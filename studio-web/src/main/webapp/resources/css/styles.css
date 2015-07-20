@@ -1,0 +1,71 @@
+*{
+	margin:0;
+	padding:0;
+}
+
+#main-left {
+	float: left;
+	width: 70%;
+	height: 900px;
+	text-align: center;
+}
+
+#main-right {
+	float: right;
+	width: 30%;
+	height: 900px;
+	background-color: #F2F2F2;
+	
+}
+
+#footer {
+	width: 100%;
+	height: 50px;
+	float:left;
+	background-color: #F2F2F2;
+	border: solid 1px gray;
+	
+}
+
+#div-logo{
+	margin-top: 200px;
+	height: 500px;
+	width: 750px;
+	display: inline-block;
+	background-color: blue;
+}
+
+#logo{
+	height: 500px;
+	width: 750px;
+	border: 1px solid black;
+	
+}
+
+#div-login{
+	margin-top: 90px;
+	height: 450px;
+	text-align: center;
+	
+	
+}
+
+#logoOtus-div{
+	height: 450px;
+	text-align: center;
+	
+}
+
+#logoOtus{
+	height: 350px;
+	width: 300px;
+	margin-top: 40px;
+	
+}
+
+#loginHome{
+	background-color: green;
+	color: white; 
+	
+	
+}

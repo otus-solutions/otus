@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head>
+	<title>Login Page</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+</h:head> 
+<body> 
+	<div id="main-left">
+		<div id="div-logo">
+			<h:graphicImage id="logo" title="Logo ELSA" value="resources/img/logo_elsa.jpg" />		
+		</div>
+	</div>
+	<div id="main-right">
+		<div id="div-login">
+			<h1>Otus</h1>
+			<br />
+			<p:inputText id="email"/>
+			<br />
+			<br />
+			<p:inputText id="password"/>
+			<br />
+			<br />
+			<p:commandButton value="Log In" id="loginHome" />
+		</div>
+		<div id="logoOtus-div">
+			<h:graphicImage id="logoOtus" title="Logo Otus" value="resources/img/tux.png" />
+		</div>
+	</div>
+	<div id="footer"></div>
+</body> 
+</html>
