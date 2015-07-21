@@ -3,6 +3,10 @@
 	padding:0;
 }
 
+body {
+	font-family: "Verdana", Times, sans-serif;
+}
+
 #main-left {
 	float: left;
 	width: 70%;
@@ -12,20 +16,13 @@
 
 #main-right {
 	float: right;
-	width: 30%;
-	height: 900px;
+	width: 29	%;
+	height: 978px;
 	background-color: #F2F2F2;
+	border-left: solid 1px rgb(211, 211, 211);
 	
 }
 
-#footer {
-	width: 100%;
-	height: 50px;
-	float:left;
-	background-color: #F2F2F2;
-	border: solid 1px gray;
-	
-}
 
 #div-logo{
 	margin-top: 200px;
@@ -38,16 +35,16 @@
 #logo{
 	height: 500px;
 	width: 750px;
-	border: 1px solid black;
 	
 }
 
 #div-login{
-	margin-top: 90px;
+	top: 165px;
 	height: 450px;
 	text-align: center;
 	
 	
+	position: relative;
 }
 
 #logoOtus-div{
@@ -59,8 +56,16 @@
 #logoOtus{
 	height: 350px;
 	width: 300px;
-	margin-top: 40px;
+	margin-top: 10px;
 	
+}
+
+#galho{
+	height: 130px;
+	width: 616px;
+	top: -63px;
+	float: right;
+	position: relative;
 }
 
 #loginHome{
