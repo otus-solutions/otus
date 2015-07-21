@@ -16,13 +16,11 @@ body {
 
 #main-right {
 	float: right;
-	width: 29	%;
+	width: 29%;
 	height: 978px;
 	background-color: #F2F2F2;
 	border-left: solid 1px rgb(211, 211, 211);
-	
 }
-
 
 #div-logo{
 	margin-top: 200px;
@@ -35,15 +33,12 @@ body {
 #logo{
 	height: 500px;
 	width: 750px;
-	
 }
 
 #div-login{
 	top: 165px;
 	height: 450px;
 	text-align: center;
-	
-	
 	position: relative;
 }
 
@@ -71,6 +66,5 @@ body {
 #loginHome{
 	background-color: green;
 	color: white; 
-	
 	
 }
