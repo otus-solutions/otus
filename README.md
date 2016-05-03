@@ -7,9 +7,7 @@ Para realizar o "start" do Software em ambiente de desenvolvimento.
 
 > $ cd otus
 
-> $ npm install
-
-> $ npm run build
+> $ npm run build-dev
 
 > $ npm start
 
