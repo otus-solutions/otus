@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+}
+.logo {
+    height: 63%;
+    display: block;
+    z-index: 3;
+    position: absolute;
+    bottom: 68%;
+    left: 39%;
+    top: 12%;
+}
+#logo_domain {
+    content: url('../../assets/img/DomainImage.png');
+}
+#DomainColor {
+    background-color: #ECEFF1;
+}
+#installerLayout {
+    border: 2px solid #66B2FF;
+    background-color: white;
+}
+#logo_github {
+    content: url('../../assets/img/icons/github-6-xxl.png');
+    height: 20%;
+    position: absolute;
+    left: 23%;
+    top: 37%;
+}
+
+/** AngularJS **/
+
+
+/** Float label color */
+
+
+/*md-input-container label, md-input-container .md-placeholder {
+    color: black !important;
+}*/
+
+
+/** This style is to fix float label 'celular'! Do NOT remove**/
+
+#installer-page label[for="phonenumber"] {
+    -webkit-transform: translate3d(0, 6px, 0) scale(.75) !important;
+}
