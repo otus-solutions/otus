@@ -30,15 +30,16 @@
 }
 #login-page .logo {
     margin: 0 auto;
-    height: 186px;
+    height: 212px;
     display: block;
     z-index: 3;
     position: absolute;
     bottom: 67%;
-    left: 38%;
+    left: 27%;
+
 }
 #login-page #logo_test {
-    content: url(../../assets/img/coruja_pesquisadora.png);
+  content: url(../../assets/img/OtusImg.png);
 }
 #login-page #content {
     margin-top: 11%;

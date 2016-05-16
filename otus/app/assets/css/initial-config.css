@@ -1,31 +1,28 @@
 * {
     box-sizing: border-box;
 }
+
+#installer .hearder {
+    
+}
 #installer .logo {
-    height: 63%;
+    height: 50%;
     display: block;
     z-index: 3;
     position: absolute;
-    bottom: 68%;
-    left: 39%;
-    top: 12%;
+    bottom: 50%;
+    left: 36%;
+    top: 10%;
 }
 #installer #logo_otus {
-    content: url(../../assets/img/coruja_pesquisadora.png);
+    content: url(../../assets/img/OtusImg.png);
 }
 #installer #OtusColor {
     background-color: #ECEFF1;
 }
 #installer #installerLayout {
-    border: 2px solid #006064;
+    border: 1px solid #80CBC4;
     background-color: white;
-}
-#installer #logo_github {
-    content: url(../../assets/img/icons/github-6-xxl.png);
-    height: 20%;
-    position: absolute;
-    left: 23%;
-    top: 37%;
 }
 
 /** AngularJS **/
