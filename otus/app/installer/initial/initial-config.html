@@ -1,7 +1,7 @@
-<md-content layout="column" flex >
-    <md-content layout="row" flex="10" id="DomainColor">
-        <div class="logo" id="logo_domain"></div>
-        <md-content flex="35" layout-align="center end" layout="column" id="DomainColor">
+<md-content layout="column" flex id="installer">
+    <md-content layout="row" flex="10" id="OtusColor">
+        <div class="logo" id="logo_otus"></div>
+        <md-content flex="35" layout-align="center end" layout="column" id="OtusColor">
             <h2 layout="row" layout-align="end center">
                 <span class="md-display-1">Bem-vindo!</span>
             </h2>
@@ -11,7 +11,7 @@
     <md-content layout="row" layout-align="center" flex id="installerLayout">
         <md-content layout="column" flex="70">
             <md-content layout="row">
-                <h3>Vamos iniciar a Instalação do Projeto Domain.</h3>
+                <h3>Vamos iniciar a Instalação do Projeto.</h3>
             </md-content>
             <md-content layout="row" flex="95">
                 <md-content layout="column" flex style="padding: 20px">
@@ -21,7 +21,7 @@
                                 <md-content class="md-padding">
                                     <md-input-container class="md-block">
                                         <label>Insira o Nome do Projeto</label>
-                                        <input type="text" name="projectName" ng-model="project.name" required />
+                                        <input type="text" name="projectName" ng-model="project.name" required="true" />
                                     </md-input-container>
                                 </md-content>
                             </md-tab>
@@ -29,14 +29,14 @@
                                 <md-content class="md-padding">
                                     <md-input-container class="md-block">
                                         <label>Insira a URL do projeto Domain.</label>
-                                        <input type="url" name="urlProject" ng-model="project.url" required/>
+                                        <input type="url" name="urlProject" ng-model="project.url" required="true"/>
                                     </md-input-container>
                                 </md-content>
                             </md-tab>
                         </md-tabs>
                         <md-content layout="row" layout-align="center center" flex="20">
-                            <md-button>
-                                <i class="material-icons" title="Próxima Aba">navigate_next</i>
+                            <md-button type="submit" class="md-raised md-accent">
+                              Cadastrar
                             </md-button>
                         </md-content>
                     </md-content>
@@ -45,9 +45,9 @@
         </md-content>
     </md-content>
 
-    <md-content layout="row" flex="20" id="DomainColor">
+    <md-content layout="row" flex="20" id="OtusColor">
         <md-button aria-label="GitHub">
-            <a href="https://github.com/ccem-dev/otus-domain" id="logo_github" title="Github"></a>
+            <a href="https://github.com/ccem-dev/otus" id="logo_github" title="Github"></a>
         </md-button>
     </md-content>
 </md-content>

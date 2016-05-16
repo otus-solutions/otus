@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
 }
-.logo {
+#installer .logo {
     height: 63%;
     display: block;
     z-index: 3;
@@ -10,18 +10,18 @@
     left: 39%;
     top: 12%;
 }
-#logo_domain {
-    content: url('../../assets/img/DomainImage.png');
+#installer #logo_otus {
+    content: url(../../assets/img/coruja_pesquisadora.png);
 }
-#DomainColor {
+#installer #OtusColor {
     background-color: #ECEFF1;
 }
-#installerLayout {
-    border: 2px solid #66B2FF;
+#installer #installerLayout {
+    border: 2px solid #006064;
     background-color: white;
 }
-#logo_github {
-    content: url('../../assets/img/icons/github-6-xxl.png');
+#installer #logo_github {
+    content: url(../../assets/img/icons/github-6-xxl.png);
     height: 20%;
     position: absolute;
     left: 23%;
@@ -41,6 +41,6 @@
 
 /** This style is to fix float label 'celular'! Do NOT remove**/
 
-#installer-page label[for="phonenumber"] {
+#installer #installer-page label[for="phonenumber"] {
     -webkit-transform: translate3d(0, 6px, 0) scale(.75) !important;
 }

@@ -16,9 +16,7 @@
                 url: '/installer',
                 views: {
                     'system-wrap': {
-                        templateUrl: 'app/installer/initial/initial-config.html',
-                        controller: 'InitialConfigController',
-                        controllerAs: 'initialConfigController'
+                        templateUrl: 'app/installer/initial/initial-config.html'
                     }
                 }
             })
@@ -26,7 +24,7 @@
                 url: '/login',
                 views: {
                     'system-wrap': {
-                        templateUrl: 'app/authenticator/login.html',
+                        templateUrl: 'app/authenticator/login.html'
                     }
                 }
             })
@@ -34,7 +32,7 @@
                 url: '/home',
                 views: {
                     'system-wrap': {
-                        templateUrl: 'app/home/main-home-content-template.html',
+                        templateUrl: 'app/home/main-home-content-template.html'
                     },
                 }
             });

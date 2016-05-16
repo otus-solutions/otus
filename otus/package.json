@@ -21,7 +21,7 @@
         "start": "npm run gulp browser-sync",
         "karma": "karma",
         "build-dev": "npm install && gulp compress && npm test",
-	"build-production": "npm install && gulp compress && npm test && npm prune --production"
+	      "build-production": "npm install && gulp compress && npm test && npm prune --production"
     },
     "dependencies": {
         "gulp-concat": "2.6.0",

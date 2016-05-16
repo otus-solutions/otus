@@ -38,7 +38,7 @@
     left: 38%;
 }
 #login-page #logo_test {
-    content: url(../assets/img/coruja_pesquisadora.png);
+    content: url(../../assets/img/coruja_pesquisadora.png);
 }
 #login-page #content {
     margin-top: 11%;
