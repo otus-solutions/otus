@@ -3,28 +3,40 @@
 }
 
 #installer .hearder {
-    
+
 }
 #installer .logo {
-    height: 50%;
-    display: block;
-    z-index: 3;
-    position: absolute;
-    bottom: 50%;
-    left: 36%;
-    top: 10%;
+  height: 178px;
+  z-index: 3;
+  position: absolute;
+  bottom: 25%;
+  left: 40%;
+}
+
+#installer #separatorLine {
+  background-color: #006064;
+  color: #ECEFF1;
 }
 #installer #logo_otus {
     content: url(../../assets/img/OtusImg.png);
+    top: 1%;
 }
-#installer #OtusColor {
-    background-color: #ECEFF1;
-}
+
 #installer #installerLayout {
-    border: 1px solid #80CBC4;
     background-color: white;
 }
 
+#installer #headerSize {
+  background-color: #ECEFF1;
+  height: 201px;
+  z-index: 3;
+}
+
+#installer #welcome {
+  height: 200px;
+  position: absolute;
+  left: 20%;
+}
 /** AngularJS **/
 
 
