@@ -13,39 +13,41 @@
     </md-content>
 
     <md-content layout="column" flex>
+      <form name="initialConfigForm" novalidate ng-submit="register(systemConf)">
 
-        <md-content layout="row" layout-align="center" flex id="installerLayout">
-            <md-content layout="column" flex="50">
-                <md-content layout="row">
-                    <md-content layout="column" flex style="padding: 20px">
-                        <md-content layout="row" flex>
-                            <md-tabs md-border-bottom flex>
-                                <md-tab label="Projeto">
-                                    <md-content class="md-padding">
-                                        <md-input-container class="md-block">
-                                            <label>Insira o Nome do Projeto</label>
-                                            <input type="text" name="projectName" ng-model="project.name" required="true" />
-                                        </md-input-container>
-                                    </md-content>
-                                </md-tab>
-                                <md-tab label="Domínio">
-                                    <md-content class="md-padding">
-                                        <md-input-container class="md-block">
-                                            <label>Insira a URL do projeto Domain.</label>
-                                            <input type="url" name="urlProject" ng-model="project.url" required="true" />
-                                        </md-input-container>
-                                    </md-content>
-                                </md-tab>
-                            </md-tabs>
-                        </md-content>
-                    </md-content>
-                </md-content>
-                <md-content layout="row" layout-align="start center">
-                    <md-button type="submit" class="md-raised md-accent">
-                        Cadastrar
-                    </md-button>
-                </md-content>
-            </md-content>
-        </md-content>
+          <md-content layout="row" layout-align="center" flex id="installerLayout">
+              <md-content layout="column" flex="50">
+                  <md-content layout="row">
+                      <md-content layout="column" flex style="padding: 20px">
+                          <md-content layout="row" flex>
+                              <md-tabs md-border-bottom flex>
+                                  <md-tab label="Projeto">
+                                      <md-content class="md-padding">
+                                          <md-input-container class="md-block">
+                                              <label>Insira o Nome do Projeto</label>
+                                              <input type="text" name="projectName" ng-model="project.name" required="true" />
+                                          </md-input-container>
+                                      </md-content>
+                                  </md-tab>
+                                  <md-tab label="Domínio">
+                                      <md-content class="md-padding">
+                                          <md-input-container class="md-block">
+                                              <label>Insira a URL do projeto Domain.</label>
+                                              <input type="url" name="urlProject" ng-model="project.url" required="true" />
+                                          </md-input-container>
+                                      </md-content>
+                                  </md-tab>
+                              </md-tabs>
+                          </md-content>
+                      </md-content>
+                  </md-content>
+                  <md-content layout="row" layout-align="start center">
+                      <md-button type="submit" class="md-raised md-accent">
+                          Cadastrar
+                      </md-button>
+                  </md-content>
+              </md-content>
+          </md-content>
+      </form>
     </md-content>
 </md-content>
