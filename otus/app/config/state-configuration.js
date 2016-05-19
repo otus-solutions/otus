@@ -16,7 +16,9 @@
                 url: '/installer',
                 views: {
                     'system-wrap': {
-                        templateUrl: 'app/installer/initial/initial-config.html'
+                        templateUrl: 'app/installer/initial/initial-config.html',
+                        controller: 'InitialConfigController',
+                        controllerAs: 'controller'
                     }
                 }
             })

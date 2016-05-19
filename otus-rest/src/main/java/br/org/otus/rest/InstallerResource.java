@@ -31,7 +31,6 @@ public class InstallerResource {
 		SystemConfigDto systemConfigDto = new Gson().fromJson(systemConfigJSon, SystemConfigDto.class);
 		
 		try {
-			//systemConfigDto.getUserDto().encrypt(); ?
 			systemConfigService.createInitialSystemConfig(systemConfigDto);
 			return new Gson().toJson(Boolean.FALSE);
 		}

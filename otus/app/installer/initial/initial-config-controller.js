@@ -1,24 +1,18 @@
 (function() {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('otus.installer')
-    .controller('InitialConfigController', InitialConfigController);
+    angular
+        .module('otus.installer')
+        .controller('InitialConfigController', InitialConfigController);
 
-  InitialConfigController.$inject = ['$q', '$scope', 'mdDialog'];
+    function InitialConfigController($scope) {
+        var self = this;
 
-  function InitialConfigController($q, $scope, $mdDialog) {
+        self.register = register;
 
-    var installerResource;
-
-    init();
-
-    function init() {
-
+        function register(project) {
+            //post
+        }
     }
 
-    $scope.register = function(systemConf) {
-      
-    }
-  }
 })();

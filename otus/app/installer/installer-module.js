@@ -1,6 +1,6 @@
 (function() {
   'use strict';
 
-  angular.module('otus.installer', ['passwordControl']);
+  angular.module('otus.installer', []);
 
 })();

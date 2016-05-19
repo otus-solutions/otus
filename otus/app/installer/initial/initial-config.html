@@ -13,7 +13,7 @@
     </md-content>
 
     <md-content layout="column" flex>
-      <form name="initialConfigForm" novalidate ng-submit="register(systemConf)">
+      <form name="initialConfigForm" novalidate ng-submit="controller.register(project)">
 
           <md-content layout="row" layout-align="center" flex id="installerLayout">
               <md-content layout="column" flex="50">
@@ -42,7 +42,7 @@
                       </md-content>
                   </md-content>
                   <md-content layout="row" layout-align="start center">
-                      <md-button type="submit" class="md-raised md-accent">
+                      <md-button type="submit" class="md-raised md-accent" ng-disabled="initialConfigForm.$invalid">
                           Cadastrar
                       </md-button>
                   </md-content>

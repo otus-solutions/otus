@@ -2,6 +2,7 @@
 
     angular
         .module('otus', [
-            'dependencies'
+            'dependencies',
+            'otus.installer'
         ]);
 }());
