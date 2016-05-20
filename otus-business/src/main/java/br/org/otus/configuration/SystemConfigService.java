@@ -1,10 +1,10 @@
 package br.org.otus.configuration;
 
-import br.org.otus.rest.dtos.SystemConfigDto;
+import br.org.otus.rest.dtos.OtusConfig;
 
 public interface SystemConfigService {
 	
 	Boolean isReady();
 	
-	void createInitialSystemConfig(SystemConfigDto systemConfigDto) throws Exception;
+	void createInitialSystemConfig(OtusConfig systemConfigDto) throws Exception;
 }

@@ -5,10 +5,24 @@
         .module('otus.installer')
         .controller('InitialConfigController', InitialConfigController);
 
-    function InitialConfigController($scope) {
-        var self = this;
+    InitialConfigController.$inject = ['$q', '$scope', '$mdDialog', 'DashboardStateService', 'RestResourceService'];
 
-        self.register = register;
+    function InitialConfigController($q, $scope, $mdDialog, DashboardStateService, RestResourceService) {
+        var installerResource;
+
+        //var self = this;
+        //self.register = register;
+
+        init();
+
+        function init() {
+            installerResource = RestResourceService.getInstallerResource();
+        }
+
+        $scope.register = function(project) {
+            $scope.isLoading = true;
+            
+        }
 
         function register(project) {
             //post

@@ -3,6 +3,9 @@
     angular
         .module('otus', [
             'dependencies',
-            'otus.installer'
+            'otus.dashboard',
+            'otus.installer',
+            'otus.authenticator',
+            'otus.client'
         ]);
 }());

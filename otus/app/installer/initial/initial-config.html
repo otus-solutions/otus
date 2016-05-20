@@ -15,11 +15,11 @@
     <md-content layout="column" flex>
       <form name="initialConfigForm" novalidate ng-submit="controller.register(project)">
 
-          <md-content layout="row" layout-align="center" flex id="installerLayout">
-              <md-content layout="column" flex="50">
-                  <md-content layout="row">
-                      <md-content layout="column" flex style="padding: 20px">
-                          <md-content layout="row" flex>
+          <div layout="row" layout-align="center" flex id="installerLayout">
+              <div layout="column" flex="50">
+                  <div layout="row">
+                      <div layout="column" flex style="padding: 20px">
+                          <div layout="row" flex>
                               <md-tabs md-border-bottom flex>
                                   <md-tab label="Projeto">
                                       <md-content class="md-padding">
@@ -38,16 +38,20 @@
                                       </md-content>
                                   </md-tab>
                               </md-tabs>
-                          </md-content>
-                      </md-content>
-                  </md-content>
+                          </div>
+                      </div>
+                  </div>
                   <md-content layout="row" layout-align="start center">
-                      <md-button type="submit" class="md-raised md-accent" ng-disabled="initialConfigForm.$invalid">
+                      <md-button type="submit" class="md-raised md-accent" ng-disabled="initialConfigForm.$invalid || isLoading">
                           Cadastrar
                       </md-button>
+
+                      <div layout="row" layout-sm="column" layout-align="center">
+                            <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+                      </div>
                   </md-content>
-              </md-content>
-          </md-content>
+              </div>
+          </div>
       </form>
     </md-content>
 </md-content>

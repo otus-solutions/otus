@@ -2,19 +2,19 @@
     'use strict';
 
     angular
-        .module('otusClient')
+        .module('otus.client')
         .service('RestResourceService', RestResourceService);
 
-    function RestResourceService.$inject = ['UrlResourceFactory'];
+    RestResourceService.$inject = ['InstallerResourceFactory'];
 
-    function RestResourceService(UrlResourceFactory) {
+    function RestResourceService(InstallerResourceFactory) {
         var HOSTNAME = 'http://' + window.location.hostname;
         var CONTEXT = '/otus-rest';
         var VERSION = '/v01';
-        //OTUS-REST? V01?
+
 
         var self = this;
-        self.getUrlResource = getUrlResource;
+        self.getInstallerResource = getInstallerResource;
 
         function getRestPrefix() {
             return HOSTNAME + CONTEXT + VERSION;
@@ -32,9 +32,10 @@
             return VERSION;
         }
 
-        function getUrlResource() {
+        function getInstallerResource() {
             var prefix = getRestPrefix();
-            return UrlResourceFactory.create(prefix);
+            return InstallerResourceFactory.create(prefix);
         }
     }
+
 }());

@@ -26,7 +26,7 @@
                 url: '/login',
                 views: {
                     'system-wrap': {
-                        templateUrl: 'app/authenticator/login.html'
+                        templateUrl: 'app/authenticator/login/login.html'
                     }
                 }
             })
@@ -34,7 +34,7 @@
                 url: '/home',
                 views: {
                     'system-wrap': {
-                        templateUrl: 'app/home/main-home-content-template.html'
+                        templateUrl: 'app/dashboard/home/main-home-content-template.html'
                     },
                 }
             });
