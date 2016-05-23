@@ -21,7 +21,8 @@
 
         $scope.register = function(project) {
             $scope.isLoading = true;
-            
+            //validação do nome do Domain
+
         }
 
         function register(project) {
