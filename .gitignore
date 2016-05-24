@@ -7,9 +7,9 @@
 **/.idea
 *.iml
 *.swp
-npm-debug.log
-/otus-studio/**/unit-result.report.html
+*.swo
+**/unit-result.report.html
 **/node_modules/
-/**/*.orig
 /**/env.properties
 /**/npm-debug.log.*
+**/.sonar

@@ -7,7 +7,8 @@
     var uglify = require("gulp-uglify");
     var minify = require('gulp-minify');
     var concat = require('gulp-concat');
-
+    var sonar = require('gulp-sonar');
+    var packageJson = require('./package.json');
     var baseDir = __dirname + '/app/index.html';
 
     /* Task registry */
@@ -43,6 +44,36 @@
             .pipe(uglify())
             .pipe(minify())
             .pipe(gulp.dest('dist'));
+    });
+
+    gulp.task('sonar', function() {
+        var options = {
+            sonar: {
+                host: {
+                    url: process.env.npm_config_sonarUrl,
+                },
+                jdbc: {
+                    url: process.env.npm_config_sonarDatabaseUrl,
+                    username: process.env.npm_config_sonarDatabaseUsername,
+                    password: process.env.npm_config_sonarDatabasePassword
+                },
+                projectKey: 'sonar:otus-js',
+                projectName: 'otus-js',
+                projectVersion: packageJson.version,
+                // comma-delimited string of source directories
+                sources: 'app',
+                language: 'js',
+                sourceEncoding: 'UTF-8',
+                exec: {
+                    maxBuffer: 1024 * 1024
+                }
+            }
+        };
+
+        return gulp.src('thisFileDoesNotExist.js', {
+                read: false
+            })
+            .pipe(sonar(options));
     });
 
 }());
