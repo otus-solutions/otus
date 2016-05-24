@@ -21,9 +21,10 @@
         "start": "npm run gulp browser-sync",
         "karma": "karma",
         "build-dev": "npm install && gulp compress && npm test",
-	      "build-production": "npm install && gulp compress && npm test && npm prune --production"
+	    "build-production": "npm install && gulp compress && npm test && npm prune --production"
     },
     "dependencies": {
+        "otus-domain-client": "git://github.com/ccem-dev/otus-domain-client-js.git#PRJ-8",
         "gulp-concat": "2.6.0",
         "gulp-minify": "0.0.11",
         "angular": "^1.4.7",

@@ -9,10 +9,10 @@
         '$location',
         '$http',
         'APP_STATE',
-        'RestResourceService'
+        'OtusRestResourceService'
     ];
 
-    function DashboardStateService($location, $http, APP_STATE, RestResourceService) {
+    function DashboardStateService($location, $http, APP_STATE, OtusRestResourceService) {
         var self = this;
 
         var HOSTNAME_REST = 'http://' + window.location.hostname;

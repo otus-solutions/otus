@@ -5,28 +5,32 @@
         .module('otus.installer')
         .controller('InitialConfigController', InitialConfigController);
 
-    InitialConfigController.$inject = ['$q', '$scope', '$mdDialog', 'DashboardStateService', 'RestResourceService'];
+    InitialConfigController.$inject = ['DashboardStateService', 'RestResourceService', '$http', '$scope'];
 
-    function InitialConfigController($q, $scope, $mdDialog, DashboardStateService, RestResourceService) {
-        var installerResource;
+    function InitialConfigController(DashboardStateService, RestResourceService, $http, $scope) {
+        var otusDomainUrlResource;
 
-        //var self = this;
-        //self.register = register;
+        var self = this;
+        self.register = register;
 
         init();
 
         function init() {
-            installerResource = RestResourceService.getInstallerResource();
-        }
-
-        $scope.register = function(project) {
-            $scope.isLoading = true;
-            //validação do nome do Domain
-
+            otusDomainUrlResource = RestResourceService.getUrlResource();
         }
 
         function register(project) {
-            //post
+            otusDomainUrlResource.isValidDomain()
+
+
+            //http://studio-dev.ccem.ufrgs.br/
+            $http.get(project.url + '-rest/v01/url')
+                .then(function(data) {
+                    console.log(data);
+                }, function(){
+                    $scope.initialConfigForm.urlProject.$setValidity('url', false);
+                });
+            //Passar um param para buscar a url
         }
     }
 

@@ -3,11 +3,11 @@
 
     angular
         .module('otus.client')
-        .service('RestResourceService', RestResourceService);
+        .service('OtusRestResourceService', OtusRestResourceService);
 
-    RestResourceService.$inject = ['InstallerResourceFactory'];
+    OtusRestResourceService.$inject = ['InstallerResourceFactory'];
 
-    function RestResourceService(InstallerResourceFactory) {
+    function OtusRestResourceService(InstallerResourceFactory) {
         var HOSTNAME = 'http://' + window.location.hostname;
         var CONTEXT = '/otus-rest';
         var VERSION = '/v01';

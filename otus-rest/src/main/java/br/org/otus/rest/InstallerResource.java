@@ -7,7 +7,7 @@ import javax.ws.rs.*;
 import com.google.gson.Gson;
 
 import br.org.otus.configuration.SystemConfigService;
-import br.org.otus.rest.dtos.OtusConfig;
+import br.org.otus.rest.dtos.OtusConfigDto;
 
 @Path("/installer")
 public class InstallerResource {
@@ -28,16 +28,20 @@ public class InstallerResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public String config(String systemConfigJSon) {
-		OtusConfig systemConfigDto = new Gson().fromJson(systemConfigJSon, OtusConfig.class);
+		OtusConfigDto OtusConfigDto = new Gson().fromJson(systemConfigJSon, OtusConfigDto.class);
 		
-		try {
+		System.out.println(OtusConfigDto.getName());
+		System.out.println(OtusConfigDto.getUrl());
+		return String.valueOf(true);
+		/*try {
 			systemConfigService.createInitialSystemConfig(systemConfigDto);
 			return new Gson().toJson(Boolean.FALSE);
 		}
 		catch (Exception e) {
 			return new Gson().toJson(Boolean.FALSE);
 		}
-	}
-	
+
+	*/
+	}	
 	
 }
