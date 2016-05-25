@@ -12,3 +12,4 @@
 **/node_modules/
 /**/env.properties
 /**/npm-debug.log.*
+**/.sonar
