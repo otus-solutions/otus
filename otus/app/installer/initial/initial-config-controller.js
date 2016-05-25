@@ -13,16 +13,7 @@
         var self = this;
         self.register = register;
 
-        init();
-
-        function init() {
-            otusDomainUrlResource = RestResourceService.getUrlResource();
-        }
-
         function register(project) {
-            otusDomainUrlResource.isValidDomain()
-
-
             //http://studio-dev.ccem.ufrgs.br/
             $http.get(project.url + '-rest/v01/url')
                 .then(function(data) {
@@ -30,7 +21,6 @@
                 }, function(){
                     $scope.initialConfigForm.urlProject.$setValidity('url', false);
                 });
-            //Passar um param para buscar a url
         }
     }
 
