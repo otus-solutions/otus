@@ -14,7 +14,9 @@
 	</parent>
 
 	<properties>
-		<database.action>validate</database.action>
+		<database.create>true</database.create>
+		<database.port>27017</database.port>
+		<database.host>localhost</database.host>
 	</properties>
 
 	<scm>
@@ -24,15 +26,9 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>5.0.1.Final</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>5.0.1.Final</version>
+			<groupId>org.hibernate.ogm</groupId>
+			<artifactId>hibernate-ogm-mongodb</artifactId>
+			<version>5.0.0.Final</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

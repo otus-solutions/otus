@@ -12,36 +12,34 @@ import br.org.otus.rest.dtos.OtusConfigDto;
 @Path("/installer")
 public class InstallerResource {
 
-	@Inject
-	private SystemConfigService systemConfigService;
+    @Inject
+    private SystemConfigService systemConfigService;
 
-	@GET
-	@Path("/ready")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String ready() {
-		Response response = new Response();
-		response.setData(systemConfigService.isReady());
-		return response.toJson();
-	}
+    @GET
+    @Path("/ready")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ready() {
+        Response response = new Response();
+        response.setData(systemConfigService.isReady());
+        return response.toJson();
+    }
 
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public String config(String systemConfigJSon) {
-		OtusConfigDto OtusConfigDto = new Gson().fromJson(systemConfigJSon, OtusConfigDto.class);
-		
-		System.out.println(OtusConfigDto.getName());
-		System.out.println(OtusConfigDto.getUrl());
-		return String.valueOf(true);
-		/*try {
-			systemConfigService.createInitialSystemConfig(systemConfigDto);
-			return new Gson().toJson(Boolean.FALSE);
-		}
-		catch (Exception e) {
-			return new Gson().toJson(Boolean.FALSE);
-		}
+    @POST
+    @Path("/config")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String config(String systemConfigJSon) {
+        Response response = new Response();
+        OtusConfigDto otusConfigDto = new Gson().fromJson(systemConfigJSon, OtusConfigDto.class);
 
-	*/
-	}	
-	
+        try {
+            systemConfigService.createInitialSystemConfig(otusConfigDto);
+            response.setData(Boolean.TRUE);
+            return response.toJson();
+        } catch (Exception e) {
+            response.setData(Boolean.FALSE);
+            return response.toJson();
+        }
+    }
+
 }
