@@ -13,3 +13,4 @@
 /**/env.properties
 /**/npm-debug.log.*
 **/.sonar
+**/*.orig
