@@ -3,11 +3,11 @@
 
     angular
         .module('otus.client')
-        .factory('InstallerResourceFactory', InstallerResourceFactory);
+        .factory('OtusInstallerResourceFactory', OtusInstallerResourceFactory);
 
-    InstallerResourceFactory.$inject = ['$resource'];
+    OtusInstallerResourceFactory.$inject = ['$resource'];
 
-    function InstallerResourceFactory($resource) {
+    function OtusInstallerResourceFactory($resource) {
         var SUFFIX = '/installer';
 
         var self = this;
@@ -21,7 +21,7 @@
                 },
                 config: {
                     method: 'POST',
-                    url: restPrefix + SUFFIX
+                    url: restPrefix + SUFFIX + '/config'
                 }
             });
         }

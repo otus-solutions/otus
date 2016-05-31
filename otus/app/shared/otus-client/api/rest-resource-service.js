@@ -5,16 +5,16 @@
         .module('otus.client')
         .service('OtusRestResourceService', OtusRestResourceService);
 
-    OtusRestResourceService.$inject = ['InstallerResourceFactory'];
+    OtusRestResourceService.$inject = ['OtusInstallerResourceFactory'];
 
-    function OtusRestResourceService(InstallerResourceFactory) {
+    function OtusRestResourceService(OtusInstallerResourceFactory) {
         var HOSTNAME = 'http://' + window.location.hostname;
         var CONTEXT = '/otus-rest';
         var VERSION = '/v01';
 
 
         var self = this;
-        self.getInstallerResource = getInstallerResource;
+        self.getOtusInstallerResource = getOtusInstallerResource;
 
         function getRestPrefix() {
             return HOSTNAME + CONTEXT + VERSION;
@@ -32,9 +32,9 @@
             return VERSION;
         }
 
-        function getInstallerResource() {
+        function getOtusInstallerResource() {
             var prefix = getRestPrefix();
-            return InstallerResourceFactory.create(prefix);
+            return OtusInstallerResourceFactory.create(prefix);
         }
     }
 
