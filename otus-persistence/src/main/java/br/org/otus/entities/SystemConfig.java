@@ -32,9 +32,6 @@ public class SystemConfig {
     
     public SystemConfig(){
     	this.uuid = UUID.randomUUID();
-    	this.id = id;
-    	this.projectName = projectName;
-    	this.domainUrl = domainUrl;
     }
 	
    	public UUID getUuid() {

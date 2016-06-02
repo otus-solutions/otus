@@ -14,7 +14,7 @@ public class InstallerResource {
 
     @Inject
     private SystemConfigService systemConfigService;
-
+    
     @GET
     @Path("/ready")
     @Produces(MediaType.APPLICATION_JSON)
@@ -34,6 +34,8 @@ public class InstallerResource {
 
         try {
             systemConfigService.createInitialSystemConfig(otusConfigDto);
+            
+            // TODO chamar register do projeto otus - url,nome,token
             response.setData(Boolean.TRUE);
             return response.toJson();
         } catch (Exception e) {
