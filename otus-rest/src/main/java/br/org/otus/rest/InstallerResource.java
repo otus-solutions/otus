@@ -1,20 +1,26 @@
 package br.org.otus.rest;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.*;
 
+import br.org.otus.domain.client.DomainRegisterResource;
 import com.google.gson.Gson;
 
 import br.org.otus.configuration.SystemConfigService;
-import br.org.otus.rest.dtos.OtusConfigDto;
+import br.org.otus.rest.dtos.OtusInitializationConfigDto;
+import org.apache.http.HttpResponse;
+
+import java.util.UUID;
 
 @Path("/installer")
 public class InstallerResource {
 
     @Inject
     private SystemConfigService systemConfigService;
-    
+
     @GET
     @Path("/ready")
     @Produces(MediaType.APPLICATION_JSON)
@@ -28,20 +34,32 @@ public class InstallerResource {
     @Path("/config")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String config(String systemConfigJSon) {
+    public String config(String systemConfigJSon, @Context HttpServletRequest request) {
         Response response = new Response();
-        OtusConfigDto otusConfigDto = new Gson().fromJson(systemConfigJSon, OtusConfigDto.class);
+        OtusInitializationConfigDto otusInitializationConfigDto = new Gson().fromJson(systemConfigJSon, OtusInitializationConfigDto.class);
 
         try {
-            systemConfigService.createInitialSystemConfig(otusConfigDto);
-            
-            // TODO chamar register do projeto otus - url,nome,token
-            response.setData(Boolean.TRUE);
-            return response.toJson();
+            UUID token = systemConfigService.createInitialSystemConfig(otusInitializationConfigDto);
+
+            StringBuffer projectRestUrl = new StringBuffer();
+            projectRestUrl.append(request.getServerName());
+            projectRestUrl.append(":");
+            projectRestUrl.append(request.getServerPort());
+            projectRestUrl.append(request.getContextPath());
+
+            String projectName = otusInitializationConfigDto.getProjectName();
+            String domainUrl = otusInitializationConfigDto.getDomainRestUrl();
+
+            DomainRegisterResource domainRegisterResource = new DomainRegisterResource(domainUrl);
+            domainRegisterResource.registerProject(projectRestUrl.toString(), projectName, token);
+
+            return response.setData(Boolean.TRUE).toJson();
+
         } catch (Exception e) {
-            response.setData(Boolean.FALSE);
-            return response.toJson();
+            e.printStackTrace();
+            return response.setHasErrors(true).setData(e).toJson();
         }
     }
+
 
 }

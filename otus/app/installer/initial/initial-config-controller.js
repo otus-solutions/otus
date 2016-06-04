@@ -5,9 +5,9 @@
         .module('otus.installer')
         .controller('InitialConfigController', InitialConfigController);
 
-    InitialConfigController.$inject = ['DashboardStateService', 'OtusRestResourceService', '$http', '$scope'];
+    InitialConfigController.$inject = ['DashboardStateService', 'OtusRestResourceService', '$http', '$scope', '$mdToast'];
 
-    function InitialConfigController(DashboardStateService, OtusRestResourceService, $http, $scope) {
+    function InitialConfigController(DashboardStateService, OtusRestResourceService, $http, $scope, $mdToast) {
 
         var self = this;
         var installerResource;
@@ -15,19 +15,19 @@
 
         init();
 
-        function init(){
+        function init() {
             installerResource = OtusRestResourceService.getOtusInstallerResource();
         }
 
         function register(project) {
-            $http.get(project.url + '-rest/v01/url')
-                .then(function(data) {
-                    installerResource.config(project, function(response) {
-                    }, function(){
-                    });
-                }, function(){
-                 $scope.initialConfigForm.urlProject.$setValidity('url', false);
-                });
+            installerResource.config(project, function(response) {
+                if (response.hasErrors) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                        .textContent('Erro ao adicionar novas configurações')
+                    );
+                }
+            });
         }
     }
 })();

@@ -11,13 +11,19 @@
     var packageJson = require('./package.json');
     var baseDir = __dirname + '/app/index.html';
 
-    /* Task registry */
     gulp.task('browser-sync', function() {
         browserSync.init({
             server: {
+                open: 'external',
                 baseDir: '../',
                 middleware: [
-                    browserSyncSpa(/^[^\.]+$/, baseDir)
+                    browserSyncSpa(/^[^\.]+$/, baseDir),
+
+                    function(req, res, next) {
+                        res.setHeader('Access-Control-Allow-Origin', '*');
+                        res.setHeader('Access-Control-Allow-Headers', '*');
+                        next();
+                    }
                 ]
             },
             startPath: 'otus/login'

@@ -2,11 +2,12 @@ package br.org.otus.configuration;
 
 import br.org.otus.dao.SystemConfigDao;
 import br.org.otus.entities.SystemConfig;
-import br.org.otus.rest.dtos.OtusConfigDto;
+import br.org.otus.rest.dtos.OtusInitializationConfigDto;
 import br.org.tutty.Equalizer;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import java.util.UUID;
 
 @Stateless
 public class SystemConfigServiceBean implements SystemConfigService{
@@ -19,9 +20,11 @@ public class SystemConfigServiceBean implements SystemConfigService{
     }
 
     @Override
-    public void createInitialSystemConfig(OtusConfigDto configDto) throws Exception {
+    public UUID createInitialSystemConfig(OtusInitializationConfigDto configDto) throws Exception {
         SystemConfig systemConfig = new SystemConfig();
         Equalizer.equalize(configDto, systemConfig);
         systemConfigDao.persist(systemConfig);
+
+        return systemConfig.getUuid();
     }
 }

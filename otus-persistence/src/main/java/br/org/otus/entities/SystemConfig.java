@@ -6,15 +6,15 @@ import br.org.tutty.Equalization;
 
 import org.hibernate.annotations.Type;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * Created by drferreira on 30/05/16.
  */
 @Entity
+@TableGenerator(
+		name = "systemConfig"
+)
 public class SystemConfig {
 
     @Id
@@ -25,8 +25,8 @@ public class SystemConfig {
     @Equalization(name = "project_name")
     private String projectName;
 
-    @Equalization(name = "domain_url")
-    private String domainUrl;
+    @Equalization(name = "domain_rest_url")
+    private String domainRestUrl;
     
     private UUID uuid;
     
@@ -46,8 +46,8 @@ public class SystemConfig {
    		return projectName;
    	}
    	
-   	public String getDomainUrl(){
-   		return domainUrl;
+   	public String getDomainRestUrl(){
+   		return domainRestUrl;
    	}
 
 }
