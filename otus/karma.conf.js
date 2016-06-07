@@ -31,10 +31,13 @@ module.exports = function(config) {
             NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-angular.js',
             NODE_MODULES_ROOT_PATH + 'moment/min/moment.min.js',
             NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
+            NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
             /* Application files */
-            DIST + 'otus-min.js',
+            APP_ROOT_PATH + 'app.js',
+            APP_ROOT_PATH + 'config/**/*-configuration.js',
+            APP_ROOT_PATH + '**/*-module.js',
             APP_ROOT_PATH + '**/*.js', {
-                pattern: 'tests/unit/*-spec.js',
+                pattern: 'tests/unit/**/*-spec.js',
                 included: true
             }
         ],
