@@ -3,18 +3,15 @@ package br.org.otus.entities;
 import java.util.UUID;
 
 import br.org.tutty.Equalization;
-
 import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-/**
- * Created by drferreira on 30/05/16.
- */
+
 @Entity
-@TableGenerator(
-		name = "systemConfig"
-)
 public class SystemConfig {
 
     @Id

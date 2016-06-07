@@ -67,11 +67,11 @@
 	</build>
 
 	<dependencies>
-		<!--<dependency>-->
-			<!--<groupId>org.hibernate.ogm</groupId>-->
-			<!--<artifactId>hibernate-ogm-core</artifactId>-->
-			<!--<version>5.0.0.Final</version>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>org.hibernate.ogm</groupId>
+			<artifactId>hibernate-ogm-core</artifactId>
+			<version>5.0.0.Final</version>
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate.ogm</groupId>
 			<artifactId>hibernate-ogm-mongodb</artifactId>
