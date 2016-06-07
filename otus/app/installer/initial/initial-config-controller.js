@@ -70,7 +70,7 @@
         function showConfirmationDialog() {
             alert = $mdDialog.alert()
                 .title('Informação')
-                .content('Suas configurações foram realizadas com com sucesso! Você vai ser redirecionado para a tela de login.')
+                .content('Suas configurações foram realizadas com sucesso! Você vai ser redirecionado para a tela de login.')
                 .ok('ok');
 
             $mdDialog
