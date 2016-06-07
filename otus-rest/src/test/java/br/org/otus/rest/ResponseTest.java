@@ -1,23 +1,22 @@
 package br.org.otus.rest;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.gson.Gson;
-
 import br.org.otus.rest.dtos.OtusInitializationConfigDto;
 
-public class ResponseTest {
+import com.google.gson.Gson;
 
-	// TODO
+public class ResponseTest {
 
 	private OtusInitializationConfigDto otusInitConfig;
 
 	@Before
 	public void setup() {
 		otusInitConfig = new OtusInitializationConfigDto();
-		otusInitConfig.setDomainRestUrl("domainRestUrl");
-		otusInitConfig.setProjectName("projectName");
+		otusInitConfig.setDomainRestUrl("domain_rest_url");
+		otusInitConfig.setProjectName("project_name");
 	}
 
 	@Test
@@ -27,6 +26,21 @@ public class ResponseTest {
 
 		Gson gson = new Gson();
 		Response generatedJson = gson.fromJson(new Gson().toJson(response), Response.class);
-
+		Assert.assertEquals(generatedJson.getData(), Boolean.TRUE);
 	}
+	
+	
+	@Test
+	public void test_if_generatedJson_get_return_to_expected_otusInitConfig() {
+		Response response = new Response();
+		response.setData(otusInitConfig);
+		
+		Gson gson = new Gson();
+		OtusInitializationConfigDto generatedJson = gson.fromJson(new Gson().toJson(response.getData()), OtusInitializationConfigDto.class);
+		
+		Assert.assertEquals(generatedJson.getDomainRestUrl(), otusInitConfig.getDomainRestUrl());
+		Assert.assertEquals(generatedJson.getProjectName(), otusInitConfig.getProjectName());
+	
+	}
+	
 }
