@@ -1,4 +1,4 @@
-package br.org.otus.domain.client;
+package br.org.otus.domain.client.actions;
 
 import br.org.otus.domain.client.exceptions.RestCallException;
 import com.google.gson.Gson;
@@ -15,7 +15,6 @@ import java.util.UUID;
 public class DomainRegisterResource extends Resource {
     public static String REGISTER_REST_PATH = "/otus/register";
 
-
     public DomainRegisterResource(String domainRestUrl) {
         super(domainRestUrl);
     }
@@ -24,7 +23,7 @@ public class DomainRegisterResource extends Resource {
         HttpClient httpClient = HttpClientBuilder.create().build();
 
         HttpPost httpPost = new HttpPost(DOMAIN_URL + REGISTER_REST_PATH);
-        httpPost.addHeader("content-type", "application/json");
+        httpPost.addHeader(CONTENT_TYPE, CONTENT_TYPE_VALUE);
 
         HttpEntity json = new StringEntity(new OtusProjectDto(projectRestUrl, projectName, token).toJson());
         httpPost.setEntity(json);

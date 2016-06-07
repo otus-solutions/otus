@@ -1,5 +1,7 @@
 package br.org.otus.rest;
 
+import br.org.otus.installer.InstallerResource;
+
 import java.util.HashSet;
 import java.util.Set;
 
