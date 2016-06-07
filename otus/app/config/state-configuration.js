@@ -26,7 +26,8 @@
                 url: '/login',
                 views: {
                     'system-wrap': {
-                        templateUrl: 'app/authenticator/login/login.html'
+                        templateUrl: 'app/authenticator/login/login.html',
+                        controller: 'LoginController'
                     }
                 }
             })

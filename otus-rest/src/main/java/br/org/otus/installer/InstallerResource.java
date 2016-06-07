@@ -1,4 +1,4 @@
-package br.org.otus.rest;
+package br.org.otus.installer;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -6,12 +6,14 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.*;
 
-import br.org.otus.domain.client.DomainRegisterResource;
+import br.org.otus.rest.RequestUrlMapping;
+import br.org.otus.rest.Response;
+import br.org.otus.domain.client.actions.DomainRegisterResource;
+import br.org.otus.domain.client.UrlProvider;
 import com.google.gson.Gson;
 
 import br.org.otus.configuration.SystemConfigService;
 import br.org.otus.rest.dtos.OtusInitializationConfigDto;
-import org.apache.http.HttpResponse;
 
 import java.util.UUID;
 
@@ -38,28 +40,20 @@ public class InstallerResource {
         Response response = new Response();
         OtusInitializationConfigDto otusInitializationConfigDto = new Gson().fromJson(systemConfigJSon, OtusInitializationConfigDto.class);
 
+        DomainRegisterResource domainRegisterResource = new DomainRegisterResource(otusInitializationConfigDto.getDomainRestUrl());
+        otusInitializationConfigDto.setDomainRestUrl(domainRegisterResource.DOMAIN_URL);
+
+        String projectName = otusInitializationConfigDto.getProjectName();
+
         try {
             UUID token = systemConfigService.createInitialSystemConfig(otusInitializationConfigDto);
-
-            StringBuffer projectRestUrl = new StringBuffer();
-            projectRestUrl.append(request.getServerName());
-            projectRestUrl.append(":");
-            projectRestUrl.append(request.getServerPort());
-            projectRestUrl.append(request.getContextPath());
-
-            String projectName = otusInitializationConfigDto.getProjectName();
-            String domainUrl = otusInitializationConfigDto.getDomainRestUrl();
-
-            DomainRegisterResource domainRegisterResource = new DomainRegisterResource(domainUrl);
-            domainRegisterResource.registerProject(projectRestUrl.toString(), projectName, token);
+            domainRegisterResource.registerProject(RequestUrlMapping.getUrl(request), projectName, token);
 
             return response.setData(Boolean.TRUE).toJson();
 
         } catch (Exception e) {
-            e.printStackTrace();
             return response.setHasErrors(true).setData(e).toJson();
         }
     }
-
 
 }

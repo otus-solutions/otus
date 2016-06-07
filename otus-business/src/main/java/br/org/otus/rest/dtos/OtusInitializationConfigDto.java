@@ -14,6 +14,10 @@ public class OtusInitializationConfigDto {
         return domainRestUrl;
     }
 
+    public void setDomainRestUrl(String domainRestUrl) {
+        this.domainRestUrl = domainRestUrl;
+    }
+
     public String getProjectName() {
         return projectName;
     }
