@@ -14,9 +14,10 @@
 	</parent>
 
 	<properties>
-		<database.create>true</database.create>
 		<database.port>27017</database.port>
 		<database.host>localhost</database.host>
+		<database.username>otus</database.username>
+		<database.password>otus</database.password>
 	</properties>
 
 	<scm>
