@@ -1,4 +1,4 @@
-package br.org.otus.installer;
+package br.org.otus.rest.open;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -9,7 +9,6 @@ import javax.ws.rs.*;
 import br.org.otus.rest.RequestUrlMapping;
 import br.org.otus.rest.Response;
 import br.org.otus.domain.client.actions.DomainRegisterResource;
-import br.org.otus.domain.client.UrlProvider;
 import com.google.gson.Gson;
 
 import br.org.otus.configuration.SystemConfigService;

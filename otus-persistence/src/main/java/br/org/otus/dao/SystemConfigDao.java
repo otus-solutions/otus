@@ -1,8 +1,7 @@
-package br.org.otus.dao;
+package br.org.otus.system;
 
-/**
- * Created by drferreira on 30/05/16.
- */
+import br.org.otus.dao.GenericDao;
+
 public class SystemConfigDao extends GenericDao {
 
     public Boolean isReady() {

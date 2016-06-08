@@ -1,4 +1,4 @@
-package br.org.otus.entities;
+package br.org.otus.system;
 
 import java.util.UUID;
 
