@@ -34,12 +34,12 @@ public class DomainRegisterResource extends Resource {
     class OtusProjectDto{
         private String projectRestUrl;
         private String projectName;
-        private UUID token;
+        private UUID projectToken;
 
-        public OtusProjectDto(String projectRestUrl, String projectName, UUID token) {
+        public OtusProjectDto(String projectRestUrl, String projectName, UUID projectToken) {
             this.projectRestUrl = projectRestUrl;
             this.projectName = projectName;
-            this.token = token;
+            this.projectToken = projectToken;
         }
 
         public String toJson() throws JSONException {

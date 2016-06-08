@@ -8,5 +8,7 @@ public interface SystemConfigService {
 	
 	Boolean isReady();
 	
-	UUID createInitialSystemConfig(OtusInitializationConfigDto configDto) throws Exception;
+	void createInitialSystemConfig(OtusInitializationConfigDto configDto, UUID projectToken) throws Exception;
+
+	UUID generateProjectToken();
 }

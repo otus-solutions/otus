@@ -24,15 +24,15 @@ public class SystemConfig {
 
     @Equalization(name = "domain_rest_url")
     private String domainRestUrl;
+
+	public void setProjectToken(UUID projectToken) {
+		this.projectToken = projectToken;
+	}
+
+	private UUID projectToken;
     
-    private UUID uuid;
-    
-    public SystemConfig(){
-    	this.uuid = UUID.randomUUID();
-    }
-	
-   	public UUID getUuid() {
-   		return uuid;
+   	public UUID getProjectToken() {
+   		return projectToken;
    	}
    	
    	public String getId() {

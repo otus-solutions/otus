@@ -46,8 +46,10 @@ public class InstallerResource {
         String projectName = otusInitializationConfigDto.getProjectName();
 
         try {
-            UUID token = systemConfigService.createInitialSystemConfig(otusInitializationConfigDto);
-            domainRegisterResource.registerProject(RequestUrlMapping.getUrl(request), projectName, token);
+            UUID projectToken = systemConfigService.generateProjectToken();
+
+            domainRegisterResource.registerProject(RequestUrlMapping.getUrl(request), projectName, projectToken);
+            systemConfigService.createInitialSystemConfig(otusInitializationConfigDto, projectToken);
 
             return response.setData(Boolean.TRUE).toJson();
 
