@@ -1,6 +1,7 @@
 package br.org.otus.rest;
 
-import br.org.otus.installer.InstallerResource;
+import br.org.otus.rest.open.AuthenticationResource;
+import br.org.otus.rest.open.InstallerResource;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -14,11 +15,15 @@ public class EndPointsLoader extends Application {
 
 	@Inject
 	private InstallerResource installerResource;
-	
+
+	@Inject
+	private AuthenticationResource authenticationResource;
+
 	@Override
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> resources = new HashSet<Class<?>>();
 		resources.add(InstallerResource.class);
+		resources.add(AuthenticationResource.class);
 		return resources;
 	}
 	
@@ -26,6 +31,7 @@ public class EndPointsLoader extends Application {
 	public Set<Object> getSingletons() {
 		Set<Object> resources = new HashSet<Object>();
 		resources.add(installerResource);
+		resources.add(authenticationResource);
 		return resources;
 	}
 }

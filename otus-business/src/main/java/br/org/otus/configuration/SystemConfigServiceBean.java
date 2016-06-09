@@ -1,7 +1,7 @@
 package br.org.otus.configuration;
 
-import br.org.otus.dao.SystemConfigDao;
-import br.org.otus.entities.SystemConfig;
+import br.org.otus.system.SystemConfigDao;
+import br.org.otus.system.SystemConfig;
 import br.org.otus.rest.dtos.OtusInitializationConfigDto;
 import br.org.tutty.Equalizer;
 

@@ -20,6 +20,7 @@
         /*Public Interface*/
         self.goToLogin = goToLogin;
         self.goToInstaller = goToInstaller;
+        self.goToHome = goToHome;
 
         init();
 
@@ -30,6 +31,11 @@
         function goToLogin() {
             self.currentState = 'Login';
             $location.url(APP_STATE.LOGIN);
+        }
+
+        function goToHome() {
+            self.currentState = 'Home';
+            $location.url(APP_STATE.HOME);
         }
 
         function goToInstaller() {
