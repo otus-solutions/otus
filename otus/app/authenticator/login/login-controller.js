@@ -8,6 +8,9 @@
     LoginController.$inject = ['$scope', 'DashboardStateService', 'OtusRestResourceService', '$mdToast'];
 
     function LoginController($scope, DashboardStateService, OtusRestResourceService, $mdToast) {
+        var LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
+        var SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
+
         init();
 
         function init() {
@@ -36,13 +39,13 @@
                 } else {
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent('Login Inválido! Verifique os dados informados.')
+                        .textContent(LOGIN_ERROR_MESSAGE)
                     );
                 }
             }, function err(){
                     $mdToast.show(
                         $mdToast.simple()
-                        .textContent('Erro interno do servidor.')
+                        .textContent(SERVER_ERROR_MESSAGE)
                     );
 
             });
