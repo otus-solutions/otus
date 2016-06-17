@@ -6,9 +6,9 @@
 	<packaging>ear</packaging>
 
 	<parent>
-		<groupId>br.org.otus</groupId>
+		<groupId>org.ccem.otus</groupId>
 		<artifactId>otus-root</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../otus-root/pom.xml</relativePath>
 	</parent>
 
@@ -18,7 +18,7 @@
 	</scm>
 
 	<build>
-	<finalName>otus-ear</finalName>
+		<finalName>otus-ear</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -27,16 +27,16 @@
 				<configuration>
 					<modules>
 						<webModule>
-							<groupId>br.org.otus</groupId>
+								<groupId>org.ccem.otus</groupId>
 							<artifactId>otus-rest</artifactId>
 							<contextRoot>otus-rest</contextRoot>
 						</webModule>
 						<ejbModule>
-							<groupId>br.org.otus</groupId>
+								<groupId>org.ccem.otus</groupId>
 							<artifactId>otus-business</artifactId>
 						</ejbModule>
 						<ejbModule>
-							<groupId>br.org.otus</groupId>
+								<groupId>org.ccem.otus</groupId>
 							<artifactId>otus-persistence</artifactId>
 						</ejbModule>
 					</modules>
@@ -78,19 +78,19 @@
 			<version>5.0.0.Final</version>
 		</dependency>
 		<dependency>
-			<groupId>br.org.otus</groupId>
+			<groupId>org.ccem.otus</groupId>
 			<artifactId>otus-business</artifactId>
 			<version>${project.parent.version}</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>br.org.otus</groupId>
+			<groupId>org.ccem.otus</groupId>
 			<artifactId>otus-persistence</artifactId>
 			<version>${project.parent.version}</version>
 			<type>ejb</type>
 		</dependency>
 		<dependency>
-			<groupId>br.org.otus</groupId>
+			<groupId>org.ccem.otus</groupId>
 			<artifactId>otus-rest</artifactId>
 			<version>${project.parent.version}</version>
 			<type>war</type>

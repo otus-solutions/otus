@@ -5,9 +5,9 @@
 	<packaging>war</packaging>
 
 	<parent>
-		<groupId>br.org.otus</groupId>
+		<groupId>org.ccem.otus</groupId>
 		<artifactId>otus-root</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../otus-root/pom.xml</relativePath>
 	</parent>
 
@@ -24,7 +24,7 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>br.org.otus</groupId>
+			<groupId>org.ccem.otus</groupId>
 			<artifactId>otus-business</artifactId>
 			<version>${project.parent.version}</version>
 			<scope>provided</scope>

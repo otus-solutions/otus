@@ -7,9 +7,9 @@
 	<packaging>ejb</packaging>
 
 	<parent>
-		<groupId>br.org.otus</groupId>
+		<groupId>org.ccem.otus</groupId>
 		<artifactId>otus-root</artifactId>
-		<version>0.0.2-SNAPSHOT</version>
+		<version>0.0.1-SNAPSHOT</version>
 		<relativePath>../otus-root/pom.xml</relativePath>
 	</parent>
 
