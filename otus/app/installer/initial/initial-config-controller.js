@@ -18,10 +18,12 @@
 
         function init() {
             installerResource = OtusRestResourceService.getOtusInstallerResource();
-            domainUrlResource = RestResourceService.getUrlResource();
         }
 
         function isDomain(url) {
+            RestResourceService.setHostname(url);
+            domainUrlResource = RestResourceService.getUrlResource();
+
             var deferred = $q.defer();
             domainUrlResource.isValidDomain(function success(response) {
                 deferred.resolve(true);
@@ -35,8 +37,6 @@
         }
 
         function register(project) {
-            RestResourceService.setHostname(project.domainRestUrl);
-
             isDomain(project.domainRestUrl).then(function success() {
                 installerResource.config(project, function success(response) {
                     if (response.hasErrors) {
