@@ -7,6 +7,8 @@
 		<provider>org.hibernate.ogm.jpa.HibernateOgmPersistence</provider>
 		<class>br.org.otus.system.SystemConfig</class>
 		<class>br.org.otus.user.User</class>
+		<class>br.org.otus.auditor.Auditor</class>
+		<class>br.org.otus.auditor.LogEntry</class>
 		<properties>
 			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform"/>
 			<property name="hibernate.ogm.datastore.database" value="otus"/>

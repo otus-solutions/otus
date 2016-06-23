@@ -14,6 +14,10 @@ public class GenericDao {
         em.persist(object);
     }
 
+    public void merge(Object object){
+        em.merge(object);
+    }
+
     public Object getSingleResult(String nativeQuery){
         return em.createNativeQuery(nativeQuery).getSingleResult();
     }
