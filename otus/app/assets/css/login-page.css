@@ -1,3 +1,6 @@
+#login-page {
+    position: relative;
+}
 #login-page #center {
     width: 55%;
     top: 60%;
@@ -29,17 +32,18 @@
     display: block;
 }
 #login-page .logo {
-    margin: 0 auto;
-    height: 212px;
-    display: block;
-    z-index: 3;
+    width: 24%;
     position: absolute;
-    bottom: 67%;
-    left: 27%;
-
+    left: 36%;
+    transform: translate(-30%, -30%);
 }
-#login-page #logo_test {
-  content: url(../../assets/img/OtusImg.png);
+@media screen and (max-width: 1280px) and (min-width: 800px) {
+    #login-page .logo {
+        width: 32%;
+        position: absolute;
+        left: 38%;
+        transform: translate(-30%, -30%);
+    }
 }
 #login-page #content {
     margin-top: 11%;
