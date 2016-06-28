@@ -2,7 +2,6 @@ package br.org.otus.domain.client;
 
 public class UrlProvider {
     public static String DEFAULT_CONTEXT = "/otus-domain-rest";
-    public static String DEFAULT_URL = "http://localhost";
     public static String DEFAULT_VERSION = "/v01";
 
     private String url;
