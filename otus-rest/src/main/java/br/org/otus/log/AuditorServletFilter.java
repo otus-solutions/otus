@@ -1,7 +1,7 @@
 package br.org.otus.log;
 
 import br.org.otus.auditor.AuditorService;
-import br.org.otus.rest.dtos.LogEntryDto;
+import br.org.otus.auditor.dto.LogEntryDto;
 import br.org.otus.security.AuthorizationHeaderReader;
 import br.org.otus.security.services.SecurityContextService;
 import org.apache.commons.io.IOUtils;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Map;
 
-@WebFilter(filterName = "auditorFilter", urlPatterns = {"/v01/installer/config"})
+@WebFilter(filterName = "auditorFilter", urlPatterns = {"/v01/installer/config", "/v01/center"})
 public class AuditorServletFilter implements Filter {
     @Inject
     private SecurityContextService securityContextService;
@@ -33,7 +33,7 @@ public class AuditorServletFilter implements Filter {
         HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
         ResettableStreamHttpServletRequest resettableStreamHttpServletRequest = new ResettableStreamHttpServletRequest(httpServletRequest);
 
-        if(isLoggedMethod(httpServletRequest.getMethod())){
+        if (isLoggedMethod(httpServletRequest.getMethod())) {
             String authorizationHeader = resettableStreamHttpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
             String token = readToken(authorizationHeader);
             String userId = readUserId(token);
@@ -54,23 +54,23 @@ public class AuditorServletFilter implements Filter {
     public void destroy() {
     }
 
-    private Boolean isLoggedMethod(String method){
-        if(HttpMethod.POST.equals(method) || HttpMethod.DELETE.equals(method) || HttpMethod.PUT.equals(method)){
+    private Boolean isLoggedMethod(String method) {
+        if (HttpMethod.POST.equals(method) || HttpMethod.DELETE.equals(method) || HttpMethod.PUT.equals(method)) {
             return Boolean.TRUE;
-        }else {
+        } else {
             return Boolean.FALSE;
         }
     }
 
-    private String readToken(String authorizationHeader){
-        if(authorizationHeader != null){
+    private String readToken(String authorizationHeader) {
+        if (authorizationHeader != null) {
             return AuthorizationHeaderReader.readToken(authorizationHeader);
-        }else {
+        } else {
             return "";
         }
     }
 
-    private String readUserId(String token){
+    private String readUserId(String token) {
         try {
             return securityContextService.getUserId(token);
         } catch (ParseException e) {

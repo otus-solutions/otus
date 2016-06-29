@@ -1,4 +1,4 @@
-package br.org.otus.rest.open;
+package br.org.otus.security.rest;
 
 import br.org.otus.exceptions.EmailNotFoundException;
 import br.org.otus.exceptions.InvalidPasswordException;
@@ -25,15 +25,14 @@ public class AuthenticationResource {
 
     @Inject
     private SecurityService securityService;
+
     @Inject
     private HttpSession httpSession;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String authenticate(String data, @Context HttpServletRequest request) {
-        Gson gson = new Gson();
-        AuthenticationDto authenticationDto = gson.fromJson(data, AuthenticationDto.class);
+    public String authenticate(AuthenticationDto authenticationDto, @Context HttpServletRequest request) {
         authenticationDto.encryptPassword();
         authenticationDto.setIssuer(request.getRequestURL().toString());
 
@@ -52,7 +51,7 @@ public class AuthenticationResource {
 
     @POST
     @Path("/invalidate")
-    public void invalidate(@Context HttpServletRequest request){
+    public void invalidate(@Context HttpServletRequest request) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         securityService.invalidate(token);
     }

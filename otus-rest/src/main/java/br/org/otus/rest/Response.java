@@ -3,7 +3,6 @@ package br.org.otus.rest;
 import com.google.gson.Gson;
 
 public class Response {
-
 	private Object data;
 	private Object error;
 	private Boolean hasErrors = Boolean.FALSE;
@@ -39,5 +38,4 @@ public class Response {
 		this.hasErrors = hasErrors;
 		return this;
 	}
-	
 }

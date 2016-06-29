@@ -1,6 +1,6 @@
 package br.org.otus.configuration;
 
-import br.org.otus.rest.dtos.OtusInitializationConfigDto;
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 
 import java.util.UUID;
 

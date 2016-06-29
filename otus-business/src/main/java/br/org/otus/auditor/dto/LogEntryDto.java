@@ -1,4 +1,4 @@
-package br.org.otus.rest.dtos;
+package br.org.otus.auditor.dto;
 
 import br.org.tutty.Equalization;
 

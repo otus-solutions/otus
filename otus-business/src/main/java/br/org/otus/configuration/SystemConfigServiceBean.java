@@ -2,7 +2,7 @@ package br.org.otus.configuration;
 
 import br.org.otus.system.SystemConfigDao;
 import br.org.otus.system.SystemConfig;
-import br.org.otus.rest.dtos.OtusInitializationConfigDto;
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.tutty.Equalizer;
 
 import javax.ejb.Stateless;

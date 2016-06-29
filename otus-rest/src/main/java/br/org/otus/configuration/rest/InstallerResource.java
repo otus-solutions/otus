@@ -1,4 +1,4 @@
-package br.org.otus.rest.open;
+package br.org.otus.configuration.rest;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +12,7 @@ import br.org.otus.domain.client.actions.DomainRegisterResource;
 import com.google.gson.Gson;
 
 import br.org.otus.configuration.SystemConfigService;
-import br.org.otus.rest.dtos.OtusInitializationConfigDto;
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 
 import java.util.UUID;
 
