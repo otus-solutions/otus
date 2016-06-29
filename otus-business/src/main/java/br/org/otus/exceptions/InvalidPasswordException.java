@@ -1,7 +1,14 @@
 package br.org.otus.exceptions;
 
-public class InvalidPasswordException extends Exception {
+public class InvalidPasswordException extends Exception implements ResponseError {
 
-	private static final long serialVersionUID = 3557131302022729752L;
+    @Override
+    public Object getObjectError() {
+        return new ErrorData();
+    }
 
+    class ErrorData{
+        private String message = "Invalid Password";
+        private ErrorType errorType = ErrorType.INVALID_PASSWORD;
+    }
 }

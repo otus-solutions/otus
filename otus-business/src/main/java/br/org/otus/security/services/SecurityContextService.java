@@ -1,7 +1,7 @@
 package br.org.otus.security.services;
 
 
-import br.org.otus.exceptions.DataNotFoundException;
+import br.org.otus.exceptions.FieldCenterNotFoundException;
 import br.org.otus.exceptions.TokenException;
 import br.org.otus.security.dtos.AuthenticationDto;
 import com.nimbusds.jose.JOSEException;
@@ -16,7 +16,7 @@ public interface SecurityContextService {
 
     void addToken(String jwtSignedAndSerialized, byte[] secretKey);
 
-    void removeToken(String jwtSignedAndSerialized) throws DataNotFoundException;
+    void removeToken(String jwtSignedAndSerialized) throws FieldCenterNotFoundException;
 
     void validateToken(String token) throws TokenException;
 

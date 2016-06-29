@@ -1,13 +1,9 @@
 package br.org.otus.security.rest;
 
-import br.org.otus.exceptions.EmailNotFoundException;
-import br.org.otus.exceptions.InvalidPasswordException;
-import br.org.otus.exceptions.TokenException;
-import br.org.otus.exceptions.UserDisabledException;
+import br.org.otus.exceptions.*;
 import br.org.otus.rest.Response;
 import br.org.otus.security.dtos.AuthenticationDto;
 import br.org.otus.security.services.SecurityService;
-import com.google.gson.Gson;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -33,19 +29,16 @@ public class AuthenticationResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String authenticate(AuthenticationDto authenticationDto, @Context HttpServletRequest request) {
+        Response response = new Response();
         authenticationDto.encryptPassword();
         authenticationDto.setIssuer(request.getRequestURL().toString());
 
-        Response response = new Response();
         try {
             String jwt = securityService.authenticate(authenticationDto);
-            response.setData(jwt);
-            response.setHasErrors(Boolean.FALSE);
-            return response.toJson();
+            return response.buildSuccess(jwt).toJson();
 
         } catch (InvalidPasswordException | EmailNotFoundException | UserDisabledException | TokenException e) {
-            response.setHasErrors(Boolean.TRUE);
-            return response.setError(e).toJson();
+            return response.buildError(((ResponseError) e)).toJson();
         }
     }
 

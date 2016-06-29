@@ -2,6 +2,7 @@ package br.org.otus.fieldCenter;
 
 import br.org.otus.exceptions.AlreadyExistException;
 import br.org.otus.exceptions.DataNotFoundException;
+import br.org.otus.exceptions.FieldCenterNotFoundException;
 import br.org.otus.exceptions.InvalidDtoException;
 import br.org.otus.fieldCenter.dtos.FieldCenterDto;
 import br.org.otus.fieldCenter.dtos.FieldCenterUpdateDto;
@@ -39,7 +40,7 @@ public class FieldCenterServiceBean implements FieldCenterService {
     }
 
     @Override
-    public void update(FieldCenterUpdateDto fieldCenterUpdateDto) throws InvalidDtoException, DataNotFoundException {
+    public void update(FieldCenterUpdateDto fieldCenterUpdateDto) throws InvalidDtoException, FieldCenterNotFoundException {
         try {
             if (fieldCenterUpdateDto.isValid()) {
                 FieldCenter fieldCenter = fieldCenterDao.fetchByAcronym(fieldCenterUpdateDto.acronym);
@@ -54,7 +55,7 @@ public class FieldCenterServiceBean implements FieldCenterService {
             throw new InvalidDtoException();
 
         } catch (DataNotFoundException e) {
-            throw new DataNotFoundException();
+            throw new FieldCenterNotFoundException();
         }
     }
 
@@ -76,15 +77,18 @@ public class FieldCenterServiceBean implements FieldCenterService {
     }
 
     @Override
-    public FieldCenterDto fetchByAcronym(String acronym) throws DataNotFoundException, InvalidDtoException {
-        FieldCenter fieldCenter = fieldCenterDao.fetchByAcronym(acronym);
-        FieldCenterDto fieldCenterDto = new FieldCenterDto();
-
+    public FieldCenterDto fetchByAcronym(String acronym) throws FieldCenterNotFoundException, InvalidDtoException {
         try {
+            FieldCenter fieldCenter = fieldCenterDao.fetchByAcronym(acronym);
+            FieldCenterDto fieldCenterDto = new FieldCenterDto();
             Equalizer.equalize(fieldCenter, fieldCenterDto);
+
+            return fieldCenterDto;
+
         } catch (IllegalAccessException | NoSuchFieldException e) {
             throw new InvalidDtoException();
+        } catch (DataNotFoundException e) {
+            throw new FieldCenterNotFoundException();
         }
-        return fieldCenterDto;
     }
 }

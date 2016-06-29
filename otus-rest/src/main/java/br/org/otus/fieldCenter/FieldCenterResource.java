@@ -1,7 +1,7 @@
 package br.org.otus.fieldCenter;
 
 import br.org.otus.exceptions.AlreadyExistException;
-import br.org.otus.exceptions.DataNotFoundException;
+import br.org.otus.exceptions.FieldCenterNotFoundException;
 import br.org.otus.exceptions.InvalidDtoException;
 import br.org.otus.exceptions.ResponseError;
 import br.org.otus.fieldCenter.dtos.FieldCenterDto;
@@ -27,10 +27,10 @@ public class FieldCenterResource {
 
         try {
             fieldCenterService.create(fieldCenterDto);
-            response.setHasErrors(Boolean.FALSE);
+            response.buildSuccess();
 
         } catch (InvalidDtoException | AlreadyExistException e) {
-            response.setError(((ResponseError) e).getObjectError()).setHasErrors(Boolean.TRUE);
+            response.buildError(((ResponseError) e));
         }
 
         return response.toJson();
@@ -51,10 +51,10 @@ public class FieldCenterResource {
 
         try {
             fieldCenterService.update(fieldCenterUpdateDto);
-            response.setHasErrors(Boolean.FALSE);
-        } catch (InvalidDtoException | DataNotFoundException e) {
-            response.setHasErrors(Boolean.TRUE).setError(((ResponseError) e).getObjectError());
+            response.buildSuccess();
 
+        } catch (InvalidDtoException | FieldCenterNotFoundException e) {
+            response.buildError(((ResponseError) e));
         }
 
         return response.toJson();

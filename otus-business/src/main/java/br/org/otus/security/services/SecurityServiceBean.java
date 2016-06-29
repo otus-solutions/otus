@@ -1,9 +1,9 @@
 package br.org.otus.security.services;
 
-import br.org.otus.user.User;
-import br.org.otus.user.UserDao;
 import br.org.otus.exceptions.*;
 import br.org.otus.security.dtos.AuthenticationDto;
+import br.org.otus.user.User;
+import br.org.otus.user.UserDao;
 import com.nimbusds.jose.JOSEException;
 
 import javax.ejb.Local;
@@ -53,6 +53,6 @@ public class SecurityServiceBean implements SecurityService, Serializable {
     public void invalidate(String token){
         try {
             securityContextService.removeToken(token);
-        } catch (DataNotFoundException e) {}
+        } catch (FieldCenterNotFoundException e) {}
     }
 }

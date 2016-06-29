@@ -6,6 +6,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.*;
 
+import br.org.otus.exceptions.ResponseError;
 import br.org.otus.rest.RequestUrlMapping;
 import br.org.otus.rest.Response;
 import br.org.otus.domain.client.actions.DomainRegisterResource;
@@ -27,8 +28,7 @@ public class InstallerResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String ready() {
         Response response = new Response();
-        response.setData(systemConfigService.isReady());
-        return response.toJson();
+        return response.buildSuccess(systemConfigService.isReady()).toJson();
     }
 
     @POST
@@ -50,11 +50,13 @@ public class InstallerResource {
             domainRegisterResource.registerProject(RequestUrlMapping.getUrl(request), projectName, projectToken);
             systemConfigService.createInitialSystemConfig(otusInitializationConfigDto, projectToken);
 
-            return response.setData(Boolean.TRUE).toJson();
+            response.buildSuccess();
 
         } catch (Exception e) {
-            return response.setHasErrors(true).setData(e).toJson();
+            response.buildError(((ResponseError)e));
         }
+
+        return response.toJson();
     }
 
 }

@@ -1,6 +1,6 @@
 package br.org.otus.exceptions;
 
-public class DataNotFoundException extends Exception implements ResponseError{
+public class FieldCenterNotFoundException extends Exception implements ResponseError{
     @Override
     public Object getObjectError() {
         return new ErrorData();

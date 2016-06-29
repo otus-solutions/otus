@@ -1,6 +1,6 @@
 package br.org.otus.security.services;
 
-import br.org.otus.exceptions.DataNotFoundException;
+import br.org.otus.exceptions.FieldCenterNotFoundException;
 import br.org.otus.exceptions.TokenException;
 import br.org.otus.security.context.SecurityContext;
 import br.org.otus.security.dtos.AuthenticationDto;
@@ -55,11 +55,11 @@ public class SecurityContextServiceBean implements SecurityContextService {
 	}
 
 	@Override
-	public void removeToken(String token) throws DataNotFoundException {
+	public void removeToken(String token) throws FieldCenterNotFoundException {
 		try {
 			securityContext.remove(token);
 		} catch (ParseException e) {
-			throw new DataNotFoundException();
+			throw new FieldCenterNotFoundException();
 		}
 	}
 
