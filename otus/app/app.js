@@ -7,6 +7,8 @@
             'otus.installer',
             'otus.authenticator',
             'otus.client',
-            'otusDomainClient'
+            'otusDomainClient',
+            'otus.dashboard',
+            'otus.participant.search'
         ]);
 }());

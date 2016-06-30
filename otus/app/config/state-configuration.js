@@ -37,6 +37,11 @@
                     'system-wrap': {
                         templateUrl: 'app/dashboard/home/main-home-content-template.html'
                     },
+                    'dashboard-menu@home': {
+                        templateUrl: 'app/dashboard/menu/dashboard-menu.html',
+                        controller: 'OtusDashboardMenu',
+                        controllerAs: 'dashboardMenu'
+                    }
                 }
             });
 

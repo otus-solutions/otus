@@ -1,0 +1,38 @@
+<md-dialog ng-cloak>
+    <md-toolbar class="md-default">
+        <div class="md-toolbar-tools">
+            <h2>Busca Participante</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="searchCustom.close()">
+                <i class="material-icons">close</i>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content>
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="Filtro">
+                <div class="md-dialog-content">
+                    <otus:recruitment-number-filter></otus:recruitment-number-filter>
+
+                    <p>Utilize os filtros para refinar a busca.</p>
+
+                    <otus:name-filter></otus:name-filter>
+                    <otus:field-center-filter></otus:field-center-filter>
+                    <otus:birthdate-filter></otus:birthdate-filter>
+                </div>
+            </md-tab>
+            <md-tab label="Resultado">
+                <md-content class="md-padding">
+                    <md-list>
+                        <md-list-item class="md-3-line" ng-repeat="participant in searchCustom.participants">
+                            <otus:participant-card></otus:participant-card>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+    <md-dialog-actions>
+        <md-button aria-label="Buscar">Buscar</md-button>
+    </md-dialog-actions>
+</md-dialog>
