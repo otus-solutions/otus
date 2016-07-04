@@ -4,7 +4,7 @@ import br.org.otus.rest.dtos.Dto;
 import br.org.otus.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
-public class AuthenticationDto implements Dto{
+public class AuthenticationDto implements Dto, AuthenticationData{
 
 	@Equalization(name = "email")
 	public String email;
@@ -14,37 +14,31 @@ public class AuthenticationDto implements Dto{
 
 	private String issuer;
 	
-	public AuthenticationDto(String email, String password, String issuer) {
-		super();
-		this.email = email;
-		this.password = password;
-		this.issuer = issuer;
-	}
-
-	public AuthenticationDto() {}
-
 	public void encryptPassword() {
 		this.password = EncryptorResources.encrypt(password);
 	}
 
-	public String getEmail() {
+	@Override
+	public String getKey() {
 		return email;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}
-	
+
+	@Override
 	public String getIssuer() {
 		return issuer;
-	}
-
-	public void setIssuer(String issuer){
-		this.issuer = issuer;
 	}
 
 	@Override
 	public Boolean isValid() {
 		return !email.isEmpty() && !password.isEmpty();
+	}
+
+	public void setIssuer(String issuer){
+		this.issuer = issuer;
 	}
 }

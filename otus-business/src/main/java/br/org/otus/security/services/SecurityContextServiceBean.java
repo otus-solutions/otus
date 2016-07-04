@@ -3,7 +3,7 @@ package br.org.otus.security.services;
 import br.org.otus.exceptions.FieldCenterNotFoundException;
 import br.org.otus.exceptions.TokenException;
 import br.org.otus.security.context.SecurityContext;
-import br.org.otus.security.dtos.AuthenticationDto;
+import br.org.otus.security.dtos.AuthenticationData;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
@@ -23,19 +23,19 @@ public class SecurityContextServiceBean implements SecurityContextService {
 	private SecurityContext securityContext;
 
 	@Override
-	public String generateToken(AuthenticationDto authenticationDto, byte[] secretKey) throws JOSEException {
+	public String generateToken(AuthenticationData authenticationData, byte[] secretKey) throws JOSEException {
 		JWSSigner signer = new MACSigner(secretKey);
 
-		SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), generateClaimsSet(authenticationDto));
+		SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), generateClaimsSet(authenticationData));
 		signedJWT.sign(signer);
 
 		return signedJWT.serialize();
 	}
 
-	private JWTClaimsSet generateClaimsSet(AuthenticationDto authenticationDto){
+	private JWTClaimsSet generateClaimsSet(AuthenticationData authenticationData){
 		JWTClaimsSet.Builder builder = new JWTClaimsSet.Builder();
-		builder.subject(authenticationDto.getEmail());
-		builder.issuer(authenticationDto.getIssuer());
+		builder.subject(authenticationData.getKey());
+		builder.issuer(authenticationData.getIssuer());
 
 		return builder.build();
 	}

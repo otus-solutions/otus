@@ -20,7 +20,7 @@ public class SystemConfigServiceBean implements SystemConfigService{
     }
 
     @Override
-    public void createInitialSystemConfig(OtusInitializationConfigDto configDto, UUID projectToken) throws Exception {
+    public void createInitialSystemConfig(OtusInitializationConfigDto configDto, String projectToken) throws Exception {
         SystemConfig systemConfig = new SystemConfig();
         Equalizer.equalize(configDto, systemConfig);
 
@@ -29,7 +29,7 @@ public class SystemConfigServiceBean implements SystemConfigService{
     }
 
     @Override
-    public UUID generateProjectToken(){
-       return UUID.randomUUID();
+    public String generateProjectToken(){
+       return UUID.randomUUID().toString();
     }
 }

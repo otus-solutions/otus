@@ -1,21 +1,18 @@
 package br.org.otus.configuration.rest;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.*;
-
+import br.org.otus.configuration.SystemConfigService;
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
+import br.org.otus.domain.client.actions.DomainRegisterResource;
 import br.org.otus.exceptions.ResponseError;
 import br.org.otus.rest.RequestUrlMapping;
 import br.org.otus.rest.Response;
-import br.org.otus.domain.client.actions.DomainRegisterResource;
 import com.google.gson.Gson;
 
-import br.org.otus.configuration.SystemConfigService;
-import br.org.otus.configuration.dto.OtusInitializationConfigDto;
-
-import java.util.UUID;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 
 @Path("/installer")
 public class InstallerResource {
@@ -45,7 +42,7 @@ public class InstallerResource {
         String projectName = otusInitializationConfigDto.getProjectName();
 
         try {
-            UUID projectToken = systemConfigService.generateProjectToken();
+            String projectToken = systemConfigService.generateProjectToken();
 
             domainRegisterResource.registerProject(RequestUrlMapping.getUrl(request), projectName, projectToken);
             systemConfigService.createInitialSystemConfig(otusInitializationConfigDto, projectToken);

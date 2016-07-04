@@ -24,7 +24,6 @@ public class FieldCenterServiceBean implements FieldCenterService {
             if (fieldCenterDto.isValid()) {
                 if (!fieldCenterDao.acronymInUse(fieldCenterDto.acronym)) {
                     FieldCenter fieldCenter = new FieldCenter();
-                    fieldCenterDto.identifier = fieldCenterDao.count(FieldCenter.class);
 
                     Equalizer.equalize(fieldCenterDto, fieldCenter);
                     fieldCenterDao.merge(fieldCenter);
@@ -43,7 +42,7 @@ public class FieldCenterServiceBean implements FieldCenterService {
     public void update(FieldCenterUpdateDto fieldCenterUpdateDto) throws InvalidDtoException, FieldCenterNotFoundException {
         try {
             if (fieldCenterUpdateDto.isValid()) {
-                FieldCenter fieldCenter = fieldCenterDao.fetchByAcronym(fieldCenterUpdateDto.acronym);
+                FieldCenter fieldCenter = fieldCenterDao.fetchByAcronym(fieldCenterUpdateDto.getAcronym());
                 Equalizer.equalize(fieldCenterUpdateDto, fieldCenter);
                 fieldCenterDao.update(fieldCenter);
 

@@ -10,9 +10,6 @@ public class FieldCenterDto implements Dto {
     @Equalization(name = "acronym")
     public String acronym;
 
-    @Equalization(name = "identifier")
-    public Long identifier;
-
     @Equalization(name = "country")
     public String country;
 
@@ -34,12 +31,7 @@ public class FieldCenterDto implements Dto {
     @Override
     public Boolean isValid() {
         return !name.isEmpty() &&
-                !acronym.isEmpty() &&
-                !country.isEmpty() &&
-                !state.isEmpty() &&
-                !address.isEmpty() &&
-                !zip.isEmpty() &&
-                !phone.isEmpty()
+                !acronym.isEmpty()
                 ? Boolean.TRUE : Boolean.FALSE;
     }
 }

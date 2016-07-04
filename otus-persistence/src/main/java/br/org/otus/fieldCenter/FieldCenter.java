@@ -25,10 +25,6 @@ public class FieldCenter {
     @NotNull
     private String acronym;
 
-    @Equalization(name = "identifier")
-    @NotNull
-    private Long identifier;
-
     @Equalization(name = "country")
     private String country;
 

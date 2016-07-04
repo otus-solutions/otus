@@ -20,7 +20,6 @@ public class FieldCenterResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     @Secured
     public String create(FieldCenterDto fieldCenterDto) {
         Response response = new Response();
@@ -43,14 +42,15 @@ public class FieldCenterResource {
         return new Response().setData(fieldCenterService.fetchAll()).toJson();
     }
 
-    @PUT
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Secured
-    public String update(FieldCenterUpdateDto fieldCenterUpdateDto) {
+    @Path("/update")
+    public String update(FieldCenterUpdateDto fieldCenterUpdate) {
         Response response = new Response();
 
         try {
-            fieldCenterService.update(fieldCenterUpdateDto);
+            fieldCenterService.update(fieldCenterUpdate);
             response.buildSuccess();
 
         } catch (InvalidDtoException | FieldCenterNotFoundException e) {
