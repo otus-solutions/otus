@@ -1,0 +1,25 @@
+* {
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    overflow-y: hidden !important;
+}
+.toolbar-icon {
+    float: right;
+    width: 45px;
+    height: 45px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+.icon-clickable {
+    cursor: pointer;
+}
+.image-brand {
+    border-radius: 25px;
+    height: 47px;
+    padding: 1px;
+    margin: 10px;
+    min-width: 45px;
+    min-height: 45px;
+}

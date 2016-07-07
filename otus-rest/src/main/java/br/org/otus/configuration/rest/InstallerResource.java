@@ -1,20 +1,18 @@
-package br.org.otus.rest.open;
+package br.org.otus.configuration.rest;
+
+import br.org.otus.configuration.SystemConfigService;
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
+import br.org.otus.domain.client.actions.DomainRegisterResource;
+import br.org.otus.exceptions.ResponseError;
+import br.org.otus.rest.RequestUrlMapping;
+import br.org.otus.rest.Response;
+import com.google.gson.Gson;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.*;
-
-import br.org.otus.rest.RequestUrlMapping;
-import br.org.otus.rest.Response;
-import br.org.otus.domain.client.actions.DomainRegisterResource;
-import com.google.gson.Gson;
-
-import br.org.otus.configuration.SystemConfigService;
-import br.org.otus.rest.dtos.OtusInitializationConfigDto;
-
-import java.util.UUID;
 
 @Path("/installer")
 public class InstallerResource {
@@ -27,8 +25,7 @@ public class InstallerResource {
     @Produces(MediaType.APPLICATION_JSON)
     public String ready() {
         Response response = new Response();
-        response.setData(systemConfigService.isReady());
-        return response.toJson();
+        return response.buildSuccess(systemConfigService.isReady()).toJson();
     }
 
     @POST
@@ -45,16 +42,18 @@ public class InstallerResource {
         String projectName = otusInitializationConfigDto.getProjectName();
 
         try {
-            UUID projectToken = systemConfigService.generateProjectToken();
+            String projectToken = systemConfigService.generateProjectToken();
 
             domainRegisterResource.registerProject(RequestUrlMapping.getUrl(request), projectName, projectToken);
             systemConfigService.createInitialSystemConfig(otusInitializationConfigDto, projectToken);
 
-            return response.setData(Boolean.TRUE).toJson();
+            response.buildSuccess();
 
         } catch (Exception e) {
-            return response.setHasErrors(true).setData(e).toJson();
+            response.buildError(((ResponseError)e));
         }
+
+        return response.toJson();
     }
 
 }

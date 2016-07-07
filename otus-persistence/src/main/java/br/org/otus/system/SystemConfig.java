@@ -1,7 +1,5 @@
 package br.org.otus.system;
 
-import java.util.UUID;
-
 import br.org.tutty.Equalization;
 import org.hibernate.annotations.Type;
 
@@ -25,13 +23,14 @@ public class SystemConfig {
     @Equalization(name = "domain_rest_url")
     private String domainRestUrl;
 
-	public void setProjectToken(UUID projectToken) {
+	@Equalization(name = "project_token")
+	private String projectToken;
+
+	public void setProjectToken(String projectToken) {
 		this.projectToken = projectToken;
 	}
 
-	private UUID projectToken;
-    
-   	public UUID getProjectToken() {
+   	public String getProjectToken() {
    		return projectToken;
    	}
    	
@@ -42,8 +41,8 @@ public class SystemConfig {
    	public String getProjectName(){
    		return projectName;
    	}
-   	
-   	public String getDomainRestUrl(){
+
+	public String getDomainRestUrl(){
    		return domainRestUrl;
    	}
 

@@ -1,43 +1,41 @@
 package br.org.otus.security.dtos;
 
+import br.org.otus.rest.dtos.Dto;
 import br.org.otus.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
-import java.io.Serializable;
-
-public class AuthenticationDto implements Serializable {
-
-	private static final long serialVersionUID = 7577651923731847238L;
+public class AuthenticationDto implements Dto, AuthenticationData{
 
 	@Equalization(name = "email")
-	private String email;
+	public String email;
 
 	@Equalization(name = "password")
-	private String password;
+	public String password;
 
 	private String issuer;
 	
-	public AuthenticationDto(String email, String password, String issuer) {
-		super();
-		this.email = email;
-		this.password = password;
-		this.issuer = issuer;
-	}
-
 	public void encryptPassword() {
 		this.password = EncryptorResources.encrypt(password);
 	}
 
-	public String getEmail() {
+	@Override
+	public String getKey() {
 		return email;
 	}
 
+	@Override
 	public String getPassword() {
 		return password;
 	}
-	
+
+	@Override
 	public String getIssuer() {
 		return issuer;
+	}
+
+	@Override
+	public Boolean isValid() {
+		return !email.isEmpty() && !password.isEmpty();
 	}
 
 	public void setIssuer(String issuer){

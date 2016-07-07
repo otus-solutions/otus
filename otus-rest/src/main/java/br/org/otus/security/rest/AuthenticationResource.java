@@ -1,17 +1,13 @@
-package br.org.otus.rest.open;
+package br.org.otus.security.rest;
 
-import br.org.otus.exceptions.EmailNotFoundException;
-import br.org.otus.exceptions.InvalidPasswordException;
-import br.org.otus.exceptions.TokenException;
-import br.org.otus.exceptions.UserDisabledException;
+import br.org.otus.exceptions.*;
 import br.org.otus.rest.Response;
 import br.org.otus.security.dtos.AuthenticationDto;
+import br.org.otus.security.dtos.ProjectAuthenticationDto;
 import br.org.otus.security.services.SecurityService;
-import com.google.gson.Gson;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -22,37 +18,48 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/authentication")
 public class AuthenticationResource {
-
     @Inject
     private SecurityService securityService;
-    @Inject
-    private HttpSession httpSession;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String authenticate(String data, @Context HttpServletRequest request) {
-        Gson gson = new Gson();
-        AuthenticationDto authenticationDto = gson.fromJson(data, AuthenticationDto.class);
+    public String authenticate(AuthenticationDto authenticationDto, @Context HttpServletRequest request) {
+        Response response = new Response();
+
         authenticationDto.encryptPassword();
         authenticationDto.setIssuer(request.getRequestURL().toString());
 
-        Response response = new Response();
         try {
             String jwt = securityService.authenticate(authenticationDto);
-            response.setData(jwt);
-            response.setHasErrors(Boolean.FALSE);
-            return response.toJson();
+            return response.buildSuccess(jwt).toJson();
 
         } catch (InvalidPasswordException | EmailNotFoundException | UserDisabledException | TokenException e) {
-            response.setHasErrors(Boolean.TRUE);
-            return response.setError(e).toJson();
+            return response.buildError(((ResponseError) e)).toJson();
+        }
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/project")
+    public String projectAuthenticate(String projectToken){
+        Response response = new Response();
+
+        ProjectAuthenticationDto projectAuthenticationDto = new ProjectAuthenticationDto();
+        projectAuthenticationDto.setToken(projectToken);
+
+        try {
+            String jwt = securityService.projectAuthenticate(projectAuthenticationDto);
+            return response.buildSuccess(jwt).toJson();
+
+        } catch (InvalidDtoException | TokenException | InvalidPasswordException e) {
+            return response.buildError(((ResponseError) e)).toJson();
         }
     }
 
     @POST
     @Path("/invalidate")
-    public void invalidate(@Context HttpServletRequest request){
+    public void invalidate(@Context HttpServletRequest request) {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         securityService.invalidate(token);
     }

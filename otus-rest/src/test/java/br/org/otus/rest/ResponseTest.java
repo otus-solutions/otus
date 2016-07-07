@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.otus.rest.dtos.OtusInitializationConfigDto;
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 
 import com.google.gson.Gson;
 

@@ -4,6 +4,7 @@ import br.org.tutty.Equalization;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.*;
 
 @Entity
@@ -15,6 +16,7 @@ public class Auditor {
     private String id;
 
     @Equalization(name = "init")
+    @NotNull
     private Date date;
 
     @OneToMany(cascade = CascadeType.ALL)

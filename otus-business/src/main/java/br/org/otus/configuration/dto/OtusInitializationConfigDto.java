@@ -1,4 +1,4 @@
-package br.org.otus.rest.dtos;
+package br.org.otus.configuration.dto;
 
 import br.org.tutty.Equalization;
 
@@ -22,9 +22,7 @@ public class OtusInitializationConfigDto {
         return projectName;
     }
 
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-    
-    
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
 }

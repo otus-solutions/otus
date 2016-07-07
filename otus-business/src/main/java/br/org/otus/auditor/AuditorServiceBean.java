@@ -1,6 +1,6 @@
 package br.org.otus.auditor;
 
-import br.org.otus.rest.dtos.LogEntryDto;
+import br.org.otus.auditor.dto.LogEntryDto;
 import br.org.tutty.Equalizer;
 
 import javax.ejb.Asynchronous;

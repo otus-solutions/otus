@@ -1,14 +1,12 @@
 package br.org.otus.configuration;
 
-import br.org.otus.rest.dtos.OtusInitializationConfigDto;
-
-import java.util.UUID;
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 
 public interface SystemConfigService {
 	
 	Boolean isReady();
 	
-	void createInitialSystemConfig(OtusInitializationConfigDto configDto, UUID projectToken) throws Exception;
+	void createInitialSystemConfig(OtusInitializationConfigDto configDto, String projectToken) throws Exception;
 
-	UUID generateProjectToken();
+	String generateProjectToken();
 }

@@ -4,6 +4,7 @@ import br.org.otus.exceptions.DataNotFoundException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 public class GenericDao {
 
@@ -26,12 +27,33 @@ public class GenericDao {
         return em.createNativeQuery(nativeQuery, clazz).getSingleResult();
     }
 
+    public List<Object> getListResult(String nativeQuery, Class clazz){
+        return em.createNativeQuery(nativeQuery, clazz).getResultList();
+    }
+
     public Object notWaitingEmpty(Object entity) throws DataNotFoundException {
         if(entity == null){
             throw new DataNotFoundException();
         }else {
             return entity;
         }
+    }
+
+    public Boolean exist(Class clazz){
+        long count = count(clazz);
+        if (count == 0){
+            return Boolean.FALSE;
+        }else {
+            return Boolean.TRUE;
+        }
+    }
+
+    public Long count(Class clazz){
+        return (Long) getSingleResult(String.format("db.%s.count()", clazz.getSimpleName()));
+    }
+
+    public void update(Object object){
+        em.merge(object);
     }
 
 }
