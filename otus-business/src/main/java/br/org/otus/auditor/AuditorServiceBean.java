@@ -9,7 +9,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 @Stateless
-public class AuditorServiceBean implements AuditorService{
+public class AuditorServiceBean implements AuditorService {
     @Inject
     private AuditorDao auditorDao;
 
@@ -21,19 +21,14 @@ public class AuditorServiceBean implements AuditorService{
     public void log(LogEntryDto logEntryDto) {
         LogEntry logEntry = new LogEntry();
 
-        try {
-            Equalizer.equalize(logEntryDto, logEntry);
-            auditorContext.addLogEntry(logEntry);
-
-        } catch (IllegalAccessException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+        Equalizer.equalize(logEntryDto, logEntry);
+        auditorContext.addLogEntry(logEntry);
     }
 
-    @Schedule(hour="*/1", info="Persist Auditor Log")
-    public void persist(){
+    @Schedule(hour = "*/1", info = "Persist Auditor Log")
+    public void persist() {
         Auditor auditor = auditorContext.getAuditor();
-        if(!auditor.isEmpty()){
+        if (!auditor.isEmpty()) {
             auditorDao.merge(auditor);
             auditorContext.init();
         }

@@ -7,6 +7,7 @@ import br.org.otus.exceptions.InvalidDtoException;
 import br.org.otus.fieldCenter.dtos.FieldCenterDto;
 import br.org.otus.fieldCenter.dtos.FieldCenterUpdateDto;
 import br.org.tutty.Equalizer;
+import br.org.tutty.exception.EqualizerException;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -33,7 +34,7 @@ public class FieldCenterServiceBean implements FieldCenterService {
             } else {
                 throw new InvalidDtoException();
             }
-        } catch (IllegalAccessException | NoSuchFieldException e) {
+        } catch (EqualizerException e) {
             throw new InvalidDtoException();
         }
     }
@@ -50,7 +51,7 @@ public class FieldCenterServiceBean implements FieldCenterService {
                 throw new InvalidDtoException();
             }
 
-        } catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (EqualizerException e) {
             throw new InvalidDtoException();
 
         } catch (DataNotFoundException e) {
@@ -65,11 +66,8 @@ public class FieldCenterServiceBean implements FieldCenterService {
 
         fieldCenters.stream().forEach(fieldCenter -> {
             FieldCenterDto fieldCenterDto = new FieldCenterDto();
-            try {
-                Equalizer.equalize(fieldCenter, fieldCenterDto);
-                fieldCenterDtos.add(fieldCenterDto);
-            } catch (IllegalAccessException | NoSuchFieldException e) {
-            }
+            Equalizer.equalize(fieldCenter, fieldCenterDto);
+            fieldCenterDtos.add(fieldCenterDto);
         });
 
         return fieldCenterDtos;
@@ -84,8 +82,9 @@ public class FieldCenterServiceBean implements FieldCenterService {
 
             return fieldCenterDto;
 
-        } catch (IllegalAccessException | NoSuchFieldException e) {
+        } catch (EqualizerException e) {
             throw new InvalidDtoException();
+
         } catch (DataNotFoundException e) {
             throw new FieldCenterNotFoundException();
         }
