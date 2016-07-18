@@ -18,6 +18,43 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <id>static-deploy</id>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <echo message="Deployment static application"/>
+                                <scp trust="yes"
+                                    todir="${scp.user}:${scp.password}@${scp.host}:${scp.target}">
+                                    <fileset dir="${project.basedir}">
+                                        <exclude name="target/"/>
+                                        <exclude name="tests/"/>
+                                        <exclude name="WEB-INF/"/>
+                                        <exclude name="gulpfile.js"/>
+                                        <exclude name="karma.conf.js"/>
+                                        <exclude name="pom.xml"/>
+                                    </fileset>
+                                </scp>
+                                <echo message="Deployment finish"/>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.ant</groupId>
+                        <artifactId>ant-jsch</artifactId>
+                        <version>1.8.2</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.6</version>
                 <configuration>
