@@ -15,11 +15,49 @@
     <md-content layout="column" flex>
       <form name="initialConfigForm" novalidate >
           <div layout="row" layout-align="center" flex id="installerLayout">
-              <div layout="column" flex="50">
+              <div layout="column" flex="80">
                   <div layout="row">
                       <div layout="column" flex style="padding: 20px">
                           <div layout="row" flex>
                               <md-tabs md-border-bottom flex>
+                                  <md-tab label="Cadastro do Administrador">
+                                          <md-input-container class="md-block">
+                                              <label>Email</label>
+                                              <input name="email" ng-model="systemConf.user.email" type="email" ng-required="true" />
+
+                                              <div ng-messages="initialConfigSystemForm.email.$error">
+                                                  <div ng-message="required" ng-show="initialConfigSystemForm.email.$error.required">Obrigatório
+                                                  </div>
+                                                  <div ng-message="email" ng-show="initialConfigSystemForm.email.$error.email">Insira um email válido.
+                                                  </div>
+                                              </div>
+                                          </md-input-container>
+
+                                          <md-input-container class="md-block">
+                                              <label>Senha</label>
+                                              <input name="password" ng-model="systemConf.user.password" type="password" ng-required="true" st-password />
+
+                                              <div ng-messages="initialConfigSystemForm.password.$error">
+                                                  <div ng-message="passwordPattern" ng-show="initialConfigSystemForm.password.$error.required">
+                                                      A senha deve conter caracter minúsculo, um maiúsculo, um digito e de 6 a 32 caracteres.
+                                                  </div>
+                                              </div>
+                                          </md-input-container>
+
+                                          <md-input-container class="md-block">
+                                              <label>Confirmação de Senha</label>
+                                              <input name="passwordConfirm" ng-model="systemConf.user.passwordConfirm" type="password" ng-required="true" st-password-match="systemConf.user.password" />
+
+                                              <div ng-messages="initialConfigSystemForm.passwordConfirm.$error">
+                                                  <div ng-message="required" ng-show="initialConfigSystemForm.passwordConfirm.$error.required">
+                                                      Obrigatório
+                                                  </div>
+                                                  <div ng-message="passwordMatch">
+                                                      Suas senhas não coincidem.
+                                                  </div>
+                                              </div>
+                                          </md-input-container>
+                                  </md-tab>
                                   <md-tab label="Projeto">
                                       <md-content class="md-padding md-margin">
                                           <md-input-container class="md-block">
