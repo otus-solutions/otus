@@ -3,31 +3,37 @@ package br.org.otus.security.dtos;
 import br.org.tutty.Equalization;
 
 public class ProjectAuthenticationDto implements AuthenticationData {
-    @Equalization(name = "token")
-    private String token;
+    @Equalization(name = "projectToken")
+    private String projectToken;
 
-    public void setToken(String token) {
-        this.token = token;
+    @Equalization(name = "projectName")
+    private String projectName;
+
+    public void setProjectToken(String projectToken) {
+        this.projectToken = projectToken;
     }
 
     @Override
     public Boolean isValid() {
-        return token != null;
+        return projectToken != null;
     }
 
     @Override
     public String getKey() {
-        return token.toString().trim();
+        return projectToken.toString().trim();
     }
 
     @Override
     public String getPassword() {
-        return token.toString().trim();
+        return projectToken.toString().trim();
     }
 
     @Override
     public String getIssuer() {
-        // TODO
-        return null;
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
     }
 }
