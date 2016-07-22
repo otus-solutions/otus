@@ -20,7 +20,29 @@
             installerResource = OtusRestResourceService.getOtusInstallerResource();
         }
 
-        $scope.isDomain = function(url) {
+        function register(project) {
+            $scope.isLoading = true;
+            delete project.userPasswordConfirm;
+            console.log(project);
+
+            validateEmailService(project).then(function success() {
+                isDomain(project.domainRestUrl).then(function success() {
+                    installerResource.config(project, function success(response) {
+                        if (response.hasErrors) {
+                            showMessage('Erro ao adicionar novas configurações');
+                        } else {
+                            showConfirmationDialog();
+                        }
+                    }, function err() {
+                        showMessage('Erro ao conectar no domínio.');
+                    });
+                });
+            }, function() {
+                $scope.isLoading = false;
+            });
+        }
+
+        function isDomain(url) {
             RestResourceService.setHostname(url);
             domainUrlResource = RestResourceService.getUrlResource();
 
@@ -34,9 +56,9 @@
             });
 
             return deferred.promise;
-        };
+        }
 
-        $scope.validateEmailService = function(systemConf) {
+        function validateEmailService(systemConf) {
             var deferred = $q.defer();
 
             installerResource.validation(systemConf, function(response) {
@@ -44,60 +66,23 @@
                     $scope.resetValidationEmail();
                     deferred.resolve(true);
                 } else {
-                    $scope.initialConfigSystemForm.emailSenderEmail.$setValidity('emailService', false);
+                    $scope.initialConfigForm.email.$setValidity('email', false);
                     deferred.reject(false);
                 }
             });
 
             return deferred.promise;
-        };
+        }
 
         $scope.resetValidationEmail = function() {
-            $scope.initialConfigSystemForm.emailSenderEmail.$setValidity('emailService', true);
-            $scope.initialConfigSystemForm.$setValidity('emailService', true);
+            $scope.initialConfigForm.email.$setValidity('email', true);
+            $scope.initialConfigForm.$setValidity('email', true);
         };
 
         $scope.resetValidationDomain = function() {
             $scope.initialConfigForm.urlProject.$setValidity('domainAccess', true);
             $scope.initialConfigForm.$setValidity('domainAccess', true);
         };
-
-        function register(project) {
-            $scope.isLoading = true;
-            $scope.validateEmailService(project).then(function() {
-                installerResource.config(project, function(response) {
-                        $scope.isLoading = false;
-                    },
-                    function() {
-                        $scope.isLoading = false;
-                    });
-            }, function() {
-                $scope.isLoading = false;
-            });
-            $scope.isDomain(project.domainRestUrl).then(function success() {
-                installerResource.config(project, function success(response) {
-                    if (response.hasErrors) {
-                        showMessage('Erro ao adicionar novas configurações');
-                    } else {
-                        showConfirmationDialog();
-                    }
-                }, function err() {
-                    showMessage('Erro ao conectar no domínio.');
-                });
-            });
-        }
-
-        function saveInitialConfig() {
-            installerResource.config(project, function success(response) {
-                if (response.hasErrors) {
-                    showMessage('Erro ao adicionar novas configurações');
-                } else {
-                    showConfirmationDialog();
-                }
-            }, function err() {
-                showMessage('Erro ao conectar no domínio.');
-            });
-        }
 
         function showConfirmationDialog() {
             alert = $mdDialog.alert()

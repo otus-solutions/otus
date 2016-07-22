@@ -13,7 +13,7 @@
     </md-content>
 
     <md-content layout="column" flex>
-      <form name="initialConfigForm" novalidate ng-submit="register(systemConf)">
+      <form name="initialConfigForm" novalidate>
           <div layout="row" layout-align="center" id="installerLayout">
               <div layout="column" flex="80">
                   <div layout="row"  id="container">
@@ -23,7 +23,7 @@
                                   <md-tab label="Cadastro do Administrador">
                                           <md-input-container class="md-block">
                                               <label>Email</label>
-                                              <input name="email" ng-model="systemConf.user.email" type="email" ng-required="true" />
+                                              <input name="email" ng-model="project.userEmail" type="email" ng-required="true" />
 
                                               <div ng-messages="initialConfigSystemForm.email.$error">
                                                   <div ng-message="required" ng-show="initialConfigSystemForm.email.$error.required">Obrigatório
@@ -35,7 +35,7 @@
 
                                           <md-input-container class="md-block">
                                               <label>Senha</label>
-                                              <input name="password" ng-model="systemConf.user.password" type="password" ng-required="true" st-password />
+                                              <input name="password" ng-model="project.userPassword" type="password" ng-required="true" st-password />
 
                                               <div ng-messages="initialConfigSystemForm.password.$error">
                                                   <div ng-message="passwordPattern" ng-show="initialConfigSystemForm.password.$error.required">
@@ -46,7 +46,7 @@
 
                                           <md-input-container class="md-block">
                                               <label>Confirmação de Senha</label>
-                                              <input name="passwordConfirm" ng-model="systemConf.user.passwordConfirm" type="password" ng-required="true" st-password-match="systemConf.user.password" />
+                                              <input name="passwordConfirm" ng-model="project.userPasswordConfirm" type="password" ng-required="true" st-password-match="project.user.password" />
 
                                               <div ng-messages="initialConfigSystemForm.passwordConfirm.$error">
                                                   <div ng-message="required" ng-show="initialConfigSystemForm.passwordConfirm.$error.required">

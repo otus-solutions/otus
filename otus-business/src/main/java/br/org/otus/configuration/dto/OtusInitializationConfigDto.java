@@ -3,6 +3,12 @@ package br.org.otus.configuration.dto;
 import br.org.tutty.Equalization;
 
 public class OtusInitializationConfigDto {
+	
+    @Equalization(name = "user_email")
+    private String userEmail;
+	
+    @Equalization(name = "user_password")
+    private String userPassword;
 
     @Equalization(name = "project_name")
     private String projectName;
@@ -25,4 +31,12 @@ public class OtusInitializationConfigDto {
     public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
+
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
+	}        
 }

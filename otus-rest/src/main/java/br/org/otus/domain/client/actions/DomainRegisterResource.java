@@ -13,39 +13,41 @@ import org.json.JSONException;
 import java.io.IOException;
 
 public class DomainRegisterResource extends Resource {
-    public static String REGISTER_REST_PATH = "/otus/register";
+	public static String REGISTER_REST_PATH = "/otus/register";
 
-    public DomainRegisterResource(String domainRestUrl) {
-        super(domainRestUrl);
-    }
+	public DomainRegisterResource(String domainRestUrl) {
+		super(domainRestUrl);
+	}
 
-    public void registerProject(String projectRestUrl, String projectName, String token) throws IOException, JSONException, RestCallException {
-        HttpClient httpClient = HttpClientBuilder.create().build();
+	public void registerProject(String projectRestUrl, String projectName, String token)
+			throws IOException, JSONException, RestCallException {
+		HttpClient httpClient = HttpClientBuilder.create().build();
 
-        HttpPost httpPost = new HttpPost(DOMAIN_URL + REGISTER_REST_PATH);
-        httpPost.addHeader(CONTENT_TYPE, CONTENT_TYPE_VALUE);
+		HttpPost httpPost = new HttpPost(DOMAIN_URL + REGISTER_REST_PATH);
+		httpPost.addHeader(CONTENT_TYPE, CONTENT_TYPE_VALUE);
 
-        HttpEntity json = new StringEntity(new OtusProjectDto(projectRestUrl, projectName, token).toJson(), ContentType.create(CONTENT_TYPE_VALUE));
-        httpPost.setEntity(json);
+		HttpEntity json = new StringEntity(new OtusProjectDto(projectRestUrl, projectName, token).toJson(),
+				ContentType.create(CONTENT_TYPE_VALUE));
+		httpPost.setEntity(json);
 
-        validationResponse(httpClient.execute(httpPost));
-    }
+		validationResponse(httpClient.execute(httpPost));
+	}
 
-    class OtusProjectDto{
-        private String projectRestUrl;
-        private String projectName;
-        private String projectToken;
+	class OtusProjectDto {
+		private String projectRestUrl;
+		private String projectName;
+		private String projectToken;
 
-        public OtusProjectDto(String projectRestUrl, String projectName, String projectToken) {
-            this.projectRestUrl = projectRestUrl;
-            this.projectName = projectName;
-            this.projectToken = projectToken;
-        }
+		public OtusProjectDto(String projectRestUrl, String projectName, String projectToken) {
+			this.projectRestUrl = projectRestUrl;
+			this.projectName = projectName;
+			this.projectToken = projectToken;
+		}
 
-        public String toJson() throws JSONException {
-            Gson gson  = new Gson();
-            return gson.toJson(this);
-        }
+		public String toJson() throws JSONException {
+			Gson gson = new Gson();
+			return gson.toJson(this);
+		}
 
-    }
+	}
 }
