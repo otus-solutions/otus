@@ -66,7 +66,7 @@ Para facilitar a manutenção da url deve-se utilizar o servidor (back-end) na p
 ### Criar base de dados MongoDB
 
 > use otus <br>
-> db.createUser({user:"otus", pwd:"otus", roles:[{role:"dbOwner", db:"otus-domain"}]}) <br>
+> db.createUser({user:"otus", pwd:"otus", roles:[{role:"dbOwner", db:"otus"}]}) <br>
 
 ### Construindo o Projeto
 Para construir e realizar o deploy da aplição devem ser utilizadas as ferramentas [Maven](https://maven.apache.org/) e [NPM](https://www.npmjs.com/).
