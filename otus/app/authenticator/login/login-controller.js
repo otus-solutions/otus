@@ -5,30 +5,25 @@
         .module('otus.authenticator')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$scope', 'DashboardStateService', 'OtusRestResourceService', '$mdToast'];
+    LoginController.$inject = [
+        'DashboardStateService',
+        'OtusRestResourceService',
+        '$mdToast'
+    ];
 
-    function LoginController($scope, DashboardStateService, OtusRestResourceService, $mdToast) {
+    function LoginController(DashboardStateService, OtusRestResourceService, $mdToast) {
+        var self = this;
+
         var LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
         var SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
 
-        init();
+        /* Public methods */
+        self.authenticate = authenticate;
+        self.signup = signup;
 
-        function init() {
-            verifyInstalation();
-        }
+        _init();
 
-        function verifyInstalation() {
-            var installerResource = OtusRestResourceService.getOtusInstallerResource();
-            installerResource.ready(function(response) {
-                if (response.data) {
-                    DashboardStateService.goToLogin();
-                } else {
-                    DashboardStateService.goToInstaller();
-                }
-            });
-        }
-
-        $scope.authenticate = function(user) {
+        function authenticate(user) {
             var authenticatorResource = OtusRestResourceService.getOtusAuthenticatorResource();
 
             authenticatorResource.authenticate(user, function success(response) {
@@ -42,14 +37,33 @@
                         .textContent(LOGIN_ERROR_MESSAGE)
                     );
                 }
-            }, function err(){
-                    $mdToast.show(
-                        $mdToast.simple()
-                        .textContent(SERVER_ERROR_MESSAGE)
-                    );
+            }, function err() {
+                $mdToast.show(
+                    $mdToast.simple()
+                    .textContent(SERVER_ERROR_MESSAGE)
+                );
 
             });
-        };
+        }
+
+        function signup() {
+            DashboardStateService.goToSignup();
+        }
+
+        function _init() {
+            _verifyInstalation();
+        }
+
+        function _verifyInstalation() {
+            var installerResource = OtusRestResourceService.getOtusInstallerResource();
+            installerResource.ready(function(response) {
+                if (response.data) {
+                    DashboardStateService.goToLogin();
+                } else {
+                    DashboardStateService.goToInstaller();
+                }
+            });
+        }
     }
 
 }());

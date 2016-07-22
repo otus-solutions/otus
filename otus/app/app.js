@@ -6,6 +6,7 @@
             'otus.dashboard',
             'otus.installer',
             'otus.authenticator',
+            'otusjs.otus.singup',
             'otus.client',
             'otusDomainClient',
             'otus.dashboard',
