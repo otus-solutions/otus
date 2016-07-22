@@ -20,7 +20,7 @@
             installerResource = OtusRestResourceService.getOtusInstallerResource();
         }
 
-        function isDomain(url) {
+        $scope.isDomain = function(url) {
             RestResourceService.setHostname(url);
             domainUrlResource = RestResourceService.getUrlResource();
 
@@ -34,10 +34,47 @@
             });
 
             return deferred.promise;
-        }
+        };
+
+        $scope.validateEmailService = function(systemConf) {
+            var deferred = $q.defer();
+
+            installerResource.validation(systemConf, function(response) {
+                if (response.data) {
+                    $scope.resetValidationEmail();
+                    deferred.resolve(true);
+                } else {
+                    $scope.initialConfigSystemForm.emailSenderEmail.$setValidity('emailService', false);
+                    deferred.reject(false);
+                }
+            });
+
+            return deferred.promise;
+        };
+
+        $scope.resetValidationEmail = function() {
+            $scope.initialConfigSystemForm.emailSenderEmail.$setValidity('emailService', true);
+            $scope.initialConfigSystemForm.$setValidity('emailService', true);
+        };
+
+        $scope.resetValidationDomain = function() {
+            $scope.initialConfigForm.urlProject.$setValidity('domainAccess', true);
+            $scope.initialConfigForm.$setValidity('domainAccess', true);
+        };
 
         function register(project) {
-            isDomain(project.domainRestUrl).then(function success() {
+            $scope.isLoading = true;
+            $scope.validateEmailService(project).then(function() {
+                installerResource.config(project, function(response) {
+                        $scope.isLoading = false;
+                    },
+                    function() {
+                        $scope.isLoading = false;
+                    });
+            }, function() {
+                $scope.isLoading = false;
+            });
+            $scope.isDomain(project.domainRestUrl).then(function success() {
                 installerResource.config(project, function success(response) {
                     if (response.hasErrors) {
                         showMessage('Erro ao adicionar novas configurações');
@@ -61,11 +98,6 @@
                 showMessage('Erro ao conectar no domínio.');
             });
         }
-
-        $scope.resetValidationDomain = function() {
-            $scope.initialConfigForm.urlProject.$setValidity('domainAccess', true);
-            $scope.initialConfigForm.$setValidity('domainAccess', true);
-        };
 
         function showConfirmationDialog() {
             alert = $mdDialog.alert()

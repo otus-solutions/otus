@@ -37,6 +37,11 @@
   position: absolute;
   left: 20%;
 }
+
+#installer #container {
+    height: 350px;
+    z-index: 3;
+}
 /** AngularJS **/
 
 

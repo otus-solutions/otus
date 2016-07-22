@@ -13,12 +13,12 @@
     </md-content>
 
     <md-content layout="column" flex>
-      <form name="initialConfigForm" novalidate >
-          <div layout="row" layout-align="center" flex id="installerLayout">
+      <form name="initialConfigForm" novalidate ng-submit="register(systemConf)">
+          <div layout="row" layout-align="center" id="installerLayout">
               <div layout="column" flex="80">
-                  <div layout="row">
+                  <div layout="row"  id="container">
                       <div layout="column" flex style="padding: 20px">
-                          <div layout="row" flex>
+                          <div layout="row" flex >
                               <md-tabs md-border-bottom flex>
                                   <md-tab label="Cadastro do Administrador">
                                           <md-input-container class="md-block">
