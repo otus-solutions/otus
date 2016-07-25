@@ -23,10 +23,9 @@
         function register(project) {
             $scope.isLoading = true;
             delete project.userPasswordConfirm;
-            console.log(project);
 
-            validateEmailService(project).then(function success() {
-                isDomain(project.domainRestUrl).then(function success() {
+            _validateEmailService(project).then(function success() {
+                _isDomain(project.domainRestUrl).then(function success() {
                     installerResource.config(project, function success(response) {
                         if (response.hasErrors) {
                             showMessage('Erro ao adicionar novas configurações');
@@ -42,7 +41,7 @@
             });
         }
 
-        function isDomain(url) {
+        function _isDomain(url) {
             RestResourceService.setHostname(url);
             domainUrlResource = RestResourceService.getUrlResource();
 
@@ -58,12 +57,12 @@
             return deferred.promise;
         }
 
-        function validateEmailService(systemConf) {
+        function _validateEmailService(systemConf) {
             var deferred = $q.defer();
 
             installerResource.validation(systemConf, function(response) {
                 if (response.data) {
-                    $scope.resetValidationEmail();
+                    $scope._resetValidationEmail();
                     deferred.resolve(true);
                 } else {
                     $scope.initialConfigForm.email.$setValidity('email', false);
@@ -74,15 +73,15 @@
             return deferred.promise;
         }
 
-        $scope.resetValidationEmail = function() {
+        function _resetValidationEmail() {
             $scope.initialConfigForm.email.$setValidity('email', true);
             $scope.initialConfigForm.$setValidity('email', true);
-        };
+        }
 
-        $scope.resetValidationDomain = function() {
+        function _resetValidationDomain() {
             $scope.initialConfigForm.urlProject.$setValidity('domainAccess', true);
             $scope.initialConfigForm.$setValidity('domainAccess', true);
-        };
+        }
 
         function showConfirmationDialog() {
             alert = $mdDialog.alert()
