@@ -6,16 +6,14 @@
         .service('DashboardStateService', DashboardStateService);
 
     DashboardStateService.$inject = [
-        '$location',
+        '$state',
         '$http',
         'APP_STATE',
         'OtusRestResourceService'
     ];
 
-    function DashboardStateService($location, $http, APP_STATE, OtusRestResourceService) {
+    function DashboardStateService($state, $http, APP_STATE, OtusRestResourceService) {
         var self = this;
-
-        var HOSTNAME_REST = 'http://' + window.location.hostname;
 
         /*Public Interface*/
         self.goToLogin = goToLogin;
@@ -30,17 +28,17 @@
 
         function goToLogin() {
             self.currentState = 'Login';
-            $location.url(APP_STATE.LOGIN);
+            $state.go(APP_STATE.LOGIN);
         }
 
         function goToHome() {
             self.currentState = 'Home';
-            $location.url(APP_STATE.HOME);
+            $state.go(APP_STATE.HOME);
         }
 
         function goToInstaller() {
             self.currentState = 'Instalador do Sistema';
-            $location.url(APP_STATE.INSTALLER);
+            $state.go(APP_STATE.INSTALLER);
         }
     }
 }());
