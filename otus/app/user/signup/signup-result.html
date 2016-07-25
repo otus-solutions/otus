@@ -1,0 +1,32 @@
+<div id="login-page" layout="column" flex>
+    <div id="divtop">
+        <h2 class="name">
+            <span class="md-display-1">Cadastro de Usuário</span>
+        </h2>
+        <div id="center">
+            <div>
+                <img src="app/assets/img/OtusImg.png" class="logo" media="screen and (max-width: 1280px) and (min-width: 800px)"/>
+            </div>
+            <div layout="column">
+                <div>
+                    <div id="content" flex>
+                        <md-content layout="row" layout-sm="column" layout-padding>
+                            <div>
+                            <p style="font-size: 1.5em; line-height: 150%; font-weight: 100 !important">
+                            Seu cadastro foi realizado com sucesso! Todavia, seu usuário ainda não está liberado para acesso
+                            ao sistema. Aguarde a liberação.
+                            <br />
+                            <br />
+                            Você será notificado no e-mail informado quando isto acontecer!
+                            </p>
+                            <md-button type="button" class="md-raised md-accent" ng-click="$ctrl.agree()">
+                                OK
+                            </md-button>
+                        </div>
+                        </md-content>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

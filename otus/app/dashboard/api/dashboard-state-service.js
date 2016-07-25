@@ -21,6 +21,8 @@
         self.goToLogin = goToLogin;
         self.goToInstaller = goToInstaller;
         self.goToHome = goToHome;
+        self.goToSignup = goToSignup;
+        self.goToSignupResult = goToSignupResult;
 
         init();
 
@@ -41,6 +43,16 @@
         function goToInstaller() {
             self.currentState = 'Instalador do Sistema';
             $location.url(APP_STATE.INSTALLER);
+        }
+
+        function goToSignup() {
+            self.currentState = 'Instalador do Sistema';
+            $location.url(APP_STATE.SIGNUP);
+        }
+
+        function goToSignupResult() {
+            self.currentState = 'Instalador do Sistema';
+            $location.url(APP_STATE.SIGNUP_RESULT);
         }
     }
 }());

@@ -7,6 +7,8 @@
             'HOME': 'home',
             'INSTALLER': 'installer',
             'LOGIN': 'login',
+            'SIGNUP': 'signup',
+            'SIGNUP_RESULT': 'signup-result',
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
@@ -27,7 +29,7 @@
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/authenticator/login/login.html',
-                        controller: 'LoginController'
+                        controller: 'LoginController as $ctrl'
                     }
                 }
             })
@@ -41,6 +43,24 @@
                         templateUrl: 'app/dashboard/menu/dashboard-menu.html',
                         controller: 'OtusDashboardMenu',
                         controllerAs: 'dashboardMenu'
+                    }
+                }
+            })
+            .state('signup', {
+                url: '/signup',
+                views: {
+                    'system-wrap': {
+                        templateUrl: 'app/user/signup/signup.html',
+                        controller: 'SignupController as $ctrl'
+                    }
+                }
+            })
+            .state('signup-result', {
+                url: '/signup-result',
+                views: {
+                    'system-wrap': {
+                        templateUrl: 'app/user/signup/signup-result.html',
+                        controller: 'SignupController as $ctrl'
                     }
                 }
             });
