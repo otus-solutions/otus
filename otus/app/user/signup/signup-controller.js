@@ -7,10 +7,10 @@
 
     SignupController.$inject = [
         'DashboardStateService',
-        'otus.client.RestResourceService'
+        'OtusRestResourceService'
     ];
 
-    function SignupController(DashboardStateService, RestResourceService) {
+    function SignupController(DashboardStateService, OtusRestResourceService) {
         var self = this;
 
         /* Public methods */
@@ -18,8 +18,8 @@
         self.back = back;
         self.agree = agree;
 
-        function signup() {
-            var userResource = RestResourceService.getUserResource();
+        function signup(user) {
+            var userResource = OtusRestResourceService.getUserResource();
             userResource.create(user, function(response) {
                 DashboardStateService.goToSignupResult();
             });

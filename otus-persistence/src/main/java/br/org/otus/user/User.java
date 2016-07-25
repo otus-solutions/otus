@@ -1,39 +1,70 @@
 package br.org.otus.user;
 
-import br.org.tutty.Equalization;
-import org.hibernate.annotations.Type;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.Type;
+
+import br.org.tutty.Equalization;
+
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Type(type = "objectid")
-    private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Type(type = "objectid")
+	private String id;
 
-    @Equalization(name = "email")
-    private String email;
+	@Equalization(name = "name")
+	private String name;
 
-    @Equalization(name = "password")
-    private String password;
+	@Equalization(name = "surname")
+	private String surname;
 
-    @Equalization(name = "enable")
-    private Boolean enable;
+	@Equalization(name = "cell_number")
+	private String cellNumber;
 
-    public String getPassword() {
-        return password;
-    }
+	@Equalization(name = "email")
+	private String email;
 
-    public String getEmail() {
-        return email;
-    }
+	@Equalization(name = "password")
+	private String password;
 
-    public Boolean isEnable(){
-        return enable;
-    }
+	@Equalization(name = "enable")
+	private Boolean isEnable;
+
+	protected User() {
+		isEnable = false;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public String getCellNumber() {
+		return cellNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public Boolean isEnable() {
+		return isEnable;
+	}
+
 }
