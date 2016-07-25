@@ -1,13 +1,14 @@
-package br.org.otus.configuration;
+package br.org.otus.configuration.service;
 
-import br.org.otus.system.SystemConfigDao;
-import br.org.otus.system.SystemConfig;
-import br.org.otus.configuration.dto.OtusInitializationConfigDto;
-import br.org.tutty.Equalizer;
+import java.util.UUID;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import java.util.UUID;
+
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
+import br.org.otus.system.SystemConfig;
+import br.org.otus.system.SystemConfigDao;
+import br.org.tutty.Equalizer;
 
 @Stateless
 public class SystemConfigServiceBean implements SystemConfigService{

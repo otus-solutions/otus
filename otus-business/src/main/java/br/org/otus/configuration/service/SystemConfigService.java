@@ -1,4 +1,5 @@
-package br.org.otus.configuration;
+package br.org.otus.configuration.service;
+
 
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 
