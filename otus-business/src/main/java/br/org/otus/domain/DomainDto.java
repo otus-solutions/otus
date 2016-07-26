@@ -1,4 +1,4 @@
-package br.org.otus.domain.dto;
+package br.org.otus.domain;
 
 import br.org.tutty.Equalization;
 

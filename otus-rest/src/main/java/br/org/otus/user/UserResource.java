@@ -7,8 +7,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import br.org.otus.configuration.SystemConfigService;
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
+import br.org.otus.configuration.service.SystemConfigService;
 import br.org.otus.exceptions.ResponseError;
 import br.org.otus.rest.Response;
 

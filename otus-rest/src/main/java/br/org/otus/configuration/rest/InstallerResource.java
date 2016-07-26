@@ -12,8 +12,8 @@ import javax.ws.rs.core.MediaType;
 
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.configuration.service.SystemConfigService;
+import br.org.otus.domain.DomainDto;
 import br.org.otus.domain.client.actions.DomainRegisterResource;
-import br.org.otus.domain.dto.DomainDto;
 import br.org.otus.exceptions.EmailNotificationException;
 import br.org.otus.exceptions.ResponseError;
 import br.org.otus.rest.RequestUrlMapping;
@@ -40,10 +40,10 @@ public class InstallerResource {
 	public String config(OtusInitializationConfigDto otusInitializationConfigDto, @Context HttpServletRequest request) {
 		Response response = new Response();
 
-		DomainRegisterResource domainRegisterResource = new DomainRegisterResource(otusInitializationConfigDto.getDomain().getDomainRestUrl());
+		DomainRegisterResource domainRegisterResource = new DomainRegisterResource(otusInitializationConfigDto.getDomainDto().getDomainRestUrl());
 		DomainDto domainDto = new DomainDto();
 		domainDto.setDomainRestUrl(domainRegisterResource.DOMAIN_URL);
-		otusInitializationConfigDto.setDomain(domainDto);
+		otusInitializationConfigDto.setDomainDto(domainDto);
 
 		String projectName = otusInitializationConfigDto.getProject().getProjectName();
 
