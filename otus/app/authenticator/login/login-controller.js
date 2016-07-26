@@ -11,23 +11,6 @@
         var LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
         var SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
 
-        init();
-
-        function init() {
-            verifyInstalation();
-        }
-
-        function verifyInstalation() {
-            var installerResource = OtusRestResourceService.getOtusInstallerResource();
-            installerResource.ready(function(response) {
-                if (response.data) {
-                    DashboardStateService.goToLogin();
-                } else {
-                    DashboardStateService.goToInstaller();
-                }
-            });
-        }
-
         $scope.authenticate = function(user) {
             var authenticatorResource = OtusRestResourceService.getOtusAuthenticatorResource();
 

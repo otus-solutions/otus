@@ -35,25 +35,23 @@ public class AuthenticationResource {
             return response.buildSuccess(jwt).toJson();
 
         } catch (InvalidPasswordException | EmailNotFoundException | UserDisabledException | TokenException e) {
-            return response.buildError(((ResponseError) e)).toJson();
+            return response.buildError(e).toJson();
         }
     }
 
     @POST
     @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Path("/project")
-    public String projectAuthenticate(String projectToken){
+    public String projectAuthenticate(ProjectAuthenticationDto projectAuthenticationDto){
         Response response = new Response();
-
-        ProjectAuthenticationDto projectAuthenticationDto = new ProjectAuthenticationDto();
-        projectAuthenticationDto.setToken(projectToken);
 
         try {
             String jwt = securityService.projectAuthenticate(projectAuthenticationDto);
             return response.buildSuccess(jwt).toJson();
 
         } catch (InvalidDtoException | TokenException | InvalidPasswordException e) {
-            return response.buildError(((ResponseError) e)).toJson();
+            return response.buildError(e).toJson();
         }
     }
 

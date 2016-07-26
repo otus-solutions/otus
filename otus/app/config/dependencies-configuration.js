@@ -9,6 +9,7 @@
         'ui.router',
         'lokijs',
         'indexedDB',
+        'ui.router'
     ]);
 
 }());
