@@ -4,6 +4,8 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.org.otus.exceptions.DataNotFoundException;
+import br.org.otus.user.dtos.SignupDataDto;
+import br.org.tutty.Equalizer;
 
 @Stateless
 public class SignupDataServiceBean implements SignupDataService {
@@ -13,49 +15,19 @@ public class SignupDataServiceBean implements SignupDataService {
 
     @Override
     public Boolean executeRegistration(SignupDataDto signupDataDto) {
-        if (isSignupDataComplete(signupDataDto) && isPasswordConfirmed(signupDataDto)) {
+        if (signupDataDto.isValid()) {
             try {
                 userDao.fetchByEmail(signupDataDto.getEmail());
                 return false;
             } catch (DataNotFoundException e) {
-                userDao.persist(signupDataDto);
+            	User user = new User();
+            	Equalizer.equalize(signupDataDto, user);
+                userDao.persist(user);
                 return true;
             }
         } else {
             return false;
         }
     }
-
-    private Boolean isSignupDataComplete(SignupDataDto signupDataDto) {
-        if (signupDataDto.getCellNumber().isEmpty()) {
-            return false;
-        }
-
-        if (signupDataDto.getEmail().isEmpty()) {
-            return false;
-        }
-
-        if (signupDataDto.getName().isEmpty()) {
-            return false;
-        }
-
-        if (signupDataDto.getPassword().isEmpty()) {
-            return false;
-        }
-
-        if (signupDataDto.getPasswordConfirmation().isEmpty()) {
-            return false;
-        }
-
-        if (signupDataDto.getSurname().isEmpty()) {
-            return false;
-        }
-
-        return true;
-    }
-    
-    private Boolean isPasswordConfirmed(SignupDataDto signupDataDto) {
-        return signupDataDto.getPassword().equals(signupDataDto.getPasswordConfirmation());
-    }
-
+ 
 }

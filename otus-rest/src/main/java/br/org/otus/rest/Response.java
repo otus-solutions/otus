@@ -4,46 +4,51 @@ import br.org.otus.exceptions.ResponseError;
 import com.google.gson.Gson;
 
 public class Response {
-    private Object data;
-    private Object error;
-    private Boolean hasErrors = Boolean.FALSE;
 
-    public Object getData() {
-        return data;
-    }
+	private Object data;
+	private Object error;
+	private Boolean hasErrors;
+	
+	public Response() {
+		hasErrors = Boolean.FALSE;
+	}
 
-    public Response setData(Object data) {
-        this.data = data;
-        return this;
-    }
+	public Object getData() {
+		return data;
+	}
 
-    public Response setError(Object error) {
-        this.error = error;
-        return this;
-    }
+	public Response setData(Object data) {
+		this.data = data;
+		return this;
+	}
 
-    public Object getError() {
-        return error;
-    }
+	public Response setError(Object error) {
+		this.error = error;
+		return this;
+	}
 
-    public String toJson() {
-        Gson gson = new Gson();
-        return gson.toJson(this);
-    }
+	public Object getError() {
+		return error;
+	}
 
-    public Response buildError(ResponseError data) {
-        this.hasErrors = Boolean.TRUE;
-        this.data = data.getObjectError();
-        return this;
-    }
+	public String toJson() {
+		Gson gson = new Gson();
+		return gson.toJson(this);
+	}
 
-    public Response buildSuccess(Object data) {
-        this.data = data;
-        return this;
-    }
+	public Response buildError(ResponseError data) {
+		this.hasErrors = Boolean.TRUE;
+		this.data = data.getObjectError();
+		return this;
+	}
 
-    public Response buildSuccess() {
-        return this;
-    }
+	public Response buildSuccess(Object data) {
+		this.data = data;
+		return this;
+	}
+
+	public Response buildSuccess() {
+		return this;
+	}
 
 }

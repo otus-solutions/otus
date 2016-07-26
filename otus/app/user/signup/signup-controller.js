@@ -21,8 +21,12 @@
         function signup(user) {
             var userResource = OtusRestResourceService.getUserResource();
             userResource.create(user, function(response) {
-                DashboardStateService.goToSignupResult();
-            });
+                    DashboardStateService.goToSignupResult();
+                    console.log('ok');
+                },
+                function() {
+                    console.log('unok');
+                });
         }
 
         function back() {

@@ -37,7 +37,7 @@
     "jquery": "2.2.0",
     "lokijs": "1.3.16",
     "moment": "2.12.0",
-    "otus-client-js": "git://github.com/ccem-dev/otus-client-js.git#dev",
+    "otus-client-js": "git://github.com/ccem-dev/otus-client-js.git#OTUS-USR-3",
     "otus-domain-client": "git://github.com/ccem-dev/otus-domain-client-js.git#dev"
   },
   "devDependencies": {

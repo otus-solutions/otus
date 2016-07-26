@@ -1,15 +1,16 @@
 package br.org.otus.rest;
 
-import br.org.otus.fieldCenter.FieldCenterResource;
-import br.org.otus.security.rest.AuthenticationResource;
-import br.org.otus.configuration.rest.InstallerResource;
-
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+
+import br.org.otus.configuration.rest.InstallerResource;
+import br.org.otus.fieldCenter.FieldCenterResource;
+import br.org.otus.security.rest.AuthenticationResource;
+import br.org.otus.user.UserResource;
 
 @ApplicationPath("otus")
 public class EndPointsLoader extends Application {
@@ -22,6 +23,9 @@ public class EndPointsLoader extends Application {
 
 	@Inject
 	private FieldCenterResource fieldCenterResource;
+	
+	@Inject
+	private UserResource userResource;
 
 	@Override
 	public Set<Class<?>> getClasses() {
@@ -29,6 +33,7 @@ public class EndPointsLoader extends Application {
 		resources.add(InstallerResource.class);
 		resources.add(AuthenticationResource.class);
 		resources.add(FieldCenterResource.class);
+		resources.add(UserResource.class);
 		return resources;
 	}
 	
@@ -38,6 +43,7 @@ public class EndPointsLoader extends Application {
 		resources.add(installerResource);
 		resources.add(authenticationResource);
 		resources.add(fieldCenterResource);
+		resources.add(userResource);
 		return resources;
 	}
 }

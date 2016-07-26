@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Map;
 
-@WebFilter(filterName = "auditorFilter", urlPatterns = {"/v01/installer/config", "/v01/center"})
+@WebFilter(filterName = "auditorFilter", urlPatterns = {"/v01/installer/config", "/v01/center", "/v01/user/signup"})
 public class AuditorServletFilter implements Filter {
     @Inject
     private SecurityContextService securityContextService;

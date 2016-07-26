@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import br.org.otus.exceptions.DataNotFoundException;
+import br.org.otus.user.dtos.SignupDataDto;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SignupDataServiceBeanTest {
@@ -67,7 +68,7 @@ public class SignupDataServiceBeanTest {
 
     private void createSignupData() {
         signupData = new SignupDataDto();
-        signupData.setCellNumber("5192898863");
+        signupData.setPhone("5192898863");
         signupData.setEmail("user@email.com");
         signupData.setName("Name");
         signupData.setPassword("password");

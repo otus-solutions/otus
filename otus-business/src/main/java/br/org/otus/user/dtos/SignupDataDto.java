@@ -1,8 +1,9 @@
-package br.org.otus.user;
+package br.org.otus.user.dtos;
 
+import br.org.otus.rest.dtos.Dto;
 import br.org.tutty.Equalization;
 
-public class SignupDataDto {
+public class SignupDataDto implements Dto {
 
 	@Equalization(name = "name")
 	private String name;
@@ -10,8 +11,8 @@ public class SignupDataDto {
 	@Equalization(name = "surname")
 	private String surname;
 
-	@Equalization(name = "cell_number")
-	private String cellNumber;
+	@Equalization(name = "phone")
+	private String phone;
 
 	@Equalization(name = "email")
 	private String email;
@@ -38,12 +39,12 @@ public class SignupDataDto {
 		this.surname = surname;
 	}
 
-	public String getCellNumber() {
-		return cellNumber;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setCellNumber(String cellNumber) {
-		this.cellNumber = cellNumber;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getEmail() {
@@ -69,5 +70,18 @@ public class SignupDataDto {
 	public void setPasswordConfirmation(String passwordConfirmation) {
 		this.passwordConfirmation = passwordConfirmation;
 	}
+
+	@Override
+	public Boolean isValid() {
+		Boolean isComplete = (!name.isEmpty() && !surname.isEmpty() && !phone.isEmpty() && !email.isEmpty() && !password.isEmpty() && !passwordConfirmation.isEmpty());
+		Boolean isPasswordConfirmed = isPasswordConfirmed();
+		
+		return isComplete && isPasswordConfirmed;
+	}
+	
+	private Boolean isPasswordConfirmed() {
+        return password.equals(passwordConfirmation);
+    }
+
 
 }
