@@ -28,7 +28,7 @@ public class SystemConfig {
 
 	@Equalization(name = "project_token")
 	private String projectToken;
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
 	private EmailSender emailSender;
 
