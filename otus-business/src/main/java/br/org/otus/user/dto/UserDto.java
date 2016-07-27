@@ -6,29 +6,39 @@ import br.org.tutty.Equalization;
 public class UserDto {
 
 	@Equalization(name = "user_email")
-	private String userEmail;
+	private String email;
 
 	@Equalization(name = "user_password")
-	private String userPassword;
+	private String password;
+
+	private String passwordConfirm;
 
 	public void encrypt() {
-		this.setUserPassword(EncryptorResources.encrypt(getUserPassword()));
+		this.setPassword(EncryptorResources.encrypt(getPassword()));
 	}
 
-	public String getUserEmail() {
-		return userEmail;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getUserPassword() {
-		return userPassword;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
 	}
 
 }

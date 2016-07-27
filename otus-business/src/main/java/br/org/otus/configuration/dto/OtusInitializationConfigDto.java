@@ -8,10 +8,10 @@ import br.org.otus.user.dto.UserDto;
 
 public class OtusInitializationConfigDto {
 
-	private UserDto user;
 	private EmailSenderDto emailSender;
+	private UserDto user;
 	private ProjectDto project;
-	private DomainDto domainDto;
+	private DomainDto domain;
 
 	public UserDto getUser() {
 		return user;
@@ -19,14 +19,6 @@ public class OtusInitializationConfigDto {
 
 	public void setUser(UserDto user) {
 		this.user = user;
-	}
-
-	public EmailSenderDto getEmailSender() {
-		return emailSender;
-	}
-
-	public void setEmailSender(EmailSenderDto emailSender) {
-		this.emailSender = emailSender;
 	}
 
 	public ProjectDto getProject() {
@@ -38,11 +30,19 @@ public class OtusInitializationConfigDto {
 	}
 
 	public DomainDto getDomainDto() {
-		return domainDto;
+		return domain;
 	}
 
 	public void setDomainDto(DomainDto domainDto) {
-		this.domainDto = domainDto;
+		this.domain = domainDto;
+	}
+
+	public EmailSenderDto getEmailSender() {
+		return emailSender;
+	}
+
+	public void setEmailSender(EmailSenderDto emailSender) {
+		this.emailSender = emailSender;
 	}
 
 }
