@@ -10,6 +10,9 @@
     function InitialConfigController(DashboardStateService, OtusRestResourceService, RestResourceService, $http, $scope, $mdToast, $q, $mdDialog) {
 
         var self = this;
+        var MESSAGE_CONFIGURATIONS_ERROR = 'Erro ao adicionar novas configurações';
+        var MESSAGE_CONNECTION_ERROR = 'Erro ao conectar no domínio.';
+        var MESSAGE_SUCCESS = 'Suas configurações foram realizadas com sucesso! Você vai ser redirecionado para a tela de login.';
         var installerResource;
         var domainUrlResource;
         self.register = register;
@@ -28,12 +31,12 @@
                 _isDomain(project.domainRestUrl).then(function success() {
                     installerResource.config(project, function success(response) {
                         if (response.hasErrors) {
-                            showMessage('Erro ao adicionar novas configurações');
+                            showMessage(MESSAGE_CONFIGURATIONS_ERROR);
                         } else {
                             showConfirmationDialog();
                         }
                     }, function err() {
-                        showMessage('Erro ao conectar no domínio.');
+                        showMessage(MESSAGE_CONNECTION);
                     });
                 });
             }, function() {
@@ -86,7 +89,7 @@
         function showConfirmationDialog() {
             alert = $mdDialog.alert()
                 .title('Informação')
-                .content('Suas configurações foram realizadas com sucesso! Você vai ser redirecionado para a tela de login.')
+                .content(MESSAGE_SUCCESS)
                 .ok('ok');
 
             $mdDialog
