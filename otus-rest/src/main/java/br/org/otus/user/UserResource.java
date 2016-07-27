@@ -7,6 +7,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.exceptions.InvalidDtoException;
 import br.org.otus.exceptions.ResponseError;
 import br.org.otus.rest.Response;
@@ -34,6 +35,14 @@ public class UserResource {
 		}
 
 		return response.toJson();
+	}
+
+	@POST
+	@Path("/validation")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String validation(OtusInitializationConfigDto otusInitializationConfigDto) {
+		System.out.println(otusInitializationConfigDto);
+		return new Response().buildSuccess().toJson();
 	}
 
 }

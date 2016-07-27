@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
+import br.org.otus.configuration.service.SystemConfigServiceBean;
 import br.org.otus.system.SystemConfigDao;
 
 @RunWith(PowerMockRunner.class)

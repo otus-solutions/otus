@@ -1,42 +1,48 @@
+
 package br.org.otus.configuration.dto;
 
-import br.org.tutty.Equalization;
+import br.org.otus.domain.DomainDto;
+import br.org.otus.email.dto.EmailSenderDto;
+import br.org.otus.project.dto.ProjectDto;
+import br.org.otus.user.dto.UserDto;
 
 public class OtusInitializationConfigDto {
-	
-    @Equalization(name = "user_email")
-    private String userEmail;
-	
-    @Equalization(name = "user_password")
-    private String userPassword;
 
-    @Equalization(name = "project_name")
-    private String projectName;
+	private UserDto user;
+	private EmailSenderDto emailSender;
+	private ProjectDto project;
+	private DomainDto domainDto;
 
-    @Equalization(name = "domain_rest_url")
-    private String domainRestUrl;
-
-    public String getDomainRestUrl() {
-        return domainRestUrl;
-    }
-
-    public void setDomainRestUrl(String domainRestUrl) {
-        this.domainRestUrl = domainRestUrl;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public UserDto getUser() {
+		return user;
 	}
 
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}        
+	public void setUser(UserDto user) {
+		this.user = user;
+	}
+
+	public EmailSenderDto getEmailSender() {
+		return emailSender;
+	}
+
+	public void setEmailSender(EmailSenderDto emailSender) {
+		this.emailSender = emailSender;
+	}
+
+	public ProjectDto getProject() {
+		return project;
+	}
+
+	public void setProject(ProjectDto project) {
+		this.project = project;
+	}
+
+	public DomainDto getDomainDto() {
+		return domainDto;
+	}
+
+	public void setDomainDto(DomainDto domainDto) {
+		this.domainDto = domainDto;
+	}
+
 }

@@ -10,11 +10,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
-import com.google.gson.Gson;
-
-import br.org.otus.configuration.SystemConfigService;
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
+import br.org.otus.configuration.service.SystemConfigService;
+import br.org.otus.domain.DomainDto;
 import br.org.otus.domain.client.actions.DomainRegisterResource;
+import br.org.otus.exceptions.EmailNotificationException;
 import br.org.otus.exceptions.ResponseError;
 import br.org.otus.rest.RequestUrlMapping;
 import br.org.otus.rest.Response;
@@ -40,11 +40,12 @@ public class InstallerResource {
 	public String config(OtusInitializationConfigDto otusInitializationConfigDto, @Context HttpServletRequest request) {
 		Response response = new Response();
 
-		DomainRegisterResource domainRegisterResource = new DomainRegisterResource(
-				otusInitializationConfigDto.getDomainRestUrl());
-		otusInitializationConfigDto.setDomainRestUrl(domainRegisterResource.DOMAIN_URL);
+		DomainRegisterResource domainRegisterResource = new DomainRegisterResource(otusInitializationConfigDto.getDomainDto().getDomainRestUrl());
+		DomainDto domainDto = new DomainDto();
+		domainDto.setDomainRestUrl(domainRegisterResource.DOMAIN_URL);
+		otusInitializationConfigDto.setDomainDto(domainDto);
 
-		String projectName = otusInitializationConfigDto.getProjectName();
+		String projectName = otusInitializationConfigDto.getProject().getProjectName();
 
 		try {
 			String projectToken = systemConfigService.generateProjectToken();
@@ -64,8 +65,17 @@ public class InstallerResource {
 	@POST
 	@Path("/validation")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public String validation(OtusInitializationConfigDto otusInitializationConfigDto) {
-		System.out.println(otusInitializationConfigDto);
+
+		Response response = new Response();
+
+		try {
+			systemConfigService.verifyEmailService(otusInitializationConfigDto.getEmailSender());
+		} catch (EmailNotificationException e) {
+			response.setData(Boolean.FALSE);
+		}
+
 		return new Response().buildSuccess().toJson();
 	}
 
