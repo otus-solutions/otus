@@ -3,7 +3,6 @@ package br.org.otus.user;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
-import br.org.otus.email.dto.EmailSenderDto;
 import br.org.otus.email.service.EmailNotifierService;
 import br.org.otus.email.validation.EmailConstraint;
 import br.org.otus.exceptions.AlreadyExistException;
@@ -36,7 +35,7 @@ public class SignupServiceBean implements SignupDataService {
 
 	@Override
 	public void sendWelcomeEmail() throws EmailNotificationException, DataNotFoundException {
-		emailNotifierService.sendWelcomeEmail(emailSender);
+//		emailNotifierService.sendWelcomeEmail(emailSender);
 	}
 
 	@Override

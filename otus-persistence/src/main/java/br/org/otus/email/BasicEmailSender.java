@@ -30,7 +30,7 @@ public class BasicEmailSender implements EmailSender {
     @NotNull
     private String password;
 
-    protected BasicEmailSender() {
+    public BasicEmailSender() {
     }
 
     public BasicEmailSender(String name, String emailAddress, String password) {

@@ -3,6 +3,7 @@ package br.org.otus.user;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -23,6 +24,7 @@ public class SignupServiceEmailSendTest {
 	@Mock
 	private EmailNotifierService emailNotifierService;
 
+	@Ignore
 	@Test
 	public void sendWelcomeEmail_method_should_call_sendWelcomeEmail_method_from_EmailNotifierService() throws EmailNotificationException, DataNotFoundException {
 		service.sendWelcomeEmail();

@@ -1,6 +1,5 @@
 package br.org.otus.system;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,45 +14,45 @@ import br.org.tutty.Equalization;
 @Entity
 public class SystemConfig {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Type(type = "objectid")
-	private String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Type(type = "objectid")
+    private String id;
 
-	@Equalization(name = "project_name")
-	private String projectName;
+    @Equalization(name = "project_name")
+    private String projectName;
 
-	@Equalization(name = "domain_rest_url")
-	private String domainRestUrl;
+    @Equalization(name = "domain_rest_url")
+    private String domainRestUrl;
 
-	@Equalization(name = "project_token")
-	private String projectToken;
+    @Equalization(name = "project_token")
+    private String projectToken;
 
-	@OneToOne(cascade = CascadeType.ALL)
-	private BasicEmailSender emailSender;
+    @OneToOne
+    private BasicEmailSender basicEmailSender;
 
-	public void setProjectToken(String projectToken) {
-		this.projectToken = projectToken;
-	}
+    public void setProjectToken(String projectToken) {
+        this.projectToken = projectToken;
+    }
 
-	public String getProjectToken() {
-		return projectToken;
-	}
+    public String getProjectToken() {
+        return projectToken;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getProjectName() {
-		return projectName;
-	}
+    public String getProjectName() {
+        return projectName;
+    }
 
-	public String getDomainRestUrl() {
-		return domainRestUrl;
-	}
+    public String getDomainRestUrl() {
+        return domainRestUrl;
+    }
 
-	public BasicEmailSender getEmailSender() {
-		return emailSender;
-	}
+    public BasicEmailSender getEmailSender() {
+        return basicEmailSender;
+    }
 
 }
