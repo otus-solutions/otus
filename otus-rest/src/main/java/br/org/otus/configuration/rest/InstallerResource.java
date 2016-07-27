@@ -10,6 +10,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import com.google.gson.Gson;
+
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.configuration.service.SystemConfigService;
 import br.org.otus.domain.DomainDto;
@@ -40,7 +42,8 @@ public class InstallerResource {
 	public String config(OtusInitializationConfigDto otusInitializationConfigDto, @Context HttpServletRequest request) {
 		Response response = new Response();
 
-		DomainRegisterResource domainRegisterResource = new DomainRegisterResource(otusInitializationConfigDto.getDomainDto().getDomainRestUrl());
+		DomainRegisterResource domainRegisterResource = new DomainRegisterResource(
+				otusInitializationConfigDto.getDomainDto().getDomainRestUrl());
 		DomainDto domainDto = new DomainDto();
 		domainDto.setDomainRestUrl(domainRegisterResource.DOMAIN_URL);
 		otusInitializationConfigDto.setDomainDto(domainDto);
@@ -65,13 +68,14 @@ public class InstallerResource {
 	@POST
 	@Path("/validation")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public String validation(OtusInitializationConfigDto otusInitializationConfigDto) {
-
+	public String validation(String systemConfigJSon) {
+		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(systemConfigJSon,
+				OtusInitializationConfigDto.class);
 		Response response = new Response();
 
 		try {
-			systemConfigService.verifyEmailService(otusInitializationConfigDto.getEmailSender());
+			systemConfigService.verifyEmailService(initializationConfigDto.getEmailSender());
+			response.setData(Boolean.TRUE);
 		} catch (EmailNotificationException e) {
 			response.setData(Boolean.FALSE);
 		}
