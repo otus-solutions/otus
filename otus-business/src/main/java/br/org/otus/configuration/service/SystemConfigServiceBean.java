@@ -7,7 +7,6 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
-import br.org.otus.email.dto.EmailSenderDto;
 import br.org.otus.email.service.EmailNotifierService;
 import br.org.otus.exceptions.DataNotFoundException;
 import br.org.otus.exceptions.EmailNotificationException;
@@ -44,10 +43,9 @@ public class SystemConfigServiceBean implements SystemConfigService {
 	}
 
 	@Override
-	public void verifyEmailService(EmailSenderDto emailSenderDto) throws EmailNotificationException {
+    public void verifyEmailService(OtusInitializationConfigDto intializationData) throws EmailNotificationException {
 		try {
-			emailNotifierService.sendWelcomeEmail(emailSenderDto);
-
+			emailNotifierService.sendWelcomeEmail(intializationData.getUser());
 		} catch (EmailNotificationException | DataNotFoundException e) {
 			throw new EmailNotificationException(e);
 		}

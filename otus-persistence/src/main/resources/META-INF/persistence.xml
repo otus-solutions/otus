@@ -8,7 +8,7 @@
 
 		<class>br.org.otus.system.SystemConfig</class>
 		<class>br.org.otus.user.User</class>
-		<class>br.org.otus.email.EmailSender</class>
+		<class>br.org.otus.email.BasicEmailSender</class>
 		<class>br.org.otus.auditor.Auditor</class>
 		<class>br.org.otus.auditor.LogEntry</class>
 		<class>br.org.otus.fieldCenter.FieldCenter</class>

@@ -13,96 +13,96 @@
     </md-content>
 
     <md-content layout="column" flex>
-      <form name="initialConfigForm" novalidate>
-          <div layout="row" layout-align="center" id="installerLayout">
-              <div layout="column" flex="80">
-                  <div layout="row"  id="container">
-                      <div layout="column" flex style="padding: 20px">
-                          <div layout="row" flex >
-                              <md-tabs md-border-bottom flex>
-                                  <md-tab label="Cadastro do Administrador">
+        <form name="initialConfigForm" novalidate>
+            <div layout="row" layout-align="center" id="installerLayout">
+                <div layout="column" flex="80">
+                    <div layout="row" id="container">
+                        <div layout="column" flex style="padding: 20px">
+                            <div layout="row" flex>
+                                <md-tabs md-border-bottom flex>
+                                    <md-tab label="Cadastro do Administrador">
                                         <md-input-container class="md-block">
-                                          <label>Nome</label>
-                                          <input name="name" ng-model="project.emailSender.name" type="text" ng-required="true" />
+                                            <label>Nome</label>
+                                            <input name="name" ng-model="project.user.name" type="text" ng-required="true"/>
                                             <div ng-messages="initialConfigSystemForm.name.$error">
-                                              <div ng-message="required" ng-show="initialConfigSystemForm.name.$error.required">
-                                                  Obrigatório
-                                              </div>
+                                                <div ng-message="required" ng-show="initialConfigSystemForm.name.$error.required">
+                                                    Obrigatório
+                                                </div>
                                             </div>
-                                          </md-input-container>
+                                        </md-input-container>
 
-                                          <md-input-container class="md-block">
-                                              <label>Email</label>
-                                              <input name="email" ng-model="project.user.email" ng-model="project.emailSender.email" type="email" ng-required="true" />
+                                        <md-input-container class="md-block">
+                                            <label>Email</label>
+                                            <input name="email" ng-model="project.user.email" type="email" ng-required="true"/>
 
-                                              <div ng-messages="initialConfigSystemForm.email.$error">
-                                                  <div ng-message="required" ng-show="initialConfigSystemForm.email.$error.required">Obrigatório
-                                                  </div>
-                                                  <div ng-message="email" ng-show="initialConfigSystemForm.email.$error.email">Insira um email válido.
-                                                  </div>
-                                              </div>
-                                          </md-input-container>
+                                            <div ng-messages="initialConfigSystemForm.email.$error">
+                                                <div ng-message="required" ng-show="initialConfigSystemForm.email.$error.required">Obrigatório
+                                                </div>
+                                                <div ng-message="email" ng-show="initialConfigSystemForm.email.$error.email">Insira um email válido.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
 
-                                          <md-input-container class="md-block">
-                                              <label>Senha</label>
-                                              <input name="password" ng-model="project.user.password" ng-model="project.emailSender.password" type="password" ng-required="true" st-password />
+                                        <md-input-container class="md-block">
+                                            <label>Senha</label>
+                                            <input name="password" ng-model="project.user.password" type="password" ng-required="true" st-password/>
 
-                                              <div ng-messages="initialConfigSystemForm.password.$error">
-                                                  <div ng-message="passwordPattern" ng-show="initialConfigSystemForm.password.$error.required">
-                                                      A senha deve conter caracter minúsculo, um maiúsculo, um digito e de 6 a 32 caracteres.
-                                                  </div>
-                                              </div>
-                                          </md-input-container>
+                                            <div ng-messages="initialConfigSystemForm.password.$error">
+                                                <div ng-message="passwordPattern" ng-show="initialConfigSystemForm.password.$error.required">
+                                                    A senha deve conter caracter minúsculo, um maiúsculo, um digito e de 6 a 32 caracteres.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
 
-                                          <md-input-container class="md-block">
-                                              <label>Confirmação de Senha</label>
-                                              <input name="passwordConfirm" ng-model="project.user.passwordConfirm" type="password" ng-required="true" st-password-match="project.user.password" />
+                                        <md-input-container class="md-block">
+                                            <label>Confirmação de Senha</label>
+                                            <input name="passwordConfirm" ng-model="project.user.passwordConfirm" type="password" ng-required="true" st-password-match="project.user.password"/>
 
-                                              <div ng-messages="initialConfigSystemForm.passwordConfirm.$error">
-                                                  <div ng-message="required" ng-show="initialConfigSystemForm.passwordConfirm.$error.required">
-                                                      Obrigatório
-                                                  </div>
-                                                  <div ng-message="passwordMatch">
-                                                      Suas senhas não coincidem.
-                                                  </div>
-                                              </div>
-                                          </md-input-container>
-                                  </md-tab>
-                                  <md-tab label="Projeto">
-                                      <md-content class="md-padding md-margin">
-                                          <md-input-container class="md-block">
-                                              <label>Nome do Projeto</label>
-                                              <input type="text" name="projectName" ng-model="project.project.projectName" ng-required="true" />
-                                              <div ng-messages="initialConfigForm.projectName.$error">
-                                                 <div ng-message="required">Campo Obrigatório</div>
-                                             </div>
-                                          </md-input-container>
-                                      </md-content>
-                                  </md-tab>
-                                  <md-tab label="Domínio">
-                                      <md-content class="md-padding md-margin">
-                                          <md-input-container class="md-block">
-                                              <label>Endereço. Exemplo: http://www.my-domain.com.br</label>
-                                              <input type="url" name="urlProject" ng-change="resetValidationDomain()" ng-model="project.domain.domainRestUrl" ng-required="true" />
-                                              <div ng-messages="initialConfigForm.urlProject.$error">
-                                                 <div ng-message="required">Campo Obrigatório</div>
-                                                 <div ng-message="url">URL inválida.</div>
-                                                 <div ng-message="domainAccess">Esse endereço não é um domínio valido</div>
-                                              </div>
-                                          </md-input-container>
-                                      </md-content>
-                                  </md-tab>
-                              </md-tabs>
-                          </div>
-                      </div>
-                  </div>
-                  <md-content layout="row" layout-align="start center">
-                      <md-button ng-click="controller.register(project)" class="md-raised md-accent" ng-disabled="initialConfigForm.$invalid || isLoading">
-                          Cadastrar
-                      </md-button>
-                  </md-content>
-              </div>
-          </div>
-      </form>
+                                            <div ng-messages="initialConfigSystemForm.passwordConfirm.$error">
+                                                <div ng-message="required" ng-show="initialConfigSystemForm.passwordConfirm.$error.required">
+                                                    Obrigatório
+                                                </div>
+                                                <div ng-message="passwordMatch">
+                                                    Suas senhas não coincidem.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </md-tab>
+                                    <md-tab label="Projeto">
+                                        <md-content class="md-padding md-margin">
+                                            <md-input-container class="md-block">
+                                                <label>Nome do Projeto</label>
+                                                <input type="text" name="projectName" ng-model="project.project.projectName" ng-required="true"/>
+                                                <div ng-messages="initialConfigForm.projectName.$error">
+                                                    <div ng-message="required">Campo Obrigatório</div>
+                                                </div>
+                                            </md-input-container>
+                                        </md-content>
+                                    </md-tab>
+                                    <md-tab label="Domínio">
+                                        <md-content class="md-padding md-margin">
+                                            <md-input-container class="md-block">
+                                                <label>Endereço. Exemplo: http://www.my-domain.com.br</label>
+                                                <input type="url" name="urlProject" ng-change="resetValidationDomain()" ng-model="project.domain.domainRestUrl" ng-required="true"/>
+                                                <div ng-messages="initialConfigForm.urlProject.$error">
+                                                    <div ng-message="required">Campo Obrigatório</div>
+                                                    <div ng-message="url">URL inválida.</div>
+                                                    <div ng-message="domainAccess">Esse endereço não é um domínio valido</div>
+                                                </div>
+                                            </md-input-container>
+                                        </md-content>
+                                    </md-tab>
+                                </md-tabs>
+                            </div>
+                        </div>
+                    </div>
+                    <md-content layout="row" layout-align="start center">
+                        <md-button ng-click="controller.register(project)" class="md-raised md-accent" ng-disabled="initialConfigForm.$invalid || isLoading">
+                            Cadastrar
+                        </md-button>
+                    </md-content>
+                </div>
+            </div>
+        </form>
     </md-content>
 </md-content>

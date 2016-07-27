@@ -1,44 +1,40 @@
 package br.org.otus.user.dto;
 
+import br.org.otus.email.EmailSender;
 import br.org.otus.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
-public class UserDto {
+public class UserDto implements EmailSender {
 
-	@Equalization(name = "user_email")
-	private String email;
+    @Equalization(name = "user_email")
+    private String email;
 
-	@Equalization(name = "user_password")
-	private String password;
+    @Equalization(name = "user_password")
+    private String password;
 
-	private String passwordConfirm;
+    private String passwordConfirm;
 
-	public void encrypt() {
-		this.setPassword(EncryptorResources.encrypt(getPassword()));
-	}
+    public void encrypt() {
+        this.password = EncryptorResources.encrypt(getPassword());
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    @Override
+    public String getName() {
+        return null;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @Override
+    public String getEmail() {
+        return email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    @Override
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
-
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
 
 }
