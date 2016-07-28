@@ -1,9 +1,12 @@
 package br.org.otus.user;
 
+import java.util.UUID;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
 
@@ -12,70 +15,96 @@ import br.org.tutty.Equalization;
 @Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Type(type = "objectid")
-    private String id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Type(type = "objectid")
+	private String id;
 
-    @Equalization(name = "name")
-    private String name;
+	@Equalization(name = "uuid")
+	@NotNull
+	private UUID uuid;
 
-    @Equalization(name = "surname")
-    private String surname;
+	@Equalization(name = "admin_flag")
+	@NotNull
+	private Boolean adm;
 
-    @Equalization(name = "phone")
-    private String phone;
+	@Equalization(name = "enable")
+	private Boolean enable;
 
-    @Equalization(name = "email")
-    private String email;
+	@Equalization(name = "name")
+	private String name;
 
-    @Equalization(name = "password")
-    private String password;
+	@Equalization(name = "surname")
+	private String surname;
 
-    @Equalization(name = "enable")
-    private Boolean isEnable;
+	@Equalization(name = "phone")
+	private String phone;
 
-    @Equalization(name = "code")
-    private Integer code;
+	@Equalization(name = "email")
+	private String email;
 
-    public User() {
-        isEnable = false;
-    }
+	@Equalization(name = "password")
+	private String password;
 
-    public String getId() {
-        return id;
-    }
+	@Equalization(name = "enable")
+	private Boolean isEnable;
 
-    public String getName() {
-        return name;
-    }
+	@Equalization(name = "code")
+	private Integer code;
 
-    public String getSurname() {
-        return surname;
-    }
+	public User() {
+		this.uuid = UUID.randomUUID();
+		this.adm = Boolean.FALSE;
+		this.enable = Boolean.FALSE;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void enable() {
+		this.enable = Boolean.TRUE;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void disable() {
+		this.enable = Boolean.FALSE;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void becomesAdm() {
+		this.adm = Boolean.TRUE;
+		enable();
+	}
 
-    public Boolean isEnable() {
-        return isEnable;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public Integer getCode() {
-        return code;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setCode(Integer code) {
-        this.code = code;
-    }
+	public String getSurname() {
+		return surname;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public Boolean isEnable() {
+		return isEnable;
+	}
+
+	public Integer getCode() {
+		return code;
+	}
+
+	public void setCode(Integer code) {
+		this.code = code;
+	}
 
 }

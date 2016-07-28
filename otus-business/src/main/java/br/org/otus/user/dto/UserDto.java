@@ -6,10 +6,10 @@ import br.org.tutty.Equalization;
 
 public class UserDto implements EmailSender {
 
-    @Equalization(name = "user_email")
+    @Equalization(name = "email")
     private String email;
 
-    @Equalization(name = "user_password")
+    @Equalization(name = "password")
     private String password;
 
     private String passwordConfirm;
