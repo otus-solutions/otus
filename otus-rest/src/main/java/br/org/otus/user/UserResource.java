@@ -11,7 +11,7 @@ import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.exceptions.InvalidDtoException;
 import br.org.otus.exceptions.ResponseError;
 import br.org.otus.rest.Response;
-import br.org.otus.user.dtos.SignupDataDto;
+import br.org.otus.user.dto.SignupDataDto;
 
 @Path("/user")
 public class UserResource {

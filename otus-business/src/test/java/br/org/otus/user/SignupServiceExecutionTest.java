@@ -9,7 +9,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import br.org.otus.exceptions.DataNotFoundException;
-import br.org.otus.user.dtos.SignupDataDto;
+import br.org.otus.user.dto.SignupDataDto;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SignupServiceExecutionTest {

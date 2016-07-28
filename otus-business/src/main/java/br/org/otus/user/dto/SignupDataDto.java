@@ -1,4 +1,4 @@
-package br.org.otus.user.dtos;
+package br.org.otus.user.dto;
 
 import br.org.otus.rest.dtos.Dto;
 import br.org.tutty.Equalization;

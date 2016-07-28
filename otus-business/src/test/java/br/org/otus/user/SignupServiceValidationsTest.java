@@ -13,7 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import br.org.otus.email.validation.EmailConstraint;
 import br.org.otus.exceptions.AlreadyExistException;
 import br.org.otus.exceptions.InvalidDtoException;
-import br.org.otus.user.dtos.SignupDataDto;
+import br.org.otus.user.dto.SignupDataDto;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SignupServiceValidationsTest {

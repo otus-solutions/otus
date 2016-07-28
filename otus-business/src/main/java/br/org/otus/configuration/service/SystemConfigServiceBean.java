@@ -35,6 +35,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
 		try {
 			User user = new User();
 
+			configDto.getUser().encrypt();
 			Equalizer.equalize(configDto.getUser(), user);
 
 			user.becomesAdm();

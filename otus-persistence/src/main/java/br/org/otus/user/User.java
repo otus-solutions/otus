@@ -46,9 +46,6 @@ public class User {
 	@Equalization(name = "password")
 	private String password;
 
-	@Equalization(name = "enable")
-	private Boolean isEnable;
-
 	@Equalization(name = "code")
 	private Integer code;
 
@@ -96,7 +93,7 @@ public class User {
 	}
 
 	public Boolean isEnable() {
-		return isEnable;
+		return enable;
 	}
 
 	public Integer getCode() {

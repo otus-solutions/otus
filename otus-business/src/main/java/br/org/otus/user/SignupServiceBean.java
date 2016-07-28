@@ -9,7 +9,7 @@ import br.org.otus.exceptions.AlreadyExistException;
 import br.org.otus.exceptions.DataNotFoundException;
 import br.org.otus.exceptions.EmailNotificationException;
 import br.org.otus.exceptions.InvalidDtoException;
-import br.org.otus.user.dtos.SignupDataDto;
+import br.org.otus.user.dto.SignupDataDto;
 import br.org.tutty.Equalizer;
 
 @Stateless
