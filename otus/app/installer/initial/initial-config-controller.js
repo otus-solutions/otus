@@ -26,7 +26,6 @@
         function register(project) {
             $scope.isLoading = true;
             delete project.userPasswordConfirm;
-
             _validateEmailService(project).then(function success() {
                 _isDomain(project.domainRestUrl).then(function success() {
                     installerResource.config(project, function success(response) {
@@ -65,14 +64,13 @@
 
             installerResource.validation(systemConf, function(response) {
                 if (response.data) {
-                    $scope._resetValidationEmail();
+                    _resetValidationEmail();
                     deferred.resolve(true);
                 } else {
                     $scope.initialConfigForm.email.$setValidity('email', false);
                     deferred.reject(false);
                 }
             });
-
             return deferred.promise;
         }
 

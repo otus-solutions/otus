@@ -74,7 +74,7 @@ public class InstallerResource {
             response.setData(Boolean.FALSE);
         }
 
-        return new Response().buildSuccess().toJson();
+        return response.toJson();
     }
 
     public void registerProjectOnDomain(OtusInitializationConfigDto initData, HttpServletRequest request, String projectToken) throws IOException, JSONException, RestCallException {

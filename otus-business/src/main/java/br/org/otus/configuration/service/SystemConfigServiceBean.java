@@ -32,8 +32,8 @@ public class SystemConfigServiceBean implements SystemConfigService {
 	public void createInitialSystemConfig(OtusInitializationConfigDto configDto, String projectToken) throws Exception {
 		SystemConfig systemConfig = new SystemConfig();
 		Equalizer.equalize(configDto, systemConfig);
-
-		systemConfig.setProjectToken(projectToken);
+		
+		systemConfig.setProjectToken(projectToken);	
 		systemConfigDao.persist(systemConfig);
 	}
 
