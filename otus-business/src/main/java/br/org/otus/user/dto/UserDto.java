@@ -6,35 +6,73 @@ import br.org.tutty.Equalization;
 
 public class UserDto implements EmailSender {
 
-    @Equalization(name = "email")
-    private String email;
+	@Equalization(name = "name")
+	private String name;
 
-    @Equalization(name = "password")
-    private String password;
+	@Equalization(name = "surname")
+	private String surname;
 
-    private String passwordConfirm;
+	@Equalization(name = "phone")
+	private String phone;
 
-    public void encrypt() {
-        this.password = EncryptorResources.encrypt(getPassword());
-    }
+	@Equalization(name = "email")
+	private String email;
 
-    @Override
-    public String getName() {
-        return null;
-    }
+	@Equalization(name = "password")
+	private String password;
 
-    @Override
-    public String getEmail() {
-        return email;
-    }
+	private String passwordConfirm;
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
+	public void encrypt() {
+		this.password = EncryptorResources.encrypt(password);
+	}
 
 }

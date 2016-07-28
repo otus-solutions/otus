@@ -63,7 +63,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
 	@Override
 	public void verifyEmailService(OtusInitializationConfigDto intializationData) throws EmailNotificationException {
 		try {
-			emailNotifierService.sendWelcomeEmail(intializationData.getUser());
+			emailNotifierService.sendWelcomeEmail(intializationData.getEmailSender());
 		} catch (EmailNotificationException | DataNotFoundException e) {
 			throw new EmailNotificationException(e);
 		}
