@@ -8,7 +8,7 @@ import br.org.owail.sender.email.Sender;
 
 public interface EmailNotifierService {
 
-	void sendEmail(OtusEmail email) throws EmailNotificationException, DataNotFoundException;
+	void sendEmail(OtusEmail email) throws EmailNotificationException;
 
 	Sender getSender() throws DataNotFoundException;
 

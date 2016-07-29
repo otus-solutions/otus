@@ -27,7 +27,7 @@ public class EmailNotifierServiceBean implements EmailNotifierService {
 
 	@Override
 	@Asynchronous
-	public void sendEmail(OtusEmail email) throws EmailNotificationException, DataNotFoundException {
+	public void sendEmail(OtusEmail email) throws EmailNotificationException {
 		GMailer mailer = GMailer.createTLSMailer();
 
 		mailer.setFrom(email.getFrom());
