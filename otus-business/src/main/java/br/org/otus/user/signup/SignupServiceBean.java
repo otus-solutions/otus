@@ -20,7 +20,7 @@ import br.org.owail.sender.email.Sender;
 import br.org.tutty.Equalizer;
 
 @Stateless
-public class SignupServiceBean implements SignupDataService {
+public class SignupServiceBean implements SignupService {
 
     @Inject
     private EmailConstraint emailConstraint;

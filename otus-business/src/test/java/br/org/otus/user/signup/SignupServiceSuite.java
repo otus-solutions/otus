@@ -1,4 +1,4 @@
-package br.org.otus.user;
+package br.org.otus.user.signup;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;

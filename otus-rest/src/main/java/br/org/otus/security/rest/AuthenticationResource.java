@@ -40,13 +40,11 @@ public class AuthenticationResource {
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("/project")
-    public String projectAuthenticate(String projectToken){
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String projectAuthenticate(ProjectAuthenticationDto projectAuthenticationDto) {
         Response response = new Response();
-
-        ProjectAuthenticationDto projectAuthenticationDto = new ProjectAuthenticationDto();
-        projectAuthenticationDto.setToken(projectToken);
 
         try {
             String jwt = securityService.projectAuthenticate(projectAuthenticationDto);

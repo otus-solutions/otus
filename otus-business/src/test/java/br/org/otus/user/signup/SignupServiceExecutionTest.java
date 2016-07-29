@@ -1,4 +1,4 @@
-package br.org.otus.user;
+package br.org.otus.user.signup;
 
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.doThrow;
@@ -16,6 +16,8 @@ import br.org.otus.email.service.EmailNotifierService;
 import br.org.otus.email.validation.EmailConstraint;
 import br.org.otus.exceptions.DataNotFoundException;
 import br.org.otus.exceptions.EmailNotificationException;
+import br.org.otus.user.User;
+import br.org.otus.user.UserDao;
 import br.org.otus.user.dto.SignupDataDto;
 import br.org.otus.user.signup.SignupServiceBean;
 import br.org.otus.user.signup.exception.SignupException;

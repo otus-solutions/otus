@@ -23,4 +23,14 @@ public class SignupPersistenceException extends SignupException {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
+    @Override
+    public Object getObjectError() {
+        return new ErrorData();
+    }
+
+    class ErrorData {
+        public static final String message = "Error while persisting data.";
+        public ErrorType errorType = ErrorType.PERSISTENCE_ERROR;
+    }
+
 }

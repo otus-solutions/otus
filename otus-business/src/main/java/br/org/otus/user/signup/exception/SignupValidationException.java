@@ -23,4 +23,14 @@ public class SignupValidationException extends SignupException {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 
+    @Override
+    public Object getObjectError() {
+        return new ErrorData();
+    }
+
+    class ErrorData {
+        public static final String message = "Signup data is not valid.";
+        public ErrorType errorType = ErrorType.INVALID_DATA;
+    }
+
 }
