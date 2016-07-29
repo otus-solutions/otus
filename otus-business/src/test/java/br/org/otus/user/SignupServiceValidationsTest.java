@@ -1,64 +1,87 @@
 package br.org.otus.user;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.whenNew;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
+import br.org.otus.email.NewUserNotificationEmail;
+import br.org.otus.email.service.EmailNotifierService;
 import br.org.otus.email.validation.EmailConstraint;
-import br.org.otus.exceptions.AlreadyExistException;
-import br.org.otus.exceptions.InvalidDtoException;
+import br.org.otus.exceptions.EmailNotificationException;
+import br.org.otus.system.SystemConfigDao;
 import br.org.otus.user.dto.SignupDataDto;
+import br.org.otus.user.signup.SignupServiceBean;
+import br.org.otus.user.signup.exception.SignupException;
+import br.org.otus.user.signup.exception.SignupValidationException;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
+@PrepareForTest({ SignupServiceBean.class })
 public class SignupServiceValidationsTest {
 
-	@InjectMocks
-	private SignupServiceBean service;
+    @InjectMocks
+    private SignupServiceBean service;
 
-	@Mock
-	private EmailConstraint emailConstraint;
-	@Mock
-	private SignupDataDto signupData;
+    @Mock
+    private EmailConstraint emailConstraint;
+    @Mock
+    private EmailNotifierService emailNotifierService;
+    @Mock
+    private SystemConfigDao systemConfigDao;
+    @Mock
+    private SignupDataDto signupData;
+    @Mock
+    private UserDao userDao;
+    @Mock
+    private NewUserNotificationEmail email;
 
-	@Test
-	public void verifyData_should_call_isUnique_method_from_EmailConstraint() throws AlreadyExistException, InvalidDtoException {
-		when(signupData.isValid()).thenReturn(true);
-		when(emailConstraint.isUnique(anyString())).thenReturn(true);
-		
-		service.verifyData(signupData);
+    @Before
+    public void setup() throws Exception {
+        whenNew(NewUserNotificationEmail.class).withArguments(any(User.class)).thenReturn(email);
+    }
 
-		verify(emailConstraint).isUnique(signupData.getEmail());
-	}
+    @Test
+    public void verifyData_should_grant_that_email_is_unique() throws SignupException, EmailNotificationException {
+        when(signupData.isValid()).thenReturn(true);
+        when(emailConstraint.isUnique(anyString())).thenReturn(true);
 
-	@Test(expected = AlreadyExistException.class)
-	public void verifyData_should_throw_AlreadyExistException_when_email_in_DTO_is_found_in_database() throws AlreadyExistException, InvalidDtoException {
-		when(signupData.isValid()).thenReturn(true);
-		when(emailConstraint.isUnique(anyString())).thenReturn(false);
-		
-		service.verifyData(signupData);
-	}
-	
-	@Test
-	public void verifyData_should_call_isValid_method_from_SignupDataDto() throws AlreadyExistException, InvalidDtoException {
-		when(signupData.isValid()).thenReturn(true);
-		when(emailConstraint.isUnique(anyString())).thenReturn(true);
-		
-		service.verifyData(signupData);
+        service.execute(signupData);
 
-		verify(signupData).isValid();
-	}
-	
-	@Test(expected = InvalidDtoException.class)
-	public void verifyData_should_throw_InvalidDtoException_when_DTO_is_invalid() throws AlreadyExistException, InvalidDtoException {
-		when(signupData.isValid()).thenReturn(false);
-		
-		service.verifyData(signupData);
-	}
+        verify(emailConstraint).isUnique(signupData.getEmail());
+    }
+
+    @Test(expected = SignupValidationException.class)
+    public void verifyData_should_throw_an_exception_if_email_is_not_unique() throws SignupException, EmailNotificationException {
+        when(signupData.isValid()).thenReturn(true);
+        when(emailConstraint.isUnique(anyString())).thenReturn(false);
+
+        service.execute(signupData);
+    }
+
+    @Test
+    public void verifyData_should_verify_if_dto_is_valid() throws SignupException, EmailNotificationException {
+        when(signupData.isValid()).thenReturn(true);
+        when(emailConstraint.isUnique(anyString())).thenReturn(true);
+
+        service.execute(signupData);
+
+        verify(signupData).isValid();
+    }
+
+    @Test(expected = SignupValidationException.class)
+    public void verifyData_should_throw_an_exception_when_DTO_is_invalid() throws SignupException, EmailNotificationException {
+        when(signupData.isValid()).thenReturn(false);
+
+        service.execute(signupData);
+    }
 
 }

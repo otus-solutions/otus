@@ -12,6 +12,7 @@ import br.org.otus.exceptions.InvalidDtoException;
 import br.org.otus.exceptions.ResponseError;
 import br.org.otus.rest.Response;
 import br.org.otus.user.dto.SignupDataDto;
+import br.org.otus.user.signup.SignupDataService;
 
 @Path("/user")
 public class UserResource {
@@ -27,7 +28,7 @@ public class UserResource {
 		Response response = new Response();
 
 		try {
-			signupDataService.executeRegistration(signupDataDto);
+			signupDataService.execute(signupDataDto);
 			response.buildSuccess();
 			throw new InvalidDtoException();
 		} catch (Exception e) {
