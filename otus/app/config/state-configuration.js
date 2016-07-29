@@ -16,6 +16,11 @@
         $stateProvider
             .state('installer', {
                 url: '/installer',
+                resolve: {
+                    onlyOneConfiguration: function(RouteRulesResolver) {
+                        return RouteRulesResolver.onlyOneConfiguration();
+                    }
+                },
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/installer/initial/initial-config.html',
@@ -26,6 +31,14 @@
             })
             .state('login', {
                 url: '/login',
+                resolve: {
+                    initialConfiguration: function(RouteRulesResolver) {
+                        return RouteRulesResolver.initialConfiguration();
+                    },
+                    alreadyLogged: function(RouteRulesResolver) {
+                        return RouteRulesResolver.alreadyLogged();
+                    }
+                },
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/authenticator/login/login.html',
@@ -35,6 +48,11 @@
             })
             .state('home', {
                 url: '/home',
+                resolve: {
+                    loggedUser: function(RouteRulesResolver) {
+                        return RouteRulesResolver.loggedUser();
+                    }
+                },
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/dashboard/home/main-home-content-template.html'
@@ -65,9 +83,10 @@
                 }
             });
 
-        /* Default state (route) */
+        /* Default state (route)
+         * $locationProvider.html5Mode(true);*/
         $urlRouterProvider.otherwise('/login');
-        $locationProvider.html5Mode(true);
+
     }
 
 }());

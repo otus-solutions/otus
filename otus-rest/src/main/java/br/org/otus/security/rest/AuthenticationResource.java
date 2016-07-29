@@ -35,15 +35,15 @@ public class AuthenticationResource {
             return response.buildSuccess(jwt).toJson();
 
         } catch (InvalidPasswordException | EmailNotFoundException | UserDisabledException | TokenException e) {
-            return response.buildError(((ResponseError) e)).toJson();
+            return response.buildError(e).toJson();
         }
     }
 
     @POST
-    @Path("/project")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String projectAuthenticate(ProjectAuthenticationDto projectAuthenticationDto) {
+    @Path("/project")
+    public String projectAuthenticate(ProjectAuthenticationDto projectAuthenticationDto){
         Response response = new Response();
 
         try {
@@ -51,7 +51,7 @@ public class AuthenticationResource {
             return response.buildSuccess(jwt).toJson();
 
         } catch (InvalidDtoException | TokenException | InvalidPasswordException e) {
-            return response.buildError(((ResponseError) e)).toJson();
+            return response.buildError(e).toJson();
         }
     }
 
