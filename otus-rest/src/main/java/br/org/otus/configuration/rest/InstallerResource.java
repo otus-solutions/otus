@@ -64,6 +64,7 @@ public class InstallerResource {
     @Path("/validation")
     @Consumes(MediaType.APPLICATION_JSON)
     public String validation(String systemConfigJSon) {
+    	System.out.println(systemConfigJSon);
         OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(systemConfigJSon, OtusInitializationConfigDto.class);
         Response response = new Response();
 
