@@ -10,7 +10,7 @@ import org.hibernate.annotations.Type;
 
 import br.org.tutty.Equalization;
 
-@Entity
+@Entity(name = "EmailSender")
 public class BasicEmailSender implements EmailSender {
 
     @Id

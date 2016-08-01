@@ -45,12 +45,12 @@
 
         function goToSignup() {
             self.currentState = 'Instalador do Sistema';
-            $location.url(APP_STATE.SIGNUP);
+            $state.go(APP_STATE.SIGNUP);
         }
 
         function goToSignupResult() {
             self.currentState = 'Instalador do Sistema';
-            $location.url(APP_STATE.SIGNUP_RESULT);
+            $state.go(APP_STATE.SIGNUP_RESULT);
         }
     }
 }());

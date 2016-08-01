@@ -29,8 +29,12 @@ public class SystemConfig {
     @Equalization(name = "project_token")
     private String projectToken;
 
-    @OneToOne(cascade = CascadeType.ALL, targetEntity=BasicEmailSender.class)
+    @OneToOne(cascade = CascadeType.ALL, targetEntity = BasicEmailSender.class)
     private BasicEmailSender basicEmailSender;
+
+    public SystemConfig() {
+        basicEmailSender = new BasicEmailSender();
+    }
 
     public void setProjectToken(String projectToken) {
         this.projectToken = projectToken;

@@ -49,7 +49,10 @@ public class SystemConfigServiceBean implements SystemConfigService {
 	@Override
 	public void createInitialSystemConfig(OtusInitializationConfigDto configDto, String projectToken) throws Exception {
 		SystemConfig systemConfig = new SystemConfig();
-		Equalizer.equalize(configDto, systemConfig);
+		
+		Equalizer.equalize(configDto.getProject(), systemConfig);
+		Equalizer.equalize(configDto.getDomainDto(), systemConfig);
+		Equalizer.equalize(configDto.getEmailSender(), systemConfig.getEmailSender());
 		createAdmin(configDto);
 
 		systemConfig.setProjectToken(projectToken);

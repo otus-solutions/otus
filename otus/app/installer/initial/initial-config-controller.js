@@ -27,7 +27,7 @@
             $scope.isLoading = true;
             delete project.userPasswordConfirm;
             _validateEmailService(project).then(function success() {
-                _isDomain(project.domainRestUrl).then(function success() {
+                _isDomain(project.domain.domainRestUrl).then(function success() {
                     installerResource.config(project, function success(response) {
                         if (response.hasErrors) {
                             showMessage(MESSAGE_CONFIGURATIONS_ERROR);
