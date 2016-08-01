@@ -1,12 +1,13 @@
 package br.org.otus.configuration.service;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import com.google.gson.Gson;
 
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.email.service.EmailNotifierService;
@@ -15,9 +16,6 @@ import br.org.otus.exceptions.EmailNotificationException;
 import br.org.otus.exceptions.InvalidDtoException;
 import br.org.otus.system.SystemConfigDao;
 
-import com.google.gson.Gson;
-
-@Ignore
 @RunWith(PowerMockRunner.class)
 public class SystemConfigServiceBeanTest {
 
