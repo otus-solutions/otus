@@ -32,7 +32,9 @@ public class SignupServiceBean implements SignupService {
     @Override
     public void execute(SignupDataDto signupData) throws SignupException {
         verifyData(signupData);
+        
         User userToRegister = new User();
+        Equalizer.equalize(signupData, userToRegister);
         
         try {
             notifyAdministrator(userToRegister);
@@ -40,7 +42,7 @@ public class SignupServiceBean implements SignupService {
             throw new SignupException(e);
         }
         
-        persistNewUserData(signupData, userToRegister);
+        persistNewUserData(userToRegister);
     }
 
     private void verifyData(SignupDataDto signupData) throws SignupValidationException {
@@ -51,6 +53,8 @@ public class SignupServiceBean implements SignupService {
         if (!emailConstraint.isUnique(signupData.getEmail())) {
             throw new SignupValidationException(new AlreadyExistException());
         }
+        
+        // TODO: send email to new user
     }
 
     private void notifyAdministrator(User userToRegister) throws EmailNotificationException {
@@ -71,9 +75,8 @@ public class SignupServiceBean implements SignupService {
         emailNotifierService.sendEmail(newUserNotificationEmail);
     }
 
-    private void persistNewUserData(SignupDataDto signupData, User userToRegister) throws SignupPersistenceException {
+    private void persistNewUserData(User userToRegister) throws SignupPersistenceException {
         try {
-            Equalizer.equalize(signupData, userToRegister);
             userDao.persist(userToRegister);
         } catch(Exception e) {
             throw new SignupPersistenceException(e);

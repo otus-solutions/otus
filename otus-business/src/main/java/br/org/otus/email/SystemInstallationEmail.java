@@ -6,13 +6,13 @@ import java.util.Map;
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Mailer;
 
-public class WelcomeNotificationEmail extends Email implements OtusEmail {
+public class SystemInstallationEmail extends Email implements OtusEmail {
 
 	private final String TEMPLATE = "/template/welcome-notification-template.html";
 	private final String SUBJECT = "Seja Bem Vindo ao Sistema Otus";
 	private HashMap<String, String> dataMap;
 
-	public WelcomeNotificationEmail() {
+	public SystemInstallationEmail() {
 		buildDataMap();
 		defineSubject();
 	}

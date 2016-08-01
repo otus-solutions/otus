@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import br.org.otus.email.BasicEmailSender;
 import br.org.otus.email.EmailSender;
 import br.org.otus.email.OtusEmail;
-import br.org.otus.email.WelcomeNotificationEmail;
+import br.org.otus.email.SystemInstallationEmail;
 import br.org.otus.exceptions.DataNotFoundException;
 import br.org.otus.exceptions.EmailNotificationException;
 import br.org.otus.system.SystemConfigDao;
@@ -51,11 +51,10 @@ public class EmailNotifierServiceBean implements EmailNotifierService {
 	}
 
 	@Override
-	public void sendWelcomeEmail(EmailSender emailSender)
-			throws EmailNotificationException, DataNotFoundException {
+	public void sendWelcomeEmail(EmailSender emailSender) throws EmailNotificationException, DataNotFoundException {
 		Sender sender = new Sender(emailSender.getName(), emailSender.getEmail(), emailSender.getPassword());
 
-		WelcomeNotificationEmail welcomeNotificationEmail = new WelcomeNotificationEmail();
+		SystemInstallationEmail welcomeNotificationEmail = new SystemInstallationEmail();
 		welcomeNotificationEmail.defineRecipient(emailSender.getEmail());
 		welcomeNotificationEmail.setFrom(sender);
 		sendEmail(welcomeNotificationEmail);
