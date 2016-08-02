@@ -9,7 +9,6 @@ import javax.inject.Inject;
 
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.email.BasicEmailSender;
-import br.org.otus.email.EmailSender;
 import br.org.otus.email.OtusEmail;
 import br.org.otus.email.OtusEmailFactory;
 import br.org.otus.email.system.SystemInstallationEmail;
@@ -20,6 +19,7 @@ import br.org.owail.io.TemplateReader;
 import br.org.owail.sender.email.Recipient;
 import br.org.owail.sender.email.Sender;
 import br.org.owail.sender.gmail.GMailer;
+import br.org.tutty.Equalizer;
 
 @Stateless
 @Local(EmailNotifierService.class)
@@ -30,7 +30,8 @@ public class EmailNotifierServiceBean implements EmailNotifierService {
 
     @Override
     public void sendSystemInstallationEmail(OtusInitializationConfigDto initializationData) throws EmailNotificationException {
-        EmailSender emailSenderDto = initializationData.getEmailSender();
+    	BasicEmailSender emailSenderDto = new BasicEmailSender();
+    	Equalizer.equalize(initializationData.getEmailSender(), emailSenderDto);    	
         Recipient recipient = Recipient.createTO(initializationData.getUser().getName(), initializationData.getUser().getEmail());
         Sender sender = new Sender(emailSenderDto.getName(), emailSenderDto.getEmail(), emailSenderDto.getPassword());
         SystemInstallationEmail email = OtusEmailFactory.createSystemInstallationEmail(sender, recipient);

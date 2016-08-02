@@ -1,10 +1,9 @@
 package br.org.otus.email.dto;
 
-import br.org.otus.email.EmailSender;
 import br.org.otus.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
-public class EmailSenderDto implements EmailSender {
+public class EmailSenderDto {
 
     @Equalization(name = "name")
     private String name;
@@ -19,17 +18,14 @@ public class EmailSenderDto implements EmailSender {
         this.password = EncryptorResources.encrypt(password);
     }
 
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public String getEmail() {
         return email;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }

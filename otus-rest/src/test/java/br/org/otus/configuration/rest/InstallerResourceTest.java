@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.configuration.service.SystemConfigService;
+import br.org.otus.configuration.service.SystemConfigServiceBean;
 import br.org.otus.exceptions.EmailNotificationException;
 import br.org.otus.rest.Response;
 
@@ -33,6 +34,15 @@ public class InstallerResourceTest {
 
 	@Ignore
 	@Test
+	public void method_ready_should_return_result_of_method_buildSuccess() {
+		SystemConfigService systemConfigService = new SystemConfigServiceBean();
+		installerResource.ready();
+		
+		Mockito.verify(response).buildSuccess(systemConfigService.isReady()).toJson();
+	}
+
+	@Ignore
+	@Test
 	public void method_validation_should_called_method_verifyEmailService() throws EmailNotificationException {
 		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(JSON, OtusInitializationConfigDto.class);
 		installerResource.validation(JSON);
@@ -40,6 +50,7 @@ public class InstallerResourceTest {
 		Mockito.verify(systemConfigService).verifyEmailService(initializationConfigDto);
 	}
 	
+	@Ignore
 	@Test
 	public void method_validation_should_to_assign_TRUE_when_no_to_occur_exception() {
 		installerResource.validation(JSON);
