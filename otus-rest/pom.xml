@@ -60,6 +60,13 @@
 			<artifactId>org.restlet.ext.json</artifactId>
 			<version>1.0.11</version>
 		</dependency>
+				
+		<dependency>
+			<groupId>org.ccem.otus</groupId>
+			<artifactId>otus-persistence</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
