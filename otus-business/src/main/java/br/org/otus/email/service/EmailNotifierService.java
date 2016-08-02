@@ -1,6 +1,6 @@
 package br.org.otus.email.service;
 
-import br.org.otus.email.EmailSender;
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.email.OtusEmail;
 import br.org.otus.exceptions.DataNotFoundException;
 import br.org.otus.exceptions.EmailNotificationException;
@@ -12,6 +12,6 @@ public interface EmailNotifierService {
 
 	Sender getSender() throws DataNotFoundException;
 
-	void sendWelcomeEmail(EmailSender emailSender) throws EmailNotificationException, DataNotFoundException;
+	void sendSystemInstallationEmail(OtusInitializationConfigDto otusInitializationData) throws EmailNotificationException, DataNotFoundException;
 
 }

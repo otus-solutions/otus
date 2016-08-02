@@ -68,7 +68,7 @@ public class SystemConfigServiceBeanTest {
 		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(json, OtusInitializationConfigDto.class);
 		systemConfigServiceBean.verifyEmailService(initializationConfigDto);
 		
-		Mockito.verify(emailNotifierService).sendWelcomeEmail(initializationConfigDto.getEmailSender());
+		Mockito.verify(emailNotifierService).sendSystemInstallationEmail(initializationConfigDto);
 	}
 
 }

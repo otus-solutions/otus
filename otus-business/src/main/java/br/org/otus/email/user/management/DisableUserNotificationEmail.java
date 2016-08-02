@@ -1,19 +1,20 @@
-package br.org.otus.email;
+package br.org.otus.email.user.management;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import br.org.otus.email.OtusEmail;
 import br.org.otus.user.User;
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Mailer;
 
-public class EnableUserNotificationEmail extends Email implements OtusEmail {
+public class DisableUserNotificationEmail extends Email implements OtusEmail {
 
-	private final String TEMPLATE = "/template/enable-user-notification-template.html";
-	private final String SUBJECT = "Alerta - Cadastro habilitado Otus";
+	private final String TEMPLATE = "/template/management/disable-user-notification-template.html";
+	private final String SUBJECT = "Alerta - Cadastro desabilitado Otus";
 	private Map<String, String> dataMap;
 
-    public EnableUserNotificationEmail() {
+    public DisableUserNotificationEmail() {
         dataMap = new HashMap<>();
         defineSubject();
     }
