@@ -50,6 +50,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
 	public void createInitialSystemConfig(OtusInitializationConfigDto configDto, String projectToken) throws Exception {
 		SystemConfig systemConfig = new SystemConfig();
 		
+		configDto.getEmailSender().encrypt();
 		Equalizer.equalize(configDto.getProject(), systemConfig);
 		Equalizer.equalize(configDto.getDomainDto(), systemConfig);
 		Equalizer.equalize(configDto.getEmailSender(), systemConfig.getEmailSender());
