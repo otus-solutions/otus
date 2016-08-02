@@ -37,7 +37,7 @@ public class SystemConfigServiceBeanTest {
 	@Mock
 	private EmailNotifierService emailNotifierService;
 	
-	private String json = "{" + "'user':" + "{" + "'name': 'teste'," + "'surname': 'teste'," + "'phone': '5555555555'," + "'email': 'teste@teste.com'," + "'password': 'minhaSenha'," + "'passwordConfirm': 'minhaSenha'" + "}," + "'project': {" + "'projectName': 'meu projeto'" + " }," + "'domain': {" + "'domainRestUrl': 'http://localhost/'" + "}," + "'emailSender': {" + "'name': 'teste'," + "'email': 'teste@teste.com'," + "'password': 'minhaSenha'," + "'passwordConfirm': 'minhaSenha'" + "}" + "}";
+	private String JSON = "{" + "'user':" + "{" + "'name': 'teste'," + "'surname': 'teste'," + "'phone': '5555555555'," + "'email': 'teste@teste.com'," + "'password': 'minhaSenha'," + "'passwordConfirm': 'minhaSenha'" + "}," + "'project': {" + "'projectName': 'meu projeto'" + " }," + "'domain': {" + "'domainRestUrl': 'http://localhost/'" + "}," + "'emailSender': {" + "'name': 'teste'," + "'email': 'teste@teste.com'," + "'password': 'minhaSenha'," + "'passwordConfirm': 'minhaSenha'" + "}" + "}";
 
 	@Test
 	public void method_isReady_should_calls_database_and_verify() {
@@ -48,7 +48,7 @@ public class SystemConfigServiceBeanTest {
 
 	@Test
 	public void method_createAdmin_should_called_method_for_persist_User() throws InvalidDtoException {
-		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(json, OtusInitializationConfigDto.class);
+		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(JSON, OtusInitializationConfigDto.class);
 		systemConfigServiceBean.createAdmin(initializationConfigDto);
 		
 		Mockito.verify(systemConfigDao).persist(Mockito.any());
@@ -56,7 +56,7 @@ public class SystemConfigServiceBeanTest {
 	
 	@Test
 	public void method_createInitialSystemConfig_should_called_method_persist_for_object_SystemConfig() throws Exception {
-		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(json, OtusInitializationConfigDto.class);
+		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(JSON, OtusInitializationConfigDto.class);
 		projectToken = systemConfigServiceBean.generateProjectToken();
 		systemConfigServiceBean.createInitialSystemConfig(initializationConfigDto, projectToken);
 		
@@ -65,7 +65,7 @@ public class SystemConfigServiceBeanTest {
 	
 	@Test
 	public void method_verifyEmailService_should_called_method_sendWelcomeEmail() throws EmailNotificationException, DataNotFoundException {
-		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(json, OtusInitializationConfigDto.class);
+		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(JSON, OtusInitializationConfigDto.class);
 		systemConfigServiceBean.verifyEmailService(initializationConfigDto);
 		
 		Mockito.verify(emailNotifierService).sendWelcomeEmail(initializationConfigDto.getEmailSender());
