@@ -66,6 +66,11 @@
             })
             .state('signup', {
                 url: '/signup',
+                resolve: {
+                    initialConfiguration: function(RouteRulesResolver) {
+                        return RouteRulesResolver.initialConfiguration();
+                    }
+                },
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/user/signup/signup.html',
@@ -75,6 +80,11 @@
             })
             .state('signup-result', {
                 url: '/signup-result',
+                resolve: {
+                    initialConfiguration: function(RouteRulesResolver) {
+                        return RouteRulesResolver.initialConfiguration();
+                    }
+                },
                 views: {
                     'system-wrap': {
                         templateUrl: 'app/user/signup/signup-result.html',

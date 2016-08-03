@@ -140,6 +140,9 @@
                         <md-button ng-click="controller.register(project)" class="md-raised md-accent" ng-disabled="initialConfigForm.$invalid || isLoading">
                             Cadastrar
                         </md-button>
+                        <div layout="row" layout-sm="column" layout-align="center">
+                            <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+                        </div>
                     </md-content>
                 </div>
             </div>
