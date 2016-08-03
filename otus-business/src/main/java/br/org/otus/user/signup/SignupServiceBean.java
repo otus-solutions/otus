@@ -70,7 +70,7 @@ public class SignupServiceBean implements SignupService {
         try {
             Recipient recipient = Recipient.createTO(signupData.getName(), signupData.getEmail());
             NewUserGreetingsEmail email = OtusEmailFactory.createNewUserGreetingsEmail(sender, recipient);
-            emailNotifierService.sendEmail(email);
+            emailNotifierService.sendEmailSync(email);
         } catch (Exception e) {
             throw new SignupValidationException(e);
         }

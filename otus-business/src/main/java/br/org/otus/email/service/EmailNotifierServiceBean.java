@@ -41,6 +41,11 @@ public class EmailNotifierServiceBean implements EmailNotifierService {
     @Override
     @Asynchronous
     public void sendEmail(OtusEmail email) throws EmailNotificationException {
+        sendEmailSync(email);
+    }
+    
+    @Override
+    public void sendEmailSync(OtusEmail email) throws EmailNotificationException {
         GMailer mailer = GMailer.createTLSMailer();
 
         mailer.setFrom(email.getFrom());
@@ -52,7 +57,6 @@ public class EmailNotifierServiceBean implements EmailNotifierService {
         try {
             mailer.send();
         } catch (Exception e) {
-            e.printStackTrace();
             throw new EmailNotificationException(e);
         }
     }
