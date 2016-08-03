@@ -67,7 +67,13 @@
                     _resetValidationEmail();
                     deferred.resolve(true);
                 } else {
-                    $scope.initialConfigForm.email.$setValidity('email', false);
+                    if (response.data.errorType === 'ADM_USER_EMAIL') {
+                        $scope.initialConfigForm.email.$setValidity('email', false);
+                    }
+
+                    if (response.data.errorType === 'SENDER_EMAIL') {
+                        $scope.initialConfigForm.email.$setValidity('emailSenderEmail', false);
+                    }
                     deferred.reject(false);
                 }
             });
