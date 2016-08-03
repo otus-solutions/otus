@@ -4,8 +4,11 @@
 - Servidor: [Wildfly 9.0.1.Final](https://www.mongodb.com/download-center#community)
 
 ## Configurações Servidor
-Passos para realizar configurações no servidor que recebera a aplicação.
-Os passos seguintes devem ser feitos no arquivo:
+É possivel construir o ambiente utilizando Vagrant ou realizando configurações manualmente.
+
+[Ambiente Otus Vagrante](https://github.com/ccem-dev/otus-api-vagrant/blob/master/README.md)
+
+Passos para realizar configurações manuais:
 
 > servidor/standalone/configuration/standalone.xml
 
