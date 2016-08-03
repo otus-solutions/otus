@@ -1,5 +1,7 @@
 package br.org.otus.user.signup.exception;
 
+import br.org.otus.exceptions.ResponseError;
+
 public class SignupValidationException extends SignupException {
 
     private static final long serialVersionUID = 3817165386353861835L;
@@ -25,7 +27,11 @@ public class SignupValidationException extends SignupException {
 
     @Override
     public Object getObjectError() {
-        return new ErrorData();
+        if (getCause() instanceof ResponseError) {
+            return ((ResponseError) getCause()).getObjectError();
+        } else {
+            return new ErrorData();            
+        }
     }
 
     class ErrorData {
