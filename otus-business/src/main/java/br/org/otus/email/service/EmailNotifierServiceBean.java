@@ -37,7 +37,7 @@ public class EmailNotifierServiceBean implements EmailNotifierService {
         SystemInstallationEmail email = OtusEmailFactory.createSystemInstallationEmail(sender, recipient);
         sendEmail(email);
     }
-
+    
     @Override
     @Asynchronous
     public void sendEmail(OtusEmail email) throws EmailNotificationException {

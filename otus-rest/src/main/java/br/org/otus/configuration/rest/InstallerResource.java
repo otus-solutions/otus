@@ -19,6 +19,7 @@ import br.org.otus.configuration.service.SystemConfigService;
 import br.org.otus.domain.DomainDto;
 import br.org.otus.domain.client.actions.DomainRegisterResource;
 import br.org.otus.domain.client.exceptions.RestCallException;
+import br.org.otus.exceptions.AlreadyExistException;
 import br.org.otus.exceptions.EmailNotificationException;
 import br.org.otus.exceptions.ResponseError;
 import br.org.otus.rest.RequestUrlMapping;
@@ -68,12 +69,26 @@ public class InstallerResource {
         Response response = new Response();
 
         try {
-            systemConfigService.verifyEmailService(initializationConfigDto);
+        	systemConfigService.verificarConfiguracoesParaUsuarioAdministrador(initializationConfigDto);
             response.setData(Boolean.TRUE);
-        } catch (EmailNotificationException e) {
-            response.setData(Boolean.FALSE);
+            try {
+            	systemConfigService.verificarConfiguracoesParaEmailSender(initializationConfigDto);
+                response.setData(Boolean.TRUE);
+            } catch (AlreadyExistException e) {
+                response.setError(new AlreadyExistException());
+            	response.setData(Boolean.FALSE);
+            } catch(EmailNotificationException e) {
+            	response.setError(new EmailNotificationException());
+            	response.setData(Boolean.FALSE);
+            }
+        } catch (AlreadyExistException e) {
+            response.setError(new AlreadyExistException());
+        	response.setData(Boolean.FALSE);
+        } catch(EmailNotificationException e) {
+        	response.setError(new EmailNotificationException());
+        	response.setData(Boolean.FALSE);
         }
-
+        
         return response.toJson();
     }
 
