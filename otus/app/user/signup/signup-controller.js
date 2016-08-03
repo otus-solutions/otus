@@ -7,12 +7,11 @@
 
     SignupController.$inject = [
         '$scope',
-        '$q',
         'DashboardStateService',
-        'OtusRestResourceService'
+        'SignupService'
     ];
 
-    function SignupController($scope, $q, DashboardStateService, OtusRestResourceService) {
+    function SignupController($scope, DashboardStateService, SignupService) {
         var self = this;
 
         /* Public methods */
@@ -22,27 +21,12 @@
 
         function signup(user) {
             self.isWaiting = true;
-            executeSignup(user).then(function() {
+            SignupService.executeSignup(user).then(function(response) {
                 DashboardStateService.goToSignupResult();
-            }, function() {
+            }, function(response) {
+                $scope.signupForm.email.$setValidity('email', false);
                 self.isWaiting = false;
             });
-        }
-
-        function executeSignup(user) {
-            var userResource = OtusRestResourceService.getUserResource();
-            var deferred = $q.defer();
-
-            userResource.create(user, function(response) {
-                if (!response.hasErrors) {
-                    deferred.resolve(true);
-                } else {
-                    $scope.signupForm.email.$setValidity('email', false);
-                    deferred.reject(false);
-                }
-            });
-
-            return deferred.promise;
         }
 
         function back() {

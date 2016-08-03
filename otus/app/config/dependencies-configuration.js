@@ -5,13 +5,12 @@
         'ngMaterial',
         'ngMessages',
         'ngAnimate',
-        'ui.mask',
-        'passwordControl',
         /* 3rd-party modules */
         'ui.router',
+        'ui.mask',
+        'passwordControl',
         'lokijs',
-        'indexedDB',
-        'ui.router'
+        'indexedDB'
     ]);
 
 }());
