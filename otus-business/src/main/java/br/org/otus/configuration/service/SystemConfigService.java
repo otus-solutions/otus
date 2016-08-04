@@ -1,7 +1,6 @@
 package br.org.otus.configuration.service;
 
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
-import br.org.otus.exceptions.AlreadyExistException;
 import br.org.otus.exceptions.EmailNotificationException;
 import br.org.otus.exceptions.InvalidDtoException;
 
@@ -16,9 +15,5 @@ public interface SystemConfigService {
 	String generateProjectToken();
 
 	void verifyEmailService(OtusInitializationConfigDto initalizationData) throws EmailNotificationException;
-	
-	public void verificarConfiguracoesParaUsuarioAdministrador(OtusInitializationConfigDto initializationData) throws AlreadyExistException, EmailNotificationException;
-
-	public void verificarConfiguracoesParaEmailSender(OtusInitializationConfigDto initializationData) throws AlreadyExistException, EmailNotificationException;
 
 }
