@@ -25,7 +25,7 @@
     "dependencies": {
 	"otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#dev",
         "otus-domain-client": "git://github.com/ccem-dev/otus-domain-client-js.git#dev",
-        "otus-client-js": "git://github.com/ccem-dev/otus-client-js.git#USR-3",
+        "otus-client-js": "git://github.com/ccem-dev/otus-client-js.git#dev",
         "angular": "^1.4.7",
         "angular-animate": "^1.4.7",
         "angular-aria": "^1.4.7",
