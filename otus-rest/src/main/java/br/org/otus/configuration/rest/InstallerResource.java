@@ -14,18 +14,17 @@ import javax.ws.rs.core.MediaType;
 
 import org.json.JSONException;
 
+import com.google.gson.Gson;
+
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.configuration.service.SystemConfigService;
 import br.org.otus.domain.DomainDto;
 import br.org.otus.domain.client.actions.DomainRegisterResource;
 import br.org.otus.domain.client.exceptions.RestCallException;
-import br.org.otus.exceptions.AlreadyExistException;
 import br.org.otus.exceptions.EmailNotificationException;
 import br.org.otus.exceptions.ResponseError;
 import br.org.otus.rest.RequestUrlMapping;
 import br.org.otus.rest.Response;
-
-import com.google.gson.Gson;
 
 @Path("/installer")
 public class InstallerResource {
@@ -69,26 +68,12 @@ public class InstallerResource {
         Response response = new Response();
 
         try {
-        	systemConfigService.verificarConfiguracoesParaUsuarioAdministrador(initializationConfigDto);
+            systemConfigService.verifyEmailService(initializationConfigDto);
             response.setData(Boolean.TRUE);
-            try {
-            	systemConfigService.verificarConfiguracoesParaEmailSender(initializationConfigDto);
-                response.setData(Boolean.TRUE);
-            } catch (AlreadyExistException e) {
-                response.setError(new AlreadyExistException());
-            	response.setData(Boolean.FALSE);
-            } catch(EmailNotificationException e) {
-            	response.setError(new EmailNotificationException());
-            	response.setData(Boolean.FALSE);
-            }
-        } catch (AlreadyExistException e) {
-            response.setError(new AlreadyExistException());
-        	response.setData(Boolean.FALSE);
-        } catch(EmailNotificationException e) {
-        	response.setError(new EmailNotificationException());
-        	response.setData(Boolean.FALSE);
+        } catch (EmailNotificationException e) {
+            response.setData(Boolean.FALSE);
         }
-        
+
         return response.toJson();
     }
 
