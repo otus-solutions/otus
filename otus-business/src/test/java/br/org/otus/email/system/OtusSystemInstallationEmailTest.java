@@ -10,12 +10,14 @@ import static org.mockito.Matchers.anyString;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Ignore;
 
 import br.org.otus.email.OtusEmailFactory;
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Recipient;
 import br.org.owail.sender.email.Sender;
 
+@Ignore
 public class OtusSystemInstallationEmailTest {
 
     private final String SUBJECT = "Sistema Otus: Instalação bem sucedida";
