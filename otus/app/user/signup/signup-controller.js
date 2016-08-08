@@ -21,9 +21,9 @@
 
         function signup(user) {
             self.isWaiting = true;
-            SignupService.executeSignup(user).then(function(response) {
+            SignupService.executeSignup(user).then(function() {
                 DashboardStateService.goToSignupResult();
-            }, function(response) {
+            }, function() {
                 $scope.signupForm.email.$setValidity('email', false);
                 self.isWaiting = false;
             });

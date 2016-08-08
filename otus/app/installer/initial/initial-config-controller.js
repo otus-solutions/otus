@@ -26,16 +26,16 @@
         function register(project) {
             $scope.isLoading = true;
             delete project.userPasswordConfirm;
-            _validateEmailService(project).then(function success() {
-                _isDomain(project.domain.domainRestUrl).then(function success() {
-                    installerResource.config(project, function success(response) {
+            _validateEmailService(project).then(function () {
+                _isDomain(project.domain.domainRestUrl).then(function () {
+                    installerResource.config(project, function (response) {
                         if (response.hasErrors) {
                             showMessage(MESSAGE_CONFIGURATIONS_ERROR);
                         } else {
                             showConfirmationDialog();
                         }
-                    }, function err() {
-                        showMessage(MESSAGE_CONNECTION);
+                    }, function () {
+                        showMessage(MESSAGE_CONNECTION_ERROR);
                     });
                 });
             }, function() {
@@ -48,10 +48,10 @@
             domainUrlResource = RestResourceService.getUrlResource();
 
             var deferred = $q.defer();
-            domainUrlResource.isValidDomain(function success(response) {
+            domainUrlResource.isValidDomain(function () {
                 deferred.resolve(true);
 
-            }, function err() {
+            }, function () {
                 $scope.initialConfigForm.urlProject.$setValidity('domainAccess', false);
                 deferred.reject(false);
             });
@@ -91,7 +91,7 @@
         }
 
         function showConfirmationDialog() {
-            alert = $mdDialog.alert()
+            var alert = $mdDialog.alert()
                 .title('Informação')
                 .content(MESSAGE_SUCCESS)
                 .ok('ok');

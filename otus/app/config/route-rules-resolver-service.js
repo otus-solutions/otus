@@ -9,8 +9,12 @@
 
     function RouteRulesResolver($rootScope, $state, $q, APP_STATE, OtusRestResourceService) {
         var self = this;
+        self.loggedUser = loggedUser;
+        self.alreadyLogged = alreadyLogged;
+        self.initialConfiguration = initialConfiguration;
+        self.onlyOneConfiguration = onlyOneConfiguration;
 
-        self.loggedUser = function loggedUser() {
+        function loggedUser() {
             var deferred = $q.defer();
 
             if (!OtusRestResourceService.isLogged()) {
@@ -22,9 +26,9 @@
             }
 
             return deferred.promise;
-        };
+        }
 
-        self.alreadyLogged = function alreadyLogged() {
+        function alreadyLogged() {
             var deferred = $q.defer();
 
             if (OtusRestResourceService.isLogged()) {
@@ -36,9 +40,9 @@
             }
 
             return deferred.promise;
-        };
+        }
 
-        self.initialConfiguration = function initialConfiguration() {
+        function initialConfiguration() {
             var deferred = $q.defer();
 
             var installerResource = OtusRestResourceService.getOtusInstallerResource();
@@ -53,9 +57,9 @@
             });
 
             return deferred.promise;
-        };
+        }
 
-        self.onlyOneConfiguration = function onlyOneConfiguration() {
+        function onlyOneConfiguration() {
             var deferred = $q.defer();
 
             var installerResource = OtusRestResourceService.getOtusInstallerResource();
@@ -70,7 +74,7 @@
             });
 
             return deferred.promise;
-        };
+        }
 
         $rootScope.$on('$stateChangeError', function(evt, to, toParams, from, fromParams, error) {
             evt.preventDefault();

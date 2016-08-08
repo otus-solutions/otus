@@ -8,11 +8,10 @@
     DashboardStateService.$inject = [
         '$state',
         '$http',
-        'APP_STATE',
-        'OtusRestResourceService'
+        'APP_STATE'
     ];
 
-    function DashboardStateService($state, $http, APP_STATE, OtusRestResourceService) {
+    function DashboardStateService($state, $http, APP_STATE) {
         var self = this;
 
         /*Public Interface*/

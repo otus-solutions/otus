@@ -2,7 +2,7 @@
 
     angular
         .module('otus')
-        .config(['$stateProvider', '$urlRouterProvider', '$locationProvider', stateConfiguration])
+        .config(['$stateProvider', '$urlRouterProvider', stateConfiguration])
         .constant('APP_STATE', {
             'HOME': 'home',
             'INSTALLER': 'installer',
@@ -11,7 +11,7 @@
             'SIGNUP_RESULT': 'signup-result',
         });
 
-    function stateConfiguration($stateProvider, $urlRouterProvider, $locationProvider) {
+    function stateConfiguration($stateProvider, $urlRouterProvider) {
 
         $stateProvider
             .state('installer', {

@@ -6,13 +6,13 @@
         .controller('LoginController', LoginController);
 
     LoginController.$inject = [
-	'DashboardStateService', 
-	'OtusRestResourceService', 
-	'$mdToast'
+        'DashboardStateService',
+        'OtusRestResourceService',
+        '$mdToast'
     ];
 
     function LoginController(DashboardStateService, OtusRestResourceService, $mdToast) {
-	var self = this;
+        var self = this;
 
         var LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
         var SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
@@ -24,7 +24,7 @@
         function authenticate(user) {
             var authenticatorResource = OtusRestResourceService.getOtusAuthenticatorResource();
 
-            authenticatorResource.authenticate(user, function success(response) {
+            authenticatorResource.authenticate(user, function (response) {
                 OtusRestResourceService.setSecurityToken(response.data);
 
                 if (!response.hasErrors) {
@@ -35,7 +35,7 @@
                         .textContent(LOGIN_ERROR_MESSAGE)
                     );
                 }
-            }, function err() {
+            }, function () {
                 $mdToast.show(
                     $mdToast.simple()
                     .textContent(SERVER_ERROR_MESSAGE)
@@ -44,7 +44,7 @@
             });
         }
 
-	function signup() {
+        function signup() {
             DashboardStateService.goToSignup();
         }
     }
