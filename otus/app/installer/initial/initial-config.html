@@ -39,7 +39,7 @@
 
                                         <md-input-container class="md-block">
                                             <md-icon md-font-set="material-icons">phone</md-icon>
-                                            <input name="phone" id="phonenumber" ng-model="project.user.phone" type="text" ui-options={clearOnBlur:false} ng-required="true" ui-mask="(99) 99999999?9" />
+                                            <input name="phone" id="phonenumber" aria-label="phone" ng-model="project.user.phone" type="text" ui-options={clearOnBlur:false} ng-required="true" ui-mask="(99) 99999999?9" />
                                             <div ng-messages="initialConfigForm.phone.$error">
                                                 <div ng-message="required">Obrigatório</div>
                                                 <div ng-message="mask">Insira um número válido.</div>
@@ -48,7 +48,7 @@
 
                                         <md-input-container class="md-block">
                                             <md-icon md-font-set="material-icons">email</md-icon>
-                                            <input name="email" ng-model="project.user.email" type="email" ng-required="true" />
+                                            <input name="email" ng-model="project.user.email" aria-label="email" type="email" ng-required="true" />
                                             <div ng-messages="initialConfigForm.email.$error">
                                                 <div ng-message="required">Obrigatório</div>
                                                 <div ng-message="email">Insira um email válido</div>

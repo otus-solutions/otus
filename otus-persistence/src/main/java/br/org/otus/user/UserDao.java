@@ -1,5 +1,7 @@
 package br.org.otus.user;
 
+import java.util.List;
+
 import javax.persistence.NoResultException;
 
 import br.org.otus.dao.GenericDao;
@@ -32,6 +34,11 @@ public class UserDao extends GenericDao {
     public User findAdmin() throws DataNotFoundException {
         String query = String.format("db.%s.find({ '%s' : %s })", "User", ADM, true);
         return (User) notWaitingEmpty(getSingleResult(query, User.class));
+    }
+    
+    public List<User> fetchAll() {
+        String query = String.format("db.%s.find({})", "User");
+        return getListResult(query, User.class);
     }
 
 }
