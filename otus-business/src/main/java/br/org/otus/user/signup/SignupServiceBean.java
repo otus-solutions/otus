@@ -39,6 +39,7 @@ public class SignupServiceBean implements SignupService {
         verifyData(signupData);
 
         User userToRegister = new User();
+        signupData.encrypt();
         Equalizer.equalize(signupData, userToRegister);
 
         try {

@@ -10,7 +10,7 @@ import br.org.owail.sender.email.Mailer;
 
 public class DisableUserNotificationEmail extends Email implements OtusEmail {
 
-	private final String TEMPLATE = "/template/management/disable-user-notification-template.html";
+	private final String TEMPLATE = "/template/user/management/disable-user-notification-template.html";
 	private final String SUBJECT = "Alerta - Cadastro desabilitado Otus";
 	private Map<String, String> dataMap;
 

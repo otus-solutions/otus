@@ -41,6 +41,7 @@ public class UserResource {
 
         try {
             signupService.execute(signupDataDto);
+            
             response.buildSuccess();
         } catch (SignupException e) {
             response.buildError(((ResponseError) e));
@@ -69,7 +70,7 @@ public class UserResource {
     @GET
     @Path("/fetch")
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)	
+    @Produces(MediaType.APPLICATION_JSON)
     @Secured
     public String getUsers() {
         List<ManagementUserDto> managementUserDtos = managementUserService.fetchUsers();

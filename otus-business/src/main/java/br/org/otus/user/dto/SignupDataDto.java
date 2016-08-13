@@ -1,6 +1,7 @@
 package br.org.otus.user.dto;
 
 import br.org.otus.rest.dtos.Dto;
+import br.org.otus.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
 public class SignupDataDto implements Dto {
@@ -83,5 +84,8 @@ public class SignupDataDto implements Dto {
         return password.equals(passwordConfirmation);
     }
 
+	public void encrypt() {
+		this.password = EncryptorResources.encrypt(password);		
+	}
 
 }
