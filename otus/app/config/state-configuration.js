@@ -9,6 +9,7 @@
             'LOGIN': 'login',
             'SIGNUP': 'signup',
             'SIGNUP_RESULT': 'signup-result',
+            'ERROR_OFFLINE': 'offline'
         });
 
     function stateConfiguration($stateProvider, $urlRouterProvider) {
@@ -91,7 +92,17 @@
                         controller: 'SignupController as $ctrl'
                     }
                 }
+            })
+            .state('offline', {
+                url: '/offline',
+                views: {
+                    'system-wrap': {
+                        templateUrl: 'app/response-error/offline/offline.html',
+                        controller: 'ResponseErrorOfflineController as controller'
+                    }
+                }
             });
+
 
         /* Default state (route)
          * $locationProvider.html5Mode(true);*/

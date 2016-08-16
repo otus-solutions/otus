@@ -20,6 +20,7 @@
         self.goToHome = goToHome;
         self.goToSignup = goToSignup;
         self.goToSignupResult = goToSignupResult;
+        self.goToErrorOffline = goToErrorOffline;
 
         init();
 
@@ -50,6 +51,11 @@
         function goToSignupResult() {
             self.currentState = 'Instalador do Sistema';
             $state.go(APP_STATE.SIGNUP_RESULT);
+        }
+
+        function goToErrorOffline() {
+            self.currentState = 'Offline';
+            $state.go(APP_STATE.ERROR_OFFLINE);
         }
     }
 }());

@@ -18,15 +18,21 @@
         self.signup = signup;
         self.back = back;
         self.agree = agree;
+        self.resetEmailValidation = resetEmailValidation;
 
         function signup(user) {
             self.isWaiting = true;
             SignupService.executeSignup(user).then(function() {
                 DashboardStateService.goToSignupResult();
             }, function() {
-                $scope.signupForm.email.$setValidity('email', false);
+                $scope.signupForm.email.$setValidity('emailInUse', false);
                 self.isWaiting = false;
             });
+        }
+
+        function resetEmailValidation() {
+            $scope.signupForm.email.$setValidity('emailInUse', true);
+            $scope.signupForm.$setValidity('emailInUse', true);
         }
 
         function back() {
