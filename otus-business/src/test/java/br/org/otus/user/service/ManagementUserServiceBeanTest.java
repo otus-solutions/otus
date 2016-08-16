@@ -15,6 +15,7 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import br.org.otus.email.service.EmailNotifierService;
+import br.org.otus.email.user.management.DisableUserNotificationEmail;
 import br.org.otus.exceptions.DataNotFoundException;
 import br.org.otus.user.User;
 import br.org.otus.user.UserDao;
@@ -38,8 +39,17 @@ public class ManagementUserServiceBeanTest {
 	@Mock
 	private User user;
 
+	@Mock
+	private DisableUserNotificationEmail disableUserNotificationEmail;
+
+	@Mock
+	private List<User> users;
+
 	@Before
 	public void setup() throws Exception {
+
+		users.add(user);
+
 		PowerMockito.when(userDao.fetchByEmail(managementUserDto.getEmail())).thenReturn(user);
 	}
 
@@ -53,10 +63,22 @@ public class ManagementUserServiceBeanTest {
 	}
 
 	@Test
-	public void disableUsers_method_should_called_methods_fetchByEmail_disable_update() throws DataNotFoundException {
+	public void disableUsers_method_should_called_methods_fetchByEmail_disable_and_update()
+			throws DataNotFoundException {
 		managementUserServiceBean.disableUsers(managementUserDto);
 
 		verify(userDao).fetchByEmail(managementUserDto.getEmail());
+		verify(user).disable();
+		verify(userDao).update(user);
+	}
+
+	@Test
+	public void enableUsers_method_should_called_methods_fetchByEmail_enable_update() throws DataNotFoundException {
+		managementUserServiceBean.enableUsers(managementUserDto);
+
+		verify(userDao).fetchByEmail(managementUserDto.getEmail());
+		verify(user).enable();
+		verify(userDao).update(user);
 	}
 
 }

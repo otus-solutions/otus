@@ -14,12 +14,12 @@ public class EnableUserNotificationEmail extends Email implements OtusEmail {
 	private final String SUBJECT = "Alerta - Cadastro habilitado Otus";
 	private Map<String, String> dataMap;
 
-    public EnableUserNotificationEmail() {
-        dataMap = new HashMap<>();
-        defineSubject();
-    }
+	public EnableUserNotificationEmail() {
+		dataMap = new HashMap<>();
+		defineSubject();
+	}
 
-    @Override
+	@Override
 	public String getTemplatePath() {
 		return TEMPLATE;
 	}
@@ -34,12 +34,12 @@ public class EnableUserNotificationEmail extends Email implements OtusEmail {
 		return Mailer.HTML;
 	}
 
-	public void defineRecipient(User user){
+	public void defineRecipient(User user) {
 		addTORecipient("recipient", user.getEmail());
 	}
 
-    private void defineSubject(){
-    	setSubject(SUBJECT);
-    }
+	private void defineSubject() {
+		setSubject(SUBJECT);
+	}
 
 }
