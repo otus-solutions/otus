@@ -10,6 +10,7 @@ import javax.ws.rs.core.Application;
 import br.org.otus.configuration.rest.InstallerResource;
 import br.org.otus.fieldCenter.FieldCenterResource;
 import br.org.otus.security.rest.AuthenticationResource;
+import br.org.otus.survey.SurveyResource;
 import br.org.otus.user.UserResource;
 
 @ApplicationPath("otus")
@@ -27,6 +28,9 @@ public class EndPointsLoader extends Application {
 	@Inject
 	private UserResource userResource;
 
+	@Inject
+	private SurveyResource surveyResource;
+
 	@Override
 	public Set<Class<?>> getClasses() {
 		Set<Class<?>> resources = new HashSet<Class<?>>();
@@ -34,6 +38,7 @@ public class EndPointsLoader extends Application {
 		resources.add(AuthenticationResource.class);
 		resources.add(FieldCenterResource.class);
 		resources.add(UserResource.class);
+		resources.add(SurveyResource.class);
 		return resources;
 	}
 	
@@ -44,6 +49,7 @@ public class EndPointsLoader extends Application {
 		resources.add(authenticationResource);
 		resources.add(fieldCenterResource);
 		resources.add(userResource);
+		resources.add(surveyResource);
 		return resources;
 	}
 }
