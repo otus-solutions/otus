@@ -25,83 +25,82 @@ import br.org.otus.user.signup.exception.SignupException;
 @Path("/user")
 public class UserResource {
 
-    @Inject
-    private SignupService signupService;
-    @Inject
-    private EmailConstraint emailConstraint;
-    @Inject
-    private ManagementUserService managementUserService;
-    
-    @POST
-    @Path("/signup")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public String signup(SignupDataDto signupDataDto) {
-        Response response = new Response();
+	@Inject
+	private SignupService signupService;
+	@Inject
+	private EmailConstraint emailConstraint;
+	@Inject
+	private ManagementUserService managementUserService;
 
-        try {
-            signupService.execute(signupDataDto);
-            
-            response.buildSuccess();
-        } catch (SignupException e) {
-            response.buildError(((ResponseError) e));
-        }
+	@POST
+	@Path("/signup")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public String signup(SignupDataDto signupDataDto) {
+		Response response = new Response();
 
-        return response.toJson();
-    }
+		try {
+			signupService.execute(signupDataDto);
 
-    @POST
-    @Path("/validation")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String validation(OtusInitializationConfigDto otusInitializationConfigDto) {
-        System.out.println(otusInitializationConfigDto);
-        return new Response().buildSuccess().toJson();
-    }
-    
-    @GET
-    @Path("/exists")
-    @Produces(MediaType.APPLICATION_JSON)
-    public String userEmailExists(@QueryParam("email") String email) {
-        Boolean result = emailConstraint.isUnique(email);
-        Response response = new Response();
-        return response.buildSuccess(!result).toJson();
-    }
-    
-    @GET
-    @Path("/fetch")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    @Secured
-    public String getUsers() {
-        List<ManagementUserDto> managementUserDtos = managementUserService.fetchUsers();
-        Response response = new Response();
-        return response.buildSuccess(managementUserDtos).toJson();
-    }
-    
-    @POST
-    @Path("/disable")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Secured
-    public String disableUsers(ManagementUserDto managementUserDto) {
-        managementUserService.disableUsers(managementUserDto);
-        Response response = new Response();
+			response.buildSuccess();
+		} catch (SignupException e) {
+			response.buildError(((ResponseError) e));
+		}
 
-        return response.buildSuccess().toJson();
+		return response.toJson();
+	}
 
-    }
+	@POST
+	@Path("/validation")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String validation(OtusInitializationConfigDto otusInitializationConfigDto) {
+		System.out.println(otusInitializationConfigDto);
+		return new Response().buildSuccess().toJson();
+	}
 
-    @POST
-    @Path("/enable")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Secured
-    public String enableUsers(ManagementUserDto managementUserDto) {
-        managementUserService.enableUsers(managementUserDto);
-        Response response = new Response();
+	@GET
+	@Path("/exists")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String userEmailExists(@QueryParam("email") String email) {
+		Boolean result = emailConstraint.isUnique(email);
+		Response response = new Response();
+		return response.buildSuccess(!result).toJson();
+	}
 
-        return response.buildSuccess().toJson();
-    }
+	@GET
+	@Path("/fetch")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Secured
+	public String getUsers() {
+		List<ManagementUserDto> managementUserDtos = managementUserService.fetchUsers();
+		Response response = new Response();
+		return response.buildSuccess(managementUserDtos).toJson();
+	}
 
+	@POST
+	@Path("/disable")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Secured
+	public String disableUsers(ManagementUserDto managementUserDto) {
+		managementUserService.disableUsers(managementUserDto);
+		Response response = new Response();
+
+		return response.buildSuccess().toJson();
+
+	}
+
+	@POST
+	@Path("/enable")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Secured
+	public String enableUsers(ManagementUserDto managementUserDto) {
+		managementUserService.enableUsers(managementUserDto);
+		Response response = new Response();
+
+		return response.buildSuccess().toJson();
+	}
 
 }
