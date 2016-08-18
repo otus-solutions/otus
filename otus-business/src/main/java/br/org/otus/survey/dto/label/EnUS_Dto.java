@@ -1,6 +1,6 @@
 package br.org.otus.survey.dto.label;
 
-public class EnUS_Dto extends GenericLabel {
+public class EnUS_Dto extends GenericLabelDto {
 
 	@Override
 	public Boolean isValid() {

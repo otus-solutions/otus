@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import br.org.otus.rest.dtos.Dto;
 import br.org.tutty.Equalization;
 
-public abstract class GenericLabel implements Dto {
+public abstract class GenericLabelDto implements Dto {
 	
 	@SerializedName("extends")
 	@Equalization(name = "extends")
