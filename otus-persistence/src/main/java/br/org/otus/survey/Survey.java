@@ -29,7 +29,7 @@ public class Survey {
 	
 	@Equalization(name = "identity")
 	@NotNull
-	private Identity identity;
+	public Identity identity;
 	
 	@Equalization(name = "metainfo")
 	@NotNull
