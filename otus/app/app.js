@@ -8,7 +8,7 @@
             'otus.authenticator',
             'otusjs.otus.singup',
             'otus.client',
-            'otusDomainClient',
+            'otus.domain.client',
             'otus.participant.search'
         ]);
 }());
