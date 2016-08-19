@@ -19,7 +19,8 @@ public class Auditor {
     @NotNull
     private Date date;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Embedded
+    @ElementCollection
     private Set<LogEntry> logEntries;
 
     public void addEntry(LogEntry logEntry) {
