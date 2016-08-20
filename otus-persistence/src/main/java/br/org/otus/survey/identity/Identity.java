@@ -5,7 +5,7 @@ import java.util.List;
 import br.org.tutty.Equalization;
 
 public class Identity {
-	
+
 	@Equalization(name = "extents")
 	private String extents;
 
@@ -26,5 +26,11 @@ public class Identity {
 
 	@Equalization(name = "keywords")
 	private List<String> keywords;
+
+	@Override
+	public String toString() {
+		return "Identity [extents=" + extents + ", objectType=" + objectType + ", name=" + name + ", acronym=" + acronym
+				+ ", recommendedTo=" + recommendedTo + ", description=" + description + ", keywords=" + keywords + "]";
+	}
 
 }

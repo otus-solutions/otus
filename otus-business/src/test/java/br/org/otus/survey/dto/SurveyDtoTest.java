@@ -10,10 +10,8 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 
-import br.org.otus.survey.Survey;
 import br.org.otus.survey.dto.identity.IdentityDto;
 import br.org.otus.survey.dto.metainfo.MetaInfoDto;
-import br.org.tutty.Equalizer;
 
 
 public class SurveyDtoTest {
@@ -26,13 +24,7 @@ public class SurveyDtoTest {
 				+ "{\"extents\": \"StudioObject\","
 				+ "\"objectType\": \"Survey\","
 				+ "\"oid\": \"dXNlclVVSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOls3MDZlMTE2MC02M2I5LTExZTYtOWJjNy0xNWVhN2RkZDA4NTZdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==\","
-				+ "\"identity\": {\"extents\": \"StudioObject\","
-				+ "\"objectType\": \"SurveyIdentity\","
-				+ "\"name\": \"Formulário Teste\","
-				+ "\"acronym\": \"TST\","
-				+ "\"recommendedTo\": \"Qualquer pesquisa\","
-				+ "\"description\": \"Descrição do formulário\","
-				+ "\"keywords\": [\"TESTE\", \"TST\"]},"
+				+ "\"identity\": {},"
 				+ "\"metainfo\": {},"
 				+ "\"itemContainer\": [],"
 				+ "\"navigationList\": []}";
@@ -52,12 +44,4 @@ public class SurveyDtoTest {
 		assertTrue(surveyDto.navigationList instanceof List<?>);
 	}
 	
-	@Test
-	public void should_equalize() {
-		Survey survey = new Survey();
-	
-		Equalizer.equalize(surveyDto, survey);
-		
-	}
-
 }
