@@ -14,10 +14,6 @@ public class AuthenticationDto implements Dto, AuthenticationData{
 
 	private String issuer;
 	
-	public void encryptPassword() {
-		this.password = EncryptorResources.encrypt(password);
-	}
-
 	@Override
 	public String getKey() {
 		return email;
@@ -36,6 +32,11 @@ public class AuthenticationDto implements Dto, AuthenticationData{
 	@Override
 	public Boolean isValid() {
 		return !email.isEmpty() && !password.isEmpty();
+	}
+
+	@Override
+	public void encrypt() {
+		this.password = EncryptorResources.encryptIrreversible(password);
 	}
 
 	public void setIssuer(String issuer){

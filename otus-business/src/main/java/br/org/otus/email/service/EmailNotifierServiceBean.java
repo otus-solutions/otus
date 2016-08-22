@@ -1,5 +1,6 @@
 package br.org.otus.email.service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import javax.ejb.Asynchronous;
@@ -14,6 +15,7 @@ import br.org.otus.email.OtusEmailFactory;
 import br.org.otus.email.system.SystemInstallationEmail;
 import br.org.otus.exceptions.DataNotFoundException;
 import br.org.otus.exceptions.EmailNotificationException;
+import br.org.otus.security.EncryptorResources;
 import br.org.otus.system.SystemConfigDao;
 import br.org.owail.io.TemplateReader;
 import br.org.owail.sender.email.Recipient;
@@ -30,12 +32,16 @@ public class EmailNotifierServiceBean implements EmailNotifierService {
 
     @Override
     public void sendSystemInstallationEmail(OtusInitializationConfigDto initializationData) throws EmailNotificationException {
-    	BasicEmailSender emailSenderDto = new BasicEmailSender();
-    	Equalizer.equalize(initializationData.getEmailSender(), emailSenderDto);    	
-        Recipient recipient = Recipient.createTO(initializationData.getUser().getName(), initializationData.getUser().getEmail());
-        Sender sender = new Sender(emailSenderDto.getName(), emailSenderDto.getEmail(), emailSenderDto.getPassword());
-        SystemInstallationEmail email = OtusEmailFactory.createSystemInstallationEmail(sender, recipient);
-        sendEmail(email);
+        try {
+            BasicEmailSender emailSenderDto = new BasicEmailSender();
+            Equalizer.equalize(initializationData.getEmailSender(), emailSenderDto);
+            Recipient recipient = Recipient.createTO(initializationData.getUser().getName(), initializationData.getUser().getEmail());
+            Sender sender = new Sender(emailSenderDto.getName(), emailSenderDto.getEmail(), EncryptorResources.decrypt(emailSenderDto.getPassword()));
+            SystemInstallationEmail email = OtusEmailFactory.createSystemInstallationEmail(sender, recipient);
+            sendEmail(email);
+        }catch (UnsupportedEncodingException e) {
+            throw new EmailNotificationException();
+        }
     }
     
     @Override
@@ -62,9 +68,14 @@ public class EmailNotifierServiceBean implements EmailNotifierService {
     }
 
     @Override
-    public Sender getSender() throws DataNotFoundException {
+    public Sender getSender() throws DataNotFoundException, EmailNotificationException {
         BasicEmailSender emailSender = systemConfigDao.findEmailSender();
-        return new Sender(emailSender.getName(), emailSender.getEmail(), emailSender.getPassword());
+        try {
+            return new Sender(emailSender.getName(), emailSender.getEmail(), EncryptorResources.decrypt(emailSender.getPassword()));
+
+        } catch (UnsupportedEncodingException e) {
+            throw new EmailNotificationException(e);
+        }
     }
 
     private String mergeTemplate(Map<String, String> dataMap, String template) {

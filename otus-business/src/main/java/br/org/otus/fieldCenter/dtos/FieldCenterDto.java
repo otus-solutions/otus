@@ -34,4 +34,8 @@ public class FieldCenterDto implements Dto {
                 !acronym.isEmpty()
                 ? Boolean.TRUE : Boolean.FALSE;
     }
+
+    @Override
+    public void encrypt() {
+    }
 }

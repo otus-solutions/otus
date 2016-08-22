@@ -72,7 +72,7 @@ public class UserDto implements EmailSender {
 	}
 
 	public void encrypt() {
-		this.password = EncryptorResources.encrypt(password);
+		this.password = EncryptorResources.encryptIrreversible(password);
 	}
 
 }

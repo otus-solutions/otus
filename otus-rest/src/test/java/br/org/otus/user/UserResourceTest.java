@@ -61,6 +61,13 @@ public class UserResourceTest {
 	}
 
 	@Test
+	public void signup_method_should_call_encrypt_from_SignupService() throws SignupException {
+		resource.signup(signupDataDto);
+
+		verify(signupDataDto).encrypt();
+	}
+
+	@Test
 	public void signup_method_should_return_a_response_with_build_success_if_no_errors_occurs() throws SignupException {
 		resource.signup(signupDataDto);
 

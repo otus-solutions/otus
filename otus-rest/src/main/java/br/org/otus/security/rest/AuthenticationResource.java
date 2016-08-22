@@ -27,7 +27,7 @@ public class AuthenticationResource {
     public String authenticate(AuthenticationDto authenticationDto, @Context HttpServletRequest request) {
         Response response = new Response();
 
-        authenticationDto.encryptPassword();
+        authenticationDto.encrypt();
         authenticationDto.setIssuer(request.getRequestURL().toString());
 
         try {

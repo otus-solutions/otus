@@ -110,7 +110,7 @@ public class SignupServiceEmailSendTest {
 
     @SuppressWarnings("unchecked")
     @Test(expected = SignupException.class)
-    public void notifyAdministrator_method_should_throw_an_exception_when_sender_data_is_not_found() throws SignupException, DataNotFoundException {
+    public void notifyAdministrator_method_should_throw_an_exception_when_sender_data_is_not_found() throws SignupException, DataNotFoundException, EmailNotificationException {
         when(emailNotifierService.getSender()).thenThrow(DataNotFoundException.class);
 
         service.execute(signupData);

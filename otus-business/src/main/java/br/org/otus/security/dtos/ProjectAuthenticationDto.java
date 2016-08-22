@@ -19,6 +19,10 @@ public class ProjectAuthenticationDto implements AuthenticationData {
     }
 
     @Override
+    public void encrypt() {
+    }
+
+    @Override
     public String getKey() {
         return projectToken.toString().trim();
     }

@@ -1,6 +1,7 @@
 package br.org.otus.configuration.rest;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -49,10 +50,12 @@ public class InstallerResource {
         OtusInitializationConfigDto initData = new Gson().fromJson(systemConfigData, OtusInitializationConfigDto.class);
 
         try {
+            initData.encrypt();
             String projectToken = systemConfigService.generateProjectToken();
             registerProjectOnDomain(initData, request, projectToken);
             systemConfigService.createInitialSystemConfig(initData, projectToken);
             response.buildSuccess();
+
         } catch (Exception e) {
             response.buildError(((ResponseError) e));
         }
@@ -68,9 +71,11 @@ public class InstallerResource {
         Response response = new Response();
 
         try {
+            initializationConfigDto.encrypt();
             systemConfigService.verifyEmailService(initializationConfigDto);
             response.setData(Boolean.TRUE);
-        } catch (EmailNotificationException e) {
+
+        } catch (EmailNotificationException | UnsupportedEncodingException e) {
             response.setData(Boolean.FALSE);
         }
 

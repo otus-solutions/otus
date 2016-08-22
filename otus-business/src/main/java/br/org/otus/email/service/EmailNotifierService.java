@@ -10,7 +10,7 @@ public interface EmailNotifierService {
 
     void sendSystemInstallationEmail(OtusInitializationConfigDto otusInitializationData) throws EmailNotificationException, DataNotFoundException;
 
-	Sender getSender() throws DataNotFoundException;
+	Sender getSender() throws DataNotFoundException, EmailNotificationException;
 
 	void sendEmail(OtusEmail email) throws EmailNotificationException;
 

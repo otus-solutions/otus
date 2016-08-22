@@ -5,6 +5,8 @@ import br.org.otus.email.dto.EmailSenderDto;
 import br.org.otus.project.dto.ProjectDto;
 import br.org.otus.user.dto.UserDto;
 
+import java.io.UnsupportedEncodingException;
+
 public class OtusInitializationConfigDto {
 
 	private UserDto user;
@@ -28,8 +30,8 @@ public class OtusInitializationConfigDto {
 		return emailSender;
 	}
 
-	public void setEmailSender(EmailSenderDto emailSender) {
-		this.emailSender = emailSender;
+	public void encrypt() throws UnsupportedEncodingException {
+		emailSender.encrypt();
+		user.encrypt();
 	}
-
 }

@@ -65,7 +65,7 @@ public class SignupServiceExecutionTest {
     @SuppressWarnings("unchecked")
     @Ignore
     @Test(expected = SignupException.class)
-    public void execute_method_should_throw_an_SignupException_when_data_persistence_fail() throws SignupException, DataNotFoundException {
+    public void execute_method_should_throw_an_SignupException_when_data_persistence_fail() throws SignupException, DataNotFoundException, EmailNotificationException {
         when(signupData.isValid()).thenReturn(true);
         when(emailConstraint.isUnique(signupData.getEmail())).thenReturn(true);
         when(userDao.findAdmin()).thenReturn(admin);

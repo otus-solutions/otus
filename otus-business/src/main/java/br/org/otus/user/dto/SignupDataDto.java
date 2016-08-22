@@ -79,13 +79,16 @@ public class SignupDataDto implements Dto {
 		
 		return isComplete && isPasswordConfirmed;
 	}
-	
+
+	@Override
+	public void encrypt() {
+		this.password = EncryptorResources.encryptIrreversible(password);
+		this.passwordConfirmation = EncryptorResources.encryptIrreversible(passwordConfirmation);
+	}
+
 	private Boolean isPasswordConfirmed() {
         return password.equals(passwordConfirmation);
     }
 
-	public void encrypt() {
-		this.password = EncryptorResources.encrypt(password);		
-	}
 
 }

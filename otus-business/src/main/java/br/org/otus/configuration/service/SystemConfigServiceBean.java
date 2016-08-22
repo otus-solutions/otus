@@ -1,11 +1,5 @@
 package br.org.otus.configuration.service;
 
-import java.util.UUID;
-
-import javax.ejb.Local;
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.email.service.EmailNotifierService;
 import br.org.otus.exceptions.DataNotFoundException;
@@ -15,6 +9,11 @@ import br.org.otus.system.SystemConfig;
 import br.org.otus.system.SystemConfigDao;
 import br.org.otus.user.User;
 import br.org.tutty.Equalizer;
+
+import javax.ejb.Local;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import java.util.UUID;
 
 @Stateless
 @Local(SystemConfigService.class)
@@ -36,7 +35,6 @@ public class SystemConfigServiceBean implements SystemConfigService {
         try {
             User user = new User();
 
-            configDto.getUser().encrypt();
             Equalizer.equalize(configDto.getUser(), user);
 
             user.becomesAdm();
@@ -51,7 +49,6 @@ public class SystemConfigServiceBean implements SystemConfigService {
     public void createInitialSystemConfig(OtusInitializationConfigDto configDto, String projectToken) throws Exception {
         SystemConfig systemConfig = new SystemConfig();
 
-        configDto.getEmailSender();
         Equalizer.equalize(configDto.getProject(), systemConfig);
         Equalizer.equalize(configDto.getDomainDto(), systemConfig);
         Equalizer.equalize(configDto.getEmailSender(), systemConfig.getEmailSender());
@@ -70,6 +67,7 @@ public class SystemConfigServiceBean implements SystemConfigService {
     public void verifyEmailService(OtusInitializationConfigDto initializationData) throws EmailNotificationException {
         try {
             emailNotifierService.sendSystemInstallationEmail(initializationData);
+
         } catch (EmailNotificationException | DataNotFoundException e) {
             throw new EmailNotificationException(e);
         }

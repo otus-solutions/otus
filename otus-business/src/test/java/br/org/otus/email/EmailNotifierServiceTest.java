@@ -36,6 +36,7 @@ import br.org.owail.sender.gmail.GMailer;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({ EmailNotifierServiceBean.class, GMailer.class, OtusEmailFactory.class, Recipient.class })
 public class EmailNotifierServiceTest {
+    private static String PASSWORD = "PASSWORD";
 
     @InjectMocks
     private EmailNotifierServiceBean service;
@@ -74,8 +75,9 @@ public class EmailNotifierServiceTest {
     }
 
     @Test
-    public void getSender_method_should_return_the_system_email_sender() throws DataNotFoundException {
+    public void getSender_method_should_return_the_system_email_sender() throws DataNotFoundException, EmailNotificationException {
         when(systemConfigDao.findEmailSender()).thenReturn(emailSender);
+        when(emailSender.getPassword()).thenReturn(PASSWORD);
 
         Object sender = service.getSender();
 
@@ -101,6 +103,8 @@ public class EmailNotifierServiceTest {
 
     @Test
     public void sendSystemInstallationEmail_method_should_send_an_SystemInstallationEmail() throws Exception {
+        whenNew(BasicEmailSender.class).withNoArguments().thenReturn(emailSender);
+        when(emailSender.getPassword()).thenReturn(PASSWORD);
         when(initializationData.getEmailSender()).thenReturn(emailSenderDto);
 
         whenNew(Sender.class).withArguments(Mockito.anyString(), Mockito.anyString(), Mockito.anyString()).thenReturn(sender);

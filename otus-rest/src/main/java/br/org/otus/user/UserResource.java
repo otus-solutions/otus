@@ -42,6 +42,7 @@ public class UserResource {
         Response response = new Response();
 
         try {
+            signupDataDto.encrypt();
             signupService.execute(signupDataDto);
 
             response.buildSuccess();
@@ -52,20 +53,12 @@ public class UserResource {
         return response.toJson();
     }
 
-    @POST
-    @Path("/validation")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public String validation(OtusInitializationConfigDto otusInitializationConfigDto) {
-        System.out.println(otusInitializationConfigDto);
-        return new Response().buildSuccess().toJson();
-    }
-
     @GET
     @Path("/exists")
     @Produces(MediaType.APPLICATION_JSON)
     public String userEmailExists(@QueryParam("email") String email) {
-        Boolean result = emailConstraint.isUnique(email);
         Response response = new Response();
+        Boolean result = emailConstraint.isUnique(email);
         return response.buildSuccess(!result).toJson();
     }
 
@@ -75,8 +68,8 @@ public class UserResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Secured
     public String getUsers() {
-        List<ManagementUserDto> managementUserDtos = managementUserService.fetchUsers();
         Response response = new Response();
+        List<ManagementUserDto> managementUserDtos = managementUserService.fetchUsers();
         return response.buildSuccess(managementUserDtos).toJson();
     }
 
