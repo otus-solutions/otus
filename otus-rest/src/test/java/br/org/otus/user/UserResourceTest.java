@@ -4,6 +4,8 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.whenNew;
 
+import br.org.otus.exceptions.UserDisabledException;
+import br.org.otus.exceptions.UserEnabledException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,16 +33,16 @@ public class UserResourceTest {
 
 	@Mock
 	private SignupService signupService;
-	
+
 	@Mock
 	private SignupDataDto signupDataDto;
-	
+
 	@Mock
 	private Response response;
-	
+
 	@Mock
 	private ManagementUserService managementUserService;
-	
+
 	@Mock
 	private ManagementUserDto managementUserDto;
 
@@ -83,17 +85,37 @@ public class UserResourceTest {
 	}
 
 	@Test
-	public void disableUsers_method_should_called_method_disableUsers_with_parameter_managementUserDto() {
+	public void disableUsers_method_should_called_method_disableUsers_with_parameter_managementUserDto() throws UserDisabledException {
 		resource.disableUsers(managementUserDto);
 
 		verify(managementUserService).disableUsers(managementUserDto);
 	}
 
 	@Test
-	public void enableUsers_method_should_called_method_enableUsers_with_parameter_managementUserDto() {
+	public void enableUsers_method_should_called_method_enableUsers_with_parameter_managementUserDto() throws UserEnabledException {
 		resource.enableUsers(managementUserDto);
 
 		verify(managementUserService).enableUsers(managementUserDto);
+	}
+
+	@Test
+	public void disableUsers_method_should_return_buildError_when_throw_UserDisabledException() throws UserDisabledException {
+		doThrow(new UserDisabledException()).when(managementUserService).disableUsers(managementUserDto);
+
+		resource.disableUsers(managementUserDto);
+
+		verify(response).buildError((ResponseError) Mockito.any(UserDisabledException.class));
+		verify(response).toJson();
+	}
+
+	@Test
+	public void enabledUsers_method_should_return_buildError_when_throw_UserEnabledException() throws UserEnabledException {
+		doThrow(new UserEnabledException()).when(managementUserService).enableUsers(managementUserDto);
+
+		resource.enableUsers(managementUserDto);
+
+		verify(response).buildError((ResponseError) Mockito.any(UserEnabledException.class));
+		verify(response).toJson();
 	}
 
 }

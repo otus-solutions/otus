@@ -68,6 +68,10 @@ public class User {
 		enable();
 	}
 
+	public Boolean isAdmin(){
+		return adm;
+	}
+
 	public String getId() {
 		return id;
 	}

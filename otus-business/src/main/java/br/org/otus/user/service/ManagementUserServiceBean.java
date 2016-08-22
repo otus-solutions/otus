@@ -11,6 +11,8 @@ import br.org.otus.email.user.management.DisableUserNotificationEmail;
 import br.org.otus.email.user.management.EnableUserNotificationEmail;
 import br.org.otus.exceptions.DataNotFoundException;
 import br.org.otus.exceptions.EmailNotificationException;
+import br.org.otus.exceptions.UserDisabledException;
+import br.org.otus.exceptions.UserEnabledException;
 import br.org.otus.user.User;
 import br.org.otus.user.UserDao;
 import br.org.otus.user.dto.ManagementUserDto;
@@ -46,25 +48,30 @@ public class ManagementUserServiceBean implements ManagementUserService {
 	}
 
 	@Override
-	public void disableUsers(ManagementUserDto managementUserDto) {
+	public void disableUsers(ManagementUserDto managementUserDto) throws UserDisabledException {
 		try {
 			User user = userDao.fetchByEmail(managementUserDto.getEmail());
-			user.disable();
 
-			userDao.update(user);
+			if(!user.isAdmin()){
+				user.disable();
 
-			DisableUserNotificationEmail disableUserNotificationEmail = new DisableUserNotificationEmail();
-			disableUserNotificationEmail.defineRecipient(user);
-			disableUserNotificationEmail.setFrom(emailNotifierService.getSender());
+				userDao.update(user);
 
-			emailNotifierService.sendEmail(disableUserNotificationEmail);
+				DisableUserNotificationEmail disableUserNotificationEmail = new DisableUserNotificationEmail();
+				disableUserNotificationEmail.defineRecipient(user);
+				disableUserNotificationEmail.setFrom(emailNotifierService.getSender());
+
+				emailNotifierService.sendEmail(disableUserNotificationEmail);
+			}else {
+				throw new UserDisabledException();
+			}
 		} catch (DataNotFoundException | EmailNotificationException e) {
-			e.printStackTrace();
+			throw new UserDisabledException();
 		}
 	}
 
 	@Override
-	public void enableUsers(ManagementUserDto managementUserDto) {
+	public void enableUsers(ManagementUserDto managementUserDto) throws UserEnabledException {
 		try {
 			User user = userDao.fetchByEmail(managementUserDto.getEmail());
 			user.enable();
@@ -77,7 +84,7 @@ public class ManagementUserServiceBean implements ManagementUserService {
 
 			emailNotifierService.sendEmail(enableUserNotificationEmail);
 		} catch (DataNotFoundException | EmailNotificationException e) {
-			e.printStackTrace();
+			throw new UserEnabledException();
 		}
 	}
 }
