@@ -15,8 +15,7 @@ public class SystemConfigDao extends GenericDao {
 	}
 
 	public BasicEmailSender findEmailSender() throws DataNotFoundException {
-		String query = String.format("db.%s.find({})", "SystemConfig", true);
-		SystemConfig systemConfig = (SystemConfig) notWaitingEmpty(getSingleResult(query, SystemConfig.class));
+		SystemConfig systemConfig = (SystemConfig) notWaitingEmpty(getSingleResult("", SystemConfig.class));
 		return systemConfig.getEmailSender();
 	}
 }
