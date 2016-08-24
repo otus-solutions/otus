@@ -1,26 +1,20 @@
 package br.org.otus.security.dtos;
 
+import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.tutty.Equalization;
 
 public class ProjectAuthenticationDto implements AuthenticationData {
     @Equalization(name = "projectToken")
-    private String projectToken;
+    public String projectToken;
 
     @Equalization(name = "projectName")
-    private String projectName;
-
-    public void setProjectToken(String projectToken) {
-        this.projectToken = projectToken;
-    }
+    public String projectName;
 
     @Override
     public Boolean isValid() {
         return projectToken != null;
     }
 
-    @Override
-    public void encrypt() {
-    }
 
     @Override
     public String getKey() {
@@ -34,10 +28,10 @@ public class ProjectAuthenticationDto implements AuthenticationData {
 
     @Override
     public String getIssuer() {
-        return projectName;
+        return "PROJECT_AUTHENTICATION";
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    @Override
+    public void encrypt() throws EncryptedException{
     }
 }

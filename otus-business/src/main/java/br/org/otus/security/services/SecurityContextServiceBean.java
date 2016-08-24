@@ -1,10 +1,13 @@
 package br.org.otus.security.services;
 
-import br.org.otus.exceptions.FieldCenterNotFoundException;
-import br.org.otus.exceptions.TokenException;
+import br.org.otus.exceptions.webservice.common.DataNotFoundException;
+import br.org.otus.exceptions.webservice.security.TokenException;
 import br.org.otus.security.context.SecurityContext;
 import br.org.otus.security.dtos.AuthenticationData;
-import com.nimbusds.jose.*;
+import com.nimbusds.jose.JOSEException;
+import com.nimbusds.jose.JWSAlgorithm;
+import com.nimbusds.jose.JWSHeader;
+import com.nimbusds.jose.JWSSigner;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
@@ -16,68 +19,62 @@ import java.security.SecureRandom;
 import java.text.ParseException;
 
 @Stateless
-@Local(SecurityContextService.class)
 public class SecurityContextServiceBean implements SecurityContextService {
 
-	@Inject
-	private SecurityContext securityContext;
+    @Inject
+    private SecurityContext securityContext;
 
-	@Override
-	public String generateToken(AuthenticationData authenticationData, byte[] secretKey) throws JOSEException {
-		JWSSigner signer = new MACSigner(secretKey);
+    @Override
+    public String generateToken(AuthenticationData authenticationData, byte[] secretKey) throws TokenException {
+        try{
+            JWSSigner signer = new MACSigner(secretKey);
 
-		SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), generateClaimsSet(authenticationData));
-		signedJWT.sign(signer);
+            SignedJWT signedJWT = new SignedJWT(new JWSHeader(JWSAlgorithm.HS256), generateClaimsSet(authenticationData));
+            signedJWT.sign(signer);
 
-		return signedJWT.serialize();
-	}
+            return signedJWT.serialize();
+        } catch (JOSEException e) {
+            throw new TokenException(e);
+        }
+    }
 
-	private JWTClaimsSet generateClaimsSet(AuthenticationData authenticationData){
-		JWTClaimsSet.Builder builder = new JWTClaimsSet.Builder();
-		builder.subject(authenticationData.getKey());
-		builder.issuer(authenticationData.getIssuer());
+    private JWTClaimsSet generateClaimsSet(AuthenticationData authenticationData) {
+        JWTClaimsSet.Builder builder = new JWTClaimsSet.Builder();
+        builder.subject(authenticationData.getKey());
+        builder.issuer(authenticationData.getIssuer());
 
-		return builder.build();
-	}
+        return builder.build();
+    }
 
-	@Override
-	public byte[] generateSecretKey(){
-		SecureRandom secureRandom = new SecureRandom();
-		byte[] sharedSecret = new byte[32];
-		secureRandom.nextBytes(sharedSecret);
+    @Override
+    public byte[] generateSecretKey() {
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] sharedSecret = new byte[32];
+        secureRandom.nextBytes(sharedSecret);
 
-		return sharedSecret;
-	}
+        return sharedSecret;
+    }
 
-	@Override
-	public void addToken(String token, byte[] secretKey) {
-		securityContext.add(token, secretKey);
-	}
+    @Override
+    public void addToken(String token, byte[] secretKey) {
+        securityContext.add(token, secretKey);
+    }
 
-	@Override
-	public void removeToken(String token) throws FieldCenterNotFoundException {
-		try {
-			securityContext.remove(token);
-		} catch (ParseException e) {
-			throw new FieldCenterNotFoundException();
-		}
-	}
+    @Override
+    public void removeToken(String token) {
+        securityContext.remove(token);
+    }
 
-	@Override
-	public void validateToken(String token) throws TokenException {
-		try {
-			if(securityContext.hasToken(token)){
-				securityContext.verifySignature(token);
-			}else {
-				throw new TokenException();
-			}
-		} catch (ParseException | JOSEException e) {
-			throw new TokenException();
-		}
-	}
-
-	@Override
-	public String getUserId(String token) throws ParseException {
-		return securityContext.getUserId(token);
-	}
+    @Override
+    public void validateToken(String token) throws TokenException {
+        try {
+            if (securityContext.hasToken(token)) {
+                securityContext.verifySignature(token);
+            } else {
+                throw new TokenException(new DataNotFoundException());
+            }
+        } catch (ParseException | JOSEException e) {
+            throw new TokenException(e);
+        }
+    }
 }

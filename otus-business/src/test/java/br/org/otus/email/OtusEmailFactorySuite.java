@@ -1,11 +1,10 @@
 package br.org.otus.email;
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
-
 import br.org.otus.email.system.OtusSystemInstallationEmailTest;
 import br.org.otus.email.user.signup.OtusNewUserGreetingsEmailTest;
 import br.org.otus.email.user.signup.OtusNewUserNotificationEmailTest;
+import org.junit.runner.RunWith;
+import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ 

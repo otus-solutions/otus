@@ -2,7 +2,6 @@ package br.org.otus.system;
 
 import br.org.otus.dao.GenericDao;
 import br.org.otus.email.BasicEmailSender;
-import br.org.otus.exceptions.DataNotFoundException;
 
 public class SystemConfigDao extends GenericDao {
 
@@ -10,11 +9,11 @@ public class SystemConfigDao extends GenericDao {
 		return exist(SystemConfig.class);
 	}
 
-	public SystemConfig fetchSystemConfig() throws DataNotFoundException {
+	public SystemConfig fetchSystemConfig() {
 		return (SystemConfig) notWaitingEmpty(getSingleResult("", SystemConfig.class));
 	}
 
-	public BasicEmailSender findEmailSender() throws DataNotFoundException {
+	public BasicEmailSender findEmailSender() {
 		SystemConfig systemConfig = (SystemConfig) notWaitingEmpty(getSingleResult("", SystemConfig.class));
 		return systemConfig.getEmailSender();
 	}

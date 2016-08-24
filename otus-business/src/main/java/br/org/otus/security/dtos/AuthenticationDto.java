@@ -1,5 +1,6 @@
 package br.org.otus.security.dtos;
 
+import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.rest.dtos.Dto;
 import br.org.otus.security.EncryptorResources;
 import br.org.tutty.Equalization;
@@ -35,7 +36,7 @@ public class AuthenticationDto implements Dto, AuthenticationData{
 	}
 
 	@Override
-	public void encrypt() {
+	public void encrypt() throws EncryptedException {
 		this.password = EncryptorResources.encryptIrreversible(password);
 	}
 

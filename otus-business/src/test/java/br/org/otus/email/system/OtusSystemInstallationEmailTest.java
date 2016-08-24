@@ -1,27 +1,17 @@
 package br.org.otus.email.system;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.instanceOf;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
-import static org.mockito.Matchers.anyString;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.Ignore;
-
 import br.org.otus.email.OtusEmailFactory;
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Recipient;
 import br.org.owail.sender.email.Sender;
+import org.junit.Before;
+import org.junit.Test;
 
-@Ignore
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.mockito.Matchers.anyString;
+
 public class OtusSystemInstallationEmailTest {
-
-    private final String SUBJECT = "Sistema Otus: Instalação bem sucedida";
-
     private Sender sender;
     private Recipient recipient;
 
@@ -51,11 +41,4 @@ public class OtusSystemInstallationEmailTest {
 
         assertThat(email.getFrom(), notNullValue());
     }
-
-    public void createSystemInstallationEmail_method_should_return_an_email_with_subject_defined() {
-        Email email = OtusEmailFactory.createSystemInstallationEmail(sender, recipient);
-
-        assertThat(email.getSubject(), equalTo(SUBJECT));
-    }
-
 }

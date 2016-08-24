@@ -14,15 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.HttpHeaders;
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.Map;
 
-@WebFilter(filterName = "auditorFilter",
-        urlPatterns = {
-                "/v01/intaller/*",
-                "/v01/center/*",
-                "/v01/user/*",
-        })
+@WebFilter(filterName = "auditorFilter", urlPatterns = {"/v01/*"})
 public class AuditorServletFilter implements Filter {
     @Inject
     private SecurityContextService securityContextService;
@@ -77,8 +71,10 @@ public class AuditorServletFilter implements Filter {
 
     private String readUserId(String token) {
         try {
-            return securityContextService.getUserId(token);
-        } catch (ParseException e) {
+            // TODO
+/*            return securityContextService.getUserId(token);*/
+            return "";
+        } catch (Exception e) {
             return "";
         }
     }

@@ -1,17 +1,9 @@
 package br.org.otus.rest;
 
-import br.org.otus.exceptions.ResponseError;
 import com.google.gson.Gson;
 
 public class Response {
-
 	private Object data;
-	private Object error;
-	private Boolean hasErrors;
-	
-	public Response() {
-		hasErrors = Boolean.FALSE;
-	}
 
 	public Object getData() {
 		return data;
@@ -22,24 +14,9 @@ public class Response {
 		return this;
 	}
 
-	public Response setError(Object error) {
-		this.error = error;
-		return this;
-	}
-
-	public Object getError() {
-		return error;
-	}
-
 	public String toJson() {
 		Gson gson = new Gson();
 		return gson.toJson(this);
-	}
-
-	public Response buildError(ResponseError data) {
-		this.hasErrors = Boolean.TRUE;
-		this.data = data.getObjectError();
-		return this;
 	}
 
 	public Response buildSuccess(Object data) {

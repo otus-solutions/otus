@@ -1,23 +1,17 @@
 package br.org.otus.user;
 
-import java.util.List;
+import br.org.otus.dao.GenericDao;
 
 import javax.persistence.NoResultException;
-
-import br.org.otus.dao.GenericDao;
-import br.org.otus.exceptions.DataNotFoundException;
+import java.util.List;
 
 public class UserDao extends GenericDao {
 
     private static final String EMAIL = "email";
     private static final String ADM = "adm";
 
-    public User fetchByEmail(String email) throws DataNotFoundException {
-        try {
-            return ((User) notWaitingEmpty(getSingleResult(String.format("db.%s.find({'email':'%s'})", "User", email), User.class)));
-        } catch (NoResultException e) {
-            throw new DataNotFoundException();
-        }
+    public User fetchByEmail(String email) {
+        return ((User) notWaitingEmpty(getSingleResult(String.format("db.%s.find({'email':'%s'})", "User", email), User.class)));
     }
 
     public Boolean emailExists(String email) {
@@ -26,16 +20,16 @@ public class UserDao extends GenericDao {
             notWaitingEmpty(getSingleResult(query, User.class));
             return Boolean.TRUE;
 
-        } catch (NoResultException | DataNotFoundException e) {
+        } catch (NoResultException e) {
             return Boolean.FALSE;
         }
     }
 
-    public User findAdmin() throws DataNotFoundException {
+    public User findAdmin() {
         String query = String.format("db.%s.find({ '%s' : %s })", "User", ADM, true);
         return (User) notWaitingEmpty(getSingleResult(query, User.class));
     }
-    
+
     public List<User> fetchAll() {
         String query = String.format("db.%s.find({})", "User");
         return getListResult(query, User.class);

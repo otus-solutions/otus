@@ -1,10 +1,10 @@
 package br.org.otus.email;
 
-import java.util.List;
-import java.util.Map;
-
 import br.org.owail.sender.email.Recipient;
 import br.org.owail.sender.email.Sender;
+
+import java.util.List;
+import java.util.Map;
 
 public interface OtusEmail {
 

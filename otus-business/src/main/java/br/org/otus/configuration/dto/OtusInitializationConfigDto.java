@@ -1,13 +1,12 @@
 package br.org.otus.configuration.dto;
 
-import br.org.otus.domain.DomainDto;
 import br.org.otus.email.dto.EmailSenderDto;
+import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.project.dto.ProjectDto;
+import br.org.otus.rest.dtos.Dto;
 import br.org.otus.user.dto.UserDto;
 
-import java.io.UnsupportedEncodingException;
-
-public class OtusInitializationConfigDto {
+public class OtusInitializationConfigDto implements Dto {
 
 	private UserDto user;
 	private EmailSenderDto emailSender;
@@ -30,7 +29,13 @@ public class OtusInitializationConfigDto {
 		return emailSender;
 	}
 
-	public void encrypt() throws UnsupportedEncodingException {
+	@Override
+	public Boolean isValid() {
+		return Boolean.TRUE;
+	}
+
+	@Override
+	public void encrypt() throws EncryptedException {
 		emailSender.encrypt();
 		user.encrypt();
 	}

@@ -1,16 +1,15 @@
 package br.org.otus.fieldCenter;
 
-import br.org.otus.exceptions.AlreadyExistException;
-import br.org.otus.exceptions.DataNotFoundException;
-import br.org.otus.exceptions.FieldCenterNotFoundException;
-import br.org.otus.exceptions.InvalidDtoException;
+import br.org.otus.exceptions.webservice.common.AlreadyExistException;
+import br.org.otus.exceptions.webservice.common.DataNotFoundException;
+import br.org.otus.exceptions.webservice.validation.ValidationException;
 import br.org.otus.fieldCenter.dtos.FieldCenterDto;
 import br.org.otus.fieldCenter.dtos.FieldCenterUpdateDto;
 import br.org.tutty.Equalizer;
-import br.org.tutty.exception.EqualizerException;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,27 +19,24 @@ public class FieldCenterServiceBean implements FieldCenterService {
     private FieldCenterDao fieldCenterDao;
 
     @Override
-    public void create(FieldCenterDto fieldCenterDto) throws InvalidDtoException, AlreadyExistException {
-        try {
-            if (fieldCenterDto.isValid()) {
-                if (!fieldCenterDao.acronymInUse(fieldCenterDto.acronym)) {
-                    FieldCenter fieldCenter = new FieldCenter();
+    public void create(FieldCenterDto fieldCenterDto) throws AlreadyExistException, ValidationException {
+        if (fieldCenterDto.isValid()) {
 
-                    Equalizer.equalize(fieldCenterDto, fieldCenter);
-                    fieldCenterDao.merge(fieldCenter);
-                } else {
-                    throw new AlreadyExistException();
-                }
+            if (!fieldCenterDao.acronymInUse(fieldCenterDto.acronym)) {
+                FieldCenter fieldCenter = new FieldCenter();
+                Equalizer.equalize(fieldCenterDto, fieldCenter);
+                fieldCenterDao.merge(fieldCenter);
+
             } else {
-                throw new InvalidDtoException();
+                throw new AlreadyExistException();
             }
-        } catch (EqualizerException e) {
-            throw new InvalidDtoException();
+        } else {
+            throw new ValidationException();
         }
     }
 
     @Override
-    public void update(FieldCenterUpdateDto fieldCenterUpdateDto) throws InvalidDtoException, FieldCenterNotFoundException {
+    public void update(FieldCenterUpdateDto fieldCenterUpdateDto) throws ValidationException, DataNotFoundException {
         try {
             if (fieldCenterUpdateDto.isValid()) {
                 FieldCenter fieldCenter = fieldCenterDao.fetchByAcronym(fieldCenterUpdateDto.getAcronym());
@@ -48,21 +44,17 @@ public class FieldCenterServiceBean implements FieldCenterService {
                 fieldCenterDao.update(fieldCenter);
 
             } else {
-                throw new InvalidDtoException();
+                throw new ValidationException();
             }
-
-        } catch (EqualizerException e) {
-            throw new InvalidDtoException();
-
-        } catch (DataNotFoundException e) {
-            throw new FieldCenterNotFoundException();
+        } catch (NoResultException e) {
+            throw new DataNotFoundException(e);
         }
     }
 
     @Override
-    public List<FieldCenterDto> fetchAll() {
+    public List<FieldCenterDto> list() {
         List<FieldCenterDto> fieldCenterDtos = new ArrayList<>();
-        List<FieldCenter> fieldCenters = (List<FieldCenter>) (Object) fieldCenterDao.getListResult("", FieldCenter.class);
+        List<FieldCenter> fieldCenters = (List<FieldCenter>) fieldCenterDao.getListResult("", FieldCenter.class);
 
         fieldCenters.stream().forEach(fieldCenter -> {
             FieldCenterDto fieldCenterDto = new FieldCenterDto();
@@ -74,19 +66,15 @@ public class FieldCenterServiceBean implements FieldCenterService {
     }
 
     @Override
-    public FieldCenterDto fetchByAcronym(String acronym) throws FieldCenterNotFoundException, InvalidDtoException {
+    public FieldCenterDto fetchByAcronym(String acronym) throws DataNotFoundException {
         try {
             FieldCenter fieldCenter = fieldCenterDao.fetchByAcronym(acronym);
             FieldCenterDto fieldCenterDto = new FieldCenterDto();
             Equalizer.equalize(fieldCenter, fieldCenterDto);
-
             return fieldCenterDto;
 
-        } catch (EqualizerException e) {
-            throw new InvalidDtoException();
-
-        } catch (DataNotFoundException e) {
-            throw new FieldCenterNotFoundException();
+        } catch (NoResultException e) {
+            throw new DataNotFoundException(e);
         }
     }
 }

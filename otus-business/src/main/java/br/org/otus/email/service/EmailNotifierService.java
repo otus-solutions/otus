@@ -2,15 +2,15 @@ package br.org.otus.email.service;
 
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.email.OtusEmail;
-import br.org.otus.exceptions.DataNotFoundException;
-import br.org.otus.exceptions.EmailNotificationException;
+import br.org.otus.exceptions.webservice.http.EmailNotificationException;
+import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.owail.sender.email.Sender;
 
 public interface EmailNotifierService {
 
-    void sendSystemInstallationEmail(OtusInitializationConfigDto otusInitializationData) throws EmailNotificationException, DataNotFoundException;
+    void sendSystemInstallationEmail(OtusInitializationConfigDto otusInitializationData) throws EmailNotificationException, EncryptedException;
 
-	Sender getSender() throws DataNotFoundException, EmailNotificationException;
+	Sender getSender() throws EncryptedException;
 
 	void sendEmail(OtusEmail email) throws EmailNotificationException;
 

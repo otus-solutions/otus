@@ -1,11 +1,9 @@
 package br.org.otus.dao;
 
-import java.util.List;
-
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-
-import br.org.otus.exceptions.DataNotFoundException;
+import java.util.List;
 
 public class GenericDao {
 
@@ -32,9 +30,9 @@ public class GenericDao {
         return em.createNativeQuery(nativeQuery, clazz).getResultList();
     }
 
-    public Object notWaitingEmpty(Object entity) throws DataNotFoundException {
+    public Object notWaitingEmpty(Object entity){
         if(entity == null){
-            throw new DataNotFoundException();
+            throw new NoResultException();
         }else {
             return entity;
         }

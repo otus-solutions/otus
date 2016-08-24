@@ -1,74 +1,108 @@
 package br.org.otus.configuration.service;
 
+import br.org.otus.configuration.builder.SystemConfigBuilder;
+import br.org.otus.configuration.builder.TokenBuilder;
+import br.org.otus.configuration.dto.OtusInitializationConfigDto;
+import br.org.otus.email.service.EmailNotifierServiceBean;
+import br.org.otus.exceptions.webservice.common.AlreadyExistException;
+import br.org.otus.exceptions.webservice.http.EmailNotificationException;
+import br.org.otus.exceptions.webservice.security.EncryptedException;
+import br.org.otus.system.SystemConfig;
+import br.org.otus.system.SystemConfigDao;
+import br.org.otus.user.api.UserFacade;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import com.google.gson.Gson;
-
-import br.org.otus.configuration.dto.OtusInitializationConfigDto;
-import br.org.otus.email.service.EmailNotifierService;
-import br.org.otus.exceptions.DataNotFoundException;
-import br.org.otus.exceptions.EmailNotificationException;
-import br.org.otus.exceptions.InvalidDtoException;
-import br.org.otus.system.SystemConfigDao;
-
 @RunWith(PowerMockRunner.class)
+@PrepareForTest({SystemConfigBuilder.class, TokenBuilder.class})
 public class SystemConfigServiceBeanTest {
 
-	@InjectMocks
-	private SystemConfigServiceBean systemConfigServiceBean;
+    @InjectMocks
+    private SystemConfigServiceBean systemConfigServiceBean;
 
-	@Mock
-	private SystemConfigDao systemConfigDao;
+    @Mock
+    private SystemConfigDao systemConfigDao;
 
-	@Mock
-	private SystemConfigService systemConfigService;
+    @Mock
+    private UserFacade userFacade;
 
-	@Mock
-	private OtusInitializationConfigDto otusInitializationConfigDto;	
-	
-	@Mock
-	private String projectToken;
-	
-	@Mock
-	private EmailNotifierService emailNotifierService;
-	
-	private String JSON = "{" + "'user':" + "{" + "'name': 'teste'," + "'surname': 'teste'," + "'phone': '5555555555'," + "'email': 'teste@teste.com'," + "'password': 'minhaSenha'," + "'passwordConfirm': 'minhaSenha'" + "}," + "'project': {" + "'projectName': 'meu projeto'" + " }," + "'domain': {" + "'domainRestUrl': 'http://localhost/'" + "}," + "'emailSender': {" + "'name': 'teste'," + "'email': 'teste@teste.com'," + "'password': 'minhaSenha'," + "'passwordConfirm': 'minhaSenha'" + "}" + "}";
+    @Mock
+    private EmailNotifierServiceBean emailNotifierServiceBean;
 
-	@Test
-	public void method_isReady_should_calls_database_and_verify() {
-		systemConfigServiceBean.isReady();
+    @Mock
+    private OtusInitializationConfigDto otusInitializationConfigDto;
 
-		Mockito.verify(systemConfigDao).isReady();
-	}
+    @Mock
+    private SystemConfig systemConfig;
 
-	@Test
-	public void method_createAdmin_should_called_method_for_persist_User() throws InvalidDtoException {
-		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(JSON, OtusInitializationConfigDto.class);
-		systemConfigServiceBean.createAdmin(initializationConfigDto);
-		
-		Mockito.verify(systemConfigDao).persist(Mockito.any());
-	}
-	
-	@Test
-	public void method_createInitialSystemConfig_should_called_method_persist_for_object_SystemConfig() throws Exception {
-		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(JSON, OtusInitializationConfigDto.class);
-		projectToken = systemConfigServiceBean.generateProjectToken();
-		systemConfigServiceBean.createInitialSystemConfig(initializationConfigDto, projectToken);
-		
-		Mockito.verify(systemConfigDao, Mockito.times(2)).persist(Mockito.any());
-	}
-	
-	@Test
-	public void method_verifyEmailService_should_called_method_sendWelcomeEmail() throws EmailNotificationException, DataNotFoundException {
-		OtusInitializationConfigDto initializationConfigDto = new Gson().fromJson(JSON, OtusInitializationConfigDto.class);
-		systemConfigServiceBean.verifyEmailService(initializationConfigDto);
-		
-		Mockito.verify(emailNotifierService).sendSystemInstallationEmail(initializationConfigDto);
-	}
+    private String DUMMY_TOKEN = "TOKEN";
 
+    @Test
+    public void method_initConfiguration_should_check_if_isReady() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+        PowerMockito.mockStatic(SystemConfigBuilder.class);
+        Mockito.when(SystemConfigBuilder.builSystemConfig(otusInitializationConfigDto, DUMMY_TOKEN)).thenReturn(systemConfig);
+        Mockito.when(systemConfigDao.isReady()).thenReturn(Boolean.FALSE);
+
+        systemConfigServiceBean.initConfiguration(otusInitializationConfigDto, DUMMY_TOKEN);
+        Mockito.verify(systemConfigDao).isReady();
+    }
+
+    @Test
+    public void method_initConfiguration_should_verify_email_service() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+        PowerMockito.mockStatic(SystemConfigBuilder.class);
+        Mockito.when(SystemConfigBuilder.builSystemConfig(otusInitializationConfigDto, DUMMY_TOKEN)).thenReturn(systemConfig);
+        Mockito.when(systemConfigDao.isReady()).thenReturn(Boolean.FALSE);
+
+        systemConfigServiceBean.initConfiguration(otusInitializationConfigDto, DUMMY_TOKEN);
+        Mockito.verify(emailNotifierServiceBean).sendSystemInstallationEmail(otusInitializationConfigDto);
+    }
+
+    @Test
+    public void method_initConfiguration_should_build_system_config() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+        PowerMockito.mockStatic(SystemConfigBuilder.class);
+        Mockito.when(SystemConfigBuilder.builSystemConfig(otusInitializationConfigDto, DUMMY_TOKEN)).thenReturn(systemConfig);
+        Mockito.when(systemConfigDao.isReady()).thenReturn(Boolean.FALSE);
+
+        systemConfigServiceBean.initConfiguration(otusInitializationConfigDto, DUMMY_TOKEN);
+        PowerMockito.verifyStatic(Mockito.times(1));
+    }
+
+    @Test
+    public void method_initConfiguration_should_persist_systemConfig() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+        PowerMockito.mockStatic(SystemConfigBuilder.class);
+        Mockito.when(SystemConfigBuilder.builSystemConfig(otusInitializationConfigDto, DUMMY_TOKEN)).thenReturn(systemConfig);
+        Mockito.when(systemConfigDao.isReady()).thenReturn(Boolean.FALSE);
+
+        systemConfigServiceBean.initConfiguration(otusInitializationConfigDto, DUMMY_TOKEN);
+        Mockito.verify(systemConfigDao).persist(systemConfig);
+    }
+
+    @Test
+    public void method_initConfiguration_should_createUser() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+        PowerMockito.mockStatic(SystemConfigBuilder.class);
+        Mockito.when(SystemConfigBuilder.builSystemConfig(otusInitializationConfigDto, DUMMY_TOKEN)).thenReturn(systemConfig);
+        Mockito.when(systemConfigDao.isReady()).thenReturn(Boolean.FALSE);
+
+        systemConfigServiceBean.initConfiguration(otusInitializationConfigDto, DUMMY_TOKEN);
+        Mockito.verify(userFacade).create(otusInitializationConfigDto);
+    }
+
+    @Test
+    public void method_isReady_should_call_SystemConfig() {
+        systemConfigServiceBean.isReady();
+        Mockito.verify(systemConfigDao).isReady();
+    }
+
+    @Test
+    public void method_buildToken_should_call_tokenBuilder() {
+        PowerMockito.mockStatic(TokenBuilder.class);
+        systemConfigServiceBean.buildToken();
+        PowerMockito.verifyStatic(Mockito.times(1));
+    }
 }

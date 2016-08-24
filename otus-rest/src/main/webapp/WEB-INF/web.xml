@@ -9,7 +9,9 @@
 
     <context-param>
         <param-name>resteasy.providers</param-name>
-        <param-value>br.org.otus.security.AuthenticationFilter</param-value>
+        <param-value>
+            br.org.otus.response.exception.HttpResponseExceptionMapper,
+            br.org.otus.security.AuthenticationFilter</param-value>
     </context-param>
 
     <servlet>

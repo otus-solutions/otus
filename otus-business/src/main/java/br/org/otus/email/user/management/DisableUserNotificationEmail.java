@@ -1,12 +1,12 @@
 package br.org.otus.email.user.management;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import br.org.otus.email.OtusEmail;
 import br.org.otus.user.User;
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Mailer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class DisableUserNotificationEmail extends Email implements OtusEmail {
 

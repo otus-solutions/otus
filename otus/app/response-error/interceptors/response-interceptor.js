@@ -14,10 +14,10 @@
 
         function responseError(response) {
             var dashboard = $injector.get('DashboardStateService');
-
-            if (response.status === -1) {
-                dashboard.goToErrorOffline();
-            }
+            // TODO Desabilitado
+            //if (response.status === -1) {
+                //dashboard.goToErrorOffline();
+            //}
             return response;
         }
 

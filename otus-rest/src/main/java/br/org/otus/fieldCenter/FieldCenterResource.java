@@ -1,9 +1,6 @@
 package br.org.otus.fieldCenter;
 
-import br.org.otus.exceptions.AlreadyExistException;
-import br.org.otus.exceptions.FieldCenterNotFoundException;
-import br.org.otus.exceptions.InvalidDtoException;
-import br.org.otus.exceptions.ResponseError;
+import br.org.otus.fieldCenter.api.FieldCenterFacade;
 import br.org.otus.fieldCenter.dtos.FieldCenterDto;
 import br.org.otus.fieldCenter.dtos.FieldCenterUpdateDto;
 import br.org.otus.rest.Response;
@@ -12,51 +9,39 @@ import br.org.otus.security.Secured;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/center")
 public class FieldCenterResource {
     @Inject
-    private FieldCenterService fieldCenterService;
+    private FieldCenterFacade fieldCenterFacade;
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     @Secured
+    @Consumes(MediaType.APPLICATION_JSON)
     public String create(FieldCenterDto fieldCenterDto) {
         Response response = new Response();
-
-        try {
-            fieldCenterService.create(fieldCenterDto);
-            response.buildSuccess();
-
-        } catch (InvalidDtoException | AlreadyExistException e) {
-            response.buildError(((ResponseError) e));
-        }
-
-        return response.toJson();
+        fieldCenterFacade.create(fieldCenterDto);
+        return response.buildSuccess(Boolean.TRUE).toJson();
     }
 
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
     @Secured
+    @Path("/list")
+    @Produces(MediaType.APPLICATION_JSON)
     public String list() {
-        return new Response().setData(fieldCenterService.fetchAll()).toJson();
+        Response response = new Response();
+        List<FieldCenterDto> fieldCenterDtos = fieldCenterFacade.list();
+        return response.setData(fieldCenterDtos).toJson();
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_JSON)
     @Secured
     @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
     public String update(FieldCenterUpdateDto fieldCenterUpdate) {
         Response response = new Response();
-
-        try {
-            fieldCenterService.update(fieldCenterUpdate);
-            response.buildSuccess();
-
-        } catch (InvalidDtoException | FieldCenterNotFoundException e) {
-            response.buildError(((ResponseError) e));
-        }
-
-        return response.toJson();
+        fieldCenterFacade.update(fieldCenterUpdate);
+        return response.buildSuccess(Boolean.TRUE).toJson();
     }
 }

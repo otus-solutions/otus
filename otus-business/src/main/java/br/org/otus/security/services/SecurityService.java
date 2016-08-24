@@ -1,16 +1,15 @@
 package br.org.otus.security.services;
 
-import br.org.otus.exceptions.*;
+import br.org.otus.exceptions.webservice.security.AuthenticationException;
+import br.org.otus.exceptions.webservice.security.TokenException;
 import br.org.otus.security.dtos.AuthenticationData;
-import br.org.otus.security.dtos.AuthenticationDto;
-import br.org.otus.security.dtos.ProjectAuthenticationDto;
+import br.org.otus.security.dtos.UserSecurityAuthorizationDto;
 
 public interface SecurityService {
 
-	String authenticate(AuthenticationData authenticationData)
-			throws InvalidPasswordException, EmailNotFoundException, UserDisabledException, TokenException;
+	UserSecurityAuthorizationDto authenticate(AuthenticationData authenticationData) throws TokenException, AuthenticationException;
 
 	void invalidate(String token);
 
-	String projectAuthenticate(AuthenticationData authenticationData) throws InvalidDtoException, TokenException, InvalidPasswordException;
+	String projectAuthenticate(AuthenticationData authenticationData) throws TokenException, AuthenticationException;
 }

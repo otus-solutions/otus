@@ -1,12 +1,12 @@
 package br.org.otus.email.user.signup;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import br.org.otus.email.OtusEmail;
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Mailer;
 import br.org.owail.sender.email.Recipient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class NewUserGreetingsEmail extends Email implements OtusEmail {
 

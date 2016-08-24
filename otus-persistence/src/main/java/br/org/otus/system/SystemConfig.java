@@ -1,11 +1,10 @@
 package br.org.otus.system;
 
-import javax.persistence.*;
-
-import org.hibernate.annotations.Type;
-
 import br.org.otus.email.BasicEmailSender;
 import br.org.tutty.Equalization;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 
 @Entity
 public class SystemConfig {

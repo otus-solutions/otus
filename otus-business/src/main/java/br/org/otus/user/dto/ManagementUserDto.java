@@ -1,8 +1,10 @@
 package br.org.otus.user.dto;
 
+import br.org.otus.exceptions.webservice.security.EncryptedException;
+import br.org.otus.rest.dtos.Dto;
 import br.org.tutty.Equalization;
 
-public class ManagementUserDto {
+public class ManagementUserDto implements Dto {
     @Equalization(name = "name")
     public String name;
 
@@ -23,5 +25,18 @@ public class ManagementUserDto {
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public Boolean isValid() {
+        return !name.isEmpty() &&
+                !surname.isEmpty() &&
+                !phone.isEmpty() &&
+                !email.isEmpty()
+                ? Boolean.TRUE : Boolean.FALSE;
+    }
+
+    @Override
+    public void encrypt() throws EncryptedException {
     }
 }
