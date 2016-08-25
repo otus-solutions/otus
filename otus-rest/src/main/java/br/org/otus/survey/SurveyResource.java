@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import br.org.otus.rest.Response;
-import br.org.otus.survey.dto.SurveyDto;
+import br.org.otus.survey.dtos.SurveyDto;
 import br.org.otus.survey.services.SurveyService;
 
 @Path("/surveys")

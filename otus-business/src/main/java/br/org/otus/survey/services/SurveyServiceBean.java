@@ -4,7 +4,7 @@ import javax.inject.Inject;
 
 import br.org.otus.survey.Survey;
 import br.org.otus.survey.SurveyDao;
-import br.org.otus.survey.dto.SurveyDto;
+import br.org.otus.survey.dtos.SurveyDto;
 import br.org.tutty.Equalizer;
 
 public class SurveyServiceBean implements SurveyService {

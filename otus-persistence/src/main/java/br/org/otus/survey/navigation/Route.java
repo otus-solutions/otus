@@ -1,10 +1,7 @@
 package br.org.otus.survey.navigation;
 
-import javax.persistence.Entity;
-
 import br.org.tutty.Equalization;
 
-@Entity
 public class Route {
 	
 	@Equalization(name = "extents")

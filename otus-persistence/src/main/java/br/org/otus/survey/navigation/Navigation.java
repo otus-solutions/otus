@@ -2,11 +2,8 @@ package br.org.otus.survey.navigation;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-
 import br.org.tutty.Equalization;
 
-@Entity
 public class Navigation {
 	
 	@Equalization(name = "extents")
