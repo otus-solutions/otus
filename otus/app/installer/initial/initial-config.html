@@ -66,9 +66,9 @@
 
                                         <md-input-container class="md-block">
                                             <label>Confirmação de Senha</label>
-                                            <input name="passwordConfirm" ng-model="project.user.passwordConfirm" st-password-match="project.user.password" type="password" ng-required="true" />
-                                            <div ng-messages="initialConfigForm.passwordConfirm.$error">
-                                                <div ng-message="required" ng-show="initialConfigForm.passwordConfirm.$error.required">Obrigatório</div>
+                                            <input name="passwordConfirmation" ng-model="project.user.passwordConfirmation" st-password-match="project.user.password" type="password" ng-required="true" />
+                                            <div ng-messages="initialConfigForm.passwordConfirmation.$error">
+                                                <div ng-message="required" ng-show="initialConfigForm.passwordConfirmation.$error.required">Obrigatório</div>
                                                 <div ng-message="passwordMatch">Suas senhas não coincidem</div>
                                             </div>
                                         </md-input-container>
@@ -127,7 +127,7 @@
 
                                         <md-input-container class="md-block">
                                             <label>Confirmação de Senha</label>
-                                            <input name="emailSenderPasswordConfirm" ng-model="project.emailSender.passwordConfirm" st-password-match="project.emailSender.password" type="password" ng-required="true" />
+                                            <input name="emailSenderPasswordConfirm" ng-model="project.emailSender.passwordConfirmation" st-password-match="project.emailSender.password" type="password" ng-required="true" />
                                             <div ng-messages="initialConfigForm.emailSenderPasswordConfirm.$error">
                                                 <div ng-message="required" ng-show="initialConfigForm.emailSenderPasswordConfirm.$error.required">Obrigatório</div>
                                                 <div ng-message="passwordMatch">Suas senhas não coincidem</div>

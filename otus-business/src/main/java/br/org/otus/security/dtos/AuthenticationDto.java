@@ -14,7 +14,15 @@ public class AuthenticationDto implements Dto, AuthenticationData{
 	public String password;
 
 	private String issuer;
-	
+
+	public void setIssuer(String issuer){
+		this.issuer = issuer;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String getKey() {
 		return email;
@@ -40,7 +48,4 @@ public class AuthenticationDto implements Dto, AuthenticationData{
 		this.password = EncryptorResources.encryptIrreversible(password);
 	}
 
-	public void setIssuer(String issuer){
-		this.issuer = issuer;
-	}
 }

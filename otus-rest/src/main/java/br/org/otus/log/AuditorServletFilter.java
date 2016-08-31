@@ -5,6 +5,7 @@ import br.org.otus.auditor.dto.LogEntryDto;
 import br.org.otus.security.AuthorizationHeaderReader;
 import br.org.otus.security.services.SecurityContextService;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.ParseException;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -33,15 +34,16 @@ public class AuditorServletFilter implements Filter {
         ResettableStreamHttpServletRequest resettableStreamHttpServletRequest = new ResettableStreamHttpServletRequest(httpServletRequest);
 
         if (isLoggedMethod(httpServletRequest.getMethod())) {
+            BodyLog body = new BodyLog(IOUtils.toString(resettableStreamHttpServletRequest.getReader()));
             String authorizationHeader = resettableStreamHttpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+
             String token = readToken(authorizationHeader);
             String userId = readUserId(token);
             String remoteAddress = resettableStreamHttpServletRequest.getRemoteAddr();
-            String body = IOUtils.toString(resettableStreamHttpServletRequest.getReader());
             String url = resettableStreamHttpServletRequest.getRequestURL().toString();
             Map<String, String[]> parameterMap = resettableStreamHttpServletRequest.getParameterMap();
 
-            auditorService.log(new LogEntryDto(remoteAddress, url, body, userId, parameterMap, token));
+            auditorService.log(new LogEntryDto(remoteAddress, url, body.getBody(), userId, parameterMap, token));
             resettableStreamHttpServletRequest.resetInputStream();
         }
 
@@ -71,9 +73,7 @@ public class AuditorServletFilter implements Filter {
 
     private String readUserId(String token) {
         try {
-            // TODO
-/*            return securityContextService.getUserId(token);*/
-            return "";
+            return securityContextService.getUserId(token);
         } catch (Exception e) {
             return "";
         }

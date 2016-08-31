@@ -1,6 +1,5 @@
 package br.org.otus.security.context;
 
-import br.org.otus.exceptions.webservice.common.DataNotFoundException;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSVerifier;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -34,13 +33,9 @@ public class SecurityContext implements Serializable {
         securityMap.remove(tokenWithoutPrefix);
     }
 
-    public String getUserId(String token) throws DataNotFoundException {
-        try {
-            SignedJWT signedJWT = SignedJWT.parse(token);
-            return signedJWT.getJWTClaimsSet().getSubject();
-        } catch (ParseException e) {
-            throw new DataNotFoundException(e);
-        }
+    public String getUserId(String token) throws ParseException {
+        SignedJWT signedJWT = SignedJWT.parse(token);
+        return signedJWT.getJWTClaimsSet().getSubject();
     }
 
     public Boolean hasToken(String token) {

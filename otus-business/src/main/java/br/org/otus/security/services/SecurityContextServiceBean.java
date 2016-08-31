@@ -77,4 +77,9 @@ public class SecurityContextServiceBean implements SecurityContextService {
             throw new TokenException(e);
         }
     }
+
+    @Override
+    public String getUserId(String token) throws ParseException {
+        return securityContext.getUserId(token);
+    }
 }

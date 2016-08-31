@@ -23,7 +23,7 @@ public class UserDto implements EmailSender, Dto {
 	@Equalization(name = "password")
 	private String password;
 
-	private String passwordConfirm;
+	private String passwordConfirmation;
 
 	public String getName() {
 		return name;
@@ -65,12 +65,12 @@ public class UserDto implements EmailSender, Dto {
 		this.password = password;
 	}
 
-	public String getPasswordConfirm() {
-		return passwordConfirm;
+	public String getPasswordConfirmation() {
+		return passwordConfirmation;
 	}
 
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
+	public void setPasswordConfirmation(String passwordConfirmation) {
+		this.passwordConfirmation = passwordConfirmation;
 	}
 
 	@Override

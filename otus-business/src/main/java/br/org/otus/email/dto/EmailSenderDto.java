@@ -16,7 +16,7 @@ public class EmailSenderDto implements Dto{
     @Equalization(name = "password")
     private String password;
 
-    private String passwordConfirm;
+    private String passwordConfirmation;
 
     public String getName() {
         return name;
