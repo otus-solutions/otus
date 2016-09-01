@@ -20,10 +20,8 @@ public class MetadataGroupBuilder {
 	}
 	
 	public MetadataGroupBuilder buildFromDto(MetadataGroupDto dto) {
-		metadataGroup.setExtents(dto.extents);
-		metadataGroup.setObjectType(dto.objectType);
 		for (MetadataOptionDto optionDto : dto.options) {
-			metadataGroup.getOptions().add(metadataOptionBuilder.buildFromDto(optionDto).build());
+			metadataGroup.addOption(metadataOptionBuilder.buildFromDto(optionDto).build());
 		}
 		
 		return this;

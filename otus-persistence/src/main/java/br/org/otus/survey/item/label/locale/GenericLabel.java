@@ -7,21 +7,20 @@ public abstract class GenericLabel {
 	private String oid;
 	private String plainText;
 	private String formattedText;
+	
+	public GenericLabel(String plainText, String formattedText) {
+		this.plainText = plainText;
+		this.formattedText = formattedText;
+		extents = "StudioObject";
+		objectType = "Label";
+	}
 
 	public String getExtents() {
 		return extents;
 	}
 
-	public void setExtents(String extents) {
-		this.extents = extents;
-	}
-
 	public String getObjectType() {
 		return objectType;
-	}
-
-	public void setObjectType(String objectType) {
-		this.objectType = objectType;
 	}
 
 	public String getOid() {

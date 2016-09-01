@@ -11,6 +11,10 @@ public abstract class Question extends SurveyItem {
 	private MetadataGroup metadata;
 	private FillingRules fillingRules;
 	
+	public Question(String templateID, String customID) {
+		super(templateID, customID);
+	}
+	
 	public Label getLabel() {
 		return label;
 	}
@@ -33,6 +37,11 @@ public abstract class Question extends SurveyItem {
 	
 	public void setFillingRules(FillingRules fillingRules) {
 		this.fillingRules = fillingRules;
+	}
+
+	@Override
+	public String toString() {
+		return "Question [label=" + label + ", metadata=" + metadata + ", fillingRules=" + fillingRules + "]";
 	}
 	
 }

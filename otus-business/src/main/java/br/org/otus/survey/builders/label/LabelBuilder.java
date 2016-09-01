@@ -34,37 +34,22 @@ public class LabelBuilder {
 	}
 
 	private PtBR buildPtBR(PtBR_Dto ptBR_Dto) {
-		ptBR = new PtBR();
-
-		ptBR.setExtents(ptBR_Dto.extents);
-		ptBR.setFormattedText(ptBR_Dto.formattedText);
-		ptBR.setObjectType(ptBR_Dto.objectType);
+		ptBR = new PtBR(ptBR_Dto.plainText, ptBR_Dto.formattedText);
 		ptBR.setOid(ptBR_Dto.oid);
-		ptBR.setPlainText(ptBR_Dto.plainText);
 
 		return ptBR;
 	}
 
 	private EsES buildEsES(EsES_Dto esES_Dto) {
-		esES = new EsES();
-
-		esES.setExtents(esES_Dto.extents);
-		esES.setFormattedText(esES_Dto.formattedText);
-		esES.setObjectType(esES_Dto.objectType);
+		esES = new EsES(esES_Dto.plainText, esES_Dto.formattedText);
 		esES.setOid(esES_Dto.oid);
-		esES.setPlainText(esES_Dto.plainText);
 
 		return esES;
 	}
 
 	private EnUS buildEnUS(EnUS_Dto enUS_Dto) {
-		enUS = new EnUS();
-
-		enUS.setExtents(enUS_Dto.extents);
-		enUS.setFormattedText(enUS_Dto.formattedText);
-		enUS.setObjectType(enUS_Dto.objectType);
+		enUS = new EnUS(enUS_Dto.plainText, enUS_Dto.formattedText);
 		enUS.setOid(enUS_Dto.oid);
-		enUS.setPlainText(enUS_Dto.plainText);
 
 		return enUS;
 	}

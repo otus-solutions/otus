@@ -1,5 +1,11 @@
 package br.org.otus.fieldCenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+
 import br.org.otus.exceptions.AlreadyExistException;
 import br.org.otus.exceptions.DataNotFoundException;
 import br.org.otus.exceptions.FieldCenterNotFoundException;
@@ -8,11 +14,6 @@ import br.org.otus.fieldCenter.dtos.FieldCenterDto;
 import br.org.otus.fieldCenter.dtos.FieldCenterUpdateDto;
 import br.org.tutty.Equalizer;
 import br.org.tutty.exception.EqualizerException;
-
-import javax.ejb.Stateless;
-import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.List;
 
 @Stateless
 public class FieldCenterServiceBean implements FieldCenterService {

@@ -1,13 +1,13 @@
 package br.org.otus.security.services;
 
 
+import java.text.ParseException;
+
+import com.nimbusds.jose.JOSEException;
+
 import br.org.otus.exceptions.FieldCenterNotFoundException;
 import br.org.otus.exceptions.TokenException;
 import br.org.otus.security.dtos.AuthenticationData;
-import br.org.otus.security.dtos.AuthenticationDto;
-import com.nimbusds.jose.JOSEException;
-
-import java.text.ParseException;
 
 public interface SecurityContextService {
 

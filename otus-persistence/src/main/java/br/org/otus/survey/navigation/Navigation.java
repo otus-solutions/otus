@@ -1,21 +1,40 @@
 package br.org.otus.survey.navigation;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import br.org.tutty.Equalization;
-
 public class Navigation {
-	
-	@Equalization(name = "extents")
+
 	private String extents;
-
-	@Equalization(name = "objectType")
 	private String objectType;
-	
-	@Equalization(name = "origin")
 	private String origin;
-
-	@Equalization(name = "routes")
 	private List<Route> routes;
+
+	public Navigation(String origin) {
+		extents = "StudioObject";
+		objectType = "Navigation";
+		this.origin = origin;
+		routes = new ArrayList<Route>();
+	}
+
+	public String getExtents() {
+		return extents;
+	}
+
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public List<Route> getRoutes() {
+		return routes;
+	}
+
+	public void addRoute(Route route) {
+		routes.add(route);
+	}
 
 }

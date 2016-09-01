@@ -7,39 +7,30 @@ public class MetadataOption {
 	private String extents;
 	private String objectType;
 	private String dataType;
-	private String value;
+	private Integer value;
 	private Label label;
+	
+	public MetadataOption(Integer value) {
+		this.value = value;
+		extents = "StudioObject";
+		objectType = "MetadataAnswer";
+		dataType = "Integer";
+	}
 
 	public String getExtents() {
 		return extents;
-	}
-
-	public void setExtents(String extents) {
-		this.extents = extents;
 	}
 
 	public String getObjectType() {
 		return objectType;
 	}
 
-	public void setObjectType(String objectType) {
-		this.objectType = objectType;
-	}
-
 	public String getDataType() {
 		return dataType;
 	}
 
-	public void setDataType(String dataType) {
-		this.dataType = dataType;
-	}
-
-	public String getValue() {
+	public Integer getValue() {
 		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 
 	public Label getLabel() {

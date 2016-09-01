@@ -10,7 +10,6 @@ public class MetadataOptionBuilder {
 	private LabelBuilder labelBuilder;
 
 	public MetadataOptionBuilder() {
-		metadataOption = new MetadataOption();
 		labelBuilder = new LabelBuilder();
 	}
 
@@ -19,10 +18,7 @@ public class MetadataOptionBuilder {
 	}
 
 	public MetadataOptionBuilder buildFromDto(MetadataOptionDto dto) {
-		metadataOption.setDataType(dto.dataType);
-		metadataOption.setExtents(dto.extents);
-		metadataOption.setObjectType(dto.objectType);
-		metadataOption.setValue(dto.value);
+		metadataOption = new MetadataOption(Integer.valueOf(dto.value));
 		metadataOption.setLabel(labelBuilder.buildFromDto(dto.label).build());
 
 		return this;

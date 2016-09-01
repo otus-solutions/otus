@@ -10,6 +10,8 @@ public class MetadataGroup {
     private List<MetadataOption> options;
     
     public MetadataGroup() {
+    	extents = "StudioObject";
+    	objectType = "MetadataGroup";
     	options = new ArrayList<MetadataOption>();
 	}
 
@@ -17,24 +19,16 @@ public class MetadataGroup {
 		return extents;
 	}
 
-	public void setExtents(String extents) {
-		this.extents = extents;
-	}
-
 	public String getObjectType() {
 		return objectType;
-	}
-
-	public void setObjectType(String objectType) {
-		this.objectType = objectType;
 	}
 
 	public List<MetadataOption> getOptions() {
 		return options;
 	}
 
-	public void setOptions(List<MetadataOption> options) {
-		this.options = options;
+	public void addOption(MetadataOption option) {
+		options.add(option);
 	}
 	
 	@Override

@@ -1,25 +1,51 @@
 package br.org.otus.survey.navigation;
 
-import br.org.tutty.Equalization;
-
 public class Route {
 	
-	@Equalization(name = "extents")
-	private String extents;
-
-	@Equalization(name = "objectType")
-	private String objectType;
-	
-	@Equalization(name = "name")
+	protected String extents;
+	protected String objectType;
 	private String name;
-
-	@Equalization(name = "origin")
 	private String origin;
-
-	@Equalization(name = "destination")
 	private String destination;
-
-	@Equalization(name = "conditionSet")
 	private RouteConditionSet conditionSet;
+	
+	public Route(String origin, String destination) {
+		this.origin = origin;
+		this.destination = destination;
+		extents = "StudioObject";
+		objectType ="Route";
+	}
+
+	public String getExtents() {
+		return extents;
+	}
+
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getOrigin() {
+		return origin;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public RouteConditionSet getConditionSet() {
+		return conditionSet;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setConditionSet(RouteConditionSet conditionSet) {
+		this.conditionSet = conditionSet;
+	}
 
 }

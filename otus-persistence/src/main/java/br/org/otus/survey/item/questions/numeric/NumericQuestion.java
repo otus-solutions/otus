@@ -6,5 +6,9 @@ import br.org.otus.survey.item.questions.numeric.unit.Unit;
 public abstract class NumericQuestion extends Question{
 	
 	protected Unit unit;
+	
+	public NumericQuestion(String templateID, String customID) {
+		super(templateID, customID);
+	}
 
 }

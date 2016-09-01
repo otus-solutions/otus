@@ -11,10 +11,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import br.org.otus.survey.Survey;
-import br.org.otus.survey.builders.SurveyBuilder;
 import br.org.otus.survey.dtos.SurveyDto;
+import br.org.otus.survey.dtos.item.SurveyItemDto;
+import br.org.otus.survey.dtos.utils.adapters.SurveyItemAdapter;
 
 public class SurveyBuilderTest {
 
@@ -24,10 +26,10 @@ public class SurveyBuilderTest {
 	private String surveyJson;
 	private SurveyDto surveyDto;
 	private Survey survey;
+	private Gson gson;
 
 	@Before
 	public void setUp() {
-/*
 		// get JSON
 		try {
 			URI uri = ClassLoader.getSystemResource(SURVEY_TEMPLATE).toURI();
@@ -37,18 +39,19 @@ public class SurveyBuilderTest {
 		}
 		
 		// Convert JSON to SurveyDto
-		surveyDto = new Gson().fromJson(surveyJson, SurveyDto.class);
+		GsonBuilder builder = new GsonBuilder();
+		builder.registerTypeAdapter(SurveyItemDto.class, new SurveyItemAdapter());
+		gson = builder.create();
+		surveyDto = gson.fromJson(surveyJson, SurveyDto.class);
 		
 		// Instance of builder
 		surveyBuilder = new SurveyBuilder();
-		survey = new Survey();*/
 	}
 
 	@Test
 	public void surveyItem() {
-		/*survey = surveyBuilder.buildFromDto(surveyDto).build();
+		survey = surveyBuilder.buildFromDto(surveyDto).build();
 		System.out.println(survey.toString());
-*/
 	}
 
 }

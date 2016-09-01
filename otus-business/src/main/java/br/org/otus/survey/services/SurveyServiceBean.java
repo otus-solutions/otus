@@ -4,8 +4,8 @@ import javax.inject.Inject;
 
 import br.org.otus.survey.Survey;
 import br.org.otus.survey.SurveyDao;
+import br.org.otus.survey.builders.SurveyBuilder;
 import br.org.otus.survey.dtos.SurveyDto;
-import br.org.tutty.Equalizer;
 
 public class SurveyServiceBean implements SurveyService {
 	
@@ -14,11 +14,12 @@ public class SurveyServiceBean implements SurveyService {
 
 	@Override
 	public void saveSurvey(SurveyDto surveyDto) {
-		Survey survey = new Survey();
+		SurveyBuilder surveyBuilder = new SurveyBuilder();
 		
-		Equalizer.equalize(surveyDto, survey);
-		
-		surveyDao.persist(survey);
+		if(surveyDto.isValid()) {
+			Survey survey = surveyBuilder.buildFromDto(surveyDto).build();
+			surveyDao.persist(survey);
+		}
 	}
 
 }

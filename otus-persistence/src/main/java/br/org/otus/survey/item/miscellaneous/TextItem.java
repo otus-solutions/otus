@@ -6,6 +6,12 @@ import br.org.otus.survey.item.label.Label;
 public class TextItem extends SurveyItem {
 	
 	private Label value;
+	
+	public TextItem(String templateID, String customID) {
+		super(templateID, customID);
+		super.dataType = "String";
+		super.objectType = "TextItem";
+	}
 
 	public Label getValue() {
 		return value;

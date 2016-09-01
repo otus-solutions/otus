@@ -2,11 +2,16 @@ package br.org.otus.survey.item;
 
 public abstract class SurveyItem {
 	
-	private String extents;
+	protected String extents;
 	private String templateID;
 	private String customID;
 	protected String objectType;
 	protected String dataType;
+	
+	public SurveyItem(String templateID, String customID) {
+		this.templateID = templateID;
+		this.customID = customID;
+	}
 	
 	public String getObjectType() {
 		return objectType;

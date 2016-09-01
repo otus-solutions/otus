@@ -16,10 +16,9 @@ import br.org.otus.survey.navigation.Navigation;
 public class Survey {
 
 	private String extents;
-
-	@NotNull
+	
 	private String objectType;
-
+	
 	@Id
 	@NotNull
 	private String oid;
@@ -33,8 +32,14 @@ public class Survey {
 	private List<SurveyItem> itemContainer;
 
 	private List<Navigation> navigationList;
-	
-	public Survey() {
+
+	protected Survey() {
+	}
+
+	public Survey(String oid) {
+		this.oid = oid;
+		extents = "StudioObject";
+		objectType = "SurveyIdentity";
 		itemContainer = new ArrayList<SurveyItem>();
 		navigationList = new ArrayList<Navigation>();
 	}
@@ -58,17 +63,17 @@ public class Survey {
 	public List<SurveyItem> getItemContainer() {
 		return itemContainer;
 	}
-
-	public void setItemContainer(List<SurveyItem> itemContainer) {
-		this.itemContainer = itemContainer;
+	
+	public void addSurveyItem(SurveyItem surveyItem) {
+		itemContainer.add(surveyItem);
 	}
 
 	public List<Navigation> getNavigationList() {
 		return navigationList;
 	}
-
-	public void setNavigationList(List<Navigation> navigationList) {
-		this.navigationList = navigationList;
+	
+	public void addNavigation(Navigation navigation) {
+		navigationList.add(navigation);
 	}
 
 	public String getExtents() {
@@ -86,7 +91,7 @@ public class Survey {
 	@Override
 	public String toString() {
 		return "Survey [extents=" + extents + ", objectType=" + objectType + ", oid=" + oid + ", identity="
-				+ identity.toString() + ", metaInfo=" + metaInfo.toString() + ", itemContainer=" + itemContainer
+				+ identity.toString() + ", metaInfo=" + metaInfo.toString() + ", itemContainer=" + itemContainer.toString()
 				+ ", navigationList=" + navigationList + "]";
 	}
 

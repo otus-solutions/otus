@@ -1,20 +1,37 @@
 package br.org.otus.survey.metainfo;
 
-import br.org.tutty.Equalization;
-
 public class MetaInfo {
 
-	@Equalization(name = "extents")
 	private String extents;
-
-	@Equalization(name = "objectType")
 	private String objectType;
-
-	@Equalization(name = "creationDatetime")
 	private String creationDatetime;
-
-	@Equalization(name = "otusStudioVersion")
 	private String otusStudioVersion;
+
+	public MetaInfo(String creationDatetime) {
+		this.creationDatetime = creationDatetime;
+		extents = "StudioObject";
+		objectType = "SurveyMetaInfo";
+	}
+
+	public String getExtents() {
+		return extents;
+	}
+
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public String getCreationDatetime() {
+		return creationDatetime;
+	}
+
+	public String getOtusStudioVersion() {
+		return otusStudioVersion;
+	}
+	
+	public void setOtusStudioVersion(String otusStudioVersion) {
+		this.otusStudioVersion = otusStudioVersion;
+	}
 
 	@Override
 	public String toString() {

@@ -1,36 +1,70 @@
 package br.org.otus.survey.identity;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import br.org.tutty.Equalization;
 
 public class Identity {
 
-	@Equalization(name = "extents")
 	private String extents;
-
-	@Equalization(name = "objectType")
 	private String objectType;
-
-	@Equalization(name = "name")
 	private String name;
-
-	@Equalization(name = "acronym")
 	private String acronym;
-
-	@Equalization(name = "recommendedTo")
 	private String recommendedTo;
-
-	@Equalization(name = "description")
 	private String description;
-
-	@Equalization(name = "keywords")
 	private List<String> keywords;
+
+	public Identity(String name, String acronym) {
+		this.name = name;
+		this.acronym = acronym;
+		extents = "StudioObject";
+		objectType = "SurveyIdentity";
+		keywords = new ArrayList<String>();
+	}
+
+	public String getExtents() {
+		return extents;
+	}
+
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getAcronym() {
+		return acronym;
+	}
+
+	public String getRecommendedTo() {
+		return recommendedTo;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public List<String> getKeywords() {
+		return keywords;
+	}
+
+	public void setRecommendedTo(String recommendedTo) {
+		this.recommendedTo = recommendedTo;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void addKeyWord(String keyword) {
+		keywords.add(keyword);
+	}
 
 	@Override
 	public String toString() {
 		return "Identity [extents=" + extents + ", objectType=" + objectType + ", name=" + name + ", acronym=" + acronym
-				+ ", recommendedTo=" + recommendedTo + ", description=" + description + ", keywords=" + keywords + "]";
+				+ ", recommendedTo=" + recommendedTo + ", description=" + description + ", keywords=" + keywords.toString() + "]";
 	}
 
 }
