@@ -24,6 +24,7 @@ public class IdentityDto implements Dto {
 	public Boolean isValid() {
 		boolean flag = true;
 
+		//TODO : Verify if is not null first. Ask Diogo
 		if (name.isEmpty() || acronym.isEmpty()) {
 			flag = false;
 		}

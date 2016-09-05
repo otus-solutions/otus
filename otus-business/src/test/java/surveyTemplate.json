@@ -46,10 +46,66 @@
                 "formattedText": ""
             }
         },
-        "metadata": {
+ "metadata": {
             "extents": "StudioObject",
             "objectType": "MetadataGroup",
-            "options": []
+            "options": [{
+                "extends": "StudioObject",
+                "objectType": "MetadataAnswer",
+                "dataType": "Integer",
+                "value": 1,
+                "label": {
+                    "ptBR": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "Não sabe responder",
+                        "formattedText": "Não sabe responder"
+                    },
+                    "enUS": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "",
+                        "formattedText": ""
+                    },
+                    "esES": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "",
+                        "formattedText": ""
+                    }
+                }
+            }, {
+                "extends": "StudioObject",
+                "objectType": "MetadataAnswer",
+                "dataType": "Integer",
+                "value": 2,
+                "label": {
+                    "ptBR": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "Não lembra",
+                        "formattedText": "Não lembra"
+                    },
+                    "enUS": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "",
+                        "formattedText": ""
+                    },
+                    "esES": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "",
+                        "formattedText": ""
+                    }
+                }
+            }]
         },
         "fillingRules": {
             "extends": "StudioObject",
@@ -108,54 +164,187 @@
                 }
             }
         }
+    },
+    {
+        "extents": "SurveyItem",
+        "objectType": "IntegerQuestion",
+        "templateID": "TE1",
+        "customID": "TE1",
+        "dataType": "Integer",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "Quantos filhos você tem?",
+                "formattedText": "Quantos filhos você tem?"
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": [{
+                "extends": "StudioObject",
+                "objectType": "MetadataAnswer",
+                "dataType": "Integer",
+                "value": 1,
+                "label": {
+                    "ptBR": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "Não quer responder",
+                        "formattedText": "Não quer responder"
+                    },
+                    "enUS": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "",
+                        "formattedText": ""
+                    },
+                    "esES": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "",
+                        "formattedText": ""
+                    }
+                }
+            }]
+        },
+        "unit": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "Filhos",
+                "formattedText": "Filhos"
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {}
+        }
+    }, {
+        "extents": "SurveyItem",
+        "objectType": "DecimalQuestion",
+        "templateID": "TE2",
+        "customID": "TE2",
+        "dataType": "Decimal",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "Qual seu peso?",
+                "formattedText": "Qual seu peso?"
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": [{
+                "extends": "StudioObject",
+                "objectType": "MetadataAnswer",
+                "dataType": "Integer",
+                "value": 1,
+                "label": {
+                    "ptBR": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "Não sabe",
+                        "formattedText": "Não sabe"
+                    },
+                    "enUS": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "",
+                        "formattedText": ""
+                    },
+                    "esES": {
+                        "extends": "StudioObject",
+                        "objectType": "Label",
+                        "oid": "",
+                        "plainText": "",
+                        "formattedText": ""
+                    }
+                }
+            }]
+        },
+        "unit": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "Quilos",
+                "formattedText": "Quilos"
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {}
+        }
     }],
-    "navigationList": [{
-        "extents": "StudioObject",
-        "objectType": "Navigation",
-        "origin": "F1",
-        "routes": [{
-            "extents": "StudioObject",
-            "objectType": "Route",
-            "name": "1",
-            "origin": "F1",
-            "destination": "F2",
-            "conditionSet": {}
-        }]
-    }, {
-        "extents": "StudioObject",
-        "objectType": "Navigation",
-        "origin": "F2",
-        "routes": [{
-            "extents": "StudioObject",
-            "objectType": "Route",
-            "name": "1",
-            "origin": "F2",
-            "destination": "F3",
-            "conditionSet": {}
-        }]
-    }, {
-        "extents": "StudioObject",
-        "objectType": "Navigation",
-        "origin": "F3",
-        "routes": [{
-            "extents": "StudioObject",
-            "objectType": "Route",
-            "name": "1",
-            "origin": "F3",
-            "destination": "F4",
-            "conditionSet": {}
-        }]
-    }, {
-        "extents": "StudioObject",
-        "objectType": "Navigation",
-        "origin": "F4",
-        "routes": [{
-            "extents": "StudioObject",
-            "objectType": "Route",
-            "name": "1",
-            "origin": "F4",
-            "destination": "F5",
-            "conditionSet": {}
-        }]
-    }]
+    "navigationList": []
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>otus-ear</artifactId>
@@ -27,16 +28,16 @@
 				<configuration>
 					<modules>
 						<webModule>
-								<groupId>org.ccem.otus</groupId>
+							<groupId>org.ccem.otus</groupId>
 							<artifactId>otus-rest</artifactId>
 							<contextRoot>otus-rest</contextRoot>
 						</webModule>
 						<ejbModule>
-								<groupId>org.ccem.otus</groupId>
+							<groupId>org.ccem.otus</groupId>
 							<artifactId>otus-business</artifactId>
 						</ejbModule>
 						<ejbModule>
-								<groupId>org.ccem.otus</groupId>
+							<groupId>org.ccem.otus</groupId>
 							<artifactId>otus-persistence</artifactId>
 						</ejbModule>
 					</modules>
@@ -99,6 +100,11 @@
 			<groupId>br.org.tutty</groupId>
 			<artifactId>equalizer</artifactId>
 			<version>${equalize-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
 		</dependency>
 	</dependencies>
 </project>

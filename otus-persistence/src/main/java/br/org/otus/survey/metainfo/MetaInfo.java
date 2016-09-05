@@ -1,5 +1,8 @@
 package br.org.otus.survey.metainfo;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class MetaInfo {
 
 	private String extents;

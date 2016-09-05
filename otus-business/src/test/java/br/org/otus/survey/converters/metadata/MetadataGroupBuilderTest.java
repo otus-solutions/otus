@@ -1,9 +1,9 @@
-package br.org.otus.survey.builders.metadata;
+package br.org.otus.survey.converters.metadata;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.otus.survey.builders.metadata.MetadataGroupBuilder;
+import br.org.otus.survey.converters.metadata.MetadataGroupBuilder;
 import br.org.otus.survey.dtos.item.metadata.MetadataGroupDtoTest;
 import br.org.otus.survey.item.questions.metadata.MetadataGroup;
 

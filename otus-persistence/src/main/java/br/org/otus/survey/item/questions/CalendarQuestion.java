@@ -9,6 +9,7 @@ public class CalendarQuestion extends Question {
 	
 	public CalendarQuestion(String templateID, String customID) {
 		super(templateID, customID);
+		super.extents = "SurveyItem";
 		super.objectType = CALENDAR_QUESTION;
 		super.dataType = "LocalDate";
 	}

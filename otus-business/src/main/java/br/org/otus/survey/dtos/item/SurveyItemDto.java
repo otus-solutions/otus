@@ -2,7 +2,7 @@ package br.org.otus.survey.dtos.item;
 
 import br.org.otus.rest.dtos.Dto;
 
-public abstract class SurveyItemDto implements Dto {
+public class SurveyItemDto implements Dto {
 	
 	public String extents;
 

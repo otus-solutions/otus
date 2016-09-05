@@ -1,12 +1,12 @@
-package br.org.otus.survey.builders.metadata;
+package br.org.otus.survey.converters.metadata;
 
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import br.org.otus.survey.builders.label.LabelBuilder;
-import br.org.otus.survey.builders.metadata.MetadataOptionBuilder;
+import br.org.otus.survey.converters.label.LabelConverter;
+import br.org.otus.survey.converters.metadata.MetadataOptionBuilder;
 import br.org.otus.survey.dtos.item.metadata.MetadataOptionDtoTest;
 import br.org.otus.survey.item.questions.metadata.MetadataOption;
 
@@ -28,9 +28,9 @@ public class MetadataOptionBuilderTest {
 		assertEquals(metadataOption.getExtents(), dtoTest.metadataOptionDto.extents);
 		assertEquals(metadataOption.getObjectType(), dtoTest.metadataOptionDto.objectType);
 		assertEquals(metadataOption.getDataType(), dtoTest.metadataOptionDto.dataType);
-		assertEquals(metadataOption.getValue(), dtoTest.metadataOptionDto.value);
+		assertEquals(metadataOption.getValue(), new Integer(dtoTest.metadataOptionDto.value));
 		assertEquals(metadataOption.getLabel().toString(),
-				new LabelBuilder().buildFromDto(dtoTest.metadataOptionDto.label).build().toString());
+				new LabelConverter().convertFromDto(dtoTest.metadataOptionDto.label).toString());
 	}
 
 }

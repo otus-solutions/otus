@@ -19,7 +19,17 @@ public class CheckboxOptionDto implements Dto {
 
 	@Override
 	public Boolean isValid() {
-		return null;
+		return (isValidIDs()) ? true : false;
+	}
+	
+	private boolean isValidIDs() {
+		boolean flag = true;
+		
+		if(optionID.isEmpty() || customOptionID.isEmpty()) {
+			flag = false;
+		}
+		
+		return flag;
 	}
 
 }

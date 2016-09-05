@@ -1,20 +1,27 @@
 package br.org.otus.survey.navigation;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+
+@Embeddable
 public class Navigation {
 
 	private String extents;
 	private String objectType;
 	private String origin;
-	private List<Route> routes;
+	@Embedded
+	@ElementCollection
+	private Set<Route> routes;
 
 	public Navigation(String origin) {
+		this.origin = origin;
 		extents = "StudioObject";
 		objectType = "Navigation";
-		this.origin = origin;
-		routes = new ArrayList<Route>();
+		routes = new HashSet<Route>();
 	}
 
 	public String getExtents() {
@@ -29,7 +36,7 @@ public class Navigation {
 		return origin;
 	}
 
-	public List<Route> getRoutes() {
+	public Set<Route> getRoutes() {
 		return routes;
 	}
 

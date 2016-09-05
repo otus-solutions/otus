@@ -1,16 +1,16 @@
-package br.org.otus.survey.builders.metadata;
+package br.org.otus.survey.converters.metadata;
 
-import br.org.otus.survey.builders.label.LabelBuilder;
+import br.org.otus.survey.converters.label.LabelConverter;
 import br.org.otus.survey.dtos.item.questions.metadata.MetadataOptionDto;
 import br.org.otus.survey.item.questions.metadata.MetadataOption;
 
 public class MetadataOptionBuilder {
 
 	private MetadataOption metadataOption;
-	private LabelBuilder labelBuilder;
+	private LabelConverter labelConverter;
 
 	public MetadataOptionBuilder() {
-		labelBuilder = new LabelBuilder();
+		labelConverter = new LabelConverter();
 	}
 
 	public MetadataOption build() {
@@ -19,9 +19,11 @@ public class MetadataOptionBuilder {
 
 	public MetadataOptionBuilder buildFromDto(MetadataOptionDto dto) {
 		metadataOption = new MetadataOption(Integer.valueOf(dto.value));
-		metadataOption.setLabel(labelBuilder.buildFromDto(dto.label).build());
+		metadataOption.setLabel(labelConverter.convertFromDto(dto.label));
 
 		return this;
 	}
+	
+	
 
 }

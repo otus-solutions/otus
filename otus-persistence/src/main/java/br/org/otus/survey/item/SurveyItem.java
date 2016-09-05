@@ -1,5 +1,8 @@
 package br.org.otus.survey.item;
 
+import javax.persistence.Embeddable;
+
+@Embeddable
 public abstract class SurveyItem {
 	
 	protected String extents;

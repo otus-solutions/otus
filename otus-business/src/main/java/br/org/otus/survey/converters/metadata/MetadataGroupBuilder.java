@@ -1,4 +1,4 @@
-package br.org.otus.survey.builders.metadata;
+package br.org.otus.survey.converters.metadata;
 
 import br.org.otus.survey.dtos.item.questions.metadata.MetadataGroupDto;
 import br.org.otus.survey.dtos.item.questions.metadata.MetadataOptionDto;
@@ -7,7 +7,6 @@ import br.org.otus.survey.item.questions.metadata.MetadataGroup;
 public class MetadataGroupBuilder {
 	
 	private MetadataGroup metadataGroup;
-	
 	private MetadataOptionBuilder metadataOptionBuilder;
 	
 	public MetadataGroupBuilder() {

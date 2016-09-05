@@ -17,7 +17,7 @@ public class RadioOptionDto implements Dto {
 
 	@Override
 	public Boolean isValid() {
-		return null;
+		return value == null ? false : true;
 	}
 
 }

@@ -1,5 +1,9 @@
 package br.org.otus.survey.navigation;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
+
+@Embeddable
 public class Route {
 	
 	protected String extents;
@@ -7,13 +11,16 @@ public class Route {
 	private String name;
 	private String origin;
 	private String destination;
+	@Embedded
 	private RouteConditionSet conditionSet;
 	
-	public Route(String origin, String destination) {
+	public Route(String origin, String destination, String name) {
 		this.origin = origin;
 		this.destination = destination;
+		this.name = name;
 		extents = "StudioObject";
 		objectType ="Route";
+		conditionSet = new RouteConditionSet();
 	}
 
 	public String getExtents() {
@@ -38,10 +45,6 @@ public class Route {
 
 	public RouteConditionSet getConditionSet() {
 		return conditionSet;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public void setConditionSet(RouteConditionSet conditionSet) {
