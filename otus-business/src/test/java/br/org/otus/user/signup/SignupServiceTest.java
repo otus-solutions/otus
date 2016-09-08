@@ -9,8 +9,10 @@ import br.org.otus.email.service.EmailNotifierServiceBean;
 import br.org.otus.email.user.signup.NewUserGreetingsEmail;
 import br.org.otus.email.user.signup.NewUserNotificationEmail;
 import br.org.otus.exceptions.webservice.common.AlreadyExistException;
+import br.org.otus.exceptions.webservice.common.DataNotFoundException;
 import br.org.otus.exceptions.webservice.http.EmailNotificationException;
 import br.org.otus.exceptions.webservice.security.EncryptedException;
+import br.org.otus.exceptions.webservice.validation.ValidationException;
 import br.org.otus.user.User;
 import br.org.otus.user.UserDao;
 import br.org.otus.user.dto.SignupDataDto;
@@ -70,8 +72,9 @@ public class SignupServiceTest {
     private EmailSenderDto emailSender;
 
     @Test(expected = AlreadyExistException.class)
-    public void method_create_should_verify_if_isUnique() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_should_verify_if_isUnique() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException, DataNotFoundException {
         Mockito.when(signupDataDto.getEmail()).thenReturn(EMAIL);
+        Mockito.when(signupDataDto.isValid()).thenReturn(Boolean.TRUE);
         signupServiceBean.create(signupDataDto);
         Mockito.verify(managementUserService.isUnique(signupDataDto.getEmail()));
     }
@@ -91,6 +94,7 @@ public class SignupServiceTest {
         Mockito.when(OtusEmailFactory.createNewUserNotificationEmail(sender, recipient, user)).thenReturn(newUserNotificationEmail);
         Mockito.when(managementUserService.isUnique(EMAIL)).thenReturn(Boolean.TRUE);
         Mockito.when(signupDataDto.getEmail()).thenReturn(EMAIL);
+        Mockito.when(signupDataDto.isValid()).thenReturn(Boolean.TRUE);
 
         signupServiceBean.create(signupDataDto);
         Mockito.verify(emailNotifierService).sendEmailSync(newUserGreetingsEmail);
@@ -98,22 +102,24 @@ public class SignupServiceTest {
     }
 
     @Test(expected = AlreadyExistException.class)
-    public void method_create_should_throw_AlreadyExistException_when_user_exist() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_should_throw_AlreadyExistException_when_user_exist() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException, DataNotFoundException {
         Mockito.when(managementUserService.isUnique(EMAIL)).thenReturn(Boolean.FALSE);
+        Mockito.when(signupDataDto.isValid()).thenReturn(Boolean.TRUE);
         signupServiceBean.create(signupDataDto);
     }
 
     @Test(expected = AlreadyExistException.class)
-    public void method_create_initializationConfig_should_verify_if_isUnique() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_initializationConfig_should_verify_if_isUnique() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException {
         Mockito.when(initializationConfigDto.getEmailSender()).thenReturn(emailSender);
         Mockito.when(emailSender.getEmail()).thenReturn(EMAIL);
         Mockito.when(managementUserService.isUnique(EMAIL)).thenReturn(Boolean.FALSE);
+        Mockito.when(initializationConfigDto.isValid()).thenReturn(Boolean.TRUE);
         signupServiceBean.create(initializationConfigDto);
         Mockito.verify(managementUserService.isUnique(initializationConfigDto.getUser().getEmail()));
     }
 
     @Test
-    public void method_create_initializationConfig_should_send_email() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_initializationConfig_should_send_email() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException {
         PowerMockito.mockStatic(OtusEmailFactory.class);
         PowerMockito.mockStatic(SystemConfigBuilder.class);
 
@@ -121,16 +127,30 @@ public class SignupServiceTest {
         Mockito.when(managementUserService.isUnique(EMAIL)).thenReturn(Boolean.TRUE);
         Mockito.when(initializationConfigDto.getEmailSender()).thenReturn(emailSender);
         Mockito.when(emailSender.getEmail()).thenReturn(EMAIL);
+        Mockito.when(initializationConfigDto.isValid()).thenReturn(Boolean.TRUE);
 
         signupServiceBean.create(initializationConfigDto);
         Mockito.verify(emailNotifierService).sendSystemInstallationEmail(initializationConfigDto);
     }
 
     @Test(expected = AlreadyExistException.class)
-    public void method_create_initializationConfig_should_throw_AlreadyExistException_when_user_exist() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_initializationConfig_should_throw_AlreadyExistException_when_user_exist() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException {
         Mockito.when(initializationConfigDto.getEmailSender()).thenReturn(emailSender);
         Mockito.when(emailSender.getEmail()).thenReturn(EMAIL);
         Mockito.when(managementUserService.isUnique(EMAIL)).thenReturn(Boolean.FALSE);
+        Mockito.when(initializationConfigDto.isValid()).thenReturn(Boolean.TRUE);
         signupServiceBean.create(initializationConfigDto);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void method_create_initializationConfig_should_throw_ValidationException_when_dto_invalid() throws EmailNotificationException, ValidationException, AlreadyExistException, EncryptedException {
+        Mockito.when(initializationConfigDto.isValid()).thenReturn(Boolean.FALSE);
+        signupServiceBean.create(initializationConfigDto);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void method_create_signup_should_throw_ValidationException_when_dto_invalid() throws EmailNotificationException, ValidationException, AlreadyExistException, EncryptedException, DataNotFoundException {
+        Mockito.when(signupDataDto.isValid()).thenReturn(Boolean.FALSE);
+        signupServiceBean.create(signupDataDto);
     }
 }

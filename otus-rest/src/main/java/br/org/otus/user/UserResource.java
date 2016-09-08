@@ -29,7 +29,7 @@ public class UserResource {
             signupDataDto.encrypt();
             Response response = new Response();
             userFacade.create(signupDataDto);
-            return response.buildSuccess(Boolean.TRUE).toJson();
+            return response.buildSuccess().toJson();
 
         } catch (EncryptedException e) {
             throw new HttpResponseException(ResponseBuild.Security.Validation.build());
@@ -55,7 +55,7 @@ public class UserResource {
     public String disableUsers(ManagementUserDto managementUserDto) {
         Response response = new Response();
         userFacade.disable(managementUserDto);
-        return response.buildSuccess(Boolean.TRUE).toJson();
+        return response.buildSuccess().toJson();
     }
 
     @POST
@@ -66,6 +66,6 @@ public class UserResource {
     public String enableUsers(ManagementUserDto managementUserDto) {
         Response response = new Response();
         userFacade.enable(managementUserDto);
-        return response.buildSuccess(Boolean.TRUE).toJson();
+        return response.buildSuccess().toJson();
     }
 }

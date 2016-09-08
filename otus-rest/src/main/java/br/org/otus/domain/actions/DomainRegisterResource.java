@@ -15,8 +15,7 @@ import org.json.JSONException;
 import java.io.IOException;
 
 public class DomainRegisterResource extends Resource {
-    public static final String REGISTER_REST_PATH = "/otus/register";
-    private static final String READY_REST_PATH = "/otus/ready";
+    public static final String REGISTER_REST_PATH = "/otus";
 
     public DomainRegisterResource(String domainRestUrl) {
         super(domainRestUrl);

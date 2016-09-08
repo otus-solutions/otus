@@ -5,6 +5,7 @@ import br.org.otus.email.BasicEmailSender;
 import br.org.otus.email.OtusEmail;
 import br.org.otus.email.OtusEmailFactory;
 import br.org.otus.email.system.SystemInstallationEmail;
+import br.org.otus.exceptions.webservice.common.DataNotFoundException;
 import br.org.otus.exceptions.webservice.http.EmailNotificationException;
 import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.security.EncryptorResources;
@@ -21,6 +22,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.mail.MessagingException;
+import javax.persistence.NoResultException;
 import java.util.Map;
 
 @Stateless
@@ -64,9 +66,14 @@ public class EmailNotifierServiceBean implements EmailNotifierService {
     }
 
     @Override
-    public Sender getSender() throws EncryptedException {
-        BasicEmailSender emailSender = systemConfigDao.findEmailSender();
-        return new Sender(emailSender.getName(), emailSender.getEmail(), EncryptorResources.decrypt(emailSender.getPassword()));
+    public Sender getSender() throws EncryptedException, DataNotFoundException {
+        try{
+            BasicEmailSender emailSender = systemConfigDao.findEmailSender();
+            return new Sender(emailSender.getName(), emailSender.getEmail(), EncryptorResources.decrypt(emailSender.getPassword()));
+
+        }catch (NoResultException e){
+            throw new DataNotFoundException();
+        }
     }
 
     private String mergeTemplate(Map<String, String> dataMap, String template) {

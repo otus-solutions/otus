@@ -25,6 +25,7 @@ public class Response {
 	}
 
 	public Response buildSuccess() {
+		this.data = Boolean.TRUE;
 		return this;
 	}
 

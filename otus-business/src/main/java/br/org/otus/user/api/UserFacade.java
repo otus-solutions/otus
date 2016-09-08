@@ -3,8 +3,10 @@ package br.org.otus.user.api;
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.email.service.EmailNotifierService;
 import br.org.otus.exceptions.webservice.common.AlreadyExistException;
+import br.org.otus.exceptions.webservice.common.DataNotFoundException;
 import br.org.otus.exceptions.webservice.http.EmailNotificationException;
 import br.org.otus.exceptions.webservice.security.EncryptedException;
+import br.org.otus.exceptions.webservice.validation.ValidationException;
 import br.org.otus.response.builders.ResponseBuild;
 import br.org.otus.response.exception.HttpResponseException;
 import br.org.otus.user.dto.ManagementUserDto;
@@ -27,33 +29,34 @@ public class UserFacade {
     private SignupService signupService;
 
     public void create(OtusInitializationConfigDto initializationConfigDto) {
-        if(initializationConfigDto.isValid()){
-            try {
-                signupService.create(initializationConfigDto);
+        try {
+            signupService.create(initializationConfigDto);
 
-            } catch (EmailNotificationException | EncryptedException e) {
-                throw new HttpResponseException(ResponseBuild.Email.CommunicationFail.build());
+        } catch (EmailNotificationException | EncryptedException e) {
+            throw new HttpResponseException(ResponseBuild.Email.CommunicationFail.build());
 
-            } catch (AlreadyExistException e) {
-                throw new HttpResponseException(ResponseBuild.User.AlreadyExist.build());
-            }
-        }else {
+        } catch (AlreadyExistException e) {
+            throw new HttpResponseException(ResponseBuild.User.AlreadyExist.build());
+
+        } catch (ValidationException e) {
             throw new HttpResponseException(ResponseBuild.Security.Validation.build());
         }
     }
 
     public void create(SignupDataDto signupDataDto) {
-        if (signupDataDto.isValid()) {
-            try {
-                signupService.create(signupDataDto);
+        try {
+            signupService.create(signupDataDto);
 
-            } catch (EncryptedException | EmailNotificationException e) {
-                throw new HttpResponseException(ResponseBuild.Email.CommunicationFail.build());
+        } catch (EncryptedException | EmailNotificationException e) {
+            throw new HttpResponseException(ResponseBuild.Email.CommunicationFail.build());
 
-            } catch (AlreadyExistException e) {
-                throw new HttpResponseException(ResponseBuild.User.AlreadyExist.build());
-            }
-        } else {
+        } catch (AlreadyExistException e) {
+            throw new HttpResponseException(ResponseBuild.User.AlreadyExist.build());
+
+        } catch (DataNotFoundException e) {
+            throw new HttpResponseException(ResponseBuild.System.NotInitialized.build());
+
+        } catch (ValidationException e) {
             throw new HttpResponseException(ResponseBuild.Security.Validation.build());
         }
     }
@@ -63,29 +66,32 @@ public class UserFacade {
     }
 
     public void disable(ManagementUserDto managementUserDto) {
-        if (managementUserDto.isValid()) {
-            try {
-                managementUserService.disable(managementUserDto);
+        try {
+            managementUserService.disable(managementUserDto);
 
-            } catch (EmailNotificationException | EncryptedException e) {
-                throw new HttpResponseException(ResponseBuild.Email.CommunicationFail.build());
-            }
-        } else {
+        } catch (EmailNotificationException | EncryptedException e) {
+            throw new HttpResponseException(ResponseBuild.Email.CommunicationFail.build());
+
+        } catch (ValidationException e) {
             throw new HttpResponseException(ResponseBuild.Security.Validation.build());
+
+        } catch (DataNotFoundException e) {
+            throw new HttpResponseException(ResponseBuild.System.NotInitialized.build());
         }
     }
 
     public void enable(ManagementUserDto managementUserDto) {
-        if (managementUserDto.isValid()) {
-            try {
-                managementUserService.enable(managementUserDto);
+        try {
+            managementUserService.enable(managementUserDto);
 
-            } catch (EmailNotificationException | EncryptedException e) {
-                throw new HttpResponseException(ResponseBuild.Email.CommunicationFail.build());
-            }
-        } else {
+        } catch (EmailNotificationException | EncryptedException e) {
+            throw new HttpResponseException(ResponseBuild.Email.CommunicationFail.build());
+
+        } catch (ValidationException e) {
             throw new HttpResponseException(ResponseBuild.Security.Validation.build());
+
+        } catch (DataNotFoundException e) {
+            throw new HttpResponseException(ResponseBuild.System.NotInitialized.build());
         }
     }
-
 }

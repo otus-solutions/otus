@@ -4,6 +4,7 @@ import br.org.otus.email.service.EmailNotifierService;
 import br.org.otus.email.service.EmailNotifierServiceBean;
 import br.org.otus.email.user.management.DisableUserNotificationEmail;
 import br.org.otus.email.user.management.EnableUserNotificationEmail;
+import br.org.otus.exceptions.webservice.common.DataNotFoundException;
 import br.org.otus.exceptions.webservice.http.EmailNotificationException;
 import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.exceptions.webservice.validation.ValidationException;
@@ -51,25 +52,28 @@ public class ManagementUserServiceBeanTest {
     private DisableUserNotificationEmail disableUserNotification;
 
     @Test
-    public void method_enable_should_fetch_user_by_email() throws EmailNotificationException, EncryptedException {
+    public void method_enable_should_fetch_user_by_email() throws EmailNotificationException, EncryptedException, ValidationException, DataNotFoundException {
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(managementUserDto.getEmail()).thenReturn(EMAIL);
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.TRUE);
         managementUserServiceBean.enable(managementUserDto);
         Mockito.verify(userDao).fetchByEmail(EMAIL);
     }
 
     @Test
-    public void method_enable_should_change_status_to_enable() throws EmailNotificationException, EncryptedException {
+    public void method_enable_should_change_status_to_enable() throws EmailNotificationException, EncryptedException, ValidationException, DataNotFoundException {
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(managementUserDto.getEmail()).thenReturn(EMAIL);
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.TRUE);
         managementUserServiceBean.enable(managementUserDto);
         Mockito.verify(user).enable();
     }
 
     @Test
-    public void method_enable_should_update_user() throws EmailNotificationException, EncryptedException {
+    public void method_enable_should_update_user() throws EmailNotificationException, EncryptedException, ValidationException, DataNotFoundException {
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(managementUserDto.getEmail()).thenReturn(EMAIL);
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.TRUE);
         managementUserServiceBean.enable(managementUserDto);
         Mockito.verify(userDao).update(user);
     }
@@ -80,34 +84,38 @@ public class ManagementUserServiceBeanTest {
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(managementUserDto.getEmail()).thenReturn(EMAIL);
         Mockito.when(emailNotifierService.getSender()).thenReturn(sender);
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.TRUE);
 
         managementUserServiceBean.enable(managementUserDto);
         Mockito.verify(emailNotifierService).sendEmail(enableUserNotification);
     }
 
     @Test
-    public void method_disable_should_fetch_user_by_email() throws EmailNotificationException, EncryptedException {
+    public void method_disable_should_fetch_user_by_email() throws EmailNotificationException, EncryptedException, ValidationException, DataNotFoundException {
         Mockito.when(user.isAdmin()).thenReturn(Boolean.FALSE);
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(managementUserDto.getEmail()).thenReturn(EMAIL);
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.TRUE);
         managementUserServiceBean.disable(managementUserDto);
         Mockito.verify(userDao).fetchByEmail(EMAIL);
     }
 
     @Test
-    public void method_disable_should_change_status_to_enable() throws EmailNotificationException, EncryptedException {
+    public void method_disable_should_change_status_to_enable() throws EmailNotificationException, EncryptedException, ValidationException, DataNotFoundException {
         Mockito.when(user.isAdmin()).thenReturn(Boolean.FALSE);
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(managementUserDto.getEmail()).thenReturn(EMAIL);
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.TRUE);
         managementUserServiceBean.disable(managementUserDto);
         Mockito.verify(user).disable();
     }
 
     @Test
-    public void method_disable_should_update_user() throws EmailNotificationException, EncryptedException {
+    public void method_disable_should_update_user() throws EmailNotificationException, EncryptedException, ValidationException, DataNotFoundException {
         Mockito.when(user.isAdmin()).thenReturn(Boolean.FALSE);
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(managementUserDto.getEmail()).thenReturn(EMAIL);
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.TRUE);
         managementUserServiceBean.disable(managementUserDto);
         Mockito.verify(userDao).update(user);
     }
@@ -119,18 +127,33 @@ public class ManagementUserServiceBeanTest {
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
         Mockito.when(managementUserDto.getEmail()).thenReturn(EMAIL);
         Mockito.when(emailNotifierService.getSender()).thenReturn(sender);
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.TRUE);
 
         managementUserServiceBean.disable(managementUserDto);
         Mockito.verify(emailNotifierService).sendEmail(disableUserNotification);
     }
 
     @Test
-    public void method_disable_should_verify_if_is_admin() throws EmailNotificationException, EncryptedException {
+    public void method_disable_should_verify_if_is_admin() throws EmailNotificationException, EncryptedException, ValidationException, DataNotFoundException {
         Mockito.when(managementUserDto.getEmail()).thenReturn(EMAIL);
         Mockito.when(user.isAdmin()).thenReturn(Boolean.TRUE);
         Mockito.when(userDao.fetchByEmail(EMAIL)).thenReturn(user);
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.TRUE);
+
         managementUserServiceBean.disable(managementUserDto);
         Mockito.verify(user).isAdmin();
         Mockito.verify(userDao, Mockito.never()).update(user);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void method_enable_should_throw_ValidationException_when_dto_invalid() throws EmailNotificationException, EncryptedException, ValidationException, DataNotFoundException {
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.FALSE);
+        managementUserServiceBean.enable(managementUserDto);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void method_disable_should_throw_ValidationException_when_dto_invalid() throws EmailNotificationException, EncryptedException, ValidationException, DataNotFoundException {
+        Mockito.when(managementUserDto.isValid()).thenReturn(Boolean.FALSE);
+        managementUserServiceBean.disable(managementUserDto);
     }
 }

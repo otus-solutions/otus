@@ -4,6 +4,7 @@ import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.email.dto.EmailSenderDto;
 import br.org.otus.email.service.EmailNotifierServiceBean;
 import br.org.otus.email.system.SystemInstallationEmail;
+import br.org.otus.exceptions.webservice.common.DataNotFoundException;
 import br.org.otus.exceptions.webservice.http.EmailNotificationException;
 import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.system.SystemConfigDao;
@@ -72,7 +73,7 @@ public class EmailNotifierServiceTest {
     }
 
     @Test
-    public void getSender_method_should_return_the_system_email_sender() throws EmailNotificationException, EncryptedException {
+    public void getSender_method_should_return_the_system_email_sender() throws EmailNotificationException, EncryptedException, DataNotFoundException {
         when(systemConfigDao.findEmailSender()).thenReturn(emailSender);
         when(emailSender.getPassword()).thenReturn(PASSWORD);
 

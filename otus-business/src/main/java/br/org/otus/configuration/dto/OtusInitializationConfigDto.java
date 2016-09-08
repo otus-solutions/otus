@@ -29,6 +29,26 @@ public class OtusInitializationConfigDto implements Dto {
 		return emailSender;
 	}
 
+	public void setUser(UserDto user) {
+		this.user = user;
+	}
+
+	public void setEmailSender(EmailSenderDto emailSender) {
+		this.emailSender = emailSender;
+	}
+
+	public void setProject(ProjectDto project) {
+		this.project = project;
+	}
+
+	public DomainDto getDomain() {
+		return domain;
+	}
+
+	public void setDomain(DomainDto domain) {
+		this.domain = domain;
+	}
+
 	@Override
 	public Boolean isValid() {
 		return Boolean.TRUE;

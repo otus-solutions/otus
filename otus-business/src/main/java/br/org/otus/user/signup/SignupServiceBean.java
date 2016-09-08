@@ -7,8 +7,10 @@ import br.org.otus.email.service.EmailNotifierService;
 import br.org.otus.email.user.signup.NewUserGreetingsEmail;
 import br.org.otus.email.user.signup.NewUserNotificationEmail;
 import br.org.otus.exceptions.webservice.common.AlreadyExistException;
+import br.org.otus.exceptions.webservice.common.DataNotFoundException;
 import br.org.otus.exceptions.webservice.http.EmailNotificationException;
 import br.org.otus.exceptions.webservice.security.EncryptedException;
+import br.org.otus.exceptions.webservice.validation.ValidationException;
 import br.org.otus.user.User;
 import br.org.otus.user.UserDao;
 import br.org.otus.user.dto.SignupDataDto;
@@ -19,6 +21,7 @@ import br.org.tutty.Equalizer;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 @Stateless
 public class SignupServiceBean implements SignupService {
@@ -33,29 +36,38 @@ public class SignupServiceBean implements SignupService {
     private ManagementUserService managementUserService;
 
     @Override
-    public void create(SignupDataDto signupDataDto) throws AlreadyExistException, EncryptedException, EmailNotificationException {
-        if (managementUserService.isUnique(signupDataDto.getEmail())) {
-            User user = new User();
-            Equalizer.equalize(signupDataDto, user);
-            Sender sender = emailNotifierService.getSender();
+    public void create(SignupDataDto signupDataDto) throws EmailNotificationException, DataNotFoundException, AlreadyExistException, ValidationException, EncryptedException {
+        if (signupDataDto.isValid()) {
+            if (managementUserService.isUnique(signupDataDto.getEmail())) {
+                    User user = new User();
+                    Equalizer.equalize(signupDataDto, user);
+                    Sender sender = emailNotifierService.getSender();
 
-            sendEmailToUser(user, sender);
-            sendEmailToAdmin(sender, user);
-            userDao.persist(user);
+                    sendEmailToUser(user, sender);
+                    sendEmailToAdmin(sender, user);
+                    userDao.persist(user);
+
+            } else {
+                throw new AlreadyExistException();
+            }
         } else {
-            throw new AlreadyExistException();
+            throw new ValidationException();
         }
     }
 
     @Override
-    public void create(OtusInitializationConfigDto initializationConfigDto) throws AlreadyExistException, EmailNotificationException, EncryptedException {
-        if (managementUserService.isUnique(initializationConfigDto.getEmailSender().getEmail())) {
-            User user = SystemConfigBuilder.buildInitialUser(initializationConfigDto);
-            emailNotifierService.sendSystemInstallationEmail(initializationConfigDto);
-            userDao.persist(user);
+    public void create(OtusInitializationConfigDto initializationConfigDto) throws AlreadyExistException, EmailNotificationException, EncryptedException, ValidationException {
+        if (initializationConfigDto.isValid()) {
+            if (managementUserService.isUnique(initializationConfigDto.getEmailSender().getEmail())) {
+                User user = SystemConfigBuilder.buildInitialUser(initializationConfigDto);
+                emailNotifierService.sendSystemInstallationEmail(initializationConfigDto);
+                userDao.persist(user);
 
+            } else {
+                throw new AlreadyExistException();
+            }
         } else {
-            throw new AlreadyExistException();
+            throw new ValidationException();
         }
     }
 

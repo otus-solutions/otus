@@ -35,17 +35,14 @@ public class InstallerResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public String config(String systemConfigData, @Context HttpServletRequest request) {
+    public String config(OtusInitializationConfigDto systemConfigDto, @Context HttpServletRequest request) {
         try {
-            Response response = new Response();
-            OtusInitializationConfigDto systemConfigDto = new Gson().fromJson(systemConfigData, OtusInitializationConfigDto.class);
             systemConfigDto.encrypt();
 
             String token = systemConfigFacade.buildToken();
             registerProjectOnDomain(systemConfigDto, request, token);
             systemConfigFacade.initConfiguration(systemConfigDto, token);
-
-            return response.buildSuccess(Boolean.TRUE).toJson();
+            return new Response().buildSuccess().toJson();
 
         } catch (EncryptedException e) {
             throw new HttpResponseException(ResponseBuild.Security.Validation.build());
@@ -61,7 +58,7 @@ public class InstallerResource {
             Response response = new Response();
             otusInitializationConfigDto.encrypt();
             systemConfigFacade.validateEmailService(otusInitializationConfigDto);
-            return response.buildSuccess(Boolean.TRUE).toJson();
+            return response.buildSuccess().toJson();
 
         } catch (EncryptedException e) {
             throw new HttpResponseException(ResponseBuild.Security.Validation.build());

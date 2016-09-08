@@ -73,6 +73,7 @@ public class UserDto implements EmailSender, Dto {
 		this.passwordConfirmation = passwordConfirmation;
 	}
 
+
 	@Override
 	public Boolean isValid() {
 		return Boolean.TRUE;
@@ -81,6 +82,7 @@ public class UserDto implements EmailSender, Dto {
 	@Override
 	public void encrypt() throws EncryptedException {
 		this.password = EncryptorResources.encryptIrreversible(password);
+		this.passwordConfirmation = EncryptorResources.encryptIrreversible(passwordConfirmation);
 	}
 
 }

@@ -3,8 +3,10 @@ package br.org.otus.user.api;
 import br.org.otus.configuration.dto.OtusInitializationConfigDto;
 import br.org.otus.email.service.EmailNotifierServiceBean;
 import br.org.otus.exceptions.webservice.common.AlreadyExistException;
+import br.org.otus.exceptions.webservice.common.DataNotFoundException;
 import br.org.otus.exceptions.webservice.http.EmailNotificationException;
 import br.org.otus.exceptions.webservice.security.EncryptedException;
+import br.org.otus.exceptions.webservice.validation.ValidationException;
 import br.org.otus.response.builders.ResponseBuild;
 import br.org.otus.response.exception.HttpResponseException;
 import br.org.otus.response.exception.ResponseInfo;
@@ -40,15 +42,8 @@ public class UserFacadeCreateTest {
     @Mock
     private SignupDataDto signupDataDto;
 
-    @Test
-    public void method_create_should_verify_if_dto_isValid() {
-        Mockito.when(initializationConfigDto.isValid()).thenReturn(Boolean.TRUE);
-        userFacade.create(initializationConfigDto);
-        Mockito.verify(initializationConfigDto).isValid();
-    }
-
     @Test(expected = HttpResponseException.class)
-    public void method_create_should_throw_CommunicationFail_when_EmailNotificationException() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_should_throw_CommunicationFail_when_EmailNotificationException() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException {
         ResponseInfo errorResponseInfo = ResponseBuild.Email.CommunicationFail.build();
         Mockito.when(initializationConfigDto.isValid()).thenReturn(Boolean.TRUE);
         PowerMockito.doThrow(new EmailNotificationException()).when(signupServiceBean).create(initializationConfigDto);
@@ -63,7 +58,7 @@ public class UserFacadeCreateTest {
     }
 
     @Test(expected = HttpResponseException.class)
-    public void method_create_should_throw_CommunicationFail_when_EncryptedException() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_should_throw_CommunicationFail_when_EncryptedException() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException {
         ResponseInfo errorResponseInfo = ResponseBuild.Email.CommunicationFail.build();
         Mockito.when(initializationConfigDto.isValid()).thenReturn(Boolean.TRUE);
         PowerMockito.doThrow(new EncryptedException()).when(signupServiceBean).create(initializationConfigDto);
@@ -78,7 +73,7 @@ public class UserFacadeCreateTest {
     }
 
     @Test(expected = HttpResponseException.class)
-    public void method_create_should_throw_AlreadyExist_when_AlreadyExistException() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_should_throw_AlreadyExist_when_AlreadyExistException() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException {
         ResponseInfo errorResponseInfo = ResponseBuild.User.AlreadyExist.build();
         Mockito.when(initializationConfigDto.isValid()).thenReturn(Boolean.TRUE);
         PowerMockito.doThrow(new AlreadyExistException()).when(signupServiceBean).create(initializationConfigDto);
@@ -93,9 +88,9 @@ public class UserFacadeCreateTest {
     }
 
     @Test(expected = HttpResponseException.class)
-    public void method_create_should_throw_SecurityValidation_when_validationIsFail() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_should_throw_SecurityValidation_when_validationIsFail() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException {
         ResponseInfo errorResponseInfo = ResponseBuild.Security.Validation.build();
-        Mockito.when(initializationConfigDto.isValid()).thenReturn(Boolean.FALSE);
+        Mockito.doThrow(ValidationException.class).when(signupServiceBean).create(initializationConfigDto);
 
         try {
             userFacade.create(initializationConfigDto);
@@ -106,15 +101,8 @@ public class UserFacadeCreateTest {
         }
     }
 
-    @Test
-    public void method_create_signup_should_verify_if_dto_isValid() {
-        Mockito.when(signupDataDto.isValid()).thenReturn(Boolean.TRUE);
-        userFacade.create(signupDataDto);
-        Mockito.verify(signupDataDto).isValid();
-    }
-
     @Test(expected = HttpResponseException.class)
-    public void method_create_signup_should_throw_CommunicationFail_when_EmailNotificationException() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_signup_should_throw_CommunicationFail_when_EmailNotificationException() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException, DataNotFoundException {
         ResponseInfo errorResponseInfo = ResponseBuild.Email.CommunicationFail.build();
         Mockito.when(signupDataDto.isValid()).thenReturn(Boolean.TRUE);
         PowerMockito.doThrow(new EmailNotificationException()).when(signupServiceBean).create(signupDataDto);
@@ -129,7 +117,7 @@ public class UserFacadeCreateTest {
     }
 
     @Test(expected = HttpResponseException.class)
-    public void method_create_signup_should_throw_CommunicationFail_when_EncryptedException() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_signup_should_throw_CommunicationFail_when_EncryptedException() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException, DataNotFoundException {
         ResponseInfo errorResponseInfo = ResponseBuild.Email.CommunicationFail.build();
         Mockito.when(signupDataDto.isValid()).thenReturn(Boolean.TRUE);
         PowerMockito.doThrow(new EncryptedException()).when(signupServiceBean).create(signupDataDto);
@@ -144,7 +132,7 @@ public class UserFacadeCreateTest {
     }
 
     @Test(expected = HttpResponseException.class)
-    public void method_create_signup_should_throw_AlreadyExist_when_AlreadyExistException() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_signup_should_throw_AlreadyExist_when_AlreadyExistException() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException, DataNotFoundException {
         ResponseInfo errorResponseInfo = ResponseBuild.User.AlreadyExist.build();
         Mockito.when(signupDataDto.isValid()).thenReturn(Boolean.TRUE);
         PowerMockito.doThrow(new AlreadyExistException()).when(signupServiceBean).create(signupDataDto);
@@ -159,9 +147,9 @@ public class UserFacadeCreateTest {
     }
 
     @Test(expected = HttpResponseException.class)
-    public void method_create_signup_should_throw_SecurityValidation_when_validationIsFail() throws EmailNotificationException, EncryptedException, AlreadyExistException {
+    public void method_create_signup_should_throw_SecurityValidation_when_validationIsFail() throws EmailNotificationException, EncryptedException, AlreadyExistException, ValidationException, DataNotFoundException {
         ResponseInfo errorResponseInfo = ResponseBuild.Security.Validation.build();
-        Mockito.when(signupDataDto.isValid()).thenReturn(Boolean.FALSE);
+        Mockito.doThrow(ValidationException.class).when(signupServiceBean).create(signupDataDto);
 
         try {
             userFacade.create(signupDataDto);

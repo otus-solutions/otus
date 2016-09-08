@@ -30,6 +30,14 @@ public class EmailSenderDto implements Dto{
         return password;
     }
 
+    public String getPasswordConfirmation() {
+        return passwordConfirmation;
+    }
+
+    public void setPasswordConfirmation(String passwordConfirmation) {
+        this.passwordConfirmation = passwordConfirmation;
+    }
+
     @Override
     public Boolean isValid() {
         return Boolean.TRUE;
@@ -38,6 +46,7 @@ public class EmailSenderDto implements Dto{
     @Override
     public void encrypt() throws EncryptedException {
         this.password = EncryptorResources.encryptReversible(password);
+        this.passwordConfirmation = EncryptorResources.encryptReversible(passwordConfirmation);
     }
 
 }

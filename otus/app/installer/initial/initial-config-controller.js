@@ -11,7 +11,6 @@
         var MESSAGE_CONFIGURATIONS_ERROR = 'Erro ao adicionar novas configurações. Contate a equipe de desenvolvimento';
         var MESSAGE_SUCCESS = 'Suas configurações foram realizadas com sucesso! Você vai ser redirecionado para a tela de login.';
         var installerResource;
-        var domainUrlResource;
 
         var self = this;
         self.register = register;
@@ -41,9 +40,9 @@
 
         function validateDomain(domainUrl) {
             RestResourceService.setHostname(domainUrl);
-            domainUrlResource = RestResourceService.getUrlResource();
+            var domainInstallerResource = RestResourceService.getInstallerResource();
 
-            domainUrlResource.isValidDomain(function(response) {
+            domainInstallerResource.ready(function(response) {
                 if (!response.data) {
                     _showDomainComunicationError();
                 }

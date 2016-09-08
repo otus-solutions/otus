@@ -22,7 +22,7 @@ public class FieldCenterResource {
     public String create(FieldCenterDto fieldCenterDto) {
         Response response = new Response();
         fieldCenterFacade.create(fieldCenterDto);
-        return response.buildSuccess(Boolean.TRUE).toJson();
+        return response.buildSuccess().toJson();
     }
 
     @GET
@@ -42,6 +42,6 @@ public class FieldCenterResource {
     public String update(FieldCenterUpdateDto fieldCenterUpdate) {
         Response response = new Response();
         fieldCenterFacade.update(fieldCenterUpdate);
-        return response.buildSuccess(Boolean.TRUE).toJson();
+        return response.buildSuccess().toJson();
     }
 }
