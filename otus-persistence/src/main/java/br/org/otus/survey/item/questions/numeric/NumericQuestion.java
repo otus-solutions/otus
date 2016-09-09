@@ -1,10 +1,12 @@
 package br.org.otus.survey.item.questions.numeric;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
 import br.org.otus.survey.item.questions.Question;
 import br.org.otus.survey.item.questions.numeric.unit.Unit;
 
+@Embeddable
 public abstract class NumericQuestion extends Question {
 
 	@Embedded

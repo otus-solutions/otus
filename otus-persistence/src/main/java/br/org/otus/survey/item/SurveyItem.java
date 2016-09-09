@@ -3,13 +3,16 @@ package br.org.otus.survey.item;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public abstract class SurveyItem {
+public class SurveyItem {
 	
 	protected String extents;
 	private String templateID;
 	private String customID;
 	protected String objectType;
 	protected String dataType;
+	
+	protected SurveyItem() {
+	}
 	
 	public SurveyItem(String templateID, String customID) {
 		this.templateID = templateID;

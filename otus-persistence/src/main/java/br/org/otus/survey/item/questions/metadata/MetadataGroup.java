@@ -1,23 +1,25 @@
 package br.org.otus.survey.item.questions.metadata;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
+@Embeddable
 public class MetadataGroup {
 	
 	private String extents;
 	private String objectType;
 	@Embedded
 	@ElementCollection
-    private Set<MetadataOption> options;
+    private List<MetadataOption> options;
     
     public MetadataGroup() {
     	extents = "StudioObject";
     	objectType = "MetadataGroup";
-    	options = new HashSet<MetadataOption>();
+    	options = new ArrayList<MetadataOption>();
 	}
 
 	public String getExtents() {
@@ -28,7 +30,7 @@ public class MetadataGroup {
 		return objectType;
 	}
 
-	public Set<MetadataOption> getOptions() {
+	public List<MetadataOption> getOptions() {
 		return options;
 	}
 

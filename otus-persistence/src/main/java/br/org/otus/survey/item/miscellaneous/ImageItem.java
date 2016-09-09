@@ -1,8 +1,11 @@
 package br.org.otus.survey.item.miscellaneous;
 
+import javax.persistence.Embeddable;
+
 import br.org.otus.survey.item.SurveyItem;
 import br.org.otus.survey.item.label.Label;
 
+@Embeddable
 public class ImageItem extends SurveyItem {
 	
 	private String url;

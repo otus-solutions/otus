@@ -1,7 +1,10 @@
 package br.org.otus.survey.item.questions.metadata;
 
+import javax.persistence.Embeddable;
+
 import br.org.otus.survey.item.label.Label;
 
+@Embeddable
 public class MetadataOption {
 
 	private String extents;
@@ -10,11 +13,15 @@ public class MetadataOption {
 	private Integer value;
 	private Label label;
 	
-	public MetadataOption(Integer value) {
-		this.value = value;
+	protected MetadataOption() {
 		extents = "StudioObject";
 		objectType = "MetadataAnswer";
 		dataType = "Integer";
+	}
+	
+	public MetadataOption(Integer value) {
+		this();
+		this.value = value;
 	}
 
 	public String getExtents() {

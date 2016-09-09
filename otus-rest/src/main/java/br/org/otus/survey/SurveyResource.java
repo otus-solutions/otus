@@ -33,7 +33,7 @@ public class SurveyResource {
 		Gson gson = builder.create();
 
 		SurveyDto surveyDto = gson.fromJson(survey, SurveyDto.class);
-
+		
 		surveyService.saveSurvey(surveyDto);
 
 		return response.toJson();
@@ -49,9 +49,4 @@ public class SurveyResource {
 		return response.toJson();
 	}
 
-	public static void main(String[] args) {
-		SurveyResource surveyResource = new SurveyResource();
-		String a = "{}";
-		surveyResource.create(a);
-	}
 }

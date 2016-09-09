@@ -3,6 +3,10 @@ package br.org.otus.survey.identity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Embeddable;
+
+@Embeddable
 public class Identity {
 
 	private String extents;
@@ -11,14 +15,19 @@ public class Identity {
 	private String acronym;
 	private String recommendedTo;
 	private String description;
+	@ElementCollection
 	private List<String> keywords;
-
-	public Identity(String name, String acronym) {
-		this.name = name;
-		this.acronym = acronym;
+	
+	protected Identity() {
 		extents = "StudioObject";
 		objectType = "SurveyIdentity";
 		keywords = new ArrayList<String>();
+	}
+
+	public Identity(String name, String acronym) {
+		this();
+		this.name = name;
+		this.acronym = acronym;
 	}
 
 	public String getExtents() {

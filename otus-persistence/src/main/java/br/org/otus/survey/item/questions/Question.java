@@ -1,5 +1,6 @@
 package br.org.otus.survey.item.questions;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Embedded;
 
 import br.org.otus.survey.item.SurveyItem;
@@ -7,6 +8,7 @@ import br.org.otus.survey.item.label.Label;
 import br.org.otus.survey.item.questions.fillingRules.FillingRules;
 import br.org.otus.survey.item.questions.metadata.MetadataGroup;
 
+@Embeddable
 public abstract class Question extends SurveyItem {
 
 	@Embedded

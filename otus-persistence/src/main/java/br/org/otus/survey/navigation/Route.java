@@ -1,26 +1,30 @@
 package br.org.otus.survey.navigation;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+import javax.persistence.Transient;
 
 @Embeddable
 public class Route {
 	
-	protected String extents;
-	protected String objectType;
+	private String extents;
+	private String objectType;
 	private String name;
 	private String origin;
 	private String destination;
-	@Embedded
+	@Transient
 	private RouteConditionSet conditionSet;
 	
+	protected Route() {
+		extents = "StudioObject";
+		objectType ="Route";
+		//conditionSet = new RouteConditionSet();
+	}
+	
 	public Route(String origin, String destination, String name) {
+		this();
 		this.origin = origin;
 		this.destination = destination;
 		this.name = name;
-		extents = "StudioObject";
-		objectType ="Route";
-		conditionSet = new RouteConditionSet();
 	}
 
 	public String getExtents() {

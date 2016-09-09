@@ -45,6 +45,12 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>br.org.tutty</groupId>
 			<artifactId>equalizer</artifactId>
 			<version>${equalize-version}</version>

@@ -1,13 +1,12 @@
 package br.org.otus.survey;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 
 import br.org.otus.survey.identity.Identity;
 import br.org.otus.survey.item.SurveyItem;
@@ -18,38 +17,35 @@ import br.org.otus.survey.navigation.Navigation;
 public class Survey {
 
 	private String extents;
-	
 	private String objectType;
 	
 	@Id
-	@NotNull
 	private String oid;
 
-	@NotNull
 	@Embedded
 	public Identity identity;
 
-	@NotNull
 	@Embedded
 	private MetaInfo metaInfo;
 
 	@Embedded
 	@ElementCollection
-	private Set<SurveyItem> itemContainer;
-
+	private List<SurveyItem> itemContainer;
+	
 	@Embedded
 	@ElementCollection
-	private Set<Navigation> navigationList;
+	private List<Navigation> navigationList;
 
 	protected Survey() {
+		extents = "StudioObject";
+		objectType = "SurveyIdentity";
+		itemContainer = new ArrayList<SurveyItem>();
+		navigationList = new ArrayList<Navigation>();
 	}
 
 	public Survey(String oid) {
+		this();
 		this.oid = oid;
-		extents = "StudioObject";
-		objectType = "SurveyIdentity";
-		itemContainer = new HashSet<SurveyItem>();
-		navigationList = new HashSet<Navigation>();
 	}
 
 	public Identity getIdentity() {
@@ -68,7 +64,7 @@ public class Survey {
 		this.metaInfo = metaInfo;
 	}
 
-	public Set<SurveyItem> getItemContainer() {
+	public List<SurveyItem> getItemContainer() {
 		return itemContainer;
 	}
 	
@@ -76,7 +72,7 @@ public class Survey {
 		itemContainer.add(surveyItem);
 	}
 
-	public Set<Navigation> getNavigationList() {
+	public List<Navigation> getNavigationList() {
 		return navigationList;
 	}
 	

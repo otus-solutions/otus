@@ -9,6 +9,9 @@ public class MetaInfo {
 	private String objectType;
 	private String creationDatetime;
 	private String otusStudioVersion;
+	
+	protected MetaInfo() {
+	}
 
 	public MetaInfo(String creationDatetime) {
 		this.creationDatetime = creationDatetime;

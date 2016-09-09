@@ -1,7 +1,10 @@
 package br.org.otus.survey.item.questions.selectable.options;
 
+import javax.persistence.Embeddable;
+
 import br.org.otus.survey.item.label.Label;
 
+@Embeddable
 public class CheckboxOption {
 
 	private String extents;
