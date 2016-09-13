@@ -1,0 +1,16 @@
+<md-virtual-repeat-container class="participant-search-result-container" md-on-demand>
+    <div layout-align="left center" layout-margin layout="row" class="participant-result" md-virtual-repeat="participant in controller.get() | orderBy:'nr':false">
+        <div layout-margin>
+            <md-icon md-font-set="material-icons">face</md-icon>
+        </div>
+        <div layout-margin flex="10">
+            <span class="md-body-2">{{participant.nr}}</span>
+        </div>
+        <div layout-margin flex="80">
+            <span class="md-body-1">{{participant.name}}</span>
+        </div>
+    </div>
+</md-virtual-repeat-container>
+<md-subheader ng-click="controller.toggle()" md-whiteframe="2" class="md-primary participant-search-footer">
+    {{controller.footer.message}}
+</md-subheader>

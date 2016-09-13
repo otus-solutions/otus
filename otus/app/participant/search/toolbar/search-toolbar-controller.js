@@ -5,11 +5,26 @@
         .module('otus.participant.search')
         .controller('SearchToolbarController', SearchToolbarController);
 
-    SearchToolbarController.$inject = ['$mdDialog'];
+    SearchToolbarController.$inject = ['$mdDialog', 'ParticipantSearchResultService'];
 
-    function SearchToolbarController($mdDialog) {
+    function SearchToolbarController($mdDialog, ParticipantSearchResultService) {
         var self = this;
         self.openCustomSearch = openCustomSearch;
+        self.quickFilter = quickFilter;
+        self.selectSearch = selectSearch;
+
+        function quickFilter(query) {
+            ParticipantSearchResultService.addFilter({
+                'participantQuick': query
+            });
+            ParticipantSearchResultService.applyFilters();
+        }
+
+        function selectSearch() {
+            if (ParticipantSearchResultService.hasClose()) {
+                ParticipantSearchResultService.toggle();
+            }
+        }
 
         function openCustomSearch($event) {
             $mdDialog.show({

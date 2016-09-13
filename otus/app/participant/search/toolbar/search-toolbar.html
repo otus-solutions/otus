@@ -1,8 +1,7 @@
-<div class="md-toolbar-tools" layout="row">
-    <span>
-        Buscar Participante
-    </span>
-    <md-button class="md-icon-button" ng-click="searchToolbar.openCustomSearch()">
-        <i class="material-icons">search</i>
+<div layout="row" class="search-participant-container">
+    <input ng-click="searchToolbar.selectSearch()" ng-model="searchToolbar.query" ng-change="searchToolbar.quickFilter(searchToolbar.query)" ng-model-options="{debounce: 500}" flex="100" type="text" class="participant-search-input" placeholder="Nome / Numero de Recrutamento"></input>
+    <md-button class="md-icon-button" ng-click="searchToolbar.openCustomSearch(ev)">
+        <md-icon md-font-set="material-icons">filter_list</md-icon>
+        <md-tooltip>Lista de Filtros</md-tooltip>
     </md-button>
 </div>

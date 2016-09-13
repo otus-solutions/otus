@@ -9,6 +9,6 @@
             'otusjs.otus.singup',
             'otus.client',
             'otus.domain.client',
-            'otus.participant.search'
+            'otus.participant.search',
         ]);
 }());

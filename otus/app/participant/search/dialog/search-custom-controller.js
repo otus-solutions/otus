@@ -5,16 +5,15 @@
         .module('otus.participant.search')
         .controller('SearchCustomController', SearchCustomController);
 
-    SearchCustomController.$inject = ['$mdDialog'];
+    SearchCustomController.$inject = ['$mdDialog', '$http'];
 
-    // TODO Dummy Controller
-    function SearchCustomController($mdDialog) {
+    function SearchCustomController($mdDialog, $http) {
         var self = this;
         self.close = close;
-        self.participants = ['Joao', 'Fernando', 'Maria'];
 
         function close($event) {
             $mdDialog.cancel();
         }
+
     }
 }());

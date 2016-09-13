@@ -1,7 +1,8 @@
-<md-toolbar>
+<md-toolbar class="md-whiteframe-10dp">
     <div class="md-toolbar-tools">
         <a class="navbar-brand" rel="home" title="Otus">
-            <img src="app/assets/img/coruja_pesquisadora.png" class="md-avatar toolbar-icon" />
+            <img src="app/assets/img/coruja_pesquisadora.png" class="md-avatar toolbar-icon"
+                                                              />
         </a>
 
         <md-button ng-click="dashboardToolbar.open()">
@@ -11,7 +12,9 @@
 
         <span flex></span>
 
-        <otus:search-toolbar></otus:search-toolbar>
+        <otus:search-toolbar flex="50"></otus:search-toolbar>
+
+        <span flex></span>
 
         <md-whiteframe class="md-whiteframe-10dp image-brand" ng-click="dashboardMenu.chooseProject()">
             <a class="navbar-brand">
@@ -21,7 +24,8 @@
 
         <md-whiteframe class="md-whiteframe-10dp image-brand" ng-click="dashboardMenu.chooseProject()">
             <a class="navbar-brand">
-                <img ng-src="app/assets/img/user.png" class="md-avatar toolbar-icon icon-clickable"/>
+                <img ng-src="app/assets/img/user.png" class="md-avatar toolbar-icon icon-clickable"
+                                                      />
             </a>
         </md-whiteframe>
     </div>
