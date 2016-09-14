@@ -7,7 +7,7 @@ import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import br.org.otus.configuration.rest.InstallerResource;
+import br.org.otus.configuration.InstallerResource;
 import br.org.otus.fieldCenter.FieldCenterResource;
 import br.org.otus.security.rest.AuthenticationResource;
 import br.org.otus.survey.SurveyResource;
@@ -24,7 +24,7 @@ public class EndPointsLoader extends Application {
 
 	@Inject
 	private FieldCenterResource fieldCenterResource;
-	
+
 	@Inject
 	private UserResource userResource;
 
@@ -41,7 +41,7 @@ public class EndPointsLoader extends Application {
 		resources.add(SurveyResource.class);
 		return resources;
 	}
-	
+
 	@Override
 	public Set<Object> getSingletons() {
 		Set<Object> resources = new HashSet<Object>();

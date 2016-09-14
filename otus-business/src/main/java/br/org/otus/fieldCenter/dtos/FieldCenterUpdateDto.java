@@ -36,6 +36,10 @@ public class FieldCenterUpdateDto implements Dto {
         return !acronym.isEmpty();
     }
 
+    @Override
+    public void encrypt() {
+    }
+
     public void setAcronym(String acronym) {
         this.acronym = acronym;
     }

@@ -1,48 +1,71 @@
 package br.org.otus.user;
 
-import javax.inject.Inject;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
-import br.org.otus.configuration.dto.OtusInitializationConfigDto;
-import br.org.otus.exceptions.ResponseError;
+import br.org.otus.exceptions.webservice.security.EncryptedException;
+import br.org.otus.response.builders.ResponseBuild;
+import br.org.otus.response.exception.HttpResponseException;
 import br.org.otus.rest.Response;
+import br.org.otus.security.Secured;
+import br.org.otus.user.api.UserFacade;
+import br.org.otus.user.dto.ManagementUserDto;
 import br.org.otus.user.dto.SignupDataDto;
-import br.org.otus.user.signup.SignupService;
-import br.org.otus.user.signup.exception.SignupException;
+
+import javax.inject.Inject;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 @Path("/user")
 public class UserResource {
 
     @Inject
-    private SignupService signupService;
+    private UserFacade userFacade;
 
     @POST
     @Path("/signup")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public String signup(SignupDataDto signupDataDto) {
-        Response response = new Response();
-
         try {
-            signupService.execute(signupDataDto);
-            response.buildSuccess();
-        } catch (SignupException e) {
-            response.buildError(((ResponseError) e));
-        }
+            signupDataDto.encrypt();
+            Response response = new Response();
+            userFacade.create(signupDataDto);
+            return response.buildSuccess().toJson();
 
-        return response.toJson();
+        } catch (EncryptedException e) {
+            throw new HttpResponseException(ResponseBuild.Security.Validation.build());
+        }
+    }
+
+    @GET
+    @Secured
+    @Path("/list")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public String list() {
+        Response response = new Response();
+        List<ManagementUserDto> managementUserDtos = userFacade.list();
+        return response.buildSuccess(managementUserDtos).toJson();
     }
 
     @POST
-    @Path("/validation")
+    @Secured
+    @Path("/disable")
+    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String validation(OtusInitializationConfigDto otusInitializationConfigDto) {
-        System.out.println(otusInitializationConfigDto);
-        return new Response().buildSuccess().toJson();
+    public String disableUsers(ManagementUserDto managementUserDto) {
+        Response response = new Response();
+        userFacade.disable(managementUserDto);
+        return response.buildSuccess().toJson();
     }
 
+    @POST
+    @Secured
+    @Path("/enable")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String enableUsers(ManagementUserDto managementUserDto) {
+        Response response = new Response();
+        userFacade.enable(managementUserDto);
+        return response.buildSuccess().toJson();
+    }
 }

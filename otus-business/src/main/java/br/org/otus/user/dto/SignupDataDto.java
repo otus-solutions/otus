@@ -1,6 +1,8 @@
 package br.org.otus.user.dto;
 
+import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.rest.dtos.Dto;
+import br.org.otus.security.EncryptorResources;
 import br.org.tutty.Equalization;
 
 public class SignupDataDto implements Dto {
@@ -78,7 +80,13 @@ public class SignupDataDto implements Dto {
 		
 		return isComplete && isPasswordConfirmed;
 	}
-	
+
+	@Override
+	public void encrypt() throws EncryptedException {
+		this.password = EncryptorResources.encryptIrreversible(password);
+		this.passwordConfirmation = EncryptorResources.encryptIrreversible(passwordConfirmation);
+	}
+
 	private Boolean isPasswordConfirmed() {
         return password.equals(passwordConfirmation);
     }

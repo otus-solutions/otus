@@ -1,19 +1,20 @@
 package br.org.otus.security.services;
 
-import br.org.otus.exceptions.*;
+import br.org.otus.exceptions.webservice.security.AuthenticationException;
+import br.org.otus.exceptions.webservice.security.TokenException;
 import br.org.otus.security.dtos.AuthenticationData;
+import br.org.otus.security.dtos.UserSecurityAuthorizationDto;
 import br.org.otus.system.SystemConfig;
 import br.org.otus.system.SystemConfigDao;
 import br.org.otus.user.User;
 import br.org.otus.user.UserDao;
-import com.nimbusds.jose.JOSEException;
+import br.org.tutty.Equalizer;
 
-import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.NoResultException;
 
 @Stateless
-@Local(SecurityService.class)
 public class SecurityServiceBean implements SecurityService {
 
     @Inject
@@ -26,26 +27,32 @@ public class SecurityServiceBean implements SecurityService {
     private SecurityContextService securityContextService;
 
     @Override
-    public String authenticate(AuthenticationData authenticationData) throws InvalidPasswordException, EmailNotFoundException, UserDisabledException, TokenException {
+    public UserSecurityAuthorizationDto authenticate(AuthenticationData authenticationData) throws TokenException, AuthenticationException {
         try {
             User user = userDao.fetchByEmail(authenticationData.getKey());
 
             if (user.getPassword().equals(authenticationData.getPassword())) {
                 if (user.isEnable()) {
-                    return initializeToken(authenticationData);
+                    UserSecurityAuthorizationDto userSecurityAuthorizationDto = new UserSecurityAuthorizationDto();
+                    Equalizer.equalize(user, userSecurityAuthorizationDto);
+
+                    String token = initializeToken(authenticationData);
+                    userSecurityAuthorizationDto.setToken(token);
+                    return userSecurityAuthorizationDto;
+
                 } else {
-                    throw new UserDisabledException();
+                    throw new AuthenticationException();
                 }
             } else {
-                throw new InvalidPasswordException();
+                throw new AuthenticationException();
             }
-        } catch (DataNotFoundException e) {
-            throw new EmailNotFoundException();
+        } catch (NoResultException e) {
+            throw new AuthenticationException();
         }
     }
 
     @Override
-    public String projectAuthenticate(AuthenticationData authenticationData) throws InvalidDtoException, TokenException, InvalidPasswordException {
+    public String projectAuthenticate(AuthenticationData authenticationData) throws TokenException, AuthenticationException {
         try {
             SystemConfig systemConfig = systemConfigDao.fetchSystemConfig();
             String password = authenticationData.getPassword();
@@ -55,35 +62,27 @@ public class SecurityServiceBean implements SecurityService {
                     return initializeToken(authenticationData);
 
                 } else {
-
-                    throw new InvalidPasswordException();
+                    throw new AuthenticationException();
                 }
             } else {
-                throw new InvalidDtoException();
+                throw new AuthenticationException();
             }
-        } catch (DataNotFoundException e) {
-            throw new TokenException();
+        } catch (NoResultException e) {
+            throw new AuthenticationException(e);
         }
     }
 
     @Override
     public void invalidate(String token) {
-        try {
-            securityContextService.removeToken(token);
-        } catch (FieldCenterNotFoundException e) {
-        }
+        securityContextService.removeToken(token);
     }
 
     private String initializeToken(AuthenticationData authenticationData) throws TokenException {
-        try {
-            byte[] secretKey = securityContextService.generateSecretKey();
-            String jwtSignedAndSerialized = securityContextService.generateToken(authenticationData, secretKey);
-            securityContextService.addToken(jwtSignedAndSerialized, secretKey);
+        byte[] secretKey = securityContextService.generateSecretKey();
+        String jwtSignedAndSerialized = securityContextService.generateToken(authenticationData, secretKey);
+        securityContextService.addToken(jwtSignedAndSerialized, secretKey);
 
-            return jwtSignedAndSerialized;
-        } catch (JOSEException e) {
-            throw new TokenException();
-        }
+        return jwtSignedAndSerialized;
     }
 
 }

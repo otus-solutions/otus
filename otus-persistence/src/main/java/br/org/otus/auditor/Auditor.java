@@ -5,7 +5,9 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Auditor {
@@ -19,7 +21,8 @@ public class Auditor {
     @NotNull
     private Date date;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @Embedded
+    @ElementCollection
     private Set<LogEntry> logEntries;
 
     public void addEntry(LogEntry logEntry) {

@@ -1,22 +1,12 @@
 package br.org.otus.email;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.Type;
-
 import br.org.tutty.Equalization;
 
-@Entity(name = "EmailSender")
-public class BasicEmailSender implements EmailSender {
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Type(type = "objectid")
-    private String id;
+@Embeddable
+public class BasicEmailSender implements EmailSender {
 
     @Equalization(name = "name")
     @NotNull
@@ -54,5 +44,4 @@ public class BasicEmailSender implements EmailSender {
     public String getPassword() {
         return password;
     }
-
 }

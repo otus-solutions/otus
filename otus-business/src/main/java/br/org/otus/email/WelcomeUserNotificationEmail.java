@@ -1,10 +1,10 @@
 package br.org.otus.email;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Mailer;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WelcomeUserNotificationEmail extends Email implements OtusEmail {
 

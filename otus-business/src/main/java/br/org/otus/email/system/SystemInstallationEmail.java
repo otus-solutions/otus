@@ -1,13 +1,13 @@
 package br.org.otus.email.system;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import br.org.otus.email.OtusEmail;
 import br.org.owail.sender.email.Email;
 import br.org.owail.sender.email.Mailer;
 import br.org.owail.sender.email.Recipient;
 import br.org.owail.sender.email.Sender;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SystemInstallationEmail extends Email implements OtusEmail {
 

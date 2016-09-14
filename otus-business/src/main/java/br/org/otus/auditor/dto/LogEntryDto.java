@@ -2,7 +2,8 @@ package br.org.otus.auditor.dto;
 
 import br.org.tutty.Equalization;
 
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
 
 public class LogEntryDto {
 

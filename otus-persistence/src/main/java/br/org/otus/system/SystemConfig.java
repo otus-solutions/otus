@@ -1,16 +1,10 @@
 package br.org.otus.system;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-import org.hibernate.annotations.Type;
-
 import br.org.otus.email.BasicEmailSender;
 import br.org.tutty.Equalization;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 
 @Entity
 public class SystemConfig {
@@ -29,7 +23,7 @@ public class SystemConfig {
     @Equalization(name = "project_token")
     private String projectToken;
 
-    @OneToOne(cascade = CascadeType.ALL, targetEntity = BasicEmailSender.class)
+    @Embedded
     private BasicEmailSender basicEmailSender;
 
     public SystemConfig() {

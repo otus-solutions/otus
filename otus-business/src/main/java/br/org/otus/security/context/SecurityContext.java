@@ -28,7 +28,7 @@ public class SecurityContext implements Serializable {
         securityMap.put(jwtSignedAndSerialized, secretKey);
     }
 
-    public void remove(String token) throws ParseException {
+    public void remove(String token) {
         String tokenWithoutPrefix = token.substring("Bearer".length()).trim();
         securityMap.remove(tokenWithoutPrefix);
     }

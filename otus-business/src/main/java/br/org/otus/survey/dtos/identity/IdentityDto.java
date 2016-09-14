@@ -2,6 +2,7 @@ package br.org.otus.survey.dtos.identity;
 
 import java.util.List;
 
+import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.rest.dtos.Dto;
 
 public class IdentityDto implements Dto {
@@ -30,6 +31,10 @@ public class IdentityDto implements Dto {
 		}
 
 		return Boolean.valueOf(flag);
+	}
+
+	@Override
+	public void encrypt() throws EncryptedException {
 	}
 
 }

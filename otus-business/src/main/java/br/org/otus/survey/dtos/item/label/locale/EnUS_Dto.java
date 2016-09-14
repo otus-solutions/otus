@@ -1,10 +1,16 @@
 package br.org.otus.survey.dtos.item.label.locale;
 
+import br.org.otus.exceptions.webservice.security.EncryptedException;
+
 public class EnUS_Dto extends GenericLabelDto {
 
 	@Override
 	public Boolean isValid() {
 		return null;
+	}
+
+	@Override
+	public void encrypt() throws EncryptedException {
 	}
 
 }

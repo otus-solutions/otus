@@ -1,5 +1,6 @@
 package br.org.otus.security.dtos;
 
+import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.rest.dtos.Dto;
 import br.org.otus.security.EncryptorResources;
 import br.org.tutty.Equalization;
@@ -13,9 +14,13 @@ public class AuthenticationDto implements Dto, AuthenticationData{
 	public String password;
 
 	private String issuer;
-	
-	public void encryptPassword() {
-		this.password = EncryptorResources.encrypt(password);
+
+	public void setIssuer(String issuer){
+		this.issuer = issuer;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	@Override
@@ -38,7 +43,9 @@ public class AuthenticationDto implements Dto, AuthenticationData{
 		return !email.isEmpty() && !password.isEmpty();
 	}
 
-	public void setIssuer(String issuer){
-		this.issuer = issuer;
+	@Override
+	public void encrypt() throws EncryptedException {
+		this.password = EncryptorResources.encryptIrreversible(password);
 	}
+
 }

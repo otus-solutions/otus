@@ -1,18 +1,12 @@
 package br.org.otus.auditor;
 
 import br.org.tutty.Equalization;
-import org.hibernate.annotations.Type;
 
-import javax.persistence.*;
+import javax.persistence.Embeddable;
 import java.util.Date;
-import java.util.Map;
 
-@Entity
+@Embeddable
 public class LogEntry {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Type(type = "objectid")
-    private String id;
 
     @Equalization(name = "date")
     private Date date;
@@ -28,9 +22,6 @@ public class LogEntry {
 
     @Equalization(name = "userId")
     private String userId;
-
-/*    @Equalization(name = "params")
-    private Map<String, String[]> params;*/
 
     @Equalization(name = "token")
     private String token;

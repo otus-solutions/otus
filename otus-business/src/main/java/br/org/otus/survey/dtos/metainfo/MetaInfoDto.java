@@ -1,5 +1,6 @@
 package br.org.otus.survey.dtos.metainfo;
 
+import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.rest.dtos.Dto;
 
 public class MetaInfoDto implements Dto {
@@ -15,6 +16,10 @@ public class MetaInfoDto implements Dto {
 	@Override
 	public Boolean isValid() {
 		return true;
+	}
+
+	@Override
+	public void encrypt() throws EncryptedException {
 	}
 
 }

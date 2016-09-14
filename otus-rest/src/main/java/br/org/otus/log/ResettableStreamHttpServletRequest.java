@@ -26,6 +26,15 @@ public class ResettableStreamHttpServletRequest extends
     }
 
     @Override
+    public String getHeader(String name) {
+        final String value = request.getParameter(name);
+        if (value != null) {
+            return value;
+        }
+        return super.getHeader(name);
+    }
+
+    @Override
     public ServletInputStream getInputStream() throws IOException {
         if (rawData == null) {
             rawData = IOUtils.toByteArray(this.request.getReader());

@@ -20,7 +20,6 @@ public class AuditorServiceBean implements AuditorService {
     @Asynchronous
     public void log(LogEntryDto logEntryDto) {
         LogEntry logEntry = new LogEntry();
-
         Equalizer.equalize(logEntryDto, logEntry);
         auditorContext.addLogEntry(logEntry);
     }

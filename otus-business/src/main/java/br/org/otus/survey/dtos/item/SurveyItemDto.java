@@ -1,5 +1,6 @@
 package br.org.otus.survey.dtos.item;
 
+import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.rest.dtos.Dto;
 
 public class SurveyItemDto implements Dto {
@@ -27,6 +28,10 @@ public class SurveyItemDto implements Dto {
 		}
 		
 		return flag;
+	}
+
+	@Override
+	public void encrypt() throws EncryptedException {
 	}
 
 }
