@@ -7,26 +7,25 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
 import br.org.otus.rest.Response;
-import br.org.otus.survey.services.SurveyService;
+import br.org.otus.survey.api.SurveyFacade;
+import br.org.otus.survey.dtos.SurveyDto;
+import br.org.otus.survey.dtos.api.SurveyDtoFacade;
 
 @Path("/surveys")
 public class SurveyResource {
 
 	@Inject
-	private SurveyService surveyService;
+	private SurveyFacade surveyFacade;
 
 	@POST
 	public String create(String survey) {
 		Response response = new Response();
 		
-		JsonObject json = new JsonParser().parse(survey).getAsJsonObject();
+		SurveyDto surveyDto = SurveyDtoFacade.deserialize(survey);
 		
-		surveyService.saveSurvey(json);
-		
+		surveyFacade.saveSurvey(surveyDto);
+
 		return response.toJson();
 	}
 
@@ -35,7 +34,7 @@ public class SurveyResource {
 	public String getSurveysList() {
 		Response response = new Response();
 
-		//surveyService.fetchAll();
+		// surveyFacade.list();
 
 		return response.toJson();
 	}

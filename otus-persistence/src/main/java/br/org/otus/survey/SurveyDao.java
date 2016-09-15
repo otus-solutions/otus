@@ -1,21 +1,23 @@
 package br.org.otus.survey;
 
-import javax.inject.Inject;
+import br.org.mongodb.MongoGenericDao;
+import static com.mongodb.client.model.Filters.*;
 
-import com.google.gson.JsonObject;
+import org.bson.Document;
 
-import br.org.mongodb.MongoClientEM;
-import br.org.mongodb.MongoDao;
+import com.mongodb.client.FindIterable;
 
-public class SurveyDao extends MongoDao {
+public class SurveyDao extends MongoGenericDao {
 
-	private static final String COLLECTION_NAME = "survey";
+	private static final String ACRONYM = "acronym";
+	private static final String COLLECTION_NAME = "surveys";
 
-	@Inject
-	private MongoClientEM mongoClientEM;
-
-	public void persist(JsonObject jsonObject) {
-		mongoClientEM.persist(COLLECTION_NAME, jsonObject);
+	public SurveyDao() {
+		super(COLLECTION_NAME);
 	}
-
+	
+	public FindIterable<Document> findByAcronym(String acronym) {
+		return collection.find(eq(ACRONYM, acronym));
+	}
+	
 }

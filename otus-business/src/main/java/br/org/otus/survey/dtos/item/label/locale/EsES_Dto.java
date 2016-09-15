@@ -6,7 +6,7 @@ public class EsES_Dto extends GenericLabelDto {
 
 	@Override
 	public Boolean isValid() {
-		return null;
+		return true;
 	}
 
 	@Override

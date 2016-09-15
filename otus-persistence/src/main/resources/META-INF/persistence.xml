@@ -13,7 +13,6 @@
 		<class>br.org.otus.auditor.Auditor</class>
 		<class>br.org.otus.auditor.LogEntry</class>
 		<class>br.org.otus.fieldCenter.FieldCenter</class>
-		<class>br.org.otus.survey.Survey</class>
 
 		<properties>
 			<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.JBossAppServerJtaPlatform" />
