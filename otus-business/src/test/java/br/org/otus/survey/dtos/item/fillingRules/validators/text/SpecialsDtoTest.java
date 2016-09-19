@@ -23,7 +23,7 @@ public class SpecialsDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Specials_Dto() {
+	public void should_deserialize_correctly_SpecialsDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("specials", dto.validatorType);

@@ -23,7 +23,7 @@ public class LowerCaseDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_LowerCase_Dto() {
+	public void should_deserialize_correctly_LowerCaseDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("lowerCase", dto.validatorType);

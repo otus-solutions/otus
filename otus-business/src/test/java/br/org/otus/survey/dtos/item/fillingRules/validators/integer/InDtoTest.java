@@ -22,7 +22,7 @@ public class InDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_In_Dto() {
+	public void should_deserialize_correctly_InDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("in", dto.validatorType);

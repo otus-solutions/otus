@@ -22,7 +22,7 @@ public class ScaleDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Scale_Dto() {
+	public void should_deserialize_correctly_ScaleDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("scale", dto.validatorType);

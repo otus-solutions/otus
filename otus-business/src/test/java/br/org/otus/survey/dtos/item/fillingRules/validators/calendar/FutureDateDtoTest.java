@@ -23,7 +23,7 @@ public class FutureDateDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Future_Date_Dto() {
+	public void should_deserialize_correctly_FutureDateDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("futureDate", dto.validatorType);

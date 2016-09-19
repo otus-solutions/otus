@@ -28,6 +28,7 @@ public class SurveyDto implements Dto {
 	@Override
 	public Boolean isValid() {
 		boolean flag = true;
+		
 
 		if ((identity.isValid() && metainfo.isValid()) && (!oid.isEmpty())) {
 			flag = true;

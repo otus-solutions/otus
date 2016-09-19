@@ -22,7 +22,7 @@ public class MaxDateDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Max_Date_Dto() {
+	public void should_deserialize_correctly_MaxDateDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("maxDate", dto.validatorType);

@@ -22,7 +22,7 @@ public class DistinctDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Distinct_Dto() {
+	public void should_deserialize_correctly_DistinctDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("distinct", dto.validatorType);

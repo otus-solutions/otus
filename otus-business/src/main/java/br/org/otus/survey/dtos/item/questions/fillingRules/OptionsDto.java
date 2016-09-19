@@ -14,45 +14,44 @@ import br.org.otus.survey.dtos.item.questions.fillingRules.validators.integer.Pr
 import br.org.otus.survey.dtos.item.questions.fillingRules.validators.integer.UpperLimitDto;
 import br.org.otus.survey.dtos.item.questions.fillingRules.validators.text.AlphanumericDto;
 import br.org.otus.survey.dtos.item.questions.fillingRules.validators.text.LowerCaseDto;
+import br.org.otus.survey.dtos.item.questions.fillingRules.validators.text.MaxLengthDto;
+import br.org.otus.survey.dtos.item.questions.fillingRules.validators.text.MinLengthDto;
 import br.org.otus.survey.dtos.item.questions.fillingRules.validators.text.SpecialsDto;
 import br.org.otus.survey.dtos.item.questions.fillingRules.validators.text.UpperCaseDto;
+import br.org.otus.survey.dtos.item.questions.fillingRules.validators.time.MaxTimeDto;
+import br.org.otus.survey.dtos.item.questions.fillingRules.validators.time.MinTimeDto;
 
 public class OptionsDto {
 	
 	public MandatoryDto mandatory;
 	
-	/* Calendar */
-	
+	/* CalendarQuestion */
 	public PasteDateDto pastDate;
 	public FutureDateDto futureDate;
 	public MinDateDto minDate;
 	public RangeDateDto rangeDate;
 	public MaxDateDto maxDate;
 	
-	/* Integer */
-	
+	/* IntegerQuestion */
 	public DistinctDto distinct;
 	public LowerLimitDto lowerLimit;
 	public UpperLimitDto upperLimit;
 	public PrecisionDto precision;
 	public InDto in;
 	
-	/* Decimal */
-	
+	/* DecimalQuestion */
 	public ScaleDto scale;
 	
-	/* Text */
-	
+	/* TextQuestion */
 	public AlphanumericDto alphanumeric;
 	public LowerCaseDto lowerCase;
 	public UpperCaseDto upperCase;
 	public SpecialsDto specials;
+	public MinLengthDto minLength;
+	public MaxLengthDto maxLength;
 	
+	/* TimeQuestion */
+	public MinTimeDto minTime;
+	public MaxTimeDto maxTime;
 	
-	
-	
-	
-	
-	
-
 }

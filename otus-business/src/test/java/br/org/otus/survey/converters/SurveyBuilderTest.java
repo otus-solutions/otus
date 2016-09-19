@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import br.org.otus.survey.Survey;
-import br.org.otus.survey.converters.SurveyBuilder;
 import br.org.otus.survey.dtos.SurveyDto;
 import br.org.otus.survey.dtos.item.SurveyItemDto;
 import br.org.otus.survey.dtos.utils.adapters.SurveyItemAdapter;
@@ -23,7 +22,7 @@ import br.org.otus.survey.dtos.utils.adapters.SurveyItemAdapter;
 @Ignore
 public class SurveyBuilderTest {
 
-	private static final String SURVEY_TEMPLATE = "surveyTemplate (15).json";
+	private static final String SURVEY_TEMPLATE = "validation-general-tester.json";
 	
 	private SurveyBuilder surveyBuilder;
 	private String surveyJson;
@@ -50,14 +49,15 @@ public class SurveyBuilderTest {
 		surveyDto = gson.fromJson(surveyJson, SurveyDto.class);
 		
 		// Instance of builder
-		surveyBuilder = new SurveyBuilder();
+		//surveyBuilder = new SurveyBuilder();
 	}
 
 	@Test
 	public void surveyItem() {
-		survey = surveyBuilder.buildFromDto(surveyDto).build();
+//		survey = surveyBuilder.buildFromDto(surveyDto).build();
 //		System.out.println(survey.toString());
-		System.out.println(gson.toJson(survey));
+		//System.out.println(gson.toJson(surveyDto));
+		System.out.println(surveyJson.contains(gson.toJson(surveyDto)));
 	}
 
 }

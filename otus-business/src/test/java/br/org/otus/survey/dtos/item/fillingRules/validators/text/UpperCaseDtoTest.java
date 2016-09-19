@@ -23,7 +23,7 @@ public class UpperCaseDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Upper_Case_Dto() {
+	public void should_deserialize_correctly_UpperCaseDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("upperCase", dto.validatorType);

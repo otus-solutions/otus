@@ -22,7 +22,7 @@ public class LowerLimitDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Lower_Limit_Dto() {
+	public void should_deserialize_correctly_LowerLimitDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("lowerLimit", dto.validatorType);

@@ -23,7 +23,7 @@ public class AlphanumericDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Alphanumeric_Dto() {
+	public void should_deserialize_correctly_AlphanumericDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("alphanumeric", dto.validatorType);

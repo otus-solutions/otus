@@ -1,0 +1,602 @@
+{
+    "extents": "StudioObject",
+    "objectType": "Survey",
+    "oid": "dXNlclVVSUQ6W3VuZGVmaW5lZF1zdXJ2ZXlVVUlEOltkYjFiMmJjMC02ZTBkLTExZTYtOTYyNy1kMzU5Nzk1MDVkMWVdcmVwb3NpdG9yeVVVSUQ6WyBOb3QgZG9uZSB5ZXQgXQ==",
+    "identity": {
+        "extents": "StudioObject",
+        "objectType": "SurveyIdentity",
+        "name": "validators",
+        "acronym": "VAL",
+        "recommendedTo": "",
+        "description": "",
+        "keywords": []
+    },
+    "metainfo": {
+        "extents": "StudioObject",
+        "objectType": "SurveyMetaInfo",
+        "creationDatetime": 1472491647098,
+        "otusStudioVersion": ""
+    },
+    "itemContainer": [{
+        "extents": "SurveyItem",
+        "objectType": "CalendarQuestion",
+        "templateID": "VAL1",
+        "customID": "VAL1",
+        "dataType": "LocalDate",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": []
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {"mandatory": {"extends": "StudioObject","objectType": "Rule","validatorType": "mandatory","data": {"reference": true}},
+                "rangeDate": {"extends": "StudioObject","objectType": "Rule","validatorType": "rangeDate","data": {"reference": {"initial": "2016-09-01T03:00:00.000Z","end": "2016-10-01T03:00:00.000Z"}}},
+                "minDate": {"extends": "StudioObject","objectType": "Rule","validatorType": "minDate","data": {"reference": "2016-07-01T03:00:00.000Z"}},
+                "maxDate": {"extends": "StudioObject","objectType": "Rule","validatorType": "maxDate","data": {"reference": "2016-12-01T02:00:00.000Z"}}
+            }
+        }
+    }, {
+        "extents": "SurveyItem",
+        "objectType": "CalendarQuestion",
+        "templateID": "VAL2",
+        "customID": "VAL2",
+        "dataType": "LocalDate",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": []
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {
+                "mandatory": {"extends": "StudioObject","objectType": "Rule","validatorType": "mandatory","data": {"reference": false}},
+                "futureDate": {"extends": "StudioObject","objectType": "Rule","validatorType": "futureDate","data": {"reference": true}}
+            }
+        }
+    }, {
+        "extents": "SurveyItem",
+        "objectType": "CalendarQuestion",
+        "templateID": "VAL3",
+        "customID": "VAL3",
+        "dataType": "LocalDate",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": []
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {
+                "mandatory": {"extends": "StudioObject","objectType": "Rule","validatorType": "mandatory","data": {"reference": false}},
+                "pastDate": {"extends": "StudioObject","objectType": "Rule","validatorType": "pastDate","data": {"reference": true}}
+            }
+        }
+    }, {
+        "extents": "SurveyItem",
+        "objectType": "IntegerQuestion",
+        "templateID": "VAL4",
+        "customID": "VAL4",
+        "dataType": "Integer",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": []
+        },
+        "unit": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {
+                "mandatory": {"extends": "StudioObject","objectType": "Rule","validatorType": "mandatory","data": {"reference": false}},
+                "distinct": {"extends": "StudioObject","objectType": "Rule","validatorType": "distinct","data": {"reference": 1}},
+                "lowerLimit": {"extends": "StudioObject","objectType": "Rule","validatorType": "lowerLimit","data": {"reference": 1}},
+                "upperLimit": {"extends": "StudioObject","objectType": "Rule","validatorType": "upperLimit","data": {"reference": 12}},
+                "precision": {"extends": "StudioObject","objectType": "Rule","validatorType": "precision","data": {"reference": 1}},
+                "in": {"extends": "StudioObject","objectType": "Rule","validatorType": "in","data": {"reference": {"initial": 1,"end": 11}}}}}
+    }, {
+        "extents": "SurveyItem",
+        "objectType": "DecimalQuestion",
+        "templateID": "VAL5",
+        "customID": "VAL5",
+        "dataType": "Decimal",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": []
+        },
+        "unit": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Unit",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {
+                "mandatory": {"extends": "StudioObject","objectType": "Rule","validatorType": "mandatory","data": {"reference": false}},
+                "scale": {"extends": "StudioObject","objectType": "Rule","validatorType": "scale","data": {"reference": 2}}
+            }
+        }
+    }, {
+        "extents": "SurveyItem",
+        "objectType": "SingleSelectionQuestion",
+        "templateID": "VAL6",
+        "customID": "VAL6",
+        "dataType": "Integer",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "options": [],
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": []
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {
+                "mandatory": {
+                    "extends": "StudioObject",
+                    "objectType": "Rule",
+                    "validatorType": "mandatory",
+                    "data": {
+                        "reference": true
+                    }
+                }
+            }
+        }
+    }, {
+        "extents": "SurveyItem",
+        "objectType": "CheckboxQuestion",
+        "templateID": "VAL7",
+        "customID": "VAL7",
+        "dataType": "Array",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "options": [],
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": []
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {
+                "mandatory": {
+                    "extends": "StudioObject",
+                    "objectType": "Rule",
+                    "validatorType": "mandatory",
+                    "data": {
+                        "reference": true
+                    }
+                }
+            }
+        }
+    }, {
+        "extents": "SurveyItem",
+        "objectType": "TextQuestion",
+        "templateID": "VAL8",
+        "customID": "VAL8",
+        "dataType": "String",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": []
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {
+                "mandatory": {"extends": "StudioObject","objectType": "Rule","validatorType": "mandatory","data": {"reference": false}},
+                "alphanumeric": {"extends": "StudioObject","objectType": "Rule","validatorType": "alphanumeric","data": {"reference": true}},
+                "lowerCase": {"extends": "StudioObject","objectType": "Rule","validatorType": "lowerCase","data": {"reference": true}},
+                "upperCase": {"extends": "StudioObject","objectType": "Rule","validatorType": "upperCase","data": {"reference": false}},
+                "specials": {"extends": "StudioObject","objectType": "Rule","validatorType": "specials","data": {"reference": true}},
+                "minLength": {
+                    "extends": "StudioObject",
+                    "objectType": "Rule",
+                    "validatorType": "minLength",
+                    "data": {
+                        "size": null,
+                        "reference": 5
+                    }
+                },
+                "maxLength": {
+                    "extends": "StudioObject",
+                    "objectType": "Rule",
+                    "validatorType": "maxLength",
+                    "data": {
+                        "size": null,
+                        "reference": 20
+                    }
+                }
+            }
+        }
+    }, {
+        "extents": "SurveyItem",
+        "objectType": "TimeQuestion",
+        "templateID": "VAL10",
+        "customID": "VAL10",
+        "dataType": "LocalTime",
+        "label": {
+            "ptBR": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "enUS": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            },
+            "esES": {
+                "extends": "StudioObject",
+                "objectType": "Label",
+                "oid": "",
+                "plainText": "",
+                "formattedText": ""
+            }
+        },
+        "metadata": {
+            "extents": "StudioObject",
+            "objectType": "MetadataGroup",
+            "options": []
+        },
+        "fillingRules": {
+            "extends": "StudioObject",
+            "objectType": "FillingRules",
+            "options": {
+                "mandatory": {
+                    "extends": "StudioObject",
+                    "objectType": "Rule",
+                    "validatorType": "mandatory",
+                    "data": {
+                        "reference": false
+                    }
+                },
+                "minTime": {
+                    "extends": "StudioObject",
+                    "objectType": "Rule",
+                    "validatorType": "minTime",
+                    "data": {
+                        "reference": "Wed Mar 25 2015 01:30:00 GMT-0300 (BRT)"
+                    }
+                },
+                "maxTime": {
+                    "extends": "StudioObject",
+                    "objectType": "Rule",
+                    "validatorType": "maxTime",
+                    "data": {
+                        "reference": "Mon Aug 29 2016 23:30:00 GMT-0300 (BRT)"
+                    }
+                }
+            }
+        }
+    }],
+    "navigationList": [{
+        "extents": "StudioObject",
+        "objectType": "Navigation",
+        "origin": "VAL1",
+        "routes": [{
+            "extents": "StudioObject",
+            "objectType": "Route",
+            "name": "1",
+            "origin": "VAL1",
+            "destination": "VAL2",
+            "conditionSet": {}
+        }]
+    }, {
+        "extents": "StudioObject",
+        "objectType": "Navigation",
+        "origin": "VAL2",
+        "routes": [{
+            "extents": "StudioObject",
+            "objectType": "Route",
+            "name": "1",
+            "origin": "VAL2",
+            "destination": "VAL3",
+            "conditionSet": {}
+        }]
+    }, {
+        "extents": "StudioObject",
+        "objectType": "Navigation",
+        "origin": "VAL3",
+        "routes": [{
+            "extents": "StudioObject",
+            "objectType": "Route",
+            "name": "1",
+            "origin": "VAL3",
+            "destination": "VAL4",
+            "conditionSet": {}
+        }]
+    }, {
+        "extents": "StudioObject",
+        "objectType": "Navigation",
+        "origin": "VAL4",
+        "routes": [{
+            "extents": "StudioObject",
+            "objectType": "Route",
+            "name": "1",
+            "origin": "VAL4",
+            "destination": "VAL5",
+            "conditionSet": {}
+        }]
+    }, {
+        "extents": "StudioObject",
+        "objectType": "Navigation",
+        "origin": "VAL5",
+        "routes": [{
+            "extents": "StudioObject",
+            "objectType": "Route",
+            "name": "1",
+            "origin": "VAL5",
+            "destination": "VAL6",
+            "conditionSet": {}
+        }]
+    }, {
+        "extents": "StudioObject",
+        "objectType": "Navigation",
+        "origin": "VAL6",
+        "routes": [{
+            "extents": "StudioObject",
+            "objectType": "Route",
+            "name": "1",
+            "origin": "VAL6",
+            "destination": "VAL7",
+            "conditionSet": {}
+        }]
+    }, {
+        "extents": "StudioObject",
+        "objectType": "Navigation",
+        "origin": "VAL7",
+        "routes": [{
+            "extents": "StudioObject",
+            "objectType": "Route",
+            "name": "1",
+            "origin": "VAL7",
+            "destination": "VAL8",
+            "conditionSet": {}
+        }]
+    }, {
+        "extents": "StudioObject",
+        "objectType": "Navigation",
+        "origin": "VAL8",
+        "routes": [{
+            "extents": "StudioObject",
+            "objectType": "Route",
+            "name": "1",
+            "origin": "VAL8",
+            "destination": "VAL10",
+            "conditionSet": {}
+        }]
+    }]
+}

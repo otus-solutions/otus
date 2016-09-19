@@ -22,7 +22,7 @@ public class UpperLimitDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Upper_Limit_Dto() {
+	public void should_deserialize_correctly_UpperLimitDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("upperLimit", dto.validatorType);

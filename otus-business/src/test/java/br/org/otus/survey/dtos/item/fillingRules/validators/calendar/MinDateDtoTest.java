@@ -22,7 +22,7 @@ public class MinDateDtoTest {
 	}
 
 	@Test	
-	public void should_deserialize_correctly_Min_Date_Dto() {
+	public void should_deserialize_correctly_MinDateDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("minDate", dto.validatorType);

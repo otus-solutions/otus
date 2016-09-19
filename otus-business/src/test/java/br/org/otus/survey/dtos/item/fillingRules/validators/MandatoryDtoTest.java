@@ -22,7 +22,7 @@ public class MandatoryDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Mandatory_Dto() {
+	public void should_deserialize_correctly_MandatoryDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("mandatory", dto.validatorType);

@@ -23,7 +23,7 @@ public class PasteDateDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Paste_Date_Dto() {
+	public void should_deserialize_correctly_PasteDateDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("pastDate", dto.validatorType);

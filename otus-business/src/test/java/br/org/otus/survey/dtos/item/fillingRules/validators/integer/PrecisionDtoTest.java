@@ -22,7 +22,7 @@ public class PrecisionDtoTest {
 	}
 
 	@Test
-	public void should_deserialize_correctly_Precision_Dto() {
+	public void should_deserialize_correctly_PrecisionDto() {
 		assertEquals("StudioObject", dto.extents);
 		assertEquals("Rule", dto.objectType);
 		assertEquals("precision", dto.validatorType);
