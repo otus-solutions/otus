@@ -1,7 +1,0 @@
-package br.org.otus.survey.dtos.item.questions.fillingRules.validators.reference;
-
-public class NumberReferenceDto {
-	
-	public Integer reference;
-
-}
