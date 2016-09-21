@@ -2,11 +2,10 @@ package br.org.otus.survey.services;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.validation.ValidationException;
+
+import org.ccem.otus.survey.Survey;
 
 import br.org.otus.survey.SurveyDao;
-import br.org.otus.survey.dtos.SurveyDto;
-import br.org.otus.survey.dtos.api.SurveyDtoFacade;
 
 @Stateless
 public class SurveyServiceBean implements SurveyService {
@@ -15,12 +14,9 @@ public class SurveyServiceBean implements SurveyService {
 	private SurveyDao surveyDao;
 
 	@Override
-	public void saveSurvey(SurveyDto surveyDto) {
-		if (surveyDto.isValid()) {
-			surveyDao.persist(SurveyDtoFacade.serialize(surveyDto));
-		} else {
-			throw new ValidationException("Invalid Survey Dto");
-		}
+	public void saveSurvey(Survey survey) {
+		//TODO: Validate this survey
+		surveyDao.persist(Survey.serialize(survey));
 	}
 
 }

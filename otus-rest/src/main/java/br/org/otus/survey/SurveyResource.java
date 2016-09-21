@@ -7,10 +7,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.ccem.otus.survey.Survey;
+
 import br.org.otus.rest.Response;
 import br.org.otus.survey.api.SurveyFacade;
-import br.org.otus.survey.dtos.SurveyDto;
-import br.org.otus.survey.dtos.api.SurveyDtoFacade;
 
 @Path("/surveys")
 public class SurveyResource {
@@ -22,9 +22,7 @@ public class SurveyResource {
 	public String create(String survey) {
 		Response response = new Response();
 		
-		SurveyDto surveyDto = SurveyDtoFacade.deserialize(survey);
-		
-		surveyFacade.saveSurvey(surveyDto);
+		surveyFacade.saveSurvey(Survey.deserialize(survey));
 
 		return response.toJson();
 	}

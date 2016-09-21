@@ -1,9 +1,9 @@
 package br.org.otus.survey.services;
 
-import br.org.otus.survey.dtos.SurveyDto;
+import org.ccem.otus.survey.Survey;
 
 public interface SurveyService {
 
-	void saveSurvey(SurveyDto surveyDto);
+	void saveSurvey(Survey survey);
 
 }

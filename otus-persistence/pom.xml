@@ -56,6 +56,12 @@
 			<version>${equalize-version}</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+		    <groupId>org.ccem.otus</groupId>
+  			<artifactId>survey-model</artifactId>
+  			<version>0.0.1-SNAPSHOT</version>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
