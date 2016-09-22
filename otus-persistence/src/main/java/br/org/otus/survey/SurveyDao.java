@@ -1,23 +1,41 @@
 package br.org.otus.survey;
 
-import br.org.mongodb.MongoGenericDao;
-import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Filters.eq;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.Document;
+import org.ccem.otus.survey.Survey;
 
-import com.mongodb.client.FindIterable;
+import com.mongodb.Block;
+
+import br.org.mongodb.MongoGenericDao;
 
 public class SurveyDao extends MongoGenericDao {
 
-	private static final String ACRONYM = "acronym";
 	private static final String COLLECTION_NAME = "surveys";
 
 	public SurveyDao() {
 		super(COLLECTION_NAME);
 	}
+
+	public List<Survey> find() {
+		ArrayList<Survey> surveys = new ArrayList<Survey>();
+		list().forEach((Block<Document>) document -> {
+			surveys.add(Survey.deserialize(document.toJson()));
+		});
+		
+		return surveys;
+	}
 	
-	public FindIterable<Document> findByAcronym(String acronym) {
-		return collection.find(eq(ACRONYM, acronym));
+	public List<Survey> findByAcronym(String acronym) {
+		ArrayList<Survey> surveys = new ArrayList<Survey>();
+		collection.find(eq("identity.acronym", acronym)).forEach((Block<Document>) document -> {
+			surveys.add(Survey.deserialize(document.toJson()));
+		});
+		
+		return surveys;
 	}
 	
 }

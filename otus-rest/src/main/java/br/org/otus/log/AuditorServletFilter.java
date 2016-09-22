@@ -1,82 +1,90 @@
 package br.org.otus.log;
 
-import br.org.otus.auditor.AuditorService;
-import br.org.otus.auditor.dto.LogEntryDto;
-import br.org.otus.security.AuthorizationHeaderReader;
-import br.org.otus.security.services.SecurityContextService;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.ParseException;
+import java.io.IOException;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.inject.Inject;
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.HttpHeaders;
-import java.io.IOException;
-import java.util.Map;
 
-@WebFilter(filterName = "auditorFilter", urlPatterns = {"/v01/*"})
+import org.apache.commons.io.IOUtils;
+
+import br.org.otus.auditor.AuditorService;
+import br.org.otus.auditor.dto.LogEntryDto;
+import br.org.otus.security.AuthorizationHeaderReader;
+import br.org.otus.security.services.SecurityContextService;
+
+@WebFilter(filterName = "auditorFilter", urlPatterns = { "/v01/*" })
 public class AuditorServletFilter implements Filter {
-    @Inject
-    private SecurityContextService securityContextService;
-    @EJB
-    private AuditorService auditorService;
 
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
+	@Inject
+	private SecurityContextService securityContextService;
+	@EJB
+	private AuditorService auditorService;
 
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-        ResettableStreamHttpServletRequest resettableStreamHttpServletRequest = new ResettableStreamHttpServletRequest(httpServletRequest);
+	@Override
+	public void init(FilterConfig filterConfig) throws ServletException {
+	}
 
-        if (isLoggedMethod(httpServletRequest.getMethod())) {
-            BodyLog body = new BodyLog(IOUtils.toString(resettableStreamHttpServletRequest.getReader()));
-            String authorizationHeader = resettableStreamHttpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+			throws IOException, ServletException {
+		HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+		ResettableStreamHttpServletRequest resettableStreamHttpServletRequest = new ResettableStreamHttpServletRequest(
+				httpServletRequest);
 
-            String token = readToken(authorizationHeader);
-            String userId = readUserId(token);
-            String remoteAddress = resettableStreamHttpServletRequest.getRemoteAddr();
-            String url = resettableStreamHttpServletRequest.getRequestURL().toString();
-            Map<String, String[]> parameterMap = resettableStreamHttpServletRequest.getParameterMap();
+		if (isLoggedMethod(httpServletRequest.getMethod())) {
+			BodyLog body = new BodyLog(IOUtils.toString(resettableStreamHttpServletRequest.getReader()));
+			String authorizationHeader = resettableStreamHttpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
 
-            auditorService.log(new LogEntryDto(remoteAddress, url, body.getBody(), userId, parameterMap, token));
-            resettableStreamHttpServletRequest.resetInputStream();
-        }
+			String token = readToken(authorizationHeader);
+			String userId = readUserId(token);
+			String remoteAddress = resettableStreamHttpServletRequest.getRemoteAddr();
+			String url = resettableStreamHttpServletRequest.getRequestURL().toString();
+			Map<String, String[]> parameterMap = resettableStreamHttpServletRequest.getParameterMap();
 
-        filterChain.doFilter(resettableStreamHttpServletRequest, servletResponse);
-        return;
-    }
+			auditorService.log(new LogEntryDto(remoteAddress, url, body.getBody(), userId, parameterMap, token));
+			resettableStreamHttpServletRequest.resetInputStream();
+		}
 
-    @Override
-    public void destroy() {
-    }
+		filterChain.doFilter(resettableStreamHttpServletRequest, servletResponse);
+		return;
+	}
 
-    private Boolean isLoggedMethod(String method) {
-        if (HttpMethod.POST.equals(method) || HttpMethod.DELETE.equals(method) || HttpMethod.PUT.equals(method)) {
-            return Boolean.TRUE;
-        } else {
-            return Boolean.FALSE;
-        }
-    }
+	@Override
+	public void destroy() {
+	}
 
-    private String readToken(String authorizationHeader) {
-        if (authorizationHeader != null) {
-            return AuthorizationHeaderReader.readToken(authorizationHeader);
-        } else {
-            return "";
-        }
-    }
+	private Boolean isLoggedMethod(String method) {
+		if (HttpMethod.POST.equals(method) || HttpMethod.DELETE.equals(method) || HttpMethod.PUT.equals(method)) {
+			return Boolean.TRUE;
+		} else {
+			return Boolean.FALSE;
+		}
+	}
 
-    private String readUserId(String token) {
-        try {
-            return securityContextService.getUserId(token);
-        } catch (Exception e) {
-            return "";
-        }
-    }
+	private String readToken(String authorizationHeader) {
+		if (authorizationHeader != null) {
+			return AuthorizationHeaderReader.readToken(authorizationHeader);
+		} else {
+			return "";
+		}
+	}
+
+	private String readUserId(String token) {
+		try {
+			return securityContextService.getUserId(token);
+		} catch (Exception e) {
+			return "";
+		}
+	}
 }
-

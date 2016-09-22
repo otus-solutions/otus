@@ -5,6 +5,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.ccem.otus.survey.Survey;
@@ -19,22 +20,21 @@ public class SurveyResource {
 	private SurveyFacade surveyFacade;
 
 	@POST
-	public String create(String survey) {
-		Response response = new Response();
-		
+	public String post(String survey) {
 		surveyFacade.saveSurvey(Survey.deserialize(survey));
-
-		return response.toJson();
+		return new Response().buildSuccess().toJson();
 	}
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getSurveysList() {
-		Response response = new Response();
+	public String a() {
+		return new Response().buildSuccess(surveyFacade.list()).toJson();
+	}
 
-		// surveyFacade.list();
-
-		return response.toJson();
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String b(@QueryParam("acronym") String acronym) {
+		return new Response().buildSuccess(surveyFacade.findByAcronym(acronym)).toJson();
 	}
 
 }

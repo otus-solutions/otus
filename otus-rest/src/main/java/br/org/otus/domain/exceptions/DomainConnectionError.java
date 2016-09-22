@@ -2,7 +2,9 @@ package br.org.otus.domain.exceptions;
 
 public class DomainConnectionError extends Exception{
 
-    public DomainConnectionError(Throwable cause) {
+	private static final long serialVersionUID = -3604477637651372672L;
+
+	public DomainConnectionError(Throwable cause) {
         super(cause);
     }
 }

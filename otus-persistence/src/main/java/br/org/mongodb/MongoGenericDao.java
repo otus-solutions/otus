@@ -14,7 +14,6 @@ public abstract class MongoGenericDao {
 	@Inject
 	private MongoDatabase db;
 	private String collectionName;
-
 	protected MongoCollection<Document> collection;
 
 	@PostConstruct
@@ -26,8 +25,8 @@ public abstract class MongoGenericDao {
 		this.collectionName = collectionName;
 	}
 
-	public void persist(String jsonObject) {
-		collection.insertOne(Document.parse(jsonObject));
+	public void persist(String json) {
+		collection.insertOne(Document.parse(json));
 	}
 	
 	public FindIterable<Document> list() {

@@ -3,6 +3,7 @@ package br.org.otus.rest;
 import com.google.gson.Gson;
 
 public class Response {
+	
 	private Object data;
 
 	public Object getData() {
