@@ -3,6 +3,11 @@
 
 - Servidor: [Wildfly 9.0.1.Final](https://www.mongodb.com/download-center#community)
 
+### Versões de ferramentas necessárias
+
+NodeJS: [v6.6.0](https://nodejs.org/en/download/current/)
+Google Chrome : [52 +](https://www.google.com.br/chrome/browser/desktop/) 
+
 ## Configurações Servidor
 É possivel construir o ambiente utilizando Vagrant ou realizando configurações manualmente.
 
