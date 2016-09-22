@@ -5,7 +5,7 @@
 
 ### Versões de ferramentas necessárias
 
-NodeJS: [v6.6.0](https://nodejs.org/en/download/current/)
+NodeJS: [v6.6.0](https://nodejs.org/en/download/current/) <br />
 Google Chrome : [52 +](https://www.google.com.br/chrome/browser/desktop/) 
 
 ## Configurações Servidor
