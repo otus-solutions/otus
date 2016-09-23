@@ -7,44 +7,41 @@ import com.nimbusds.jwt.SignedJWT;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import java.io.Serializable;
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 @ApplicationScoped
-public class SecurityContext implements Serializable {
-
-    private static final long serialVersionUID = 109656450161251588L;
-
-    private Map<String, byte[]> securityMap;
+public class SecurityContext{
+    private Set<SessionIdentifier> sessions;
 
     @PostConstruct
     public void setUp() {
-        securityMap = new HashMap<String, byte[]>();
+        this.sessions = new HashSet<>();
     }
 
-    public void add(String jwtSignedAndSerialized, byte[] secretKey) {
-        securityMap.put(jwtSignedAndSerialized, secretKey);
+    public void addSession(SessionIdentifier sessionIdentifier){
+        sessions.add(sessionIdentifier);
     }
 
-    public void remove(String token) {
+    public void removeSession(String token){
         String tokenWithoutPrefix = token.substring("Bearer".length()).trim();
-        securityMap.remove(tokenWithoutPrefix);
+        sessions.removeIf(session -> session.getToken().equals(tokenWithoutPrefix));
     }
 
-    public String getUserId(String token) throws ParseException {
-        SignedJWT signedJWT = SignedJWT.parse(token);
-        return signedJWT.getJWTClaimsSet().getSubject();
+    public SessionIdentifier getSession(String token){
+        return sessions.stream().filter(session -> session.getToken().equals(token)).findFirst().get();
     }
+
 
     public Boolean hasToken(String token) {
-        return securityMap.containsKey(token);
+        return sessions.stream().anyMatch(session -> session.getToken().equals(token));
     }
 
     public Boolean verifySignature(String token) throws ParseException, JOSEException {
         SignedJWT signedJWT = SignedJWT.parse(token);
-        byte[] sharedSecret = securityMap.get(token);
+        SessionIdentifier session = getSession(token);
+        byte[] sharedSecret = session.getSecretKey();
         JWSVerifier verifier = new MACVerifier(sharedSecret);
         return signedJWT.verify(verifier);
     }

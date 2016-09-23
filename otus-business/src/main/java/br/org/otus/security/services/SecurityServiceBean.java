@@ -2,6 +2,7 @@ package br.org.otus.security.services;
 
 import br.org.otus.exceptions.webservice.security.AuthenticationException;
 import br.org.otus.exceptions.webservice.security.TokenException;
+import br.org.otus.security.context.SessionIdentifier;
 import br.org.otus.security.dtos.AuthenticationData;
 import br.org.otus.security.dtos.UserSecurityAuthorizationDto;
 import br.org.otus.system.SystemConfig;
@@ -29,9 +30,9 @@ public class SecurityServiceBean implements SecurityService {
     @Override
     public UserSecurityAuthorizationDto authenticate(AuthenticationData authenticationData) throws TokenException, AuthenticationException {
         try {
-            User user = userDao.fetchByEmail(authenticationData.getKey());
+            User user = userDao.fetchByEmail(authenticationData.getUser());
 
-            if (user.getPassword().equals(authenticationData.getPassword())) {
+            if (user.getPassword().equals(authenticationData.getKey())) {
                 if (user.isEnable()) {
                     UserSecurityAuthorizationDto userSecurityAuthorizationDto = new UserSecurityAuthorizationDto();
                     Equalizer.equalize(user, userSecurityAuthorizationDto);
@@ -55,7 +56,7 @@ public class SecurityServiceBean implements SecurityService {
     public String projectAuthenticate(AuthenticationData authenticationData) throws TokenException, AuthenticationException {
         try {
             SystemConfig systemConfig = systemConfigDao.fetchSystemConfig();
-            String password = authenticationData.getPassword();
+            String password = authenticationData.getKey();
 
             if (authenticationData.isValid()) {
                 if (systemConfig.getProjectToken().equals(password)) {
@@ -80,7 +81,8 @@ public class SecurityServiceBean implements SecurityService {
     private String initializeToken(AuthenticationData authenticationData) throws TokenException {
         byte[] secretKey = securityContextService.generateSecretKey();
         String jwtSignedAndSerialized = securityContextService.generateToken(authenticationData, secretKey);
-        securityContextService.addToken(jwtSignedAndSerialized, secretKey);
+        SessionIdentifier sessionIdentifier = new SessionIdentifier(jwtSignedAndSerialized, secretKey, authenticationData);
+        securityContextService.addSession(sessionIdentifier);
 
         return jwtSignedAndSerialized;
     }

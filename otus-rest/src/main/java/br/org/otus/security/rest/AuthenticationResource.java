@@ -32,8 +32,8 @@ public class AuthenticationResource {
         try{
             authenticationDto.encrypt();
             Response response = new Response();
-            String issuer = request.getRequestURL().toString();
-            UserSecurityAuthorizationDto userSecurityAuthorizationDto = securityFacade.userAuthentication(authenticationDto, issuer);
+            String requestAddress = request.getRemoteAddr().toString();
+            UserSecurityAuthorizationDto userSecurityAuthorizationDto = securityFacade.userAuthentication(authenticationDto, requestAddress);
             return response.buildSuccess(userSecurityAuthorizationDto).toJson();
 
         } catch (EncryptedException e) {
@@ -45,11 +45,12 @@ public class AuthenticationResource {
     @Path("/project")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public String projectAuthenticate(ProjectAuthenticationDto projectAuthenticationDto) {
+    public String projectAuthenticate(ProjectAuthenticationDto projectAuthenticationDto, @Context HttpServletRequest request) {
         try{
             projectAuthenticationDto.encrypt();
             Response response = new Response();
-            String jwt = securityFacade.projectAuthentication(projectAuthenticationDto);
+            String requestAddress = request.getRemoteAddr().toString();
+            String jwt = securityFacade.projectAuthentication(projectAuthenticationDto, requestAddress);
             return response.buildSuccess(jwt).toJson();
 
         } catch (EncryptedException e) {

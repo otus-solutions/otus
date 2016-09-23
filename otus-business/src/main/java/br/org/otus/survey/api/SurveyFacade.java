@@ -1,12 +1,10 @@
 package br.org.otus.survey.api;
 
-import java.util.List;
-
-import javax.inject.Inject;
-
+import br.org.otus.survey.services.SurveyService;
 import org.ccem.otus.survey.Survey;
 
-import br.org.otus.survey.services.SurveyService;
+import javax.inject.Inject;
+import java.util.List;
 
 public class SurveyFacade {
 

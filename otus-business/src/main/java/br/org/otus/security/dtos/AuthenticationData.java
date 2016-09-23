@@ -1,14 +1,22 @@
 package br.org.otus.security.dtos;
 
 import br.org.otus.exceptions.webservice.security.EncryptedException;
-import br.org.otus.rest.dtos.Dto;
+import com.nimbusds.jwt.JWTClaimsSet;
 
-public interface AuthenticationData extends Dto{
+public interface AuthenticationData{
+    String getUser();
+
     String getKey();
 
-    String getPassword();
+    String getMode();
 
-    String getIssuer();
+    String getRequestAddress();
+
+    void setRequestAddress(String requestAddress);
 
     void encrypt() throws EncryptedException;
+
+    JWTClaimsSet buildClaimSet();
+
+    Boolean isValid();
 }

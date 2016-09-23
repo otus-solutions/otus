@@ -1,7 +1,6 @@
 package br.org.otus.user.management;
 
 import br.org.otus.email.service.EmailNotifierService;
-import br.org.otus.email.service.EmailNotifierServiceBean;
 import br.org.otus.email.user.management.DisableUserNotificationEmail;
 import br.org.otus.email.user.management.EnableUserNotificationEmail;
 import br.org.otus.exceptions.webservice.common.DataNotFoundException;
@@ -10,7 +9,6 @@ import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.exceptions.webservice.validation.ValidationException;
 import br.org.otus.user.User;
 import br.org.otus.user.UserDao;
-import br.org.otus.user.api.UserFacade;
 import br.org.otus.user.dto.ManagementUserDto;
 import br.org.owail.sender.email.Sender;
 import org.junit.Test;

@@ -2,9 +2,8 @@ package br.org.otus.security.services;
 
 
 import br.org.otus.exceptions.webservice.security.TokenException;
+import br.org.otus.security.context.SessionIdentifier;
 import br.org.otus.security.dtos.AuthenticationData;
-
-import java.text.ParseException;
 
 public interface SecurityContextService {
 
@@ -12,11 +11,11 @@ public interface SecurityContextService {
 
     byte[] generateSecretKey();
 
-    void addToken(String jwtSignedAndSerialized, byte[] secretKey);
+    void addSession(SessionIdentifier sessionIdentifier);
 
     void removeToken(String jwtSignedAndSerialized);
 
     void validateToken(String token) throws TokenException;
 
-    String getUserId(String token) throws ParseException;
+    SessionIdentifier getSession(String token);
 }

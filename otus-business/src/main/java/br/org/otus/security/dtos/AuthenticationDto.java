@@ -3,49 +3,59 @@ package br.org.otus.security.dtos;
 import br.org.otus.exceptions.webservice.security.EncryptedException;
 import br.org.otus.rest.dtos.Dto;
 import br.org.otus.security.EncryptorResources;
-import br.org.tutty.Equalization;
+import com.nimbusds.jwt.JWTClaimsSet;
 
-public class AuthenticationDto implements Dto, AuthenticationData{
+public class AuthenticationDto implements Dto, AuthenticationData {
+    private static final String MODE = "user";
 
-	@Equalization(name = "email")
-	public String email;
+    public String user;
+    public String password;
+    public String requestAddress;
 
-	@Equalization(name = "password")
-	public String password;
+    @Override
+    public Boolean isValid() {
+        return (!user.isEmpty() && user != null) && (!password.isEmpty() && password != null) && (requestAddress != null);
+    }
 
-	private String issuer;
+    public void setEmail(String email) {
+        this.user = email;
+    }
 
-	public void setIssuer(String issuer){
-		this.issuer = issuer;
-	}
+    @Override
+    public String getUser() {
+        return user;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    @Override
+    public String getKey() {
+        return password;
+    }
 
-	@Override
-	public String getKey() {
-		return email;
-	}
+    @Override
+    public String getMode() {
+        return MODE;
+    }
 
-	@Override
-	public String getPassword() {
-		return password;
-	}
+    @Override
+    public String getRequestAddress() {
+        return requestAddress;
+    }
 
-	@Override
-	public String getIssuer() {
-		return issuer;
-	}
+    @Override
+    public void setRequestAddress(String requestAddress) {
+        this.requestAddress = requestAddress;
+    }
 
-	@Override
-	public Boolean isValid() {
-		return !email.isEmpty() && !password.isEmpty();
-	}
+    @Override
+    public void encrypt() throws EncryptedException {
+        this.password = EncryptorResources.encryptIrreversible(password);
+    }
 
-	@Override
-	public void encrypt() throws EncryptedException {
-		this.password = EncryptorResources.encryptIrreversible(password);
-	}
-
+    @Override
+    public JWTClaimsSet buildClaimSet() {
+        JWTClaimsSet.Builder builder = new JWTClaimsSet.Builder();
+        builder.issuer(user);
+        builder.claim("mode", MODE);
+        return builder.build();
+    }
 }

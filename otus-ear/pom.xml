@@ -85,6 +85,12 @@
 			<type>ejb</type>
 		</dependency>
 		<dependency>
+			<groupId>org.ccem.auditor</groupId>
+			<artifactId>auditor-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>ejb</type>
+		</dependency>
+		<dependency>
 			<groupId>org.ccem.otus</groupId>
 			<artifactId>otus-persistence</artifactId>
 			<version>${project.parent.version}</version>

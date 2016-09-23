@@ -18,7 +18,6 @@ import br.org.owail.sender.gmail.GMailer;
 import br.org.tutty.Equalizer;
 
 import javax.ejb.Asynchronous;
-import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.mail.MessagingException;

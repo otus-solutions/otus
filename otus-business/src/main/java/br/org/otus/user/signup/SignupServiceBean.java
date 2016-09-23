@@ -21,7 +21,6 @@ import br.org.tutty.Equalizer;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.NoResultException;
 
 @Stateless
 public class SignupServiceBean implements SignupService {

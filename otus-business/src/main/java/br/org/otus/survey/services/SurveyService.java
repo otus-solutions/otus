@@ -1,8 +1,8 @@
 package br.org.otus.survey.services;
 
-import java.util.List;
-
 import org.ccem.otus.survey.Survey;
+
+import java.util.List;
 
 public interface SurveyService {
 

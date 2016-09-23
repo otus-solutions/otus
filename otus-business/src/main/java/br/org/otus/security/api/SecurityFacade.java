@@ -16,9 +16,9 @@ public class SecurityFacade {
     @Inject
     private SecurityService securityService;
 
-    public UserSecurityAuthorizationDto userAuthentication(AuthenticationDto authenticationDto, String issuer) {
+    public UserSecurityAuthorizationDto userAuthentication(AuthenticationDto authenticationDto, String requestAddress) {
         try {
-            authenticationDto.setIssuer(issuer);
+            authenticationDto.setRequestAddress(requestAddress);
             return securityService.authenticate(authenticationDto);
 
         } catch (AuthenticationException | TokenException e) {
@@ -26,8 +26,9 @@ public class SecurityFacade {
         }
     }
 
-    public String projectAuthentication(ProjectAuthenticationDto projectAuthenticationDto) {
+    public String projectAuthentication(ProjectAuthenticationDto projectAuthenticationDto, String requestAddress) {
         try {
+            projectAuthenticationDto.setRequestAddress(requestAddress);
             return securityService.projectAuthenticate(projectAuthenticationDto);
 
         } catch (AuthenticationException | TokenException e) {

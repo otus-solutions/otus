@@ -1,4 +1,4 @@
-package br.org.otus.log;
+package br.org.otus.auditor;
 
 import org.apache.commons.io.IOUtils;
 

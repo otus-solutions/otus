@@ -62,6 +62,13 @@
   			<version>0.0.1-SNAPSHOT</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.ccem.auditor</groupId>
+			<artifactId>auditor-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<type>ejb</type>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
