@@ -31,7 +31,7 @@ public class SurveyDao extends MongoGenericDao {
 	
 	public List<Survey> findByAcronym(String acronym) {
 		ArrayList<Survey> surveys = new ArrayList<Survey>();
-		collection.find(eq("identity.acronym", acronym)).forEach((Block<Document>) document -> {
+		collection.find(eq("template.identity.acronym", acronym)).forEach((Block<Document>) document -> {
 			surveys.add(Survey.deserialize(document.toJson()));
 		});
 		
