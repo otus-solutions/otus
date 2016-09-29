@@ -7,10 +7,11 @@ import javax.inject.Inject;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-import br.org.otus.configuration.InstallerResource;
+import br.org.otus.configuration.publish.TemplateResource;
+import br.org.otus.configuration.survey.SurveyResource;
 import br.org.otus.fieldCenter.FieldCenterResource;
 import br.org.otus.security.rest.AuthenticationResource;
-import br.org.otus.survey.SurveyResource;
+import br.org.otus.settings.InstallerResource;
 import br.org.otus.user.UserResource;
 
 @ApplicationPath("otus")
@@ -30,6 +31,10 @@ public class EndPointsLoader extends Application {
 
 	@Inject
 	private SurveyResource surveyResource;
+	
+	@Inject
+	private TemplateResource templateResource;
+	
 
 	@Override
 	public Set<Class<?>> getClasses() {
@@ -39,6 +44,7 @@ public class EndPointsLoader extends Application {
 		resources.add(FieldCenterResource.class);
 		resources.add(UserResource.class);
 		resources.add(SurveyResource.class);
+		resources.add(TemplateResource.class);
 		return resources;
 	}
 
@@ -50,6 +56,7 @@ public class EndPointsLoader extends Application {
 		resources.add(fieldCenterResource);
 		resources.add(userResource);
 		resources.add(surveyResource);
+		resources.add(templateResource);
 		return resources;
 	}
 }

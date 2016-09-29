@@ -1,26 +1,39 @@
 package br.org.otus.survey.api;
 
-import br.org.otus.survey.services.SurveyService;
-import org.ccem.otus.survey.Survey;
+import java.util.List;
 
 import javax.inject.Inject;
-import java.util.List;
+
+import org.ccem.otus.survey.form.SurveyForm;
+import org.ccem.otus.survey.template.SurveyTemplate;
+
+import br.org.otus.survey.services.SurveyService;
 
 public class SurveyFacade {
 
 	@Inject
 	private SurveyService surveyService;
 
-	public void saveSurvey(Survey survey) {
+	public void saveSurvey(SurveyForm survey) {
 		surveyService.saveSurvey(survey);
 	}
 
-	public List<Survey> list() {
+	public List<SurveyForm> list() {
 		return surveyService.list();
 	}
 
-	public List<Survey> findByAcronym(String acronym) {
+	public List<SurveyForm> findByAcronym(String acronym) {
 		return surveyService.findByAcronym(acronym);
 	}
+	
+	public void publishSurveyTemplate(SurveyTemplate surveyTemplate, String userEmail) {
+		SurveyForm s = new SurveyForm(surveyTemplate, userEmail);
+		surveyService.saveSurvey(s);
+	}
+	
+
+//	public void updateSurveyFormType(String acronym) {
+//		return surveyService.findByAcronym(acronym);
+//	}
 
 }

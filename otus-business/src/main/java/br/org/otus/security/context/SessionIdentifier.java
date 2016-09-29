@@ -56,4 +56,8 @@ public class SessionIdentifier {
         return token != null ? token.hashCode() : 0;
     }
 
+	public AuthenticationData getAuthenticationData() {
+		return authenticationData;
+	}
+
 }

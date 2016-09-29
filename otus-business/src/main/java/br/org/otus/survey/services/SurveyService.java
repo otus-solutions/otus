@@ -1,15 +1,15 @@
 package br.org.otus.survey.services;
 
-import org.ccem.otus.survey.Survey;
-
 import java.util.List;
+
+import org.ccem.otus.survey.form.SurveyForm;
 
 public interface SurveyService {
 
-	void saveSurvey(Survey survey);
+	void saveSurvey(SurveyForm survey);
 	
-	List<Survey> list();
+	List<SurveyForm> list();
 	
-	List<Survey> findByAcronym(String acronym);
+	List<SurveyForm> findByAcronym(String acronym);
 
 }

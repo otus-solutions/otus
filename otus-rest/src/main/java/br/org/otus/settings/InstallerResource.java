@@ -1,4 +1,4 @@
-package br.org.otus.configuration;
+package br.org.otus.settings;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;

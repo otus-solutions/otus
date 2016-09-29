@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.bson.Document;
-import org.ccem.otus.survey.Survey;
+import org.ccem.otus.survey.form.SurveyForm;
 
 import com.mongodb.Block;
 
@@ -20,19 +20,19 @@ public class SurveyDao extends MongoGenericDao {
 		super(COLLECTION_NAME);
 	}
 
-	public List<Survey> find() {
-		ArrayList<Survey> surveys = new ArrayList<Survey>();
+	public List<SurveyForm> find() {
+		ArrayList<SurveyForm> surveys = new ArrayList<SurveyForm>();
 		list().forEach((Block<Document>) document -> {
-			surveys.add(Survey.deserialize(document.toJson()));
+			surveys.add(SurveyForm.deserialize(document.toJson()));
 		});
 		
 		return surveys;
 	}
 	
-	public List<Survey> findByAcronym(String acronym) {
-		ArrayList<Survey> surveys = new ArrayList<Survey>();
+	public List<SurveyForm> findByAcronym(String acronym) {
+		ArrayList<SurveyForm> surveys = new ArrayList<SurveyForm>();
 		collection.find(eq("template.identity.acronym", acronym)).forEach((Block<Document>) document -> {
-			surveys.add(Survey.deserialize(document.toJson()));
+			surveys.add(SurveyForm.deserialize(document.toJson()));
 		});
 		
 		return surveys;
