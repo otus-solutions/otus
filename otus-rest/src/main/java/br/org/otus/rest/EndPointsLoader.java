@@ -9,6 +9,7 @@ import javax.ws.rs.core.Application;
 
 import br.org.otus.configuration.publish.TemplateResource;
 import br.org.otus.configuration.survey.SurveyResource;
+import br.org.otus.configuration.visual.VisualIdentityResource;
 import br.org.otus.fieldCenter.FieldCenterResource;
 import br.org.otus.security.rest.AuthenticationResource;
 import br.org.otus.settings.InstallerResource;
@@ -34,6 +35,9 @@ public class EndPointsLoader extends Application {
 	
 	@Inject
 	private TemplateResource templateResource;
+
+	@Inject
+	private VisualIdentityResource visualIdentityResource;
 	
 
 	@Override
@@ -45,6 +49,7 @@ public class EndPointsLoader extends Application {
 		resources.add(UserResource.class);
 		resources.add(SurveyResource.class);
 		resources.add(TemplateResource.class);
+		resources.add(VisualIdentityResource.class);
 		return resources;
 	}
 
@@ -57,6 +62,7 @@ public class EndPointsLoader extends Application {
 		resources.add(userResource);
 		resources.add(surveyResource);
 		resources.add(templateResource);
+		resources.add(visualIdentityResource);
 		return resources;
 	}
 }
