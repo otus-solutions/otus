@@ -9,31 +9,35 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import br.org.otus.rest.Response;
+import br.org.otus.security.Secured;
 import br.org.otus.survey.api.SurveyFacade;
 
 @Path("configuration/surveys")
 public class SurveyResource {
-	
-	@Inject
-	private SurveyFacade surveyFacade;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public String getAll() {
-		return new Response().buildSuccess(surveyFacade.list()).toJson();
-	}
+    @Inject
+    private SurveyFacade surveyFacade;
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public String getByAcronym(@QueryParam("acronym") String acronym) {
-		return new Response().buildSuccess(surveyFacade.findByAcronym(acronym)).toJson();
-	}
-	
-	@PUT
-	@Produces(MediaType.APPLICATION_JSON)
-	public String updateSurveyFormTypeByTemplateOID(String updateData) {
-		// TODO update surveyFormType
-		return null;
-	}
+    @GET
+    @Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getAll() {
+        return new Response().buildSuccess(surveyFacade.list()).toJson();
+    }
+
+    @GET
+    @Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getByAcronym(@QueryParam("acronym") String acronym) {
+        return new Response().buildSuccess(surveyFacade.findByAcronym(acronym)).toJson();
+    }
+
+    @PUT
+    @Secured
+    @Produces(MediaType.APPLICATION_JSON)
+    public String updateSurveyFormTypeByTemplateOID(String updateData) {
+        // TODO update surveyFormType
+        return null;
+    }
 
 }
