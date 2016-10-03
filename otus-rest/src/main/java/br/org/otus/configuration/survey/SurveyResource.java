@@ -1,16 +1,18 @@
 package br.org.otus.configuration.survey;
 
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import br.org.otus.rest.Response;
 import br.org.otus.security.Secured;
 import br.org.otus.survey.api.SurveyFacade;
+import br.org.otus.survey.dtos.UpdateSurveyFormTypeDto;
 
 @Path("configuration/surveys")
 public class SurveyResource {
@@ -27,17 +29,20 @@ public class SurveyResource {
 
     @GET
     @Secured
+    @Path("/{acronym}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getByAcronym(@QueryParam("acronym") String acronym) {
+    public String getByAcronym(@PathParam("acronym") String acronym) {
         return new Response().buildSuccess(surveyFacade.findByAcronym(acronym)).toJson();
     }
 
     @PUT
     @Secured
+    @Path("/{acronym}/type")
     @Produces(MediaType.APPLICATION_JSON)
-    public String updateSurveyFormTypeByTemplateOID(String updateData) {
-        // TODO update surveyFormType
-        return null;
+    @Consumes
+    public String updateSurveyFormType(@PathParam("acronym") String acronym, UpdateSurveyFormTypeDto updateSurveyFormTypeDto) {
+    	updateSurveyFormTypeDto.acronym = acronym;
+    	return new Response().buildSuccess(surveyFacade.updateSurveyFormType(updateSurveyFormTypeDto)).toJson();
     }
 
 }
