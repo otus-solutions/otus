@@ -19,7 +19,7 @@ import br.org.mongodb.MongoGenericDao;
 
 public class SurveyDao extends MongoGenericDao {
 
-	private static final String COLLECTION_NAME = "Surveys";
+	private static final String COLLECTION_NAME = "survey";
 
 	public SurveyDao() {
 		super(COLLECTION_NAME);
