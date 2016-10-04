@@ -12,6 +12,7 @@ import org.bson.Document;
 import org.ccem.otus.survey.form.SurveyForm;
 
 import com.mongodb.Block;
+import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
 import br.org.mongodb.MongoGenericDao;
@@ -58,7 +59,14 @@ public class SurveyDao extends MongoGenericDao {
 	public String updateSurveyFormType(String acronym, String surveyFormType) {
 		UpdateResult updateOne = collection.updateOne(eq("surveyTemplate.identity.acronym", acronym.toUpperCase()),
 				new Document("$set", new Document("surveyFormType", surveyFormType)));
+		
 		return updateOne.toString();
+	}
+	
+	public String deleteByAcronym(String acronym) {
+		DeleteResult deleteResult = collection.deleteOne(eq("surveyTemplate.identity.acronym", acronym.toUpperCase()));
+		
+		return deleteResult.toString();
 	}
 
 }

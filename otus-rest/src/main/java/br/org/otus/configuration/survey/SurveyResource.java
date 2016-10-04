@@ -2,6 +2,7 @@ package br.org.otus.configuration.survey;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -35,11 +36,18 @@ public class SurveyResource {
         return new Response().buildSuccess(surveyFacade.findByAcronym(acronym)).toJson();
     }
 
+    @DELETE
+    @Secured
+    @Path("/{acronym}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String deleteByAcronym(@PathParam("acronym") String acronym) {
+    	return new Response().buildSuccess(surveyFacade.deleteByAcronym(acronym)).toJson();
+    }
+
     @PUT
     @Secured
     @Path("/{acronym}/type")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes
+    @Consumes(MediaType.APPLICATION_JSON)
     public String updateSurveyFormType(@PathParam("acronym") String acronym, UpdateSurveyFormTypeDto updateSurveyFormTypeDto) {
     	updateSurveyFormTypeDto.acronym = acronym;
     	return new Response().buildSuccess(surveyFacade.updateSurveyFormType(updateSurveyFormTypeDto)).toJson();

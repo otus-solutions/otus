@@ -60,4 +60,13 @@ public class SurveyServiceBean implements SurveyService {
 		}
 
 	}
+
+	@Override
+	public String deleteByAcronym(String acronym) throws ValidationException {
+		if (acronym.isEmpty() || acronym == null) {
+			throw new ValidationException();
+		} else {
+			return surveyDao.deleteByAcronym(acronym);
+		}
+	}
 }

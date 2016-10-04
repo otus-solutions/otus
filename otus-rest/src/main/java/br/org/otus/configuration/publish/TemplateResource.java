@@ -9,14 +9,14 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
-import br.org.otus.security.Secured;
-import br.org.otus.survey.validators.SurveyValidation;
 import org.ccem.otus.survey.template.SurveyTemplate;
 
 import br.org.otus.rest.Response;
 import br.org.otus.security.AuthorizationHeaderReader;
+import br.org.otus.security.Secured;
 import br.org.otus.security.context.SecurityContext;
 import br.org.otus.survey.api.SurveyFacade;
+import br.org.otus.survey.validators.SurveyValidation;
 
 @Path("configuration/publish/template")
 public class TemplateResource {

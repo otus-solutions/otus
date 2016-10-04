@@ -17,5 +17,7 @@ public interface SurveyService {
 	List<SurveyForm> findByAcronym(String acronym);
 	
 	String updateSurveyFormType(UpdateSurveyFormTypeDto updateSurveyFormTypeDto) throws ValidationException;
+	
+	String deleteByAcronym(String acronym) throws ValidationException;
 
 }
