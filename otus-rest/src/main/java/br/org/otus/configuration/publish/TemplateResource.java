@@ -9,6 +9,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 
+import org.ccem.otus.survey.form.SurveyForm;
 import org.ccem.otus.survey.template.SurveyTemplate;
 
 import br.org.otus.rest.Response;
@@ -16,7 +17,6 @@ import br.org.otus.security.AuthorizationHeaderReader;
 import br.org.otus.security.Secured;
 import br.org.otus.security.context.SecurityContext;
 import br.org.otus.survey.api.SurveyFacade;
-import br.org.otus.survey.validators.SurveyValidation;
 
 @Path("configuration/publish/template")
 public class TemplateResource {
@@ -34,8 +34,8 @@ public class TemplateResource {
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         String userEmail = securityContext.getSession(AuthorizationHeaderReader.readToken(token)).getAuthenticationData().getUser();
 
-        SurveyValidation surveyValidation = surveyFacade.publishSurveyTemplate(SurveyTemplate.deserialize(template), userEmail);
-        return new Response().setData(surveyValidation).toJson();
+        SurveyForm publishedSurveyTemplate = surveyFacade.publishSurveyTemplate(SurveyTemplate.deserialize(template), userEmail);
+        return new Response().setData(publishedSurveyTemplate).toJson();
     }
 
 }

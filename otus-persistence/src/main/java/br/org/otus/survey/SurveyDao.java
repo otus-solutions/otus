@@ -56,17 +56,17 @@ public class SurveyDao extends MongoGenericDao {
 
 	}
 
-	public String updateSurveyFormType(String acronym, String surveyFormType) {
+	public boolean updateSurveyFormType(String acronym, String surveyFormType) {
 		UpdateResult updateOne = collection.updateOne(eq("surveyTemplate.identity.acronym", acronym.toUpperCase()),
 				new Document("$set", new Document("surveyFormType", surveyFormType)));
-		
-		return updateOne.toString();
+
+		return updateOne.getModifiedCount() > 0 ? true : false;
 	}
-	
-	public String deleteByAcronym(String acronym) {
+
+	public boolean deleteByAcronym(String acronym) {
 		DeleteResult deleteResult = collection.deleteOne(eq("surveyTemplate.identity.acronym", acronym.toUpperCase()));
-		
-		return deleteResult.toString();
+
+		return deleteResult.getDeletedCount() > 0 ? true : false;
 	}
 
 }

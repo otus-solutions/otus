@@ -7,4 +7,5 @@ public class ResponseBuild {
     public static Security Security;
     public static FieldCenter FieldCenter;
     public static Http Http;
+    public static Survey Survey;
 }

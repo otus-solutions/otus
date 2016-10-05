@@ -7,37 +7,24 @@ import javax.inject.Inject;
 
 import org.ccem.otus.survey.form.SurveyForm;
 
+import br.org.otus.exceptions.webservice.common.AlreadyExistException;
 import br.org.otus.exceptions.webservice.validation.ValidationException;
 import br.org.otus.survey.SurveyDao;
 import br.org.otus.survey.dtos.UpdateSurveyFormTypeDto;
-import br.org.otus.survey.validators.AcronymValidator;
-import br.org.otus.survey.validators.CustomIdValidator;
-import br.org.otus.survey.validators.SurveyValidation;
 
 @Stateless
 public class SurveyServiceBean implements SurveyService {
 
 	@Inject
 	private SurveyDao surveyDao;
+	@Inject
+	private SurveyValidorService surveyValidorService;
 
 	@Override
-	public SurveyValidation saveSurvey(SurveyForm survey) {
-		SurveyValidation surveyValidation = validateSurvey(survey);
-
-		if (surveyValidation.isValid())
-			surveyDao.persist(SurveyForm.serialize(survey));
-
-		return surveyValidation;
-	}
-
-	public SurveyValidation validateSurvey(SurveyForm surveyForm) {
-		SurveyValidation surveyValidation = new SurveyValidation();
-		CustomIdValidator customIdValidator = new CustomIdValidator(surveyDao, surveyForm);
-		AcronymValidator acronymValidator = new AcronymValidator(surveyDao, surveyForm);
-
-		surveyValidation.addValidatorResponse(customIdValidator.validate());
-		surveyValidation.addValidatorResponse(acronymValidator.validate());
-		return surveyValidation;
+	public SurveyForm saveSurvey(SurveyForm survey) throws AlreadyExistException {
+		surveyValidorService.validateSurvey(surveyDao, survey);
+		surveyDao.persist(SurveyForm.serialize(survey));
+		return survey;
 	}
 
 	@Override
@@ -51,22 +38,22 @@ public class SurveyServiceBean implements SurveyService {
 	}
 
 	@Override
-	public String updateSurveyFormType(UpdateSurveyFormTypeDto updateSurveyFormTypeDto) throws ValidationException {
+	public boolean updateSurveyFormType(UpdateSurveyFormTypeDto updateSurveyFormTypeDto) throws ValidationException {
 		if (updateSurveyFormTypeDto.isValid()) {
 			return surveyDao.updateSurveyFormType(updateSurveyFormTypeDto.acronym,
 					updateSurveyFormTypeDto.newSurveyFormType.toString());
 		} else {
 			throw new ValidationException();
 		}
-
 	}
 
 	@Override
-	public String deleteByAcronym(String acronym) throws ValidationException {
+	public boolean deleteByAcronym(String acronym) throws ValidationException {
 		if (acronym.isEmpty() || acronym == null) {
 			throw new ValidationException();
 		} else {
 			return surveyDao.deleteByAcronym(acronym);
 		}
 	}
+
 }
