@@ -3,6 +3,11 @@
 
 - Servidor: [Wildfly 9.0.1.Final](https://www.mongodb.com/download-center#community)
 
+### Versões de ferramentas necessárias
+
+NodeJS: [v6.6.0](https://nodejs.org/en/download/current/) <br />
+Google Chrome : [52 +](https://www.google.com.br/chrome/browser/desktop/) 
+
 ## Configurações Servidor
 É possivel construir o ambiente utilizando Vagrant ou realizando configurações manualmente.
 
@@ -41,7 +46,7 @@ Para tornar possivel a acesso do projeto Domain (back-end) via java script é ne
                 <response-header name="server-header" header-name="Server" header-value="WildFly/9"/>
                 <response-header name="x-powered-by-header" header-name="X-Powered-By" header-value="Undertow/1"/>
                 <response-header name="Access-Control-Allow-Origin" header-name="Access-Control-Allow-Origin" header-value="*"/>
-                <response-header name="Access-Control-Allow-Methods" header-name="Access-Control-Allow-Methods" header-value="*"/>
+                <response-header name="Access-Control-Allow-Methods" header-name="Access-Control-Allow-Methods" header-value="GET, POST, PUT, DELETE, OPTIONS, HEAD, PATCH"/>
                 <response-header name="Access-Control-Allow-Headers" header-name="Access-Control-Allow-Headers" header-value="Content-Type, Authorization"/>
                 <response-header name="Access-Control-Allow-Credentials" header-name="Access-Control-Allow-Credentials" header-value="true"/>
             </filters>
@@ -146,5 +151,10 @@ Para realizar download de dependencias de front-end
 > mvn antrun:run@static-deploy -Dscp.user='USER' -Dscp.host='HOST' -Dscp.target='DIRECTORY_TARGET' -Dscp.password='USER_PASSWORD'
 
 O serviço de front-end será acessivel através da url: **URL_SERVIDOR/otus**
+
+### Contato
+Gostaria de saber mais sobre nosso projeto ?! Entre em contato conosco. <br />
+Email: ccem-projects@gmail.com <br />
+Chat : https://www.hipchat.com/gWD3zStLw
 
 
