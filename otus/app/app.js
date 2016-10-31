@@ -1,14 +1,12 @@
 (function() {
+  'use strict';
 
-    angular
-        .module('otus', [
-            'dependencies',
-            'otus.dashboard',
-            'otus.installer',
-            'otus.authenticator',
-            'otusjs.otus.singup',
-            'otus.client',
-            'otus.domain.client',
-            'otus.participant.search'
-        ]);
+  angular
+    .module('otus', [
+      'otusjs.otus.access',
+      'otusjs.otus.configuration',
+      'otusjs.otus.installer',
+      'otusjs.otus.session'
+    ]);
+
 }());

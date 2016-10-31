@@ -1,6 +1,7 @@
 (function() {
   'use strict';
 
-  angular.module('otus.installer', []);
+  angular
+    .module('otusjs.otus.installer', []);
 
-})();
+}());
