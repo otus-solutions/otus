@@ -71,7 +71,7 @@ describe('State names configuration', function() {
   }
 
   function defineServiceInjections() {
-    module('otus', function($provide, $injector) {
+    module('otusjs.otus', function($provide, $injector) {
       var LoginStateProvider = $injector.get('otusjs.otus.configuration.state.LoginStateProvider');
       var STATE = $injector.get('STATE');
 

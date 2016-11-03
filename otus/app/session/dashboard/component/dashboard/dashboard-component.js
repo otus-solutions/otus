@@ -8,19 +8,21 @@
       templateUrl: 'app/session/dashboard/component/dashboard/dashboard-template.html'
     });
 
-  Controller.$inject = [
-    '$mdDialog',
-    'ParticipantSearchResultService'
-  ];
-
-  function Controller($mdDialog, ParticipantSearchResultService) {
+  function Controller() {
     var self = this;
 
     /* Public methods */
     self.selectParticipant = selectParticipant;
+    /* Lifecycle hooks */
+    self.$onInit = onInit;
 
     function selectParticipant(selectedParticipant) {
       self.selectedParticipant = selectedParticipant;
+    }
+
+    /* Lifecycle methods */
+    function onInit() {
+      self.selectedParticipant = null;
     }
   }
 }());

@@ -39,7 +39,7 @@ describe('Session state configuration', function() {
   }
 
   function defineServiceInjections() {
-    module('otus', function($provide, $injector) {
+    module('otusjs.otus', function($provide, $injector) {
       var DashboardStateProvider = $injector.get('otusjs.otus.configuration.state.DashboardStateProvider');
       var SessionStateProvider = $injector.get('otusjs.otus.configuration.state.SessionStateProvider');
 

@@ -13,27 +13,30 @@
 
   Controller.$inject = [
     '$mdSidenav',
-    'LogoutService',
-    'otusjs.otus.participant.context.ParticipantContextService'
+    'LogoutService'
   ];
 
-  function Controller($mdSidenav, LogoutService, ParticipantContextService) {
+  function Controller($mdSidenav, LogoutService) {
     var self = this;
+    var _sideNav = null;
+    var SIDENAV_ORIGIN = 'left';
 
     /* Public methods */
     self.close = close;
     self.logout = logout;
+    /* Lifecycle hooks */
+    self.$onInit = onInit;
 
     function close() {
-      $mdSidenav('left').toggle();
+      _sideNav.toggle();
     }
 
     function logout() {
       LogoutService.logout();
     }
 
-    function openHome() {
-      $mdSidenav('left').toggle();
+    function onInit() {
+      _sideNav = $mdSidenav(SIDENAV_ORIGIN);
     }
   }
 }());

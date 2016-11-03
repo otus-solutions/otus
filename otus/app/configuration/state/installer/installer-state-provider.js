@@ -12,22 +12,26 @@
   function Provider(STATE) {
     var self = this;
 
+    self.$get = [provider];
+
+    function provider() {
+      return self;
+    }
+
     self.state = {
       name: STATE.INSTALLER,
       url: '/' + STATE.INSTALLER,
       templateUrl: 'app/installer/initial-config.html',
       controller: 'InitialConfigController as controller',
       resolve: {
-        onlyOneConfiguration: function(RouteRulesResolver) {
-          return RouteRulesResolver.onlyOneConfiguration();
-        }
+        onlyOneConfiguration: _onlyOneConfiguration
       }
     };
 
-    self.$get = [provider];
+    _onlyOneConfiguration.$inject = ['RouteRulesResolver']
 
-    function provider() {
-      return self;
+    function _onlyOneConfiguration(RouteRulesResolver) {
+      return RouteRulesResolver.onlyOneConfiguration();
     }
   }
 }());

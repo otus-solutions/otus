@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otus', [
+    .module('otusjs.otus', [
       'otusjs.otus.access',
       'otusjs.otus.configuration',
       'otusjs.otus.installer',

@@ -34,7 +34,7 @@ describe('Installer state configuration', function() {
   }
 
   function defineServiceInjections() {
-    module('otus', function($provide, $injector) {
+    module('otusjs.otus', function($provide, $injector) {
       var InstallerStateProvider = $injector.get('otusjs.otus.configuration.state.InstallerStateProvider');
 
       $provide.value('InstallerStateProvider', InstallerStateProvider);

@@ -6,27 +6,19 @@
     .service('ParticipantSearchResultService', Service);
 
   Service.$inject = [
-    '$http',
-    '$filter'
+    '$filter',
+    'otusjs.otus.participant.context.ParticipantContextService'
   ];
 
-  function Service($http, $filter) {
+  function Service($filter, ParticipantContextService) {
     var self = this;
     var _filteredParticipants = [];
-    var _participants = [];
+    var _participants = ParticipantContextService.getPreList();
 
     /* Public methods */
     self.filter = filter;
     self.getAll = getAll;
     self.getFiltered = getFiltered;
-
-    _init();
-
-    function _init() {
-      $http.get('app/assets/static-resources/participants_dummy.json').success(function(data) {
-        _participants = data;
-      });
-    }
 
     function filter(query) {
       if (query) {

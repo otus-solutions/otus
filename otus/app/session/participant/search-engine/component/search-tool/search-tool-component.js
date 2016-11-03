@@ -25,7 +25,7 @@
 
     function filter() {
       ParticipantSearchResultService.filter(self.query);
-      self.resultComponent.setResult(ParticipantSearchResultService.getFiltered());
+      self.resultComponent.setResultData(ParticipantSearchResultService.getFiltered());
     }
 
     function onInit() {

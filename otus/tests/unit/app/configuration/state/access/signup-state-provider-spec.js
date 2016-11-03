@@ -8,7 +8,7 @@ describe('SingupResultStateProvider', function() {
   var injections = {};
 
   beforeEach(function() {
-    module('otus');
+    module('otusjs.otus');
 
     inject(function(_$injector_, _STATE_) {
       injections.STATE = _STATE_;

@@ -11,18 +11,11 @@
       }
     });
 
-  Controller.$inject = ['$mdSidenav'];
-
-  function Controller($mdSidenav) {
+  function Controller() {
     var self = this;
 
     /* Public methods */
-    self.open = open;
     self.selectParticipant = selectParticipant;
-
-    function open() {
-      $mdSidenav('left').toggle();
-    }
 
     function selectParticipant(selectedParticipant) {
       self.onParticipantSelect({

@@ -6,11 +6,13 @@ describe('LoginStateProvider', function() {
   var CONTROLLER = 'LoginController as $ctrl';
   var provider = {};
   var injections = {};
+  var Mock = {};
 
   beforeEach(function() {
-    module('otus');
+    module('otusjs.otus');
 
     inject(function(_$injector_, _STATE_) {
+      mockRouteRulesResolver(_$injector_);
       injections.STATE = _STATE_;
       provider = _$injector_.get(UNIT_NAME, injections);
     });
@@ -42,6 +44,18 @@ describe('LoginStateProvider', function() {
       expect(provider.state.resolve.alreadyLogged).toBeDefined();
     });
 
+    it('resolve.alreadyLogged should call RouteRulesResolver.alreadyLogged', function() {
+      spyOn(Mock.RouteRulesResolver, 'alreadyLogged');
+
+      provider.state.resolve.alreadyLogged(Mock.RouteRulesResolver);
+
+      expect(Mock.RouteRulesResolver.alreadyLogged).toHaveBeenCalledWith();
+    });
+
   });
+
+  function mockRouteRulesResolver($injector) {
+    Mock.RouteRulesResolver = $injector.get('RouteRulesResolver');
+  }
 
 });

@@ -23,24 +23,18 @@
 
     var OPENED_FOOTER_MESSAGE = 'Fechar Lista';
     var CLOSED_FOOTER_MESSAGE = 'Visualizar Participantes';
-    var _open = true;
 
-    self.footer = {};
     self.participants = [];
-    self.hasResult = false;
+    self.showResultList = false;
 
     /* Public methods */
     self.selectParticipant = selectParticipant;
-    self.setResult = setResult;
+    self.setResultData = setResultData;
+    /* Lifecycle hooks */
     self.$onInit = onInit;
 
-    function onInit() {
-      self.footer.message = CLOSED_FOOTER_MESSAGE;
-      self.otusParticipantSearchTool.resultComponent = self;
-    }
-
     function selectParticipant(selectedParticipant) {
-      self.hasResult = false;
+      self.showResultList = false;
       self.participants = [];
       ParticipantContextService.selectParticipant(selectedParticipant);
       self.onSelect({
@@ -48,9 +42,13 @@
       });
     }
 
-    function setResult(data) {
-      self.hasResult = data.length > 0;
+    function setResultData(data) {
+      self.showResultList = data.length > 0;
       self.participants = data;
+    }
+
+    function onInit() {
+      self.otusParticipantSearchTool.resultComponent = self;
     }
   }
 }());

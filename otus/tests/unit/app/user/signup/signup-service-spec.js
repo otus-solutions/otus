@@ -4,7 +4,7 @@ describe('SignupService', function() {
   var service;
 
   beforeEach(function() {
-    module('otus');
+    module('otusjs.otus');
 
     mockUserData();
 

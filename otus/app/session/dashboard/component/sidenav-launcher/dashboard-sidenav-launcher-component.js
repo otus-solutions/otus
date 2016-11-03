@@ -9,18 +9,26 @@
     });
 
   Controller.$inject = [
-    '$mdSidenav',
-    'LogoutService'
+    '$mdSidenav'
   ];
 
-  function Controller($mdSidenav, LogoutService) {
+  function Controller($mdSidenav) {
     var self = this;
+    var _sideNav = null;
+
+    var SIDENAV_ORIGIN = 'left';
 
     /* Public methods */
-    self.open = open;
+    self.launchSidenav = launchSidenav;
+    /* Lifecycle hooks */
+    self.$onInit = onInit;
 
-    function open() {
-      $mdSidenav('left').toggle();
+    function launchSidenav() {
+      _sideNav.toggle();
+    }
+
+    function onInit() {
+      _sideNav = $mdSidenav(SIDENAV_ORIGIN);
     }
   }
 }());

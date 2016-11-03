@@ -4,11 +4,13 @@ describe('AccessStateProvider', function() {
   var TEMPLATE = '<div flex layout="column"><div ui-view flex layout="row"></div></div>';
   var provider = {};
   var injections = {};
+  var Mock = {};
 
   beforeEach(function() {
-    module('otus');
+    module('otusjs.otus');
 
     inject(function(_$injector_, _STATE_) {
+      mockRouteRulesResolver(_$injector_);
       injections.STATE = _STATE_;
       provider = _$injector_.get(UNIT_NAME, injections);
     });
@@ -32,6 +34,18 @@ describe('AccessStateProvider', function() {
       expect(provider.state.resolve.initialConfiguration).toBeDefined();
     });
 
+    it('resolve.initialConfiguration should call RouteRulesResolver.initialConfiguration', function() {
+      spyOn(Mock.RouteRulesResolver, 'initialConfiguration');
+
+      provider.state.resolve.initialConfiguration(Mock.RouteRulesResolver);
+
+      expect(Mock.RouteRulesResolver.initialConfiguration).toHaveBeenCalledWith();
+    });
+
   });
+
+  function mockRouteRulesResolver($injector) {
+    Mock.RouteRulesResolver = $injector.get('RouteRulesResolver');
+  }
 
 });

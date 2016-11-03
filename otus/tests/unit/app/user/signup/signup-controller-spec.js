@@ -4,7 +4,7 @@ describe('SignupController', function() {
   var controller;
 
   beforeEach(function() {
-    module('otus');
+    module('otusjs.otus');
 
     mockUserData();
 

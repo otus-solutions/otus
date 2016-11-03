@@ -1,14 +1,16 @@
 describe('SessionStateProvider', function() {
 
   var UNIT_NAME = 'otusjs.otus.configuration.state.SessionState';
-  var TEMPLATE = '<div flex layout="column"><div ui-view="session-wrap" flex layout="row"></div></div>';
+  var TEMPLATE = '<div flex layout="column"><div flex layout="row" ui-view></div></div>';
   var provider = {};
   var injections = {};
+  var Mock = {};
 
   beforeEach(function() {
-    module('otus');
+    module('otusjs.otus');
 
     inject(function(_$injector_, _STATE_) {
+      mockRouteRulesResolver(_$injector_);
       injections.STATE = _STATE_;
       provider = _$injector_.get(UNIT_NAME, injections);
     });
@@ -32,6 +34,18 @@ describe('SessionStateProvider', function() {
       expect(provider.state.resolve.loggedUser).toBeDefined();
     });
 
+    it('resolve.loggedUser should call RouteRulesResolver.loggedUser', function() {
+      spyOn(Mock.RouteRulesResolver, 'loggedUser');
+
+      provider.state.resolve.loggedUser(Mock.RouteRulesResolver);
+
+      expect(Mock.RouteRulesResolver.loggedUser).toHaveBeenCalledWith();
+    });
+
   });
+
+  function mockRouteRulesResolver($injector) {
+    Mock.RouteRulesResolver = $injector.get('RouteRulesResolver');
+  }
 
 });
