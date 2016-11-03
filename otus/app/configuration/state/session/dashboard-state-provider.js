@@ -22,16 +22,7 @@
       parent: STATE.SESSION,
       name: STATE.DASHBOARD,
       url: '/' + STATE.DASHBOARD,
-      templateUrl: 'app/session/dashboard/home/main-home-content-template.html',
-      views: {
-        'session-wrap': {
-          templateUrl: 'app/session/dashboard/home/main-home-content-template.html'
-        },
-        'dashboard-menu@dashboard': {
-          templateUrl: 'app/session/dashboard/menu/dashboard-menu.html',
-          controller: 'OtusDashboardMenu as dashboardMenu'
-        }
-      }
+      template: '<otus-dashboard layout="column" flex></otus-dashboard>'
     };
   }
 }());

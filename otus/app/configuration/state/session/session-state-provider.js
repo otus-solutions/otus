@@ -21,7 +21,7 @@
     self.state = {
       abstract: true,
       name: STATE.SESSION,
-      template: '<div flex layout="column"><div ui-view="session-wrap" flex layout="row"></div></div>',
+      template: '<div flex layout="column"><div flex layout="row" ui-view></div></div>',
       resolve: {
         loggedUser: loggedUser
       }

@@ -15,15 +15,11 @@
     self.state = {
       name: STATE.INSTALLER,
       url: '/' + STATE.INSTALLER,
+      templateUrl: 'app/installer/initial-config.html',
+      controller: 'InitialConfigController as controller',
       resolve: {
         onlyOneConfiguration: function(RouteRulesResolver) {
           return RouteRulesResolver.onlyOneConfiguration();
-        }
-      },
-      views: {
-        'system-wrap': {
-          templateUrl: 'app/installer/initial/initial-config.html',
-          controller: 'InitialConfigController as controller'
         }
       }
     };

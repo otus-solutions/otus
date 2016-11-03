@@ -1,144 +1,149 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="otus">
 
-  <head>
-    <base href="/otus/"/>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="initial-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link href="app/assets/img/coruja_pesquisadora.png" rel="icon"/>
+<head>
+  <base href="/otus/" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="app/assets/img/coruja_pesquisadora.png" rel="icon" />
 
-    <title>Otus</title>
-  </head>
+  <title>Otus</title>
+</head>
 
-  <body layout="column" md-theme="layoutTheme">
-    <div flex layout="row" class="md-body-2" ui-view></div>
-  </body>
+<body layout="column" md-theme="layoutTheme">
+  <div flex layout="row" class="md-body-2" ui-view></div>
+</body>
 
-  <!-- ************************************* jQuery ************************************* -->
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-  <!-- ************************************* Angular ************************************* -->
-  <script src="node_modules/angular/angular.min.js"></script>
-  <script src="node_modules/angular-animate/angular-animate.min.js"></script>
-  <script src="node_modules/angular-aria/angular-aria.min.js"></script>
-  <script src="node_modules/angular-bind-html-compile-ci-dev/angular-bind-html-compile.js"></script>
-  <script src="node_modules/angular-messages/angular-messages.min.js"></script>
-  <script src="node_modules/angular-ui-mask/dist/mask.min.js"></script>
-  <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script src="node_modules/angular-resource/angular-resource.min.js"></script>
-  <!-- ************************************* Angular Material ************************************* -->
-  <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet"/>
-  <script src="node_modules/angular-material/angular-material.min.js"></script>
-  <!-- ************************************* Lokijs ************************************* -->
-  <script src="node_modules/lokijs/build/lokijs.min.js"></script>
-  <script src="node_modules/lokijs/src/loki-angular.js"></script>
-  <!-- ************************************* Moment ************************************* -->
-  <script src="node_modules/moment/min/moment.min.js"></script>
-  <!-- ************************************* OTUS-MODEL ************************************* -->
-  <script src="node_modules/otus-model-js/dist/otus-model.min.js"></script>
-  <!-- ************************************* otus-domain-client ************************************* -->
-  <script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
-  <!-- ************************************* OTUS-CLIENT ************************************* -->
-  <script src="node_modules/otus-client-js/dist/otus-client-min.js"></script>
-  <!-- ************************************* IndexedDB ************************************* -->
-  <script src="app/shared/angular-indexed-db/angular-indexed-db.min.js"></script>
-  <!-- ************************************* ST-PASSWORD ************************************* -->
-  <script src="app/shared/st-password-module.js"></script>
+<!-- ************************************* jQuery ************************************* -->
+<script src="node_modules/jquery/dist/jquery.min.js"></script>
+<!-- ************************************* Angular ************************************* -->
+<script src="node_modules/angular/angular.min.js"></script>
+<script src="node_modules/angular-animate/angular-animate.min.js"></script>
+<script src="node_modules/angular-aria/angular-aria.min.js"></script>
+<script src="node_modules/angular-bind-html-compile-ci-dev/angular-bind-html-compile.js"></script>
+<script src="node_modules/angular-messages/angular-messages.min.js"></script>
+<script src="node_modules/angular-ui-mask/dist/mask.min.js"></script>
+<script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="node_modules/angular-resource/angular-resource.min.js"></script>
+<!-- ************************************* Angular Material ************************************* -->
+<link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
+<script src="node_modules/angular-material/angular-material.min.js"></script>
+<!-- ************************************* Lokijs ************************************* -->
+<script src="node_modules/lokijs/build/lokijs.min.js"></script>
+<script src="node_modules/lokijs/src/loki-angular.js"></script>
+<!-- ************************************* Moment ************************************* -->
+<script src="node_modules/moment/min/moment.min.js"></script>
+<!-- ************************************* OTUS-MODEL ************************************* -->
+<script src="node_modules/otus-model-js/dist/otus-model.min.js"></script>
+<!-- ************************************* otus-domain-client ************************************* -->
+<script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
+<!-- ************************************* OTUS-CLIENT ************************************* -->
+<script src="node_modules/otus-client-js/dist/otus-client-min.js"></script>
+<!-- ************************************* IndexedDB ************************************* -->
+<script src="app/shared/angular-indexed-db/angular-indexed-db.min.js"></script>
+<!-- ************************************* ST-PASSWORD ************************************* -->
+<script src="app/shared/st-password-module.js"></script>
 
-  <!-- ************************************* Otus Application ************************************* -->
-  <!-- APPLICATION -->
-  <script src="app/app.js"></script>
+<!-- ************************************* Otus Application ************************************* -->
+<!-- APPLICATION -->
+<script src="app/app.js"></script>
 
-  <!-- SCRIPT IMPORTS -->
-  <link href="app/assets/css/login-page.css" rel="stylesheet"/>
-  <link href="app/assets/css/styles.css" rel="stylesheet"/>
-  <link href="app/assets/css/initial-config.css" rel="stylesheet"/>
+<!-- SCRIPT IMPORTS -->
+<link href="app/assets/css/login-page.css" rel="stylesheet" />
+<link href="app/assets/css/styles.css" rel="stylesheet" />
+<link href="app/assets/css/initial-config.css" rel="stylesheet" />
 
-  <script src="app/configuration/configuration-module.js"></script>
+<script src="app/configuration/configuration-module.js"></script>
 
-  <!-- DEPENDENCY -->
-  <script src="app/configuration/dependency/dependency-configuration-module.js"></script>
-  <script src="app/configuration/dependency/dependency-configuration.js"></script>
+<!-- DEPENDENCY -->
+<script src="app/configuration/dependency/dependency-configuration-module.js"></script>
+<script src="app/configuration/dependency/dependency-configuration.js"></script>
 
-  <!-- ENVIRONMENT -->
-  <script src="app/configuration/environment/environment-configuration-module.js"></script>
-  <script src="app/configuration/environment/env.js"></script>
-  <script src="app/configuration/environment/init-configuration.js"></script>
+<!-- ENVIRONMENT -->
+<script src="app/configuration/environment/environment-configuration-module.js"></script>
+<script src="app/configuration/environment/env.js"></script>
+<script src="app/configuration/environment/init-configuration.js"></script>
 
-  <!-- HTTP -->
-  <script src="app/configuration/http/http-configuration-module.js"></script>
-  <script src="app/configuration/http/interceptor/interceptor-configuration.js"></script>
-  <script src="app/configuration/http/interceptor/response-interceptor-factory.js"></script>
-  <script src="app/configuration/http/response/offline/offline-controller.js"></script>
+<!-- HTTP -->
+<script src="app/configuration/http/http-configuration-module.js"></script>
+<script src="app/configuration/http/interceptor/interceptor-configuration.js"></script>
+<script src="app/configuration/http/interceptor/response-interceptor-factory.js"></script>
+<script src="app/configuration/http/response/offline/offline-controller.js"></script>
 
-  <!-- LOCALE -->
-  <script src="app/configuration/locale/locale-configuration-module.js"></script>
-  <script src="app/configuration/locale/locale-configuration.js"></script>
+<!-- LOCALE -->
+<script src="app/configuration/locale/locale-configuration-module.js"></script>
+<script src="app/configuration/locale/locale-configuration.js"></script>
 
-  <!-- STATE -->
-  <script src="app/configuration/state/state-configuration-module.js"></script>
-  <script src="app/configuration/state/state-configuration.js"></script>
+<!-- STATE -->
+<script src="app/configuration/state/state-configuration-module.js"></script>
+<script src="app/configuration/state/state-configuration.js"></script>
 
-  <!-- STATE-APPLICATION -->
-  <script src="app/configuration/state/application/application-state-service.js"></script>
-  <script src="app/configuration/state/application/route-rules-resolver-service.js"></script>
+<!-- STATE-APPLICATION -->
+<script src="app/configuration/state/application/application-state-service.js"></script>
+<script src="app/configuration/state/application/route-rules-resolver-service.js"></script>
 
-  <!-- STATE-ACCESS -->
-  <script src="app/configuration/state/access/access-configuration.js"></script>
-  <script src="app/configuration/state/access/access-state-provider.js"></script>
-  <script src="app/configuration/state/access/login-state-provider.js"></script>
-  <script src="app/configuration/state/access/signup-state-provider.js"></script>
-  <script src="app/configuration/state/access/signup-result-state-provider.js"></script>
+<!-- STATE-ACCESS -->
+<script src="app/configuration/state/access/access-configuration.js"></script>
+<script src="app/configuration/state/access/access-state-provider.js"></script>
+<script src="app/configuration/state/access/login-state-provider.js"></script>
+<script src="app/configuration/state/access/signup-state-provider.js"></script>
+<script src="app/configuration/state/access/signup-result-state-provider.js"></script>
 
-  <!-- ENVIRONMENT-INSTALLER -->
-  <script src="app/configuration/state/installer/installer-configuration.js"></script>
-  <script src="app/configuration/state/installer/installer-state-provider.js"></script>
+<!-- INSTALLER -->
+<script src="app/configuration/state/installer/installer-configuration.js"></script>
+<script src="app/configuration/state/installer/installer-state-provider.js"></script>
 
-  <!-- ENVIRONMENT-SESSION -->
-  <script src="app/configuration/state/session/session-configuration.js"></script>
-  <script src="app/configuration/state/session/dashboard-state-provider.js"></script>
-  <script src="app/configuration/state/session/session-state-provider.js"></script>
+<!-- SESSION -->
+<script src="app/configuration/state/session/session-configuration.js"></script>
+<script src="app/configuration/state/session/dashboard-state-provider.js"></script>
+<script src="app/configuration/state/session/session-state-provider.js"></script>
 
-  <!-- ENVIRONMENT-SESSION -->
-  <script src="app/configuration/theme/theme-configuration-module.js"></script>
-  <script src="app/configuration/theme/theme-configuration.js"></script>
+<!-- THEME -->
+<script src="app/configuration/theme/theme-configuration-module.js"></script>
+<script src="app/configuration/theme/theme-configuration.js"></script>
 
-  <!-- ************************************* Access ************************************* -->
-  <script src="app/access/access-module.js"></script>
+<!-- ************************************* Access ************************************* -->
+<script src="app/access/access-module.js"></script>
 
-  <!-- LOGIN-->
-  <script src="app/access/login/login-controller.js"></script>
-  <script src="app/access/logout/logout-service.js"></script>
+<!-- LOGIN-->
+<script src="app/access/login/login-controller.js"></script>
+<script src="app/access/logout/logout-service.js"></script>
 
-  <!-- SIGNUP -->
-  <script src="app/access/signup/signup-module.js"></script>
-  <script src="app/access/signup/signup-controller.js"></script>
-  <script src="app/access/signup/signup-service.js"></script>
+<!-- SIGNUP -->
+<script src="app/access/signup/signup-module.js"></script>
+<script src="app/access/signup/signup-controller.js"></script>
+<script src="app/access/signup/signup-service.js"></script>
 
-  <!-- ************************************* Installer ************************************* -->
-  <script src="app/installer/installer-module.js"></script>
-  <script src="app/installer/initial-config-controller.js"></script>
+<!-- ************************************* Installer ************************************* -->
+<script src="app/installer/installer-module.js"></script>
+<script src="app/installer/initial-config-controller.js"></script>
 
-  <!-- ************************************* Session ************************************* -->
-  <script src="app/session/session-module.js"></script>
+<!-- ************************************* Session ************************************* -->
+<script src="app/session/session-module.js"></script>
 
-  <!-- OTUS-DASHBOARD -->
-  <script src="app/session/dashboard/dashboard-module.js"></script>
-  <script src="app/session/dashboard/toolbar/dashboard-toolbar-directive.js"></script>
-  <script src="app/session/dashboard/toolbar/dashboard-toolbar-controller.js"></script>
-  <script src="app/session/dashboard/menu/dashboard-menu-controller.js"></script>
+<!-- OTUS-DASHBOARD -->
+<script src="app/session/dashboard/dashboard-module.js"></script>
+<script src="app/session/dashboard/component/dashboard/dashboard-component.js"></script>
+<script src="app/session/dashboard/component/dashboard-display/dashboard-display-component.js"></script>
+<script src="app/session/dashboard/component/sidenav/dashboard-sidenav-component.js"></script>
+<script src="app/session/dashboard/component/sidenav-launcher/dashboard-sidenav-launcher-component.js"></script>
+<script src="app/session/dashboard/component/toolbar/dashboard-toolbar-component.js"></script>
 
-  <!-- OTUS-PARTICIPANT-SEARCH -->
-  <script src="app/session/participant/search/participant-search-module.js"></script>
-  <script src="app/session/participant/search/toolbar/search-toolbar-controller.js"></script>
-  <script src="app/session/participant/search/toolbar/search-toolbar-directive.js"></script>
-  <script src="app/session/participant/search/dialog/search-custom-controller.js"></script>
-  <script src="app/session/participant/search/result/participant-card-directive.js"></script>
-  <script src="app/session/participant/search/filters/birthdate-filter-directive.js"></script>
-  <script src="app/session/participant/search/filters/field-center-filter-directive.js"></script>
-  <script src="app/session/participant/search/filters/name-filter-directive.js"></script>
-  <script src="app/session/participant/search/filters/recruitment-number-filter-directive.js"></script>
+<!-- PARTICIPANT -->
+<script src="app/session/participant/participant-module.js"></script>
+
+<!-- PARTICIPANT-CONTEXT -->
+<script src="app/session/participant/context/participant-context-module.js"></script>
+<script src="app/session/participant/context/participant-context-service.js"></script>
+
+<!-- PARTICIPANT-SEARCH-ENGINE -->
+<script src="app/session/participant/search-engine/participant-search-engine-module.js"></script>
+<script src="app/session/participant/search-engine/component/result/participant-search-result-component.js"></script>
+<script src="app/session/participant/search-engine/component/search-tool/search-tool-component.js"></script>
+<script src="app/session/participant/search-engine/service/participant-search-result-service.js"></script>
+<script src="app/session/participant/search-engine/service/participant-quick-filter.js"></script>
 
 </html>
