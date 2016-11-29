@@ -61,7 +61,7 @@
           replacement: process.env.npm_config_apiUrl,
         }]
       }))
-      .pipe(gulp.dest('app/config'));
+      .pipe(gulp.dest('app/configuration/environment'));
   });
 
   gulp.task('sonar', function() {
