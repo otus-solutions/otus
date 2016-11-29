@@ -2,5 +2,5 @@
   'use strict';
 
   window.__env = window.__env || {};
-  window.__env.apiUrl = 'http://api.otus.hmg.ccem.ufrgs.br';
+  window.__env.apiUrl = 'http://api-otus.localhost:8080';
 }(this));
