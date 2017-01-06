@@ -1,0 +1,36 @@
+<div id="login-page" layout="column" flex>
+  <div id="divtop">
+    <h2 class="name">
+            <span class="md-display-1">Cadastro</span>
+        </h2>
+    <div id="center">
+      <div>
+        <img src="app/static-resource/image/OtusImg.png" class="logo" media="screen and (max-width: 1280px) and (min-width: 800px)"></img>
+      </div>
+      <div layout="column">
+        <div>
+          <div id="content" flex>
+            <md-content layout-sm="column" layout-padding>
+              <div layout-align="center">
+                <p class="md-display-1">Cadastro Realizado</p>
+              </div>
+              <div layout-align="left">
+                <p class="md-body-1">
+                  Seu usuário ainda <span class="md-body-2"> não está liberado </span> para acesso ao sistema.
+                </p>
+                <p class="md-body-1">
+                  Você será notificado no e-mail informado quando ocorrer a liberação.
+                </p>
+              </div>
+              <div layout-align="left">
+                <md-button type="button" class="md-raised md-accent" ng-click="$ctrl.agree()">
+                  OK
+                </md-button>
+              </div>
+            </md-content>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

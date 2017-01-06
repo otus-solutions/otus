@@ -53,11 +53,73 @@
       .pipe(gulp.dest('dist'));
   });
 
+  gulp.task('modularize', function() {
+    gulp
+      .src('app/application/**/*.js')
+      .pipe(concat('application.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('dist'));
+
+    gulp
+      .src('app/module/access/**/*.js')
+      .pipe(concat('access.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('dist'));
+
+    gulp
+      .src('app/module/activity/**/*.js')
+      .pipe(concat('activity.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('dist'));
+
+    gulp
+      .src('app/module/dashboard/**/*.js')
+      .pipe(concat('dashboard.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('dist'));
+
+    gulp
+      .src('app/module/installer/**/*.js')
+      .pipe(concat('installer.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('dist'));
+
+    gulp
+      .src('app/module/interoperability/**/*.js')
+      .pipe(concat('interoperability.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('dist'));
+
+    gulp
+      .src('app/module/participant/**/*.js')
+      .pipe(concat('participant.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('dist'));
+
+    gulp
+      .src('app/module/report/**/*.js')
+      .pipe(concat('report.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('dist'));
+
+    gulp
+      .src('app/module/session/**/*.js')
+      .pipe(concat('session.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('dist'));
+
+    gulp
+      .src('app/module/study/**/*.js')
+      .pipe(concat('study.js'))
+      .pipe(uglify())
+      .pipe(gulp.dest('dist'));
+  });
+
   gulp.task('replace-env', function(value) {
     gulp.src('app/configuration/environment/env.js')
       .pipe(replaceTask({
         patterns: [{
-          match: /http:\/\/api\-otus\.localhost:8080/g,
+          match: /https:\/\/api\-otus\.localhost:8080/g,
           replacement: process.env.npm_config_apiUrl,
         }]
       }))

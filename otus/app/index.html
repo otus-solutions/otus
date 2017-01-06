@@ -4,16 +4,20 @@
 <head>
   <base href="/otus/" />
   <meta charset="UTF-8" />
-  <meta name="viewport" content="initial-scale=1">
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="app/assets/img/coruja_pesquisadora.png" rel="icon" />
+  <meta name="viewport" content="initial-scale=1" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
+  <link href="app/static-resource/image/coruja_pesquisadora.png" rel="icon" />
+  <link href="app/static-resource/stylesheet/login-page.css" rel="stylesheet" />
+  <link href="app/static-resource/stylesheet/styles.css" rel="stylesheet" />
+  <link href="app/static-resource/stylesheet/initial-config.css" rel="stylesheet" />
 
   <title>Otus</title>
 </head>
 
-<body layout="column" md-theme="layoutTheme">
+<body layout="column" md-theme="default">
   <div flex layout="row" class="md-body-2" ui-view></div>
 </body>
 
@@ -29,121 +33,254 @@
 <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="node_modules/angular-resource/angular-resource.min.js"></script>
 <!-- ************************************* Angular Material ************************************* -->
-<link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
 <script src="node_modules/angular-material/angular-material.min.js"></script>
 <!-- ************************************* Lokijs ************************************* -->
 <script src="node_modules/lokijs/build/lokijs.min.js"></script>
+<script src="node_modules/lokijs/build/loki-indexed-adapter.min.js"></script>
 <script src="node_modules/lokijs/src/loki-angular.js"></script>
 <!-- ************************************* Moment ************************************* -->
 <script src="node_modules/moment/min/moment.min.js"></script>
 <!-- ************************************* OTUS-MODEL ************************************* -->
 <script src="node_modules/otus-model-js/dist/otus-model.min.js"></script>
-<!-- ************************************* otus-domain-client ************************************* -->
+<script src="node_modules/otus-model-js/dist/st-utils.min.js"></script>
+<!-- ************************************* OTUS-DOMAIN-CLIENT ************************************* -->
 <script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
 <!-- ************************************* OTUS-CLIENT ************************************* -->
 <script src="node_modules/otus-client-js/dist/otus-client-min.js"></script>
-<!-- ************************************* IndexedDB ************************************* -->
-<script src="app/shared/angular-indexed-db/angular-indexed-db.min.js"></script>
 <!-- ************************************* ST-PASSWORD ************************************* -->
-<script src="app/shared/st-password-module.js"></script>
+<script src="app/static-resource/st-password-module.js"></script>
 
-<!-- ************************************* Otus Application ************************************* -->
-<!-- APPLICATION -->
+<!-- ************************************* Otus ************************************* -->
 <script src="app/app.js"></script>
 
-<!-- SCRIPT IMPORTS -->
-<link href="app/assets/css/login-page.css" rel="stylesheet" />
-<link href="app/assets/css/styles.css" rel="stylesheet" />
-<link href="app/assets/css/initial-config.css" rel="stylesheet" />
+<!-- # Application -->
+<script src="app/application/module.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Application > Context -->
+<script src="app/application/context/module.js"></script>
+<script src="app/application/context/context-factory.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Application > Core -->
+<script src="app/application/core/module.js"></script>
+<script src="app/application/core/context-service.js"></script>
+<script src="app/application/core/module-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Application > Dependency -->
+<script src="app/application/dependency/module.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Application > Environment -->
+<script src="app/application/environment/module.js"></script>
+<script src="app/application/environment/init-configuration.js"></script>
+<script src="app/application/environment/env.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Application > Http -->
+<script src="app/application/http/module.js"></script>
+<!-- # Http > Interceptor -->
+<script src="app/application/http/interceptor/interceptor-configuration.js"></script>
+<script src="app/application/http/interceptor/response-interceptor-factory.js"></script>
+<!-- # Http > Response -->
+<script src="app/application/http/response/offline/offline-controller.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Application > Locale -->
+<script src="app/application/locale/module.js"></script>
+<script src="app/application/locale/locale-configuration.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Application > Session -->
+<script src="app/application/session/module.js"></script>
+<!-- # Session > Core -->
+<script src="app/application/session/core/module.js"></script>
+<!-- # Session > Core > Module -->
+<script src="app/application/session/core/context-service.js"></script>
+<script src="app/application/session/core/event-service.js"></script>
+<script src="app/application/session/core/module-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Application > State -->
+<script src="app/application/state/module.js"></script>
+<!-- # State > Core -->
+<script src="app/application/state/core/state-constant.js"></script>
+<script src="app/application/state/core/state-resolver-service.js"></script>
+<script src="app/application/state/core/state-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Application > Storage -->
+<script src="app/application/storage/module.js"></script>
+<!-- # Storage > Service -->
+<script src="app/application/storage/service/indexed-db-service.js"></script>
+<script src="app/application/storage/service/local-storage-service.js"></script>
+<script src="app/application/storage/service/session-storage-service.js"></script>
+<script src="app/application/storage/service/storage-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Application > Theme -->
+<script src="app/application/theme/module.js"></script>
+<script src="app/application/theme/theme-configuration.js"></script>
 
-<script src="app/configuration/configuration-module.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<script src="app/deploy/module.js"></script>
+<!-- # Deploy > Bootstrap -->
+<script src="app/deploy/bootstrap/bootstrap-service.js"></script>
+<script src="app/deploy/bootstrap/access-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/activity-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/application-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/participant-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/session-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/user-module-bootstrap.js"></script>
+<!-- # Deploy > Data Source -->
+<script src="app/deploy/data-source/data-source-loader-service.js"></script>
+<script src="app/deploy/data-source/activity-data-source-service.js"></script>
+<script src="app/deploy/data-source/participant-data-source-service.js"></script>
+<script src="app/deploy/data-source/user-data-source-service.js"></script>
+<!-- # Deploy > Model -->
+<script src="app/deploy/model/otus/activity-facade-service.js"></script>
+<script src="app/deploy/model/otus/activity-model-pool-service.js"></script>
+<script src="app/deploy/model/otus/survey-model-pool-service.js"></script>
+<!-- # Deploy > Rest -->
+<script src="app/deploy/rest/otus-api/otus-api-service.js"></script>
+<script src="app/deploy/rest/otus-api/activity/activity-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/configuration/configuration-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/installer/installer-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/participant/participant-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/survey/survey-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/user/authentication-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/user/user-rest-service.js"></script>
+<!-- # Deploy > State -->
+<script src="app/deploy/state/state-configuration.js"></script>
+<script src="app/deploy/state/access/access-state-provider.js"></script>
+<script src="app/deploy/state/access/login-state-provider.js"></script>
+<script src="app/deploy/state/access/signup-result-state-provider.js"></script>
+<script src="app/deploy/state/access/signup-state-provider.js"></script>
+<script src="app/deploy/state/activity/activity-adder-state-provider.js"></script>
+<script src="app/deploy/state/activity/activity-state-provider.js"></script>
+<script src="app/deploy/state/activity/paper-activity-adder-state-provider.js"></script>
+<script src="app/deploy/state/activity/paper-activity-initializer-state-provider.js"></script>
+<script src="app/deploy/state/dashboard/dashboard-state-provider.js"></script>
+<script src="app/deploy/state/installer/installer-state-provider.js"></script>
+<script src="app/deploy/state/participant/participant-state-provider.js"></script>
+<script src="app/deploy/state/session/session-state-provider.js"></script>
+<script src="app/deploy/storage/storage-loader-service.js"></script>
 
-<!-- DEPENDENCY -->
-<script src="app/configuration/dependency/dependency-configuration-module.js"></script>
-<script src="app/configuration/dependency/dependency-configuration.js"></script>
+<!------------------------------------------------------------------------------------------------>
 
-<!-- ENVIRONMENT -->
-<script src="app/configuration/environment/environment-configuration-module.js"></script>
-<script src="app/configuration/environment/env.js"></script>
-<script src="app/configuration/environment/init-configuration.js"></script>
+<!-- # Module > Activity -->
+<script src="app/module/activity/module.js"></script>
+<!-- # Activity > Business -->
+<script src="app/module/activity/business/module.js"></script>
+<script src="app/module/activity/business/participant-activity-management-service.js"></script>
+<!-- # Activity > Core -->
+<script src="app/module/activity/core/module.js"></script>
+<script src="app/module/activity/core/context-service.js"></script>
+<script src="app/module/activity/core/event-service.js"></script>
+<script src="app/module/activity/core/module-service.js"></script>
+<script src="app/module/activity/core/service-loader.js"></script>
+<!-- # Activity > Repository -->
+<script src="app/module/activity/repository/module.js"></script>
+<script src="app/module/activity/repository/activity/activity-collection-service.js"></script>
+<script src="app/module/activity/repository/activity/activity-repository-service.js"></script>
+<script src="app/module/activity/repository/activity/survey-collection-service.js"></script>
+<script src="app/module/activity/repository/user/user-repository-service.js"></script>
+<!-- # Activity > Storage -->
+<script src="app/module/activity/storage/module.js"></script>
+<script src="app/module/activity/storage/activity-storage-service.js"></script>
+<script src="app/module/activity/storage/survey-storage-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Module > Dashboard -->
+<script src="app/module/dashboard/module.js"></script>
+<!-- # Dashboard > Core -->
+<script src="app/module/dashboard/core/module.js"></script>
+<script src="app/module/dashboard/core/context-service.js"></script>
+<script src="app/module/dashboard/core/event-service.js"></script>
+<script src="app/module/dashboard/core/module-service.js"></script>
+<!-- # Dashboard > Core -->
+<script src="app/module/dashboard/service/module.js"></script>
+<script src="app/module/dashboard/service/dashboard-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Module > Installer -->
+<script src="app/module/installer/module.js"></script>
 
-<!-- HTTP -->
-<script src="app/configuration/http/http-configuration-module.js"></script>
-<script src="app/configuration/http/interceptor/interceptor-configuration.js"></script>
-<script src="app/configuration/http/interceptor/response-interceptor-factory.js"></script>
-<script src="app/configuration/http/response/offline/offline-controller.js"></script>
 
-<!-- LOCALE -->
-<script src="app/configuration/locale/locale-configuration-module.js"></script>
-<script src="app/configuration/locale/locale-configuration.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Module > Participant -->
+<script src="app/module/participant/module.js"></script>
+<!-- # User > Business -->
+<script src="app/module/participant/business/module.js"></script>
+<script src="app/module/participant/business/participant-quick-filter.js"></script>
+<script src="app/module/participant/business/participant-search-service.js"></script>
+<!-- # Participant > Core -->
+<script src="app/module/participant/core/module.js"></script>
+<script src="app/module/participant/core/context-service.js"></script>
+<script src="app/module/participant/core/event-service.js"></script>
+<script src="app/module/participant/core/module-service.js"></script>
+<script src="app/module/participant/core/service-loader.js"></script>
+<!-- # Participant > Model -->
+<script src="app/module/participant/model/module.js"></script>
+<script src="app/module/participant/model/participant-factory.js"></script>
+<!-- # Participant > Repository -->
+<script src="app/module/participant/repository/module.js"></script>
+<script src="app/module/participant/repository/participant-repository-service.js"></script>
+<!-- # Participant > Storage -->
+<script src="app/module/participant/storage/module.js"></script>
+<script src="app/module/participant/storage/participant-storage-service.js"></script>
 
-<!-- STATE -->
-<script src="app/configuration/state/state-configuration-module.js"></script>
-<script src="app/configuration/state/state-configuration.js"></script>
 
-<!-- STATE-APPLICATION -->
-<script src="app/configuration/state/application/application-state-service.js"></script>
-<script src="app/configuration/state/application/route-rules-resolver-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Module > User -->
+<script src="app/module/user/module.js"></script>
+<!-- # User > Business -->
+<script src="app/module/user/business/module.js"></script>
+<script src="app/module/user/business/user-authentication-service.js"></script>
+<!-- # User > Core -->
+<script src="app/module/user/core/module.js"></script>
+<script src="app/module/user/core/context-service.js"></script>
+<script src="app/module/user/core/event-service.js"></script>
+<script src="app/module/user/core/module-service.js"></script>
+<script src="app/module/user/core/service-loader.js"></script>
+<!-- # User > Model -->
+<script src="app/module/user/model/module.js"></script>
+<script src="app/module/user/model/user-factory.js"></script>
+<!-- # User > Repository -->
+<script src="app/module/user/repository/module.js"></script>
+<script src="app/module/user/repository/user-repository-service.js"></script>
+<!-- # User > Storage -->
+<script src="app/module/user/storage/module.js"></script>
+<script src="app/module/user/storage/user-storage-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
+<!-- # Module > User Access -->
+<script src="app/module/user-access/module.js"></script>
+<!-- # User Access > Core -->
+<script src="app/module/user-access/core/module.js"></script>
+<script src="app/module/user-access/core/context-service.js"></script>
+<script src="app/module/user-access/core/event-service.js"></script>
+<script src="app/module/user-access/core/module-service.js"></script>
+<!-- # User Access > Service -->
+<script src="app/module/user-access/service/module.js"></script>
+<script src="app/module/user-access/service/login-service.js"></script>
+<script src="app/module/user-access/service/logout-service.js"></script>
+<script src="app/module/user-access/service/signup-service.js"></script>
 
-<!-- STATE-ACCESS -->
-<script src="app/configuration/state/access/access-configuration.js"></script>
-<script src="app/configuration/state/access/access-state-provider.js"></script>
-<script src="app/configuration/state/access/login-state-provider.js"></script>
-<script src="app/configuration/state/access/signup-state-provider.js"></script>
-<script src="app/configuration/state/access/signup-result-state-provider.js"></script>
+<!------------------------------------------------------------------------------------------------>
 
-<!-- INSTALLER -->
-<script src="app/configuration/state/installer/installer-configuration.js"></script>
-<script src="app/configuration/state/installer/installer-state-provider.js"></script>
-
-<!-- SESSION -->
-<script src="app/configuration/state/session/session-configuration.js"></script>
-<script src="app/configuration/state/session/dashboard-state-provider.js"></script>
-<script src="app/configuration/state/session/session-state-provider.js"></script>
-
-<!-- THEME -->
-<script src="app/configuration/theme/theme-configuration-module.js"></script>
-<script src="app/configuration/theme/theme-configuration.js"></script>
-
-<!-- ************************************* Access ************************************* -->
-<script src="app/access/access-module.js"></script>
-
-<!-- LOGIN-->
-<script src="app/access/login/login-controller.js"></script>
-<script src="app/access/logout/logout-service.js"></script>
-
-<!-- SIGNUP -->
-<script src="app/access/signup/signup-module.js"></script>
-<script src="app/access/signup/signup-controller.js"></script>
-<script src="app/access/signup/signup-service.js"></script>
-
-<!-- ************************************* Installer ************************************* -->
-<script src="app/installer/installer-module.js"></script>
-<script src="app/installer/initial-config-controller.js"></script>
-
-<!-- ************************************* Session ************************************* -->
-<script src="app/session/session-module.js"></script>
-
-<!-- OTUS-DASHBOARD -->
-<script src="app/session/dashboard/dashboard-module.js"></script>
-<script src="app/session/dashboard/component/dashboard/dashboard-component.js"></script>
-<script src="app/session/dashboard/component/dashboard-display/dashboard-display-component.js"></script>
-<script src="app/session/dashboard/component/sidenav/dashboard-sidenav-component.js"></script>
-<script src="app/session/dashboard/component/sidenav-launcher/dashboard-sidenav-launcher-component.js"></script>
-<script src="app/session/dashboard/component/toolbar/dashboard-toolbar-component.js"></script>
-
-<!-- PARTICIPANT -->
-<script src="app/session/participant/participant-module.js"></script>
-
-<!-- PARTICIPANT-CONTEXT -->
-<script src="app/session/participant/context/participant-context-module.js"></script>
-<script src="app/session/participant/context/participant-context-service.js"></script>
-
-<!-- PARTICIPANT-SEARCH-ENGINE -->
-<script src="app/session/participant/search-engine/participant-search-engine-module.js"></script>
-<script src="app/session/participant/search-engine/component/result/participant-search-result-component.js"></script>
-<script src="app/session/participant/search-engine/component/search-tool/search-tool-component.js"></script>
-<script src="app/session/participant/search-engine/service/participant-search-result-service.js"></script>
-<script src="app/session/participant/search-engine/service/participant-quick-filter.js"></script>
-
+<script src="app/ux-component/module.js"></script>
+<script src="app/ux-component/activity-adder/activity-adder-component.js"></script>
+<script src="app/ux-component/activity-adder-list/activity-adder-list-component.js"></script>
+<script src="app/ux-component/activity-adder-toolbar/activity-adder-toolbar-component.js"></script>
+<script src="app/ux-component/activity-information/activity-information-component.js"></script>
+<script src="app/ux-component/activity-information/activity-status-item-factory.js"></script>
+<script src="app/ux-component/activity-manager/activity-manager-component.js"></script>
+<script src="app/ux-component/activity-manager-commander/activity-manager-commander-component.js"></script>
+<script src="app/ux-component/activity-manager-list/activity-item-factory.js"></script>
+<script src="app/ux-component/activity-manager-list/activity-manager-list-component.js"></script>
+<script src="app/ux-component/activity-manager-toolbar/activity-manager-toolbar-component.js"></script>
+<script src="app/ux-component/dashboard/dashboard-component.js"></script>
+<script src="app/ux-component/dashboard-display/dashboard-display-component.js"></script>
+<script src="app/ux-component/dashboard-participant-box/dashboard-participant-box-component.js"></script>
+<script src="app/ux-component/dashboard-sidenav/dashboard-sidenav-component.js"></script>
+<script src="app/ux-component/dashboard-sidenav-launcher/dashboard-sidenav-launcher-component.js"></script>
+<script src="app/ux-component/dashboard-toolbar/dashboard-toolbar-component.js"></script>
+<script src="app/ux-component/installer/initial-config-controller.js"></script>
+<script src="app/ux-component/paper-activity-adder/paper-activity-adder-component.js"></script>
+<script src="app/ux-component/paper-activity-adder-list/paper-activity-adder-list-component.js"></script>
+<script src="app/ux-component/paper-activity-initializer/checker-item-factory.js"></script>
+<script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>
+<script src="app/ux-component/participant-search-result/participant-search-result-component.js"></script>
+<script src="app/ux-component/participant-search-tool/participant-search-tool-component.js"></script>
+<script src="app/ux-component/user-login/login-controller.js"></script>
+<script src="app/ux-component/user-signup/signup-controller.js"></script>
 </html>

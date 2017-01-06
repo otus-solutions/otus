@@ -3,10 +3,15 @@
 
   angular
     .module('otusjs.otus', [
-      'otusjs.otus.access',
-      'otusjs.otus.configuration',
+      'otusjs.activity',
+      'otusjs.participant',
+      'otusjs.user',
+      'otusjs.user.access',
       'otusjs.otus.installer',
-      'otusjs.otus.session'
+      'otusjs.otus.dashboard',
+      'otusjs.otus.uxComponent',
+      'otusjs.application',
+      'otusjs.deploy'
     ]);
 
 }());

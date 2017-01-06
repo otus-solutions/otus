@@ -1,0 +1,125 @@
+* {
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow-y: hidden !important;
+}
+
+.toolbar-icon {
+  float: right;
+  width: 45px;
+  height: 45px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.icon-clickable {
+  cursor: pointer;
+}
+
+.image-brand {
+  border-radius: 25px;
+  height: 47px;
+  padding: 1px;
+  margin: 10px;
+  min-width: 45px;
+  min-height: 45px;
+}
+
+
+/** Toolbar : Participant Search **/
+
+otus-participant-search-tool {
+  min-width: 667px;
+}
+
+.participant-search-input {
+  background-color: #299288 !important;
+  color: rgba(255, 255, 255, 0.87) !important;
+  border-radius: 3px !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 10px;
+}
+
+.participant-search-input:focus {
+  outline: none !important;
+}
+
+.participant-search-input::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.87) !important;
+  font-size: 80%;
+}
+
+otus-participant-search-result {
+  position: absolute;
+  color: #363636 !important;
+  cursor: pointer;
+  min-width: 667px;
+  z-index: 10000;
+}
+
+otus-participant-search-result md-icon {
+  color: #363636 !important;
+}
+
+.result-container-open {
+  background-color: white;
+  border: 1px solid #CCCCCC;
+}
+
+.result-container-close {
+  height: 0;
+}
+
+.participant-result {
+  height: 50px;
+  overflow: hidden;
+  margin-right: 16px;
+}
+
+.participant-result:hover {
+  background-color: #EFEFEF;
+}
+
+.selectedState {
+  background-color: #EFF9F7;
+}
+
+.regularState {
+  background-color: #FFFFFF;
+}
+
+.autocomplete-custom-template li {
+  border-bottom: 1px solid #ccc;
+  height: auto;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  white-space: normal;
+}
+
+.autocomplete-custom-template li:last-child {
+  border-bottom-width: 0;
+}
+
+.autocomplete-custom-template .item-title, .autocomplete-custom-template .item-metadata {
+  display: block;
+  line-height: 2;
+}
+
+.autocomplete-custom-template .item-title md-icon {
+  height: 18px;
+  width: 18px;
+}
+
+/****************************************************************************************************/
+/*  ACTIVITY MANAGER LIST
+/****************************************************************************************************/
+.activity-item-icon {
+  background: none !important;
+  color: #0091EA !important;
+  margin: 0 !important;
+  padding-left: 0px !important;
+}

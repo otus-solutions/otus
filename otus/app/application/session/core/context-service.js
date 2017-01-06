@@ -1,0 +1,132 @@
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.application.session.core')
+    .service('otusjs.application.session.core.ContextService', Service);
+
+  Service.$inject = [
+    '$window',
+    'otusjs.application.session.core.EventService'
+  ];
+
+  function Service($window, EventService) {
+    var self = this;
+
+    var _context = null;
+    var _storage = null;
+
+    var SESSION_CONTEXT = 'session_context';
+    var LOGGED_USER = 'loggedUser';
+
+    //--------------------------------------------------------------------------------------------
+    // Data from other contexts
+    //--------------------------------------------------------------------------------------------
+
+    /* Public methods */
+    self.begin = begin;
+    self.restore = restore;
+    self.end = end;
+    self.isValid = isValid;
+    self.hasContextActive = hasContextActive;
+    self.save = save;
+
+    self.configureContext = configureContext;
+    self.configureStorage = configureStorage;
+
+    self.getData = getData;
+    self.setData = setData;
+    self.removeData = removeData;
+
+    self.getToken = getToken;
+
+    function begin(sessionData) {
+      $window.sessionStorage.setItem('outk', sessionData.token);
+      setData(LOGGED_USER, sessionData);
+    }
+
+    function restore() {
+      isValid();
+      _restoreContextData();
+      EventService.fireLogin(getData(LOGGED_USER));
+    }
+
+    function end() {
+      _storage.removeItem(SESSION_CONTEXT);
+      $window.sessionStorage.removeItem('outk');
+    }
+
+    function isValid() {
+      _testInternalState();
+      if (!hasContextActive()) {
+        throw new Error('There is no active session context.', 'session/context-service.js', 58);
+      }
+    }
+
+    function hasContextActive() {
+      return _storage.getItem(SESSION_CONTEXT) ? true : false;
+    }
+
+    function save() {
+      _testInternalState();
+      _storage.setItem(SESSION_CONTEXT, _context.toJson());
+    }
+
+    //--------------------------------------------------------------------------------------------
+    // Context methods
+    //--------------------------------------------------------------------------------------------
+    function getData(dataKey) {
+      _testInternalState();
+      return _context.getData(dataKey);
+    }
+
+    function setData(dataKey, dataValue) {
+      _testInternalState();
+      _context.setData(dataKey, dataValue);
+      save();
+    }
+
+    function removeData(dataKey) {
+      _testInternalState();
+      _context.removeData(dataKey);
+      save();
+    }
+
+    //--------------------------------------------------------------------------------------------
+    // Methods for application integration
+    //--------------------------------------------------------------------------------------------
+    function configureContext(contextFactory) {
+      _context = contextFactory.create(SESSION_CONTEXT);
+    }
+
+    function configureStorage(storage) {
+      _storage = storage;
+    }
+
+    //--------------------------------------------------------------------------------------------
+    // Internal context methods
+    //--------------------------------------------------------------------------------------------
+    function _restoreContextData() {
+      isValid();
+      if (hasContextActive()) {
+        _context.fromJson(_storage.getItem(SESSION_CONTEXT));
+      }
+    }
+
+    function _testInternalState() {
+      if (!_context) {
+        throw new Error('Internal context is not initialized.', 'session-context-service.js', 152);
+      }
+      if (!_storage) {
+        throw new Error('Internal storage is not initialized.', 'application-context-service.js', 158);
+      }
+    }
+
+    //--------------------------------------------------------------------------------------------
+    // Custom context methods
+    //--------------------------------------------------------------------------------------------
+    function getToken() {
+      return null;
+    }
+  }
+}());

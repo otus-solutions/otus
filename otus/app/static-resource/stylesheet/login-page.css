@@ -1,0 +1,59 @@
+#login-page {
+    position: relative;
+}
+#login-page #center {
+    width: 55%;
+    top: 60%;
+    margin: 0 auto;
+    background-color: white;
+    position: relative;
+    border: 2px solid #E6E6E6;
+}
+#login-page #divtop {
+    background-color: #00796B;
+    height: 35%;
+    z-index: 1;
+    position: absolute;
+    width: 100%;
+}
+#login-page .name {
+    text-align: left;
+    color: white;
+    top: 58%;
+    position: relative;
+    margin: 0 auto;
+}
+#login-page .name span {
+    margin-left: 23%;
+}
+#login-page h1 {
+    margin: 0 auto;
+    width: 110px;
+    display: block;
+}
+#login-page .logo {
+    width: 24%;
+    position: absolute;
+    left: 36%;
+    transform: translate(-30%, -30%);
+}
+@media screen and (max-width: 1280px) and (min-width: 800px) {
+    #login-page .logo {
+        width: 32%;
+        position: absolute;
+        left: 38%;
+        transform: translate(-30%, -30%);
+    }
+}
+#login-page #content {
+    margin-top: 11%;
+    padding: 10px;
+}
+#login-page .md-block {
+    width: 60%;
+    left: 12%;
+    right: 12%
+}
+.project-name {
+    color: white;
+}

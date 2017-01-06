@@ -1,0 +1,62 @@
+<md-content layout="row" ng-show="$ctrl.isListEmpty" flex layout-align="center center">
+  <md-whiteframe class="md-whiteframe-1dp" flex="30" layout-padding style="background-color: #FFF9C4">
+    <div layout="row">
+      <md-icon layout="column" md-svg-icon="information" style="color: orange; margin-left: 1px; height: 60px; width: 60px;" flex="10"></md-icon>
+      <div layout="column" class="md-body-2" flex layout-align="center start"layout-margin>
+        <span>Não existem Atividades para listar.</span>
+      </div>
+    </div>
+  </md-whiteframe>
+</md-content>
+<md-list flex ng-show="!$ctrl.isListEmpty">
+  <md-list-item class="md-1-line list-header">
+    <div class="md-list-item-text" layout="column" flex>
+      <md-content layout="row" layout-align="start center" layout-padding>
+        <span layout="column">Nome</span>
+        <!-- <md-button class="md-icon-button" layout="column">
+          <md-icon md-svg-icon="arrow-down" aria-label="Reordenar"></md-icon>
+        </md-button> -->
+      </md-content>
+    </div>
+    <div class="md-list-item-text" layout="column" flex="10">
+      <md-content layout="row" layout-align="start center">
+        <span layout="column">Acrônimo</span>
+      </md-content>
+    </div>
+    <div class="md-list-item-text" layout="column" flex="10">
+      <md-content layout="row" layout-align="start center">
+        <span layout="column">Tipo</span>
+      </md-content>
+    </div>
+    <div class="md-list-item-text" layout="column" flex="10">
+      <md-content layout="row" layout-align="start center">
+        <span layout="column"></span>
+      </md-content>
+    </div>
+    <md-divider></md-divider>
+  </md-list-item>
+
+  <md-list-item class="md-1-line" ng-repeat="activity in $ctrl.activities">
+    <div class="md-list-item-text" layout="column" flex>
+      <md-content layout="row" layout-align="start center">
+        <span layout="column">{{ activity.identity.name }}</span>
+      </md-content>
+    </div>
+    <div class="md-list-item-text" layout="column" flex="10">
+      <md-content layout="row" layout-align="start center">
+        <span layout="column">{{ activity.identity.acronym }}</span>
+      </md-content>
+    </div>
+    <div class="md-list-item-text" layout="column" flex="10">
+      <md-content layout="row" layout-align="start center">
+        <span layout="column">{{ $ctrl.getType(activity) }}</span>
+      </md-content>
+    </div>
+    <div class="md-list-item-text" layout="column" flex="10">
+      <md-content layout="row" layout-align="start center">
+        <md-checkbox ng-click="$ctrl.selectActivity(activity)" layout="column" aria-label="Selecionar"></md-checkbox>
+      </md-content>
+    </div>
+    <md-divider></md-divider>
+  </md-list-item>
+</md-list flex>

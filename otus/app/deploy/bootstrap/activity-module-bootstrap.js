@@ -1,0 +1,66 @@
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.deploy')
+    .service('otusjs.deploy.ActivityModuleBootstrap', Service);
+
+  Service.$inject = [
+    'otusjs.activity.core.ModuleService',
+    'otusjs.application.context.ContextFactory',
+    'otusjs.application.storage.StorageService',
+    'otusjs.deploy.ActivityDataSourceService',
+    'otusjs.deploy.UserDataSourceService',
+    'otusjs.deploy.model.ActivityFacadeService',
+    'otusjs.deploy.model.ActivityModelPoolService',
+    'otusjs.deploy.model.SurveyModelPoolService'
+  ];
+
+  function Service(
+    ModuleService, ContextFactory, StorageService,
+    ActivityDataSourceService, UserDataSourceService,
+    ActivityFacadeService, ActivityModelPoolService, SurveyModelPoolService) {
+
+    var self = this;
+
+    /* Public methods */
+    self.bootstrap = bootstrap;
+    self.configureContext = configureContext;
+    self.configureStorage = configureStorage;
+    self.configureActivityDataSourceService = configureActivityDataSourceService;
+
+    function bootstrap() {
+      configureContext(ContextFactory);
+      configureStorage(StorageService.session);
+      configureUserDataSourceService(UserDataSourceService);
+      configureActivityDataSourceService(ActivityDataSourceService);
+      configureActivityFacadeService(ActivityFacadeService);
+      addModel(ActivityModelPoolService);
+      addModel(SurveyModelPoolService);
+    }
+
+    function configureContext(context) {
+      ModuleService.configureContext(context);
+    }
+
+    function configureStorage(storage) {
+      ModuleService.configureStorage(storage);
+    }
+
+    function configureActivityDataSourceService(dataSource) {
+      ModuleService.configureActivityDataSourceService(dataSource);
+    }
+
+    function configureUserDataSourceService(dataSource) {
+      ModuleService.configureUserDataSourceService(dataSource);
+    }
+
+    function configureActivityFacadeService(facade) {
+      ModuleService.configureActivityFacadeService(facade);
+    }
+
+    function addModel(ModelPoolService) {
+      ModelPoolService.getModels().forEach(ModuleService.addModel);
+    }
+  }
+}());

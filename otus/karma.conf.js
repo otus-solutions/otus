@@ -38,43 +38,24 @@ module.exports = function(config) {
       /* Otus platform*/
       NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
       NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
+      /* Static resources files */
+      APP_ROOT_PATH + 'static-resource/**/*.js',
       /* Application files */
       APP_ROOT_PATH + 'app.js',
-      APP_ROOT_PATH + 'configuration/**/*-module.js',
-      APP_ROOT_PATH + 'configuration/**/*-configuration.js',
-      APP_ROOT_PATH + 'configuration/**/*-provider.js',
-      APP_ROOT_PATH + 'configuration/**/*-service.js',
-      APP_ROOT_PATH + 'configuration/**/*.js',
-      /* Access files */
-      APP_ROOT_PATH + 'access/**/*-module.js',
-      APP_ROOT_PATH + 'access/**/*-factory.js',
-      APP_ROOT_PATH + 'access/**/*-service.js',
-      APP_ROOT_PATH + 'access/**/*-controller.js',
-      APP_ROOT_PATH + 'access/**/*.js',
-      /* Installer files */
-      APP_ROOT_PATH + 'installer/**/*-module.js',
-      APP_ROOT_PATH + 'installer/**/*-factory.js',
-      APP_ROOT_PATH + 'installer/**/*-service.js',
-      APP_ROOT_PATH + 'installer/**/*-controller.js',
-      APP_ROOT_PATH + 'installer/**/*.js',
-      /* Session files */
-      APP_ROOT_PATH + 'session/**/*-module.js',
-      APP_ROOT_PATH + 'session/**/*-factory.js',
-      APP_ROOT_PATH + 'session/**/*-service.js',
-      APP_ROOT_PATH + 'session/**/*-controller.js',
-      APP_ROOT_PATH + 'session/**/*.js',
-      /* Session files */
-      APP_ROOT_PATH + 'shared/**/*.js',
+      /* Applicatoin Module files */
+      APP_ROOT_PATH + '**/**/module.js',
+      APP_ROOT_PATH + '**/**/*.js',
       /* Test files */
       {
         pattern: 'tests/unit/**/*-spec.js',
+        pattern: 'tests/unit/**/example.js',
         included: true
       }
     ],
 
     // list of files to exclude
     exclude: [
-      'tests/unit/**/*-spec-ignore.js',
+      'tests/unit/**/*-spec.js'
     ],
 
     // preprocess matching files before serving them to the browser
