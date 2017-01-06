@@ -57,7 +57,7 @@
         };
       } else if ('ONLINE' === activity.mode) {
         return {
-          name: 'Online em papel',
+          name: 'Online',
           icon: 'signal'
         };
       } else {
