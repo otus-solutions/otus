@@ -40,9 +40,9 @@
     "jquery": "2.2.0",
     "lokijs": "^1.4.1",
     "moment": "2.12.0",
-    "otus-client-js": "git://github.com/ccem-dev/otus-client-js.git#feature-otus-38",
+    "otus-client-js": "git://github.com/ccem-dev/otus-client-js.git#dev",
     "otus-domain-client": "git://github.com/ccem-dev/otus-domain-client-js.git#dev",
-    "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#feature-otus-38",
+    "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#dev",
     "otus-preview-js": "git@github.com:ccem-dev/otus-preview-js.git#feature-otus-66",
     "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#dev"
   },
