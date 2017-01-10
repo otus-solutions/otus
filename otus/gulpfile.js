@@ -116,7 +116,7 @@
   });
 
   gulp.task('replace-env', function(value) {
-    gulp.src('app/configuration/environment/env.js')
+    gulp.src('app/application/environment/env.js')
       .pipe(replaceTask({
         patterns: [{
           match: /https:\/\/api\-otus\.localhost:8080/g,
