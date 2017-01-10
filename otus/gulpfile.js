@@ -123,7 +123,7 @@
           replacement: process.env.npm_config_apiUrl,
         }]
       }))
-      .pipe(gulp.dest('app/configuration/environment'));
+      .pipe(gulp.dest('app/application/environment'));
   });
 
   gulp.task('sonar', function() {
