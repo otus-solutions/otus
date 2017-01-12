@@ -20,6 +20,7 @@
     self.createFromPaperActivity = createFromPaperActivity;
     self.listAll = listAll;
     self.listAvailables = listAvailables;
+    self.save = save;
     self.remove = remove;
 
     function createFromSurvey(surveys, loggedUser, participant) {
@@ -52,6 +53,14 @@
       return SurveyCollectionService.listAll().then(_toEntity);
     }
 
+    function save(activity) {
+      var activityToUpdate = JSON.parse(activity.toJson());
+      activityToUpdate.$loki = activity.$loki;
+      activityToUpdate.meta = activity.meta;
+      ActivityCollectionService.update(activityToUpdate);
+      ActivityCollectionService.save();
+    }
+
     function remove(activities) {
       ActivityCollectionService.remove(activities);
       ActivityCollectionService.save();
@@ -71,13 +80,13 @@
       var activity = null;
 
       if (data.hasOwnProperty('surveyFormType')) {
-        activity = ModuleService.Model.Survey.fromJsonObject(data.surveyTemplate);
-        activity.type = data.surveyFormType;
+        activity = ModuleService.Model.SurveyForm.fromJsonObject(data);
       } else {
         activity = ModuleService.Model[data.objectType].fromJsonObject(data);
       }
 
       activity.$loki = data.$loki;
+      activity.meta = data.meta;
       return activity;
     }
   }

@@ -11,6 +11,7 @@
 
   function Service(ActivityFacadeService) {
     var self = this;
+    var _currentUser = null;
 
     /* Public methods */
     self.getActivity = getActivity;
@@ -18,7 +19,7 @@
     self.createActivity = createActivity;
     self.createQuestionFill = createQuestionFill;
     self.fillQuestion = fillQuestion;
-    self.openActivitySurvey = openActivitySurvey;
+    self.openSurveyActivity = openSurveyActivity;
     self.initializeActivitySurvey = initializeActivitySurvey;
     self.getFillingByQuestionID = getFillingByQuestionID;
 
@@ -28,6 +29,7 @@
 
     function useActivity(activity) {
       ActivityFacadeService.surveyActivity = activity;
+      self.surveyActivity = activity;
     }
 
     function createActivity(template, user, participant, paperActivityData) {
@@ -40,8 +42,9 @@
       return getActivity();
     }
 
-    function openActivitySurvey() {
-      ActivityFacadeService.openActivitySurvey();
+    function openSurveyActivity(user) {
+      _currentUser = user;
+      ActivityFacadeService.openActivitySurvey(_currentUser);
     }
 
     function initializeActivitySurvey() {

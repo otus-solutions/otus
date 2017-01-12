@@ -7,10 +7,11 @@
 
   Service.$inject = [
     'otusjs.activity.core.ModuleService',
-    'otusjs.activity.core.ContextService'
+    'otusjs.activity.core.ContextService',
+    'otusjs.activity.LocalStorageStepService'
   ];
 
-  function Service(ModuleService, ContextService) {
+  function Service(ModuleService, ContextService, LocalStorageStepService) {
     var self = this;
 
     /* Public methods */
@@ -26,14 +27,24 @@
     }
 
     function _setActivityToPlay(ActivityFacadeService) {
-      ActivityFacadeService.useActivity(ContextService.getSelectedActivities()[0]);
+      var activityToPlay = ContextService.getSelectedActivities()[0];
+      ActivityFacadeService.useActivity(activityToPlay);
+      ActivityFacadeService.openSurveyActivity(ContextService.getLoggedUser());
+      ContextService.setActivityToPlay(activityToPlay);
     }
 
     function _setupPlayer() {
       ModuleService
         .whenActivityPlayerServiceReady()
-        .then(function(ActivityPlayerService) {
-          ActivityPlayerService.setup();
+        .then(function(PlayerService) {
+          PlayerService.setup({
+            'onEject': [
+              LocalStorageStepService
+            ],
+            'onSave': [
+              LocalStorageStepService
+            ]
+          });
         });
     }
   }

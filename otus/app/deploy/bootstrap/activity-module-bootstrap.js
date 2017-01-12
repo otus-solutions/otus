@@ -13,13 +13,15 @@
     'otusjs.deploy.UserDataSourceService',
     'otusjs.deploy.model.ActivityFacadeService',
     'otusjs.deploy.model.ActivityModelPoolService',
-    'otusjs.deploy.model.SurveyModelPoolService'
+    'otusjs.deploy.model.SurveyModelPoolService',
+    'otusjs.deploy.PlayerService'
   ];
 
   function Service(
     ModuleService, ContextFactory, StorageService,
     ActivityDataSourceService, UserDataSourceService,
-    ActivityFacadeService, ActivityModelPoolService, SurveyModelPoolService) {
+    ActivityFacadeService, ActivityModelPoolService, SurveyModelPoolService,
+    PlayerService) {
 
     var self = this;
 
@@ -35,6 +37,7 @@
       configureUserDataSourceService(UserDataSourceService);
       configureActivityDataSourceService(ActivityDataSourceService);
       configureActivityFacadeService(ActivityFacadeService);
+      configureActivityPlayerService(PlayerService);
       addModel(ActivityModelPoolService);
       addModel(SurveyModelPoolService);
     }
@@ -57,6 +60,10 @@
 
     function configureActivityFacadeService(facade) {
       ModuleService.configureActivityFacadeService(facade);
+    }
+
+    function configureActivityPlayerService(service) {
+      ModuleService.configureActivityPlayerService(service);
     }
 
     function addModel(ModelPoolService) {

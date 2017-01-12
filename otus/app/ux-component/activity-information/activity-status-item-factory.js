@@ -30,11 +30,20 @@
       if ('CREATED' === status.name) {
         return 'Criado';
       }
+      if ('OPENED' === status.name) {
+        return 'Aberto';
+      }
       if ('FINALIZED' === status.name) {
         return 'Finalizado';
       }
+      if ('SAVED' === status.name) {
+        return 'Salvo';
+      }
       if ('INITIALIZED_OFFLINE' === status.name) {
-        return 'Finalizado em Papel';
+        return 'Realizado em Papel';
+      }
+      if ('INITIALIZED_ONLINE' === status.name) {
+        return 'Iniciado Online';
       }
     }
 

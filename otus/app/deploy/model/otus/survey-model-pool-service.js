@@ -26,6 +26,7 @@
     function _loadModels() {
       _models = _models.concat([
         _modelLookup('SurveyFactory'),
+        _modelLookup('SurveyFormFactory'),
         _modelLookup('SurveyIdentityFactory'),
         _modelLookup('SurveyMetaInfoFactory')
       ]);

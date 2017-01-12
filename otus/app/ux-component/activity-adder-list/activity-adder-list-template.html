@@ -39,12 +39,12 @@
   <md-list-item class="md-1-line" ng-repeat="activity in $ctrl.activities">
     <div class="md-list-item-text" layout="column" flex>
       <md-content layout="row" layout-align="start center">
-        <span layout="column">{{ activity.identity.name }}</span>
+        <span layout="column">{{ activity.surveyTemplate.identity.name }}</span>
       </md-content>
     </div>
     <div class="md-list-item-text" layout="column" flex="10">
       <md-content layout="row" layout-align="start center">
-        <span layout="column">{{ activity.identity.acronym }}</span>
+        <span layout="column">{{ activity.surveyTemplate.identity.acronym }}</span>
       </md-content>
     </div>
     <div class="md-list-item-text" layout="column" flex="10">

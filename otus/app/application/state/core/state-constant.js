@@ -6,6 +6,7 @@
     .constant('STATE', {
       'ACCESS': 'access',
       'ACTIVITY_ADDER': 'activity-adder',
+      'ACTIVITY_PLAYER': 'activity-player',
       'PAPER_ACTIVITY_ADDER': 'paper-activity-adder',
       'PAPER_ACTIVITY_INITIALIZER': 'paper-activity-initializer',
       'APPLICATION': 'application',

@@ -10,7 +10,8 @@
       /* 3rd-party modules */
       'ui.router',
       'ui.mask',
-      'passwordControl'
+      'passwordControl',
+      'angular-bind-html-compile'
     ])
     .run(function($injector) {
       var currentModule = angular.module('otusjs.application.dependency');

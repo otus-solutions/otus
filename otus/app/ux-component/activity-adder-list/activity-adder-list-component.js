@@ -44,11 +44,11 @@
     }
 
     function getType(activity) {
-      if ('FORM_INTERVIEW' === activity.type || 'INTERVIEW' === activity.type) {
+      if ('FORM_INTERVIEW' === activity.surveyFormType || 'INTERVIEW' === activity.surveyFormType) {
         return 'Entrevista';
       }
 
-      if ('PROFILE' === activity.type) {
+      if ('PROFILE' === activity.surveyFormType) {
         return 'Perfil';
       }
 

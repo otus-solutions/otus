@@ -17,6 +17,7 @@
     self.insert = insert;
     self.listAll = listAll;
     self.remove = remove;
+    self.update = update;
     self.save = save;
     self.useParticipant = useParticipant;
     self.resetParticipantInUse = resetParticipantInUse;
@@ -45,6 +46,12 @@
         activities.forEach(function(activity) {
           dataSource.getData().remove(activity);
         });
+      });
+    }
+
+    function update(activity) {
+      _executeWork(function(dataSource) {
+        dataSource.getData().update(activity);
       });
     }
 

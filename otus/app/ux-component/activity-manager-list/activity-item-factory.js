@@ -21,8 +21,8 @@
   function ActivityItem(activity) {
     var self = this;
 
-    self.name = activity.template.identity.name;
-    self.acronym = activity.template.identity.acronym;
+    self.name = activity.surveyForm.surveyTemplate.identity.name;
+    self.acronym = activity.surveyForm.surveyTemplate.identity.acronym;
     self.mode = _getMode();
     self.realizationDate = _getFormattedDate();
     self.status = _getStatus();
@@ -38,11 +38,13 @@
     }
 
     function _getStatus() {
-      if ('INITIALIZED_OFFLINE' === activity.statusHistory.getLastStatus().name) {
+      var status = activity.statusHistory.getLastStatus();
+
+      if ('INITIALIZED_OFFLINE' === status.name) {
         return 'Finalizado em papel';
-      } else if ('SAVED' === activity.statusHistory.getLastStatus().name) {
+      } else if ('SAVED' === status.name) {
         return 'Salvo';
-      } else if ('FINALIZED' === activity.statusHistory.getLastStatus().name) {
+      } else if ('FINALIZED' === status.name) {
         return 'Finalizado';
       } else {
         return '';

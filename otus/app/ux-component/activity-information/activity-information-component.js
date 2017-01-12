@@ -33,7 +33,7 @@
     function show() {
       var activity = ContextService.getSelectedActivities()[0];
       self.activity = {};
-      self.activity.details = activity.template.identity;
+      self.activity.details = activity.surveyForm.surveyTemplate.identity;
       self.activity.history = activity.statusHistory.getHistory().map(ActivityStatusItemFactory.create);
       self.activity.history.reverse();
       $mdSidenav('right').toggle();

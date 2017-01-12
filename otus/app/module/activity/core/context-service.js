@@ -43,9 +43,12 @@
     self.setSelectedParticipant = setSelectedParticipant;
     self.getLoggedUser = getLoggedUser;
     self.setLoggedUser = setLoggedUser;
-    self.selectActivities = selectActivities;
     self.getSelectedActivities = getSelectedActivities;
     self.clearSelectedActivities = clearSelectedActivities;
+    self.selectActivities = selectActivities;
+    self.getActivityToPlay = getActivityToPlay;
+    self.setActivityToPlay = setActivityToPlay;
+    self.existsActivityToPlay = existsActivityToPlay;
 
     function begin() {
       _context.clear();
@@ -157,6 +160,22 @@
     function selectActivities(activities) {
       setData('selectedActivities', activities);
       EventService.fireActivitySelected(activities);
+    }
+
+    function getActivityToPlay() {
+      return getData('activityToPlay');
+    }
+
+    function setActivityToPlay(activity) {
+      setData('activityToPlay', activity);
+    }
+
+    function existsActivityToPlay() {
+      if (getData('activityToPlay')) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 }());

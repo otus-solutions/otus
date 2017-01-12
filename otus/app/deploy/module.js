@@ -5,7 +5,9 @@
     .module('otusjs.deploy', [
       'otus.client',
       'otus.domain.client',
-      'otusjs'
+      'otusjs',
+      'otusjs.player.core',
+      'otusjs.player.component'
     ])
     .value('OtusLocalStorage', [
       'otusjs.activity.storage.ActivityStorageService',

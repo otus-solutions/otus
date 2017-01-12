@@ -17,18 +17,29 @@
 
   Controller.$inject = [
     'otusjs.activity.business.ParticipantActivityManagementService',
-    'otusjs.activity.core.EventService'
+    'otusjs.activity.business.ActivityPlayerService',
+    'otusjs.activity.core.EventService',
+    'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(ActivityService, EventService) {
+  function Controller(ActivityService, ActivityPlayerService, EventService, ApplicationStateService) {
     var self = this;
 
     /* Public methods */
+    self.fillSelectedActivity = fillSelectedActivity;
     self.deleteSelectedActivity = deleteSelectedActivity;
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
+
+    function fillSelectedActivity() {
+      ActivityPlayerService
+        .load()
+        .then(function() {
+          ApplicationStateService.activateActivityPlayer();
+        });
+    }
 
     function deleteSelectedActivity() {
       ActivityService.getSelectedActivities().remove();

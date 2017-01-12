@@ -25,7 +25,6 @@
     self.getSelectedActivities = getSelectedActivities;
     self.getSelectedParticipant = getSelectedParticipant;
     self.listActivityCheckers = listActivityCheckers;
-    self.useSelectedActivity = useSelectedActivity;
 
     function add(surveys) {
       var loggedUser = ContextService.getLoggedUser();

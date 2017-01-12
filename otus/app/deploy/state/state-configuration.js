@@ -6,6 +6,7 @@
     .constant('STATE', {
       'ACCESS': 'access',
       'ACTIVITY_ADDER': 'activity-adder',
+      'ACTIVITY_PLAYER': 'activity-player',
       'PAPER_ACTIVITY_ADDER': 'paper-activity-adder',
       'PAPER_ACTIVITY_INITIALIZER': 'paper-activity-initializer',
       'APPLICATION': 'application',
@@ -27,6 +28,7 @@
     'otusjs.deploy.AccessStateProvider',
     'otusjs.deploy.ActivityStateProvider',
     'otusjs.deploy.ActivityAdderStateProvider',
+    'otusjs.deploy.ActivityPlayerStateProvider',
     'otusjs.deploy.PaperActivityAdderStateProvider',
     'otusjs.deploy.PaperActivityInitializerStateProvider',
     'otusjs.deploy.DashboardStateProvider',
@@ -42,6 +44,7 @@
     AccessStateProvider,
     ActivityStateProvider,
     ActivityAdderStateProvider,
+    ActivityPlayerStateProvider,
     PaperActivityAdderStateProvider,
     PaperActivityInitializerStateProvider,
     DashboardProvider,
@@ -55,6 +58,7 @@
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ActivityStateProvider.state);
     $stateProvider.state(ActivityAdderStateProvider.state);
+    $stateProvider.state(ActivityPlayerStateProvider.state);
     $stateProvider.state(PaperActivityAdderStateProvider.state);
     $stateProvider.state(PaperActivityInitializerStateProvider.state);
     $stateProvider.state(LoginStateProvider.state);
