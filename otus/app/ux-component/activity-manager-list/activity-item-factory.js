@@ -41,7 +41,7 @@
       var status = activity.statusHistory.getLastStatus();
 
       if ('INITIALIZED_OFFLINE' === status.name) {
-        return 'Finalizado em papel';
+        return 'Realizado em papel';
       } else if ('SAVED' === status.name) {
         return 'Salvo';
       } else if ('FINALIZED' === status.name) {
