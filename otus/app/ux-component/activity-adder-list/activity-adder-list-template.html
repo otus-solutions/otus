@@ -1,8 +1,9 @@
 <md-content layout="row" ng-show="$ctrl.isListEmpty" flex layout-align="center center">
   <md-whiteframe class="md-whiteframe-1dp" flex="30" layout-padding style="background-color: #FFF9C4">
     <div layout="row">
-      <md-icon layout="column" md-svg-icon="information" style="color: orange; margin-left: 1px; height: 60px; width: 60px;" flex="10"></md-icon>
-      <div layout="column" class="md-body-2" flex layout-align="center start"layout-margin>
+      <md-icon layout="column" md-svg-icon="information" style="color: orange; margin-left: 1px; height: 60px; width: 60px;"
+      flex="10"></md-icon>
+      <div layout="column" class="md-body-2" flex layout-align="center start" layout-margin>
         <span>Não existem Atividades para listar.</span>
       </div>
     </div>
@@ -52,10 +53,10 @@
         <span layout="column">{{ $ctrl.getType(activity) }}</span>
       </md-content>
     </div>
-    <div class="md-list-item-text" layout="column" flex="10">
-      <md-content layout="row" layout-align="start center">
+    <div flex="10">
+      <div class="md-secondary-container">
         <md-checkbox ng-click="$ctrl.selectActivity(activity)" layout="column" aria-label="Selecionar"></md-checkbox>
-      </md-content>
+      </div>
     </div>
     <md-divider></md-divider>
   </md-list-item>
