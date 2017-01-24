@@ -6,11 +6,19 @@
   </md-fab-trigger>
 
   <md-fab-actions>
-    <md-button aria-label="Atividade online" class="md-fab md-accent md-raised md-mini" ng-click="$ctrl.goToActivityAdder()">
+    <md-button aria-label="Atividade online" class="md-fab md-accent md-raised md-mini"
+    ng-click="$ctrl.goToActivityAdder()">
       <md-icon md-svg-icon="signal" aria-label="Atividade online" style="color: white"></md-icon>
+      <md-tooltip md-direction="left">
+        Atividade online
+      </md-tooltip>
     </md-button>
-    <md-button aria-label="Atividade em papel" class="md-fab md-accent md-raised md-mini" ng-click="$ctrl.goToPaperActivityInitializer()">
+    <md-button aria-label="Atividade em papel" class="md-fab md-accent md-raised md-mini"
+    ng-click="$ctrl.goToPaperActivityInitializer()">
       <md-icon md-svg-icon="file-document" aria-label="Atividade em papel" style="color: white"></md-icon>
+      <md-tooltip md-direction="left">
+        Atividade em papel
+      </md-tooltip>
     </md-button>
   </md-fab-actions>
 </md-fab-speed-dial>

@@ -6,32 +6,21 @@ body {
   overflow-y: hidden !important;
 }
 .toolbar-icon {
-  float: right;
-  width: 45px;
-  height: 45px;
-  margin-left: 0px;
-  margin-right: 0px;
+  width: 48px;
+  height: 48px;
 }
 .icon-clickable {
   cursor: pointer;
 }
-.image-brand {
-  border-radius: 25px;
-  height: 47px;
-  padding: 1px;
-  margin: 10px;
-  min-width: 45px;
-  min-height: 45px;
-}
 /** Toolbar : Participant Search **/
 
 otus-participant-search-tool {
-  min-width: 667px;
+  min-width: 500px;
 }
 .participant-search-input {
   background-color: #299288 !important;
   color: rgba(255, 255, 255, 0.87) !important;
-  border-radius: 3px !important;
+  border-radius: 4px !important;
   border: none !important;
   box-shadow: none !important;
   padding: 10px;
@@ -47,7 +36,7 @@ otus-participant-search-result {
   position: absolute;
   color: #363636 !important;
   cursor: pointer;
-  min-width: 667px;
+  min-width: 525px;
   z-index: 10000;
 }
 otus-participant-search-result md-icon {

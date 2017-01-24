@@ -1,19 +1,26 @@
 <md-content layout="column" flex layout-padding layout-align="center center" ng-show="$ctrl.isEmpty">
   <span class="md-title" style="text-align: center">Não há participante selecionado(a).</span>
 </md-content>
-<div layout="column" flex ng-show="!$ctrl.isEmpty">
-  <div layout="row" layout-align="center center" style="background-color: #009688; border-bottom: 1px solid #E1E1E1; color: white">
-    <md-whiteframe class="md-whiteframe-1dp image-brand" style="width: 80px; height: 80px; border-radius: 40px">
-      <img src="app/static-resource/image/user.png" class="toolbar-icon" style="width: 78px; height: 78px;" />
-    </md-whiteframe>
-    <div layout-padding layout="column" flex>
+<div layout="column" ng-show="!$ctrl.isEmpty" flex>
+
+  <div md-colors="::{background: 'default-primary-500'}" flex>
+    <div layout-margin layout-padding layout="column" flex>
+      <div layout-align="start center" layout="row">
+        <md-button class="md-fab md-accent">
+          <md-icon md-font-set="material-icons">person</md-icon>
+        </md-button>
+        <div layout="column">
+          <span class="md-title">{{ $ctrl.selectedParticipant.recruitmentNumber }}</span>
+          <span class="md-body-1">{{ $ctrl.selectedParticipant.fieldCenter.name }} ({{ $ctrl.selectedParticipant.fieldCenter.acronym }})</span>
+        </div>
+      </div>
       <span class="md-title">{{ $ctrl.selectedParticipant.name }}</span>
-      <span class="md-subhead">{{ $ctrl.selectedParticipant.recruitmentNumber }}</span>
-      <span class="md-body-2">{{ $ctrl.selectedParticipant.fieldCenter.name }} ({{ $ctrl.selectedParticipant.fieldCenter.acronym }})</span>
     </div>
   </div>
-  <md-list layout-padding ng-show="!$ctrl.isEmpty">
-    <!-- <md-list-item>
+
+  <div layout-margin>
+    <md-list ng-show="!$ctrl.isEmpty">
+      <!-- <md-list-item>
       <div layout-align="start center">
         <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
         <md-button id="home-menu">
@@ -21,17 +28,19 @@
         </md-button>
       </div>
     </md-list-item> -->
-    <md-list-item>
-      <div layout-align="start center">
-        <md-icon md-svg-icon="file-document-box" aria-label="Atividades" style="color: blue"></md-icon>
-        <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantActivities()">Atividades</md-button>
-      </div>
-    </md-list-item>
-    <!-- <md-list-item>
+      <md-list-item class="md-2-line">
+        <div layout-align="start center">
+          <md-icon md-svg-icon="file-document-box" aria-label="Atividades" class="md-accent"></md-icon>
+          <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantActivities()">Atividades</md-button>
+        </div>
+        <md-divider></md-divider>
+      </md-list-item>
+      <!-- <md-list-item>
       <div layout-align="start center">
         <md-icon md-font-library="material-icons">insert_chart</md-icon>
         <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantReports()">Relatórios</md-button>
       </div>
     </md-list-item> -->
-  </md-list>
+    </md-list>
+  </div>
 </div>

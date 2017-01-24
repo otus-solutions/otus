@@ -1,10 +1,12 @@
-<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right" flex>
+<md-sidenav class="md-sidenav-right md-whiteframe-4dp" md-component-id="right"
+flex>
   <md-toolbar>
-    <div layout="row" layout-padding>
-      <md-whiteframe class="md-whiteframe-1dp image-brand" layout-align="center center" style="margin-left: 1px; height: 41px; width: 41px;">
-        <md-icon md-svg-icon="information" style="margin-left: 1px; height: 41px; width: 41px;"></md-icon>
-      </md-whiteframe>
-      <h1 class="md-toolbar-tools">Informações da Atividade</h1>
+    <!--<div layout="row" layout-align="center center">-->
+    <div>
+      <md-button class="md-fab md-accent">
+        <md-icon md-font-library="material-icons">information</md-icon>
+      </md-button>
+      <span>Informações da Atividade</span>
     </div>
   </md-toolbar>
   <md-tabs md-dynamic-height md-border-bottom>
@@ -38,19 +40,20 @@
     </md-tab>
     <md-tab label="Histórico">
       <md-list flex>
-        <md-list-item class="md-2-line" style="margin-top: 15px" ng-repeat="status in $ctrl.activity.history track by $index" ng-click="null">
-          <img ng-src="{{ status.face }} ? {{ $index }}" class="md-avatar" alt="{{ status.who }}" />
+        <md-list-item class="md-2-line" style="margin-top: 15px" ng-repeat="status in $ctrl.activity.history track by $index"
+        ng-click="null">
+          <img ng-src="{{ status.face }} ? {{ $index }}" class="md-avatar" alt="{{ status.who }}"
+          />
           <div class="md-list-item-text" layout="column">
             <h3>{{ status.name }}</h3>
             <p>
               Em {{ status.date }}
-              <br /> Por {{ status.user.name }}
-              <br /> {{ status.user.email }}
+              <br />Por {{ status.user.name }}
+              <br />{{ status.user.email }}
             </p>
           </div>
         </md-list-item>
       </md-list>
     </md-tab>
   </md-tabs>
-
 </md-sidenav>

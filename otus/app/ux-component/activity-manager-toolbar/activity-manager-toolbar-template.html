@@ -1,8 +1,15 @@
 <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
   <div class="md-toolbar-tools">
-    <h2><span>Atividades de {{ $ctrl.selectedParticipant.name }}</span></h2>
+    <div layout="row" layout-margin>
+      <md-icon md-svg-icon="file-document-box" aria-label="Atividades">
+        <md-tooltip>Atividades</md-tooltip>
+      </md-icon>
+      <span>{{ $ctrl.selectedParticipant.name }}</span>
+    </div>
+
     <span flex></span>
-    <md-button class="md-raised md-primary md-hue-3 md-icon-button" aria-label="Preencher Atividade" ng-click="$ctrl.fillSelectedActivity()" ng-show="$ctrl.showFillingButton">
+    <md-button class="md-raised md-primary md-hue-3 md-icon-button" aria-label="Preencher Atividade"
+    ng-click="$ctrl.fillSelectedActivity()" ng-show="$ctrl.showFillingButton">
       <md-tooltip md-direction="down">Preencher Atividade</md-tooltip>
       <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
     </md-button>
@@ -10,7 +17,8 @@
       <md-tooltip md-direction="down">Visualizar</md-tooltip>
       <md-icon md-svg-icon="eye" aria-label="Visualizar"></md-icon>
     </md-button> -->
-    <md-button class="md-raised md-primary md-hue-3 md-icon-button" aria-label="Excluir" ng-click="$ctrl.deleteSelectedActivity()" ng-show="$ctrl.showDeleteButton">
+    <md-button class="md-raised md-primary md-hue-3 md-icon-button" aria-label="Excluir"
+    ng-click="$ctrl.deleteSelectedActivity()" ng-show="$ctrl.showDeleteButton">
       <md-tooltip md-direction="down">Excluir</md-tooltip>
       <md-icon md-svg-icon="delete" aria-label="Excluir"></md-icon>
     </md-button>
@@ -29,7 +37,8 @@
       <md-tooltip md-direction="down">Lista</md-tooltip>
       <md-icon md-svg-icon="view-list" aria-label="Lista"></md-icon>
     </md-button> -->
-    <md-button class="md-raised md-primary md-hue-3 md-icon-button" aria-label="Detalhes" ng-click="$ctrl.visualizeSelectedActivityInfo()" ng-show="$ctrl.showInfoButton">
+    <md-button class="md-raised md-primary md-hue-3 md-icon-button" aria-label="Detalhes"
+    ng-click="$ctrl.visualizeSelectedActivityInfo()" ng-show="$ctrl.showInfoButton">
       <md-tooltip md-direction="down">Detalhes</md-tooltip>
       <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>
     </md-button>

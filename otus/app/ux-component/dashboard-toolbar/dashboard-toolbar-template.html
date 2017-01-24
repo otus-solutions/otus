@@ -1,20 +1,18 @@
 <md-toolbar class="md-primary md-whiteframe-1dp">
   <div class="md-toolbar-tools">
-    <a class="navbar-brand" rel="home" title="Otus">
-      <img src="app/static-resource/image/coruja_pesquisadora.png" class="md-avatar toolbar-icon" />
-    </a>
+    <img src="app/static-resource/image/coruja_pesquisadora.png" class="toolbar-icon"></img>
     <otus-dashboard-sidenav-launcher></otus-dashboard-sidenav-launcher>
+
     <span flex></span>
-    <otus-participant-search-tool flex="50" on-select="$ctrl.selectParticipant(participant)" class="md-primary md"></otus-participant-search-tool>
+
+    <otus-participant-search-tool flex on-select="$ctrl.selectParticipant(participant)"
+    class="md-primary md"></otus-participant-search-tool>
+
     <span flex></span>
-    <!-- <md-whiteframe class="md-whiteframe-10dp image-brand">
-      <a class="navbar-brand">
-        <img src="app/static-resource/image/project_research.png" class="md-avatar toolbar-icon" />
-      </a>
-    </md-whiteframe> -->
-    <span flex>{{ $ctrl.loggedUser.name + ' ' + $ctrl.loggedUser.surname }}</span>
-    <md-whiteframe class="md-whiteframe-1dp image-brand" layout-align="center center">
-      <md-icon md-svg-icon="account" style="margin-left: 1px; height: 41px; width: 41px;"></md-icon>
-    </md-whiteframe>
+
+    <span>{{ $ctrl.loggedUser.name}}</span>
+    <md-button class="md-fab md-mini md-accent">
+      <md-icon md-font-set="material-icons">person</md-icon>
+    </md-button>
   </div>
 </md-toolbar>
