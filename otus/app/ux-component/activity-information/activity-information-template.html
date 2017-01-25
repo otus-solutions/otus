@@ -2,54 +2,39 @@
 flex>
   <md-toolbar>
     <!--<div layout="row" layout-align="center center">-->
-    <div>
-      <md-button class="md-fab md-accent">
+    <div class="md-toolbar-tools">
         <md-icon md-font-library="material-icons">information</md-icon>
-      </md-button>
       <span>Informações da Atividade</span>
     </div>
   </md-toolbar>
   <md-tabs md-dynamic-height md-border-bottom>
     <md-tab label="Detalhes">
       <md-content layout-padding layout="column">
-        <div layout="row">
-          <div layout="column" flex="50">
-            <span>Nome</span>
-          </div>
-          <div layout="column" flex>
-            <span>{{ $ctrl.activity.details.name }}</span>
-          </div>
+        <div layout="column">
+            <span class="md-caption">Nome</span>
+            <span class="md-body-1">{{ $ctrl.activity.details.name }}</span>
         </div>
-        <div layout="row">
-          <div layout="column" flex="50">
-            <span>Acrônimo</span>
-          </div>
-          <div layout="column" flex>
-            <span>{{ $ctrl.activity.details.acronym }}</span>
-          </div>
+        <div layout="column">
+            <span class="md-caption">Acrônimo</span>
+            <span class="md-body-1">{{ $ctrl.activity.details.acronym }}</span>
         </div>
-        <div layout="row">
-          <div layout="column" flex="50">
-            <span>Descrição</span>
-          </div>
-          <div layout="column" flex>
-            <span>{{ $ctrl.activity.details.description }}</span>
-          </div>
+        <div layout="column">
+            <span class="md-caption">Descrição</span>
+            <span class="md-body-1">{{ $ctrl.activity.details.description }}</span>
         </div>
       </md-content>
     </md-tab>
     <md-tab label="Histórico">
       <md-list flex>
-        <md-list-item class="md-2-line" style="margin-top: 15px" ng-repeat="status in $ctrl.activity.history track by $index"
+        <md-list-item class="md-2-line" style="margin-top: 15px" ng-repeat="item in $ctrl.activity.history track by $index"
         ng-click="null">
-          <img ng-src="{{ status.face }} ? {{ $index }}" class="md-avatar" alt="{{ status.who }}"
-          />
+          <md-icon style="color:{{item.status.color}}" md-font-library="material-icons">{{item.status.icon}}</md-icon>
           <div class="md-list-item-text" layout="column">
-            <h3>{{ status.name }}</h3>
+            <h3>{{ item.status.label }}</h3>
             <p>
-              Em {{ status.date }}
-              <br />Por {{ status.user.name }}
-              <br />{{ status.user.email }}
+              Em {{ item.date }}
+              <br />Por {{ item.user.name }}
+              <br />{{ item.user.email }}
             </p>
           </div>
         </md-list-item>
