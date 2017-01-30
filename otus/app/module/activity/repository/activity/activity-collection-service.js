@@ -84,13 +84,20 @@
      * @memberof ActivityCollectionService
      */
     function update(activities) {
-      return _remoteStorage
+      var request = $q.defer();
+
+      _remoteStorage
         .whenReady()
         .then(function(remoteStorage) {
           remoteStorage
             .update(activities)
-            .then(ActivityStorageService.update);
+            .then(function(remoteActivities) {
+              ActivityStorageService.update(remoteActivities);
+              request.resolve();
+            });
         });
+
+      return request.promise;
     }
 
     /**
