@@ -16,13 +16,13 @@
     });
 
   Controller.$inject = [
-    'otusjs.activity.business.ParticipantActivityManagementService',
+    'otusjs.activity.business.ParticipantActivityService',
     'otusjs.activity.business.ActivityPlayerService',
     'otusjs.activity.core.EventService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(ActivityService, ActivityPlayerService, EventService, ApplicationStateService) {
+  function Controller(ParticipantActivityService, ActivityPlayerService, EventService, ApplicationStateService) {
     var self = this;
 
     /* Public methods */
@@ -42,7 +42,7 @@
     }
 
     function deleteSelectedActivity() {
-      ActivityService.getSelectedActivities().remove();
+      ParticipantActivityService.getSelectedActivities().discard();
       self.onDelete();
     }
 
@@ -60,7 +60,7 @@
       if (participantData) {
         self.selectedParticipant = participantData;
       } else {
-        ActivityService
+        ParticipantActivityService
           .getSelectedParticipant()
           .then(function(participantData) {
             self.selectedParticipant = participantData;

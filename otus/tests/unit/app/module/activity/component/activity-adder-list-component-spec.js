@@ -41,7 +41,7 @@ describe('otusActivityAdderList', function() {
   });
 
   function mockActivityService($injector) {
-    Mock.ActivityService = $injector.get('otusjs.activity.business.ParticipantActivityManagementService');
+    Mock.ActivityService = $injector.get('otusjs.activity.business.ParticipantActivityService');
     spyOn(Mock.ActivityService, 'listAvailables');
     Injections.ActivityService = Mock.ActivityService;
   }

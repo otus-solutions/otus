@@ -6,11 +6,11 @@
     .service('otusjs.deploy.ActivityRestService', Service);
 
   Service.$inject = [
-    'OtusRestResourceService',
-    '$http'
+    '$q',
+    'OtusRestResourceService'
   ];
 
-  function Service(OtusRestResourceService, $http) {
+  function Service($q, OtusRestResourceService) {
     var self = this;
     var _rest = null;
 
@@ -18,6 +18,7 @@
     self.initialize = initialize;
     self.update = update;
     self.list = list;
+    self.save = save;
     self.remove = remove;
 
     function initialize() {
@@ -28,15 +29,35 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.update(data).$promise;
+      return _rest.update({ id: data._id, rn: data.participantData.recruitmentNumber }, data).$promise;
     }
 
-    function list() {
-      // if (!_rest) {
-      //   throw new Error('REST resource is not initialized.');
-      // }
-      // return _rest.list().$promise;
-      return $http.get('app/deploy/data-source/file/activities.json');
+    function save(data) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.create({ rn: data.participantData.recruitmentNumber }, data).$promise;
+    }
+
+    function list(recruitmentNumber) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+
+      var request = $q.defer();
+
+      _rest
+        .listAll({ rn: recruitmentNumber })
+        .$promise
+        .then(function(response) {
+          if (response.data && response.data.length) {
+            request.resolve(response.data);
+          } else {
+            request.resolve([]);
+          }
+        });
+
+      return request.promise;
     }
 
     function remove(data) {

@@ -39,6 +39,7 @@
     function isDeployed() {
       if (_isDeployed) {
         _deferred.resolve();
+      } else {
         _deferred = $q.defer();
       }
       return _deferred.promise;

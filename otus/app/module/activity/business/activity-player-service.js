@@ -7,11 +7,10 @@
 
   Service.$inject = [
     'otusjs.activity.core.ModuleService',
-    'otusjs.activity.core.ContextService',
-    'otusjs.activity.LocalStorageStepService'
+    'otusjs.activity.core.ContextService'
   ];
 
-  function Service(ModuleService, ContextService, LocalStorageStepService) {
+  function Service(ModuleService, ContextService) {
     var self = this;
 
     /* Public methods */
@@ -37,14 +36,7 @@
       ModuleService
         .whenActivityPlayerServiceReady()
         .then(function(PlayerService) {
-          PlayerService.setup({
-            'onEject': [
-              LocalStorageStepService
-            ],
-            'onSave': [
-              LocalStorageStepService
-            ]
-          });
+          PlayerService.setup();
         });
     }
   }

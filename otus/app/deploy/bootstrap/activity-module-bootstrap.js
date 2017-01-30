@@ -10,6 +10,7 @@
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
     'otusjs.deploy.ActivityDataSourceService',
+    'otusjs.deploy.ActivityRemoteStorageService',
     'otusjs.deploy.UserDataSourceService',
     'otusjs.deploy.model.ActivityFacadeService',
     'otusjs.deploy.model.ActivityModelPoolService',
@@ -19,7 +20,7 @@
 
   function Service(
     ModuleService, ContextFactory, StorageService,
-    ActivityDataSourceService, UserDataSourceService,
+    ActivityDataSourceService, ActivityRemoteStorageService, UserDataSourceService,
     ActivityFacadeService, ActivityModelPoolService, SurveyModelPoolService,
     PlayerService) {
 
@@ -35,6 +36,7 @@
       configureContext(ContextFactory);
       configureStorage(StorageService.session);
       configureUserDataSourceService(UserDataSourceService);
+      ModuleService.setActivityRemoteStorage(ActivityRemoteStorageService);
       configureActivityDataSourceService(ActivityDataSourceService);
       configureActivityFacadeService(ActivityFacadeService);
       configureActivityPlayerService(PlayerService);
@@ -48,6 +50,10 @@
 
     function configureStorage(storage) {
       ModuleService.configureStorage(storage);
+    }
+
+    function configureStateService(service) {
+      ModuleService.configureStateService(service);
     }
 
     function configureActivityDataSourceService(dataSource) {

@@ -6,6 +6,7 @@
     .service('otusjs.deploy.BootstrapService', Service);
 
   Service.$inject = [
+    'otusjs.deploy.OtusApiService',
     'otusjs.deploy.DataSourceLoaderService',
     'otusjs.deploy.AccessModuleBootstrap',
     'otusjs.deploy.ActivityModuleBootstrap',
@@ -23,7 +24,7 @@
   ];
 
   function Service(
-    DataSourceLoaderService,
+    OtusApiService, DataSourceLoaderService,
     AccessModuleBootstrap, ActivityModuleBootstrap, ApplicationModuleBootstrap,
     ParticipantModuleBootstrap, SessionModuleBootstrap, UserModuleBootstrap,
     AccessModule, ActivityModule, ApplicationModule, DashboardModule, ParticipantModule, SessionModule, UserModule) {
@@ -57,10 +58,6 @@
       // ActivityModule setup.
       //--------------------------------------------------------------------------------------------
       ActivityModule.DataSource.User = UserModule.DataSource.User;
-      //--------------------------------------------------------------------------------------------
-      // DashboardModule setup.
-      //--------------------------------------------------------------------------------------------
-      // DashboardModule.DataSources.configureParticipant(ParticipantModule.DataSources.getParticipant());
 
       //--------------------------------------------------------------------------------------------
       // Setup event listening for modules.
@@ -69,16 +66,18 @@
       AccessModule.onLogin(SessionModule.Event.fireLogin);
       AccessModule.onLogin(DashboardModule.Event.fireLogin);
       AccessModule.onLogin(ActivityModule.Event.fireLogin);
-      AccessModule.onLogin(DataSourceLoaderService.initializeDataSources);
-      // AccessModule.onLogout(SessionModule.Event.fireLogout);
+      AccessModule.onLogout(SessionModule.Event.fireLogout);
       AccessModule.onLogout(DashboardModule.Event.fireLogout);
       AccessModule.onLogout(ParticipantModule.Event.fireLogout);
       AccessModule.onLogout(ActivityModule.Event.fireLogout);
       AccessModule.onLogout(SessionModule.Event.fireLogout);
+      AccessModule.onLogin(OtusApiService.initializeRestrictResources);
+      AccessModule.onLogin(DataSourceLoaderService.initializeDataSources);
       // From Session Module to...
-      SessionModule.Event.onLogin(DataSourceLoaderService.initializeDataSources);
       SessionModule.Event.onLogin(DashboardModule.Event.fireLogin);
       SessionModule.Event.onLogin(ActivityModule.Event.fireLogin);
+      SessionModule.Event.onLogin(OtusApiService.initializeRestrictResources);
+      SessionModule.Event.onLogin(DataSourceLoaderService.initializeDataSources);
       // From Participant Module to...
       ParticipantModule.Event.onParticipantSelected(ActivityModule.Event.fireParticipantSelected);
       ParticipantModule.Event.onParticipantSelected(DashboardModule.Event.fireParticipantSelected);

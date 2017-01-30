@@ -10,7 +10,7 @@
     'otusjs.deploy.ProjectConfigurationRestService',
     'otusjs.deploy.ActivityRestService',
     'otusjs.deploy.SurveyRestService',
-    'otusjs.activity.storage.ActivityStorageService',
+    'otusjs.activity.storage.ActivityLocalStorageService',
     'otusjs.activity.storage.SurveyStorageService'
   ];
 
@@ -19,29 +19,17 @@
     var _loadingDefer = null;
     var _isSurveyDataReady = false;
     var _isActivityDataReady = false;
+    var _updatedActivity = null;
 
     /* Public methods */
     self.up = up;
-    self.getActivityDataSet = getActivityDataSet;
     self.getSurveyDataSet = getSurveyDataSet;
+    self.loadDataByParticipant = loadDataByParticipant;
 
     function up() {
       _loadingDefer = $q.defer();
-      _initializeResources();
       _loadData();
       return _loadingDefer.promise;
-    }
-
-    function getActivityDataSet() {
-      return {
-        getData: function() {
-          return ActivityStorageService.getCollection();
-        },
-        save: function() {
-          ActivityStorageService.save();
-          _synchronizeActivityData();
-        }
-      };
     }
 
     function getSurveyDataSet() {
@@ -55,10 +43,18 @@
       };
     }
 
-    function _initializeResources() {
-      ProjectConfigurationRestService.initialize();
-      ActivityRestService.initialize();
-      SurveyRestService.initialize();
+    function loadDataByParticipant(participant) {
+      return ActivityRestService
+        .list(participant.recruitmentNumber)
+        .then(function(response) {
+          if (response.data && response.data.length) {
+            ActivityStorageService.loadData(response.data);
+          } else {
+            console.log('Não foi possível atualizar o storage local.');
+          }
+          _isActivityDataReady = true;
+          if (_isSurveyDataReady && _isActivityDataReady) _loadingDefer.resolve();
+        });
     }
 
     function _loadData() {
@@ -75,33 +71,27 @@
           _isSurveyDataReady = true;
           if (_isSurveyDataReady && _isActivityDataReady) _loadingDefer.resolve();
         });
-
-      ActivityRestService
-        .list()
-        .then(function(response) {
-          if (response.data && response.data.length) {
-            ActivityStorageService.getCollection().clear();
-            ActivityStorageService.getCollection().insert(response.data);
-            ActivityStorageService.save();
-            console.log('Storage local de atividades atualizado com dados do servidor.');
-          } else {
-            console.log('Não foi possível atualizar o storage local.');
-          }
-          _isActivityDataReady = true;
-          if (_isSurveyDataReady && _isActivityDataReady) _loadingDefer.resolve();
-        });
     }
 
-    function _synchronizeActivityData() {
-      var localData = ActivityStorageService.getCollection().find();
+    function _sendUpdatedDataToServer() {
       ActivityRestService
-        .update(localData)
-        .then(function(response) {
-          console.log('Dados de atividade sincronizados.');
-        })
-        .catch(function(response) {
-          console.log('Falha ao sincronizar dados de atividade.');
-        });
+        .update(ActivityStorageService.getCollection().by('_id', _updatedActivity._id));
+    }
+
+    function _sendInsertedDataToServer() {
+      var localData = ActivityStorageService.getCollection().find();
+
+      localData.forEach(function(activity) {
+        if (!activity._id && !(activity.getID && activity.getID())) {
+          ActivityRestService
+            .save(activity)
+            .then(function(response) {
+              activity._id = response.data;
+              ActivityStorageService.getCollection().update(activity);
+              ActivityStorageService.save();
+            });
+        }
+      });
     }
   }
 }());

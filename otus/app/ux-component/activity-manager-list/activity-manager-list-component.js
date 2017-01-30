@@ -12,7 +12,7 @@
     });
 
   Controller.$inject = [
-    'otusjs.activity.business.ParticipantActivityManagementService',
+    'otusjs.activity.business.ParticipantActivityService',
     'otusjs.activity.core.EventService',
     'otusjs.otus.uxComponent.ActivityItemFactory'
   ];
@@ -48,21 +48,26 @@
     }
 
     function onInit() {
+      EventService.onParticipantSelected(_loadActivities);
       self.isListEmpty = true;
       self.otusActivityManager.listComponent = self;
       _loadActivities();
-      EventService.onParticipantSelected(_loadActivities);
     }
 
     function _loadActivities() {
       ActivityService
         .listAll()
         .then(function(activities) {
-          self.activities = activities.map(ActivityItemFactory.create);
-          if (activities.length) {
-            self.isListEmpty = false;
-          }
+          self.activities = activities
+            .filter(_onlyNotDiscarded)
+            .map(ActivityItemFactory.create);
+
+          self.isListEmpty = !self.activities.length;
         });
+    }
+
+    function _onlyNotDiscarded(activity) {
+      return !activity.isDiscarded;
     }
   }
 }());

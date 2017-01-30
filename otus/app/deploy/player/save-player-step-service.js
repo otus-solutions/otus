@@ -6,10 +6,12 @@
     .service('otusjs.deploy.SavePlayerStepService', Service);
 
   Service.$inject = [
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.activity.core.ModuleService',
+    'otusjs.activity.repository.ActivityRepositoryService'
   ];
 
-  function Service(ApplicationStateService) {
+  function Service(ApplicationStateService, ActivityModuleService, ActivityRepositoryService) {
     var self = this;
     var _currentItem;
 
@@ -19,14 +21,19 @@
     self.afterEffect = afterEffect;
     self.getEffectResult = getEffectResult;
 
-    function beforeEffect(pipe, flowData) { }
+    function beforeEffect(pipe, flowData) {}
 
     function effect(pipe, flowData) {
-      ApplicationStateService.activateParticipantActivities();
+      ActivityModuleService
+        .whenActivityFacadeServiceReady()
+        .then(function(ActivityFacadeService) {
+          ActivityRepositoryService
+            .save(ActivityFacadeService.getActivity())
+            .then(ApplicationStateService.activateParticipantActivities);
+        });
     }
 
-    function afterEffect(pipe, flowData) {
-    }
+    function afterEffect(pipe, flowData) {}
 
     function getEffectResult(pipe, flowData) {
       return flowData;

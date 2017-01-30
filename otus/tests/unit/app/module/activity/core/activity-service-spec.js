@@ -1,6 +1,6 @@
-describe('otusjs.activity.business.ParticipantActivityManagementService', function() {
+describe('otusjs.activity.business.ParticipantActivityService', function() {
 
-  var UNIT_NAME = 'otusjs.activity.business.ParticipantActivityManagementService';
+  var UNIT_NAME = 'otusjs.activity.business.ParticipantActivityService';
   var Mock = {};
   var Injections = {};
   var service = {};

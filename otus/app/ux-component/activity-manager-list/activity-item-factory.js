@@ -26,7 +26,9 @@
     self.mode = _getMode();
     self.realizationDate = _getFormattedDate();
     self.status = _getStatus();
+    self.isDiscarded = activity.isDiscarded;
     self.activity = activity;
+    self.id = activity.getID();
 
     function _getFormattedDate() {
       try {

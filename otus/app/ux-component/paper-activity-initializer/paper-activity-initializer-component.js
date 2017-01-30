@@ -11,7 +11,7 @@
   Controller.$inject = [
     '$q',
     '$timeout',
-    'otusjs.activity.business.ParticipantActivityManagementService',
+    'otusjs.activity.business.ParticipantActivityService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.otus.uxComponent.CheckerItemFactory'
   ];

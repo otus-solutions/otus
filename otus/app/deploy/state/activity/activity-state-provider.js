@@ -27,7 +27,7 @@
         redirect: _redirect
       },
       resolve: {
-        loadParticipantContext: _loadParticipantContext
+        loadStateData: _loadStateData
       }
     };
 
@@ -48,7 +48,7 @@
       return deferred.promise;
     }
 
-    function _loadParticipantContext(ActivityContextService, ParticipantContextService, SessionContextService, Application) {
+    function _loadStateData(ActivityContextService, ParticipantContextService, SessionContextService, Application, ActivityDataSourceService) {
       Application
         .isDeployed()
         .then(function() {
@@ -78,11 +78,12 @@
       'otusjs.activity.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
-    _loadParticipantContext.$inject = [
+    _loadStateData.$inject = [
       'otusjs.activity.core.ContextService',
       'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.deploy.ActivityDataSourceService'
     ];
     _onEnter.$inject = [
       'otusjs.activity.core.ContextService',

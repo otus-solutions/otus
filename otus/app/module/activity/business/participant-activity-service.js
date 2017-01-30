@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.activity.business')
-    .service('otusjs.activity.business.ParticipantActivityManagementService', Service);
+    .service('otusjs.activity.business.ParticipantActivityService', Service);
 
   Service.$inject = [
     'otusjs.activity.core.ModuleService',
@@ -64,8 +64,12 @@
         list: function list() {
           return ContextService.getSelectedActivities();
         },
-        remove: function remove() {
-          ActivityRepositoryService.remove(ContextService.getSelectedActivities());
+        discard: function discard() {
+          var toDiscard = ContextService.getSelectedActivities().map(function(activity) {
+            activity.isDiscarded = true;
+            return activity;
+          });
+          ActivityRepositoryService.discard(toDiscard);
           ContextService.clearSelectedActivities();
         }
       };

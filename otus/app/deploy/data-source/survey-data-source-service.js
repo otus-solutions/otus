@@ -9,7 +9,7 @@
     '$q',
     'otusjs.deploy.ActivityRestService',
     'otusjs.deploy.SurveyRestService',
-    'otusjs.activity.storage.ActivityStorageService',
+    'otusjs.activity.storage.ActivityLocalStorageService',
     'otusjs.activity.storage.SurveyStorageService'
   ];
 

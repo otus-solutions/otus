@@ -253,7 +253,7 @@ describe('otusjs.otus.interoperability.dataSource.ActivityDataSourceService', fu
   }
 
   function mockActivityStorageService($injector) {
-    Mock.ActivityStorageService = $injector.get('otusjs.activity.storage.ActivityStorageService');
+    Mock.ActivityStorageService = $injector.get('otusjs.activity.storage.ActivityLocalStorageService');
 
     Mock.activityCollection = {};
     Mock.activityCollection.find = jasmine.createSpy();

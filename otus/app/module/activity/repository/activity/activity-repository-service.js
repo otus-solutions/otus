@@ -6,14 +6,16 @@
     .service('otusjs.activity.repository.ActivityRepositoryService', Service);
 
   Service.$inject = [
+    '$q',
     'otusjs.activity.core.ModuleService',
     'otusjs.activity.core.ContextService',
     'otusjs.activity.repository.ActivityCollectionService',
     'otusjs.activity.repository.SurveyCollectionService'
   ];
 
-  function Service(ModuleService, ContextService, ActivityCollectionService, SurveyCollectionService) {
+  function Service($q, ModuleService, ContextService, ActivityCollectionService, SurveyCollectionService) {
     var self = this;
+    var _existsWorkingInProgress = null;
 
     /* Public methods */
     self.createFromSurvey = createFromSurvey;
@@ -21,73 +23,113 @@
     self.listAll = listAll;
     self.listAvailables = listAvailables;
     self.save = save;
-    self.remove = remove;
-
-    function createFromSurvey(surveys, loggedUser, participant) {
-      _createActivity(surveys, loggedUser, participant);
-    }
-
-    function createFromPaperActivity(surveys, loggedUser, participant, paperActivityData) {
-      _createActivity(surveys, loggedUser, participant, paperActivityData);
-    }
-
-    function _createActivity(surveys, loggedUser, participant, paperActivityData) {
-      ModuleService
-        .whenActivityFacadeServiceReady()
-        .then(function(activityFacadeService) {
-          var activities = surveys.map(function(survey) {
-            var activity = activityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData);
-            return JSON.parse(activity.toJson());
-          });
-          ActivityCollectionService.insert(activities);
-          ActivityCollectionService.save();
-        });
-    }
+    self.discard = discard;
 
     function listAll(participant) {
-      ActivityCollectionService.useParticipant(participant);
-      return ActivityCollectionService.listAll().then(_toEntity);
+      if (!participant) {
+        throw new Error('No participant selected to list activities.', 'activity-repository-service.js', 63);
+      } else {
+        ActivityCollectionService.useParticipant(participant);
+      }
+
+      if (_existsWorkingInProgress) {
+        return _existsWorkingInProgress
+          .then(function() {
+            return _listAll();
+          });
+      } else {
+        return _listAll();
+      }
     }
 
     function listAvailables() {
       return SurveyCollectionService.listAll().then(_toEntity);
     }
 
+    function createFromSurvey(surveys, loggedUser, participant) {
+      return _createActivity(surveys, loggedUser, participant);
+    }
+
+    function createFromPaperActivity(surveys, loggedUser, participant, paperActivityData) {
+      return _createActivity(surveys, loggedUser, participant, paperActivityData);
+    }
+
     function save(activity) {
-      var activityToUpdate = JSON.parse(activity.toJson());
-      activityToUpdate.$loki = activity.$loki;
-      activityToUpdate.meta = activity.meta;
-      ActivityCollectionService.update(activityToUpdate);
-      ActivityCollectionService.save();
+      return _update([_toDbObject(activity)]);
     }
 
-    function remove(activities) {
-      ActivityCollectionService.remove(activities);
-      ActivityCollectionService.save();
+    function discard(activities) {
+      return _update(activities.map(_toDbObject));
     }
 
-    function _toEntity(rawData) {
-      if (Array.isArray(rawData)) {
-        return rawData.map(function(data) {
-          return _mapEntity(data);
+    function _createActivity(surveys, loggedUser, participant, paperActivityData) {
+      var work = _setupWorkProgress();
+      ModuleService
+        .whenActivityFacadeServiceReady()
+        .then(function(activityFacadeService) {
+          var activities = _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService);
+          return ActivityCollectionService.insert(activities).then(work.finish);
+        });
+    }
+
+    function _listAll() {
+      return ActivityCollectionService.listAll().then(_toEntity);
+    }
+
+    function _update(toUpdate) {
+      if (!toUpdate || !toUpdate.length) {
+        throw new Error('No activity to update.', 'activity-repository-service.js', 50);
+      } else {
+        var work = _setupWorkProgress();
+        return ActivityCollectionService.update(toUpdate).then(work.finish);
+      }
+    }
+
+    function _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService) {
+      return surveys.map(function(survey) {
+        var activity = activityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData);
+        return JSON.parse(activity.toJson());
+      });
+    }
+
+    function _setupWorkProgress() {
+      var defer = $q.defer();
+      _existsWorkingInProgress = defer.promise;
+
+      return {
+        finish: function() {
+          defer.resolve();
+        }
+      };
+    }
+
+    /*************************************************************************************************
+     * The next methods (_toEntity, _restoreEntity and _toDbObject) must be moved to another object
+     * that will be responsible for the work of mapping the database objects to entities and
+     * vice versa.
+     ************************************************************************************************/
+    function _toEntity(dbObjects) {
+      if (Array.isArray(dbObjects)) {
+        return dbObjects.map(function(dbObject) {
+          return _restoreEntity(dbObject);
         });
       } else {
-        return _mapEntity(data);
+        return [_restoreEntity(dbObjects)];
       }
     }
 
-    function _mapEntity(data) {
-      var activity = null;
+    function _restoreEntity(dbObject) {
+      var entity = ModuleService.Model[dbObject.objectType].fromJsonObject(dbObject);
+      entity.$loki = dbObject.$loki;
+      entity.meta = dbObject.meta;
+      return entity;
+    }
 
-      if (data.hasOwnProperty('surveyFormType')) {
-        activity = ModuleService.Model.SurveyForm.fromJsonObject(data);
-      } else {
-        activity = ModuleService.Model[data.objectType].fromJsonObject(data);
-      }
-
-      activity.$loki = data.$loki;
-      activity.meta = data.meta;
-      return activity;
+    function _toDbObject(entity) {
+      var dbObject = JSON.parse(entity.toJson());
+      dbObject.$loki = entity.$loki;
+      dbObject.meta = entity.meta;
+      return dbObject;
     }
   }
 }());

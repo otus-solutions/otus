@@ -32,7 +32,7 @@
       _dbManager[dbName].lokiDb = new loki(dbName, {
         autoload: true,
         autoloadCallback: function() {
-          _newDbLoadHandler(dbName)
+          _newDbLoadHandler(dbName);
         }
       });
       return _dbManager[dbName].loading.promise;
@@ -45,7 +45,7 @@
       _dbManager[dbName].lokiDb = new loki(dbName, {
         autoload: true,
         autoloadCallback: function() {
-          _existentDbLoadHandler(dbName)
+          _existentDbLoadHandler(dbName);
         }
       });
       return _dbManager[dbName].loading.promise;
@@ -57,7 +57,8 @@
 
     function _newDbLoadHandler(dbName) {
       _dbManager[dbName].storages.forEach(function(storage) {
-        storage.initialize(getDb(dbName).addCollection(storage.collectionName), getDb(dbName));
+        if (!storage.options) storage.options = {};
+        storage.initialize(getDb(dbName).addCollection(storage.collectionName, storage.options), getDb(dbName));
       });
       getDb(dbName).saveDatabase();
       _dbManager[dbName].loading.resolve();

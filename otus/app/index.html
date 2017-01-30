@@ -42,7 +42,7 @@
 <!-- ************************************* Moment ************************************* -->
 <script src="node_modules/moment/min/moment.min.js"></script>
 <!-- ************************************* OTUS-MODEL ************************************* -->
-<script src="node_modules/otus-model-js/dist/otus-model.min.js"></script>
+<script src="node_modules/otus-model-js/dist/otus-model.js"></script>
 <script src="node_modules/otus-model-js/dist/st-utils.min.js"></script>
 <!-- ************************************* OTUS-DOMAIN-CLIENT ************************************* -->
 <script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
@@ -167,7 +167,9 @@
 <script src="app/deploy/state/installer/installer-state-provider.js"></script>
 <script src="app/deploy/state/participant/participant-state-provider.js"></script>
 <script src="app/deploy/state/session/session-state-provider.js"></script>
+<!-- # Deploy > Storage -->
 <script src="app/deploy/storage/storage-loader-service.js"></script>
+<script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
 
 <!------------------------------------------------------------------------------------------------>
 
@@ -176,8 +178,7 @@
 <!-- # Activity > Business -->
 <script src="app/module/activity/business/module.js"></script>
 <script src="app/module/activity/business/activity-player-service.js"></script>
-<script src="app/module/activity/business/local-storage-step-service.js"></script>
-<script src="app/module/activity/business/participant-activity-management-service.js"></script>
+<script src="app/module/activity/business/participant-activity-service.js"></script>
 <!-- # Activity > Core -->
 <script src="app/module/activity/core/module.js"></script>
 <script src="app/module/activity/core/context-service.js"></script>
@@ -192,7 +193,7 @@
 <script src="app/module/activity/repository/user/user-repository-service.js"></script>
 <!-- # Activity > Storage -->
 <script src="app/module/activity/storage/module.js"></script>
-<script src="app/module/activity/storage/activity-storage-service.js"></script>
+<script src="app/module/activity/storage/activity-local-storage-service.js"></script>
 <script src="app/module/activity/storage/survey-storage-service.js"></script>
 <!------------------------------------------------------------------------------------------------>
 <!-- # Module > Dashboard -->

@@ -89,7 +89,7 @@ describe('otusActivityManagerToolbar', function() {
   }
 
   function mockActivityService($injector) {
-    Mock.ActivityService = $injector.get('otusjs.activity.business.ParticipantActivityManagementService');
+    Mock.ActivityService = $injector.get('otusjs.activity.business.ParticipantActivityService');
     Injections.ActivityService = Mock.ActivityService;
   }
 

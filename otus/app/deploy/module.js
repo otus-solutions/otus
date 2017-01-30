@@ -10,7 +10,7 @@
       'otusjs.player.component'
     ])
     .value('OtusLocalStorage', [
-      'otusjs.activity.storage.ActivityStorageService',
+      'otusjs.activity.storage.ActivityLocalStorageService',
       'otusjs.activity.storage.SurveyStorageService',
       'otusjs.participant.storage.ParticipantStorageService',
       'otusjs.user.storage.UserStorageService'
@@ -25,19 +25,15 @@
   ];
 
   function Runner($injector, StorageLoaderService, OtusApiService, BootstrapService) {
-    loadOtusRestApi(OtusApiService);
-    loadOtusDb(StorageLoaderService)
+    OtusApiService.initializeOpenResources();
+    _loadOtusDb(StorageLoaderService)
       .then(function() {
         BootstrapService.run();
         notifyModuleLoad($injector);
       });
   }
 
-  function loadOtusRestApi(OtusApiService) {
-    OtusApiService.initializeResources();
-  }
-
-  function loadOtusDb(StorageLoaderService) {
+  function _loadOtusDb(StorageLoaderService) {
     var OTUS_DB = 'otus';
 
     StorageLoaderService.initializeSessionStorage();
@@ -47,10 +43,6 @@
     } else {
       return StorageLoaderService.createLocalStorage(OTUS_DB);
     }
-  }
-
-  function loadDataSources(DataSourceLoaderService) {
-    return DataSourceLoaderService.initializeDataSources();
   }
 
   function notifyModuleLoad($injector) {

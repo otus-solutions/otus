@@ -14,7 +14,7 @@
 
   Controller.$inject = [
     'otusjs.application.state.ApplicationStateService'
-  ]
+  ];
 
   function Controller(ApplicationStateService) {
     var self = this;

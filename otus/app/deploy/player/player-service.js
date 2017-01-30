@@ -19,15 +19,16 @@
     /* Public methods */
     self.setup = setup;
 
-    function setup(configuration) {
+    function setup() {
       // Module custom steps
-      configuration.onEject.forEach(PlayerConfigurationService.onEject);
-      configuration.onSave.forEach(PlayerConfigurationService.onSave);
+      // configuration.onEject.forEach(PlayerConfigurationService.onEject);
+      // configuration.onSave.forEach(PlayerConfigurationService.onSave);
 
       // Application default steps
-      PlayerConfigurationService.onStop(StopPlayerStepService);
       PlayerConfigurationService.onEject(ExitPlayerStepService);
+      PlayerConfigurationService.onEject(SavePlayerStepService);
       PlayerConfigurationService.onSave(SavePlayerStepService);
+      PlayerConfigurationService.onStop(StopPlayerStepService);
 
       PlayerService.setup();
     }

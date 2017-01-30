@@ -11,15 +11,15 @@
     .run(Runner);
 
   Runner.$inject = [
+    'otusjs.activity.core.ModuleService',
     'otusjs.activity.core.ContextService',
     'otusjs.activity.core.EventService'
   ];
 
-  function Runner(ContextService, EventService) {
+  function Runner(ModuleService, ContextService, EventService) {
     EventService.onLogin(ContextService.setLoggedUser);
     EventService.onLogout(ContextService.end);
     EventService.onParticipantSelected(ContextService.setSelectedParticipant);
     EventService.onParticipantSelected(ContextService.begin);
   }
-
 }());

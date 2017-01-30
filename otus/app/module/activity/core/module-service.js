@@ -13,11 +13,13 @@
 
   function Service($q, ContextService, EventService) {
     var self = this;
+    var _activityRemoteStorageDefer = $q.defer();
     var _activityDataSourceDefer = $q.defer();
     var _surveyDataSourceDefer = $q.defer();
     var _activityFacadeServiceDefer = $q.defer();
     var _activityPlayerServiceDefer = $q.defer();
 
+    self.RemoteStorage = {};
     self.DataSource = {};
     self.Event = EventService;
     self.Model = {};
@@ -30,6 +32,8 @@
     self.configureActivityPlayerService = configureActivityPlayerService;
     self.configureUserDataSourceService = configureUserDataSourceService;
     self.addModel = addModel;
+    self.getActivityRemoteStorage = getActivityRemoteStorage;
+    self.setActivityRemoteStorage = setActivityRemoteStorage;
     self.whenActivityDataSourceServiceReady = whenActivityDataSourceServiceReady;
     self.whenActivityFacadeServiceReady = whenActivityFacadeServiceReady;
     self.whenActivityPlayerServiceReady = whenActivityPlayerServiceReady;
@@ -45,7 +49,6 @@
 
     function configureActivityDataSourceService(dataSource) {
       self.DataSource.Activity = dataSource;
-      _activityDataSourceDefer.resolve(self.DataSource.Activity.getActivityDataSet());
       _surveyDataSourceDefer.resolve(self.DataSource.Activity.getSurveyDataSet());
     }
 
@@ -67,10 +70,26 @@
       self.Model[model.OBJECT_TYPE] = model;
     }
 
+    function getActivityRemoteStorage() {
+      if (self.RemoteStorage.Activity) {
+        _activityRemoteStorageDefer = $q.defer();
+        _activityRemoteStorageDefer.resolve(self.RemoteStorage.Activity);
+      }
+      return {
+        whenReady: function() {
+          return _activityRemoteStorageDefer.promise;
+        }
+      };
+    }
+
+    function setActivityRemoteStorage(storage) {
+      self.RemoteStorage.Activity = storage;
+      _activityRemoteStorageDefer.resolve(self.RemoteStorage.Activity);
+    }
+
     function whenActivityDataSourceServiceReady() {
       if (self.DataSource.Activity) {
         _activityDataSourceDefer = $q.defer();
-        _activityDataSourceDefer.resolve(self.DataSource.Activity.getActivityDataSet());
       }
       return _activityDataSourceDefer.promise;
     }

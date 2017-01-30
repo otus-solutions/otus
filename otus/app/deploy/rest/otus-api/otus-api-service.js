@@ -7,22 +7,37 @@
 
   Service.$inject = [
     'otusjs.deploy.AuthenticationRestService',
-    'otusjs.deploy.InstallerRestService'
+    'otusjs.deploy.InstallerRestService',
+    'otusjs.deploy.ActivityRestService',
+    'otusjs.deploy.ProjectConfigurationRestService',
+    'otusjs.deploy.ParticipantRestService',
+    'otusjs.deploy.UserRestService'
   ];
 
-  function Service(AuthenticationRestService, InstallerRestService) {
+  function Service(
+    AuthenticationRestService,
+    InstallerRestService,
+    ActivityRestService,
+    ProjectConfigurationRestService,
+    ParticipantRestService,
+    UserRestService
+  ) {
     var self = this;
 
     /* Public methods */
-    self.initializeResources = initializeResources;
+    self.initializeOpenResources = initializeOpenResources;
+    self.initializeRestrictResources = initializeRestrictResources;
 
-    function initializeResources() {
+    function initializeOpenResources() {
       AuthenticationRestService.initialize();
       InstallerRestService.initialize();
-      // ActivityRestService.initialize();
-      // ProjectConfigurationRestService.initialize();
-      // ParticipantRestService.initialize();
-      // UserRestService.initialize();
+    }
+
+    function initializeRestrictResources() {
+      ActivityRestService.initialize();
+      ProjectConfigurationRestService.initialize();
+      ParticipantRestService.initialize();
+      UserRestService.initialize();
     }
   }
 }());

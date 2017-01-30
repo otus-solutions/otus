@@ -12,7 +12,7 @@
     });
 
   Controller.$inject = [
-    'otusjs.activity.business.ParticipantActivityManagementService'
+    'otusjs.activity.business.ParticipantActivityService'
   ];
 
   function Controller(ActivityService) {
