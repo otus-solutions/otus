@@ -8,7 +8,7 @@
   function Service() {
     var self = this;
 
-    var _onParticipantSelectedListeners = [];
+    var _onParticipantSelectedListeners = {};
     var _onActivitySelectedListeners = [];
     var _onLoginListeners = [];
     var _onLogoutListeners = [];
@@ -24,11 +24,12 @@
     self.onLogout = onLogout;
 
     function fireParticipantSelected(data) {
-      _notifyEvent(_onParticipantSelectedListeners, data, _onParticipantSelectedListeners.length);
+      _notifyEventObj(_onParticipantSelectedListeners, data, _onParticipantSelectedListeners.length);
     }
 
     function onParticipantSelected(listener) {
-      _onParticipantSelectedListeners.push(listener);
+      var listenerName = listener.name;
+      _onParticipantSelectedListeners[listenerName] = listener;
     }
 
     function fireActivitySelected(data) {
@@ -57,6 +58,12 @@
 
     function _notifyEvent(listeners, data, endLoop) {
       for (var listener = 0; listener < endLoop; listener++) {
+        listeners[listener](data);
+      }
+    }
+
+    function _notifyEventObj(listeners, data, endLoop) {
+      for (var listener in listeners) {
         listeners[listener](data);
       }
     }

@@ -15,22 +15,26 @@
 
   function Service(PlayerService, PlayerConfigurationService, ExitPlayerStepService, StopPlayerStepService, SavePlayerStepService) {
     var self = this;
+    var _isSetupStepsReady = false;
 
     /* Public methods */
     self.setup = setup;
 
     function setup() {
-      // Module custom steps
-      // configuration.onEject.forEach(PlayerConfigurationService.onEject);
-      // configuration.onSave.forEach(PlayerConfigurationService.onSave);
+      if(!_isSetupStepsReady) {
+        _setupSteps();
+      }
+      PlayerService.setup();
+    }
 
+    function _setupSteps() {
       // Application default steps
       PlayerConfigurationService.onEject(ExitPlayerStepService);
       PlayerConfigurationService.onEject(SavePlayerStepService);
       PlayerConfigurationService.onSave(SavePlayerStepService);
       PlayerConfigurationService.onStop(StopPlayerStepService);
-
-      PlayerService.setup();
+      _isSetupStepsReady = true;
     }
+
   }
 }());

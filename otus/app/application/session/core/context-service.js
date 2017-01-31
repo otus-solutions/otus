@@ -15,6 +15,7 @@
 
     var _context = null;
     var _storage = null;
+    var _shouldRestore = true;
 
     var SESSION_CONTEXT = 'session_context';
     var LOGGED_USER = 'loggedUser';
@@ -48,7 +49,11 @@
     function restore() {
       isValid();
       _restoreContextData();
-      EventService.fireLogin(getData(LOGGED_USER));
+      // TODO: Refresh issue
+      if(_shouldRestore) {
+        EventService.fireLogin(getData(LOGGED_USER));
+        _shouldRestore = false;
+      }
     }
 
     function end() {

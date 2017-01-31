@@ -61,18 +61,6 @@
         });
     }
 
-    function _onEnter(ActivityContextService, Application) {
-      Application
-        .isDeployed()
-        .then(function() {
-          try {
-            ActivityContextService.restore();
-          } catch (e) {
-            ActivityContextService.begin();
-          }
-        });
-    }
-
     _redirect.$inject = [
       '$q',
       'otusjs.activity.core.ContextService',
@@ -84,10 +72,6 @@
       'otusjs.application.session.core.ContextService',
       'otusjs.application.core.ModuleService',
       'otusjs.deploy.ActivityDataSourceService'
-    ];
-    _onEnter.$inject = [
-      'otusjs.activity.core.ContextService',
-      'otusjs.application.core.ModuleService'
     ];
   }
 }());

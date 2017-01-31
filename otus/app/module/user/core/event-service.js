@@ -12,7 +12,6 @@
     var _onUserIndexersLoaded = [];
     var _onUserDataSourceProvidedListeners = [];
     var _onLoginProxyProvidedListeners = [];
-    var _onUserAuthenticationListeners = [];
 
     function _notifyEvent(listeners, data, endLoop) {
       for (var listener = 0; listener < endLoop; listener++) {
@@ -68,10 +67,6 @@
 
     function fireUserAuthentication(data) {
       _notifyEvent(_onUserAuthenticationListeners, data, _onUserAuthenticationListeners.length);
-    }
-
-    function onUserAuthentication(listener) {
-      _onUserAuthenticationListeners.push(listener);
     }
   }
 }());
