@@ -18,7 +18,8 @@
       'PARTICIPANT_REPORT': 'report',
       'SESSION': 'session',
       'SIGNUP': 'signup',
-      'SIGNUP_RESULT': 'signup-result'
+      'SIGNUP_RESULT': 'signup-result',
+      'LABORATORY': 'laboratory-participant'
     })
     .config(Configuration);
 
@@ -37,7 +38,8 @@
     'otusjs.deploy.ParticipantStateProvider',
     'otusjs.deploy.SignupStateProvider',
     'otusjs.deploy.SignupResultStateProvider',
-    'otusjs.deploy.SessionStateProvider'
+    'otusjs.deploy.SessionStateProvider',
+    'otusjs.deploy.LaboratoryStateProvider'
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
@@ -53,7 +55,8 @@
     ParticipantStateProvider,
     SignupStateProvider,
     SignupResultStateProvider,
-    SessionStateProvider
+    SessionStateProvider,
+    LaboratoryStateProvider
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ActivityStateProvider.state);
@@ -68,6 +71,7 @@
     $stateProvider.state(InstallerProvider.state);
     $stateProvider.state(ParticipantStateProvider.state);
     $stateProvider.state(SessionStateProvider.state);
+    $stateProvider.state(LaboratoryStateProvider.state);
 
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);

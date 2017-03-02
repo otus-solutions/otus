@@ -1,0 +1,6 @@
+<div ng-show="!$ctrl.hasLaboratory" layout="row" layout-align="center center">
+  <md-button class="md-raised md-primary" ng-click="$ctrl.intializeLaboratory()">Iniciar Laboratório</md-button>
+</div>
+<div ng-show="$ctrl.hasLaboratory" layout="row" layout-align="center center">
+  <setup-component json="$ctrl.json"></setup-component>
+</div>

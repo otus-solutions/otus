@@ -11,7 +11,8 @@
     'otusjs.deploy.ActivityRestService',
     'otusjs.deploy.ProjectConfigurationRestService',
     'otusjs.deploy.ParticipantRestService',
-    'otusjs.deploy.UserRestService'
+    'otusjs.deploy.UserRestService',
+    'otusjs.deploy.ParticipantLaboratoryRestService'
   ];
 
   function Service(
@@ -20,7 +21,8 @@
     ActivityRestService,
     ProjectConfigurationRestService,
     ParticipantRestService,
-    UserRestService
+    UserRestService,
+    ParticipantLaboratoryRestService
   ) {
     var self = this;
 
@@ -38,6 +40,7 @@
       ProjectConfigurationRestService.initialize();
       ParticipantRestService.initialize();
       UserRestService.initialize();
+      ParticipantLaboratoryRestService.initialize();
     }
   }
 }());

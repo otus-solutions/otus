@@ -20,6 +20,7 @@
     self.activatePaperActivityInitializer = activatePaperActivityInitializer;
     self.activateInstaller = activateInstaller;
     self.activateLogin = activateLogin;
+    self.activateLaboratory = activateLaboratory;
     self.activateDashboard = activateDashboard;
     self.activateParticipantActivities = activateParticipantActivities;
     self.activateParticipantReports = activateParticipantReports;
@@ -49,6 +50,10 @@
 
     function activateLogin() {
       $state.go(STATE.LOGIN);
+    }
+
+    function activateLaboratory() {
+      $state.go(STATE.LABORATORY);
     }
 
     function activateDashboard() {

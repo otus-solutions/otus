@@ -14,6 +14,7 @@
   <link href="app/static-resource/stylesheet/styles.css" rel="stylesheet" />
   <link href="app/static-resource/stylesheet/initial-config.css" rel="stylesheet" />
   <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
+  <link href="node_modules/label-maker-js/dist/label-maker-js/css/otusjs-setup-view.css" rel="stylesheet">
 
   <title>Otus</title>
 </head>
@@ -55,6 +56,10 @@
 <script src="node_modules/angular-mousewheel/mousewheel.js"></script>
 <!-- ************************************** Otus Validation ************************************** -->
 <script src="node_modules/otus-validation-js/dist/otus-validation-min.js"></script>
+<!-- ************************************** Otus Label-Maker ************************************** -->
+<script src="node_modules/label-maker-js/dist/label-maker-js/scripts/otusjs-label-maker-min.js"></script>
+<!-- ************************************** JSBARCODE ************************************** -->
+<script src="node_modules/jsbarcode/dist/barcodes/JsBarcode.code39.min.js" charset="utf-8"></script>
 
 <!-- ************************************* Otus ************************************* -->
 <script src="app/app.js"></script>
@@ -125,6 +130,7 @@
 <script src="app/deploy/bootstrap/bootstrap-service.js"></script>
 <script src="app/deploy/bootstrap/access-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/activity-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/laboratory-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/application-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/participant-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/session-module-bootstrap.js"></script>
@@ -134,6 +140,8 @@
 <script src="app/deploy/data-source/activity-data-source-service.js"></script>
 <script src="app/deploy/data-source/participant-data-source-service.js"></script>
 <script src="app/deploy/data-source/user-data-source-service.js"></script>
+<!-- # Deploy > Label Maker -->
+<script src="app/deploy/label-maker/player-label-maker-service.js"></script>
 <!-- # Deploy > Model -->
 <script src="app/deploy/model/otus/activity-facade-service.js"></script>
 <script src="app/deploy/model/otus/activity-model-pool-service.js"></script>
@@ -152,6 +160,8 @@
 <script src="app/deploy/rest/otus-api/survey/survey-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/user/authentication-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/user/user-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/laboratory/participant-laboratory-rest-service.js"></script>
+
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
 <script src="app/deploy/state/access/access-state-provider.js"></script>
@@ -167,10 +177,11 @@
 <script src="app/deploy/state/installer/installer-state-provider.js"></script>
 <script src="app/deploy/state/participant/participant-state-provider.js"></script>
 <script src="app/deploy/state/session/session-state-provider.js"></script>
+<script src="app/deploy/state/laboratory/laboratory-state-provider.js"></script>
 <!-- # Deploy > Storage -->
 <script src="app/deploy/storage/storage-loader-service.js"></script>
 <script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
-
+<script src="app/deploy/storage/laboratory/participant-laboratory-remote-storage-service.js"></script>
 <!------------------------------------------------------------------------------------------------>
 
 <!-- # Module > Activity -->
@@ -210,6 +221,29 @@
 <!-- # Module > Installer -->
 <script src="app/module/installer/module.js"></script>
 
+<!------------------------------------------------------------------------------------------------>
+<!-- # Module > Laboratory -->
+<script src="app/module/laboratory/module.js"></script>
+
+<!-- # laboratory > Business -->
+<script src="app/module/laboratory/business/module.js"></script>
+<script src="app/module/laboratory/business/participant-laboratory-service.js"></script>
+<script src="app/module/laboratory/business/participant-laboratory-factory.js"></script>
+
+<!-- # laboratory > core -->
+<script src="app/module/laboratory/core/module.js"></script>
+<script src="app/module/laboratory/core/module-service.js"></script>
+<script src="app/module/laboratory/core/context-service.js"></script>
+<script src="app/module/laboratory/core/event-service.js"></script>
+
+<!-- # laboratory > repository -->
+<script src="app/module/laboratory/repository/module.js"></script>
+<script src="app/module/laboratory/repository/laboratory/participant-laboratory-collection-service.js"></script>
+<script src="app/module/laboratory/repository/laboratory/participant-laboratory-repository-service.js"></script>
+
+<!-- # laboratory > storage -->
+<script src="app/module/laboratory/storage/module.js"></script>
+<script src="app/module/laboratory/storage/participant-laboratory-local-storage-service.js"></script>
 
 <!------------------------------------------------------------------------------------------------>
 <!-- # Module > Participant -->
@@ -292,6 +326,7 @@
 <script src="app/ux-component/dashboard-toolbar/dashboard-toolbar-component.js"></script>
 <script src="app/ux-component/installer/initial-config-controller.js"></script>
 <script src="app/ux-component/paper-activity-adder/paper-activity-adder-component.js"></script>
+<script src="app/ux-component/laboratory/laboratory-component.js"></script>
 <script src="app/ux-component/paper-activity-adder-list/paper-activity-adder-list-component.js"></script>
 <script src="app/ux-component/paper-activity-initializer/checker-item-factory.js"></script>
 <script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>
@@ -299,4 +334,5 @@
 <script src="app/ux-component/participant-search-tool/participant-search-tool-component.js"></script>
 <script src="app/ux-component/user-login/login-controller.js"></script>
 <script src="app/ux-component/user-signup/signup-controller.js"></script>
+
 </html>

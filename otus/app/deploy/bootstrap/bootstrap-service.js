@@ -14,8 +14,10 @@
     'otusjs.deploy.ParticipantModuleBootstrap',
     'otusjs.deploy.SessionModuleBootstrap',
     'otusjs.deploy.UserModuleBootstrap',
+    'otusjs.deploy.LaboratoryModuleBootstrap',
     'otusjs.user.access.core.ModuleService',
     'otusjs.activity.core.ModuleService',
+    'otusjs.laboratory.core.ModuleService',
     'otusjs.application.core.ModuleService',
     'otusjs.otus.dashboard.core.ModuleService',
     'otusjs.participant.core.ModuleService',
@@ -26,8 +28,8 @@
   function Service(
     OtusApiService, DataSourceLoaderService,
     AccessModuleBootstrap, ActivityModuleBootstrap, ApplicationModuleBootstrap,
-    ParticipantModuleBootstrap, SessionModuleBootstrap, UserModuleBootstrap,
-    AccessModule, ActivityModule, ApplicationModule, DashboardModule, ParticipantModule, SessionModule, UserModule) {
+    ParticipantModuleBootstrap, SessionModuleBootstrap, UserModuleBootstrap, LaboratoryModuleBootstrap,
+    AccessModule, ActivityModule, LaboratoryModule, ApplicationModule, DashboardModule, ParticipantModule, SessionModule, UserModule) {
 
     var self = this;
 
@@ -40,6 +42,7 @@
       ParticipantModuleBootstrap.bootstrap();
       SessionModuleBootstrap.bootstrap();
       UserModuleBootstrap.bootstrap();
+      LaboratoryModuleBootstrap.bootstrap();
 
       //--------------------------------------------------------------------------------------------
       // Here the application identifies if should recover a "logged state" or request a new
@@ -81,6 +84,7 @@
       // From Participant Module to...
       ParticipantModule.Event.onParticipantSelected(ActivityModule.Event.fireParticipantSelected);
       ParticipantModule.Event.onParticipantSelected(DashboardModule.Event.fireParticipantSelected);
+      ParticipantModule.Event.onParticipantSelected(LaboratoryModule.Event.fireParticipantSelected);
 
       ApplicationModuleBootstrap.beginApplicationContext();
     }

@@ -22,6 +22,7 @@
     /* Public methods */
     self.loadParticipantActivities = loadParticipantActivities;
     self.loadParticipantReports = loadParticipantReports;
+    self.loadLaboratory = loadLaboratory;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -32,6 +33,10 @@
 
     function loadParticipantReports() {
       ApplicationStateService.activateParticipantReports();
+    }
+
+    function loadLaboratory() {
+      ApplicationStateService.activateLaboratory();
     }
 
     function onInit() {

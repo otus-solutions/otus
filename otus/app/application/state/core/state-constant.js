@@ -13,12 +13,14 @@
       'DASHBOARD': 'dashboard',
       'INSTALLER': 'installer',
       'LOGIN': 'login',
+      'LABORATORY': 'laboratory-participant',
       'PARTICIPANT': 'participant',
       'PARTICIPANT_ACTIVITY': 'activity',
       'PARTICIPANT_REPORT': 'report',
       'SESSION': 'session',
       'SIGNUP': 'signup',
-      'SIGNUP_RESULT': 'signup-result'
+      'SIGNUP_RESULT': 'signup-result',
+      'LABELMAKER': 'labelMaker'
     });
 
 }());

@@ -6,11 +6,19 @@
       'otus.client',
       'otus.domain.client',
       'otusjs',
+      /* Player dependencies */
       'otusjs.player.core',
-      'otusjs.player.component'
+      'otusjs.player.component',
+      /* LabelMaker dependencies */
+      'otusjs.labelMaker.config',
+      'otusjs.labelMaker.setupView',
+      'otusjs.labelMaker.dataBuilder',
+      'otusjs.labelMaker.labelBuilder',
+      'otusjs.labelMaker.labelPage'
     ])
     .value('OtusLocalStorage', [
       'otusjs.activity.storage.ActivityLocalStorageService',
+      'otusjs.laboratory.storage.ParticipantLaboratoryLocalStorageService',
       'otusjs.activity.storage.SurveyStorageService',
       'otusjs.participant.storage.ParticipantStorageService',
       'otusjs.user.storage.UserStorageService'

@@ -40,11 +40,13 @@
     "jquery": "2.2.0",
     "lokijs": "1.4.2",
     "moment": "2.12.0",
-    "otus-client-js": "git://github.com/ccem-dev/otus-client-js.git#dev",
-    "otus-domain-client": "git://github.com/ccem-dev/otus-domain-client-js.git#dev",
+    "jsbarcode": "^3.5.7",
+    "otus-client-js": "git@github.com:ccem-dev/otus-client-js.git#dev",
+    "otus-domain-client": "git@github.com:ccem-dev/otus-domain-client-js.git#dev",
     "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#dev",
     "otus-preview-js": "git@github.com:ccem-dev/otus-preview-js.git#dev",
-    "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#dev"
+    "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#dev",
+    "label-maker-js": "git@github.com:ccem-dev/label-maker-js.git#dev"
   },
   "devDependencies": {
     "gulp-replace-task": "0.11.0",
