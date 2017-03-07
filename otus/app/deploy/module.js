@@ -10,7 +10,6 @@
       'otusjs.player.core',
       'otusjs.player.component',
       /* LabelMaker dependencies */
-      'otusjs.labelMaker.config',
       'otusjs.labelMaker.setupView',
       'otusjs.labelMaker.dataBuilder',
       'otusjs.labelMaker.labelBuilder',
@@ -46,11 +45,13 @@
 
     StorageLoaderService.initializeSessionStorage();
 
-    if (StorageLoaderService.dbExists(OTUS_DB)) {
-      return StorageLoaderService.loadLocalStorage(OTUS_DB);
-    } else {
-      return StorageLoaderService.createLocalStorage(OTUS_DB);
-    }
+    return StorageLoaderService.dbExists(OTUS_DB).then(function(dbExists) {
+      if (dbExists) {
+        return StorageLoaderService.loadIndexedStorage(OTUS_DB);
+      } else {
+        return StorageLoaderService.createIndexedStorage(OTUS_DB);
+      }
+    });
   }
 
   function notifyModuleLoad($injector) {

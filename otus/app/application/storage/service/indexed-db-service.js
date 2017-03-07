@@ -3,69 +3,83 @@
 
   angular
     .module('otusjs.application.storage')
-    .service('otusjs.application.storage.IndexedDbService', Service);
+    .service('otusjs.application.storage.IndexedDbStorageService', Service);
 
-  Service.$inject = ['$localForage'];
+  Service.$inject = [
+    '$q',
+    '$window'
+  ];
 
-  function Service($localForage) {
+  function Service($q, $window) {
     var self = this;
-    var _storageInstance = null;
+    var _dbManager = {};
+    var _idbAdapter = new LokiIndexedAdapter('otus');
 
     /* Public methods */
-    self.initialize = initialize;
-    self.setItem = setItem;
-    self.getItem = getItem;
-    self.removeItem = removeItem;
-    self.pull = pull;
-    self.clear = clear;
-    self.key = key;
-    self.keys = keys;
-    self.length = length;
-    self.iterate = iterate;
+    self.getDb = getDb;
+    self.newDb = newDb;
+    self.loadDb = loadDb;
+    self.dbExists = dbExists;
 
-    function initialize() {
-      _storageInstance = $localForage.createInstance({
-        name: 'otus',
-        driver: 'asyncStorage',
-        storeName: 'session_data'
-      })._localforage;
-      setItem('dbname', 'otus');
+    function getDb(dbName) {
+      return _dbManager[dbName].lokiDb;
     }
 
-    function setItem(key, value) {
-      return _storageInstance.setItem(key, value);
+    function newDb(dbName, storages) {
+      _dbManager[dbName] = {};
+      _dbManager[dbName].loading = $q.defer();
+      _dbManager[dbName].storages = storages;
+      _dbManager[dbName].lokiDb = new loki(dbName, {
+        autoload: true,
+        autoloadCallback: function() {
+          _newDbLoadHandler(dbName);
+        },
+        adapter: _idbAdapter
+      });
+      return _dbManager[dbName].loading.promise;
     }
 
-    function getItem(key) {
-      return _storageInstance.getItem(key);
+    function loadDb(dbName, storages) {
+      _dbManager[dbName] = {};
+      _dbManager[dbName].loading = $q.defer();
+      _dbManager[dbName].storages = storages;
+      _dbManager[dbName].lokiDb = new loki(dbName, {
+        autoload: true,
+        autoloadCallback: function() {
+          _existentDbLoadHandler(dbName);
+        },
+        adapter: _idbAdapter
+      });
+      return _dbManager[dbName].loading.promise;
     }
 
-    function removeItem(key) {
-      return _storageInstance.removeItem(key);
+    function dbExists(dbName) {
+      var response = $q.defer();
+
+      _idbAdapter.getDatabaseList(function(dbList) {
+        var result = dbList.some(function(foundedDbName) {
+          return (foundedDbName === dbName);
+        });
+        response.resolve(result);
+      });
+
+      return response.promise;
     }
 
-    function pull(key) {
-      return _storageInstance.pull(key);
+    function _newDbLoadHandler(dbName) {
+      _dbManager[dbName].storages.forEach(function(storage) {
+        if (!storage.options) storage.options = {};
+        storage.initialize(getDb(dbName).addCollection(storage.collectionName, storage.options), getDb(dbName));
+      });
+      getDb(dbName).saveDatabase();
+      _dbManager[dbName].loading.resolve();
     }
 
-    function clear() {
-      return _storageInstance.clear();
-    }
-
-    function key(n) {
-      return _storageInstance.key(n);
-    }
-
-    function keys() {
-      return _storageInstance.keys();
-    }
-
-    function length() {
-      return _storageInstance.length();
-    }
-
-    function iterate(iteratorCallback) {
-      return _storageInstance.iterate(iteratorCallback);
+    function _existentDbLoadHandler(dbName) {
+      _dbManager[dbName].storages.forEach(function(storage) {
+        storage.initialize(getDb(dbName).getCollection(storage.collectionName), getDb(dbName));
+      });
+      _dbManager[dbName].loading.resolve();
     }
   }
 }());

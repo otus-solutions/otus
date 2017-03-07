@@ -4,7 +4,7 @@
   var browserSync = require('browser-sync').create();
   var browserSyncSpa = require('browser-sync-middleware-spa');
   var bump = require('gulp-bump');
-  var uglify = require("gulp-uglify");
+  var uglify = require('gulp-uglify');
   var minify = require('gulp-minify');
   var concat = require('gulp-concat');
   var sonar = require('gulp-sonar');
@@ -50,68 +50,6 @@
       .pipe(concat('otus.js'))
       .pipe(uglify())
       .pipe(minify())
-      .pipe(gulp.dest('dist'));
-  });
-
-  gulp.task('modularize', function() {
-    gulp
-      .src('app/application/**/*.js')
-      .pipe(concat('application.js'))
-      .pipe(uglify())
-      .pipe(gulp.dest('dist'));
-
-    gulp
-      .src('app/module/access/**/*.js')
-      .pipe(concat('access.js'))
-      .pipe(uglify())
-      .pipe(gulp.dest('dist'));
-
-    gulp
-      .src('app/module/activity/**/*.js')
-      .pipe(concat('activity.js'))
-      .pipe(uglify())
-      .pipe(gulp.dest('dist'));
-
-    gulp
-      .src('app/module/dashboard/**/*.js')
-      .pipe(concat('dashboard.js'))
-      .pipe(uglify())
-      .pipe(gulp.dest('dist'));
-
-    gulp
-      .src('app/module/installer/**/*.js')
-      .pipe(concat('installer.js'))
-      .pipe(uglify())
-      .pipe(gulp.dest('dist'));
-
-    gulp
-      .src('app/module/interoperability/**/*.js')
-      .pipe(concat('interoperability.js'))
-      .pipe(uglify())
-      .pipe(gulp.dest('dist'));
-
-    gulp
-      .src('app/module/participant/**/*.js')
-      .pipe(concat('participant.js'))
-      .pipe(uglify())
-      .pipe(gulp.dest('dist'));
-
-    gulp
-      .src('app/module/report/**/*.js')
-      .pipe(concat('report.js'))
-      .pipe(uglify())
-      .pipe(gulp.dest('dist'));
-
-    gulp
-      .src('app/module/session/**/*.js')
-      .pipe(concat('session.js'))
-      .pipe(uglify())
-      .pipe(gulp.dest('dist'));
-
-    gulp
-      .src('app/module/study/**/*.js')
-      .pipe(concat('study.js'))
-      .pipe(uglify())
       .pipe(gulp.dest('dist'));
   });
 

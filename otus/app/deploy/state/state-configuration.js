@@ -75,6 +75,6 @@
 
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
-    // $locationProvider.html5Mode(true);
+    // $locationProvider.html5Mode(false);
   }
 }());
