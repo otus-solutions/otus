@@ -1,25 +1,21 @@
 <div layout="column" flex>
-  <md-content layout="row" ng-show="$ctrl.isListEmpty" flex layout-align="center center">
-    <md-whiteframe class="md-whiteframe-1dp" flex="30" layout-padding style="background-color: #FFF9C4">
-      <div layout="row">
-        <md-icon layout="column" md-svg-icon="information" style="color: orange; margin-left: 1px; height: 60px; width: 60px;"
-        flex="10"></md-icon>
-        <div layout="column" class="md-body-2" flex layout-align="center start" layout-margin>
-          <span>Não existem Atividades para listar.</span>
-        </div>
+  <md-content layout="row" ng-if="$ctrl.isListEmpty" flex layout-align="center center">
+    <div class="label-light-gray">
+      <h3 class="md-display-3">Nenhuma Atividade Adicionada</h3>
+      <div>
+        <span class="md-body-1">Utilize o menu</span>
+        <md-icon md-svg-icon="plus" aria-label="Adicionar Atividade"></md-icon>
+        <span class="md-body-1">para adicionar atividades ao participante</span>
       </div>
-    </md-whiteframe>
+    </div>
   </md-content>
 
-  <md-content layout="column" flex>
-    <md-list flex ng-show="!$ctrl.isListEmpty">
+  <md-content layout="column" flex ng-if="!$ctrl.isListEmpty">
+    <md-list flex>
       <md-list-item class="md-1-line">
         <div class="md-list-item-text" layout="column" flex>
           <div layout="row" layout-align="start center" layout-padding>
             <span layout="column">Nome</span>
-            <!-- <md-button class="md-icon-button" layout="column">
-          <md-icon md-svg-icon="arrow-down" aria-label="Reordenar"></md-icon>
-        </md-button> -->
           </div>
         </div>
         <div class="md-list-item-text" layout="column" flex="10">
@@ -30,29 +26,21 @@
         <div class="md-list-item-text" layout="column" flex="20">
           <div layout="row" layout-align="start center">
             <span layout="column">Modo</span>
-            <!-- <md-button class="md-icon-button" layout="column">
-          <md-icon md-svg-icon="arrow-down" aria-label="Reordenar"></md-icon>
-        </md-button> -->
           </div>
         </div>
         <div class="md-list-item-text" layout="column" flex="20">
           <div layout="row" layout-align="start center">
             <span layout="column">Data de realização</span>
-            <!-- <md-button class="md-icon-button" layout="column">
-          <md-icon md-svg-icon="arrow-down" aria-label="Reordenar"></md-icon>
-        </md-button> -->
           </div>
         </div>
         <div class="md-list-item-text" layout="column" flex="10">
           <div layout="row" layout-align="start center">
             <span layout="column">Status</span>
-            <!-- <md-button class="md-icon-button" layout="column">
-          <md-icon md-svg-icon="arrow-down" aria-label="Reordenar"></md-icon>
-        </md-button> -->
           </div>
         </div>
         <md-divider></md-divider>
       </md-list-item>
+
       <md-list-item ng-repeat="activity in $ctrl.activities track by $index" ng-class="{ 'selectedState': activity.isSelected, 'regularState': !activity.isSelected }"
       ng-click="$ctrl.selectActivity(activity)">
         <div class="md-list-item-text" layout="column" flex>

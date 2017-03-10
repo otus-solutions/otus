@@ -2,49 +2,43 @@
   <div class="md-toolbar-tools">
     <md-button ng-click="$ctrl.returnToParticipantActivities()" aria-label="Lista de Atividades">
       <md-tooltip md-direction="down">Lista de Atividades</md-tooltip>
-      <md-icon md-svg-icon="arrow-left" aria-label="Lista de Atividades" style="color: white"></md-icon>
+      <md-icon md-svg-icon="arrow-left" aria-label="Lista de Atividades"></md-icon>
       Voltar
     </md-button>
+
     <span flex></span>
     <h2><span>Dados de Atividade em Papel</span></h2>
     <span flex></span>
+
     <md-button ng-click="$ctrl.goToActivityAdder()" aria-label="Continuar">
       Continuar
       <md-tooltip md-direction="down">Continuar</md-tooltip>
-      <md-icon md-svg-icon="arrow-right" aria-label="Continuar" style="color: white"></md-icon>
+      <md-icon md-svg-icon="arrow-right" aria-label="Continuar"></md-icon>
     </md-button>
   </div>
 </md-toolbar>
 
-<div layout="row" flex style="overflow: hidden" layout-align="center center">
-  <form layout="column" flex="50">
-    <md-content layout="row" flex layout-align="center center" layout-margin>
-      <md-whiteframe class="md-whiteframe-1dp" flex layout-padding style="background-color: #FFF9C4">
-        <div layout="row">
-          <md-icon layout="column" md-svg-icon="information" style="color: orange; margin-left: 1px; height: 60px; width: 60px;" flex="10"></md-icon>
-          <div layout="column" class="md-body-2" flex layout-align="center start" layout-margin>
-            <p style="text-align: justify" flex>
-              Antes de adicionar uma Atividade em Papel, você deve informar a <strong>data de realização</strong> e <strong>aferidor (a) responsável</strong> pelo preenchimento da atividade.
-            </p>
-          </div>
-        </div>
-      </md-whiteframe>
-    </md-content>
-    <div layout-margin>
-      <md-datepicker ng-model="$ctrl.paperActivityData.realizationDate" md-placeholder="Data de realização"></md-datepicker>
+<div layout="row" flex layout-align="center center">
+  <div layout-margin layout="column">
+    <div layout="column" class="label-light-gray">
+      <h3 class="md-display-3">Informações de Realização</h3>
+      <span class="md-body-1">Informe a <b>data de realização</b> e o responsável pelo preenchimento <b>realizado em papel.</b>
+      </span>
     </div>
-    <div layout="row" layout-margin>
-      <md-autocomplete flex md-no-cache="true" md-selected-item="$ctrl.selectedItem" md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)" md-search-text="$ctrl.searchText" md-selected-item-change="$ctrl.selectedItemChange(item)" md-items="item in $ctrl.querySearch($ctrl.searchText)"
-          md-item-text="item.text" md-min-length="0" placeholder="Aferidor (a)" md-menu-class="autocomplete-custom-template">
+    <div flex>
+      <div>
+        <md-datepicker ng-model="$ctrl.paperActivityData.realizationDate" md-placeholder="Data de realização"></md-datepicker>
+      </div>
+      <md-autocomplete flex md-no-cache="true" md-selected-item="$ctrl.selectedItem"
+      md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)" md-search-text="$ctrl.searchText"
+      md-selected-item-change="$ctrl.selectedItemChange(item)" md-items="item in $ctrl.querySearch($ctrl.searchText)"
+      md-item-text="item.text" md-min-length="0" placeholder="Aferidor (a)" md-menu-class="autocomplete-custom-template">
         <md-item-template>
           <span class="item-title">
             <md-icon md-svg-icon="account"></md-icon>
             <span md-highlight-text="$ctrl.searchText" md-highlight-flags="i">{{ item.title }}</span>
           </span>
           <span class="item-metadata">
-            <!-- <span class="item-metastat">
-              Código: <strong>{{ item.metastat.code }}</strong>
-            </span> &nbsp; -->
             <span class="item-metastat">
               E-mail: <strong>{{ item.metastat.email }}</strong>
             </span>
@@ -53,7 +47,7 @@
         <md-not-found>
           Nenhum resultado para "{{ $ctrl.searchText }}" foi encontrado.
         </md-not-found>
-        </md-autocomplete>
+      </md-autocomplete>
     </div>
-  </form>
+  </div>
 </div>

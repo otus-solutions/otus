@@ -22,7 +22,7 @@
       parent: STATE.DASHBOARD,
       name: STATE.PAPER_ACTIVITY_INITIALIZER,
       url: '/' + STATE.PAPER_ACTIVITY_INITIALIZER,
-      template: '<otus-paper-activity-initializer layout="column" layout-align="center center" flex></otus-paper-activity-initializer>',
+      template: '<otus-paper-activity-initializer layout="column" flex></otus-paper-activity-initializer>',
       onEnter: _onEnter
     };
 
