@@ -33,7 +33,8 @@
     self.setLoggedUser = setLoggedUser;
 
     function begin() {
-      _isLogged = true;
+      _removeParticipantFromMemory();
+      _isLogged = true
     }
 
     function restore() {
@@ -41,6 +42,7 @@
     }
 
     function end() {
+      _removeParticipantFromMemory();
       _isLogged = false;
     }
 
@@ -60,6 +62,10 @@
     //--------------------------------------------------------------------------------------------
     // Custom context methods
     //--------------------------------------------------------------------------------------------
+
+    function _removeParticipantFromMemory() {  //bugfix: OTUS-128
+      setSelectedParticipant();
+    }
     function getSelectedParticipant() {
       return _selectedParticipantDefer.promise;
     }
