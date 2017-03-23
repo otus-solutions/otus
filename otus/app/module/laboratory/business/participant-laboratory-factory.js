@@ -22,6 +22,7 @@
 
   function ToJson() {
     var NONE = 'Nenhum';
+    var DEFAULT = 'DEFAULT';
     var self = this;
     self.toJson = toJson;
 
@@ -32,7 +33,7 @@
       json.participant_name = participant.name;
       json.gender = participant.sex;
       json.birthday = _convertFormatDate(new Date(participant.birthdate.value));
-      json.cq_group = (laboratory.collectGroupName !== undefined) ? laboratory.collectGroupName : NONE;
+      json.cq_group = (laboratory.collectGroupName !== undefined && laboratory.collectGroupName !== DEFAULT) ? laboratory.collectGroupName : NONE;
       json.tubes = laboratory.tubes;
       buildTubeLabel(json.tubes);
       return JSON.stringify(json);
