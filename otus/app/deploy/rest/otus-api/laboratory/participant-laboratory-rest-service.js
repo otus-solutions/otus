@@ -16,8 +16,7 @@
     /* Public methods */
     self.initialize = initialize;
     self.create = create;
-    self.createLaboratory = createLaboratory;
-    self.createLaboratoryEmpty = createLaboratoryEmpty;
+    self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
 
     function initialize() {
@@ -28,20 +27,11 @@
       _rest.create();
     }
 
-    function createLaboratory(recruitmentNumber) {
+    function initializeLaboratory(recruitmentNumber) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.create({
-        rn: recruitmentNumber
-      }).$promise;
-    }
-
-    function createLaboratoryEmpty(recruitmentNumber) {
-      if (!_rest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _rest.createEmpty({
+      return _rest.initialize({
         rn: recruitmentNumber
       }).$promise;
     }

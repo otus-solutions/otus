@@ -33,8 +33,7 @@
     self.resetParticipantInUse = resetParticipantInUse;
     self.insert = insert;
     self.listAll = listAll;
-    self.createLaboratory = createLaboratory;
-    self.createLaboratoryEmpty = createLaboratoryEmpty;
+    self.initializeLaboratory = initializeLaboratory;
     self.update = update;
     self.getLaboratory = getLaboratory;
 
@@ -130,32 +129,14 @@
       return request.promise;
     }
 
-    function createLaboratory() {
+    function initializeLaboratory() {
       var request = $q.defer();
 
       _remoteStorage
         .whenReady()
         .then(function(remoteStorage) {
           return remoteStorage
-            .createLaboratory(_participant.recruitmentNumber)
-            .then(function(laboratory) {
-              ParticipantLaboratoryLocalStorageService.clear();
-              var localData = ParticipantLaboratoryLocalStorageService.insert(laboratory);
-              request.resolve(localData);
-            });
-        });
-
-      return request.promise;
-    }
-
-    function createLaboratoryEmpty() {
-      var request = $q.defer();
-
-      _remoteStorage
-        .whenReady()
-        .then(function(remoteStorage) {
-          return remoteStorage
-            .createLaboratoryEmpty(_participant.recruitmentNumber)
+            .initializeLaboratory(_participant.recruitmentNumber)
             .then(function(laboratory) {
               ParticipantLaboratoryLocalStorageService.clear();
               var localData = ParticipantLaboratoryLocalStorageService.insert(laboratory);

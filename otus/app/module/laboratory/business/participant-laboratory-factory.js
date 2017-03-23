@@ -21,13 +21,9 @@
   }
 
   function ToJson() {
+    var NONE = 'Nenhum';
     var self = this;
     self.toJson = toJson;
-
-    function _convertFormatDate(birthdate) {
-      var date = new Date(birthdate);
-      return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
-    }
 
     function toJson(participant, laboratory) {
       var json = {};
@@ -36,10 +32,31 @@
       json.participant_name = participant.name;
       json.gender = participant.sex;
       json.birthday = _convertFormatDate(new Date(participant.birthdate.value));
-      json.cq_group = laboratory.cqGroup || 'Nenhum';
+      json.cq_group = (laboratory.collectGroupName !== undefined) ? laboratory.collectGroupName : NONE;
       json.tubes = laboratory.tubes;
-
+      buildTubeLabel(json.tubes);
       return JSON.stringify(json);
+    }
+
+    function _convertFormatDate(birthdate) {
+      var date = new Date(birthdate);
+      return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    }
+
+    function buildTubeLabel(tubes) {
+      var labels = {};
+      labels.GEL = "Gel";
+      labels.FLUORIDE = "Fluoreto";
+      labels.EDTA = "EDTA";
+      labels.URINE = "Urina";
+
+      labels.FASTING = "Jejum";
+      labels.POST_OVERLOAD = "Pós-carga";
+      labels.NONE = "";
+
+      tubes.forEach(function(tube) {
+        tube.label = labels[tube.type] + " " + labels[tube.moment];
+      });
     }
 
   }

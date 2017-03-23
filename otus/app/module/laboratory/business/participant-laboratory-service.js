@@ -17,32 +17,18 @@
     self.participant = {};
     self.tubes = {};
 
-    self.createLaboratory = createLaboratory;
-    self.createLaboratoryEmpty = createLaboratoryEmpty;
+    self.initializeLaboratory = initializeLaboratory;
     self.getSelectedParticipant = getSelectedParticipant;
     self.hasLaboratory = hasLaboratory;
     self.getLaboratory = getLaboratory;
     self.toJson = toJson;
 
-    function createLaboratory() {
+    function initializeLaboratory() {
       return getSelectedParticipant()
         .then(function(participant) {
           self.participant = participant;
           return ParticipantLaboratoryRepositoryService
-            .createLaboratory(participant)
-            .then(function(laboratory) {
-              self.laboratory = laboratory;
-              return laboratory;
-            });
-        });
-    }
-
-    function createLaboratoryEmpty() {
-      return getSelectedParticipant()
-        .then(function(participant) {
-          self.participant = participant;
-          return ParticipantLaboratoryRepositoryService
-            .createLaboratoryEmpty(participant)
+            .initializeLaboratory(participant)
             .then(function(laboratory) {
               self.laboratory = laboratory;
               return laboratory;

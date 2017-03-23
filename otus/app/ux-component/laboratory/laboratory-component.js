@@ -35,7 +35,7 @@
 
     function intializeLaboratory() {
       ParticipantLaboratoryService
-        .createLaboratory()
+        .initializeLaboratory()
         .then(function(laboratory) {
           if (laboratory) {
             self.hasLaboratory = true;

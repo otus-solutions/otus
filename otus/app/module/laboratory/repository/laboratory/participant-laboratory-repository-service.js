@@ -14,25 +14,14 @@
     var self = this;
     var laboratory = {};
 
-    self.createLaboratory = createLaboratory;
-    self.createLaboratoryEmpty = createLaboratoryEmpty;
+    self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
 
-    function createLaboratory(participant) {
+    function initializeLaboratory(participant) {
       // var request = $q.defer();
       ParticipantLaboratoryCollectionService.useParticipant(participant);
       return ParticipantLaboratoryCollectionService
-        .createLaboratory()
-        .then(function(laboratory) {
-          return laboratory;
-        });
-    }
-
-    function createLaboratoryEmpty(participant) {
-      // var request = $q.defer();
-      ParticipantLaboratoryCollectionService.useParticipant(participant);
-      return ParticipantLaboratoryCollectionService
-        .createLaboratoryEmpty()
+        .initializeLaboratory()
         .then(function(laboratory) {
           return laboratory;
         });

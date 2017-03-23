@@ -31,8 +31,7 @@
 
     /* Public methods */
     self.insert = insert;
-    self.createLaboratoryEmpty = createLaboratoryEmpty;
-    self.createLaboratory = createLaboratory;
+    self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
 
     /**
@@ -53,34 +52,16 @@
     }
 
     /**
-     * create laboratories.
+     * initialize laboratories.
      * @param {(object)} recruitmentNumber - the recruitment number of participant
      * @returns {Promise} promise
      * @memberof LaboratoryRemoteStorageService
      */
-    function createLaboratory(recruitmentNumber) {
+    function initializeLaboratory(recruitmentNumber) {
       var deferred = $q.defer();
 
       ParticipantLaboratoryRestService
-        .createLaboratory(recruitmentNumber)
-        .then(function(response) {
-          deferred.resolve(response.data);
-        });
-
-      return deferred.promise;
-    }
-
-    /**
-     * create laboratories empty.
-     * @param {(object)} recruitmentNumber - the recruitment number of participant
-     * @returns {Promise} promise
-     * @memberof LaboratoryRemoteStorageService
-     */
-    function createLaboratoryEmpty(recruitmentNumber) {
-      var deferred = $q.defer();
-
-      ParticipantLaboratoryRestService
-        .createLaboratoryEmpty(recruitmentNumber)
+        .initializeLaboratory(recruitmentNumber)
         .then(function(response) {
           deferred.resolve(response.data);
         });
