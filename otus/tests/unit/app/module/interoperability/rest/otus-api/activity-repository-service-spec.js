@@ -1,4 +1,4 @@
-describe('otusjs.otus.interoperability.rest.otusApi.ActivityRepositoryService', function() {
+xdescribe('otusjs.otus.interoperability.rest.otusApi.ActivityRepositoryService', function() {
 
   var UNIT_NAME = 'otusjs.otus.interoperability.rest.otusApi.ActivityRepositoryService';
   var Mock = {};

@@ -1,4 +1,4 @@
-describe('otusjs.otus.application.state.ParticipantStateProvider', function() {
+xdescribe('otusjs.otus.application.state.ParticipantStateProvider', function() {
 
   var UNIT_NAME = 'otusjs.otus.application.state.ParticipantState';
   var TEMPLATE = '<div id="participant-state-template" flex ui-view></div>';

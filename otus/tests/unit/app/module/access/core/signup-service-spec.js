@@ -1,4 +1,4 @@
-describe('otusjs.user.access.service.SignupService', function() {
+xdescribe('otusjs.user.access.service.SignupService', function() {
 
   var UNIT_NAME = 'otusjs.user.access.service.SignupService';
   var Mock = {};

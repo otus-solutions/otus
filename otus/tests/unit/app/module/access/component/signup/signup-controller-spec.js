@@ -1,4 +1,4 @@
-describe('otusjs.user.access.signup.SignupController', function() {
+xdescribe('otusjs.user.access.signup.SignupController', function() {
 
   var UNIT_NAME = 'otusjs.otus.uxComponent.SignupController';
   var Mock = {};

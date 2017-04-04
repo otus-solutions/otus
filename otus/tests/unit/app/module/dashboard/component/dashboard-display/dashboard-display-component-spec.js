@@ -1,4 +1,4 @@
-describe('otusDashboardDisplay', function() {
+xdescribe('otusDashboardDisplay', function() {
 
   var UNIT_NAME = 'otusDashboardDisplay';
   var injections = {};

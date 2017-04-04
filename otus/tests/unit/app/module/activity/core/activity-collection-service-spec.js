@@ -1,4 +1,4 @@
-describe('otusjs.activity.repository.ActivityRepositoryService', function() {
+xdescribe('otusjs.activity.repository.ActivityRepositoryService', function() {
 
   var UNIT_NAME = 'otusjs.activity.repository.ActivityRepositoryService';
   var Mock = {};

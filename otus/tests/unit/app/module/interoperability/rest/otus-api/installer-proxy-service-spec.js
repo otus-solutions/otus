@@ -1,4 +1,4 @@
-describe('otusjs.otus.interoperability.rest.otusApi.InstallerProxyService', function() {
+xdescribe('otusjs.otus.interoperability.rest.otusApi.InstallerProxyService', function() {
 
   var UNIT_NAME = 'otusjs.otus.interoperability.rest.otusApi.InstallerProxyService';
   var Mock = {};

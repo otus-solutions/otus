@@ -1,4 +1,4 @@
-describe('LoginStateProvider', function() {
+xdescribe('LoginStateProvider', function() {
 
   var UNIT_NAME = 'otusjs.otus.application.state.LoginState';
   var URL = '/login';

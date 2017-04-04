@@ -1,4 +1,4 @@
-describe('otusjs.otus.interoperability.rest.otusApi.LoginProxyService', function() {
+xdescribe('otusjs.otus.interoperability.rest.otusApi.LoginProxyService', function() {
 
   var UNIT_NAME = 'otusjs.otus.interoperability.rest.otusApi.LoginProxyService';
   var Mock = {};

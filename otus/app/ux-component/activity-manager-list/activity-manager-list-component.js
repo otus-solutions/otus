@@ -14,10 +14,11 @@
   Controller.$inject = [
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.activity.core.EventService',
-    'otusjs.otus.uxComponent.ActivityItemFactory'
+    'otusjs.otus.uxComponent.ActivityItemFactory',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(ActivityService, EventService, ActivityItemFactory) {
+  function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService) {
     var self = this;
     var _selectedActivities = [];
     self.activities = [];
@@ -55,6 +56,7 @@
     }
 
     function _loadActivities() {
+      LoadingScreenService.start();
       ActivityService
         .listAll()
         .then(function(activities) {
@@ -63,6 +65,7 @@
             .map(ActivityItemFactory.create);
 
           self.isListEmpty = !self.activities.length;
+          LoadingScreenService.finish();
         });
     }
 

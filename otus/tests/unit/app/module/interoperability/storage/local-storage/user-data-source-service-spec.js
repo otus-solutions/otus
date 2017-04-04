@@ -1,4 +1,4 @@
-describe('otusjs.otus.interoperability.dataSource.UserDataSourceService', function() {
+xdescribe('otusjs.otus.interoperability.dataSource.UserDataSourceService', function() {
 
   var UNIT_NAME = 'otusjs.otus.interoperability.dataSource.UserDataSourceService';
   var Mock = {};

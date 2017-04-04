@@ -1,4 +1,4 @@
-describe('otusActivityManagerToolbar', function() {
+xdescribe('otusActivityManagerToolbar', function() {
 
   var UNIT_NAME = 'otusActivityManagerToolbar';
   var Mock = {};

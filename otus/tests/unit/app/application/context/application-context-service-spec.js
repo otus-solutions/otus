@@ -1,4 +1,4 @@
-describe('otusjs.application.ApplicationContextService', function() {
+xdescribe('otusjs.application.ApplicationContextService', function() {
 
   var UNIT_NAME = 'otusjs.application.ApplicationContextService';
   var Mock = {};

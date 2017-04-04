@@ -1,4 +1,4 @@
-describe('otusjs.otus.scope.ScopeFactory', function() {
+xdescribe('otusjs.otus.scope.ScopeFactory', function() {
 
   var UNIT_NAME = 'otusjs.otus.scope.ScopeFactory';
   var Mock = {};

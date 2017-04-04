@@ -1,4 +1,4 @@
-describe('otusjs.otus.application.state.ActivityAdderStateProvider', function() {
+xdescribe('otusjs.otus.application.state.ActivityAdderStateProvider', function() {
 
   var UNIT_NAME = 'otusjs.otus.application.state.ActivityAdderState';
   var URL = '/activity-adder';

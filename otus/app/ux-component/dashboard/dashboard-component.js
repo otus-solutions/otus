@@ -22,7 +22,6 @@
 
     function selectParticipant(selectedParticipant) {
       self.selectedParticipant = selectedParticipant;
-      ApplicationStateService.activateParticipantActivities();
     }
 
     /* Lifecycle methods */

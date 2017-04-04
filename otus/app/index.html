@@ -13,10 +13,11 @@
   <link href="app/static-resource/stylesheet/login-page.css" rel="stylesheet" />
   <link href="app/static-resource/stylesheet/styles.css" rel="stylesheet" />
   <link href="app/static-resource/stylesheet/initial-config.css" rel="stylesheet" />
+  <link href="app/static-resource/stylesheet/please-wait-style.css" rel="stylesheet">
   <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
   <link href="node_modules/label-maker-js/dist/label-maker-js/css/otusjs-label-page.min.css" rel="stylesheet">
   <link href="node_modules/label-maker-js/dist/label-maker-js/css/otusjs-setup-view.min.css" rel="stylesheet">
-
+  <link href="node_modules/please-wait/build/please-wait.css" rel="stylesheet">
   <title>Otus</title>
 </head>
 
@@ -63,6 +64,8 @@
 <script src="node_modules/label-maker-js/dist/label-maker-js/scripts/otusjs-label-maker.min.js"></script>
 <!-- ************************************** JSBARCODE ************************************** -->
 <script src="node_modules/jsbarcode/dist/barcodes/JsBarcode.code39.min.js" charset="utf-8"></script>
+<!-- ************************************** Please-wait ************************************** -->
+<script src="node_modules/please-wait/build/please-wait.min.js"></script>
 
 <!-- ************************************* Otus ************************************* -->
 <script src="app/app.js"></script>
@@ -167,7 +170,6 @@
 <script src="app/deploy/rest/otus-api/user/authentication-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/user/user-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/participant-laboratory-rest-service.js"></script>
-
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
 <script src="app/deploy/state/access/access-state-provider.js"></script>
@@ -188,6 +190,8 @@
 <script src="app/deploy/storage/storage-loader-service.js"></script>
 <script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
 <script src="app/deploy/storage/laboratory/participant-laboratory-remote-storage-service.js"></script>
+<!-- # Deploy > Loading Screen -->
+<script src="app/deploy/loading-screen/loading-screen-service.js"></script>
 <!------------------------------------------------------------------------------------------------>
 
 <!-- # Module > Activity -->

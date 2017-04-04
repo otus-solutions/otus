@@ -1,4 +1,4 @@
-describe('AccessStateProvider', function() {
+xdescribe('AccessStateProvider', function() {
 
   var UNIT_NAME = 'otusjs.otus.application.state.AccessState';
   var TEMPLATE = '<div flex layout="column"><div ui-view flex layout="row"></div></div>';

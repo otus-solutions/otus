@@ -1,4 +1,4 @@
-describe('SessionContextService', function() {
+xdescribe('SessionContextService', function() {
 
   var UNIT_NAME = 'otusjs.application.session.core.ContextService';
   var Mock = {};

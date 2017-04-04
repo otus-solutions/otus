@@ -1,4 +1,4 @@
-describe('otusDashboardToolbar', function() {
+xdescribe('otusDashboardToolbar', function() {
 
   var UNIT_NAME = 'otusDashboardToolbar';
   var componentController = {};

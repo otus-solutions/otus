@@ -1,4 +1,4 @@
-describe('otusParticipantSearchTool', function() {
+xdescribe('otusParticipantSearchTool', function() {
 
   var UNIT_NAME = 'otusParticipantSearchTool';
   var Mock = {};

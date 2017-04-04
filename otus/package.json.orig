@@ -43,7 +43,11 @@
     "label-maker-js": "git@github.com:ccem-dev/label-maker-js.git#dev",
     "lokijs": "1.4.2",
     "moment": "2.12.0",
+<<<<<<< HEAD
+    "jsbarcode": "^3.5.7",
     "please-wait": "0.0.5",
+=======
+>>>>>>> ef2da2e648b63545b6c8cd30829409b551a18650
     "otus-client-js": "git@github.com:ccem-dev/otus-client-js.git#dev",
     "otus-domain-client": "git@github.com:ccem-dev/otus-domain-client-js.git#dev",
     "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#dev",

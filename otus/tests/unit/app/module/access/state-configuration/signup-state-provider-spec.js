@@ -1,4 +1,4 @@
-describe('SingupResultStateProvider', function() {
+xdescribe('SingupResultStateProvider', function() {
 
   var UNIT_NAME = 'otusjs.otus.application.state.SignupState';
   var URL = '/signup';

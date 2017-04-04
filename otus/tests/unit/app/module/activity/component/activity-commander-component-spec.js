@@ -1,4 +1,4 @@
-describe('otusActivityManagerCommander', function() {
+xdescribe('otusActivityManagerCommander', function() {
 
   var UNIT_NAME = 'otusActivityManagerCommander';
   var Mock = {};

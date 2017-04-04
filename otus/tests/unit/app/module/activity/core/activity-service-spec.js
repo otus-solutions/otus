@@ -1,4 +1,4 @@
-describe('otusjs.activity.business.ParticipantActivityService', function() {
+xdescribe('otusjs.activity.business.ParticipantActivityService', function() {
 
   var UNIT_NAME = 'otusjs.activity.business.ParticipantActivityService';
   var Mock = {};

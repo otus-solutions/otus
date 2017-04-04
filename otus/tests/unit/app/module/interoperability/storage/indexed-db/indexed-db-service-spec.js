@@ -1,4 +1,4 @@
-describe('otusjs.otus.interoperability.storage.IndexedDbService', function() {
+xdescribe('otusjs.otus.interoperability.storage.IndexedDbService', function() {
 
   var UNIT_NAME = 'otusjs.otus.interoperability.storage.IndexedDbService';
   var Mock = {};

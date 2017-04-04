@@ -1,4 +1,4 @@
-describe('otusjs.otus.interoperability.storage.StorageService', function() {
+xdescribe('otusjs.otus.interoperability.storage.StorageService', function() {
 
   var UNIT_NAME = 'otusjs.otus.interoperability.storage.StorageService';
   var Mock = {};

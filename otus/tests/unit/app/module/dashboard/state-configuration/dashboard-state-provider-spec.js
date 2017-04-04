@@ -1,4 +1,4 @@
-describe('DashboardStateProvider', function() {
+xdescribe('DashboardStateProvider', function() {
 
   var UNIT_NAME = 'otusjs.otus.application.state.DashboardState';
   var URL = '/dashboard';

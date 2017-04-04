@@ -1,4 +1,4 @@
-describe('otusjs.otus.uxComponent.LoginController', function() {
+xdescribe('otusjs.otus.uxComponent.LoginController', function() {
 
   var UNIT_NAME = 'otusjs.otus.uxComponent.LoginController';
   var Mock = {};

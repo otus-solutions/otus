@@ -1,4 +1,4 @@
-describe('otusjs.user.access.service.UserCollectionService', function() {
+xdescribe('otusjs.user.access.service.UserCollectionService', function() {
 
   var UNIT_NAME = 'otusjs.user.access.service.UserCollectionService';
   var Mock = {};

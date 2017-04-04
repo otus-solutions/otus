@@ -8,11 +8,12 @@
   Controller.$inject = [
     'otusjs.application.state.ApplicationStateService',
     'otusjs.user.access.service.SignupService',
+    'otusjs.deploy.LoadingScreenService',
     '$scope',
     '$mdToast'
   ];
 
-  function Controller(ApplicationStateService, SignupService, $scope, $mdToast) {
+  function Controller(ApplicationStateService, SignupService, LoadingScreenService, $scope, $mdToast) {
     var INTERNAL_ERROR_MESSAGE = "Houve um erro ao realizar o cadastro. Informe a equipe de desenvolvimento";
     var self = this;
 
@@ -24,6 +25,7 @@
 
     function signup(user) {
       self.isWaiting = true;
+      LoadingScreenService.start();
 
       SignupService
         .executeSignup(user)
@@ -34,6 +36,7 @@
             _showErrorMessage(response);
           }
           self.isWaiting = false;
+          LoadingScreenService.finish();
         });
     }
 

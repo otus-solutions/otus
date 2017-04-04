@@ -1,4 +1,4 @@
-describe('otusActivityAdderList', function() {
+xdescribe('otusActivityAdderList', function() {
 
   var UNIT_NAME = 'otusActivityAdderList';
   var Mock = {};

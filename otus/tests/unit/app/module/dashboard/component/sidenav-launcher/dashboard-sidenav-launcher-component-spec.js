@@ -1,4 +1,4 @@
-describe('otusDashboardSidenav', function() {
+xdescribe('otusDashboardSidenav', function() {
 
   var UNIT_NAME = 'otusDashboardSidenavLauncher';
   var SIDENAV_ORIGIN = 'left';
