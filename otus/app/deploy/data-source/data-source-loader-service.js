@@ -9,10 +9,11 @@
     '$q',
     'otusjs.deploy.ActivityDataSourceService',
     'otusjs.deploy.ParticipantDataSourceService',
-    'otusjs.deploy.UserDataSourceService'
+    'otusjs.deploy.UserDataSourceService',
+    'otusjs.deploy.SurveyItemDatasourceService'
   ];
 
-  function Service($q, ActivityDataSourceService, ParticipantDataSourceService, UserDataSourceService) {
+  function Service($q, ActivityDataSourceService, ParticipantDataSourceService, UserDataSourceService, SurveyItemDatasourceService) {
     var self = this;
     var _deferred = $q.defer();
     var _dsLoaded = 0;
@@ -25,6 +26,7 @@
       ActivityDataSourceService.up().then(_checkDataSourceInitialization);
       ParticipantDataSourceService.up().then(_checkDataSourceInitialization);
       UserDataSourceService.up().then(_checkDataSourceInitialization);
+      SurveyItemDatasourceService.up().then(_checkDataSourceInitialization);
       return _deferred.promise;
     }
 

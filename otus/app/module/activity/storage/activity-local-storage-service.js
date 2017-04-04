@@ -39,6 +39,10 @@
     self.update = update;
     self.clear = clear;
 
+    /* Datasources Methods */
+    self.getDatasource = getDatasource;
+    self.registerDatasource = registerDatasource;
+
     /**
      * Binds this service to collection "activities" from LokiJS database instance.
      * @param {object} collection - the reference to collection
@@ -82,6 +86,24 @@
         _collection.constraints.unique[uniqueIndex].lokiMap = {};
       });
       _db.saveDatabase();
+    }
+
+    /* Datasources  Methods */
+    function registerDatasource(datasource) {
+      _collection.insert({
+        name: 'datasource',
+        dataMap: datasource
+      });
+      return self.getDatasource;
+    }
+
+    function getDatasource() {
+      var find = _collection.findOne({
+        name: 'datasource'
+      });
+      if (find) {
+        return find.dataMap;
+      }
     }
   }
 }());

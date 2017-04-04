@@ -23,7 +23,7 @@
 
     function beforeEffect(pipe, flowData) {}
 
-    function effect(pipe, flowData) {
+    function effect(pipe, flowData) {      
       ActivityModuleService
         .whenActivityFacadeServiceReady()
         .then(function(ActivityFacadeService) {
