@@ -15,11 +15,10 @@
     });
 
   Controller.$inject = [
-    'otusjs.participant.business.ParticipantSearchService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.participant.business.ParticipantSearchService'
   ];
 
-  function Controller(ParticipantSearchService, LoadingScreenService) {
+  function Controller(ParticipantSearchService) {
     var self = this;
 
     /* Public methods */
@@ -39,10 +38,8 @@
     }
 
     function setResultData(data) {
-      LoadingScreenService.start();
       self.participants = data;
       self.showResultList = ParticipantSearchService.hasResultFilter();
-      LoadingScreenService.finish();
     }
 
     function onInit() {
