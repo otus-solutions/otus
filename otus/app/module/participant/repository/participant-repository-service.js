@@ -11,7 +11,6 @@
 
   function Service(ModuleService) {
     var self = this;
-    var _dataSource = ModuleService.DataSource.Participant;
 
     /* Public methods */
     self.listIdexers = listIdexers;
@@ -27,7 +26,10 @@
     function update() {}
 
     function listIdexers() {
-      return _dataSource.listIndexers();
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+         return _dataSource.listIndexers();
+      }
     }
   }
 }());
