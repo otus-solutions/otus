@@ -50,9 +50,11 @@
       labels.FLUORIDE = "Fluoreto";
       labels.EDTA = "EDTA";
       labels.URINE = "Urina";
+      labels.CITRATE = "Citrato";
 
       labels.FASTING = "Jejum";
-      labels.POST_OVERLOAD = "Pós-carga";
+      labels.ONE_HOUR = "1 Hora";
+      labels.POST_OVERLOAD = "Pós";
       labels.NONE = "";
 
       tubes.forEach(function(tube) {
