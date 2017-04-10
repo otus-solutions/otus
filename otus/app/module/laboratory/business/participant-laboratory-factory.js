@@ -51,9 +51,10 @@
       labels.EDTA = 'EDTA';
       labels.URINE = 'Urina';
       labels.CITRATE = 'Citrato';
+      labels.EDTA_DNA = 'EDTA DNA';
 
       labels.FASTING = 'Jejum';
-      labels.ONE_HOUR = '1 Hora';
+      labels.MIDDLE = 'Meio';
       labels.POST_OVERLOAD = 'Pós';
       labels.NONE = '';
 
