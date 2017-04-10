@@ -19,7 +19,19 @@
     }
 
     function onParticipantSelected(listener) {
-      _onParticipantSelectedListeners.push(listener);
+      if (!_onParticipantSelectedListeners.length) {
+        _onParticipantSelectedListeners.push(listener);
+      } else {
+        if (!_onParticipantSelectedListeners.some(function(registeredListener) {
+            return registeredListener.name === listener.name;
+          })) {
+          _onParticipantSelectedListeners.push(listener);
+        }
+      }
+    }
+
+    function filterFunction(registeredListener) {
+      return registeredListener.name === listener.name;
     }
 
     function _notifyEvent(listeners, data, endLoop) {

@@ -10,27 +10,35 @@
 
   Controller.$inject = [
     'otusjs.laboratory.business.ParticipantLaboratoryService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
   ];
 
   function Controller(ParticipantLaboratoryService, LoadingScreenService) {
     var self = this;
-    self.hasLaboratory = false;
     self.json = '';
-    // self.json = Servicoquevaipegarojsonviarestrequest;
 
     /* Public methods */
     self.$onInit = onInit;
     self.intializeLaboratory = intializeLaboratory;
 
     function onInit() {
+      self.selectedParticipant = undefined;
+      self.hasLaboratory = false;
+      LoadingScreenService.start();
+      ParticipantLaboratoryService.onParticipantSelected(_setupLaboratory);
+      _setupLaboratory();
+    }
+
+    function _setupLaboratory() {
       ParticipantLaboratoryService
         .hasLaboratory()
         .then(function(hasLaboratory) {
-          self.hasLaboratory = hasLaboratory
+          self.hasLaboratory = hasLaboratory;
           if (hasLaboratory) {
             _fetchLaboratory();
           }
+          LoadingScreenService.finish();
+          self.selectedParticipant = ParticipantLaboratoryService.participant;
         });
     }
 

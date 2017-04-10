@@ -9,10 +9,11 @@
     '$q',
     'otusjs.laboratory.repository.ParticipantLaboratoryRepositoryService',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.laboratory.business.ParticipantLaboratoryFactory'
+    'otusjs.laboratory.business.ParticipantLaboratoryFactory',
+    'otusjs.laboratory.core.EventService'
   ];
 
-  function Service($q, ParticipantLaboratoryRepositoryService, ContextService, ParticipantLaboratoryFactory) {
+  function Service($q, ParticipantLaboratoryRepositoryService, ContextService, ParticipantLaboratoryFactory, EventService) {
     var self = this;
     self.participant = {};
     self.tubes = {};
@@ -21,7 +22,12 @@
     self.getSelectedParticipant = getSelectedParticipant;
     self.hasLaboratory = hasLaboratory;
     self.getLaboratory = getLaboratory;
+    self.onParticipantSelected = onParticipantSelected;
     self.toJson = toJson;
+
+    function onParticipantSelected(listener) {
+      EventService.onParticipantSelected(listener);
+    }
 
     function initializeLaboratory() {
       return getSelectedParticipant()
@@ -36,7 +42,7 @@
         });
     }
 
-    function getSelectedParticipant() {
+    function getSelectedParticipant() {      
       return ContextService.getSelectedParticipant();
     }
 
