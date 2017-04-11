@@ -1,0 +1,17 @@
+<md-toolbar style="z-index: 1" class="md-primary md-hue-1">
+  <div class="md-toolbar-tools">
+    <div layout="row" layout-margin>
+      <md-icon md-svg-icon="eyedropper-variant" aria-label="Atividades">
+        <md-tooltip>Laboratório</md-tooltip>
+      </md-icon>
+      <span>{{ $ctrl.selectedParticipant.name }}</span>
+    </div>
+    </div>
+</md-toolbar>
+
+<div ng-show="!$ctrl.hasLaboratory" layout="row" layout-align="center center">
+  <md-button class="md-raised md-primary" ng-click="$ctrl.intializeLaboratory()">Iniciar Laboratório</md-button>
+</div>
+<div ng-show="$ctrl.hasLaboratory" layout="row" layout-align="center center">
+  <setup-component json="$ctrl.json"></setup-component>
+</div>

@@ -1,0 +1,24 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-1dp" md-component-id="left" style="z-index: 1000 !important">
+  <md-toolbar class="md-primary md-whiteframe-1dp">
+    <div class="md-toolbar-tools">
+      <img src="app/static-resource/image/coruja_pesquisadora.png" class="toolbar-icon"></img>
+      <span flex></span>
+      <span class="md-body-2">OTUS | PROJETO</span>
+      <span flex></span>
+      <md-button aria-label="Logout" ng-click="$ctrl.logout()" layout="column">
+        <md-icon md-svg-icon="exit-to-app" aria-label="Logout"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <otus-participant-box layout="row"></otus-participant-box>
+  <!-- <md-divider></md-divider>
+    <md-list>
+      <md-subheader class="md-no-sticky">Projeto</md-subheader>
+      <md-list-item>
+        <div layout-align="start center">
+          <md-icon md-font-library="material-icons">local_pharmacy</md-icon>
+          <md-button id="home-menu">Laboratório</md-button>
+        </div>
+      </md-list-item>
+    </md-list> -->
+</md-sidenav>

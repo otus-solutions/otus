@@ -1,0 +1,36 @@
+[{
+  "value": 1,
+  "name": "Diego dos Santos",
+  "email": "santos.diegoferreira@gmail.com",
+  "display": "(1) Diego dos Santos"
+}, {
+  "value": 2,
+  "name": "Diogo Ferreira",
+  "email": "diogo.rosas.ferreira@gmail.com",
+  "display": "(2) Diogo Ferreira"
+}, {
+  "value": 3,
+  "name": "Emanoel Viana",
+  "email": "vianaemanoel@gmail.com",
+  "display": "(3) Emanoel Viana"
+}, {
+  "value": 4,
+  "name": "Carolina nery",
+  "email": "carolinanery@gmail.com",
+  "display": "(5) Carolina Nery"
+}, {
+  "value": 5,
+  "name": "Fabiano Ramires",
+  "email": "framires@gmail.com",
+  "display": "(5) Fabiano Ramires"
+}, {
+  "value": 6,
+  "name": "Breno Scheffer",
+  "email": "breffer@gmail.com",
+  "display": "(6) Breno Scheffer"
+}, {
+  "value": 7,
+  "name": "Fagner Schwalm",
+  "email": "fagnersch@gmail.com",
+  "display": "(7) Fagner Schwalm"
+}]

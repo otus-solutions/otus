@@ -1,0 +1,11 @@
+<div layout="row">
+  <input type="text" placeholder="Busca por nome ou número de recrutamento" class="participant-search-input"
+    ng-change="$ctrl.filter()"
+    ng-model="$ctrl.query"
+    ng-model-options="{ debounce: 500 }" flex>
+  </input>
+</div>
+<otus-participant-search-result
+  class="md-whiteframe-1dp"
+  on-select="$ctrl.selectParticipant(participant)">
+</otus-participant-search-result>

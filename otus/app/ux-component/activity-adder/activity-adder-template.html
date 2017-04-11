@@ -1,0 +1,10 @@
+<otus-activity-adder-toolbar
+  activity-type="Online"
+  on-add-activities="$ctrl.addActivities()">
+</otus-activity-adder-toolbar>
+<otus-activity-adder-list
+  layout="column"
+  flex
+  on-activity-selection="$ctrl.catchActivity(activity)"
+  style="overflow-y: auto">
+</otus-activity-adder-list>

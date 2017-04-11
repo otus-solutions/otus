@@ -1,0 +1,51 @@
+<md-content layout="column" flex layout-padding layout-align="center center" ng-show="$ctrl.isEmpty">
+  <span class="md-title" style="text-align: center">Não há participante selecionado(a).</span>
+</md-content>
+<div layout="column" ng-show="!$ctrl.isEmpty" flex>
+
+  <div md-colors="::{background: 'default-primary-500'}" flex>
+    <div layout-margin layout-padding layout="column" flex>
+      <div layout-align="start center" layout="row">
+        <md-button class="md-fab md-accent">
+          <md-icon md-font-set="material-icons">person</md-icon>
+        </md-button>
+        <div layout="column">
+          <span class="md-title">{{ $ctrl.selectedParticipant.recruitmentNumber }}</span>
+          <span class="md-body-1">{{ $ctrl.selectedParticipant.fieldCenter.name }} ({{ $ctrl.selectedParticipant.fieldCenter.acronym }})</span>
+        </div>
+      </div>
+      <span class="md-title">{{ $ctrl.selectedParticipant.name }}</span>
+    </div>
+  </div>
+
+  <div layout-margin>
+    <md-list ng-show="!$ctrl.isEmpty">
+      <!-- <md-list-item>
+      <div layout-align="start center">
+        <md-icon md-svg-icon="home" aria-label="Home"></md-icon>
+        <md-button id="home-menu">
+          Home
+        </md-button>
+      </div>
+    </md-list-item> -->
+      <md-list-item class="md-2-line">
+        <div layout-align="start center">
+          <md-icon md-svg-icon="file-document-box" aria-label="Atividades" class="md-accent"></md-icon>
+          <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantActivities()">Atividades</md-button>
+        </div>
+      </md-list-item>
+      <md-list-item class="md-2-line">
+        <div layout-align="start center">
+          <md-icon md-svg-icon="eyedropper-variant" aria-label="Laboratório" class="md-accent"></md-icon>
+          <md-button id="surveyforms-menu" ng-click="$ctrl.loadLaboratory()">Laboratório</md-button>
+        </div>
+      </md-list-item>
+      <!-- <md-list-item>
+      <div layout-align="start center">
+        <md-icon md-font-library="material-icons">insert_chart</md-icon>
+        <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantReports()">Relatórios</md-button>
+      </div>
+    </md-list-item> -->
+    </md-list>
+  </div>
+</div>

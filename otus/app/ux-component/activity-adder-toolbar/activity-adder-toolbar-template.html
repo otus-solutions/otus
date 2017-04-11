@@ -1,0 +1,31 @@
+<md-toolbar style="z-index: 1" class="md-primary md-hue-1">
+  <div class="md-toolbar-tools md-hue-2">
+    <md-button ng-click="$ctrl.returnToParticipantActivities()" aria-label="Lista de Atividades">
+      <md-tooltip md-direction="down">Lista de Atividades</md-tooltip>
+      <md-icon md-svg-icon="arrow-left" aria-label="Lista de Atividades" style="color: white"></md-icon>
+      Voltar
+    </md-button>
+    <span flex></span>
+    <h2><span>Adicionar Atividade {{ $ctrl.activityType }}</span></h2>
+    <span flex></span>
+    <md-button ng-click="$ctrl.addActivities()" class="md-raised md-primary md-icon-button" aria-label="Adicionar">
+      <md-tooltip md-direction="down">Adicionar</md-tooltip>
+      <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
+    </md-button>
+    <!-- <div style="
+      border-right: 1px solid #555;
+      display: inline-block;
+      height: 53px;
+      margin: -10.5px 8px;
+      vertical-align: middle;">
+    </div>
+    <md-button class="md-raised md-primary md-icon-button" aria-label="Visualização em grade" ng-click="$ctrl.visualizeSelectedActivity()">
+      <md-tooltip md-direction="down">Visualização em grade</md-tooltip>
+      <md-icon md-svg-icon="view-grid" aria-label="Visualização em grade"></md-icon>
+    </md-button>
+    <md-button class="md-raised md-primary md-icon-button" aria-label="Detalhes" ng-click="$ctrl.visualizeSelectedActivity()">
+      <md-tooltip md-direction="down">Detalhes</md-tooltip>
+      <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>
+    </md-button> -->
+  </div>
+</md-toolbar>
