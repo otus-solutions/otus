@@ -30,8 +30,11 @@
     function setupDatasources(dsDefsArray) {
       var defer = $q.defer();
       getDatasources(dsDefsArray)
-        .then(function(dsArray) {
-          var getAddress = ActivityLocalStorageService.registerDatasource(dsArray);
+        .then(function(dsMap) {
+          dsDefsArray.forEach(function(dsDef){
+             dsMap[dsDef.getID()].bindedItems = dsDef.getBindedItems();
+          });
+          var getAddress = ActivityLocalStorageService.registerDatasource(dsMap);
           DatasourceService.provideDatasourcesAddress(getAddress);
           defer.resolve(true);
         });
@@ -42,11 +45,9 @@
     function getDatasources(dsDefsArray) {
       var defer = $q.defer();
       var dsMap = {};
-      var dsArr = [];
       _getAll(dsDefsArray)
         .then(function(promiseArray) {
           promiseArray.forEach(function(promise) {
-            dsArr.push(promise.data);
             dsMap[promise.data.id] = promise.data;
           });
           defer.resolve(dsMap);
