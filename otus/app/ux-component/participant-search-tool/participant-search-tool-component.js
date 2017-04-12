@@ -15,7 +15,7 @@
     'otusjs.participant.business.ParticipantSearchService'
   ];
 
-  function Controller(ParticipantSearchResultService) {
+  function Controller(ParticipantSearchService) {
     var self = this;
 
     /* Public methods */
@@ -24,16 +24,20 @@
     self.selectParticipant = selectParticipant;
 
     function filter() {
-      ParticipantSearchResultService.filter(self.query);
-      self.resultComponent.setResultData(ParticipantSearchResultService.getFilteredData());
+      ParticipantSearchService.filter(self.inputedText)
+        .then(function(value) {
+           ParticipantSearchService.setFilteredParticipants(value.slice(0, 15));
+           self.resultComponent.setResultData(value.slice(0, 15));
+        });
     }
 
     function onInit() {
+      ParticipantSearchService.setup();
       self.resultComponent = {};
     }
 
     function selectParticipant(selectedParticipant) {
-      self.query = '';
+      self.inputedText = '';
       self.onSelect({
         participant: selectedParticipant
       });

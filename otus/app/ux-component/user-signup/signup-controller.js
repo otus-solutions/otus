@@ -24,7 +24,7 @@
     self.resetEmailValidation = resetEmailValidation;
 
     function signup(user) {
-      self.isWaiting = true;
+      // self.isWaiting = true;
       LoadingScreenService.start();
 
       SignupService
@@ -33,16 +33,18 @@
           if (response.data) {
             ApplicationStateService.activateSignupResult();
           } else {
-            _showErrorMessage(response);
+             _showErrorMessage(response);
+             LoadingScreenService.finish();
           }
-          self.isWaiting = false;
+       }, function(err){
           LoadingScreenService.finish();
-        });
+          _showErrorMessage(err);
+       });
     }
 
     function _showErrorMessage(response) {
-      switch (response.STATUS) {
-        case 'CONFLICT':
+      switch (response.statusText) {
+        case 'Conflict':
           _showAlreadyExistError();
           break;
         default:

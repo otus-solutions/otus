@@ -6,31 +6,46 @@
     .service('otusjs.participant.business.ParticipantSearchService', Service);
 
   Service.$inject = [
-    '$filter',
     'otusjs.participant.core.ContextService',
     'otusjs.participant.core.EventService',
     'otusjs.participant.repository.ParticipantRepositoryService',
+    'otusjs.utils.SearchQueryFactory'
   ];
 
-  function Service($filter, ContextService, EventService, ParticipantRepositoryService) {
+  function Service(ContextService, EventService, ParticipantRepositoryService, SearchQueryFactory) {
     var self = this;
     var _filteredParticipants = [];
+    var query;
 
     /* Public methods */
+    self.setup = setup;
     self.filter = filter;
     self.getAll = getAll;
     self.getFilteredData = getFilteredData;
     self.hasResultFilter = hasResultFilter;
     self.selectParticipant = selectParticipant;
+    self.setFilteredParticipants = setFilteredParticipants;
 
-    function filter(query) {
-      var participants = ParticipantRepositoryService.listIdexers();
-      if (query) {
-        _filteredParticipants = $filter('participantQuick')(participants, query);
-      } else {
-        _filteredParticipants = [];
+    var _setupSuccess;
+
+    function setup() {
+      var _participants = ParticipantRepositoryService.listIdexers();
+      if (_participants) {
+        query = SearchQueryFactory.newParticipantFilter(_participants);
+        _setupSuccess = true;
       }
     }
+
+    function filter(text) {
+      if (!_setupSuccess) {
+        setup();
+      }
+      return query.perform(text);
+    }
+
+    function setFilteredParticipants(filteredArray){
+      _filteredParticipants = filteredArray;
+   }
 
     function getAll() {
       return ParticipantRepositoryService.listIdexers();
