@@ -24,6 +24,7 @@
     self.getFilteredData = getFilteredData;
     self.hasResultFilter = hasResultFilter;
     self.selectParticipant = selectParticipant;
+    self.setFilteredParticipants = setFilteredParticipants;
 
     var _setupSuccess;
 
@@ -41,6 +42,10 @@
       }
       return query.perform(text);
     }
+
+    function setFilteredParticipants(filteredArray){
+      _filteredParticipants = filteredArray;
+   }
 
     function getAll() {
       return ParticipantRepositoryService.listIdexers();

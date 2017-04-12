@@ -39,7 +39,7 @@
 
     function setResultData(data) {
       self.participants = data;
-      self.showResultList = ParticipantSearchService.hasResultFilter();
+      self.showResultList = true;
     }
 
     function onInit() {
