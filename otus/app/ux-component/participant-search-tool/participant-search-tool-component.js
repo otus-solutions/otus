@@ -24,16 +24,19 @@
     self.selectParticipant = selectParticipant;
 
     function filter() {
-      ParticipantSearchResultService.filter(self.query);
-      self.resultComponent.setResultData(ParticipantSearchResultService.getFilteredData());
+      ParticipantSearchResultService.filter(self.inputedText)
+        .then(function(value) {
+           self.resultComponent.setResultData(value.slice(0, 15));
+        });
     }
 
     function onInit() {
+      ParticipantSearchResultService.setup();
       self.resultComponent = {};
     }
 
     function selectParticipant(selectedParticipant) {
-      self.query = '';
+      self.inputedText = '';
       self.onSelect({
         participant: selectedParticipant
       });
