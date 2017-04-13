@@ -39,7 +39,7 @@
 
     function setResultData(data) {
       self.participants = data;
-      self.showResultList = true;
+      self.showResultList = data.length ? true : false;
     }
 
     function onInit() {

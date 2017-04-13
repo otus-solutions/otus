@@ -20,7 +20,6 @@
       var userResource = OtusRestResourceService.getUserResource();
       var deferred = $q.defer();
       userResource.create(user, function(response) {
-         console.log(response);
         if (!response.hasErrors) {
           deferred.resolve(response);
         } else {

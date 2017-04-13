@@ -26,8 +26,9 @@
     function filter() {
       ParticipantSearchService.filter(self.inputedText)
         .then(function(value) {
-           ParticipantSearchService.setFilteredParticipants(value.slice(0, 15));
-           self.resultComponent.setResultData(value.slice(0, 15));
+           var slicedList = value.slice(0, 15);
+           ParticipantSearchService.setFilteredParticipants(slicedList);
+           self.resultComponent.setResultData(slicedList);
         });
     }
 

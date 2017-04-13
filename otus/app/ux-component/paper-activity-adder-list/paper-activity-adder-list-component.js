@@ -31,7 +31,6 @@
 
     function _loadActivities() {
       self.activities = ActivityService.listAvailables();
-      console.log(self.activities);
     }
 
     function selectActivity(activity) {

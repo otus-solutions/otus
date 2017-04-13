@@ -32,9 +32,17 @@
       var _participants = ParticipantRepositoryService.listIdexers();
       if (_participants) {
         query = SearchQueryFactory.newParticipantFilter(_participants);
+        _stringfyRNs(_participants);
         _setupSuccess = true;
       }
     }
+
+    function _stringfyRNs(ds){
+      for (var i = 0; i < ds.length; i++){
+         ds[i].stringfiedRN = String(ds[i].recruitmentNumber);
+      }
+      query = SearchQueryFactory.newParticipantFilter(ds);
+   }
 
     function filter(text) {
       if (!_setupSuccess) {
