@@ -2,14 +2,9 @@
   <div class="md-toolbar-tools">
     <img src="app/static-resource/image/coruja_pesquisadora.png" class="toolbar-icon"></img>
     <otus-dashboard-sidenav-launcher></otus-dashboard-sidenav-launcher>
-
     <span flex></span>
-
-    <otus-participant-search-tool flex on-select="$ctrl.selectParticipant(participant)"
-    class="md-primary md"></otus-participant-search-tool>
-
+    <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)" class="md-primary md"></otus-participant-search>
     <span flex></span>
-
     <span>{{ $ctrl.loggedUser.name}}</span>
     <md-button class="md-fab md-mini md-accent">
       <md-icon md-font-set="material-icons">person</md-icon>

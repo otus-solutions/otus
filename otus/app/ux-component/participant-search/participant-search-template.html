@@ -1,0 +1,26 @@
+<md-autocomplete class="md-autocomplete-participant"
+  md-selected-item="$ctrl.selectedParticipant"
+  md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)"
+  md-search-text="$ctrl.inputedText"
+  md-items="participant in $ctrl.querySearch($ctrl.inputedText)"
+  md-item-text="participant.name"
+  md-min-length="1"
+  placeholder="Busca por nome ou número de recrutamento"
+  md-menu-class="autocomplete-custom-participant-template">
+  <md-item-template>
+    <span class="participant-title">
+      <md-icon md-font-set="material-icons" class="material-icons">face</md-icon>
+      <span>
+        <strong>{{ participant.recruitmentNumber }}</strong>
+      </span>
+    </span>
+    <span class="participant-information">
+      <span>
+        <span>{{ participant.name }}</span>
+      </span>
+    </span>
+  </md-item-template>
+  <md-not-found>
+    Nenhum participante correspondente "{{$ctrl.inputedText}}" foi encontrado.
+  </md-not-found>
+</md-autocomplete>

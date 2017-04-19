@@ -43,7 +43,7 @@
           .then(function(userData) {
             self.loggedUser = userData;
           });
-        }
+      }
     }
   }
 }());

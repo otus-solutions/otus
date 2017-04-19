@@ -17,60 +17,7 @@ body {
 }
 
 
-/** Toolbar : Participant Search **/
-
-otus-participant-search-tool {
-  min-width: 500px;
-}
-
-.participant-search-input {
-  background-color: #299288 !important;
-  color: rgba(255, 255, 255, 0.87) !important;
-  border-radius: 4px !important;
-  border: none !important;
-  box-shadow: none !important;
-  padding: 10px;
-}
-
-.participant-search-input:focus {
-  outline: none !important;
-}
-
-.participant-search-input::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.87) !important;
-  font-size: 80%;
-}
-
-otus-participant-search-result {
-  position: absolute;
-  color: #363636 !important;
-  cursor: pointer;
-  min-width: 525px;
-  z-index: 10000;
-}
-
-otus-participant-search-result md-icon {
-  color: #363636 !important;
-}
-
-.result-container-open {
-  background-color: white;
-  border: 1px solid #CCCCCC;
-}
-
-.result-container-close {
-  height: 0;
-}
-
-.participant-result {
-  height: 50px;
-  overflow: hidden;
-  margin-right: 16px;
-}
-
-.participant-result:hover {
-  background-color: #EFEFEF;
-}
+/** finish style participant search **/
 
 .selectedState {
   border-style: solid;
@@ -109,11 +56,7 @@ otus-participant-search-result md-icon {
 }
 
 
-/****************************************************************************************************/
-
-
-/*  ACTIVITY MANAGER LIST
-/****************************************************************************************************/
+/**  ACTIVITY MANAGER LIST **/
 
 .activity-item-icon {
   background: none !important;
@@ -125,3 +68,53 @@ otus-participant-search-result md-icon {
 .label-light-gray {
   color: #757575;
 }
+
+
+/** participant-search **/
+
+.md-autocomplete-participant {
+  background-color: #299288 !important;
+  border-radius: 4px !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.autocomplete-custom-participant-template li {
+  border-bottom: 1px solid #ccc;
+  height: auto;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  white-space: normal;
+}
+
+otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
+  color: rgb(255, 255, 255) !important;
+}
+
+otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
+  color: rgb(255, 255, 255) !important;
+}
+
+otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {
+  fill: rgb(255, 254, 254) !important;
+}
+
+otus-participant-search>md-autocomplete {
+  color: rgb(255, 255, 255) !important;
+}
+
+.autocomplete-custom-participant-template li:last-child {
+  border-bottom-width: 0;
+}
+
+.autocomplete-custom-participant-template .participant-title, .autocomplete-custom-participant-template .participant-information {
+  display: block;
+  line-height: 2;
+}
+
+.autocomplete-custom-participant-template .participant-title md-icon {
+  margin-right: 10px;
+}
+
+
+/** finish participant-search **/
