@@ -10,9 +10,10 @@
     'otusjs.player.core.player.PlayerService',
     'otusjs.deploy.SurveyItemDatasourceService',
     'otusjs.player.data.activity.ActivityFacadeService',
+    'otusjs.deploy.FileUploadDatasourceService'
   ];
 
-  function Service($q, PlayerService, SurveyItemDatasourceService, ActivityFacadeService) {
+  function Service($q, PlayerService, SurveyItemDatasourceService, ActivityFacadeService, FileUploadDatasourceService) {
     var self = this;
     var defer = $q.defer();
 
@@ -28,6 +29,7 @@
       var dsDefsArray = ActivityFacadeService.getCurrentSurvey().getSurveyDatasources();
       var unlockingPromises = [
          SurveyItemDatasourceService.setupDatasources(dsDefsArray),
+         FileUploadDatasourceService.setupUploader(),
          //another promise to solve before unblock phase
       ];
       PlayerService.registerPhaseBlocker($q.all(unlockingPromises));
