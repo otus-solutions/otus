@@ -11,7 +11,6 @@
     'otusjs.laboratory.core.EventService'
   ];
 
-  //TODO
   function Service($q, ContextService, EventService) {
     var self = this;
     var _participantLaboratoryRemoteStorageDefer = $q.defer();

@@ -8,34 +8,29 @@
   function Service() {
     var self = this;
 
-    var _onParticipantSelectedListeners = [];
+    var _onParticipantSelectedListeners = {};
 
     /* Public methods */
     self.fireParticipantSelected = fireParticipantSelected;
     self.onParticipantSelected = onParticipantSelected;
 
     function fireParticipantSelected(data) {
-      _notifyEvent(_onParticipantSelectedListeners, data, _onParticipantSelectedListeners.length);
+      _notifyEventObj(_onParticipantSelectedListeners, data, _onParticipantSelectedListeners.length);
     }
 
     function onParticipantSelected(listener) {
-      if (!_onParticipantSelectedListeners.length) {
-        _onParticipantSelectedListeners.push(listener);
-      } else {
-        if (!_onParticipantSelectedListeners.some(function(registeredListener) {
-            return registeredListener.name === listener.name;
-          })) {
-          _onParticipantSelectedListeners.push(listener);
-        }
-      }
-    }
-
-    function filterFunction(registeredListener) {
-      return registeredListener.name === listener.name;
+      var listenerName = listener.name;
+      _onParticipantSelectedListeners[listenerName] = listener;
     }
 
     function _notifyEvent(listeners, data, endLoop) {
       for (var listener = 0; listener < endLoop; listener++) {
+        listeners[listener](data);
+      }
+    }
+
+    function _notifyEventObj(listeners, data, endLoop) {
+      for (var listener in listeners) {
         listeners[listener](data);
       }
     }
