@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -22,14 +22,16 @@
     'otusjs.otus.dashboard.core.ModuleService',
     'otusjs.participant.core.ModuleService',
     'otusjs.application.session.core.ModuleService',
-    'otusjs.user.core.ModuleService'
+    'otusjs.user.core.ModuleService',
+    'otusjs.deploy.StorageLoaderService'
   ];
 
   function Service(
     OtusApiService, DataSourceLoaderService,
     AccessModuleBootstrap, ActivityModuleBootstrap, ApplicationModuleBootstrap,
     ParticipantModuleBootstrap, SessionModuleBootstrap, UserModuleBootstrap, LaboratoryModuleBootstrap,
-    AccessModule, ActivityModule, LaboratoryModule, ApplicationModule, DashboardModule, ParticipantModule, SessionModule, UserModule) {
+    AccessModule, ActivityModule, LaboratoryModule, ApplicationModule, DashboardModule, ParticipantModule, SessionModule, UserModule,
+    StorageLoaderService) {
 
     var self = this;
 
@@ -76,11 +78,13 @@
       AccessModule.onLogout(SessionModule.Event.fireLogout);
       AccessModule.onLogin(OtusApiService.initializeRestrictResources);
       AccessModule.onLogin(DataSourceLoaderService.initializeDataSources);
+      AccessModule.onLogout(StorageLoaderService.deleteDatabase);
       // From Session Module to...
       SessionModule.Event.onLogin(DashboardModule.Event.fireLogin);
       SessionModule.Event.onLogin(ActivityModule.Event.fireLogin);
       SessionModule.Event.onLogin(OtusApiService.initializeRestrictResources);
       SessionModule.Event.onLogin(DataSourceLoaderService.initializeDataSources);
+      SessionModule.Event.onLogout(StorageLoaderService.deleteDatabase);
       // From Participant Module to...
       ParticipantModule.Event.onParticipantSelected(ActivityModule.Event.fireParticipantSelected);
       ParticipantModule.Event.onParticipantSelected(DashboardModule.Event.fireParticipantSelected);

@@ -9,10 +9,11 @@
     'otusjs.participant.core.ContextService',
     'otusjs.participant.core.EventService',
     'otusjs.participant.repository.ParticipantRepositoryService',
-    'otusjs.utils.SearchQueryFactory'
+    'otusjs.utils.SearchQueryFactory',
+    '$q'
   ];
 
-  function Service(ContextService, EventService, ParticipantRepositoryService, SearchQueryFactory) {
+  function Service(ContextService, EventService, ParticipantRepositoryService, SearchQueryFactory, $q) {
     var self = this;
     var _filteredParticipants = [];
     var query;
@@ -25,12 +26,17 @@
     var _setupSuccess;
 
     function setup() {
-      var _participants = ParticipantRepositoryService.listIdexers();
-      if (_participants) {
-        query = SearchQueryFactory.newParticipantFilter(_participants);
-        _stringfyRNs(_participants);
-        _setupSuccess = true;
-      }
+      var defer = $q.defer();
+        ParticipantRepositoryService.listIdexers()
+          .then(function(_participants) {
+            if (_participants) {
+              query = SearchQueryFactory.newParticipantFilter(_participants);
+              _stringfyRNs(_participants);
+              _setupSuccess = true;
+              defer.resolve();
+            }
+          });
+      return defer.promise;
     }
 
     function _stringfyRNs(ds) {
