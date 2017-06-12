@@ -30,7 +30,7 @@
       var json = {};
 
       json.recruitment_number = participant.recruitmentNumber;
-      json.participant_name = _buildNameParticipantLabel(participant.name);
+      json.participant_name = participant.name;
       json.gender = participant.sex;
       json.birthday = _convertFormatDate(new Date(participant.birthdate.value));
       json.cq_group = (laboratory.collectGroupName !== undefined && laboratory.collectGroupName !== DEFAULT) ? laboratory.collectGroupName : NONE;
@@ -62,11 +62,5 @@
         tube.label = labels[tube.type] + ' ' + labels[tube.moment];
       });
     }
-
-    function _buildNameParticipantLabel(name) {
-      var result = name.split(' ');
-      return result[0] + ' ' + result[result.length - 1];
-    }
-
   }
 }());
