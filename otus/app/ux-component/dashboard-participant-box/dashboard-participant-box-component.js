@@ -5,8 +5,12 @@
     .module('otusjs.otus.uxComponent')
     .component('otusParticipantBox', {
       controller: Controller,
-      templateUrl: 'app/ux-component/dashboard-participant-box/dashboard-participant-box-template.html'
+      templateUrl: 'app/ux-component/dashboard-participant-box/dashboard-participant-box-template.html',
+      bindings: {
+        onClose:'&'
+      }
     });
+
 
   Controller.$inject = [
     '$element',
@@ -29,6 +33,7 @@
 
     function loadParticipantActivities() {
       ApplicationStateService.activateParticipantActivities();
+      self.onClose();
     }
 
     function loadParticipantReports() {
@@ -37,6 +42,7 @@
 
     function loadLaboratory() {
       ApplicationStateService.activateLaboratory();
+      self.onClose();
     }
 
     function onInit() {
