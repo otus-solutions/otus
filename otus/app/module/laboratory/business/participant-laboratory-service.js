@@ -9,41 +9,51 @@
     '$q',
     'otusjs.laboratory.repository.ParticipantLaboratoryRepositoryService',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.laboratory.business.ParticipantLaboratoryFactory',
-    'otusjs.laboratory.core.EventService'
+    'otusjs.laboratory.business.LaboratoryLabelFactory',
+    'otusjs.laboratory.core.EventService',
+    'otusjs.laboratory.ParticipantLaboratoryFactory'
   ];
 
-  function Service($q, ParticipantLaboratoryRepositoryService, ContextService, ParticipantLaboratoryFactory, EventService) {
+  function Service($q, ParticipantLaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory) {
     var self = this;
-    self.participant = {};
-    self.tubes = {};
+    var _participantLaboratory;
+    var _laboratoryConfiguration;
+
+    _init();
 
     self.initializeLaboratory = initializeLaboratory;
     self.getSelectedParticipant = getSelectedParticipant;
     self.hasLaboratory = hasLaboratory;
     self.getLaboratory = getLaboratory;
     self.onParticipantSelected = onParticipantSelected;
-    self.toJson = toJson;
+    self.generateLabels = generateLabels;
+    self.getLoggedUser = getLoggedUser;
+    self.updateLaboratoryParticipant = updateLaboratoryParticipant;
+
+    function _init() {
+      _laboratoryConfiguration = null;
+   }
 
     function onParticipantSelected(listener) {
       EventService.onParticipantSelected(listener);
     }
 
     function initializeLaboratory() {
-      return getSelectedParticipant()
+      var request = $q.defer();
+      getSelectedParticipant()
         .then(function(participant) {
           self.participant = participant;
-          return ParticipantLaboratoryRepositoryService
-            .initializeLaboratory(participant)
-            .then(function(laboratory) {
-              self.laboratory = laboratory;
-              return laboratory;
+          getLaboratoryDescriptors()
+            .then(function(labDescriptor) {
+              return ParticipantLaboratoryRepositoryService
+                .initializeLaboratory(participant)
+                .then(function(laboratory) {
+                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser());
+                  request.resolve(laboratory);
+                });
             });
         });
-    }
-
-    function getSelectedParticipant() {      
-      return ContextService.getSelectedParticipant();
+      return request.promise;
     }
 
     function hasLaboratory() {
@@ -51,35 +61,63 @@
 
       getSelectedParticipant()
         .then(function(participant) {
-          ParticipantLaboratoryRepositoryService
-            .getLaboratory(participant)
-            .then(function(laboratory) {
-              self.participant = participant;
-              self.laboratory = laboratory;
-              if (laboratory) {
-                request.resolve(true);
-              } else {
-                request.resolve(false);
-              }
+          getLaboratoryDescriptors()
+            .then(function(labDescriptor) {
+              ParticipantLaboratoryRepositoryService
+                .getLaboratory(participant)
+                .then(function(laboratory) {
+                  self.participant = participant;
+                  if (laboratory !== 'null') {
+                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser());
+                    request.resolve(true);
+                  } else {
+                    request.resolve(false);
+                  }
+                });
             });
         });
 
       return request.promise;
     }
 
-    function getLaboratory() {
-      return getSelectedParticipant()
-        .then(function(participant) {
-          ParticipantLaboratoryRepositoryService
-            .getLaboratory(participant)
-            .then(function(laboratory) {
-              self.laboratory = laboratory;
-            });
-        });
+    function getSelectedParticipant() {
+      return ContextService.getSelectedParticipant();
     }
 
-    function toJson() {
-      return ParticipantLaboratoryFactory.create().toJson(self.participant, self.laboratory);
+    function getCurrentUser() {
+      return ContextService.getCurrentUser();
+    }
+
+    function getLaboratory() {
+      return _participantLaboratory;
+    }
+
+    function getLaboratoryDescriptors() {
+      var defer = $q.defer();
+      if (_laboratoryConfiguration) {
+        defer.resolve(_laboratoryConfiguration);
+      } else {
+        ParticipantLaboratoryRepositoryService.getLaboratoryDescriptors()
+          .then(function(labConfiguration) {
+            _laboratoryConfiguration = labConfiguration.data;
+            defer.resolve(_laboratoryConfiguration);
+         }, function(e){
+            defer.reject(e);
+         });
+      }
+      return defer.promise;
+    }
+
+    function getLoggedUser() {
+      return ContextService.getCurrentUser();
+    }
+
+    function updateLaboratoryParticipant() {
+      return ParticipantLaboratoryRepositoryService.updateLaboratoryParticipant(_participantLaboratory.toJSON());
+    }
+
+    function generateLabels() {
+      return LaboratoryLabelFactory.create(self.participant, angular.copy(_participantLaboratory));
     }
   }
 }());

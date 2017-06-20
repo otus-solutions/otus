@@ -118,3 +118,15 @@ otus-participant-search>md-autocomplete {
 
 
 /** finish participant-search **/
+
+/** tube-item-view-component **/
+.tubeNotCollect {
+    transition:all linear 0.5s;
+    opacity: 0.4;
+  }
+/** finish tube-item-view-component**/
+
+md-checkbox.md-checkbox-small {
+    transform: scale(0.8);
+    margin:0;
+}

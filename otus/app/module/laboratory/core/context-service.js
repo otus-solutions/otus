@@ -40,6 +40,8 @@
     self.removeData = removeData;
     self.getSelectedParticipant = getSelectedParticipant;
     self.setSelectedParticipant = setSelectedParticipant;
+    self.setCurrentUser = setCurrentUser;
+    self.getCurrentUser = getCurrentUser;
 
     function begin() {
       _context.clear();
@@ -131,6 +133,14 @@
       if (participantData) {
         _selectedParticipantDefer.resolve(participantData);
       }
+    }
+
+    function setCurrentUser(currentUser) {
+      _loggedUser = currentUser;
+    }
+
+    function getCurrentUser(currentUser) {
+      return _loggedUser;
     }
   }
 }());

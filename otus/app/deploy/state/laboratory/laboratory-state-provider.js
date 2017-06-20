@@ -22,7 +22,7 @@
       parent: STATE.DASHBOARD,
       name: STATE.LABORATORY,
       url: '/' + STATE.LABORATORY,
-      template: '<otus-laboratory></otus-laboratory>',
+      template: '<otus-laboratory layout="row" flex></otus-laboratory>',
       data: {
         redirect: _redirect
       },

@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -85,6 +85,7 @@
       SessionModule.Event.onLogin(OtusApiService.initializeRestrictResources);
       SessionModule.Event.onLogin(DataSourceLoaderService.initializeDataSources);
       SessionModule.Event.onLogout(StorageLoaderService.deleteDatabase);
+      SessionModule.Event.onLogin(LaboratoryModule.setCurrentUser);  //TODO better handle this data (call event service?)
       // From Participant Module to...
       ParticipantModule.Event.onParticipantSelected(ActivityModule.Event.fireParticipantSelected);
       ParticipantModule.Event.onParticipantSelected(DashboardModule.Event.fireParticipantSelected);

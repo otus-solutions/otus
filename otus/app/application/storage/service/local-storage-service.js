@@ -7,11 +7,10 @@
 
   Service.$inject = [
     '$q',
-    '$window',
-    'Lokiwork'
+    '$window'
   ];
 
-  function Service($q, $window, Lokiwork) {
+  function Service($q, $window) {
     var self = this;
     var _dbManager = {};
 

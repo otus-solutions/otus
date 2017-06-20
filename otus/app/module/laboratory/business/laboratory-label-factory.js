@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.business')
-    .factory('otusjs.laboratory.business.ParticipantLaboratoryFactory', Factory);
+    .factory('otusjs.laboratory.business.LaboratoryLabelFactory', Factory);
 
   Factory.$inject = [];
 
@@ -13,31 +13,27 @@
     /* Public interface */
     self.create = create;
 
-    function create() {
-      return new ToJson();
+    function create(participant, laboratory) {
+      return new LaboratoryLabel(participant, laboratory);
     }
 
     return self;
   }
 
-  function ToJson() {
+  function LaboratoryLabel(participant, laboratory) {
     var NONE = 'Nenhum';
     var DEFAULT = 'DEFAULT';
     var self = this;
-    self.toJson = toJson;
 
-    function toJson(participant, laboratory) {
-      var json = {};
+    self.recruitment_number = participant.recruitmentNumber;
+    self.participant_name = _buildNameParticipantLabel(participant.name);
+    self.gender = participant.sex;
+    self.birthday = _convertFormatDate(new Date(participant.birthdate.value));
+    self.cq_group = (laboratory.collectGroupName !== undefined && laboratory.collectGroupName !== DEFAULT) ? laboratory.collectGroupName : NONE;
+    self.tubes = laboratory.tubes;
+    _buildTubeLabel(self.tubes);
 
-      json.recruitment_number = participant.recruitmentNumber;
-      json.participant_name = participant.name;
-      json.gender = participant.sex;
-      json.birthday = _convertFormatDate(new Date(participant.birthdate.value));
-      json.cq_group = (laboratory.collectGroupName !== undefined && laboratory.collectGroupName !== DEFAULT) ? laboratory.collectGroupName : NONE;
-      json.tubes = laboratory.tubes;
-      _buildTubeLabel(json.tubes);
-      return JSON.stringify(json);
-    }
+
 
     function _convertFormatDate(birthdate) {
       var date = new Date(birthdate);
@@ -62,5 +58,11 @@
         tube.label = labels[tube.type] + ' ' + labels[tube.moment];
       });
     }
+
+    function _buildNameParticipantLabel(name) {
+      var result = name.split(' ');
+      return result[0] + ' ' + result[result.length - 1];
+    }
+
   }
 }());

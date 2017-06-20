@@ -15,6 +15,7 @@
     var self = this;
     var _participantLaboratoryRemoteStorageDefer = $q.defer();
     var _surveyDataSourceDefer = $q.defer();
+    var _currentUser;
 
     self.RemoteStorage = {};
     self.DataSource = {};
@@ -25,6 +26,12 @@
     self.configureStorage = configureStorage;
     self.getParticipantLaboratoryRemoteStorage = getParticipantLaboratoryRemoteStorage;
     self.setParticipantLaboratoryRemoteStorage = setParticipantLaboratoryRemoteStorage;
+    self.setCurrentUser = setCurrentUser;
+
+    function setCurrentUser(currentUser) {
+      _currentUser = currentUser;
+      ContextService.setCurrentUser(currentUser);
+    }
 
     function configureContext(context) {
       ContextService.configureContext(context);

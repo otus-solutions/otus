@@ -33,6 +33,8 @@
     self.insert = insert;
     self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
+    self.update = update;
+    self.getDescriptors = getDescriptors;
 
     /**
      * Adds laboratories to collection.
@@ -44,8 +46,6 @@
      */
     function insert(laboratoryToInsert) {
       var deferred = $q.defer();
-
-      //TODO Enviar dados para backend (REST)
       ParticipantLaboratoryRestService.create();
 
       return deferred.promise;
@@ -59,7 +59,6 @@
      */
     function initializeLaboratory(recruitmentNumber) {
       var deferred = $q.defer();
-
       ParticipantLaboratoryRestService
         .initializeLaboratory(recruitmentNumber)
         .then(function(response) {
@@ -84,6 +83,36 @@
           deferred.resolve(response.data);
         });
 
+      return deferred.promise;
+    }
+
+    /**
+     * initialize laboratories.
+     * @param {(object)} recruitmentNumber - the recruitment number of participant
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function update(recruitmentNumber, participantLaboratory) {
+      var deferred = $q.defer();
+      ParticipantLaboratoryRestService
+         .updateLaboratoryParticipant(recruitmentNumber, participantLaboratory)
+         .then(function(response){
+            deferred.resolve(response);
+         }, function(e){
+            deferred.reject(e);
+         });
+      return deferred.promise;
+    }
+
+    function getDescriptors() {
+      var deferred = $q.defer();
+      ParticipantLaboratoryRestService
+         .getDescriptors()
+         .then(function(response){
+            deferred.resolve(response);
+         }, function(e){
+            deferred.reject(e);
+         });
       return deferred.promise;
     }
   }
