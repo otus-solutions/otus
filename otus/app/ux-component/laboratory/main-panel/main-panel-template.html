@@ -1,1 +1,2 @@
-<tube-list state="$ctrl.state" layout="row" flex tube-list="$ctrl.participantLaboratory.tubes"></tube-list>
+<tube-list ng-show="$ctrl.state == 'main' || $ctrl.state == 'coleta' " state="$ctrl.state" layout="row" flex tube-list="$ctrl.participantLaboratory.tubes"></tube-list>
+<aliquotes-view ng-if="$ctrl.state === 'aliquotes'" layout="row" flex tube-list="$ctrl.participantLaboratory.tubes"></aliquotes-view>
