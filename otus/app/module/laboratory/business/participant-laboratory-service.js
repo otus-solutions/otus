@@ -68,7 +68,7 @@
                 .then(function(laboratory) {
                   self.participant = participant;
                   if (laboratory !== 'null') {
-                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser());
+                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(JSON.stringify(laboratory.data), labDescriptor, getLoggedUser());
                     request.resolve(true);
                   } else {
                     request.resolve(false);
