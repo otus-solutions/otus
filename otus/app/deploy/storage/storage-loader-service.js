@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -24,6 +24,7 @@
     self.loadLocalStorage = loadLocalStorage;
     self.loadIndexedStorage = loadIndexedStorage;
     self.dbExists = dbExists;
+    self.deleteDatabase = deleteDatabase;
 
     function initializeSessionStorage() {
       SessionStorageService.initialize();
@@ -34,7 +35,7 @@
 
       LocalStorageService
         .newDb(dbName, _instantiateStorages(OtusLocalStorage))
-        .then(function() {
+        .then(function () {
           deferred.resolve();
         });
 
@@ -46,7 +47,7 @@
 
       LocalStorageService
         .loadDb(dbName, _instantiateStorages(OtusLocalStorage))
-        .then(function() {
+        .then(function () {
           deferred.resolve();
         });
 
@@ -58,7 +59,7 @@
 
       IndexedDbStorageService
         .newDb(dbName, _instantiateStorages(OtusLocalStorage))
-        .then(function() {
+        .then(function () {
           deferred.resolve();
         });
 
@@ -70,7 +71,7 @@
 
       IndexedDbStorageService
         .loadDb(dbName, _instantiateStorages(OtusLocalStorage))
-        .then(function() {
+        .then(function () {
           deferred.resolve();
         });
 
@@ -82,9 +83,13 @@
     }
 
     function _instantiateStorages(storages) {
-      return storages.map(function(storage) {
+      return storages.map(function (storage) {
         return $injector.get(storage);
       });
+    }
+
+    function deleteDatabase() {
+      return IndexedDbStorageService.deleteDatabase();
     }
   }
 }());

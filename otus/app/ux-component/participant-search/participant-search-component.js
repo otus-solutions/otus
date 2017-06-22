@@ -19,6 +19,7 @@
   function Controller($q, ParticipantSearchService) {
     var self = this;
 
+
     /* Lifecycle hooks */
     self.$onInit = onInit;
     /* Public methods */

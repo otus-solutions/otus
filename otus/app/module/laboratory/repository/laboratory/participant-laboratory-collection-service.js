@@ -36,6 +36,7 @@
     self.initializeLaboratory = initializeLaboratory;
     self.update = update;
     self.getLaboratory = getLaboratory;
+    self.getDescriptors = getDescriptors;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -81,28 +82,6 @@
     }
 
     /**
-     * Updates laboratory in collection.
-     * @param {(object)} laboratory - the laboratory to be updated
-     * @memberof LaboratoryCollectionService
-     */
-    function update(laboratory) {
-      var request = $q.defer();
-
-      _remoteStorage
-        .whenReady()
-        .then(function(remoteStorage) {
-          remoteStorage
-            .update(laboratory)
-            .then(function(remoteLaboratory) {
-              ParticipantLaboratoryLocalStorageService.update(remoteLaboratory);
-              request.resolve();
-            });
-        });
-
-      return request.promise;
-    }
-
-    /**
      * Fetches laboratory from collection based on participant passed to {@link | useParticipant}
      * method.
      * @param {(object)} laboratory - the laboratory to be updated
@@ -138,9 +117,30 @@
           return remoteStorage
             .initializeLaboratory(_participant.recruitmentNumber)
             .then(function(laboratory) {
-              ParticipantLaboratoryLocalStorageService.clear();
-              var localData = ParticipantLaboratoryLocalStorageService.insert(laboratory);
-              request.resolve(localData);
+              request.resolve(laboratory);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Updates laboratory in collection.
+     * @param {(object)} laboratory - the laboratory to be updated
+     * @memberof LaboratoryCollectionService
+     */
+    function update(laboratory) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .update(_participant.recruitmentNumber, laboratory)
+            .then(function(remoteLaboratory) {
+              request.resolve();
+            }, function(e){
+               request.reject(e);
             });
         });
 
@@ -161,6 +161,23 @@
         });
 
       return request.promise;
+    }
+
+    function getDescriptors() {
+      var request = $q.defer();
+
+      _remoteStorage
+      .whenReady()
+      .then(function(remoteStorage) {
+         return remoteStorage
+         .getDescriptors()
+         .then(function(descriptors) {
+            request.resolve(descriptors);
+         });
+      });
+
+      return request.promise;
+
     }
   }
 }());

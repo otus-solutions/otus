@@ -1,0 +1,44 @@
+<div layout-fill layout="column" ng-class="{tubeNotCollect: !($ctrl.tube.tubeCollectionData.isCollected || $ctrl.tube.tubeCollectionData.metadata !== '')}">
+
+  <md-card ng-style="{'padding':'10px', 'width':'300px'}">
+    <div layout="row">
+      <div layout="column" flex="10">
+        <div ng-style="{'background-color':$ctrl.tube.boxColor,
+          'height':'80px', 'width':'10px',
+          'margin-right':'10px',
+          'border': 'solid 1px #ccc',
+          'border-radius':'3px 3px 10px 10px'}">
+        </div>
+      </div>
+      <div layout="column" flex="90">
+        <div layout="row" flex="70">
+          <div layout="column" flex="90">
+            <span class="md-title">{{$ctrl.tube.label}}</span>
+            <span class="md-subhead">{{$ctrl.tube.code}}</span>
+          </div>
+          <div layout="column" flex="10">
+            <md-icon class="md-primary" md-font-set="material-icons" ng-show="$ctrl.tube.tubeCollectionData.isCollected">assignment_turned_in</md-icon>
+            <md-icon md-font-set="material-icons" ng-hide="$ctrl.tube.tubeCollectionData.isCollected">assignment_late</md-icon>
+          </div>
+        </div>
+        <div layout="row" flex="30">
+
+          <div layout="column" flex="50">
+             <span class="md-caption">{{$ctrl.tube.tubeCollectionData.time | date:'dd/MM/yyyy HH:mm'}}</span>
+          </div>
+
+          <div layout="column" flex="50">
+            <md-checkbox class="md-checkbox-small md-primary" ng-model="$ctrl.tube.tubeCollectionData.metadata" ng-false-value="''" ng-show="$ctrl.tube.tubeCollectionData.isCollected" ng-true-value="'.vp'" name="partial_volume" aria-label="volume parcial" ng-click="$ctrl.setDirty()">
+              <span class="md-caption">Volume Parcial</a>
+            </md-checkbox>
+            <md-checkbox class="md-checkbox-small md-primary" ng-model="$ctrl.tube.tubeCollectionData.metadata" ng-hide="$ctrl.tube.tubeCollectionData.isCollected" ng-false-value="''" ng-true-value="'.nc'" name="not_collected" aria-label="não coletado" ng-click="$ctrl.setDirty()">
+              <span class="md-caption">Não coletado</a>
+            </md-checkbox>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </md-card>
+
+</div>

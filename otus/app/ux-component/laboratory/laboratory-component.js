@@ -11,12 +11,12 @@
   Controller.$inject = [
     'otusjs.laboratory.business.ParticipantLaboratoryService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.laboratory.core.EventService'
+    'otusjs.laboratory.core.EventService',
+    '$scope'
   ];
 
-  function Controller(ParticipantLaboratoryService, LoadingScreenService, EventService) {
+  function Controller(ParticipantLaboratoryService, LoadingScreenService, EventService, $scope) {
     var self = this;
-    self.json = '';
 
     /* Public methods */
     self.$onInit = onInit;
@@ -31,6 +31,18 @@
       _setupLaboratory();
     }
 
+    function _loadSelectedParticipant(participantData) {
+      if (participantData) {
+        self.selectedParticipant = participantData;
+      } else {
+        ParticipantLaboratoryService
+          .getSelectedParticipant()
+          .then(function(participantData) {
+            self.selectedParticipant = participantData;
+          });
+      }
+    }
+
     function _setupLaboratory() {
       ParticipantLaboratoryService
         .hasLaboratory()
@@ -43,17 +55,6 @@
         });
     }
 
-    function _loadSelectedParticipant(participantData) {
-      if (participantData) {
-        self.selectedParticipant = participantData;
-      } else {
-        ParticipantLaboratoryService
-          .getSelectedParticipant()
-          .then(function(participantData) {
-            self.selectedParticipant = participantData;
-          });
-      }
-    }
 
     function intializeLaboratory() {
       LoadingScreenService.start();
@@ -70,11 +71,8 @@
     }
 
     function _fetchLaboratory() {
-      ParticipantLaboratoryService
-        .getLaboratory()
-        .then(function() {
-          self.json = ParticipantLaboratoryService.toJson();
-        });
+      self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
+      self.state = 'main';
     }
   }
 }());

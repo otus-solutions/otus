@@ -18,6 +18,8 @@
     self.create = create;
     self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
+    self.updateLaboratoryParticipant = updateLaboratoryParticipant;
+    self.getDescriptors = getDescriptors;
 
     function initialize() {
       _rest = OtusRestResourceService.getLaboratoryParticipantResource();
@@ -44,5 +46,20 @@
         rn: recruitmentNumber
       }).$promise;
     }
+
+    function updateLaboratoryParticipant(recruitmentNumber, participantLaboratory) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.update({rn: recruitmentNumber}, participantLaboratory).$promise;
+    }
+
+    function getDescriptors() {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getDescriptors().$promise;
+    }
+
   }
 }());

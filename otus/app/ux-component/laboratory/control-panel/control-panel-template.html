@@ -1,0 +1,23 @@
+
+<div layout="column" md-whiteframe="1">
+  <div class="control-panel" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'main'">
+    <label-maker label-data="$ctrl.labels"></label-maker>
+    <div layout="row" layout-align="center center">
+      <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('coleta')">Coleta de Tubos</md-button>
+    </div>
+  </div>
+
+  <div class="control-panel" layout="row" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'">
+    <div layout="row" layout-align="start center">
+      <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAndReturn()">Voltar</md-button>
+      <md-button class="md-primary md-raised" aria-label="cancelar coleta" ng-click="$ctrl.cancelCollect()">Cancelar</md-button>
+    </div>
+    <div layout="row" layout-align="center center" layout-fill>
+      <fast-collection tube-list="$ctrl.labParticipant.tubes"></fast-collection>
+      <md-button class="md-primary md-raised" aria-label="realizar coleta" ng-click="$ctrl.finish()">Salvar</md-button>
+      <div flex-offset="5">
+      </div>
+    </div>
+    <div layout="row"></div>
+  </div>
+</div>

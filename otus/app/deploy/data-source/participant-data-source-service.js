@@ -13,7 +13,7 @@
 
   function Service($q, ParticipantRestService, ParticipantStorageService) {
     var self = this;
-    var _loadingDefer = null;
+    var _loadingDefer = $q.defer();
 
     /* Public methods */
     self.up = up;
@@ -27,7 +27,12 @@
     }
 
     function listIndexers() {
-      return ParticipantStorageService.getCollection().find();
+      var defer = $q.defer();
+      _loadingDefer.promise
+        .then(function() {
+          defer.resolve(ParticipantStorageService.getCollection().find());
+        });
+      return defer.promise;
     }
 
     function _initializeSources() {

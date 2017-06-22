@@ -1,0 +1,9 @@
+<md-content layout="row" layout-align="center" layout-sm="column" layout-align-sm="center center" flex>
+  <md-list ng-repeat="moment in $ctrl.moments">
+    <md-subheader class="md-no-sticky" style="font-size: 18px;">{{moment}}</md-subheader>
+    <div class="tube-list-view">
+      <tube-item-view id="{{tube.code}}" tube=tube ng-repeat="tube in $ctrl.tubeList | orderBy:'order'" ng-show="$ctrl.state==='main'" ng-if="::tube.momentLabel==moment" />
+      <tube-item id="{{tube.code}}" tube=tube ng-repeat="tube in $ctrl.tubeList | orderBy:'order'" ng-show="$ctrl.state==='coleta'" ng-if="::tube.momentLabel==moment" />
+    </div>
+  </md-list>
+</md-content>

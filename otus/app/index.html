@@ -4,7 +4,7 @@
 <head>
   <base href="/otus/" />
   <meta charset="UTF-8" />
-  <meta name="viewport" content="initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -21,7 +21,7 @@
   <title>Otus</title>
 </head>
 
-<body layout="column" md-theme="default">
+<body layout="row" md-theme="default">
   <div flex layout="row" class="md-body-2" ui-view></div>
 </body>
 
@@ -148,8 +148,6 @@
 <script src="app/deploy/data-source/user-data-source-service.js"></script>
 <script src="app/deploy/data-source/survey-item-datasource-service.js"></script>
 <script src="app/deploy/data-source/file-upload-datasource-service.js"></script>
-<!-- # Deploy > Label Maker -->
-<script src="app/deploy/label-maker/player-label-maker-service.js"></script>
 <!-- # Deploy > Model -->
 <script src="app/deploy/model/otus/activity-facade-service.js"></script>
 <script src="app/deploy/model/otus/activity-model-pool-service.js"></script>
@@ -240,7 +238,7 @@
 <!-- # laboratory > Business -->
 <script src="app/module/laboratory/business/module.js"></script>
 <script src="app/module/laboratory/business/participant-laboratory-service.js"></script>
-<script src="app/module/laboratory/business/participant-laboratory-factory.js"></script>
+<script src="app/module/laboratory/business/laboratory-label-factory.js"></script>
 
 <!-- # laboratory > core -->
 <script src="app/module/laboratory/core/module.js"></script>
@@ -338,7 +336,18 @@
 <script src="app/ux-component/dashboard-toolbar/dashboard-toolbar-component.js"></script>
 <script src="app/ux-component/installer/initial-config-controller.js"></script>
 <script src="app/ux-component/paper-activity-adder/paper-activity-adder-component.js"></script>
+
+
+   <!--  laboratory-ux  -->
 <script src="app/ux-component/laboratory/laboratory-component.js"></script>
+<script src="app/ux-component/laboratory/control-panel/control-panel-component.js"></script>
+<script src="app/ux-component/laboratory/main-panel/lab-main-panel-component.js"></script>
+<script src="app/ux-component/laboratory/main-panel/tube-list/tube-list-component.js"></script>
+<script src="app/ux-component/laboratory/main-panel/tube-list/tube-item/tube-item-component.js"></script>
+<script src="app/ux-component/laboratory/main-panel/tube-list/tube-item-view/tube-item-view-component.js"></script>
+<script src="app/ux-component/laboratory/control-panel/fast-collection/fast-collection-component.js"></script></script>
+   <!--   ----    -->
+
 <script src="app/ux-component/paper-activity-adder-list/paper-activity-adder-list-component.js"></script>
 <script src="app/ux-component/paper-activity-initializer/checker-item-factory.js"></script>
 <script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>

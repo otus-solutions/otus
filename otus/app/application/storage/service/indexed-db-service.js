@@ -20,6 +20,7 @@
     self.newDb = newDb;
     self.loadDb = loadDb;
     self.dbExists = dbExists;
+    self.deleteDatabase = deleteDatabase;
 
     function getDb(dbName) {
       return _dbManager[dbName].lokiDb;
@@ -80,6 +81,15 @@
         storage.initialize(getDb(dbName).getCollection(storage.collectionName), getDb(dbName));
       });
       _dbManager[dbName].loading.resolve();
+    }
+
+    function deleteDatabase() {
+      _dbManager.otus.lokiDb.collections.forEach(function(collection) {
+        // console.log(undefined);
+        // console.log(collection.count());
+        collection.clear();
+      });
+      // _dbManager.otus.lokiDb.deleteDatabase();
     }
   }
 }());

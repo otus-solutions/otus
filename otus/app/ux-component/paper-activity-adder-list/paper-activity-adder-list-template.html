@@ -30,7 +30,7 @@
     <md-divider></md-divider>
   </md-list-item>
 
-  <md-list-item class="md-1-line" ng-repeat="activity in $ctrl.activities">
+  <md-list-item class="md-1-line" ng-repeat="activity in $ctrl.activities | orderBy:'name'">
     <div class="md-list-item-text" layout="column" flex>
       <md-content layout="row" layout-align="start center">
         <span layout="column">{{ activity.name }}</span>
