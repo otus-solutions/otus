@@ -31,13 +31,13 @@
 
     function getLaboratory(participant) {
       ParticipantLaboratoryCollectionService.useParticipant(participant);
-      return ParticipantLaboratoryCollectionService.getLaboratory();
-      // return $http.get('app/module/laboratory/repository/laboratory/lab-participant.json');
+      // return ParticipantLaboratoryCollectionService.getLaboratory();
+      return $http.get('app/module/laboratory/repository/laboratory/lab-participant.json');
     }
 
     function getLaboratoryDescriptors(){
-      return ParticipantLaboratoryCollectionService.getDescriptors();
-      // return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');
+      // return ParticipantLaboratoryCollectionService.getDescriptors();
+      return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');
    }
 
    function updateLaboratoryParticipant(laboratory){
