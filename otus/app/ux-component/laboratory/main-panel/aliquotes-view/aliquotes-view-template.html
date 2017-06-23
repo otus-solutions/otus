@@ -1,1 +1,155 @@
-<span>{{$ctrl.tubeList}}</span>
+
+<style>
+    .selected{
+        box-shadow: 1px 2px 5px green;
+    }
+</style>
+
+<md-content layout="row" flex >
+    <div layout="column" layout-align="start center" flex="30">
+    <md-subheader class="md-no-sticky" style="font-size: 18px;">Momento e Tipo</md-subheader>
+    <md-list ng-repeat="momentType in $ctrl.momentTypeList" >
+        <div class="tube-list-view">
+            
+
+
+            <md-card ng-style="{'padding':'10px', 'width':'300px'}" ng-click="$ctrl.selecMomentType(momentType)" ng-class="{selected:$ctrl.selectedMomentType == momentType}">
+                <div layout="row">
+                <div layout="column" flex="10">
+                    <div ng-style="{'background-color':momentType.boxColor,
+                    'height':'80px', 'width':'10px',
+                    'margin-right':'10px',
+                    'border': 'solid 1px #ccc',
+                    'border-radius':'3px 3px 10px 10px'}">
+                    </div>
+                </div>
+                <div layout="column" flex="90">
+                    <div layout="row" flex="70">
+                    <div layout="column" flex="90">
+                        <span class="md-title">{{momentType.type}}</span>
+                        <span class="md-subhead">{{momentType.momentLabel}}</span>
+                    </div>
+                    <div layout="column" flex="10">
+                        <!--<md-icon class="md-primary" md-font-set="material-icons" ng-show="$ctrl.tube.tubeCollectionData.isCollected">assignment_turned_in</md-icon>
+                        <md-icon md-font-set="material-icons" ng-hide="$ctrl.tube.tubeCollectionData.isCollected">assignment_late</md-icon>-->
+                    </div>
+                    </div>
+                    <div layout="row" flex="30">
+                    <div layout="column" flex="50">
+                        <!--<span class="md-caption">{{$ctrl.tube.tubeCollectionData.time | date : 'dd/MM/yyyy HH:mm'}}</span>-->
+                    </div>
+                    <div layout="column" flex="50" style="text-align:right">
+                        <!--<a class="md-caption" ng-show="$ctrl.tube.tubeCollectionData.isCollected && $ctrl.tube.tubeCollectionData.metadata">Volume Parcial</a>
+                        <a class="md-caption" ng-show="!$ctrl.tube.tubeCollectionData.isCollected && $ctrl.tube.tubeCollectionData.metadata">Não Coletado</a>-->
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </md-card>
+
+
+
+
+
+
+
+
+
+        </div>
+    </md-list>
+    </div>
+
+    <div layout="column" layout-align="start center" flex="70">
+    <md-subheader class="md-no-sticky" style="font-size: 18px;">Aliquotagem</md-subheader>
+    <md-list flex>
+        <div class="tube-list-view" flex>
+            
+
+<!---->
+
+            <div layout="column" class="boxWithHeight tela" layout-padding flex ng-style="{'min-width':'800px'}">
+                <div>
+                {{$ctrl.aliquotList.type}} - {{$ctrl.aliquotList.momentLabel}}
+                </div>
+                
+                <md-whiteframe class="md-whiteframe-12dp" ng-style='{"margin-bottom":"10px"}' flex layout-padding>
+                <div ng-style='{"color":"red"}'>Exame:</div>
+                
+                <div ng-repeat="exam in $ctrl.aliquotList.aliquots.exams" layout="row">
+                    <div class="input-tube" flex>
+                    
+                    <div class="md-list-item-text" layout="column" flex>
+                        <md-content layout="row" flex layout-align="start center">
+                        <md-input-container flex layout="column">
+                            <label>Tubo</label>
+                            <input class="campo" ng-model="$ctrl.aliquotList.aliquots.exam[$index + 1].code" placeholder="{{$ctrl.aliquotList.aliquots.exam[$index + 1].placeholder}}" tabindex="-1" 
+                                ng-change="$ctrl.inputExamsChange()"/>
+                        </md-input-container>
+                        </md-content>
+                    </div>
+                    </div>
+                    
+                    <div flex=10 layout="row" layout-align="center center" ng-style='{"text-align":"center"}'>
+                    <div>
+                        <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
+                    </div>
+                    </div>
+                    
+                    <div class="input-aloquot" flex>
+                    <div class="md-list-item-text" layout="column" flex>
+                        <md-content layout="row" flex layout-align="start center">
+                        <md-input-container flex layout="column">
+                            <label>{{exam.label}}</label>
+                            <input ng-model="$ctrl.aliquotList.aliquots.exam[$index + 1].aliquot" />
+                        </md-input-container>
+                        </md-content>
+                    </div>
+                    </div>
+                </div>
+                </md-whiteframe>
+                
+                <md-whiteframe class="md-whiteframe-12dp" flex layout-padding ng-style='{"margin-bottom":"20px"}'>
+                <div ng-style='{"color":"red"}'>Armazenamento:</div>
+                
+                <div ng-repeat="storage in $ctrl.aliquotList.aliquots.stores" layout="row">
+                    <div class="input-tube" flex>
+                    
+                    <div class="md-list-item-text" layout="column" flex>
+                        <md-content layout="row" flex layout-align="start center">
+                        <md-input-container flex layout="column">
+                            <label>Tubo</label>
+                            <input class="campo" ng-model="$ctrl.aliquotList.aliquots.storage[$index + 1].code" placeholder="{{$ctrl.aliquotList.aliquots.storage[$index + 1].placeholder}}" tabindex="-1" 
+                                ng-change="$ctrl.inputStoresChange()"/>
+                        </md-input-container>
+                        </md-content>
+                    </div>
+                    </div>
+                    
+                    <div flex=10 layout="row" layout-align="center center" ng-style='{"text-align":"center"}'>
+                    <div>
+                        <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
+                    </div>
+                    </div>
+                    
+                    <div class="input-aloquot" flex>
+                    <div class="md-list-item-text" layout="column" flex>
+                        <md-content layout="row" flex layout-align="start center">
+                        <md-input-container flex layout="column">
+                            <label>{{storage.label}}</label>
+                            <input ng-model="$ctrl.aliquotList.aliquots.storage[$index + 1].aliquot" />
+                        </md-input-container>
+                        </md-content>
+                    </div>
+                    </div>
+                </div>
+                </md-whiteframe>
+            </div>
+
+
+        
+        </div>
+    </md-list>
+    </div>
+</md-content>
+
+
