@@ -1,5 +1,7 @@
 /*/target/
+**/dist/
 /*/.settings
+**/package-lock.json
 /*/.project
 /*/.classpath
 *.jsfdia
