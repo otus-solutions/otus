@@ -34,6 +34,8 @@
       self.collectedTubes = [];
       _buildDialogs();
       self.labels = ParticipantLaboratoryService.generateLabels();
+      self.labels.tubes = _orderTubesWithLabelNullAlphabetically(self.labels.tubes);
+      console.log(self.labels.tubes);
     }
 
     function changeState(moment) {
@@ -45,9 +47,9 @@
         ParticipantLaboratoryService.updateLaboratoryParticipant().then(function() {
           self.labParticipant.updateTubeList();
           $mdToast.show(
-             $mdToast.simple()
-             .textContent('Registrado com sucesso!')
-             .hideDelay(1000)
+            $mdToast.simple()
+            .textContent('Registrado com sucesso!')
+            .hideDelay(1000)
           );
         }, function(e) {
           console.log(e);
@@ -89,6 +91,30 @@
         .cancel('Voltar');
     }
 
-    return self;
+    function _orderTubesWithLabelNullAlphabetically(tubeList) {
+      var sortedArrayOfNulls = _removeTubesWithOrderNull(tubeList).sort(_sortByTubeLabel);
+      return _concatArrays(tubeList, sortedArrayOfNulls);
+    }
+
+    function _concatArrays(array1, array2) {
+      return array1.concat(array2);
+    }
+
+    function _sortByTubeLabel(a, b) {
+      // if label are equals
+      if(a.label.toLowerCase() ===  b.label.toLowerCase()) {
+        // sort by code
+        return a.code > b.code;
+      }
+      return a.label.toLowerCase() >  b.label.toLowerCase();
+    }
+
+    function _removeTubesWithOrderNull(tubeList) {
+      var firstIndexOfOrderNull = tubeList.findIndex(function(tube) {
+        return tube.order === null;
+      });
+      return tubeList.splice(firstIndexOfOrderNull, tubeList.length);
+    }
+
   }
 }());
