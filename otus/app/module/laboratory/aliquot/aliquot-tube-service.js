@@ -230,6 +230,7 @@
 
     function _getStructureAliquot(){
       //Used to exam and storage aliquots
+      //TODO store error messages on model?
       return {
         tubeCode: "",
         aliquotCode: "",

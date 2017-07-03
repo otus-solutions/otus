@@ -48,7 +48,7 @@
               return ParticipantLaboratoryRepositoryService
                 .initializeLaboratory(participant)
                 .then(function(laboratory) {
-                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser());
+                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser(),self.participant);
                   request.resolve(laboratory);
                 });
             });
@@ -67,8 +67,9 @@
                 .getLaboratory(participant)
                 .then(function(laboratory) {
                   self.participant = participant;
-                  if (laboratory !== 'null') {
-                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(JSON.stringify(laboratory.data), labDescriptor, getLoggedUser());
+                  if (laboratory !== 'null') {                    
+                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(JSON.stringify(laboratory.data), labDescriptor, getLoggedUser(),self.participant);
+                    console.log(_participantLaboratory);
                     request.resolve(true);
                   } else {
                     request.resolve(false);
