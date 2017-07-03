@@ -35,7 +35,6 @@
       _buildDialogs();
       self.labels = ParticipantLaboratoryService.generateLabels();
       self.labels.tubes = _orderTubesWithLabelNullAlphabetically(self.labels.tubes);
-      console.log(self.labels.tubes);
     }
 
     function changeState(moment) {
