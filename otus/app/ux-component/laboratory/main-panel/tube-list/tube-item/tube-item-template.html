@@ -17,8 +17,15 @@
             <span class="md-subhead">{{$ctrl.tube.code}}</span>
           </div>
           <div layout="column" flex="10">
-            <md-icon class="md-primary" md-font-set="material-icons" ng-show="$ctrl.tube.tubeCollectionData.isCollected">assignment_turned_in</md-icon>
-            <md-icon md-font-set="material-icons" ng-hide="$ctrl.tube.tubeCollectionData.isCollected">assignment_late</md-icon>
+            <md-icon class="md-primary" md-font-set="material-icons" ng-show="$ctrl.tube.tubeCollectionData.isCollected">assignment_turned_in
+              <md-tooltip>Coletado</md-tooltip>
+            </md-icon>
+            <md-icon md-font-set="material-icons" ng-show="!$ctrl.tube.tubeCollectionData.isCollected && $ctrl.tube.tubeCollectionData.metadata">not_interested
+              <md-tooltip>Não coletado</md-tooltip>
+            </md-icon>
+            <md-icon md-font-set="material-icons" ng-hide="$ctrl.tube.tubeCollectionData.isCollected || $ctrl.tube.tubeCollectionData.metadata">assignment_late
+              <md-tooltip>Aguardando</md-tooltip>
+            </md-icon>
           </div>
         </div>
         <div layout="row" flex="30">
