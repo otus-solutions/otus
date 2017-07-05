@@ -14,6 +14,7 @@
   Controller.$inject = [
     'otusjs.laboratory.aliquot.AliquotTubeService',
     'otusjs.laboratory.aliquot.MomentType',
+    
     '$scope',
     '$element'
   ];
@@ -76,15 +77,15 @@
         self.aliquotList = AliquotTubeService.createStructureAliquotList(self.selectedMomentType);
         momentType.aliquotList = self.aliquotList;
         AliquotTubeService.fillAliquotsWithTubesAliquots(momentType);
-        console.log(self.momentTypeList);
+        //console.log(self.momentTypeList);
       }
 
       completePlaceholder(self.aliquotList.aliquots.exams);
       completePlaceholder(self.aliquotList.aliquots.stores);
 
-      console.log(self.aliquotList.aliquots);
+      //console.log(self.aliquotList.aliquots);
       setTimeout(function(){
-        console.log('Começando');
+        //console.log('Começando');
         _defaultCustomValidation();
       },1000);
     }
@@ -141,7 +142,7 @@
         if(filterTube.length > 0){
           $scope.formAliquot[examStorage.tubeId].$setValidity('customValidation',true);
           //Tube find
-          console.log(filterTube[0].isCollected);
+          //console.log(filterTube[0].isCollected);
           if(!filterTube[0].isCollected){
             //Tube NOT collected
             examStorage.tubeMessage = "Tubo não coletado, não pode ser Aliquotado.";
@@ -202,7 +203,7 @@
     self.setFocus = setFocus; 
     
     function setFocus(id){
-      console.log('#'+id);
+      //console.log('#'+id);
       $element.find('#'+id).focus();
     }
 
@@ -216,8 +217,10 @@
       //console.log($element);
       //console.log(angular);
       selecMomentType(self.momentTypeList[0]);
-
+      console.log(self.momentTypeList);
       
+      console.log('teste semi fake');
+      console.log(AliquotTubeService.getMomentTypeList());
     }
 
 
