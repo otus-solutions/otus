@@ -6,22 +6,330 @@
     .service('otusjs.laboratory.aliquot.AliquotTubeService', Service);
 
   Service.$inject = [
-    '$q'
+    'otusjs.laboratory.AliquotManagerService'
   ];
 
-  function Service($q) {
+  function Service(AliquotManagerService) {
     var self = this;
     var _test;
 
-    _init();
-
-    function _init() {
-      _test = null;
-    }
 
     self.createStructureAliquotList = createStructureAliquotList;
     self.fillAliquotsWithTubesAliquots = fillAliquotsWithTubesAliquots;
     self.fillTubesWithAliquots = fillTubesWithAliquots;
+
+    self.getMomentTypeList = getMomentTypeList;
+    self.getMomentTypeAliquot = getMomentTypeAliquot;
+
+
+    function getMomentTypeList(isFake){     
+      var momentTypeList = AliquotManagerService.getMomentTypeList();
+
+      console.log(momentTypeList);
+
+      momentTypeList.forEach(function(momentType) {
+        //var fieldsMomentType = AliquotManagerService.getMomentTypeMap(momentType.type, momentType.moment);
+
+        momentType.typeLabel = fakeTypeLabel(momentType.typeLabel, momentType.type);
+        momentType.momentLabel = fakeMomentLabel(momentType.momentLabel,momentType.moment);
+        momentType.boxColor = fakeColor(momentType.boxColor);
+        //momentType.availableAliquots = fieldsMomentType.aliquotsConfig;
+        //momentType.collectedAliquots = fieldsMomentType.aliquots;
+
+        var indexStorage = 0;
+        var indexExam = 0;
+        var stores = [];
+        var exams = [];
+        momentType.availableAliquots.forEach(function(aliquot){
+          var aliquotStructure = {
+                                    aliquotCode: "",
+                                    tubeCode: "",
+                                    container: "",
+                                    placeholder: "",
+                                    aliquotMessage: "Teste Aliquot Message",
+                                    tubeMessage: "Teste Tube Message",
+                                    isSaved: false
+                                 };
+          
+          var role = "exam";
+          var index = indexExam;
+          
+          if(aliquot.name.toUpperCase() == "STORAGE"){
+            role = "storage";
+            index = indexStorage;
+          }
+          
+          aliquotStructure.name = aliquot.name;
+          aliquotStructure.label = aliquot.label ? aliquot.label : aliquot.name;
+
+          aliquotStructure.aliquotId = role + "Aliquot" + index;
+          aliquotStructure.tubeId = role + "Tube" + index;
+          aliquotStructure.role = role;
+          aliquotStructure.index = index;
+          
+          if(aliquot.name.toUpperCase() == "STORAGE"){
+            stores.push(aliquotStructure);
+            indexStorage++;
+          } else {
+            exams.push(aliquotStructure);
+            indexExam++;
+          }
+        });
+
+        momentType.stores = stores;
+        momentType.exams = exams;
+
+        momentType = fillAliquotsWithCollectedAliquots(momentType);
+      });
+      
+      momentTypeList = fakeMomentTypeList(momentTypeList);
+
+      return momentTypeList;
+    }
+
+
+
+    function fillAliquotsWithCollectedAliquots(momentType){
+      momentType.collectedAliquots.forEach(function(collectedAliquot){
+        var arrayAliquots = momentType.exams;
+        
+        if(collectedAliquot.role.toUpperCase() == "STORAGE") arrayAliquots = momentType.stores;
+        
+        for (var i = 0, endLoop = false; i < arrayAliquots.length && !endLoop; i++) {
+          var aliquot = arrayAliquots[i];
+          if(aliquot.tubeCode == "" && aliquot.name.toUpperCase() == collectedAliquot.name.toUpperCase()){
+            aliquot.tubeCode = collectedAliquot.tubeCode;
+            aliquot.aliquotCode = collectedAliquot.code;
+            aliquot.isSaved = true;
+            endLoop = true;
+          }
+        }
+      });
+
+      return momentType;
+    }
+
+
+
+
+
+    function getFakeMomentTypeList(){
+      return fakeMomentTypeList();
+    }
+    function getFakeMomentTypeMaps(){
+      var retorno = JSON.parse(`
+        {
+          "FASTING": {
+            "GEL": {
+              "type": "GEL",
+              "typeLabel": "GEL",
+              "moment": "FASTING",
+              "momentLabel": "Jejum",
+              "boxColor": "#ffcc00"
+            },
+            "EDTA": {
+              "type": "EDTA",
+              "typeLabel": "EDTA",
+              "moment": "FASTING",
+              "momentLabel": "Jejum",
+              "boxColor": "#660066"
+            },
+            "FLUORIDE": {
+              "type": "FLUORIDE",
+              "typeLabel": "FLUORIDE",
+              "moment": "FASTING",
+              "momentLabel": "Jejum",
+              "boxColor": "#666666"
+            }
+          },
+          "POST_OVERLOAD": {
+            "GEL": {
+              "type": "GEL",
+              "typeLabel": "GEL",
+              "moment": "POST_OVERLOAD",
+              "momentLabel": "Pós",
+              "boxColor": "#ffcc00"
+            },
+            "FLUORIDE": {
+              "type": "FLUORIDE",
+              "typeLabel": "FLUORIDE",
+              "moment": "POST_OVERLOAD",
+              "momentLabel": "Pós",
+              "boxColor": "#666666"
+            }
+          },
+          "NONE": {
+            "URINE": {
+              "type": "URINE",
+              "typeLabel": "URINE",
+              "moment": "NONE",
+              "momentLabel": "Nenhum",
+              "boxColor": "#ffffff"
+            }
+          }
+        }
+      `);
+
+      retorno = fakeFillMomentTypeMaps(retorno,getFakeMomentTypeList());
+
+      return retorno;
+    }
+
+
+    function getMomentTypeAliquot(type, moment){
+      var momentType = AliquotManagerService.getMomentType(type, moment);
+      
+    }
+
+    function fakeColor(color){
+      var retorno = "#bf0000";
+      if(color && color.length > 0) retorno = color;
+      return retorno;
+    }
+
+    function fakeMomentLabel(momentLabel, moment){
+      var retorno;
+      switch (moment.toUpperCase()) {
+      case 'FASTING':
+        retorno = "Jejum";
+        break;
+      case 'NONE':
+        retorno = "Nenhum";
+        break;
+      case 'POST_OVERLOAD':
+        retorno = "Pós";
+        break;
+      default:
+        retorno = "Outro";
+      }
+      if(momentLabel && momentLabel.length > 0) retorno = momentLabel;
+      return retorno;
+    }
+
+    function fakeTypeLabel(typeLabel, type){
+      var retorno = type;
+      if(typeLabel && typeLabel.length > 0) retorno = typeLabel;
+      return retorno;
+    }
+
+    function fakeAliquotsConfig(aliquotsConfig){
+      var retorno = JSON.parse(`[
+                      {
+                        "objectType": "AliquotDescriptor",
+                        "name": "BIOSORO",
+                        "label": "Bioquímica Soro",
+                        "role": "exam",
+                        "quantity": 1
+                      },
+                      {
+                        "objectType": "AliquotDescriptor",
+                        "name": "PCR",
+                        "label": "PCR",
+                        "role": "exam",
+                        "quantity": 1
+                      },
+                      {
+                        "objectType": "AliquotDescriptor",
+                        "name": "FASTING_INSULINE",
+                        "label": "Insulina Jejum",
+                        "role": "exam",
+                        "quantity": 1
+                      },
+                      {
+                        "objectType": "AliquotDescriptor",
+                        "name": "STORAGE",
+                        "label": "Armazenamento",
+                        "role": "storage",
+                        "quantity": 8
+                      }
+                    ]`);
+      var array = [];
+      if(Object.prototype.toString.call(aliquotsConfig) == Object.prototype.toString.call(array) && aliquotsConfig.length > 0)
+        retorno = aliquotsConfig;
+
+      return retorno;
+    }
+    
+    function fakeMomentTypeList(momentTypeList){
+      var retorno = JSON.parse(`
+        [
+          {
+            "type": "GEL",
+            "typeLabel": "GEL",
+            "moment": "FASTING",
+            "momentLabel": "Jejum",
+            "boxColor": "#ffcc00"
+          },
+          {
+            "type": "EDTA",
+            "typeLabel": "EDTA",
+            "moment": "FASTING",
+            "momentLabel": "Jejum",
+            "boxColor": "#660066"
+          },
+          {
+            "type": "FLUORIDE",
+            "typeLabel": "FLUORIDE",
+            "moment": "FASTING",
+            "momentLabel": "Jejum",
+            "boxColor": "#666666"
+          },
+          {
+            "type": "GEL",
+            "typeLabel": "GEL",
+            "moment": "POST_OVERLOAD",
+            "momentLabel": "Pós",
+            "boxColor": "#ffcc00"
+          },
+          {
+            "type": "FLUORIDE",
+            "typeLabel": "FLUORIDE",
+            "moment": "POST_OVERLOAD",
+            "momentLabel": "Pós",
+            "boxColor": "#666666"
+          },
+          {
+            "type": "URINE",
+            "typeLabel": "URINE",
+            "moment": "NONE",
+            "momentLabel": "Nenhum",
+            "boxColor": "#ffffff"
+          }
+        ]
+      `);
+      var array = [];
+      if(Object.prototype.toString.call(momentTypeList) == Object.prototype.toString.call(array) && momentTypeList.length > 0)
+        retorno = momentTypeList;
+      
+      return retorno;
+    }
+
+    
+    function fakeFillMomentTypeMaps(momentTypeMaps, momentTypeList){
+      var retorno = momentTypeMaps;
+      
+      fakeFillTubeList(momentTypeMaps);
+      
+      momentTypeList.forEach(function(mt) {
+        momentTypeMaps[mt.moment][mt.type].aliquotsConfig = fakeAliquotsConfig(momentTypeMaps[mt.moment][mt.type].aliquotsConfig);
+      });
+
+      return retorno;
+    }
+
+    function fakeFillTubeList(momentTypeMaps, tubeList){
+      tubeList.forEach(function(tube) {
+        var array = [];
+        if(Object.prototype.toString.call(momentTypeMaps[tube.moment][tube.type].tubeList) != Object.prototype.toString.call(array))
+          momentTypeMaps[tube.moment][tube.type].tubeList = [];
+        
+        momentTypeMaps[tube.moment][tube.type].tubeList.push(tube);
+      });
+    }
+
+    //Object.keys(myObject).forEach(function(element) { });
+
+    /* ------------------ Before Integration with Model  ------------------ */
 
 
     function fillTubesWithAliquots(momentType){
