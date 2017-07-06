@@ -22,78 +22,40 @@
   function Controller(AliquotTubeService,MomentType, $scope, $element) {
     var self = this;
     
-    self.momentTypeList = MomentType.createListMomentType(self.tubeList);
+    //self.momentTypeList = MomentType.createListMomentType(self.tubeList);
+    self.momentTypeList = AliquotTubeService.getMomentTypeList()
 
     self.$onInit = onInit;
 
     self.selecMomentType = selecMomentType;
     self.selectedMomentType;
-    self.aliquotList = {};
+    //self.aliquotList = {};
 
     self.completePlaceholder = completePlaceholder; 
     self.inputChange = inputChange;
     
     self.validateTube = validateTube;
     self.validateAliquot = validateAliquot;
+    self.setFocus = setFocus; 
 
-    
     
     function selecMomentType(momentType){
-      if(self.selectedMomentType)
-        AliquotTubeService.fillTubesWithAliquots(self.selectedMomentType);
-      
       self.selectedMomentType = momentType;
-
-      self.selectedMomentType.aliquotsConfigs = [
-        {
-          label:"Armazenamento",
-          name:"STORAGE"
-        },
-        {
-          label:"Armazenamento",
-          name:"STORAGE"
-        },
-        {
-          label:"Armazenamento",
-          name:"STORAGE"
-        },
-        {
-          label:"Soro",
-          name:"SORO_1"
-        },
-        {
-          label:"Hemacias",
-          name:"HEMA_1"
-        },
-        {
-          label:"Soro",
-          name:"SORO_1"
-        }
-      ];
       
-      if(momentType.aliquotList["type"]){
-        self.aliquotList = momentType.aliquotList;
-      } else {
-        self.aliquotList = AliquotTubeService.createStructureAliquotList(self.selectedMomentType);
-        momentType.aliquotList = self.aliquotList;
-        AliquotTubeService.fillAliquotsWithTubesAliquots(momentType);
-        //console.log(self.momentTypeList);
-      }
+      completePlaceholder(self.selectedMomentType.exams);
+      completePlaceholder(self.selectedMomentType.stores);
 
-      completePlaceholder(self.aliquotList.aliquots.exams);
-      completePlaceholder(self.aliquotList.aliquots.stores);
-
-      //console.log(self.aliquotList.aliquots);
       setTimeout(function(){
         //console.log('Começando');
         _defaultCustomValidation();
-      },1000);
+        _nextFocus({index:-1, role: 'EXAM'})
+      },500);
     }
 
     function _defaultCustomValidation(){
-      var arrayAliquots = self.aliquotList.aliquots.exams.concat(self.aliquotList.aliquots.stores);
+      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
 
-      arrayAliquots.forEach(function(aliquot) {
+      aliquotsArray.forEach(function(aliquot) {
         $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',true);
         $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',true);
 
@@ -107,8 +69,7 @@
 
       aliquots.forEach(function(aliquot) {
         aliquot.placeholder = lastPlaceholder;
-        if(aliquot.tubeCode)
-          lastPlaceholder = aliquot.tubeCode;
+        if(aliquot.tubeCode) lastPlaceholder = aliquot.tubeCode;
       });
     };
 
@@ -121,86 +82,84 @@
       return (value.length && value.length == 9 && (value.toString().substr(2,1) == '2' || value.toString().substr(2,1) == '3'));
     }
 
-    function validateAliquot(examStorage){
-      if(examStorage.aliquotCode){
-        if(_isAliquot(examStorage.aliquotCode)){
-          examStorage.aliquotMessage = "";
-          $scope.formAliquot[examStorage.aliquotId].$setValidity('customValidation',true);
+    function validateAliquot(aliquot){
+      if(aliquot.aliquotCode){
+        if(_isAliquot(aliquot.aliquotCode)){
+          aliquot.aliquotMessage = "";
+          $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',true);
         } else {
-          examStorage.aliquotMessage = "Não é uma Aliquota válida.";
-          $scope.formAliquot[examStorage.aliquotId].$setValidity('customValidation',false);
+          aliquot.aliquotMessage = "Não é uma Aliquota válida.";
+          $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',false);
         }
       }
     }
 
-    function validateTube(examStorage){
-      if(examStorage.tubeCode){
-        var filterTube = self.aliquotList.tubes.filter(function(tube){
-          return tube.code == examStorage.tubeCode;
+    function validateTube(aliquot){
+      if(aliquot.tubeCode){
+        var filterTube = self.selectedMomentType.tubeList.filter(function(tube){
+          return tube.code == aliquot.tubeCode;
         });
         
         if(filterTube.length > 0){
-          $scope.formAliquot[examStorage.tubeId].$setValidity('customValidation',true);
+          $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',true);
           //Tube find
           //console.log(filterTube[0].isCollected);
           if(!filterTube[0].isCollected){
             //Tube NOT collected
-            examStorage.tubeMessage = "Tubo não coletado, não pode ser Aliquotado.";
-            $scope.formAliquot[examStorage.tubeId].$setValidity('customValidation',false);  
+            aliquot.tubeMessage = "Tubo não coletado, não pode ser Aliquotado.";
+            $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',false);  
           }
         } else {
           //Tube NOT exist to this Moment Type
-          examStorage.tubeMessage = "Este tubo não existe, ou, não pertence a este Tipo/Momento.";
-          $scope.formAliquot[examStorage.tubeId].$setValidity('customValidation',false);
+          aliquot.tubeMessage = "Este tubo não existe, ou, não pertence a este Tipo/Momento.";
+          $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',false);
         }
       }
     }
 
-    function inputChange(examStorage, aliquotChange){
+    function inputChange(aliquot, aliquotChange){
       if(aliquotChange){
-        $scope.formAliquot[examStorage.aliquotId].$setValidity('customValidation',true);
-        if(examStorage.aliquotCode && examStorage.aliquotCode.length==9){
-          if(_isTube(examStorage.aliquotCode)){
-            examStorage.tubeCode = examStorage.aliquotCode;
-            examStorage.aliquotCode = "";
-            $element.find('#' + examStorage.tubeId).blur();
+        $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',true);
+        if(aliquot.aliquotCode && aliquot.aliquotCode.length==9){
+          if(_isTube(aliquot.aliquotCode)){
+            aliquot.tubeCode = aliquot.aliquotCode;
+            aliquot.aliquotCode = "";
+            $element.find('#' + aliquot.tubeId).blur();
           } else {
-            _nextFocus(examStorage);
+            _nextFocus(aliquot);
           }
         }
       } else {
-        $scope.formAliquot[examStorage.tubeId].$setValidity('customValidation',true);
+        $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',true);
       }
 
-      if(examStorage.role.toUpperCase() == "EXAM"){
-        completePlaceholder(self.aliquotList.aliquots.exams);
+      if(aliquot.role.toUpperCase() == "EXAM"){
+        completePlaceholder(self.selectedMomentType.exams);
       } else {
-        completePlaceholder(self.aliquotList.aliquots.stores);
+        completePlaceholder(self.selectedMomentType.stores);
       }
     }  
    
    
 
-    function _nextFocus(examStorage){
+    function _nextFocus(aliquot){
       var newFocus = ""
-      if(examStorage.role.toUpperCase() == "EXAM"){
-        if(examStorage.index < self.aliquotList.aliquots.exams.length - 1){
-          newFocus = self.aliquotList.aliquots.exams[examStorage.index + 1].aliquotId;
+      if(aliquot.role.toUpperCase() == "EXAM"){
+        if(aliquot.index < self.selectedMomentType.exams.length - 1){
+          newFocus = self.selectedMomentType.exams[aliquot.index + 1].aliquotId;
         } else {
-          newFocus = self.aliquotList.aliquots.stores[0].aliquotId;
+          newFocus = self.selectedMomentType.stores[0].aliquotId;
         }
       } else {
-        if(examStorage.index < self.aliquotList.aliquots.stores.length - 1){
-          newFocus = self.aliquotList.aliquots.stores[examStorage.index + 1].aliquotId;
+        if(aliquot.index < self.selectedMomentType.stores.length - 1){
+          newFocus = self.selectedMomentType.stores[aliquot.index + 1].aliquotId;
         } else {
-          //newFocus = self.aliquotList.aliquots.exams[0].aliquotId;
+          newFocus = self.selectedMomentType.exams[0].aliquotId;
         }
       }
-
-      self.setFocus(newFocus);
+      if(newFocus) self.setFocus(newFocus);
     }
 
-    self.setFocus = setFocus; 
     
     function setFocus(id){
       //console.log('#'+id);

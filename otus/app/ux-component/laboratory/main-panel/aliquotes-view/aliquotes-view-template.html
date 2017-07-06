@@ -90,7 +90,7 @@
                 <div class="tube-list-view" flex>
                     <div layout="column" class="boxWithHeight tela" layout-padding flex ng-style="{'min-width':'800px'}">
                         <div>
-                        {{$ctrl.aliquotList.type}} - {{$ctrl.aliquotList.momentLabel}}
+                        {{$ctrl.selectedMomentType.type}} - {{$ctrl.selectedMomentType.momentLabel}}
                         </div>
                         
                         <md-whiteframe class="md-whiteframe-12dp" ng-style='{"margin-bottom":"10px"}' flex layout-padding>
@@ -98,7 +98,7 @@
                                 Exame:
                             </div>
                             
-                            <div ng-repeat="exam in $ctrl.aliquotList.aliquots.exams" layout="row">
+                            <div ng-repeat="exam in $ctrl.selectedMomentType.exams" layout="row">
 <!-- Mount Tube Input - Exam - Begin -->
                                 <div class="input-tube" flex>
                                     <div class="md-list-item-text" layout="column" flex>
@@ -113,7 +113,8 @@
                                                     id="{{exam.tubeId}}"
                                                     maxlength="9"
                                                     ng-blur="$ctrl.validateTube(exam)"
-
+                                                    tabindex="-1"
+                                                    ng-disabled="exam.isSaved"
                                                 />
                                                 <!-- tabindex="-1" -->
                                                 <div ng-messages="formAliquot[exam.tubeId].$error">
@@ -144,6 +145,7 @@
                                                     id="{{exam.aliquotId}}"
                                                     maxlength="9"
                                                     ng-blur="$ctrl.validateAliquot(exam)"
+                                                    ng-disabled="exam.isSaved"
                                                 />
                                                 <div ng-messages="formAliquot[exam.aliquotId].$error">
                                                     <div ng-message="customValidation">{{exam.aliquotMessage}}</div>
@@ -163,7 +165,7 @@
                                 Armazenamento:
                             </div>
                             
-                            <div ng-repeat="storage in $ctrl.aliquotList.aliquots.stores" layout="row">
+                            <div ng-repeat="storage in $ctrl.selectedMomentType.stores" layout="row">
 <!-- Mount Tube Input - Storage - Begin -->
                                 <div class="input-tube" flex>
                                     <div class="md-list-item-text" layout="column" flex>
@@ -178,7 +180,8 @@
                                                     id="{{storage.tubeId}}"
                                                     maxlength="9"
                                                     ng-blur="$ctrl.validateTube(storage)"
-                                                    
+                                                    tabindex="-1"
+                                                    ng-disabled="exam.isSaved"
                                                 />
                                                 <!-- tabindex="-1" -->
                                                 <div ng-messages="formAliquot[storage.tubeId].$error">
@@ -210,6 +213,7 @@
                                                     id="{{storage.aliquotId}}"
                                                     maxlength="9"
                                                     ng-blur="$ctrl.validateAliquot(storage)"
+                                                    ng-disabled="exam.isSaved"
                                                 />
                                                 <div ng-messages="formAliquot[storage.aliquotId].$error">
                                                     <div ng-message="customValidation">{{storage.aliquotMessage}}</div>
