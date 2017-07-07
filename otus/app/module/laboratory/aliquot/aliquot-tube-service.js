@@ -110,6 +110,18 @@
     }
 
 
+    function getNewAliquots(momentType){
+      var arrayAliquots = momentType.exams.concat(momentType.stores);
+      var listReturn = [];
+
+      arrayAliquots.forEach(function(aliquot) {
+        if(aliquot.isSaved == false && aliquot.aliquotCode && aliquot.tubeCode){
+          //implementar
+        } 
+      });
+
+      return listReturn;
+    }
 
 
 

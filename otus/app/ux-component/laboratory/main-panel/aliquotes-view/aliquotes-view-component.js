@@ -48,8 +48,8 @@
       setTimeout(function(){
         //console.log('Começando');
         _defaultCustomValidation();
-        _nextFocus({index:-1, role: 'EXAM'})
-      },500);
+        _nextFocusNotSave({index:-1, role: 'EXAM'})
+      },200);
     }
 
     function _defaultCustomValidation(){
@@ -143,22 +143,56 @@
    
 
     function _nextFocus(aliquot){
-      var newFocus = ""
-      if(aliquot.role.toUpperCase() == "EXAM"){
-        if(aliquot.index < self.selectedMomentType.exams.length - 1){
-          newFocus = self.selectedMomentType.exams[aliquot.index + 1].aliquotId;
-        } else {
-          newFocus = self.selectedMomentType.stores[0].aliquotId;
-        }
-      } else {
-        if(aliquot.index < self.selectedMomentType.stores.length - 1){
-          newFocus = self.selectedMomentType.stores[aliquot.index + 1].aliquotId;
-        } else {
-          newFocus = self.selectedMomentType.exams[0].aliquotId;
-        }
-      }
-      if(newFocus) self.setFocus(newFocus);
+      // var newFocus = ""
+      // if(aliquot.role.toUpperCase() == "EXAM"){
+      //   if(aliquot.index < self.selectedMomentType.exams.length - 1){
+      //     newFocus = self.selectedMomentType.exams[aliquot.index + 1].aliquotId;
+      //   } else {
+      //     newFocus = self.selectedMomentType.stores[0].aliquotId;
+      //   }
+      // } else {
+      //   if(aliquot.index < self.selectedMomentType.stores.length - 1){
+      //     newFocus = self.selectedMomentType.stores[aliquot.index + 1].aliquotId;
+      //   } else {
+      //     newFocus = self.selectedMomentType.exams[0].aliquotId;
+      //   }
+      // }
+      // if(newFocus) self.setFocus(newFocus);
+      _nextFocusNotSave(aliquot);
     }
+
+
+    function _nextFocusNotSave(currentAliquot){
+      var newFocus = "";
+      var aliquotArray = self.selectedMomentType.stores.concat(self.selectedMomentType.exams);
+      var current = {
+        index:currentAliquot.index + 1,
+        role: currentAliquot.role,
+        roleChanged: false
+      };
+      
+      if(currentAliquot.role.toUpperCase() == "EXAM") 
+        aliquotArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+
+      for (var i = 0; i < aliquotArray.length; i++) {
+        var aliquot = aliquotArray[i];
+        
+        if(current.role.toUpperCase() != aliquot.role.toUpperCase() && current.roleChanged == false) {
+          current.index = 0;
+          current.role = aliquot.role;
+          current.roleChanged = true;
+        }
+        
+        if(current.index == aliquot.index && current.role.toUpperCase() == aliquot.role.toUpperCase() && aliquot.isSaved == false){
+          newFocus = aliquot.aliquotId;
+          break;
+        }
+        if(current.index == aliquot.index) current.index++;
+      }
+
+      if(newFocus.length) self.setFocus(newFocus);
+    }
+
 
     
     function setFocus(id){

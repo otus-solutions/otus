@@ -25,7 +25,8 @@
 
   <div class="control-panel" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'aliquotes'">
      <div layout="row" layout-align="center center">
-        <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.changeState('main')">Voltar</md-button>
+        <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAndReturn()">Voltar</md-button>
+        <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-click="$ctrl.executeCallback(cb)">Salvar</md-button>
      </div>
   </div>
 </div>
