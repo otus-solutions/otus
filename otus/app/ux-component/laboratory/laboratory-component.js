@@ -71,6 +71,7 @@
     }
 
     function _fetchLaboratory() {
+      self.labels = ParticipantLaboratoryService.generateLabels();
       self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
       self.state = 'main';
     }

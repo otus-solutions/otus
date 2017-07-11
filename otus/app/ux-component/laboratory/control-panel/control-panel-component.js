@@ -7,7 +7,8 @@
       templateUrl: 'app/ux-component/laboratory/control-panel/control-panel-template.html',
       bindings: {
         state: '=',
-        labParticipant: '='
+        labParticipant: '=',
+        labels: '='
       },
       transclude: true,
       controller: controller
@@ -33,7 +34,6 @@
     function onInit() {
       self.collectedTubes = [];
       _buildDialogs();
-      self.labels = ParticipantLaboratoryService.generateLabels();
       self.labels.tubes = _orderTubesWithLabelNullAlphabetically(self.labels.tubes);
     }
 
@@ -101,11 +101,11 @@
 
     function _sortByTubeLabel(a, b) {
       // if label are equals
-      if(a.label.toLowerCase() ===  b.label.toLowerCase()) {
+      if (a.label.toLowerCase() === b.label.toLowerCase()) {
         // sort by code
         return a.code > b.code;
       }
-      return a.label.toLowerCase() >  b.label.toLowerCase();
+      return a.label.toLowerCase() > b.label.toLowerCase();
     }
 
     function _removeTubesWithOrderNull(tubeList) {
