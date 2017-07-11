@@ -95,31 +95,86 @@
 
     function completePlaceholder(aliquots,currentAliquot){
       var lastPlaceholder = '';
+      var tubeIdList = [];
 
       aliquots.forEach(function(aliquot) {
         aliquot.placeholder = lastPlaceholder;
         if(lastPlaceholder){
-          aliquot.tubeMessage = "";
+          //aliquot.tubeMessage = "";
         }
         if(currentAliquot){
-          if($scope.formAliquot && currentAliquot != aliquot) $element.find('#'+ aliquot.tubeId).blur();
+          tubeIdList.push(aliquot.tubeId);
+          if($scope.formAliquot 
+            && (aliquot.tubeCode.length || aliquot.tubeCode.length == 9)
+            //currentAliquot != aliquot
+          ){
+            if(currentAliquot == aliquot){
+              //_validateTubeRequired(aliquot);
+            } else {
+              //$element.find('#'+ aliquot.tubeId).blur();
+            }
+            //
+          } 
         }
 
         if(aliquot.tubeCode) lastPlaceholder = aliquot.tubeCode;
       });
+
+      //if($scope.formAliquot && currentAliquot != aliquot) $element.find('#'+ aliquot.tubeId).blur();
     };
 
-    function _aliquotAlreadyUsed(aliquot){
+    function _addAloquotInRepeatedAliquots(aliquot){
+      var newArray = self.selectedMomentType.repeatedAliquots.filter(function(currentAliquot){ 
+        return aliquot == currentAliquot; 
+      });
+
+      if(newArray.length){
+        return false;
+      } else {
+        self.selectedMomentType.repeatedAliquots.push(aliquot);
+        return true;
+      }
+    }
+
+    function _removeRepeatedAliquots(aliquot){
+      self.selectedMomentType.repeatedAliquots = self.selectedMomentType.repeatedAliquots.filter(function(currentAliquot){
+        return JSON.stringify(currentAliquot) != JSON.stringify(aliquot);
+      });
+    }
+
+    function _aliquotAlreadyUsed(aliquot, validateRepeatedList){
       var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
       var alreadyUsed = false;
 
       for (var i = 0; i < aliquotsArray.length; i++) {
         var currentAliquot = aliquotsArray[i];
         
-        if(currentAliquot != aliquot && currentAliquot.aliquotCode == aliquot.aliquotCode){
+        if(currentAliquot.aliquotCode && currentAliquot != aliquot && currentAliquot.aliquotCode == aliquot.aliquotCode){
           alreadyUsed = true;
-          break;
+          if(validateRepeatedList) {
+            _addAloquotInRepeatedAliquots(currentAliquot);
+          } 
+          //break;
         }
+      }
+      
+      if(alreadyUsed){
+        if(validateRepeatedList) _addAloquotInRepeatedAliquots(aliquot);
+      } else {
+        console.log("Chamou:");
+        if(validateRepeatedList) _removeRepeatedAliquots(aliquot);
+      }
+
+      if(validateRepeatedList){
+        self.selectedMomentType.repeatedAliquots.forEach(function(currentAliquot) {
+          if(_aliquotAlreadyUsed(currentAliquot)){
+            currentAliquot.aliquotMessage = "Código de alíquota já utilizado.";
+            $scope.formAliquot[currentAliquot.aliquotId].$setValidity('customValidation',false);
+          } else {
+            currentAliquot.aliquotMessage = "";
+            $scope.formAliquot[currentAliquot.aliquotId].$setValidity('customValidation',true);
+          }
+        });
       }
 
       return alreadyUsed;
@@ -155,24 +210,31 @@
     function _validateWave(aliquot,tubeOrAliquot){
       var isTube = (tubeOrAliquot.toUpperCase() == "TUBE");
       var value = isTube ? aliquot.tubeCode : aliquot.aliquotCode;
+      var msgTube = "Não é um código válido.";
+      var msgAliquot = "Não é um código válido.";
+      
       var isValid = true;
 
       if(value.length > 0) isValid = (value.toString().substr(0,1) == '3');
 
       if(isValid){
         if(isTube){
-          aliquot.tubeMessage = "";
-          $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',true);
+          if(msgTube == aliquot.tubeMessage){
+            aliquot.tubeMessage = "";
+            $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',true);
+          }
         } else {
-          aliquot.aliquotMessage = "";
-          $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',true);
+          if(msgAliquot == aliquot.aliquotMessage){
+            aliquot.aliquotMessage = "";
+            $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',true);
+          }
         }
       } else {
         if(isTube){
-          aliquot.tubeMessage = "Não é um código válido.";
+          aliquot.tubeMessage = msgTube;
           $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',false);
         } else {
-          aliquot.aliquotMessage = "Não é um código válido.";
+          aliquot.aliquotMessage = msgAliquot;
           $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',false);
         }
       }
@@ -183,16 +245,19 @@
 
     function _validateTubeRequired(aliquot){
       var isValid = true;
-      
+      var msg = "O código do Tubo é obrigatório.";
       if(aliquot.aliquotCode){
         if(aliquot.tubeCode.length == 0 && aliquot.placeholder.length == 0) isValid = false;
       }
 
       if(isValid){
-        aliquot.tubeMessage = "";
-        $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',true);
+        if(aliquot.tubeMessage == msg){
+          console.log("Apagando?");
+          aliquot.tubeMessage = "";
+          $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',true);
+        }
       } else {
-        aliquot.tubeMessage = "O código do Tubo é obrigatório.";
+        aliquot.tubeMessage = msg;
         $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',false);
       }
 
@@ -205,23 +270,25 @@
     }
 
     function _isAliquot(value, nameField){
-      return (value.length && value.length == 9 && (value.toString().substr(2,1) == '2' || value.toString().substr(2,1) == '3'));
+      return (value.length == 0 || (value.length == 9 && (value.toString().substr(2,1) == '2' || value.toString().substr(2,1) == '3')));
     }
 
 
     function validateAliquot(aliquot){
+      _aliquotAlreadyUsed(aliquot,true);
+      _validateTubeRequired(aliquot);
       if(!_validateIsNumber(aliquot,"ALIQUOT")) return;
       if(!_validateWave(aliquot,"ALIQUOT")) return;
-      _validateTubeRequired(aliquot);
-      
+
       if(aliquot.aliquotCode){
         if(_isAliquot(aliquot.aliquotCode)){
           aliquot.aliquotMessage = "";
           $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',true);
           
-          if(_aliquotAlreadyUsed(aliquot)){
+          if(_aliquotAlreadyUsed(aliquot,true)){
             aliquot.aliquotMessage = "Código de alíquota já utilizado.";
             $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',false);
+            return;
           }
         } else {
           aliquot.aliquotMessage = "Não é uma Aliquota válida.";
@@ -256,26 +323,41 @@
       }
     }
 
-    function inputChange(aliquot, aliquotChange){
-      if(aliquotChange){
+    function _blurTubeOfAliquotsArray(aliquotsArray,currentAliquot){
+      aliquotsArray.forEach(function(aliquot) {
+        if(aliquot == currentAliquot){
+          _validateTubeRequired(aliquot);
+        } else{
+          $element.find('#' + aliquot.tubeId).blur();
+        }
+      });
+    }
+
+    function inputChange(aliquot, tubeOrAliquot){
+      var aliquotsArray = aliquot.role.toUpperCase() == "EXAM" ? self.selectedMomentType.exams : self.selectedMomentType.stores;
+      var runCompletePlaceholder = false;
+
+      if(tubeOrAliquot.toUpperCase() == 'ALIQUOT'){
         $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',true);
         if(aliquot.aliquotCode && aliquot.aliquotCode.length==9){
           if(_isTube(aliquot.aliquotCode)){
             aliquot.tubeCode = aliquot.aliquotCode;
             aliquot.aliquotCode = "";
-            $element.find('#' + aliquot.tubeId).blur();
+            runCompletePlaceholder = true;
+            //$element.find('#' + aliquot.tubeId).blur();
           } else {
             _nextFocus(aliquot);
           }
         }
       } else {
+        runCompletePlaceholder = true;
+        console.log('Alterado Tubo');
         $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',true);
       }
 
-      if(aliquot.role.toUpperCase() == "EXAM"){
-        completePlaceholder(self.selectedMomentType.exams, aliquot);
-      } else {
-        completePlaceholder(self.selectedMomentType.stores, aliquot);
+      if(runCompletePlaceholder){
+        completePlaceholder(aliquotsArray, aliquot);
+        _blurTubeOfAliquotsArray(aliquotsArray,aliquot);
       }
     }  
    
@@ -329,7 +411,11 @@
         if(current.index == aliquot.index) current.index++;
       }
 
-      if(newFocus.length) self.setFocus(newFocus);
+      if(newFocus.length) {
+        self.setFocus(newFocus);
+      } else {
+        if(aliquot.aliquotId) $element.find('#'+ aliquot.aliquotId).blur();
+      };
     }
 
 

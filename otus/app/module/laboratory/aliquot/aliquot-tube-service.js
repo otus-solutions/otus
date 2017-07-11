@@ -123,6 +123,8 @@
       momentType.originalStores = JSON.parse(JSON.stringify(momentType.stores));
       momentType.originalExams = JSON.parse(JSON.stringify(momentType.exams));
 
+      momentType.repeatedAliquots = [];
+
       return momentType;
     }
 
@@ -136,6 +138,9 @@
           var aliquot = arrayAliquots[i];
           if(aliquot.tubeCode == "" && aliquot.name.toUpperCase() == collectedAliquot.name.toUpperCase()){
             aliquot.tubeCode = collectedAliquot.tubeCode;
+            //Apaga Daqui
+            if(collectedAliquot.code.toString().length == 8) collectedAliquot.code = `${collectedAliquot.code}9`;
+            //Até Aqui
             aliquot.aliquotCode = collectedAliquot.code;
             aliquot.isSaved = true;
             endLoop = true;

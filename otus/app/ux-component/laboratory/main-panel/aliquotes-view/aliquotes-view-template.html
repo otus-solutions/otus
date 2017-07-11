@@ -108,7 +108,7 @@
                                                 <input class="campo" 
                                                     ng-model="exam.tubeCode" 
                                                     placeholder="{{exam.placeholder}}" 
-                                                    ng-change="$ctrl.inputChange(exam)"
+                                                    ng-change="$ctrl.inputChange(exam,'TUBE')"
                                                     name="{{exam.tubeId}}"
                                                     id="{{exam.tubeId}}"
                                                     maxlength="9"
@@ -139,7 +139,7 @@
                                             <md-input-container flex layout="column">
                                                 <label>{{exam.label}}</label>
                                                 <input ng-model="exam.aliquotCode" 
-                                                    ng-change="$ctrl.inputChange(exam,true)"
+                                                    ng-change="$ctrl.inputChange(exam,'ALIQUOT')"
                                                     ng-model-options='{ debounce: 100 }'
                                                     name="{{exam.aliquotId}}"
                                                     id="{{exam.aliquotId}}"
@@ -153,6 +153,11 @@
                                                 </div>
                                             </md-input-container>
                                         </md-content>
+                                                <div ng-show="exam.isSaved"
+                                                    ng-style="{'position':'relative','top':'-10px'}"
+                                                >
+                                                    <p>Data de Aliquotagem</p>
+                                                </div>
                                     </div>
                                 </div>
 <!-- Mount Aliquot Input - Exam - End -->
@@ -175,7 +180,7 @@
                                                 <input class="campo" 
                                                     ng-model="storage.tubeCode" 
                                                     placeholder="{{storage.placeholder}}" 
-                                                    ng-change="$ctrl.inputChange(storage)"
+                                                    ng-change="$ctrl.inputChange(storage,'TUBE')"
                                                     name="{{storage.tubeId}}"
                                                     id="{{storage.tubeId}}"
                                                     maxlength="9"
@@ -207,7 +212,7 @@
                                                 <label>{{storage.label}}</label>
                                                 <input 
                                                     ng-model="storage.aliquotCode" 
-                                                    ng-change="$ctrl.inputChange(storage,true)"
+                                                    ng-change="$ctrl.inputChange(storage,'ALIQUOT')"
                                                     ng-model-options='{ debounce: 100 }'
                                                     name="{{storage.aliquotId}}"
                                                     id="{{storage.aliquotId}}"
