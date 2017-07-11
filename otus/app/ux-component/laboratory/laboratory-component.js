@@ -21,6 +21,11 @@
     /* Public methods */
     self.$onInit = onInit;
     self.intializeLaboratory = intializeLaboratory;
+    self.callbackFunctions = {
+      saveAliquots: function(){console.log('Function not implemented.');},
+      cancelAliquots: function(){console.log('Function not implemented.'); return false;}
+    };
+
 
     function onInit() {
       _loadSelectedParticipant();

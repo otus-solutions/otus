@@ -7,7 +7,8 @@
       templateUrl: 'app/ux-component/laboratory/control-panel/control-panel-template.html',
       bindings: {
         state: '=',
-        labParticipant: '='
+        labParticipant: '=',
+        callbackFunctions: '='
       },
       transclude: true,
       controller: controller
@@ -29,6 +30,23 @@
     self.finish = finish;
     self.cancelCollect = cancelCollect;
     self.cancelAndReturn = cancelAndReturn;
+    
+    
+    self.saveAliquots = saveAliquots;
+    self.cancelAliquots = cancelAliquots;
+
+    function saveAliquots(){
+      self.callbackFunctions.saveAliquots();
+    }
+
+    function cancelAliquots(){
+      if(self.callbackFunctions.cancelAliquots()){
+        self.cancelAndReturn();
+      } else {
+        self.labParticipant.reloadTubeList();
+        changeState('main');
+      }
+    }
 
     function onInit() {
       self.collectedTubes = [];
