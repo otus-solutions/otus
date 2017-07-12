@@ -4,12 +4,12 @@
         <md-subheader class="md-no-sticky" style="font-size: 18px;">
             Momento e Tipo
         </md-subheader>
-        
+
         <md-list ng-repeat="momentType in $ctrl.momentTypeList" >
             <div class="tube-list-view">
-                <md-card ng-style="{'padding':'10px', 'width':'300px'}" 
-                    ng-click="$ctrl.selecMomentType(momentType)" 
-                    
+                <md-card ng-style="{'padding':'10px', 'width':'300px'}"
+                    ng-click="$ctrl.selecMomentType(momentType)"
+
                     class="{{$ctrl.selectedMomentType == momentType ? 'moment-type-selected aliquot-md-card' : 'moment-type-not-selected aliquot-md-card' }}"
                 >
                     <div layout="row">
@@ -19,7 +19,7 @@
                             'margin-right':'10px',
                             'border': 'solid 1px #ccc',
                             'border-radius':'3px 3px 10px 10px'
-                            
+
                             }">
                             </div>
                         </div>
@@ -71,12 +71,12 @@
                         <div>
                         {{$ctrl.selectedMomentType.typeLabel}} - {{$ctrl.selectedMomentType.momentLabel}}
                         </div>
-                        
+
                         <md-whiteframe class="md-whiteframe-12dp" ng-style='{"margin-bottom":"10px"}' flex layout-padding>
                             <div ng-style='{"color":"red"}'>
                                 Exame:
                             </div>
-                            
+
                             <div ng-repeat="exam in $ctrl.selectedMomentType.exams" layout="row">
 <!-- Mount Tube Input - Exam - Begin -->
                                 <div class="input-tube" flex>
@@ -84,10 +84,10 @@
                                         <md-content layout="row" flex layout-align="start center">
                                             <md-input-container flex layout="column">
                                                 <label>Tubo</label>
-                                                <input class="campo" 
-                                                    ng-model="exam.tubeCode" 
-                                                    placeholder="{{exam.placeholder}}" 
-                                                    ng-change="$ctrl.inputChange(exam,'TUBE')"
+                                                <input class="campo"
+                                                    ng-model="exam.tubeCode"
+                                                    placeholder="{{exam.placeholder}}"
+                                                    ng-change="$ctrl.inputOnChangeTube(exam)"
                                                     name="{{exam.tubeId}}"
                                                     id="{{exam.tubeId}}"
                                                     maxlength="9"
@@ -101,7 +101,7 @@
                                                 </div>
                                             </md-input-container>
                                         </md-content>
-                                        
+
                                         <div ng-show="exam.isSaved" class="input-footer-message">
                                             {{"Aliquotado por: " + exam.operator}}
                                         </div>
@@ -114,15 +114,15 @@
                                         <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
                                     </div>
                                 </div>
-                                
+
 <!-- Mount Aliquot Input - Exam - Begin -->
                                 <div class="input-aloquot" flex>
                                     <div class="md-list-item-text" layout="column" flex>
                                         <md-content layout="row" flex layout-align="start center">
                                             <md-input-container flex layout="column">
                                                 <label>{{exam.containerLabel}}</label>
-                                                <input ng-model="exam.aliquotCode" 
-                                                    ng-change="$ctrl.inputChange(exam,'ALIQUOT')"
+                                                <input ng-model="exam.aliquotCode"
+                                                    ng-change="$ctrl.inputOnChangeAliquot(exam)"
                                                     ng-model-options='{ debounce: 100 }'
                                                     name="{{exam.aliquotId}}"
                                                     id="{{exam.aliquotId}}"
@@ -136,7 +136,7 @@
                                                 </div>
                                             </md-input-container>
                                         </md-content>
-                                        
+
                                         <div ng-show="exam.isSaved" class="input-footer-message">
                                             {{exam.date + " " + exam.time}}
                                         </div>
@@ -146,12 +146,12 @@
                             </div>
                             <br>
                         </md-whiteframe>
-                        
+
                         <md-whiteframe class="md-whiteframe-12dp" flex layout-padding ng-style='{"margin-bottom":"20px"}'>
                             <div ng-style='{"color":"red"}'>
                                 Armazenamento:
                             </div>
-                            
+
                             <div ng-repeat="storage in $ctrl.selectedMomentType.stores" layout="row">
 <!-- Mount Tube Input - Storage - Begin -->
                                 <div class="input-tube" flex>
@@ -159,10 +159,10 @@
                                         <md-content layout="row" flex layout-align="start center">
                                             <md-input-container flex layout="column">
                                                 <label>Tubo</label>
-                                                <input class="campo" 
-                                                    ng-model="storage.tubeCode" 
-                                                    placeholder="{{storage.placeholder}}" 
-                                                    ng-change="$ctrl.inputChange(storage,'TUBE')"
+                                                <input class="campo"
+                                                    ng-model="storage.tubeCode"
+                                                    placeholder="{{storage.placeholder}}"
+                                                    ng-change="$ctrl.inputOnChangeTube(storage)"
                                                     name="{{storage.tubeId}}"
                                                     id="{{storage.tubeId}}"
                                                     maxlength="9"
@@ -176,29 +176,29 @@
                                                 </div>
                                             </md-input-container>
                                         </md-content>
-                                        
+
                                         <div ng-show="storage.isSaved" class="input-footer-message">
                                             {{"Aliquotado por: " + storage.operator}}
                                         </div>
                                     </div>
                                 </div>
 <!-- Mount Tube Input - Storage - End -->
-                                
+
                                 <div flex=10 layout="row" layout-align="center center" ng-style='{"text-align":"center"}'>
                                     <div>
                                         <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
                                     </div>
                                 </div>
-                                
+
 <!-- Mount Aliquot Input - Storage - Begin -->
                                 <div class="input-aloquot" flex>
                                     <div class="md-list-item-text" layout="column" flex>
                                         <md-content layout="row" flex layout-align="start center">
                                             <md-input-container flex layout="column">
                                                 <label>{{storage.containerLabel}}</label>
-                                                <input 
-                                                    ng-model="storage.aliquotCode" 
-                                                    ng-change="$ctrl.inputChange(storage,'ALIQUOT')"
+                                                <input
+                                                    ng-model="storage.aliquotCode"
+                                                    ng-change="$ctrl.inputOnChangeAliquot(storage)"
                                                     ng-model-options='{ debounce: 100 }'
                                                     name="{{storage.aliquotId}}"
                                                     id="{{storage.aliquotId}}"
