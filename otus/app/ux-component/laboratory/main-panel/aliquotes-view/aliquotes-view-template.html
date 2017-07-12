@@ -1,24 +1,3 @@
-
-<style>
-    .is-selected{
-        box-shadow: 1px 2px 5px grey;
-    }
-    .not-selected{
-        opacity: 0.5;
-    }
-    md-card:focus {
-        outline: none;
-        border: 0;
-        box-shadow: 1px 2px 5px grey;
-    }
-
-    [ng-click],
-    [data-ng-click],
-    [x-ng-click] {
-        cursor: pointer;
-    }
-</style>
-
 <md-content layout="row" flex >
 <!--List MomentType - Begin-->
     <div layout="column" layout-align="start center" flex="30">
@@ -31,7 +10,7 @@
                 <md-card ng-style="{'padding':'10px', 'width':'300px'}" 
                     ng-click="$ctrl.selecMomentType(momentType)" 
                     
-                    class="{{$ctrl.selectedMomentType == momentType ? 'is-selected' : 'not-selected' }}"
+                    class="{{$ctrl.selectedMomentType == momentType ? 'moment-type-selected aliquot-md-card' : 'moment-type-not-selected aliquot-md-card' }}"
                 >
                     <div layout="row">
                         <div layout="column" flex="10">
@@ -47,7 +26,7 @@
                         <div layout="column" flex="90">
                             <div layout="row" flex="70">
                                 <div layout="column" flex="90">
-                                    <span class="md-title">{{momentType.type}}</span>
+                                    <span class="md-title">{{momentType.typeLabel}}</span>
                                     <span class="md-subhead">{{momentType.momentLabel}}</span>
                                 </div>
                                 <div layout="column" flex="10">
@@ -90,7 +69,7 @@
                 <div class="tube-list-view" flex>
                     <div layout="column" class="boxWithHeight tela" layout-padding flex ng-style="{'min-width':'800px'}">
                         <div>
-                        {{$ctrl.selectedMomentType.type}} - {{$ctrl.selectedMomentType.momentLabel}}
+                        {{$ctrl.selectedMomentType.typeLabel}} - {{$ctrl.selectedMomentType.momentLabel}}
                         </div>
                         
                         <md-whiteframe class="md-whiteframe-12dp" ng-style='{"margin-bottom":"10px"}' flex layout-padding>
@@ -122,6 +101,10 @@
                                                 </div>
                                             </md-input-container>
                                         </md-content>
+                                        
+                                        <div ng-show="exam.isSaved" class="input-footer-message">
+                                            {{"Aliquotado por: " + exam.operator}}
+                                        </div>
                                     </div>
                                 </div>
 <!-- Mount Tube Input - Exam - End -->
@@ -137,7 +120,7 @@
                                     <div class="md-list-item-text" layout="column" flex>
                                         <md-content layout="row" flex layout-align="start center">
                                             <md-input-container flex layout="column">
-                                                <label>{{exam.label}}</label>
+                                                <label>{{exam.containerLabel}}</label>
                                                 <input ng-model="exam.aliquotCode" 
                                                     ng-change="$ctrl.inputChange(exam,'ALIQUOT')"
                                                     ng-model-options='{ debounce: 100 }'
@@ -153,11 +136,10 @@
                                                 </div>
                                             </md-input-container>
                                         </md-content>
-                                                <div ng-show="exam.isSaved"
-                                                    ng-style="{'position':'relative','top':'-10px'}"
-                                                >
-                                                    <p>Data de Aliquotagem</p>
-                                                </div>
+                                        
+                                        <div ng-show="exam.isSaved" class="input-footer-message">
+                                            {{exam.date + " " + exam.time}}
+                                        </div>
                                     </div>
                                 </div>
 <!-- Mount Aliquot Input - Exam - End -->
@@ -186,7 +168,7 @@
                                                     maxlength="9"
                                                     ng-blur="$ctrl.validateTube(storage)"
                                                     tabindex="-1"
-                                                    ng-disabled="exam.isSaved"
+                                                    ng-disabled="storage.isSaved"
                                                 />
                                                 <!-- tabindex="-1" -->
                                                 <div ng-messages="formAliquot[storage.tubeId].$error">
@@ -194,6 +176,10 @@
                                                 </div>
                                             </md-input-container>
                                         </md-content>
+                                        
+                                        <div ng-show="storage.isSaved" class="input-footer-message">
+                                            {{"Aliquotado por: " + storage.operator}}
+                                        </div>
                                     </div>
                                 </div>
 <!-- Mount Tube Input - Storage - End -->
@@ -209,7 +195,7 @@
                                     <div class="md-list-item-text" layout="column" flex>
                                         <md-content layout="row" flex layout-align="start center">
                                             <md-input-container flex layout="column">
-                                                <label>{{storage.label}}</label>
+                                                <label>{{storage.containerLabel}}</label>
                                                 <input 
                                                     ng-model="storage.aliquotCode" 
                                                     ng-change="$ctrl.inputChange(storage,'ALIQUOT')"
@@ -218,13 +204,17 @@
                                                     id="{{storage.aliquotId}}"
                                                     maxlength="9"
                                                     ng-blur="$ctrl.validateAliquot(storage)"
-                                                    ng-disabled="exam.isSaved"
+                                                    ng-disabled="storage.isSaved"
                                                 />
                                                 <div ng-messages="formAliquot[storage.aliquotId].$error">
                                                     <div ng-message="customValidation">{{storage.aliquotMessage}}</div>
                                                 </div>
                                             </md-input-container>
                                         </md-content>
+
+                                        <div ng-show="storage.isSaved" class="input-footer-message">
+                                            {{storage.date + " " + storage.time}}
+                                        </div>
                                     </div>
                                 </div>
 <!-- Mount Aliquot Input - Storage - End -->

@@ -84,9 +84,13 @@
                                   aliquotCode: "",
                                   tubeCode: "",
                                   container: "",
+                                  containerLabel: "",
                                   placeholder: "",
                                   aliquotMessage: "",
                                   tubeMessage: "",
+                                  operator: "",
+                                  date: "",
+                                  time:"",
                                   isSaved: false
                                 };
         
@@ -100,6 +104,7 @@
         
         aliquotStructure.name = aliquot.name;
         aliquotStructure.label = aliquot.label ? aliquot.label : aliquot.name;
+        aliquotStructure.containerLabel = aliquotStructure.label;
 
         aliquotStructure.aliquotId = role + "Aliquot" + index;
         aliquotStructure.tubeId = role + "Tube" + index;
@@ -143,6 +148,10 @@
             //Até Aqui
             aliquot.aliquotCode = collectedAliquot.code;
             aliquot.isSaved = true;
+            aliquot.operator = collectedAliquot.collectionData.operator.toLowerCase();
+            var dateTime = new Date(collectedAliquot.collectionData.time)
+            aliquot.date = dateTime.toLocaleDateString();
+            aliquot.time = dateTime.toLocaleTimeString();
             endLoop = true;
           }
         }

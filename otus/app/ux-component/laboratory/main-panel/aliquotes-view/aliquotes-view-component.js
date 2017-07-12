@@ -15,27 +15,23 @@
   Controller.$inject = [
     'otusjs.laboratory.aliquot.AliquotTubeService',
     'otusjs.laboratory.aliquot.MomentType',
+    'otusjs.laboratory.LaboratoryConfigurationService',
     '$mdDialog',
     '$mdToast',
     '$scope',
     '$element'
   ];
   
-  function Controller(AliquotTubeService,MomentType, $mdDialog, $mdToast, $scope, $element) {
+  function Controller(AliquotTubeService,MomentType, LaboratoryConfigurationService, $mdDialog, $mdToast, $scope, $element) {
     var self = this;
     
-    //self.momentTypeList = MomentType.createListMomentType(self.tubeList);
-    self.momentTypeList = AliquotTubeService.getMomentTypeList()
-
     self.$onInit = onInit;
 
+    self.momentTypeList = AliquotTubeService.getMomentTypeList()
     self.selecMomentType = selecMomentType;
     self.selectedMomentType;
-    //self.aliquotList = {};
-
     self.completePlaceholder = completePlaceholder; 
     self.inputChange = inputChange;
-    
     self.validateTube = validateTube;
     self.validateAliquot = validateAliquot;
     self.setFocus = setFocus; 
@@ -45,7 +41,7 @@
       var toChange = false
       var confirmCancel = $mdDialog.confirm()
           .title('Descartar Alterações?')
-          .textContent('Alíquotas ateradas serão descartadas')
+          .textContent('Alíquotas alteradas serão descartadas')
           .ariaLabel('Confirmação de cancelamento')
           .ok('Continuar')
           .cancel('Cancelar');
@@ -75,9 +71,8 @@
       completePlaceholder(self.selectedMomentType.stores);
 
       setTimeout(function(){
-        //console.log('Começando');
         _defaultCustomValidation();
-        _nextFocusNotSave({index:-1, role: 'EXAM'})
+        _nextFocusNotFilled({index:-1, role: 'EXAM'})
       },200);
     }
 
@@ -95,32 +90,11 @@
 
     function completePlaceholder(aliquots,currentAliquot){
       var lastPlaceholder = '';
-      var tubeIdList = [];
 
       aliquots.forEach(function(aliquot) {
         aliquot.placeholder = lastPlaceholder;
-        if(lastPlaceholder){
-          //aliquot.tubeMessage = "";
-        }
-        if(currentAliquot){
-          tubeIdList.push(aliquot.tubeId);
-          if($scope.formAliquot 
-            && (aliquot.tubeCode.length || aliquot.tubeCode.length == 9)
-            //currentAliquot != aliquot
-          ){
-            if(currentAliquot == aliquot){
-              //_validateTubeRequired(aliquot);
-            } else {
-              //$element.find('#'+ aliquot.tubeId).blur();
-            }
-            //
-          } 
-        }
-
         if(aliquot.tubeCode) lastPlaceholder = aliquot.tubeCode;
       });
-
-      //if($scope.formAliquot && currentAliquot != aliquot) $element.find('#'+ aliquot.tubeId).blur();
     };
 
     function _addAloquotInRepeatedAliquots(aliquot){
@@ -161,7 +135,6 @@
       if(alreadyUsed){
         if(validateRepeatedList) _addAloquotInRepeatedAliquots(aliquot);
       } else {
-        console.log("Chamou:");
         if(validateRepeatedList) _removeRepeatedAliquots(aliquot);
       }
 
@@ -252,7 +225,6 @@
 
       if(isValid){
         if(aliquot.tubeMessage == msg){
-          console.log("Apagando?");
           aliquot.tubeMessage = "";
           $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',true);
         }
@@ -274,6 +246,20 @@
     }
 
 
+    function _fillContainer(aliquot){
+      aliquot.container = LaboratoryConfigurationService.getAliquotContainer(aliquot.aliquotCode);
+      var label = aliquot.container.toUpperCase() == "PALLET" ? "Palheta" : "Criotubo";
+
+      aliquot.containerLabel = label + " de " + aliquot.label;
+    }
+
+    function _clearContainer(aliquot){
+      if(aliquot.container != aliquot.containerLabel){
+        aliquot.container = "";
+        aliquot.containerLabel = aliquot.label;
+      }
+    }
+
     function validateAliquot(aliquot){
       _aliquotAlreadyUsed(aliquot,true);
       _validateTubeRequired(aliquot);
@@ -282,6 +268,7 @@
 
       if(aliquot.aliquotCode){
         if(_isAliquot(aliquot.aliquotCode)){
+          _fillContainer(aliquot);
           aliquot.aliquotMessage = "";
           $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',true);
           
@@ -316,7 +303,7 @@
             $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',false);  
           }
         } else {
-          //Tube NOT exist to this Moment Type
+          //Tube NOT exist in this Moment Type
           aliquot.tubeMessage = "Este tubo não existe, ou, não pertence a este Tipo/Momento.";
           $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',false);
         }
@@ -339,19 +326,19 @@
 
       if(tubeOrAliquot.toUpperCase() == 'ALIQUOT'){
         $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation',true);
+        _clearContainer(aliquot);
         if(aliquot.aliquotCode && aliquot.aliquotCode.length==9){
           if(_isTube(aliquot.aliquotCode)){
             aliquot.tubeCode = aliquot.aliquotCode;
             aliquot.aliquotCode = "";
             runCompletePlaceholder = true;
-            //$element.find('#' + aliquot.tubeId).blur();
+            $element.find('#' + aliquot.tubeId).blur();
           } else {
             _nextFocus(aliquot);
           }
         }
       } else {
         runCompletePlaceholder = true;
-        console.log('Alterado Tubo');
         $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation',true);
       }
 
@@ -361,29 +348,13 @@
       }
     }  
    
-   
 
     function _nextFocus(aliquot){
-      // var newFocus = ""
-      // if(aliquot.role.toUpperCase() == "EXAM"){
-      //   if(aliquot.index < self.selectedMomentType.exams.length - 1){
-      //     newFocus = self.selectedMomentType.exams[aliquot.index + 1].aliquotId;
-      //   } else {
-      //     newFocus = self.selectedMomentType.stores[0].aliquotId;
-      //   }
-      // } else {
-      //   if(aliquot.index < self.selectedMomentType.stores.length - 1){
-      //     newFocus = self.selectedMomentType.stores[aliquot.index + 1].aliquotId;
-      //   } else {
-      //     newFocus = self.selectedMomentType.exams[0].aliquotId;
-      //   }
-      // }
-      // if(newFocus) self.setFocus(newFocus);
-      _nextFocusNotSave(aliquot);
+      _nextFocusNotFilled(aliquot);
     }
 
 
-    function _nextFocusNotSave(currentAliquot){
+    function _nextFocusNotFilled(currentAliquot){
       var newFocus = "";
       var aliquotArray = self.selectedMomentType.stores.concat(self.selectedMomentType.exams);
       var current = {
@@ -418,21 +389,13 @@
       };
     }
 
-
-    
     function setFocus(id){
       //console.log('#'+id);
       $element.find('#'+id).focus();
     }
 
-    self.teste = function(msg){
-      //Remove this method
-      console.log(msg);
-    }
-
     function onInit() {
       selecMomentType(self.momentTypeList[0]);
-      console.log('Teste');
       console.log(AliquotTubeService.getMomentTypeList());
 
       self.callbackFunctions.cancelAliquots = function(){
@@ -462,7 +425,7 @@
                 
                 $mdToast.show(
                   $mdToast.simple()
-                    .textContent('Salvo com sucesso! (Teste)')
+                    .textContent('Salvo com sucesso!')
                     .hideDelay(2000)
                 );
               } else {
@@ -477,7 +440,7 @@
         } else {
           $mdToast.show(
             $mdToast.simple()
-              .textContent('Salvo com sucesso! (Já salvo)')
+              .textContent('Salvo com sucesso!')
               .hideDelay(2000)
           );
         }
