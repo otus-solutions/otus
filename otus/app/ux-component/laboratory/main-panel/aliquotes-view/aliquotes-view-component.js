@@ -46,22 +46,27 @@
 
       self.callbackFunctions.saveAliquots = function () {
         if (AliquotTubeService.fieldsChanged(self.selectedMomentType)) {
-          _defaultCustomValidation();
           if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
             AliquotMessagesService.showToast('Verifique os erros antes de salvar.', 2000);
           } else {
             AliquotMessagesService.showSaveDialog().then(function () {
-              if (AliquotTubeService.saveAliquoting(
-                    AliquotTubeService.getNewAliquots(self.selectedMomentType),
-                    self.selectedMomentType,
-                    true
-                  )
-              ) {
-                AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
-                _setMomentType(self.selectedMomentType);
-              } else {
-                AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
-              }
+             var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
+             console.log(self.selectedMomentType);
+             var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);             
+             AliquotTubeService.updateAliquots(persistanceStructure);
+
+              // if (AliquotTubeService.saveAliquoting(
+              //       AliquotTubeService.getNewAliquots(self.selectedMomentType),
+              //       self.selectedMomentType,
+              //       false
+              //     )
+              // ) {
+              //   AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
+              //   _setMomentType(self.selectedMomentType);
+              // } else {
+              //   AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
+              // }
+
             });
           }
         } else {

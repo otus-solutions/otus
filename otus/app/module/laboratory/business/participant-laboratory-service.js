@@ -29,6 +29,7 @@
     self.generateLabels = generateLabels;
     self.getLoggedUser = getLoggedUser;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
+    self.updateAliquots = updateAliquots;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -67,7 +68,7 @@
                 .getLaboratory(participant)
                 .then(function(laboratory) {
                   self.participant = participant;
-                  if (laboratory !== 'null') {                    
+                  if (laboratory !== 'null') {
                     _participantLaboratory = ParticipantLaboratoryFactory.fromJson(JSON.stringify(laboratory.data), labDescriptor, getLoggedUser(),self.participant);
                     console.log(_participantLaboratory);
                     request.resolve(true);
@@ -115,6 +116,10 @@
 
     function updateLaboratoryParticipant() {
       return ParticipantLaboratoryRepositoryService.updateLaboratoryParticipant(_participantLaboratory.toJSON());
+    }
+
+    function updateAliquots(updateStructure) {
+      return ParticipantLaboratoryRepositoryService.updateAliquots(updateStructure);      
     }
 
     function generateLabels() {

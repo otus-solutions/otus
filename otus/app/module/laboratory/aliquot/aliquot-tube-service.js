@@ -6,10 +6,11 @@
     .service('otusjs.laboratory.aliquot.AliquotTubeService', Service);
 
   Service.$inject = [
-    'otusjs.laboratory.AliquotManagerService'
+    'otusjs.laboratory.AliquotManagerService',
+    'otusjs.laboratory.business.ParticipantLaboratoryService'
   ];
 
-  function Service(AliquotManagerService) {
+  function Service(AliquotManagerService, ParticipantLaboratoryService) {
     var self = this;
     var _test;
 
@@ -20,6 +21,11 @@
     self.populateAliquotsArray = populateAliquotsArray;
     self.getNewAliquots = getNewAliquots;
     self.saveAliquoting = saveAliquoting;
+    self.updateAliquots = updateAliquots;
+
+    function updateAliquots(updateStructure) {
+      ParticipantLaboratoryService.updateAliquots(updateStructure);
+    }
 
     function saveAliquoting(newAliquots, momentType, results){
       return _saveFakeAliquots(newAliquots,momentType, results);

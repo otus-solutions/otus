@@ -19,6 +19,7 @@
     self.getLaboratory = getLaboratory;
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
+    self.updateAliquots = updateAliquots;
 
     function initializeLaboratory(participant) {
       ParticipantLaboratoryCollectionService.useParticipant(participant);
@@ -42,6 +43,10 @@
 
    function updateLaboratoryParticipant(laboratory){
       return ParticipantLaboratoryCollectionService.update(laboratory);
+   }
+
+   function updateAliquots(updateStructure) {
+     return ParticipantLaboratoryCollectionService.updateAliquots(updateStructure);     
    }
   }
 }());

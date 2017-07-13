@@ -34,6 +34,7 @@
     self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
     self.update = update;
+    self.updateAliquots = updateAliquots;
     self.getDescriptors = getDescriptors;
 
     /**
@@ -96,6 +97,24 @@
       var deferred = $q.defer();
       ParticipantLaboratoryRestService
          .updateLaboratoryParticipant(recruitmentNumber, participantLaboratory)
+         .then(function(response){
+            deferred.resolve(response);
+         }, function(e){
+            deferred.reject(e);
+         });
+      return deferred.promise;
+    }
+
+    /**
+     * initialize laboratories.
+     * @param {(object)} persistanceStructure - the recruitment number of participant and a persistanceStructure
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function updateAliquots(recruitmentNumber, persistanceStructure) {
+      var deferred = $q.defer();
+      ParticipantLaboratoryRestService
+         .updateAliquots(recruitmentNumber, persistanceStructure)
          .then(function(response){
             deferred.resolve(response);
          }, function(e){
