@@ -4,208 +4,197 @@
   "recruitmentNumber": 5003304,
   "collectGroupName": "DEFAULT",
   "tubes": [{
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "FASTING",
-      "code": "341002263",
-      "groupName": "DEFAULT",
-      "aliquotes": [{
-        "objectType": "Aliquot",
-        "code": 34200252,
-        "name": "BIOSORO",
-        "container": "CRIOTUBE",
-        "role": "exam",
-        "collectionData": {
-          "metadata": "",
-          "operator": "LALA@GMAIL.COM",
-          "time": "2017-06-22T21:43:06.086Z"
-        }
-        }],
-      "order": 1,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": true,
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "FASTING",
+    "code": "341002263",
+    "groupName": "DEFAULT",
+    "aliquotes": [{
+      "objectType": "Aliquot",
+      "code": 34200252,
+      "name": "BIOSORO",
+      "container": "CRIOTUBE",
+      "role": "exam",
+      "collectionData": {
+        "objectType": "AliquotCollectionData",
         "metadata": "",
-        "operator": "lalala@gmail.com",
-        "time": "2017-06-06T15:15:28.958Z"
+        "operator": "LALA@GMAIL.COM",
+        "time": "2017-06-22T21:43:06.086Z"
       }
-      },
-    {
-      "objectType": "Tube",
-      "type": "EDTA",
-      "moment": "FASTING",
-      "code": "361009386",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 2,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "FLUORIDE",
-      "moment": "FASTING",
-      "code": "361009389",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 3,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "FASTING",
-      "code": "361009381",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 4,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "FASTING",
-      "code": "361009382",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 5,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "FASTING",
-      "code": "361009383",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 6,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "EDTA",
-      "moment": "FASTING",
-      "code": "361009387",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 7,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "EDTA",
-      "moment": "FASTING",
-      "code": "361009388",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 8,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "POST_OVERLOAD",
-      "code": "361009390",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 9,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "GEL",
-      "moment": "POST_OVERLOAD",
-      "code": "361009391",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 10,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "FLUORIDE",
-      "moment": "POST_OVERLOAD",
-      "code": "361009385",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 11,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      },
-    {
-      "objectType": "Tube",
-      "type": "URINE",
-      "moment": "NONE",
-      "code": "361009384",
-      "groupName": "DEFAULT",
-      "aliquotes": [],
-      "order": 12,
-      "tubeCollectionData": {
-        "objectType": "TubeCollectionData",
-        "isCollected": false,
-        "metadata": "",
-        "operator": "",
-        "time": null
-      }
-      }
-    ],
+    }],
+    "order": 1,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": true,
+      "metadata": "",
+      "operator": "lalala@gmail.com",
+      "time": "2017-06-06T15:15:28.958Z"
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "EDTA",
+    "moment": "FASTING",
+    "code": "361009386",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 2,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "FLUORIDE",
+    "moment": "FASTING",
+    "code": "361009389",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 3,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "FASTING",
+    "code": "361009381",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 4,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "FASTING",
+    "code": "361009382",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 5,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "FASTING",
+    "code": "361009383",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 6,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "EDTA",
+    "moment": "FASTING",
+    "code": "361009387",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 7,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "EDTA",
+    "moment": "FASTING",
+    "code": "361009388",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 8,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "POST_OVERLOAD",
+    "code": "361009390",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 9,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "GEL",
+    "moment": "POST_OVERLOAD",
+    "code": "361009391",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 10,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "FLUORIDE",
+    "moment": "POST_OVERLOAD",
+    "code": "361009385",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 11,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }, {
+    "objectType": "Tube",
+    "type": "URINE",
+    "moment": "NONE",
+    "code": "361009384",
+    "groupName": "DEFAULT",
+    "aliquotes": [],
+    "order": 12,
+    "tubeCollectionData": {
+      "objectType": "TubeCollectionData",
+      "isCollected": false,
+      "metadata": "",
+      "operator": "",
+      "time": null
+    }
+  }],
   "exams": []
 }
