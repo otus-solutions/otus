@@ -24,7 +24,7 @@
     self.updateAliquots = updateAliquots;
 
     function updateAliquots(updateStructure) {
-      ParticipantLaboratoryService.updateAliquots(updateStructure);
+      return ParticipantLaboratoryService.updateAliquots(updateStructure);
     }
 
     function saveAliquoting(newAliquots, momentType, results){

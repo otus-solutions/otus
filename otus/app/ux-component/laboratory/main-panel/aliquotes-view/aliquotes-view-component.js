@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -22,7 +22,7 @@
     '$element'
   ];
 
-  function Controller(AliquotTubeService, MomentType, LaboratoryConfigurationService, AliquotMessagesService,AliquotValidationService, $scope, $element) {
+  function Controller(AliquotTubeService, MomentType, LaboratoryConfigurationService, AliquotMessagesService, AliquotValidationService, $scope, $element) {
     var self = this;
 
     self.$onInit = onInit;
@@ -40,20 +40,27 @@
       selecMomentType(self.momentTypeList[0]);
       console.log(AliquotTubeService.getMomentTypeList());
 
-      self.callbackFunctions.cancelAliquots = function () {
+      self.callbackFunctions.cancelAliquots = function() {
         return AliquotTubeService.fieldsChanged(self.selectedMomentType);
       }
 
-      self.callbackFunctions.saveAliquots = function () {
+      self.callbackFunctions.saveAliquots = function() {
         if (AliquotTubeService.fieldsChanged(self.selectedMomentType)) {
           if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
             AliquotMessagesService.showToast('Verifique os erros antes de salvar.', 2000);
           } else {
-            AliquotMessagesService.showSaveDialog().then(function () {
-             var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
-             console.log(self.selectedMomentType);
-             var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);             
-             AliquotTubeService.updateAliquots(persistanceStructure);
+            AliquotMessagesService.showSaveDialog().then(function() {
+              var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
+              console.log(self.selectedMomentType);
+              var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
+              AliquotTubeService.updateAliquots(persistanceStructure)
+                .then(function(data) {
+                   console.log(data);
+                  //success
+                }, function(e) {
+                   console.log(e);
+                  //error
+                });
 
               // if (AliquotTubeService.saveAliquoting(
               //       AliquotTubeService.getNewAliquots(self.selectedMomentType),
@@ -82,7 +89,7 @@
         if (momentType != self.selectedMomentType) {
           if (AliquotTubeService.fieldsChanged(self.selectedMomentType)) {
             AliquotMessagesService.showExitDialog()
-              .then(function () {
+              .then(function() {
                 toChange = true;
                 _setMomentType(momentType);
               });
@@ -103,16 +110,19 @@
       completePlaceholder(self.selectedMomentType.exams);
       completePlaceholder(self.selectedMomentType.stores);
 
-      setTimeout(function () {
+      setTimeout(function() {
         _defaultCustomValidation();
-        _nextFocusNotFilled({ index: -1, role: 'EXAM' })
+        _nextFocusNotFilled({
+          index: -1,
+          role: 'EXAM'
+        })
       }, 200);
     }
 
     function _defaultCustomValidation() {
       var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
 
-      aliquotsArray.forEach(function (aliquot) {
+      aliquotsArray.forEach(function(aliquot) {
         clearAliquotError(aliquot);
         clearTubeError(aliquot);
 
@@ -124,14 +134,14 @@
     function completePlaceholder(aliquots) {
       var lastPlaceholder = '';
 
-      aliquots.forEach(function (aliquot) {
+      aliquots.forEach(function(aliquot) {
         aliquot.placeholder = lastPlaceholder;
         if (aliquot.tubeCode) lastPlaceholder = aliquot.tubeCode;
       });
     };
 
     function _addAliquotInRepeatedAliquots(aliquot) {
-      var newArray = self.selectedMomentType.repeatedAliquots.filter(function (currentAliquot) {
+      var newArray = self.selectedMomentType.repeatedAliquots.filter(function(currentAliquot) {
         return aliquot == currentAliquot;
       });
 
@@ -144,7 +154,7 @@
     }
 
     function _removeRepeatedAliquots(aliquot) {
-      self.selectedMomentType.repeatedAliquots = self.selectedMomentType.repeatedAliquots.filter(function (currentAliquot) {
+      self.selectedMomentType.repeatedAliquots = self.selectedMomentType.repeatedAliquots.filter(function(currentAliquot) {
         return JSON.stringify(currentAliquot) != JSON.stringify(aliquot);
       });
     }
@@ -173,11 +183,11 @@
       }
 
       if (validateRepeatedList) {
-        self.selectedMomentType.repeatedAliquots.forEach(function (currentAliquot) {
+        self.selectedMomentType.repeatedAliquots.forEach(function(currentAliquot) {
           if (_aliquotAlreadyUsed(currentAliquot)) {
-            if(currentAliquot.aliquotMessage == "") setAliquotError(currentAliquot, msgError);
+            if (currentAliquot.aliquotMessage == "") setAliquotError(currentAliquot, msgError);
           } else {
-            if(currentAliquot.aliquotMessage == msgError) clearAliquotError(currentAliquot);
+            if (currentAliquot.aliquotMessage == msgError) clearAliquotError(currentAliquot);
           }
         });
       }
@@ -250,9 +260,9 @@
         }
       } else {
         if (isTube) {
-          setTubeError(aliquot,msgTube);
+          setTubeError(aliquot, msgTube);
         } else {
-          setAliquotError(aliquot,msgAliquot);
+          setAliquotError(aliquot, msgAliquot);
         }
       }
 
@@ -320,7 +330,7 @@
             return;
           }
         } else {
-          setAliquotError(aliquot,msgAliquotInvalid);
+          setAliquotError(aliquot, msgAliquotInvalid);
         }
       }
     }
@@ -336,7 +346,7 @@
 
 
       if (aliquot.tubeCode) {
-        var filterTube = self.selectedMomentType.tubeList.filter(function (tube) {
+        var filterTube = self.selectedMomentType.tubeList.filter(function(tube) {
           return tube.code == aliquot.tubeCode;
         });
 
@@ -345,17 +355,17 @@
           //Tube find
           if (!filterTube[0].tubeCollectionData.isCollected) {
             //Tube NOT collected
-            setTubeError(aliquot,msgTubeNotCollected);
+            setTubeError(aliquot, msgTubeNotCollected);
           }
         } else {
           //Tube NOT exist in this Moment Type
-          setTubeError(aliquot,msgTubeNotExists);
+          setTubeError(aliquot, msgTubeNotExists);
         }
       }
     }
 
     function _callBlurTubes(aliquotsArray, currentAliquot) {
-      aliquotsArray.forEach(function (aliquot) {
+      aliquotsArray.forEach(function(aliquot) {
         if (aliquot == currentAliquot) {
           _validateTubeRequired(aliquot);
         } else {
