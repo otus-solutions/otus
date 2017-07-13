@@ -17,11 +17,12 @@
     'otusjs.laboratory.aliquot.MomentType',
     'otusjs.laboratory.LaboratoryConfigurationService',
     'otusjs.laboratory.aliquot.AliquotMessagesService',
+    'otusjs.laboratory.aliquot.AliquotValidationService',
     '$scope',
     '$element'
   ];
 
-  function Controller(AliquotTubeService, MomentType, LaboratoryConfigurationService, AliquotMessagesService, $scope, $element) {
+  function Controller(AliquotTubeService, MomentType, LaboratoryConfigurationService, AliquotMessagesService,AliquotValidationService, $scope, $element) {
     var self = this;
 
     self.$onInit = onInit;
@@ -45,14 +46,19 @@
 
       self.callbackFunctions.saveAliquots = function () {
         if (AliquotTubeService.fieldsChanged(self.selectedMomentType)) {
+          _defaultCustomValidation();
           if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
             AliquotMessagesService.showToast('Verifique os erros antes de salvar.', 2000);
           } else {
             AliquotMessagesService.showSaveDialog().then(function () {
-              if (1 == 1) {
-                console.log(AliquotTubeService.getNewAliquots(self.selectedMomentType));
-
+              if (AliquotTubeService.saveAliquoting(
+                    AliquotTubeService.getNewAliquots(self.selectedMomentType),
+                    self.selectedMomentType,
+                    true
+                  )
+              ) {
                 AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
+                _setMomentType(self.selectedMomentType);
               } else {
                 AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
               }
@@ -66,7 +72,6 @@
 
     function selecMomentType(momentType) {
       var toChange = false
-
 
       if (self.selectedMomentType) {
         if (momentType != self.selectedMomentType) {
@@ -103,15 +108,15 @@
       var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
 
       aliquotsArray.forEach(function (aliquot) {
-        $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
-        $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
+        clearAliquotError(aliquot);
+        clearTubeError(aliquot);
 
         $element.find('#' + aliquot.tubeId).blur();
         $element.find('#' + aliquot.aliquotId).blur();
       });
     }
 
-    function completePlaceholder(aliquots, currentAliquot) {
+    function completePlaceholder(aliquots) {
       var lastPlaceholder = '';
 
       aliquots.forEach(function (aliquot) {
@@ -142,6 +147,7 @@
     function _aliquotAlreadyUsed(aliquot, validateRepeatedList) {
       var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
       var alreadyUsed = false;
+      var msgError = "Código de alíquota já utilizado.";
 
       for (var i = 0; i < aliquotsArray.length; i++) {
         var currentAliquot = aliquotsArray[i];
@@ -164,11 +170,9 @@
       if (validateRepeatedList) {
         self.selectedMomentType.repeatedAliquots.forEach(function (currentAliquot) {
           if (_aliquotAlreadyUsed(currentAliquot)) {
-            currentAliquot.aliquotMessage = "Código de alíquota já utilizado.";
-            $scope.formAliquot[currentAliquot.aliquotId].$setValidity('customValidation', false);
+            if(currentAliquot.aliquotMessage == "") setAliquotError(currentAliquot, msgError);
           } else {
-            currentAliquot.aliquotMessage = "";
-            $scope.formAliquot[currentAliquot.aliquotId].$setValidity('customValidation', true);
+            if(currentAliquot.aliquotMessage == msgError) clearAliquotError(currentAliquot);
           }
         });
       }
@@ -180,28 +184,44 @@
       var isTube = (tubeOrAliquot.toUpperCase() == "TUBE");
       var value = isTube ? aliquot.tubeCode : aliquot.aliquotCode;
       var isNumber = !isNaN(value);
+      var msgError = "Não é um código válido.";
 
       if (isNumber) {
         if (isTube) {
-          aliquot.tubeMessage = "";
-          $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
+          clearTubeError(aliquot);
         } else {
-          aliquot.aliquotMessage = "";
-          $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
+          clearAliquotError(aliquot);
         }
       } else {
         if (isTube) {
-          aliquot.tubeMessage = "Não é um código válido.";
-          $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', false);
+          setTubeError(aliquot, msgError);
         } else {
-          aliquot.aliquotMessage = "Não é um código válido.";
-          $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', false);
+          setAliquotError(aliquot, msgError);
         }
       }
 
       return isNumber;
     }
 
+    function clearAliquotError(aliquot) {
+      aliquot.aliquotMessage = "";
+      $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
+    }
+
+    function clearTubeError(aliquot) {
+      aliquot.tubeMessage = "";
+      $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
+    }
+
+    function setAliquotError(aliquot, msg) {
+      aliquot.aliquotMessage = msg;
+      $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', false);
+    }
+
+    function setTubeError(aliquot, msg) {
+      aliquot.tubeMessage = msg;
+      $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', false);
+    }
 
     function _validateWave(aliquot, tubeOrAliquot) {
       var isTube = (tubeOrAliquot.toUpperCase() == "TUBE");
@@ -216,22 +236,18 @@
       if (isValid) {
         if (isTube) {
           if (msgTube == aliquot.tubeMessage) {
-            aliquot.tubeMessage = "";
-            $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
+            clearTubeError(aliquot);
           }
         } else {
           if (msgAliquot == aliquot.aliquotMessage) {
-            aliquot.aliquotMessage = "";
-            $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
+            clearAliquotError(aliquot);
           }
         }
       } else {
         if (isTube) {
-          aliquot.tubeMessage = msgTube;
-          $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', false);
+          setTubeError(aliquot,msgTube);
         } else {
-          aliquot.aliquotMessage = msgAliquot;
-          $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', false);
+          setAliquotError(aliquot,msgAliquot);
         }
       }
 
@@ -248,12 +264,10 @@
 
       if (isValid) {
         if (aliquot.tubeMessage == msg) {
-          aliquot.tubeMessage = "";
-          $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
+          clearTubeError(aliquot);
         }
       } else {
-        aliquot.tubeMessage = msg;
-        $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', false);
+        setTubeError(aliquot, msg);
       }
 
       return isValid;
@@ -282,6 +296,9 @@
     }
 
     function validateAliquot(aliquot) {
+      var msgAliquotUsed = "Código de alíquota já utilizado.";
+      var msgAliquotInvalid = "Não é uma Aliquota válida.";
+
       _aliquotAlreadyUsed(aliquot, true);
       _validateTubeRequired(aliquot);
       if (!_validateIsNumber(aliquot, "ALIQUOT")) return;
@@ -290,25 +307,28 @@
       if (aliquot.aliquotCode) {
         if (_isAliquot(aliquot.aliquotCode)) {
           _fillContainer(aliquot);
-          aliquot.aliquotMessage = "";
-          $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
+
+          clearAliquotError(aliquot);
 
           if (_aliquotAlreadyUsed(aliquot, true)) {
-            aliquot.aliquotMessage = "Código de alíquota já utilizado.";
-            $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', false);
+            setAliquotError(aliquot, msgAliquotUsed);
             return;
           }
         } else {
-          aliquot.aliquotMessage = "Não é uma Aliquota válida.";
-          $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', false);
+          setAliquotError(aliquot,msgAliquotInvalid);
         }
       }
     }
 
     function validateTube(aliquot) {
+      var msgTubeNotCollected = "Tubo não coletado, não pode ser Aliquotado.";
+      var msgTubeNotExists = "Este tubo não existe, ou, não pertence a este Tipo/Momento.";
+
       if (!_validateIsNumber(aliquot, "TUBE")) return;
       if (!_validateWave(aliquot, "TUBE")) return;
       if (!_validateTubeRequired(aliquot)) return;
+
+
 
       if (aliquot.tubeCode) {
         var filterTube = self.selectedMomentType.tubeList.filter(function (tube) {
@@ -316,22 +336,20 @@
         });
 
         if (filterTube.length > 0) {
-          $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
+          clearTubeError(aliquot);
           //Tube find
           if (!filterTube[0].tubeCollectionData.isCollected) {
             //Tube NOT collected
-            aliquot.tubeMessage = "Tubo não coletado, não pode ser Aliquotado.";
-            $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', false);
+            setTubeError(aliquot,msgTubeNotCollected);
           }
         } else {
           //Tube NOT exist in this Moment Type
-          aliquot.tubeMessage = "Este tubo não existe, ou, não pertence a este Tipo/Momento.";
-          $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', false);
+          setTubeError(aliquot,msgTubeNotExists);
         }
       }
     }
 
-    function _blurTubeOfAliquotsArray(aliquotsArray, currentAliquot) {
+    function _callBlurTubes(aliquotsArray, currentAliquot) {
       aliquotsArray.forEach(function (aliquot) {
         if (aliquot == currentAliquot) {
           _validateTubeRequired(aliquot);
@@ -360,8 +378,8 @@
       }
 
       if (runCompletePlaceholder) {
-        completePlaceholder(aliquotsArray, aliquot);
-        _blurTubeOfAliquotsArray(aliquotsArray, aliquot);
+        completePlaceholder(aliquotsArray);
+        _callBlurTubes(aliquotsArray, aliquot);
       }
     }
 
@@ -373,8 +391,8 @@
       runCompletePlaceholder = true;
       $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
 
-      completePlaceholder(aliquotsArray, aliquot);
-      _blurTubeOfAliquotsArray(aliquotsArray, aliquot);
+      completePlaceholder(aliquotsArray);
+      _callBlurTubes(aliquotsArray, aliquot);
     }
 
     function _nextFocus(aliquot) {
@@ -417,7 +435,6 @@
     }
 
     function setFocus(id) {
-      //console.log('#'+id);
       $element.find('#' + id).focus();
     }
 

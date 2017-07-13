@@ -12,21 +12,52 @@
   function Service(AliquotManagerService) {
     var self = this;
     var _test;
-    
+
     self.getMomentTypeList = getMomentTypeList;
     self.getMomentTypeAliquot = getMomentTypeAliquot;
     self.fieldsChanged = fieldsChanged;
     self.aliquotsWithErrors = aliquotsWithErrors;
     self.populateAliquotsArray = populateAliquotsArray;
     self.getNewAliquots = getNewAliquots;
-    
+    self.saveAliquoting = saveAliquoting;
+
+    function saveAliquoting(newAliquots, momentType, results){
+      return _saveFakeAliquots(newAliquots,momentType, results);
+    }
+
+    function _saveFakeAliquots(newAliquots, momentType, results){
+      var results = results ? results : true;
+
+      newAliquots.forEach(function(aliquot) {
+        var newAliquot = {
+          objectType: "Aliquot",
+          name: aliquot.name,
+          role: aliquot.role,
+          code: aliquot.aliquotCode,
+          container: aliquot.container,
+          collectionData: {
+            objectType: "AliquotCollectionData",
+            metadata: "",
+            operator: "jose.maria@teste.com",
+            time: new Date().toISOString()
+          },
+          tubeCode: aliquot.tubeCode,
+          label: aliquot.label
+        };
+
+        momentType.collectedAliquots.push(newAliquot);
+      });
+
+      return results;
+    }
+
     function fieldsChanged(momentType){
       var changed = false;
       var originalAliquots = momentType.originalExams.concat(momentType.originalStores);
       var newAliquots = momentType.exams.concat(momentType.stores);
-      
+
       for (var i = 0; i < newAliquots.length; i++) {
-        if(originalAliquots[i].tubeCode != newAliquots[i].tubeCode 
+        if(originalAliquots[i].tubeCode != newAliquots[i].tubeCode
         || originalAliquots[i].aliquotCode != newAliquots[i].aliquotCode){
           changed = true;
           break
@@ -42,7 +73,7 @@
       var newAliquotsArray = [];
 
       for (var i = 0; i < aliquotArray.length; i++) {
-        if((originalAliquots[i].tubeCode != aliquotArray[i].tubeCode 
+        if((originalAliquots[i].tubeCode != aliquotArray[i].tubeCode
         || originalAliquots[i].aliquotCode != aliquotArray[i].aliquotCode) && aliquotArray[i].aliquotCode && aliquotArray[i].isSaved == false){
           aliquotArray[i].tubeCode = aliquotArray[i].tubeCode ? aliquotArray[i].tubeCode : aliquotArray[i].placeholder;
           newAliquotsArray.push(aliquotArray[i]);
@@ -56,7 +87,7 @@
     function aliquotsWithErrors(momentType){
       var hasErrors = false;
       var aliquotArray = momentType.exams.concat(momentType.stores);
-      
+
       for (var i = 0; i < aliquotArray.length; i++) {
         if(aliquotArray[i].aliquotMessage || aliquotArray[i].tubeMessage){
           if(!aliquotArray[i].isSaved){
@@ -69,7 +100,7 @@
       return hasErrors;
     }
 
-    function getMomentTypeList(isFake){     
+    function getMomentTypeList(isFake){
       var momentTypeList = AliquotManagerService.getMomentTypeList();
       return momentTypeList;
     }
@@ -93,15 +124,15 @@
                                   time:"",
                                   isSaved: false
                                 };
-        
+
         var role = "exam";
         var index = indexExam;
-        
+
         if(aliquot.name.toUpperCase() == "STORAGE"){
           role = "storage";
           index = indexStorage;
         }
-        
+
         aliquotStructure.name = aliquot.name;
         aliquotStructure.label = aliquot.label ? aliquot.label : aliquot.name;
         aliquotStructure.containerLabel = aliquotStructure.label;
@@ -110,7 +141,7 @@
         aliquotStructure.tubeId = role + "Tube" + index;
         aliquotStructure.role = role;
         aliquotStructure.index = index;
-        
+
         if(aliquot.name.toUpperCase() == "STORAGE"){
           stores.push(aliquotStructure);
           indexStorage++;
@@ -122,7 +153,7 @@
 
       momentType.stores = stores;
       momentType.exams = exams;
-      
+
       momentType = fillAliquotsWithCollectedAliquots(momentType);
 
       momentType.originalStores = JSON.parse(JSON.stringify(momentType.stores));
@@ -136,9 +167,9 @@
     function fillAliquotsWithCollectedAliquots(momentType){
       momentType.collectedAliquots.forEach(function(collectedAliquot){
         var arrayAliquots = momentType.exams;
-        
+
         if(collectedAliquot.role.toUpperCase() == "STORAGE") arrayAliquots = momentType.stores;
-        
+
         for (var i = 0, endLoop = false; i < arrayAliquots.length && !endLoop; i++) {
           var aliquot = arrayAliquots[i];
           if(aliquot.tubeCode == "" && aliquot.name.toUpperCase() == collectedAliquot.name.toUpperCase()){
@@ -226,7 +257,7 @@
 
     function getMomentTypeAliquot(type, moment){
       var momentType = AliquotManagerService.getMomentType(type, moment);
-      
+
     }
 
     function fakeColor(color){
@@ -297,7 +328,7 @@
 
       return retorno;
     }
-    
+
     function fakeMomentTypeList(momentTypeList){
       var retorno = JSON.parse(`
         [
@@ -348,16 +379,16 @@
       var array = [];
       if(Object.prototype.toString.call(momentTypeList) == Object.prototype.toString.call(array) && momentTypeList.length > 0)
         retorno = momentTypeList;
-      
+
       return retorno;
     }
 
-    
+
     function fakeFillMomentTypeMaps(momentTypeMaps, momentTypeList){
       var retorno = momentTypeMaps;
-      
+
       fakeFillTubeList(momentTypeMaps);
-      
+
       momentTypeList.forEach(function(mt) {
         momentTypeMaps[mt.moment][mt.type].aliquotsConfig = fakeAliquotsConfig(momentTypeMaps[mt.moment][mt.type].aliquotsConfig);
       });
@@ -370,7 +401,7 @@
         var array = [];
         if(Object.prototype.toString.call(momentTypeMaps[tube.moment][tube.type].tubeList) != Object.prototype.toString.call(array))
           momentTypeMaps[tube.moment][tube.type].tubeList = [];
-        
+
         momentTypeMaps[tube.moment][tube.type].tubeList.push(tube);
       });
     }
