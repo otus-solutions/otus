@@ -14,7 +14,7 @@
   <div>
     <div layout="column" layout-align="center center" style="    margin-bottom: 3px;">
       <md-button ng-show="!$ctrl.hasLaboratory" class="md-raised md-primary" ng-click="$ctrl.intializeLaboratory()">Iniciar Laboratório</md-button>
-      <lab-control-panel ng-if="$ctrl.hasLaboratory" lab-participant="$ctrl.participantLaboratory" state="$ctrl.state" layout-fill/>
+      <lab-control-panel ng-if="$ctrl.hasLaboratory" lab-participant="$ctrl.participantLaboratory" state="$ctrl.state" labels="$ctrl.labels" layout-fill/>
     </div>
   </div>
 
