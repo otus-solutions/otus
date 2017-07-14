@@ -26,9 +26,9 @@
     var self = this;
 
     self.$onInit = onInit;
-    self.momentTypeList = AliquotTubeService.getMomentTypeList()
+    self.momentTypeList = AliquotTubeService.getMomentTypeList();
     self.selecMomentType = selecMomentType;
-    self.selectedMomentType;
+    self.selectedMomentType = undefined;
     self.completePlaceholder = completePlaceholder;
     self.inputOnChangeAliquot = inputOnChangeAliquot;
     self.inputOnChangeTube = inputOnChangeTube;
@@ -42,7 +42,7 @@
 
       self.callbackFunctions.cancelAliquots = function() {
         return AliquotTubeService.fieldsChanged(self.selectedMomentType);
-      }
+      };
 
       self.callbackFunctions.saveAliquots = function() {
         if (AliquotTubeService.fieldsChanged(self.selectedMomentType)) {
@@ -55,25 +55,15 @@
               var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
               AliquotTubeService.updateAliquots(persistanceStructure)
                 .then(function(data) {
-                   console.log(data);
+                  console.log(data);
                   //success
+                  AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
+                  _setMomentType(self.selectedMomentType);
                 }, function(e) {
-                   console.log(e);
                   //error
-                });
-
-              // if (AliquotTubeService.saveAliquoting(
-              //       AliquotTubeService.getNewAliquots(self.selectedMomentType),
-              //       self.selectedMomentType,
-              //       false
-              //     )
-              // ) {
-              //   AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
-              //   _setMomentType(self.selectedMomentType);
-              // } else {
-              //   AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
-              // }
-
+                  AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
+                  console.log(e);
+               });
             });
           }
         } else {
@@ -83,7 +73,7 @@
     }
 
     function selecMomentType(momentType) {
-      var toChange = false
+      var toChange = false;
 
       if (self.selectedMomentType) {
         if (momentType != self.selectedMomentType) {
@@ -115,7 +105,7 @@
         _nextFocusNotFilled({
           index: -1,
           role: 'EXAM'
-        })
+        });
       }, 200);
     }
 
@@ -138,7 +128,7 @@
         aliquot.placeholder = lastPlaceholder;
         if (aliquot.tubeCode) lastPlaceholder = aliquot.tubeCode;
       });
-    };
+    }
 
     function _addAliquotInRepeatedAliquots(aliquot) {
       var newArray = self.selectedMomentType.repeatedAliquots.filter(function(currentAliquot) {
@@ -185,7 +175,7 @@
       if (validateRepeatedList) {
         self.selectedMomentType.repeatedAliquots.forEach(function(currentAliquot) {
           if (_aliquotAlreadyUsed(currentAliquot)) {
-            if (currentAliquot.aliquotMessage == "") setAliquotError(currentAliquot, msgError);
+            if (currentAliquot.aliquotMessage === "") setAliquotError(currentAliquot, msgError);
           } else {
             if (currentAliquot.aliquotMessage == msgError) clearAliquotError(currentAliquot);
           }
@@ -274,7 +264,7 @@
       var isValid = true;
       var msg = "O código do Tubo é obrigatório.";
       if (aliquot.aliquotCode) {
-        if (aliquot.tubeCode.length == 0 && aliquot.placeholder.length == 0) isValid = false;
+        if (aliquot.tubeCode.length === 0 && aliquot.placeholder.length === 0) isValid = false;
       }
 
       if (isValid) {
@@ -293,7 +283,7 @@
     }
 
     function _isAliquot(value, nameField) {
-      return (value.length == 0 || (value.length == 9 && (value.toString().substr(2, 1) == '2' || value.toString().substr(2, 1) == '3')));
+      return (value.length === 0 || (value.length == 9 && (value.toString().substr(2, 1) == '2' || value.toString().substr(2, 1) == '3')));
     }
 
     function _fillContainer(aliquot) {
@@ -429,13 +419,13 @@
       for (var i = 0; i < aliquotArray.length; i++) {
         var aliquot = aliquotArray[i];
 
-        if (current.role.toUpperCase() != aliquot.role.toUpperCase() && current.roleChanged == false) {
+        if (current.role.toUpperCase() != aliquot.role.toUpperCase() && current.roleChanged === false) {
           current.index = 0;
           current.role = aliquot.role;
           current.roleChanged = true;
         }
 
-        if (current.index == aliquot.index && current.role.toUpperCase() == aliquot.role.toUpperCase() && aliquot.isSaved == false && !aliquot.aliquotCode) {
+        if (current.index == aliquot.index && current.role.toUpperCase() == aliquot.role.toUpperCase() && aliquot.isSaved === false && !aliquot.aliquotCode) {
           newFocus = aliquot.aliquotId;
           break;
         }
@@ -446,7 +436,7 @@
         self.setFocus(newFocus);
       } else {
         if (aliquot.aliquotId) $element.find('#' + aliquot.aliquotId).blur();
-      };
+      }
     }
 
     function setFocus(id) {
