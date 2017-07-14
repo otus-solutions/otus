@@ -9,12 +9,12 @@
     "moment": "FASTING",
     "code": "341002263",
     "groupName": "DEFAULT",
-    "aliquotes": [{
+    "aliquots": [{
       "objectType": "Aliquot",
       "code": 34200252,
       "name": "BIOSORO",
       "container": "CRIOTUBE",
-      "role": "exam",
+      "role": "EXAM",
       "collectionData": {
         "objectType": "AliquotCollectionData",
         "metadata": "",
@@ -36,7 +36,7 @@
     "moment": "FASTING",
     "code": "361009386",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 2,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -51,7 +51,7 @@
     "moment": "FASTING",
     "code": "361009389",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 3,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -66,7 +66,7 @@
     "moment": "FASTING",
     "code": "361009381",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 4,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -81,7 +81,7 @@
     "moment": "FASTING",
     "code": "361009382",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 5,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -96,7 +96,7 @@
     "moment": "FASTING",
     "code": "361009383",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 6,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -111,7 +111,7 @@
     "moment": "FASTING",
     "code": "361009387",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 7,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -126,7 +126,7 @@
     "moment": "FASTING",
     "code": "361009388",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 8,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -141,7 +141,7 @@
     "moment": "POST_OVERLOAD",
     "code": "361009390",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 9,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -156,7 +156,7 @@
     "moment": "POST_OVERLOAD",
     "code": "361009391",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 10,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -171,7 +171,7 @@
     "moment": "POST_OVERLOAD",
     "code": "361009385",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 11,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",
@@ -186,7 +186,7 @@
     "moment": "NONE",
     "code": "361009384",
     "groupName": "DEFAULT",
-    "aliquotes": [],
+    "aliquots": [],
     "order": 12,
     "tubeCollectionData": {
       "objectType": "TubeCollectionData",

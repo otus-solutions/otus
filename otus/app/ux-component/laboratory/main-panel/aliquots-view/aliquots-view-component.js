@@ -3,10 +3,10 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('aliquotesView', {
-      templateUrl: 'app/ux-component/laboratory/main-panel/aliquotes-view/aliquotes-view-template.html',
+    .component('aliquotsView', {
+      templateUrl: 'app/ux-component/laboratory/main-panel/aliquots-view/aliquots-view-template.html',
       bindings: {
-        tubeList: '=',
+        participantLaboratory: '=',
         callbackFunctions: '='
       },
       controller: Controller
@@ -24,6 +24,7 @@
 
   function Controller(AliquotTubeService, MomentType, LaboratoryConfigurationService, AliquotMessagesService, AliquotValidationService, $scope, $element) {
     var self = this;
+    self.tubeList = self.participantLaboratory.tubes;
 
     self.$onInit = onInit;
     self.momentTypeList = AliquotTubeService.getMomentTypeList();
@@ -38,7 +39,6 @@
 
     function onInit() {
       selecMomentType(self.momentTypeList[0]);
-      console.log(AliquotTubeService.getMomentTypeList());
 
       self.callbackFunctions.cancelAliquots = function() {
         return AliquotTubeService.fieldsChanged(self.selectedMomentType);
@@ -55,7 +55,8 @@
               var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
               AliquotTubeService.updateAliquots(persistanceStructure)
                 .then(function(data) {
-                  console.log(data);
+                  self.participantLaboratory.updateTubeList();
+                  console.log(self.participantLaboratory);
                   //success
                   AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
                   _setMomentType(self.selectedMomentType);
@@ -412,12 +413,13 @@
         role: currentAliquot.role,
         roleChanged: false
       };
+      var aliquot;
 
       if (currentAliquot.role.toUpperCase() == "EXAM")
         aliquotArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
 
       for (var i = 0; i < aliquotArray.length; i++) {
-        var aliquot = aliquotArray[i];
+        aliquot = aliquotArray[i];
 
         if (current.role.toUpperCase() != aliquot.role.toUpperCase() && current.roleChanged === false) {
           current.index = 0;

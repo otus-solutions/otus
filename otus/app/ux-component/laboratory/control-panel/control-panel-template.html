@@ -4,7 +4,7 @@
     <label-maker label-data="$ctrl.labels"></label-maker>
     <div layout="row" layout-align="center center">
       <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('coleta')">Coleta de Tubos</md-button>
-      <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('aliquotes')">Aliquotagem</md-button>
+      <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('aliquots')">Aliquotagem</md-button>
     </div>
   </div>
 
@@ -23,7 +23,7 @@
   </div>
 
 
-  <div class="control-panel" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'aliquotes'">
+  <div class="control-panel" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'aliquots'">
      <div layout="row" layout-align="center center">
         <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAliquots()">Voltar</md-button>
         <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-click="$ctrl.saveAliquots()">Salvar</md-button>

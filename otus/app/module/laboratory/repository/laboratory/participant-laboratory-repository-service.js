@@ -32,8 +32,8 @@
 
     function getLaboratory(participant) {
       ParticipantLaboratoryCollectionService.useParticipant(participant);
-      // return ParticipantLaboratoryCollectionService.getLaboratory();
-      return $http.get('app/module/laboratory/repository/laboratory/lab-participant.json');
+      return ParticipantLaboratoryCollectionService.getLaboratory();
+      // return $http.get('app/module/laboratory/repository/laboratory/lab-participant.json');
     }
 
     function getLaboratoryDescriptors(){
@@ -46,7 +46,7 @@
    }
 
    function updateAliquots(updateStructure) {
-     return ParticipantLaboratoryCollectionService.updateAliquots(updateStructure);     
+     return ParticipantLaboratoryCollectionService.updateAliquots(updateStructure);
    }
   }
 }());

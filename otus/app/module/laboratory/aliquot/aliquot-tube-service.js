@@ -131,7 +131,7 @@
                                   isSaved: false
                                 };
 
-        var role = "exam";
+        var role = "EXAM";
         var index = indexExam;
 
         if(aliquot.name.toUpperCase() == "STORAGE"){
@@ -303,21 +303,21 @@
                         "objectType": "AliquotDescriptor",
                         "name": "BIOSORO",
                         "label": "Bioquímica Soro",
-                        "role": "exam",
+                        "role": "EXAM",
                         "quantity": 1
                       },
                       {
                         "objectType": "AliquotDescriptor",
                         "name": "PCR",
                         "label": "PCR",
-                        "role": "exam",
+                        "role": "EXAM",
                         "quantity": 1
                       },
                       {
                         "objectType": "AliquotDescriptor",
                         "name": "FASTING_INSULINE",
                         "label": "Insulina Jejum",
-                        "role": "exam",
+                        "role": "EXAM",
                         "quantity": 1
                       },
                       {

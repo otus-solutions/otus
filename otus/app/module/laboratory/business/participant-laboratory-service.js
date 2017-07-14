@@ -69,7 +69,7 @@
                 .then(function(laboratory) {
                   self.participant = participant;
                   if (laboratory !== 'null') {
-                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(JSON.stringify(laboratory.data), labDescriptor, getLoggedUser(),self.participant);
+                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser(),self.participant);
                     console.log(_participantLaboratory);
                     request.resolve(true);
                   } else {
@@ -119,7 +119,7 @@
     }
 
     function updateAliquots(updateStructure) {
-      return ParticipantLaboratoryRepositoryService.updateAliquots(updateStructure);      
+      return ParticipantLaboratoryRepositoryService.updateAliquots(updateStructure);
     }
 
     function generateLabels() {
