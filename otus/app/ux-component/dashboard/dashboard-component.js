@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusDashboard', {
+    .component('otusParticipantDashboard', {
       controller: Controller,
       templateUrl: 'app/ux-component/dashboard/dashboard-template.html'
     });

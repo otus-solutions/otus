@@ -19,7 +19,7 @@
     }
 
     self.state = {
-      parent: STATE.DASHBOARD,
+      parent: STATE.PARTICIPANT_DASHBOARD,
       name: STATE.PAPER_ACTIVITY_INITIALIZER,
       url: '/' + STATE.PAPER_ACTIVITY_INITIALIZER,
       template: '<otus-paper-activity-initializer layout="column" flex></otus-paper-activity-initializer>',

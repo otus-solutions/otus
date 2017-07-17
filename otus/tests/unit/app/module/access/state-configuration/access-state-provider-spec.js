@@ -64,12 +64,12 @@ xdescribe('AccessStateProvider', function() {
 
     describe('when access context is not valid', function() {
 
-      it('data.redirect should return STATE.DASHBOARD', function() {
+      it('data.redirect should return STATE.PARTICIPANT_DASHBOARD', function() {
         spyOn(Mock.AccessContextService, 'isValid').and.returnValue(false);
 
         var state = provider.state.data.redirect(Mock.AccessContextService);
 
-        expect(state).toEqual(Injections.STATE.DASHBOARD);
+        expect(state).toEqual(Injections.STATE.PARTICIPANT_DASHBOARD);
       });
 
     });

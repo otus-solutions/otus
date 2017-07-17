@@ -11,6 +11,7 @@
       'PAPER_ACTIVITY_INITIALIZER': 'paper-activity-initializer',
       'APPLICATION': 'application',
       'DASHBOARD': 'dashboard',
+      'PARTICIPANT_DASHBOARD': 'participant-dashboard',
       'INSTALLER': 'installer',
       'LOGIN': 'login',
       'PARTICIPANT': 'participant',
@@ -33,6 +34,7 @@
     'otusjs.deploy.PaperActivityAdderStateProvider',
     'otusjs.deploy.PaperActivityInitializerStateProvider',
     'otusjs.deploy.DashboardStateProvider',
+    'otusjs.deploy.ParticipantDashboardStateProvider',
     'otusjs.deploy.InstallerStateProvider',
     'otusjs.deploy.LoginStateProvider',
     'otusjs.deploy.ParticipantStateProvider',
@@ -50,6 +52,7 @@
     PaperActivityAdderStateProvider,
     PaperActivityInitializerStateProvider,
     DashboardProvider,
+    ParticipantDashboardProvider,
     InstallerProvider,
     LoginStateProvider,
     ParticipantStateProvider,
@@ -68,6 +71,7 @@
     $stateProvider.state(SignupStateProvider.state);
     $stateProvider.state(SignupResultStateProvider.state);
     $stateProvider.state(DashboardProvider.state);
+    $stateProvider.state(ParticipantDashboardProvider.state);
     $stateProvider.state(InstallerProvider.state);
     $stateProvider.state(ParticipantStateProvider.state);
     $stateProvider.state(SessionStateProvider.state);

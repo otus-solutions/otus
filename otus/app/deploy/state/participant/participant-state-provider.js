@@ -20,7 +20,7 @@
 
     self.state = {
       abstract: true,
-      parent: STATE.DASHBOARD,
+      parent: STATE.PARTICIPANT_DASHBOARD,
       name: STATE.PARTICIPANT,
       url: '/' + STATE.PARTICIPANT,
       template: '<div id="participant-state-template" flex ui-view></div>'
