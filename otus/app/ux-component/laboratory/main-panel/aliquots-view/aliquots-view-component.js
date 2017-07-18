@@ -27,7 +27,6 @@
     self.tubeList = self.participantLaboratory.tubes;
 
     self.$onInit = onInit;
-    self.momentTypeList = AliquotTubeService.getMomentTypeList();
     self.selecMomentType = selecMomentType;
     self.selectedMomentType = undefined;
     self.completePlaceholder = completePlaceholder;
@@ -38,89 +37,106 @@
     self.setFocus = setFocus;
 
     function onInit() {
+      console.clear();
+      _buildMomentTypeList();
       selecMomentType(self.momentTypeList[0]);
-
-      self.callbackFunctions.cancelAliquots = function() {
-        return AliquotTubeService.fieldsChanged(self.selectedMomentType);
-      };
-
-      self.callbackFunctions.saveAliquots = function() {
-        if (AliquotTubeService.fieldsChanged(self.selectedMomentType)) {
-          if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
-            AliquotMessagesService.showToast('Verifique os erros antes de salvar.', 2000);
-          } else {
-            AliquotMessagesService.showSaveDialog().then(function() {
-              var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
-              console.log(self.selectedMomentType);
-              var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
-              AliquotTubeService.updateAliquots(persistanceStructure)
-                .then(function(data) {
-                  self.participantLaboratory.updateTubeList();
-                  console.log(self.participantLaboratory);
-                  //success
-                  AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
-                  _setMomentType(self.selectedMomentType);
-                })
-                .catch(function(e) {
-                  //error
-                  AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
-                  var err = e.json();
-                  fillAliquotsErrors(err.conflicts, err.MESSAGE);
-                  fillTubesErrors(err.tubesNotFound, err.MESSAGE);
-                  console.log(e);
-               });
-            });
-          }
-        } else {
-          AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
+      self.selectedMomentType.tubeList.forEach(function(tube) {
+        console.log(tube.code);
+        console.log('is collected: ' + tube.tubeCollectionData.isCollected);
+        if (tube.tubeCollectionData.isCollected) {
+           tube.aliquots.forEach(function(aliquot) {
+              console.log(aliquot.code);
+           });
         }
-      };
+        console.log('-------');
+      });
+      self.callbackFunctions.cancelAliquots = _cancelAliquots;
+      self.callbackFunctions.saveAliquots = _saveAliquots;
     }
 
-    function transcribeMessage(msg){
+    function _buildMomentTypeList() {
+      self.momentTypeList = AliquotTubeService.buildMomentTypeList(self.participantLaboratory.tubes);
+    }
+
+    function _cancelAliquots() {
+      return AliquotTubeService.fieldsChanged(self.selectedMomentType);
+    }
+
+    function _saveAliquots() {
+      if (AliquotTubeService.fieldsChanged(self.selectedMomentType)) {
+        if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
+          AliquotMessagesService.showToast('Verifique os erros antes de salvar.', 2000);
+        } else {
+          AliquotMessagesService.showSaveDialog().then(function() {
+            var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
+            var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
+            AliquotTubeService.updateAliquots(persistanceStructure)
+              .then(function(data) {
+                //success
+                self.participantLaboratory.updateTubeList();               
+                AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
+               //  _setMomentType(self.selectedMomentType);
+              })
+              .catch(function(e) {
+                //error
+                AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
+                var err = e.json();
+                fillAliquotsErrors(err.conflicts, err.MESSAGE);
+                fillTubesErrors(err.tubesNotFound, err.MESSAGE);
+                console.log(e);
+              });
+          });
+        }
+      } else {
+        AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
+      }
+
+    }
+
+    function transcribeMessage(msg) {
       var newMessage;
 
       switch (msg) {
         case "Tube codes not found.": //O código do tube não foi encontrado na lista de tubos do participante, ou seja, código não existe
-          newMessage = "Este código não pertence ao participante."
+          newMessage = "Este código não pertence ao participante.";
           break;
 
         case "There are repeated aliquots on Database.": //Código da aliquot já existe na base de dados
-          newMessage = "Este código já foi utilizado em outra Aliquotagem."
+          newMessage = "Este código já foi utilizado em outra Aliquotagem.";
           break;
 
         case "There are repeated aliquots on DTO.": //Código da aliquot duplicada na lista que deveria ser atualizada
-          newMessage = "O código da Aliquota está Duplicado."
+          newMessage = "O código da Aliquota está Duplicado.";
           break;
 
         default:
           newMessage = "Erro ao salvar esse campo.";
-          if(msg) console.log("Erro do Back-end: " + msg);
+          if (msg) console.log("Erro do Back-end: " + msg);
           break;
       }
 
       return newMessage;
     }
 
-    function fillAliquotsErrors(aliquotConflicts, msgErro){
+    function fillAliquotsErrors(aliquotConflicts, msgErro) {
       var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
 
       aliquotConflicts.forEach(function(conflict) {
         aliquotsArray.forEach(function(aliquot) {
-          if(aliquot.aliquotCode == conflict.code){
-            setAliquotError(aliquot,transcribeMessage(msgErro));
+          if (aliquot.aliquotCode == conflict.code) {
+            setAliquotError(aliquot, transcribeMessage(msgErro));
           }
         });
       });
     }
 
-    function fillTubesErrors(tubeConflicts, msgErro){
+    function fillTubesErrors(tubeConflicts, msgErro) {
       var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
 
       tubeConflicts.forEach(function(tubeCode) {
         aliquotsArray.forEach(function(aliquot) {
-          if(aliquot.tubeCode == tubeCode){
-            setTubeError(aliquot,transcribeMessage(msgErro));
+          if (aliquot.tubeCode == tubeCode) {
+            setTubeError(aliquot, transcribeMessage(msgErro));
           }
         });
       });

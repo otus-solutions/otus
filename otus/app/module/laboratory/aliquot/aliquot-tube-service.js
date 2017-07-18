@@ -6,15 +6,16 @@
     .service('otusjs.laboratory.aliquot.AliquotTubeService', Service);
 
   Service.$inject = [
-    'otusjs.laboratory.AliquotManagerService',
-    'otusjs.laboratory.business.ParticipantLaboratoryService'
+    'otusjs.laboratory.aliquot.AliquotManagerService',
+    'otusjs.laboratory.business.ParticipantLaboratoryService',
+    '$q'
   ];
 
-  function Service(AliquotManagerService, ParticipantLaboratoryService) {
+  function Service(AliquotManagerService, ParticipantLaboratoryService, $q) {
     var self = this;
     var _test;
 
-    self.getMomentTypeList = getMomentTypeList;
+    self.buildMomentTypeList = buildMomentTypeList;
     self.getMomentTypeAliquot = getMomentTypeAliquot;
     self.fieldsChanged = fieldsChanged;
     self.aliquotsWithErrors = aliquotsWithErrors;
@@ -23,8 +24,15 @@
     self.saveAliquoting = saveAliquoting;
     self.updateAliquots = updateAliquots;
 
-    function updateAliquots(updateStructure) {
-      return ParticipantLaboratoryService.updateAliquots(updateStructure);
+    function updateAliquots(updateStructure, fakeMe) {
+      var defer = $q.defer();
+      defer.resolve();
+      if (fakeMe) {
+      }else {
+         defer.reject();
+      }
+      return defer.promise;
+      // return ParticipantLaboratoryService.updateAliquots(updateStructure);
     }
 
     function saveAliquoting(newAliquots, momentType, results){
@@ -106,8 +114,8 @@
       return hasErrors;
     }
 
-    function getMomentTypeList(isFake){
-      var momentTypeList = AliquotManagerService.getMomentTypeList();
+    function buildMomentTypeList(tubeList){
+      var momentTypeList = AliquotManagerService.buildMomentTypeList(tubeList);
       return momentTypeList;
     }
 
@@ -185,8 +193,8 @@
             //Até Aqui
             aliquot.aliquotCode = collectedAliquot.code;
             aliquot.isSaved = true;
-            aliquot.operator = collectedAliquot.collectionData.operator.toLowerCase();
-            var dateTime = new Date(collectedAliquot.collectionData.time)
+            aliquot.operator = collectedAliquot.aliquotCollectionData.operator.toLowerCase();
+            var dateTime = new Date(collectedAliquot.aliquotCollectionData.time)
             aliquot.date = dateTime.toLocaleDateString();
             aliquot.time = dateTime.toLocaleTimeString();
             endLoop = true;

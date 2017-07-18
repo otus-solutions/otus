@@ -6,7 +6,7 @@
     .component('tubeList', {
       templateUrl: 'app/ux-component/laboratory/main-panel/tube-list/tube-list-template.html',
       bindings: {
-        tubeList: '<',
+        tubeList: '=',
         tubeConfiguration: '<',
         state: '<'
       },
