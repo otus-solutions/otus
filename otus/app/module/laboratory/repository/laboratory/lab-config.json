@@ -455,6 +455,50 @@
               "label": "Armazenamento",
               "role": "STORAGE"
             }]
+          },{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "EDTA_DNA",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "EXAM"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "EXAM"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "EXAM"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "STORAGE"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "STORAGE"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "STORAGE"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "STORAGE"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "STORAGE"
+            }]
           }]
         }]
       }]
@@ -648,7 +692,6 @@
         }]
       }]
     }, {
-
       "objectType": "AliquotCenterDescriptor",
       "name": "SP",
       "aliquotGroupDescriptors": [{
@@ -832,7 +875,6 @@
           }]
         }]
       }]
-
     }],
     "containerDescriptor": [{
       "objectType": "ContainerDescriptor",
@@ -872,7 +914,7 @@
     }]
   },
   "collectMomentConfiguration": {
-    "collectMomentDescriptors": [{
+    "momentDescriptors": [{
       "name": "POST_OVERLOAD",
       "label": "Pós"
     }, {
@@ -1403,10 +1445,54 @@
   "metadataConfiguration": [{
     "objectType": "MetadataConfiguration",
     "extractionValue": ".vp",
-    "label": "Volume Parcial"
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "Volume Parcial",
+        "formattedText": ""
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    }
   }, {
     "objectType": "MetadataConfiguration",
     "extractionValue": ".nc",
-    "label": "Não coletado"
+    "label": {
+      "ptBR": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "Não coletado",
+        "formattedText": ""
+      },
+      "enUS": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      },
+      "esES": {
+        "extends": "StudioObject",
+        "objectType": "Label",
+        "oid": "",
+        "plainText": "",
+        "formattedText": ""
+      }
+    }
   }]
 }
