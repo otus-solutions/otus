@@ -60,9 +60,13 @@
                   //success
                   AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
                   _setMomentType(self.selectedMomentType);
-                }, function(e) {
+                })
+                .catch(function(e) {
                   //error
                   AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
+                  var err = e.json();
+                  fillAliquotsErrors(err.conflicts, err.MESSAGE);
+                  fillTubesErrors(err.tubesNotFound, err.MESSAGE);
                   console.log(e);
                });
             });
@@ -71,6 +75,55 @@
           AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
         }
       };
+    }
+
+    function transcribeMessage(msg){
+      var newMessage;
+
+      switch (msg) {
+        case "Tube codes not found.": //O código do tube não foi encontrado na lista de tubos do participante, ou seja, código não existe
+          newMessage = "Este código não pertence ao participante."
+          break;
+
+        case "There are repeated aliquots on Database.": //Código da aliquot já existe na base de dados
+          newMessage = "Este código já foi utilizado em outra Aliquotagem."
+          break;
+
+        case "There are repeated aliquots on DTO.": //Código da aliquot duplicada na lista que deveria ser atualizada
+          newMessage = "O código da Aliquota está Duplicado."
+          break;
+
+        default:
+          newMessage = "Erro ao salvar esse campo.";
+          if(msg) console.log("Erro do Back-end: " + msg);
+          break;
+      }
+
+      return newMessage;
+    }
+
+    function fillAliquotsErrors(aliquotConflicts, msgErro){
+      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+
+      aliquotConflicts.forEach(function(conflict) {
+        aliquotsArray.forEach(function(aliquot) {
+          if(aliquot.aliquotCode == conflict.code){
+            setAliquotError(aliquot,transcribeMessage(msgErro));
+          }
+        });
+      });
+    }
+
+    function fillTubesErrors(tubeConflicts, msgErro){
+      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+
+      tubeConflicts.forEach(function(tubeCode) {
+        aliquotsArray.forEach(function(aliquot) {
+          if(aliquot.tubeCode == tubeCode){
+            setTubeError(aliquot,transcribeMessage(msgErro));
+          }
+        });
+      });
     }
 
     function selecMomentType(momentType) {
