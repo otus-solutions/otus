@@ -8,7 +8,8 @@
       templateUrl: 'app/ux-component/dashboard-sidenav/dashboard-sidenav-template.html',
       bindings: {
         participant: '<'
-      }
+      },
+      transclude:true
     });
 
   Controller.$inject = [
@@ -27,6 +28,7 @@
     self.logout = logout;
     self.loadParticipantActivities = loadParticipantActivities;
     self.loadParticipantReports = loadParticipantReports;
+    self.home = home;
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -36,6 +38,10 @@
 
     function logout() {
       LogoutService.logout();
+    }
+
+    function home() {
+      ApplicationStateService.activateDashboard();
     }
 
     function loadParticipantActivities() {

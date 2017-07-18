@@ -1,5 +1,9 @@
 <div layout="column" flex>
-  <otus-dashboard-sidenav layout="row" participant="$ctrl.selectedParticipant"></otus-dashboard-sidenav>
-  <otus-dashboard-toolbar layout="row" on-participant-select="$ctrl.selectParticipant(participant)"></otus-dashboard-toolbar>
+  <otus-dashboard-sidenav layout="row" participant="$ctrl.selectedParticipant">
+      <otus-participant-box on-close="$ctrl.close()" layout="row"></otus-participant-box>
+  </otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row" on-participant-select="$ctrl.selectParticipant(participant)">
+      <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)" class="md-primary md"></otus-participant-search>
+  </otus-dashboard-toolbar>
   <otus-dashboard-display layout="row" flex></otus-dashboard-display>
 </div>

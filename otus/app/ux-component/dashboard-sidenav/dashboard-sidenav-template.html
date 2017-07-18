@@ -10,15 +10,15 @@
       </md-button>
     </div>
   </md-toolbar>
-  <otus-participant-box on-close="$ctrl.close()" layout="row"></otus-participant-box>
-  <!-- <md-divider></md-divider>
-    <md-list>
-      <md-subheader class="md-no-sticky">Projeto</md-subheader>
+  <md-list>
       <md-list-item>
         <div layout-align="start center">
           <md-icon md-font-library="material-icons">local_pharmacy</md-icon>
-          <md-button id="home-menu">Laboratório</md-button>
+          <md-button id="home-menu" ng-click="$ctrl.home()">INICIO</md-button>
         </div>
       </md-list-item>
-    </md-list> -->
+  </md-list>
+  <md-divider></md-divider>
+  <div ng-transclude></div>
+
 </md-sidenav>

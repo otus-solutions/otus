@@ -22,6 +22,7 @@
     self.activateLogin = activateLogin;
     self.activateLaboratory = activateLaboratory;
     self.activateDashboard = activateDashboard;
+    self.activateParticipantDashboard = activateParticipantDashboard;
     self.activateParticipantActivities = activateParticipantActivities;
     self.activateParticipantReports = activateParticipantReports;
     self.activateSignup = activateSignup;
@@ -58,6 +59,10 @@
 
     function activateDashboard() {
       $state.go(STATE.DASHBOARD);
+    }
+
+    function activateParticipantDashboard() {
+      $state.go(STATE.PARTICIPANT_DASHBOARD);
     }
 
     function activateParticipantActivities() {
