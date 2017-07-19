@@ -717,6 +717,35 @@
               "label": "Armazenamento",
               "role": "STORAGE"
             }]
+          },{
+            "objectType": "AliquotTypesDescriptor",
+            "name": "EDTA_DNA",
+            "aliquots": [{
+              "objectType": "AliquotDescriptor",
+              "name": "BIOSORO",
+              "label": "Bioquímica Soro",
+              "role": "EXAM"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "PCR",
+              "label": "PCR",
+              "role": "EXAM"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "FASTING_INSULINE",
+              "label": "Insulina Jejum",
+              "role": "EXAM"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "STORAGE"
+            }, {
+              "objectType": "AliquotDescriptor",
+              "name": "STORAGE",
+              "label": "Armazenamento",
+              "role": "STORAGE"
+            }]
           }]
         }]
       }]
