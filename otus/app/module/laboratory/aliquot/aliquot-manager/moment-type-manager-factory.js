@@ -24,6 +24,7 @@
 
   function MomentTypeManager($q, tube) {
     var self = this;
+    var _tubesToUpdate;
 
     /* Public Interface */
     self.type = tube.type;
@@ -40,6 +41,7 @@
     self.addTube = addTube;
     self.setAvailableAliquots = setAvailableAliquots;
     self.getPersistanceStructure = getPersistanceStructure;
+    self.updateTubes = updateTubes;
 
     onInit();
 
@@ -55,51 +57,65 @@
     }
 
 
-    function getPersistanceStructure(aliquotsArray, forceResult) {
-      var persistanceStructure = _buildPersistanceStructure(aliquotsArray);
-      return persistanceStructure;
+    function getPersistanceStructure(newAliquotsArray) {
+      var persistanceStructure = {tubes:_buildTubeArray(newAliquotsArray)};
+      _tubesToUpdate = persistanceStructure.tubes;
+      return JSON.stringify(persistanceStructure);
     }
 
-    function _buildPersistanceStructure(aliquotsArray) {
-      var auxTubeList = angular.copy(self.tubeList);
+    function updateTubes() {
+       _tubesToUpdate.forEach(function(tubeSet) {
+          var tube = _findTube(tubeSet.code);
+          tubeSet.aliquots.forEach(function(aliquot) {
+             tube.pushAliquot(aliquot);
+             self.collectedAliquots.push(aliquot);
+          });
+       });
+       _tubesToUpdate = undefined;
+    }
 
-      var tubeMaps = _buildMaps();
-      tubeMaps.forEach(function(tubeMap) {
-        var tube = _findTube(auxTubeList, tubeMap.tubeCode);
-        tubeMap.aliquotsArray.forEach(function(aliquot) {
-          tube.toAliquot(aliquot);
+    function _buildTubeArray(newAliquotsArray) {
+      var preStructure = _buildPreStructure(newAliquotsArray);
+
+      preStructure.forEach(function(tubeSet) {
+        var tube = _findTube(tubeSet.code);
+        tubeSet.rawAliquotes.forEach(function(aliquot) {
+          tubeSet.aliquots.push(tube.toAliquot(aliquot));
         });
+        delete tubeSet.rawAliquotes;
       });
 
-      var returning = {tubes: auxTubeList};
-      return JSON.stringify(returning);
-
-      function _buildMaps() {
-        var maps = [];
-
-        aliquotsArray.forEach(function(aliquot) {
-          var thisMap = maps.find(function(map) {
-            return map.tubeCode === aliquot.tubeCode;
-          });
-          if (thisMap) {
-            thisMap.aliquotsArray.push(aliquot);
-          } else {
-            var newMap = {
-              tubeCode: aliquot.tubeCode,
-              aliquotsArray: []
-            };
-            newMap.aliquotsArray.push(aliquot);
-            maps.push(newMap);
-          }
-        });
-        return maps;
-      }
-
-      function _findTube(tubeArray, tubeCode) {
-        return tubeArray.find(function(tube) {
-          return tube.code === tubeCode;
-        });
-      }
+      return preStructure;
     }
+
+    function _findTube(tubeCode) {
+      return self.tubeList.find(function(tube) {
+        return tube.code === tubeCode;
+      });
+    }
+
+    function _buildPreStructure(aliquotsArray) {
+      var maps = [];
+
+      aliquotsArray.forEach(function(aliquot) {
+        var thisMap = maps.find(function(map) {
+          return map.code === aliquot.tubeCode;
+        });
+        if (thisMap) {
+          thisMap.rawAliquotes.push(aliquot);
+        } else {
+          var newMap = {
+            code: aliquot.tubeCode,
+            rawAliquotes: [],
+            aliquots: []
+          };
+          newMap.rawAliquotes.push(aliquot);
+          maps.push(newMap);
+        }
+      });
+      console.log(maps);
+      return maps;
+    }
+
   }
 }());

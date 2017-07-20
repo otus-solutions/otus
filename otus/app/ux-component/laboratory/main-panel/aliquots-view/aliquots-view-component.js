@@ -37,19 +37,8 @@
     self.setFocus = setFocus;
 
     function onInit() {
-      console.clear();
       _buildMomentTypeList();
       selecMomentType(self.momentTypeList[0]);
-      self.selectedMomentType.tubeList.forEach(function(tube) {
-        console.log(tube.code);
-        console.log('is collected: ' + tube.tubeCollectionData.isCollected);
-        if (tube.tubeCollectionData.isCollected) {
-           tube.aliquots.forEach(function(aliquot) {
-              console.log(aliquot.code);
-           });
-        }
-        console.log('-------');
-      });
       self.callbackFunctions.cancelAliquots = _cancelAliquots;
       self.callbackFunctions.saveAliquots = _saveAliquots;
     }
@@ -73,9 +62,12 @@
             AliquotTubeService.updateAliquots(persistanceStructure)
               .then(function(data) {
                 //success
-                self.participantLaboratory.updateTubeList();               
+                self.selectedMomentType.updateTubes();
+                self.participantLaboratory.updateTubeList();
+                console.log(self.selectedMomentType.tubeList);
+                console.log(self.participantLaboratory.tubes);
                 AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
-               //  _setMomentType(self.selectedMomentType);
+                 _setMomentType(self.selectedMomentType);
               })
               .catch(function(e) {
                 //error
@@ -162,6 +154,18 @@
       }
 
       if (toChange) _setMomentType(momentType);
+
+      console.clear();
+      self.selectedMomentType.tubeList.forEach(function(tube) {
+        console.group(tube.code);
+        console.log('is collected: ' + tube.tubeCollectionData.isCollected);
+        if (tube.tubeCollectionData.isCollected) {
+          tube.aliquots.forEach(function(aliquot) {
+            console.log(aliquot.code);
+          });
+        }
+        console.groupEnd(tube.code);
+      });
     }
 
     function _setMomentType(momentType) {

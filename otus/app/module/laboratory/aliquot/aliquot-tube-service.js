@@ -25,14 +25,14 @@
     self.updateAliquots = updateAliquots;
 
     function updateAliquots(updateStructure, fakeMe) {
-      var defer = $q.defer();
-      defer.resolve();
-      if (fakeMe) {
-      }else {
-         defer.reject();
-      }
-      return defer.promise;
-      // return ParticipantLaboratoryService.updateAliquots(updateStructure);
+      // var defer = $q.defer();
+      // defer.resolve();
+      // if (fakeMe) {
+      // }else {
+      //    defer.reject();
+      // }
+      // return defer.promise;
+      return ParticipantLaboratoryService.updateAliquots(updateStructure);
     }
 
     function saveAliquoting(newAliquots, momentType, results){
