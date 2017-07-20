@@ -27,6 +27,7 @@
     self.activateParticipantReports = activateParticipantReports;
     self.activateSignup = activateSignup;
     self.activateSignupResult = activateSignupResult;
+    self.getCurrentState = getCurrentState;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -81,6 +82,9 @@
       $state.go(STATE.SIGNUP_RESULT);
     }
 
+    function getCurrentState() {
+      return $state.current.name;
+    }
     // function activateErrorOffline() {
     //   self.currentState = 'Offline';
     //   $state.go(APP_STATE.ERROR_OFFLINE);

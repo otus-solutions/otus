@@ -12,11 +12,13 @@
     });
 
   Controller.$inject = [
+    'STATE',
     '$q',
-    'otusjs.participant.business.ParticipantSearchService'
+    'otusjs.participant.business.ParticipantSearchService',
+    'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller($q, ParticipantSearchService) {
+  function Controller(STATE, $q, ParticipantSearchService, ApplicationStateService) {
     var self = this;
 
 
@@ -44,10 +46,13 @@
       if (!self.selectedParticipant)
         return;
       ParticipantSearchService.selectParticipant(self.selectedParticipant);
-
       self.onSelect({
         participant: self.selectedParticipant
       });
+      if(ApplicationStateService.getCurrentState() == STATE.DASHBOARD){
+        ApplicationStateService.activateParticipantDashboard();
+        ApplicationStateService.activateParticipantActivities();
+      }
     }
 
   }
