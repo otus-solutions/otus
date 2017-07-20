@@ -143,7 +143,7 @@
         var index = indexExam;
 
         if(aliquot.name.toUpperCase() == "STORAGE"){
-          role = "storage";
+          role = "STORAGE";
           index = indexStorage;
         }
 

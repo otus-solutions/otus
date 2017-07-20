@@ -61,16 +61,12 @@
             var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
             AliquotTubeService.updateAliquots(persistanceStructure)
               .then(function(data) {
-                //success
                 self.selectedMomentType.updateTubes();
                 self.participantLaboratory.updateTubeList();
-                console.log(self.selectedMomentType.tubeList);
-                console.log(self.participantLaboratory.tubes);
                 AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
                  _setMomentType(self.selectedMomentType);
               })
               .catch(function(e) {
-                //error
                 AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
                 var err = e.data;
                 fillAliquotsErrors(err.CONTENT.conflicts, err.MESSAGE);
