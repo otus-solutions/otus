@@ -72,9 +72,9 @@
               .catch(function(e) {
                 //error
                 AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
-                var err = e.json();
-                fillAliquotsErrors(err.conflicts, err.MESSAGE);
-                fillTubesErrors(err.tubesNotFound, err.MESSAGE);
+                var err = e.data;
+                fillAliquotsErrors(err.CONTENT.conflicts, err.MESSAGE);
+                fillTubesErrors(err.CONTENT.tubesNotFound, err.MESSAGE);
                 console.log(e);
               });
           });
@@ -89,46 +89,50 @@
       var newMessage;
 
       switch (msg) {
-        case "Tube codes not found.": //O código do tube não foi encontrado na lista de tubos do participante, ou seja, código não existe
+        case "Data Validation Fail: Tube codes not found.": //O código do tube não foi encontrado na lista de tubos do participante, ou seja, código não existe
           newMessage = "Este código não pertence ao participante.";
           break;
 
-        case "There are repeated aliquots on Database.": //Código da aliquot já existe na base de dados
+        case "Data Validation Fail: There are repeated aliquots on Database.": //Código da aliquot já existe na base de dados
           newMessage = "Este código já foi utilizado em outra Aliquotagem.";
           break;
 
-        case "There are repeated aliquots on DTO.": //Código da aliquot duplicada na lista que deveria ser atualizada
-          newMessage = "O código da Aliquota está Duplicado.";
+        case "Data Validation Fail: There are repeated aliquots on DTO.": //Código da aliquot duplicada na lista que deveria ser atualizada
+          newMessage = "O código da aliquota está duplicado.";
+          break;
+
+        case "Data Validation Fail: There are repeated aliquots on Participant.": //Esta aliquota está duplicada.
+          newMessage = "Esta aliquota está duplicada.";
           break;
 
         default:
           newMessage = "Erro ao salvar esse campo.";
-          if (msg) console.log("Erro do Back-end: " + msg);
+          if(msg) console.log("Erro do Back-end: " + msg);
           break;
       }
 
       return newMessage;
     }
 
-    function fillAliquotsErrors(aliquotConflicts, msgErro) {
+    function fillAliquotsErrors(aliquotConflicts, msgErro){
       var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
 
       aliquotConflicts.forEach(function(conflict) {
         aliquotsArray.forEach(function(aliquot) {
-          if (aliquot.aliquotCode == conflict.code) {
-            setAliquotError(aliquot, transcribeMessage(msgErro));
+          if(aliquot.aliquotCode == conflict.code && !aliquot.isSaved){
+            setAliquotError(aliquot,transcribeMessage(msgErro));
           }
         });
       });
     }
 
-    function fillTubesErrors(tubeConflicts, msgErro) {
+    function fillTubesErrors(tubeConflicts, msgErro){
       var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
 
       tubeConflicts.forEach(function(tubeCode) {
         aliquotsArray.forEach(function(aliquot) {
-          if (aliquot.tubeCode == tubeCode) {
-            setTubeError(aliquot, transcribeMessage(msgErro));
+          if(aliquot.tubeCode == tubeCode && !aliquot.isSaved){
+            setTubeError(aliquot,transcribeMessage(msgErro));
           }
         });
       });
@@ -154,18 +158,6 @@
       }
 
       if (toChange) _setMomentType(momentType);
-
-      console.clear();
-      self.selectedMomentType.tubeList.forEach(function(tube) {
-        console.group(tube.code);
-        console.log('is collected: ' + tube.tubeCollectionData.isCollected);
-        if (tube.tubeCollectionData.isCollected) {
-          tube.aliquots.forEach(function(aliquot) {
-            console.log(aliquot.code);
-          });
-        }
-        console.groupEnd(tube.code);
-      });
     }
 
     function _setMomentType(momentType) {
