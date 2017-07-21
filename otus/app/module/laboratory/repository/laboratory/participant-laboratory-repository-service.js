@@ -37,8 +37,8 @@
     }
 
     function getLaboratoryDescriptors(){
-      // return ParticipantLaboratoryCollectionService.getDescriptors();
-      return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');
+      return ParticipantLaboratoryCollectionService.getDescriptors();
+      // return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');
    }
 
    function updateLaboratoryParticipant(laboratory){

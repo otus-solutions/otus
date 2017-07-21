@@ -8,7 +8,7 @@
       bindings: {
         state: '=',
         labParticipant: '=',
-        labels: '='
+        labels: '=',
         callbackFunctions: '='
       },
       transclude: true,
