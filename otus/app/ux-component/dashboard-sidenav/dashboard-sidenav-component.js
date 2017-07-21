@@ -9,16 +9,17 @@
       bindings: {
         participant: '<'
       },
-      transclude:true
+      transclude: true
     });
 
   Controller.$inject = [
     '$mdComponentRegistry',
     'otusjs.user.access.service.LogoutService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    '$mdSidenav'
   ];
 
-  function Controller($mdComponentRegistry, LogoutService, ApplicationStateService) {
+  function Controller($mdComponentRegistry, LogoutService, ApplicationStateService, $mdSidenav) {
     var self = this;
     var _sideNav = null;
     var SIDENAV_ORIGIN = 'left';
@@ -33,7 +34,8 @@
     self.$onInit = onInit;
 
     function close() {
-      _sideNav.toggle();
+      // _sideNav.toggle();
+      $mdSidenav(SIDENAV_ORIGIN).toggle();
     }
 
     function logout() {
@@ -53,11 +55,11 @@
     }
 
     function onInit() {
-      $mdComponentRegistry
-        .when(SIDENAV_ORIGIN)
-        .then(function(sidenav) {
-          _sideNav = sidenav;
-        });
+      // $mdComponentRegistry
+      //   .when(SIDENAV_ORIGIN)
+      //   .then(function(sidenav) {
+      //     _sideNav = sidenav;
+      //   });
     }
   }
 }());

@@ -8,9 +8,17 @@
       templateUrl: 'app/ux-component/dashboard-home-display/dashboard-home-display-template.html'
     });
 
-  function Controller() {
-    var self = this;
+  Controller.$inject = [
+    'otusjs.application.state.ApplicationStateService'
+  ];
 
+  function Controller(ApplicationStateService) {
+    var self = this;
+    self.participantDasboard = participantDasboard;
     /* Public methods */
+    function participantDasboard(){
+      ApplicationStateService.activateParticipantDashboard();
+    }
+
   }
 }());

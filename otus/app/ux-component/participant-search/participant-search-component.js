@@ -51,7 +51,6 @@
       });
       if(ApplicationStateService.getCurrentState() == STATE.DASHBOARD){
         ApplicationStateService.activateParticipantDashboard();
-        ApplicationStateService.activateParticipantActivities();
       }
     }
 

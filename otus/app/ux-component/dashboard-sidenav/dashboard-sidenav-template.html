@@ -19,6 +19,7 @@
       </md-list-item>
   </md-list>
   <md-divider></md-divider>
-  <div ng-transclude></div>
-
+  <div ng-transclude>
+     <otus-participant-box on-close="$ctrl.close()" layout="row"></otus-participant-box><!-- Insere participant-box caso não seja fornecido elemento para o transclude -->
+  </div>
 </md-sidenav>

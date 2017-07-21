@@ -1,14 +1,15 @@
 <div flex>
-  <div flex>
-      <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)" class="md-primary md"></otus-participant-search>
+  <div flex >
+    <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)" class="md-primary md"></otus-participant-search>
   </div>
-
-  <div layout="row" flex layout-padding layout-wrap  style="padding-bottom: 32px;" ng-cloak>
-    <md-whiteframe class="md-whiteframe-6dp" flex layout layout-align="center center">
-      <span>.md-whiteframe-6dp</span>
-    </md-whiteframe>
-    <md-whiteframe class="md-whiteframe-6dp" flex layout layout-align="center center">
-      <span>.md-whiteframe-6dp</span>
-    </md-whiteframe>
+  <div layout="row" layout-padding layout-wrap ng-cloak>
+    <md-card flex ng-style={'height':'45'} ng-click="$ctrl.participantDasboard()">
+      <md-icon  aria-label="Laboratório" ng-style={'font-size':'30px','height':'48px'}>wc</md-icon>
+      <md-tooltip>Participante</md-tooltip>
+    </md-card>
+    <md-card flex ng-style={'height':'45'} ng-click="$ctrl.participantDasboard()">
+      <md-icon aria-label="transporte" ng-style={'font-size':'30px','height':'48px'}>local_shipping</md-icon>
+      <md-tooltip>Transporte de amostra</md-tooltip>
+    </md-card>
   </div>
 </div>
