@@ -70,7 +70,6 @@
                   self.participant = participant;
                   if (laboratory !== 'null') {
                     _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser(),self.participant);
-                    console.log(_participantLaboratory);
                     request.resolve(true);
                   } else {
                     request.resolve(false);

@@ -30,8 +30,8 @@
     self.finish = finish;
     self.cancelCollect = cancelCollect;
     self.cancelAndReturn = cancelAndReturn;
-    
-    
+
+
     self.saveAliquots = saveAliquots;
     self.cancelAliquots = cancelAliquots;
 
@@ -68,7 +68,6 @@
              .hideDelay(1000)
           );
         }, function(e) {
-          console.log(e);
           $mdToast.show(
             $mdToast.simple()
             .textContent('Falha ao registrar coleta')

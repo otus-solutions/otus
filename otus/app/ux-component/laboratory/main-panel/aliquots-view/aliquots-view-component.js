@@ -101,7 +101,7 @@
 
         default:
           newMessage = "Erro ao salvar esse campo.";
-          if(msg) console.log("Erro do Back-end: " + msg);
+          if(msg) console.log("Erro do servidor: " + msg);
           break;
       }
 
