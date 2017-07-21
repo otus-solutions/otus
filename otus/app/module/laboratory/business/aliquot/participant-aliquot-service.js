@@ -74,7 +74,7 @@
         if(originalAliquots[i].tubeCode != newAliquots[i].tubeCode
         || originalAliquots[i].aliquotCode != newAliquots[i].aliquotCode){
           changed = true;
-          break
+          break;
         }
       }
 
@@ -88,7 +88,7 @@
 
       for (var i = 0; i < aliquotArray.length; i++) {
         if((originalAliquots[i].tubeCode != aliquotArray[i].tubeCode
-        || originalAliquots[i].aliquotCode != aliquotArray[i].aliquotCode) && aliquotArray[i].aliquotCode && aliquotArray[i].isSaved == false){
+        || originalAliquots[i].aliquotCode != aliquotArray[i].aliquotCode) && aliquotArray[i].aliquotCode && aliquotArray[i].isSaved === false){
           aliquotArray[i].tubeCode = aliquotArray[i].tubeCode ? aliquotArray[i].tubeCode : aliquotArray[i].placeholder;
           newAliquotsArray.push(aliquotArray[i]);
         }
@@ -186,15 +186,12 @@
 
         for (var i = 0, endLoop = false; i < arrayAliquots.length && !endLoop; i++) {
           var aliquot = arrayAliquots[i];
-          if(aliquot.tubeCode == "" && aliquot.name.toUpperCase() == collectedAliquot.name.toUpperCase()){
+          if(aliquot.tubeCode === "" && aliquot.name.toUpperCase() == collectedAliquot.name.toUpperCase()){
             aliquot.tubeCode = collectedAliquot.tubeCode;
-            //Apaga Daqui
-            if(collectedAliquot.code.toString().length == 8) collectedAliquot.code = `${collectedAliquot.code}9`;
-            //Até Aqui
             aliquot.aliquotCode = collectedAliquot.code;
             aliquot.isSaved = true;
             aliquot.operator = collectedAliquot.aliquotCollectionData.operator.toLowerCase();
-            var dateTime = new Date(collectedAliquot.aliquotCollectionData.time)
+            var dateTime = new Date(collectedAliquot.aliquotCollectionData.time);
             aliquot.date = dateTime.toLocaleDateString();
             aliquot.time = dateTime.toLocaleTimeString();
             endLoop = true;
