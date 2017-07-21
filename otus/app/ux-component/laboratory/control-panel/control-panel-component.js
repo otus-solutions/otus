@@ -8,6 +8,7 @@
       bindings: {
         state: '=',
         labParticipant: '=',
+        labels: '='
         callbackFunctions: '='
       },
       transclude: true,
@@ -51,7 +52,6 @@
     function onInit() {
       self.collectedTubes = [];
       _buildDialogs();
-      self.labels = ParticipantLaboratoryService.generateLabels();
     }
 
     function changeState(moment) {
