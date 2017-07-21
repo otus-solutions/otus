@@ -35,6 +35,7 @@
     self.listAll = listAll;
     self.initializeLaboratory = initializeLaboratory;
     self.update = update;
+    self.updateAliquots = updateAliquots;
     self.getLaboratory = getLaboratory;
     self.getDescriptors = getDescriptors;
 
@@ -138,6 +139,29 @@
           remoteStorage
             .update(_participant.recruitmentNumber, laboratory)
             .then(function(remoteLaboratory) {
+              request.resolve();
+            }, function(e){
+               request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Updates the aliquots list in the participant laboratory.
+     * @param {(object)} persistanceStructure - an array of tubes with an array of aliquots
+     * @memberof LaboratoryCollectionService
+     */
+    function updateAliquots(updateStructure) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .updateAliquots(_participant.recruitmentNumber, updateStructure)
+            .then(function(data) {
               request.resolve();
             }, function(e){
                request.reject(e);

@@ -1,0 +1,60 @@
+.card-tube{
+  padding:10px;
+}
+
+.moment-type-title{
+  font-size: 18px;
+  text-align: center;
+}
+
+.tube-design{
+  height:80px;
+  width:10px;
+  margin-right:10px;
+  border: solid 1px #ccc;
+  border-radius: 3px 3px 10px 10px;
+}
+
+.aliquot-whiteframe{
+  margin-bottom: 10px;
+}
+
+.aliquot-whiteframe-title{
+  color:red;
+}
+
+.aliquot-arrow-icon{
+  text-align: center;
+}
+
+.aliquot-arrow-icon-up{
+  position: relative;
+  top: -7px;
+}
+
+.moment-type-selected{
+  box-shadow: 1px 2px 5px grey;
+}
+.moment-type-not-selected{
+  opacity: 0.5;
+}
+.aliquot-md-card:focus {
+  outline: none;
+  box-shadow: 1px 2px 5px grey;
+}
+
+.aliquot-md-card {
+  cursor: pointer;
+}
+
+.input-footer-message{
+  position: relative;
+  left: 5px;
+  right: auto;
+  top: -35px;
+  opacity: 0.7;
+  font-size: 12px;
+  line-height: 14px;
+  transition: all 0.3s cubic-bezier(0.55, 0, 0.55, 0.2);
+  color: grey;
+}

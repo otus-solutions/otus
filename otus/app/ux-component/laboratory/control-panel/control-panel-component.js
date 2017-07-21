@@ -8,7 +8,8 @@
       bindings: {
         state: '=',
         labParticipant: '=',
-        labels: '='
+        labels: '=',
+        callbackFunctions: '='
       },
       transclude: true,
       controller: controller
@@ -31,6 +32,23 @@
     self.cancelCollect = cancelCollect;
     self.cancelAndReturn = cancelAndReturn;
 
+
+    self.saveAliquots = saveAliquots;
+    self.cancelAliquots = cancelAliquots;
+
+    function saveAliquots(){
+      self.callbackFunctions.saveAliquots();
+    }
+
+    function cancelAliquots(){
+      if(self.callbackFunctions.cancelAliquots()){
+        self.cancelAndReturn();
+      } else {
+        self.labParticipant.reloadTubeList();
+        changeState('main');
+      }
+    }
+
     function onInit() {
       self.collectedTubes = [];
       _buildDialogs();
@@ -45,12 +63,11 @@
         ParticipantLaboratoryService.updateLaboratoryParticipant().then(function() {
           self.labParticipant.updateTubeList();
           $mdToast.show(
-            $mdToast.simple()
-            .textContent('Registrado com sucesso!')
-            .hideDelay(1000)
+             $mdToast.simple()
+             .textContent('Registrado com sucesso!')
+             .hideDelay(1000)
           );
         }, function(e) {
-          console.log(e);
           $mdToast.show(
             $mdToast.simple()
             .textContent('Falha ao registrar coleta')
@@ -88,5 +105,7 @@
         .ok('Ok')
         .cancel('Voltar');
     }
+
+    return self;
   }
 }());
