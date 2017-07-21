@@ -14,7 +14,6 @@
 
   Controller.$inject = [
     'otusjs.laboratory.aliquot.AliquotTubeService',
-    'otusjs.laboratory.aliquot.MomentType',
     'otusjs.laboratory.LaboratoryConfigurationService',
     'otusjs.laboratory.aliquot.AliquotMessagesService',
     'otusjs.laboratory.aliquot.AliquotValidationService',
@@ -22,7 +21,7 @@
     '$element'
   ];
 
-  function Controller(AliquotTubeService, MomentType, LaboratoryConfigurationService, AliquotMessagesService, AliquotValidationService, $scope, $element) {
+  function Controller(AliquotTubeService, LaboratoryConfigurationService, AliquotMessagesService, AliquotValidationService, $scope, $element) {
     var self = this;
     self.tubeList = self.participantLaboratory.tubes;
 
