@@ -113,7 +113,6 @@
           maps.push(newMap);
         }
       });
-      console.log(maps);
       return maps;
     }
 

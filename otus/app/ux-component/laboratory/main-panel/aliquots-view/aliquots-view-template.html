@@ -1,30 +1,23 @@
 <md-content layout="row" flex >
 <!--List MomentType - Begin-->
-    <div layout="column" layout-align="start center" flex="30">
-        <md-subheader class="md-no-sticky" style="font-size: 18px;">
-            Momento e Tipo
+    <div layout="column" layout-align="start stretch" flex="25" flex-md="30" flex-offset="5">
+        <md-subheader class="md-no-sticky moment-type-title">
+            Tipo e Momento
         </md-subheader>
 
         <md-list ng-repeat="momentType in $ctrl.momentTypeList" >
             <div class="tube-list-view">
-                <md-card ng-style="{'padding':'10px', 'width':'300px'}"
-                    ng-click="$ctrl.selecMomentType(momentType)"
-
-                    class="{{$ctrl.selectedMomentType == momentType ? 'moment-type-selected aliquot-md-card' : 'moment-type-not-selected aliquot-md-card' }}"
+                <md-card ng-click="$ctrl.selecMomentType(momentType)"
+                    class="{{($ctrl.selectedMomentType == momentType ? 'moment-type-selected' : 'moment-type-not-selected') + ' aliquot-md-card card-tube ' }}"
                 >
                     <div layout="row">
                         <div layout="column" flex="10">
-                            <div ng-style="{'background-color':momentType.boxColor,
-                            'height':'80px', 'width':'10px',
-                            'margin-right':'10px',
-                            'border': 'solid 1px #ccc',
-                            'border-radius':'3px 3px 10px 10px'
-
-                            }">
+                            <div class="tube-design"
+                            ng-style="{'background-color':momentType.boxColor}">
                             </div>
                         </div>
                         <div layout="column" flex="90">
-                            <div layout="row" flex="70">
+                            <div layout="row" flex="65">
                                 <div layout="column" flex="90">
                                     <span class="md-title">{{momentType.typeLabel}}</span>
                                     <span class="md-subhead">{{momentType.momentLabel}}</span>
@@ -40,12 +33,10 @@
                                 </div>
                                 <div layout="column" flex="50" style="text-align:right">
 
-
                                     <!-- Implementar Icones de Status -->
                                     <!--done : Aliquotagem Parcial -->
                                     <!--done_all : Aliquotagem Completa -->
                                     <!--error_outline : Erros Impossivel Salvar -->
-
 
                                     <!--<a class="md-caption" ng-show="$ctrl.tube.tubeCollectionData.isCollected && $ctrl.tube.tubeCollectionData.metadata">Volume Parcial</a>
                                     <a class="md-caption" ng-show="!$ctrl.tube.tubeCollectionData.isCollected && $ctrl.tube.tubeCollectionData.metadata">Não Coletado</a>-->
@@ -59,21 +50,19 @@
     </div>
 <!--List MomentType - End-->
 
-    <div layout="column" layout-align="start center" flex="70">
-        <md-subheader class="md-no-sticky" style="font-size: 18px;">
-            Aliquotagem
+
+    <div layout="column" flex="70" flex-offset="5">
+        <md-subheader class="md-no-sticky moment-type-title">
+            Aliquotagem: {{$ctrl.selectedMomentType.typeLabel}} - {{$ctrl.selectedMomentType.momentLabel}}
         </md-subheader>
 
-        <form name="formAliquot">
+        <form name="formAliquot" layout-align="start stretch">
             <md-list flex>
                 <div class="tube-list-view" flex>
-                    <div layout="column" class="boxWithHeight tela" layout-padding flex ng-style="{'min-width':'800px'}">
-                        <div>
-                        {{$ctrl.selectedMomentType.typeLabel}} - {{$ctrl.selectedMomentType.momentLabel}}
-                        </div>
+                    <div layout="column" class="boxWithHeight tela" layout-padding flex >
 
-                        <md-whiteframe class="md-whiteframe-12dp" ng-style='{"margin-bottom":"10px"}' flex layout-padding>
-                            <div ng-style='{"color":"red"}'>
+                        <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex layout-padding>
+                            <div class="aliquot-whiteframe-title">
                                 Exame:
                             </div>
 
@@ -109,8 +98,8 @@
                                 </div>
 <!-- Mount Tube Input - Exam - End -->
 
-                                <div flex=10 layout="row" layout-align="center center" ng-style='{"text-align":"center"}'>
-                                    <div>
+                                <div flex=10 layout="row" layout-align="center center" class="aliquot-arrow-icon">
+                                    <div class="{{exam.isSaved ? 'aliquot-arrow-icon-up' : ''}}">
                                         <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
                                     </div>
                                 </div>
@@ -137,7 +126,7 @@
                                             </md-input-container>
                                         </md-content>
 
-                                        <div ng-show="exam.isSaved" class="input-footer-message">
+                                        <div ng-show="exam.isSaved && exam.aliquotMessage == ''" class="input-footer-message">
                                             {{exam.date + " " + exam.time}}
                                         </div>
                                     </div>
@@ -147,8 +136,8 @@
                             <br>
                         </md-whiteframe>
 
-                        <md-whiteframe class="md-whiteframe-12dp" flex layout-padding ng-style='{"margin-bottom":"20px"}'>
-                            <div ng-style='{"color":"red"}'>
+                        <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex layout-padding>
+                            <div class="aliquot-whiteframe-title">
                                 Armazenamento:
                             </div>
 
@@ -184,8 +173,8 @@
                                 </div>
 <!-- Mount Tube Input - Storage - End -->
 
-                                <div flex=10 layout="row" layout-align="center center" ng-style='{"text-align":"center"}'>
-                                    <div>
+                                <div flex=10 layout="row" layout-align="center center" class="aliquot-arrow-icon">
+                                    <div class="{{storage.isSaved ? 'aliquot-arrow-icon-up' : ''}}">
                                         <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
                                     </div>
                                 </div>
@@ -212,7 +201,7 @@
                                             </md-input-container>
                                         </md-content>
 
-                                        <div ng-show="storage.isSaved" class="input-footer-message">
+                                        <div ng-show="storage.isSaved && storage.aliquotMessage == ''" class="input-footer-message">
                                             {{storage.date + " " + storage.time}}
                                         </div>
                                     </div>
@@ -225,6 +214,10 @@
                 </div>
             </md-list>
         </form>
+    </div>
+
+    <div flex-offset="5">
+
     </div>
 </md-content>
 

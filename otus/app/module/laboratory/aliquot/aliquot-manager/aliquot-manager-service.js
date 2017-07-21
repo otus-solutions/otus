@@ -17,7 +17,6 @@
     self.buildMomentTypeList = buildMomentTypeList;
 
     function _buildMomentTypeList(tubeList) {
-      console.log('otus');
       _momentTypeList = [];
       tubeList.forEach(function(tube) {
         var momentType = _momentTypeList.find(function(momentType) {

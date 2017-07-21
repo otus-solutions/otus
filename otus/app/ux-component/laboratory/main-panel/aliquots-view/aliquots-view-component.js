@@ -71,7 +71,6 @@
                 var err = e.data;
                 fillAliquotsErrors(err.CONTENT.conflicts, err.MESSAGE);
                 fillTubesErrors(err.CONTENT.tubesNotFound, err.MESSAGE);
-                console.log(e);
               });
           });
         }
@@ -293,8 +292,8 @@
     function _validateWave(aliquot, tubeOrAliquot) {
       var isTube = (tubeOrAliquot.toUpperCase() == "TUBE");
       var value = isTube ? aliquot.tubeCode : aliquot.aliquotCode;
-      var msgTube = "Não é um código válido.";
-      var msgAliquot = "Não é um código válido.";
+      var msgTube = "Tubo não pertence à Onda atual.";
+      var msgAliquot = "Aliquota não pertence à Onda atual.";
 
       var isValid = true;
 
@@ -362,6 +361,29 @@
       }
     }
 
+    function _validateCenterAliquot(aliquot) {
+      var isValid = true;
+      var tubeCode = aliquot.tubeCode ? aliquot.tubeCode : aliquot.placeholder;
+      var msg = "Não pertence ao mesmo Centro do Tubo.";
+
+      if(aliquot.aliquotCode) {
+        if((aliquot.tubeCode.length >= 9 || aliquot.placeholder.length >= 9)
+            && tubeCode.toString().substr(1, 1) != aliquot.aliquotCode.toString().substr(1, 1)) {
+              isValid = false;
+          }
+      }
+
+      if (isValid) {
+        if (aliquot.aliquotMessage == msg) {
+          clearAliquotError(aliquot);
+        }
+      } else {
+        setAliquotError(aliquot, msg);
+      }
+
+      return isValid;
+    }
+
     function validateAliquot(aliquot) {
       var msgAliquotUsed = "Código de alíquota já utilizado.";
       var msgAliquotInvalid = "Não é uma Aliquota válida.";
@@ -370,6 +392,7 @@
       _validateTubeRequired(aliquot);
       if (!_validateIsNumber(aliquot, "ALIQUOT")) return;
       if (!_validateWave(aliquot, "ALIQUOT")) return;
+      if (!_validateCenterAliquot(aliquot)) return;
 
       if (aliquot.aliquotCode) {
         if (_isAliquot(aliquot.aliquotCode)) {
@@ -391,10 +414,10 @@
       var msgTubeNotCollected = "Tubo não coletado, não pode ser Aliquotado.";
       var msgTubeNotExists = "Este tubo não existe, ou, não pertence a este Tipo/Momento.";
 
+      _validateCenterAliquot(aliquot);
       if (!_validateIsNumber(aliquot, "TUBE")) return;
       if (!_validateWave(aliquot, "TUBE")) return;
       if (!_validateTubeRequired(aliquot)) return;
-
 
 
       if (aliquot.tubeCode) {

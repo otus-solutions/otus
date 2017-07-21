@@ -1,3 +1,37 @@
+.card-tube{
+  padding:10px;
+}
+
+.moment-type-title{
+  font-size: 18px;
+  text-align: center;
+}
+
+.tube-design{
+  height:80px;
+  width:10px;
+  margin-right:10px;
+  border: solid 1px #ccc;
+  border-radius: 3px 3px 10px 10px;
+}
+
+.aliquot-whiteframe{
+  margin-bottom: 10px;
+}
+
+.aliquot-whiteframe-title{
+  color:red;
+}
+
+.aliquot-arrow-icon{
+  text-align: center;
+}
+
+.aliquot-arrow-icon-up{
+  position: relative;
+  top: -7px;
+}
+
 .moment-type-selected{
   box-shadow: 1px 2px 5px grey;
 }
