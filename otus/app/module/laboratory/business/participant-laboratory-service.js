@@ -29,6 +29,7 @@
     self.generateLabels = generateLabels;
     self.getLoggedUser = getLoggedUser;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
+    self.updateAliquots = updateAliquots;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -48,7 +49,7 @@
               return ParticipantLaboratoryRepositoryService
                 .initializeLaboratory(participant)
                 .then(function(laboratory) {
-                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser());
+                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser(),self.participant);
                   request.resolve(laboratory);
                 });
             });
@@ -68,7 +69,7 @@
                 .then(function(laboratory) {
                   self.participant = participant;
                   if (laboratory !== 'null') {
-                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser());
+                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser(),self.participant);
                     request.resolve(true);
                   } else {
                     request.resolve(false);
@@ -114,6 +115,10 @@
 
     function updateLaboratoryParticipant() {
       return ParticipantLaboratoryRepositoryService.updateLaboratoryParticipant(_participantLaboratory.toJSON());
+    }
+
+    function updateAliquots(updateStructure) {
+      return ParticipantLaboratoryRepositoryService.updateAliquots(updateStructure);
     }
 
     function generateLabels() {

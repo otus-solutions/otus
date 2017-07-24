@@ -16,6 +16,7 @@
       <link href="app/static-resource/stylesheet/styles.css" rel="stylesheet" />
       <link href="app/static-resource/stylesheet/initial-config.css" rel="stylesheet" />
       <link href="app/static-resource/stylesheet/please-wait-style.css" rel="stylesheet">
+      <link href="app/static-resource/stylesheet/aliquoting-styles.css" rel="stylesheet">
       <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
       <link href="node_modules/label-maker-js/dist/label-maker-js/css/otusjs-label-page.min.css" rel="stylesheet">
       <link href="node_modules/label-maker-js/dist/label-maker-js/css/otusjs-setup-view.min.css" rel="stylesheet">
@@ -255,9 +256,17 @@
   <script src="app/module/laboratory/module.js"></script>
 
   <!-- # laboratory > Business -->
-  <script src="app/module/laboratory/business/module.js"></script>
-  <script src="app/module/laboratory/business/participant-laboratory-service.js"></script>
-  <script src="app/module/laboratory/business/laboratory-label-factory.js"></script>
+<script src="app/module/laboratory/business/module.js"></script>
+<script src="app/module/laboratory/business/participant-laboratory-service.js"></script>
+<script src="app/module/laboratory/business/laboratory-label-factory.js"></script>
+<script src="app/module/laboratory/business/aliquot/module.js"></script>
+<script src="app/module/laboratory/business/aliquot/participant-aliquot-service.js"></script>
+<script src="app/module/laboratory/business/aliquot/aliquot-messages-service.js"></script>
+<script src="app/module/laboratory/business/aliquot/aliquot-validation-service.js"></script>
+<!-- # laboratory > Aliquot Manager-->
+<script src="app/module/laboratory/business/aliquot/aliquot-manager/aliquot-manager-service.js"></script>
+<script src="app/module/laboratory/business/aliquot/aliquot-manager/moment-type-manager-factory.js"></script>
+
 
   <!-- # laboratory > core -->
   <script src="app/module/laboratory/core/module.js"></script>
@@ -371,6 +380,7 @@
   <script src="app/ux-component/laboratory/main-panel/tube-list/tube-item/tube-item-component.js"></script>
   <script src="app/ux-component/laboratory/main-panel/tube-list/tube-item-view/tube-item-view-component.js"></script>
   <script src="app/ux-component/laboratory/control-panel/fast-collection/fast-collection-component.js"></script></script>
+  <script src="app/ux-component/laboratory/main-panel/aliquots-view/aliquots-view-component.js"></script>
      <!--   ----    -->
 
   <script src="app/ux-component/paper-activity-adder-list/paper-activity-adder-list-component.js"></script>
