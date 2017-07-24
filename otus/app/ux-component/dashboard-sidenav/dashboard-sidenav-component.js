@@ -16,10 +16,11 @@
     '$mdComponentRegistry',
     'otusjs.user.access.service.LogoutService',
     'otusjs.application.state.ApplicationStateService',
-    '$mdSidenav'
+    '$mdSidenav',
+    'otusjs.participant.core.ContextService'
   ];
 
-  function Controller($mdComponentRegistry, LogoutService, ApplicationStateService, $mdSidenav) {
+  function Controller($mdComponentRegistry, LogoutService, ApplicationStateService, $mdSidenav, ParticipantContextService) {
     var self = this;
     var _sideNav = null;
     var SIDENAV_ORIGIN = 'left';
@@ -43,6 +44,7 @@
     }
 
     function home() {
+      ParticipantContextService.removeData('selectedParticipant');
       ApplicationStateService.activateDashboard();
     }
 

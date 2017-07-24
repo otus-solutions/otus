@@ -27,9 +27,13 @@
     self.loadParticipantActivities = loadParticipantActivities;
     self.loadParticipantReports = loadParticipantReports;
     self.loadLaboratory = loadLaboratory;
-
+    self.home = home;
     /* Lifecycle hooks */
     self.$onInit = onInit;
+
+    function home() {
+      ApplicationStateService.activateParticipantDashboard();
+    }
 
     function loadParticipantActivities() {
       ApplicationStateService.activateParticipantActivities();
