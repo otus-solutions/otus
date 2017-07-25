@@ -9,7 +9,10 @@
       bindings: {
         participant: '<'
       },
-      transclude: true
+      transclude: {
+        'hideHomeButton':'?hideHomeButton',
+        'hideParticipantBox':'?hideParticipantBox'
+      }
     });
 
   Controller.$inject = [

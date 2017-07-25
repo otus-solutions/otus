@@ -15,10 +15,11 @@
     'STATE',
     '$q',
     'otusjs.participant.business.ParticipantSearchService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    '$mdDialog'
   ];
 
-  function Controller(STATE, $q, ParticipantSearchService, ApplicationStateService) {
+  function Controller(STATE, $q, ParticipantSearchService, ApplicationStateService, $mdDialog) {
     var self = this;
 
 
@@ -27,6 +28,8 @@
     /* Public methods */
     self.querySearch = querySearch;
     self.selectParticipant = selectParticipant;
+
+    var confirmParticipantChange;
 
     function onInit() {
       self.inputedText = '';
@@ -43,15 +46,36 @@
     }
 
     function selectParticipant() {
-      if (!self.selectedParticipant)
+      _buildDialogs();
+      if (!self.selectedParticipant){
         return;
+      } else if(ApplicationStateService.getCurrentState() == STATE.DASHBOARD){
+        _setParticipant();
+        ApplicationStateService.activateParticipantDashboard();
+      } else if(ApplicationStateService.getCurrentState() == STATE.LABORATORY) {
+        $mdDialog.show(confirmParticipantChange).then(function() {
+        _setParticipant();
+        });
+      } else {
+        _setParticipant();
+      }
+    }
+
+    function _setParticipant() {
       ParticipantSearchService.selectParticipant(self.selectedParticipant);
       self.onSelect({
         participant: self.selectedParticipant
       });
-      if(ApplicationStateService.getCurrentState() == STATE.DASHBOARD){
-        ApplicationStateService.activateParticipantDashboard();
-      }
+      self.inputedText = '';
+    }
+
+    function _buildDialogs() {
+      confirmParticipantChange = $mdDialog.confirm()
+        .title('Confirmar troca de participante:')
+        .textContent('Alterações não finalizadas serão descartadas')
+        .ariaLabel('Confirmação de troca')
+        .ok('Ok')
+        .cancel('Voltar');
     }
 
   }

@@ -33,6 +33,7 @@
 
     function home() {
       ApplicationStateService.activateParticipantDashboard();
+      self.onClose();
     }
 
     function loadParticipantActivities() {
