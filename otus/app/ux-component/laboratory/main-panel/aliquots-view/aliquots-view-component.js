@@ -411,7 +411,7 @@
 
     function validateTube(aliquot) {
       var msgTubeNotCollected = "Tubo não coletado, não pode ser Aliquotado.";
-      var msgTubeNotExists = "Este tubo não existe, ou, não pertence a este Tipo/Momento.";
+      var msgTubeNotExists = "Este tubo não existe ou não pertence a este Tipo/Momento.";
 
       _validateCenterAliquot(aliquot);
       if (!_validateIsNumber(aliquot, "TUBE")) return;
