@@ -142,7 +142,7 @@
         var role = "EXAM";
         var index = indexExam;
 
-        if(aliquot.name.toUpperCase() == "STORAGE"){
+        if(aliquot.role.toUpperCase() == "STORAGE"){
           role = "STORAGE";
           index = indexStorage;
         }
@@ -156,7 +156,7 @@
         aliquotStructure.role = role;
         aliquotStructure.index = index;
 
-        if(aliquot.name.toUpperCase() == "STORAGE"){
+        if(aliquot.role.toUpperCase() == "STORAGE"){
           stores.push(aliquotStructure);
           indexStorage++;
         } else {
