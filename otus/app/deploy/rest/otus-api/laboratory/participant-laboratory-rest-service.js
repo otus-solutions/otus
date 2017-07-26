@@ -19,6 +19,7 @@
     self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
+    self.updateAliquots = updateAliquots;
     self.getDescriptors = getDescriptors;
 
     function initialize() {
@@ -52,6 +53,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _rest.update({rn: recruitmentNumber}, participantLaboratory).$promise;
+    }
+
+    function updateAliquots(recruitmentNumber, persistanceStructure) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.updateAliquots({rn: recruitmentNumber}, persistanceStructure).$promise;
     }
 
     function getDescriptors() {

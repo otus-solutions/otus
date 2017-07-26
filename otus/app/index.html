@@ -6,18 +6,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <link href="app/static-resource/image/coruja_pesquisadora.png" rel="icon" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
-  <link href="app/static-resource/image/coruja_pesquisadora.png" rel="icon" />
-  <link href="app/static-resource/stylesheet/login-page.css" rel="stylesheet" />
-  <link href="app/static-resource/stylesheet/styles.css" rel="stylesheet" />
-  <link href="app/static-resource/stylesheet/initial-config.css" rel="stylesheet" />
-  <link href="app/static-resource/stylesheet/please-wait-style.css" rel="stylesheet">
-  <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
-  <link href="node_modules/label-maker-js/dist/label-maker-js/css/otusjs-label-page.min.css" rel="stylesheet">
-  <link href="node_modules/label-maker-js/dist/label-maker-js/css/otusjs-setup-view.min.css" rel="stylesheet">
-  <link href="node_modules/please-wait/build/please-wait.css" rel="stylesheet">
+  <!-- uncache(rename:true, append:hash) -->
+    <!-- build:css css/otus.min.css -->
+      <link href="app/static-resource/stylesheet/login-page.css" rel="stylesheet" />
+      <link href="app/static-resource/stylesheet/styles.css" rel="stylesheet" />
+      <link href="app/static-resource/stylesheet/initial-config.css" rel="stylesheet" />
+      <link href="app/static-resource/stylesheet/please-wait-style.css" rel="stylesheet">
+      <link href="app/static-resource/stylesheet/aliquoting-styles.css" rel="stylesheet">
+      <link href="node_modules/otus-preview-js/dist/otus-preview-js/css/otus-player-min.css" rel="stylesheet">
+      <link href="node_modules/label-maker-js/dist/label-maker-js/css/otusjs-label-page.min.css" rel="stylesheet">
+      <link href="node_modules/label-maker-js/dist/label-maker-js/css/otusjs-setup-view.min.css" rel="stylesheet">
+      <link href="node_modules/please-wait/build/please-wait.css" rel="stylesheet">
+    <!-- endbuild -->
+  <!-- enduncache -->
   <title>Otus</title>
 </head>
 
@@ -25,334 +30,362 @@
   <div flex layout="row" class="md-body-2" ui-view></div>
 </body>
 
-<!-- ************************************* jQuery ************************************* -->
-<script src="node_modules/jquery/dist/jquery.min.js"></script>
-<!-- ************************************* Angular ************************************* -->
-<script src="node_modules/angular/angular.min.js"></script>
-<script src="node_modules/angular-animate/angular-animate.min.js"></script>
-<script src="node_modules/angular-aria/angular-aria.min.js"></script>
-<script src="node_modules/angular-bind-html-compile-ci-dev/angular-bind-html-compile.js"></script>
-<script src="node_modules/angular-messages/angular-messages.min.js"></script>
-<script src="node_modules/angular-ui-mask/dist/mask.min.js"></script>
-<script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
-<script src="node_modules/angular-resource/angular-resource.min.js"></script>
-<!-- ************************************* Angular Material ************************************* -->
-<script src="node_modules/angular-material/angular-material.min.js"></script>
-<!-- ************************************* Lokijs ************************************* -->
-<script src="node_modules/lokijs/build/lokijs.min.js"></script>
-<script src="node_modules/lokijs/build/loki-indexed-adapter.min.js"></script>
-<script src="node_modules/lokijs/src/loki-angular.js"></script>
-<!-- ************************************* Moment ************************************* -->
-<script src="node_modules/moment/min/moment.min.js"></script>
-<!-- ************************************* OTUS-MODEL ************************************* -->
-<script src="node_modules/otus-model-js/dist/otus-model.js"></script>
-<script src="node_modules/otus-model-js/dist/st-utils.min.js"></script>
-<!-- ************************************* FUSE.JS ************************************* -->
-<script src="node_modules/fuse.js/src/fuse.min.js"></script>
-<!-- ************************************* OTUS-DOMAIN-CLIENT ************************************* -->
-<script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
-<!-- ************************************* OTUS-CLIENT ************************************* -->
-<script src="node_modules/otus-client-js/dist/otus-client.js"></script>
-<!-- ************************************* ST-PASSWORD ************************************* -->
-<script src="app/static-resource/st-password-module.js"></script>
-<!-- ************************************** Otus Preview ************************************** -->
-<script src="node_modules/otus-preview-js/dist/otus-preview-js/scripts/otusjs-player-min.js"></script>
-<script src="node_modules/angular-mousewheel/mousewheel.js"></script>
-<!-- ************************************** Otus Validation ************************************** -->
-<script src="node_modules/otus-validation-js/dist/otus-validation-min.js"></script>
-<!-- ************************************** Otus Label-Maker ************************************** -->
-<script src="node_modules/label-maker-js/dist/label-maker-js/scripts/otusjs-label-maker.min.js"></script>
-<!-- ************************************** JSBARCODE ************************************** -->
-<script src="node_modules/jsbarcode/dist/barcodes/JsBarcode.code39.min.js" charset="utf-8"></script>
-<!-- ************************************** Please-wait ************************************** -->
-<script src="node_modules/please-wait/build/please-wait.min.js"></script>
+<!-- uncache(rename:true, append:hash) -->
+    <!-- ************************************* jQuery ************************************* -->
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- ************************************* Angular ************************************* -->
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-animate/angular-animate.min.js"></script>
+    <script src="node_modules/angular-aria/angular-aria.min.js"></script>
+    <script src="node_modules/angular-bind-html-compile-ci-dev/angular-bind-html-compile.js"></script>
+    <script src="node_modules/angular-messages/angular-messages.min.js"></script>
+    <script src="node_modules/angular-ui-mask/dist/mask.min.js"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="node_modules/angular-resource/angular-resource.min.js"></script>
+    <!-- ************************************* Angular Material ************************************* -->
+    <script src="node_modules/angular-material/angular-material.min.js"></script>
+    <!-- ************************************* Lokijs ************************************* -->
+    <script src="node_modules/lokijs/build/lokijs.min.js"></script>
+    <script src="node_modules/lokijs/build/loki-indexed-adapter.min.js"></script>
+    <script src="node_modules/lokijs/src/loki-angular.js"></script>
+    <!-- ************************************* Moment ************************************* -->
+    <script src="node_modules/moment/min/moment.min.js"></script>
+    <!-- ************************************* OTUS-MODEL ************************************* -->
+    <script src="node_modules/otus-model-js/dist/otus-model.js"></script>
+    <script src="node_modules/otus-model-js/dist/st-utils.min.js"></script>
+    <!-- ************************************* FUSE.JS ************************************* -->
+    <script src="node_modules/fuse.js/src/fuse.min.js"></script>
+    <!-- ************************************* OTUS-DOMAIN-CLIENT ************************************* -->
+    <script src="node_modules/otus-domain-client/dist/otus-domain-client-min.js"></script>
+    <!-- ************************************* OTUS-CLIENT ************************************* -->
+    <script src="node_modules/otus-client-js/dist/otus-client.js"></script>
+    <!-- ************************************* ST-PASSWORD ************************************* -->
+    <!-- build:js scripts/st-password-module.min.js -->
+      <script src="app/static-resource/st-password-module.js"></script>
+    <!-- endbuild -->
+    <!-- ************************************** Otus Preview ************************************** -->
+    <script src="node_modules/otus-preview-js/dist/otus-preview-js/scripts/otusjs-player-min.js"></script>
+    <script src="node_modules/angular-mousewheel/mousewheel.js"></script>
+    <!-- ************************************** Otus Validation ************************************** -->
+    <script src="node_modules/otus-validation-js/dist/otus-validation-min.js"></script>
+    <!-- ************************************** Otus Label-Maker ************************************** -->
+    <script src="node_modules/label-maker-js/dist/label-maker-js/scripts/otusjs-label-maker.min.js"></script>
+    <!-- ************************************** JSBARCODE ************************************** -->
+    <script src="node_modules/jsbarcode/dist/barcodes/JsBarcode.code39.min.js" charset="utf-8"></script>
+    <!-- ************************************** Please-wait ************************************** -->
+    <script src="node_modules/please-wait/build/please-wait.min.js"></script>
+<!-- enduncache -->
 
 <!-- ************************************* Otus ************************************* -->
-<script src="app/app.js"></script>
+<!-- uncache(rename:true, append:hash) -->
+<!-- build:js scripts/application-module.min.js -->
+  <script src="app/app.js"></script>
 
-<!-- # Application -->
-<script src="app/application/module.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Application > Context -->
-<script src="app/application/context/module.js"></script>
-<script src="app/application/context/context-factory.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Application > Core -->
-<script src="app/application/core/module.js"></script>
-<script src="app/application/core/context-service.js"></script>
-<script src="app/application/core/module-service.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Application > Dependency -->
-<script src="app/application/dependency/module.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Application > Environment -->
-<script src="app/application/environment/module.js"></script>
-<script src="app/application/environment/init-configuration.js"></script>
-<script src="app/application/environment/env.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Application > Http -->
-<script src="app/application/http/module.js"></script>
-<!-- # Http > Interceptor -->
-<script src="app/application/http/interceptor/interceptor-configuration.js"></script>
-<script src="app/application/http/interceptor/response-interceptor-factory.js"></script>
-<!-- # Http > Response -->
-<script src="app/application/http/response/offline/offline-controller.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Application > Locale -->
-<script src="app/application/locale/module.js"></script>
-<script src="app/application/locale/locale-configuration.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Application > Session -->
-<script src="app/application/session/module.js"></script>
-<!-- # Session > Core -->
-<script src="app/application/session/core/module.js"></script>
-<!-- # Session > Core > Module -->
-<script src="app/application/session/core/context-service.js"></script>
-<script src="app/application/session/core/event-service.js"></script>
-<script src="app/application/session/core/module-service.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Application > State -->
-<script src="app/application/state/module.js"></script>
-<!-- # State > Core -->
-<script src="app/application/state/core/state-constant.js"></script>
-<script src="app/application/state/core/state-resolver-service.js"></script>
-<script src="app/application/state/core/state-service.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Application > Storage -->
-<script src="app/application/storage/module.js"></script>
-<!-- # Storage > Service -->
-<script src="app/application/storage/service/indexed-db-service.js"></script>
-<script src="app/application/storage/service/local-storage-service.js"></script>
-<script src="app/application/storage/service/session-storage-service.js"></script>
-<script src="app/application/storage/service/storage-service.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Application > Theme -->
-<script src="app/application/theme/module.js"></script>
-<script src="app/application/theme/theme-configuration.js"></script>
+  <!-- # Application -->
+  <script src="app/application/module.js"></script>
+  <!------------------------------------------------------------------------------------------------>
+  <!-- # Application > Context -->
+  <script src="app/application/context/module.js"></script>
+  <script src="app/application/context/context-factory.js"></script>
+  <!------------------------------------------------------------------------------------------------>
+  <!-- # Application > Core -->
+  <script src="app/application/core/module.js"></script>
+  <script src="app/application/core/context-service.js"></script>
+  <script src="app/application/core/module-service.js"></script>
+  <!------------------------------------------------------------------------------------------------>
+  <!-- # Application > Dependency -->
+  <script src="app/application/dependency/module.js"></script>
+  <!------------------------------------------------------------------------------------------------>
+  <!-- # Application > Environment -->
+  <script src="app/application/environment/module.js"></script>
+  <script src="app/application/environment/init-configuration.js"></script>
+  <script src="app/application/environment/env.js"></script>
+  <!------------------------------------------------------------------------------------------------>
+  <!-- # Application > Http -->
+  <script src="app/application/http/module.js"></script>
+  <!-- # Http > Interceptor -->
+  <script src="app/application/http/interceptor/interceptor-configuration.js"></script>
+  <script src="app/application/http/interceptor/response-interceptor-factory.js"></script>
+  <!-- # Http > Response -->
+  <script src="app/application/http/response/offline/offline-controller.js"></script>
+  <!------------------------------------------------------------------------------------------------>
+  <!-- # Application > Locale -->
+  <script src="app/application/locale/module.js"></script>
+  <script src="app/application/locale/locale-configuration.js"></script>
 
+  <!------------------------------------------------------------------------------------------------>
+  <!-- # Application > Session -->
+  <script src="app/application/session/module.js"></script>
+  <!-- # Session > Core -->
+  <script src="app/application/session/core/module.js"></script>
+  <!-- # Session > Core > Module -->
+  <script src="app/application/session/core/context-service.js"></script>
+  <script src="app/application/session/core/event-service.js"></script>
+  <script src="app/application/session/core/module-service.js"></script>
+  <!------------------------------------------------------------------------------------------------>
+  <!-- # Application > State -->
+  <script src="app/application/state/module.js"></script>
+  <!-- # State > Core -->
+  <script src="app/application/state/core/state-constant.js"></script>
+  <script src="app/application/state/core/state-resolver-service.js"></script>
+  <script src="app/application/state/core/state-service.js"></script>
+  <!------------------------------------------------------------------------------------------------>
+  <!-- # Application > Storage -->
+  <script src="app/application/storage/module.js"></script>
+  <!-- # Storage > Service -->
+  <script src="app/application/storage/service/indexed-db-service.js"></script>
+  <script src="app/application/storage/service/local-storage-service.js"></script>
+  <script src="app/application/storage/service/session-storage-service.js"></script>
+  <script src="app/application/storage/service/storage-service.js"></script>
+  <!------------------------------------------------------------------------------------------------>
+  <!-- # Application > Theme -->
+  <script src="app/application/theme/module.js"></script>
+  <script src="app/application/theme/theme-configuration.js"></script>
+<!-- endbuild -->
+  <!------------------------------------------------------------------------------------------------>
+<!-- build:js scripts/deploy-module.min.js -->
+  <script src="app/deploy/module.js"></script>
+  <!-- # Deploy > Bootstrap -->
+  <script src="app/deploy/bootstrap/bootstrap-service.js"></script>
+  <script src="app/deploy/bootstrap/access-module-bootstrap.js"></script>
+  <script src="app/deploy/bootstrap/activity-module-bootstrap.js"></script>
+  <script src="app/deploy/bootstrap/laboratory-module-bootstrap.js"></script>
+  <script src="app/deploy/bootstrap/application-module-bootstrap.js"></script>
+  <script src="app/deploy/bootstrap/participant-module-bootstrap.js"></script>
+  <script src="app/deploy/bootstrap/session-module-bootstrap.js"></script>
+  <script src="app/deploy/bootstrap/user-module-bootstrap.js"></script>
+  <!-- # Deploy > Data Source -->
+  <script src="app/deploy/data-source/data-source-loader-service.js"></script>
+  <script src="app/deploy/data-source/activity-data-source-service.js"></script>
+  <script src="app/deploy/data-source/participant-data-source-service.js"></script>
+  <script src="app/deploy/data-source/user-data-source-service.js"></script>
+  <script src="app/deploy/data-source/survey-item-datasource-service.js"></script>
+  <script src="app/deploy/data-source/file-upload-datasource-service.js"></script>
+  <!-- # Deploy > Model -->
+  <script src="app/deploy/model/otus/activity-facade-service.js"></script>
+  <script src="app/deploy/model/otus/activity-model-pool-service.js"></script>
+  <script src="app/deploy/model/otus/survey-model-pool-service.js"></script>
+  <!-- # Deploy > Player -->
+  <script src="app/deploy/player/pre-player-step-service.js"></script>
+  <script src="app/deploy/player/exit-player-step-service.js"></script>
+  <script src="app/deploy/player/save-player-step-service.js"></script>
+  <script src="app/deploy/player/stop-player-step-service.js"></script>
+  <script src="app/deploy/player/player-service.js"></script>
+  <!-- # Deploy > Rest -->
+  <script src="app/deploy/rest/otus-api/otus-api-service.js"></script>
+  <script src="app/deploy/rest/otus-api/activity/activity-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/configuration/configuration-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/installer/installer-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/participant/participant-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/survey/survey-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/survey-item/survey-item-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/file-upload/file-upload-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/user/authentication-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/user/user-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/laboratory/participant-laboratory-rest-service.js"></script>
+  <!-- # Deploy > State -->
+  <script src="app/deploy/state/state-configuration.js"></script>
+  <script src="app/deploy/state/access/access-state-provider.js"></script>
+  <script src="app/deploy/state/access/login-state-provider.js"></script>
+  <script src="app/deploy/state/access/signup-result-state-provider.js"></script>
+  <script src="app/deploy/state/access/signup-state-provider.js"></script>
+  <script src="app/deploy/state/activity/activity-adder-state-provider.js"></script>
+  <script src="app/deploy/state/activity/activity-player-state-provider.js"></script>
+  <script src="app/deploy/state/activity/activity-state-provider.js"></script>
+  <script src="app/deploy/state/activity/paper-activity-adder-state-provider.js"></script>
+  <script src="app/deploy/state/activity/paper-activity-initializer-state-provider.js"></script>
+  <script src="app/deploy/state/dashboard/dashboard-state-provider.js"></script>
+  <script src="app/deploy/state/installer/installer-state-provider.js"></script>
+  <script src="app/deploy/state/participant/participant-state-provider.js"></script>
+  <script src="app/deploy/state/session/session-state-provider.js"></script>
+  <script src="app/deploy/state/laboratory/laboratory-state-provider.js"></script>
+  <!-- # Deploy > Storage -->
+  <script src="app/deploy/storage/storage-loader-service.js"></script>
+  <script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
+  <script src="app/deploy/storage/laboratory/participant-laboratory-remote-storage-service.js"></script>
+  <!-- # Deploy > Loading Screen -->
+  <script src="app/deploy/loading-screen/loading-screen-service.js"></script>
+<!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
-<script src="app/deploy/module.js"></script>
-<!-- # Deploy > Bootstrap -->
-<script src="app/deploy/bootstrap/bootstrap-service.js"></script>
-<script src="app/deploy/bootstrap/access-module-bootstrap.js"></script>
-<script src="app/deploy/bootstrap/activity-module-bootstrap.js"></script>
-<script src="app/deploy/bootstrap/laboratory-module-bootstrap.js"></script>
-<script src="app/deploy/bootstrap/application-module-bootstrap.js"></script>
-<script src="app/deploy/bootstrap/participant-module-bootstrap.js"></script>
-<script src="app/deploy/bootstrap/session-module-bootstrap.js"></script>
-<script src="app/deploy/bootstrap/user-module-bootstrap.js"></script>
-<!-- # Deploy > Data Source -->
-<script src="app/deploy/data-source/data-source-loader-service.js"></script>
-<script src="app/deploy/data-source/activity-data-source-service.js"></script>
-<script src="app/deploy/data-source/participant-data-source-service.js"></script>
-<script src="app/deploy/data-source/user-data-source-service.js"></script>
-<script src="app/deploy/data-source/survey-item-datasource-service.js"></script>
-<script src="app/deploy/data-source/file-upload-datasource-service.js"></script>
-<!-- # Deploy > Model -->
-<script src="app/deploy/model/otus/activity-facade-service.js"></script>
-<script src="app/deploy/model/otus/activity-model-pool-service.js"></script>
-<script src="app/deploy/model/otus/survey-model-pool-service.js"></script>
-<!-- # Deploy > Player -->
-<script src="app/deploy/player/pre-player-step-service.js"></script>
-<script src="app/deploy/player/exit-player-step-service.js"></script>
-<script src="app/deploy/player/save-player-step-service.js"></script>
-<script src="app/deploy/player/stop-player-step-service.js"></script>
-<script src="app/deploy/player/player-service.js"></script>
-<!-- # Deploy > Rest -->
-<script src="app/deploy/rest/otus-api/otus-api-service.js"></script>
-<script src="app/deploy/rest/otus-api/activity/activity-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/configuration/configuration-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/installer/installer-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/participant/participant-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/survey/survey-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/survey-item/survey-item-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/file-upload/file-upload-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/user/authentication-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/user/user-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/laboratory/participant-laboratory-rest-service.js"></script>
-<!-- # Deploy > State -->
-<script src="app/deploy/state/state-configuration.js"></script>
-<script src="app/deploy/state/access/access-state-provider.js"></script>
-<script src="app/deploy/state/access/login-state-provider.js"></script>
-<script src="app/deploy/state/access/signup-result-state-provider.js"></script>
-<script src="app/deploy/state/access/signup-state-provider.js"></script>
-<script src="app/deploy/state/activity/activity-adder-state-provider.js"></script>
-<script src="app/deploy/state/activity/activity-player-state-provider.js"></script>
-<script src="app/deploy/state/activity/activity-state-provider.js"></script>
-<script src="app/deploy/state/activity/paper-activity-adder-state-provider.js"></script>
-<script src="app/deploy/state/activity/paper-activity-initializer-state-provider.js"></script>
-<script src="app/deploy/state/dashboard/dashboard-state-provider.js"></script>
-<script src="app/deploy/state/installer/installer-state-provider.js"></script>
-<script src="app/deploy/state/participant/participant-state-provider.js"></script>
-<script src="app/deploy/state/session/session-state-provider.js"></script>
-<script src="app/deploy/state/laboratory/laboratory-state-provider.js"></script>
-<!-- # Deploy > Storage -->
-<script src="app/deploy/storage/storage-loader-service.js"></script>
-<script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
-<script src="app/deploy/storage/laboratory/participant-laboratory-remote-storage-service.js"></script>
-<!-- # Deploy > Loading Screen -->
-<script src="app/deploy/loading-screen/loading-screen-service.js"></script>
+<!-- build:js scripts/activity-module.min.js -->
+  <!-- # Module > Activity -->
+  <script src="app/module/activity/module.js"></script>
+  <!-- # Activity > Business -->
+  <script src="app/module/activity/business/module.js"></script>
+  <script src="app/module/activity/business/activity-player-service.js"></script>
+  <script src="app/module/activity/business/participant-activity-service.js"></script>
+  <!-- # Activity > Core -->
+  <script src="app/module/activity/core/module.js"></script>
+  <script src="app/module/activity/core/context-service.js"></script>
+  <script src="app/module/activity/core/event-service.js"></script>
+  <script src="app/module/activity/core/module-service.js"></script>
+  <script src="app/module/activity/core/service-loader.js"></script>
+  <!-- # Activity > Repository -->
+  <script src="app/module/activity/repository/module.js"></script>
+  <script src="app/module/activity/repository/activity/activity-collection-service.js"></script>
+  <script src="app/module/activity/repository/activity/activity-repository-service.js"></script>
+  <script src="app/module/activity/repository/activity/survey-collection-service.js"></script>
+  <script src="app/module/activity/repository/user/user-repository-service.js"></script>
+  <!-- # Activity > Storage -->
+  <script src="app/module/activity/storage/module.js"></script>
+  <script src="app/module/activity/storage/activity-local-storage-service.js"></script>
+  <script src="app/module/activity/storage/survey-storage-service.js"></script>
+<!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
-
-<!-- # Module > Activity -->
-<script src="app/module/activity/module.js"></script>
-<!-- # Activity > Business -->
-<script src="app/module/activity/business/module.js"></script>
-<script src="app/module/activity/business/activity-player-service.js"></script>
-<script src="app/module/activity/business/participant-activity-service.js"></script>
-<!-- # Activity > Core -->
-<script src="app/module/activity/core/module.js"></script>
-<script src="app/module/activity/core/context-service.js"></script>
-<script src="app/module/activity/core/event-service.js"></script>
-<script src="app/module/activity/core/module-service.js"></script>
-<script src="app/module/activity/core/service-loader.js"></script>
-<!-- # Activity > Repository -->
-<script src="app/module/activity/repository/module.js"></script>
-<script src="app/module/activity/repository/activity/activity-collection-service.js"></script>
-<script src="app/module/activity/repository/activity/activity-repository-service.js"></script>
-<script src="app/module/activity/repository/activity/survey-collection-service.js"></script>
-<script src="app/module/activity/repository/user/user-repository-service.js"></script>
-<!-- # Activity > Storage -->
-<script src="app/module/activity/storage/module.js"></script>
-<script src="app/module/activity/storage/activity-local-storage-service.js"></script>
-<script src="app/module/activity/storage/survey-storage-service.js"></script>
-<!------------------------------------------------------------------------------------------------>
-<!-- # Module > Dashboard -->
-<script src="app/module/dashboard/module.js"></script>
-<!-- # Dashboard > Core -->
-<script src="app/module/dashboard/core/module.js"></script>
-<script src="app/module/dashboard/core/context-service.js"></script>
-<script src="app/module/dashboard/core/event-service.js"></script>
-<script src="app/module/dashboard/core/module-service.js"></script>
-<!-- # Dashboard > Core -->
-<script src="app/module/dashboard/service/module.js"></script>
-<script src="app/module/dashboard/service/dashboard-service.js"></script>
+<!-- build:js scripts/dashboard-module.min.js -->
+  <!-- # Module > Dashboard -->
+  <script src="app/module/dashboard/module.js"></script>
+  <!-- # Dashboard > Core -->
+  <script src="app/module/dashboard/core/module.js"></script>
+  <script src="app/module/dashboard/core/context-service.js"></script>
+  <script src="app/module/dashboard/core/event-service.js"></script>
+  <script src="app/module/dashboard/core/module-service.js"></script>
+  <!-- # Dashboard > Core -->
+  <script src="app/module/dashboard/service/module.js"></script>
+  <script src="app/module/dashboard/service/dashboard-service.js"></script>
+<!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
 <!-- # Module > Installer -->
+<!-- build:js scripts/installer-module.min.js -->
 <script src="app/module/installer/module.js"></script>
-
+<!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
-<!-- # Module > Laboratory -->
-<script src="app/module/laboratory/module.js"></script>
+<!-- build:js scripts/laboratory-module.min.js -->
+  <!-- # Module > Laboratory -->
+  <script src="app/module/laboratory/module.js"></script>
 
-<!-- # laboratory > Business -->
+  <!-- # laboratory > Business -->
 <script src="app/module/laboratory/business/module.js"></script>
 <script src="app/module/laboratory/business/participant-laboratory-service.js"></script>
 <script src="app/module/laboratory/business/laboratory-label-factory.js"></script>
+<script src="app/module/laboratory/business/aliquot/module.js"></script>
+<script src="app/module/laboratory/business/aliquot/participant-aliquot-service.js"></script>
+<script src="app/module/laboratory/business/aliquot/aliquot-messages-service.js"></script>
+<script src="app/module/laboratory/business/aliquot/aliquot-validation-service.js"></script>
+<!-- # laboratory > Aliquot Manager-->
+<script src="app/module/laboratory/business/aliquot/aliquot-manager/aliquot-manager-service.js"></script>
+<script src="app/module/laboratory/business/aliquot/aliquot-manager/moment-type-manager-factory.js"></script>
 
-<!-- # laboratory > core -->
-<script src="app/module/laboratory/core/module.js"></script>
-<script src="app/module/laboratory/core/module-service.js"></script>
-<script src="app/module/laboratory/core/context-service.js"></script>
-<script src="app/module/laboratory/core/event-service.js"></script>
 
-<!-- # laboratory > repository -->
-<script src="app/module/laboratory/repository/module.js"></script>
-<script src="app/module/laboratory/repository/laboratory/participant-laboratory-collection-service.js"></script>
-<script src="app/module/laboratory/repository/laboratory/participant-laboratory-repository-service.js"></script>
+  <!-- # laboratory > core -->
+  <script src="app/module/laboratory/core/module.js"></script>
+  <script src="app/module/laboratory/core/module-service.js"></script>
+  <script src="app/module/laboratory/core/context-service.js"></script>
+  <script src="app/module/laboratory/core/event-service.js"></script>
 
-<!-- # laboratory > storage -->
-<script src="app/module/laboratory/storage/module.js"></script>
-<script src="app/module/laboratory/storage/participant-laboratory-local-storage-service.js"></script>
+  <!-- # laboratory > repository -->
+  <script src="app/module/laboratory/repository/module.js"></script>
+  <script src="app/module/laboratory/repository/laboratory/participant-laboratory-collection-service.js"></script>
+  <script src="app/module/laboratory/repository/laboratory/participant-laboratory-repository-service.js"></script>
+
+  <!-- # laboratory > storage -->
+  <script src="app/module/laboratory/storage/module.js"></script>
+  <script src="app/module/laboratory/storage/participant-laboratory-local-storage-service.js"></script>
+<!-- endbuild -->
+<!------------------------------------------------------------------------------------------------>
+<!-- build:js scripts/participant-module.min.js -->
+  <!-- # Module > Participant -->
+  <script src="app/module/participant/module.js"></script>
+  <!-- # User > Business -->
+  <script src="app/module/participant/business/module.js"></script>
+  <script src="app/module/participant/business/participant-quick-filter.js"></script>
+  <script src="app/module/participant/business/participant-search-service.js"></script>
+  <!-- # Participant > Core -->
+  <script src="app/module/participant/core/module.js"></script>
+  <script src="app/module/participant/core/context-service.js"></script>
+  <script src="app/module/participant/core/event-service.js"></script>
+  <script src="app/module/participant/core/module-service.js"></script>
+  <script src="app/module/participant/core/service-loader.js"></script>
+  <!-- # Participant > Model -->
+  <script src="app/module/participant/model/module.js"></script>
+  <script src="app/module/participant/model/participant-factory.js"></script>
+  <!-- # Participant > Repository -->
+  <script src="app/module/participant/repository/module.js"></script>
+  <script src="app/module/participant/repository/participant-repository-service.js"></script>
+  <!-- # Participant > Storage -->
+  <script src="app/module/participant/storage/module.js"></script>
+  <script src="app/module/participant/storage/participant-storage-service.js"></script>
+<!-- endbuild -->
 
 <!------------------------------------------------------------------------------------------------>
-<!-- # Module > Participant -->
-<script src="app/module/participant/module.js"></script>
-<!-- # User > Business -->
-<script src="app/module/participant/business/module.js"></script>
-<script src="app/module/participant/business/participant-quick-filter.js"></script>
-<script src="app/module/participant/business/participant-search-service.js"></script>
-<!-- # Participant > Core -->
-<script src="app/module/participant/core/module.js"></script>
-<script src="app/module/participant/core/context-service.js"></script>
-<script src="app/module/participant/core/event-service.js"></script>
-<script src="app/module/participant/core/module-service.js"></script>
-<script src="app/module/participant/core/service-loader.js"></script>
-<!-- # Participant > Model -->
-<script src="app/module/participant/model/module.js"></script>
-<script src="app/module/participant/model/participant-factory.js"></script>
-<!-- # Participant > Repository -->
-<script src="app/module/participant/repository/module.js"></script>
-<script src="app/module/participant/repository/participant-repository-service.js"></script>
-<!-- # Participant > Storage -->
-<script src="app/module/participant/storage/module.js"></script>
-<script src="app/module/participant/storage/participant-storage-service.js"></script>
-
-
+<!-- build:js scripts/user-module.min.js -->
+  <!-- # Module > User -->
+  <script src="app/module/user/module.js"></script>
+  <!-- # User > Business -->
+  <script src="app/module/user/business/module.js"></script>
+  <script src="app/module/user/business/user-authentication-service.js"></script>
+  <!-- # User > Core -->
+  <script src="app/module/user/core/module.js"></script>
+  <script src="app/module/user/core/context-service.js"></script>
+  <script src="app/module/user/core/event-service.js"></script>
+  <script src="app/module/user/core/module-service.js"></script>
+  <script src="app/module/user/core/service-loader.js"></script>
+  <!-- # User > Model -->
+  <script src="app/module/user/model/module.js"></script>
+  <script src="app/module/user/model/user-factory.js"></script>
+  <!-- # User > Repository -->
+  <script src="app/module/user/repository/module.js"></script>
+  <script src="app/module/user/repository/user-repository-service.js"></script>
+  <!-- # User > Storage -->
+  <script src="app/module/user/storage/module.js"></script>
+  <script src="app/module/user/storage/user-storage-service.js"></script>
+<!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
-<!-- # Module > User -->
-<script src="app/module/user/module.js"></script>
-<!-- # User > Business -->
-<script src="app/module/user/business/module.js"></script>
-<script src="app/module/user/business/user-authentication-service.js"></script>
-<!-- # User > Core -->
-<script src="app/module/user/core/module.js"></script>
-<script src="app/module/user/core/context-service.js"></script>
-<script src="app/module/user/core/event-service.js"></script>
-<script src="app/module/user/core/module-service.js"></script>
-<script src="app/module/user/core/service-loader.js"></script>
-<!-- # User > Model -->
-<script src="app/module/user/model/module.js"></script>
-<script src="app/module/user/model/user-factory.js"></script>
-<!-- # User > Repository -->
-<script src="app/module/user/repository/module.js"></script>
-<script src="app/module/user/repository/user-repository-service.js"></script>
-<!-- # User > Storage -->
-<script src="app/module/user/storage/module.js"></script>
-<script src="app/module/user/storage/user-storage-service.js"></script>
+<!-- build:js scripts/user-access-module.min.js -->
+  <!-- # Module > User Access -->
+  <script src="app/module/user-access/module.js"></script>
+  <!-- # User Access > Core -->
+  <script src="app/module/user-access/core/module.js"></script>
+  <script src="app/module/user-access/core/context-service.js"></script>
+  <script src="app/module/user-access/core/event-service.js"></script>
+  <script src="app/module/user-access/core/module-service.js"></script>
+  <!-- # User Access > Service -->
+  <script src="app/module/user-access/service/module.js"></script>
+  <script src="app/module/user-access/service/login-service.js"></script>
+  <script src="app/module/user-access/service/logout-service.js"></script>
+  <script src="app/module/user-access/service/signup-service.js"></script>
+<!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
-<!-- # Module > User Access -->
-<script src="app/module/user-access/module.js"></script>
-<!-- # User Access > Core -->
-<script src="app/module/user-access/core/module.js"></script>
-<script src="app/module/user-access/core/context-service.js"></script>
-<script src="app/module/user-access/core/event-service.js"></script>
-<script src="app/module/user-access/core/module-service.js"></script>
-<!-- # User Access > Service -->
-<script src="app/module/user-access/service/module.js"></script>
-<script src="app/module/user-access/service/login-service.js"></script>
-<script src="app/module/user-access/service/logout-service.js"></script>
-<script src="app/module/user-access/service/signup-service.js"></script>
-
-<!------------------------------------------------------------------------------------------------>
-
-<script src="app/ux-component/module.js"></script>
-<script src="app/ux-component/activity-adder/activity-adder-component.js"></script>
-<script src="app/ux-component/activity-adder-list/activity-adder-list-component.js"></script>
-<script src="app/ux-component/activity-adder-toolbar/activity-adder-toolbar-component.js"></script>
-<script src="app/ux-component/activity-information/activity-information-component.js"></script>
-<script src="app/ux-component/activity-information/activity-status-item-factory.js"></script>
-<script src="app/ux-component/activity-manager/activity-manager-component.js"></script>
-<script src="app/ux-component/activity-manager-commander/activity-manager-commander-component.js"></script>
-<script src="app/ux-component/activity-manager-list/activity-item-factory.js"></script>
-<script src="app/ux-component/activity-manager-list/activity-manager-list-component.js"></script>
-<script src="app/ux-component/activity-manager-toolbar/activity-manager-toolbar-component.js"></script>
-<script src="app/ux-component/activity-player/activity-player-component.js"></script>
-<script src="app/ux-component/dashboard/dashboard-component.js"></script>
-<script src="app/ux-component/dashboard-display/dashboard-display-component.js"></script>
-<script src="app/ux-component/dashboard-participant-box/dashboard-participant-box-component.js"></script>
-<script src="app/ux-component/dashboard-sidenav/dashboard-sidenav-component.js"></script>
-<script src="app/ux-component/dashboard-sidenav-launcher/dashboard-sidenav-launcher-component.js"></script>
-<script src="app/ux-component/dashboard-toolbar/dashboard-toolbar-component.js"></script>
-<script src="app/ux-component/installer/initial-config-controller.js"></script>
-<script src="app/ux-component/paper-activity-adder/paper-activity-adder-component.js"></script>
+<!-- build:js scripts/ux-component-module.min.js -->
+  <script src="app/ux-component/module.js"></script>
+  <script src="app/ux-component/activity-adder/activity-adder-component.js"></script>
+  <script src="app/ux-component/activity-adder-list/activity-adder-list-component.js"></script>
+  <script src="app/ux-component/activity-adder-toolbar/activity-adder-toolbar-component.js"></script>
+  <script src="app/ux-component/activity-information/activity-information-component.js"></script>
+  <script src="app/ux-component/activity-information/activity-status-item-factory.js"></script>
+  <script src="app/ux-component/activity-manager/activity-manager-component.js"></script>
+  <script src="app/ux-component/activity-manager-commander/activity-manager-commander-component.js"></script>
+  <script src="app/ux-component/activity-manager-list/activity-item-factory.js"></script>
+  <script src="app/ux-component/activity-manager-list/activity-manager-list-component.js"></script>
+  <script src="app/ux-component/activity-manager-toolbar/activity-manager-toolbar-component.js"></script>
+  <script src="app/ux-component/activity-player/activity-player-component.js"></script>
+  <script src="app/ux-component/dashboard/dashboard-component.js"></script>
+  <script src="app/ux-component/dashboard-display/dashboard-display-component.js"></script>
+  <script src="app/ux-component/dashboard-participant-box/dashboard-participant-box-component.js"></script>
+  <script src="app/ux-component/dashboard-sidenav/dashboard-sidenav-component.js"></script>
+  <script src="app/ux-component/dashboard-sidenav-launcher/dashboard-sidenav-launcher-component.js"></script>
+  <script src="app/ux-component/dashboard-toolbar/dashboard-toolbar-component.js"></script>
+  <script src="app/ux-component/installer/initial-config-controller.js"></script>
+  <script src="app/ux-component/paper-activity-adder/paper-activity-adder-component.js"></script>
 
 
-   <!--  laboratory-ux  -->
-<script src="app/ux-component/laboratory/laboratory-component.js"></script>
-<script src="app/ux-component/laboratory/control-panel/control-panel-component.js"></script>
-<script src="app/ux-component/laboratory/main-panel/lab-main-panel-component.js"></script>
-<script src="app/ux-component/laboratory/main-panel/tube-list/tube-list-component.js"></script>
-<script src="app/ux-component/laboratory/main-panel/tube-list/tube-item/tube-item-component.js"></script>
-<script src="app/ux-component/laboratory/main-panel/tube-list/tube-item-view/tube-item-view-component.js"></script>
-<script src="app/ux-component/laboratory/control-panel/fast-collection/fast-collection-component.js"></script></script>
-   <!--   ----    -->
+     <!--  laboratory-ux  -->
+  <script src="app/ux-component/laboratory/laboratory-component.js"></script>
+  <script src="app/ux-component/laboratory/control-panel/control-panel-component.js"></script>
+  <script src="app/ux-component/laboratory/main-panel/lab-main-panel-component.js"></script>
+  <script src="app/ux-component/laboratory/main-panel/tube-list/tube-list-component.js"></script>
+  <script src="app/ux-component/laboratory/main-panel/tube-list/tube-item/tube-item-component.js"></script>
+  <script src="app/ux-component/laboratory/main-panel/tube-list/tube-item-view/tube-item-view-component.js"></script>
+  <script src="app/ux-component/laboratory/control-panel/fast-collection/fast-collection-component.js"></script></script>
+  <script src="app/ux-component/laboratory/main-panel/aliquots-view/aliquots-view-component.js"></script>
+     <!--   ----    -->
 
-<script src="app/ux-component/paper-activity-adder-list/paper-activity-adder-list-component.js"></script>
-<script src="app/ux-component/paper-activity-initializer/checker-item-factory.js"></script>
-<script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>
-<script src="app/ux-component/participant-search/participant-search-component.js"></script>
-<script src="app/ux-component/user-login/login-controller.js"></script>
-<script src="app/ux-component/user-signup/signup-controller.js"></script>
-
+  <script src="app/ux-component/paper-activity-adder-list/paper-activity-adder-list-component.js"></script>
+  <script src="app/ux-component/paper-activity-initializer/checker-item-factory.js"></script>
+  <script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>
+  <script src="app/ux-component/participant-search/participant-search-component.js"></script>
+  <script src="app/ux-component/user-login/login-controller.js"></script>
+  <script src="app/ux-component/user-signup/signup-controller.js"></script>
+<!-- endbuild -->
+<!-- enduncache -->
 </html>

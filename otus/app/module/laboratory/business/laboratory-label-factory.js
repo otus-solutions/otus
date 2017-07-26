@@ -26,7 +26,7 @@
     var self = this;
 
     self.recruitment_number = participant.recruitmentNumber;
-    self.participant_name = _buildNameParticipantLabel(participant.name);
+    self.participant_name = participant.name;
     self.gender = participant.sex;
     self.birthday = _convertFormatDate(new Date(participant.birthdate.value));
     self.cq_group = (laboratory.collectGroupName !== undefined && laboratory.collectGroupName !== DEFAULT) ? laboratory.collectGroupName : NONE;

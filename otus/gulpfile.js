@@ -7,10 +7,16 @@
   var uglify = require('gulp-uglify');
   var minify = require('gulp-minify');
   var concat = require('gulp-concat');
+  var useref = require('gulp-useref');
+  var gulpif = require('gulp-if');
   var sonar = require('gulp-sonar');
   var packageJson = require('./package.json');
   var replaceTask = require('gulp-replace-task');
   var baseDir = __dirname + '/app/index.html';
+  var minifyCss = require('gulp-minify-css');
+  var uncache = require('gulp-uncache');
+  var replace = require('gulp-replace');
+  var runSequence = require('run-sequence');
 
   gulp.task('browser-sync', function() {
     browserSync.init({
@@ -27,7 +33,7 @@
           }
         ]
       },
-      startPath: 'otus'
+      startPath: 'otus/app/'
     });
 
     gulp.watch([
@@ -45,12 +51,32 @@
       .pipe(gulp.dest('./'));
   });
 
+  gulp.task('compress-compress', function() {
+    return gulp.src('app/index.html')
+      .pipe(useref({
+        transformPath: function(filePath) {
+          return filePath.replace('app', '');
+        }
+      }))
+      .pipe(gulpif('*.js', uglify()))
+      .pipe(gulpif('index.html', replace('href="css', 'href="dist/otus/css')))
+      .pipe(gulpif('index.html', replace('src="scripts', 'src="dist/otus/scripts')))
+      .pipe(gulpif('*.css', replace('url(../../static-resource/', 'url(/otus/app/static-resource/')))
+      .pipe(gulpif('*.css', minifyCss()))
+      .pipe(gulp.dest('dist/otus'));
+  });
+
+  gulp.task('compress-hash', function() {
+    return gulp.src('dist/otus/index.html')
+      .pipe(uncache({
+        append: 'hash',
+        rename: true
+      }))
+      .pipe(gulp.dest('dist/otus'));
+  });
+
   gulp.task('compress', function() {
-    gulp.src('app/**/*.js')
-      .pipe(concat('otus.js'))
-      .pipe(uglify())
-      .pipe(minify())
-      .pipe(gulp.dest('dist'));
+    runSequence('compress-compress', 'compress-hash');
   });
 
   gulp.task('replace-env', function(value) {

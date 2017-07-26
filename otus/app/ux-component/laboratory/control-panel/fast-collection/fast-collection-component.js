@@ -14,11 +14,10 @@
   controller.$inject = [
       'otusjs.laboratory.business.ParticipantLaboratoryService',
       '$element',
-      '$timeout',
       '$mdToast'
   ];
 
-  function controller(ParticipantLaboratoryService, $element, $timeout, $mdToast) {
+  function controller(ParticipantLaboratoryService, $element, $mdToast) {
     var self = this;
 
 
@@ -57,10 +56,8 @@
         } else {
           toastError(tubeCode);
         }
-      }
-      $timeout(function() {
         element.tube_code = '';
-      }, 300);
+      }
     }
 
     function _findTube(code) {
