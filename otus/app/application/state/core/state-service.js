@@ -28,6 +28,7 @@
     self.activateSignup = activateSignup;
     self.activateSignupResult = activateSignupResult;
     self.getCurrentState = getCurrentState;
+    self.activateSampleTransport = activateSampleTransport;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -80,6 +81,10 @@
 
     function activateSignupResult() {
       $state.go(STATE.SIGNUP_RESULT);
+    }
+
+    function activateSampleTransport() {
+      $state.go(STATE.SAMPLE_TRANSPORT);
     }
 
     function getCurrentState() {

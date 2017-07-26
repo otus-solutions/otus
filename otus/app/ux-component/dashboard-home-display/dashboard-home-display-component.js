@@ -14,10 +14,10 @@
 
   function Controller(ApplicationStateService) {
     var self = this;
-    self.participantDasboard = participantDasboard;
+    self.sampleTransportDashboard = sampleTransportDashboard;
     /* Public methods */
-    function participantDasboard(){
-      ApplicationStateService.activateParticipantDashboard();
+    function sampleTransportDashboard(){
+      ApplicationStateService.activateSampleTransport();
     }
 
   }
