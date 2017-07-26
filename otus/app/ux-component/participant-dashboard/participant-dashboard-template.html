@@ -1,16 +1,16 @@
 <div layout="column" flex>
   <otus-dashboard-sidenav layout="row" participant="$ctrl.selectedParticipant"></otus-dashboard-sidenav>
   <otus-dashboard-toolbar layout="row" on-participant-select="$ctrl.selectParticipant(participant)">
-    <div flex layout="row" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.PARTICIPANT_DASHBOARD">
+    <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.PARTICIPANT_DASHBOARD">
       <span>{{ $ctrl.selectedParticipant.name }}</span>
     </div>
-    <div flex layout="row" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.LABORATORY">
+    <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.LABORATORY">
       <md-icon md-svg-icon="eyedropper-variant" aria-label="Atividades">
         <md-tooltip>Laboratório</md-tooltip>
       </md-icon>
       <span>{{ $ctrl.selectedParticipant.recruitmentNumber}} - {{ $ctrl.selectedParticipant.name }}</span>
     </div>
-    <div flex layout="row" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.PARTICIPANT_ACTIVITY">
+    <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.PARTICIPANT_ACTIVITY">
       <md-icon md-svg-icon="file-document-box" aria-label="Atividades">
         <md-tooltip>Atividades</md-tooltip>
       </md-icon>

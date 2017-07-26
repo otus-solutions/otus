@@ -1,11 +1,12 @@
-<div flex>
-  <div ng-style={'padding-top':'50%'}>
+<div layout="column" layout-padding flex>
+  <div flex>
     <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)" class="md-primary md"></otus-participant-search>
   </div>
-  <div layout="row" layout-padding layout-wrap ng-cloak>
-    <md-card flex ng-style={'height':'45'} ng-click="$ctrl.sampleTransportDashboard()">
-      <md-icon aria-label="transporte" ng-style={'font-size':'30px','height':'48px'}>local_shipping</md-icon>
+  <div flex>
+    <md-card flex layout-align="center center" ng-click="$ctrl.sampleTransportDashboard()">
       <md-tooltip>Transporte de amostra</md-tooltip>
+      <md-icon>local_shipping</md-icon>
     </md-card>
   </div>
 </div>
+|
