@@ -46,8 +46,8 @@
     "please-wait": "0.0.5",
     "otus-domain-client": "git@github.com:ccem-dev/otus-domain-client-js.git#dev",
     "otus-client-js": "git@github.com:ccem-dev/otus-client-js.git#dev",
-    "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#dev",
-    "otus-preview-js": "git@github.com:ccem-dev/otus-preview-js.git#dev",
+    "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#v1.4",
+    "otus-preview-js": "git@github.com:ccem-dev/otus-preview-js.git#v1.2",
     "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#dev"
   },
   "devDependencies": {
