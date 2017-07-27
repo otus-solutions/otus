@@ -19,12 +19,13 @@
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.activity.business.ActivityPlayerService',
     'otusjs.activity.core.EventService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    '$mdDialog'
   ];
 
-  function Controller(ParticipantActivityService, ActivityPlayerService, EventService, ApplicationStateService) {
+  function Controller(ParticipantActivityService, ActivityPlayerService, EventService, ApplicationStateService, $mdDialog) {
     var self = this;
-
+    var confirmDeleteSelectedActivity;
     /* Public methods */
     self.fillSelectedActivity = fillSelectedActivity;
     self.deleteSelectedActivity = deleteSelectedActivity;
@@ -42,8 +43,10 @@
     }
 
     function deleteSelectedActivity() {
-      ParticipantActivityService.getSelectedActivities().discard();
-      self.onDelete();
+      $mdDialog.show(confirmDeleteSelectedActivity).then(function() {
+        ParticipantActivityService.getSelectedActivities().discard();
+        self.onDelete();
+      });
     }
 
     function visualizeSelectedActivityInfo() {
@@ -51,6 +54,7 @@
     }
 
     function onInit() {
+      _buildDialogs();
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       EventService.onActivitySelected(_updateComponent);
@@ -85,6 +89,15 @@
         self.showDeleteButton = true;
         self.showInfoButton = false;
       }
+    }
+
+    function _buildDialogs() {
+      confirmDeleteSelectedActivity = $mdDialog.confirm()
+        .title('Confirmar exclusão de atividade:')
+        .textContent('A atividade será excluida')
+        .ariaLabel('Confirmação de exclusão')
+        .ok('Ok')
+        .cancel('Voltar');
     }
   }
 }());
