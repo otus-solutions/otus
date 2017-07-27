@@ -22,8 +22,13 @@
     self.$onInit = onInit;
     self.intializeLaboratory = intializeLaboratory;
     self.callbackFunctions = {
-      saveAliquots: function(){console.log('Function not implemented.');},
-      cancelAliquots: function(){console.log('Function not implemented.'); return false;}
+      saveAliquots: function() {
+        console.log('Function not implemented.');
+      },
+      cancelAliquots: function() {
+        console.log('Function not implemented.');
+        return false;
+      }
     };
 
 
@@ -31,7 +36,6 @@
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       self.hasLaboratory = false;
-      LoadingScreenService.start();
       ParticipantLaboratoryService.onParticipantSelected(_setupLaboratory);
       _setupLaboratory();
     }
@@ -49,6 +53,8 @@
     }
 
     function _setupLaboratory() {
+      LoadingScreenService.start();
+      self.hasLaboratory = false;
       ParticipantLaboratoryService
         .hasLaboratory()
         .then(function(hasLaboratory) {
