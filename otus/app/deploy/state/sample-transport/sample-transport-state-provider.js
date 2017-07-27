@@ -22,7 +22,31 @@
       parent: STATE.SESSION,
       name: STATE.SAMPLE_TRANSPORT,
       url: '/' + STATE.SAMPLE_TRANSPORT,
-      template: '<sample-transport-dashboard layout="column" flex></sample-transport-dashboard>'
+      template: '<sample-transport-dashboard layout="column" flex></sample-transport-dashboard>',
+      data: {
+        redirect: _redirect
+      }
     };
+
+    function _redirect($q, Application) {
+      var deferred = $q.defer();
+
+      Application
+        .isDeployed()
+        .then(function() {
+          try {
+            deferred.resolve();
+          } catch (e) {
+            deferred.resolve(STATE.LOGIN);
+          }
+        });
+
+      return deferred.promise;
+    }
+
+    _redirect.$inject = [
+      '$q',
+      'otusjs.application.core.ModuleService'
+    ];
   }
 }());

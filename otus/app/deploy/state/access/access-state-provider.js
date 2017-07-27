@@ -40,7 +40,7 @@
             AccessContextService.isValid();
             deferred.resolve();
           } catch (e) {
-            deferred.resolve(STATE.PARTICIPANT_DASHBOARD);
+            deferred.resolve(STATE.DASHBOARD);
           }
         });
 
