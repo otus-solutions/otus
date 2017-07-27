@@ -40,14 +40,14 @@
     "fuse.js": "^2.6.2",
     "jquery": "2.2.0",
     "jsbarcode": "^3.5.7",
-    "label-maker-js": "git@github.com:ccem-dev/label-maker-js.git#dev",
     "lokijs": "1.4.2",
     "moment": "2.12.0",
     "please-wait": "0.0.5",
+    "label-maker-js": "git@github.com:ccem-dev/label-maker-js.git#v1.1",
     "otus-domain-client": "git@github.com:ccem-dev/otus-domain-client-js.git#dev",
-    "otus-client-js": "git@github.com:ccem-dev/otus-client-js.git#dev",
-    "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#dev",
-    "otus-preview-js": "git@github.com:ccem-dev/otus-preview-js.git#dev",
+    "otus-client-js": "git@github.com:ccem-dev/otus-client-js.git#v1.1",
+    "otus-model-js": "git@github.com:ccem-dev/otus-model-js.git#v1.4",
+    "otus-preview-js": "git@github.com:ccem-dev/otus-preview-js.git#v1.2",
     "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#dev"
   },
   "devDependencies": {
