@@ -9,7 +9,7 @@
     });
 
   Controller.$inject = [
-     'otusjs.laboratory.transportation.TransportationService'
+     'otusjs.laboratory.business.transportation.TransportationService'
   ];
 
 
@@ -20,7 +20,7 @@
     self.fastInsertion = fastInsertion;
 
     function onInit() {
-      self.lot = TransportationService.newLot();
+      self.lot = TransportationService.createAliquotLot();
       console.log(self.lot);
     }
 

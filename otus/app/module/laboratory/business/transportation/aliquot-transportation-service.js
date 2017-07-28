@@ -1,0 +1,62 @@
+(function() {
+  'use strict';
+
+  angular
+    .module('otusjs.laboratory.business.transportation')
+    .service('otusjs.laboratory.business.transportation.TransportationService', service);
+
+  service.$inject = [
+     'otusjs.laboratory.transportation.TransportationService',
+     '$http',
+     '$q'
+  ];
+
+  function service(TransportationService, $http, $q) {
+    var self = this;
+
+    self.getFullAliquotsList = getFullAliquotsList;
+    self.loadLots = loadLots;
+    self.createAliquotLot = createAliquotLot;
+
+    onInit();
+
+    function onInit() {
+      loadLots()
+         .then(function(response) {
+            console.log(response);
+         });
+      getFullAliquotsList()
+         .then(function(response) {
+            console.log(response.data);
+         });
+    }
+
+    function loadLots() {
+      //this returns the already created lots
+      var defer = $q.defer();
+      $http.get('app/module/laboratory/repository/laboratory/single-lot.json')
+         .then(function(response) {
+            //assume response.data as array
+            if (response.data) {
+               console.log(response);
+               var lots = response.data.map(function(lotJson) {
+                  return TransportationService.buildAliquotLotFromJson(lotJson);
+               });
+               defer.resolve(lots);
+            }
+         });
+      return defer.promise;
+    }
+
+    function getFullAliquotsList() {
+      //this returns the full aliquots list to check for conflicts when creating a new lot
+      return $http.get('app/module/laboratory/repository/laboratory/aliquot-list.json');
+    }
+
+    function createAliquotLot() {
+       return TransportationService.createAliquotLot();
+    }
+
+    return self;
+  }
+}());
