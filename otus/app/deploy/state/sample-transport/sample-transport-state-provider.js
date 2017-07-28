@@ -20,8 +20,8 @@
 
     self.state = {
       parent: STATE.SESSION,
-      name: STATE.SAMPLE_TRANSPORT,
-      url: '/' + STATE.SAMPLE_TRANSPORT,
+      name: STATE.SAMPLE_TRANSPORT_DASHBOARD,
+      url: '/' + STATE.SAMPLE_TRANSPORT_DASHBOARD,
       template: '<sample-transport-dashboard layout="column" flex></sample-transport-dashboard>',
       data: {
         redirect: _redirect
