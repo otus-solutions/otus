@@ -16,10 +16,11 @@
     '$q',
     'otusjs.participant.business.ParticipantSearchService',
     'otusjs.application.state.ApplicationStateService',
+    'otusjs.otus.dashboard.core.ContextService',
     '$mdDialog'
   ];
 
-  function Controller(STATE, $q, ParticipantSearchService, ApplicationStateService, $mdDialog) {
+  function Controller(STATE, $q, ParticipantSearchService, ApplicationStateService, dashboardContextService, $mdDialog) {
     var self = this;
 
 
@@ -52,9 +53,10 @@
       } else if(ApplicationStateService.getCurrentState() == STATE.DASHBOARD){
         _setParticipant();
         ApplicationStateService.activateParticipantDashboard();
-      } else if(ApplicationStateService.getCurrentState() == STATE.LABORATORY) {
+      } else if(ApplicationStateService.getCurrentState() == STATE.LABORATORY && dashboardContextService.getChangedState()) {
         $mdDialog.show(confirmParticipantChange).then(function() {
         _setParticipant();
+        dashboardContextService.setChangedState();
         });
       } else {
         _setParticipant();
