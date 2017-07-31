@@ -84,7 +84,7 @@
     }
 
     function activateSampleTransport() {
-      $state.go(STATE.SAMPLE_TRANSPORT_DASHBOARD);
+      $state.go(STATE.SAMPLE_TRANSPORTATION_DASHBOARD);
     }
 
     function getCurrentState() {

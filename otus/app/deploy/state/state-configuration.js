@@ -21,8 +21,8 @@
       'SIGNUP': 'signup',
       'SIGNUP_RESULT': 'signup-result',
       'LABORATORY': 'laboratory-participant',
-      'SAMPLE_TRANSPORT_LOT_ADDER': 'sample-transport-lot-adder',
-      'SAMPLE_TRANSPORT_DASHBOARD': 'sample-transport-dashboard'
+      'SAMPLE_TRANSPORTATION_LOT_ADDER': 'sample-transportation-lot-adder',
+      'SAMPLE_TRANSPORTATION_DASHBOARD': 'sample-transportation-dashboard'
     })
     .config(Configuration);
 
@@ -44,8 +44,8 @@
     'otusjs.deploy.SignupResultStateProvider',
     'otusjs.deploy.SessionStateProvider',
     'otusjs.deploy.LaboratoryStateProvider',
-    'otusjs.deploy.SampleTransportLotAdderStateProvider',
-    'otusjs.deploy.SampleTransportStateProvider'
+    'otusjs.deploy.SampleTransportationLotAdderStateProvider',
+    'otusjs.deploy.SampleTransportationStateProvider'
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
@@ -64,8 +64,8 @@
     SignupResultStateProvider,
     SessionStateProvider,
     LaboratoryStateProvider,
-    SampleTransportLotAdderProvider,
-    SampleTransportProvider
+    SampleTransportationLotAdderProvider,
+    SampleTransportationProvider
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ActivityStateProvider.state);
@@ -82,8 +82,8 @@
     $stateProvider.state(ParticipantStateProvider.state);
     $stateProvider.state(SessionStateProvider.state);
     $stateProvider.state(LaboratoryStateProvider.state);
-    $stateProvider.state(SampleTransportLotAdderProvider.state);
-    $stateProvider.state(SampleTransportProvider.state);
+    $stateProvider.state(SampleTransportationLotAdderProvider.state);
+    $stateProvider.state(SampleTransportationProvider.state);
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
     // $locationProvider.html5Mode(false);

@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.SampleTransportLotAdderState', Provider);
+    .provider('otusjs.deploy.SampleTransportationLotAdderState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -19,9 +19,9 @@
     }
 
     self.state = {
-      parent: STATE.SAMPLE_TRANSPORT_DASHBOARD,
-      name: STATE.SAMPLE_TRANSPORT_LOT_ADDER,
-      url: '/' + STATE.SAMPLE_TRANSPORT_LOT_ADDER,
+      parent: STATE.SAMPLE_TRANSPORTATION_DASHBOARD,
+      name: STATE.SAMPLE_TRANSPORTATION_LOT_ADDER,
+      url: '/' + STATE.SAMPLE_TRANSPORTATION_LOT_ADDER,
       template: '<otus-paper-activity-adder layout="column" flex></otus-paper-activity-adder>',
     };
   }
