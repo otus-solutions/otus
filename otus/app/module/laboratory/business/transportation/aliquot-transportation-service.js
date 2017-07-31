@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.business.transportation')
-    .service('otusjs.laboratory.business.transportation.TransportationService', service);
+    .service('otusjs.laboratory.business.transportation.AliquotTransportationService', service);
 
   service.$inject = [
      'otusjs.laboratory.transportation.TransportationService',
