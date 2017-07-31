@@ -12,7 +12,7 @@
   </div>
 
   <div>
-    <div layout="column" layout-align="center center" style="    margin-bottom: 3px;">
+    <div layout="column" layout-align="center center" style=" margin-bottom: 3px;">
       <md-button ng-show="!$ctrl.hasLaboratory" class="md-raised md-primary" ng-click="$ctrl.intializeLaboratory()">Iniciar Laboratório</md-button>
       <lab-control-panel ng-if="$ctrl.hasLaboratory" lab-participant="$ctrl.participantLaboratory" state="$ctrl.state" labels="$ctrl.labels" callback-functions="$ctrl.callbackFunctions" layout-fill/>
     </div>
@@ -20,7 +20,7 @@
 
   <div layout="column" flex>
     <div ng-if="$ctrl.hasLaboratory" layout="row" flex>
-      <lab-main-panel participant-laboratory="$ctrl.participantLaboratory" layout="row" flex state="$ctrl.state" callback-functions="$ctrl.callbackFunctions"/>
+      <lab-main-panel participant-laboratory="$ctrl.participantLaboratory" layout="row" flex state="$ctrl.state" callback-functions="$ctrl.callbackFunctions" />
     </div>
   </div>
 </div>
