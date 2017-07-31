@@ -14,5 +14,11 @@
 
   function Controller(ApplicationStateService) {
     var self = this;
+
+    self.lotAdder = lotAdder;
+
+    function lotAdder() {
+      ApplicationStateService.activateSampleTransportationLotAdder();
+    }
   }
 }());

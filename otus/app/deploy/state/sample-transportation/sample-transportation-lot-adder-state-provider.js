@@ -22,7 +22,7 @@
       parent: STATE.SAMPLE_TRANSPORTATION_DASHBOARD,
       name: STATE.SAMPLE_TRANSPORTATION_LOT_ADDER,
       url: '/' + STATE.SAMPLE_TRANSPORTATION_LOT_ADDER,
-      template: '<otus-paper-activity-adder layout="column" flex></otus-paper-activity-adder>',
+      template: '<otus-sample-transportation-lot-adder layout="column" flex></otus-sample-transportation-lot-adder>',
     };
   }
 }());

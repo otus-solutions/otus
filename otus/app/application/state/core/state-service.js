@@ -29,6 +29,7 @@
     self.activateSignupResult = activateSignupResult;
     self.getCurrentState = getCurrentState;
     self.activateSampleTransport = activateSampleTransport;
+    self.activateSampleTransportationLotAdder = activateSampleTransportationLotAdder;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -85,6 +86,10 @@
 
     function activateSampleTransport() {
       $state.go(STATE.SAMPLE_TRANSPORTATION_DASHBOARD);
+    }
+
+    function activateSampleTransportationLotAdder() {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_ADDER);
     }
 
     function getCurrentState() {

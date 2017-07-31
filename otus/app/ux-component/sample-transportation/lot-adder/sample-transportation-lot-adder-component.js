@@ -3,13 +3,13 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusAliquotShipmentComponent', {
+    .component('otusSampleTransportationLotAdder', {
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/lot-adder/sample-transportation-lot-adder-template.html'
     });
 
   Controller.$inject = [
-     'otusjs.laboratory.transportation.TransportationService'
+     'otusjs.laboratory.business.transportation.TransportationService'
   ];
 
 
@@ -20,7 +20,7 @@
     self.fastInsertion = fastInsertion;
 
     function onInit() {
-      self.lot = TransportationService.newLot();
+      self.lot = TransportationService.createAliquotLot();
       console.log(self.lot);
     }
 
