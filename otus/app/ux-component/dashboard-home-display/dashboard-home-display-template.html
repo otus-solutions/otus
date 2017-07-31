@@ -1,12 +1,24 @@
 <div layout="column" layout-padding flex>
-  <div flex>
-    <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)" class="md-primary md"></otus-participant-search>
-  </div>
-  <div flex>
-    <md-card flex layout-align="center center" ng-click="$ctrl.sampleTransportDashboard()">
-      <md-tooltip>Transporte de amostra</md-tooltip>
-      <md-icon>local_shipping</md-icon>
-    </md-card>
+  <div layout="row">
+
+    <div flex="20" ></div>
+    <div flex>
+      <div layout="row" style="padding-top:50px;">
+        <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)"></otus-participant-search>
+      </div>
+      <div layout="row" flex style="padding-bottom:50px;"></div>
+      <div layout="row" flex>
+        <span flex></span>
+        <md-card flex layout-align="center center" style="cursor: pointer;" ng-click="$ctrl.sampleTransportDashboard()">
+          <md-card-content>
+            <md-icon style="font-size:100px;height:100px;width:100px;">local_shipping</md-icon>
+          </md-card-content>
+          <span class="md-subhead" style="padding-bottom:20px;">Transporte de amostra</span>
+        </md-card>
+        <span flex></span>
+      </div>
+    </div>
+    <div flex="20"></div>
   </div>
 </div>
 |

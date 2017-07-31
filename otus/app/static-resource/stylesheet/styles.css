@@ -79,6 +79,12 @@ body {
   box-shadow: none !important;
 }
 
+.md-dashboard-autocomplete {
+  color: : red !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
 .autocomplete-custom-participant-template li {
   border-bottom: 1px solid #ccc;
   height: auto;
@@ -87,19 +93,19 @@ body {
   white-space: normal;
 }
 
-otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
+otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
   color: rgb(255, 255, 255) !important;
 }
 
-otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
+otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
   color: rgb(255, 255, 255) !important;
 }
 
-otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {
+otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {
   fill: rgb(255, 254, 254) !important;
 }
 
-otus-participant-search>md-autocomplete {
+otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete {
   color: rgb(255, 255, 255) !important;
 }
 
