@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.SampleTransportState', Provider);
+    .provider('otusjs.deploy.SampleTransportationState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -20,9 +20,9 @@
 
     self.state = {
       parent: STATE.SESSION,
-      name: STATE.SAMPLE_TRANSPORT_DASHBOARD,
-      url: '/' + STATE.SAMPLE_TRANSPORT_DASHBOARD,
-      template: '<sample-transport-dashboard layout="column" flex></sample-transport-dashboard>',
+      name: STATE.SAMPLE_TRANSPORTATION_DASHBOARD,
+      url: '/' + STATE.SAMPLE_TRANSPORTATION_DASHBOARD,
+      template: '<sample-transportation-dashboard layout="column" flex></sample-transportation-dashboard>',
       data: {
         redirect: _redirect
       }

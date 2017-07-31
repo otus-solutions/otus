@@ -3,9 +3,9 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('sampleTransportDashboard', {
+    .component('sampleTransportationDashboard', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transport-dashboard/sample-transport-dashboard-template.html'
+      templateUrl: 'app/ux-component/sample-transportation/dashboard/sample-transportation-dashboard-template.html'
     });
 
   function Controller() {

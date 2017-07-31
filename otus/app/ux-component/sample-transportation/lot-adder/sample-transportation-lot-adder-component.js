@@ -3,9 +3,9 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusAliquotShipmentComponent', {
+    .component('otusSampleTransportationLotAdder', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-shipment/aliquot-shipment-template.html'
+      templateUrl: 'app/ux-component/sample-transportation/lot-adder/sample-transportation-lot-adder-template.html'
     });
 
   Controller.$inject = [

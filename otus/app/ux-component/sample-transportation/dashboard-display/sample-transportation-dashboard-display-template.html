@@ -1,0 +1,9 @@
+<otus-sample-transportation-manager-toolbar layout="row"></otus-sample-transportation-manager-toolbar>
+<div layout="row" flex>
+  <div ui-view layout="column" flex>
+    <md-icon aria-label="transport" style="font-size:100px;height:100px;width:100px;">local_shipping</md-icon>
+  </div>
+</div>
+<md-button ng-class="{ visible: selectedTab==0 }" class="md-fab md-fab-bottom-right" aria-label="Adicionar Lote" ng-click="$ctrl.lotAdder()">
+  <md-icon md-svg-icon="plus"></md-icon>
+</md-button>
