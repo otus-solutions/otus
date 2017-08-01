@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.ActivityPlayerState', Provider);
+    .provider('otusjs.deploy.ParticipantDashboardState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -19,41 +19,41 @@
     }
 
     self.state = {
-      name: STATE.ACTIVITY_PLAYER,
-      url: '/' + STATE.ACTIVITY_PLAYER,
-      template: '<otus-activity-player layout="row" flex></otus-activity-player>',
+      parent: STATE.SESSION,
+      name: STATE.PARTICIPANT_DASHBOARD,
+      url: '/' + STATE.PARTICIPANT_DASHBOARD,
+      template: '<otus-participant-dashboard layout="column" flex></otus-participant-dashboard>',
       data: {
         redirect: _redirect
       },
       resolve: {
-        loadPlayerContext: _loadPlayerContext
+        loadParticipantContext: _loadParticipantContext
       }
     };
 
-    function _redirect($q, ActivityContextService, Application, ActivityFacadeService) {
+    function _redirect($q, DashboardContextService, Application) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
         .then(function() {
           try {
-            ActivityContextService.isValid();
-            ActivityContextService.restore();
+            DashboardContextService.isValid();
             deferred.resolve();
           } catch (e) {
-            deferred.resolve(STATE.PARTICIPANT_DASHBOARD);
+            deferred.resolve(STATE.LOGIN);
           }
         });
 
       return deferred.promise;
     }
 
-    function _loadPlayerContext(ActivityContextService, SessionContextService, Application) {
+    function _loadParticipantContext(ParticipantContextService, SessionContextService, Application) {
       Application
         .isDeployed()
         .then(function() {
           try {
-            ActivityContextService.restore();
+            ParticipantContextService.restore();
             SessionContextService.restore();
           } catch (e) {
             console.log(e);
@@ -63,12 +63,11 @@
 
     _redirect.$inject = [
       '$q',
-      'otusjs.activity.core.ContextService',
-      'otusjs.application.core.ModuleService',
-      'otusjs.deploy.model.ActivityFacadeService'
+      'otusjs.otus.dashboard.core.ContextService',
+      'otusjs.application.core.ModuleService'
     ];
-    _loadPlayerContext.$inject = [
-      'otusjs.activity.core.ContextService',
+    _loadParticipantContext.$inject = [
+      'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];

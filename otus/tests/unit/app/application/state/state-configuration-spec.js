@@ -3,7 +3,7 @@ xdescribe('State names configuration', function() {
   var ACCESS = 'access';
   var INSTALLER = 'installer';
   var SESSION = 'session';
-  var DASHBOARD = 'dashboard';
+  var DASHBOARD = 'participant-dashboard';
   var LOGIN = 'login';
   var PARTICIPANT_ACTIVITY = 'activity';
   var SIGNUP = 'signup';
@@ -37,7 +37,7 @@ xdescribe('State names configuration', function() {
     });
 
     it('DASHBOARD constant value should be equal to "dashboard"', function() {
-      expect(STATE.DASHBOARD).toEqual(DASHBOARD);
+      expect(STATE.PARTICIPANT_DASHBOARD).toEqual(DASHBOARD);
     });
 
     it('LOGIN constant value should be equal to "login"', function() {

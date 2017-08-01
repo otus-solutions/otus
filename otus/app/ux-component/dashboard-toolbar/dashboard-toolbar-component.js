@@ -8,7 +8,8 @@
       templateUrl: 'app/ux-component/dashboard-toolbar/dashboard-toolbar-template.html',
       bindings: {
         onParticipantSelect: '&'
-      }
+      },
+      transclude: true
     });
 
   Controller.$inject = [

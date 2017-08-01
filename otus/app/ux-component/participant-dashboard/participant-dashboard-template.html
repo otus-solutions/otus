@@ -1,0 +1,30 @@
+<div layout="column" flex>
+  <otus-dashboard-sidenav layout="row" participant="$ctrl.selectedParticipant"></otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row" on-participant-select="$ctrl.selectParticipant(participant)">
+    <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.PARTICIPANT_DASHBOARD">
+      <span>{{ $ctrl.selectedParticipant.name }}</span>
+    </div>
+    <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.LABORATORY">
+      <md-icon md-svg-icon="eyedropper-variant" aria-label="Atividades">
+        <md-tooltip>Laboratório</md-tooltip>
+      </md-icon>
+      <span>{{ $ctrl.selectedParticipant.recruitmentNumber}} - {{ $ctrl.selectedParticipant.name }}</span>
+    </div>
+    <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.PARTICIPANT_ACTIVITY ||
+                                                                              $ctrl.getCurrentState() == $ctrl.STATE.PAPER_ACTIVITY_INITIALIZER ||
+                                                                              $ctrl.getCurrentState() == $ctrl.STATE.ACTIVITY_ADDER">
+      <md-icon md-svg-icon="file-document-box" aria-label="Atividades" ng-if="$ctrl.getCurrentState() == $ctrl.STATE.PARTICIPANT_ACTIVITY ||
+                                                                              $ctrl.getCurrentState() == $ctrl.STATE.ACTIVITY_ADDER">
+        <md-tooltip>Atividades</md-tooltip>
+      </md-icon>
+      <md-icon md-svg-icon="file-document" aria-label="Atividade em papel" style="color: white"  ng-if="$ctrl.getCurrentState() == $ctrl.STATE.PAPER_ACTIVITY_INITIALIZER">
+        <md-tooltip md-direction="left">
+          Atividade em papel
+        </md-tooltip>
+      </md-icon>
+      <span>{{ $ctrl.selectedParticipant.name }}</span>
+    </div>
+  </otus-dashboard-toolbar>
+  <otus-participant-dashboard-toolbbar layout="row"></otus-participant-dashboard-toolbbar>
+  <otus-dashboard-display layout="row" flex></otus-dashboard-display>
+</div>

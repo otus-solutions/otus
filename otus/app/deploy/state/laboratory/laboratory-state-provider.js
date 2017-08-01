@@ -19,7 +19,7 @@
     }
 
     self.state = {
-      parent: STATE.DASHBOARD,
+      parent: STATE.PARTICIPANT_DASHBOARD,
       name: STATE.LABORATORY,
       url: '/' + STATE.LABORATORY,
       template: '<otus-laboratory layout="row" flex></otus-laboratory>',

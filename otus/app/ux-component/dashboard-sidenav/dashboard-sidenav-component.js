@@ -8,16 +8,22 @@
       templateUrl: 'app/ux-component/dashboard-sidenav/dashboard-sidenav-template.html',
       bindings: {
         participant: '<'
+      },
+      transclude: {
+        'hideHomeButton':'?hideHomeButton',
+        'hideParticipantBox':'?hideParticipantBox'
       }
     });
 
   Controller.$inject = [
     '$mdComponentRegistry',
     'otusjs.user.access.service.LogoutService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    '$mdSidenav',
+    'otusjs.participant.core.ContextService'
   ];
 
-  function Controller($mdComponentRegistry, LogoutService, ApplicationStateService) {
+  function Controller($mdComponentRegistry, LogoutService, ApplicationStateService, $mdSidenav, ParticipantContextService) {
     var self = this;
     var _sideNav = null;
     var SIDENAV_ORIGIN = 'left';
@@ -27,15 +33,22 @@
     self.logout = logout;
     self.loadParticipantActivities = loadParticipantActivities;
     self.loadParticipantReports = loadParticipantReports;
+    self.home = home;
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function close() {
-      _sideNav.toggle();
+      // _sideNav.toggle();
+      $mdSidenav(SIDENAV_ORIGIN).toggle();
     }
 
     function logout() {
       LogoutService.logout();
+    }
+
+    function home() {
+      ParticipantContextService.removeData('selectedParticipant');
+      ApplicationStateService.activateDashboard();
     }
 
     function loadParticipantActivities() {
@@ -47,11 +60,11 @@
     }
 
     function onInit() {
-      $mdComponentRegistry
-        .when(SIDENAV_ORIGIN)
-        .then(function(sidenav) {
-          _sideNav = sidenav;
-        });
+      // $mdComponentRegistry
+      //   .when(SIDENAV_ORIGIN)
+      //   .then(function(sidenav) {
+      //     _sideNav = sidenav;
+      //   });
     }
   }
 }());

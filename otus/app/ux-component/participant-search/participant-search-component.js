@@ -12,11 +12,15 @@
     });
 
   Controller.$inject = [
+    'STATE',
     '$q',
-    'otusjs.participant.business.ParticipantSearchService'
+    'otusjs.participant.business.ParticipantSearchService',
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.otus.dashboard.core.ContextService',
+    '$mdDialog'
   ];
 
-  function Controller($q, ParticipantSearchService) {
+  function Controller(STATE, $q, ParticipantSearchService, ApplicationStateService, dashboardContextService, $mdDialog) {
     var self = this;
 
 
@@ -26,8 +30,15 @@
     self.querySearch = querySearch;
     self.selectParticipant = selectParticipant;
 
+    var confirmParticipantChange;
+
     function onInit() {
       self.inputedText = '';
+      if(ApplicationStateService.getCurrentState() != STATE.DASHBOARD){
+        self.autoCompleteClass = 'md-autocomplete-participant';
+      } else {
+        self.autoCompleteClass = 'md-dashboard-autocomplete';
+      }
       ParticipantSearchService.setup();
     }
 
@@ -41,13 +52,37 @@
     }
 
     function selectParticipant() {
-      if (!self.selectedParticipant)
+      _buildDialogs();
+      if (!self.selectedParticipant){
         return;
-      ParticipantSearchService.selectParticipant(self.selectedParticipant);
+      } else if(ApplicationStateService.getCurrentState() == STATE.DASHBOARD){
+        _setParticipant();
+        ApplicationStateService.activateParticipantDashboard();
+      } else if(ApplicationStateService.getCurrentState() == STATE.LABORATORY && dashboardContextService.getChangedState()) {
+        $mdDialog.show(confirmParticipantChange).then(function() {
+        _setParticipant();
+        dashboardContextService.setChangedState();
+        });
+      } else {
+        _setParticipant();
+      }
+    }
 
+    function _setParticipant() {
+      ParticipantSearchService.selectParticipant(self.selectedParticipant);
       self.onSelect({
         participant: self.selectedParticipant
       });
+      self.inputedText = '';
+    }
+
+    function _buildDialogs() {
+      confirmParticipantChange = $mdDialog.confirm()
+        .title('Confirmar troca de participante:')
+        .textContent('Alterações não finalizadas serão descartadas')
+        .ariaLabel('Confirmação de troca')
+        .ok('Ok')
+        .cancel('Voltar');
     }
 
   }

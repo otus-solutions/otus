@@ -1,25 +1,15 @@
 <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
   <div class="md-toolbar-tools">
-    <div layout="row" layout-margin>
-      <md-icon md-svg-icon="file-document-box" aria-label="Atividades">
-        <md-tooltip>Atividades</md-tooltip>
-      </md-icon>
-      <span>{{ $ctrl.selectedParticipant.name }}</span>
-    </div>
-
-    <span flex></span>
-    <md-button class="md-raised md-primary md-hue-3 md-icon-button" aria-label="Preencher Atividade"
-    ng-click="$ctrl.fillSelectedActivity()" ng-show="$ctrl.showFillingButton">
+    <span flex>Lista de atividades</span>
+    <md-button class="md-raised md-accent md-icon-button" aria-label="Preencher Atividade" ng-click="$ctrl.fillSelectedActivity()" ng-show="$ctrl.showFillingButton">
       <md-tooltip md-direction="down">Preencher Atividade</md-tooltip>
       <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
     </md-button>
-    <md-button class="md-raised md-primary md-hue-3 md-icon-button" aria-label="Excluir"
-    ng-click="$ctrl.deleteSelectedActivity()" ng-show="$ctrl.showDeleteButton">
+    <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-click="$ctrl.deleteSelectedActivity()" ng-show="$ctrl.showDeleteButton">
       <md-tooltip md-direction="down">Excluir</md-tooltip>
-      <md-icon md-svg-icon="delete" aria-label="Excluir"></md-icon>
+      <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
     </md-button>
-    <md-button class="md-raised md-primary md-hue-3 md-icon-button" aria-label="Detalhes"
-    ng-click="$ctrl.visualizeSelectedActivityInfo()" ng-show="$ctrl.showInfoButton">
+    <md-button class="md-raised md-accent md-icon-button" aria-label="Detalhes" ng-click="$ctrl.visualizeSelectedActivityInfo()" ng-show="$ctrl.showInfoButton">
       <md-tooltip md-direction="down">Detalhes</md-tooltip>
       <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>
     </md-button>

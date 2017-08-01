@@ -22,10 +22,13 @@
     self.activateLogin = activateLogin;
     self.activateLaboratory = activateLaboratory;
     self.activateDashboard = activateDashboard;
+    self.activateParticipantDashboard = activateParticipantDashboard;
     self.activateParticipantActivities = activateParticipantActivities;
     self.activateParticipantReports = activateParticipantReports;
     self.activateSignup = activateSignup;
     self.activateSignupResult = activateSignupResult;
+    self.getCurrentState = getCurrentState;
+    self.activateSampleTransport = activateSampleTransport;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -60,6 +63,10 @@
       $state.go(STATE.DASHBOARD);
     }
 
+    function activateParticipantDashboard() {
+      $state.go(STATE.PARTICIPANT_DASHBOARD);
+    }
+
     function activateParticipantActivities() {
       $state.go(STATE.PARTICIPANT_ACTIVITY);
     }
@@ -76,6 +83,13 @@
       $state.go(STATE.SIGNUP_RESULT);
     }
 
+    function activateSampleTransport() {
+      $state.go(STATE.SAMPLE_TRANSPORT);
+    }
+
+    function getCurrentState() {
+      return $state.current.name;
+    }
     // function activateErrorOffline() {
     //   self.currentState = 'Offline';
     //   $state.go(APP_STATE.ERROR_OFFLINE);

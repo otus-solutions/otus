@@ -1,14 +1,11 @@
 <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
   <div class="md-toolbar-tools md-hue-2">
-    <md-button ng-click="$ctrl.returnToParticipantActivities()" aria-label="Lista de Atividades">
-      <md-tooltip md-direction="down">Lista de Atividades</md-tooltip>
-      <md-icon md-svg-icon="arrow-left" aria-label="Lista de Atividades" style="color: white"></md-icon>
-      Voltar
+    <span flex>Adicionar Atividade {{ $ctrl.activityType }}</span>
+    <md-button ng-click="$ctrl.returnToParticipantActivities()" style="background-color: grey" class="md-raised md-icon-button"  aria-label="Cancelar">
+      <md-tooltip md-direction="down">Cancelar</md-tooltip>
+      <md-icon  style="color: white" md-font-set="material-icons" aria-label="Cancelar">clear</md-icon>
     </md-button>
-    <span flex></span>
-    <h2><span>Adicionar Atividade {{ $ctrl.activityType }}</span></h2>
-    <span flex></span>
-    <md-button ng-click="$ctrl.addActivities()" class="md-raised md-primary md-icon-button" aria-label="Adicionar">
+    <md-button ng-click="$ctrl.addActivities()" class="md-raised md-accent md-icon-button" aria-label="Adicionar">
       <md-tooltip md-direction="down">Adicionar</md-tooltip>
       <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
     </md-button>

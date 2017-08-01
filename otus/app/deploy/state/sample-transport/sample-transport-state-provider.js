@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.DashboardState', Provider);
+    .provider('otusjs.deploy.SampleTransportState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -20,22 +20,21 @@
 
     self.state = {
       parent: STATE.SESSION,
-      name: STATE.DASHBOARD,
-      url: '/' + STATE.DASHBOARD,
-      template: '<otus-dashboard layout="column" flex></otus-dashboard>',
+      name: STATE.SAMPLE_TRANSPORT,
+      url: '/' + STATE.SAMPLE_TRANSPORT,
+      template: '<sample-transport-dashboard layout="column" flex></sample-transport-dashboard>',
       data: {
         redirect: _redirect
       }
     };
 
-    function _redirect($q, DashboardContextService, Application) {
+    function _redirect($q, Application) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
         .then(function() {
           try {
-            DashboardContextService.isValid();
             deferred.resolve();
           } catch (e) {
             deferred.resolve(STATE.LOGIN);
@@ -47,9 +46,7 @@
 
     _redirect.$inject = [
       '$q',
-      'otusjs.otus.dashboard.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
-
   }
 }());

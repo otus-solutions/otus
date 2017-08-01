@@ -3,9 +3,9 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusDashboardDisplay', {
+    .component('otusParticipantDashboardToolbbar', {
       controller: Controller,
-      templateUrl: 'app/ux-component/dashboard-display/dashboard-display-template.html'
+      templateUrl: 'app/ux-component/participant-dashboard-toolbar/participant-dashboard-toolbar-template.html'
     });
 
   function Controller() {
