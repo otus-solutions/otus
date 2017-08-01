@@ -9,16 +9,42 @@
     });
 
   Controller.$inject = [
+    'otusjs.otus.dashboard.core.ContextService',
+    'otusjs.otus.dashboard.core.EventService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(ApplicationStateService) {
+  function Controller(ContextService, EventService, ApplicationStateService){
     var self = this;
     self.sampleTransportDashboard = sampleTransportDashboard;
+    self.setFocus = setFocus;
+    self.$onInit = onInit;
     /* Public methods */
     function sampleTransportDashboard(){
       ApplicationStateService.activateSampleTransport();
     }
 
+    function setFocus() {
+      setTimeout(function() {
+        document.querySelector('#participantSearchAutoCompleteId').focus();
+      }, 0);
+    }
+
+    function onInit() {
+      _loadLoggedUser();
+      EventService.onLogin(_loadLoggedUser);
+    }
+
+    function _loadLoggedUser(userData) {
+      if (userData) {
+        self.loggedUser = userData;
+      } else {
+        ContextService
+          .getLoggedUser()
+          .then(function(userData) {
+            self.loggedUser = userData;
+          });
+      }
+    }
   }
 }());

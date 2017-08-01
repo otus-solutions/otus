@@ -1,24 +1,30 @@
-<div layout="column" layout-padding flex>
+<div layout="column" layout-align="center center" layout-padding flex>
   <div layout="row">
-
-    <div flex="20" ></div>
     <div flex>
-      <div layout="row" style="padding-top:50px;">
-        <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)"></otus-participant-search>
+      <div layout="row" layout-padding>
+        <div layout="column" layout-padding layout-align="center center">
+          <span layout="row" class="md-display-2">Olá {{ $ctrl.loggedUser.name}}!</span>
+          <span layout="row" class="md-headline">Utilize as opções a seguir para navegar no sistema.</span>
+        </div>
       </div>
-      <div layout="row" flex style="padding-bottom:50px;"></div>
+      <div layout="row" layout-padding>
+        <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)"></otus-participant-search>
+      </div><div layout="row" layout-padding></div>
       <div layout="row" flex>
-        <span flex></span>
-        <md-card flex layout-align="center center" style="cursor: pointer;" ng-click="$ctrl.sampleTransportDashboard()">
+        <md-card layout-align="center center" flex style="cursor:pointer;" ng-click="$ctrl.setFocus()">
           <md-card-content>
-            <md-icon style="font-size:100px;height:100px;width:100px;">local_shipping</md-icon>
+            <md-icon style="font-size:50px;height:50px;width:50px;">search</md-icon>
           </md-card-content>
-          <span class="md-subhead" style="padding-bottom:20px;">Transporte de amostra</span>
+          <span class="md-body-1" layout-padding>Participantes</span>
+        </md-card>
+        <md-card layout-align="center center" flex style="cursor:pointer;" ng-click="$ctrl.sampleTransportDashboard()">
+          <md-card-content>
+            <md-icon style="font-size:50px;height:50px;width:50px;">local_shipping</md-icon>
+          </md-card-content>
+          <span class="md-body-1" layout-padding>Transporte de amostra</span>
         </md-card>
         <span flex></span>
       </div>
     </div>
-    <div flex="20"></div>
   </div>
 </div>
-|
