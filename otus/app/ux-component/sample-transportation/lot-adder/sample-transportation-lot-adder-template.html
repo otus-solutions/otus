@@ -6,15 +6,15 @@
     </md-input-container>
     <md-input-container>
       <label>Inserir alíquota</label>
-      <input type="text" style="font-size: 20px;" name="fast-trigger"
-      value="Inserção rápida" ng-model="aliquot_code" ng-change="$ctrl.fastInsertion(this, aliquot_code)" />
+      <input type="text" style="font-size: 20px;" name="fast-trigger" value="Inserção rápida" ng-model="aliquot_code" ng-change="$ctrl.fastInsertion(this, aliquot_code)" />
     </md-input-container>
   </div>
 
-  <md-content id="aliquot-list" layout="column" layout-padding>
+  <md-content id="aliquot-list" layout-padding layout-margin>
     <md-input-container ng-repeat=" aliquot in $ctrl.lot.aliquotList">
       <label>Código alíquota</label>
       <input ng-model="aliquot.code">
+      <md-icon class="md-primary" md-font-set="material-icons" ng-click="$ctrl.lot.removeAliquotByIndex($index)">delete</md-icon>
     </md-input-container>
   </md-content>
 </div>
