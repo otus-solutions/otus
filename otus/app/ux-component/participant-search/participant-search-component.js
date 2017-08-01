@@ -34,6 +34,11 @@
 
     function onInit() {
       self.inputedText = '';
+      if(ApplicationStateService.getCurrentState() != STATE.DASHBOARD){
+        self.autoCompleteClass = 'md-autocomplete-participant';
+      } else {
+        self.autoCompleteClass = 'md-dashboard-autocomplete';
+      }
       ParticipantSearchService.setup();
     }
 
