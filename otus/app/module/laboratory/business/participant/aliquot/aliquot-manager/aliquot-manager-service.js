@@ -2,11 +2,11 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory.aliquot')
-    .service('otusjs.laboratory.aliquot.AliquotManagerService', service);
+    .module('otusjs.laboratory.business.participant.aliquot')
+    .service('otusjs.laboratory.business.participant.aliquot.AliquotManagerService', service);
 
   service.$inject = [
-      'otusjs.laboratory.aliquot.MomentTypeManagerFactory'
+      'otusjs.laboratory.business.participant.aliquot.MomentTypeManagerFactory'
     ];
 
   function service(MomentTypeManagerFactory) {

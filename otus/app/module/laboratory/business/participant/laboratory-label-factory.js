@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory.business')
-    .factory('otusjs.laboratory.business.LaboratoryLabelFactory', Factory);
+    .module('otusjs.laboratory.business.participant')
+    .factory('otusjs.laboratory.business.participant.LaboratoryLabelFactory', Factory);
 
   Factory.$inject = [];
 

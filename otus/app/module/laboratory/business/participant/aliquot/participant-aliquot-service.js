@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory.aliquot')
-    .service('otusjs.laboratory.aliquot.AliquotTubeService', Service);
+    .module('otusjs.laboratory.business.participant.aliquot')
+    .service('otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService', Service);
 
   Service.$inject = [
-    'otusjs.laboratory.aliquot.AliquotManagerService',
-    'otusjs.laboratory.business.ParticipantLaboratoryService',
+    'otusjs.laboratory.business.participant.aliquot.AliquotManagerService',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     '$q'
   ];
 

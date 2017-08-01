@@ -13,10 +13,10 @@
     });
 
   Controller.$inject = [
-    'otusjs.laboratory.aliquot.AliquotTubeService',
+    'otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService',
     'otusjs.laboratory.LaboratoryConfigurationService',
-    'otusjs.laboratory.aliquot.AliquotMessagesService',
-    'otusjs.laboratory.aliquot.AliquotValidationService',
+    'otusjs.laboratory.business.participant.aliquot.AliquotMessagesService',
+    'otusjs.laboratory.business.participant.aliquot.AliquotValidationService',
     '$scope',
     '$element'
   ];

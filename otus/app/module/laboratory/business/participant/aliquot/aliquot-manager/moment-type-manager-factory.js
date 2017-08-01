@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory.aliquot')
-    .factory('otusjs.laboratory.aliquot.MomentTypeManagerFactory', factory);
+    .module('otusjs.laboratory.business.participant.aliquot')
+    .factory('otusjs.laboratory.business.participant.aliquot.MomentTypeManagerFactory', factory);
 
   factory.$inject = [
       '$q'

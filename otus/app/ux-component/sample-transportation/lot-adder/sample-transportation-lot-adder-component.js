@@ -9,7 +9,7 @@
     });
 
   Controller.$inject = [
-     'otusjs.laboratory.business.transportation.AliquotTransportationService'
+     'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
   ];
 
 

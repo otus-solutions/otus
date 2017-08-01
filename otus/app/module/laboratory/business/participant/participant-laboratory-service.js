@@ -2,14 +2,14 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory.business')
-    .service('otusjs.laboratory.business.ParticipantLaboratoryService', Service);
+    .module('otusjs.laboratory.business.participant')
+    .service('otusjs.laboratory.business.participant.ParticipantLaboratoryService', Service);
 
   Service.$inject = [
     '$q',
     'otusjs.laboratory.repository.ParticipantLaboratoryRepositoryService',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.laboratory.business.LaboratoryLabelFactory',
+    'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.laboratory.core.EventService',
     'otusjs.laboratory.ParticipantLaboratoryFactory'
   ];
