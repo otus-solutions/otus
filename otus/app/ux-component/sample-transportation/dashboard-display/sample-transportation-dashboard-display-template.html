@@ -1,6 +1,6 @@
 <div ui-view layout="column" flex>
-  <otus-sample-transportation-manager-toolbar layout="row"></otus-sample-transportation-manager-toolbar>
-  <otus-sample-transportation-lot-manager-list layout="row"></otus-sample-transportation-lot-manager-list>
+  <otus-sample-transportation-manager-toolbar selected-lots="$ctrl.selectedLots" layout="row"></otus-sample-transportation-manager-toolbar>
+  <otus-sample-transportation-lot-manager-list on-selected="$ctrl.selectLot(lots)" layout="row"></otus-sample-transportation-lot-manager-list>
   <md-button ng-class="{ visible: selectedTab==0 }" class="md-fab md-fab-bottom-right" aria-label="Adicionar Lote" ng-click="$ctrl.lotAdder()">
     <md-icon md-svg-icon="plus"></md-icon>
   </md-button>

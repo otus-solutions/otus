@@ -5,27 +5,38 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationDashboardDisplay', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/dashboard-display/sample-transportation-dashboard-display-template.html'
+      templateUrl: 'app/ux-component/sample-transportation/dashboard-display/sample-transportation-dashboard-display-template.html',
+      bindings:{
+        lots: "<"
+      }
     });
 
   Controller.$inject = [
-    'otusjs.laboratory.business.transportation.AliquotTransportationService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(AliquotTransportationService, ApplicationStateService) {
+  function Controller(ApplicationStateService) {
     var self = this;
+    self.selectedLots;
 
     self.lotAdder = lotAdder;
+    self.$onInit = onInit;
+    self.selectLot = selectLot;
+
+    function onInit() {
+      self.selectedLots = [];
+    }
+
+    function selectLot(selectedLots) {
+      self.selectedLots = selectedLots;
+    }
 
     function lotAdder() {
       ApplicationStateService.activateSampleTransportationLotAdder();
     }
 
     function getLots() {
-      self.lots = AliquotTransportationService.loadLots();
       console.log(self.lots);
     }
-
   }
 }());

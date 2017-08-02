@@ -6,30 +6,24 @@
     .component('otusSampleTransportationManagerToolbar', {
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/manager-toolbar/sample-transportation-manager-toolbar-template.html',
+      bindings: {
+        selectedLots: '<'
+      }
     });
 
 
   function Controller() {
     var self = this;
 
-    self.showChangeButton = true;
-    self.showInfoButton = true;
     self.$onInit = onInit;
+
+    self.details = details;
 
     function onInit() {
     }
 
-    function _updateComponent(selectedActivities) {
-      if (selectedLots.length <= 0) {
-        self.showChangeButton = false;
-        self.showInfoButton = false;
-      } else if (selectedLots.length === 1) {
-        self.showChangeButton = true;
-        self.showInfoButton = true;
-      } else {
-        self.showChangeButton = false;
-        self.showInfoButton = false;
-      }
+    function details() {
+      console.log(self.selectedLots);
     }
   }
 }());
