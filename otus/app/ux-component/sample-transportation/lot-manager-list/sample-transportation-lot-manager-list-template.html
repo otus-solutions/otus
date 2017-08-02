@@ -9,10 +9,12 @@
         </div>
         <md-divider></md-divider>
       </md-list-item>
-      <md-list-item >
+      <md-list-item ng-repeat="Lot in $ctrl.lotsList track by $index "
+                    ng-class="{ 'selectedState': Lot.isSelected, 'regularState': !Lot.isSelected }"
+                    ng-click="$ctrl.selectLot(Lot)">
         <div class="md-list-item-text" layout="column" flex>
           <div layout="row" layout-align="start center">
-            <span layout="column">{{ $ctrl.lotsList[0].code}}</span>
+            <span layout="column">{{ Lot.code }}</span>
           </div>
         </div>
         <md-divider></md-divider>
