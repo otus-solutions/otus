@@ -3,8 +3,9 @@
 
     angular
       .module('otusjs.laboratory.business', [
-         'otusjs.laboratory.aliquot',
-         'otusjs.laboratory.business.transportation'
+         'otusjs.laboratory.business.participant',
+         'otusjs.laboratory.business.configuration',
+         'otusjs.laboratory.business.project'
       ]);
 
 }());

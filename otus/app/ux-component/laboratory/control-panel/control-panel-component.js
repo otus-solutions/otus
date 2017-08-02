@@ -18,7 +18,7 @@
   controller.$inject = [
     '$mdToast',
     '$mdDialog',
-    'otusjs.laboratory.business.ParticipantLaboratoryService',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.otus.dashboard.core.ContextService'
   ];
 
