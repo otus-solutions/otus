@@ -5,8 +5,9 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationManagerToolbar', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/manager-toolbar/sample-transportation-manager-toolbar-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/dashboard-display/manager-toolbar/sample-transportation-manager-toolbar-template.html',
       bindings: {
+        onViewInfo: '&',
         selectedLots: '<'
       }
     });
@@ -23,7 +24,7 @@
     }
 
     function details() {
-      console.log(self.selectedLots);
+      self.onViewInfo();
     }
   }
 }());

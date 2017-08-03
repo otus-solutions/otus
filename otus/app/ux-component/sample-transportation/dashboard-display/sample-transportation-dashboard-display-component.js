@@ -21,13 +21,18 @@
 
     self.lotAdder = lotAdder;
     self.$onInit = onInit;
-    self.selectLot = selectLot;
+    self.updateSelectedLots = updateSelectedLots;
+    self.handleViewInfoAction = handleViewInfoAction;
 
     function onInit() {
       self.selectedLots = [];
     }
 
-    function selectLot(selectedLots) {
+    function handleViewInfoAction() {
+      self.lotInfoComponent.show();
+    }
+
+    function updateSelectedLots(selectedLots) {
       self.selectedLots = selectedLots;
     }
 

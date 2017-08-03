@@ -17,6 +17,7 @@
     // lifecycle hooks
     self.$onInit = onInit;
 
+    /* Public methods */
 
     function onInit() {
     }

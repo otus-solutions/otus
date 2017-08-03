@@ -5,9 +5,9 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationLotManagerList', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/lot-manager-list/sample-transportation-lot-manager-list-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/dashboard-display/lot-manager-list/sample-transportation-lot-manager-list-template.html',
       bindings: {
-        onSelected: '&'
+        onUpdateSelectedLots: '&'
       }
     });
 
@@ -41,7 +41,7 @@
         _selectedLots.push(lot);
         lot.isSelected = true;
       }
-      self.onSelected({
+      self.onUpdateSelectedLots({
         lots: _selectedLots
       });
     }
