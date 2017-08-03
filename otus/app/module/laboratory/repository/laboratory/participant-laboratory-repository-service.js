@@ -17,9 +17,13 @@
 
     self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
-    self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+
+    //Laboratory Configuration Methods
+    self.getLaboratoryDescriptors = getLaboratoryDescriptors;
+    self.getAliquotsDescriptors = getAliquotsDescriptors;
+
 
     function initializeLaboratory(participant) {
       ParticipantLaboratoryCollectionService.useParticipant(participant);
@@ -36,17 +40,22 @@
       // return $http.get('app/module/laboratory/repository/laboratory/lab-participant.json');
     }
 
-    function getLaboratoryDescriptors(){
-      return ParticipantLaboratoryCollectionService.getDescriptors();
-      // return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');
-   }
-
-   function updateLaboratoryParticipant(laboratory){
+    function updateLaboratoryParticipant(laboratory) {
       return ParticipantLaboratoryCollectionService.update(laboratory);
-   }
+    }
 
-   function updateAliquots(updateStructure) {
-     return ParticipantLaboratoryCollectionService.updateAliquots(updateStructure);
-   }
+    function updateAliquots(updateStructure) {
+      return ParticipantLaboratoryCollectionService.updateAliquots(updateStructure);
+    }
+
+    function getLaboratoryDescriptors() {
+      // return ParticipantLaboratoryCollectionService.getDescriptors();
+      return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');
+    }
+
+    function getAliquotsDescriptors() {
+      // return ParticipantLaboratoryCollectionService.getAliquotDescriptors();  // TODO: implement
+      return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
+    }
   }
 }());

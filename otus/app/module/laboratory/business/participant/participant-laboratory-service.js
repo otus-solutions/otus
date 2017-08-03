@@ -11,10 +11,11 @@
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.laboratory.core.EventService',
-    'otusjs.laboratory.ParticipantLaboratoryFactory'
+    'otusjs.laboratory.ParticipantLaboratoryFactory',
+    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService'
   ];
 
-  function Service($q, ParticipantLaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory) {
+  function Service($q, ParticipantLaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService) {
     var self = this;
     var _participantLaboratory;
     var _laboratoryConfiguration;
@@ -94,19 +95,7 @@
     }
 
     function getLaboratoryDescriptors() {
-      var defer = $q.defer();
-      if (_laboratoryConfiguration) {
-        defer.resolve(_laboratoryConfiguration);
-      } else {
-        ParticipantLaboratoryRepositoryService.getLaboratoryDescriptors()
-          .then(function(labConfiguration) {
-            _laboratoryConfiguration = labConfiguration.data;
-            defer.resolve(_laboratoryConfiguration);
-         }, function(e){
-            defer.reject(e);
-         });
-      }
-      return defer.promise;
+      return LaboratoryConfigurationService.getLaboratoryDescriptors();
     }
 
     function getLoggedUser() {
