@@ -11,7 +11,7 @@
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.laboratory.core.EventService',
-    'otusjs.laboratory.ParticipantLaboratoryFactory',
+    'otusjs.laboratory.participant.ParticipantLaboratoryFactory',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService'
   ];
 

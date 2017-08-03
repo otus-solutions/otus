@@ -14,7 +14,7 @@
 
   Controller.$inject = [
     'otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService',
-    'otusjs.laboratory.LaboratoryConfigurationService',
+    'otusjs.laboratory.configuration.LaboratoryConfigurationService',
     'otusjs.laboratory.business.participant.aliquot.AliquotMessagesService',
     'otusjs.laboratory.business.participant.aliquot.AliquotValidationService',
     '$scope',

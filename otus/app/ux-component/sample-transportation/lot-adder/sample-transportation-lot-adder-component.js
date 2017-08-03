@@ -39,7 +39,6 @@
         var foundAliquot = _findAliquot(tubeCode);
         if (foundAliquot) {
           console.log(self.lot.insertAliquot(foundAliquot));
-
         }
         element.aliquot_code = '';
       }

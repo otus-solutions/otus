@@ -6,7 +6,7 @@
     .service('otusjs.laboratory.business.configuration.LaboratoryConfigurationService', Service);
 
   Service.$inject = [
-     'otusjs.laboratory.LaboratoryConfigurationService',
+     'otusjs.laboratory.configuration.LaboratoryConfigurationService',
      'otusjs.laboratory.repository.ParticipantLaboratoryRepositoryService',
     '$q',
   ];
