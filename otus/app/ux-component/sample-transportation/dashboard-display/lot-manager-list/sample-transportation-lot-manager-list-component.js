@@ -8,6 +8,9 @@
       templateUrl: 'app/ux-component/sample-transportation/dashboard-display/lot-manager-list/sample-transportation-lot-manager-list-template.html',
       bindings: {
         onUpdateSelectedLots: '&'
+      },
+      require: {
+        otusSampleTransportationDashboardDisplay: '^otusSampleTransportationDashboardDisplay'
       }
     });
 
@@ -21,8 +24,15 @@
 
     self.$onInit = onInit;
     self.selectLot = selectLot;
+    self.update = update;
 
     function onInit() {
+      _LoadLotsList();
+      self.otusSampleTransportationDashboardDisplay.listComponent = self;
+    }
+
+    function update() {
+      _updateSelected();
       _LoadLotsList();
     }
 
@@ -41,8 +51,12 @@
         _selectedLots.push(lot);
         lot.isSelected = true;
       }
+      _updateSelected(_selectedLots);
+    }
+
+    function _updateSelected(selectedlots) {
       self.onUpdateSelectedLots({
-        lots: _selectedLots
+        lots: selectedlots
       });
     }
   }

@@ -23,6 +23,7 @@
     self.$onInit = onInit;
     self.updateSelectedLots = updateSelectedLots;
     self.handleViewInfoAction = handleViewInfoAction;
+    self.handleDeleteAction = handleDeleteAction;
 
     function onInit() {
       self.selectedLots = [];
@@ -30,6 +31,10 @@
 
     function handleViewInfoAction() {
       self.lotInfoComponent.show();
+    }
+
+    function handleDeleteAction() {
+      self.listComponent.update();
     }
 
     function updateSelectedLots(selectedLots) {
