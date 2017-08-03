@@ -6,7 +6,7 @@
     .component('otusSampleTransportationDashboardDisplay', {
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/dashboard-display/sample-transportation-dashboard-display-template.html',
-      bindings:{
+      bindings: {
         lots: "<"
       }
     });
@@ -34,7 +34,7 @@
     }
 
     function handleDeleteAction() {
-      self.listComponent.update();
+      self.listComponent.updateOnDelete();
     }
 
     function updateSelectedLots(selectedLots) {

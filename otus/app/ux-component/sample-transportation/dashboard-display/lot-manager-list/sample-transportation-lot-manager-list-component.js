@@ -24,14 +24,15 @@
 
     self.$onInit = onInit;
     self.selectLot = selectLot;
-    self.update = update;
+    self.updateOnDelete = updateOnDelete;
 
     function onInit() {
       _LoadLotsList();
       self.otusSampleTransportationDashboardDisplay.listComponent = self;
     }
 
-    function update() {
+    function updateOnDelete() {
+      _selectedLots = [];
       _updateSelected();
       _LoadLotsList();
     }

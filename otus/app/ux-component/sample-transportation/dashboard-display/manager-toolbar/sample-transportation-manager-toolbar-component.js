@@ -13,9 +13,9 @@
       }
     });
 
-    Controller.$inject = [
-      '$mdDialog'
-    ];
+  Controller.$inject = [
+    '$mdDialog'
+  ];
 
   function Controller($mdDialog) {
     var self = this;
@@ -24,8 +24,7 @@
     self.$onInit = onInit;
 
     self.details = details;
-    self.deleteSelectedLots =deleteSelectedLots;
-    // self.deleteSelectedLots = deleteSelectedLots
+    self.deleteSelectedLots = deleteSelectedLots;
 
     function onInit() {
       _buildDialogs()
