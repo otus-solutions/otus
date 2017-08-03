@@ -13,27 +13,42 @@
   ];
 
 
-  function Controller(TransportationService) {
+  function Controller(AliquotTransportationService) {
     var self = this;
 
     self.$onInit = onInit;
     self.fastInsertion = fastInsertion;
 
     function onInit() {
-      self.lot = TransportationService.createAliquotLot();
+      console.clear();
+      self.lot = AliquotTransportationService.createAliquotLot();
+      AliquotTransportationService.getFullAliquotsList()
+        .then(function(response) {
+          self.fullAliquotsList = response.data; // TODO: fix
+          console.group('aliquots-list');
+          self.fullAliquotsList.forEach(function(aliquot) {
+            console.log(aliquot.code);
+          });
+          console.groupEnd('aliquots-list');
+        });
       console.log(self.lot);
     }
 
     function fastInsertion(element, tubeCode) {
       if (tubeCode.length === 9) {
         var foundAliquot = _findAliquot(tubeCode);
-        self.lot.insertAliquot(foundAliquot);
+        if (foundAliquot) {
+          console.log(self.lot.insertAliquot(foundAliquot));
+
+        }
         element.aliquot_code = '';
       }
     }
 
     function _findAliquot(code) {
-       return {code: code};
+      return self.fullAliquotsList.find(function(avaiableAliquot) {
+        return avaiableAliquot.code == code;
+      });
     }
   }
 }());
