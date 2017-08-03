@@ -3,15 +3,15 @@
 
   angular
     .module('otusjs.laboratory.repository')
-    .service('otusjs.laboratory.repository.ParticipantLaboratoryRepositoryService', Service);
+    .service('otusjs.laboratory.repository.LaboratoryRepositoryService', Service);
 
   Service.$inject = [
     'otusjs.laboratory.core.ModuleService',
-    'otusjs.laboratory.repository.ParticipantLaboratoryCollectionService',
+    'otusjs.laboratory.repository.LaboratoryCollectionService',
     '$http'
   ];
 
-  function Service(ModuleService, ParticipantLaboratoryCollectionService, $http) {
+  function Service(ModuleService, LaboratoryCollectionService, $http) {
     var self = this;
     var laboratory = {};
 
@@ -26,8 +26,8 @@
 
 
     function initializeLaboratory(participant) {
-      ParticipantLaboratoryCollectionService.useParticipant(participant);
-      return ParticipantLaboratoryCollectionService
+      LaboratoryCollectionService.useParticipant(participant);
+      return LaboratoryCollectionService
         .initializeLaboratory()
         .then(function(laboratory) {
           return laboratory;
@@ -35,26 +35,26 @@
     }
 
     function getLaboratory(participant) {
-      ParticipantLaboratoryCollectionService.useParticipant(participant);
-      return ParticipantLaboratoryCollectionService.getLaboratory();
+      LaboratoryCollectionService.useParticipant(participant);
+      return LaboratoryCollectionService.getLaboratory();
       // return $http.get('app/module/laboratory/repository/laboratory/lab-participant.json');
     }
 
     function updateLaboratoryParticipant(laboratory) {
-      return ParticipantLaboratoryCollectionService.update(laboratory);
+      return LaboratoryCollectionService.update(laboratory);
     }
 
     function updateAliquots(updateStructure) {
-      return ParticipantLaboratoryCollectionService.updateAliquots(updateStructure);
+      return LaboratoryCollectionService.updateAliquots(updateStructure);
     }
 
     function getLaboratoryDescriptors() {
-      // return ParticipantLaboratoryCollectionService.getDescriptors();
+      // return LaboratoryCollectionService.getDescriptors();
       return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');
     }
 
     function getAliquotsDescriptors() {
-      // return ParticipantLaboratoryCollectionService.getAliquotDescriptors();  // TODO: implement
+      // return LaboratoryCollectionService.getAliquotDescriptors();  // TODO: implement
       return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
     }
   }

@@ -7,12 +7,12 @@
 
   angular
     .module('otusjs.laboratory.repository')
-    .service('otusjs.laboratory.repository.ParticipantLaboratoryCollectionService', Service);
+    .service('otusjs.laboratory.repository.LaboratoryCollectionService', Service);
 
   Service.$inject = [
     '$q',
     'otusjs.laboratory.core.ModuleService',
-    'otusjs.laboratory.storage.ParticipantLaboratoryLocalStorageService'
+    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
   ];
 
   /**
@@ -23,9 +23,9 @@
    * @namespace LaboratoryCollectionService
    * @memberof Services
    */
-  function Service($q, ModuleService, ParticipantLaboratoryLocalStorageService) {
+  function Service($q, ModuleService, LaboratoryLocalStorageService) {
     var self = this;
-    var _remoteStorage = ModuleService.getParticipantLaboratoryRemoteStorage();
+    var _remoteStorage = ModuleService.getLaboratoryRemoteStorage();
     var _participant = null;
 
     /* Public methods */
@@ -74,7 +74,7 @@
           return remoteStorage
             .insert(laboratory)
             .then(function(remoteLaboratory) {
-              var localLaboratory = ParticipantLaboratoryLocalStorageService.insert(remoteLaboratory);
+              var localLaboratory = LaboratoryLocalStorageService.insert(remoteLaboratory);
               request.resolve(localLaboratory);
             });
         });
@@ -100,8 +100,8 @@
               recruitmentNumber: _participant.recruitmentNumber
             })
             .then(function(laboratory) {
-              ParticipantLaboratoryLocalStorageService.clear();
-              var localData = ParticipantLaboratoryLocalStorageService.insert(laboratory);
+              LaboratoryLocalStorageService.clear();
+              var localData = LaboratoryLocalStorageService.insert(laboratory);
               request.resolve(localData);
             });
         });

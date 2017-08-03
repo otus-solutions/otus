@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.ParticipantLaboratoryRestService', Service);
+    .service('otusjs.deploy.LaboratoryRestService', Service);
 
   Service.$inject = [
     'OtusRestResourceService'

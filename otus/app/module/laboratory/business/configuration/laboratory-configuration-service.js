@@ -7,11 +7,11 @@
 
   Service.$inject = [
      'otusjs.laboratory.configuration.LaboratoryConfigurationService',
-     'otusjs.laboratory.repository.ParticipantLaboratoryRepositoryService',
+     'otusjs.laboratory.repository.LaboratoryRepositoryService',
     '$q',
   ];
 
-  function Service(LaboratoryConfigurationService, ParticipantLaboratoryRepositoryService, $q) {
+  function Service(LaboratoryConfigurationService, LaboratoryRepositoryService, $q) {
     var self = this;
 
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
@@ -44,7 +44,7 @@
 
     function _fetchLaboratoryConfiguration() {
       var defer = $q.defer();
-      ParticipantLaboratoryRepositoryService.getLaboratoryDescriptors()
+      LaboratoryRepositoryService.getLaboratoryDescriptors()
         .then(function(response) {
           defer.resolve(response.data);
         }, function(e) {
@@ -73,7 +73,7 @@
 
     function _fetchAliquotsDescriptors() {
       var defer = $q.defer();
-      ParticipantLaboratoryRepositoryService.getAliquotsDescriptors() // TODO: implement
+      LaboratoryRepositoryService.getAliquotsDescriptors() // TODO: implement
         .then(function(response) {
           defer.resolve(response.data);
         }, function(e) {

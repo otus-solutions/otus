@@ -7,7 +7,7 @@
 
   Service.$inject = [
     '$q',
-    'otusjs.laboratory.repository.ParticipantLaboratoryRepositoryService',
+    'otusjs.laboratory.repository.LaboratoryRepositoryService',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.laboratory.core.EventService',
@@ -15,7 +15,7 @@
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService'
   ];
 
-  function Service($q, ParticipantLaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService) {
+  function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService) {
     var self = this;
     var _participantLaboratory;
     var _laboratoryConfiguration;
@@ -47,7 +47,7 @@
           self.participant = participant;
           getLaboratoryDescriptors()
             .then(function() {
-              return ParticipantLaboratoryRepositoryService
+              return LaboratoryRepositoryService
                 .initializeLaboratory(participant)
                 .then(function(laboratory) {
                   _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(),self.participant);
@@ -65,7 +65,7 @@
         .then(function(participant) {
           getLaboratoryDescriptors()
             .then(function() {
-              ParticipantLaboratoryRepositoryService
+              LaboratoryRepositoryService
                 .getLaboratory(participant)
                 .then(function(laboratory) {
                   self.participant = participant;
@@ -103,11 +103,11 @@
     }
 
     function updateLaboratoryParticipant() {
-      return ParticipantLaboratoryRepositoryService.updateLaboratoryParticipant(_participantLaboratory.toJSON());
+      return LaboratoryRepositoryService.updateLaboratoryParticipant(_participantLaboratory.toJSON());
     }
 
     function updateAliquots(updateStructure) {
-      return ParticipantLaboratoryRepositoryService.updateAliquots(updateStructure);
+      return LaboratoryRepositoryService.updateAliquots(updateStructure);
     }
 
     function generateLabels() {
