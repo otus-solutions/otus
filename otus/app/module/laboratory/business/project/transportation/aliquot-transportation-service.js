@@ -7,11 +7,12 @@
 
   service.$inject = [
      'otusjs.laboratory.transportation.TransportationService',
+     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
      '$http',
      '$q'
   ];
 
-  function service(TransportationService, $http, $q) {
+  function service(TransportationService, LaboratoryConfigurationService, $http, $q) {
     var self = this;
 
     self.getFullAliquotsList = getFullAliquotsList;
@@ -21,30 +22,33 @@
     onInit();
 
     function onInit() {
-      loadLots()
-         .then(function(response) {
-            console.log(response);
-         });
-      getFullAliquotsList()
-         .then(function(response) {
-            console.log(response.data);
-         });
+      LaboratoryConfigurationService.getAliquotsDescriptors()
+        .then(function() {
+          loadLots()
+            .then(function(response) {
+              console.log(response);
+            });
+        });
+    }
+
+    function _fetchAliquotsDescriptors() {
+
     }
 
     function loadLots() {
       //this returns the already created lots
       var defer = $q.defer();
       $http.get('app/module/laboratory/repository/laboratory/single-lot.json')
-         .then(function(response) {
-            //assume response.data as array
-            if (response.data) {
-               console.log(response);
-               var lots = response.data.map(function(lotJson) {
-                  return TransportationService.buildAliquotLotFromJson(lotJson);
-               });
-               defer.resolve(lots);
-            }
-         });
+        .then(function(response) {
+          //assume response.data as array
+          if (response.data) {
+            console.log(response);
+            var lots = response.data.map(function(lotJson) {
+              return TransportationService.buildAliquotLotFromJson(lotJson);
+            });
+            defer.resolve(lots);
+          }
+        });
       return defer.promise;
     }
 
@@ -54,7 +58,7 @@
     }
 
     function createAliquotLot() {
-       return TransportationService.createAliquotLot();
+      return TransportationService.createAliquotLot();
     }
 
     return self;
