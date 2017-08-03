@@ -5,12 +5,12 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationLotInfoSidenav', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/dashboard-display/lot-info-sidenav/lot-info-sidenav-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-info-sidenav/lot-info-sidenav-template.html',
       bindings: {
         selectedLot: '<'
       },
       require: {
-        otusSampleTransportationDashboardDisplay: '^otusSampleTransportationDashboardDisplay'
+        otusSampleTransportationManagerList: '^otusSampleTransportationManagerList'
       }
     });
 
@@ -28,7 +28,7 @@
     self.$onInit = onInit;
 
     function onInit() {
-      self.otusSampleTransportationDashboardDisplay.lotInfoComponent = self;
+      self.otusSampleTransportationManagerList.lotInfoComponent = self;
     }
 
     function show() {

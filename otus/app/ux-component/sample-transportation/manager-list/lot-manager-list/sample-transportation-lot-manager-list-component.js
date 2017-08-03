@@ -5,12 +5,12 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationLotManagerList', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/dashboard-display/lot-manager-list/sample-transportation-lot-manager-list-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-manager-list/sample-transportation-lot-manager-list-template.html',
       bindings: {
         onUpdateSelectedLots: '&'
       },
       require: {
-        otusSampleTransportationDashboardDisplay: '^otusSampleTransportationDashboardDisplay'
+        otusSampleTransportationManagerList: '^otusSampleTransportationManagerList'
       }
     });
 
@@ -28,7 +28,7 @@
 
     function onInit() {
       _LoadLotsList();
-      self.otusSampleTransportationDashboardDisplay.listComponent = self;
+      self.otusSampleTransportationManagerList.listComponent = self;
     }
 
     function updateOnDelete() {

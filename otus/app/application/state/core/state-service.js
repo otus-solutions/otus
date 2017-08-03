@@ -30,6 +30,7 @@
     self.getCurrentState = getCurrentState;
     self.activateSampleTransport = activateSampleTransport;
     self.activateSampleTransportationLotAdder = activateSampleTransportationLotAdder;
+    self.activateSampleTransportationManagerList = activateSampleTransportationManagerList;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -85,7 +86,11 @@
     }
 
     function activateSampleTransport() {
-      $state.go(STATE.SAMPLE_TRANSPORTATION_DASHBOARD);
+      $state.go(STATE.SAMPLE_TRANSPORTATION_DASHBOARD,{obj:"teste"});
+    }
+
+    function activateSampleTransportationManagerList() {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_MANAGER_LIST);
     }
 
     function activateSampleTransportationLotAdder() {

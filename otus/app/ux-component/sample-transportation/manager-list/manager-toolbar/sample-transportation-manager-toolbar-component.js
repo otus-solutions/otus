@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationManagerToolbar', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/dashboard-display/manager-toolbar/sample-transportation-manager-toolbar-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/manager-list/manager-toolbar/sample-transportation-manager-toolbar-template.html',
       bindings: {
         onViewInfo: '&',
         onDelete: '&',

@@ -18,7 +18,7 @@
     self.returnToSampleTransportationDashboard = returnToSampleTransportationDashboard;
 
     function returnToSampleTransportationDashboard() {
-      ApplicationStateService.activateSampleTransport();
+      ApplicationStateService.activateSampleTransportationManagerList();
     }
   }
 }());

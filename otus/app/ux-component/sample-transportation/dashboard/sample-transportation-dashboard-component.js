@@ -11,7 +11,11 @@
       }
     });
 
-  function Controller() {
+  Controller.$inject = [
+    'otusjs.application.state.ApplicationStateService'
+  ];
+
+  function Controller(ApplicationStateService) {
     var self = this;
 
     // lifecycle hooks
@@ -20,6 +24,7 @@
     /* Public methods */
 
     function onInit() {
+      ApplicationStateService.activateSampleTransportationManagerList();
     }
   }
 }());

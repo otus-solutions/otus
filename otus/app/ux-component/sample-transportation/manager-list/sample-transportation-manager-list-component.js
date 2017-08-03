@@ -3,19 +3,20 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusSampleTransportationDashboardDisplay', {
+    .component('otusSampleTransportationManagerList', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/dashboard-display/sample-transportation-dashboard-display-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/manager-list/sample-transportation-manager-list-template.html',
       bindings: {
         lots: "<"
       }
     });
 
   Controller.$inject = [
+    '$stateParams',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(ApplicationStateService) {
+  function Controller($stateParams, ApplicationStateService) {
     var self = this;
     self.selectedLots;
 
@@ -27,6 +28,7 @@
 
     function onInit() {
       self.selectedLots = [];
+      console.log($stateParams);
     }
 
     function handleViewInfoAction() {
