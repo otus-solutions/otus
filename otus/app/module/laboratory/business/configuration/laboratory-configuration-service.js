@@ -28,15 +28,15 @@
     //takes nothing, returns promise
     function getLaboratoryDescriptors() {
       var defer = $q.defer();
-      var _laboratoryConfiguration = LaboratoryConfigurationService.getLaboratoryConfiguration();
+      var labConfigInitialized = LaboratoryConfigurationService.checkLaboratoryConfiguration();
 
-      if (_laboratoryConfiguration) {
-        defer.resolve(_laboratoryConfiguration);
+      if (labConfigInitialized) {
+        defer.resolve(labConfigInitialized);
       } else {
         _fetchLaboratoryConfiguration()
           .then(function(laboratoryConfiguration) {
             LaboratoryConfigurationService.initializeLaboratoryConfiguration(laboratoryConfiguration);
-            defer.resolve(LaboratoryConfigurationService.getLaboratoryConfiguration());
+            defer.resolve(LaboratoryConfigurationService.checkLaboratoryConfiguration());
           });
       }
       return defer.promise;
@@ -57,15 +57,15 @@
     /*Aliquots Descriptors*/
     function getAliquotsDescriptors() {
       var defer = $q.defer();
-      var _aliquotsDescriptors = LaboratoryConfigurationService.getAliquotsDescriptors();
+      var aliquotsInitialized = LaboratoryConfigurationService.checkAliquotsDescriptors();
 
-      if (_aliquotsDescriptors) {
-        defer.resolve(_aliquotsDescriptors);
+      if (aliquotsInitialized) {
+        defer.resolve(aliquotsInitialized);
       } else {
         _fetchAliquotsDescriptors()
           .then(function(aliquotsDescriptors) {
             LaboratoryConfigurationService.initializeAliquotsDescriptors(aliquotsDescriptors);
-            defer.resolve(LaboratoryConfigurationService.getAliquotsDescriptors());
+            defer.resolve(LaboratoryConfigurationService.checkAliquotsDescriptors());
           });
       }
       return defer.promise;

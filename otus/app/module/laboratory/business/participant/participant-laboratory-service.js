@@ -46,11 +46,11 @@
         .then(function(participant) {
           self.participant = participant;
           getLaboratoryDescriptors()
-            .then(function(labDescriptor) {
+            .then(function() {
               return ParticipantLaboratoryRepositoryService
                 .initializeLaboratory(participant)
                 .then(function(laboratory) {
-                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser(),self.participant);
+                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(),self.participant);
                   request.resolve(laboratory);
                 });
             });
@@ -64,13 +64,13 @@
       getSelectedParticipant()
         .then(function(participant) {
           getLaboratoryDescriptors()
-            .then(function(labDescriptor) {
+            .then(function() {
               ParticipantLaboratoryRepositoryService
                 .getLaboratory(participant)
                 .then(function(laboratory) {
                   self.participant = participant;
                   if (laboratory !== 'null') {
-                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser(),self.participant);
+                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(),self.participant);
                     request.resolve(true);
                   } else {
                     request.resolve(false);
