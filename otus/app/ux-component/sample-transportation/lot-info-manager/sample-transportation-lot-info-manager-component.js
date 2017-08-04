@@ -3,17 +3,18 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusSampleTransportationLotAdder', {
+    .component('otusSampleTransportationLotInfoManager', {
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/sample-transportation-lot-info-manager-template.html'
     });
 
   Controller.$inject = [
+    '$stateParams',
      'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
   ];
 
 
-  function Controller(AliquotTransportationService) {
+  function Controller($stateParams, AliquotTransportationService) {
     var self = this;
 
     self.$onInit = onInit;
@@ -21,6 +22,9 @@
 
     function onInit() {
       console.clear();
+      console.log('teste');
+      console.log($stateParams.selectedLot);
+
       self.lot = AliquotTransportationService.createAliquotLot();
       AliquotTransportationService.getFullAliquotsList()
         .then(function(response) {

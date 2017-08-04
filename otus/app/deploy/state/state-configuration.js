@@ -21,7 +21,7 @@
       'SIGNUP': 'signup',
       'SIGNUP_RESULT': 'signup-result',
       'LABORATORY': 'laboratory-participant',
-      'SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER': 'sample-transportation-lot-adder',
+      'SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER': 'sample-transportation-lot-info-manager',
       'SAMPLE_TRANSPORTATION_MANAGER_LIST': 'sample-transportation-manager-list',
       'SAMPLE_TRANSPORTATION_DASHBOARD': 'sample-transportation-dashboard'
     })

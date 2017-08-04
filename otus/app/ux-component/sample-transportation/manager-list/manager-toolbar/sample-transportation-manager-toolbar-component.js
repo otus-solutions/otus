@@ -9,6 +9,7 @@
       bindings: {
         onViewInfo: '&',
         onDelete: '&',
+        onChangeLot: '&',
         selectedLots: '<'
       }
     });
@@ -25,6 +26,7 @@
 
     self.details = details;
     self.deleteSelectedLots = deleteSelectedLots;
+    self.changeSelectedLot = changeSelectedLot;
 
     function onInit() {
       _buildDialogs()
@@ -38,6 +40,10 @@
       $mdDialog.show(confirmDeleteSelectedLots).then(function() {
         self.onDelete();
       });
+    }
+
+    function changeSelectedLot() {
+      self.onChangeLot();
     }
 
     function _buildDialogs() {
