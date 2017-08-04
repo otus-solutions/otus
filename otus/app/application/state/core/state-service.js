@@ -28,8 +28,8 @@
     self.activateSignup = activateSignup;
     self.activateSignupResult = activateSignupResult;
     self.getCurrentState = getCurrentState;
-    self.activateSampleTransport = activateSampleTransport;
-    self.activateSampleTransportationLotAdder = activateSampleTransportationLotAdder;
+    self.activateSampleTransportation = activateSampleTransportation;
+    self.activateSampleTransportationLotInfoManager = activateSampleTransportationLotInfoManager;
     self.activateSampleTransportationManagerList = activateSampleTransportationManagerList;
     // self.activateErrorOffline = activateErrorOffline;
 
@@ -85,16 +85,16 @@
       $state.go(STATE.SIGNUP_RESULT);
     }
 
-    function activateSampleTransport() {
-      $state.go(STATE.SAMPLE_TRANSPORTATION_DASHBOARD,{obj:"teste"});
+    function activateSampleTransportation() {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_DASHBOARD);
     }
 
     function activateSampleTransportationManagerList() {
       $state.go(STATE.SAMPLE_TRANSPORTATION_MANAGER_LIST);
     }
 
-    function activateSampleTransportationLotAdder() {
-      $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_ADDER);
+    function activateSampleTransportationLotInfoManager(lot) {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER, {selectedLot:lot});
     }
 
     function getCurrentState() {

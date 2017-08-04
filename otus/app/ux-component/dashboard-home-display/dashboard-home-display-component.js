@@ -21,7 +21,7 @@
     self.$onInit = onInit;
     /* Public methods */
     function sampleTransportDashboard() {
-      ApplicationStateService.activateSampleTransport();
+      ApplicationStateService.activateSampleTransportation();
     }
 
     function setFocus() {

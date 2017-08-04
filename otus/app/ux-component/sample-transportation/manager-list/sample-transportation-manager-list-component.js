@@ -12,11 +12,10 @@
     });
 
   Controller.$inject = [
-    '$stateParams',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller($stateParams, ApplicationStateService) {
+  function Controller(ApplicationStateService) {
     var self = this;
     self.selectedLots;
 
@@ -25,10 +24,10 @@
     self.updateSelectedLots = updateSelectedLots;
     self.handleViewInfoAction = handleViewInfoAction;
     self.handleDeleteAction = handleDeleteAction;
+    self.handleChangeAction = handleChangeAction;
 
     function onInit() {
       self.selectedLots = [];
-      console.log($stateParams);
     }
 
     function handleViewInfoAction() {
@@ -39,12 +38,16 @@
       self.listComponent.updateOnDelete();
     }
 
+    function handleChangeAction() {
+
+    }
+
     function updateSelectedLots(selectedLots) {
       self.selectedLots = selectedLots;
     }
 
     function lotAdder() {
-      ApplicationStateService.activateSampleTransportationLotAdder();
+      ApplicationStateService.activateSampleTransportationLotInfoManager();
     }
 
     function getLots() {

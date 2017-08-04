@@ -20,8 +20,8 @@
 
     self.state = {
       parent: STATE.SAMPLE_TRANSPORTATION_DASHBOARD,
-      name: STATE.SAMPLE_TRANSPORTATION_LOT_ADDER,
-      url: '/' + STATE.SAMPLE_TRANSPORTATION_LOT_ADDER,
+      name: STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER,
+      url: '/' + STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER,
       template: '<otus-sample-transportation-lot-adder layout="column" flex></otus-sample-transportation-lot-adder>',
     };
   }

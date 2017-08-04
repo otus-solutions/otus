@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationLotAdder', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/lot-adder/sample-transportation-lot-adder-template.html'
+      templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/sample-transportation-lot-info-manager-template.html'
     });
 
   Controller.$inject = [

@@ -18,7 +18,7 @@
     self.lotAdder = lotAdder;
 
     function lotAdder() {
-      ApplicationStateService.activateSampleTransportationLotAdder();
+      ApplicationStateService.activateSampleTransportationLotInfoManager();
     }
   }
 }());

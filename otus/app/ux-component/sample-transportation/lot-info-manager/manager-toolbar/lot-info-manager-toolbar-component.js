@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusLotAdderManagerToolbar', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/lot-adder/manager-toolbar/lot-adder-manager-toolbar-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/manager-toolbar/lot-info-manager-toolbar-template.html',
     });
 
   Controller.$inject = [
