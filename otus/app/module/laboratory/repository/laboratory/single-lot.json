@@ -1,7 +1,7 @@
 [{
   "code": "30513515",
   "shipmentDate": "2017-07-28T19:14:08.925Z",
-  "processingDate": "2017-07-28T19:14:08.925Z",
+  "processingDate": "2017-07-28T19:18:08.925Z",
   "operator": "fulanodetal@gmail.com",
   "aliquotList": [{
     "objectType": "Aliquot",
@@ -40,6 +40,180 @@
   }, {
     "objectType": "Aliquot",
     "code": "333000003",
+    "name": "FASTING_INSULINE",
+    "container": "CRYOTUBE",
+    "role": "EXAM",
+    "sex": "F",
+    "birthdate": {
+      "objectType": "ImmutableDate",
+      "value": "1970-10-20 00:00:00.000"
+    },
+    "aliquotCollectionData": {
+      "objectType": "AliquotCollectionData",
+      "metadata": "",
+      "operator": "fulano.detal@gmail.com",
+      "time": "2017-07-27T17:02:51.417Z"
+    }
+  }]
+},
+{
+  "code": "40513515",
+  "shipmentDate": "2017-07-29T19:14:08.925Z",
+  "processingDate": "2017-07-28T19:14:08.925Z",
+  "operator": "fulanodetal@gmail.com",
+  "aliquotList": [{
+    "objectType": "Aliquot",
+    "code": "433000001",
+    "name": "BIOSORO",
+    "container": "CRYOTUBE",
+    "role": "EXAM",
+    "sex": "F",
+    "birthdate": {
+      "objectType": "ImmutableDate",
+      "value": "1970-09-20 00:00:00.000"
+    },
+    "aliquotCollectionData": {
+      "objectType": "AliquotCollectionData",
+      "metadata": "",
+      "operator": "fulano.detal@gmail.com",
+      "time": "2017-07-27T17:02:51.417Z"
+    }
+  }, {
+    "objectType": "Aliquot",
+    "code": "433000002",
+    "name": "PCR",
+    "container": "CRYOTUBE",
+    "role": "EXAM",
+    "sex": "F",
+    "birthdate": {
+      "objectType": "ImmutableDate",
+      "value": "1970-09-20 00:00:00.000"
+    },
+    "aliquotCollectionData": {
+      "objectType": "AliquotCollectionData",
+      "metadata": "",
+      "operator": "fulano.detal@gmail.com",
+      "time": "2017-07-27T17:02:51.417Z"
+    }
+  }, {
+    "objectType": "Aliquot",
+    "code": "433000003",
+    "name": "FASTING_INSULINE",
+    "container": "CRYOTUBE",
+    "role": "EXAM",
+    "sex": "F",
+    "birthdate": {
+      "objectType": "ImmutableDate",
+      "value": "1970-10-20 00:00:00.000"
+    },
+    "aliquotCollectionData": {
+      "objectType": "AliquotCollectionData",
+      "metadata": "",
+      "operator": "fulano.detal@gmail.com",
+      "time": "2017-07-27T17:02:51.417Z"
+    }
+  }]
+},
+{
+  "code": "50513515",
+  "shipmentDate": "2017-07-30T19:14:08.925Z",
+  "processingDate": "2017-07-28T19:14:08.925Z",
+  "operator": "fulanodetal@gmail.com",
+  "aliquotList": [{
+    "objectType": "Aliquot",
+    "code": "433000001",
+    "name": "BIOSORO",
+    "container": "CRYOTUBE",
+    "role": "EXAM",
+    "sex": "F",
+    "birthdate": {
+      "objectType": "ImmutableDate",
+      "value": "1970-09-20 00:00:00.000"
+    },
+    "aliquotCollectionData": {
+      "objectType": "AliquotCollectionData",
+      "metadata": "",
+      "operator": "fulano.detal@gmail.com",
+      "time": "2017-07-27T17:02:51.417Z"
+    }
+  }, {
+    "objectType": "Aliquot",
+    "code": "533000002",
+    "name": "PCR",
+    "container": "CRYOTUBE",
+    "role": "EXAM",
+    "sex": "F",
+    "birthdate": {
+      "objectType": "ImmutableDate",
+      "value": "1970-09-20 00:00:00.000"
+    },
+    "aliquotCollectionData": {
+      "objectType": "AliquotCollectionData",
+      "metadata": "",
+      "operator": "fulano.detal@gmail.com",
+      "time": "2017-07-27T17:02:51.417Z"
+    }
+  }, {
+    "objectType": "Aliquot",
+    "code": "533000003",
+    "name": "FASTING_INSULINE",
+    "container": "CRYOTUBE",
+    "role": "EXAM",
+    "sex": "F",
+    "birthdate": {
+      "objectType": "ImmutableDate",
+      "value": "1970-10-20 00:00:00.000"
+    },
+    "aliquotCollectionData": {
+      "objectType": "AliquotCollectionData",
+      "metadata": "",
+      "operator": "fulano.detal@gmail.com",
+      "time": "2017-07-27T17:02:51.417Z"
+    }
+  }]
+},
+{
+  "code": "60513515",
+  "shipmentDate": "2017-07-31T19:14:08.925Z",
+  "processingDate": "2017-07-28T19:14:08.925Z",
+  "operator": "fulanodetal@gmail.com",
+  "aliquotList": [{
+    "objectType": "Aliquot",
+    "code": "633000001",
+    "name": "BIOSORO",
+    "container": "CRYOTUBE",
+    "role": "EXAM",
+    "sex": "F",
+    "birthdate": {
+      "objectType": "ImmutableDate",
+      "value": "1970-09-20 00:00:00.000"
+    },
+    "aliquotCollectionData": {
+      "objectType": "AliquotCollectionData",
+      "metadata": "",
+      "operator": "fulano.detal@gmail.com",
+      "time": "2017-07-27T17:02:51.417Z"
+    }
+  }, {
+    "objectType": "Aliquot",
+    "code": "633000002",
+    "name": "PCR",
+    "container": "CRYOTUBE",
+    "role": "EXAM",
+    "sex": "F",
+    "birthdate": {
+      "objectType": "ImmutableDate",
+      "value": "1970-09-20 00:00:00.000"
+    },
+    "aliquotCollectionData": {
+      "objectType": "AliquotCollectionData",
+      "metadata": "",
+      "operator": "fulano.detal@gmail.com",
+      "time": "2017-07-27T17:02:51.417Z"
+    }
+  }, {
+    "objectType": "Aliquot",
+    "code": "633000003",
     "name": "FASTING_INSULINE",
     "container": "CRYOTUBE",
     "role": "EXAM",

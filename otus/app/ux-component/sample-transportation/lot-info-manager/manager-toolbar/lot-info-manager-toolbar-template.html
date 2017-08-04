@@ -5,9 +5,13 @@
       <md-tooltip md-direction="down">Cancelar</md-tooltip>
       <md-icon  style="color: white" md-font-set="material-icons" aria-label="Cancelar">clear</md-icon>
     </md-button>
-    <md-button ng-click="$ctrl.addLot()" class="md-raised md-accent md-icon-button" aria-label="Adicionar">
+    <md-button ng-click="$ctrl.addLot()" class="md-raised md-accent md-icon-button" aria-label="Adicionar" ng-if="!$ctrl.selectedLot">
       <md-tooltip md-direction="down">Adicionar</md-tooltip>
       <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
+    </md-button>
+    <md-button ng-click="$ctrl.saveLot()" class="md-raised md-accent md-icon-button" aria-label="Salvar" ng-if="$ctrl.selectedLot">
+      <md-tooltip md-direction="down">Salvar</md-tooltip>
+      <md-icon aria-label="Adicionar">save</md-icon>
     </md-button>
   </div>
 </md-toolbar>
