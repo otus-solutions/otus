@@ -7,15 +7,15 @@
 
   Service.$inject = [
     '$q',
-    'otusjs.laboratory.repository.ParticipantLaboratoryRepositoryService',
+    'otusjs.laboratory.repository.LaboratoryRepositoryService',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.laboratory.core.EventService',
-    'otusjs.laboratory.ParticipantLaboratoryFactory',
+    'otusjs.laboratory.participant.ParticipantLaboratoryFactory',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService'
   ];
 
-  function Service($q, ParticipantLaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService) {
+  function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService) {
     var self = this;
     var _participantLaboratory;
     var _laboratoryConfiguration;
@@ -46,11 +46,11 @@
         .then(function(participant) {
           self.participant = participant;
           getLaboratoryDescriptors()
-            .then(function(labDescriptor) {
-              return ParticipantLaboratoryRepositoryService
+            .then(function() {
+              return LaboratoryRepositoryService
                 .initializeLaboratory(participant)
                 .then(function(laboratory) {
-                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser(),self.participant);
+                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(),self.participant);
                   request.resolve(laboratory);
                 });
             });
@@ -64,13 +64,13 @@
       getSelectedParticipant()
         .then(function(participant) {
           getLaboratoryDescriptors()
-            .then(function(labDescriptor) {
-              ParticipantLaboratoryRepositoryService
+            .then(function() {
+              LaboratoryRepositoryService
                 .getLaboratory(participant)
                 .then(function(laboratory) {
                   self.participant = participant;
                   if (laboratory !== 'null') {
-                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, labDescriptor, getLoggedUser(),self.participant);
+                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(),self.participant);
                     request.resolve(true);
                   } else {
                     request.resolve(false);
@@ -103,11 +103,11 @@
     }
 
     function updateLaboratoryParticipant() {
-      return ParticipantLaboratoryRepositoryService.updateLaboratoryParticipant(_participantLaboratory.toJSON());
+      return LaboratoryRepositoryService.updateLaboratoryParticipant(_participantLaboratory.toJSON());
     }
 
     function updateAliquots(updateStructure) {
-      return ParticipantLaboratoryRepositoryService.updateAliquots(updateStructure);
+      return LaboratoryRepositoryService.updateAliquots(updateStructure);
     }
 
     function generateLabels() {

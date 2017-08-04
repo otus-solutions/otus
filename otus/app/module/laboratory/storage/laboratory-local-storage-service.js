@@ -1,5 +1,5 @@
 /**
- * ParticipantLaboratoryLocalStorageService
+ * LaboratoryLocalStorageService
  * @namespace Services
  */
 (function() {
@@ -7,19 +7,19 @@
 
   angular
     .module('otusjs.laboratory.storage')
-    .service('otusjs.laboratory.storage.ParticipantLaboratoryLocalStorageService', Service);
+    .service('otusjs.laboratory.storage.LaboratoryLocalStorageService', Service);
 
   Service.$inject = [
     '$q'
   ];
 
   /**
-   * ParticipantLaboratoryLocalStorageService creates a communication between the application and
+   * LaboratoryLocalStorageService creates a communication between the application and
    * a LokiJS's collection, named "laboratories". So the operations allowed to a
    * LokiJS's collection are placed here and specialized to deal only with data of
    * laboratories.
-   * @see {ParticipantLaboratoryLocalStorageService}
-   * @namespace ParticipantLaboratoryLocalStorageService
+   * @see {LaboratoryLocalStorageService}
+   * @namespace LaboratoryLocalStorageService
    * @memberof Services
    */
   function Service($q) {
@@ -43,7 +43,7 @@
      * Binds this service to collection "laboratories" from LokiJS database instance.
      * @param {object} collection - the reference to collection
      * @param {object} db - the reference to database instance
-     * @memberof ParticipantLaboratoryLocalStorageService
+     * @memberof LaboratoryLocalStorageService
      */
     function initialize(collection, db) {
       _collection = collection;
@@ -54,7 +54,7 @@
      * Adds laboratories to collection.
      * @param {(object)} laboratories - the laboratory to be inserted
      * @returns {(object)} laboratory inserted
-     * @memberof ParticipantLaboratoryLocalStorageService
+     * @memberof LaboratoryLocalStorageService
      */
     function insert(laboratories) {
       var insertedData = _collection.insert(laboratories);
@@ -65,7 +65,7 @@
     /**
      * Updates laboratories in collection.
      * @param {(object)} laboratories - the laboratory to be updated
-     * @memberof ParticipantLaboratoryLocalStorageService
+     * @memberof LaboratoryLocalStorageService
      */
     function update(laboratories) {
       _collection.update(laboratories);

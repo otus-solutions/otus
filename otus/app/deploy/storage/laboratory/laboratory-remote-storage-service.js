@@ -1,5 +1,5 @@
 /**
- * ParticipantLaboratoryRestService
+ * LaboratoryRestService
  * @namespace Services
  */
 (function() {
@@ -7,26 +7,26 @@
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.ParticipantLaboratoryRemoteStorageService', Service);
+    .service('otusjs.deploy.LaboratoryRemoteStorageService', Service);
 
   Service.$inject = [
     '$q',
-    'otusjs.deploy.ParticipantLaboratoryRestService'
+    'otusjs.deploy.LaboratoryRestService'
   ];
 
   /**
-   * ParticipantLaboratoryRemoteStorageService creates a communication between the application and
-   * ParticipantLaboratoryRestService. Thus, layers above this service doesn't really know from
+   * LaboratoryRemoteStorageService creates a communication between the application and
+   * LaboratoryRestService. Thus, layers above this service doesn't really know from
    * where the storage is coming, considering that a remote storage not necessarily
    * is accessed through a REST service. The interface of this service has the
    * intent of represents to the client code that it is an collection like an
    * MongoDB or IndexDB collection. If new storage sources are created, this service
    * should wrap it.
-   * @see {ParticipantLaboratoryRestService}
-   * @namespace ParticipantLaboratoryRemoteStorage
+   * @see {LaboratoryRestService}
+   * @namespace LaboratoryRemoteStorage
    * @memberof Services
    */
-  function Service($q, ParticipantLaboratoryRestService) {
+  function Service($q, LaboratoryRestService) {
     var self = this;
 
     /* Public methods */
@@ -47,7 +47,7 @@
      */
     function insert(laboratoryToInsert) {
       var deferred = $q.defer();
-      ParticipantLaboratoryRestService.create();
+      LaboratoryRestService.create();
 
       return deferred.promise;
     }
@@ -60,7 +60,7 @@
      */
     function initializeLaboratory(recruitmentNumber) {
       var deferred = $q.defer();
-      ParticipantLaboratoryRestService
+      LaboratoryRestService
         .initializeLaboratory(recruitmentNumber)
         .then(function(response) {
           deferred.resolve(response.data);
@@ -78,7 +78,7 @@
     function getLaboratory(recruitmentNumber) {
       var deferred = $q.defer();
 
-      ParticipantLaboratoryRestService
+      LaboratoryRestService
         .getLaboratory(recruitmentNumber)
         .then(function(response) {
           deferred.resolve(response.data);
@@ -95,7 +95,7 @@
      */
     function update(recruitmentNumber, participantLaboratory) {
       var deferred = $q.defer();
-      ParticipantLaboratoryRestService
+      LaboratoryRestService
          .updateLaboratoryParticipant(recruitmentNumber, participantLaboratory)
          .then(function(response){
             deferred.resolve(response);
@@ -113,7 +113,7 @@
      */
     function updateAliquots(recruitmentNumber, persistanceStructure) {
       var deferred = $q.defer();
-      ParticipantLaboratoryRestService
+      LaboratoryRestService
          .updateAliquots(recruitmentNumber, persistanceStructure)
          .then(function(response){
             deferred.resolve(response);
@@ -125,7 +125,7 @@
 
     function getDescriptors() {
       var deferred = $q.defer();
-      ParticipantLaboratoryRestService
+      LaboratoryRestService
          .getDescriptors()
          .then(function(response){
             deferred.resolve(response);

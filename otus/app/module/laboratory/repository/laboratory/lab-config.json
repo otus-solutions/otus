@@ -11036,7 +11036,7 @@
          }
       }
    }],
-   "aliquotDescriptors": [{
+   "aliquotsDescriptors": [{
       "objectType": "AliquotDescriptor",
       "name": "BIOSORO",
       "label" : "Bioquímica Soro",
