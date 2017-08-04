@@ -93,8 +93,8 @@
       $state.go(STATE.SAMPLE_TRANSPORTATION_MANAGER_LIST);
     }
 
-    function activateSampleTransportationLotInfoManager(lot) {
-      $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER, {selectedLot:lot});
+    function activateSampleTransportationLotInfoManager(lots,selectedLot) {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER, {lot:lots,selectedLot:selectedLot});
     }
 
     function getCurrentState() {

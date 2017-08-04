@@ -23,7 +23,7 @@
     function onInit() {
       console.clear();
       console.log('teste');
-      console.log($stateParams.selectedLot);
+      console.log($stateParams);
 
       self.lot = AliquotTransportationService.createAliquotLot();
       AliquotTransportationService.getFullAliquotsList()

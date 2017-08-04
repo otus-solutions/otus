@@ -5,20 +5,19 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationLotAddButton', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-add-button/lot-add-button-template.html'
+      templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-add-button/lot-add-button-template.html',
+      bindings:{
+        onNewLot: "&"
+      }
     });
 
-  Controller.$inject = [
-    'otusjs.application.state.ApplicationStateService'
-  ];
-
-  function Controller(ApplicationStateService) {
+  function Controller() {
     var self = this;
 
-    self.lotAdder = lotAdder;
+    self.newLot = newLot;
 
-    function lotAdder() {
-      ApplicationStateService.activateSampleTransportationLotInfoManager();
+    function newLot() {
+      self.onNewLot();
     }
   }
 }());

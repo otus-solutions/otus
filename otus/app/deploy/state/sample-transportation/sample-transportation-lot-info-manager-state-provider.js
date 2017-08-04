@@ -24,7 +24,8 @@
       url: '/' + STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER,
       template: '<otus-sample-transportation-lot-info-manager layout="column" flex></otus-sample-transportation-lot-info-manager>',
       params: {
-        selectedLot: null
+        selectedLot: null,
+        lots:null
       }
     };
   }

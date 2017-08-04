@@ -19,7 +19,7 @@
     var self = this;
     self.selectedLots;
 
-    self.lotAdder = lotAdder;
+    self.newLot = newLot;
     self.$onInit = onInit;
     self.updateSelectedLots = updateSelectedLots;
     self.handleViewInfoAction = handleViewInfoAction;
@@ -46,7 +46,7 @@
       self.selectedLots = selectedLots;
     }
 
-    function lotAdder() {
+    function newLot() {
       ApplicationStateService.activateSampleTransportationLotInfoManager();
     }
 
