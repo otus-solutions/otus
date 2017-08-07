@@ -20,9 +20,12 @@
     self.activities = [];
     self.isListEmpty = true;
 
+    self.orderByField = 'activity.surveyTemplate.identity.name';
+    self.reverseSort = false;
     /* Public methods */
     self.getType = getType;
     self.selectActivity = selectActivity;
+    self.changeSort = changeSort;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -59,6 +62,11 @@
       self.onActivitySelection({
         activity: activity
       });
+    }
+
+    function changeSort(field,order) {
+      self.orderByField = field;
+      self.reverseSort = order;
     }
   }
 }());
