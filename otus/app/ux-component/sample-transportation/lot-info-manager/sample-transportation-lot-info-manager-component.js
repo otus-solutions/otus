@@ -22,14 +22,15 @@
     self.fastInsertion = fastInsertion;
 
     function onInit() {
-      console.clear();
-      if ($stateParams) {
+      // console.clear();
+      if ($stateParams.selectedLot) {
         self.lot = $stateParams.selectedLot;
+        self.lot.shipmentDate = new Date(self.lot.shipmentDate);
+        self.lot.processingDate = new Date(self.lot.processingDate);
       }else {
         self.lot = AliquotTransportationService.createAliquotLot();
       }
-      self.lot.shipmentDate = new Date(self.lot.shipmentDate);
-      self.lot.processingDate = new Date(self.lot.processingDate);
+
       AliquotTransportationService.getFullAliquotsList()
         .then(function(response) {
           self.fullAliquotsList = response.data; // TODO: fix

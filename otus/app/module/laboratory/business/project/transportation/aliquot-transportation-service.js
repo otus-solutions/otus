@@ -8,11 +8,12 @@
   service.$inject = [
      'otusjs.laboratory.transportation.TransportationService',
      'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
+     'otusjs.laboratory.repository.LaboratoryRepositoryService',
      '$http',
      '$q'
   ];
 
-  function service(TransportationService, LaboratoryConfigurationService, $http, $q) {
+  function service(TransportationService, LaboratoryConfigurationService, LaboratoryRepositoryService, $http, $q) {
     var self = this;
 
     self.getFullAliquotsList = getFullAliquotsList;
@@ -22,6 +23,7 @@
     onInit();
 
     function onInit() {
+      createLot(false);
       LaboratoryConfigurationService.getAliquotsDescriptors()
         .then(function() {
           loadLots()
@@ -59,6 +61,15 @@
 
     function createAliquotLot() {
       return TransportationService.createAliquotLot();
+    }
+
+    function createLot(forceResult) {
+      LaboratoryRepositoryService.createLot({}, forceResult)
+        .then(function(response) {
+          console.log(response.data);
+        }, function(err) {
+          console.log(err.data);
+        });
     }
 
     return self;

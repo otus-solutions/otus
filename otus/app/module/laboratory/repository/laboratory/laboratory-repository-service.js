@@ -8,10 +8,11 @@
   Service.$inject = [
     'otusjs.laboratory.core.ModuleService',
     'otusjs.laboratory.repository.LaboratoryCollectionService',
+    '$q',
     '$http'
   ];
 
-  function Service(ModuleService, LaboratoryCollectionService, $http) {
+  function Service(ModuleService, LaboratoryCollectionService, $q, $http) {
     var self = this;
     var laboratory = {};
 
@@ -23,6 +24,11 @@
     //Laboratory Configuration Methods
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
+
+    //Laboratory Project Methods
+    self.createLot = createLot;
+
+
 
 
     function initializeLaboratory(participant) {
@@ -56,6 +62,18 @@
     function getAliquotsDescriptors() {
       // return LaboratoryCollectionService.getAliquotDescriptors();  // TODO: implement
       return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
+    }
+
+    function createLot(lotInfo, forceResult) {
+      var defer = $q.defer();
+
+      if (forceResult) {
+        defer.resolve({data: 'breno'});
+      }else {
+        defer.reject({data: 'not breno'});
+      }
+
+      return defer.promise;
     }
   }
 }());
