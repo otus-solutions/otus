@@ -9,12 +9,13 @@
     });
 
   Controller.$inject = [
-    '$stateParams',
-     'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
+     '$stateParams',
+     'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+     '$filter'
   ];
 
 
-  function Controller($stateParams, AliquotTransportationService) {
+  function Controller($stateParams, AliquotTransportationService, $filter) {
     var self = this;
 
     self.$onInit = onInit;
@@ -22,8 +23,13 @@
 
     function onInit() {
       console.clear();
-      self.selectedLot = $stateParams.selectedLot;
-      self.lot = AliquotTransportationService.createAliquotLot();
+      if ($stateParams) {
+        self.lot = $stateParams.selectedLot;
+      }else {
+        self.lot = AliquotTransportationService.createAliquotLot();
+      }
+      self.lot.shipmentDate = new Date(self.lot.shipmentDate);
+      self.lot.processingDate = new Date(self.lot.processingDate);
       AliquotTransportationService.getFullAliquotsList()
         .then(function(response) {
           self.fullAliquotsList = response.data; // TODO: fix
@@ -33,7 +39,6 @@
           });
           console.groupEnd('aliquots-list');
         });
-      console.log(self.lot);
     }
 
     function fastInsertion(element, tubeCode) {

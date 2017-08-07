@@ -19,6 +19,8 @@
         </div>
         <md-divider></md-divider>
       </md-list-item>
+      <!--  TODO  -->
+      <!-- <md-list-item ng-repeat="Lot in $ctrl.lotsList | orderBy:'code' track by $index" -->
       <md-list-item ng-repeat="Lot in $ctrl.lotsList track by $index"
                     ng-class="{ 'selectedState': Lot.isSelected, 'regularState': !Lot.isSelected }"
                     ng-click="$ctrl.selectLot(Lot)">
