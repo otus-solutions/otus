@@ -39,7 +39,7 @@
     }
 
     function handleChangeAction() {
-      ApplicationStateService.activateSampleTransportationLotInfoManager(self.selectedLots, self.selectedLots[0]);
+      ApplicationStateService.activateSampleTransportationLotInfoManager(self.lots, self.selectedLots[0]);
     }
 
     function updateSelectedLots(selectedLots) {
@@ -47,7 +47,7 @@
     }
 
     function newLot() {
-      ApplicationStateService.activateSampleTransportationLotInfoManager(self.selectedLots);
+      ApplicationStateService.activateSampleTransportationLotInfoManager(self.lots);
     }
 
     function getLots() {

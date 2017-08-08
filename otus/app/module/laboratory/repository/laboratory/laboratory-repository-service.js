@@ -27,6 +27,7 @@
 
     //Laboratory Project Methods
     self.createLot = createLot;
+    self.alterLot = alterLot;
 
 
 
@@ -68,9 +69,21 @@
       var defer = $q.defer();
 
       if (forceResult) {
-        defer.resolve({data: 'breno'});
+        defer.resolve({data: 'createLot'});
       }else {
-        defer.reject({data: 'not breno'});
+        defer.reject({data: 'not createLot'});
+      }
+
+      return defer.promise;
+    }
+
+    function alterLot(lotInfo, forceResult) {
+      var defer = $q.defer();
+
+      if (forceResult) {
+        defer.resolve({data: 'alterLot'});
+      }else {
+        defer.reject({data: 'not alterLot'});
       }
 
       return defer.promise;

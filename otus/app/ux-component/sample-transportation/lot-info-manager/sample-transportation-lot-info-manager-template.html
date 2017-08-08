@@ -1,12 +1,5 @@
 <div>
-  <otus-lot-adder-manager-toolbar selected-lot="$ctrl.selectedLot" layout="row"></otus-lot-adder-manager-toolbar>
-  <div layout="row">
-    <div layout="column" layout-align="center center" flex>
-      <span class="md-body-1">Código do Lote:</span>
-      <span class="md-body-2">{{$ctrl.lot.code}}</span>
-    </div>
-  </div>
-  <md-divider></md-divider>
+  <otus-lot-info-manager-toolbar selected-lot="$ctrl.selectedLot" on-add-lot="$ctrl.newLot()" on-save-lot="$ctrl.changeLot()" layout="row"></otus-lot-info-manager-toolbar>
   <div layout="row">
     <div layout="column" layout-align="center center" flex>
       <label>Data de Processamento</label>
@@ -32,7 +25,6 @@
       <input type="text" style="font-size: 20px;" name="fast-trigger" value="Inserção rápida" ng-model="aliquot_code" ng-change="$ctrl.fastInsertion(this, aliquot_code)" />
     </md-input-container>
   </div>
-
   <md-content layout-padding layout-margin flex>
     <md-input-container  id="aliquot-list" ng-repeat="aliquot in $ctrl.lot.aliquotList" layout-align="center center">
       <label>{{aliquot.label}}</label>
@@ -40,5 +32,4 @@
       <md-icon class="md-primary" md-font-set="material-icons" style="cursor:pointer;" ng-click="$ctrl.lot.removeAliquotByIndex($index)">delete</md-icon>
     </md-input-container>
   </md-content>
-
 </div>

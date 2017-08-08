@@ -3,9 +3,13 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusLotAdderManagerToolbar', {
+    .component('otusLotInfoManagerToolbar', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/manager-toolbar/lot-info-manager-toolbar-template.html'
+      templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/manager-toolbar/lot-info-manager-toolbar-template.html',
+      bindings: {
+        onAddLot: '&',
+        onSaveLot: '&'
+      }
     });
 
   Controller.$inject = [
@@ -22,7 +26,6 @@
 
     function onInit() {
       self.selectedLot = $stateParams.selectedLot;
-      console.log(self.selectedLot);
     }
 
     function returnToSampleTransportationDashboard() {

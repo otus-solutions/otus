@@ -19,16 +19,17 @@
     self.getFullAliquotsList = getFullAliquotsList;
     self.loadLots = loadLots;
     self.createAliquotLot = createAliquotLot;
+    self.createLot = createLot;
+    self.alterLot = alterLot;
 
     onInit();
 
     function onInit() {
-      createLot(false);
       LaboratoryConfigurationService.getAliquotsDescriptors()
         .then(function() {
           loadLots()
             .then(function(response) {
-              console.log(response);
+              // console.log(response);
             });
         });
     }
@@ -44,7 +45,7 @@
         .then(function(response) {
           //assume response.data as array
           if (response.data) {
-            console.log(response);
+            // console.log(response);
             var lots = response.data.map(function(lotJson) {
               return TransportationService.buildAliquotLotFromJson(lotJson);
             });
@@ -63,12 +64,21 @@
       return TransportationService.createAliquotLot();
     }
 
-    function createLot(forceResult) {
-      LaboratoryRepositoryService.createLot({}, forceResult)
+    function createLot(newLot,forceResult) {
+      LaboratoryRepositoryService.createLot(newLot, forceResult)
         .then(function(response) {
-          console.log(response.data);
+          return response.data;
         }, function(err) {
-          console.log(err.data);
+          return err.data;
+        });
+    }
+
+    function alterLot(lot, forceResult) {
+      LaboratoryRepositoryService.alterLot(lot, forceResult)
+        .then(function(response) {
+          return response.data;
+        }, function(err) {
+          return err.data;
         });
     }
 

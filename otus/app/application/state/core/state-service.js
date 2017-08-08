@@ -94,8 +94,6 @@
     }
 
     function activateSampleTransportationLotInfoManager(lots, selectedLot) {
-      console.log(lots);
-      console.log(selectedLot);
       $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER, {
                                                               lots:lots,
                                                               selectedLot:selectedLot
