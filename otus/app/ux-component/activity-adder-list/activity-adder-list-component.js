@@ -20,7 +20,7 @@
     self.activities = [];
     self.isListEmpty = true;
 
-    self.orderByField = 'activity.surveyTemplate.identity.name';
+    self.orderByField = 'surveyTemplate.identity.name';
     self.reverseSort = false;
     /* Public methods */
     self.getType = getType;
