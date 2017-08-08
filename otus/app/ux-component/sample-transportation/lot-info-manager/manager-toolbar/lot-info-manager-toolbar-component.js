@@ -14,22 +14,37 @@
 
   Controller.$inject = [
     '$stateParams',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    '$mdDialog'
   ];
 
-  function Controller($stateParams,ApplicationStateService) {
+  function Controller($stateParams, ApplicationStateService, $mdDialog) {
     var self = this;
+    var confirmCancel;
 
     self.$onInit = onInit;
 
     self.returnToSampleTransportationDashboard = returnToSampleTransportationDashboard;
 
     function onInit() {
+      _buildDialogs()
       self.selectedLot = $stateParams.selectedLot;
     }
 
     function returnToSampleTransportationDashboard() {
-      ApplicationStateService.activateSampleTransportationManagerList();
+      $mdDialog.show(confirmCancel).then(function() {
+        ApplicationStateService.activateSampleTransportationManagerList();
+      });
     }
+
+    function _buildDialogs() {
+      confirmCancel = $mdDialog.confirm()
+        .title('Confirmar cancelamento:')
+        .textContent('As alterações realizadas no lote serão descartadas')
+        .ariaLabel('Confirmação de cancelamento')
+        .ok('Ok')
+        .cancel('Voltar');
+    }
+
   }
 }());
