@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -95,9 +95,9 @@
 
     function activateSampleTransportationLotInfoManager(lots, selectedLot) {
       $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER, {
-                                                              lots:lots,
-                                                              selectedLot:selectedLot
-                                                              });
+        lots: lots,
+        selectedLot: selectedLot
+      });
     }
 
     function getCurrentState() {
