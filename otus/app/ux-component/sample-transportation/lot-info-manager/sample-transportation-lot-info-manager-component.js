@@ -54,7 +54,6 @@
     }
 
     function fastInsertion(element, aliquotCode) {
-      console.log(self.lot.shipmentDate);
       if (aliquotCode.length === 9) {
         var foundAliquot = _findAliquot(aliquotCode);
         if (foundAliquot) {

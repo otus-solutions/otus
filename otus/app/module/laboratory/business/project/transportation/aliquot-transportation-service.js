@@ -6,11 +6,11 @@
     .service('otusjs.laboratory.business.project.transportation.AliquotTransportationService', service);
 
   service.$inject = [
-     'otusjs.laboratory.transportation.TransportationService',
-     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
-     'otusjs.laboratory.repository.LaboratoryRepositoryService',
-     '$http',
-     '$q'
+    'otusjs.laboratory.transportation.TransportationService',
+    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
+    'otusjs.laboratory.repository.LaboratoryRepositoryService',
+    '$http',
+    '$q'
   ];
 
   function service(TransportationService, LaboratoryConfigurationService, LaboratoryRepositoryService, $http, $q) {
@@ -21,6 +21,7 @@
     self.createAliquotLot = createAliquotLot;
     self.createLot = createLot;
     self.alterLot = alterLot;
+    self.deleteLot = deleteLot;
     self.loadAliquotLotFromJson = loadAliquotLotFromJson;
 
     onInit();
@@ -69,7 +70,7 @@
       return TransportationService.buildAliquotLotFromJson(lotJSON);
     }
 
-    function createLot(newLot,forceResult) {
+    function createLot(newLot, forceResult) {
       LaboratoryRepositoryService.createLot(newLot, forceResult)
         .then(function(response) {
           return response.data;
@@ -80,6 +81,15 @@
 
     function alterLot(lot, forceResult) {
       LaboratoryRepositoryService.alterLot(lot, forceResult)
+        .then(function(response) {
+          return response.data;
+        }, function(err) {
+          return err.data;
+        });
+    }
+
+    function deleteLot(lot, forceResult) {
+      LaboratoryRepositoryService.deleteLot(lot, forceResult)
         .then(function(response) {
           return response.data;
         }, function(err) {

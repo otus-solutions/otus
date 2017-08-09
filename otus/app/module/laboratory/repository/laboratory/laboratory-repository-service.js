@@ -28,6 +28,7 @@
     //Laboratory Project Methods
     self.createLot = createLot;
     self.alterLot = alterLot;
+    self.deleteLot = deleteLot;
 
 
 
@@ -84,6 +85,18 @@
         defer.resolve({data: 'alterLot'});
       }else {
         defer.reject({data: 'not alterLot'});
+      }
+
+      return defer.promise;
+    }
+
+    function deleteLot(lotInfo, forceResult) {
+      var defer = $q.defer();
+
+      if (forceResult) {
+        defer.resolve({data: 'deleteLot'});
+      }else {
+        defer.reject({data: 'not deleteLot'});
       }
 
       return defer.promise;
