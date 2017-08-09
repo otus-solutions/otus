@@ -11,12 +11,13 @@
   Controller.$inject = [
     '$stateParams',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+    'otusjs.utils.ImmutableDate',
     '$filter',
     '$mdToast'
   ];
 
 
-  function Controller($stateParams, AliquotTransportationService, $filter, $mdToast) {
+  function Controller($stateParams, AliquotTransportationService, ImmutableDate, $filter, $mdToast) {
     var self = this;
     var _aliquotsInOtherLots = [];
 
@@ -25,6 +26,53 @@
     self.newLot = newLot;
     self.changeLot = changeLot;
 
+    function onInit() {
+      if ($stateParams.selectedLot) {
+        self.lot = $stateParams.selectedLot;
+        self.lot.shipmentDate = new ImmutableDate(self.lot.shipmentDate);
+        self.lot.processingDate = new ImmutableDate(self.lot.processingDate);
+      } else {
+        self.lot = AliquotTransportationService.createAliquotLot();
+        self.lot.shipmentDate = new ImmutableDate();
+        self.lot.processingDate = new ImmutableDate();
+      }
+      _formatLotDates();
+      _findAliquotsInOtherLots();
+      _fetchgCollectedAliquots();
+    }
+
+    function newLot() {
+      console.log('newLot function');
+      AliquotTransportationService.createLot(self.lot, true);
+      AliquotTransportationService.createLot(self.lot, false);
+    }
+
+    function changeLot() {
+      console.log('changeLot function');
+      AliquotTransportationService.alterLot(self.lot, true);
+      AliquotTransportationService.alterLot(self.lot, false);
+
+    }
+
+    function fastInsertion(element, aliquotCode) {
+      if (aliquotCode.length === 9) {
+        var foundAliquot = _findAliquot(aliquotCode);
+        if (foundAliquot) {
+          if (_findAliquotInLot(aliquotCode)) {
+            _toastDuplicated(element.aliquot_code);
+          } else {
+            if (_getAliquotsInOtherLots(aliquotCode)) {
+              _toastOtherLot(element.aliquot_code);
+            }else {
+              self.lot.insertAliquot(foundAliquot)
+            }
+          }
+        } else {
+          _toastError(element.aliquot_code);
+        }
+        element.aliquot_code = '';
+      }
+    }
 
     function _toastError(aliquotCode) {
       $mdToast.show(
@@ -50,65 +98,30 @@
       );
     }
 
-    function onInit() {
-      // console.clear();
-      if ($stateParams.selectedLot) {
-        self.lot = $stateParams.selectedLot;
-        self.lot.shipmentDate = new Date(self.lot.shipmentDate);
-        self.lot.processingDate = new Date(self.lot.processingDate);
-      } else {
-        self.lot = AliquotTransportationService.createAliquotLot();
-      }
+    function _formatLotDates() {
+        self.lot.shipmentDate.setSeconds(0);
+        self.lot.shipmentDate.setMilliseconds(0);
+        self.lot.processingDate.setSeconds(0);
+        self.lot.processingDate.setMilliseconds(0);
+    }
 
+    function _fetchgCollectedAliquots() {
+      AliquotTransportationService.getFullAliquotsList()
+      .then(function(response) {
+        self.fullAliquotsList = response.data; // TODO: fix
+        console.group('aliquots-list');
+        self.fullAliquotsList.forEach(function(aliquot) {
+          console.log(aliquot.code);
+        });
+        console.groupEnd('aliquots-list');
+      });
+    }
+
+    function _findAliquotsInOtherLots(){
       for (let i = 0; i < $stateParams.lots.length; i++) {
         for (let j = 0; j < $stateParams.lots[i].aliquotList.length; j++) {
           _aliquotsInOtherLots.push($stateParams.lots[i].aliquotList[j]);
         }
-      }
-      console.log(_aliquotsInOtherLots);
-      AliquotTransportationService.getFullAliquotsList()
-        .then(function(response) {
-          self.fullAliquotsList = response.data; // TODO: fix
-          console.group('aliquots-list');
-          self.fullAliquotsList.forEach(function(aliquot) {
-            console.log(aliquot.code);
-          });
-          console.groupEnd('aliquots-list');
-        });
-    }
-
-    function newLot() {
-      console.log('newLot function');
-      AliquotTransportationService.createLot(self.lot, true);
-      AliquotTransportationService.createLot(self.lot, false);
-    }
-
-    function changeLot() {
-      console.log('changeLot function');
-      AliquotTransportationService.alterLot(self.lot, true);
-      AliquotTransportationService.alterLot(self.lot, false);
-
-    }
-
-    function fastInsertion(element, aliquotCode) {
-      if (aliquotCode.length === 9) {
-        var foundAliquot = _findAliquot(aliquotCode);
-        if (foundAliquot) {
-          var foundAliquotInLot = _findAliquotInLot(aliquotCode);
-          if (foundAliquotInLot) {
-            _toastDuplicated(element.aliquot_code);
-          } else {
-            var foundAliquotInOtherLots = _getAliquotsInOtherLots(aliquotCode);
-            if (foundAliquotInOtherLots) {
-              _toastOtherLot(element.aliquot_code);
-            }else {
-              self.lot.insertAliquot(foundAliquot)
-            }
-          }
-        } else {
-          _toastError(element.aliquot_code);
-        }
-        element.aliquot_code = '';
       }
     }
 
