@@ -21,6 +21,7 @@
     self.createAliquotLot = createAliquotLot;
     self.createLot = createLot;
     self.alterLot = alterLot;
+    self.loadAliquotLotFromJson = loadAliquotLotFromJson;
 
     onInit();
 
@@ -62,6 +63,10 @@
 
     function createAliquotLot() {
       return TransportationService.createAliquotLot();
+    }
+
+    function loadAliquotLotFromJson(lotJSON) {
+      return TransportationService.buildAliquotLotFromJson(lotJSON);
     }
 
     function createLot(newLot,forceResult) {

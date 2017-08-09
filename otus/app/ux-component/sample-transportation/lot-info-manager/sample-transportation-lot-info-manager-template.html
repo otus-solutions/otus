@@ -3,19 +3,19 @@
   <div layout="row">
     <div layout="column" layout-align="center center" flex>
       <label>Data de Processamento</label>
-      <md-datepicker ng-model="$ctrl.lot.processingDate.date" md-placeholder="Insira a data"></md-datepicker>
+      <md-datepicker ng-model="$ctrl.lot.processingDate" md-placeholder="Insira a data"></md-datepicker>
       <md-input-container class="md-block" flex>
         <md-icon class="material-icons">access_time</md-icon>
-        <input type="time" ng-model="$ctrl.lot.processingDate.date" aria-label="Tempo" min="0" max="4999" placeholder="insira a hora">
+        <input type="time" ng-model="$ctrl.lot.processingDate" aria-label="Tempo" min="0" max="4999" placeholder="insira a hora">
       </md-input-container>
     </div>
     <md-divider class="vertical-divider"></md-divider>
     <div layout="column" layout-align="center center" flex>
       <label>Data de Envio</label>
-      <md-datepicker ng-model="$ctrl.lot.shipmentDate.date" md-placeholder="Insira a data"></md-datepicker>
+      <md-datepicker ng-model="$ctrl.lot.shipmentDate" md-placeholder="Insira a data"></md-datepicker>
       <md-input-container class="md-block" flex>
         <md-icon class="material-icons">access_time</md-icon>
-        <input type="time" ng-model="$ctrl.lot.shipmentDate.date" aria-label="Tempo" min="0" max="4999" placeholder="insira a hora">
+        <input type="time" ng-model="$ctrl.lot.shipmentDate" aria-label="Tempo" min="0" max="4999" placeholder="insira a hora">
       </md-input-container>
     </div>
   </div>

@@ -39,7 +39,7 @@
     }
 
     function handleChangeAction() {
-      ApplicationStateService.activateSampleTransportationLotInfoManager(self.lots, self.selectedLots[0]);
+      ApplicationStateService.activateSampleTransportationLotInfoManager(self.lots, self.selectedLots[0].toJSON());
     }
 
     function updateSelectedLots(selectedLots) {

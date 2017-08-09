@@ -11,13 +11,12 @@
   Controller.$inject = [
     '$stateParams',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
-    'otusjs.utils.ImmutableDate',
     '$filter',
     '$mdToast'
   ];
 
 
-  function Controller($stateParams, AliquotTransportationService, ImmutableDate, $filter, $mdToast) {
+  function Controller($stateParams, AliquotTransportationService, $filter, $mdToast) {
     var self = this;
     var _aliquotsInOtherLots = [];
 
@@ -28,13 +27,13 @@
 
     function onInit() {
       if ($stateParams.selectedLot) {
-        self.lot = $stateParams.selectedLot;
-        self.lot.shipmentDate = new ImmutableDate(self.lot.shipmentDate);
-        self.lot.processingDate = new ImmutableDate(self.lot.processingDate);
+        self.lot = AliquotTransportationService.loadAliquotLotFromJson($stateParams.selectedLot);
+        self.lot.shipmentDate = new Date(self.lot.shipmentDate);
+        self.lot.processingDate = new Date(self.lot.processingDate);
       } else {
         self.lot = AliquotTransportationService.createAliquotLot();
-        self.lot.shipmentDate = new ImmutableDate();
-        self.lot.processingDate = new ImmutableDate();
+        self.lot.shipmentDate = new Date();
+        self.lot.processingDate = new Date();
       }
       _formatLotDates();
       _findAliquotsInOtherLots();
@@ -55,6 +54,7 @@
     }
 
     function fastInsertion(element, aliquotCode) {
+      console.log(self.lot.shipmentDate);
       if (aliquotCode.length === 9) {
         var foundAliquot = _findAliquot(aliquotCode);
         if (foundAliquot) {
