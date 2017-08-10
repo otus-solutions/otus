@@ -1,0 +1,32 @@
+<div layout="row">
+  <div layout="column" layout-align="center center" flex>
+    <label>Data de Processamento</label>
+    <md-datepicker ng-model="$ctrl.lot.processingDate" md-placeholder="Insira a data"></md-datepicker>
+    <md-input-container class="md-block" flex>
+      <md-icon class="material-icons">access_time</md-icon>
+      <input type="time" ng-model="$ctrl.lot.processingDate" aria-label="Tempo" min="0" max="4999" placeholder="insira a hora">
+    </md-input-container>
+  </div>
+  <md-divider class="vertical-divider"></md-divider>
+  <div layout="column" layout-align="center center" flex>
+    <label>Data de Envio</label>
+    <md-datepicker ng-model="$ctrl.lot.shipmentDate" md-placeholder="Insira a data" flex></md-datepicker>
+    <md-input-container class="md-block" flex>
+      <md-icon class="material-icons">access_time</md-icon>
+      <input type="time" ng-model="$ctrl.lot.shipmentDate" aria-label="Tempo" min="0" max="4999" placeholder="insira a hora">
+    </md-input-container>
+  </div>
+</div>
+<div id="header" layout="row" layout-align="center center">
+  <md-input-container>
+    <label>Inserir alíquota</label>
+    <input type="text" style="font-size: 20px;" name="fast-trigger" value="Inserção rápida" ng-model="aliquot_code" ng-change="$ctrl.fastInsertion(this)" />
+  </md-input-container>
+</div>
+<md-content layout-padding layout-margin flex>
+  <md-input-container  id="aliquot-list" ng-repeat="aliquot in $ctrl.lot.aliquotList" layout-align="center center">
+    <label>{{aliquot.label}}</label>
+    <input disabled ng-model="aliquot.code" flex>
+    <md-icon class="md-primary" md-font-set="material-icons" style="cursor:pointer;" ng-click="$ctrl.lot.removeAliquotByIndex($index)">delete</md-icon>
+  </md-input-container>
+</md-content>

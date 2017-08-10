@@ -21,7 +21,9 @@
 
     /* Public methods */
     function onInit() {
-      ApplicationStateService.activateSampleTransportationManagerList();
+      if(ApplicationStateService.getCurrentState() == STATE.SAMPLE_TRANSPORTATION_DASHBOARD){
+        ApplicationStateService.activateSampleTransportationManagerList();
+      }
     }
   }
 }());
