@@ -21,11 +21,11 @@
   function Controller($mdSidenav) {
     var self = this;
 
-    /* Public methods */
-    self.show = show;
-
     /* Lifecycle hooks */
     self.$onInit = onInit;
+
+    /* Public methods */
+    self.show = show;
 
     function onInit() {
       self.otusSampleTransportationManagerList.lotInfoComponent = self;

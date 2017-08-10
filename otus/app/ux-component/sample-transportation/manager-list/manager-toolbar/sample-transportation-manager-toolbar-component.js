@@ -22,8 +22,10 @@
     var self = this;
     var confirmDeleteSelectedLots;
 
+    /* Lifecycle hooks */
     self.$onInit = onInit;
 
+    /* Public methods */
     self.details = details;
     self.deleteSelectedLots = deleteSelectedLots;
     self.changeSelectedLot = changeSelectedLot;

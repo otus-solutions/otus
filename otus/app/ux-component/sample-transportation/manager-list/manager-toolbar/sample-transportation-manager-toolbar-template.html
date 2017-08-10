@@ -8,7 +8,7 @@
     </md-button> -->
     <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Lote" ng-if="$ctrl.selectedLots.length == 1" ng-click="$ctrl.changeSelectedLot()">
       <md-tooltip md-direction="down">Alterar Lote</md-tooltip>
-      <md-icon md-svg-icon="clipboard-check" aria-label="Alterar Lote"></md-icon>
+      <md-icon aria-label="Alterar Lote">edit</md-icon>
     </md-button>
     <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-if="$ctrl.selectedLots.length >= 1" ng-click="$ctrl.deleteSelectedLots()">
       <md-tooltip md-direction="down">Excluir</md-tooltip>

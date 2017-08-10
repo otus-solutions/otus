@@ -22,7 +22,10 @@
     var self = this;
     var _selectedLots = [];
 
+    /* Lifecycle hooks */
     self.$onInit = onInit;
+
+    /* Public methods */
     self.selectLot = selectLot;
     self.updateOnDelete = updateOnDelete;
 
@@ -37,12 +40,6 @@
       _LoadLotsList();
     }
 
-    function _LoadLotsList() {
-      self.lotsList = AliquotTransportationService.loadLots().then(function(response) {
-         self.lotsList = response;
-      });
-    }
-
     function selectLot(lot) {
       var activityIndex = _selectedLots.indexOf(lot);
       if (activityIndex > -1) {
@@ -53,6 +50,12 @@
         lot.isSelected = true;
       }
       _updateSelected(_selectedLots);
+    }
+
+    function _LoadLotsList() {
+      self.lotsList = AliquotTransportationService.loadLots().then(function(response) {
+        self.lotsList = response;
+      });
     }
 
     function _updateSelected(selectedlots) {

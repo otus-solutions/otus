@@ -9,12 +9,11 @@
     });
 
   Controller.$inject = [
-    'otusjs.application.state.ApplicationStateService',
     '$stateParams',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
   ];
   // TODO: remover Logs
-  function Controller(ApplicationStateService, $stateParams, AliquotTransportationService) {
+  function Controller($stateParams, AliquotTransportationService) {
     var self = this;
 
     self.$onInit = onInit;

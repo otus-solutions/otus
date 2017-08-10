@@ -19,9 +19,12 @@
   function Controller(AliquotTransportationService, ApplicationStateService) {
     var self = this;
 
+    /* Lifecycle hooks */
+    self.$onInit = onInit;
+
+    /* Public methods */
     self.selectedLots;
     self.newLot = newLot;
-    self.$onInit = onInit;
     self.updateSelectedLots = updateSelectedLots;
     self.handleViewInfoAction = handleViewInfoAction;
     self.handleDeleteAction = handleDeleteAction;
@@ -37,6 +40,7 @@
 
     function handleDeleteAction() {
       console.log('handleDeleteAction');
+      console.log(self.selectedLots);
       AliquotTransportationService.deleteLot(self.selectedLots,true);
       AliquotTransportationService.deleteLot(self.selectedLots,false);
       self.listComponent.updateOnDelete();
@@ -52,10 +56,6 @@
 
     function newLot() {
       ApplicationStateService.activateSampleTransportationLotInfoManager(self.lots);
-    }
-
-    function getLots() {
-      console.log(self.lots);
     }
   }
 }());

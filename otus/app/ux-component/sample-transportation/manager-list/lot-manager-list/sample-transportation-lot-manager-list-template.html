@@ -17,6 +17,11 @@
             <span layout="column">Data de Envio</span>
           </div>
         </div>
+        <div class="md-list-item-text" layout="column" flex>
+          <div layout="row" layout-align="start " layout-padding>
+            <span layout="column">Responsável</span>
+          </div>
+        </div>
         <md-divider></md-divider>
       </md-list-item>
       <!--  TODO  -->
@@ -37,6 +42,11 @@
         <div class="md-list-item-text" layout="column" flex>
           <div layout="row" layout-align="start center" layout-padding>
             <span layout="column">{{ Lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
+          </div>
+        </div>
+        <div class="md-list-item-text" layout="column" flex>
+          <div layout="row" layout-align="start center" layout-padding>
+            <span layout="column">{{ Lot.operator}}</span>
           </div>
         </div>
         <md-divider></md-divider>
