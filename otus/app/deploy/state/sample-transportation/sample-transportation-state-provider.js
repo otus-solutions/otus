@@ -22,18 +22,11 @@
       parent: STATE.SESSION,
       name: STATE.SAMPLE_TRANSPORTATION_DASHBOARD,
       url: '/' + STATE.SAMPLE_TRANSPORTATION_DASHBOARD,
-      template: '<sample-transportation-dashboard lots="$resolve.lots" layout="column" flex></sample-transportation-dashboard>',
+      template: '<sample-transportation-dashboard layout="column" flex></sample-transportation-dashboard>',
       data: {
         redirect: _redirect
-      },
-      resolve:{
-        lots: _resolveLots
       }
     };
-
-    function _resolveLots(AliquotTransportationService) {
-      return AliquotTransportationService.loadLots();
-    }
 
     function _redirect($q, Application) {
       var deferred = $q.defer();
@@ -50,10 +43,6 @@
 
       return deferred.promise;
     }
-
-    _resolveLots.$inject = [
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
-    ];
 
     _redirect.$inject = [
       '$q',

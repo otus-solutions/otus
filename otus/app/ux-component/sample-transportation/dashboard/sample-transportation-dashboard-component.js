@@ -6,9 +6,6 @@
     .component('sampleTransportationDashboard', {
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/dashboard/sample-transportation-dashboard-template.html',
-      bindings: {
-        lots: '<'
-      }
     });
 
   Controller.$inject = [
@@ -23,11 +20,8 @@
     self.$onInit = onInit;
 
     /* Public methods */
-
     function onInit() {
-      if(ApplicationStateService.getCurrentState() == STATE.SAMPLE_TRANSPORTATION_DASHBOARD){
-        ApplicationStateService.activateSampleTransportationManagerList();
-      }
+      ApplicationStateService.activateSampleTransportationManagerList();
     }
   }
 }());
