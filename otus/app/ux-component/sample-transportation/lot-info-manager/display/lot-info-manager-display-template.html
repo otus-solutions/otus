@@ -1,19 +1,21 @@
-<div layout="row">
+<div layout="row" layout-xs="column">
   <div layout="column" layout-align="center center" flex>
     <label>Data de Processamento</label>
     <md-datepicker ng-model="$ctrl.lot.processingDate" md-placeholder="Insira a data"></md-datepicker>
     <md-input-container class="md-block" flex>
       <md-icon class="material-icons">access_time</md-icon>
-      <input type="time" ng-model="$ctrl.lot.processingDate" aria-label="Tempo" min="0" max="4999" placeholder="insira a hora">
+      <label style="min-width: 100px;">insira a hora</label>
+      <input type="time" ng-model="$ctrl.lot.processingDate" aria-label="Tempo" min="0" max="4999">
     </md-input-container>
   </div>
-  <md-divider class="vertical-divider"></md-divider>
+  <md-divider class="vertical-divider" hide-xs></md-divider>
   <div layout="column" layout-align="center center" flex>
     <label>Data de Envio</label>
     <md-datepicker ng-model="$ctrl.lot.shipmentDate" md-placeholder="Insira a data" flex></md-datepicker>
     <md-input-container class="md-block" flex>
-      <md-icon class="material-icons">access_time</md-icon>
-      <input type="time" ng-model="$ctrl.lot.shipmentDate" aria-label="Tempo" min="0" max="4999" placeholder="insira a hora">
+      <md-icon class="material-icons" style="position-right:50;">access_time</md-icon>
+      <label style="min-width: 100px;">insira a hora</label>
+      <input type="time" ng-model="$ctrl.lot.shipmentDate" aria-label="Tempo" min="0" max="4999">
     </md-input-container>
   </div>
 </div>
@@ -24,7 +26,7 @@
   </md-input-container>
 </div>
 <md-content layout-padding layout-margin flex>
-  <md-input-container  id="aliquot-list" ng-repeat="aliquot in $ctrl.lot.aliquotList" layout-align="center center">
+  <md-input-container id="aliquot-list" ng-repeat="aliquot in $ctrl.lot.aliquotList" layout-align="center center">
     <label>{{aliquot.label}}</label>
     <input disabled ng-model="aliquot.code" flex>
     <md-icon class="md-primary" md-font-set="material-icons" style="cursor:pointer;" ng-click="$ctrl.lot.removeAliquotByIndex($index)">delete</md-icon>

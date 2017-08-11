@@ -7,24 +7,27 @@
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/manager-toolbar/lot-info-manager-toolbar-template.html',
       bindings: {
-        onAddLot: '&',
-        onSaveLot: '&',
-        onCancel: '&'
+        lot: '<'
       }
     });
 
   Controller.$inject = [
+    'otusjs.laboratory.core.ContextService',
     'otusjs.application.state.ApplicationStateService',
-    '$mdDialog'
+    '$mdDialog',
+    'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
   ];
 
-  function Controller(ApplicationStateService, $mdDialog) {
+  function Controller(laboratoryContextService, ApplicationStateService, $mdDialog, AliquotTransportationService) {
     var self = this;
     var confirmCancel;
 
     self.$onInit = onInit;
 
     self.returnToSampleTransportationDashboard = returnToSampleTransportationDashboard;
+    self.newLot = newLot;
+    self.changeLot = changeLot;
+    self.cancel = cancel;
 
     function onInit() {
       _buildDialogs()
@@ -45,5 +48,23 @@
         .cancel('Voltar');
     }
 
+    function newLot() {
+      // TODO: Novo lote
+      laboratoryContextService.selectLot();
+      AliquotTransportationService.createLot(self.lot, true);
+      AliquotTransportationService.createLot(self.lot, false);
+    }
+
+    function changeLot() {
+      // TODO: Alterar lote
+      laboratoryContextService.selectLot();
+      AliquotTransportationService.alterLot(self.lot, true);
+      AliquotTransportationService.alterLot(self.lot, false);
+    }
+
+    function cancel() {
+      laboratoryContextService.selectLot();
+      ApplicationStateService.activateSampleTransportationManagerList();
+    }
   }
 }());

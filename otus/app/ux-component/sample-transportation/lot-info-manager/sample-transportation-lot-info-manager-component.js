@@ -22,9 +22,6 @@
     var self = this;
 
     self.$onInit = onInit;
-    self.newLot = newLot;
-    self.changeLot = changeLot;
-    self.cancel = cancel;
 
     function onInit() {
       if (self.selectedLot) {
@@ -39,25 +36,6 @@
       _formatLotDates();
       _getAliquotsInOtherLots();
       _fetchgCollectedAliquots();
-    }
-
-    function newLot() {
-      // TODO: Novo lote
-      laboratoryContextService.selectLot();
-      AliquotTransportationService.createLot(self.lot, true);
-      AliquotTransportationService.createLot(self.lot, false);
-    }
-
-    function changeLot() {
-      // TODO: Alterar lote
-      laboratoryContextService.selectLot();
-      AliquotTransportationService.alterLot(self.lot, true);
-      AliquotTransportationService.alterLot(self.lot, false);
-    }
-
-    function cancel() {
-      laboratoryContextService.selectLot();
-      ApplicationStateService.activateSampleTransportationManagerList();
     }
 
     function _formatLotDates() {

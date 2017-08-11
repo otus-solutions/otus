@@ -2,15 +2,15 @@
   <div class="md-toolbar-tools md-hue-2">
     <span ng-if="!$ctrl.selectedLot" flex>Adicionar lote</span>
     <span ng-if="$ctrl.selectedLot" flex>Alterar lote</span>
-    <md-button ng-click="$ctrl.returnToSampleTransportationDashboard()" style="background-color: grey" class="md-raised md-icon-button"  aria-label="Cancelar">
+    <md-button ng-click="$ctrl.cancel()" style="background-color: grey" class="md-raised md-icon-button"  aria-label="Cancelar">
       <md-tooltip md-direction="down">Cancelar</md-tooltip>
       <md-icon  style="color: white" md-font-set="material-icons" aria-label="Cancelar">clear</md-icon>
     </md-button>
-    <md-button ng-click="$ctrl.onAddLot()" class="md-raised md-accent md-icon-button" aria-label="Adicionar" ng-if="!$ctrl.selectedLot">
+    <md-button ng-click="$ctrl.newLot()" class="md-raised md-accent md-icon-button" aria-label="Adicionar" ng-if="!$ctrl.selectedLot">
       <md-tooltip md-direction="down">Adicionar</md-tooltip>
       <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
     </md-button>
-    <md-button ng-click="$ctrl.onSaveLot()" class="md-raised md-accent md-icon-button" aria-label="Salvar" ng-if="$ctrl.selectedLot">
+    <md-button ng-click="$ctrl.changeLot()" class="md-raised md-accent md-icon-button" aria-label="Salvar" ng-if="$ctrl.selectedLot">
       <md-tooltip md-direction="down">Salvar</md-tooltip>
       <md-icon aria-label="Adicionar">save</md-icon>
     </md-button>
