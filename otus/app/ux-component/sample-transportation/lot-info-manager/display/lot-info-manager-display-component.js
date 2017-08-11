@@ -13,11 +13,12 @@
       }
     });
 
-    Controller.$inject = [
-      '$mdToast'
-    ];
+  Controller.$inject = [
+    'otusjs.laboratory.core.ContextService',
+    '$mdToast'
+  ];
 
-  function Controller($mdToast) {
+  function Controller(laboratoryContextService, $mdToast) {
     var self = this;
 
     self.fastInsertion = fastInsertion;
@@ -38,6 +39,7 @@
         }
         element.aliquot_code = '';
       }
+      laboratoryContextService.selectLot(self.lot.toJSON());
     }
 
     function _toastError(aliquotCode) {

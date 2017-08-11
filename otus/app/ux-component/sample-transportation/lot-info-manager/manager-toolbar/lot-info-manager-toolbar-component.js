@@ -8,17 +8,17 @@
       templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/manager-toolbar/lot-info-manager-toolbar-template.html',
       bindings: {
         onAddLot: '&',
-        onSaveLot: '&'
+        onSaveLot: '&',
+        onCancel: '&'
       }
     });
 
   Controller.$inject = [
-    '$stateParams',
     'otusjs.application.state.ApplicationStateService',
     '$mdDialog'
   ];
 
-  function Controller($stateParams, ApplicationStateService, $mdDialog) {
+  function Controller(ApplicationStateService, $mdDialog) {
     var self = this;
     var confirmCancel;
 
@@ -28,12 +28,11 @@
 
     function onInit() {
       _buildDialogs()
-      self.selectedLot = $stateParams.selectedLot;
     }
 
     function returnToSampleTransportationDashboard() {
       $mdDialog.show(confirmCancel).then(function() {
-        ApplicationStateService.activateSampleTransportationManagerList();
+        self.onCancel();
       });
     }
 

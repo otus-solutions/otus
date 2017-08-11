@@ -43,6 +43,9 @@
     self.setCurrentUser = setCurrentUser;
     self.getCurrentUser = getCurrentUser;
 
+    self.selectLot = selectLot;
+    self.getSelectedLot = getSelectedLot;
+
     function begin() {
       _context.clear();
       save();
@@ -141,6 +144,17 @@
 
     function getCurrentUser(currentUser) {
       return _loggedUser;
+    }
+
+    //--------------------------------------------------------------------------------------------
+    // Custom context methods
+    //--------------------------------------------------------------------------------------------
+    function selectLot(lot) {
+      setData('selectedLot', lot);
+    }
+
+    function getSelectedLot() {
+      return getData('selectedLot');
     }
   }
 }());

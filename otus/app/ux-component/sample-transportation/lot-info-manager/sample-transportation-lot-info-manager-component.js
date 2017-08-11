@@ -5,24 +5,30 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationLotInfoManager', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/sample-transportation-lot-info-manager-template.html'
+      templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/sample-transportation-lot-info-manager-template.html',
+      bindings: {
+        selectedLot: "<",
+        lots: "<"
+      }
     });
 
   Controller.$inject = [
-    '$stateParams',
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
   ];
   // TODO: remover Logs
-  function Controller($stateParams, AliquotTransportationService) {
+  function Controller(ApplicationStateService, laboratoryContextService, AliquotTransportationService) {
     var self = this;
 
     self.$onInit = onInit;
     self.newLot = newLot;
     self.changeLot = changeLot;
+    self.cancel = cancel;
 
     function onInit() {
-      if ($stateParams.selectedLot) {
-        self.lot = AliquotTransportationService.loadAliquotLotFromJson($stateParams.selectedLot);
+      if (self.selectedLot) {
+        self.lot = AliquotTransportationService.loadAliquotLotFromJson(self.selectedLot);
         self.lot.shipmentDate = new Date(self.lot.shipmentDate);
         self.lot.processingDate = new Date(self.lot.processingDate);
       } else {
@@ -37,17 +43,21 @@
 
     function newLot() {
       // TODO: Novo lote
-      console.log('newLot function');
-      console.log(self.lot.toJSON());
+      laboratoryContextService.selectLot();
       AliquotTransportationService.createLot(self.lot, true);
       AliquotTransportationService.createLot(self.lot, false);
     }
 
     function changeLot() {
       // TODO: Alterar lote
-      console.log('changeLot function');
+      laboratoryContextService.selectLot();
       AliquotTransportationService.alterLot(self.lot, true);
       AliquotTransportationService.alterLot(self.lot, false);
+    }
+
+    function cancel() {
+      laboratoryContextService.selectLot();
+      ApplicationStateService.activateSampleTransportationManagerList();
     }
 
     function _formatLotDates() {
@@ -59,9 +69,9 @@
 
     function _getAliquotsInOtherLots() {
       self.aliquotsInOtherLots = [];
-      for (let i = 0; i < $stateParams.lots.length; i++) {
-        for (let j = 0; j < $stateParams.lots[i].aliquotList.length; j++) {
-          self.aliquotsInOtherLots.push($stateParams.lots[i].aliquotList[j]);
+      for (let i = 0; i < self.lots.length; i++) {
+        for (let j = 0; j < self.lots[i].aliquotList.length; j++) {
+          self.aliquotsInOtherLots.push(self.lots[i].aliquotList[j]);
         }
       }
     }

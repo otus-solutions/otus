@@ -12,11 +12,12 @@
     });
 
   Controller.$inject = [
+    'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(AliquotTransportationService, ApplicationStateService) {
+  function Controller(laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
     var self = this;
 
     /* Lifecycle hooks */
@@ -39,15 +40,14 @@
     }
 
     function handleDeleteAction() {
-      console.log('handleDeleteAction');
-      console.log(self.selectedLots);
-      AliquotTransportationService.deleteLot(self.selectedLots,true);
-      AliquotTransportationService.deleteLot(self.selectedLots,false);
+      AliquotTransportationService.deleteLot(self.selectedLots, true);
+      AliquotTransportationService.deleteLot(self.selectedLots, false);
       self.listComponent.updateOnDelete();
     }
 
     function handleChangeAction() {
-      ApplicationStateService.activateSampleTransportationLotInfoManager(self.lots, self.selectedLots[0]);
+      laboratoryContextService.selectLot(self.selectedLots[0].toJSON())
+      ApplicationStateService.activateSampleTransportationLotInfoManager();
     }
 
     function updateSelectedLots(selectedLots) {
@@ -55,7 +55,7 @@
     }
 
     function newLot() {
-      ApplicationStateService.activateSampleTransportationLotInfoManager(self.lots);
+      ApplicationStateService.activateSampleTransportationLotInfoManager();
     }
   }
 }());
