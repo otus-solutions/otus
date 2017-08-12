@@ -70,8 +70,8 @@
       return TransportationService.buildAliquotLotFromJson(lotJSON);
     }
 
-    function createLot(newLot, forceResult) {
-      LaboratoryRepositoryService.createLot(newLot, forceResult)
+    function createLot(lot) {
+      LaboratoryRepositoryService.createLot(lot)
         .then(function(response) {
           return response.data;
         }, function(err) {
@@ -79,8 +79,8 @@
         });
     }
 
-    function alterLot(lot, forceResult) {
-      LaboratoryRepositoryService.alterLot(lot, forceResult)
+    function alterLot(lot) {
+      LaboratoryRepositoryService.alterLot(lot)
         .then(function(response) {
           return response.data;
         }, function(err) {
@@ -88,8 +88,8 @@
         });
     }
 
-    function deleteLot(lot, forceResult) {
-      LaboratoryRepositoryService.deleteLot(lot, forceResult)
+    function deleteLot(lot) {
+      LaboratoryRepositoryService.deleteLot(lot)
         .then(function(response) {
           return response.data;
         }, function(err) {

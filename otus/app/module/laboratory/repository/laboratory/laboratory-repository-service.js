@@ -30,9 +30,6 @@
     self.alterLot = alterLot;
     self.deleteLot = deleteLot;
 
-
-
-
     function initializeLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
       return LaboratoryCollectionService
@@ -66,10 +63,10 @@
       return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
     }
 
-    function createLot(lotInfo, forceResult) {
+    function createLot(lotInfo) {
       var defer = $q.defer();
 
-      if (forceResult) {
+      if (true) {
         defer.resolve({data: 'createLot'});
       }else {
         defer.reject({data: 'not createLot'});
@@ -78,10 +75,10 @@
       return defer.promise;
     }
 
-    function alterLot(lotInfo, forceResult) {
+    function alterLot(lotInfo) {
       var defer = $q.defer();
 
-      if (forceResult) {
+      if (true) {
         defer.resolve({data: 'alterLot'});
       }else {
         defer.reject({data: 'not alterLot'});
@@ -90,10 +87,10 @@
       return defer.promise;
     }
 
-    function deleteLot(lotInfo, forceResult) {
+    function deleteLot(lotInfo) {
       var defer = $q.defer();
 
-      if (forceResult) {
+      if (true) {
         defer.resolve({data: 'deleteLot'});
       }else {
         defer.reject({data: 'not deleteLot'});

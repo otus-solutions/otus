@@ -9,7 +9,8 @@
       bindings: {
         lot: '=',
         aliquotsInOtherLotsList: '<',
-        fullAliquotsList: '<'
+        fullAliquotsList: '<',
+        onLotAlteration: '&'
       }
     });
 
@@ -39,7 +40,9 @@
         }
         element.aliquot_code = '';
       }
-      laboratoryContextService.selectLot(self.lot.toJSON());
+      self.onLotAlteration({
+        newData: self.lot.toJSON()
+      });
     }
 
     function _toastError(aliquotCode) {
@@ -65,7 +68,6 @@
         .hideDelay(1000)
       );
     }
-
 
     function _findAliquotInLot(code) {
       return self.lot.aliquotList.find(function(aliquotsInLot) {
