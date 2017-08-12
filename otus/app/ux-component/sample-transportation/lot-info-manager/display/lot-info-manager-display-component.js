@@ -34,15 +34,15 @@
             _toastOtherLot(element.aliquot_code);
           } else {
             self.lot.insertAliquot(foundAliquot);
+            self.onLotAlteration({
+              newData: self.lot.toJSON()
+            });
           }
         } else {
           _toastError(element.aliquot_code);
         }
         element.aliquot_code = '';
       }
-      self.onLotAlteration({
-        newData: self.lot.toJSON()
-      });
     }
 
     function _toastError(aliquotCode) {

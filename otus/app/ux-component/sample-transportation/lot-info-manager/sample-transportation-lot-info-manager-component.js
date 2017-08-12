@@ -73,7 +73,6 @@
     }
 
     function updateLotStateData(newData){
-      console.log(newData);
       laboratoryContextService.selectLot(newData);
     }
 
