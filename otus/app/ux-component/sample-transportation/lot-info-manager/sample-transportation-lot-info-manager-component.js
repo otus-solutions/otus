@@ -7,35 +7,72 @@
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/sample-transportation-lot-info-manager-template.html',
       bindings: {
-        selectedLot: "<",
+        stateData: "<",
         lots: "<"
       }
     });
 
   Controller.$inject = [
-    'otusjs.application.state.ApplicationStateService',
+    '$mdDialog',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
+    'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+    'otusjs.application.state.ApplicationStateService'
   ];
+
   // TODO: remover Logs
-  function Controller(ApplicationStateService, laboratoryContextService, AliquotTransportationService) {
+  function Controller($mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
     var self = this;
+    var _confirmCancel;
 
     self.$onInit = onInit;
 
+    self.createLot = createLot
+    self.cancel = cancel;
+    self.alterLot = alterLot;
+    self.updateLotStateData = updateLotStateData;
+
     function onInit() {
-      if (self.selectedLot) {
-        self.lot = AliquotTransportationService.loadAliquotLotFromJson(self.selectedLot);
+      self.action = laboratoryContextService.getLotInfoManagerAction();
+
+      if (self.stateData['selectedLot']) {
+        self.lot = AliquotTransportationService.loadAliquotLotFromJson(self.stateData['selectedLot']);
         self.lot.shipmentDate = new Date(self.lot.shipmentDate);
         self.lot.processingDate = new Date(self.lot.processingDate);
       } else {
         self.lot = AliquotTransportationService.createAliquotLot();
+        self.lot.operator = self.stateData['user'].email;
         self.lot.shipmentDate = new Date();
         self.lot.processingDate = new Date();
       }
+      _buildDialogs();
       _formatLotDates();
       _getAliquotsInOtherLots();
       _fetchgCollectedAliquots();
+    }
+
+    function createLot() {
+      // TODO: Novo lote
+      self.updateLotStateData();
+      AliquotTransportationService.createLot(self.lot);
+      ApplicationStateService.activateSampleTransportationManagerList();
+    }
+
+    function alterLot() {
+      // TODO: Alterar lote
+      self.updateLotStateData();
+      AliquotTransportationService.alterLot(self.lot);
+      ApplicationStateService.activateSampleTransportationManagerList();
+    }
+
+    function cancel() {
+      $mdDialog.show(_confirmCancel).then(function() {
+        self.updateLotStateData();
+        ApplicationStateService.activateSampleTransportationManagerList();
+      });
+    }
+
+    function updateLotStateData(newData){
+      laboratoryContextService.selectLot(newData);
     }
 
     function _formatLotDates() {
@@ -64,6 +101,15 @@
           });
           console.groupEnd('aliquots-list');
         });
+    }
+
+    function _buildDialogs() {
+      _confirmCancel = $mdDialog.confirm()
+        .title('Confirmar cancelamento:')
+        .textContent('As alterações realizadas no lote serão descartadas')
+        .ariaLabel('Confirmação de cancelamento')
+        .ok('Ok')
+        .cancel('Voltar');
     }
   }
 }());

@@ -12,13 +12,15 @@
     });
 
   Controller.$inject = [
+    '$mdDialog',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
+  function Controller($mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
     var self = this;
+    var _confirmDeleteSelectedLots;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -33,6 +35,7 @@
 
     function onInit() {
       self.selectedLots = [];
+      _buildDialogs();
     }
 
     function handleViewInfoAction() {
@@ -40,12 +43,14 @@
     }
 
     function handleDeleteAction() {
-      AliquotTransportationService.deleteLot(self.selectedLots, true);
-      AliquotTransportationService.deleteLot(self.selectedLots, false);
-      self.listComponent.updateOnDelete();
+      $mdDialog.show(_confirmDeleteSelectedLots).then(function() {
+        AliquotTransportationService.deleteLot(self.selectedLot);
+        self.listComponent.updateOnDelete();
+      });
     }
 
     function handleChangeAction() {
+      self.action = laboratoryContextService.setLotInfoManagerAction('alter');
       laboratoryContextService.selectLot(self.selectedLots[0].toJSON())
       ApplicationStateService.activateSampleTransportationLotInfoManager();
     }
@@ -55,7 +60,17 @@
     }
 
     function newLot() {
+      self.action = laboratoryContextService.setLotInfoManagerAction('create');
       ApplicationStateService.activateSampleTransportationLotInfoManager();
+    }
+
+    function _buildDialogs() {
+      _confirmDeleteSelectedLots = $mdDialog.confirm()
+        .title('Confirmar exclusão de Lote(s):')
+        .textContent('O(s) lote(s) será(ão) excluido(s)')
+        .ariaLabel('Confirmação de exclusão')
+        .ok('Ok')
+        .cancel('Voltar');
     }
   }
 }());

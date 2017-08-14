@@ -45,6 +45,8 @@
 
     self.selectLot = selectLot;
     self.getSelectedLot = getSelectedLot;
+    self.setLotInfoManagerAction = setLotInfoManagerAction;
+    self.getLotInfoManagerAction = getLotInfoManagerAction;
 
     function begin() {
       _context.clear();
@@ -155,6 +157,15 @@
 
     function getSelectedLot() {
       return getData('selectedLot');
+    }
+
+    function setLotInfoManagerAction(action) {
+      setData('lotInfoManagerAction', action);
+      console.log(action);
+    }
+
+    function getLotInfoManagerAction() {
+      return getData('lotInfoManagerAction');
     }
   }
 }());

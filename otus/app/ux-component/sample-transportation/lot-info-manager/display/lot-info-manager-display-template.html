@@ -10,22 +10,43 @@
           <md-card-content>
             <div layout="row" layout-align="center center">
               <md-input-container>
-                <md-datepicker ng-model="$ctrl.lot.processingDate"></md-datepicker>
+                <md-datepicker ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de processamento"></md-datepicker>
               </md-input-container>
               <span flex="5"></span>
               <md-input-container>
                 <md-icon class="material-icons" >access_time</md-icon>
-                <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.processingDate" aria-label="Tempo" min="0" max="4999">
+                <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
               </md-input-container>
 
             </div>
-            <div layout="column">
+            <div layout="column" ng-if="$ctrl.action=='alter'">
               <span class="md-body-1">{{$ctrl.lot.shipmentDate | date:format:timezone}} - {{$ctrl.lot.shipmentDate | date: "HH:mm"}}</span>
               <span class="md-body-1">{{$ctrl.lot.operator}}</span>
 
-          </div>
+            </div>
           </md-card-content>
         </md-card>
+
+        <md-card layout="column" layout-xs="column" ng-if="$ctrl.action=='create'" flex>
+              <md-card-title>
+                <md-card-title-text layout-align="center center">
+                  <span class="md-headline">Envio</span>
+
+                </md-card-title-text>
+              </md-card-title>
+              <md-card-content>
+                <div layout="row" layout-align="center center">
+                  <md-input-container>
+                    <md-datepicker ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de Envio"></md-datepicker>
+                  </md-input-container>
+                  <span flex="5"></span>
+                  <md-input-container>
+                    <md-icon class="material-icons" >access_time</md-icon>
+                    <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
+                  </md-input-container>
+                </div>
+              </md-card-content>
+            </md-card>
   <span flex="30"></span>
 </md-content>
 

@@ -34,12 +34,6 @@
       self.otusSampleTransportationManagerList.listComponent = self;
     }
 
-    function updateOnDelete() {
-      _selectedLots = [];
-      _updateSelected();
-      _LoadLotsList();
-    }
-
     function selectLot(lot) {
       var activityIndex = _selectedLots.indexOf(lot);
       if (activityIndex > -1) {
@@ -50,6 +44,12 @@
         lot.isSelected = true;
       }
       _updateSelected(_selectedLots);
+    }
+
+    function updateOnDelete() {
+      _selectedLots = [];
+      _updateSelected();
+      _LoadLotsList();
     }
 
     function _LoadLotsList() {
