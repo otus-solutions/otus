@@ -1,100 +1,69 @@
-<md-content class="md-padding" layout-xs="column" layout="row">
-  <span flex="30"></span>
-    <md-card layout="column" layout-xs="column" flex>
-          <md-card-title>
-            <md-card-title-text layout-align="center center">
-              <span class="md-headline">Processamento</span>
-
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            <div layout="row" layout-align="center center">
-              <md-input-container>
-                <md-datepicker ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de processamento"></md-datepicker>
-              </md-input-container>
-              <span flex="5"></span>
-              <md-input-container>
-                <md-icon class="material-icons" >access_time</md-icon>
-                <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
-              </md-input-container>
-
-            </div>
-            <div layout="column" ng-if="$ctrl.action=='alter'">
-              <span class="md-body-1">{{$ctrl.lot.shipmentDate | date:format:timezone}} - {{$ctrl.lot.shipmentDate | date: "HH:mm"}}</span>
-              <span class="md-body-1">{{$ctrl.lot.operator}}</span>
-
-            </div>
-          </md-card-content>
-        </md-card>
-
-        <md-card layout="column" layout-xs="column" ng-if="$ctrl.action=='create'" flex>
-              <md-card-title>
-                <md-card-title-text layout-align="center center">
-                  <span class="md-headline">Envio</span>
-
-                </md-card-title-text>
-              </md-card-title>
-              <md-card-content>
-                <div layout="row" layout-align="center center">
-                  <md-input-container>
-                    <md-datepicker ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de Envio"></md-datepicker>
-                  </md-input-container>
-                  <span flex="5"></span>
-                  <md-input-container>
-                    <md-icon class="material-icons" >access_time</md-icon>
-                    <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
-                  </md-input-container>
-                </div>
-              </md-card-content>
-            </md-card>
-  <span flex="30"></span>
-</md-content>
-
-<md-content class="md-padding" layout-xs="column" layout="row">
-  <span flex="30"></span>
-    <md-card layout="column" layout-xs="column" flex>
-          <md-card-title>
-            <md-card-title-text layout-align="center center">
-
-                <span class="md-headline">Inserir Aliquota</span>
-                <input type="text" class="aliquot" placeholder="Aliquota" name="fast-trigger" value="Inserção rápida" ng-model="aliquot_code" ng-change="$ctrl.fastInsertion(this)" flex="80"/>
-
-
-            </md-card-title-text>
-          </md-card-title>
-          <md-card-content>
-            <div layout="column" layout-align="center">
-              <md-content>
-                <md-input-container id="aliquot-list" ng-repeat="aliquot in $ctrl.lot.aliquotList" layout="column">
-                  <label>{{aliquot.label}}</label>
-                  <input ng-disabled="true" ng-model="aliquot.code">
-                  <md-icon class="md-primary" md-font-set="material-icons" style="cursor:pointer;" ng-click="$ctrl.lot.removeAliquotByIndex($index)">delete</md-icon>
+<md-card-content layout="row" layout-xs="column" layout-padding flex>
+  <div layout="column" flex>
+    <md-card>
+      <md-card-title>
+        <md-card-title-text layout-align="center center">
+          <span class="md-headline">Inserir Aliquota</span>
+          <div ng-if="$ctrl.action=='alter'">
+            <span class="md-body-1">{{$ctrl.lot.shipmentDate | date:format:timezone}} - {{$ctrl.lot.shipmentDate | date: "HH:mm"}}</span>
+            <span class="md-body-1">{{$ctrl.lot.operator}}</span>
+          </div>
+          <input type="text" class="aliquot-lot-input" placeholder="Aliquota" name="fast-trigger" value="Inserção rápida" ng-model="aliquot_code" ng-change="$ctrl.fastInsertion(this)" />
+          <div layout="row" layout-xs="column">
+            <div ng-if="$ctrl.action=='create'">
+              <div layout="row" layout-align="center center">
+                <span class="md-subhead">Envio</span>
+              </div>
+              <div layout="row" layout-align="right center">
+                <md-input-container>
+                  <md-datepicker ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de Envio"></md-datepicker>
                 </md-input-container>
-              </md-content>
-
+                <md-input-container>
+                  <md-icon class="material-icons">access_time</md-icon>
+                  <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
+                </md-input-container>
+              </div>
             </div>
-
-          </md-card-content>
-        </md-card>
-
-  <span flex="30"></span>
-</md-content>
-<style>
-  .aliquot {
-      margin:20px;
-      font-size: 14px;
-      box-sizing: border-box;
-      border: none;
-      -webkit-box-shadow: 4px 4px 14px -1px rgba(112,108,112,0.79);
-      -moz-box-shadow: 4px 4px 14px -1px rgba(112,108,112,0.79);
-      box-shadow: 4px 4px 14px -1px rgba(112,108,112,0.79);
-      outline: none;
-      background: transparent;
-      width: 100%;
-      padding: 0 15px;
-      line-height: 40px;
-      height: 40px;
-      border-radius:4px;
-      -webkit-appearance: textfield;
-  }
-</style>
+            <div>
+              <div layout="row" layout-align="center center">
+                <span class="md-subhead">Processamento</span>
+              </div>
+              <div layout="row" layout-align="right center">
+                <md-input-container>
+                  <md-datepicker ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de processamento"></md-datepicker>
+                </md-input-container>
+                <md-input-container>
+                  <md-icon class="material-icons">access_time</md-icon>
+                  <input type="time" ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
+                </md-input-container>
+              </div>
+            </div>
+          </div>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <md-content>
+          <md-list>
+            <md-list-item ng-repeat="aliquot in $ctrl.lot.aliquotList"
+                          ng-class="{ 'selectedState': Lot.isSelected, 'regularState': !Lot.isSelected }"
+                          ng-click="$ctrl.selectAliquot($index)">
+              <div class="md-list-item-text" flex>
+                <div layout="row">
+                  <div flex="95">
+                    <span class="md-title" flex>{{aliquot.code}}</span> <span flex>{{aliquot.label}}</span>
+                  </div>
+                  <div flex>
+                    <md-icon class="md-primary" md-font-set="material-icons" style="cursor:pointer;" ng-click="$ctrl.lot.removeAliquotByIndex($index) && $ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})">delete
+                      <md-tooltip md-direction="down">Remover</md-tooltip>
+                    </md-icon>
+                  </div>
+                </div>
+              </div>
+              <md-divider></md-divider>
+            </md-list-item>
+          </md-list>
+        </md-content>
+      </md-card-content>
+    </md-card>
+  </div>
+</md-card-content>

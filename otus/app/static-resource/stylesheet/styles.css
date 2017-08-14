@@ -16,6 +16,7 @@ body {
   cursor: pointer;
 }
 
+md-input-container.hide-error-msg .md-errors-spacer:empty { display: none; }
 
 /** finish style participant search **/
 

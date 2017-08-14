@@ -161,7 +161,6 @@
 
     function setLotInfoManagerAction(action) {
       setData('lotInfoManagerAction', action);
-      console.log(action);
     }
 
     function getLotInfoManagerAction() {

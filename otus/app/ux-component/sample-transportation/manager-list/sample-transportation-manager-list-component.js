@@ -26,12 +26,11 @@
     self.$onInit = onInit;
 
     /* Public methods */
-    self.selectedLots;
-    self.newLot = newLot;
-    self.updateSelectedLots = updateSelectedLots;
     self.handleViewInfoAction = handleViewInfoAction;
     self.handleDeleteAction = handleDeleteAction;
     self.handleChangeAction = handleChangeAction;
+    self.updateSelectedLots = updateSelectedLots;
+    self.newLot = newLot;
 
     function onInit() {
       self.selectedLots = [];
