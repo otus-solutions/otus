@@ -21,7 +21,7 @@
     self.createAliquotLot = createAliquotLot;
     self.createLot = createLot;
     self.alterLot = alterLot;
-    self.deleteLot = deleteLot;
+    self.deleteLots = deleteLots;
     self.loadAliquotLotFromJson = loadAliquotLotFromJson;
 
     onInit();
@@ -88,8 +88,8 @@
         });
     }
 
-    function deleteLot(lot) {
-      LaboratoryRepositoryService.deleteLot(lot)
+    function deleteLots(lotsList) {
+      LaboratoryRepositoryService.deleteLots(lotsList)
         .then(function(response) {
           return response.data;
         }, function(err) {

@@ -43,7 +43,8 @@
 
     function handleDeleteAction() {
       $mdDialog.show(_confirmDeleteSelectedLots).then(function() {
-        AliquotTransportationService.deleteLot(self.selectedLot);
+        AliquotTransportationService.deleteLots(self.selectedLots);
+        self.selectedLots = [];
         self.listComponent.updateOnDelete();
       });
     }

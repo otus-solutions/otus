@@ -28,7 +28,7 @@
     //Laboratory Project Methods
     self.createLot = createLot;
     self.alterLot = alterLot;
-    self.deleteLot = deleteLot;
+    self.deleteLots = deleteLots;
 
     function initializeLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
@@ -87,7 +87,7 @@
       return defer.promise;
     }
 
-    function deleteLot(lotInfo) {
+    function deleteLots(lotsList) {
       var defer = $q.defer();
 
       if (true) {
