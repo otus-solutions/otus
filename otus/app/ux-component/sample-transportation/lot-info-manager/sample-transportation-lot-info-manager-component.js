@@ -30,8 +30,11 @@
     self.cancel = cancel;
     self.alterLot = alterLot;
     self.updateLotStateData = updateLotStateData;
+    self.removeAliquots = removeAliquots;
+
 
     function onInit() {
+      self.selectedAliquots = [];
       self.action = laboratoryContextService.getLotInfoManagerAction();
 
       if (self.stateData['selectedLot']) {
@@ -48,6 +51,15 @@
       _formatLotDates();
       _getAliquotsInOtherLots();
       _fetchgCollectedAliquots();
+    }
+
+    function removeAliquots() {
+      for (var i = 0; i < self.selectedAliquots.length; i++) {
+        var aliquotIndex = self.lot.aliquotList.indexOf(self.selectedAliquots[i]);
+        self.lot.removeAliquotByIndex(aliquotIndex);
+      }
+      self.updateLotStateData(self.lot);
+      self.selectedAliquots = [];
     }
 
     function createLot() {
@@ -71,7 +83,7 @@
       });
     }
 
-    function updateLotStateData(newData){
+    function updateLotStateData(newData) {
       laboratoryContextService.selectLot(newData);
     }
 

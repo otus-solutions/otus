@@ -6,6 +6,10 @@
       <md-tooltip md-direction="down">Cancelar</md-tooltip>
       <md-icon  style="color: white" md-font-set="material-icons" aria-label="Cancelar">clear</md-icon>
     </md-button>
+    <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-if="$ctrl.selectedAliquots.length >= 1" ng-click="$ctrl.onRemoveAliquots()">
+      <md-tooltip md-direction="down">Excluir</md-tooltip>
+      <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
+    </md-button>
     <md-button ng-click="$ctrl.onAddLot()" class="md-raised md-accent md-icon-button" aria-label="Adicionar" ng-if="$ctrl.action == 'create'">
       <md-tooltip md-direction="down">Adicionar</md-tooltip>
       <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>

@@ -8,10 +8,11 @@
       templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/display/lot-info-manager-display-template.html',
       bindings: {
         lot: '=',
+        selectedAliquots: '=',
         aliquotsInOtherLotsList: '<',
         fullAliquotsList: '<',
-        onLotAlteration: '&',
-        action: '<'
+        action: '<',
+        onLotAlteration: '&'
       }
     });
 
@@ -23,6 +24,7 @@
     var self = this;
 
     self.fastInsertion = fastInsertion;
+    self.selectAliquot = selectAliquot;
 
     function fastInsertion(element) {
       if (element.aliquot_code.length >= 9) {
@@ -45,16 +47,15 @@
       }
     }
 
-    function selectAliquot(index) {
-
-      if (index > -1) {
-        _selectedLots.splice(index, 1);
-        lot.isSelected = false;
+    function selectAliquot(aliquot) {
+      var aliquotIndex = self.selectedAliquots.indexOf(aliquot);
+      if (aliquotIndex > -1) {
+        self.selectedAliquots.splice(aliquotIndex, 1);
+        aliquot.isSelected = false;
       } else {
-        _selectedLots.push(index);
-        lot.isSelected = true;
+        self.selectedAliquots.push(aliquot);
+        aliquot.isSelected = true;
       }
-      _updateSelected(_selectedLots);
     }
 
     function _toastError(aliquotCode) {

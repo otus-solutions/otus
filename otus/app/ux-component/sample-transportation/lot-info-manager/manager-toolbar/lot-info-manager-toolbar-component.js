@@ -10,7 +10,9 @@
         action: '<',
         onAddLot: '&',
         onCancel: '&',
-        onAlterLot: '&'
+        onAlterLot: '&',
+        onRemoveAliquots: '&',
+        selectedAliquots: '<'
       }
     });
 
