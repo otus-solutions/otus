@@ -39,6 +39,14 @@
     self.getLaboratory = getLaboratory;
     self.getDescriptors = getDescriptors;
 
+    //Laboratory Project Methods
+    self.getAliquots = getAliquots;
+    self.getAliquotsByCenter = getAliquotsByCenter;
+    self.getLots = getLots;
+    self.createLot = createLot;
+    self.updateLot = updateLot;
+    self.deleteLot = deleteLot;
+
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
      * all methods of this service that deal with data and don't need parameters to operator over
@@ -201,7 +209,128 @@
       });
 
       return request.promise;
+    }
 
+
+    //TODO: Test this
+    function getAliquots() {
+      var request = $q.defer();
+
+      _remoteStorage
+      .whenReady()
+      .then(function(remoteStorage) {
+         return remoteStorage
+         .getAliquots()
+         .then(function(aliquots) {
+            request.resolve(aliquots);
+         });
+      });
+
+      return request.promise;
+    }
+
+    function getAliquotsByCenter(lotCode) {
+      var request = $q.defer();
+
+      _remoteStorage
+      .whenReady()
+      .then(function(remoteStorage) {
+         return remoteStorage
+         .getAliquotsByCenter(lotCode)
+         .then(function(aliquots) {
+            request.resolve(aliquots);
+         });
+      });
+
+      return request.promise;
+    }
+
+    function getLots() {
+      var request = $q.defer();
+
+      _remoteStorage
+      .whenReady()
+      .then(function(remoteStorage) {
+         return remoteStorage
+         .getLots()
+         .then(function(lots) {
+            request.resolve(lots);
+         });
+      });
+
+      return request.promise;
+    }
+
+    /**
+     * Create the transport lot.
+     * @param {(object)} lotStructure - structure of transport lot
+     * @memberof LaboratoryCollectionService
+     */
+    function createLot(lotStructure) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .createLot(lotStructure)
+            .then(function(data) {
+              request.resolve(data);
+            })
+            .catch(function(e){
+               request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Update the transport lot.
+     * @param {(object)} lotStructure - structure of transport lot
+     * @memberof LaboratoryCollectionService
+     */
+    function updateLot(lotStructure) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .updateLot(lotStructure)
+            .then(function(data) {
+              request.resolve(data);
+            })
+            .catch(function(e){
+               request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Delete the transport lot.
+     * @param {(object)} lotCode - code of transport lot
+     * @memberof LaboratoryCollectionService
+     */
+    function deleteLot(lotCode) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .deleteLot(lotCode)
+            .then(function(data) {
+              request.resolve(data);
+            })
+            .catch(function(e){
+               request.reject(e);
+            });
+        });
+
+      return request.promise;
     }
   }
 }());

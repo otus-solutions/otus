@@ -106,9 +106,9 @@
     }
 
     function _fetchgCollectedAliquots() {
-      AliquotTransportationService.getFullAliquotsList()
+      AliquotTransportationService.getAliquots()
         .then(function(response) {
-          self.fullAliquotsList = response.data; // TODO: fix
+          self.fullAliquotsList = response; // TODO: fix
           console.group('aliquots-list');
           self.fullAliquotsList.forEach(function(aliquot) {
             console.log(aliquot.code);

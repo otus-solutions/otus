@@ -19,10 +19,18 @@
     self.getFullAliquotsList = getFullAliquotsList;
     self.loadLots = loadLots;
     self.createAliquotLot = createAliquotLot;
-    self.createLot = createLot;
-    self.alterLot = alterLot;
-    self.deleteLot = deleteLot;
     self.loadAliquotLotFromJson = loadAliquotLotFromJson;
+
+    //Laboratory Project Methods
+    self.getAliquots = getAliquots;
+    self.getAliquotsByCenter = getAliquotsByCenter;
+    self.getLots = getLots;
+    self.createLot = createLot;
+    self.updateLot = updateLot;
+    self.deleteLot = deleteLot;
+    //TODO: Remove this method
+    self.getFullAliquotsList = getAliquots;
+    //self.getFullAliquotsList = self.getFullAliquotsList;
 
     onInit();
 
@@ -70,31 +78,92 @@
       return TransportationService.buildAliquotLotFromJson(lotJSON);
     }
 
-    function createLot(lot) {
-      LaboratoryRepositoryService.createLot(lot)
-        .then(function(response) {
-          return response.data;
-        }, function(err) {
-          return err.data;
-        });
+    function createLot(lotStructure) {
+      return LaboratoryCollectionService.createLot(lotStructure);
     }
 
-    function alterLot(lot) {
-      LaboratoryRepositoryService.alterLot(lot)
+    function getAliquots() {
+      var deferred = $q.defer();
+
+      LaboratoryRepositoryService.getAliquots()
         .then(function(response) {
-          return response.data;
-        }, function(err) {
-          return err.data;
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
         });
+      
+      return deferred.promise;
     }
 
-    function deleteLot(lot) {
-      LaboratoryRepositoryService.deleteLot(lot)
+    function getAliquotsByCenter(center) {
+      var deferred = $q.defer();
+
+      LaboratoryRepositoryService.getAliquotsByCenter(center)
         .then(function(response) {
-          return response.data;
-        }, function(err) {
-          return err.data;
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
         });
+
+      return deferred.promise;
+    }
+
+    function getLots() {
+      var deferred = $q.defer();
+
+      LaboratoryRepositoryService.getLots()
+        .then(function(response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function createLot(lotStructure) {
+      var deferred = $q.defer();
+
+      LaboratoryRepositoryService.createLot(lotStructure)
+        .then(function(response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function updateLot(lotStructure) {
+      var deferred = $q.defer();
+
+      LaboratoryRepositoryService.updateLot(lotStructure)
+        .then(function(response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function deleteLot(lotCode) {
+      var deferred = $q.defer();
+
+      LaboratoryRepositoryService.deleteLot(lotCode)
+        .then(function(response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
     }
 
     return self;

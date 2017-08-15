@@ -30,47 +30,49 @@
       _rest.create();
     }
 
-    function getAliquots(center) {
+    //TODO: Test this
+    function getAliquots() {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getAliquots({
+      return _rest.getAliquots().$promise;
+    }
+
+    function getAliquotsByCenter(center) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getAliquotsByCenter({
         center: center
       }).$promise;
     }
 
-    function getLots(center) {
+    function getLots() {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getLots({
-        center: center
-      }).$promise;
+      return _rest.getLots().$promise;
     }
 
-    function createLot(sampleLot) {
+    function createLot(persistanceStructure) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.createLot({
-        sampleLot: sampleLot
-      }).$promise;
+      return _rest.createLot({}, persistanceStructure).$promise;
     }
 
-    function updateLot(id, sampleLot) {
+    function updateLot(persistanceStructure) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.updateLot({ id: id }, sampleLot).$promise;
+      return _rest.updateLot({}, persistanceStructure).$promise;
     }
 
-    function deleteLot(id) {
+    function deleteLot(lotCode) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.deleteLot({
-        id: id
-      }).$promise;
+      return _rest.deleteLot({id: lotCode}).$promise;
     }
   }
 }());
