@@ -5,6 +5,7 @@
   "container": "CRYOTUBE",
   "role": "EXAM",
   "sex": "F",
+  "recruitmentNumber": 3023652,
   "birthdate": {
     "objectType": "ImmutableDate",
     "value": "1970-09-20 00:00:00.000"
@@ -22,6 +23,7 @@
   "container": "CRYOTUBE",
   "role": "EXAM",
   "sex": "F",
+  "recruitmentNumber": 3023652,
   "birthdate": {
     "objectType": "ImmutableDate",
     "value": "1970-09-20 00:00:00.000"
@@ -39,6 +41,7 @@
   "container": "CRYOTUBE",
   "role": "EXAM",
   "sex": "F",
+  "recruitmentNumber": 3023652,
   "birthdate": {
     "objectType": "ImmutableDate",
     "value": "1970-10-20 00:00:00.000"
@@ -56,6 +59,7 @@
   "container": "CRYOTUBE",
   "role": "EXAM",
   "sex": "M",
+  "recruitmentNumber": 3023652,
   "birthdate": {
     "objectType": "ImmutableDate",
     "value": "1954-09-20 00:00:00.000"
@@ -73,6 +77,7 @@
   "container": "CRYOTUBE",
   "role": "EXAM",
   "sex": "M",
+  "recruitmentNumber": 3023652,
   "birthdate": {
     "objectType": "ImmutableDate",
     "value": "1955-09-23 00:00:00.000"
@@ -90,6 +95,7 @@
   "container": "PALLET",
   "role": "EXAM",
   "sex": "F",
+  "recruitmentNumber": 3023652,
   "birthdate": {
     "objectType": "ImmutableDate",
     "value": "1962-12-12 00:00:00.000"
@@ -107,6 +113,7 @@
   "container": "PALLET",
   "role": "EXAM",
   "sex": "M",
+  "recruitmentNumber": 3023652,
   "birthdate": {
     "objectType": "ImmutableDate",
     "value": "1954-09-20 00:00:00.000"
@@ -124,6 +131,7 @@
   "container": "CRYOTUBE",
   "role": "EXAM",
   "sex": "F",
+  "recruitmentNumber": 3023652,
   "birthdate": {
     "objectType": "ImmutableDate",
     "value": "1954-09-20 00:00:00.000"
@@ -141,6 +149,7 @@
   "container": "PALLET",
   "role": "STORAGE",
   "sex": "F",
+  "recruitmentNumber": 3023652,
   "birthdate": {
     "objectType": "ImmutableDate",
     "value": "1954-09-20 00:00:00.000"
@@ -158,6 +167,7 @@
   "container": "CRYOTUBE",
   "role": "STORAGE",
   "sex": "F",
+  "recruitmentNumber": 3023652,
   "birthdate": {
     "objectType": "ImmutableDate",
     "value": "1954-09-20 00:00:00.000"

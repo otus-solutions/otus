@@ -27,12 +27,6 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
 
-    onInit();
-
-    function onInit() {
-      LaboratoryConfigurationService.getAliquotsDescriptors();
-    }
-
     function createAliquotLot() {
       return TransportationService.createAliquotLot();
     }
@@ -76,16 +70,19 @@
     function getLots() {
       var deferred = $q.defer();
 
-      LaboratoryRepositoryService.getLots()
-        .then(function(response) {
-          var lots = JSON.parse(response).map(function(lotJson) {
-              return TransportationService.buildAliquotLotFromJson(lotJson);
+      LaboratoryConfigurationService.fetchAliquotsDescriptors()
+        .then(function() {
+          LaboratoryRepositoryService.getLots()
+            .then(function(response) {
+              var lots = JSON.parse(response).map(function(lotJson) {
+                  return TransportationService.buildAliquotLotFromJson(lotJson);
+                });
+              
+              deferred.resolve(lots);
+            })
+            .catch(function(err) {
+              deferred.reject(err);
             });
-          
-          deferred.resolve(lots);
-        })
-        .catch(function(err) {
-          deferred.reject(err);
         });
 
       return deferred.promise;
