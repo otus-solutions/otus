@@ -24,35 +24,22 @@
     self.deleteLots = deleteLots;
     self.loadAliquotLotFromJson = loadAliquotLotFromJson;
 
-    onInit();
-
-    function onInit() {
-      LaboratoryConfigurationService.getAliquotsDescriptors()
-        .then(function() {
-          loadLots()
-            .then(function(response) {
-              // console.log(response);
-            });
-        });
-    }
-
-    function _fetchAliquotsDescriptors() {
-
-    }
-
     function loadLots() {
-      //this returns the already created lots
+      //this returns the already created lots      
       var defer = $q.defer();
-      $http.get('app/module/laboratory/repository/laboratory/single-lot.json')
-        .then(function(response) {
-          //assume response.data as array
-          if (response.data) {
-            // console.log(response);
-            var lots = response.data.map(function(lotJson) {
-              return TransportationService.buildAliquotLotFromJson(lotJson);
+      LaboratoryConfigurationService.fetchAliquotsDescriptors()
+        .then(function() {
+          $http.get('app/module/laboratory/repository/laboratory/single-lot.json')
+            .then(function(response) {
+              //assume response.data as array
+              if (response.data) {
+                // console.log(response);
+                var lots = response.data.map(function(lotJson) {
+                  return TransportationService.buildAliquotLotFromJson(lotJson);
+                });
+                defer.resolve(lots);
+              }
             });
-            defer.resolve(lots);
-          }
         });
       return defer.promise;
     }
