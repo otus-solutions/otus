@@ -7,7 +7,7 @@
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-manager-list/sample-transportation-lot-manager-list-template.html',
       bindings: {
-        onUpdateSelectedLots: '&'
+        selectedLots: '<'
       },
       require: {
         otusSampleTransportationManagerList: '^otusSampleTransportationManagerList'
@@ -20,7 +20,6 @@
 
   function Controller(AliquotTransportationService) {
     var self = this;
-    var _selectedLots = [];
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -28,6 +27,7 @@
     /* Public methods */
     self.selectLot = selectLot;
     self.updateOnDelete = updateOnDelete;
+    self.lotsList = [];
 
     function onInit() {
       _LoadLotsList();
@@ -35,33 +35,25 @@
     }
 
     function selectLot(lot) {
-      var activityIndex = _selectedLots.indexOf(lot);
+      var activityIndex = self.selectedLots.indexOf(lot);
       if (activityIndex > -1) {
-        _selectedLots.splice(activityIndex, 1);
+        self.selectedLots.splice(activityIndex, 1);
         lot.isSelected = false;
       } else {
-        _selectedLots.push(lot);
+        self.selectedLots.push(lot);
         lot.isSelected = true;
       }
-      _updateSelected(_selectedLots);
     }
 
     function updateOnDelete() {
-      _selectedLots = [];
-      _updateSelected();
       _LoadLotsList();
     }
 
     function _LoadLotsList() {
-      self.lotsList = AliquotTransportationService.loadLots().then(function(response) {
+      AliquotTransportationService.getLots().then(function(response) {
         self.lotsList = response;
       });
     }
 
-    function _updateSelected(selectedlots) {
-      self.onUpdateSelectedLots({
-        lots: selectedlots
-      });
-    }
   }
 }());

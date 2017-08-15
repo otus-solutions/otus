@@ -16,8 +16,6 @@
   function service(TransportationService, LaboratoryConfigurationService, LaboratoryRepositoryService, $http, $q) {
     var self = this;
 
-    self.getFullAliquotsList = getFullAliquotsList;
-    self.loadLots = loadLots;
     self.createAliquotLot = createAliquotLot;
     self.loadAliquotLotFromJson = loadAliquotLotFromJson;
 
@@ -28,46 +26,11 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
-    //TODO: Remove this method
-    self.getFullAliquotsList = getAliquots;
-    //self.getFullAliquotsList = self.getFullAliquotsList;
 
     onInit();
 
     function onInit() {
-      LaboratoryConfigurationService.getAliquotsDescriptors()
-        .then(function() {
-          loadLots()
-            .then(function(response) {
-              // console.log(response);
-            });
-        });
-    }
-
-    function _fetchAliquotsDescriptors() {
-
-    }
-
-    function loadLots() {
-      //this returns the already created lots
-      var defer = $q.defer();
-      $http.get('app/module/laboratory/repository/laboratory/single-lot.json')
-        .then(function(response) {
-          //assume response.data as array
-          if (response.data) {
-            // console.log(response);
-            var lots = response.data.map(function(lotJson) {
-              return TransportationService.buildAliquotLotFromJson(lotJson);
-            });
-            defer.resolve(lots);
-          }
-        });
-      return defer.promise;
-    }
-
-    function getFullAliquotsList() {
-      //this returns the full aliquots list to check for conflicts when creating a new lot
-      return $http.get('app/module/laboratory/repository/laboratory/aliquot-list.json');
+      LaboratoryConfigurationService.getAliquotsDescriptors();
     }
 
     function createAliquotLot() {
@@ -115,7 +78,11 @@
 
       LaboratoryRepositoryService.getLots()
         .then(function(response) {
-          deferred.resolve(JSON.parse(response));
+          var lots = JSON.parse(response).map(function(lotJson) {
+              return TransportationService.buildAliquotLotFromJson(lotJson);
+            });
+          
+          deferred.resolve(lots);
         })
         .catch(function(err) {
           deferred.reject(err);

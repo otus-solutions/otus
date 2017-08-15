@@ -67,7 +67,6 @@
       return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
     }
 
-    //TODO: Test this
     function getAliquots() {
       return LaboratoryCollectionService.getAliquots();
     }

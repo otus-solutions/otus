@@ -212,7 +212,6 @@
     }
 
 
-    //TODO: Test this
     function getAliquots() {
       var request = $q.defer();
 

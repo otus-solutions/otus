@@ -30,7 +30,7 @@
     };
 
     function _resolveLots(AliquotTransportationService) {
-      return AliquotTransportationService.loadLots();
+      return AliquotTransportationService.getLots();
     }
 
     function _loadStateData(SessionContextService, LaboratoryContextService, Application) {

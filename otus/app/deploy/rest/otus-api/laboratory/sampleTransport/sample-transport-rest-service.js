@@ -30,7 +30,6 @@
       _rest.create();
     }
 
-    //TODO: Test this
     function getAliquots() {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');

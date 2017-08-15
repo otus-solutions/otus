@@ -19,7 +19,6 @@
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  // TODO: remover Logs
   function Controller($mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
     var self = this;
     var _confirmCancel;
@@ -65,16 +64,14 @@
     }
 
     function createLot() {
-      // TODO: Novo lote
       self.updateLotStateData();
-      AliquotTransportationService.createLot(self.lot);
+      AliquotTransportationService.createLot(self.lot.toJSON());
       ApplicationStateService.activateSampleTransportationManagerList();
     }
 
     function alterLot() {
-      // TODO: Alterar lote
       self.updateLotStateData();
-      AliquotTransportationService.alterLot(self.lot);
+      AliquotTransportationService.updateLot(self.lot);
       ApplicationStateService.activateSampleTransportationManagerList();
     }
 
@@ -108,12 +105,7 @@
     function _fetchgCollectedAliquots() {
       AliquotTransportationService.getAliquots()
         .then(function(response) {
-          self.fullAliquotsList = response; // TODO: fix
-          console.group('aliquots-list');
-          self.fullAliquotsList.forEach(function(aliquot) {
-            console.log(aliquot.code);
-          });
-          console.groupEnd('aliquots-list');
+          self.fullAliquotsList = response;
         });
     }
 

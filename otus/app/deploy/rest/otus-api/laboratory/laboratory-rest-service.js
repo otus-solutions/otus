@@ -77,7 +77,7 @@
       return _rest.getDescriptors().$promise;
     }
 
-    //TODO: Test this
+    
     function getAliquots() {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');

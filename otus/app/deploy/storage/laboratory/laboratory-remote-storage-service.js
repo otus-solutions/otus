@@ -145,8 +145,6 @@
       return deferred.promise;
     }
 
-    //TODO: Test this
-
     /**
      * Transport Lot
      * @returns {Promise} promise
@@ -158,8 +156,6 @@
       SampleTransportRestService
         .getAliquots()
         .then(function(response) {
-          //console.log('deferred.resolve(response.data);');
-          //console.log(response.data);
           deferred.resolve(response.data);
         })
         .catch(function(e){
@@ -215,7 +211,7 @@
       SampleTransportRestService
          .createLot(lotStructure)
          .then(function(response){
-            deferred.resolve(response);
+            deferred.resolve(response.data);
          })
          .catch(function(e){
             deferred.reject(e);
@@ -234,7 +230,7 @@
       SampleTransportRestService
          .updateLot(lotStructure)
          .then(function(response){
-            deferred.resolve(response);
+            deferred.resolve(response.data);
          })
          .catch(function(e){
             deferred.reject(e);
@@ -253,7 +249,7 @@
       SampleTransportRestService
          .deleteLot(lotCode)
          .then(function(response){
-            deferred.resolve(response);
+            deferred.resolve(response.data);
          })
          .catch(function(e){
             deferred.reject(e);
