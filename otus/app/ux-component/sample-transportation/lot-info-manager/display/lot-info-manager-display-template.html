@@ -4,17 +4,13 @@
       <md-card-title>
         <md-card-title-text layout-align="center center">
           <span class="md-headline">Inserir Aliquota</span>
-          <div ng-if="$ctrl.action=='alter'">
-            <span class="md-body-1">{{$ctrl.lot.shipmentDate | date:format:timezone}} - {{$ctrl.lot.shipmentDate | date: "HH:mm"}}</span>
-            <span class="md-body-1">{{$ctrl.lot.operator}}</span>
-          </div>
           <input type="text" class="aliquot-lot-input" placeholder="Aliquota" name="fast-trigger" value="Inserção rápida" ng-model="aliquot_code" ng-change="$ctrl.fastInsertion(this)" />
           <div layout="row" layout-xs="column">
             <div ng-if="$ctrl.action=='create'">
-              <div layout="row" layout-align="center center">
-                <span class="md-subhead">Envio</span>
+              <div layout="row" layout-xs="column" layout-align="center center">
+                <span class="md-body-2">Envio</span>
               </div>
-              <div layout="row" layout-align="right center">
+              <div layout="row" layout-xs="column" layout-align="right center">
                 <md-input-container>
                   <md-datepicker ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de Envio"></md-datepicker>
                 </md-input-container>
@@ -25,19 +21,23 @@
               </div>
             </div>
             <div>
-              <div layout="row" layout-align="center center">
-                <span class="md-subhead">Processamento</span>
+              <div layout="row"  layout-xs="column"  layout-align="center center">
+                <span class="md-body-2">Processamento</span>
               </div>
-              <div layout="row" layout-align="right center">
+              <div layout="row"  layout-xs="column"  layout-align="right center">
                 <md-input-container>
                   <md-datepicker ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de processamento"></md-datepicker>
                 </md-input-container>
                 <md-input-container>
                   <md-icon class="material-icons">access_time</md-icon>
-                  <input type="time" ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
+                  <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
                 </md-input-container>
               </div>
             </div>
+          </div>
+          <div ng-if="$ctrl.action=='alter'">
+            <span class="md-body-1" layout-margin>{{$ctrl.lot.shipmentDate | date:format:timezone}} - {{$ctrl.lot.shipmentDate | date: "HH:mm"}}</span>
+            <span class="md-body-1">{{$ctrl.lot.operator}}</span>
           </div>
         </md-card-title-text>
       </md-card-title>
@@ -47,7 +47,7 @@
             <div class="md-list-item-text" flex>
               <div layout="row">
                 <div flex="95">
-                  <span class="md-title" flex>{{aliquot.code}}</span> <span flex>{{aliquot.label}}</span>
+                  <span class="md-title" layout-margin>{{aliquot.code}}</span><span>{{aliquot.label}}</span>
                 </div>
               </div>
             </div>
