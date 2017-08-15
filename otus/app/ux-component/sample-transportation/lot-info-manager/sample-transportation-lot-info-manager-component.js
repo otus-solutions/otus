@@ -24,8 +24,10 @@
     var self = this;
     var _confirmCancel;
 
+    /* Lifecycle hooks */
     self.$onInit = onInit;
 
+    /* Public methods */
     self.createLot = createLot
     self.cancel = cancel;
     self.alterLot = alterLot;

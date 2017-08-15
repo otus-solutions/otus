@@ -23,6 +23,7 @@
   function Controller($mdToast) {
     var self = this;
 
+    /* Public methods */
     self.fastInsertion = fastInsertion;
     self.selectAliquot = selectAliquot;
 
