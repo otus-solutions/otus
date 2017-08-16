@@ -29,7 +29,7 @@
     };
 
     function _resolveLots(AliquotTransportationService) {
-      return AliquotTransportationService.loadLots();
+      return AliquotTransportationService.getLots();
     }
 
     _resolveLots.$inject = [

@@ -11,7 +11,8 @@
 
   Service.$inject = [
     '$q',
-    'otusjs.deploy.LaboratoryRestService'
+    'otusjs.deploy.LaboratoryRestService',
+    'otusjs.deploy.SampleTransportRestService'
   ];
 
   /**
@@ -26,7 +27,7 @@
    * @namespace LaboratoryRemoteStorage
    * @memberof Services
    */
-  function Service($q, LaboratoryRestService) {
+  function Service($q, LaboratoryRestService, SampleTransportRestService) {
     var self = this;
 
     /* Public methods */
@@ -36,6 +37,14 @@
     self.update = update;
     self.updateAliquots = updateAliquots;
     self.getDescriptors = getDescriptors;
+
+    //Laboratory Project Methods
+    self.getAliquots = getAliquots;
+    self.getAliquotsByCenter = getAliquotsByCenter;
+    self.getLots = getLots;
+    self.createLot = createLot;
+    self.updateLot = updateLot;
+    self.deleteLot = deleteLot;
 
     /**
      * Adds laboratories to collection.
@@ -48,6 +57,7 @@
     function insert(laboratoryToInsert) {
       var deferred = $q.defer();
       LaboratoryRestService.create();
+      SampleTransportRestService.create();
 
       return deferred.promise;
     }
@@ -130,6 +140,118 @@
          .then(function(response){
             deferred.resolve(response);
          }, function(e){
+            deferred.reject(e);
+         });
+      return deferred.promise;
+    }
+
+    /**
+     * Transport Lot
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function getAliquots() {
+      var deferred = $q.defer();
+
+      SampleTransportRestService
+        .getAliquots()
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e){
+          console.log(e);
+        });
+
+      return deferred.promise;
+    }
+
+    /**
+     * Transport Lot
+     * @param {(object)} center - the code of center
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function getAliquotsByCenter(center) {
+      var deferred = $q.defer();
+
+      SampleTransportRestService
+        .getAliquotsByCenter(center)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        });
+
+      return deferred.promise;
+    }
+
+    /**
+     * Transport Lot
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function getLots() {
+      var deferred = $q.defer();
+
+      SampleTransportRestService
+        .getLots()
+        .then(function(response) {
+          deferred.resolve(response.data);
+        });
+
+      return deferred.promise;
+    }
+
+    /**
+     * Transport Lot
+     * @param {(object)} lotStructure - the structure of lof
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function createLot(lotStructure) {
+      var deferred = $q.defer();
+      SampleTransportRestService
+         .createLot(lotStructure)
+         .then(function(response){
+            deferred.resolve(response.data);
+         })
+         .catch(function(e){
+            deferred.reject(e);
+         });
+      return deferred.promise;
+    }
+    
+    /**
+     * Transport Lot
+     * @param {(object)} lotStructure - the structure of lof
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function updateLot(lotStructure) {
+      var deferred = $q.defer();
+      SampleTransportRestService
+         .updateLot(lotStructure)
+         .then(function(response){
+            deferred.resolve(response.data);
+         })
+         .catch(function(e){
+            deferred.reject(e);
+         });
+      return deferred.promise;
+    }
+
+    /**
+     * Transport Lot
+     * @param {(object)} lotCode - the code of lot
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function deleteLot(lotCode) {
+      var deferred = $q.defer();
+      SampleTransportRestService
+         .deleteLot(lotCode)
+         .then(function(response){
+            deferred.resolve(response.data);
+         })
+         .catch(function(e){
             deferred.reject(e);
          });
       return deferred.promise;

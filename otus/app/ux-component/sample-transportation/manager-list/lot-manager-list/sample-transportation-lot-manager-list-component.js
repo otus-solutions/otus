@@ -27,6 +27,7 @@
     /* Public methods */
     self.selectLot = selectLot;
     self.updateOnDelete = updateOnDelete;
+    self.lotsList = [];
 
     function onInit() {
       _LoadLotsList();
@@ -49,7 +50,7 @@
     }
 
     function _LoadLotsList() {
-      self.lotsList = AliquotTransportationService.loadLots().then(function(response) {
+      AliquotTransportationService.getLots().then(function(response) {
         self.lotsList = response;
       });
     }

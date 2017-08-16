@@ -15,7 +15,7 @@
     var self = this;
 
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
-    self.getAliquotsDescriptors = getAliquotsDescriptors;
+    self.fetchAliquotsDescriptors = fetchAliquotsDescriptors;
 
     onInit();
 
@@ -55,7 +55,7 @@
     }
 
     /*Aliquots Descriptors*/
-    function getAliquotsDescriptors() {
+    function fetchAliquotsDescriptors() {
       var defer = $q.defer();
       var aliquotsInitialized = LaboratoryConfigurationService.checkAliquotsDescriptors();
 

@@ -42,10 +42,19 @@
     }
 
     function handleDeleteAction() {
-      $mdDialog.show(_confirmDeleteSelectedLots).then(function() {
-        AliquotTransportationService.deleteLots(self.selectedLots);
+      $mdDialog.show(_confirmDeleteSelectedLots).then(function() {        
+        for(var i = 0;i< self.selectedLots.length;i++){
+          var lot = self.selectedLots[i];
+
+          if(i == self.selectedLots.length - 1){
+            AliquotTransportationService.deleteLot(lot.code).then(function(){
+              self.listComponent.updateOnDelete();
+            });
+          } else {
+            AliquotTransportationService.deleteLot(lot.code);
+          }
+        }
         self.selectedLots = [];
-        self.listComponent.updateOnDelete();
       });
     }
 

@@ -26,9 +26,13 @@
     self.getAliquotsDescriptors = getAliquotsDescriptors;
 
     //Laboratory Project Methods
+    self.getAliquots = getAliquots;
+    self.getAliquotsByCenter = getAliquotsByCenter;
+    self.getLots = getLots;
     self.createLot = createLot;
-    self.alterLot = alterLot;
-    self.deleteLots = deleteLots;
+    self.updateLot = updateLot;
+    self.deleteLot = deleteLot;
+
 
     function initializeLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
@@ -63,40 +67,28 @@
       return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
     }
 
-    function createLot(lotInfo) {
-      var defer = $q.defer();
-
-      if (true) {
-        defer.resolve({data: 'createLot'});
-      }else {
-        defer.reject({data: 'not createLot'});
-      }
-
-      return defer.promise;
+    function getAliquots() {
+      return LaboratoryCollectionService.getAliquots();
+    }
+    
+    function getAliquotsByCenter(center) {
+      return LaboratoryCollectionService.getAliquotsByCenter(center);
+    }
+    
+    function getLots() {
+      return LaboratoryCollectionService.getLots();
     }
 
-    function alterLot(lotInfo) {
-      var defer = $q.defer();
-
-      if (true) {
-        defer.resolve({data: 'alterLot'});
-      }else {
-        defer.reject({data: 'not alterLot'});
-      }
-
-      return defer.promise;
+    function createLot(lotStructure) {
+      return LaboratoryCollectionService.createLot(lotStructure);
     }
 
-    function deleteLots(lotsList) {
-      var defer = $q.defer();
+    function updateLot(lotStructure) {
+      return LaboratoryCollectionService.updateLot(lotStructure);
+    }
 
-      if (true) {
-        defer.resolve({data: 'deleteLot'});
-      }else {
-        defer.reject({data: 'not deleteLot'});
-      }
-
-      return defer.promise;
+    function deleteLot(lotCode) {
+      return LaboratoryCollectionService.deleteLot(lotCode);
     }
   }
 }());
