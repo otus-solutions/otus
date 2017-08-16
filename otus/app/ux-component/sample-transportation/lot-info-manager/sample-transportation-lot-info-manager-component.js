@@ -98,8 +98,8 @@
 
     function _getAliquotsInOtherLots() {
       self.aliquotsInOtherLots = [];
-      for (let i = 0; i < self.lots.length; i++) {
-        for (let j = 0; j < self.lots[i].aliquotList.length; j++) {
+      for (var i = 0; i < self.lots.length; i++) {
+        for (var j = 0; j < self.lots[i].aliquotList.length; j++) {
           self.aliquotsInOtherLots.push(self.lots[i].aliquotList[j]);
         }
       }
