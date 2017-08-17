@@ -30,6 +30,7 @@
 
     /* Public methods */
     self.initializeOpenResources = initializeOpenResources;
+    self.initializeConfigurationResources = initializeConfigurationResources;
     self.initializeRestrictResources = initializeRestrictResources;
 
     function initializeOpenResources() {
@@ -37,9 +38,12 @@
       InstallerRestService.initialize();
     }
 
+    function initializeConfigurationResources() {
+      ProjectConfigurationRestService.initialize();
+    }
+
     function initializeRestrictResources() {
       ActivityRestService.initialize();
-      ProjectConfigurationRestService.initialize();
       ParticipantRestService.initialize();
       UserRestService.initialize();
       LaboratoryRestService.initialize();

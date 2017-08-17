@@ -65,14 +65,16 @@
 
     function createLot() {
       self.updateLotStateData();
-      AliquotTransportationService.createLot(self.lot.toJSON());
-      ApplicationStateService.activateSampleTransportationManagerList();
+      AliquotTransportationService.createLot(self.lot.toJSON()).then(function() {
+        ApplicationStateService.activateSampleTransportationManagerList();
+      });
     }
 
     function alterLot() {
       self.updateLotStateData();
-      AliquotTransportationService.updateLot(self.lot);
-      ApplicationStateService.activateSampleTransportationManagerList();
+      AliquotTransportationService.updateLot(self.lot).then(function() {
+        ApplicationStateService.activateSampleTransportationManagerList();
+      });
     }
 
     function cancel() {
