@@ -103,8 +103,8 @@
     }
 
     function _hasErrorBackEnd(errorAliquots) {
-      for (let i = 0; i < errorAliquots.length; i++) {
-        for (let j = 0; j < self.lot.aliquotList.length; j++) {
+      for (var i = 0; i < errorAliquots.length; i++) {
+        for (var j = 0; j < self.lot.aliquotList.length; j++) {
           if (self.lot.aliquotList[j].code == errorAliquots[i]) {
             self.lot.aliquotList[j].hasError = true;
           }
