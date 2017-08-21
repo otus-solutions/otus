@@ -31,8 +31,10 @@
         .executeSignup(user)
         .then(function(response) {
           if (response.data) {
+            LoadingScreenService.finish();
             ApplicationStateService.activateSignupResult();
-          } else {
+
+          } else {LoadingScreenService.finish();
              _showErrorMessage(response);
              LoadingScreenService.finish();
           }
@@ -40,6 +42,7 @@
           LoadingScreenService.finish();
           _showErrorMessage(err);
        });
+
     }
 
     function _showErrorMessage(response) {
