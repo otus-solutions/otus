@@ -16,7 +16,10 @@ body {
   cursor: pointer;
 }
 
-md-input-container.hide-error-msg .md-errors-spacer:empty { display: none; }
+md-input-container.hide-error-msg .md-errors-spacer:empty {
+  display: none;
+}
+
 
 /** finish style participant search **/
 
@@ -122,18 +125,22 @@ otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>m
 .autocomplete-custom-participant-template .participant-title md-icon {
   margin-right: 10px;
 }
-
-
 /** finish participant-search **/
 
 /** tube-item-view-component **/
 .tubeNotCollect {
-    transition:all linear 0.5s;
-    opacity: 0.4;
-  }
-/** finish tube-item-view-component**/
+  transition: all linear 0.5s;
+  opacity: 0.4;
+}
 
 md-checkbox.md-checkbox-small {
-    transform: scale(0.8);
-    margin:0;
+  transform: scale(0.8);
+  margin: 0;
 }
+/** finish tube-item-view-component**/
+
+/** lot-info-maneger-display-component **/
+.error {
+  color: red;
+}
+/** finish lot-info-maneger-display-component **/

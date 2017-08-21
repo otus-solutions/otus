@@ -13,13 +13,14 @@
     });
 
   Controller.$inject = [
+    '$mdToast',
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller($mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
+  function Controller($mdToast, $mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
     var self = this;
     var _confirmCancel;
 
@@ -37,7 +38,6 @@
     function onInit() {
       self.selectedAliquots = [];
       self.action = laboratoryContextService.getLotInfoManagerAction();
-
       if (self.stateData['selectedLot']) {
         self.lot = AliquotTransportationService.loadAliquotLotFromJson(self.stateData['selectedLot']);
         self.lot.shipmentDate = new Date(self.lot.shipmentDate);
@@ -64,16 +64,22 @@
     }
 
     function createLot() {
-      self.updateLotStateData();
       AliquotTransportationService.createLot(self.lot.toJSON()).then(function() {
         ApplicationStateService.activateSampleTransportationManagerList();
+        self.updateLotStateData();
+      }, function(err) {
+        _hasErrorBackEnd(err.data.CONTENT.value);
+        _toastOtherLot()
       });
     }
 
     function alterLot() {
-      self.updateLotStateData();
       AliquotTransportationService.updateLot(self.lot).then(function() {
         ApplicationStateService.activateSampleTransportationManagerList();
+        self.updateLotStateData();
+      }, function(err) {
+        _hasErrorBackEnd(err.data.CONTENT.value);
+        _toastOtherLot()
       });
     }
 
@@ -86,6 +92,25 @@
 
     function updateLotStateData(newData) {
       laboratoryContextService.selectLot(newData);
+    }
+
+    function _toastOtherLot() {
+      $mdToast.show(
+        $mdToast.simple()
+        .textContent('aliquota(s) em outro(s) lote(s)')
+        .hideDelay(2000)
+      );
+    }
+
+    function _hasErrorBackEnd(errorAliquots) {
+      for (let i = 0; i < errorAliquots.length; i++) {
+        for (let j = 0; j < self.lot.aliquotList.length; j++) {
+          if (self.lot.aliquotList[j].code == errorAliquots[i]) {
+            self.lot.aliquotList[j].hasError = true;
+          }
+        }
+      }
+      self.updateLotStateData(self.lot);
     }
 
     function _formatLotDates() {
