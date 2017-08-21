@@ -63,7 +63,7 @@
       $mdToast.show(
         $mdToast.simple()
         .textContent('aliquota ' + aliquotCode + ' não encontrada')
-        .hideDelay(1000)
+        .hideDelay(2000)
       );
     }
 
@@ -71,7 +71,7 @@
       $mdToast.show(
         $mdToast.simple()
         .textContent('aliquota ' + aliquotCode + ' já esta no lote')
-        .hideDelay(1000)
+        .hideDelay(2000)
       );
     }
 
@@ -79,7 +79,7 @@
       $mdToast.show(
         $mdToast.simple()
         .textContent('aliquota ' + aliquotCode + ' já esta em outro lote')
-        .hideDelay(1000)
+        .hideDelay(2000)
       );
     }
 

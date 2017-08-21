@@ -12,13 +12,14 @@
     });
 
   Controller.$inject = [
+    '$mdToast',
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller($mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
+  function Controller($mdToast, $mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
     var self = this;
     var _confirmDeleteSelectedLots;
 
@@ -43,17 +44,33 @@
 
     function handleDeleteAction() {
       $mdDialog.show(_confirmDeleteSelectedLots).then(function() {
-        for (var i = 0; i < self.selectedLots.length; i++) {
-          var lot = self.selectedLots[i];
-          if (i == self.selectedLots.length - 1) {
-            AliquotTransportationService.deleteLot(lot.code).then(function() {
-              self.listComponent.updateOnDelete();
-            });
-          } else {
-            AliquotTransportationService.deleteLot(lot.code);
-          }
+        _removeLotRecursive(self.selectedLots, function() {
+          self.listComponent.updateOnDelete();
+          self.selectedLots = [];
+        });
+      });
+    }
+
+    function _removeLotRecursive(lotArray,callback){
+      AliquotTransportationService.deleteLot(lotArray[0].code).then(function(){
+        if(lotArray.length == 1){
+          callback();
+        } else {
+          lotArray.splice(0,1);
+          _removeLotRecursive(lotArray,callback);
         }
-        self.selectedLots = [];
+      })
+      .catch(function(e){
+        var msgLots = "Não foi possível excluir o Lote " + lotArray[0].code + " o(s) Lote(s):" 
+          + lotArray.map(function(lot){return " " + lot.code;})
+          + " não será(ão) excluído(s).";
+
+        $mdToast.show(
+          $mdToast.simple()
+          .textContent(msgLots)
+          .hideDelay(4000)
+          );
+        callback();
       });
     }
 
