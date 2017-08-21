@@ -103,7 +103,7 @@
     }
 
     function updateLaboratoryParticipant() {
-      return LaboratoryRepositoryService.updateLaboratoryParticipant(_participantLaboratory.toJSON());
+      return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(_participantLaboratory));
     }
 
     function updateAliquots(updateStructure) {
