@@ -1,0 +1,4 @@
+<otus-sample-transportation-lot-info-sidenav selected-lot="$ctrl.selectedLots[0]" ng-if="$ctrl.selectedLots.length == 1"></otus-sample-transportation-lot-info-sidenav>
+<otus-sample-transportation-manager-toolbar selected-lots="$ctrl.selectedLots" on-change-lot="$ctrl.handleChangeAction()" on-delete="$ctrl.handleDeleteAction()" on-view-info="$ctrl.handleViewInfoAction()" layout="row"></otus-sample-transportation-manager-toolbar>
+<otus-sample-transportation-lot-manager-list selected-lots="$ctrl.selectedLots" layout="column" flex></otus-sample-transportation-lot-manager-list>
+<otus-sample-transportation-lot-add-button on-new-lot="$ctrl.newLot()"></otus-sample-transportation-lot-add-button>

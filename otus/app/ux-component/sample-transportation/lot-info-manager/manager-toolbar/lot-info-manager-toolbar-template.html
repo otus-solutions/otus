@@ -1,0 +1,24 @@
+<div flex>
+  <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
+    <div class="md-toolbar-tools md-hue-2">
+      <span ng-if="!$ctrl.selectedLot" flex>Adicionar lote</span>
+      <span ng-if="$ctrl.selectedLot" flex>Alterar lote</span>
+      <md-button ng-click="$ctrl.onCancel()" style="background-color: grey" class="md-raised md-icon-button" aria-label="Cancelar">
+        <md-tooltip md-direction="down">Cancelar</md-tooltip>
+        <md-icon style="color: white" md-font-set="material-icons" aria-label="Cancelar">clear</md-icon>
+      </md-button>
+      <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-if="$ctrl.selectedAliquots.length >= 1" ng-click="$ctrl.onRemoveAliquots()">
+        <md-tooltip md-direction="down">Excluir</md-tooltip>
+        <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
+      </md-button>
+      <md-button ng-click="$ctrl.onAddLot()" class="md-raised md-accent md-icon-button" aria-label="Adicionar" ng-if="$ctrl.action == 'create'">
+        <md-tooltip md-direction="down">Adicionar</md-tooltip>
+        <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
+      </md-button>
+      <md-button ng-click="$ctrl.onAlterLot()" class="md-raised md-accent md-icon-button" aria-label="Salvar" ng-if="$ctrl.action == 'alter'">
+        <md-tooltip md-direction="down">Salvar</md-tooltip>
+        <md-icon aria-label="Adicionar">save</md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+</div>

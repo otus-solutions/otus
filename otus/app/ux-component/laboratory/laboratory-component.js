@@ -9,7 +9,7 @@
     });
 
   Controller.$inject = [
-    'otusjs.laboratory.business.ParticipantLaboratoryService',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.laboratory.core.EventService',
     '$scope'

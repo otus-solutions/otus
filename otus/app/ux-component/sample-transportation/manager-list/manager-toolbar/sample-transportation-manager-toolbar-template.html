@@ -1,0 +1,22 @@
+<md-toolbar style="z-index: 1" class="md-primary md-hue-1">
+  <div class="md-toolbar-tools md-hue-2">
+    <span flex>Lotes de transporte</span>
+    <!-- TODO: LMJ-4  -->
+    <!-- <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Lote" ng-if="$ctrl.selectedLots.length == 1" ng-click="">
+      <md-tooltip md-direction="down">Imprimir Etiquetas</md-tooltip>
+      <md-icon aria-label="Alterar Lote">local_printshop</md-icon>
+    </md-button> -->
+    <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Lote" ng-if="$ctrl.selectedLots.length == 1" ng-click="$ctrl.onChangeLot()">
+      <md-tooltip md-direction="down">Alterar Lote</md-tooltip>
+      <md-icon aria-label="Alterar Lote">edit</md-icon>
+    </md-button>
+    <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-if="$ctrl.selectedLots.length >= 1" ng-click="$ctrl.onDelete()">
+      <md-tooltip md-direction="down">Excluir</md-tooltip>
+      <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
+    </md-button>
+    <md-button class="md-raised md-accent md-icon-button" aria-label="Detalhes" ng-if="$ctrl.selectedLots.length == 1" ng-click="$ctrl.onViewInfo()">
+      <md-tooltip md-direction="down">Aliquotas</md-tooltip>
+      <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>
+    </md-button>
+  </div>
+</md-toolbar>

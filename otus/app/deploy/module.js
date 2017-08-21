@@ -17,7 +17,7 @@
     ])
     .value('OtusLocalStorage', [
       'otusjs.activity.storage.ActivityLocalStorageService',
-      'otusjs.laboratory.storage.ParticipantLaboratoryLocalStorageService',
+      'otusjs.laboratory.storage.LaboratoryLocalStorageService',
       'otusjs.activity.storage.SurveyStorageService',
       'otusjs.participant.storage.ParticipantStorageService',
       'otusjs.user.storage.UserStorageService'

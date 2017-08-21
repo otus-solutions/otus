@@ -13,7 +13,7 @@
 
   function Service($q, ContextService, EventService) {
     var self = this;
-    var _participantLaboratoryRemoteStorageDefer = $q.defer();
+    var _laboratoryRemoteStorageDefer = $q.defer();
     var _surveyDataSourceDefer = $q.defer();
     var _currentUser;
 
@@ -24,8 +24,8 @@
     /* Public methods */
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;
-    self.getParticipantLaboratoryRemoteStorage = getParticipantLaboratoryRemoteStorage;
-    self.setParticipantLaboratoryRemoteStorage = setParticipantLaboratoryRemoteStorage;
+    self.getLaboratoryRemoteStorage = getLaboratoryRemoteStorage;
+    self.setLaboratoryRemoteStorage = setLaboratoryRemoteStorage;
     self.setCurrentUser = setCurrentUser;
 
     function setCurrentUser(currentUser) {
@@ -41,21 +41,21 @@
       ContextService.configureStorage(storage);
     }
 
-    function getParticipantLaboratoryRemoteStorage() {
-      if (self.RemoteStorage.ParticipantLaboratory) {
-        _participantLaboratoryRemoteStorageDefer = $q.defer();
-        _participantLaboratoryRemoteStorageDefer.resolve(self.RemoteStorage.ParticipantLaboratory);
+    function getLaboratoryRemoteStorage() {
+      if (self.RemoteStorage.Laboratory) {
+        _laboratoryRemoteStorageDefer = $q.defer();
+        _laboratoryRemoteStorageDefer.resolve(self.RemoteStorage.Laboratory);
       }
       return {
         whenReady: function() {
-          return _participantLaboratoryRemoteStorageDefer.promise;
+          return _laboratoryRemoteStorageDefer.promise;
         }
       };
     }
 
-    function setParticipantLaboratoryRemoteStorage(storage) {
-      self.RemoteStorage.ParticipantLaboratory = storage;
-      _participantLaboratoryRemoteStorageDefer.resolve(self.RemoteStorage.ParticipantLaboratory);
+    function setLaboratoryRemoteStorage(storage) {
+      self.RemoteStorage.Laboratory = storage;
+      _laboratoryRemoteStorageDefer.resolve(self.RemoteStorage.Laboratory);
     }
 
   }

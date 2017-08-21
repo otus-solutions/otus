@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -28,7 +28,9 @@
     self.activateSignup = activateSignup;
     self.activateSignupResult = activateSignupResult;
     self.getCurrentState = getCurrentState;
-    self.activateSampleTransport = activateSampleTransport;
+    self.activateSampleTransportation = activateSampleTransportation;
+    self.activateSampleTransportationLotInfoManager = activateSampleTransportationLotInfoManager;
+    self.activateSampleTransportationManagerList = activateSampleTransportationManagerList;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -83,8 +85,16 @@
       $state.go(STATE.SIGNUP_RESULT);
     }
 
-    function activateSampleTransport() {
-      $state.go(STATE.SAMPLE_TRANSPORT);
+    function activateSampleTransportation() {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_DASHBOARD);
+    }
+
+    function activateSampleTransportationManagerList() {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_MANAGER_LIST);
+    }
+
+    function activateSampleTransportationLotInfoManager() {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER);
     }
 
     function getCurrentState() {

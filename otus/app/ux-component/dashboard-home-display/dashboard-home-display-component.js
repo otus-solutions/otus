@@ -14,14 +14,14 @@
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(ContextService, EventService, ApplicationStateService){
+  function Controller(ContextService, EventService, ApplicationStateService) {
     var self = this;
     self.sampleTransportDashboard = sampleTransportDashboard;
     self.setFocus = setFocus;
     self.$onInit = onInit;
     /* Public methods */
-    function sampleTransportDashboard(){
-      ApplicationStateService.activateSampleTransport();
+    function sampleTransportDashboard() {
+      ApplicationStateService.activateSampleTransportation();
     }
 
     function setFocus() {

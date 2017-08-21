@@ -12,7 +12,8 @@
     'otusjs.deploy.ProjectConfigurationRestService',
     'otusjs.deploy.ParticipantRestService',
     'otusjs.deploy.UserRestService',
-    'otusjs.deploy.ParticipantLaboratoryRestService'
+    'otusjs.deploy.LaboratoryRestService',
+    'otusjs.deploy.SampleTransportRestService'
   ];
 
   function Service(
@@ -22,12 +23,14 @@
     ProjectConfigurationRestService,
     ParticipantRestService,
     UserRestService,
-    ParticipantLaboratoryRestService
+    LaboratoryRestService,
+    SampleTransportRestService
   ) {
     var self = this;
 
     /* Public methods */
     self.initializeOpenResources = initializeOpenResources;
+    self.initializeConfigurationResources = initializeConfigurationResources;
     self.initializeRestrictResources = initializeRestrictResources;
 
     function initializeOpenResources() {
@@ -35,12 +38,16 @@
       InstallerRestService.initialize();
     }
 
+    function initializeConfigurationResources() {
+      ProjectConfigurationRestService.initialize();
+    }
+
     function initializeRestrictResources() {
       ActivityRestService.initialize();
-      ProjectConfigurationRestService.initialize();
       ParticipantRestService.initialize();
       UserRestService.initialize();
-      ParticipantLaboratoryRestService.initialize();
+      LaboratoryRestService.initialize();
+      SampleTransportRestService.initialize();
     }
   }
 }());
