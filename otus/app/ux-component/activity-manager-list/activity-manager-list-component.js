@@ -48,7 +48,7 @@
 
     function update() {
       _selectedActivities = [];
-      _loadActivities();
+      ActivityService.selectActivities(_selectedActivities);
     }
 
     function onInit() {
@@ -60,6 +60,7 @@
 
     function _loadActivities() {
       LoadingScreenService.start();
+      self.update();
       ActivityService
         .listAll()
         .then(function(activities) {
