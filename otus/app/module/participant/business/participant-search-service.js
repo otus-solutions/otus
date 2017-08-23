@@ -27,15 +27,19 @@
 
     function setup() {
       var defer = $q.defer();
-        ParticipantRepositoryService.listIdexers()
-          .then(function(_participants) {
-            if (_participants) {
-              query = SearchQueryFactory.newParticipantFilter(_participants);
-              _stringfyRNs(_participants);
-              _setupSuccess = true;
-              defer.resolve();
-            }
-          });
+      setTimeout(function() {
+      var promise = ParticipantRepositoryService.listIdexers();
+      promise.then(function(_participants) {
+          if (_participants) {
+            query = SearchQueryFactory.newParticipantFilter(_participants);
+            _stringfyRNs(_participants);
+            _setupSuccess = true;
+            defer.resolve();
+          } else {
+            defer.reject();
+          }
+        });
+      }, 1000);
       return defer.promise;
     }
 

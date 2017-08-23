@@ -22,15 +22,20 @@
       parent: STATE.PARTICIPANT_DASHBOARD,
       name: STATE.PAPER_ACTIVITY_INITIALIZER,
       url: '/' + STATE.PAPER_ACTIVITY_INITIALIZER,
-      template: '<otus-paper-activity-initializer layout="column" flex></otus-paper-activity-initializer>',
-      onEnter: _onEnter
+      template: '<otus-paper-activity-initializer checkers="$resolve.listCheckers" layout="column" flex></otus-paper-activity-initializer>',
+      onEnter: _onEnter,
+      resolve:{
+        listCheckers: _listCheckers
+      }
+
     };
 
-    function _onEnter(ActivityContextService, Application) {
+    function _onEnter(ParticipantContextService, ActivityContextService, Application) {
       Application
         .isDeployed()
         .then(function() {
           try {
+            ParticipantContextService.restore();
             ActivityContextService.restore();
           } catch (e) {
             ActivityContextService.begin();
@@ -38,7 +43,27 @@
         });
     }
 
+    function _listCheckers(ActivityService, CheckerItemFactory, Application) {
+      return Application
+        .isDeployed()
+        .then(function() {
+          try {
+            return ActivityService.listActivityCheckers().map(CheckerItemFactory.create);
+          } catch (e) {
+            console.log(e);
+          }
+        });
+
+    }
+
+    _listCheckers.$inject = [
+      'otusjs.activity.business.ParticipantActivityService',
+      'otusjs.otus.uxComponent.CheckerItemFactory',
+      'otusjs.application.core.ModuleService'
+    ]
+
     _onEnter.$inject = [
+      'otusjs.participant.core.ContextService',
       'otusjs.activity.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
