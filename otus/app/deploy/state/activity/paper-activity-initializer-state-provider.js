@@ -14,6 +14,7 @@
 
     self.$get = [provider];
 
+
     function provider() {
       return self;
     }
@@ -25,17 +26,18 @@
       template: '<otus-paper-activity-initializer checkers="$resolve.listCheckers" layout="column" flex></otus-paper-activity-initializer>',
       onEnter: _onEnter,
       resolve:{
-        listCheckers: _listCheckers
+        listCheckers: _listCheckers,
       }
-
     };
 
-    function _onEnter(ParticipantContextService, ActivityContextService, Application) {
+    function _onEnter(ParticipantContextService, ActivityContextService, Application, SessionContextService) {
       Application
         .isDeployed()
         .then(function() {
           try {
+            ActivityContextService.restore();
             ParticipantContextService.restore();
+            SessionContextService.restore();
             ActivityContextService.restore();
           } catch (e) {
             ActivityContextService.begin();
@@ -43,29 +45,31 @@
         });
     }
 
-    function _listCheckers(ActivityService, CheckerItemFactory, Application) {
+    function _listCheckers(ActivityService, CheckerItemFactory, Application, SessionContextService) {
       return Application
         .isDeployed()
         .then(function() {
           try {
+            SessionContextService.restore();
             return ActivityService.listActivityCheckers().map(CheckerItemFactory.create);
           } catch (e) {
             console.log(e);
           }
         });
-
     }
 
     _listCheckers.$inject = [
       'otusjs.activity.business.ParticipantActivityService',
       'otusjs.otus.uxComponent.CheckerItemFactory',
-      'otusjs.application.core.ModuleService'
-    ]
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.session.core.ContextService'
+    ];
 
     _onEnter.$inject = [
       'otusjs.participant.core.ContextService',
       'otusjs.activity.core.ContextService',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.session.core.ContextService'
     ];
   }
 }());

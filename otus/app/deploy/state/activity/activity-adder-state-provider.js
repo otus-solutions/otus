@@ -23,15 +23,20 @@
       name: STATE.ACTIVITY_ADDER,
       url: '/' + STATE.ACTIVITY_ADDER,
       template: '<otus-activity-adder layout="column" flex></otus-activity-adder>',
-      onEnter: _onEnter
+      onEnter: _onEnter,
+      resolve:{
+        loadStateData: _loadStateData
+      }
     };
 
-    function _onEnter(ParticipantContextService, ActivityContextService, Application) {
+    function _onEnter(ParticipantContextService, ActivityContextService, Application, SessionContextService) {
       Application
         .isDeployed()
         .then(function() {
           try {
+            ActivityContextService.restore();
             ParticipantContextService.restore();
+            SessionContextService.restore();
             ActivityContextService.restore();
           } catch (e) {
             ActivityContextService.begin();
@@ -39,10 +44,32 @@
         });
     }
 
+    function _loadStateData(ActivityService, CheckerItemFactory, Application, SessionContextService) {
+      return Application
+        .isDeployed()
+        .then(function() {
+          try {
+            SessionContextService.restore();
+            return ActivityService.listActivityCheckers().map(CheckerItemFactory.create);
+          } catch (e) {
+            console.log(e);
+          }
+        });
+
+    }
+
     _onEnter.$inject = [
       'otusjs.participant.core.ContextService',
       'otusjs.activity.core.ContextService',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.session.core.ContextService'
+    ];
+
+    _loadStateData.$inject = [
+      'otusjs.activity.business.ParticipantActivityService',
+      'otusjs.otus.uxComponent.CheckerItemFactory',
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.session.core.ContextService'
     ];
   }
 }());
