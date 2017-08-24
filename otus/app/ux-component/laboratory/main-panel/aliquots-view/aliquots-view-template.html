@@ -79,7 +79,7 @@
                                                     ng-change="$ctrl.inputOnChangeTube(exam)"
                                                     name="{{exam.tubeId}}"
                                                     id="{{exam.tubeId}}"
-                                                    maxlength="9"
+                                                    maxlength="{{$ctrl.tubeLength}}"
                                                     ng-blur="$ctrl.validateTube(exam)"
                                                     tabindex="-1"
                                                     ng-disabled="exam.isSaved"
@@ -115,7 +115,7 @@
                                                     ng-model-options='{ debounce: 100 }'
                                                     name="{{exam.aliquotId}}"
                                                     id="{{exam.aliquotId}}"
-                                                    maxlength="9"
+                                                    maxlength="{{$ctrl.aliquotLength}}"
                                                     ng-blur="$ctrl.validateAliquot(exam)"
                                                     ng-disabled="exam.isSaved"
                                                 />
@@ -154,7 +154,7 @@
                                                     ng-change="$ctrl.inputOnChangeTube(storage)"
                                                     name="{{storage.tubeId}}"
                                                     id="{{storage.tubeId}}"
-                                                    maxlength="9"
+                                                    maxlength="{{$ctrl.tubeLength}}"
                                                     ng-blur="$ctrl.validateTube(storage)"
                                                     tabindex="-1"
                                                     ng-disabled="storage.isSaved"
@@ -191,7 +191,7 @@
                                                     ng-model-options='{ debounce: 100 }'
                                                     name="{{storage.aliquotId}}"
                                                     id="{{storage.aliquotId}}"
-                                                    maxlength="9"
+                                                    maxlength="{{$ctrl.aliquotLength}}"
                                                     ng-blur="$ctrl.validateAliquot(storage)"
                                                     ng-disabled="storage.isSaved"
                                                 />
