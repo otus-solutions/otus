@@ -24,13 +24,16 @@
       url: '/' + STATE.ACTIVITY_ADDER,
       template: '<otus-activity-adder layout="column" flex></otus-activity-adder>',
       onEnter: _onEnter
+
     };
 
-    function _onEnter(ActivityContextService, Application) {
+    function _onEnter(ParticipantContextService, ActivityContextService, Application, SessionContextService) {
       Application
         .isDeployed()
         .then(function() {
           try {
+            SessionContextService.restore();
+            ParticipantContextService.restore();
             ActivityContextService.restore();
           } catch (e) {
             ActivityContextService.begin();
@@ -38,9 +41,13 @@
         });
     }
 
+
     _onEnter.$inject = [
+      'otusjs.participant.core.ContextService',
       'otusjs.activity.core.ContextService',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.session.core.ContextService'
     ];
+
   }
 }());
