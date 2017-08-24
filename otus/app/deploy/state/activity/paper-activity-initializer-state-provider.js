@@ -35,9 +35,8 @@
         .isDeployed()
         .then(function() {
           try {
-            ActivityContextService.restore();
-            ParticipantContextService.restore();
             SessionContextService.restore();
+            ParticipantContextService.restore();
             ActivityContextService.restore();
           } catch (e) {
             ActivityContextService.begin();
@@ -50,7 +49,6 @@
         .isDeployed()
         .then(function() {
           try {
-            SessionContextService.restore();
             return ActivityService.listActivityCheckers().map(CheckerItemFactory.create);
           } catch (e) {
             console.log(e);

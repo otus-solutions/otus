@@ -23,10 +23,8 @@
       name: STATE.ACTIVITY_ADDER,
       url: '/' + STATE.ACTIVITY_ADDER,
       template: '<otus-activity-adder layout="column" flex></otus-activity-adder>',
-      onEnter: _onEnter,
-      resolve:{
-        loadStateData: _loadStateData
-      }
+      onEnter: _onEnter
+
     };
 
     function _onEnter(ParticipantContextService, ActivityContextService, Application, SessionContextService) {
@@ -34,9 +32,8 @@
         .isDeployed()
         .then(function() {
           try {
-            ActivityContextService.restore();
-            ParticipantContextService.restore();
             SessionContextService.restore();
+            ParticipantContextService.restore();
             ActivityContextService.restore();
           } catch (e) {
             ActivityContextService.begin();
@@ -44,19 +41,6 @@
         });
     }
 
-    function _loadStateData(ActivityService, CheckerItemFactory, Application, SessionContextService) {
-      return Application
-        .isDeployed()
-        .then(function() {
-          try {
-            SessionContextService.restore();
-            return ActivityService.listActivityCheckers().map(CheckerItemFactory.create);
-          } catch (e) {
-            console.log(e);
-          }
-        });
-
-    }
 
     _onEnter.$inject = [
       'otusjs.participant.core.ContextService',
@@ -65,11 +49,5 @@
       'otusjs.application.session.core.ContextService'
     ];
 
-    _loadStateData.$inject = [
-      'otusjs.activity.business.ParticipantActivityService',
-      'otusjs.otus.uxComponent.CheckerItemFactory',
-      'otusjs.application.core.ModuleService',
-      'otusjs.application.session.core.ContextService'
-    ];
   }
 }());
