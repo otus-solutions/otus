@@ -24,7 +24,6 @@
   function Controller(AliquotTubeService, LaboratoryConfigurationService, AliquotMessagesService, AliquotValidationService, $scope, $element) {
     var self = this;
     
-    const timeShowMsg = 2000;
     const msgErrors = [
       {
         msgServer: "Data Validation Fail: Tube codes not found.",
@@ -56,8 +55,15 @@
       aliquotFromAnotherCenter: "Não pertence ao mesmo Centro do Tubo.",
       invalidAliquot: "Não é uma Aliquota válida.",
       uncollectedTube: "Tubo não coletado, não pode ser Aliquotado.",
-      tubeNotFound: "Este tubo não existe ou não pertence a este Tipo/Momento."
-    }
+      tubeNotFound: "Este tubo não existe ou não pertence a este Tipo/Momento.",
+      serverError: "Erro do Servidor:"
+    };
+    const tubeIdentifier = "TUBE";
+    const aliquotIdentifier = "ALIQUOT";
+    const examIdentifier = "EXAM";
+    const palletLabel = "Palheta";
+    const cryotubeLabel = "Criotubo";
+    const timeShowMsg = 2000;
 
     self.tubeLength = 9;
     self.aliquotLength = 9;
@@ -100,7 +106,6 @@
       self.callbackFunctions.cancelAliquots = _cancelAliquots;
       self.callbackFunctions.saveAliquots = _saveAliquots;
       
-      //console.log(LaboratoryConfigurationService);
       var codeConfiguration = LaboratoryConfigurationService.getLaboratoryConfiguration().codeConfiguration;
 
       self.validations.wave.value = codeConfiguration.waveNumberToken;
@@ -112,7 +117,7 @@
     function _isValidCode(validation, code){
       var isValid = false;
       
-      if(code.toString.length >= validation.position + 1) {
+      if(code.toString().length >= validation.position + 1) {
         isValid =  (code.toString().substr(validation.position, 1) == validation.value);
       }
       
@@ -135,6 +140,22 @@
       return _isValidCode(self.validations.pallet,code);
     }
 
+    function _fieldsAreEquals(field, otherField){
+      var ret = false;
+      
+      if(field && otherField) ret = (field.toUpperCase() == otherField.toUpperCase());
+
+      return ret;
+    }
+    
+    function _fieldIsTube(field){
+      return _fieldsAreEquals(field,tubeIdentifier);
+    }
+
+    function _fieldIsExam(field){
+      return _fieldsAreEquals(field, examIdentifier);
+    }
+
     function _buildMomentTypeList() {
       self.momentTypeList = AliquotTubeService.buildMomentTypeList(self.participantLaboratory.tubes);
     }
@@ -142,7 +163,7 @@
     function _cancelAliquots() {
       return AliquotTubeService.fieldsChanged(self.selectedMomentType);
     }
-
+    
     function _saveAliquots() {
       if (AliquotTubeService.fieldsChanged(self.selectedMomentType)) {
         if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
@@ -175,13 +196,13 @@
     function transcribeMessage(msg) {
       var newMessage = "";
 
-      msgErrors.forEach(function(msg) {
-        if(msg.msgServer === msg) newMessage == msg.msgShow;
+      msgErrors.forEach(function(currentMsg) {
+        if(currentMsg.msgServer === msg) newMessage = currentMsg.msgShow;
       });
 
       if(newMessage === ""){
         newMessage = validationMsg.errorSavingField;
-        if(msg) console.log("Erro do servidor: " + msg);
+        if(msg) console.log(validationMsg.serverError,msg);
       }
 
       return newMessage;
@@ -243,7 +264,7 @@
         _defaultCustomValidation();
         _nextFocusNotFilled({
           index: -1,
-          role: 'EXAM'
+          role: examIdentifier
         });
       }, 200);
     }
@@ -325,7 +346,7 @@
     }
 
     function _validateIsNumber(aliquot, tubeOrAliquot) {
-      var isTube = (tubeOrAliquot.toUpperCase() == "TUBE");
+      var isTube = _fieldIsTube(tubeOrAliquot);
       var value = isTube ? aliquot.tubeCode : aliquot.aliquotCode;
       var isNumber = !isNaN(value);
       var msgError = validationMsg.invalidCode;
@@ -368,14 +389,14 @@
     }
 
     function _validateWave(aliquot, tubeOrAliquot) {
-      var isTube = (tubeOrAliquot.toUpperCase() == "TUBE");
+      var isTube = _fieldIsTube(tubeOrAliquot);
       var value = isTube ? aliquot.tubeCode : aliquot.aliquotCode;
       var msgTube = validationMsg.tubeFromAnotherWave;
       var msgAliquot = validationMsg.aliquotFromAnotherWave;
 
       var isValid = true;
 
-      if (value.length > 0) isValid = (_isValidWave(value));
+      if (value.length > 0) isValid = _isValidWave(value);
 
       if (isValid) {
         if (isTube) {
@@ -428,7 +449,7 @@
 
     function _fillContainer(aliquot) {
       aliquot.container = LaboratoryConfigurationService.getAliquotContainer(aliquot.aliquotCode);
-      var label = _isValidPallet(aliquot.aliquotCode) ? "Palheta" : "Criotubo";
+      var label = _isValidPallet(aliquot.aliquotCode) ? palletLabel : cryotubeLabel;
       
       aliquot.containerLabel = label + " de " + aliquot.label;
     }
@@ -469,8 +490,8 @@
 
       _aliquotAlreadyUsed(aliquot, true);
       _validateTubeRequired(aliquot);
-      if (!_validateIsNumber(aliquot, "ALIQUOT")) return;
-      if (!_validateWave(aliquot, "ALIQUOT")) return;
+      if (!_validateIsNumber(aliquot, aliquotIdentifier)) return;
+      if (!_validateWave(aliquot, aliquotIdentifier)) return;
       if (!_validateCenterAliquot(aliquot)) return;
 
       if (aliquot.aliquotCode) {
@@ -494,8 +515,8 @@
       var msgTubeNotExists = validationMsg.tubeNotFound;
 
       _validateCenterAliquot(aliquot);
-      if (!_validateIsNumber(aliquot, "TUBE")) return;
-      if (!_validateWave(aliquot, "TUBE")) return;
+      if (!_validateIsNumber(aliquot, tubeIdentifier)) return;
+      if (!_validateWave(aliquot, tubeIdentifier)) return;
       if (!_validateTubeRequired(aliquot)) return;
 
 
@@ -530,7 +551,7 @@
 
 
     function inputOnChangeAliquot(aliquot) {
-      var aliquotsArray = aliquot.role.toUpperCase() == "EXAM" ? self.selectedMomentType.exams : self.selectedMomentType.stores;
+      var aliquotsArray = _fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
       var runCompletePlaceholder = false;
 
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
@@ -554,7 +575,7 @@
 
 
     function inputOnChangeTube(aliquot, tubeOrAliquot) {
-      var aliquotsArray = aliquot.role.toUpperCase() == "EXAM" ? self.selectedMomentType.exams : self.selectedMomentType.stores;
+      var aliquotsArray = _fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
       var runCompletePlaceholder = false;
 
       runCompletePlaceholder = true;
@@ -578,19 +599,19 @@
       };
       var aliquot;
 
-      if (currentAliquot.role.toUpperCase() == "EXAM")
+      if (_fieldIsExam(currentAliquot.role))
         aliquotArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
 
       for (var i = 0; i < aliquotArray.length; i++) {
         aliquot = aliquotArray[i];
 
-        if (current.role.toUpperCase() != aliquot.role.toUpperCase() && current.roleChanged === false) {
+        if (!_fieldsAreEquals(current.role, aliquot.role) && current.roleChanged === false) {
           current.index = 0;
           current.role = aliquot.role;
           current.roleChanged = true;
         }
 
-        if (current.index == aliquot.index && current.role.toUpperCase() == aliquot.role.toUpperCase() && aliquot.isSaved === false && !aliquot.aliquotCode) {
+        if (current.index == aliquot.index && _fieldsAreEquals(current.role, aliquot.role) && aliquot.isSaved === false && !aliquot.aliquotCode) {
           newFocus = aliquot.aliquotId;
           break;
         }
