@@ -23,6 +23,71 @@
 
   function Controller(AliquotTubeService, LaboratoryConfigurationService, AliquotMessagesService, AliquotValidationService, $scope, $element) {
     var self = this;
+    
+    const msgErrors = [
+      {
+        msgServer: "Data Validation Fail: Tube codes not found.",
+        msgShow: "Este código não pertence ao participante."
+      },
+      {
+        msgServer: "Data Validation Fail: There are repeated aliquots on Database.",
+        msgShow: "Este código já foi utilizado em outra Aliquotagem."
+      },
+      {
+        msgServer: "Data Validation Fail: There are repeated aliquots on DTO.",
+        msgShow: "O código da aliquota está duplicado."
+      },
+      {
+        msgServer: "Data Validation Fail: There are repeated aliquots on Participant.",
+        msgShow: "Esta aliquota está duplicada."
+      }
+    ];
+    const validationMsg = {
+      checkErrorsBeforeSaving: "Verifique os erros antes de salvar.",
+      savedSuccessfully: "Salvo com sucesso!",
+      couldNotSave: "Não foi possível salvar os dados.",
+      errorSavingField: "Erro ao salvar esse campo.",
+      aliquotAlreadyUsed: "Código de alíquota já utilizado.",
+      invalidCode: "Não é um código válido.",
+      tubeFromAnotherWave: "Tubo não pertence à Onda atual.",
+      aliquotFromAnotherWave: "Aliquota não pertence à Onda atual.",
+      requiredTube: "O código do Tubo é obrigatório.",
+      aliquotFromAnotherCenter: "Não pertence ao mesmo Centro do Tubo.",
+      invalidAliquot: "Não é uma Aliquota válida.",
+      uncollectedTube: "Tubo não coletado, não pode ser Aliquotado.",
+      tubeNotFound: "Este tubo não existe ou não pertence a este Tipo/Momento.",
+      serverError: "Erro do Servidor:"
+    };
+    const tubeIdentifier = "TUBE";
+    const aliquotIdentifier = "ALIQUOT";
+    const examIdentifier = "EXAM";
+    const palletLabel = "Palheta";
+    const cryotubeLabel = "Criotubo";
+    const timeShowMsg = 2000;
+
+    self.tubeLength = 9;
+    self.aliquotLength = 9;
+
+    self.validations = {
+      wave:{
+        value: "",
+        position: 0
+      },
+      tube:{
+        value: "",
+        position: 2
+      },
+      cryotube:{
+        value: "",
+        position: 2
+      },
+      pallet:{
+        value: "",
+        position: 2
+      }
+    };
+    
+    
     self.tubeList = self.participantLaboratory.tubes;
 
     self.$onInit = onInit;
@@ -40,6 +105,55 @@
       selecMomentType(self.momentTypeList[0]);
       self.callbackFunctions.cancelAliquots = _cancelAliquots;
       self.callbackFunctions.saveAliquots = _saveAliquots;
+      
+      var codeConfiguration = LaboratoryConfigurationService.getLaboratoryConfiguration().codeConfiguration;
+
+      self.validations.wave.value = codeConfiguration.waveNumberToken;
+      self.validations.tube.value = codeConfiguration.tubeToken;
+      self.validations.cryotube.value = codeConfiguration.cryotubeToken;
+      self.validations.pallet.value = codeConfiguration.palletToken;
+    }
+
+    function _isValidCode(validation, code){
+      var isValid = false;
+      
+      if(code.toString().length >= validation.position + 1) {
+        isValid =  (code.toString().substr(validation.position, 1) == validation.value);
+      }
+      
+      return isValid;
+    }
+
+    function _isValidWave(code){
+      return _isValidCode(self.validations.wave,code);
+    }
+    
+    function _isValidTube(code){
+      return _isValidCode(self.validations.tube,code);
+    }
+    
+    function _isValidCryotube(code){
+      return _isValidCode(self.validations.cryotube,code);
+    }
+
+    function _isValidPallet(code){
+      return _isValidCode(self.validations.pallet,code);
+    }
+
+    function _fieldsAreEquals(field, otherField){
+      var ret = false;
+      
+      if(field && otherField) ret = (field.toUpperCase() == otherField.toUpperCase());
+
+      return ret;
+    }
+    
+    function _fieldIsTube(field){
+      return _fieldsAreEquals(field,tubeIdentifier);
+    }
+
+    function _fieldIsExam(field){
+      return _fieldsAreEquals(field, examIdentifier);
     }
 
     function _buildMomentTypeList() {
@@ -49,11 +163,11 @@
     function _cancelAliquots() {
       return AliquotTubeService.fieldsChanged(self.selectedMomentType);
     }
-
+    
     function _saveAliquots() {
       if (AliquotTubeService.fieldsChanged(self.selectedMomentType)) {
         if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
-          AliquotMessagesService.showToast('Verifique os erros antes de salvar.', 2000);
+          AliquotMessagesService.showToast(validationMsg.checkErrorsBeforeSaving, timeShowMsg);
         } else {
           AliquotMessagesService.showSaveDialog().then(function() {
             var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
@@ -62,11 +176,11 @@
               .then(function(data) {
                 self.selectedMomentType.updateTubes();
                 self.participantLaboratory.updateTubeList();
-                AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
+                AliquotMessagesService.showToast(validationMsg.savedSuccessfully, timeShowMsg);
                  _setMomentType(self.selectedMomentType);
               })
               .catch(function(e) {
-                AliquotMessagesService.showToast('Não foi possível salvar os dados.', 2000);
+                AliquotMessagesService.showToast(validationMsg.couldNotSave, timeShowMsg);
                 var err = e.data;
                 fillAliquotsErrors(err.CONTENT.conflicts, err.MESSAGE);
                 fillTubesErrors(err.CONTENT.tubesNotFound, err.MESSAGE);
@@ -74,35 +188,21 @@
           });
         }
       } else {
-        AliquotMessagesService.showToast('Salvo com sucesso!', 2000);
+        AliquotMessagesService.showToast(validationMsg.savedSuccessfully, timeShowMsg);
       }
 
     }
 
     function transcribeMessage(msg) {
-      var newMessage;
+      var newMessage = "";
 
-      switch (msg) {
-        case "Data Validation Fail: Tube codes not found.": //O código do tube não foi encontrado na lista de tubos do participante, ou seja, código não existe
-          newMessage = "Este código não pertence ao participante.";
-          break;
+      msgErrors.forEach(function(currentMsg) {
+        if(currentMsg.msgServer === msg) newMessage = currentMsg.msgShow;
+      });
 
-        case "Data Validation Fail: There are repeated aliquots on Database.": //Código da aliquot já existe na base de dados
-          newMessage = "Este código já foi utilizado em outra Aliquotagem.";
-          break;
-
-        case "Data Validation Fail: There are repeated aliquots on DTO.": //Código da aliquot duplicada na lista que deveria ser atualizada
-          newMessage = "O código da aliquota está duplicado.";
-          break;
-
-        case "Data Validation Fail: There are repeated aliquots on Participant.": //Esta aliquota está duplicada.
-          newMessage = "Esta aliquota está duplicada.";
-          break;
-
-        default:
-          newMessage = "Erro ao salvar esse campo.";
-          if(msg) console.log("Erro do servidor: " + msg);
-          break;
+      if(newMessage === ""){
+        newMessage = validationMsg.errorSavingField;
+        if(msg) console.log(validationMsg.serverError,msg);
       }
 
       return newMessage;
@@ -164,7 +264,7 @@
         _defaultCustomValidation();
         _nextFocusNotFilled({
           index: -1,
-          role: 'EXAM'
+          role: examIdentifier
         });
       }, 200);
     }
@@ -212,7 +312,7 @@
     function _aliquotAlreadyUsed(aliquot, validateRepeatedList) {
       var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
       var alreadyUsed = false;
-      var msgError = "Código de alíquota já utilizado.";
+      var msgError = validationMsg.aliquotAlreadyUsed;
 
       for (var i = 0; i < aliquotsArray.length; i++) {
         var currentAliquot = aliquotsArray[i];
@@ -246,10 +346,10 @@
     }
 
     function _validateIsNumber(aliquot, tubeOrAliquot) {
-      var isTube = (tubeOrAliquot.toUpperCase() == "TUBE");
+      var isTube = _fieldIsTube(tubeOrAliquot);
       var value = isTube ? aliquot.tubeCode : aliquot.aliquotCode;
       var isNumber = !isNaN(value);
-      var msgError = "Não é um código válido.";
+      var msgError = validationMsg.invalidCode;
 
       if (isNumber) {
         if (isTube) {
@@ -289,14 +389,14 @@
     }
 
     function _validateWave(aliquot, tubeOrAliquot) {
-      var isTube = (tubeOrAliquot.toUpperCase() == "TUBE");
+      var isTube = _fieldIsTube(tubeOrAliquot);
       var value = isTube ? aliquot.tubeCode : aliquot.aliquotCode;
-      var msgTube = "Tubo não pertence à Onda atual.";
-      var msgAliquot = "Aliquota não pertence à Onda atual.";
+      var msgTube = validationMsg.tubeFromAnotherWave;
+      var msgAliquot = validationMsg.aliquotFromAnotherWave;
 
       var isValid = true;
 
-      if (value.length > 0) isValid = (value.toString().substr(0, 1) == '3');
+      if (value.length > 0) isValid = _isValidWave(value);
 
       if (isValid) {
         if (isTube) {
@@ -322,7 +422,8 @@
 
     function _validateTubeRequired(aliquot) {
       var isValid = true;
-      var msg = "O código do Tubo é obrigatório.";
+      var msg = validationMsg.requiredTube;
+      
       if (aliquot.aliquotCode) {
         if (aliquot.tubeCode.length === 0 && aliquot.placeholder.length === 0) isValid = false;
       }
@@ -339,17 +440,17 @@
     }
 
     function _isTube(value) {
-      return (value.length && value.length == 9 && value.toString().substr(2, 1) == '1');
+      return (value.length && value.length == self.tubeLength && _isValidTube(value));
     }
 
     function _isAliquot(value, nameField) {
-      return (value.length === 0 || (value.length == 9 && (value.toString().substr(2, 1) == '2' || value.toString().substr(2, 1) == '3')));
+      return (value.length === 0 || (value.length == self.aliquotLength && (_isValidCryotube(value) || _isValidPallet(value))));
     }
 
     function _fillContainer(aliquot) {
       aliquot.container = LaboratoryConfigurationService.getAliquotContainer(aliquot.aliquotCode);
-      var label = aliquot.container.toUpperCase() == "PALLET" ? "Palheta" : "Criotubo";
-
+      var label = _isValidPallet(aliquot.aliquotCode) ? palletLabel : cryotubeLabel;
+      
       aliquot.containerLabel = label + " de " + aliquot.label;
     }
 
@@ -363,10 +464,10 @@
     function _validateCenterAliquot(aliquot) {
       var isValid = true;
       var tubeCode = aliquot.tubeCode ? aliquot.tubeCode : aliquot.placeholder;
-      var msg = "Não pertence ao mesmo Centro do Tubo.";
+      var msg = validationMsg.aliquotFromAnotherCenter;
 
       if(aliquot.aliquotCode) {
-        if((aliquot.tubeCode.length >= 9 || aliquot.placeholder.length >= 9)
+        if((aliquot.tubeCode.length >= self.tubeLength || aliquot.placeholder.length >= self.tubeLength)
             && tubeCode.toString().substr(1, 1) != aliquot.aliquotCode.toString().substr(1, 1)) {
               isValid = false;
           }
@@ -384,13 +485,13 @@
     }
 
     function validateAliquot(aliquot) {
-      var msgAliquotUsed = "Código de alíquota já utilizado.";
-      var msgAliquotInvalid = "Não é uma Aliquota válida.";
+      var msgAliquotUsed = validationMsg.aliquotAlreadyUsed;
+      var msgAliquotInvalid = validationMsg.invalidAliquot;
 
       _aliquotAlreadyUsed(aliquot, true);
       _validateTubeRequired(aliquot);
-      if (!_validateIsNumber(aliquot, "ALIQUOT")) return;
-      if (!_validateWave(aliquot, "ALIQUOT")) return;
+      if (!_validateIsNumber(aliquot, aliquotIdentifier)) return;
+      if (!_validateWave(aliquot, aliquotIdentifier)) return;
       if (!_validateCenterAliquot(aliquot)) return;
 
       if (aliquot.aliquotCode) {
@@ -410,12 +511,12 @@
     }
 
     function validateTube(aliquot) {
-      var msgTubeNotCollected = "Tubo não coletado, não pode ser Aliquotado.";
-      var msgTubeNotExists = "Este tubo não existe ou não pertence a este Tipo/Momento.";
+      var msgTubeNotCollected = validationMsg.uncollectedTube;
+      var msgTubeNotExists = validationMsg.tubeNotFound;
 
       _validateCenterAliquot(aliquot);
-      if (!_validateIsNumber(aliquot, "TUBE")) return;
-      if (!_validateWave(aliquot, "TUBE")) return;
+      if (!_validateIsNumber(aliquot, tubeIdentifier)) return;
+      if (!_validateWave(aliquot, tubeIdentifier)) return;
       if (!_validateTubeRequired(aliquot)) return;
 
 
@@ -450,12 +551,12 @@
 
 
     function inputOnChangeAliquot(aliquot) {
-      var aliquotsArray = aliquot.role.toUpperCase() == "EXAM" ? self.selectedMomentType.exams : self.selectedMomentType.stores;
+      var aliquotsArray = _fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
       var runCompletePlaceholder = false;
 
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
-      if (aliquot.aliquotCode && aliquot.aliquotCode.length == 9) {
+      if (aliquot.aliquotCode && aliquot.aliquotCode.length == self.aliquotLength) {
         if (_isTube(aliquot.aliquotCode)) {
           aliquot.tubeCode = aliquot.aliquotCode;
           aliquot.aliquotCode = "";
@@ -474,7 +575,7 @@
 
 
     function inputOnChangeTube(aliquot, tubeOrAliquot) {
-      var aliquotsArray = aliquot.role.toUpperCase() == "EXAM" ? self.selectedMomentType.exams : self.selectedMomentType.stores;
+      var aliquotsArray = _fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
       var runCompletePlaceholder = false;
 
       runCompletePlaceholder = true;
@@ -498,19 +599,19 @@
       };
       var aliquot;
 
-      if (currentAliquot.role.toUpperCase() == "EXAM")
+      if (_fieldIsExam(currentAliquot.role))
         aliquotArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
 
       for (var i = 0; i < aliquotArray.length; i++) {
         aliquot = aliquotArray[i];
 
-        if (current.role.toUpperCase() != aliquot.role.toUpperCase() && current.roleChanged === false) {
+        if (!_fieldsAreEquals(current.role, aliquot.role) && current.roleChanged === false) {
           current.index = 0;
           current.role = aliquot.role;
           current.roleChanged = true;
         }
 
-        if (current.index == aliquot.index && current.role.toUpperCase() == aliquot.role.toUpperCase() && aliquot.isSaved === false && !aliquot.aliquotCode) {
+        if (current.index == aliquot.index && _fieldsAreEquals(current.role, aliquot.role) && aliquot.isSaved === false && !aliquot.aliquotCode) {
           newFocus = aliquot.aliquotId;
           break;
         }
