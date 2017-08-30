@@ -108,6 +108,8 @@
       
       var codeConfiguration = LaboratoryConfigurationService.getLaboratoryConfiguration().codeConfiguration;
 
+      self.aliquotLength = LaboratoryConfigurationService.getAliquotLength();
+      
       self.validations.wave.value = codeConfiguration.waveNumberToken;
       self.validations.tube.value = codeConfiguration.tubeToken;
       self.validations.cryotube.value = codeConfiguration.cryotubeToken;
@@ -556,14 +558,14 @@
 
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
-      if (aliquot.aliquotCode && aliquot.aliquotCode.length == self.aliquotLength) {
-        if (_isTube(aliquot.aliquotCode)) {
+      if (aliquot.aliquotCode && (aliquot.aliquotCode.length == self.aliquotLength || aliquot.aliquotCode.length == self.tubeLength)) {
+        if (aliquot.aliquotCode.length == self.tubeLength && _isTube(aliquot.aliquotCode)) {
           aliquot.tubeCode = aliquot.aliquotCode;
           aliquot.aliquotCode = "";
           runCompletePlaceholder = true;
           $element.find('#' + aliquot.tubeId).blur();
         } else {
-          _nextFocus(aliquot);
+          if(aliquot.aliquotCode.length == self.aliquotLength) _nextFocus(aliquot);
         }
       }
 
