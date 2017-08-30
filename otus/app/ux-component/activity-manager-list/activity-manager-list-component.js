@@ -47,8 +47,7 @@
     }
 
     function update() {
-      _selectedActivities = [];
-      ActivityService.selectActivities(_selectedActivities);
+      _loadActivities();
     }
 
     function onInit() {
@@ -60,7 +59,6 @@
 
     function _loadActivities() {
       LoadingScreenService.start();
-      self.update();
       ActivityService
         .listAll()
         .then(function(activities) {
@@ -69,6 +67,8 @@
             .map(ActivityItemFactory.create);
 
           self.isListEmpty = !self.activities.length;
+          _selectedActivities = [];
+          ActivityService.selectActivities(_selectedActivities);
           LoadingScreenService.finish();
         });
     }
