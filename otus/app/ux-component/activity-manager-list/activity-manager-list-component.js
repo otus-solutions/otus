@@ -44,7 +44,6 @@
     }
 
     function update() {
-      _selectedActivities = [];
       _loadActivities();
     }
 
@@ -65,6 +64,8 @@
             .map(ActivityItemFactory.create);
 
           self.isListEmpty = !self.activities.length;
+          _selectedActivities = [];
+          ActivityService.selectActivities(_selectedActivities);
           LoadingScreenService.finish();
         });
     }
