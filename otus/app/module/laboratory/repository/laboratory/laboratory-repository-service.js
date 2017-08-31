@@ -58,8 +58,8 @@
     }
 
     function getLaboratoryDescriptors() {
-      // return LaboratoryCollectionService.getDescriptors();
-      return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');
+      return LaboratoryCollectionService.getDescriptors();
+      // return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');
     }
 
     function getAliquotsDescriptors() {
