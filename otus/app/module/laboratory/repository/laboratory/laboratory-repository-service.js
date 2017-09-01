@@ -63,18 +63,18 @@
     }
 
     function getAliquotsDescriptors() {
-      // return LaboratoryCollectionService.getAliquotDescriptors();  // TODO: implement
-      return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
+      return LaboratoryCollectionService.getAliquotDescriptors();
+      // return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
     }
 
     function getAliquots() {
       return LaboratoryCollectionService.getAliquots();
     }
-    
+
     function getAliquotsByCenter(center) {
       return LaboratoryCollectionService.getAliquotsByCenter(center);
     }
-    
+
     function getLots() {
       return LaboratoryCollectionService.getLots();
     }

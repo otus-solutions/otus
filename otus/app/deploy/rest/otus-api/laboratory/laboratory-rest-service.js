@@ -11,7 +11,8 @@
 
   function Service(OtusRestResourceService) {
     var self = this;
-    var _rest = null;
+    var _participantRest = null;
+    var _configurationRest = null;
 
     /* Public methods */
     self.initialize = initialize;
@@ -20,106 +21,70 @@
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
-    self.getDescriptors = getDescriptors;
 
-    //Laboratory Project Methods
-    self.getAliquots = getAliquots;
-    self.getAliquotsByCenter = getAliquotsByCenter;
-    self.getLots = getLots;
-    self.createLot = createLot;
-    self.updateLot = updateLot;
-    self.deleteLot = deleteLot;
+    /* Laboratory Configuration Methods*/
+    self.getDescriptors = getDescriptors;
+    self.getAliquotDescriptors = getAliquotDescriptors;
 
     function initialize() {
-      _rest = OtusRestResourceService.getLaboratoryParticipantResource();
+      _participantRest = OtusRestResourceService.getLaboratoryParticipantResource();
+      _configurationRest = OtusRestResourceService.getLaboratoryConfigurationResource();
     }
 
+    //laboratory-participant methods
     function create() {
-      _rest.create();
+      _participantRest.create();
     }
 
     function initializeLaboratory(recruitmentNumber) {
-      if (!_rest) {
+      if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.initialize({
+      return _participantRest.initialize({
         rn: recruitmentNumber
       }).$promise;
     }
 
     function getLaboratory(recruitmentNumber) {
-      if (!_rest) {
+      if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getLaboratory({
+      return _participantRest.getLaboratory({
         rn: recruitmentNumber
       }).$promise;
     }
 
     function updateLaboratoryParticipant(recruitmentNumber, participantLaboratory) {
-      if (!_rest) {
+      if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.update({rn: recruitmentNumber}, participantLaboratory).$promise;
+      return _participantRest.update({
+        rn: recruitmentNumber
+      }, participantLaboratory).$promise;
     }
 
     function updateAliquots(recruitmentNumber, persistanceStructure) {
-      if (!_rest) {
+      if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.updateAliquots({rn: recruitmentNumber}, persistanceStructure).$promise;
+      return _participantRest.updateAliquots({
+        rn: recruitmentNumber
+      }, persistanceStructure).$promise;
     }
 
+    //laboratory-configuration methods
     function getDescriptors() {
-      if (!_rest) {
+      if (!_configurationRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getDescriptors().$promise;
+      return _configurationRest.getDescriptors().$promise;
     }
 
-    
-    function getAliquots() {
-      if (!_rest) {
+    function getAliquotDescriptors() {
+      if (!_configurationRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getAliquots().$promise;
-    }
-
-    function getAliquotsByCenter(center) {
-      if (!_rest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _rest.getAliquotsByCenter({
-        center: center
-      }).$promise;
-    }
-
-    function getLots() {
-      if (!_rest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _rest.getLots().$promise;
-    }
-
-    function createLot(persistanceStructure) {
-      if (!_rest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _rest.createLot({}, persistanceStructure).$promise;
-    }
-
-    function updateLot(persistanceStructure) {
-      if (!_rest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _rest.updateLot({}, persistanceStructure).$promise;
-    }
-
-    function deleteLot(lotCode) {
-      if (!_rest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _rest.deleteLot({id: lotCode}).$promise;
+      return _configurationRest.getAliquotDescriptors().$promise;
     }
   }
 }());

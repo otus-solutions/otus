@@ -36,7 +36,11 @@
     self.getLaboratory = getLaboratory;
     self.update = update;
     self.updateAliquots = updateAliquots;
+
+
+    //Laboratory Configuration Methods
     self.getDescriptors = getDescriptors;
+    self.getAliquotDescriptors = getAliquotDescriptors;
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
@@ -145,6 +149,18 @@
       return deferred.promise;
     }
 
+    function getAliquotDescriptors() {
+      var deferred = $q.defer();
+      LaboratoryRestService
+         .getAliquotDescriptors()
+         .then(function(response){
+            deferred.resolve(response);
+         }, function(e){
+            deferred.reject(e);
+         });
+      return deferred.promise;
+    }
+
     /**
      * Transport Lot
      * @returns {Promise} promise
@@ -218,7 +234,7 @@
          });
       return deferred.promise;
     }
-    
+
     /**
      * Transport Lot
      * @param {(object)} lotStructure - the structure of lof

@@ -38,6 +38,7 @@
     self.updateAliquots = updateAliquots;
     self.getLaboratory = getLaboratory;
     self.getDescriptors = getDescriptors;
+    self.getAliquotDescriptors = getAliquotDescriptors;
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
@@ -203,6 +204,22 @@
       .then(function(remoteStorage) {
          return remoteStorage
          .getDescriptors()
+         .then(function(descriptors) {
+            request.resolve(descriptors);
+         });
+      });
+
+      return request.promise;
+    }
+
+    function getAliquotDescriptors() {
+      var request = $q.defer();
+
+      _remoteStorage
+      .whenReady()
+      .then(function(remoteStorage) {
+         return remoteStorage
+         .getAliquotDescriptors()
          .then(function(descriptors) {
             request.resolve(descriptors);
          });
