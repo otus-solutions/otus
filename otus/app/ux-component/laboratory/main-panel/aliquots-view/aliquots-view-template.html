@@ -112,11 +112,11 @@
                                                 <label>{{exam.containerLabel}}</label>
                                                 <input ng-model="exam.aliquotCode"
                                                     ng-change="$ctrl.inputOnChangeAliquot(exam)"
-                                                    ng-model-options='{ debounce: 100 }'
                                                     name="{{exam.aliquotId}}"
                                                     id="{{exam.aliquotId}}"
-                                                    maxlength="{{$ctrl.aliquotLength}}"
+                                                    maxlength="{{$ctrl.aliquotMaxLength}}"
                                                     ng-blur="$ctrl.validateAliquot(exam)"
+                                                    ng-keydown="$ctrl.inputKeyDownAliquot($event, exam)"
                                                     ng-disabled="exam.isSaved"
                                                 />
                                                 <div ng-messages="formAliquot[exam.aliquotId].$error">
@@ -188,11 +188,11 @@
                                                 <input
                                                     ng-model="storage.aliquotCode"
                                                     ng-change="$ctrl.inputOnChangeAliquot(storage)"
-                                                    ng-model-options='{ debounce: 100 }'
                                                     name="{{storage.aliquotId}}"
                                                     id="{{storage.aliquotId}}"
-                                                    maxlength="{{$ctrl.aliquotLength}}"
+                                                    maxlength="{{$ctrl.aliquotMaxLength}}"
                                                     ng-blur="$ctrl.validateAliquot(storage)"
+                                                    ng-keydown="$ctrl.inputKeyDownAliquot($event, storage)"
                                                     ng-disabled="storage.isSaved"
                                                 />
                                                 <div ng-messages="formAliquot[storage.aliquotId].$error">
