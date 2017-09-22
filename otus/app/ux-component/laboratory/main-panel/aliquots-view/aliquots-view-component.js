@@ -48,15 +48,15 @@
 
     function onInit() {
       _buildMomentTypeList();
-      selecMomentType(self.momentTypeList[0]);
+      
       self.callbackFunctions.cancelAliquots = _cancelAliquots;
       self.callbackFunctions.saveAliquots = _saveAliquots;
       
       var codeConfiguration = LaboratoryConfigurationService.getCodeConfiguration();
-
+      
       self.aliquotLengths = LaboratoryConfigurationService.getAliquotLengths();
       self.aliquotMaxLength = Math.max.apply(null,self.aliquotLengths);
-
+      
       self.validations = {
         wave:{
           value: codeConfiguration.waveNumberToken,
@@ -74,20 +74,9 @@
           value: codeConfiguration.palletToken,
           position: 2
         }
-      };
-
-      Validation.initialize(
-        self.validations
-        , self.tubeLength
-        , self.aliquotLengths
-        , clearAliquotError
-        , clearTubeError
-        , setAliquotError
-        , setTubeError
-        , self.selectedMomentType.exams
-        , self.selectedMomentType.stores
-      );
-        
+      };        
+      
+      selecMomentType(self.momentTypeList[0]);
     }
 
     function _buildMomentTypeList() {
@@ -175,6 +164,18 @@
     function _setMomentType(momentType) {
       self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType);
 
+      Validation.initialize(
+        self.validations
+        , self.tubeLength
+        , self.aliquotLengths
+        , clearAliquotError
+        , clearTubeError
+        , setAliquotError
+        , setTubeError
+        , self.selectedMomentType.exams
+        , self.selectedMomentType.stores
+      );
+
       completePlaceholder(self.selectedMomentType.exams);
       completePlaceholder(self.selectedMomentType.stores);
 
@@ -254,7 +255,7 @@
       if (!Validation.validateIsNumber(aliquot, Validation.aliquotIdentifier)) return;
       if (!Validation.validateWave(aliquot, Validation.aliquotIdentifier)) return;
       if (!Validation.validateCenterAliquot(aliquot)) return;
-      if (!_validateAliquotLength(aliquot)) return;
+      if (!Validation.validateAliquotLength(aliquot)) return;
 
       if (aliquot.aliquotCode) {
         if (Validation.isAliquot(aliquot.aliquotCode)) {

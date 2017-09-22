@@ -62,6 +62,7 @@
     self.exams = [];
     self.stores = [];
     self.repeatedAliquots = [];
+    self.clearRepeatedAliquots = ()=> self.repeatedAliquots = [];
     self.clearAliquotError;
     self.clearTubeError;
     self.setAliquotError;
@@ -82,6 +83,7 @@
     self.validateWave = validateWave;
     self.validateTubeRequired = validateTubeRequired;
     self.validateCenterAliquot = validateCenterAliquot;
+    self.validateAliquotLength = validateAliquotLength;
     self.isValidAliquotLength = isValidAliquotLength;
     self.transcribeErrorMessage = transcribeErrorMessage;
     
@@ -347,7 +349,7 @@
       return lengthArray.length ? true : false;
     }
 
-    function _validateAliquotLength(aliquot) {
+    function validateAliquotLength(aliquot) {
       var isValid = true;
       var msg = self.validationMsg.invalidAliquotLength;
 
