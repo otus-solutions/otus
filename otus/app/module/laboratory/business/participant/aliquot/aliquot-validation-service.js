@@ -62,7 +62,6 @@
     self.exams = [];
     self.stores = [];
     self.repeatedAliquots = [];
-    self.clearRepeatedAliquots = ()=> self.repeatedAliquots = [];
     self.clearAliquotError;
     self.clearTubeError;
     self.setAliquotError;
