@@ -22,6 +22,9 @@
 
     /* Public methods */
     self.selectParticipant = selectParticipant;
+    self.copyToClipboard = copyToClipboard;
+    self.getKey = getKey;
+    self.key = false;
     self.$onInit = onInit;
 
     function selectParticipant(selectedParticipant) {
@@ -45,6 +48,19 @@
             self.loggedUser = userData;
           });
       }
+    }
+
+    function copyToClipboard() {
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val("1bbd70dc1b6fc84e5617ca8703c72c744b3b4fc1").select();
+      document.execCommand("copy");
+      $temp.remove();
+
+    }
+
+    function getKey() {
+      self.key = true;
     }
   }
 }());
