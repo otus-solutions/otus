@@ -5,7 +5,10 @@
     .module('otusjs.otus.uxComponent')
     .component('otusPaperActivityInitializer', {
       controller: Controller,
-      templateUrl: 'app/ux-component/paper-activity-initializer/paper-activity-initializer-template.html'
+      templateUrl: 'app/ux-component/paper-activity-initializer/paper-activity-initializer-template.html',
+      bindings: {
+        checkers: '<'
+      }
     });
 
   Controller.$inject = [
@@ -18,7 +21,6 @@
 
   function Controller($q, $timeout, ActivityService, ApplicationStateService, CheckerItemFactory) {
     var self = this;
-    var checkers = ActivityService.listActivityCheckers().map(CheckerItemFactory.create);
 
     /* Public methods */
     self.querySearch = querySearch;
@@ -27,7 +29,7 @@
     self.$onInit = onInit;
 
     function querySearch(query) {
-      var results = query ? checkers.filter(_createFilterFor(query)) : checkers;
+      var results = query ? self.checkers.filter(_createFilterFor(query)) : self.checkers;
       var deferred = $q.defer();
 
       $timeout(function() {

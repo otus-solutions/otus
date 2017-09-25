@@ -9,10 +9,11 @@
     });
 
   Controller.$inject = [
-    '$mdComponentRegistry'
+    '$mdComponentRegistry',
+    '$mdSidenav'
   ];
 
-  function Controller($mdComponentRegistry) {
+  function Controller($mdComponentRegistry, $mdSidenav) {
     var self = this;
     var _sideNav = null;
 
@@ -24,17 +25,18 @@
     self.$onInit = onInit;
 
     function launchSidenav() {
-      if (_sideNav) {
-        _sideNav.toggle();
-      }
+      // if (_sideNav) {
+      $mdSidenav(SIDENAV_ORIGIN).toggle();
+      // }
     }
 
     function onInit() {
-      $mdComponentRegistry
-        .when(SIDENAV_ORIGIN)
-        .then(function(sidenav) {
-          _sideNav = sidenav;
-        });
+      // $mdComponentRegistry
+      //   .when(SIDENAV_ORIGIN)
+      //   .then(function(sidenav) {
+      //     console.log('');
+      //     _sideNav = sidenav;
+      //   });
     }
   }
 }());

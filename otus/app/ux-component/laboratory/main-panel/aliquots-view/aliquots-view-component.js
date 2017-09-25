@@ -13,16 +13,15 @@
     });
 
   Controller.$inject = [
-    'otusjs.laboratory.aliquot.AliquotTubeService',
-    'otusjs.laboratory.LaboratoryConfigurationService',
-    'otusjs.laboratory.aliquot.AliquotMessagesService',
-    'otusjs.laboratory.aliquot.AliquotValidationService',
-    'otusjs.laboratory.business.ParticipantLaboratoryService',
+    'otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService',
+    'otusjs.laboratory.configuration.LaboratoryConfigurationService',
+    'otusjs.laboratory.business.participant.aliquot.AliquotMessagesService',
+    'otusjs.laboratory.business.participant.aliquot.AliquotValidationService',
     '$scope',
     '$element'
   ];
 
-  function Controller(AliquotTubeService, LaboratoryConfigurationService, AliquotMessagesService, AliquotValidationService, ParticipantLaboratoryService, $scope, $element) {
+  function Controller(AliquotTubeService, LaboratoryConfigurationService, AliquotMessagesService, AliquotValidationService, $scope, $element) {
     var self = this;
     
     const msgErrors = [
@@ -68,7 +67,7 @@
     const timeShowMsg = 2000;
 
     self.tubeLength = 9;
-    self.aliquotLength = [9];
+    self.aliquotLengths = [9];
     self.aliquotMaxLength = 9;
 
     self.validations = {
@@ -110,13 +109,10 @@
       self.callbackFunctions.cancelAliquots = _cancelAliquots;
       self.callbackFunctions.saveAliquots = _saveAliquots;
       
-      var codeConfiguration = LaboratoryConfigurationService.getLaboratoryConfiguration().codeConfiguration;
+      var codeConfiguration = LaboratoryConfigurationService.getCodeConfiguration();
 
-      //---------------------------------------------------------------------
-      self.aliquotLength = [9,10];
-      self.aliquotLength = ParticipantLaboratoryService.participant.fieldCenter.acronym === "RS" ? [9,10] : [9];
-      self.aliquotMaxLength = Math.max.apply(null,self.aliquotLength);
-      //---------------------------------------------------------------------
+      self.aliquotLengths = LaboratoryConfigurationService.getAliquotLengths();
+      self.aliquotMaxLength = Math.max.apply(null,self.aliquotLengths);
 
       self.validations.wave.value = codeConfiguration.waveNumberToken;
       self.validations.tube.value = codeConfiguration.tubeToken;
@@ -512,7 +508,7 @@
     }
 
     function _isValidAliquotLength(currentLength){
-      var lengthArray = self.aliquotLength.filter(function(value){
+      var lengthArray = self.aliquotLengths.filter(function(value){
         return value === currentLength;
       });
 
@@ -521,7 +517,7 @@
 
     function _validateAliquotLength(aliquot) {
       var isValid = true;
-      var msg = validationMsg.invalidAliquotLength(self.aliquotLength);
+      var msg = validationMsg.invalidAliquotLength(self.aliquotLengths);
 
       if(aliquot.aliquotCode) {
         isValid = _isValidAliquotLength(aliquot.aliquotCode.length);
@@ -548,7 +544,7 @@
       if (!_validateWave(aliquot, aliquotIdentifier)) return;
       if (!_validateCenterAliquot(aliquot)) return;
       if (!_validateAliquotLength(aliquot)) return;
-      
+
       if (aliquot.aliquotCode) {
         if (_isAliquot(aliquot.aliquotCode)) {
           _fillContainer(aliquot);
@@ -604,11 +600,10 @@
       });
     }
 
-
     function inputKeyDownAliquot(event,aliquot) {
       var charCode = event.which || event.keyCode;
       
-      if(self.aliquotLength.length > 1){
+      if(self.aliquotLengths.length > 1){
         if(charCode == '13') {
           //Enter pressed
           var aliquotsArray = _fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
@@ -636,7 +631,7 @@
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
 
-      if(self.aliquotLength.length === 1){
+      if(self.aliquotLengths.length === 1){
         var aliquotsArray = _fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
         var runCompletePlaceholder = false;
   
@@ -706,7 +701,7 @@
       if (newFocus.length) {
         self.setFocus(newFocus);
       } else {
-        if (aliquot.aliquotId) $element.find('#' + aliquot.aliquotId).blur();
+        if (aliquot && aliquot.aliquotId) $element.find('#' + aliquot.aliquotId).blur();
       }
     }
 

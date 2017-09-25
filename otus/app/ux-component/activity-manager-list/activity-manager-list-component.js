@@ -24,9 +24,12 @@
     self.activities = [];
     self.isListEmpty = true;
 
+    self.orderByField = 'name';
+    self.reverseSort = false;
     /* Public methods */
     self.selectActivity = selectActivity;
     self.update = update;
+    self.changeSort = changeSort;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -72,6 +75,11 @@
 
     function _onlyNotDiscarded(activity) {
       return !activity.isDiscarded;
+    }
+
+    function changeSort(field,order) {
+      self.orderByField = field;
+      self.reverseSort = order;
     }
   }
 }());

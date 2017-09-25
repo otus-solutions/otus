@@ -18,10 +18,11 @@
   controller.$inject = [
     '$mdToast',
     '$mdDialog',
-    'otusjs.laboratory.business.ParticipantLaboratoryService'
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.otus.dashboard.core.ContextService'
   ];
 
-  function controller($mdToast, $mdDialog, ParticipantLaboratoryService) {
+  function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService) {
     var self = this;
     var confirmCancel;
     var confirmFinish;
@@ -55,6 +56,11 @@
     }
 
     function changeState(moment) {
+      if(moment != 'main'){
+        dashboardContextService.setChangedState(moment);
+      } else {
+        dashboardContextService.setChangedState();
+      }
       self.state = moment;
     }
 

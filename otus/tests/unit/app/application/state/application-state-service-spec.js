@@ -51,7 +51,7 @@ xdescribe('ApplicationStateService', function() {
     it('should activate the DASHBOARD state', function() {
       service.activateDashboard();
 
-      expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.DASHBOARD);
+      expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.PARTICIPANT_DASHBOARD);
     });
 
   });

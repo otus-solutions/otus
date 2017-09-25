@@ -1,16 +1,4 @@
 <div layout="column" flex>
-
-  <div>
-    <md-toolbar class="md-primary md-hue-1">
-      <div layout="row" layout-margin>
-        <md-icon md-svg-icon="eyedropper-variant" aria-label="Atividades">
-          <md-tooltip>Laboratório</md-tooltip>
-        </md-icon>
-        <span>{{ $ctrl.selectedParticipant.recruitmentNumber}} - {{ $ctrl.selectedParticipant.name }}</span>
-      </div>
-    </md-toolbar>
-  </div>
-
   <div>
     <div layout="column" layout-align="center center" style=" margin-bottom: 3px;">
       <md-button ng-show="!$ctrl.hasLaboratory" class="md-raised md-primary" ng-click="$ctrl.intializeLaboratory()">Iniciar Laboratório</md-button>

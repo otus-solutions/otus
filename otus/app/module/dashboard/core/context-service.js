@@ -31,6 +31,16 @@
     self.setSelectedParticipant = setSelectedParticipant;
     self.getLoggedUser = getLoggedUser;
     self.setLoggedUser = setLoggedUser;
+    self.setChangedState = setChangedState;
+    self.getChangedState = getChangedState;
+
+    function getChangedState() {
+      return self.changedState;
+    }
+
+    function setChangedState(state) {
+      self.changedState = state;
+    }
 
     function begin() {
       _removeParticipantFromMemory();

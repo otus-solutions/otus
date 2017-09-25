@@ -26,7 +26,7 @@ xdescribe('DashboardStateProvider', function() {
     });
 
     it('name should be equal to "dashboard"', function() {
-      expect(provider.state.name).toEqual(Injections.STATE.DASHBOARD);
+      expect(provider.state.name).toEqual(Injections.STATE.PARTICIPANT_DASHBOARD);
     });
 
     it('url should be equal to "/dashboard"', function() {

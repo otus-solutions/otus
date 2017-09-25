@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -22,10 +22,15 @@
     self.activateLogin = activateLogin;
     self.activateLaboratory = activateLaboratory;
     self.activateDashboard = activateDashboard;
+    self.activateParticipantDashboard = activateParticipantDashboard;
     self.activateParticipantActivities = activateParticipantActivities;
     self.activateParticipantReports = activateParticipantReports;
     self.activateSignup = activateSignup;
     self.activateSignupResult = activateSignupResult;
+    self.getCurrentState = getCurrentState;
+    self.activateSampleTransportation = activateSampleTransportation;
+    self.activateSampleTransportationLotInfoManager = activateSampleTransportationLotInfoManager;
+    self.activateSampleTransportationManagerList = activateSampleTransportationManagerList;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -60,6 +65,10 @@
       $state.go(STATE.DASHBOARD);
     }
 
+    function activateParticipantDashboard() {
+      $state.go(STATE.PARTICIPANT_DASHBOARD);
+    }
+
     function activateParticipantActivities() {
       $state.go(STATE.PARTICIPANT_ACTIVITY);
     }
@@ -76,6 +85,21 @@
       $state.go(STATE.SIGNUP_RESULT);
     }
 
+    function activateSampleTransportation() {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_DASHBOARD);
+    }
+
+    function activateSampleTransportationManagerList() {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_MANAGER_LIST);
+    }
+
+    function activateSampleTransportationLotInfoManager() {
+      $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER);
+    }
+
+    function getCurrentState() {
+      return $state.current.name;
+    }
     // function activateErrorOffline() {
     //   self.currentState = 'Offline';
     //   $state.go(APP_STATE.ERROR_OFFLINE);

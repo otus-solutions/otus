@@ -25,9 +25,6 @@
       template: '<otus-dashboard layout="column" flex></otus-dashboard>',
       data: {
         redirect: _redirect
-      },
-      resolve: {
-        loadParticipantContext: _loadParticipantContext
       }
     };
 
@@ -48,28 +45,11 @@
       return deferred.promise;
     }
 
-    function _loadParticipantContext(ParticipantContextService, SessionContextService, Application) {
-      Application
-        .isDeployed()
-        .then(function() {
-          try {
-            ParticipantContextService.restore();
-            SessionContextService.restore();
-          } catch (e) {
-            console.log(e);
-          }
-        });
-    }
-
     _redirect.$inject = [
       '$q',
       'otusjs.otus.dashboard.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
-    _loadParticipantContext.$inject = [
-      'otusjs.participant.core.ContextService',
-      'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService'
-    ];
+
   }
 }());

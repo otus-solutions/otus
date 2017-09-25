@@ -6,8 +6,7 @@
       'otusjs.laboratory.core',
       'otusjs.laboratory.business',
       'otusjs.laboratory.repository',
-      'otusjs.laboratory.storage',
-      'otusjs.laboratory.aliquot'
+      'otusjs.laboratory.storage'
     ])
     .run(Runner);
 

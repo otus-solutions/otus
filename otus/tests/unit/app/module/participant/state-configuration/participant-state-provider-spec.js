@@ -25,7 +25,7 @@ xdescribe('otusjs.otus.application.state.ParticipantStateProvider', function() {
     });
 
     it('parent should be equal to "session"', function() {
-      expect(provider.state.parent).toEqual(Injections.STATE.DASHBOARD);
+      expect(provider.state.parent).toEqual(Injections.STATE.PARTICIPANT_DASHBOARD);
     });
 
     it('name should be equal to "session"', function() {

@@ -41,7 +41,7 @@
             ActivityContextService.restore();
             deferred.resolve();
           } catch (e) {
-            deferred.resolve(STATE.DASHBOARD);
+            deferred.resolve(STATE.PARTICIPANT_DASHBOARD);
           }
         });
 

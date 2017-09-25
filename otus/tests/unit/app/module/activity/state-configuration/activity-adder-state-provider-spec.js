@@ -23,7 +23,7 @@ xdescribe('otusjs.otus.application.state.ActivityAdderStateProvider', function()
   describe('state definition', function() {
 
     it('parent should be equal to "dashboard"', function() {
-      expect(provider.state.parent).toEqual(Injections.STATE.DASHBOARD);
+      expect(provider.state.parent).toEqual(Injections.STATE.PARTICIPANT_DASHBOARD);
     });
 
     it('name should be equal to "activity-adder"', function() {

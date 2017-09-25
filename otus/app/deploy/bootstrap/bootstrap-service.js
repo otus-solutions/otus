@@ -76,13 +76,13 @@
       AccessModule.onLogout(ParticipantModule.Event.fireLogout);
       AccessModule.onLogout(ActivityModule.Event.fireLogout);
       AccessModule.onLogout(SessionModule.Event.fireLogout);
-      AccessModule.onLogin(OtusApiService.initializeRestrictResources);
+      AccessModule.onLogin(OtusApiService.initializeConfigurationResources);
       AccessModule.onLogin(DataSourceLoaderService.initializeDataSources);
       AccessModule.onLogout(StorageLoaderService.deleteDatabase);
       // From Session Module to...
       SessionModule.Event.onLogin(DashboardModule.Event.fireLogin);
       SessionModule.Event.onLogin(ActivityModule.Event.fireLogin);
-      SessionModule.Event.onLogin(OtusApiService.initializeRestrictResources);
+      SessionModule.Event.onLogin(OtusApiService.initializeConfigurationResources);
       SessionModule.Event.onLogin(DataSourceLoaderService.initializeDataSources);
       SessionModule.Event.onLogout(StorageLoaderService.deleteDatabase);
       SessionModule.Event.onLogin(LaboratoryModule.setCurrentUser);  //TODO better handle this data (call event service?)

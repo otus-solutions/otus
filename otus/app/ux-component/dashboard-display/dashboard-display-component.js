@@ -10,7 +10,5 @@
 
   function Controller() {
     var self = this;
-
-    /* Public methods */
   }
 }());

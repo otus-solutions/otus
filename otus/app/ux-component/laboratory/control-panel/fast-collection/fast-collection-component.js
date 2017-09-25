@@ -12,7 +12,7 @@
     });
 
   controller.$inject = [
-      'otusjs.laboratory.business.ParticipantLaboratoryService',
+      'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
       '$element',
       '$mdToast'
   ];
