@@ -76,11 +76,11 @@
                                                     <input class="campo"
                                                         ng-model="exam.tubeCode"
                                                         placeholder="{{exam.placeholder}}"
-                                                        ng-change="$ctrl.inputOnChangeTube(exam)"
+                                                        ng-change="$ctrl.tubeInputOnChange(exam)"
                                                         name="{{exam.tubeId}}"
                                                         id="{{exam.tubeId}}"
                                                         maxlength="{{$ctrl.tubeLength}}"
-                                                        ng-blur="$ctrl.validateTube(exam)"
+                                                        ng-blur="$ctrl.tubeInputOnBlur(exam)"
                                                         tabindex="-1"
                                                         ng-disabled="exam.isSaved"
                                                     />
@@ -111,12 +111,12 @@
                                                 <md-input-container flex class="md-block">
                                                     <label>{{exam.containerLabel}}</label>
                                                     <input ng-model="exam.aliquotCode"
-                                                        ng-change="$ctrl.inputOnChangeAliquot(exam)"
+                                                        ng-change="$ctrl.aliquotInputOnChange(exam)"
                                                         name="{{exam.aliquotId}}"
                                                         id="{{exam.aliquotId}}"
                                                         maxlength="{{$ctrl.aliquotMaxLength}}"
-                                                        ng-blur="$ctrl.validateAliquot(exam)"
-                                                        ng-keydown="$ctrl.inputKeyDownAliquot($event, exam)"
+                                                        ng-blur="$ctrl.aliquotInputOnBlur(exam)"
+                                                        ng-keydown="$ctrl.aliquotInputOnKeyDown($event, exam)"
                                                         ng-disabled="exam.isSaved"
                                                     />
                                                     <div ng-messages="formAliquot[exam.aliquotId].$error">
@@ -151,11 +151,11 @@
                                                     <input class="campo"
                                                         ng-model="storage.tubeCode"
                                                         placeholder="{{storage.placeholder}}"
-                                                        ng-change="$ctrl.inputOnChangeTube(storage)"
+                                                        ng-change="$ctrl.tubeInputOnChange(storage)"
                                                         name="{{storage.tubeId}}"
                                                         id="{{storage.tubeId}}"
                                                         maxlength="{{$ctrl.tubeLength}}"
-                                                        ng-blur="$ctrl.validateTube(storage)"
+                                                        ng-blur="$ctrl.tubeInputOnBlur(storage)"
                                                         tabindex="-1"
                                                         ng-disabled="storage.isSaved"
                                                     />
@@ -187,12 +187,12 @@
                                                     <label>{{storage.containerLabel}}</label>
                                                     <input
                                                         ng-model="storage.aliquotCode"
-                                                        ng-change="$ctrl.inputOnChangeAliquot(storage)"
+                                                        ng-change="$ctrl.aliquotInputOnChange(storage)"
                                                         name="{{storage.aliquotId}}"
                                                         id="{{storage.aliquotId}}"
                                                         maxlength="{{$ctrl.aliquotMaxLength}}"
-                                                        ng-blur="$ctrl.validateAliquot(storage)"
-                                                        ng-keydown="$ctrl.inputKeyDownAliquot($event, storage)"
+                                                        ng-blur="$ctrl.aliquotInputOnBlur(storage)"
+                                                        ng-keydown="$ctrl.aliquotInputOnKeyDown($event, storage)"
                                                         ng-disabled="storage.isSaved"
                                                     />
                                                     <div ng-messages="formAliquot[storage.aliquotId].$error">
