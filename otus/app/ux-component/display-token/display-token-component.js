@@ -28,7 +28,7 @@
 
     function onInit() {
       TokenRestService.initialize();
-      self.token = TokenRestService.getToken();
+      self.token = TokenRestService.getExtractionToken();
       self.key = hasToken();
 
     }

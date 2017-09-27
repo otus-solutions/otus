@@ -15,20 +15,19 @@
 
     /* Public methods */
     self.initialize = initialize;
-    self.getToken = getToken;
+    self.getExtractionToken = getExtractionToken;
 
     function initialize() {
-      // _rest = OtusRestResourceService.getExtractionResource();
-      _rest = true;
-
+      _rest = OtusRestResourceService.getExtractionResource();
     }
 
-    function getToken() {
+    function getExtractionToken() {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      // return _rest.getTokenResource();
-      return "Demo token";
+      return _rest.extractionToken();
+
+
     }
   }
 }());
