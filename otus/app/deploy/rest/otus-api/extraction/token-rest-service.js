@@ -22,11 +22,11 @@
     }
 
     function getExtractionToken() {
-      if (!_rest) {
+      if (_rest) {
+        return _rest.extractionToken().$promise;
+      } else {
         throw new Error('REST resource is not initialized.');
       }
-
-      return _rest.extractionToken();
     }
   }
 }());
