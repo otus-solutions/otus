@@ -28,12 +28,13 @@
 
     function onInit() {
       TokenRestService.initialize();
-      self.token = TokenRestService.getExtractionToken();
-      self.key = hasToken();
-
+      TokenRestService.getExtractionToken().then(function(response) {
+        self.token = response.data;
+        self.key = _hasToken();
+      });
     }
 
-    function hasToken() {
+    function _hasToken() {
       return self.token ? true : false;
     }
 
@@ -44,7 +45,6 @@
       document.execCommand("copy");
       $temp.remove();
       showToast("Token copiado!", 3000);
-
     }
 
     function getKey() {
