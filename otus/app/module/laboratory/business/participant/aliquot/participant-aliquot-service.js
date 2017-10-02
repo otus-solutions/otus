@@ -21,48 +21,10 @@
     self.aliquotsWithErrors = aliquotsWithErrors;
     self.populateAliquotsArray = populateAliquotsArray;
     self.getNewAliquots = getNewAliquots;
-    self.saveAliquoting = saveAliquoting;
     self.updateAliquots = updateAliquots;
 
     function updateAliquots(updateStructure, fakeMe) {
-      // var defer = $q.defer();
-      // defer.resolve();
-      // if (fakeMe) {
-      // }else {
-      //    defer.reject();
-      // }
-      // return defer.promise;
       return ParticipantLaboratoryService.updateAliquots(updateStructure);
-    }
-
-    function saveAliquoting(newAliquots, momentType, results){
-      return _saveFakeAliquots(newAliquots,momentType, results);
-    }
-
-    function _saveFakeAliquots(newAliquots, momentType, results){
-      var results = results ? results : true;
-
-      newAliquots.forEach(function(aliquot) {
-        var newAliquot = {
-          objectType: "Aliquot",
-          name: aliquot.name,
-          role: aliquot.role,
-          code: aliquot.aliquotCode,
-          container: aliquot.container,
-          collectionData: {
-            objectType: "AliquotCollectionData",
-            metadata: "",
-            operator: "jose.maria@teste.com",
-            time: new Date().toISOString()
-          },
-          tubeCode: aliquot.tubeCode,
-          label: aliquot.label
-        };
-
-        momentType.collectedAliquots.push(newAliquot);
-      });
-
-      return results;
     }
 
     function fieldsChanged(momentType){

@@ -15,13 +15,14 @@
   Controller.$inject = [
     'otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService',
     'otusjs.laboratory.configuration.LaboratoryConfigurationService',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.laboratory.business.participant.aliquot.AliquotMessagesService',
     'otusjs.laboratory.business.participant.aliquot.AliquotValidationService',
     '$scope',
     '$element'
   ];
 
-  function Controller(AliquotTubeService, LaboratoryConfigurationService, AliquotMessagesService, AliquotValidationService, $scope, $element) {
+  function Controller(AliquotTubeService, LaboratoryConfigurationService, ParticipantLaboratoryService, AliquotMessagesService, AliquotValidationService, $scope, $element) {
     var self = this;
     
     const msgErrors = [
@@ -52,8 +53,8 @@
       tubeFromAnotherWave: "Tubo não pertence à Onda atual.",
       aliquotFromAnotherWave: "Aliquota não pertence à Onda atual.",
       requiredTube: "O código do Tubo é obrigatório.",
-      aliquotFromAnotherCenter: "Não pertence ao mesmo Centro do Tubo.",
-      invalidAliquotLength: function(lengthArray){ return "Tamnaho inválido. A aliquota deve possuir " + _convertArrayToStringInclusesLastPosition(lengthArray,' ou ') + " digitos." },
+      aliquotFromAnotherCenter: "Não pertence ao mesmo Centro do Participante.",
+      invalidAliquotLength: function(lengthArray){ return "Tamanho inválido. A aliquota deve possuir " + _convertArrayToStringInclusesLastPosition(lengthArray,' ou ') + " digitos." },
       invalidAliquot: "Não é uma Aliquota válida.",
       uncollectedTube: "Tubo não coletado, não pode ser Aliquotado.",
       tubeNotFound: "Este tubo não existe ou não pertence a este Tipo/Momento.",
@@ -75,6 +76,10 @@
         value: "",
         position: 0
       },
+      center:{
+        value: "",
+        position: 1
+      }, 
       tube:{
         value: "",
         position: 2
@@ -118,6 +123,8 @@
       self.validations.tube.value = codeConfiguration.tubeToken;
       self.validations.cryotube.value = codeConfiguration.cryotubeToken;
       self.validations.pallet.value = codeConfiguration.palletToken;
+
+      self.validations.center.value = ParticipantLaboratoryService.participant.fieldCenter.code;
     }
 
     function _convertArrayToStringInclusesLastPosition(array, includes){
@@ -151,6 +158,10 @@
       return _isValidCode(self.validations.wave,code);
     }
     
+    function _isValidCenter(code){
+      return _isValidCode(self.validations.center,code);
+    }
+
     function _isValidTube(code){
       return _isValidCode(self.validations.tube,code);
     }
@@ -419,7 +430,7 @@
 
       var isValid = true;
 
-      if (value.length > 0) isValid = _isValidWave(value);
+      if (value.length > 0 && !aliquot.isSaved) isValid = _isValidWave(value);
 
       if (isValid) {
         if (isTube) {
@@ -484,16 +495,12 @@
       }
     }
 
-    function _validateCenterAliquot(aliquot) {
+    function _validateAliquotCenter(aliquot) {
       var isValid = true;
-      var tubeCode = aliquot.tubeCode ? aliquot.tubeCode : aliquot.placeholder;
       var msg = validationMsg.aliquotFromAnotherCenter;
 
-      if(aliquot.aliquotCode) {
-        if((aliquot.tubeCode.length >= self.tubeLength || aliquot.placeholder.length >= self.tubeLength)
-            && tubeCode.toString().substr(1, 1) != aliquot.aliquotCode.toString().substr(1, 1)) {
-              isValid = false;
-          }
+      if(aliquot.aliquotCode && !aliquot.isSaved) {
+        isValid = _isValidCenter(aliquot.aliquotCode);
       }
 
       if (isValid) {
@@ -519,7 +526,7 @@
       var isValid = true;
       var msg = validationMsg.invalidAliquotLength(self.aliquotLengths);
 
-      if(aliquot.aliquotCode) {
+      if(aliquot.aliquotCode && !aliquot.isSaved) {
         isValid = _isValidAliquotLength(aliquot.aliquotCode.length);
       }
 
@@ -542,7 +549,7 @@
       _validateTubeRequired(aliquot);
       if (!_validateIsNumber(aliquot, aliquotIdentifier)) return;
       if (!_validateWave(aliquot, aliquotIdentifier)) return;
-      if (!_validateCenterAliquot(aliquot)) return;
+      if (!_validateAliquotCenter(aliquot)) return;
       if (!_validateAliquotLength(aliquot)) return;
 
       if (aliquot.aliquotCode) {
@@ -565,7 +572,6 @@
       var msgTubeNotCollected = validationMsg.uncollectedTube;
       var msgTubeNotExists = validationMsg.tubeNotFound;
 
-      _validateCenterAliquot(aliquot);
       if (!_validateIsNumber(aliquot, tubeIdentifier)) return;
       if (!_validateWave(aliquot, tubeIdentifier)) return;
       if (!_validateTubeRequired(aliquot)) return;
