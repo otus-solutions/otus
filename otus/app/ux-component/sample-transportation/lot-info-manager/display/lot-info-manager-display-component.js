@@ -27,8 +27,9 @@
     self.fastInsertion = fastInsertion;
     self.selectAliquot = selectAliquot;
 
-    function fastInsertion(element) {
-      if (element.aliquot_code.length >= 9) {
+    function fastInsertion(event, element) {
+      var charCode = event.which || event.keyCode;
+      if(charCode == '13' && element.aliquot_code.length > 0) {
         var foundAliquot = _findAliquot(element.aliquot_code);
         if (foundAliquot) {
           if (_findAliquotInLot(element.aliquot_code)) {
@@ -62,7 +63,7 @@
     function _toastError(aliquotCode) {
       $mdToast.show(
         $mdToast.simple()
-        .textContent('aliquota ' + aliquotCode + ' não encontrada')
+        .textContent('A alíquota "' + aliquotCode + '" não foi encontrada.')
         .hideDelay(2000)
       );
     }
@@ -70,7 +71,7 @@
     function _toastDuplicated(aliquotCode) {
       $mdToast.show(
         $mdToast.simple()
-        .textContent('aliquota ' + aliquotCode + ' já esta no lote')
+        .textContent('A alíquota "' + aliquotCode + '" já esta no lote.')
         .hideDelay(2000)
       );
     }
@@ -78,7 +79,7 @@
     function _toastOtherLot(aliquotCode) {
       $mdToast.show(
         $mdToast.simple()
-        .textContent('aliquota ' + aliquotCode + ' já esta em outro lote')
+        .textContent('A alíquota "' + aliquotCode + '" já esta em outro lote.')
         .hideDelay(2000)
       );
     }

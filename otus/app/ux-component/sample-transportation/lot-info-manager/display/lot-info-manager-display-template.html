@@ -3,7 +3,7 @@
     <md-card-title>
       <md-card-title-text layout-align="center center">
         <span class="md-headline">Inserir Aliquota</span>
-        <input type="text" class="aliquot-lot-input" placeholder="Aliquota" name="fast-trigger" value="Inserção rápida" ng-model="aliquot_code" ng-change="$ctrl.fastInsertion(this)" />
+        <input type="text" class="aliquot-lot-input" placeholder="Aliquota" name="fast-trigger" value="Inserção rápida" ng-model="aliquot_code" ng-keydown="$ctrl.fastInsertion($event, this)" />
         <div layout="row" layout-xs="column">
           <div ng-if="$ctrl.action=='create'">
             <div layout="row" layout-xs="column" layout-align="center center">

@@ -144,3 +144,7 @@ md-checkbox.md-checkbox-small {
   color: red;
 }
 /** finish lot-info-maneger-display-component **/
+
+.remove-padding{
+  padding: 0;
+}
