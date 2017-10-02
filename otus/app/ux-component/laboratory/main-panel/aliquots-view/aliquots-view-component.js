@@ -15,13 +15,14 @@
   Controller.$inject = [
     'otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService',
     'otusjs.laboratory.configuration.LaboratoryConfigurationService',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.laboratory.business.participant.aliquot.AliquotMessagesService',
     'otusjs.laboratory.business.participant.aliquot.AliquotValidationService',
     '$scope',
     '$element'
   ];
 
-  function Controller(AliquotTubeService, LaboratoryConfigurationService, AliquotMessagesService, Validation, $scope, $element) {
+  function Controller(AliquotTubeService, LaboratoryConfigurationService, ParticipantLaboratoryService, AliquotMessagesService, Validation, $scope, $element) {
     var self = this;
 
     const timeShowMsg = 2000;
@@ -61,6 +62,10 @@
         wave:{
           value: codeConfiguration.waveNumberToken,
           position: 0
+        },
+        center:{
+          value: ParticipantLaboratoryService.participant.fieldCenter.code,
+          position: 1
         },
         tube:{
           value: codeConfiguration.tubeToken,
@@ -254,7 +259,7 @@
       Validation.validateTubeRequired(aliquot);
       if (!Validation.validateIsNumber(aliquot, Validation.aliquotIdentifier)) return;
       if (!Validation.validateWave(aliquot, Validation.aliquotIdentifier)) return;
-      if (!Validation.validateCenterAliquot(aliquot)) return;
+      if (!Validation.validateAliquotCenter(aliquot)) return;
       if (!Validation.validateAliquotLength(aliquot)) return;
 
       if (aliquot.aliquotCode) {
@@ -277,7 +282,6 @@
       var msgTubeNotCollected = Validation.validationMsg.uncollectedTube;
       var msgTubeNotExists = Validation.validationMsg.tubeNotFound;
 
-      Validation.validateCenterAliquot(aliquot);
       if (!Validation.validateIsNumber(aliquot, Validation.tubeIdentifier)) return;
       if (!Validation.validateWave(aliquot, Validation.tubeIdentifier)) return;
       if (!Validation.validateTubeRequired(aliquot)) return;

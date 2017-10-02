@@ -41,8 +41,8 @@
       tubeFromAnotherWave: "Tubo não pertence à Onda atual.",
       aliquotFromAnotherWave: "Aliquota não pertence à Onda atual.",
       requiredTube: "O código do Tubo é obrigatório.",
-      aliquotFromAnotherCenter: "Não pertence ao mesmo Centro do Tubo.",
-      invalidAliquotLength: "Tamnaho inválido. A aliquota deve possuir * digitos." ,
+      aliquotFromAnotherCenter: "Não pertence ao mesmo Centro do Participante.",
+      invalidAliquotLength: "Tamanho inválido. A aliquota deve possuir * digitos." ,
       invalidAliquot: "Não é uma Aliquota válida.",
       uncollectedTube: "Tubo não coletado, não pode ser Aliquotado.",
       tubeNotFound: "Este tubo não existe ou não pertence a este Tipo/Momento.",
@@ -69,6 +69,7 @@
 
     self.initialize = initialize;
     self.isValidWave = isValidWave;
+    self.isValidCenter = isValidCenter;
     self.isValidTube = isValidTube;
     self.isValidCryotube = isValidCryotube;
     self.isValidPallet = isValidPallet;
@@ -81,7 +82,7 @@
     self.validateIsNumber = validateIsNumber;
     self.validateWave = validateWave;
     self.validateTubeRequired = validateTubeRequired;
-    self.validateCenterAliquot = validateCenterAliquot;
+    self.validateAliquotCenter = validateAliquotCenter;
     self.validateAliquotLength = validateAliquotLength;
     self.isValidAliquotLength = isValidAliquotLength;
     self.transcribeErrorMessage = transcribeErrorMessage;
@@ -117,7 +118,7 @@
     }
 
     function _fillMsgInvalidAliquotLength(lengthArray){
-      return "Tamnaho inválido. A aliquota deve possuir " + _convertArrayToStringInclusesLastPosition(lengthArray,' ou ') + " digitos.";
+      return "Tamanho inválido. A aliquota deve possuir " + _convertArrayToStringInclusesLastPosition(lengthArray,' ou ') + " digitos.";
     }
 
     function _convertArrayToStringInclusesLastPosition(array, includes){
@@ -151,6 +152,10 @@
       return _isValidCode(self.validations.wave,code);
     }
     
+    function isValidCenter(code){
+      return _isValidCode(self.validations.center,code);
+    }
+
     function isValidTube(code){
       return _isValidCode(self.validations.tube,code);
     }
@@ -273,7 +278,7 @@
 
       var isValid = true;
 
-      if (value.length > 0) isValid = self.isValidWave(value);
+      if (value.length > 0 && !aliquot.isSaved) isValid = self.isValidWave(value);
 
       if (isValid) {
         if (isTube) {
@@ -317,16 +322,12 @@
     }
 
 
-    function validateCenterAliquot(aliquot) {
+    function validateAliquotCenter(aliquot) {
       var isValid = true;
-      var tubeCode = aliquot.tubeCode ? aliquot.tubeCode : aliquot.placeholder;
       var msg = self.validationMsg.aliquotFromAnotherCenter;
 
-      if(aliquot.aliquotCode) {
-        if((aliquot.tubeCode.length >= self.tubeLength || aliquot.placeholder.length >= self.tubeLength)
-            && tubeCode.toString().substr(1, 1) != aliquot.aliquotCode.toString().substr(1, 1)) {
-              isValid = false;
-          }
+      if(aliquot.aliquotCode && !aliquot.isSaved) {
+        isValid = self.isValidCenter(aliquot.aliquotCode);
       }
 
       if (isValid) {
@@ -352,7 +353,7 @@
       var isValid = true;
       var msg = self.validationMsg.invalidAliquotLength;
 
-      if(aliquot.aliquotCode) {
+      if(aliquot.aliquotCode && !aliquot.isSaved) {
         isValid = self.isValidAliquotLength(aliquot.aliquotCode.length);
       }
 
