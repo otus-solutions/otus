@@ -17,15 +17,31 @@
     });
 
   Controller.$inject = [
-    '$mdToast'
+    '$mdToast',
+    'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
   ];
 
-  function Controller($mdToast) {
+  function Controller($mdToast, AliquotTransportationService) {
     var self = this;
+
+    const timeShowMsg = 3000;
+
+    self.$onInit = onInit;
 
     /* Public methods */
     self.fastInsertion = fastInsertion;
     self.selectAliquot = selectAliquot;
+
+    function onInit() {
+      _updateContainerLabel();
+    }
+
+    function _updateContainerLabel(){
+      self.lot.aliquotList.forEach(function(aliquot) {
+        aliquot.containerLabel = AliquotTransportationService.getContainerLabelToAliquot(aliquot);
+      }, this);
+    }
+
 
     function fastInsertion(event, element) {
       var charCode = event.which || event.keyCode;
@@ -41,6 +57,7 @@
             self.onLotAlteration({
               newData: self.lot.toJSON()
             });
+            _updateContainerLabel();
           }
         } else {
           _toastError(element.aliquot_code);
@@ -64,7 +81,7 @@
       $mdToast.show(
         $mdToast.simple()
         .textContent('A alíquota "' + aliquotCode + '" não foi encontrada.')
-        .hideDelay(2000)
+        .hideDelay(timeShowMsg)
       );
     }
 
@@ -72,7 +89,7 @@
       $mdToast.show(
         $mdToast.simple()
         .textContent('A alíquota "' + aliquotCode + '" já esta no lote.')
-        .hideDelay(2000)
+        .hideDelay(timeShowMsg)
       );
     }
 
@@ -80,7 +97,7 @@
       $mdToast.show(
         $mdToast.simple()
         .textContent('A alíquota "' + aliquotCode + '" já esta em outro lote.')
-        .hideDelay(2000)
+        .hideDelay(timeShowMsg)
       );
     }
 

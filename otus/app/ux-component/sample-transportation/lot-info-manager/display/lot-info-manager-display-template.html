@@ -44,7 +44,7 @@
       <md-list>
         <md-list-item ng-repeat="aliquot in $ctrl.lot.aliquotList track by $index" ng-class="{ 'selectedState': aliquot.isSelected, 'regularState': !aliquot.isSelected}" ng-click="$ctrl.selectAliquot(aliquot)">
           <div ng-class="{'md-list-item-text': true, 'error': aliquot.hasError}" flex>
-            <span class="md-title" layout-margin>{{aliquot.code}}</span><span>{{aliquot.label}}</span>
+            <span class="md-title" layout-margin>{{aliquot.code}}</span><span>{{aliquot.containerLabel + " de " + aliquot.label}}</span>
           </div>
           <md-divider></md-divider>
         </md-list-item>
