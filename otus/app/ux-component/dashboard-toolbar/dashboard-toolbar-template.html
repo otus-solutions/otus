@@ -1,17 +1,19 @@
-<md-toolbar class="md-primary md-whiteframe-1dp">
-  <div class="md-toolbar-tools md-padding">
-    <img src="app/static-resource/image/coruja_pesquisadora.png" class="toolbar-icon"></img>
-    <otus-dashboard-sidenav-launcher></otus-dashboard-sidenav-launcher>
-    <div ng-transclude flex>
+<md-toolbar class="md-primary md-whiteframe-1dp" flex>
+  <div class="md-toolbar-tools remove-padding" flex>
+    <div class="md-toolbar-tools" flex="25">
+      <img src="app/static-resource/image/coruja_pesquisadora.png" class="toolbar-icon"></img>
+      <otus-dashboard-sidenav-launcher></otus-dashboard-sidenav-launcher>
+    </div>
+
+    <div ng-transclude flex="50">
       <!-- <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)" class="md-primary md"></otus-participant-search> -->
     </div>
 
-          <otus-display-token></otus-display-token>
-
-          <span>{{ $ctrl.loggedUser.name}}</span>
-          <md-button class="md-fab md-mini md-accent" ng-click="$ctrl.getKey()" >
-            <md-icon md-font-set="material-icons">person</md-icon>
-          </md-button>
-
+    <div style="text-align:right" flex="25">
+      <span style="position:relative; top:2px; left: 5px">{{ $ctrl.loggedUser.name}}</span>
+      <md-button class="md-fab md-mini md-accent">
+        <md-icon md-font-set="material-icons">person</md-icon>
+      </md-button>
+    </div>
   </div>
 </md-toolbar>

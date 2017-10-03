@@ -6,11 +6,14 @@
     </div>
   </md-toolbar>
   <md-list flex>
-    <md-list-item class="md-2-line" style="margin-top: 15px" ng-repeat="aliquot in $ctrl.selectedLot.aliquotList" ng-click="null">
+    <md-list-item class="md-2-line"  ng-repeat="aliquot in $ctrl.selectedLot.aliquotList" ng-click="null">
       <md-icon aria-label="Atividades">keyboard_arrow_right</md-icon>
       <div class="md-list-item-text" layout="column">
-        <h2 class="md-title">{{aliquot.code}}</h2>
-        <h3 class="md-subhead">{{aliquot.label}}</h3>
+        <div layout="row" layout-align="start center">
+          <h2 flex class="md-title">{{aliquot.code}}</h2>
+          <h3 flex class="md-subhead" >{{aliquot.containerLabel}}</h3>
+        </div>
+        <span class="md-subhead">{{aliquot.label}}</span>
       </div>
     </md-list-item>
   </md-list>

@@ -15,10 +15,11 @@
     });
 
   Controller.$inject = [
-    '$mdSidenav'
+    '$mdSidenav',
+    'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
   ];
 
-  function Controller($mdSidenav) {
+  function Controller($mdSidenav, AliquotTransportationService) {
     var self = this;
 
     /* Lifecycle hooks */
@@ -29,6 +30,9 @@
 
     function onInit() {
       self.otusSampleTransportationManagerList.lotInfoComponent = self;
+      self.selectedLot.aliquotList.forEach(function(aliquot) {
+        aliquot.containerLabel = AliquotTransportationService.getContainerLabelToAliquot(aliquot);
+      }, this);
     }
 
     function show() {

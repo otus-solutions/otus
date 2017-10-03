@@ -26,6 +26,11 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.getContainerLabelToAliquot = getContainerLabelToAliquot;
+    
+    function getContainerLabelToAliquot(aliquot){
+      return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
+    }
 
     function createAliquotLot() {
       return TransportationService.createAliquotLot();
