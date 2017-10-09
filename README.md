@@ -36,7 +36,7 @@ O serviço de front-end será acessivel através da url: **URL_SERVIDOR/otus**
 
 ## Contato
 Gostaria de saber mais sobre nosso projeto? <br />
-Entre em contato conosco. 
+Entre em contato conosco. <br />
 Email: contato@otus-solutions.com.br <br />
 
 
