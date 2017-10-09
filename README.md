@@ -35,8 +35,9 @@ Para realizar download de dependencias de front-end
 O serviço de front-end será acessivel através da url: **URL_SERVIDOR/otus**
 
 ## Contato
-Gostaria de saber mais sobre nosso projeto ?! Entre em contato conosco. <br />
-Email: ccem-projects@gmail.com <br />
+Gostaria de saber mais sobre nosso projeto? <br />
+Entre em contato conosco. 
+Email: contato@otus-solutions.com.br <br />
 
 
 
