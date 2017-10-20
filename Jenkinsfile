@@ -20,7 +20,7 @@ pipeline {
     }
     stage('Build') {
       steps{
-          sh "git show -s --pretty=%an | perl -ne 'print \"GIT-COMMIT-USER=$_\"' >> env.properties"
+          //sh "git show -s --pretty=%an | perl -ne 'print \"GIT-COMMIT-USER=$_\"' >> env.properties"
           sh "rm -rf node_modules/"
           sh "npm install --prefix otus/"
           sh "npm run test --prefix otus/"
@@ -44,7 +44,7 @@ pipeline {
     }
 
 
-    stage('Development Deploy') {
+    stage('Deploy') {
       steps {
         // sh "npm prune --production --prefix otus/"
         // sh "mvn -f otus/pom.xml antrun:run@static-deploy -Dscp.user='${SERVER_USER}' -Dscp.host='${SERVER_HOST}' -Dscp.target='${SERVER_TARGET}' -Dscp.password='${SERVER_PWD}'"
