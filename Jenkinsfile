@@ -29,6 +29,7 @@ pipeline {
 
 
     }
+  }
 
     stage('Publish Nexus') {
       steps {
