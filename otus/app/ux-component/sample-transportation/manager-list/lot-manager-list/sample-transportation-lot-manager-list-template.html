@@ -1,4 +1,81 @@
-<div layout="column" flex>
+<div>
+  <md-subheader class="md-no-sticky moment-type-title">
+    Filtros de Pesquisa
+  </md-subheader>
+
+  <div layout="row" layout-xs="column"  layout-align="center ">
+    <md-input-container class="remove-erros-spacer">
+      <label>Período Inicial</label>
+      <md-datepicker ng-model="$ctrl.lot.shipmentBegin" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Período Inicial"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="remove-erros-spacer">
+      <label>Período Fínal</label>
+      <md-datepicker ng-model="$ctrl.lot.shipmentEnd" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Período Final"></md-datepicker>
+    </md-input-container>
+    <md-input-container class="remove-erros-spacer" style="margin-left:15px">
+      <label>Centro</label>
+      <md-select ng-model="$ctrl.center">
+        <md-option ng-repeat="center in ['RS','SP','SC','BA','MG']" value="{{center}}">
+          {{center}}
+        </md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container class="remove-erros-spacer" style="margin-left:15px">
+        <label>Visualização</label>
+        <md-select ng-model="$ctrl.view">
+          <md-option ng-repeat="view in ['Cards','Lista']" value="{{view}}">
+            {{view}}
+          </md-option>
+        </md-select>
+    </md-input-container>
+  </div>
+</div>
+
+<md-divider></md-divider>
+
+<md-content ng-if="$ctrl.view=='Cards'" class="md-padding" layout="column" >
+  <div>
+  <div layout-align="center none" layout-wrap layout="row" flex>
+    <div ng-repeat="lot in $ctrl.lotsList | limitTo:$ctrl.show" class="card-animated">
+        <md-card layout-padding style="width:500px"
+        ng-click="$ctrl.selectLot(lot)"
+        class="{{(lot.isSelected ? 'selectedState' : 'regularState') + ' aliquot-md-card card-tube' }}"
+        ng-class="{ 'selectedState': lot.isSelected, 'regularState': !lot.isSelected }"
+        >
+        <!-- ng-click="$ctrl.selecMomentType(momentType)" class="{{($ctrl.selectedMomentType == momentType ? 'moment-type-selected' : 'moment-type-not-selected') + ' aliquot-md-card card-tube ' }}" -->
+        <md-card-title flex>
+          <div layout="row">
+            <div layout="column" flex>
+              <div layout="row" flex>
+                <div layout="column" flex="70">
+                    <md-card-title-text flex="100">
+                      <span class="md-headline">{{lot.code}}</span>
+                      <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                      <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                      <span class="md-subhead">Responsável: {{lot.operator}}</span>
+                    </md-card-title-text>
+                    <md-card-actions layout="row" layout-align="end center"></md-card-actions>
+                  </div>
+                  <div layout="column" flex>
+                    <img src="./app/static-resource/image/transport_chart_donut_demo.png" class="md-card-image" alt="image caption" style="height:120px; width:100px">
+                  </div>
+                </div>
+                <div flex="40">
+                    <img src="./app/static-resource/image/transport_chart_legend_demo.png" class="md-card-image" alt="image caption" style="height:160px; width:480px; position:relative; top:-50px; left:-20px">
+              </div>
+            </div>
+          </div>
+        </md-card-title>
+      </md-card>
+    </div>
+  </div>
+</div>
+  <div layout="row">
+    <md-button class="md-accent" flex ng-click="$ctrl.showMore()">Exibir mais</md-button>
+  </div>
+</md-content>
+
+<div ng-if="$ctrl.view!='Cards'" layout="column" flex>
   <md-content layout="column" flex>
     <md-list flex>
       <md-list-item class="md-1-line" style="margin-left:8px">
