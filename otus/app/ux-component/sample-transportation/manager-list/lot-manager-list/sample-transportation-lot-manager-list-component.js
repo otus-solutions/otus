@@ -24,6 +24,16 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
+    self.view = 'Cards';
+    self.limit = 3;
+    self.show = self.limit;
+    self.page = 2;
+    self.showMore = showMore;
+
+    function showMore(){
+      self.show+= self.limit;
+    }
+
     /* Public methods */
     self.selectLot = selectLot;
     self.updateOnDelete = updateOnDelete;

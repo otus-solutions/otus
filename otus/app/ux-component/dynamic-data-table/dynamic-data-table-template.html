@@ -1,0 +1,34 @@
+<div layout="column" layout-align="center center" layout-margin flex>
+  <span>My Dynamic Data Table</span>
+
+  <div ng-if="$ctrl.error.isError">
+    <h1>{{$ctrl.error.msg}}</h1>
+  </div>
+
+  <div ng-if="!$ctrl.error.isError">
+    <table>
+      <thead>
+        <tr ng-repeat="column in $ctrl. | orderBy:$ctrl.orderQuery">
+          <th>Month</th>
+          <th>Savings</th>
+        </tr>
+      </thead>
+      <tfoot>
+        <tr>
+          <td>Sum</td>
+          <td>$180</td>
+        </tr>
+      </tfoot>
+      <tbody>
+        <tr>
+          <td>January</td>
+          <td>$100</td>
+        </tr>
+        <tr>
+          <td>February</td>
+          <td>$80</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
