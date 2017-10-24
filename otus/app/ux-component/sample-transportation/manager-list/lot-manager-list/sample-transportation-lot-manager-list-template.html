@@ -44,29 +44,25 @@
         >
         <!-- ng-click="$ctrl.selecMomentType(momentType)" class="{{($ctrl.selectedMomentType == momentType ? 'moment-type-selected' : 'moment-type-not-selected') + ' aliquot-md-card card-tube ' }}" -->
         <md-card-title flex>
-          <div layout="row">
-            <div layout="column" flex>
-              <div layout="row" flex>
-                <div layout="column" flex="70">
-                    <md-card-title-text flex="100">
-                      <span class="md-headline">{{lot.code}}</span>
-                      <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
-                      <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
-                      <span class="md-subhead">Responsável: {{lot.operator}}</span>
-                    </md-card-title-text>
-                    <md-card-actions layout="row" layout-align="end center"></md-card-actions>
-                  </div>
-                  <div layout="column" flex>
-                    <img src="./app/static-resource/image/transport_chart_donut_demo.png" class="md-card-image" alt="image caption" style="height:120px; width:100px">
-                  </div>
+          <div layout="row" flex>
+              <div layout="column" flex="70">
+                  <md-card-title-text flex="100">
+                    <span class="md-headline">{{lot.code}}</span>
+                    <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                    <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                    <span class="md-subhead">Responsável: {{lot.operator}}</span>
+                  </md-card-title-text>
+                  <md-card-actions layout="row" layout-align="end center"></md-card-actions>
                 </div>
-                <div flex="40">
-                    <img src="./app/static-resource/image/transport_chart_legend_demo.png" class="md-card-image" alt="image caption" style="height:160px; width:480px; position:relative; top:-50px; left:-20px">
-              </div>
-            </div>
+                <div layout="column">
+                  <otus-sample-transportation-lot-aliquots-chart lot="lot"></otus-sample-transportation-lot-aliquots-chart>
+                </div>
           </div>
         </md-card-title>
-      </md-card>
+          <md-card-content>
+              <!--<img src="./app/static-resource/image/transport_chart_legend_demo.png" class="md-card-image" alt="image caption" style="height:160px; width:480px; position:relative; top:-50px; left:-20px">-->
+          </md-card-content>
+        </md-card>
     </div>
   </div>
 </div>

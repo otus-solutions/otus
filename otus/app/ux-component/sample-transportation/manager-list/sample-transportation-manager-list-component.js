@@ -61,7 +61,7 @@
         }
       })
       .catch(function(e){
-        var msgLots = "Não foi possível excluir o Lote " + lotArray[0].code + " o(s) Lote(s):" 
+        var msgLots = "Não foi possível excluir o Lote " + lotArray[0].code + " o(s) Lote(s):"
           + lotArray.map(function(lot){return " " + lot.code;})
           + " não será(ão) excluído(s).";
 
@@ -76,7 +76,7 @@
 
     function handleChangeAction() {
       self.action = laboratoryContextService.setLotInfoManagerAction('alter');
-      laboratoryContextService.selectLot(self.selectedLots[0].toJSON())
+      laboratoryContextService.selectLot(self.selectedLots[0].toJSON());
       ApplicationStateService.activateSampleTransportationLotInfoManager();
     }
 

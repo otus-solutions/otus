@@ -37,18 +37,19 @@
     "angular-resource": "1.5.5",
     "angular-ui-mask": "^1.8.3",
     "angular-ui-router": "^0.3.1",
+    "chart.js": "^2.7.0",
     "fuse.js": "^2.6.2",
     "jquery": "2.2.0",
     "jsbarcode": "^3.5.7",
+    "label-maker-js": "https://github.com/ccem-dev/label-maker-js.git#v1.1",
     "lokijs": "1.4.2",
     "moment": "2.12.0",
-    "please-wait": "0.0.5",
-    "label-maker-js": "https://github.com/ccem-dev/label-maker-js.git#v1.1",
-    "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#v1.0",
     "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#v1.2",
+    "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#v1.0",
     "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#v1.5",
     "otus-preview-js": "https://github.com/ccem-dev/otus-preview-js.git#v1.3.2",
-    "otus-validation-js": "https://github.com/ccem-dev/otus-validation-js.git#v1.0"
+    "otus-validation-js": "https://github.com/ccem-dev/otus-validation-js.git#v1.0",
+    "please-wait": "0.0.5"
   },
   "devDependencies": {
     "angular-mocks": "1.4.9",

@@ -108,6 +108,10 @@
     }
 
     function _findAliquot(code) {
+      self.fullAliquotsList.forEach(function (aliquot) {
+        console.log(aliquot.code);
+      });
+
       return self.fullAliquotsList.find(function(avaiableAliquot) {
         return avaiableAliquot.code == code;
       });

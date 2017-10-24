@@ -15,10 +15,11 @@
     });
 
   Controller.$inject = [
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
+    'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+    '$scope'
   ];
 
-  function Controller(AliquotTransportationService) {
+  function Controller(AliquotTransportationService,$scope) {
     var self = this;
 
     /* Lifecycle hooks */
