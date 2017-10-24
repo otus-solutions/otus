@@ -3,17 +3,21 @@
 
   angular
     .module('otusjs.laboratory.business.project.transportation')
-    .service('otusjs.laboratory.business.project.transportation.AliquotTransportationService', service);
+    .service(
+      'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+      service);
 
   service.$inject = [
     'otusjs.laboratory.transportation.TransportationService',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
     'otusjs.laboratory.repository.LaboratoryRepositoryService',
     '$http',
-    '$q'
+    '$q',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service(TransportationService, LaboratoryConfigurationService, LaboratoryRepositoryService, $http, $q) {
+  function service(TransportationService, LaboratoryConfigurationService,
+    LaboratoryRepositoryService, $http, $q, LoadingScreenService) {
     var self = this;
 
     self.createAliquotLot = createAliquotLot;
@@ -27,9 +31,12 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
-    
-    function getContainerLabelToAliquot(aliquot){
-      return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
+    const messageLoading =
+      'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
+
+    function getContainerLabelToAliquot(aliquot) {
+      return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" :
+        "Palheta";
     }
 
     function createAliquotLot() {
@@ -45,16 +52,17 @@
     }
 
     function getAliquots() {
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
       var deferred = $q.defer();
-
       LaboratoryRepositoryService.getAliquots()
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
+          LoadingScreenService.finish();
         })
         .catch(function(err) {
           deferred.reject(err);
         });
-      
       return deferred.promise;
     }
 
@@ -68,7 +76,6 @@
         .catch(function(err) {
           deferred.reject(err);
         });
-
       return deferred.promise;
     }
 
@@ -80,9 +87,10 @@
           LaboratoryRepositoryService.getLots()
             .then(function(response) {
               var lots = JSON.parse(response).map(function(lotJson) {
-                  return TransportationService.buildAliquotLotFromJson(lotJson);
-                });
-              
+                return TransportationService.buildAliquotLotFromJson(
+                  lotJson);
+              });
+
               deferred.resolve(lots);
             })
             .catch(function(err) {
