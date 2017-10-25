@@ -35,9 +35,13 @@
     self.aliquotCode;
     self.initialDate;
     self.finalDate;
+
+    self.AliquotTransportationService = AliquotTransportationService;
+
     self.aliquotInputkeydown = aliquotInputkeydown;
     self.insertAliquotsByPeriod = insertAliquotsByPeriod;
     self.periodInputkeydown = periodInputkeydown;
+    self.dynamicDataTableChange = dynamicDataTableChange;
 
     var _confirmAliquotsInsertionByPeriod;
 
@@ -60,7 +64,7 @@
       //TODO: Remove This {
         setTimeout(()=>{
           console.log('fullList',self.fullAliquotsList);
-        },10000)
+        },1000)
       //TODO: }
     }
 
@@ -71,6 +75,11 @@
         .ariaLabel('Confirmar inclusão de Aliquotas por Período')
         .ok('Confirmar')
         .cancel('Cancelar');
+    }
+
+    function _dynamicDataTableUpdate(){
+      AliquotTransportationService.dynamicDataTableFunction.updateElements();
+      self.selectedAliquots = [];
     }
 
     function _updateContainerLabel(){
@@ -99,6 +108,7 @@
 
             if(successInsertion){
               _successInAliquotInsertion();
+              _dynamicDataTableUpdate()
             } else {
               _notAliquotsInserted();
             }
@@ -142,6 +152,7 @@
           });
           _updateContainerLabel();
           successInsertion = true;
+          if(!hideMsgErrors) _dynamicDataTableUpdate();
         }
       } else {
         if(!hideMsgErrors) _toastError(newAliquotCode);
@@ -149,6 +160,14 @@
       self.aliquotCode = "";
       return successInsertion;
     }
+
+
+    function dynamicDataTableChange(change){
+      if(change.type === 'select' || change.type === 'deselect'){
+        self.selectAliquot(change.element);
+      }
+    }
+
 
     function selectAliquot(aliquot) {
       var aliquotIndex = self.selectedAliquots.indexOf(aliquot);

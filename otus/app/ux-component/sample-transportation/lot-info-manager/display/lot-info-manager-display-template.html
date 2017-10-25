@@ -122,20 +122,26 @@
               </div>
             </div>
 
-            <dynamic-data-table
-              headers="['Código', 'Tipo', 'Recipiente', 'Data']"
+            <dynamic-data-table flex 
+              title="'Lista de Aliquotas'"
+              headers="['Código', 'Tipo', 'Recipiente', 'Aliquotagem']"
               elements-array="$ctrl.lot.aliquotList"
               elements-properties="['code', 'label', 'containerLabel', 'aliquotCollectionData.time']"            
               order-indices="[1,3,2,0]"
               flex-array="['20','30','']"
-              checkbox="true"
+              hide-checkbox="false"
               enable-reorder="true"
-              callback="(change) => console.log(change)"
-              >
+              callback="$ctrl.dynamicDataTableChange"
+              function-structure="$ctrl.AliquotTransportationService.dynamicDataTableFunction"
+              number-fields-aligned-left="100000000"
+            >
               <!-- group-by="label" -->
             </dynamic-data-table>
-            <md-list>
-              <md-list-item ng-repeat="aliquot in $ctrl.lot.aliquotList | orderBy:['label', 'aliquotCollectionData.time', 'containerLabel'] track by $index" ng-class="{ 'selectedState': aliquot.isSelected, 'regularState': !aliquot.isSelected}" ng-click="$ctrl.selectAliquot(aliquot)" class="card-animated">
+            
+            <md-list ng-if="false">
+              <md-list-item ng-repeat="aliquot in $ctrl.lot.aliquotList | orderBy:['label', 'aliquotCollectionData.time', 'containerLabel'] track by $index" 
+               ng-class="{ 'selectedState': aliquot.isSelected, 'regularState': !aliquot.isSelected}" 
+               ng-click="$ctrl.selectAliquot(aliquot)" class="card-animated">
                 <div ng-class="{'md-list-item-text': true, 'error': aliquot.hasError}" flex>
                   <span class="md-title" layout-margin>{{aliquot.code}}</span>
                   <span>{{aliquot.containerLabel + " de " + aliquot.label}}</span>

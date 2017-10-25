@@ -27,6 +27,8 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
+
+    self.dynamicDataTableFunction = {};
     
     function getContainerLabelToAliquot(aliquot){
       return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";

@@ -1,28 +1,166 @@
-<div layout="column" layout-align="center center" layout-margin flex>
-  <span>My Dynamic Data Table</span>
+<style>
+  .my-border{
+    
+    border:1px solid blue;
+  }
+
+  .dynamic-structure{
+    margin: 16px;
+  }
+
+  .dynamic-table-body-row:focus,
+  .dynamic-table-header-column:focus {
+    outline: none;
+  }
+
+  .dynamic-table-body-row,
+  .dynamic-table-header-column {
+    cursor: pointer;
+  }
+
+  .dynamic-table-body-row:hover {
+    background-color: #EEEEEE;
+  }
+
+  .dynamic-table-row-selected {
+    background-color: #F5F5F5;
+  }
+
+  .dynamic-table md-checkbox{
+    position: relative;
+    top: 7.5px;
+  }
+
+  .dynamic-table md-icon.dynamic-arrow-icon,
+  .dynamic-table md-icon.dynamic-arrow-icon-inverse{
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+     transition-property: transform;
+  }
+
+  .dynamic-table md-icon.dynamic-arrow-icon{
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg); 
+    transform:rotate(0deg);
+  }
+
+  .dynamic-table md-icon.dynamic-arrow-icon-inverse{
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg); 
+    transform:rotate(180deg);
+  }
+
+  .dynamic-table-body-column,
+  .dynamic-table-header-column{
+    padding: 4px 10px;
+  }
+
+  .dynamic-table-body-row,
+  .dynamic-table-header-row{
+    border-bottom: 1px solid #E0DFDF;
+  }
+
+  .dynamic-table-column-first{
+    padding-left: 16px;
+
+  }
+
+  .dynamic-table-column-last{
+    padding-right: 16px;
+  }
+
+
+
+  .dynamic-table-column-left{
+    text-align: left;
+  }
+
+  .dynamic-table-column-right{
+    text-align: right;
+  }
+
+  .dynamic-table-expand-filter{
+    margin-top:20px;
+  }
+
+
+</style>
+
+
+
+
+<md-whiteframe class="md-whiteframe-1dp dynamic-structure" layout="column" flex>
+  <div ng-if="$ctrl.title">
+    <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
+        {{$ctrl.title}}
+      </md-subheader>
+  </div>
+
+  
+  <div layout="row" layout-align="center center" layout-margin >
+    <md-input-container class="remove-erros-spacer " flex>
+      <input type="text"  flex 
+        placeholder="Filtro de busca" name="fast-trigger" value="Inserção rápida" 
+        ng-model="$ctrl.filter" 
+        />
+    </md-input-container>
+  </div>
 
   <div ng-if="$ctrl.error.isError">
     <h1>{{$ctrl.error.msg}}</h1>
   </div>
 
-  <div ng-if="!$ctrl.error.isError">
-    <table>
-      <thead>
-        <tr>
-          <th ng-repeat="header in $ctrl.table.headers">{{header}}</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="row in $ctrl.table.rows | orderBy:$ctrl.orderQuery">
-          <td ng-repeat="column in row.columns">{{column.value}}</td>
-        </tr>
-      </tbody>
-      <!-- <tfoot>
-        <tr>
-          <td>Sum</td>
-          <td>$180</td>
-        </tr>
-      </tfoot> -->
-    </table>
+  <div ng-if="!$ctrl.error.isError" class="dynamic-table" flex>
+    <div class="dynamic-table-header" layout="row" flex>
+      <div class="dynamic-table-header-row" layout="row" layout-align="start center" flex>
+        <div style="padding-left:15px" ng-if="!$ctrl.hideCheckbox" layout="column" flex="5" layout-align="center center">
+          <md-checkbox flex aria-label="Selecionar Todos os Registros"
+            ng-checked="$ctrl.selectedItemCounter === $ctrl.table.rows.length"
+            md-indeterminate="$ctrl.selectedItemCounter !== $ctrl.table.rows.length && $ctrl.selectedItemCounter>0"
+            ng-click="$ctrl.selectDeselectAllRows()">
+          </md-checkbox>
+        </div>
+        
+        <div class="{{'dynamic-table-header-column ' + $ctrl.getColumnPositionClass($index, $ctrl.table.headers)}}" 
+          ng-repeat="header in $ctrl.table.headers" flex
+          ng-click="$ctrl.changeOrder($index)"
+        >
+          {{header}}
+          <md-icon 
+            ng-show="$ctrl.orderQuery === 'column' + $index + '.value'"
+            ng-class="$ctrl.getOrderIcon()" 
+            md-font-set="material-icons"
+          >arrow_drop_up</md-icon>
+        </div>
+      </div>
+    </div>
+    
+    <div class="dynamic-table-body" layout="column" flex>
+      <div class="{{'dynamic-table-body-row card-animated ' + (row.selected ? 'dynamic-table-row-selected':'')}}" 
+        layout="row" layout-align="start center" flex 
+        ng-repeat="row in $ctrl.table.rows | orderBy:$ctrl.orderQuery:$ctrl.orderInverse | filter:$ctrl.filter"
+        ng-click="$ctrl.selectDeselectRow(row)">
+
+        <div style="padding-left:15px" ng-if="!$ctrl.hideCheckbox" layout="column" flex="5" layout-align="center center">
+          <md-checkbox ng-checked="row.selected" aria-label="Checkbox registro da linha {{row.index}}">
+          </md-checkbox>
+        </div>
+          
+        <div class="{{'dynamic-table-body-column ' + $ctrl.getColumnPositionClass(column.index,row.columns)}}" ng-repeat="column in row.columns" 
+         flex>
+          <span class="md-body-1">
+            {{column.value}}
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</md-whiteframe>
