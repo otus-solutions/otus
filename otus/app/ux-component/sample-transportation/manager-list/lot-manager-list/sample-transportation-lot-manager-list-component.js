@@ -63,7 +63,37 @@
     function _LoadLotsList() {
       AliquotTransportationService.getLots().then(function(response) {
         self.lotsList = response;
+        _setChartData();
       });
+    }
+
+    function _setChartData() {
+      self.lotDataSet = [];
+      self.lotsList.forEach(function (lot) {
+        var labelsCount = {};
+        var color = ["#8e5ea2","#3cba9f","#e8c3b9","#c45850"];
+
+        var dataSet = [];
+        dataSet["backgroundColor"] = [];
+        dataSet["data"] = [];
+        dataSet["chartId"] = lot.code;
+
+        lot.aliquotList.forEach(function (aliquot) {
+          if(labelsCount[aliquot.label]){
+
+            labelsCount[aliquot.label] = labelsCount[aliquot.label]  + 1;
+          } else {
+            labelsCount[aliquot.label] = 1;
+            dataSet["backgroundColor"].push(color[Object.keys(labelsCount).length-1]);
+          }
+        });
+
+        for(var key in labelsCount) {
+          dataSet["data"].push(labelsCount[key]);
+        }
+        self.lotDataSet.push(dataSet);
+      });
+
     }
 
   }

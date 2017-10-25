@@ -36,7 +36,7 @@
 <md-content ng-if="$ctrl.view=='Cards'" class="md-padding" layout="column" >
   <div>
   <div layout-align="center none" layout-wrap layout="row" flex>
-    <div ng-repeat="lot in $ctrl.lotsList | limitTo:$ctrl.show" class="card-animated">
+    <div ng-repeat="lot in $ctrl.lotsList | limitTo:$ctrl.show track by $index" class="card-animated">
         <md-card layout-padding style="width:500px"
         ng-click="$ctrl.selectLot(lot)"
         class="{{(lot.isSelected ? 'selectedState' : 'regularState') + ' aliquot-md-card card-tube' }}"
@@ -55,7 +55,8 @@
                   <md-card-actions layout="row" layout-align="end center"></md-card-actions>
                 </div>
                 <div layout="column">
-                  <otus-sample-transportation-lot-aliquots-chart lot="lot"></otus-sample-transportation-lot-aliquots-chart>
+                  <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet[$index]"></otus-sample-transportation-lot-aliquots-chart>
+
                 </div>
           </div>
         </md-card-title>
