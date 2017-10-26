@@ -2,7 +2,6 @@
   <md-subheader class="md-no-sticky moment-type-title">
     Filtros de Pesquisa
   </md-subheader>
-
   <div layout="row" layout-xs="column"  layout-align="center ">
     <md-input-container class="remove-erros-spacer">
       <label>Período Inicial</label>
@@ -30,43 +29,40 @@
     </md-input-container>
   </div>
 </div>
-
 <md-divider></md-divider>
-
 <md-content ng-if="$ctrl.view=='Cards'" class="md-padding" layout="column" >
   <div>
-  <div layout-align="center none" layout-wrap layout="row" flex>
-    <div ng-repeat="lot in $ctrl.lotsList | limitTo:$ctrl.show track by $index" class="card-animated">
-        <md-card layout-padding style="width:500px"
-        ng-click="$ctrl.selectLot(lot)"
-        class="{{(lot.isSelected ? 'selectedState' : 'regularState') + ' aliquot-md-card card-tube' }}"
-        ng-class="{ 'selectedState': lot.isSelected, 'regularState': !lot.isSelected }"
-        >
-        <!-- ng-click="$ctrl.selecMomentType(momentType)" class="{{($ctrl.selectedMomentType == momentType ? 'moment-type-selected' : 'moment-type-not-selected') + ' aliquot-md-card card-tube ' }}" -->
-        <md-card-title flex>
-          <div layout="row" flex>
-              <div layout="column" flex="70">
-                  <md-card-title-text flex="100">
-                    <span class="md-headline">{{lot.code}}</span>
-                    <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
-                    <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
-                    <span class="md-subhead">Responsável: {{lot.operator}}</span>
-                  </md-card-title-text>
-                  <md-card-actions layout="row" layout-align="end center"></md-card-actions>
-                </div>
-                <div layout="column">
-                  <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet[$index]"></otus-sample-transportation-lot-aliquots-chart>
-
-                </div>
-          </div>
-        </md-card-title>
-          <md-card-content>
-              <!--<img src="./app/static-resource/image/transport_chart_legend_demo.png" class="md-card-image" alt="image caption" style="height:160px; width:480px; position:relative; top:-50px; left:-20px">-->
+    <div layout-align="center none" layout-wrap layout="row" flex>
+      <div ng-repeat="lot in $ctrl.lotsList | limitTo:$ctrl.show track by $index" class="card-animated">
+        <md-card layout-padding style="width:500px" ng-click="$ctrl.selectLot(lot)" class="{{(lot.isSelected ? 'selectedState' : 'regularState') + ' aliquot-md-card card-tube' }}"
+              ng-class="{ 'selectedState': lot.isSelected, 'regularState': !lot.isSelected }">
+          <!-- ng-click="$ctrl.selecMomentType(momentType)" class="{{($ctrl.selectedMomentType == momentType ? 'moment-type-selected' : 'moment-type-not-selected') + ' aliquot-md-card card-tube ' }}" -->
+          <md-card-title flex>
+            <div layout="row" flex>
+                <div layout="column" flex="70">
+                    <md-card-title-text flex="100">
+                      <span class="md-headline">{{lot.code}}</span>
+                      <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                      <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                      <span class="md-subhead">Responsável: {{lot.operator}}</span>
+                    </md-card-title-text>
+                    <md-card-actions layout="row" layout-align="end center"></md-card-actions>
+                  </div>
+                  <div layout="column" flex="">
+                    <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet[$index]"></otus-sample-transportation-lot-aliquots-chart>
+                  </div>
+            </div>
+          </md-card-title>
+          <md-card-content layout="column" style="height:180px;">
+            <md-content>
+              <chart-subtitle-table lot-data-set="$ctrl.lotDataSet[$index]"></chart-subtitle-table>
+              <!--<img src="./app/static-resource/image/transport_chart_legend_demo.png" class="md-card-image" alt="image caption" style="height:160px; width:480px; position:relative; left:-20px">-->
+            </md-content>
           </md-card-content>
         </md-card>
+      </div>
     </div>
   </div>
-</div>
   <div layout="row">
     <md-button class="md-accent" flex ng-click="$ctrl.showMore()">Exibir mais</md-button>
   </div>

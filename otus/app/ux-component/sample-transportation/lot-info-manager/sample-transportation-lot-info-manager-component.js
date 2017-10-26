@@ -36,6 +36,9 @@
 
 
     function onInit() {
+      // self.lots.forEach(function (lot) {
+      //   console.log(lot);
+      // });
       self.selectedAliquots = [];
       self.action = laboratoryContextService.getLotInfoManagerAction();
       if (self.stateData['selectedLot']) {

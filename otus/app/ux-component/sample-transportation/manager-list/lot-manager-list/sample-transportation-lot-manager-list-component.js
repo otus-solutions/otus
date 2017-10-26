@@ -41,6 +41,9 @@
     self.lotsList = [];
 
     function onInit() {
+      self.lotDataSet = [];
+      self.colorSet = [];
+
       _LoadLotsList();
       self.otusSampleTransportationManagerList.listComponent = self;
     }
@@ -68,29 +71,34 @@
     }
 
     function _setChartData() {
-      self.lotDataSet = [];
       self.lotsList.forEach(function (lot) {
         var labelsCount = {};
-        var color = ["#8e5ea2","#3cba9f","#e8c3b9","#c45850"];
+        var color = ["#F44336","#E91E63","#9C27B0","#673AB7","#3F51B5","#2196F3","#03A9F4","#00BCD4","#009688","#4CAF50","#8BC34A","#CDDC39"];
 
         var dataSet = [];
-        dataSet["backgroundColor"] = [];
-        dataSet["data"] = [];
-        dataSet["chartId"] = lot.code;
+        dataSet.backgroundColor = [];
+        dataSet.data = [];
+        dataSet.labels = [];
+        dataSet.chartId = lot.code;
 
         lot.aliquotList.forEach(function (aliquot) {
           if(labelsCount[aliquot.label]){
-
             labelsCount[aliquot.label] = labelsCount[aliquot.label]  + 1;
           } else {
             labelsCount[aliquot.label] = 1;
-            dataSet["backgroundColor"].push(color[Object.keys(labelsCount).length-1]);
+            dataSet.labels.push(aliquot.label)
+          }
+
+          if(!self.colorSet[aliquot.label]){
+            self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length]
           }
         });
 
         for(var key in labelsCount) {
           dataSet["data"].push(labelsCount[key]);
+          dataSet["backgroundColor"].push(self.colorSet[key]);
         }
+
         self.lotDataSet.push(dataSet);
       });
 
