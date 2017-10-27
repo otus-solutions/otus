@@ -61,7 +61,7 @@
       }
       self.updateLotStateData(self.lot);
       self.selectedAliquots = [];
-      AliquotTransportationService.dynamicDataTableFunction.updateElements();
+      AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
     }
 
     function createLot() {

@@ -84,7 +84,7 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
 }
 
 .md-dashboard-autocomplete {
-  color: : red !important;
+  color: red !important;
   border: none !important;
   box-shadow: none !important;
 }

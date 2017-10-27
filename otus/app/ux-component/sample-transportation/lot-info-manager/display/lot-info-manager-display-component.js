@@ -78,7 +78,7 @@
     }
 
     function _dynamicDataTableUpdate(){
-      AliquotTransportationService.dynamicDataTableFunction.updateElements();
+      AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
       self.selectedAliquots = [];
     }
 
