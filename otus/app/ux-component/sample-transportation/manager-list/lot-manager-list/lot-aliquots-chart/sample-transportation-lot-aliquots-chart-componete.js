@@ -24,20 +24,25 @@
     function onInit() {
       Chart.defaults.global.tooltips.enabled = false;
       $timeout(_renderChart);
-      console.log(self.lotDataSet.labels);
     }
 
     function _renderChart() {
-      var ctx = document.getElementById(self.lotDataSet.chartId).getContext('2d');
+      self.ctx = document.getElementById(self.lotDataSet.chartId).getContext('2d');
+      _setFieldCenter();
 
-      var myChart = new Chart(ctx, {
+      var chartBorderWidth = 0;
+      if(self.lotDataSet.data.length>1){
+        chartBorderWidth = 1;
+      }
+
+      var myChart = new Chart(self.ctx, {
         type: 'doughnut',
         data: {
           labels: self.lotDataSet.labels,
           datasets: [{
             backgroundColor: self.lotDataSet.backgroundColor,
             data: self.lotDataSet.data,
-            borderWidth: 0
+            borderWidth: chartBorderWidth
           }]
         },
         options: {
@@ -73,6 +78,28 @@
               tooltipEl.style.fontStyle = tooltipModel._fontStyle;
             }
           }
+        }
+      });
+    }
+
+    function _setFieldCenter(){
+      Chart.pluginService.register({
+        beforeDraw: function (chart) {
+          var width = chart.chart.width,
+            height = chart.chart.height,
+            ctx = self.ctx;
+
+          ctx.restore();
+          var fontSize = (height / 114).toFixed(2);
+          ctx.font = fontSize + "em sans-serif";
+          ctx.textBaseline = "middle";
+
+          var text = self.lotDataSet.fieldCenter.acronym,
+            textX = Math.round((width - ctx.measureText(text).width) / 2),
+            textY = height / 2;
+
+          ctx.fillText(text, textX, textY);
+          ctx.save();
         }
       });
     }

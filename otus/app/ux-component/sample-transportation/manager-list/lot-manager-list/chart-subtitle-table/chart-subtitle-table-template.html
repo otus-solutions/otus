@@ -1,12 +1,15 @@
-<div layout="row" ng-repeat="labels in $ctrl.lotDataSet.labels track by $index">
-  <div flex="5" style="background-color: {{$ctrl.lotDataSet.backgroundColor[$index]}};border-radius: 100%"layout-margin="">
+<div ng-repeat="labels in $ctrl.lotDataSet.labels track by $index">
+  <div layout="row" layout-align="center center">
+    <div flex="5">
+      <div style="background-color: {{$ctrl.lotDataSet.backgroundColor[$index]}};border-radius:30%;width:13px;height:13px">
+      </div>
+    </div>
+    <div flex="80">
+      {{$ctrl.lotDataSet.labels[$index]}}
+    </div>
+    <div flex="10">
+      {{$ctrl.lotDataSet.data[$index]}}
+    </div>
   </div>
-  <div flex="80">
-    {{$ctrl.lotDataSet.labels[$index]}}
-    <md-divider>
-  </div>
-  <div flex="10">
-    {{$ctrl.lotDataSet.data[$index]}}
-    <md-divider>
-  </div>
+  <md-divider></md-divider>
 </div>
