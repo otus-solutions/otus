@@ -55,17 +55,17 @@
     /* Public methods */
     self.selectLot = selectLot;
     self.updateOnDelete = updateOnDelete;
-
     self.onFilter = onFilter;
 
     function onInit() {
       ProjectFieldCenterService.loadCenters().then(function (result) {
-        result.forEach(function (fieldcenter) {
-          self.centers.push(fieldcenter.acronym)
-        });
         self.lotDataSet = [];
         self.colorSet = [];
         self.centers = $filter('orderBy')(self.centers);
+        result.forEach(function (fieldCenter) {
+          self.centers.push(fieldCenter.acronym)
+        });
+
         _LoadLotsList();
         setUserFieldCenter();
       });

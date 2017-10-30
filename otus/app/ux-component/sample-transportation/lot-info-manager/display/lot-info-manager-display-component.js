@@ -34,7 +34,6 @@
 
     function onInit() {
       _updateContainerLabel();
-
     }
 
     function _updateContainerLabel(){
@@ -45,7 +44,6 @@
 
 
     function fastInsertion(event, element) {
-      console.log(self.fullAliquotsList);
       var charCode = event.which || event.keyCode;
       if(charCode == '13' && element.aliquot_code.length > 0) {
         var foundAliquot = _findAliquot(element.aliquot_code);
@@ -110,10 +108,6 @@
     }
 
     function _findAliquot(code) {
-      self.fullAliquotsList.forEach(function (aliquot) {
-        console.log(aliquot.code);
-      });
-
       return self.fullAliquotsList.find(function(avaiableAliquot) {
         return avaiableAliquot.code == code;
       });

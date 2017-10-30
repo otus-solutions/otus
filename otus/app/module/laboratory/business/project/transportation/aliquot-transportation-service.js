@@ -31,8 +31,6 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
-    self.getAliquotLabels = getAliquotLabels;
-
     const messageLoading =
       'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
 
@@ -66,12 +64,6 @@
           deferred.reject(err);
         });
       return deferred.promise;
-    }
-
-    function getAliquotLabels() {
-      LaboratoryConfigurationService.fetchAliquotsDescriptors().then(function (response) {
-        console.log(response);
-      });
     }
 
     function getAliquotsByCenter(center) {
