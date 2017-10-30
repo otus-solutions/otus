@@ -47,6 +47,8 @@
     self.getSelectedLot = getSelectedLot;
     self.setLotInfoManagerAction = setLotInfoManagerAction;
     self.getLotInfoManagerAction = getLotInfoManagerAction;
+    self.setSelectedFieldCenter = setSelectedFieldCenter;
+    self.getSelectedFieldCenter = getSelectedFieldCenter;
 
     function begin() {
       _context.clear();
@@ -157,6 +159,14 @@
 
     function getSelectedLot() {
       return getData('selectedLot');
+    }
+
+    function setSelectedFieldCenter(fieldcenter) {
+      setData('selectedFieldcenter', fieldcenter);
+    }
+
+    function getSelectedFieldCenter() {
+      return getData('selectedFieldcenter');
     }
 
     function setLotInfoManagerAction(action) {

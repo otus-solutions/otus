@@ -3,9 +3,9 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('chartSubtitleTable', {
+    .component('otusSampleTransportationLotChartSubtitleTable', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-manager-list/chart-subtitle-table/chart-subtitle-table-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/aliquots-chart-subtitle-table/chart-subtitle-table-template.html',
       bindings: {
         lotDataSet: '<'
       }

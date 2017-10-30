@@ -13,8 +13,8 @@
     </md-input-container>
     <md-input-container class="remove-erros-spacer" style="margin-left:15px">
       <label>Centro</label>
-      <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
-        <md-option ng-repeat="center in ['RS','SP','SC','BA','MG']" value="{{center}}">
+      <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
+        <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-selected="$index == $ctrl.centerFilterselectedIndex">
           {{center}}
         </md-option>
       </md-select>
@@ -52,16 +52,19 @@
                   </div>
             </div>
           </md-card-title>
-          <md-card-content layout="column" style="height:180px;">
+          <md-card-content layout="column" style="height:180px;" ng-if="$ctrl.lotDataSet[$index].labels.length > 0">
             <md-content>
-              <chart-subtitle-table lot-data-set="$ctrl.lotDataSet[$index]"></chart-subtitle-table>
+              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lotDataSet[$index]"></otus-sample-transportation-lot-chart-subtitle-table>
             </md-content>
+          </md-card-content>
+          <md-card-content layout-align="center center" layout="column" ng-if="!$ctrl.lotDataSet[$index].labels.length">
+            <span class="md-subhead">Não há aliquotas no lote</span>
           </md-card-content>
         </md-card>
       </div>
     </div>
   </div>
-  <div layout="row">
+  <div layout="row" ng-if="$ctrl.lotsList.length > 3">
     <md-button class="md-accent" flex ng-click="$ctrl.showMore()">Exibir mais</md-button>
   </div>
 </md-content>

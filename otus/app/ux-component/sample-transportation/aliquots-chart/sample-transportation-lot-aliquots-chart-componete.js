@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationLotAliquotsChart', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-manager-list/lot-aliquots-chart/sample-transportation-lot-aliquots-chart-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/aliquots-chart/sample-transportation-lot-aliquots-chart-template.html',
       bindings: {
         lotDataSet: '<'
       }

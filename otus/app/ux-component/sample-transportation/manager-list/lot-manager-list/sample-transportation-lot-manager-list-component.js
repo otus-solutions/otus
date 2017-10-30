@@ -15,13 +15,18 @@
     });
 
   Controller.$inject = [
+    'otusjs.deploy.FieldCenterRestService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+    '$mdToast',
+    'otusjs.laboratory.core.ContextService',
+    'otusjs.otus.dashboard.core.ContextService',
     '$filter'
   ];
 
-  function Controller(AliquotTransportationService,$filter) {
+  function Controller(ProjectFieldCenterService,AliquotTransportationService,$mdToast,laboratoryContextService,dashboardContextService,$filter) {
     var self = this;
-    //TODO: Colors for the aliquots types in the chats, the colors will be dynamic in the future
+
+    //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
     var color = ["#F44336","#E91E63","#9C27B0","#673AB7","#3F51B5","#2196F3",
                 "#03A9F4","#00BCD4","#009688","#4CAF50","#8BC34A","#CDDC39",
                 "#FFEB3B","#FFC107","#FF9800","#FF5722","#795548","#9E9E9E",
@@ -38,24 +43,44 @@
     self.centerFilter = "";
     self.shipmentBeginFilter = "";
     self.shipmentEndFilter = "";
+    self.centers = [];
+    self.lotsList = [];
+    self.lotsListImutable = [];
 
     self.showMore = showMore;
-
     function showMore(){
       self.show+= self.limit;
-    }
 
+    }
     /* Public methods */
     self.selectLot = selectLot;
     self.updateOnDelete = updateOnDelete;
+
     self.onFilter = onFilter;
-    self.lotsList = [];
 
     function onInit() {
-      self.lotDataSet = [];
-      self.colorSet = [];
-      _LoadLotsList();
+      ProjectFieldCenterService.loadCenters().then(function (result) {
+        result.forEach(function (fieldcenter) {
+          self.centers.push(fieldcenter.acronym)
+        });
+        self.lotDataSet = [];
+        self.colorSet = [];
+        self.centers = $filter('orderBy')(self.centers);
+        _LoadLotsList();
+        setUserFieldCenter();
+      });
       self.otusSampleTransportationManagerList.listComponent = self;
+    }
+
+    function setUserFieldCenter() {
+      dashboardContextService
+        .getLoggedUser()
+        .then(function(userData) {
+          self.centerFilter = userData.fieldCenter.acronym ? userData.fieldCenter.acronym : "" ;
+          laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
+          self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
+          self.centerFilterDisabled = self.centerFilter ? "disabled" : "";
+        });
     }
 
     function selectLot(lot) {
@@ -77,29 +102,44 @@
       AliquotTransportationService.getLots().then(function(response) {
         self.lotsList = response;
         self.lotsListImutable = response;
+        self.onFilter();
         _setChartData();
       });
     }
 
     function onFilter(){
       self.selectedLots = [];
-      self.lotsList = self.lotsListImutable.filter(function (lot) {
-        if(self.centerFilter.length) {
-          return lot.fieldCenter.acronym == self.centerFilter;
-        } else {
-          return lot;
-        }
-      }).filter(function (lot2) {
-        if(self.shipmentBeginFilter.toString().length && self.shipmentEndFilter.toString().length) {
-          var lotFormatedData = $filter('date')(lot2.shipmentDate,'yyyyMMdd');
-          var initialDateFormated = $filter('date')(self.shipmentBeginFilter,'yyyyMMdd');
-          var finalDateFormated = $filter('date')(self.shipmentEndFilter,'yyyyMMdd');
-          return (lotFormatedData >= initialDateFormated && lotFormatedData <= finalDateFormated);
-        } else {
-          return lot2;
-        }
-      });
-      _setChartData();
+      self.show = self.limit;
+      if(self.lotsListImutable.length) {
+        self.lotsList = self.lotsListImutable.filter(function (lot) {
+          if (self.centerFilter.length) {
+            return lot.fieldCenter.acronym == self.centerFilter;
+          } else {
+            return lot;
+          }
+        }).filter(function (FilteredByCenter) {
+          var lotFormatedData = $filter('date')(FilteredByCenter.shipmentDate, 'yyyyMMdd');
+          var initialDateFormated = $filter('date')(self.shipmentBeginFilter, 'yyyyMMdd');
+          var finalDateFormated = $filter('date')(self.shipmentEndFilter, 'yyyyMMdd');
+          if (self.shipmentBeginFilter.toString().length && self.shipmentEndFilter.toString().length ) {
+            if(initialDateFormated <= finalDateFormated){
+              return (lotFormatedData >= initialDateFormated && lotFormatedData <= finalDateFormated);
+            }else{
+              var msgDataInvalida = "Datas invalidas";
+
+              $mdToast.show(
+                $mdToast.simple()
+                  .textContent(msgDataInvalida)
+                  .hideDelay(4000)
+              );
+              return FilteredByCenter;
+            }
+          } else {
+            return FilteredByCenter;
+          }
+        });
+        _setChartData();
+      }
     }
 
     function _setChartData() {
