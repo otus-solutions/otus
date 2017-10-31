@@ -10,10 +10,12 @@
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
     'otusjs.laboratory.repository.LaboratoryRepositoryService',
     '$http',
-    '$q'
+    '$q',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service(TransportationService, LaboratoryConfigurationService, LaboratoryRepositoryService, $http, $q) {
+  function service(TransportationService, LaboratoryConfigurationService,
+    LaboratoryRepositoryService, $http, $q, LoadingScreenService) {
     var self = this;
 
     self.createAliquotLot = createAliquotLot;
@@ -27,9 +29,11 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
+    const messageLoading =
+      'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
 
     self.dynamicDataTableFunction = {};
-    
+
     function getContainerLabelToAliquot(aliquot){
       return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
     }
@@ -47,16 +51,19 @@
     }
 
     function getAliquots() {
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
       var deferred = $q.defer();
 
       LaboratoryRepositoryService.getAliquots()
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
+          LoadingScreenService.finish();
         })
         .catch(function(err) {
           deferred.reject(err);
         });
-      
+
       return deferred.promise;
     }
 
@@ -84,7 +91,7 @@
               var lots = JSON.parse(response).map(function(lotJson) {
                   return TransportationService.buildAliquotLotFromJson(lotJson);
                 });
-              
+
               deferred.resolve(lots);
             })
             .catch(function(err) {

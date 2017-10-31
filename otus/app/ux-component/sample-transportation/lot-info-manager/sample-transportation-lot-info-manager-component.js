@@ -28,7 +28,7 @@
     self.$onInit = onInit;
 
     /* Public methods */
-    self.createLot = createLot
+    self.createLot = createLot;
     self.cancel = cancel;
     self.alterLot = alterLot;
     self.updateLotStateData = updateLotStateData;
