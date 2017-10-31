@@ -119,9 +119,9 @@
           }
         }).filter(function (FilteredByCenter) {
           var lotFormatedData = $filter('date')(FilteredByCenter.shipmentDate, 'yyyyMMdd');
-          var initialDateFormated = $filter('date')(self.shipmentBeginFilter, 'yyyyMMdd');
-          var finalDateFormated = $filter('date')(self.shipmentEndFilter, 'yyyyMMdd');
-          if (self.shipmentBeginFilter.toString().length && self.shipmentEndFilter.toString().length ) {
+          if (self.shipmentBeginFilter && self.shipmentEndFilter) {
+            var initialDateFormated = $filter('date')(self.shipmentBeginFilter, 'yyyyMMdd');
+            var finalDateFormated = $filter('date')(self.shipmentEndFilter, 'yyyyMMdd');
             if(initialDateFormated <= finalDateFormated){
               return (lotFormatedData >= initialDateFormated && lotFormatedData <= finalDateFormated);
             }else{
