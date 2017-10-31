@@ -4,8 +4,8 @@
 
 <md-content layout="column" flex>
       <div layout-align="start center" flex>
-        
-        
+
+
         <md-card layout="column" flex="80" flex-offset="10">
             <div layout="column">
               <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
@@ -14,7 +14,7 @@
             </div>
             <div flex layout="row">
               <div flex layout-padding>
-                <div ng-if="$ctrl.action=='create'" flex>  
+                <div ng-if="$ctrl.action=='create'" flex>
                   <div layout="row" layout-xs="column" flex>
                     <div layout="column" layout-align="center start" flex="15" flex-gt-md="10">
                         <span>Envio:</span>
@@ -22,7 +22,7 @@
                     <md-input-container class="remove-erros-spacer input-container-lot-margin">
                       <md-datepicker ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de Envio"></md-datepicker>
                     </md-input-container>
-    
+
                     <md-input-container class="remove-erros-spacer input-container-lot-margin">
                       <md-icon class="material-icons">access_time</md-icon>
                       <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
@@ -56,8 +56,8 @@
               </div>
             </div>
         </md-card>
-        
-        
+
+
         <div flex layout="row" layout-align="center center">
           <md-card flex="80">
             <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
@@ -77,20 +77,20 @@
             <div ng-if="$ctrl.currentNavItem == 'insertionByPeriod'" layout="row" layout-align="start center" layout-padding>
               <div layout="row" layout-xs="column" layout-align="center center">
                 <span>Período Inicial:</span>
-                
+
                 <md-input-container class="remove-erros-spacer input-container-lot-margin">
                   <md-datepicker ng-model="$ctrl.initialDate" aria-label="Período Inicial" ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
                 </md-input-container>
               </div>
-              
+
               <div layout="row" layout-xs="column" layout-align="center center">
                 <span>Período Final:</span>
-                
+
                 <md-input-container class="remove-erros-spacer input-container-lot-margin">
                   <md-datepicker ng-model="$ctrl.finalDate" aria-label="Período Final" ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
                 </md-input-container>
               </div>
-              
+
               <div>
                 <md-button ng-click="$ctrl.insertAliquotsByPeriod()" class="md-raised md-primary" aria-label="Adicionar Aliquotas por Período">
                   <md-tooltip md-direction="down">Adicionar</md-tooltip>
@@ -102,7 +102,7 @@
             <div ng-if="$ctrl.currentNavItem == 'individualInsertion'" layout="row" layout-align="center center" layout-padding>
               <span class="">Código:</span>
               <input type="text" class="aliquot-lot-input" flex placeholder="Aliquota" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" />
-              
+
               <div>
                 <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Aliquota">
                   <md-tooltip md-direction="down">Adicionar</md-tooltip>
@@ -115,17 +115,17 @@
 
             <div layout="row" layou-align="center center"  layout-padding>
               <div flex="30" style="text-align: center">
-                <img src="./app/static-resource/image/transport_chart_donut_demo.png" class="md-card-image" alt="image caption" style="height:180px; width:150px">
+                <otus-sample-transportation-lot-aliquots-chart></otus-sample-transportation-lot-aliquots-chart>
               </div>
               <div flex>
-                <img src="./app/static-resource/image/transport_chart_legend_demo.png" class="md-card-image" alt="image caption" style="height:160px; width:460px;">
+                <otus-sample-transportation-lot-chart-subtitle-table></otus-sample-transportation-lot-chart-subtitle-table>
               </div>
             </div>
 
-            <dynamic-data-table flex 
+            <dynamic-data-table flex
             headers="['Código', 'Tipo', 'Recipiente', 'Aliquotagem']"
             elements-array="$ctrl.lot.aliquotList"
-            elements-properties="['code', 'label', 'containerLabel', 'aliquotCollectionData.time']"            
+            elements-properties="['code', 'label', 'containerLabel', 'aliquotCollectionData.time']"
             callback-after-change="$ctrl.dynamicDataTableChange"
             table-update-function="$ctrl.AliquotTransportationService.dynamicDataTableFunction.updateDataTable"
 
@@ -138,21 +138,20 @@
             format-data=""
             format-data-properties-array="['aliquotCollectionData.time']"
             format-data-index-array="[]"
-            
+
             disable-checkbox="false"
             disable-filter="false"
             disable-reorder="false"
             disable-pagination="false"
-            
+
             selected-color=""
             hover-color=""
             >
-              <!-- group-by="label" -->
             </dynamic-data-table>
-            
+
             <md-list ng-if="false">
-              <md-list-item ng-repeat="aliquot in $ctrl.lot.aliquotList | orderBy:['label', 'aliquotCollectionData.time', 'containerLabel'] track by $index" 
-               ng-class="{ 'selectedState': aliquot.isSelected, 'regularState': !aliquot.isSelected}" 
+              <md-list-item ng-repeat="aliquot in $ctrl.lot.aliquotList | orderBy:['label', 'aliquotCollectionData.time', 'containerLabel'] track by $index"
+               ng-class="{ 'selectedState': aliquot.isSelected, 'regularState': !aliquot.isSelected}"
                ng-click="$ctrl.selectAliquot(aliquot)" class="card-animated">
                 <div ng-class="{'md-list-item-text': true, 'error': aliquot.hasError}" flex>
                   <span class="md-title" layout-margin>{{aliquot.code}}</span>
@@ -165,10 +164,10 @@
             </md-list>
           </md-card>
         </div>
-        
+
       </div>
 
-  
+
 </md-content>
 
 

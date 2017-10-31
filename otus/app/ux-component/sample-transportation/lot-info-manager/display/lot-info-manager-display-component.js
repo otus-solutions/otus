@@ -60,7 +60,7 @@
       self.initialDate = new Date();
       self.finalDate = new Date();
       _buildDialogs();
-      
+
       //TODO: Remove This {
         setTimeout(()=>{
           console.log('fullList',self.fullAliquotsList);
@@ -89,13 +89,13 @@
     }
 
     function insertAliquotsByPeriod(){
-      console.log(self.finalDate)
+      console.log(self.finalDate);
       if(self.initialDate instanceof Date && self.finalDate instanceof Date){
         self.initialDate = new Date(self.initialDate.toISOString());
         self.finalDate = new Date(self.finalDate.toISOString());
 
         if(self.initialDate <= self.finalDate){
-          _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no Lot as aliquotas realizadas no período' 
+          _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no Lot as aliquotas realizadas no período'
           + ' entre ' + $filter('date')(self.initialDate,'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate,'dd/MM/yyyy') + '.');
 
           $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
@@ -108,7 +108,7 @@
 
             if(successInsertion){
               _successInAliquotInsertion();
-              _dynamicDataTableUpdate()
+              _dynamicDataTableUpdate();
             } else {
               _notAliquotsInserted();
             }
@@ -246,7 +246,7 @@
       });
     }
 
-    
+
     function _findAliquotInLot(code) {
       return self.lot.aliquotList.find(function(aliquotsInLot) {
         return aliquotsInLot.code == code;

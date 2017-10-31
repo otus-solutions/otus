@@ -7,7 +7,7 @@
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-manager-list/sample-transportation-lot-manager-list-template.html',
       bindings: {
-        selectedLots: '<'
+        selectedLots: '='
       },
       require: {
         otusSampleTransportationManagerList: '^otusSampleTransportationManagerList'
@@ -160,10 +160,10 @@
             labelsCount[aliquot.label] = labelsCount[aliquot.label]  + 1;
           } else {
             labelsCount[aliquot.label] = 1;
-            dataSet.labels.push(aliquot.label)
+            dataSet.labels.push(aliquot.label);
           }
           if(!self.colorSet[aliquot.label]){
-            self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length]
+            self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length];
           }
         });
 
