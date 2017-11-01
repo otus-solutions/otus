@@ -3,7 +3,9 @@
 
   angular
     .module('otusjs.laboratory.business.project.transportation')
-    .service('otusjs.laboratory.business.project.transportation.AliquotTransportationService', service);
+    .service(
+      'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+      service);
 
   service.$inject = [
     'otusjs.laboratory.transportation.TransportationService',
@@ -15,7 +17,7 @@
   ];
 
   function service(TransportationService, LaboratoryConfigurationService,
-    LaboratoryRepositoryService, $http, $q, LoadingScreenService) {
+                   LaboratoryRepositoryService, $http, $q, LoadingScreenService) {
     var self = this;
 
     self.createAliquotLot = createAliquotLot;
@@ -32,10 +34,9 @@
     const messageLoading =
       'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
 
-    self.dynamicDataTableFunction = {};
-
-    function getContainerLabelToAliquot(aliquot){
-      return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
+    function getContainerLabelToAliquot(aliquot) {
+      return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" :
+        "Palheta";
     }
 
     function createAliquotLot() {
@@ -44,10 +45,6 @@
 
     function loadAliquotLotFromJson(lotJSON) {
       return TransportationService.buildAliquotLotFromJson(lotJSON);
-    }
-
-    function createLot(lotStructure) {
-      return LaboratoryCollectionService.createLot(lotStructure);
     }
 
     function getAliquots() {
@@ -89,8 +86,9 @@
           LaboratoryRepositoryService.getLots()
             .then(function(response) {
               var lots = JSON.parse(response).map(function(lotJson) {
-                  return TransportationService.buildAliquotLotFromJson(lotJson);
-                });
+                return TransportationService.buildAliquotLotFromJson(
+                  lotJson);
+              });
 
               deferred.resolve(lots);
             })

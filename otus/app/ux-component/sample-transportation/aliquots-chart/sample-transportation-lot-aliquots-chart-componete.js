@@ -83,6 +83,7 @@
     }
 
     function _setFieldCenter(){
+      console.log(self.lotDataSet);
       Chart.pluginService.register({
         beforeDraw: function (chart) {
           var width = chart.chart.width,

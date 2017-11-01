@@ -45,6 +45,7 @@
       } else {
         self.lot = AliquotTransportationService.createAliquotLot();
         self.lot.operator = self.stateData['user'].email;
+        self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter()};
         self.lot.shipmentDate = new Date();
         self.lot.processingDate = new Date();
       }

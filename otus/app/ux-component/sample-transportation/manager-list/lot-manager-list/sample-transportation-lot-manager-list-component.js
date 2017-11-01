@@ -110,6 +110,7 @@
     function onFilter(){
       self.selectedLots = [];
       self.show = self.limit;
+      laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
       if(self.lotsListImutable.length) {
         self.lotsList = self.lotsListImutable.filter(function (lot) {
           if (self.centerFilter.length) {
@@ -176,6 +177,5 @@
       });
 
     }
-
   }
 }());
