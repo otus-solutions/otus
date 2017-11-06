@@ -1,10 +1,7 @@
 <md-content layout="column" flex>
       <div layout-align="start center" flex>
-
-
-
         <md-card layout="row" flex="80" flex-offset="10">
-          <div layout="column" flex="40">
+          <div layout="column" flex>
             <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
               Informações do Lote
             </md-subheader>
@@ -18,7 +15,6 @@
                     <md-input-container class="remove-erros-spacer input-container-lot-margin">
                       <md-datepicker ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de Envio"></md-datepicker>
                     </md-input-container>
-
                     <md-input-container class="remove-erros-spacer input-container-lot-margin">
                       <md-icon class="material-icons">access_time</md-icon>
                       <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
@@ -27,7 +23,7 @@
                 </div>
                 <div>
                   <div layout="row" layout-xs="column" flex>
-                    <div layout="column" layout-align="center start" flex="15" >
+                    <div layout="column" layout-align="center start" flex="10" >
                       <span>Processamento:</span>
                     </div>
                     <md-input-container class="remove-erros-spacer input-container-lot-margin">
@@ -46,12 +42,6 @@
               </div>
             </div>
           </div>
-          <div layout="column" flex>
-            <div layout="row" flex>
-              <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet" flex="25"></otus-sample-transportation-lot-aliquots-chart>
-              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lotDataSet" flex></otus-sample-transportation-lot-chart-subtitle-table>
-            </div>
-          </div>
         </md-card>
 
 
@@ -68,7 +58,8 @@
               </md-nav-item>
               <md-nav-item md-nav-click="$ctrl.changeNavItem('individualInsertion')" name="individualInsertion">
                 Inserção Individual
-              </md-nav-item>
+              </md-nav-item><div layout="row" >
+            </div>
             </md-nav-bar>
 
             <div ng-if="$ctrl.currentNavItem == 'insertionByPeriod'" layout="row" layout-align="start center" layout-padding>
@@ -93,6 +84,16 @@
                   <md-tooltip md-direction="down">Adicionar</md-tooltip>
                   <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
                 </md-button>
+              </div>
+            </div>
+            <div layout="row" >
+              <div layout="column" flex="20">
+                <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet"></otus-sample-transportation-lot-aliquots-chart>
+              </div>
+              <div layout="column"  style="height:200px;" flex>
+                <md-content>
+                  <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lotDataSet" flex></otus-sample-transportation-lot-chart-subtitle-table>
+                </md-content>
               </div>
             </div>
 

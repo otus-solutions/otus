@@ -65,7 +65,6 @@
         result.forEach(function (fieldCenter) {
           self.centers.push(fieldCenter.acronym)
         });
-
         _LoadLotsList();
         setUserFieldCenter();
       });
@@ -76,10 +75,10 @@
       dashboardContextService
         .getLoggedUser()
         .then(function(userData) {
-          self.centerFilter = userData.fieldCenter.acronym ? userData.fieldCenter.acronym : "" ;
+          self.centerFilter = userData.fieldCenter.acronym ? userData.fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter() ? laboratoryContextService.getSelectedFieldCenter() : "";
           laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
           self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
-          self.centerFilterDisabled = self.centerFilter ? "disabled" : "";
+          self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
         });
     }
 

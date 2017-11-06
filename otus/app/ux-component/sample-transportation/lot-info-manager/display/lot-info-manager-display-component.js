@@ -9,9 +9,11 @@
       bindings: {
         lot: '=',
         selectedAliquots: '=',
+        lotDataSet: '<',
         aliquotsInOtherLotsList: '<',
         fullAliquotsList: '<',
         action: '<',
+        setChartData: '&',
         onLotAlteration: '&'
       }
     });
@@ -27,12 +29,6 @@
     var self = this;
 
     const timeShowMsg = 3000;
-    //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
-    var color = ["#F44336","#E91E63","#9C27B0","#673AB7","#3F51B5","#2196F3",
-      "#03A9F4","#00BCD4","#009688","#4CAF50","#8BC34A","#CDDC39",
-      "#FFEB3B","#FFC107","#FF9800","#FF5722","#795548","#9E9E9E",
-      "#9E9E9E","#000000","#B71C1C","#880E4F","#4A148C","#311B92",
-      "#1A237E","#0D47A1","#01579B","#006064","#004D40","#1B5E20"];
 
     self.$onInit = onInit;
 
@@ -66,8 +62,6 @@
       self.initialDate = new Date();
       self.finalDate = new Date();
       _buildDialogs();
-      _setChartData();
-
 
       //TODO: Remove This {
       //   setTimeout(()=>{
@@ -100,7 +94,6 @@
     }
 
     function insertAliquotsByPeriod(){
-      // console.log(self.finalDate);
       if(self.initialDate instanceof Date && self.finalDate instanceof Date){
         self.initialDate = new Date(self.initialDate.toISOString());
         self.finalDate = new Date(self.finalDate.toISOString());
@@ -111,12 +104,10 @@
 
           $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
             var successInsertion = false;
-
             _findAliquotByPeriod(self.initialDate, self.finalDate).forEach(function(avaiableAliquot) {
               var returned = fastInsertion(avaiableAliquot.code, true);
               if(!successInsertion) successInsertion = returned;
             }, this);
-
             if(successInsertion){
               _successInAliquotInsertion();
               _dynamicDataTableUpdate();
@@ -163,7 +154,7 @@
           self.onLotAlteration({
             newData: self.lot.toJSON()
           });
-          _setChartData();
+          self.setChartData();
           _updateContainerLabel();
           successInsertion = true;
           if(!hideMsgErrors) _dynamicDataTableUpdate();
@@ -174,7 +165,6 @@
       self.aliquotCode = "";
       return successInsertion;
     }
-
 
     function dynamicDataTableChange(change){
       if(change.type === 'select' || change.type === 'deselect'){
@@ -284,39 +274,6 @@
       return self.aliquotsInOtherLotsList.find(function(aliquotsInOtherLots) {
         return aliquotsInOtherLots.code == code;
       });
-    }
-
-    function _setChartData() {
-        self.lotDataSet = [];
-        self.colorSet = [];
-        var labelsCount = {};
-
-        var dataSet = [];
-        dataSet.backgroundColor = [];
-        dataSet.data = [];
-        dataSet.labels = [];
-        dataSet.fieldCenter = self.lot.fieldCenter;
-        dataSet.chartId = self.lot.code;
-
-        self.lot.aliquotList.forEach(function (aliquot) {
-          if(labelsCount[aliquot.label]){
-            labelsCount[aliquot.label] = labelsCount[aliquot.label]  + 1;
-          } else {
-            labelsCount[aliquot.label] = 1;
-            dataSet.labels.push(aliquot.label);
-          }
-          if(!self.colorSet[aliquot.label]){
-            self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length];
-          }
-        });
-
-        for(var key in labelsCount) {
-          dataSet.data.push(labelsCount[key]);
-          dataSet.backgroundColor.push(self.colorSet[key]);
-        }
-
-        self.lotDataSet = dataSet;
-        // console.log(self.lotDataSet);
     }
   }
 }());
