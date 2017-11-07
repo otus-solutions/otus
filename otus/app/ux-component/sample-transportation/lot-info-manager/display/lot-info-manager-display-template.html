@@ -12,10 +12,10 @@
                     <div layout="column" layout-align="center start" flex="15" flex-gt-md="10">
                       <span>Envio:</span>
                     </div>
-                    <md-input-container class="remove-erros-spacer input-container-lot-margin">
+                    <md-input-container class="remove-errors-spacer input-container-lot-margin">
                       <md-datepicker ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de Envio"></md-datepicker>
                     </md-input-container>
-                    <md-input-container class="remove-erros-spacer input-container-lot-margin">
+                    <md-input-container class="remove-errors-spacer input-container-lot-margin">
                       <md-icon class="material-icons">access_time</md-icon>
                       <input type="time" ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
                     </md-input-container>
@@ -26,10 +26,10 @@
                     <div layout="column" layout-align="center start" flex="10" >
                       <span>Processamento:</span>
                     </div>
-                    <md-input-container class="remove-erros-spacer input-container-lot-margin">
+                    <md-input-container class="remove-errors-spacer input-container-lot-margin">
                       <md-datepicker ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de processamento"></md-datepicker>
                     </md-input-container>
-                    <md-input-container class="remove-erros-spacer input-container-lot-margin">
+                    <md-input-container class="remove-errors-spacer input-container-lot-margin">
                       <md-icon class="material-icons">access_time</md-icon>
                       <input type="time" ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
                     </md-input-container>
@@ -66,7 +66,7 @@
               <div layout="row" layout-xs="column" layout-align="center center">
                 <span>Período Inicial:</span>
 
-                <md-input-container class="remove-erros-spacer input-container-lot-margin">
+                <md-input-container class="remove-errors-spacer input-container-lot-margin">
                   <md-datepicker ng-model="$ctrl.initialDate" aria-label="Período Inicial" ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
                 </md-input-container>
               </div>
@@ -74,7 +74,7 @@
               <div layout="row" layout-xs="column" layout-align="center center">
                 <span>Período Final:</span>
 
-                <md-input-container class="remove-erros-spacer input-container-lot-margin">
+                <md-input-container class="remove-errors-spacer input-container-lot-margin">
                   <md-datepicker ng-model="$ctrl.finalDate" aria-label="Período Final" ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
                 </md-input-container>
               </div>

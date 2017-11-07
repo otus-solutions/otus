@@ -3,15 +3,15 @@
     Filtros de Pesquisa
   </md-subheader>
   <div layout="row" layout-xs="column"  layout-align="center ">
-    <md-input-container class="remove-erros-spacer">
+    <md-input-container class="remove-errors-spacer">
       <label>Período Inicial</label>
       <md-datepicker ng-model="$ctrl.shipmentBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
     </md-input-container>
-    <md-input-container class="remove-erros-spacer">
+    <md-input-container class="remove-errors-spacer">
       <label>Período Fínal</label>
       <md-datepicker ng-model="$ctrl.shipmentEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
     </md-input-container>
-    <md-input-container class="remove-erros-spacer" style="margin-left:15px">
+    <md-input-container class="remove-errors-spacer" style="margin-left:15px">
       <label>Centro</label>
       <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
         <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-selected="$index == $ctrl.centerFilterselectedIndex">
@@ -19,7 +19,7 @@
         </md-option>
       </md-select>
     </md-input-container>
-    <md-input-container class="remove-erros-spacer" style="margin-left:15px">
+    <md-input-container class="remove-errors-spacer" style="margin-left:15px">
       <label>Visualização</label>
       <md-select ng-model="$ctrl.view">
         <md-option ng-repeat="view in ['Cards','Lista']" value="{{view}}">
