@@ -30,7 +30,7 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
-    const messageLoading =
+    var messageLoading =
       'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
 
     function getContainerLabelToAliquot(aliquot) {

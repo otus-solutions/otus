@@ -143,7 +143,7 @@
     function getFlex(index){
       var value = self.flexArray[index];
 
-      if(!value === ''){
+      if(value !== ''){
         value = Number(value);
 
         if(value === NaN){
@@ -153,8 +153,11 @@
       return value;
     }
 
-    function getColumnPositionClass(index, array=[]){
+    function getColumnPositionClass(index, array){
       var retClass = '';
+      if(array === undefined){
+        array = [];
+      }
 
       if(index < self.numberFieldsAlignedLeft){
         retClass = retClass + ' dynamic-table-column-left ';
@@ -189,7 +192,7 @@
 
 
     self.getOrderIcon = function(){
-      return self.orderInverse ? 'dynamic-arrow-icon-inverse' : 'dynamic-arrow-icon'
+      return self.orderInverse ? 'dynamic-arrow-icon-inverse' : 'dynamic-arrow-icon';
     }
 
     self.verifyOrderIcon = function(index){
@@ -408,7 +411,6 @@
     function _createColumn(row, value, index){
       var column = {
         type:"dynamicDataTableColumn",
-        //row: row,
         value: value,
         index: index,
         name: "column" + index
