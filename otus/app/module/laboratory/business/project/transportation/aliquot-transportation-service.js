@@ -8,16 +8,15 @@
       service);
 
   service.$inject = [
+    '$q',
     'otusjs.laboratory.transportation.TransportationService',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
     'otusjs.laboratory.repository.LaboratoryRepositoryService',
-    '$http',
-    '$q',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service(TransportationService, LaboratoryConfigurationService,
-                   LaboratoryRepositoryService, $http, $q, LoadingScreenService) {
+  function service($q, TransportationService, LaboratoryConfigurationService,
+                   LaboratoryRepositoryService, LoadingScreenService) {
     var self = this;
 
     self.createAliquotLot = createAliquotLot;

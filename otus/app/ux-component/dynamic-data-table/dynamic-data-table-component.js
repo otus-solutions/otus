@@ -7,7 +7,7 @@
       templateUrl: 'app/ux-component/dynamic-data-table/dynamic-data-table-template.html',
       bindings: {
         headers: '<',
-        elementsArray: '<', 
+        elementsArray: '<',
         elementsProperties: '<',
         callbackAfterChange: '=',
         tableUpdateFunction: '=',
@@ -15,12 +15,12 @@
         formatData: '<',
         formatDataIndexArray: '<',
         formatDataPropertiesArray: '<',
-        
-        tableTitle: '<', 
+
+        tableTitle: '<',
         flexArray: '<',
         orderIndices: '<',
         numberFieldsAlignedLeft: '<',
-        
+
         selectedColor: '<',
         hoverColor: '<',
 
@@ -28,7 +28,7 @@
         disableReorder: '<',
         disableFilter: '<',
         disablePagination: '<',
-        
+
         rowsPerPageArray: '<',
         rowPerPageDefault: '<'
       },
@@ -54,7 +54,6 @@
 
     self.$onInit = onInit;
 
-    self.myFunction = myFunction;
     self.changeOrder = changeOrder;
     self.creacteTable = creacteTable;
     self.selectDeselectRow = selectDeselectRow;
@@ -83,19 +82,15 @@
 
 
     function onInit() {
-      console.log('$scope',$scope);
-      console.log('$element', $element);
-      console.log('$filter', $filter);
-
       _setOrderQuery();
-      
+
       if(!self.numberFieldsAlignedLeft) self.numberFieldsAlignedLeft = 1;
-      
+
       if(!self.hoverColor) self.hoverColor = '#EEEEEE';
       if(!self.selectedColor) self.selectedColor = '#F5F5F5';
       if(!self.rowsPerPageArray) self.rowsPerPageArray = [5,10,15,20,25,30,35,40,45,50,60,70,80,90,100,200];
       if(!self.rowPerPageDefault) self.rowPerPageDefault = self.rowsPerPageArray.length >= 3 ? self.rowsPerPageArray[3] : self.rowsPerPageArray[0];
-      
+
       if(!self.formatData) self.formatData = 'dd/MM/yyyy';
       if(!self.formatDataIndexArray) self.formatDataIndexArray = [];
       if(!self.formatDataPropertiesArray) self.formatDataPropertiesArray = [];
@@ -104,13 +99,12 @@
         isError: false,
         msg: "Devem ser informadas a mesma quantidade de valores e de cabeçalhos."
       };
-      console.log(self);
-      
+
       self.tableUpdateFunction = function(){
         self.selectedItemCounter = 0;
         self.creacteTable();
-      }
-      
+      };
+
       creacteTable();
     }
 
@@ -138,7 +132,7 @@
       if(!self.disablePagination){
         self.table.currentPageRows = self.table.fullRows.slice(self.table.startPage, self.table.endPage + 1);
       }
-      
+
       self.table.rows = $filter('filter')(self.table.currentPageRows, self.filter);
       self.selectedItemCounter = self.table.rows.filter(function(row){
         return row.selected;
@@ -171,7 +165,7 @@
       if(index === 0 && self.disableCheckbox){
           retClass = retClass + ' dynamic-table-column-first ';
       }
-      
+
       if((index + 1) === array.length){
         retClass = retClass + ' dynamic-table-column-last ';
       }
@@ -187,7 +181,7 @@
       }
 
       if(change.type === 'selected' || change.type === 'deselected'){
-        
+
       }
 
       self.callbackAfterChange(change);
@@ -195,14 +189,14 @@
 
 
     self.getOrderIcon = function(){
-      return self.orderInverse ? 'dynamic-arrow-icon-inverse' : 'dynamic-arrow-icon' 
+      return self.orderInverse ? 'dynamic-arrow-icon-inverse' : 'dynamic-arrow-icon'
     }
 
     self.verifyOrderIcon = function(index){
       return self.orderQuery === 'column' + $index + '.value' ? true : false;
     }
 
-    
+
     function rowPerPageChange(){
       self.table.currentPage = 1;
       pagesChage();
@@ -228,7 +222,7 @@
       }
 
       var tempEnd = (self.table.currentPage * self.rowPerPageDefault - 1);
-      
+
       if(tempEnd >= (length - 1)){
         self.table.endPage = tempEnd;
       } else {
@@ -273,18 +267,16 @@
         textPage: ""
       };
 
-      
+
       self.elementsArray.forEach(function(element, index) {
         self.table.fullRows.push(
           _createRow(element, index)
         );
       }, this);
-      
-      self.table.currentPageRows = self.table.fullRows;
-      
-      pagesChage();
 
-      console.log('table', self.table);
+      self.table.currentPageRows = self.table.fullRows;
+
+      pagesChage();
     }
 
     function changeOrder(index){
@@ -307,7 +299,7 @@
         if(self.orderIndices){
           self.orderIndices.forEach(function(orderIndex){
             self.orderQuery.push('column' + orderIndex + '.value');
-          }); 
+          });
         }
       }
     }
@@ -322,7 +314,7 @@
       } else if(self.formatDataPropertiesArray.filter(function(prop){ return prop === property }).length){
         value = $filter('date')(value, self.formatData);
       }
-      
+
       return value;
     }
 
@@ -353,7 +345,7 @@
 
     function selectDeselectAllRows(){
       var deselect = (self.selectedItemCounter === self.table.rows.length);
-      
+
       self.table.rows.forEach(function(row){
         if(deselect){
           _deselectRow(row);
@@ -405,11 +397,11 @@
           _getValueFromElement(element,elementProperty, index),
           index
         );
-        
+
         row.columns.push(column);
         row[column.name] = column;
       }, this);
-      
+
       return row;
     }
 
@@ -424,10 +416,5 @@
 
       return column;
     }
-
-    function myFunction() {
-      console.log('Run myFunction');
-    }
-
   }
 }());

@@ -35,7 +35,6 @@
     }
 
     function _renderChart() {
-      console.log(self.lotDataSet);
       self.ctx = document.getElementById(self.lotDataSet.chartId).getContext('2d');
       _setFieldCenter();
 

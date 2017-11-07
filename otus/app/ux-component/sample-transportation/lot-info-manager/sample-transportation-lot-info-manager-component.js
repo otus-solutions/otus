@@ -156,7 +156,6 @@
     }
 
     function setChartData() {
-      console.log(self.lot);
       self.lotDataSet = [];
       self.colorSet = [];
       var labelsCount = {};

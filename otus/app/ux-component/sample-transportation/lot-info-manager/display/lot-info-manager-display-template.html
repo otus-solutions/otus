@@ -17,7 +17,7 @@
                     </md-input-container>
                     <md-input-container class="remove-erros-spacer input-container-lot-margin">
                       <md-icon class="material-icons">access_time</md-icon>
-                      <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
+                      <input type="time" ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
                     </md-input-container>
                   </div>
                 </div>
@@ -31,7 +31,7 @@
                     </md-input-container>
                     <md-input-container class="remove-erros-spacer input-container-lot-margin">
                       <md-icon class="material-icons">access_time</md-icon>
-                      <input type="time" style="margin-bottom:10px" ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
+                      <input type="time" ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
                     </md-input-container>
                   </div>
                   <div ng-if="$ctrl.action=='alter'" layout="row" layout-xs="column" layout-align="start center">
@@ -90,7 +90,7 @@
               <div layout="column" flex="20">
                 <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet"></otus-sample-transportation-lot-aliquots-chart>
               </div>
-              <div layout="column"  style="height:200px;" flex>
+              <div layout="column" style="height: 200px;" flex>
                 <md-content>
                   <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lotDataSet" flex></otus-sample-transportation-lot-chart-subtitle-table>
                 </md-content>
@@ -99,8 +99,7 @@
 
             <div ng-if="$ctrl.currentNavItem == 'individualInsertion'" layout="row" layout-align="center center" layout-padding>
               <span class="">Código:</span>
-              <input type="text" class="aliquot-lot-input" flex placeholder="Aliquota" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" />
-
+              <input type="text" class="aliquot-lot-input" flex placeholder="Aliquota" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)"/>
               <div>
                 <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Aliquota">
                   <md-tooltip md-direction="down">Adicionar</md-tooltip>

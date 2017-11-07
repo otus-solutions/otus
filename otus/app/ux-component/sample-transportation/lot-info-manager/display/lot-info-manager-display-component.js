@@ -34,9 +34,6 @@
 
     self.currentNavItem = "insertionByPeriod";
     self.changeNavItem = changeNavItem;
-    self.aliquotCode;
-    self.initialDate;
-    self.finalDate;
 
     self.AliquotTransportationService = AliquotTransportationService;
 
@@ -51,7 +48,6 @@
       self.currentNavItem = newNavItem;
     }
 
-
     /* Public methods */
     self.fastInsertion = fastInsertion;
     self.selectAliquot = selectAliquot;
@@ -62,15 +58,6 @@
       self.initialDate = new Date();
       self.finalDate = new Date();
       _buildDialogs();
-
-      //TODO: Remove This {
-      //   setTimeout(()=>{
-      //     self.fullAliquotsList.forEach(function (aliquot) {
-      //     console.log('fullList',aliquot.code);
-      //     console.log('fullList',aliquot.fieldCenter.acronym);
-      //     });
-      //   },1000)
-      //TODO: }
     }
 
     function _buildDialogs() {
@@ -104,10 +91,9 @@
 
           $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
             var successInsertion = false;
-            _findAliquotByPeriod(self.initialDate, self.finalDate).forEach(function(avaiableAliquot) {
-              var returned = fastInsertion(avaiableAliquot.code, true);
-              if(!successInsertion) successInsertion = returned;
-            }, this);
+            _findAliquotByPeriod(self.initialDate, self.finalDate).forEach(function(availableAliquot) {
+              var returned = fastInsertion(availableAliquot.code, true);
+              if(!successInsertion) successInsertion = returned; }, this);
             if(successInsertion){
               _successInAliquotInsertion();
               _dynamicDataTableUpdate();
@@ -249,8 +235,8 @@
     }
 
     function _findAliquotByPeriod(initialDate, finalDate) {
-      return self.fullAliquotsList.filter(function(avaiableAliquot) {
-        var aliquotFormatedData = $filter('date')(avaiableAliquot.aliquotCollectionData.time,'yyyyMMdd');
+      return self.fullAliquotsList.filter(function(availableAliquot) {
+        var aliquotFormatedData = $filter('date')(availableAliquot.aliquotCollectionData.time,'yyyyMMdd');
         var initialDateFormated = $filter('date')(initialDate,'yyyyMMdd');
         var finalDateFormated = $filter('date')(finalDate,'yyyyMMdd');
 
