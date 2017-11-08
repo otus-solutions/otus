@@ -23,6 +23,12 @@
   function Controller($mdToast, $mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
     var self = this;
     var _confirmCancel;
+    //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
+    var color = ["#F44336","#E91E63","#9C27B0","#673AB7","#3F51B5","#2196F3",
+      "#03A9F4","#00BCD4","#009688","#4CAF50","#8BC34A","#CDDC39",
+      "#FFEB3B","#FFC107","#FF9800","#FF5722","#795548","#9E9E9E",
+      "#9E9E9E","#000000","#B71C1C","#880E4F","#4A148C","#311B92",
+      "#1A237E","#0D47A1","#01579B","#006064","#004D40","#1B5E20"];
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -33,7 +39,7 @@
     self.alterLot = alterLot;
     self.updateLotStateData = updateLotStateData;
     self.removeAliquots = removeAliquots;
-
+    self.setChartData = setChartData;
 
     function onInit() {
       self.selectedAliquots = [];
@@ -45,6 +51,7 @@
       } else {
         self.lot = AliquotTransportationService.createAliquotLot();
         self.lot.operator = self.stateData['user'].email;
+        self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter()};
         self.lot.shipmentDate = new Date();
         self.lot.processingDate = new Date();
       }
@@ -52,6 +59,7 @@
       _formatLotDates();
       _getAliquotsInOtherLots();
       _fetchgCollectedAliquots();
+      self.setChartData();
     }
 
     function removeAliquots() {
@@ -61,6 +69,8 @@
       }
       self.updateLotStateData(self.lot);
       self.selectedAliquots = [];
+      AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
+      self.setChartData();
     }
 
     function createLot() {
@@ -143,6 +153,42 @@
         .ariaLabel('Confirmação de cancelamento')
         .ok('Ok')
         .cancel('Voltar');
+    }
+
+    function setChartData() {
+      self.lotDataSet = [];
+      self.colorSet = [];
+      var labelsCount = {};
+
+      var dataSet = [];
+      dataSet.backgroundColor = [];
+      dataSet.data = [];
+      dataSet.labels = [];
+      dataSet.fieldCenter = self.lot.fieldCenter;
+      if(self.lot.code){
+        dataSet.chartId = self.lot.code;
+      } else {
+        dataSet.chartId = "aliquotsChart";
+      }
+
+      self.lot.aliquotList.forEach(function (aliquot) {
+        if(labelsCount[aliquot.label]){
+          labelsCount[aliquot.label] = labelsCount[aliquot.label]  + 1;
+        } else {
+          labelsCount[aliquot.label] = 1;
+          dataSet.labels.push(aliquot.label);
+        }
+        if(!self.colorSet[aliquot.label]){
+          self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length];
+        }
+      });
+
+      for(var key in labelsCount) {
+        dataSet.data.push(labelsCount[key]);
+        dataSet.backgroundColor.push(self.colorSet[key]);
+      }
+
+      self.lotDataSet = dataSet;
     }
   }
 }());

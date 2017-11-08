@@ -1,8 +1,8 @@
 <div flex>
   <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
     <div class="md-toolbar-tools md-hue-2">
-      <span ng-if="!$ctrl.selectedLot" flex>Adicionar lote</span>
-      <span ng-if="$ctrl.selectedLot" flex>Alterar lote</span>
+      <span ng-if="!$ctrl.lot.code" flex>Adicionando Lote</span>
+      <span ng-if="$ctrl.lot.code" flex>Alterando o lote: {{$ctrl.lot.code}}</span>
       <md-button ng-click="$ctrl.onCancel()" style="background-color: grey" class="md-raised md-icon-button" aria-label="Cancelar">
         <md-tooltip md-direction="down">Cancelar</md-tooltip>
         <md-icon style="color: white" md-font-set="material-icons" aria-label="Cancelar">clear</md-icon>

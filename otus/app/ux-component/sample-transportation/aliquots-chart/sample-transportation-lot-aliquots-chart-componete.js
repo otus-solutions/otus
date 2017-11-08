@@ -20,10 +20,18 @@
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
+    self.$onChanges = onChanges;
 
     function onInit() {
       Chart.defaults.global.tooltips.enabled = false;
       $timeout(_renderChart);
+    }
+
+    function onChanges(){
+      if(self.myChart){
+        self.myChart.destroy();
+        _renderChart();
+      }
     }
 
     function _renderChart() {
@@ -35,7 +43,7 @@
         chartBorderWidth = 1;
       }
 
-      var myChart = new Chart(self.ctx, {
+      self.myChart = new Chart(self.ctx, {
         type: 'doughnut',
         data: {
           labels: self.lotDataSet.labels,

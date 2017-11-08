@@ -7,6 +7,7 @@
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/manager-toolbar/lot-info-manager-toolbar-template.html',
       bindings: {
+        lot: '<',
         action: '<',
         onAddLot: '&',
         onCancel: '&',

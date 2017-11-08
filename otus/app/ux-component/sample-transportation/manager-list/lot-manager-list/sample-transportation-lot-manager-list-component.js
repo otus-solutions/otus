@@ -65,7 +65,6 @@
         result.forEach(function (fieldCenter) {
           self.centers.push(fieldCenter.acronym)
         });
-
         _LoadLotsList();
         setUserFieldCenter();
       });
@@ -76,10 +75,10 @@
       dashboardContextService
         .getLoggedUser()
         .then(function(userData) {
-          self.centerFilter = userData.fieldCenter.acronym ? userData.fieldCenter.acronym : "" ;
+          self.centerFilter = userData.fieldCenter.acronym ? userData.fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter() ? laboratoryContextService.getSelectedFieldCenter() : "";
           laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
           self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
-          self.centerFilterDisabled = self.centerFilter ? "disabled" : "";
+          self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
         });
     }
 
@@ -110,6 +109,7 @@
     function onFilter(){
       self.selectedLots = [];
       self.show = self.limit;
+      laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
       if(self.lotsListImutable.length) {
         self.lotsList = self.lotsListImutable.filter(function (lot) {
           if (self.centerFilter.length) {
@@ -160,10 +160,10 @@
             labelsCount[aliquot.label] = labelsCount[aliquot.label]  + 1;
           } else {
             labelsCount[aliquot.label] = 1;
-            dataSet.labels.push(aliquot.label)
+            dataSet.labels.push(aliquot.label);
           }
           if(!self.colorSet[aliquot.label]){
-            self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length]
+            self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length];
           }
         });
 
@@ -176,6 +176,5 @@
       });
 
     }
-
   }
 }());

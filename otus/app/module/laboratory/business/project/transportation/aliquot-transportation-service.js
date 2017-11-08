@@ -8,16 +8,15 @@
       service);
 
   service.$inject = [
+    '$q',
     'otusjs.laboratory.transportation.TransportationService',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
     'otusjs.laboratory.repository.LaboratoryRepositoryService',
-    '$http',
-    '$q',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service(TransportationService, LaboratoryConfigurationService,
-    LaboratoryRepositoryService, $http, $q, LoadingScreenService) {
+  function service($q, TransportationService, LaboratoryConfigurationService,
+                   LaboratoryRepositoryService, LoadingScreenService) {
     var self = this;
 
     self.createAliquotLot = createAliquotLot;
@@ -31,7 +30,7 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
-    const messageLoading =
+    var messageLoading =
       'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
 
     function getContainerLabelToAliquot(aliquot) {
@@ -47,14 +46,11 @@
       return TransportationService.buildAliquotLotFromJson(lotJSON);
     }
 
-    function createLot(lotStructure) {
-      return LaboratoryCollectionService.createLot(lotStructure);
-    }
-
     function getAliquots() {
       LoadingScreenService.changeMessage(messageLoading);
       LoadingScreenService.start();
       var deferred = $q.defer();
+
       LaboratoryRepositoryService.getAliquots()
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
@@ -63,6 +59,7 @@
         .catch(function(err) {
           deferred.reject(err);
         });
+
       return deferred.promise;
     }
 
@@ -76,6 +73,7 @@
         .catch(function(err) {
           deferred.reject(err);
         });
+
       return deferred.promise;
     }
 
