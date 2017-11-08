@@ -63,7 +63,7 @@
     function _buildDialogs() {
       _confirmAliquotsInsertionByPeriod = $mdDialog.confirm()
         .title('Confirmar inclusão de Aliquotas:')
-        .textContent('Serão incluídas no Lot as aliquotas realizadas no perído selecionado.')
+        .textContent('Serão incluídas no lote as aliquotas realizadas no perído selecionado.')
         .ariaLabel('Confirmar inclusão de Aliquotas por Período')
         .ok('Confirmar')
         .cancel('Cancelar');
@@ -86,7 +86,7 @@
         self.finalDate = new Date(self.finalDate.toISOString());
 
         if(self.initialDate <= self.finalDate){
-          _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no Lot as aliquotas realizadas no período'
+          _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no lote as aliquotas realizadas no período'
           + ' entre ' + $filter('date')(self.initialDate,'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate,'dd/MM/yyyy') + '.');
 
           $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {

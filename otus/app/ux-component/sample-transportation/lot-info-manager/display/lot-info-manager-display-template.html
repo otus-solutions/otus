@@ -36,15 +36,13 @@
                   </div>
                   <div ng-if="$ctrl.action=='alter'" layout="row" layout-xs="column" layout-align="start center">
                     <span class="md-body-1"> Criado em {{($ctrl.lot.shipmentDate | date:'dd/mm/yyyy') + " às " + ($ctrl.lot.shipmentDate | date: "HH:mm")}}</span>
-                    <span class="md-body-1" layout-margin layout-padding>Responável:  {{$ctrl.lot.operator}}</span>
+                    <span class="md-body-1" layout-margin layout-padding>{{$ctrl.lot.operator}}</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </md-card>
-
-
         <div flex layout="row" layout-align="center center">
           <md-card flex="80">
             <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
@@ -86,17 +84,6 @@
                 </md-button>
               </div>
             </div>
-            <div layout="row" >
-              <div layout="column" flex="20">
-                <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet"></otus-sample-transportation-lot-aliquots-chart>
-              </div>
-              <div layout="column" style="height: 200px;" flex>
-                <md-content>
-                  <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lotDataSet" flex></otus-sample-transportation-lot-chart-subtitle-table>
-                </md-content>
-              </div>
-            </div>
-
             <div ng-if="$ctrl.currentNavItem == 'individualInsertion'" layout="row" layout-align="center center" layout-padding>
               <span class="">Código:</span>
               <input type="text" class="aliquot-lot-input" flex placeholder="Aliquota" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)"/>
@@ -105,6 +92,17 @@
                   <md-tooltip md-direction="down">Adicionar</md-tooltip>
                   <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
                 </md-button>
+              </div>
+            </div>
+
+            <div layout="row" >
+              <div layout="column" flex="20">
+                <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet"></otus-sample-transportation-lot-aliquots-chart>
+              </div>
+              <div layout="column" style="height: 200px;" flex>
+                <md-content>
+                  <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lotDataSet" flex></otus-sample-transportation-lot-chart-subtitle-table>
+                </md-content>
               </div>
             </div>
 
