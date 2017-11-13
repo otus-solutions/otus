@@ -51,8 +51,11 @@
     }
 
     function onInit() {
-      self.collectedTubes = [];
+      self.collectedTubes = ParticipantLaboratoryService.getList();
       _buildDialogs();
+      self.rn = ParticipantLaboratoryService.getSelectedParticipant().$$state.value.recruitmentNumber;
+
+
     }
 
     function changeState(moment) {
@@ -65,8 +68,13 @@
     }
 
     function finish() {
+
+      console.log(JSON.stringify(self.collectedTubes));
+
       $mdDialog.show(confirmFinish).then(function() {
-        ParticipantLaboratoryService.updateLaboratoryParticipant().then(function() {
+        //TODO: REFATORAR
+
+        ParticipantLaboratoryService.updateLaboratoryParticipant(self.collectedTubes).then(function() {
           self.labParticipant.updateTubeList();
           $mdToast.show(
              $mdToast.simple()

@@ -12,9 +12,9 @@
     });
 
   controller.$inject = [
-      'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
-      '$element',
-      '$mdToast'
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    '$element',
+    '$mdToast'
   ];
 
   function controller(ParticipantLaboratoryService, $element, $mdToast) {
@@ -50,6 +50,7 @@
         if (foundTube) {
           if (!foundTube.tubeCollectionData.isCollected) {
             foundTube.collect();
+            ParticipantLaboratoryService.setList(foundTube);
           } else {
             toastDuplicated(tubeCode);
           }

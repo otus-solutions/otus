@@ -31,9 +31,13 @@
     self.getLoggedUser = getLoggedUser;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.setList = setList;
+    self.getList = getList;
+    // self.getNewTubes = getNewTubes;
 
     function _init() {
       _laboratoryConfiguration = null;
+      self.list = [];
    }
 
     function onParticipantSelected(listener) {
@@ -102,8 +106,9 @@
       return ContextService.getCurrentUser();
     }
 
-    function updateLaboratoryParticipant() {
-      return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(_participantLaboratory));
+    function updateLaboratoryParticipant(updateStructure) {
+      return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(updateStructure));
+      // return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(_participantLaboratory));
     }
 
     function updateAliquots(updateStructure) {
@@ -112,6 +117,16 @@
 
     function generateLabels() {
       return LaboratoryLabelFactory.create(self.participant, angular.copy(_participantLaboratory));
+    }
+
+    function setList(tube){
+      console.log(tube);
+      self.list.push(tube);
+    }
+
+    function getList() {
+      return self.list;
+
     }
   }
 }());
