@@ -165,3 +165,23 @@ md-input-container.input-container-lot-margin{
 .md-subheader.left-alignment{
   text-align: left;
 }
+
+.rotate-180-deg,
+.reverse-rotate-180-deg {
+  -webkit-transition: 0.5s ease all;
+  -moz-transition: 0.5s ease all;
+  -o-transition: 0.5s ease all;
+  transition: 0.5s ease all;
+}
+.rotate-180-deg {
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.reverse-rotate-180-deg {
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+}

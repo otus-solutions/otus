@@ -9,14 +9,16 @@
     });
 
   Controller.$inject = [
+    '$q',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.laboratory.core.EventService',
     '$scope'
   ];
 
-  function Controller(ParticipantLaboratoryService, LoadingScreenService, EventService, $scope) {
+  function Controller($q, ParticipantLaboratoryService, LoadingScreenService, EventService, $scope) {
     var self = this;
+    var PubSub = EventService.pubSub;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -37,6 +39,7 @@
       EventService.onParticipantSelected(_loadSelectedParticipant);
       self.hasLaboratory = false;
       ParticipantLaboratoryService.onParticipantSelected(_setupLaboratory);
+      PubSub.subscribe('refresh-laboratory-participant',_setupLaboratory);
       _setupLaboratory();
     }
 
