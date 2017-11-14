@@ -26,6 +26,7 @@
 
     function onInit() {
       $element.find('input').focus();
+      ParticipantLaboratoryService.setOlderTubeList(self.tubeList);
     }
 
     function toastError(tubeCode) {
@@ -50,7 +51,6 @@
         if (foundTube) {
           if (!foundTube.tubeCollectionData.isCollected) {
             foundTube.collect();
-            ParticipantLaboratoryService.setList(foundTube);
           } else {
             toastDuplicated(tubeCode);
           }

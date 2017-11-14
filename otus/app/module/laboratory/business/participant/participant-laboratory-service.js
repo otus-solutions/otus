@@ -31,14 +31,16 @@
     self.getLoggedUser = getLoggedUser;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
-    self.setList = setList;
-    self.getList = getList;
-    // self.getNewTubes = getNewTubes;
+    self.updateTubes = updateTubes;
+    self.getListTubes = getListTubes;
+    self.setOlderTubeList = setOlderTubeList;
+    var _oldTubeList = [];
+
 
     function _init() {
       _laboratoryConfiguration = null;
-      self.list = [];
-   }
+      self.listTubes = [];
+    }
 
     function onParticipantSelected(listener) {
       EventService.onParticipantSelected(listener);
@@ -54,7 +56,7 @@
               return LaboratoryRepositoryService
                 .initializeLaboratory(participant)
                 .then(function(laboratory) {
-                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(),self.participant);
+                  _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(), self.participant);
                   request.resolve(laboratory);
                 });
             });
@@ -74,7 +76,7 @@
                 .then(function(laboratory) {
                   self.participant = participant;
                   if (laboratory !== 'null') {
-                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(),self.participant);
+                    _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(), self.participant);
                     request.resolve(true);
                   } else {
                     request.resolve(false);
@@ -107,8 +109,11 @@
     }
 
     function updateLaboratoryParticipant(updateStructure) {
-      return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(updateStructure));
-      // return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(_participantLaboratory));
+      return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(_participantLaboratory));
+    }
+
+    function updateTubes(updateStructure) {
+      return LaboratoryRepositoryService.updateTubes(JSON.stringify(updateStructure));
     }
 
     function updateAliquots(updateStructure) {
@@ -119,14 +124,23 @@
       return LaboratoryLabelFactory.create(self.participant, angular.copy(_participantLaboratory));
     }
 
-    function setList(tube){
-      console.log(tube);
-      self.list.push(tube);
+    function setOlderTubeList(tubeList) {
+      _oldTubeList = angular.copy(tubeList);
     }
 
-    function getList() {
-      return self.list;
+    function getListTubes() {
+      var _array = []
+      _participantLaboratory.tubes.forEach(function(tubeList) {
+        _oldTubeList.forEach(function(oldTube) {
+          if(tubeList.code === oldTube.code){
+            if(!angular.equals(tubeList,oldTube)){
+              _array.push(tubeList);
+            }
+          }
+        });
+      });
 
+      return _array;
     }
   }
 }());

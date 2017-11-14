@@ -20,6 +20,7 @@
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.updateTubes = updateTubes;
 
     //Laboratory Configuration Methods
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
@@ -55,6 +56,10 @@
 
     function updateAliquots(updateStructure) {
       return LaboratoryCollectionService.updateAliquots(updateStructure);
+    }
+
+    function updateTubes(updateStructure) {
+      return LaboratoryCollectionService.updateTubes(updateStructure);
     }
 
     function getLaboratoryDescriptors() {

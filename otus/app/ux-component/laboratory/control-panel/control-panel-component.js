@@ -51,11 +51,7 @@
     }
 
     function onInit() {
-      self.collectedTubes = ParticipantLaboratoryService.getList();
       _buildDialogs();
-      self.rn = ParticipantLaboratoryService.getSelectedParticipant().$$state.value.recruitmentNumber;
-
-
     }
 
     function changeState(moment) {
@@ -68,24 +64,26 @@
     }
 
     function finish() {
-
-      console.log(JSON.stringify(self.collectedTubes));
-
+      self.collectedTubes = ParticipantLaboratoryService.getListTubes();
+      console.log(self.collectedTubes);
+      var _array = {};
+      _array.tubes = []
+      self.collectedTubes.forEach(function(tube) {
+        _array.tubes.push(JSON.stringify(tube));
+      });
       $mdDialog.show(confirmFinish).then(function() {
-        //TODO: REFATORAR
-
-        ParticipantLaboratoryService.updateLaboratoryParticipant(self.collectedTubes).then(function() {
+          ParticipantLaboratoryService.updateTubes(_array).then(function() {
           self.labParticipant.updateTubeList();
           $mdToast.show(
              $mdToast.simple()
              .textContent('Registrado com sucesso!')
-             .hideDelay(1000)
+             .hideDelay(3000)
           );
         }, function(e) {
           $mdToast.show(
             $mdToast.simple()
             .textContent('Falha ao registrar coleta')
-            .hideDelay(1000)
+            .hideDelay(3000)
           );
         });
       });
