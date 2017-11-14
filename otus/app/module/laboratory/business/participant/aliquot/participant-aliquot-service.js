@@ -17,7 +17,7 @@
 
     self.buildMomentTypeList = buildMomentTypeList;
     self.getMomentTypeAliquot = getMomentTypeAliquot;
-    self.fieldsChanged = fieldsChanged;
+    self.areFieldsChanged = areFieldsChanged;
     self.aliquotsWithErrors = aliquotsWithErrors;
     self.populateAliquotsArray = populateAliquotsArray;
     self.getNewAliquots = getNewAliquots;
@@ -26,8 +26,8 @@
     function updateAliquots(updateStructure, fakeMe) {
       return ParticipantLaboratoryService.updateAliquots(updateStructure);
     }
-
-    function fieldsChanged(momentType){
+    
+    function areFieldsChanged(momentType){
       var changed = false;
       var originalAliquots = momentType.originalExams.concat(momentType.originalStores);
       var newAliquots = momentType.exams.concat(momentType.stores);

@@ -44,6 +44,8 @@
     <script src="node_modules/angular-resource/angular-resource.min.js"></script>
     <!-- ************************************* Angular Material ************************************* -->
     <script src="node_modules/angular-material/angular-material.min.js"></script>
+    <!-- ************************************* Chart.js ************************************* -->
+    <script src="node_modules/chart.js/dist/Chart.min.js"></script>
     <!-- ************************************* Lokijs ************************************* -->
     <script src="node_modules/lokijs/build/lokijs.min.js"></script>
     <script src="node_modules/lokijs/build/loki-indexed-adapter.min.js"></script>
@@ -175,6 +177,7 @@
   <script src="app/deploy/rest/otus-api/otus-api-service.js"></script>
   <script src="app/deploy/rest/otus-api/activity/activity-rest-service.js"></script>
   <script src="app/deploy/rest/otus-api/configuration/configuration-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/field-center/field-center-rest-service.js"></script>
   <script src="app/deploy/rest/otus-api/installer/installer-rest-service.js"></script>
   <script src="app/deploy/rest/otus-api/participant/participant-rest-service.js"></script>
   <script src="app/deploy/rest/otus-api/survey/survey-rest-service.js"></script>
@@ -184,6 +187,7 @@
   <script src="app/deploy/rest/otus-api/user/user-rest-service.js"></script>
   <script src="app/deploy/rest/otus-api/laboratory/laboratory-rest-service.js"></script>
   <script src="app/deploy/rest/otus-api/laboratory/sampleTransport/sample-transport-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/extraction/token-rest-service.js"></script>
   <!-- # Deploy > State -->
   <script src="app/deploy/state/state-configuration.js"></script>
   <script src="app/deploy/state/access/access-state-provider.js"></script>
@@ -382,6 +386,7 @@
   <script src="app/ux-component/participant-dashboard-toolbar/participant-dashboard-toolbar-component.js"></script>
   <script src="app/ux-component/dashboard/dashboard-component.js"></script>
   <script src="app/ux-component/dashboard-display/dashboard-display-component.js"></script>
+  <script src="app/ux-component/display-token/display-token-component.js"></script>
   <script src="app/ux-component/dashboard-home-display/dashboard-home-display-component.js"></script>
   <script src="app/ux-component/dashboard-participant-box/dashboard-participant-box-component.js"></script>
   <script src="app/ux-component/dashboard-sidenav/dashboard-sidenav-component.js"></script>
@@ -394,12 +399,16 @@
   <script src="app/ux-component/sample-transportation/manager-list/manager-toolbar/sample-transportation-manager-toolbar-component.js"></script>
   <script src="app/ux-component/sample-transportation/manager-list/lot-info-sidenav/lot-info-sidenav-component.js"></script>
   <script src="app/ux-component/sample-transportation/manager-list/lot-add-button/lot-add-button-component.js"></script>
+  <script src="app/ux-component/sample-transportation/aliquots-chart-subtitle-table/chart-subtitle-table-component.js"></script>
+  <script src="app/ux-component/sample-transportation/aliquots-chart/sample-transportation-lot-aliquots-chart-componete.js"></script>
   <script src="app/ux-component/sample-transportation/lot-info-manager/sample-transportation-lot-info-manager-component.js"></script>
   <script src="app/ux-component/sample-transportation/lot-info-manager/manager-toolbar/lot-info-manager-toolbar-component.js"></script>
   <script src="app/ux-component/sample-transportation/lot-info-manager/display/lot-info-manager-display-component.js"></script>
   <script src="app/ux-component/installer/initial-config-controller.js"></script>
   <script src="app/ux-component/paper-activity-adder/paper-activity-adder-component.js"></script>
 
+     <!--  dynamic-data-table  -->
+  <script src="app/ux-component/dynamic-data-table/dynamic-data-table-component.js"></script>
 
      <!--  laboratory-ux  -->
   <script src="app/ux-component/laboratory/laboratory-component.js"></script>
@@ -408,7 +417,7 @@
   <script src="app/ux-component/laboratory/main-panel/tube-list/tube-list-component.js"></script>
   <script src="app/ux-component/laboratory/main-panel/tube-list/tube-item/tube-item-component.js"></script>
   <script src="app/ux-component/laboratory/main-panel/tube-list/tube-item-view/tube-item-view-component.js"></script>
-  <script src="app/ux-component/laboratory/control-panel/fast-collection/fast-collection-component.js"></script></script>
+  <script src="app/ux-component/laboratory/control-panel/fast-collection/fast-collection-component.js"></script>
   <script src="app/ux-component/laboratory/main-panel/aliquots-view/aliquots-view-component.js"></script>
 
      <!--   ----    -->

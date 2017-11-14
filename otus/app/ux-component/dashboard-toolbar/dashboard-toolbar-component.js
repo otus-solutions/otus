@@ -22,6 +22,7 @@
 
     /* Public methods */
     self.selectParticipant = selectParticipant;
+
     self.$onInit = onInit;
 
     function selectParticipant(selectedParticipant) {
