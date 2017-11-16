@@ -18,128 +18,61 @@
     '$mdToast',
     '$mdDialog',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
-    'otusjs.laboratory.core.EventService',
+    'otusjs.otus.uxComponent.Publisher',
     'otusjs.otus.dashboard.core.ContextService'
   ];
 
-  function Controller($mdToast, $mdDialog, ParticipantLaboratoryService, EventService, dashboardContextService) {
+  function Controller($mdToast, $mdDialog, ParticipantLaboratoryService, Publisher, dashboardContextService) {
     var self = this;
-    
-    var PubSub = EventService.pubSub;
+
     var confirmRefresh;
-    
+
     self.$onInit = onInit;
-    
+
     self.refreshClick = refreshClick;
     self.rotateClass;
-    
-    
-    var confirmCancel;
-    var confirmFinish;
-    self.changeState = changeState;
-    self.finish = finish;
-    self.cancelCollect = cancelCollect;
-    self.cancelAndReturn = cancelAndReturn;
-
-
-    self.saveAliquots = saveAliquots;
-    self.cancelAliquots = cancelAliquots;
-
 
     function onInit() {
       self.rotateClass = "reverse-rotate-180-deg";
-      //self.collectedTubes = [];
       _buildDialogs();
     }
 
-    function refreshClick(){
-      $mdDialog.show(confirmRefresh).then(function () {
-        _refreshPage();
-      });
-    }
+    function refreshClick() {
+      var showMsg = false;
+      var currentState = 'main';
 
-    
-    function _refreshPage(){
-      PubSub.publish('refresh-laboratory-participant');
-    }
+      if (self.state === "coleta") {
+        currentState = "coleta";
 
-
-    function saveAliquots() {
-      self.callbackFunctions.saveAliquots();
-    }
-
-    function cancelAliquots() {
-      if (self.callbackFunctions.cancelAliquots()) {
-        self.cancelAndReturn();
-      } else {
-        self.labParticipant.reloadTubeList();
-        changeState('main');
-      }
-    }
-
-
-    function changeState(moment) {
-      if (moment != 'main') {
-        dashboardContextService.setChangedState(moment);
-      } else {
-        dashboardContextService.setChangedState();
-      }
-      self.state = moment;
-    }
-
-    function finish() {
-      $mdDialog.show(confirmFinish).then(function () {
-        ParticipantLaboratoryService.updateLaboratoryParticipant().then(function () {
-          self.labParticipant.updateTubeList();
-          $mdToast.show(
-            $mdToast.simple()
-              .textContent('Registrado com sucesso!')
-              .hideDelay(1000)
-          );
-        }, function (e) {
-          $mdToast.show(
-            $mdToast.simple()
-              .textContent('Falha ao registrar coleta')
-              .hideDelay(1000)
-          );
+        Publisher.publish('have-tubes-changed', function(result){
+          showMsg = result;
         });
-      });
+      } else if (self.state === "aliquots") {
+        currentState = "aliquots";
+        showMsg = self.callbackFunctions.haveAliquotsChanged();
+      }
+
+      if(showMsg){
+        $mdDialog.show(confirmRefresh).then(function () {
+          _refreshPage(currentState);
+        });
+      } else {
+        _refreshPage(currentState);
+      }
     }
 
-    function cancelAndReturn() {
-      $mdDialog.show(confirmCancel).then(function () {
-        self.labParticipant.reloadTubeList();
-        changeState('main');
-      });
-    }
 
-    function cancelCollect() {
-      $mdDialog.show(confirmCancel).then(function () {
-        self.labParticipant.reloadTubeList();
-      });
+    function _refreshPage(currentState) {
+      Publisher.publish('refresh-laboratory-participant', currentState);
     }
 
     function _buildDialogs() {
       confirmRefresh = $mdDialog.confirm()
-      .title('Confirmar a atualização do Laboratório:')
-      .textContent('Existem alterações não finalizadas que serão descartadas.')
-      .ariaLabel('Confirmar atualização do Laboratório')
-      .ok('Ok')
-      .cancel('Cancelar');
-      
-      // confirmCancel = $mdDialog.confirm()
-      //   .title('Confirmar cancelamento:')
-      //   .textContent('Alterações não finalizadas serão descartadas')
-      //   .ariaLabel('Confirmação de cancelamento')
-      //   .ok('Ok')
-      //   .cancel('Voltar');
-
-      // confirmFinish = $mdDialog.confirm()
-      //   .title('Confirmar finalização')
-      //   .textContent('Deseja salvar as alterações?')
-      //   .ariaLabel('Confirmação de finalização')
-      //   .ok('Ok')
-      //   .cancel('Voltar');
+        .title('Confirmar a atualização do Laboratório:')
+        .textContent('Existem alterações não finalizadas que serão descartadas.')
+        .ariaLabel('Confirmar atualização do Laboratório')
+        .ok('Ok')
+        .cancel('Cancelar');
     }
 
     return self;

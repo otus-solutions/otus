@@ -50,7 +50,7 @@
     function onInit() {
       _buildMomentTypeList();
       
-      self.callbackFunctions.cancelAliquots = _cancelAliquots;
+      self.callbackFunctions.haveAliquotsChanged = _haveAliquotsChanged;
       self.callbackFunctions.saveAliquots = _saveAliquots;
       
       var codeConfiguration = LaboratoryConfigurationService.getCodeConfiguration();
@@ -88,7 +88,7 @@
       self.momentTypeList = AliquotTubeService.buildMomentTypeList(self.participantLaboratory.tubes);
     }
 
-    function _cancelAliquots() {
+    function _haveAliquotsChanged() {
       return AliquotTubeService.areFieldsChanged(self.selectedMomentType);
     }
     
