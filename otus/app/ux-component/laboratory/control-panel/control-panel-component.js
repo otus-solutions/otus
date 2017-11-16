@@ -68,7 +68,7 @@
       var _array = {};
       _array.tubes = []
       self.collectedTubes.forEach(function(tube) {
-        _array.tubes.push(JSON.stringify(tube));
+        _array.tubes.push(tube);
       });
       $mdDialog.show(confirmFinish).then(function() {
           ParticipantLaboratoryService.updateTubeCollectionData(_array).then(function() {

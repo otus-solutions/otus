@@ -120,15 +120,16 @@
       return deferred.promise;
     }
     /**
-     * initialize laboratories.
+     * Update Collection Data of changed tubes
      * @param {(object)} recruitmentNumber - the recruitment number of participant
+     * @param {(object)} updateStructure - the list of changed tubes to be updated
      * @returns {Promise} promise
      * @memberof LaboratoryRemoteStorageService
      */
-    function updateTubeCollectionData(recruitmentNumber, participantLaboratory) {
+    function updateTubeCollectionData(recruitmentNumber, updateStructure) {
       var deferred = $q.defer();
       LaboratoryRestService
-         .updateTubeCollectionData(recruitmentNumber, participantLaboratory)
+         .updateTubeCollectionData(recruitmentNumber, updateStructure)
          .then(function(response){
             deferred.resolve(response);
          }, function(e){

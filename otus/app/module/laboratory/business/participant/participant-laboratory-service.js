@@ -108,7 +108,7 @@
       return ContextService.getCurrentUser();
     }
 
-    function updateLaboratoryParticipant(updateStructure) {
+    function updateLaboratoryParticipant() {
       return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(_participantLaboratory));
     }
 
@@ -125,7 +125,11 @@
     }
 
     function setOlderTubeList(tubeList) {
-      if(tubeList.length>0){
+      if(
+        tubeList &&
+        Object.prototype.toString.call(tubeList) === '[object Array]' &&
+        tubeList.length > 0
+      ){
         _oldTubeList = angular.copy(tubeList);
       } else {
         _oldTubeList = angular.copy(_participantLaboratory.tubes);

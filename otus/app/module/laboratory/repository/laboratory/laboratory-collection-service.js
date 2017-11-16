@@ -136,7 +136,7 @@
     }
 
     /**
-     * Updates laboratory in collection.
+     * Update laboratory in collection.
      * @param {(object)} laboratory - the laboratory to be updated
      * @memberof LaboratoryCollectionService
      */
@@ -159,8 +159,8 @@
     }
 
     /**
-     * Updates laboratory in collection.
-     * @param {(object)} persistanceStructure - the laboratory to be updated
+     * Update Collection Data of changed tubes
+     * @param {(object)} updateStructure - the list of changed tubes to be updated
      * @memberof LaboratoryCollectionService
      */
     function updateTubeCollectionData(updateStructure) {
@@ -170,7 +170,7 @@
         .whenReady()
         .then(function(remoteStorage) {
           remoteStorage
-            .updateTubes(_participant.recruitmentNumber, updateStructure)
+            .updateTubeCollectionData(_participant.recruitmentNumber, updateStructure)
             .then(function(remoteLaboratory) {
               request.resolve();
             }, function(e){
