@@ -65,7 +65,6 @@
 
     function finish() {
       self.collectedTubes = ParticipantLaboratoryService.getListTubes();
-      console.log(self.collectedTubes);
       var _array = {};
       _array.tubes = []
       self.collectedTubes.forEach(function(tube) {
@@ -74,6 +73,7 @@
       $mdDialog.show(confirmFinish).then(function() {
           ParticipantLaboratoryService.updateTubes(_array).then(function() {
           self.labParticipant.updateTubeList();
+          ParticipantLaboratoryService.setOlderTubeList();
           $mdToast.show(
              $mdToast.simple()
              .textContent('Registrado com sucesso!')

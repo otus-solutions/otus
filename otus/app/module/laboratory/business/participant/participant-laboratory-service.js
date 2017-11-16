@@ -125,7 +125,12 @@
     }
 
     function setOlderTubeList(tubeList) {
-      _oldTubeList = angular.copy(tubeList);
+      if(tubeList.length>0){
+        _oldTubeList = angular.copy(tubeList);
+      } else {
+        _oldTubeList = angular.copy(_participantLaboratory.tubes);
+
+      }
     }
 
     function getListTubes() {
