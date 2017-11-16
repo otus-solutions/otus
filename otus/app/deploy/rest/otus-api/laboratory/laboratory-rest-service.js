@@ -63,6 +63,15 @@
       }, participantLaboratory).$promise;
     }
 
+    function updateTubes(recruitmentNumber, participantLaboratory) {
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.updateTubeCollectionData({
+        rn: recruitmentNumber
+      }, participantLaboratory).$promise;
+    }
+
     function updateAliquots(recruitmentNumber, persistanceStructure) {
       if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
