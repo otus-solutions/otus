@@ -170,7 +170,7 @@
         .whenReady()
         .then(function(remoteStorage) {
           remoteStorage
-            .updateTubeCollectionData(_participant.recruitmentNumber, updateStructure)
+            .updateTubes(_participant.recruitmentNumber, updateStructure)
             .then(function(remoteLaboratory) {
               request.resolve();
             }, function(e){
