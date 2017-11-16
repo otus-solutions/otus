@@ -21,6 +21,7 @@
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.updateTubeCollectionData = updateTubeCollectionData;
 
     /* Laboratory Configuration Methods*/
     self.getDescriptors = getDescriptors;
@@ -59,6 +60,15 @@
         throw new Error('REST resource is no initialized.');
       }
       return _participantRest.update({
+        rn: recruitmentNumber
+      }, participantLaboratory).$promise;
+    }
+
+    function updateTubeCollectionData(recruitmentNumber, participantLaboratory) {
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.updateTubeCollectionData({
         rn: recruitmentNumber
       }, participantLaboratory).$promise;
     }

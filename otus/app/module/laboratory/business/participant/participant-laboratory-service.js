@@ -31,7 +31,7 @@
     self.getLoggedUser = getLoggedUser;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
-    self.updateTubes = updateTubes;
+    self.updateTubeCollectionData = updateTubeCollectionData;
     self.getListTubes = getListTubes;
     self.setOlderTubeList = setOlderTubeList;
     var _oldTubeList = [];
@@ -112,8 +112,8 @@
       return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(_participantLaboratory));
     }
 
-    function updateTubes(updateStructure) {
-      return LaboratoryRepositoryService.updateTubes(JSON.stringify(updateStructure));
+    function updateTubeCollectionData(updateStructure) {
+      return LaboratoryRepositoryService.updateTubeCollectionData(JSON.stringify(updateStructure));
     }
 
     function updateAliquots(updateStructure) {

@@ -35,7 +35,7 @@
     self.listAll = listAll;
     self.initializeLaboratory = initializeLaboratory;
     self.update = update;
-    self.updateTubes = updateTubes;
+    self.updateTubeCollectionData = updateTubeCollectionData;
     self.updateAliquots = updateAliquots;
     self.getLaboratory = getLaboratory;
     self.getDescriptors = getDescriptors;
@@ -163,7 +163,7 @@
      * @param {(object)} persistanceStructure - the laboratory to be updated
      * @memberof LaboratoryCollectionService
      */
-    function updateTubes(updateStructure) {
+    function updateTubeCollectionData(updateStructure) {
       var request = $q.defer();
 
       _remoteStorage

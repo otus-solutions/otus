@@ -36,6 +36,7 @@
     self.getLaboratory = getLaboratory;
     self.update = update;
     self.updateAliquots = updateAliquots;
+    self.updateTubeCollectionData = updateTubeCollectionData;
 
 
     //Laboratory Configuration Methods
@@ -111,6 +112,23 @@
       var deferred = $q.defer();
       LaboratoryRestService
          .updateLaboratoryParticipant(recruitmentNumber, participantLaboratory)
+         .then(function(response){
+            deferred.resolve(response);
+         }, function(e){
+            deferred.reject(e);
+         });
+      return deferred.promise;
+    }
+    /**
+     * initialize laboratories.
+     * @param {(object)} recruitmentNumber - the recruitment number of participant
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function updateTubeCollectionData(recruitmentNumber, participantLaboratory) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+         .updateTubeCollectionData(recruitmentNumber, participantLaboratory)
          .then(function(response){
             deferred.resolve(response);
          }, function(e){

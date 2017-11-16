@@ -71,7 +71,7 @@
         _array.tubes.push(JSON.stringify(tube));
       });
       $mdDialog.show(confirmFinish).then(function() {
-          ParticipantLaboratoryService.updateTubes(_array).then(function() {
+          ParticipantLaboratoryService.updateTubeCollectionData(_array).then(function() {
           self.labParticipant.updateTubeList();
           ParticipantLaboratoryService.setOlderTubeList();
           $mdToast.show(
