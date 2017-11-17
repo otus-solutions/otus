@@ -51,7 +51,6 @@
     }
 
     function onInit() {
-      self.collectedTubes = [];
       _buildDialogs();
     }
 
@@ -65,19 +64,26 @@
     }
 
     function finish() {
+      self.collectedTubes = ParticipantLaboratoryService.getListTubes();
+      var _array = {};
+      _array.tubes = []
+      self.collectedTubes.forEach(function(tube) {
+        _array.tubes.push(tube);
+      });
       $mdDialog.show(confirmFinish).then(function() {
-        ParticipantLaboratoryService.updateLaboratoryParticipant().then(function() {
+          ParticipantLaboratoryService.updateTubeCollectionData(_array).then(function() {
           self.labParticipant.updateTubeList();
+          ParticipantLaboratoryService.setOlderTubeList();
           $mdToast.show(
              $mdToast.simple()
              .textContent('Registrado com sucesso!')
-             .hideDelay(1000)
+             .hideDelay(3000)
           );
         }, function(e) {
           $mdToast.show(
             $mdToast.simple()
             .textContent('Falha ao registrar coleta')
-            .hideDelay(1000)
+            .hideDelay(3000)
           );
         });
       });
