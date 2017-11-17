@@ -25,6 +25,8 @@
     self.getSelectedActivities = getSelectedActivities;
     self.getSelectedParticipant = getSelectedParticipant;
     self.listActivityCheckers = listActivityCheckers;
+    self.setActivitiesSelection = setActivitiesSelection
+    self.getActivitiesSelection = getActivitiesSelection
 
     function add(surveys) {
       var loggedUser = ContextService.getLoggedUser();
@@ -32,12 +34,20 @@
       getSelectedParticipant()
       .then(function(selectedParticipant) {
         if (_paperActivityCheckerData) {
-          ActivityRepositoryService.createFromPaperActivity(surveys, loggedUser, selectedParticipant, _paperActivityCheckerData);
+          ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData);
           _paperActivityCheckerData = null;
         } else {
-          ActivityRepositoryService.createFromSurvey(surveys, loggedUser, selectedParticipant);
+          ActivityRepositoryService.createFromSurvey(self.listSurveys, loggedUser, selectedParticipant);
         }
       });
+    }
+
+    function setActivitiesSelection(surveys) {
+      self.listSurveys = surveys;
+    }
+
+    function getActivitiesSelection() {
+      return self.listSurveys;
     }
 
     function listAll() {

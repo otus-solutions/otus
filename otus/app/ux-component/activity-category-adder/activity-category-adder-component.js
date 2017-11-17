@@ -3,9 +3,9 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusActivityAdder', {
+    .component('otusActivityCategoryAdder', {
       controller: Controller,
-      templateUrl: 'app/ux-component/activity-adder/activity-adder-template.html'
+      templateUrl: 'app/ux-component/activity-category-adder/activity-category-adder-template.html'
     });
 
   Controller.$inject = [
@@ -17,7 +17,6 @@
   function Controller(ActivityService, ApplicationStateService, $mdDialog) {
     var self = this;
     var _selectedActivities = [];
-    var _categories = false;
     var _exitDialog;
 
 
@@ -35,13 +34,9 @@
     }
 
     function addActivities() {
-      if(_selectedActivities.length>0){
-        ActivityService.setActivitiesSelection(_selectedActivities);
-        _selectedActivities = [];
-        ApplicationStateService.activateActivityCategories();
-      } else {
-        $mdDialog.show(_exitDialog);
-      }
+        ActivityService.add();
+        ApplicationStateService.activateParticipantActivities();
+
     }
 
     function catchActivity(activity) {
