@@ -22,7 +22,7 @@
 
     /* Public methods */
     self.addActivities = addActivities;
-    self.catchActivity = catchActivity;
+    self.catchCategory = catchCategory;
     _init();
 
     function _init() {
@@ -33,13 +33,14 @@
         .ok('Fechar');
     }
 
-    function addActivities() {
+    function addActivities(configuration) {
+        // ActivityService.updateConfiguration();
         ActivityService.add();
         ApplicationStateService.activateParticipantActivities();
 
     }
 
-    function catchActivity(activity) {
+    function catchCategory(activity) {
       var activityIndex = _selectedActivities.indexOf(activity);
 
       if (activityIndex !== -1) {

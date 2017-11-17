@@ -15,6 +15,9 @@
   function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService) {
     var self = this;
     var _paperActivityCheckerData = null;
+    var _updater;
+    self.activityConfigurations = new Object();
+
 
     /* Public methods */
     self.initializePaperActivityData = initializePaperActivityData;
@@ -25,25 +28,33 @@
     self.getSelectedActivities = getSelectedActivities;
     self.getSelectedParticipant = getSelectedParticipant;
     self.listActivityCheckers = listActivityCheckers;
-    self.setActivitiesSelection = setActivitiesSelection
-    self.getActivitiesSelection = getActivitiesSelection
+    self.setActivitiesSelection = setActivitiesSelection;
+    self.getActivitiesSelection = getActivitiesSelection;
+    self.getCategories = getCategories;
 
-    function add(surveys) {
+    function add() {
       var loggedUser = ContextService.getLoggedUser();
 
       getSelectedParticipant()
       .then(function(selectedParticipant) {
         if (_paperActivityCheckerData) {
-          ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData);
+          ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData, self.activityConfigurations);
           _paperActivityCheckerData = null;
         } else {
-          ActivityRepositoryService.createFromSurvey(self.listSurveys, loggedUser, selectedParticipant);
+          ActivityRepositoryService.createFromSurvey(self.listSurveys, loggedUser, selectedParticipant, self.activityConfigurations);
         }
       });
     }
 
+    function getCategories() {
+      return self.activityConfigurations;
+    }
+
     function setActivitiesSelection(surveys) {
       self.listSurveys = surveys;
+      self.listSurveys.forEach(function(template) {
+        self.activityConfigurations[template.surveyTemplate.identity.acronym] = {};
+      });
     }
 
     function getActivitiesSelection() {
