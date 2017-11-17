@@ -7,26 +7,25 @@
     </div>
 
     <div layout="row" layout-align="end center" flex style="padding-top: 12px">
-      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" callback-functions="$ctrl.callbackFunctions"
-      />
+      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" />
     </div>
   </div>
 
-  <div class="" layout="row" layout-xs="column" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'" flex>
+  <div class="" layout="row" layout-xs="column" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'"
+    flex>
     <div layout="row" layout-align="start center" flex>
-      <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAndReturn()">Voltar</md-button>
+      <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelTubeCollectionAndReturn()">Voltar</md-button>
       <md-button class="md-primary md-raised" aria-label="cancelar coleta" ng-click="$ctrl.cancelCollect()">Cancelar</md-button>
     </div>
     <div layout="row" layout-align="center center" layout-fill flex>
       <fast-collection tube-list="$ctrl.labParticipant.tubes"></fast-collection>
-      <md-button class="md-primary md-raised" aria-label="realizar coleta" ng-click="$ctrl.finish()">Salvar</md-button>
+      <md-button class="md-primary md-raised" aria-label="realizar coleta" ng-click="$ctrl.saveChangedTubes()">Salvar</md-button>
       <div flex-offset="5">
       </div>
     </div>
 
     <div layout="row" layout-align="end none" flex="20" style="padding-top: 12px">
-      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" callback-functions="$ctrl.callbackFunctions"
-      />
+      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" />
     </div>
   </div>
 
@@ -37,8 +36,7 @@
       <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-click="$ctrl.saveAliquots()">Salvar</md-button>
     </div>
     <div layout="row" layout-align="end center" flex style="padding-top: 12px">
-      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" callback-functions="$ctrl.callbackFunctions"
-      />
+      <laboratory-refresh-button state="$ctrl.state" />
     </div>
   </div>
 </div>

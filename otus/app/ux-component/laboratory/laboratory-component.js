@@ -23,16 +23,6 @@
     /* Public methods */
     self.$onInit = onInit;
     self.intializeLaboratory = intializeLaboratory;
-    self.callbackFunctions = {
-      saveAliquots: function() {
-        console.log('Function not implemented.');
-      },
-      haveAliquotsChanged: function() {
-        console.log('Function not implemented.');
-        return false;
-      }
-    };
-
 
     function onInit() {
       _loadSelectedParticipant();
@@ -41,8 +31,6 @@
       ParticipantLaboratoryService.onParticipantSelected(_setupLaboratory);
       Publisher.unsubscribe('refresh-laboratory-participant');
       Publisher.subscribe('refresh-laboratory-participant',_refreshLaboratory);
-      //TODO: Remove This
-      console.log(Publisher);
       _setupLaboratory();
     }
 

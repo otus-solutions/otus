@@ -8,8 +8,7 @@
       bindings: {
         state: '=',
         labParticipant: '=',
-        labels: '=',
-        callbackFunctions: '='
+        labels: '='
       },
       transclude: true,
       controller: controller
@@ -27,26 +26,35 @@
   function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService, Publisher) {
     var self = this;
     var confirmCancel;
+    var confirmAliquotingExitDialog;
     var confirmFinish;
     var hideDelayTime = 3000;
 
     self.$onInit = onInit;
     self.changeState = changeState;
-    self.finish = finish;
+    self.saveChangedTubes = saveChangedTubes;
     self.cancelCollect = cancelCollect;
-    self.cancelAndReturn = cancelAndReturn;
+    self.cancelTubeCollectionAndReturn = cancelTubeCollectionAndReturn;
 
 
     self.saveAliquots = saveAliquots;
     self.cancelAliquots = cancelAliquots;
 
     function saveAliquots(){
-      self.callbackFunctions.saveAliquots();
+      Publisher.publish('save-changed-aliquots');
     }
 
     function cancelAliquots(){
-      if(self.callbackFunctions.haveAliquotsChanged()){
-        self.cancelAndReturn();
+      var changedAliquots;
+      
+      Publisher.publish('have-aliquots-changed', function(result){
+        changedAliquots = result;
+      });
+      
+      if(changedAliquots){
+        $mdDialog.show(confirmAliquotingExitDialog).then(function() {
+          _returnMain();
+        });
       } else {
         _returnMain();
       }
@@ -57,31 +65,19 @@
     }
 
     function changeState(moment) {
-      // if(moment != 'main'){
-      //   dashboardContextService.setChangedState(moment);
-      // } else {
-      //   dashboardContextService.setChangedState();
-      // }
       Publisher.publish('refresh-laboratory-participant', moment);
       self.state = moment;
     }
-
-    function finish() {
-      self.collectedTubes = ParticipantLaboratoryService.getListTubes();
-      var _array = {};
-      _array.tubes = []
-      self.collectedTubes.forEach(function(tube) {
-        _array.tubes.push(tube);      
-      });
-
-      var changedTubes;
+    
+    function saveChangedTubes() {
+      var haveTubesChanged;
       
       Publisher.publish('have-tubes-changed', function(result){
-        changedTubes = result;
+        haveTubesChanged = result;
       });
 
-      if(changedTubes){
-        _finish();
+      if(haveTubesChanged){
+        _updateChangedTubes();
       } else {
         $mdToast.show(
           $mdToast.simple()
@@ -91,37 +87,34 @@
       }
     }
 
-    function _finish() {
+    function _updateChangedTubes() {
       var changedTubes;
+      var updateChangedTubesStructure = {
+        tubes: []
+      };
       
       Publisher.publish('get-changed-tubes', function(result){
         changedTubes = result;
       });
 
-      console.log('changedTubes',changedTubes);
+      changedTubes.forEach(function(tube) {
+        updateChangedTubesStructure.tubes.push(tube);
+      });
 
       $mdDialog.show(confirmFinish).then(function() {
-          ParticipantLaboratoryService.updateTubeCollectionData(_array).then(function() {
+        ParticipantLaboratoryService.updateTubeCollectionData(updateChangedTubesStructure).then(function() {
           self.labParticipant.updateTubeList();
-          ParticipantLaboratoryService.setOlderTubeList();
-          $mdToast.show(
-             $mdToast.simple()
-             .textContent('Registrado com sucesso!')
-             .hideDelay(hideDelayTime)
-          );
           Publisher.publish('fill-original-tube-list',self.labParticipant.tubes);
-        }, function(e) {
-          $mdToast.show(
-            $mdToast.simple()
-            .textContent('Falha ao registrar coleta')
-            .hideDelay(hideDelayTime)
-          );
+          Publisher.publish('refresh-laboratory-participant', 'coleta');
+          _showToastMsg('Registrado com sucesso!');
+        }).catch(function(e) {
+          _showToastMsg('Falha ao registrar coleta');
         });
       });
     }
 
 
-    function cancelAndReturn() {
+    function cancelTubeCollectionAndReturn() {
       var changedTubes;
       
       Publisher.publish('have-tubes-changed', function(result){
@@ -139,10 +132,8 @@
     
     function _returnMain(){
       LoadingScreenService.start();
-      
       _reloadTubeList();
       changeState('main');
-
       LoadingScreenService.finish();
     }
 
@@ -157,10 +148,11 @@
       if(changedTubes){
         $mdDialog.show(confirmCancel).then(function() {
           _reloadTubeList();
-          _undoneChangesMsg();
+          Publisher.publish('refresh-laboratory-participant', 'coleta');
+          _showToastMsg('As alterações foram desfeitas.');
         });
       } else {
-        _undoneChangesMsg();
+        _showToastMsg('As alterações foram desfeitas.');
       }
     }
 
@@ -169,10 +161,10 @@
       Publisher.publish('fill-original-tube-list',self.labParticipant.tubes);
     }
 
-    function _undoneChangesMsg(){
+    function _showToastMsg(msg){
       $mdToast.show(
         $mdToast.simple()
-        .textContent('As alterações foram desfeitas.')
+        .textContent(msg)
         .hideDelay(hideDelayTime)
      );
     }
@@ -184,6 +176,13 @@
         .ariaLabel('Confirmação de cancelamento')
         .ok('Ok')
         .cancel('Voltar');
+
+      confirmAliquotingExitDialog = $mdDialog.confirm()
+        .title('Descartar Alterações?')
+        .textContent('Alíquotas alteradas serão descartadas.')
+        .ariaLabel('Confirmação de cancelamento')
+        .ok('Continuar')
+        .cancel('Cancelar');
 
       confirmFinish = $mdDialog.confirm()
         .title('Confirmar finalização')

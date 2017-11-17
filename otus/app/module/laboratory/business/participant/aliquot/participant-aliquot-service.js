@@ -29,17 +29,20 @@
     
     function areFieldsChanged(momentType){
       var changed = false;
-      var originalAliquots = momentType.originalExams.concat(momentType.originalStores);
-      var newAliquots = momentType.exams.concat(momentType.stores);
 
-      for (var i = 0; i < newAliquots.length; i++) {
-        if(originalAliquots[i].tubeCode != newAliquots[i].tubeCode
-        || originalAliquots[i].aliquotCode != newAliquots[i].aliquotCode){
-          changed = true;
-          break;
+      if(momentType){
+        var originalAliquots = momentType.originalExams.concat(momentType.originalStores);
+        var newAliquots = momentType.exams.concat(momentType.stores);
+
+        for (var i = 0; i < newAliquots.length; i++) {
+          if(originalAliquots[i].tubeCode != newAliquots[i].tubeCode
+          || originalAliquots[i].aliquotCode != newAliquots[i].aliquotCode){
+            changed = true;
+            break;
+          }
         }
       }
-
+      
       return changed;
     }
 

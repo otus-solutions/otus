@@ -6,10 +6,7 @@
     .component('laboratoryRefreshButton', {
       templateUrl: 'app/ux-component/laboratory/control-panel/refresh-button/laboratory-refresh-button-template.html',
       bindings: {
-        state: '=',
-        labParticipant: '=',
-        labels: '=',
-        callbackFunctions: '='
+        state: '='
       },
       controller: Controller
     });
@@ -44,15 +41,18 @@
       if (self.state === "coleta") {
         currentState = "coleta";
 
-        Publisher.publish('have-tubes-changed', function(result){
+        Publisher.publish('have-tubes-changed', function (result) {
           showMsg = result;
         });
       } else if (self.state === "aliquots") {
         currentState = "aliquots";
-        showMsg = self.callbackFunctions.haveAliquotsChanged();
+
+        Publisher.publish('have-aliquots-changed', function (result) {
+          showMsg = result;
+        });
       }
 
-      if(showMsg){
+      if (showMsg) {
         $mdDialog.show(confirmRefresh).then(function () {
           _refreshPage(currentState);
         });
@@ -60,7 +60,6 @@
         _refreshPage(currentState);
       }
     }
-
 
     function _refreshPage(currentState) {
       Publisher.publish('refresh-laboratory-participant', currentState);

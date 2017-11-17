@@ -33,9 +33,6 @@
     function onInit() {
       _getMoments();
       self.fillOriginalTubeList();
-      console.log(self.tubeList);
-      console.log(_originalTubeList);
-      console.log(self)
 
       Publisher.unsubscribe('have-tubes-changed');
       Publisher.subscribe('have-tubes-changed', haveTubesChanged);
