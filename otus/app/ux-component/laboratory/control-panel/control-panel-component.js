@@ -36,9 +36,6 @@
     self.cancelCollect = cancelCollect;
     self.cancelAndReturn = cancelAndReturn;
 
-    // Publisher.publish('have-tubes-changed', function(result){
-    //   showMsg = result;
-    // });
 
     self.saveAliquots = saveAliquots;
     self.cancelAliquots = cancelAliquots;
@@ -56,7 +53,6 @@
     }
 
     function onInit() {
-      self.collectedTubes = [];
       _buildDialogs();
     }
 
@@ -71,6 +67,13 @@
     }
 
     function finish() {
+      self.collectedTubes = ParticipantLaboratoryService.getListTubes();
+      var _array = {};
+      _array.tubes = []
+      self.collectedTubes.forEach(function(tube) {
+        _array.tubes.push(tube);      
+      });
+
       var changedTubes;
       
       Publisher.publish('have-tubes-changed', function(result){
@@ -98,8 +101,9 @@
       console.log('changedTubes',changedTubes);
 
       $mdDialog.show(confirmFinish).then(function() {
-        ParticipantLaboratoryService.updateLaboratoryParticipant().then(function() {
+          ParticipantLaboratoryService.updateTubeCollectionData(_array).then(function() {
           self.labParticipant.updateTubeList();
+          ParticipantLaboratoryService.setOlderTubeList();
           $mdToast.show(
              $mdToast.simple()
              .textContent('Registrado com sucesso!')

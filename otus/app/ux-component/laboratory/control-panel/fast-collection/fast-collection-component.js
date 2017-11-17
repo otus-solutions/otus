@@ -12,9 +12,9 @@
     });
 
   controller.$inject = [
-      'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
-      '$element',
-      '$mdToast'
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    '$element',
+    '$mdToast'
   ];
 
   function controller(ParticipantLaboratoryService, $element, $mdToast) {
@@ -26,6 +26,7 @@
 
     function onInit() {
       $element.find('input').focus();
+      ParticipantLaboratoryService.setOlderTubeList(self.tubeList);
     }
 
     function toastError(tubeCode) {
