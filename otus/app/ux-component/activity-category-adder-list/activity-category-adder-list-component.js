@@ -31,17 +31,8 @@
     function _loadActivities() {
       self.activities = ActivityService.getActivitiesSelection();
       self.config = ActivityService.getCategories();
-      self.categories = [
-        {"name":"C0","objectType":"ActivityCategory","label":"breno","deleted":false,"isDefault":false},
-        {"name":"C1","objectType":"ActivityCategory","label":"teste","deleted":false,"isDefault":false},
-        {"name":"C2","objectType":"ActivityCategory","label":"breno","deleted":false,"isDefault":false},
-        {"name":"C3","objectType":"ActivityCategory","label":"normal","deleted":false,"isDefault":true},
-        {"name":"C4","objectType":"ActivityCategory","label":"breno","deleted":false,"isDefault":false},
-        {"name":"C5","objectType":"ActivityCategory","label":"breno","deleted":false,"isDefault":false},
-        {"name":"C6","objectType":"ActivityCategory","label":"breno","deleted":false,"isDefault":false},
-        {"name":"C7","objectType":"ActivityCategory","label":"breno","deleted":false,"isDefault":false},
-        {"name":"C8","objectType":"ActivityCategory","label":"breno","deleted":false,"isDefault":false}
-      ];
+      self.categories = ActivityService.listAllConfiguration();
+     
       if(self.activities === undefined || self.activities.length<1){
         returnToParticipantActivities();
       }

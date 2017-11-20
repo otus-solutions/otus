@@ -33,6 +33,7 @@
     self.resetParticipantInUse = resetParticipantInUse;
     self.insert = insert;
     self.listAll = listAll;
+    self.listAllConfiguration = listAllConfiguration;
     self.update = update;
 
     /**
@@ -114,12 +115,30 @@
         .whenReady()
         .then(function(remoteStorage) {
           return remoteStorage
-            .find({
+            .findActivities({
               recruitmentNumber: _participant.recruitmentNumber
             })
             .then(function(activities) {
               ActivityStorageService.clear();
               var localData = ActivityStorageService.insert(activities);
+              request.resolve(localData);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function listAllConfiguration() {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .findCategories()
+            .then(function (activityConfiguratin) {
+              ActivityStorageService.clear();
+              var localData = ActivityStorageService.insert(activityConfiguratin);
               request.resolve(localData);
             });
         });

@@ -11,7 +11,8 @@
 
   Service.$inject = [
     '$q',
-    'otusjs.deploy.ActivityRestService'
+    'otusjs.deploy.ActivityRestService',
+    'otusjs.deploy.ActivityConfigurationRestService'
   ];
 
   /**
@@ -26,13 +27,14 @@
    * @namespace ActivityRemoteStorage
    * @memberof Services
    */
-  function Service($q, ActivityRestService) {
+  function Service($q, ActivityRestService, ActivityConfigurationRestService) {
     var self = this;
 
     /* Public methods */
     self.insert = insert;
     self.update = update;
-    self.find = find;
+    self.findActivities = findActivities;
+    self.findCategories = findCategories;
 
     /**
      * Adds activities to collection.
@@ -77,8 +79,19 @@
      * @returns {Promise} promise with activity or activities updated when resolved
      * @memberof ActivityRemoteStorageService
      */
-    function find(query) {
+    function findActivities(query) {
       return ActivityRestService.list(query.recruitmentNumber);
+    }
+
+    /**
+     * Finds categories in collection. An object-like query can be passed to filter
+     * the results.
+     * @param {object} query - the query object to be applied like filter
+     * @returns {Promise} promise with category or categories updated when resolved
+     * @memberof ActivityRemoteStorageService
+     */
+    function findCategories(query) {
+      return ActivityConfigurationRestService.list();
     }
 
     /**

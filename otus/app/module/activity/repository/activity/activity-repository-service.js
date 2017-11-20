@@ -21,6 +21,7 @@
     self.createFromSurvey = createFromSurvey;
     self.createFromPaperActivity = createFromPaperActivity;
     self.listAll = listAll;
+    self.listAllConfiguration = listAllConfiguration;
     self.listAvailables = listAvailables;
     self.save = save;
     self.discard = discard;
@@ -74,6 +75,10 @@
 
     function _listAll() {
       return ActivityCollectionService.listAll().then(_toEntity);
+    }
+
+    function listAllConfiguration() {
+      return ActivityCollectionService.listAllConfiguration().then(_toEntity);
     }
 
     function _update(toUpdate) {

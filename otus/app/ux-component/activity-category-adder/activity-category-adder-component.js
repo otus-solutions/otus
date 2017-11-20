@@ -10,44 +10,21 @@
 
   Controller.$inject = [
     'otusjs.activity.business.ParticipantActivityService',
-    'otusjs.application.state.ApplicationStateService',
-    '$mdDialog'
+    'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(ActivityService, ApplicationStateService, $mdDialog) {
+  function Controller(ActivityService, ApplicationStateService) {
     var self = this;
-    var _selectedActivities = [];
-    var _exitDialog;
-
 
     /* Public methods */
-    self.addActivities = addActivities;
-    self.catchCategory = catchCategory;
-    _init();
-
-    function _init() {
-      _exitDialog = $mdDialog.alert()
-        .title('ATENÇÃO!')
-        .textContent('Você deve selecionar ao menos uma atividade.')
-        .ariaLabel('Alerta de Erro')
-        .ok('Fechar');
-    }
+    self.addActivities = addActivities;   
 
     function addActivities(configuration) {
-        // ActivityService.updateConfiguration();
         ActivityService.add();
         ApplicationStateService.activateParticipantActivities();
 
     }
 
-    function catchCategory(activity) {
-      var activityIndex = _selectedActivities.indexOf(activity);
-
-      if (activityIndex !== -1) {
-        _selectedActivities.splice(activityIndex, 1);
-      } else {
-        _selectedActivities.push(activity);
-      }
-    }
+    
   }
 }());

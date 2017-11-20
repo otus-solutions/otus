@@ -23,6 +23,7 @@
     self.initializePaperActivityData = initializePaperActivityData;
     self.add = add;
     self.listAll = listAll;
+    self.listAllConfiguration = listAllConfiguration;
     self.listAvailables = listAvailables;
     self.selectActivities = selectActivities;
     self.getSelectedActivities = getSelectedActivities;
@@ -30,6 +31,7 @@
     self.listActivityCheckers = listActivityCheckers;
     self.setActivitiesSelection = setActivitiesSelection;
     self.getActivitiesSelection = getActivitiesSelection;
+
     self.getCategories = getCategories;
 
     function add() {
@@ -46,15 +48,9 @@
       });
     }
 
-    function getCategories() {
-      return self.activityConfigurations;
-    }
-
     function setActivitiesSelection(surveys) {
       self.listSurveys = surveys;
-      self.listSurveys.forEach(function(template) {
-        self.activityConfigurations[template.surveyTemplate.identity.acronym] = {};
-      });
+      _constructCollectionConfiguration();
     }
 
     function getActivitiesSelection() {
@@ -68,18 +64,19 @@
         });
     }
 
+    
     function listAvailables() {
       return ActivityRepositoryService.listAvailables();
     }
-
+    
     function initializePaperActivityData(paperActivityCheckerData) {
       _paperActivityCheckerData = paperActivityCheckerData;
     }
-
+    
     function selectActivities(activities) {
       ContextService.selectActivities(activities);
     }
-
+    
     function getSelectedActivities() {
       return {
         list: function list() {
@@ -95,15 +92,15 @@
         }
       };
     }
-
+    
     function getSelectedParticipant() {
       return ContextService.getSelectedParticipant();
     }
-
+    
     function listActivityCheckers() {
       return UserRepositoryService.listAll();
     }
-
+    
     function useSelectedActivity() {
       var selectedActivities = getSelectedActivities();
       if (selectedActivities.length === 1) {
@@ -111,5 +108,21 @@
         ModuleService.ActivityFacadeService.useActivity(selectedActivities[0]);
       }
     }
+    
+    /* Activity Configuration Methods */
+    function getCategories() {
+      return self.activityConfigurations;
+    }
+    
+    function _constructCollectionConfiguration() {
+      self.listSurveys.forEach(function (template) {
+        self.activityConfigurations[template.surveyTemplate.identity.acronym] = {};
+      });
+    }
+    
+    function listAllConfiguration() {
+        return ActivityRepositoryService.listAllConfiguration();      
+    }
+    
   }
 }());

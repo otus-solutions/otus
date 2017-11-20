@@ -31,7 +31,7 @@
       <md-input-container>
             <md-select ng-model="$ctrl.config[activity.surveyTemplate.identity.acronym].category">
 
-            <md-option ng-repeat="category in $ctrl.categories" ng-value="category" ng-selected="category.isDefault">{{category.label}}</md-option>
+            <md-option ng-repeat="category in $ctrl.categories" ng-value="category" ng-selected="category.isDefault">{{category.label | uppercase}}</md-option>
 
         </md-select>
       </md-input-container>
