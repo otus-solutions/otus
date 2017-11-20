@@ -1,32 +1,42 @@
-
-<div layout="column" md-whiteframe="1">
+<div layout="column" md-whiteframe="1" flex>
   <div class="control-panel" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'main'">
     <label-maker label-data="$ctrl.labels"></label-maker>
     <div layout="row" layout-align="center center">
       <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('coleta')">Coleta de Tubos</md-button>
       <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('aliquots')">Aliquotagem</md-button>
     </div>
+
+    <div layout="row" layout-align="end center" flex style="padding-top: 12px">
+      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" />
+    </div>
   </div>
 
-  <div class="control-panel" layout="row" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'">
-    <div layout="row" layout-align="start center">
-      <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAndReturn()">Voltar</md-button>
+  <div class="" layout="row" layout-xs="column" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'"
+    flex>
+    <div layout="row" layout-align="start center" flex>
+      <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelTubeCollectionAndReturn()">Voltar</md-button>
       <md-button class="md-primary md-raised" aria-label="cancelar coleta" ng-click="$ctrl.cancelCollect()">Cancelar</md-button>
     </div>
-    <div layout="row" layout-align="center center" layout-fill>
+    <div layout="row" layout-align="center center" layout-fill flex>
       <fast-collection tube-list="$ctrl.labParticipant.tubes"></fast-collection>
-      <md-button class="md-primary md-raised" aria-label="realizar coleta" ng-click="$ctrl.finish()">Salvar</md-button>
+      <md-button class="md-primary md-raised" aria-label="realizar coleta" ng-click="$ctrl.saveChangedTubes()">Salvar</md-button>
       <div flex-offset="5">
       </div>
     </div>
-    <div layout="row"></div>
+
+    <div layout="row" layout-align="end none" flex="20" style="padding-top: 12px">
+      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" />
+    </div>
   </div>
 
 
   <div class="control-panel" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'aliquots'">
-     <div layout="row" layout-align="center center">
-        <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAliquots()">Voltar</md-button>
-        <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-click="$ctrl.saveAliquots()">Salvar</md-button>
-     </div>
+    <div layout="row" layout-align="center center">
+      <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAliquots()">Voltar</md-button>
+      <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-click="$ctrl.saveAliquots()">Salvar</md-button>
+    </div>
+    <div layout="row" layout-align="end center" flex style="padding-top: 12px">
+      <laboratory-refresh-button state="$ctrl.state" />
+    </div>
   </div>
 </div>

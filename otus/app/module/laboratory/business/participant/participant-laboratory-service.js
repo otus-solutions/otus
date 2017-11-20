@@ -32,10 +32,6 @@
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
     self.updateTubeCollectionData = updateTubeCollectionData;
-    self.getListTubes = getListTubes;
-    self.setOlderTubeList = setOlderTubeList;
-    var _oldTubeList = [];
-
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -122,34 +118,6 @@
 
     function generateLabels() {
       return LaboratoryLabelFactory.create(self.participant, angular.copy(_participantLaboratory));
-    }
-
-    function setOlderTubeList(tubeList) {
-      if(
-        tubeList &&
-        Object.prototype.toString.call(tubeList) === '[object Array]' &&
-        tubeList.length > 0
-      ){
-        _oldTubeList = angular.copy(tubeList);
-      } else {
-        _oldTubeList = angular.copy(_participantLaboratory.tubes);
-
-      }
-    }
-
-    function getListTubes() {
-      var _array = []
-      _participantLaboratory.tubes.forEach(function(tubeList) {
-        _oldTubeList.forEach(function(oldTube) {
-          if(tubeList.code === oldTube.code){
-            if(!angular.equals(tubeList,oldTube)){
-              _array.push(tubeList);
-            }
-          }
-        });
-      });
-
-      return _array;
     }
   }
 }());

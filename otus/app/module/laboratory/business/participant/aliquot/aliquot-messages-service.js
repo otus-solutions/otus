@@ -26,7 +26,7 @@
     function _init() {
       _exitDialog = $mdDialog.confirm()
         .title('Descartar Alterações?')
-        .textContent('Alíquotas alteradas serão descartadas')
+        .textContent('Alíquotas alteradas serão descartadas.')
         .ariaLabel('Confirmação de cancelamento')
         .ok('Continuar')
         .cancel('Cancelar');
