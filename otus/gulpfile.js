@@ -59,10 +59,10 @@
         }
       }))
       .pipe(gulpif('*.js', uglify()))
-      .pipe(gulpif('index.html', replace('href="app/static-resource/stylesheet', 'href="dist/otus/css')))
+      .pipe(gulpif('*.css', minifyCss()))
+      .pipe(gulpif('index.html', replace('href="css', 'href="dist/otus/css')))
       .pipe(gulpif('index.html', replace('src="scripts', 'src="dist/otus/scripts')))
       .pipe(gulpif('*.css', replace('url(../../static-resource/', 'url(/otus/app/static-resource/')))
-      .pipe(gulpif('*.css', minifyCss()))
       .pipe(gulp.dest('dist/otus'));
   });
 
