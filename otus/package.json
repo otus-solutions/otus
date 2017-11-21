@@ -66,7 +66,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.6.1",
     "gulp-replace-task": "0.11.0",
-    "gulp-sonar": "2.1.0",
+    "gulp-sonar": "^2.1.0",
     "gulp-uglify": "^1.5.1",
     "gulp-uncache": "^0.4.0-beta1",
     "gulp-useref": "^3.0.4",
