@@ -33,7 +33,7 @@ pipeline {
 
     stage('Publish Nexus') {
       steps {
-        sh "cd otus/ && npm publish --registry ${repository_npm}"
+        sh "npm publish otus/ --registry ${repository_npm}"
       }
     }
 
