@@ -65,7 +65,7 @@
             if (!_rest) {
                 throw new Error('REST resource is not initialized.');
             }
-            return _rest.remove({id: data.name}).$promise;
+            return _rest.delete({id: data.name}).$promise;
         }
 
         function setDefault(data) {
