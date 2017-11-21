@@ -55,7 +55,7 @@
     return gulp.src('app/index.html')
       .pipe(useref({
         transformPath: function(filePath) {
-          return filePath.replace('app', 'app');
+          return filePath.replace('app', '');
         }
       }))
       .pipe(gulpif('*.js', uglify()))
