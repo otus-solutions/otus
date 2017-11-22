@@ -35,7 +35,7 @@
                     </md-input-container>
                   </div>
                   <div ng-if="$ctrl.action=='alter'" layout="row" layout-xs="column" layout-align="start center">
-                    <span class="md-body-1"> Criado em {{($ctrl.lot.shipmentDate | date:'dd/mm/yyyy') + " às " + ($ctrl.lot.shipmentDate | date: "HH:mm")}}</span>
+                    <span class="md-body-1"> Criado em {{($ctrl.lot.shipmentDate | date:'dd/MM/yyyy') + " às " + ($ctrl.lot.shipmentDate | date: "HH:mm")}}</span>
                     <span class="md-body-1" layout-margin layout-padding>{{$ctrl.lot.operator}}</span>
                   </div>
                 </div>
