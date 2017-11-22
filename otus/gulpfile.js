@@ -59,6 +59,7 @@
         }
       }))
       .pipe(gulpif('*.js', uglify()))
+      .pipe(gulpif('index.html', replace('href="app/static-resource/stylesheet', 'href="../app/static-resource/stylesheet')))
       .pipe(gulpif('*.css', minifyCss()))
       .pipe(gulpif('index.html', replace('href="css', 'href="dist/otus/css')))
       .pipe(gulpif('index.html', replace('src="scripts', 'src="dist/otus/scripts')))
