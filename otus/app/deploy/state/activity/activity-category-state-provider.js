@@ -23,7 +23,9 @@
       name: STATE.ACTIVITY_CATEGORY_ADDER,
       url: '/' + STATE.ACTIVITY_CATEGORY_ADDER,
       template: '<otus-activity-category-adder layout="column" flex></otus-activity-category-adder>',
-      onEnter: _onEnter
+      resolve: {
+        onEnter:_onEnter
+      }
 
     };
 

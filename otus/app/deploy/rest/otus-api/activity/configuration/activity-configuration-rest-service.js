@@ -16,28 +16,10 @@
 
         /* Public methods */
         self.initialize = initialize;
-        self.update = update;
         self.list = list;
-        self.save = save;
-        self.remove = remove;
-        self.setDefault = setDefault;
 
         function initialize() {
             _rest = OtusRestResourceService.getActivityConfigurationResource();
-        }
-
-        function update(data) {
-            if (!_rest) {
-                throw new Error('REST resource is not initialized.');
-            }
-            return _rest.update(data).$promise;
-        }
-
-        function save(data) {
-            if (!_rest) {
-                throw new Error('REST resource is not initialized.');
-            }
-            return _rest.create(data).$promise;
         }
 
         function list() {
@@ -61,18 +43,5 @@
             return request.promise;
         }
 
-        function remove(data) {
-            if (!_rest) {
-                throw new Error('REST resource is not initialized.');
-            }
-            return _rest.delete({id: data.name}).$promise;
-        }
-
-        function setDefault(data) {
-            if (!_rest) {
-                throw new Error('REST resource is not initialized.');
-            }
-            return _rest.setDefault({ id: data.name }).$promise;
-        }
     }
 }());

@@ -17,16 +17,14 @@
   function Controller(ActivityService, ApplicationStateService, $mdDialog) {
     var self = this;
     var _selectedActivities = [];
-    var _categories = false;
     var _exitDialog;
-
 
     /* Public methods */
     self.addActivities = addActivities;
     self.catchActivity = catchActivity;
-    _init();
+    self.$onInit = onInit;
 
-    function _init() {
+    function onInit() {
       _exitDialog = $mdDialog.alert()
         .title('ATENÇÃO!')
         .textContent('Você deve selecionar ao menos uma atividade.')

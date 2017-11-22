@@ -90,7 +90,7 @@
      * @returns {Promise} promise with category or categories updated when resolved
      * @memberof ActivityRemoteStorageService
      */
-    function findCategories(query) {
+    function findCategories() {
       return ActivityConfigurationRestService.list();
     }
 

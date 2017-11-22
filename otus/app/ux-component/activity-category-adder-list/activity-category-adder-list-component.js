@@ -5,10 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusActivityCategoryAdderList', {
       controller: Controller,
-      templateUrl: 'app/ux-component/activity-category-adder-list/activity-category-adder-list-template.html',
-      bindings: {
-        onActivitySelection: '&'
-      }
+      templateUrl: 'app/ux-component/activity-category-adder-list/activity-category-adder-list-template.html'
     });
 
   Controller.$inject = [
@@ -30,9 +27,9 @@
 
     function _loadActivities() {
       self.activities = ActivityService.getActivitiesSelection();
-      self.config = ActivityService.getCategories();
+      self.configuration = ActivityService.configurationStructure();
       self.categories = ActivityService.listAllConfiguration();
-     
+
       if(self.activities === undefined || self.activities.length<1){
         returnToParticipantActivities();
       }
