@@ -28,7 +28,9 @@
     function _loadActivities() {
       self.activities = ActivityService.getActivitiesSelection();
       self.configuration = ActivityService.configurationStructure();
-      self.categories = ActivityService.listAllConfiguration();
+      ActivityService.listAllCategories().then(function (response) {
+        self.categories = response;
+      });
 
       if(self.activities === undefined || self.activities.length<1){
         returnToParticipantActivities();

@@ -36,6 +36,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
+      console.log(data);
       return _rest.create({ rn: data.participantData.recruitmentNumber }, data).$promise;
     }
 

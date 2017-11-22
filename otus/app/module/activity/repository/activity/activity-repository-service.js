@@ -78,7 +78,7 @@
     }
 
     function listAllCategories() {
-      return ActivityCollectionService.listAllCategories().then(_toEntity);
+      return ActivityCollectionService.listAllCategories();
     }
 
     function _update(toUpdate) {
@@ -91,7 +91,6 @@
     }
 
     function _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService, configuration) {
-
       return surveys.map(function(survey) {
         var configActivity = configuration[survey.surveyTemplate.identity.acronym];
         var activity = activityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configActivity);

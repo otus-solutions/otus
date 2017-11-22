@@ -22,7 +22,6 @@
     function addActivities() {
         ActivityService.add();
         ApplicationStateService.activateParticipantActivities();
-
     }
 
 
