@@ -33,7 +33,7 @@
           }
         ]
       },
-      startPath: 'otus/app/'
+      startPath: 'otus/app'
     });
 
     gulp.watch([
@@ -52,14 +52,17 @@
   });
 
   gulp.task('compress-compress', function() {
-    return gulp.src('app/index.html')
+    return gulp.src('otus/app/index.html', {
+      read: false,
+      allowEmpty: true
+    })
       .pipe(useref({
         transformPath: function(filePath) {
           return filePath.replace('app', '');
         }
       }))
-      .pipe(gulpif('*.js', uglify()))
       .pipe(replace('href="app/static-resource/stylesheet', 'href="static-resource/stylesheet'))
+      .pipe(gulpif('*.js', uglify()))
       .pipe(gulpif('*.css', minifyCss()))
       .pipe(gulpif('index.html', replace('href="css', 'href="dist/otus/css')))
       .pipe(gulpif('index.html', replace('src="scripts', 'src="dist/otus/scripts')))
