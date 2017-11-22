@@ -16,11 +16,7 @@
 
         /* Public methods */
         self.initialize = initialize;
-        self.update = update;
         self.list = list;
-        self.save = save;
-        self.remove = remove;
-        self.setDefault = setDefault;
 
         function initialize() {
             _rest = OtusRestResourceService.getActivityConfigurationResource();
