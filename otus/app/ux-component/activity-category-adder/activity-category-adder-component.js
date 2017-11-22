@@ -17,14 +17,14 @@
     var self = this;
 
     /* Public methods */
-    self.addActivities = addActivities;   
+    self.addActivities = addActivities;
 
-    function addActivities(configuration) {
+    function addActivities() {
         ActivityService.add();
         ApplicationStateService.activateParticipantActivities();
 
     }
 
-    
+
   }
 }());

@@ -26,20 +26,6 @@
             _rest = OtusRestResourceService.getActivityConfigurationResource();
         }
 
-        function update(data) {
-            if (!_rest) {
-                throw new Error('REST resource is not initialized.');
-            }
-            return _rest.update(data).$promise;
-        }
-
-        function save(data) {
-            if (!_rest) {
-                throw new Error('REST resource is not initialized.');
-            }
-            return _rest.create(data).$promise;
-        }
-
         function list() {
             if (!_rest) {
                 throw new Error('REST resource is not initialized.');
@@ -61,18 +47,5 @@
             return request.promise;
         }
 
-        function remove(data) {
-            if (!_rest) {
-                throw new Error('REST resource is not initialized.');
-            }
-            return _rest.delete({id: data.name}).$promise;
-        }
-
-        function setDefault(data) {
-            if (!_rest) {
-                throw new Error('REST resource is not initialized.');
-            }
-            return _rest.setDefault({ id: data.name }).$promise;
-        }
     }
 }());

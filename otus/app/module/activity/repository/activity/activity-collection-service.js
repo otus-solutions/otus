@@ -33,7 +33,7 @@
     self.resetParticipantInUse = resetParticipantInUse;
     self.insert = insert;
     self.listAll = listAll;
-    self.listAllConfiguration = listAllConfiguration;
+    self.listAllCategories = listAllCategories;
     self.update = update;
 
     /**
@@ -128,7 +128,7 @@
       return request.promise;
     }
 
-    function listAllConfiguration() {
+    function listAllCategories() {
       var request = $q.defer();
 
       _remoteStorage
@@ -136,9 +136,9 @@
         .then(function (remoteStorage) {
           return remoteStorage
             .findCategories()
-            .then(function (activityConfiguratin) {
+            .then(function (activityConfiguration) {
               ActivityStorageService.clear();
-              var localData = ActivityStorageService.insert(activityConfiguratin);
+              var localData = ActivityStorageService.insert(activityConfiguration);
               request.resolve(localData);
             });
         });

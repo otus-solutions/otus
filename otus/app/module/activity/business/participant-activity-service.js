@@ -15,7 +15,6 @@
   function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService) {
     var self = this;
     var _paperActivityCheckerData = null;
-    var _updater;
     self.activityConfigurations = new Object();
 
 
@@ -23,7 +22,7 @@
     self.initializePaperActivityData = initializePaperActivityData;
     self.add = add;
     self.listAll = listAll;
-    self.listAllConfiguration = listAllConfiguration;
+    self.listAllCategories = listAllCategories;
     self.listAvailables = listAvailables;
     self.selectActivities = selectActivities;
     self.getSelectedActivities = getSelectedActivities;
@@ -32,7 +31,7 @@
     self.setActivitiesSelection = setActivitiesSelection;
     self.getActivitiesSelection = getActivitiesSelection;
 
-    self.getCategories = getCategories;
+    self.configurationStructure = configurationStructure;
 
     function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -64,19 +63,19 @@
         });
     }
 
-    
+
     function listAvailables() {
       return ActivityRepositoryService.listAvailables();
     }
-    
+
     function initializePaperActivityData(paperActivityCheckerData) {
       _paperActivityCheckerData = paperActivityCheckerData;
     }
-    
+
     function selectActivities(activities) {
       ContextService.selectActivities(activities);
     }
-    
+
     function getSelectedActivities() {
       return {
         list: function list() {
@@ -92,15 +91,15 @@
         }
       };
     }
-    
+
     function getSelectedParticipant() {
       return ContextService.getSelectedParticipant();
     }
-    
+
     function listActivityCheckers() {
       return UserRepositoryService.listAll();
     }
-    
+
     function useSelectedActivity() {
       var selectedActivities = getSelectedActivities();
       if (selectedActivities.length === 1) {
@@ -108,21 +107,21 @@
         ModuleService.ActivityFacadeService.useActivity(selectedActivities[0]);
       }
     }
-    
+
     /* Activity Configuration Methods */
-    function getCategories() {
+    function configurationStructure() {
       return self.activityConfigurations;
     }
-    
+
     function _constructCollectionConfiguration() {
       self.listSurveys.forEach(function (template) {
         self.activityConfigurations[template.surveyTemplate.identity.acronym] = {};
       });
     }
-    
-    function listAllConfiguration() {
-        return ActivityRepositoryService.listAllConfiguration();      
+
+    function listAllCategories() {
+        return ActivityRepositoryService.listAllCategories();
     }
-    
+
   }
 }());
