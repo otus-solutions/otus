@@ -1,0 +1,15 @@
+<div ng-repeat="labels in $ctrl.lotDataSet.labels track by $index">
+  <div layout="row" layout-align="center center">
+    <div flex="5">
+      <div style="background-color: {{$ctrl.lotDataSet.backgroundColor[$index]}};border-radius:30%;width:13px;height:13px">
+      </div>
+    </div>
+    <div flex="80">
+      {{$ctrl.lotDataSet.labels[$index]}}
+    </div>
+    <div flex="15">
+      {{$ctrl.lotDataSet.data[$index]}}
+    </div>
+  </div>
+  <md-divider></md-divider>
+</div>

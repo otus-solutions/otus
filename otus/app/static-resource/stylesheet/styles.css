@@ -84,7 +84,7 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
 }
 
 .md-dashboard-autocomplete {
-  color: : red !important;
+  color: red !important;
   border: none !important;
   box-shadow: none !important;
 }
@@ -147,4 +147,21 @@ md-checkbox.md-checkbox-small {
 
 .remove-padding{
   padding: 0;
+}
+
+md-input-container.remove-errors-spacer .md-errors-spacer {
+  min-height: 0;
+}
+
+md-input-container.input-container-lot-margin{
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+
+.md-subheader.backgroud-color-default{
+  background-color: unset;
+}
+
+.md-subheader.left-alignment{
+  text-align: left;
 }

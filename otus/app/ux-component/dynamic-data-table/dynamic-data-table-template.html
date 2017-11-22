@@ -1,0 +1,204 @@
+<style>
+  .my-border{
+    border:1px solid blue;
+  }
+
+  .dynamic-structure{
+    margin: 16px;
+  }
+
+  .dynamic-table-body-row:focus,
+  .dynamic-table-header-column:focus {
+    outline: none;
+  }
+
+  .dynamic-table-body-row,
+  .dynamic-table-header-column {
+    cursor: pointer;
+  }
+
+  /* .dynamic-table-body-row:hover {
+    background-color: #EEEEEE;
+  } */
+
+  .dynamic-table-row-selected {
+    background-color: #F5F5F5;
+  }
+
+  .dynamic-table md-checkbox{
+    position: relative;
+    top: 7.5px;
+  }
+
+  .dynamic-table md-icon.dynamic-arrow-icon,
+  .dynamic-table md-icon.dynamic-arrow-icon-inverse{
+    -webkit-transition-duration: 0.5s;
+    -moz-transition-duration: 0.5s;
+    -o-transition-duration: 0.5s;
+    transition-duration: 0.5s;
+
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    -o-transition-property: -o-transform;
+     transition-property: transform;
+  }
+
+  .dynamic-table md-icon.dynamic-arrow-icon{
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    transform:rotate(0deg);
+  }
+
+  .dynamic-table md-icon.dynamic-arrow-icon-inverse{
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform:rotate(180deg);
+  }
+
+  .dynamic-table-body-column,
+  .dynamic-table-header-column{
+    padding: 4px 10px;
+  }
+
+  .dynamic-table-body-row,
+  .dynamic-table-header-row{
+    border-bottom: 1px solid #E0DFDF;
+  }
+
+  .dynamic-table-column-first{
+    padding-left: 16px;
+
+  }
+
+  .dynamic-table-column-last{
+    padding-right: 16px;
+  }
+
+
+
+  .dynamic-table-column-left{
+    text-align: left;
+  }
+
+  .dynamic-table-column-right{
+    text-align: right;
+  }
+
+  .dynamic-table-expand-filter{
+    margin-top:20px;
+  }
+
+  .dynamic-pagination{
+
+  }
+</style>
+<md-whiteframe class="md-whiteframe-1dp dynamic-structure" layout="column" flex>
+  <div ng-if="$ctrl.tableTitle">
+    <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
+        {{$ctrl.tableTitle}}
+      </md-subheader>
+  </div>
+
+  <div ng-if="!$ctrl.tableTitle && !$ctrl.disableFilter" class="dynamic-table-expand-filter"></div>
+
+  <div ng-if="!$ctrl.disableFilter" layout="row" layout-align="center center" layout-margin >
+    <md-input-container class="remove-errors-spacer" flex>
+      <input type="text"  flex  placeholder="Filtro de busca" ng-model="$ctrl.filter"
+        ng-change="$ctrl.filterRows()"
+        ng-model-options="{ allowInvalid: true, debounce: 500 }"
+      />
+    </md-input-container>
+  </div>
+
+  <div ng-if="$ctrl.error.isError">
+    <h1>{{$ctrl.error.msg}}</h1>
+  </div>
+
+  <div ng-if="!$ctrl.error.isError" class="dynamic-table" flex>
+    <div class="dynamic-table-header" layout="row" flex>
+      <div class="dynamic-table-header-row" layout="row" layout-align="start center" flex>
+        <div style="padding-left:15px" ng-if="!$ctrl.disableCheckbox" layout="column" flex="5" layout-align="center center">
+          <md-checkbox flex aria-label="Selecionar Todos os Registros"
+            class="md-primary"
+            ng-checked="$ctrl.selectedItemCounter === $ctrl.table.rows.length"
+            md-indeterminate="$ctrl.selectedItemCounter !== $ctrl.table.rows.length && $ctrl.selectedItemCounter>0"
+            ng-click="$ctrl.selectDeselectAllRows()">
+          </md-checkbox>
+        </div>
+
+        <div class="{{'dynamic-table-header-column ' + $ctrl.getColumnPositionClass($index, $ctrl.table.headers)}}"
+          ng-repeat="header in $ctrl.table.headers" flex="{{$ctrl.getFlex($index)}}"
+          ng-click="$ctrl.changeOrder($index)">
+          {{header}}
+          <md-icon
+            ng-if="$ctrl.orderQuery === 'column' + $index + '.value'"
+            ng-class="$ctrl.getOrderIcon()"
+            md-font-set="material-icons"
+          >arrow_drop_up</md-icon>
+        </div>
+      </div>
+    </div>
+
+    <div class="dynamic-table-body" layout="column" flex id="dynamic-body">
+      <div class="dynamic-table-body-row {{$ctrl.disablePagination ? ' card-animated ' : ''}}"
+        layout="row" layout-align="start center" flex
+        ng-repeat="row in $ctrl.table.rows | orderBy:$ctrl.orderQuery:$ctrl.orderInverse"
+        ng-click="$ctrl.selectDeselectRow(row)"
+        name="bodyRow{{row.index}}"
+        id="bodyRow{{row.index}}"
+        ng-mouseenter="$ctrl.mouseEnter(row)"
+        ng-mouseleave="$ctrl.mouseLeave(row)"
+        ng-style="row.style"
+        >
+        <div style="padding-left:15px" ng-if="!$ctrl.disableCheckbox" layout="column" flex="5" layout-align="center center">
+          <md-checkbox ng-checked="row.selected" aria-label="Checkbox registro da linha {{row.index}}" class="md-primary">
+          </md-checkbox>
+        </div>
+        <div class="{{'dynamic-table-body-column ' + $ctrl.getColumnPositionClass(column.index,row.columns)}}"
+         ng-repeat="column in row.columns" flex="{{$ctrl.getFlex(column.index)}}"
+        >
+          <span class="md-body-1">
+            {{column.value}}
+          </span>
+        </div>
+      </div>
+    </div>
+    <div ng-if="!$ctrl.disablePagination" class="dynamic-pagination" layout="row" layout-align="end center"   layout-padding flex>
+      <div>
+        <span class="md-body-1">
+          Linhas por página:
+        </span>
+      </div>
+      <div>
+        <md-select ng-model="$ctrl.rowPerPageDefault" aria-label="Página "  style="margin:0" ng-change="$ctrl.rowPerPageChange()">
+          <md-option ng-repeat="rowPerPage in $ctrl.rowsPerPageArray" value="{{rowPerPage}}">
+              <span class="md-body-1">
+                  {{rowPerPage}}
+              </span>
+          </md-option>
+        </md-select>
+      </div>
+      <div>
+        <span class="md-body-1">
+          {{$ctrl.table.textPage}}
+        </span>
+      </div>
+      <div>
+        <md-button class="md-icon-button" aria-label="Página Anterior" ng-disabled="!$ctrl.getIsPreviousPage()" ng-click="$ctrl.previousPage()">
+          <md-icon md-font-set="material-icons">
+            keyboard_arrow_left
+          </md-icon>
+        </md-button>
+      </div>
+      <div>
+        <md-button class="md-icon-button" aria-label="Página Seguinte" ng-disabled="!$ctrl.getIsNextPage()" ng-click="$ctrl.nextPage()">
+          <md-icon md-font-set="material-icons">
+            keyboard_arrow_right
+          </md-icon>
+        </md-button>
+      </div>
+    </div>
+  </div>
+</md-whiteframe>
