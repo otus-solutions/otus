@@ -63,6 +63,8 @@
     }
 
     function removeAliquots() {
+      var aliquotsCount = self.selectedAliquots.length;
+
       for (var i = 0; i < self.selectedAliquots.length; i++) {
         var aliquotIndex = self.lot.aliquotList.indexOf(self.selectedAliquots[i]);
         self.lot.removeAliquotByIndex(aliquotIndex);
@@ -71,6 +73,7 @@
       self.selectedAliquots = [];
       AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
       self.setChartData();
+      _toastAliquotsRemoved(aliquotsCount);
     }
 
     function createLot() {
@@ -107,8 +110,16 @@
     function _toastOtherLot() {
       $mdToast.show(
         $mdToast.simple()
-        .textContent('aliquota(s) em outro(s) lote(s)')
-        .hideDelay(2000)
+        .textContent('Alíquota(s) em outro(s) lote(s)')
+        .hideDelay(3000)
+      );
+    }
+
+    function _toastAliquotsRemoved(count) {
+      $mdToast.show(
+        $mdToast.simple()
+        .textContent(count +' Alíquota(s) removida(s).')
+        .hideDelay(3000)
       );
     }
 

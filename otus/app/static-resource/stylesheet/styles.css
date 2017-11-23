@@ -185,3 +185,7 @@ md-input-container.input-container-lot-margin{
   -o-transform: rotate(0deg);
   transform: rotate(0deg);
 }
+
+md-content.no-background-color{
+  background-color: transparent;
+}
