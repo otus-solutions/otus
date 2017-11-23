@@ -35,10 +35,10 @@
 
     function add() {
       var loggedUser = ContextService.getLoggedUser();
+
       getSelectedParticipant()
       .then(function(selectedParticipant) {
         if (_paperActivityCheckerData) {
-          console.log(self.listSurveys);
           ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData, self.activityConfigurations);
           _paperActivityCheckerData = null;
         } else {

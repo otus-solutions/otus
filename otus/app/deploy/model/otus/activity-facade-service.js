@@ -36,7 +36,7 @@
       if (paperActivityData) {
         ActivityFacadeService.createPaperActivity(template, user, participant, paperActivityData, configuration);
       } else {
-        ActivityFacadeService.createActivity(template, user, participant, participant, configuration);
+        ActivityFacadeService.createActivity(template, user, participant, configuration);
       }
 
       return getActivity();
