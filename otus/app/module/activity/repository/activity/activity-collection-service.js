@@ -137,9 +137,7 @@
           return remoteStorage
             .findCategories()
             .then(function (activityConfiguration) {
-              ActivityStorageService.clear();
-              var localData = ActivityStorageService.insert(activityConfiguration);
-              request.resolve(localData);
+              request.resolve(activityConfiguration);
             });
         });
 

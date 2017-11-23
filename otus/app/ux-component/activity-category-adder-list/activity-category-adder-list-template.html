@@ -27,15 +27,11 @@
       </div>
     </div>
     <div class="md-list-item-text" layout="column" flex="20">
-
       <md-input-container>
-            <md-select ng-model="$ctrl.configuration[activity.surveyTemplate.identity.acronym].category">
-
+            <md-select ng-model="$ctrl.configuration[activity.surveyTemplate.identity.acronym].category" aria-label="Categoria">
             <md-option ng-repeat="category in $ctrl.categories" ng-value="category" ng-selected="category.isDefault">{{category.label | uppercase}}</md-option>
-
         </md-select>
       </md-input-container>
-
     </div>
     <md-divider></md-divider>
   </md-list-item>
