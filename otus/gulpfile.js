@@ -18,13 +18,12 @@
   var replace = require('gulp-replace');
   var runSequence = require('run-sequence');
   var cleanCSS = require('gulp-clean-css');
-  var htmlreplace = require('gulp-html-replace');
 
   gulp.task('browser-sync', function() {
     browserSync.init({
       server: {
         open: 'external',
-        // baseDir: '../',
+        baseDir: '../',
         middleware: [
           //browserSyncSpa(/^[^\.]+$/, baseDir),
 
@@ -35,7 +34,7 @@
           }
         ]
       },
-      startPath: 'app'
+      startPath: 'otus/app'
     });
 
     gulp.watch([
@@ -61,41 +60,31 @@
         }
       }))
       .pipe(gulpif('*.js', uglify()))
-      .pipe(gulpif('*.css', minifyCss()))
-      .pipe(gulpif('*.css', replace('url(../../static-resource/', 'url(/otus/app/static-resource/')))
       .pipe(gulpif('index.html', replace('href="css', 'href="dist/otus/css')))
       .pipe(gulpif('index.html', replace('src="scripts', 'src="dist/otus/scripts')))
+      .pipe(gulpif('*.css', replace('url(../../static-resource/', 'url(/otus/app/static-resource/')))
       .pipe(gulp.dest('dist/otus'));
-    });
-    
-    gulp.task('compress-hash', function() {
-      return gulp.src('dist/otus/index.html')
+  });
+
+  gulp.task('compress-hash', function() {
+    return gulp.src('dist/otus/index.html')
       .pipe(uncache({
         append: 'hash',
         rename: true
       }))
       .pipe(gulp.dest('dist/otus'));
-    });
-    
-    gulp.task('minify-css', () => {
-      return gulp.src('app/**/**/*.css')
+  });
+
+  gulp.task('minify-css', () => {
+    return gulp.src('app/**/**/*.css')
       .pipe(cleanCSS({
         compatibility: 'ie8'
       }))
       .pipe(gulp.dest('dist/otus/css'));
   });
 
-  gulp.task('replace', function() {
-    htmlreplace({
-      js: {
-        src: 'href="app/static-resource/stylesheet',
-        tpl: 'href="static-resource/stylesheet'
-      }
-    })
-  });
-
   gulp.task('compress', function() {
-    runSequence('minify-css','replace', 'compress-compress', 'compress-hash');
+    runSequence('minify-css', 'compress-compress', 'compress-hash');
   });
 
   gulp.task('replace-env', function(value) {
