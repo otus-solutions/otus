@@ -8,7 +8,8 @@
       templateUrl: 'app/ux-component/activity-adder-toolbar/activity-adder-toolbar-template.html',
       bindings: {
         activityType: '<',
-        onAddActivities: '&'
+        onAddActivities: '&',
+        title: '@'
       }
     });
 

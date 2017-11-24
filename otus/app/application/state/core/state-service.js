@@ -31,6 +31,7 @@
     self.activateSampleTransportation = activateSampleTransportation;
     self.activateSampleTransportationLotInfoManager = activateSampleTransportationLotInfoManager;
     self.activateSampleTransportationManagerList = activateSampleTransportationManagerList;
+    self.activateActivityCategories = activateActivityCategories;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -69,6 +70,9 @@
       $state.go(STATE.PARTICIPANT_DASHBOARD);
     }
 
+    function activateActivityCategories() {
+      $state.go(STATE.ACTIVITY_CATEGORY_ADDER);
+    }
     function activateParticipantActivities() {
       $state.go(STATE.PARTICIPANT_ACTIVITY);
     }
