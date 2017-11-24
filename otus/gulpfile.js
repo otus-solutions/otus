@@ -60,26 +60,26 @@
         }
       }))
       .pipe(gulpif('*.js', uglify()))
-      .pipe(gulpif('index.html', replace('href="css', 'href="dist/otus/css')))
       .pipe(gulpif('index.html', replace('src="scripts', 'src="dist/otus/scripts')))
-      .pipe(gulpif('*.css', replace('url(../../static-resource/', 'url(/otus/app/static-resource/')))
       .pipe(gulp.dest('dist/otus'));
-  });
-
-  gulp.task('compress-hash', function() {
-    return gulp.src('dist/otus/index.html')
+    });
+    
+    gulp.task('compress-hash', function() {
+      return gulp.src('dist/otus/index.html')
       .pipe(uncache({
         append: 'hash',
         rename: true
       }))
       .pipe(gulp.dest('dist/otus'));
-  });
-
-  gulp.task('minify-css', () => {
-    return gulp.src('app/**/**/*.css')
+    });
+    
+    gulp.task('minify-css', () => {
+      return gulp.src('app/**/**/*.css')
       .pipe(cleanCSS({
         compatibility: 'ie8'
       }))
+      .pipe(gulpif('*.css', replace('url(../../static-resource/', 'url(/otus/app/static-resource/')))
+      .pipe(gulpif('index.html', replace('href="css', 'href="dist/otus/css')))
       .pipe(gulp.dest('dist/otus/css'));
   });
 

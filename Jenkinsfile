@@ -22,10 +22,10 @@ pipeline {
       steps{
           //sh "git show -s --pretty=%an | perl -ne 'print \"GIT-COMMIT-USER=$_\"' >> env.properties"
           sh "rm -rf otus/node_modules/"
-          sh "npm install --prefix otus/"
+          sh "npm install --prefix otus/ && npm run build --prefix otus/"
           sh "npm run test --prefix otus/"
           sh "mvn -f otus/pom.xml exec:exec@npm-replace-env -Dapi.url='https://api-otus.dev.ccem.ufrgs.br'"
-          sh "npm run build --prefix otus/"
+          // sh "npm run build --prefix otus/"
 
 
     }
