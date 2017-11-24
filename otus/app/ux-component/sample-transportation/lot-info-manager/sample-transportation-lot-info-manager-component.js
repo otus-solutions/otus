@@ -127,11 +127,11 @@
 
     function _backendErrorAliquotsAlreadyUsed(aliquotsArray){
       _deleteAlreadyUsedAliquotsDialog.textContent(
-        'A(s) aliquota(s): ' 
-        + _convertArrayToStringInclusesLastPosition(aliquotsArray,' e ')
+        'A(s) aliquota(s): '
+        + _convertArrayToStringIncludesLastPosition(aliquotsArray,' e ')
         + ' estão em outro(s) lote(s), deseja remove-la(s) do lote atual?'
       );
-      
+
       $mdDialog.show(_deleteAlreadyUsedAliquotsDialog).then(function() {
         self.selectedAliquots = aliquotsArray;
         removeAliquots()
@@ -140,8 +140,8 @@
         _hasErrorBackEnd(aliquotsArray);
       });
     }
-    
-    function _convertArrayToStringInclusesLastPosition(array, includes){
+
+    function _convertArrayToStringIncludesLastPosition(array, includes){
       var text = "";
       array.forEach(function(value, index) {
         if(index == 0){
@@ -154,7 +154,7 @@
           }
         }
       }, this);
-      
+
       return text;
     }
 

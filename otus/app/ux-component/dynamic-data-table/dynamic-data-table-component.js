@@ -38,13 +38,11 @@
     });
 
   Controller.$inject = [
-    '$scope',
     '$filter',
-    '$element',
     '$mdToast'
   ];
 
-  function Controller($scope, $filter, $element, $mdToast) {
+  function Controller($filter, $mdToast) {
     var self = this;
 
     self.selectedItemCounter = 0;
@@ -96,7 +94,7 @@
 
       if(!self.hoverColor) self.hoverColor = '#EEEEEE';
       if(!self.selectedColor) self.selectedColor = '#F5F5F5';
-      if(!self.rowsPerPageArray) self.rowsPerPageArray = [10,25,50,100,250,500,1000];   
+      if(!self.rowsPerPageArray) self.rowsPerPageArray = [10,25,50,100,250,500,1000];
       if(!self.rowPerPageDefault) self.rowPerPageDefault = self.rowsPerPageArray.length >= 2 ? self.rowsPerPageArray[2] : self.rowsPerPageArray[0];
 
       if(!self.formatData) self.formatData = 'dd/MM/yyyy';
@@ -131,7 +129,7 @@
 
     function filterAllChanged(value){
       var newValue = value !== undefined ? value : !self.filterAll;
-      
+
       self.filterAll = newValue;
 
       filterRows()
@@ -139,7 +137,7 @@
 
     function viewPerPageChanged(value){
       var newValue = value !== undefined ? value : !self.viewPerPage;
-      
+
       self.viewPerPage = newValue;
 
       filterRows()
@@ -183,7 +181,7 @@
         self.table.filteredRows = self.table.fullRows;
         self.filterAll = false;
       }
-      
+
       self.table.currentPageRows = self.table.filteredRows;
       self.table.currentPage = 1;
       pagesChage();
@@ -193,9 +191,9 @@
       if(_havePagination()){
         self.table.currentPageRows = self.table.filteredRows.slice(self.table.startPage, self.table.endPage + 1);
       }
-      
+
       self.table.rows = self.table.currentPageRows;
-      
+
       self.selectedItemCounter = self.table.rows.filter(function(row){
         return row.selected;
       }).length;
@@ -469,14 +467,14 @@
       self.elementsProperties.forEach(function(elementProperty, index){
         var value = _getValueFromElement(element,elementProperty, index, true);
         var orderValue = _getValueFromElement(element,elementProperty, index);
-        
+
         var column = _createColumn(
           row,
           value,
           orderValue,
           index
         );
-        
+
         row.columns.push(column);
         row[column.name] = column;
       }, this);
