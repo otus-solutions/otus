@@ -81,7 +81,7 @@
               }
 
               tooltipEl.style.opacity = 1;
-              tooltipEl.style.fontFamily = tooltipModel._fontFamily;
+              tooltipEl.style.fontFamily = "Roboto";
               tooltipEl.style.fontSize = tooltipModel.fontSize;
               tooltipEl.style.fontStyle = tooltipModel._fontStyle;
             }

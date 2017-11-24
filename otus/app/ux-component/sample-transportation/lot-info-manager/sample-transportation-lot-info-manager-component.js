@@ -23,6 +23,8 @@
   function Controller($mdToast, $mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
     var self = this;
     var _confirmCancel;
+    var _deleteAlreadyUsedAliquotsDialog;
+
     //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
     var color = ["#F44336","#E91E63","#9C27B0","#673AB7","#3F51B5","#2196F3",
       "#03A9F4","#00BCD4","#009688","#4CAF50","#8BC34A","#CDDC39",
@@ -63,6 +65,8 @@
     }
 
     function removeAliquots() {
+      var aliquotsCount = self.selectedAliquots.length;
+
       for (var i = 0; i < self.selectedAliquots.length; i++) {
         var aliquotIndex = self.lot.aliquotList.indexOf(self.selectedAliquots[i]);
         self.lot.removeAliquotByIndex(aliquotIndex);
@@ -71,6 +75,7 @@
       self.selectedAliquots = [];
       AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
       self.setChartData();
+      _toastAliquotsRemoved(aliquotsCount);
     }
 
     function createLot() {
@@ -78,7 +83,7 @@
         ApplicationStateService.activateSampleTransportationManagerList();
         self.updateLotStateData();
       }, function(err) {
-        _hasErrorBackEnd(err.data.CONTENT.value);
+        _backendErrorAliquotsAlreadyUsed(err.data.CONTENT.value);
         _toastOtherLot()
       });
     }
@@ -88,7 +93,7 @@
         ApplicationStateService.activateSampleTransportationManagerList();
         self.updateLotStateData();
       }, function(err) {
-        _hasErrorBackEnd(err.data.CONTENT.value);
+        _backendErrorAliquotsAlreadyUsed(err.data.CONTENT.value);
         _toastOtherLot()
       });
     }
@@ -107,9 +112,50 @@
     function _toastOtherLot() {
       $mdToast.show(
         $mdToast.simple()
-        .textContent('aliquota(s) em outro(s) lote(s)')
-        .hideDelay(2000)
+        .textContent('Alíquota(s) em outro(s) lote(s)')
+        .hideDelay(3000)
       );
+    }
+
+    function _toastAliquotsRemoved(count) {
+      $mdToast.show(
+        $mdToast.simple()
+        .textContent(count +' Alíquota(s) removida(s).')
+        .hideDelay(3000)
+      );
+    }
+
+    function _backendErrorAliquotsAlreadyUsed(aliquotsArray){
+      _deleteAlreadyUsedAliquotsDialog.textContent(
+        'A(s) aliquota(s): '
+        + _convertArrayToStringIncludesLastPosition(aliquotsArray,' e ')
+        + ' estão em outro(s) lote(s), deseja remove-la(s) do lote atual?'
+      );
+
+      $mdDialog.show(_deleteAlreadyUsedAliquotsDialog).then(function() {
+        self.selectedAliquots = aliquotsArray;
+        removeAliquots()
+      })
+      .catch(function() {
+        _hasErrorBackEnd(aliquotsArray);
+      });
+    }
+
+    function _convertArrayToStringIncludesLastPosition(array, includes){
+      var text = "";
+      array.forEach(function(value, index) {
+        if(index == 0){
+          text = text + value;
+        } else {
+          if(index == array.length - 1){
+            text = text + includes + value;
+          } else {
+            text = text + ', ' + value;
+          }
+        }
+      }, this);
+
+      return text;
     }
 
     function _hasErrorBackEnd(errorAliquots) {
@@ -150,6 +196,13 @@
       _confirmCancel = $mdDialog.confirm()
         .title('Confirmar cancelamento:')
         .textContent('As alterações realizadas no lote serão descartadas')
+        .ariaLabel('Confirmação de cancelamento')
+        .ok('Ok')
+        .cancel('Voltar');
+
+      _deleteAlreadyUsedAliquotsDialog = $mdDialog.confirm()
+        .title('Aliquota(s) utilizada(s) em outro(s) Lote(s), remover aliquotas?')
+        .textContent('A(s) aliquota(s): "asd5a4s5sa4a" estão em outro(s) lote(s), deseja remove-la(s) do lote atual?')
         .ariaLabel('Confirmação de cancelamento')
         .ok('Ok')
         .cancel('Voltar');

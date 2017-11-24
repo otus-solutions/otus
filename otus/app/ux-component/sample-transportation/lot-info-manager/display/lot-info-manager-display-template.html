@@ -9,7 +9,7 @@
               <div flex layout-padding>
                 <div ng-if="$ctrl.action=='create'" flex>
                   <div layout="row" layout-xs="column" flex>
-                    <div layout="column" layout-align="center start" flex="15" flex-gt-md="10">
+                    <div layout="column" layout-align="center start" flex="20" flex-md="15" flex-gt-md="10">
                       <span>Envio:</span>
                     </div>
                     <md-input-container class="remove-errors-spacer input-container-lot-margin">
@@ -23,7 +23,7 @@
                 </div>
                 <div>
                   <div layout="row" layout-xs="column" flex>
-                    <div layout="column" layout-align="center start" flex="10" >
+                    <div layout="column" layout-align="center start" flex="20" flex-md="15" flex-gt-md="10" >
                       <span>Processamento:</span>
                     </div>
                     <md-input-container class="remove-errors-spacer input-container-lot-margin">
@@ -46,11 +46,11 @@
         <div flex layout="row" layout-align="center center">
           <md-card flex="80">
             <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
-              Aliquotas
+              Alíquotas
             </md-subheader>
             <md-nav-bar
               md-selected-nav-item="$ctrl.currentNavItem"
-              nav-bar-aria-label="Navegação de tipo de inserção de aliquota">
+              nav-bar-aria-label="Navegação de tipo de inserção de alíquota">
               <md-nav-item md-nav-click="$ctrl.changeNavItem('insertionByPeriod')" name="insertionByPeriod">
                 Inserção por Período
               </md-nav-item>
@@ -78,7 +78,7 @@
               </div>
 
               <div>
-                <md-button ng-click="$ctrl.insertAliquotsByPeriod()" class="md-raised md-primary" aria-label="Adicionar Aliquotas por Período">
+                <md-button ng-click="$ctrl.insertAliquotsByPeriod()" class="md-raised md-primary" aria-label="Adicionar Alíquotas por Período">
                   <md-tooltip md-direction="down">Adicionar</md-tooltip>
                   <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
                 </md-button>
@@ -86,21 +86,21 @@
             </div>
             <div ng-if="$ctrl.currentNavItem == 'individualInsertion'" layout="row" layout-align="center center" layout-padding>
               <span class="">Código:</span>
-              <input type="text" class="aliquot-lot-input" flex placeholder="Aliquota" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)"/>
+              <input type="text" class="aliquot-lot-input" flex placeholder="Alíquota" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)"/>
               <div>
-                <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Aliquota">
+                <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Alíquota">
                   <md-tooltip md-direction="down">Adicionar</md-tooltip>
                   <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
                 </md-button>
               </div>
             </div>
 
-            <div layout="row" >
-              <div layout="column" flex="20">
+            <div layout="row" layout-margin>
+              <div layout="column" flex-gt-sm="40" flex-gt-md="25" flex="40">
                 <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet"></otus-sample-transportation-lot-aliquots-chart>
               </div>
               <div layout="column" style="height: 200px;" flex>
-                <md-content>
+                <md-content class="no-background-color">
                   <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lotDataSet" flex></otus-sample-transportation-lot-chart-subtitle-table>
                 </md-content>
               </div>
@@ -109,29 +109,27 @@
             <md-divider></md-divider>
 
             <dynamic-data-table flex
-            headers="['Código', 'Tipo', 'Recipiente', 'Aliquotagem']"
-            elements-array="$ctrl.lot.aliquotList"
-            elements-properties="['code', 'label', 'containerLabel', 'aliquotCollectionData.time']"
-            callback-after-change="$ctrl.dynamicDataTableChange"
-            table-update-function="$ctrl.AliquotTransportationService.dynamicDataTableFunction.updateDataTable"
+              headers="['Código', 'Tipo', 'Recipiente', 'Aliquotagem']"
+              elements-array="$ctrl.lot.aliquotList"
+              elements-properties="['code', 'label', 'containerLabel', 'aliquotCollectionData.time']"
+              callback-after-change="$ctrl.dynamicDataTableChange"
+              table-update-function="$ctrl.AliquotTransportationService.dynamicDataTableFunction.updateDataTable"
 
-            table-title="'Lista de Aliquotas'"
-            order-indices="[1,3,2,0]"
-            number-fields-aligned-left="10"
+              table-title="'Lista de Alíquotas'"
+              order-indices="[1,3,2,0]"
+              number-fields-aligned-left="10"
 
-            flex-array="[20, 40, 20,20]"
+              flex-array="[20, 40, 20,20]"
+              format-data=""
+              format-data-properties-array="['aliquotCollectionData.time']"
+              format-data-index-array="[]"
 
-            format-data=""
-            format-data-properties-array="['aliquotCollectionData.time']"
-            format-data-index-array="[]"
-
-            disable-checkbox="false"
-            disable-filter="false"
-            disable-reorder="false"
-            disable-pagination="false"
-
-            selected-color=""
-            hover-color=""
+              disable-checkbox="false"
+              disable-filter="false"
+              disable-reorder="false"
+              disable-pagination="false"
+              selected-color=""
+              hover-color=""
             >
             </dynamic-data-table>
 
