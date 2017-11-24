@@ -20,7 +20,8 @@
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
-
+    self.updateTubeCollectionData = updateTubeCollectionData;
+    
     //Laboratory Configuration Methods
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
@@ -52,11 +53,15 @@
     function updateLaboratoryParticipant(laboratory) {
       return LaboratoryCollectionService.update(laboratory);
     }
-
+    
     function updateAliquots(updateStructure) {
       return LaboratoryCollectionService.updateAliquots(updateStructure);
     }
-
+    
+    function updateTubeCollectionData(updateStructure){
+      return LaboratoryCollectionService.updateTubeCollectionData(updateStructure);
+    }
+    
     function getLaboratoryDescriptors() {
       return LaboratoryCollectionService.getDescriptors();
       // return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');

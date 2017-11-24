@@ -6,8 +6,7 @@
     .component('aliquotsView', {
       templateUrl: 'app/ux-component/laboratory/main-panel/aliquots-view/aliquots-view-template.html',
       bindings: {
-        participantLaboratory: '=',
-        callbackFunctions: '='
+        participantLaboratory: '='
       },
       controller: Controller
     });
@@ -18,11 +17,12 @@
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.laboratory.business.participant.aliquot.AliquotMessagesService',
     'otusjs.laboratory.business.participant.aliquot.AliquotValidationService',
+    'otusjs.otus.uxComponent.Publisher',
     '$scope',
     '$element'
   ];
 
-  function Controller(AliquotTubeService, LaboratoryConfigurationService, ParticipantLaboratoryService, AliquotMessagesService, Validation, $scope, $element) {
+  function Controller(AliquotTubeService, LaboratoryConfigurationService, ParticipantLaboratoryService, AliquotMessagesService, Validation, Publisher, $scope, $element) {
     var self = this;
 
     const timeShowMsg = 2000;
@@ -49,10 +49,7 @@
 
     function onInit() {
       _buildMomentTypeList();
-      
-      self.callbackFunctions.cancelAliquots = _cancelAliquots;
-      self.callbackFunctions.saveAliquots = _saveAliquots;
-      
+
       var codeConfiguration = LaboratoryConfigurationService.getCodeConfiguration();
       
       self.aliquotLengths = LaboratoryConfigurationService.getAliquotLengths();
@@ -82,14 +79,26 @@
       };        
       
       selecMomentType(self.momentTypeList[0]);
+
+      Publisher.unsubscribe('have-aliquots-changed');
+      Publisher.subscribe('have-aliquots-changed', _haveAliquotsChanged);
+
+      Publisher.unsubscribe('save-changed-aliquots');
+      Publisher.subscribe('save-changed-aliquots', _saveAliquots);
     }
 
     function _buildMomentTypeList() {
       self.momentTypeList = AliquotTubeService.buildMomentTypeList(self.participantLaboratory.tubes);
     }
 
-    function _cancelAliquots() {
-      return AliquotTubeService.areFieldsChanged(self.selectedMomentType);
+    function _haveAliquotsChanged(callbackResult) {
+      var hasChanged = AliquotTubeService.areFieldsChanged(self.selectedMomentType);
+      
+      if(callbackResult && typeof callbackResult === "function"){
+        callbackResult(hasChanged);
+      }
+
+      return hasChanged;
     }
     
     function _saveAliquots() {
