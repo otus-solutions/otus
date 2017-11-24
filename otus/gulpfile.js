@@ -24,7 +24,7 @@
     browserSync.init({
       server: {
         open: 'external',
-        baseDir: '../',
+        // baseDir: '../',
         middleware: [
           //browserSyncSpa(/^[^\.]+$/, baseDir),
 
@@ -35,7 +35,7 @@
           }
         ]
       },
-      startPath: 'otus/app'
+      startPath: 'app'
     });
 
     gulp.watch([
