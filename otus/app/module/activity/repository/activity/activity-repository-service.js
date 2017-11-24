@@ -21,6 +21,7 @@
     self.createFromSurvey = createFromSurvey;
     self.createFromPaperActivity = createFromPaperActivity;
     self.listAll = listAll;
+    self.listAllCategories = listAllCategories;
     self.listAvailables = listAvailables;
     self.save = save;
     self.discard = discard;
@@ -46,12 +47,12 @@
       return SurveyCollectionService.listAll().then(_toEntity);
     }
 
-    function createFromSurvey(surveys, loggedUser, participant) {
-      return _createActivity(surveys, loggedUser, participant);
+    function createFromSurvey(surveys, loggedUser, participant, configuration) {
+      return _createActivity(surveys, loggedUser, participant, null, configuration);
     }
 
-    function createFromPaperActivity(surveys, loggedUser, participant, paperActivityData) {
-      return _createActivity(surveys, loggedUser, participant, paperActivityData);
+    function createFromPaperActivity(surveys, loggedUser, participant, paperActivityData, configuration) {
+      return _createActivity(surveys, loggedUser, participant, paperActivityData, configuration);
     }
 
     function save(activity) {
@@ -62,18 +63,22 @@
       return _update(activities.map(_toDbObject));
     }
 
-    function _createActivity(surveys, loggedUser, participant, paperActivityData) {
+    function _createActivity(surveys, loggedUser, participant, paperActivityData, configuration) {
       var work = _setupWorkProgress();
       ModuleService
         .whenActivityFacadeServiceReady()
         .then(function(activityFacadeService) {
-          var activities = _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService);
+          var activities = _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService, configuration);
           return ActivityCollectionService.insert(activities).then(work.finish);
         });
     }
 
     function _listAll() {
       return ActivityCollectionService.listAll().then(_toEntity);
+    }
+
+    function listAllCategories() {
+      return ActivityCollectionService.listAllCategories();
     }
 
     function _update(toUpdate) {
@@ -85,9 +90,11 @@
       }
     }
 
-    function _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService) {
+    function _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService, configuration) {
+
       return surveys.map(function(survey) {
-        var activity = activityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData);
+        var configActivity = configuration[survey.surveyTemplate.identity.acronym];
+        var activity = activityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configActivity);
         return JSON.parse(activity.toJson());
       });
     }
