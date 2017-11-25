@@ -30,18 +30,19 @@
         disablePagination: '<',
 
         rowsPerPageArray: '<',
-        rowPerPageDefault: '<'
+        rowPerPageDefault: '<',
+
+        hideDelayTime: '<'
       },
       controller: Controller
     });
 
   Controller.$inject = [
-    '$scope',
     '$filter',
-    '$element'
+    '$mdToast'
   ];
 
-  function Controller($scope, $filter, $element) {
+  function Controller($filter, $mdToast) {
     var self = this;
 
     self.selectedItemCounter = 0;
@@ -79,6 +80,11 @@
     self.disableAnimation = false;
 
     self.filter = '';
+    self.filterAll = false;
+    self.filterAllChanged = filterAllChanged;
+
+    self.viewPerPage = true;
+    self.viewPerPageChanged = viewPerPageChanged;
 
 
     function onInit() {
@@ -88,12 +94,13 @@
 
       if(!self.hoverColor) self.hoverColor = '#EEEEEE';
       if(!self.selectedColor) self.selectedColor = '#F5F5F5';
-      if(!self.rowsPerPageArray) self.rowsPerPageArray = [5,10,15,20,25,30,35,40,45,50,60,70,80,90,100,200];
-      if(!self.rowPerPageDefault) self.rowPerPageDefault = self.rowsPerPageArray.length >= 3 ? self.rowsPerPageArray[3] : self.rowsPerPageArray[0];
+      if(!self.rowsPerPageArray) self.rowsPerPageArray = [10,25,50,100,250,500,1000];
+      if(!self.rowPerPageDefault) self.rowPerPageDefault = self.rowsPerPageArray.length >= 2 ? self.rowsPerPageArray[2] : self.rowsPerPageArray[0];
 
       if(!self.formatData) self.formatData = 'dd/MM/yyyy';
       if(!self.formatDataIndexArray) self.formatDataIndexArray = [];
       if(!self.formatDataPropertiesArray) self.formatDataPropertiesArray = [];
+      if(!self.hideDelayTime) self.hideDelayTime = 3000;
 
       self.error = {
         isError: false,
@@ -106,6 +113,34 @@
       };
 
       creacteTable();
+    }
+
+    function _havePagination(){
+      return (!self.disablePagination && self.viewPerPage && !self.filterAll);
+    }
+
+    function _showMsg(msg){
+      $mdToast.show(
+        $mdToast.simple()
+        .textContent(msg)
+        .hideDelay(self.hideDelayTime)
+      );
+    }
+
+    function filterAllChanged(value){
+      var newValue = value !== undefined ? value : !self.filterAll;
+
+      self.filterAll = newValue;
+
+      filterRows()
+    }
+
+    function viewPerPageChanged(value){
+      var newValue = value !== undefined ? value : !self.viewPerPage;
+
+      self.viewPerPage = newValue;
+
+      filterRows()
     }
 
     function mouseEnter(row){
@@ -129,16 +164,41 @@
     }
 
     function filterRows(){
-      if(!self.disablePagination){
-        self.table.currentPageRows = self.table.fullRows.slice(self.table.startPage, self.table.endPage + 1);
+      if(self.filter.length){
+        self.table.filteredRows = $filter('filter')(self.table.fullRows, self.filter);
+
+        var count = self.table.filteredRows.length;
+        var msg = '';
+        if(!count) {
+          msg = 'Nenhum registro foi encontrado.';
+        } else if (count === 1){
+          msg = count + ' Registro foi encontrado.'
+        } else {
+          msg = count + ' Registros foram encontrados.'
+        }
+        _showMsg(msg);
+      } else {
+        self.table.filteredRows = self.table.fullRows;
+        self.filterAll = false;
       }
 
-      self.table.rows = $filter('filter')(self.table.currentPageRows, self.filter);
+      self.table.currentPageRows = self.table.filteredRows;
+      self.table.currentPage = 1;
+      pagesChage();
+    }
+
+    function _changeDisplayRows(){
+      if(_havePagination()){
+        self.table.currentPageRows = self.table.filteredRows.slice(self.table.startPage, self.table.endPage + 1);
+      }
+
+      self.table.rows = self.table.currentPageRows;
+
       self.selectedItemCounter = self.table.rows.filter(function(row){
         return row.selected;
       }).length;
-      self.disableAnimation = false;
     }
+
 
     function getFlex(index){
       var value = self.flexArray[index];
@@ -229,21 +289,21 @@
       if(tempEnd >= (length - 1)){
         self.table.endPage = tempEnd;
       } else {
-        self.table.endPage = self.table.fullRows.length - 1;
+        self.table.endPage = self.table.filteredRows.length - 1;
       }
 
       setCurrentPageText();
-      filterRows();
+      _changeDisplayRows();
     }
 
     function setCurrentPageText(){
-      var tempEnd = (self.table.endPage + 1) > self.table.fullRows.length ? self.table.fullRows.length : (self.table.endPage + 1);
-      self.table.textPage = "" + (self.table.startPage + 1) + "-" + (tempEnd) + " de " + self.table.fullRows.length;
+      var tempEnd = (self.table.endPage + 1) > self.table.filteredRows.length ? self.table.filteredRows.length : (self.table.endPage + 1);
+      self.table.textPage = "" + (self.table.startPage + 1) + "-" + (tempEnd) + " de " + self.table.filteredRows.length;
     }
 
     function getIsNextPage(){
       var activeNext = false;
-      if(self.table.currentPage * self.rowPerPageDefault < self.table.fullRows.length){
+      if(self.table.currentPage * self.rowPerPageDefault < self.table.filteredRows.length){
         activeNext = true;
       }
 
@@ -263,10 +323,11 @@
         headers:self.headers,
         rows: [],
         fullRows: [],
+        filteredRows: [],
         currentPageRows: [],
         currentPage: 1,
         startPage: 0,
-        endPage: 0,
+        endPage: self.rowPerPageDefault + 1,
         textPage: ""
       };
 
@@ -277,15 +338,15 @@
         );
       }, this);
 
-      self.table.currentPageRows = self.table.fullRows;
-
+      self.table.filteredRows = self.table.fullRows;
+      filterRows();
       pagesChage();
     }
 
     function changeOrder(index){
       var columnName = "column" + index;
 
-      if(columnName + '.value' === self.orderQuery){
+      if(columnName + '.orderValue' === self.orderQuery){
         self.orderInverse = !self.orderInverse;
       } else {
         self.orderInverse = false;
@@ -296,12 +357,12 @@
 
     function _setOrderQuery(columnName){
       if(columnName){
-        self.orderQuery = columnName + '.value';
+        self.orderQuery = columnName + '.orderValue';
       } else {
         self.orderQuery = [];
         if(self.orderIndices){
           self.orderIndices.forEach(function(orderIndex){
-            self.orderQuery.push('column' + orderIndex + '.value');
+            self.orderQuery.push('column' + orderIndex + '.orderValue');
           });
         }
       }
@@ -321,9 +382,10 @@
       return value;
     }
 
-    function _getValueFromElement(element,compositeProperty, index){
+    function _getValueFromElement(element,compositeProperty, index, formatValue){
       var propertyArray = compositeProperty.split('.');
       var value = undefined;
+      var valueReturned;
 
       propertyArray.forEach(function(property) {
         if(value === undefined){
@@ -333,7 +395,13 @@
         }
       }, this);
 
-      return _getValueFormated(value, compositeProperty, index);
+      valueReturned = value;
+
+      if(formatValue){
+        valueReturned = _getValueFormated(value, compositeProperty, index);
+      }
+
+      return valueReturned;
     }
 
     function clearError(){
@@ -355,6 +423,7 @@
         } else {
           _selectRow(row);
         }
+        changeRowStyle(row);
       },this);
     }
 
@@ -364,6 +433,7 @@
       } else {
         _selectRow(row);
       }
+      changeRowStyle(row);
     }
 
     function _selectRow(row){
@@ -395,9 +465,13 @@
       };
 
       self.elementsProperties.forEach(function(elementProperty, index){
+        var value = _getValueFromElement(element,elementProperty, index, true);
+        var orderValue = _getValueFromElement(element,elementProperty, index);
+
         var column = _createColumn(
           row,
-          _getValueFromElement(element,elementProperty, index),
+          value,
+          orderValue,
           index
         );
 
@@ -408,10 +482,11 @@
       return row;
     }
 
-    function _createColumn(row, value, index){
+    function _createColumn(row, value, orderValue, index){
       var column = {
         type:"dynamicDataTableColumn",
         value: value,
+        orderValue: orderValue,
         index: index,
         name: "column" + index
       };

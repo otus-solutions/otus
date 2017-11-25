@@ -69,6 +69,17 @@
           </md-buttom>
           </div>
         </div>
+        <div class="md-list-item-text" layout="column" flex="10">
+          <div layout="row" layout-align="start center" layout-margin>
+            <md-buttom class="md-button" ng-click="$ctrl.changeSort('category',!$ctrl.reverseSort)">
+              <span>Categoria</span>
+              <md-icon class="material-icons" ng-show="$ctrl.orderByField == 'category' && !$ctrl.reverseSort">
+                keyboard_arrow_down</md-icon>
+              <md-icon class="material-icons" ng-show="$ctrl.orderByField == 'category' && $ctrl.reverseSort">
+                keyboard_arrow_up</md-icon>
+            </md-buttom>
+          </div>
+        </div>
         <md-divider></md-divider>
       </md-list-item>
 
@@ -99,6 +110,11 @@
         <div class="md-list-item-text" layout="column" flex="10">
           <div layout="row" layout-align="start center">
             <span layout="column">{{ activity.status }}</span>
+          </div>
+        </div>
+        <div class="md-list-item-text" layout="column" flex="10">
+          <div layout="row" layout-align="start center">
+            <span layout="column">{{ activity.category }}</span>
           </div>
         </div>
         <md-divider></md-divider>

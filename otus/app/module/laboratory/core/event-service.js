@@ -7,12 +7,12 @@
 
   function Service() {
     var self = this;
-
+    
     var _onParticipantSelectedListeners = {};
 
     /* Public methods */
     self.fireParticipantSelected = fireParticipantSelected;
-    self.onParticipantSelected = onParticipantSelected;
+    self.onParticipantSelected = onParticipantSelected; 
 
     function fireParticipantSelected(data) {
       _notifyEventObj(_onParticipantSelectedListeners, data, _onParticipantSelectedListeners.length);
