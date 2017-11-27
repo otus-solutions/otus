@@ -15,6 +15,9 @@ pipeline {
         sh "npm config set email ${author_email}"
         sh "npm config set always-auth true"
         sh "npm config set _auth '${auth}'"
+
+        sh "npm -v"
+        sh "echo $PATH"
       }
     }
 
