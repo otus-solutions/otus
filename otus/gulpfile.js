@@ -54,28 +54,19 @@
   
     gulp.task('compress-compress', function() {
       return gulp.src('app/index.html')
-        .pipe(useref({
-          transformPath: function(filePath) {
-            return filePath.replace('/app', '');
-          }
-        }))
-        .pipe(gulpif('*.js', uglify()))
-        .pipe(gulpif('*.css', minifyCss()))
-        .pipe(gulpif('index.html', replace('href="css', 'href="dist/otus/css')))
-        .pipe(gulpif('index.html', replace('src="scripts', 'src="dist/otus/scripts')))
-        .pipe(gulpif('*.css', replace('url(../../static-resource/', 'url(/otus/app/static-resource/')))
-        .pipe(gulp.dest('dist/otus'));
-    });
-  
-    gulp.task('transform', function(){
-      return gulp.src('app/index.html')
+      .pipe(gulpif('*.js', uglify()))
+      .pipe(gulpif('*.css', minifyCss()))
+      .pipe(gulpif('*.css', replace('url(../../static-resource/', 'url(/otus/app/static-resource/')))
       .pipe(useref({
         transformPath: function(filePath) {
           return filePath.replace('/app', '');
         }
       }))
+      .pipe(gulpif('index.html', replace('href="css', 'href="dist/otus/css')))
+      .pipe(gulpif('index.html', replace('src="scripts', 'src="dist/otus/scripts')))
+        .pipe(gulp.dest('dist/otus'));
     });
-  
+   
     gulp.task('compress-hash', function() {
       return gulp.src('dist/otus/index.html')
         .pipe(uncache({
@@ -94,7 +85,7 @@
     // });
   
     gulp.task('compress', function() {
-      runSequence('transform', 'compress-compress', 'compress-hash');
+      runSequence('compress-compress', 'compress-hash');
     });
   
     gulp.task('replace-env', function(value) {
