@@ -55,11 +55,11 @@
     gulp.task('compress-compress', function() {
       return gulp.src('app/index.html')
         // .pipe(gulpif('index.html',replace('app/','')))
-        .pipe(useref({
-          transformPath: function(filePath) {
-            return filePath.replace('app', '');
-          }
-        }))
+        // .pipe(useref({
+        //   transformPath: function(filePath) {
+        //     return filePath.replace('app', '');
+        //   }
+        // }))
       .pipe(gulpif('*.js', uglify()))
       .pipe(gulpif('*.css', minifyCss()))
       .pipe(gulpif('*.css', replace('url(../../static-resource/', 'url(/otus/app/static-resource/')))
