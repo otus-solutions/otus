@@ -53,7 +53,7 @@
     });
   
     gulp.task('compress-compress', function() {
-      return gulp.src('app/*.html')
+      return gulp.src(baseDir)
         .pipe(useref())
         .pipe(useref({
           transformPath: function(filePath) {
