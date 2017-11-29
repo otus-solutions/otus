@@ -23,7 +23,7 @@ pipeline {
 
     stage('Build') {
       steps{
-          sh "chmod +x *.*"
+          sh "chmod +x **/*.*"
           // sh "git show -s --pretty=%an | perl -ne 'print \"GIT-COMMIT-USER=$_\"' >> $WORKSPACE/env.properties"
           // sh "echo '' >> $WORKSPACE/env.properties"
           sh "rm -rf otus/node_modules/"
