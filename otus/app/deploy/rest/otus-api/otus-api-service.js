@@ -15,7 +15,8 @@
     'otusjs.deploy.ParticipantRestService',
     'otusjs.deploy.UserRestService',
     'otusjs.deploy.LaboratoryRestService',
-    'otusjs.deploy.SampleTransportRestService'
+    'otusjs.deploy.SampleTransportRestService',
+    'otusjs.deploy.ExamsLotsRestService'
   ];
 
   function Service(
@@ -28,7 +29,8 @@
     ParticipantRestService,
     UserRestService,
     LaboratoryRestService,
-    SampleTransportRestService
+    SampleTransportRestService,
+    ExamsLotsRestService
   ) {
     var self = this;
 
@@ -54,6 +56,7 @@
       UserRestService.initialize();
       LaboratoryRestService.initialize();
       SampleTransportRestService.initialize();
+      ExamsLotsRestService.initialize();
     }
   }
 }());

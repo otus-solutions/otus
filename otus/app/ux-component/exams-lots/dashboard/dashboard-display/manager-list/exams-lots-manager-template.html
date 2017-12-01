@@ -1,0 +1,4 @@
+<otus-exam-lot-info-sidenav selected-lot="$ctrl.selectedLots[0]" ng-if="$ctrl.selectedLots.length == 1"></otus-exam-lot-info-sidenav>
+<otus-exams-lots-manager-toolbar selected-lots="$ctrl.selectedLots" on-change-lot="$ctrl.handleChangeAction()" on-delete="$ctrl.handleDeleteAction()" on-view-info="$ctrl.handleViewInfoAction()" layout="row"></otus-exams-lots-manager-toolbar>
+<otus-exams-lots-manager-list selected-lots="$ctrl.selectedLots" layout="column" flex></otus-exams-lots-manager-list>
+<otus-exam-lot-add-button on-new-lot="$ctrl.newLot()"></otus-exam-lot-add-button>
