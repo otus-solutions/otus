@@ -5,10 +5,11 @@ pipeline {
      jdk 'Java8'
      nodejs 'node 8.4.0'
    }
- 
+
   stages{
     stage('Npm Config') {
       steps {
+        sh "npm -v"
         sh "npm config set init.author.name '${author_user}'"
         sh "npm config set init.author.email '${author_email}'"
         sh "npm config set init.author.url '${author_url}'"
