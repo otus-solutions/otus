@@ -1,5 +1,5 @@
 (function() {
-  
+
     var gulp = require('gulp');
     var browserSync = require('browser-sync').create();
     var browserSyncSpa = require('browser-sync-middleware-spa');
@@ -17,9 +17,9 @@
     var uncache = require('gulp-uncache');
     var replace = require('gulp-replace');
     var runSequence = require('run-sequence');
-    var cleanCSS = require('gulp-clean-css');
-    var addsrc = require('gulp-add-src');
-  
+    // var cleanCSS = require('gulp-clean-css');
+    // var addsrc = require('gulp-add-src');
+
     gulp.task('browser-sync', function() {
       browserSync.init({
         server: {
@@ -27,7 +27,7 @@
           baseDir: '../',
           middleware: [
             //browserSyncSpa(/^[^\.]+$/, baseDir),
-  
+
             function(req, res, next) {
               res.setHeader('Access-Control-Allow-Origin', '*');
               res.setHeader('Access-Control-Allow-Headers', '*');
@@ -37,14 +37,14 @@
         },
         startPath: 'otus/app'
       });
-  
+
       gulp.watch([
         'app/**/*.html',
         'app/**/*.js',
         'app/**/*.css'
       ]).on('change', browserSync.reload);
     });
-  
+
     gulp.task('upgrade-version', function(value) {
       gulp.src('./package.json')
         .pipe(bump({
@@ -52,10 +52,9 @@
         }))
         .pipe(gulp.dest('./'));
     });
-  
+
     gulp.task('compress-compress', function() {
-      return gulp.src('app/*.html')
-        .pipe(addsrc('app/**/**/*.css'))
+      return gulp.src('app/*.html',{allowEmpty: true})
         .pipe(useref({
           transformPath: function(filePath) {
             return filePath.replace('/app', '');
@@ -68,7 +67,7 @@
         .pipe(gulpif('index.html', replace('src="scripts', 'src="dist/otus/scripts')))
       .pipe(gulp.dest('dist/otus'));
     });
-   
+
     gulp.task('compress-hash', function() {
       return gulp.src('dist/otus/index.html')
         .pipe(uncache({
@@ -77,7 +76,7 @@
         }))
         .pipe(gulp.dest('dist/otus'));
     });
-  
+
     // gulp.task('minify-css', () => {
     //   return gulp.src('app/**/**/*.css')
     //     .pipe(cleanCSS({
@@ -85,11 +84,11 @@
     //     }))
     //     .pipe(gulp.dest('dist/otus/css'));
     // });
-  
+
     gulp.task('compress', function() {
       runSequence('compress-compress', 'compress-hash');
     });
-  
+
     gulp.task('replace-env', function(value) {
       gulp.src('app/application/environment/env.js')
         .pipe(replaceTask({
@@ -100,7 +99,7 @@
         }))
         .pipe(gulp.dest('app/application/environment'));
     });
-  
+
     gulp.task('sonar', function() {
       var options = {
         sonar: {
@@ -125,12 +124,11 @@
           }
         }
       };
-  
+
       return gulp.src('thisFileDoesNotExist.js', {
           read: false
         })
         .pipe(sonar(options));
     });
-  
+
   }());
-  

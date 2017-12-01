@@ -9,16 +9,12 @@ pipeline {
   stages{
     stage('Npm Config') {
       steps {
-        sh "npm -v"
         sh "npm config set init.author.name '${author_user}'"
         sh "npm config set init.author.email '${author_email}'"
         sh "npm config set init.author.url '${author_url}'"
         sh "npm config set email ${author_email}"
         sh "npm config set always-auth true"
         sh "npm config set _auth '${auth}'"
-
-        sh "npm -v"
-        sh "echo $PATH"
       }
     }
 
