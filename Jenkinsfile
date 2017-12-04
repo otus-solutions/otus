@@ -1,11 +1,11 @@
 pipeline {
-  agent {
-    node {
-        label 'Otus-Dev'
-        customWorkspace '/opt/bitnami/apps/jenkins/jenkins_home/workspace/otus-dev-pl/otus'
-    }
-  }
-  // agent any
+  // agent {
+  //   node {
+  //       label 'Otus-Dev'
+  //       customWorkspace '/opt/bitnami/apps/jenkins/jenkins_home/workspace/otus-dev-pl/otus'
+  //   }
+  // }
+  agent any
   tools {
      maven 'maven 3.5.0'
      jdk 'Java8'
@@ -14,17 +14,6 @@ pipeline {
 
 
   stages{
-    // stage('Npm Config') {
-    //   steps {
-    //     sh "npm config set init.author.name '${author_user}'"
-    //     sh "npm config set init.author.email '${author_email}'"
-    //     sh "npm config set init.author.url '${author_url}'"
-    //     sh "npm config set email ${author_email}"
-    //     sh "npm config set always-auth true"
-    //     sh "npm config set _auth '${auth}'"
-    //   }
-    // }
-
     stage('Build') {
       steps{
               // sh "git show -s --pretty=%an | perl -ne 'print \"GIT-COMMIT-USER=$_\"' >> $WORKSPACE/env.properties"
