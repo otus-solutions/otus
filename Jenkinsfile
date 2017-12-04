@@ -1,33 +1,40 @@
 pipeline {
-  agent any
+  agent {
+    node {
+        label 'Otus-Dev'
+        customWorkspace '/opt/bitnami/apps/jenkins/jenkins_home/workspace/otus-dev-pl/otus'
+    }
+  }
+  // agent any
   tools {
      maven 'maven 3.5.0'
      jdk 'Java8'
      nodejs 'node 8.4.0'
    }
 
+
   stages{
-    stage('Npm Config') {
-      steps {
-        sh "npm config set init.author.name '${author_user}'"
-        sh "npm config set init.author.email '${author_email}'"
-        sh "npm config set init.author.url '${author_url}'"
-        sh "npm config set email ${author_email}"
-        sh "npm config set always-auth true"
-        sh "npm config set _auth '${auth}'"
-      }
-    }
+    // stage('Npm Config') {
+    //   steps {
+    //     sh "npm config set init.author.name '${author_user}'"
+    //     sh "npm config set init.author.email '${author_email}'"
+    //     sh "npm config set init.author.url '${author_url}'"
+    //     sh "npm config set email ${author_email}"
+    //     sh "npm config set always-auth true"
+    //     sh "npm config set _auth '${auth}'"
+    //   }
+    // }
 
     stage('Build') {
       steps{
-          sh "chmod +x **/*.*"
-          // sh "git show -s --pretty=%an | perl -ne 'print \"GIT-COMMIT-USER=$_\"' >> $WORKSPACE/env.properties"
+              // sh "git show -s --pretty=%an | perl -ne 'print \"GIT-COMMIT-USER=$_\"' >> $WORKSPACE/env.properties"
           // sh "echo '' >> $WORKSPACE/env.properties"
-          sh "rm -rf otus/node_modules/"
-          sh "npm install --prefix otus/"
-          sh "npm run test --prefix otus/"
-          sh "mvn -f otus/pom.xml exec:exec@npm-replace-env -Dapi.url='https://api-otus.dev.ccem.ufrgs.br'"
-          sh "npm run build --prefix otus/"
+
+            sh "rm -rf otus/node_modules/"
+            sh "npm install --prefix otus/"
+            sh "npm run test --prefix otus/"
+            sh "mvn -f otus/pom.xml exec:exec@npm-replace-env -Dapi.url='https://api-otus.dev.ccem.ufrgs.br'"
+            sh "npm run build --prefix otus/"
 
 
     }
