@@ -26,6 +26,7 @@
   function Service($q, ModuleService, LaboratoryLocalStorageService) {
     var self = this;
     var _remoteStorage = ModuleService.getLaboratoryRemoteStorage();
+    var _prjectRemoteStorege = ModuleService.getProjectRemoteStorage();
     var _participant = null;
 
     /* Public methods */

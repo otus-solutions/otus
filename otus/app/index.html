@@ -189,7 +189,7 @@
   <script src="app/deploy/rest/otus-api/laboratory/laboratory-rest-service.js"></script>
   <script src="app/deploy/rest/otus-api/laboratory/sampleTransport/sample-transport-rest-service.js"></script>
   <script src="app/deploy/rest/otus-api/extraction/token-rest-service.js"></script>
-  <script src="app/deploy/rest/otus-api/laboratory/exam/exam-lot-rest-service.js"></script>
+  <script src="app/deploy/rest/otus-api/laboratory/exam/exams-rest-service.js"></script>
   <!-- # Deploy > State -->
   <script src="app/deploy/state/state-configuration.js"></script>
   <script src="app/deploy/state/access/access-state-provider.js"></script>
@@ -217,6 +217,7 @@
   <script src="app/deploy/storage/storage-loader-service.js"></script>
   <script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
   <script src="app/deploy/storage/laboratory/laboratory-remote-storage-service.js"></script>
+  <script src="app/deploy/storage/laboratory/project-remote-storage-service.js"></script>
   <!-- # Deploy > Loading Screen -->
   <script src="app/deploy/loading-screen/loading-screen-service.js"></script>
 <!-- endbuild -->
@@ -293,6 +294,9 @@
 <script src="app/module/laboratory/business/project/module.js"></script>
 <script src="app/module/laboratory/business/project/transportation/aliquot-transportation-module.js"></script>
 <script src="app/module/laboratory/business/project/transportation/aliquot-transportation-service.js"></script>
+<script src="app/module/laboratory/business/project/exams/exams-module.js"></script>
+<script src="app/module/laboratory/business/project/exams/exams-lots-service.js"></script>
+
 
 
   <!-- # laboratory > core -->
@@ -305,6 +309,8 @@
   <script src="app/module/laboratory/repository/module.js"></script>
   <script src="app/module/laboratory/repository/laboratory/laboratory-collection-service.js"></script>
   <script src="app/module/laboratory/repository/laboratory/laboratory-repository-service.js"></script>
+  <script src="app/module/laboratory/repository/laboratory/project/project-collection-service.js"></script>
+  <script src="app/module/laboratory/repository/laboratory/project/project-repository-service.js"></script>
 
   <!-- # laboratory > storage -->
   <script src="app/module/laboratory/storage/module.js"></script>

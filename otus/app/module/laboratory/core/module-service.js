@@ -25,7 +25,9 @@
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;
     self.getLaboratoryRemoteStorage = getLaboratoryRemoteStorage;
+    self.getProjectRemoteStorage = getProjectRemoteStorage;
     self.setLaboratoryRemoteStorage = setLaboratoryRemoteStorage;
+    self.setProjectRemoteStorage = setProjectRemoteStorage;
     self.setCurrentUser = setCurrentUser;
 
     function setCurrentUser(currentUser) {
@@ -56,6 +58,23 @@
     function setLaboratoryRemoteStorage(storage) {
       self.RemoteStorage.Laboratory = storage;
       _laboratoryRemoteStorageDefer.resolve(self.RemoteStorage.Laboratory);
+    }
+
+    function getProjectRemoteStorage() {
+      if (self.RemoteStorage.project) {
+        _laboratoryRemoteStorageDefer = $q.defer();
+        _laboratoryRemoteStorageDefer.resolve(self.RemoteStorage.project);
+      }
+      return {
+        whenReady: function() {
+          return _laboratoryRemoteStorageDefer.promise;
+        }
+      };
+    }
+
+    function setProjectRemoteStorage(storage) {
+      self.RemoteStorage.project = storage;
+      _laboratoryRemoteStorageDefer.resolve(self.RemoteStorage.project);
     }
 
   }

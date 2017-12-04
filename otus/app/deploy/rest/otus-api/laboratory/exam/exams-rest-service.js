@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.ExamsLotsRestService', Service);
+    .service('otusjs.deploy.ExamsRestService', Service);
 
   Service.$inject = [
     'OtusRestResourceService'
@@ -22,7 +22,7 @@
     self.deleteLot = deleteLot;
 
     function initialize() {
-      _rest = OtusRestResourceService.getExamLot();
+      _rest = OtusRestResourceService.getExamsResource();
     }
 
     function create() {

@@ -11,12 +11,12 @@
     '$q',
     'otusjs.laboratory.transportation.TransportationService',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
-    'otusjs.laboratory.repository.LaboratoryRepositoryService',
+    'otusjs.laboratory.repository.ProjectRepositoryService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
   function service($q, TransportationService, LaboratoryConfigurationService,
-                   LaboratoryRepositoryService, LoadingScreenService) {
+                   ProjectRepositoryService, LoadingScreenService) {
     var self = this;
 
     self.createAliquotLot = createAliquotLot;
@@ -51,7 +51,7 @@
       LoadingScreenService.start();
       var deferred = $q.defer();
 
-      LaboratoryRepositoryService.getAliquots()
+      ProjectRepositoryService.getAliquots()
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
           LoadingScreenService.finish();
@@ -66,7 +66,7 @@
     function getAliquotsByCenter(center) {
       var deferred = $q.defer();
 
-      LaboratoryRepositoryService.getAliquotsByCenter(center)
+      ProjectRepositoryService.getAliquotsByCenter(center)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
         })
@@ -78,19 +78,67 @@
     }
 
     function getLots() {
-      console.log("listed");
+      var deferred = $q.defer();
+
+      LaboratoryConfigurationService.fetchAliquotsDescriptors()
+        .then(function() {
+          ProjectRepositoryService.getLots()
+            .then(function(response) {
+              var lots = JSON.parse(response).map(function(lotJson) {
+                return TransportationService.buildAliquotLotFromJson(
+                  lotJson);
+              });
+
+              deferred.resolve(lots);
+            })
+            .catch(function(err) {
+              deferred.reject(err);
+            });
+        });
+
+      return deferred.promise;
     }
 
     function createLot(lotStructure) {
-      console.log("created");
+      var deferred = $q.defer();
+
+      ProjectRepositoryService.createLot(lotStructure)
+        .then(function(response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
     }
 
     function updateLot(lotStructure) {
-      console.log("updated");
+      var deferred = $q.defer();
+
+      ProjectRepositoryService.updateLot(lotStructure)
+        .then(function(response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
     }
 
     function deleteLot(lotCode) {
-      console.log("deleted");
+      var deferred = $q.defer();
+
+      ProjectRepositoryService.deleteLot(lotCode)
+        .then(function(response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
     }
 
     return self;
