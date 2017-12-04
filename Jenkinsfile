@@ -14,9 +14,6 @@ pipeline {
 
 
   stages{
-    stage('Checkout'){
-      checkout scm
-    }
     stage('Build') {
       steps{
               // sh "git show -s --pretty=%an | perl -ne 'print \"GIT-COMMIT-USER=$_\"' >> $WORKSPACE/env.properties"
