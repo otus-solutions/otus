@@ -66,18 +66,6 @@ pipeline {
     //   sh "mvn antrun:run@static-deploy -Dscp.user='${SERVER_USER}' -Dscp.host='${SERVER_HOST}' -Dscp.target='${SERVER_TARGET}' -Dscp.password='${SERVER_PWD}'"
     // }
 
-     stage('Cleanup'){
-       steps {
-         echo 'prune and cleanup'
-        //  sh 'npm prune --prefix otus/'
-         sh 'rm otus/node_modules -rf'
-
-       }
-     }
-
-
-
-
   }
 
 }
