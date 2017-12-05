@@ -1,0 +1,13 @@
+<div ng-class="{ 'result-container-close': !$ctrl.showResultList, 'result-container-open': $ctrl.showResultList }">
+  <div ng-click="$ctrl.selectParticipant(participant)" ng-repeat="participant in $ctrl.participants" class="participant-result" layout="row" layout-align="left center" layout-margin>
+    <div flex="10">
+      <md-icon md-font-set="material-icons">face</md-icon>
+    </div>
+    <div flex="10">
+      <span class="md-body-2">{{ participant.recruitmentNumber }}</span>
+    </div>
+    <div flex="80">
+      <span class="md-body-1">{{ participant.name }}</span>
+    </div>
+  </div>
+</div>

@@ -21,7 +21,7 @@
     </md-input-container>
     <md-input-container class="remove-errors-spacer" style="margin-left:15px">
       <label>Visualização</label>
-      <md-select ng-model="$ctrl.view">
+      <md-select ng-model="$ctrl.view" style="width: 90px;">
         <md-option ng-repeat="view in ['Cards','Lista']" value="{{view}}">
           {{view}}
         </md-option>
@@ -33,7 +33,7 @@
 <md-content ng-if="$ctrl.view=='Cards'" class="md-padding" layout="column" >
   <div>
     <div layout-align="center none" layout-wrap layout="row" flex>
-      <div ng-repeat="lot in $ctrl.lotsList | limitTo:$ctrl.show track by lot.code" class="card-animated">
+      <div ng-repeat="lot in $ctrl.lotsList | limitTo:$ctrl.show track by lot.code">
         <md-card layout-padding style="width:500px" ng-click="$ctrl.selectLot(lot)" class="{{(lot.isSelected ? 'selectedState' : 'regularState') + ' aliquot-md-card card-tube' }}"
               ng-class="{ 'selectedState': lot.isSelected, 'regularState': !lot.isSelected }">
           <md-card-title flex>
@@ -53,12 +53,12 @@
             </div>
           </md-card-title>
           <md-card-content layout="column" style="height:180px;" ng-if="$ctrl.lotDataSet[$index].labels.length > 0">
-            <md-content>
+            <md-content md-content class="no-background-color">
               <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lotDataSet[$index]"></otus-sample-transportation-lot-chart-subtitle-table>
             </md-content>
           </md-card-content>
           <md-card-content layout-align="center center" layout="column" ng-if="!$ctrl.lotDataSet[$index].labels.length">
-            <span class="md-subhead">Não há aliquotas no lote</span>
+            <span class="md-subhead">Não há Alíquotas no lote</span>
           </md-card-content>
         </md-card>
       </div>

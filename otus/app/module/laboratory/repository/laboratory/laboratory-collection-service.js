@@ -35,6 +35,7 @@
     self.listAll = listAll;
     self.initializeLaboratory = initializeLaboratory;
     self.update = update;
+    self.updateTubeCollectionData = updateTubeCollectionData;
     self.updateAliquots = updateAliquots;
     self.getLaboratory = getLaboratory;
     self.getDescriptors = getDescriptors;
@@ -135,7 +136,7 @@
     }
 
     /**
-     * Updates laboratory in collection.
+     * Update laboratory in collection.
      * @param {(object)} laboratory - the laboratory to be updated
      * @memberof LaboratoryCollectionService
      */
@@ -147,6 +148,29 @@
         .then(function(remoteStorage) {
           remoteStorage
             .update(_participant.recruitmentNumber, laboratory)
+            .then(function(remoteLaboratory) {
+              request.resolve();
+            }, function(e){
+               request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Update Collection Data of changed tubes
+     * @param {(object)} updateStructure - the list of changed tubes to be updated
+     * @memberof LaboratoryCollectionService
+     */
+    function updateTubeCollectionData(updateStructure) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .updateTubeCollectionData(_participant.recruitmentNumber, updateStructure)
             .then(function(remoteLaboratory) {
               request.resolve();
             }, function(e){

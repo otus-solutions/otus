@@ -15,29 +15,45 @@
   function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService) {
     var self = this;
     var _paperActivityCheckerData = null;
+    self.activityConfigurations = new Object();
+
 
     /* Public methods */
     self.initializePaperActivityData = initializePaperActivityData;
     self.add = add;
     self.listAll = listAll;
+    self.listAllCategories = listAllCategories;
     self.listAvailables = listAvailables;
     self.selectActivities = selectActivities;
     self.getSelectedActivities = getSelectedActivities;
     self.getSelectedParticipant = getSelectedParticipant;
     self.listActivityCheckers = listActivityCheckers;
+    self.setActivitiesSelection = setActivitiesSelection;
+    self.getActivitiesSelection = getActivitiesSelection;
 
-    function add(surveys) {
+    self.configurationStructure = configurationStructure;
+
+    function add() {
       var loggedUser = ContextService.getLoggedUser();
 
       getSelectedParticipant()
       .then(function(selectedParticipant) {
         if (_paperActivityCheckerData) {
-          ActivityRepositoryService.createFromPaperActivity(surveys, loggedUser, selectedParticipant, _paperActivityCheckerData);
+          ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData, self.activityConfigurations);
           _paperActivityCheckerData = null;
         } else {
-          ActivityRepositoryService.createFromSurvey(surveys, loggedUser, selectedParticipant);
+          ActivityRepositoryService.createFromSurvey(self.listSurveys, loggedUser, selectedParticipant, self.activityConfigurations);
         }
       });
+    }
+
+    function setActivitiesSelection(surveys) {
+      self.listSurveys = surveys;
+      _constructCollectionConfiguration();
+    }
+
+    function getActivitiesSelection() {
+      return self.listSurveys;
     }
 
     function listAll() {
@@ -46,6 +62,7 @@
           return ActivityRepositoryService.listAll(selectedParticipant);
         });
     }
+
 
     function listAvailables() {
       return ActivityRepositoryService.listAvailables();
@@ -90,5 +107,21 @@
         ModuleService.ActivityFacadeService.useActivity(selectedActivities[0]);
       }
     }
+
+    /* Activity Configuration Methods */
+    function configurationStructure() {
+      return self.activityConfigurations;
+    }
+
+    function _constructCollectionConfiguration() {
+      self.listSurveys.forEach(function (template) {
+        self.activityConfigurations[template.surveyTemplate.identity.acronym] = {};
+      });
+    }
+
+    function listAllCategories() {
+        return ActivityRepositoryService.listAllCategories();
+    }
+
   }
 }());

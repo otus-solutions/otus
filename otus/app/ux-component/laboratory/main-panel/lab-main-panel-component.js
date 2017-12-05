@@ -7,8 +7,7 @@
       templateUrl: 'app/ux-component/laboratory/main-panel/main-panel-template.html',
       bindings: {
          participantLaboratory: '<',
-         state: '<',
-         callbackFunctions: '='
+         state: '<'
       },
       controller: controller
     });

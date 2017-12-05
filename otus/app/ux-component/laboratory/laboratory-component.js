@@ -9,34 +9,28 @@
     });
 
   Controller.$inject = [
+    '$q',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.laboratory.core.EventService',
+    'otusjs.otus.uxComponent.Publisher',
     '$scope'
   ];
 
-  function Controller(ParticipantLaboratoryService, LoadingScreenService, EventService, $scope) {
+  function Controller($q, ParticipantLaboratoryService, LoadingScreenService, EventService, Publisher, $scope) {
     var self = this;
 
     /* Public methods */
     self.$onInit = onInit;
     self.intializeLaboratory = intializeLaboratory;
-    self.callbackFunctions = {
-      saveAliquots: function() {
-        console.log('Function not implemented.');
-      },
-      cancelAliquots: function() {
-        console.log('Function not implemented.');
-        return false;
-      }
-    };
-
 
     function onInit() {
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       self.hasLaboratory = false;
       ParticipantLaboratoryService.onParticipantSelected(_setupLaboratory);
+      Publisher.unsubscribe('refresh-laboratory-participant');
+      Publisher.subscribe('refresh-laboratory-participant',_refreshLaboratory);
       _setupLaboratory();
     }
 
@@ -50,6 +44,20 @@
             self.selectedParticipant = participantData;
           });
       }
+    }
+
+    function _refreshLaboratory(currentState) {
+      LoadingScreenService.start();
+      self.hasLaboratory = false;
+      ParticipantLaboratoryService
+        .hasLaboratory()
+        .then(function(hasLaboratory) {
+          self.hasLaboratory = hasLaboratory;
+          if (hasLaboratory) {
+            _fetchLaboratory(currentState);
+          }
+          LoadingScreenService.finish();
+        });
     }
 
     function _setupLaboratory() {
@@ -81,11 +89,13 @@
         });
     }
 
-    function _fetchLaboratory() {
+    function _fetchLaboratory(currentState) {
+      var newState = currentState ? currentState : 'main';
+
       self.labels = ParticipantLaboratoryService.generateLabels();
       self.labels.tubes = _orderTubesWithLabelNullAlphabetically(self.labels.tubes);
       self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
-      self.state = 'main';
+      self.state = newState;
     }
 
     function _orderTubesWithLabelNullAlphabetically(tubeList) {

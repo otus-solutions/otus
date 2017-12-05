@@ -32,11 +32,11 @@
       self.surveyActivity = activity;
     }
 
-    function createActivity(template, user, participant, paperActivityData) {
+    function createActivity(template, user, participant, paperActivityData, configuration) {
       if (paperActivityData) {
-        ActivityFacadeService.createPaperActivity(template, user, participant, paperActivityData);
+        ActivityFacadeService.createPaperActivity(template, user, participant, paperActivityData, configuration);
       } else {
-        ActivityFacadeService.createActivity(template, user, participant, participant);
+        ActivityFacadeService.createActivity(template, user, participant, configuration);
       }
 
       return getActivity();
