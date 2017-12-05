@@ -69,8 +69,8 @@ pipeline {
      stage('Cleanup'){
        steps {
          echo 'prune and cleanup'
-         sh 'npm prune'
-         sh 'rm node_modules -rf'
+        //  sh 'npm prune --prefix otus/'
+         sh 'rm otus/node_modules -rf'
 
        }
      }

@@ -57,7 +57,7 @@
       return gulp.src('app/*.html',{allowEmpty: true})
         .pipe(useref({
           transformPath: function(filePath) {
-            return filePath.replace('/app', '');
+            return filePath.replace('otus/app', 'otus');
           }
         }))
         .pipe(gulpif('*.js', uglify()))
