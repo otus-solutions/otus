@@ -34,6 +34,7 @@
     self.activateActivityCategories = activateActivityCategories;
     self.activateExamsLotsDashBoard = activateExamsLotsDashBoard;
     self.activateExamsLotsManagerList = activateExamsLotsManagerList;
+    self.activateExamsLotInfoManager = activateExamsLotInfoManager;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -109,6 +110,10 @@
 
     function activateExamsLotsManagerList() {
       $state.go(STATE.EXAMS_LOTS_MANAGER_LIST);
+    }
+
+    function activateExamsLotInfoManager() {
+      $state.go(STATE.EXAM_LOT_INFO_MANAGER);
     }
 
     function getCurrentState() {

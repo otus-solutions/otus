@@ -22,7 +22,7 @@
     self.deleteLot = deleteLot;
 
     function initialize() {
-      _rest = OtusRestResourceService.getExamsResource();
+      _rest = OtusRestResourceService.getExamLotResource();
     }
 
     function create() {

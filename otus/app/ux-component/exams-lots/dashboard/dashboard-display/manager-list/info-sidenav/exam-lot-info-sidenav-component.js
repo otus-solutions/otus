@@ -10,7 +10,7 @@
         selectedLot: '<'
       },
       require: {
-        otusSampleTransportationManagerList: '^otusSampleTransportationManagerList'
+        otusExamsLotsManager: '^otusExamsLotsManager'
       }
     });
 
@@ -29,7 +29,7 @@
     self.show = show;
 
     function onInit() {
-      self.otusSampleTransportationManagerList.lotInfoComponent = self;
+      self.otusExamsLotsManager.lotInfoComponent = self;
       self.selectedLot.aliquotList.forEach(function(aliquot) {
         aliquot.containerLabel = AliquotTransportationService.getContainerLabelToAliquot(aliquot);
       }, this);

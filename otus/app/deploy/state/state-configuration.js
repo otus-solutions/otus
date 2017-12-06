@@ -26,7 +26,8 @@
       'SAMPLE_TRANSPORTATION_MANAGER_LIST': 'sample-transportation-manager-list',
       'SAMPLE_TRANSPORTATION_DASHBOARD': 'sample-transportation-dashboard',
       'EXAMS_LOTS_DASHBOARD' : 'exams-lots-dashboard',
-      'EXAMS_LOTS_MANAGER_LIST' : 'exams-lots-manager-list'
+      'EXAMS_LOTS_MANAGER_LIST' : 'exams-lots-manager-list',
+      'EXAM_LOT_INFO_MANAGER' : 'exam-lot-info-manager'
     })
     .config(Configuration);
 
@@ -53,7 +54,8 @@
     'otusjs.deploy.SampleTransportationManagerListStateProvider',
     'otusjs.deploy.SampleTransportationStateProvider',
     'otusjs.deploy.ExamsLotsStateProvider',
-    'otusjs.deploy.ExamsLotsManagerListStateProvider'
+    'otusjs.deploy.ExamsLotsManagerListStateProvider',
+    'otusjs.deploy.ExamLotInfoManagerStateProvider'
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
@@ -77,7 +79,8 @@
     SampleTransportationManagerListProvider,
     SampleTransportationProvider,
     ExamsLotsStateProvider,
-    ExamsLotsManagerListState
+    ExamsLotsManagerListState,
+    ExamLotInfoManagerState
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ActivityStateProvider.state);
@@ -100,6 +103,7 @@
     $stateProvider.state(SampleTransportationProvider.state);
     $stateProvider.state(ExamsLotsStateProvider.state);
     $stateProvider.state(ExamsLotsManagerListState.state);
+    $stateProvider.state(ExamLotInfoManagerState.state);
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
     // $locationProvider.html5Mode(false);

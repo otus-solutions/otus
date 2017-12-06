@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.repository')
-    .service('otusjs.laboratory.repository.LaboratoryRepositoryService', Service);
+    .service('otusjs.laboratory.repository.ProjectRepositoryService', Service);
 
   Service.$inject = [
     'otusjs.laboratory.repository.ProjectCollectionService'

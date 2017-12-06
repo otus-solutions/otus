@@ -56,6 +56,7 @@
 
     /*Aliquots Descriptors*/
     function fetchAliquotsDescriptors() {
+      // console.log(_fetchAliquotsDescriptors());
       var defer = $q.defer();
       var aliquotsInitialized = LaboratoryConfigurationService.checkAliquotsDescriptors();
 

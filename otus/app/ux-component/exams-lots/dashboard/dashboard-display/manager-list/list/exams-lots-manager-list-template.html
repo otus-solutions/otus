@@ -5,11 +5,11 @@
   <div layout="row" layout-xs="column"  layout-align="center ">
     <md-input-container class="remove-errors-spacer">
       <label>Período Inicial</label>
-      <md-datepicker ng-model="$ctrl.shipmentBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
+      <md-datepicker ng-model="$ctrl.creationBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
     </md-input-container>
     <md-input-container class="remove-errors-spacer">
       <label>Período Fínal</label>
-      <md-datepicker ng-model="$ctrl.shipmentEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
+      <md-datepicker ng-model="$ctrl.creationEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
     </md-input-container>
     <md-input-container class="remove-errors-spacer" style="margin-left:15px">
       <label>Centro</label>
@@ -20,74 +20,31 @@
       </md-select>
     </md-input-container>
     <md-input-container class="remove-errors-spacer" style="margin-left:15px">
-      <label>Visualização</label>
-      <md-select ng-model="$ctrl.view" style="width: 90px;">
-        <md-option ng-repeat="view in ['Cards','Lista']" value="{{view}}">
-          {{view}}
+      <label>Tipo de exame</label>
+      <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
+        <md-option ng-repeat="exam in $ctrl.exams track by $index" value="{{exam}}" ng-selected="$index == $ctrl.centerFilterselectedIndex">
+          {{center}}
         </md-option>
       </md-select>
     </md-input-container>
   </div>
 </div>
 <md-divider></md-divider>
-<md-content ng-if="$ctrl.view=='Cards'" class="md-padding" layout="column" >
-  <div>
-    <div layout-align="center none" layout-wrap layout="row" flex>
-      <div ng-repeat="lot in $ctrl.lotsList | limitTo:$ctrl.show track by lot.code">
-        <md-card layout-padding style="width:500px" ng-click="$ctrl.selectLot(lot)" class="{{(lot.isSelected ? 'selectedState' : 'regularState') + ' aliquot-md-card card-tube' }}"
-              ng-class="{ 'selectedState': lot.isSelected, 'regularState': !lot.isSelected }">
-          <md-card-title flex>
-            <div layout="row" flex>
-                <div layout="column" flex="70">
-                    <md-card-title-text flex="100">
-                      <span class="md-headline">{{lot.code}}</span>
-                      <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
-                      <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
-                      <span class="md-subhead">Responsável: {{lot.operator}}</span>
-                    </md-card-title-text>
-                    <md-card-actions layout="row" layout-align="end center"></md-card-actions>
-                  </div>
-                  <div layout="column" flex="">
-                    <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet[$index]"></otus-sample-transportation-lot-aliquots-chart>
-                  </div>
-            </div>
-          </md-card-title>
-          <md-card-content layout="column" style="height:180px;" ng-if="$ctrl.lotDataSet[$index].labels.length > 0">
-            <md-content md-content class="no-background-color">
-              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lotDataSet[$index]"></otus-sample-transportation-lot-chart-subtitle-table>
-            </md-content>
-          </md-card-content>
-          <md-card-content layout-align="center center" layout="column" ng-if="!$ctrl.lotDataSet[$index].labels.length">
-            <span class="md-subhead">Não há Alíquotas no lote</span>
-          </md-card-content>
-        </md-card>
-      </div>
-    </div>
-  </div>
-  <div layout="row" ng-if="$ctrl.lotsList.length > 3">
-    <md-button class="md-accent" flex ng-click="$ctrl.showMore()">Exibir mais</md-button>
-  </div>
-</md-content>
-<div ng-if="$ctrl.view!='Cards'" layout="column" flex>
+<div layout="column" flex>
   <md-content layout="column" flex>
     <md-list flex>
       <md-list-item class="md-1-line" style="margin-left:8px">
-        <div class="md-list-item-text" layout="column" flex="25">
+        <div class="md-list-item-text" layout="column" flex="30">
           <div layout="row" layout-align="start center" layout-padding>
             <span layout="column">Código</span>
           </div>
         </div>
-        <div class="md-list-item-text" layout="column" flex="25">
+        <div class="md-list-item-text" layout="column" flex="30">
           <div layout="row" layout-align="start center" layout-padding>
             <span layout="column">Data de Processamento</span>
           </div>
         </div>
-        <div class="md-list-item-text" layout="column" flex="25">
-          <div layout="row" layout-align="start " layout-padding>
-            <span layout="column">Data de Envio</span>
-          </div>
-        </div>
-        <div class="md-list-item-text" layout="column" flex="25">
+        <div class="md-list-item-text" layout="column" flex="30">
           <div layout="row" layout-align="start " layout-padding>
             <span layout="column">Responsável</span>
           </div>
@@ -97,22 +54,17 @@
       <md-list-item ng-repeat="Lot in $ctrl.lotsList | orderBy: 'code' track by $index"
                     ng-class="{ 'selectedState': Lot.isSelected, 'regularState': !Lot.isSelected }"
                     ng-click="$ctrl.selectLot(Lot)">
-        <div class="md-list-item-text" layout="column" flex="25">
+        <div class="md-list-item-text" layout="column" flex="30">
           <div layout="row" layout-align="start center" layout-padding>
             <span layout="column">{{ Lot.code }}</span>
           </div>
         </div>
-        <div class="md-list-item-text" layout="column" flex="25">
+        <div class="md-list-item-text" layout="column" flex="30">
           <div layout="row" layout-align="start center" layout-padding>
             <span layout="column">{{ Lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
           </div>
         </div>
-        <div class="md-list-item-text" layout="column" flex="25">
-          <div layout="row" layout-align="start center" layout-padding>
-            <span layout="column">{{ Lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
-          </div>
-        </div>
-        <div class="md-list-item-text" layout="column" flex="25">
+        <div class="md-list-item-text" layout="column" flex="30">
           <div layout="row" layout-align="start center" layout-padding>
             <span layout="column">{{ Lot.operator}}</span>
           </div>

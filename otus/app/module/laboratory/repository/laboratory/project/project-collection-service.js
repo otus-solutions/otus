@@ -7,7 +7,7 @@
 
   angular
     .module('otusjs.laboratory.repository')
-    .service('otusjs.laboratory.repository.LaboratoryCollectionService', Service);
+    .service('otusjs.laboratory.repository.ProjectCollectionService', Service);
 
   Service.$inject = [
     '$q',

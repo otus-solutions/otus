@@ -6,12 +6,21 @@
     .component('otusExamLotAddButton', {
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-add-button/lot-add-button-template.html',
-      bindings:{
-        onNewLot: "&"
-      }
     });
 
-  function Controller() {
+  Controller.$inject = [
+    'otusjs.laboratory.core.ContextService',
+    'otusjs.application.state.ApplicationStateService'
+  ];
+
+  function Controller(laboratoryContextService, ApplicationStateService) {
     var self = this;
+
+    self.onNewLot = onNewLot;
+
+    function onNewLot() {
+      self.action = laboratoryContextService.setLotInfoManagerAction('create');
+      ApplicationStateService.activateExamsLotInfoManager();
+    }
   }
 }());

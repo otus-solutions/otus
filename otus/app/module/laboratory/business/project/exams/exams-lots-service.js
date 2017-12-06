@@ -4,7 +4,7 @@
   angular
     .module('otusjs.laboratory.business.project.transportation')
     .service(
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+      'otusjs.laboratory.business.project.transportation.ExamLotService',
       service);
 
   service.$inject = [

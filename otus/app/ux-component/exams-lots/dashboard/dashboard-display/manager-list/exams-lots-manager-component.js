@@ -31,7 +31,6 @@
     self.handleDeleteAction = handleDeleteAction;
     self.handleChangeAction = handleChangeAction;
     self.updateSelectedLots = updateSelectedLots;
-    self.newLot = newLot;
 
     function onInit() {
       self.selectedLots = [];
@@ -82,11 +81,6 @@
 
     function updateSelectedLots(selectedLots) {
       self.selectedLots = selectedLots;
-    }
-
-    function newLot() {
-      self.action = laboratoryContextService.setLotInfoManagerAction('create');
-      ApplicationStateService.activateSampleTransportationLotInfoManager();
     }
 
     function _buildDialogs() {
