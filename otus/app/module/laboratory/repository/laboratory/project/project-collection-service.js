@@ -31,6 +31,7 @@
     //Laboratory Project Public Methods
     self.getAliquots = getAliquots;
     self.getAliquotsByCenter = getAliquotsByCenter;
+    self.getAliquotDescriptors = getAliquotDescriptors;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -48,6 +49,22 @@
             request.resolve(aliquots);
          });
       });
+
+      return request.promise;
+    }
+
+    function getAliquotDescriptors() {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          return remoteStorage
+            .getAliquotDescriptors()
+            .then(function(descriptors) {
+              request.resolve(descriptors);
+            });
+        });
 
       return request.promise;
     }
@@ -74,6 +91,7 @@
       _prjectRemoteStorage
       .whenReady()
       .then(function(remoteStorage) {
+        console.log(remoteStorage);
          return remoteStorage
          .getLots()
          .then(function(lots) {

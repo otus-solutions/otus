@@ -15,11 +15,11 @@
     '$mdToast',
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+    'otusjs.laboratory.business.project.transportation.ExamLotService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller($mdToast, $mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
+  function Controller($mdToast, $mdDialog, laboratoryContextService, ExamLotService, ApplicationStateService) {
     var self = this;
     var _confirmDeleteSelectedLots;
 
@@ -33,6 +33,7 @@
     self.updateSelectedLots = updateSelectedLots;
 
     function onInit() {
+      console.log(self.lots);
       self.selectedLots = [];
       _buildDialogs();
     }
@@ -51,7 +52,7 @@
     }
 
     function _removeLotRecursive(lotArray,callback){
-      AliquotTransportationService.deleteLot(lotArray[0].code).then(function(){
+      ExamLotService.deleteLot(lotArray[0].code).then(function(){
         if(lotArray.length == 1){
           callback();
         } else {

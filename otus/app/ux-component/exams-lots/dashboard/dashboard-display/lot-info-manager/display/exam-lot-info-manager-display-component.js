@@ -22,10 +22,10 @@
     '$mdDialog',
     '$mdToast',
     '$filter',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
+    'otusjs.laboratory.business.project.transportation.ExamLotService'
   ];
 
-  function Controller($mdDialog, $mdToast, $filter, AliquotTransportationService) {
+  function Controller($mdDialog, $mdToast, $filter, ExamLotService) {
     var self = this;
 
     const timeShowMsg = 3000;
@@ -35,7 +35,7 @@
     self.currentNavItem = "insertionByPeriod";
     self.changeNavItem = changeNavItem;
 
-    self.AliquotTransportationService = AliquotTransportationService;
+    self.ExamLotService = ExamLotService;
 
     self.aliquotInputkeydown = aliquotInputkeydown;
     self.insertAliquotsByPeriod = insertAliquotsByPeriod;
@@ -70,13 +70,13 @@
     }
 
     function _dynamicDataTableUpdate(){
-      AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
+      ExamLotService.dynamicDataTableFunction.updateDataTable();
       self.selectedAliquots = [];
     }
 
     function _updateContainerLabel(){
       self.lot.aliquotList.forEach(function(aliquot) {
-        aliquot.containerLabel = AliquotTransportationService.getContainerLabelToAliquot(aliquot);
+        aliquot.containerLabel = ExamLotService.getContainerLabelToAliquot(aliquot);
       }, this);
     }
 

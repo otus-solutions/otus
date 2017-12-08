@@ -29,8 +29,8 @@
       }
     };
 
-    function _resolveLots(AliquotTransportationService) {
-      return AliquotTransportationService.getLots();
+    function _resolveLots(ExamLotService) {
+      return ExamLotService.getLots();
     }
 
     function _loadStateData(SessionContextService, LaboratoryContextService, Application) {
@@ -51,7 +51,7 @@
     }
 
     _resolveLots.$inject = [
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
+      'otusjs.laboratory.business.project.transportation.ExamLotService'
     ];
 
     _loadStateData.$inject = [

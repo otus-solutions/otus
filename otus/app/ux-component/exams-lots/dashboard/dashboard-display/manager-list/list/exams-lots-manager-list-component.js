@@ -16,14 +16,14 @@
 
   Controller.$inject = [
     'otusjs.deploy.FieldCenterRestService',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+    'otusjs.laboratory.business.project.transportation.ExamLotService',
     '$mdToast',
     'otusjs.laboratory.core.ContextService',
     'otusjs.otus.dashboard.core.ContextService',
     '$filter'
   ];
 
-  function Controller(ProjectFieldCenterService,AliquotTransportationService,$mdToast,laboratoryContextService,dashboardContextService,$filter) {
+  function Controller(ProjectFieldCenterService,ExamLotService,$mdToast,laboratoryContextService,dashboardContextService,$filter) {
     var self = this;
 
 
@@ -48,12 +48,10 @@
     self.onFilter = onFilter;
 
     function onInit() {
-      AliquotTransportationService.getDescriptors().then(function (result) {
+      ExamLotService.getDescriptors().then(function (result) {
         result.forEach(function (aliquotTypes) {
-          self.exams.push(aliquotTypes.label)
+          self.exams.push(aliquotTypes)
         });
-        console.log(result
-        )
       });
 
       ProjectFieldCenterService.loadCenters().then(function (result) {
@@ -96,7 +94,7 @@
     }
 
     function _LoadLotsList() {
-      AliquotTransportationService.getLots().then(function(response) {
+      ExamLotService.getLots().then(function(response) {
         self.lotsList = response;
         self.lotsListImutable = response;
         self.onFilter();

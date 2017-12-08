@@ -16,10 +16,10 @@
 
   Controller.$inject = [
     '$mdSidenav',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
+    'otusjs.laboratory.business.project.transportation.ExamLotService'
   ];
 
-  function Controller($mdSidenav, AliquotTransportationService) {
+  function Controller($mdSidenav, ExamLotService) {
     var self = this;
 
     /* Lifecycle hooks */
@@ -31,7 +31,7 @@
     function onInit() {
       self.otusExamsLotsManager.lotInfoComponent = self;
       self.selectedLot.aliquotList.forEach(function(aliquot) {
-        aliquot.containerLabel = AliquotTransportationService.getContainerLabelToAliquot(aliquot);
+        aliquot.containerLabel = ExamLotService.getContainerLabelToAliquot(aliquot);
       }, this);
     }
 

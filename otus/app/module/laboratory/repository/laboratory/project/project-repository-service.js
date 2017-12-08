@@ -15,6 +15,7 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
+    self.getAliquotsDescriptors = getAliquotsDescriptors;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
     self.createLot = createLot;
@@ -23,6 +24,12 @@
 
     function getAliquots() {
       return ProjectCollectionService.getAliquots();
+    }
+
+
+    function getAliquotsDescriptors() {
+      return ProjectCollectionService.getAliquotDescriptors();
+      // return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
     }
 
     function getAliquotsByCenter(center) {

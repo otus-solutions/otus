@@ -30,6 +30,7 @@
     }
 
     function getLots() {
+      console.log(_rest.getLots());
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }

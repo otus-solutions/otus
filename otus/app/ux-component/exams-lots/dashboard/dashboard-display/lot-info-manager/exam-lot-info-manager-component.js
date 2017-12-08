@@ -16,11 +16,11 @@
     '$mdToast',
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+    'otusjs.laboratory.business.project.transportation.ExamLotService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller($mdToast, $mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService) {
+  function Controller($mdToast, $mdDialog, laboratoryContextService, ExamLotService, ApplicationStateService) {
     var self = this;
     var _confirmCancel;
     var _deleteAlreadyUsedAliquotsDialog;
@@ -40,11 +40,11 @@
       self.selectedAliquots = [];
       self.action = laboratoryContextService.getLotInfoManagerAction();
       if (self.stateData['selectedLot']) {
-        self.lot = AliquotTransportationService.loadAliquotLotFromJson(self.stateData['selectedLot']);
+        self.lot = ExamLotService.loadAliquotLotFromJson(self.stateData['selectedLot']);
         self.lot.shipmentDate = new Date(self.lot.shipmentDate);
         self.lot.processingDate = new Date(self.lot.processingDate);
       } else {
-        self.lot = AliquotTransportationService.createAliquotLot();
+        self.lot = ExamLotService.createAliquotLot();
         self.lot.operator = self.stateData['user'].email;
         self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter()};
         self.lot.shipmentDate = new Date();
@@ -65,12 +65,12 @@
       }
       self.updateLotStateData(self.lot);
       self.selectedAliquots = [];
-      AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
+      ExamLotService.dynamicDataTableFunction.updateDataTable();
       _toastAliquotsRemoved(aliquotsCount);
     }
 
     function createLot() {
-      AliquotTransportationService.createLot(self.lot.toJSON()).then(function() {
+      ExamLotService.createLot(self.lot.toJSON()).then(function() {
         ApplicationStateService.activateSampleTransportationManagerList();
         self.updateLotStateData();
       }, function(err) {
@@ -80,7 +80,7 @@
     }
 
     function alterLot() {
-      AliquotTransportationService.updateLot(self.lot).then(function() {
+      ExamLotService.updateLot(self.lot).then(function() {
         ApplicationStateService.activateSampleTransportationManagerList();
         self.updateLotStateData();
       }, function(err) {
@@ -177,7 +177,7 @@
     }
 
     function _fetchgCollectedAliquots() {
-      AliquotTransportationService.getAliquots()
+      ExamLotService.getAliquots()
         .then(function(response) {
           self.fullAliquotsList = response;
         });
