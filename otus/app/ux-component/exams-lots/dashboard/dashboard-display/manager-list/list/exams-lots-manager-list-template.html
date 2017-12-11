@@ -21,8 +21,11 @@
     </md-input-container>
     <md-input-container class="remove-errors-spacer" style="margin-left:15px">
       <label>Tipo de exame</label>
-      <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
-        <md-option ng-repeat="exam in $ctrl.exams track by $index" value="{{exam.name}}" ng-selected="$index == $ctrl.centerFilterselectedIndex">
+      <md-select ng-model="$ctrl.examFilter" ng-change="$ctrl.onFilter()">
+        <md-option selected value="ALL">
+          Todos
+        </md-option>
+        <md-option ng-repeat="exam in $ctrl.exams track by $index" value="{{exam.name}}">
           {{exam.label}}
         </md-option>
       </md-select>
@@ -41,7 +44,12 @@
         </div>
         <div class="md-list-item-text" layout="column" flex>
           <div layout="row" layout-align="start center" layout-padding>
-            <span layout="column">Data de Processamento</span>
+            <span layout="column">Exame</span>
+          </div>
+        </div>
+        <div class="md-list-item-text" layout="column" flex>
+          <div layout="row" layout-align="start center" layout-padding>
+            <span layout="column">Data de Realização</span>
           </div>
         </div>
         <div class="md-list-item-text" layout="column" flex>
@@ -61,7 +69,12 @@
         </div>
         <div class="md-list-item-text" layout="column" flex>
           <div layout="row" layout-align="start center" layout-padding>
-            <span layout="column">{{ Lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
+            <span layout="column">{{ Lot.aliquotName }}</span>
+          </div>
+        </div>
+        <div class="md-list-item-text" layout="column" flex>
+          <div layout="row" layout-align="start center" layout-padding>
+            <span layout="column">{{ Lot.realizationDate | date:'dd/MM/yyyy - h:mm'}}</span>
           </div>
         </div>
         <div class="md-list-item-text" layout="column" flex>

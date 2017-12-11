@@ -30,6 +30,7 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
     self.centerFilter = "";
+    self.examFilter = "";
     self.creationBeginFilter = "";
     self.creationEndFilter = "";
     self.centers = [];
@@ -42,6 +43,7 @@
       self.show+= self.limit;
 
     }
+
     /* Public methods */
     self.selectLot = selectLot;
     self.updateOnDelete = updateOnDelete;
@@ -96,6 +98,7 @@
     function _LoadLotsList() {
       ExamLotService.getLots().then(function(response) {
         self.lotsList = response;
+        console.log(response);
         self.lotsListImutable = response;
         self.onFilter();
       });
@@ -105,6 +108,7 @@
       self.selectedLots = [];
       self.show = self.limit;
       laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
+      laboratoryContextService.setSelectedExamType(self.examFilter);
       if(self.lotsListImutable.length) {
         self.lotsList = self.lotsListImutable.filter(function (lot) {
           if (self.centerFilter.length) {
@@ -113,12 +117,12 @@
             return lot;
           }
         }).filter(function (FilteredByCenter) {
-          var lotFormatedData = $filter('date')(FilteredByCenter.shipmentDate, 'yyyyMMdd');
+          var lotFormattedData = $filter('date')(FilteredByCenter.realizationDate, 'yyyyMMdd');
           if (self.creationBeginFilter && self.creationEndFilter) {
-            var initialDateFormated = $filter('date')(self.creationBeginFilter, 'yyyyMMdd');
-            var finalDateFormated = $filter('date')(self.creationEndFilter, 'yyyyMMdd');
-            if(initialDateFormated <= finalDateFormated){
-              return (lotFormatedData >= initialDateFormated && lotFormatedData <= finalDateFormated);
+            var initialDateFormatted = $filter('date')(self.creationBeginFilter, 'yyyyMMdd');
+            var finalDateFormatted = $filter('date')(self.creationEndFilter, 'yyyyMMdd');
+            if(initialDateFormatted <= finalDateFormatted){
+              return (lotFormattedData >= initialDateFormatted && lotFormattedData <= finalDateFormatted);
             }else{
               var msgDataInvalida = "Datas invalidas";
 
@@ -131,6 +135,12 @@
             }
           } else {
             return FilteredByCenter;
+          }
+        }).filter(function (filteredByPeriod) {
+          if (self.examFilter.length && self.examFilter !== "ALL") {
+            return filteredByPeriod.aliquotName === self.examFilter;
+          } else {
+            return filteredByPeriod;
           }
         });
       }

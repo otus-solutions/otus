@@ -9,13 +9,13 @@
 
   service.$inject = [
     '$q',
-    'otusjs.laboratory.transportation.TransportationService',
+    'otusjs.laboratory.exam.ExamService',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
     'otusjs.laboratory.repository.ProjectRepositoryService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service($q, TransportationService, LaboratoryConfigurationService,
+  function service($q, ExamService, LaboratoryConfigurationService,
                    ProjectRepositoryService, LoadingScreenService) {
     var self = this;
 
@@ -41,11 +41,11 @@
     }
 
     function createAliquotLot() {
-      return TransportationService.createAliquotLot();
+      return ExamService.createAliquotLot();
     }
 
     function loadAliquotLotFromJson(lotJSON) {
-      return TransportationService.buildAliquotLotFromJson(lotJSON);
+      return ExamService.buildAliquotLotFromJson(lotJSON);
     }
 
     function getAliquots() {
@@ -87,7 +87,7 @@
           ProjectRepositoryService.getLots()
             .then(function(response) {
               var lots = JSON.parse(response).map(function(lotJson) {
-                return TransportationService.buildAliquotLotFromJson(
+                return ExamService.buildAliquotLotFromJson(
                   lotJson);
               });
 

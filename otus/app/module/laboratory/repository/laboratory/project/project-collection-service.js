@@ -91,7 +91,6 @@
       _prjectRemoteStorage
       .whenReady()
       .then(function(remoteStorage) {
-        console.log(remoteStorage);
          return remoteStorage
          .getLots()
          .then(function(lots) {

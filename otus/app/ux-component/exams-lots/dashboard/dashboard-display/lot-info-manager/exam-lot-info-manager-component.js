@@ -41,14 +41,13 @@
       self.action = laboratoryContextService.getLotInfoManagerAction();
       if (self.stateData['selectedLot']) {
         self.lot = ExamLotService.loadAliquotLotFromJson(self.stateData['selectedLot']);
-        self.lot.shipmentDate = new Date(self.lot.shipmentDate);
-        self.lot.processingDate = new Date(self.lot.processingDate);
+        self.lot.realizationDate = new Date(self.lot.realizationDate);
       } else {
         self.lot = ExamLotService.createAliquotLot();
+        self.lot.aliquotName = laboratoryContextService.getSelectedExamType();
         self.lot.operator = self.stateData['user'].email;
         self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter()};
-        self.lot.shipmentDate = new Date();
-        self.lot.processingDate = new Date();
+        self.lot.realizationDate = new Date();
       }
       _buildDialogs();
       _formatLotDates();
@@ -161,10 +160,8 @@
     }
 
     function _formatLotDates() {
-      self.lot.shipmentDate.setSeconds(0);
-      self.lot.shipmentDate.setMilliseconds(0);
-      self.lot.processingDate.setSeconds(0);
-      self.lot.processingDate.setMilliseconds(0);
+      self.lot.realizationDate.setSeconds(0);
+      self.lot.realizationDate.setMilliseconds(0);
     }
 
     function _getAliquotsInOtherLots() {

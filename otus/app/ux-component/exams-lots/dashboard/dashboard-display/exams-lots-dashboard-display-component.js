@@ -8,7 +8,5 @@
       templateUrl: 'app/ux-component/exams-lots/dashboard/dashboard-display/exams-lots-dashboard-display-template.html'
     });
 
-  function Controller() {
-    var self = this;
-  }
+  function Controller() {}
 }());
