@@ -17,8 +17,6 @@
     var uncache = require('gulp-uncache');
     var replace = require('gulp-replace');
     var runSequence = require('run-sequence');
-    // var cleanCSS = require('gulp-clean-css');
-    // var addsrc = require('gulp-add-src');
 
     gulp.task('browser-sync', function() {
       browserSync.init({
@@ -76,14 +74,6 @@
         }))
         .pipe(gulp.dest('dist/otus'));
     });
-
-    // gulp.task('minify-css', () => {
-    //   return gulp.src('app/**/**/*.css')
-    //     .pipe(cleanCSS({
-    //       compatibility: 'ie8'
-    //     }))
-    //     .pipe(gulp.dest('dist/otus/css'));
-    // });
 
     gulp.task('compress', function() {
       runSequence('compress-compress', 'compress-hash');
