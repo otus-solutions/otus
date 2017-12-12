@@ -9,11 +9,10 @@
       bindings: {
         lot: '=',
         selectedAliquots: '=',
-        lotDataSet: '<',
-        aliquotsInOtherLotsList: '<',
+        aliquotsInTransportLot: '<',
+        aliquotsInOtherLots: '<',
         fullAliquotsList: '<',
         action: '<',
-        setChartData: '&',
         onLotAlteration: '&'
       }
     });
@@ -22,7 +21,7 @@
     '$mdDialog',
     '$mdToast',
     '$filter',
-    'otusjs.laboratory.business.project.transportation.ExamLotService'
+    'otusjs.laboratory.business.project.exams.ExamLotService'
   ];
 
   function Controller($mdDialog, $mdToast, $filter, ExamLotService) {
@@ -31,15 +30,11 @@
     const timeShowMsg = 3000;
 
     self.$onInit = onInit;
-
-    self.currentNavItem = "insertionByPeriod";
     self.changeNavItem = changeNavItem;
 
     self.ExamLotService = ExamLotService;
 
     self.aliquotInputkeydown = aliquotInputkeydown;
-    self.insertAliquotsByPeriod = insertAliquotsByPeriod;
-    self.periodInputkeydown = periodInputkeydown;
     self.dynamicDataTableChange = dynamicDataTableChange;
 
     var _confirmAliquotsInsertionByPeriod;
@@ -53,6 +48,7 @@
     self.selectAliquot = selectAliquot;
 
     function onInit() {
+      console.log(self.lot);
       _updateContainerLabel();
       self.aliquotCode = "";
       self.initialDate = new Date();
@@ -80,41 +76,6 @@
       }, this);
     }
 
-    function insertAliquotsByPeriod(){
-      if(self.initialDate instanceof Date && self.finalDate instanceof Date){
-        self.initialDate = new Date(self.initialDate.toISOString());
-        self.finalDate = new Date(self.finalDate.toISOString());
-
-        if(self.initialDate <= self.finalDate){
-          _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no lote as Alíquotas realizadas no período'
-          + ' entre ' + $filter('date')(self.initialDate,'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate,'dd/MM/yyyy') + '.');
-
-          $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
-            var successInsertion = false;
-            _findAliquotByPeriod(self.initialDate, self.finalDate).forEach(function(availableAliquot) {
-              var returned = fastInsertion(availableAliquot.code, true);
-              if(!successInsertion) successInsertion = returned; }, this);
-            if(successInsertion){
-              _successInAliquotInsertion();
-              _dynamicDataTableUpdate();
-            } else {
-              _notAliquotsInserted();
-            }
-          });
-        } else {
-          _invalidPeriodInterval();
-        }
-      } else {
-        _unselectedPeriod();
-      }
-    }
-
-    function periodInputkeydown(event) {
-      var charCode = event.which || event.keyCode;
-      if(charCode == '13') {
-        self.insertAliquotsByPeriod();
-      }
-    }
 
     function aliquotInputkeydown(event) {
       var charCode = event.which || event.keyCode;
@@ -125,12 +86,16 @@
 
 
     function fastInsertion(newAliquotCode, hideMsgErrors) {
+      console.log(self.fullAliquotsList);
       var foundAliquot = _findAliquot(newAliquotCode);
       var successInsertion = false;
 
       if (foundAliquot) {
-        if(foundAliquot.fieldCenter.acronym !== self.lot.fieldCenter.acronym){
-          if(!hideMsgErrors) _toastWrongFieldCenter(newAliquotCode);
+        if(self.lot.aliquotName !== foundAliquot.name){
+          console.log(foundAliquot);
+          if(!hideMsgErrors) _toastWrongTypeAliquot(foundAliquot);
+        } else if((foundAliquot.fieldCenter.acronym !== self.lot.fieldCenter.acronym) && (!_findAliquotsInTransportLots(newAliquotCode))){
+          if(!hideMsgErrors) _toastInvalid(newAliquotCode);
         } else if (_findAliquotInLot(newAliquotCode)) {
           if(!hideMsgErrors) _toastDuplicated(newAliquotCode);
         } else if (_findAliquotsInOtherLots(newAliquotCode)) {
@@ -140,7 +105,6 @@
           self.onLotAlteration({
             newData: self.lot.toJSON()
           });
-          self.setChartData();
           _updateContainerLabel();
           successInsertion = true;
           if(!hideMsgErrors) _dynamicDataTableUpdate();
@@ -170,6 +134,14 @@
       }
     }
 
+    function _toastWrongTypeAliquot(aliquot) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('A alíquota "' + aliquot.code + '" do tipo "'+aliquot.name+'" nâo pode ser inserida em um lote de "'+self.lot.aliquotName)
+          .hideDelay(timeShowMsg)
+      );
+    }
+
     function _toastError(aliquotCode) {
       $mdToast.show(
         $mdToast.simple()
@@ -186,10 +158,10 @@
       );
     }
 
-    function _toastWrongFieldCenter(aliquotCode) {
+    function _toastInvalid(aliquotCode) {
       $mdToast.show(
         $mdToast.simple()
-        .textContent('A alíquota "' + aliquotCode + '" não pertence a este centro.')
+        .textContent('A alíquota "' + aliquotCode + '" não pertence a este centro ou não está em um lote de transporte.')
         .hideDelay(timeShowMsg)
       );
     }
@@ -200,48 +172,6 @@
         .textContent('A alíquota "' + aliquotCode + '" já esta em outro lote.')
         .hideDelay(timeShowMsg)
       );
-    }
-
-    function _unselectedPeriod() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('Por favor, selecione o Período Inicial e o Período Final antes de prosseguir.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _invalidPeriodInterval() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('O Início do Período, não pode ser superior ao Final do Período.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _successInAliquotInsertion() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A(s) alíquota(s) foi(ram) inserida(s) com sucesso.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _notAliquotsInserted() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('Nenhuma alíquota foi inserida.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _findAliquotByPeriod(initialDate, finalDate) {
-      return self.fullAliquotsList.filter(function(availableAliquot) {
-        var aliquotFormatedData = $filter('date')(availableAliquot.aliquotCollectionData.time,'yyyyMMdd');
-        var initialDateFormated = $filter('date')(initialDate,'yyyyMMdd');
-        var finalDateFormated = $filter('date')(finalDate,'yyyyMMdd');
-
-        return (aliquotFormatedData >= initialDateFormated && aliquotFormatedData <= finalDateFormated);
-      });
     }
 
     function _findAliquotInLot(code) {
@@ -256,8 +186,14 @@
       });
     }
 
+    function _findAliquotsInTransportLots(code) {
+      return self.aliquotsInTransportLot.find(function(aliquotInTransportLot) {
+        return aliquotInTransportLot.code == code;
+      });
+    }
+
     function _findAliquotsInOtherLots(code) {
-      return self.aliquotsInOtherLotsList.find(function(aliquotsInOtherLots) {
+      return self.aliquotsInOtherLots.find(function(aliquotsInOtherLots) {
         return aliquotsInOtherLots.code == code;
       });
     }

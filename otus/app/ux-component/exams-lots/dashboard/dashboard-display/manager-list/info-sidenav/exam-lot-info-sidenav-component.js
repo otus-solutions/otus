@@ -16,7 +16,7 @@
 
   Controller.$inject = [
     '$mdSidenav',
-    'otusjs.laboratory.business.project.transportation.ExamLotService'
+    'otusjs.laboratory.business.project.exams.ExamLotService'
   ];
 
   function Controller($mdSidenav, ExamLotService) {

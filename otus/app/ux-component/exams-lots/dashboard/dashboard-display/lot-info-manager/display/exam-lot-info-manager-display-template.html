@@ -10,29 +10,16 @@
                 <div ng-if="$ctrl.action=='create'" flex>
                   <div layout="row" layout-xs="column" flex>
                     <div layout="column" layout-align="center start" flex="20" flex-md="15" flex-gt-md="10">
-                      <span>Centro:</span>
+                      <span>Centro: {{$ctrl.lot.fieldCenter.acronym}}</span>
                     </div>
-                    <md-input-container class="remove-errors-spacer input-container-lot-margin">
-                      <md-datepicker ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de Envio"></md-datepicker>
-                    </md-input-container>
-                    <md-input-container class="remove-errors-spacer input-container-lot-margin">
-                      <md-icon class="material-icons">access_time</md-icon>
-                      <input type="time" ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
-                    </md-input-container>
                   </div>
                 </div>
                 <div>
                   <div layout="row" layout-xs="column" flex>
-                    <div layout="column" layout-align="center start" flex="20" flex-md="15" flex-gt-md="10" >
-                      <span>Processamento:</span>
+                    <div layout="column" layout-align="center start" flex="35" >
+                      <span>Tipo do lote: {{$ctrl.lot.aliquotLabel}}</span>
                     </div>
-                    <md-input-container class="remove-errors-spacer input-container-lot-margin">
-                      <md-datepicker ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de processamento"></md-datepicker>
-                    </md-input-container>
-                    <md-input-container class="remove-errors-spacer input-container-lot-margin">
-                      <md-icon class="material-icons">access_time</md-icon>
-                      <input type="time" ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
-                    </md-input-container>
+                    <span></span>
                   </div>
                 </div>
               </div>
@@ -60,7 +47,7 @@
               elements-array="$ctrl.lot.aliquotList"
               elements-properties="['code', 'label', 'containerLabel', 'aliquotCollectionData.time']"
               callback-after-change="$ctrl.dynamicDataTableChange"
-              table-update-function="$ctrl.AliquotTransportationService.dynamicDataTableFunction.updateDataTable"
+              table-update-function="$ctrl.ExamLotService.dynamicDataTableFunction.updateDataTable"
 
               table-title="'Lista de Alíquotas'"
               order-indices="[1,3,2,0]"

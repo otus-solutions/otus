@@ -2,9 +2,9 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory.business.project.transportation')
+    .module('otusjs.laboratory.business.project.exams')
     .service(
-      'otusjs.laboratory.business.project.transportation.ExamLotService',
+      'otusjs.laboratory.business.project.exams.ExamLotService',
       service);
 
   service.$inject = [

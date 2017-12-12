@@ -22,10 +22,11 @@
       parent: STATE.EXAMS_LOTS_DASHBOARD,
       name: STATE.EXAM_LOT_INFO_MANAGER,
       url: '/' + STATE.EXAM_LOT_INFO_MANAGER,
-      template: '<otus-exam-lot-info-manager lots="$resolve.lots" state-data="$resolve.stateData" layout="column" flex></otus-exam-lot-info-manager>',
+      template: '<otus-exam-lot-info-manager lots="$resolve.lots" transport-lots="$resolve.transportLots" state-data="$resolve.stateData" layout="column" flex></otus-exam-lot-info-manager>',
       resolve:{
         stateData: _loadStateData,
-        lots: _resolveLots
+        lots: _resolveLots,
+        transportLots: _resolveTransportLots
       }
     };
 
@@ -50,8 +51,16 @@
         });
     }
 
+    function _resolveTransportLots(AliquotTransportationService) {
+      return AliquotTransportationService.getLots();
+    }
+
+    _resolveTransportLots.$inject = [
+      'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
+    ];
+
     _resolveLots.$inject = [
-      'otusjs.laboratory.business.project.transportation.ExamLotService'
+      'otusjs.laboratory.business.project.exams.ExamLotService'
     ];
 
     _loadStateData.$inject = [

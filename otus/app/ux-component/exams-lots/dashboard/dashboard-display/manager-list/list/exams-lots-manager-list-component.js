@@ -16,7 +16,7 @@
 
   Controller.$inject = [
     'otusjs.deploy.FieldCenterRestService',
-    'otusjs.laboratory.business.project.transportation.ExamLotService',
+    'otusjs.laboratory.business.project.exams.ExamLotService',
     '$mdToast',
     'otusjs.laboratory.core.ContextService',
     'otusjs.otus.dashboard.core.ContextService',
@@ -29,6 +29,7 @@
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
+
     self.centerFilter = "";
     self.examFilter = "";
     self.creationBeginFilter = "";
@@ -41,7 +42,6 @@
     self.showMore = showMore;
     function showMore(){
       self.show+= self.limit;
-
     }
 
     /* Public methods */
@@ -98,7 +98,6 @@
     function _LoadLotsList() {
       ExamLotService.getLots().then(function(response) {
         self.lotsList = response;
-        console.log(response);
         self.lotsListImutable = response;
         self.onFilter();
       });

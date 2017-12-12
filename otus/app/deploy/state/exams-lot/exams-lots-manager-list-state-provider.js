@@ -33,7 +33,7 @@
     }
 
     _resolveLots.$inject = [
-      'otusjs.laboratory.business.project.transportation.ExamLotService'
+      'otusjs.laboratory.business.project.exams.ExamLotService'
     ];
   }
 }());

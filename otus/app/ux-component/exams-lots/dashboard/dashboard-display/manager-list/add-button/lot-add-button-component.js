@@ -9,18 +9,32 @@
     });
 
   Controller.$inject = [
+    '$mdToast',
     'otusjs.laboratory.core.ContextService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(laboratoryContextService, ApplicationStateService) {
+  function Controller($mdToast, laboratoryContextService, ApplicationStateService) {
     var self = this;
+    var timeShowMsg = 3000;
 
     self.onNewLot = onNewLot;
 
     function onNewLot() {
-      self.action = laboratoryContextService.setLotInfoManagerAction('create');
-      ApplicationStateService.activateExamsLotInfoManager();
+      if(laboratoryContextService.getSelectedExamType() !== "ALL"){
+        self.action = laboratoryContextService.setLotInfoManagerAction('create');
+        ApplicationStateService.activateExamsLotInfoManager();
+      } else {
+        _toastError();
+      }
+    }
+
+    function _toastError() {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Selecione um tipo de aliquota')
+          .hideDelay(timeShowMsg)
+      );
     }
   }
 }());

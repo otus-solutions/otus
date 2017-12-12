@@ -18,7 +18,7 @@
     '$mdToast',
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.laboratory.business.project.transportation.ExamLotService',
+    'otusjs.laboratory.business.project.exams.ExamLotService',
     'otusjs.application.state.ApplicationStateService'
   ];
 

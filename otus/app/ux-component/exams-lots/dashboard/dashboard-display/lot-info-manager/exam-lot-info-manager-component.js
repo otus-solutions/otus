@@ -8,7 +8,8 @@
       templateUrl: 'app/ux-component/exams-lots/dashboard/dashboard-display/lot-info-manager/exam-lot-info-manager-template.html',
       bindings: {
         stateData: "<",
-        lots: "<"
+        lots: "<",
+        transportLots: "<"
       }
     });
 
@@ -16,7 +17,7 @@
     '$mdToast',
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.laboratory.business.project.transportation.ExamLotService',
+    'otusjs.laboratory.business.project.exams.ExamLotService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
@@ -44,7 +45,7 @@
         self.lot.realizationDate = new Date(self.lot.realizationDate);
       } else {
         self.lot = ExamLotService.createAliquotLot();
-        self.lot.aliquotName = laboratoryContextService.getSelectedExamType();
+        self.lot.setAliquotName(laboratoryContextService.getSelectedExamType());
         self.lot.operator = self.stateData['user'].email;
         self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter()};
         self.lot.realizationDate = new Date();
@@ -52,7 +53,8 @@
       _buildDialogs();
       _formatLotDates();
       _getAliquotsInOtherLots();
-      _fetchgCollectedAliquots();
+      _fetchCollectedAliquots();
+      _getAliquotsInTransportLots();
     }
 
     function removeAliquots() {
@@ -173,7 +175,17 @@
       }
     }
 
-    function _fetchgCollectedAliquots() {
+    function _getAliquotsInTransportLots() {
+      self.aliquotsInTransportLots = [];
+      for (var i = 0; i < self.transportLots.length; i++) {
+        for (var j = 0; j < self.transportLots[i].aliquotList.length; j++) {
+          self.aliquotsInTransportLots.push(self.transportLots[i].aliquotList[j]);
+        }
+      }
+      console.log(self.aliquotsInTransportLots);
+    }
+
+    function _fetchCollectedAliquots() {
       ExamLotService.getAliquots()
         .then(function(response) {
           self.fullAliquotsList = response;
