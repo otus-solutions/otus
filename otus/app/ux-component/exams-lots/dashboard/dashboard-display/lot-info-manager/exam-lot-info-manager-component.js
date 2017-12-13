@@ -72,7 +72,7 @@
 
     function createLot() {
       ExamLotService.createLot(self.lot.toJSON()).then(function() {
-        ApplicationStateService.activateSampleTransportationManagerList();
+        ApplicationStateService.activateExamsLotsManagerList();
         self.updateLotStateData();
       }, function(err) {
         _backendErrorAliquotsAlreadyUsed(err.data.CONTENT.value);
@@ -82,7 +82,7 @@
 
     function alterLot() {
       ExamLotService.updateLot(self.lot).then(function() {
-        ApplicationStateService.activateSampleTransportationManagerList();
+        ApplicationStateService.activateExamsLotsManagerList();
         self.updateLotStateData();
       }, function(err) {
         _backendErrorAliquotsAlreadyUsed(err.data.CONTENT.value);
@@ -93,7 +93,7 @@
     function cancel() {
       $mdDialog.show(_confirmCancel).then(function() {
         self.updateLotStateData();
-        ApplicationStateService.activateSampleTransportationManagerList();
+        ApplicationStateService.activateExamsLotsManagerList();
       });
     }
 
