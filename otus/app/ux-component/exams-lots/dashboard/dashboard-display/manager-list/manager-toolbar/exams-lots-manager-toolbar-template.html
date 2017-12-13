@@ -2,7 +2,7 @@
   <div class="md-toolbar-tools md-hue-2">
     <span flex>Lotes de exames</span>
     <!-- TODO: LMJ-4  -->
-    <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Lote" ng-if="$ctrl.selectedLots.length == 1" ng-click="">
+    <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Lote" ng-if="$ctrl.selectedLots.length == 1" report-export option="CSV" report="$ctrl.csvData">
       <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
       <md-icon aria-label="Alterar Lote">local_printshop</md-icon>
     </md-button>

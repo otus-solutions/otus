@@ -9,7 +9,8 @@
       bindings: {
         onViewInfo: '&',
         updateLotListOnDelete: '&',
-        selectedLots: '<'
+        selectedLots: '<',
+        csvData: '<'
       }
     });
 

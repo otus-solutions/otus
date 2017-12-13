@@ -7,7 +7,8 @@
       controller: Controller,
       templateUrl: 'app/ux-component/exams-lots/dashboard/dashboard-display/manager-list/list/exams-lots-manager-list-template.html',
       bindings: {
-        selectedLots: '='
+        selectedLots: '=',
+        csvData: '='
       },
       require: {
         otusExamsLotsManager: '^otusExamsLotsManager'
@@ -50,6 +51,7 @@
     self.onFilter = onFilter;
 
     function onInit() {
+      console.log(self.csvData);
       ExamLotService.getDescriptors().then(function (result) {
         result.forEach(function (aliquotTypes) {
           self.exams.push(aliquotTypes)
@@ -88,6 +90,10 @@
       } else {
         self.selectedLots.push(lot);
         lot.isSelected = true;
+
+      }
+      if(self.selectedLots.length == 1){
+        self.csvData = self.selectedLots[0].getAliquotsToCsv();
       }
     }
 

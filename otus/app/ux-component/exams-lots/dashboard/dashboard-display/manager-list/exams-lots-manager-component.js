@@ -21,6 +21,7 @@
     self.handleViewInfoAction = handleViewInfoAction;
 
     function onInit() {
+      self.dataToCsv = [];
       self.selectedLots = [];
     }
 
