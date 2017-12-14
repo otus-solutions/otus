@@ -18,13 +18,12 @@
     });
 
   Controller.$inject = [
-    '$mdDialog',
     '$mdToast',
     '$filter',
     'otusjs.laboratory.business.project.exams.ExamLotService'
   ];
 
-  function Controller($mdDialog, $mdToast, $filter, ExamLotService) {
+  function Controller($mdToast, $filter, ExamLotService) {
     var self = this;
 
     const timeShowMsg = 3000;
@@ -36,8 +35,6 @@
 
     self.aliquotInputkeydown = aliquotInputkeydown;
     self.dynamicDataTableChange = dynamicDataTableChange;
-
-    var _confirmAliquotsInsertionByPeriod;
 
     function changeNavItem(newNavItem){
       self.currentNavItem = newNavItem;
@@ -53,16 +50,6 @@
       self.aliquotCode = "";
       self.initialDate = new Date();
       self.finalDate = new Date();
-      _buildDialogs();
-    }
-
-    function _buildDialogs() {
-      _confirmAliquotsInsertionByPeriod = $mdDialog.confirm()
-        .title('Confirmar inclusão de Alíquotas:')
-        .textContent('Serão incluídas no lote as Alíquotas realizadas no perído selecionado.')
-        .ariaLabel('Confirmar inclusão de Alíquotas por Período')
-        .ok('Confirmar')
-        .cancel('Cancelar');
     }
 
     function _dynamicDataTableUpdate(){

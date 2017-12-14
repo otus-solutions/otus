@@ -3,9 +3,9 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusExamsLotsDashboard', {
+    .component('otusExamLotDashboard', {
       controller: Controller,
-      templateUrl: 'app/ux-component/exams-lots/dashboard/exams-lots-dashboard-template.html'
+      templateUrl: 'app/ux-component/exams-lots/dashboard/exam-lot-dashboard-template.html'
     });
 
   Controller.$inject = [

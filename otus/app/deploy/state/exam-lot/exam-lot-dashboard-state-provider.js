@@ -22,7 +22,7 @@
       parent: STATE.SESSION,
       name: STATE.EXAM_LOT_DASHBOARD,
       url: '/' + STATE.EXAM_LOT_DASHBOARD,
-      template: '<otus-exams-lots-dashboard layout="column" flex></otus-exams-lots-dashboard>',
+      template: '<otus-exam-lot-dashboard layout="column" flex></otus-exam-lot-dashboard>',
       data: {
         redirect: _redirect
       }

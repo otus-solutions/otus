@@ -146,10 +146,11 @@
     function getDescriptors(){
       var deferred = $q.defer();
 
-      ProjectRepositoryService.getAliquotsDescriptors().then(function(response) {
-        deferred.resolve(response.data);
-        LoadingScreenService.finish();
-      })
+      ProjectRepositoryService.getAliquotsDescriptors()
+        .then(function(response) {
+          deferred.resolve(response.data);
+          LoadingScreenService.finish();
+        })
         .catch(function(err) {
           deferred.reject(err);
         });
