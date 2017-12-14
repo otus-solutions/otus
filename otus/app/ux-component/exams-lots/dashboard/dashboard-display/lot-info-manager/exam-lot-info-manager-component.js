@@ -98,7 +98,7 @@
     }
 
     function updateLotStateData(newData) {
-      laboratoryContextService.selectLot(newData);
+      laboratoryContextService.setSelectedExamLot(newData);
     }
 
     function _toastOtherLot() {

@@ -21,7 +21,7 @@
 
     /* Public methods */
     function onInit() {
-      if(ApplicationStateService.getCurrentState() === STATE.EXAMS_LOTS_DASHBOARD){
+      if(ApplicationStateService.getCurrentState() === STATE.EXAM_LOT_DASHBOARD){
         ApplicationStateService.activateExamsLotsManagerList();
       }
     }

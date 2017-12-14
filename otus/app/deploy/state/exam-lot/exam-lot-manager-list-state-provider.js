@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.ExamsLotsManagerListState', Provider);
+    .provider('otusjs.deploy.ExamLotManagerListState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -19,9 +19,9 @@
     }
 
     self.state = {
-      parent: STATE.EXAMS_LOTS_DASHBOARD,
-      name: STATE.EXAMS_LOTS_MANAGER_LIST,
-      url: '/' + STATE.EXAMS_LOTS_MANAGER_LIST,
+      parent: STATE.EXAM_LOT_DASHBOARD,
+      name: STATE.EXAM_LOT_MANAGER_LIST,
+      url: '/' + STATE.EXAM_LOT_MANAGER_LIST,
       template: '<otus-exams-lots-manager lots="$resolve.lots" layout="column" flex></otus-exams-lots-manager>',
       resolve:{
         lots: _resolveLots

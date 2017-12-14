@@ -6,9 +6,9 @@
     .service('otusjs.laboratory.business.configuration.LaboratoryConfigurationService', Service);
 
   Service.$inject = [
-     'otusjs.laboratory.configuration.LaboratoryConfigurationService',
-     'otusjs.laboratory.repository.LaboratoryRepositoryService',
-    '$q',
+    'otusjs.laboratory.configuration.LaboratoryConfigurationService',
+    'otusjs.laboratory.repository.LaboratoryRepositoryService',
+    '$q'
   ];
 
   function Service(LaboratoryConfigurationService, LaboratoryRepositoryService, $q) {
@@ -56,7 +56,6 @@
 
     /*Aliquots Descriptors*/
     function fetchAliquotsDescriptors() {
-      // console.log(_fetchAliquotsDescriptors());
       var defer = $q.defer();
       var aliquotsInitialized = LaboratoryConfigurationService.checkAliquotsDescriptors();
 

@@ -38,7 +38,7 @@
 
     function ChangeLot() {
       self.action = laboratoryContextService.setLotInfoManagerAction('alter');
-      laboratoryContextService.selectLot(self.selectedLots[0].toJSON());
+      laboratoryContextService.setSelectedExamLot(self.selectedLots[0].toJSON());
       ApplicationStateService.activateExamsLotInfoManager();
     }
 

@@ -45,6 +45,8 @@
 
     self.selectLot = selectLot;
     self.getSelectedLot = getSelectedLot;
+    self.setSelectedExamLot = setSelectedExamLot;
+    self.getSelectedExamLot = getSelectedExamLot;
     self.setLotInfoManagerAction = setLotInfoManagerAction;
     self.getLotInfoManagerAction = getLotInfoManagerAction;
     self.setSelectedFieldCenter = setSelectedFieldCenter;
@@ -161,6 +163,14 @@
 
     function getSelectedLot() {
       return getData('selectedLot');
+    }
+
+    function setSelectedExamLot(examLot) {
+      setData('selectedExamLot', examLot);
+    }
+
+    function getSelectedExamLot() {
+      return getData('selectedExamLot');
     }
 
     function setSelectedFieldCenter(fieldcenter) {

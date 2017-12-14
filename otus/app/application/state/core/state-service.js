@@ -105,11 +105,11 @@
     }
 
     function activateExamsLotsDashBoard() {
-      $state.go(STATE.EXAMS_LOTS_DASHBOARD);
+      $state.go(STATE.EXAM_LOT_DASHBOARD);
     }
 
     function activateExamsLotsManagerList() {
-      $state.go(STATE.EXAMS_LOTS_MANAGER_LIST);
+      $state.go(STATE.EXAM_LOT_MANAGER_LIST);
     }
 
     function activateExamsLotInfoManager() {

@@ -19,7 +19,7 @@
     }
 
     self.state = {
-      parent: STATE.EXAMS_LOTS_DASHBOARD,
+      parent: STATE.EXAM_LOT_DASHBOARD,
       name: STATE.EXAM_LOT_INFO_MANAGER,
       url: '/' + STATE.EXAM_LOT_INFO_MANAGER,
       template: '<otus-exam-lot-info-manager lots="$resolve.lots" transport-lots="$resolve.transportLots" state-data="$resolve.stateData" layout="column" flex></otus-exam-lot-info-manager>',
@@ -42,7 +42,7 @@
             SessionContextService.restore();
             LaboratoryContextService.restore();
             var _stateData = [];
-            _stateData['selectedLot'] = LaboratoryContextService.getSelectedLot();
+            _stateData['selectedLot'] = LaboratoryContextService.getSelectedExamLot();
             _stateData['user'] = SessionContextService.getData('loggedUser');
             return _stateData;
           } catch (e) {

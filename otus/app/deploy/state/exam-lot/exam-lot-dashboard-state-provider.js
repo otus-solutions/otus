@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.ExamsLotsState', Provider);
+    .provider('otusjs.deploy.ExamLotDashboardState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -20,8 +20,8 @@
 
     self.state = {
       parent: STATE.SESSION,
-      name: STATE.EXAMS_LOTS_DASHBOARD,
-      url: '/' + STATE.EXAMS_LOTS_DASHBOARD,
+      name: STATE.EXAM_LOT_DASHBOARD,
+      url: '/' + STATE.EXAM_LOT_DASHBOARD,
       template: '<otus-exams-lots-dashboard layout="column" flex></otus-exams-lots-dashboard>',
       data: {
         redirect: _redirect

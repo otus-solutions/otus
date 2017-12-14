@@ -15,14 +15,14 @@
   ];
 
   /**
-   * LaboratoryRemoteStorageService creates a communication between the application and
-   * LaboratoryRestService. Thus, layers above this service doesn't really know from
+   * ProjectRemoteStorageService creates a communication between the application and
+   * ExamsRestService. Thus, layers above this service doesn't really know from
    * where the storage is coming, considering that a remote storage not necessarily
    * is accessed through a REST service. The interface of this service has the
    * intent of represents to the client code that it is an collection like an
    * MongoDB or IndexDB collection. If new storage sources are created, this service
    * should wrap it.
-   * @see {LaboratoryRestService}
+   * @see {ProjectRemoteStorageService}
    * @namespace ProjectRemoteStorageService
    * @memberof Services
    */
@@ -35,7 +35,7 @@
     self.deleteLot = deleteLot;
 
     /**
-     * Transport Lot
+     * Exam Lot
      * @returns {Promise} promise
      * @memberof ProjectRemoteStorageService
      */
@@ -52,7 +52,7 @@
     }
 
     /**
-     * Transport Lot
+     * Exam Lot
      * @param {(object)} lotStructure - the structure of lof
      * @returns {Promise} promise
      * @memberof ProjectRemoteStorageService
@@ -71,7 +71,7 @@
     }
 
     /**
-     * Transport Lot
+     * Exam Lot
      * @param {(object)} lotStructure - the structure of lof
      * @returns {Promise} promise
      * @memberof ProjectRemoteStorageService
@@ -90,7 +90,7 @@
     }
 
     /**
-     * Exan Lot
+     * Exam Lot
      * @param {(object)} lotCode - the code of lot
      * @returns {Promise} promise
      * @memberof ProjectRemoteStorageService
