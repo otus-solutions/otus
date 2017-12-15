@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusExamLotAddButton', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-add-button/lot-add-button-template.html',
+      templateUrl: 'app/ux-component/exams-lots/dashboard/dashboard-display/manager-list/add-button/lot-add-button-template.html'
     });
 
   Controller.$inject = [

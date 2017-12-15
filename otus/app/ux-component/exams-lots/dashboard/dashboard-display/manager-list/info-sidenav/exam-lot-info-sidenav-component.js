@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusExamLotInfoSidenav', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-info-sidenav/lot-info-sidenav-template.html',
+      templateUrl: 'app/ux-component/exams-lots/dashboard/dashboard-display/manager-list/info-sidenav/exam-lot-info-sidenav-template.html',
       bindings: {
         selectedLot: '<'
       },

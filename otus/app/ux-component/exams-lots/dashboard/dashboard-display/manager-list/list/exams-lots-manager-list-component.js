@@ -54,6 +54,7 @@
       console.log(self.csvData);
       ExamLotService.getDescriptors().then(function (result) {
         result.forEach(function (aliquotTypes) {
+          console.log(ExamLotService.getDescriptors());
           self.exams.push(aliquotTypes)
         });
       });
@@ -115,33 +116,36 @@
       laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
       laboratoryContextService.setSelectedExamType(self.examFilter);
       if(self.lotsListImutable.length) {
-        self.lotsList = self.lotsListImutable.filter(function (lot) {
-          if (self.centerFilter.length) {
-            return lot.fieldCenter.acronym == self.centerFilter;
-          } else {
-            return lot;
-          }
-        }).filter(function (FilteredByCenter) {
-          var lotFormattedData = $filter('date')(FilteredByCenter.realizationDate, 'yyyyMMdd');
-          if (self.creationBeginFilter && self.creationEndFilter) {
-            var initialDateFormatted = $filter('date')(self.creationBeginFilter, 'yyyyMMdd');
-            var finalDateFormatted = $filter('date')(self.creationEndFilter, 'yyyyMMdd');
-            if(initialDateFormatted <= finalDateFormatted){
-              return (lotFormattedData >= initialDateFormatted && lotFormattedData <= finalDateFormatted);
-            }else{
-              var msgDataInvalida = "Datas invalidas";
+        self.lotsList = self.lotsListImutable
+          .filter(function (lot) {
+            if (self.centerFilter.length) {
+              return lot.fieldCenter.acronym == self.centerFilter;
+            } else {
+              return lot;
+            }
+          })
+          .filter(function (FilteredByCenter) {
+            var lotFormattedData = $filter('date')(FilteredByCenter.realizationDate, 'yyyyMMdd');
+            if (self.creationBeginFilter && self.creationEndFilter) {
+              var initialDateFormatted = $filter('date')(self.creationBeginFilter, 'yyyyMMdd');
+              var finalDateFormatted = $filter('date')(self.creationEndFilter, 'yyyyMMdd');
+              if(initialDateFormatted <= finalDateFormatted){
+                return (lotFormattedData >= initialDateFormatted && lotFormattedData <= finalDateFormatted);
+              }else{
+                var msgDataInvalida = "Datas invalidas";
 
-              $mdToast.show(
-                $mdToast.simple()
-                  .textContent(msgDataInvalida)
-                  .hideDelay(4000)
-              );
+                $mdToast.show(
+                  $mdToast.simple()
+                    .textContent(msgDataInvalida)
+                    .hideDelay(4000)
+                );
+                return FilteredByCenter;
+              }
+            } else {
               return FilteredByCenter;
             }
-          } else {
-            return FilteredByCenter;
-          }
-        }).filter(function (filteredByPeriod) {
+          })
+          .filter(function (filteredByPeriod) {
           if (self.examFilter.length && self.examFilter !== "ALL") {
             return filteredByPeriod.aliquotName === self.examFilter;
           } else {
