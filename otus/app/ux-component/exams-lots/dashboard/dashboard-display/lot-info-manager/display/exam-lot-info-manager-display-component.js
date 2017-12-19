@@ -20,10 +20,12 @@
   Controller.$inject = [
     '$mdToast',
     '$filter',
-    'otusjs.laboratory.business.project.exams.ExamLotService'
+    'otusjs.laboratory.business.project.exams.ExamLotService',
+    'otusjs.laboratory.WorkAliquotFactory',
+    '$scope'
   ];
 
-  function Controller($mdToast, $filter, ExamLotService) {
+  function Controller($mdToast, $filter, ExamLotService,WorkAliquotFactory,$scope) {
     var self = this;
 
     const timeShowMsg = 3000;
@@ -35,6 +37,7 @@
 
     self.aliquotInputkeydown = aliquotInputkeydown;
     self.dynamicDataTableChange = dynamicDataTableChange;
+    self.hasError = false;
 
     function changeNavItem(newNavItem){
       self.currentNavItem = newNavItem;
@@ -45,7 +48,6 @@
     self.selectAliquot = selectAliquot;
 
     function onInit() {
-      console.log(self.lot);
       _updateContainerLabel();
       self.aliquotCode = "";
       self.initialDate = new Date();
@@ -73,13 +75,12 @@
 
 
     function fastInsertion(newAliquotCode, hideMsgErrors) {
-      console.log(self.fullAliquotsList);
       var foundAliquot = _findAliquot(newAliquotCode);
       var successInsertion = false;
 
       if (foundAliquot) {
+        var msg;
         if(self.lot.aliquotName !== foundAliquot.name){
-          console.log(foundAliquot);
           if(!hideMsgErrors) _toastWrongTypeAliquot(foundAliquot);
         } else if((foundAliquot.fieldCenter.acronym !== self.lot.fieldCenter.acronym) && (!_findAliquotsInTransportLots(newAliquotCode))){
           if(!hideMsgErrors) _toastInvalid(newAliquotCode);
@@ -88,6 +89,7 @@
         } else if (_findAliquotsInOtherLots(newAliquotCode)) {
           if(!hideMsgErrors) _toastOtherLot(newAliquotCode);
         } else {
+          _clearAliquotError();
           self.lot.insertAliquot(foundAliquot);
           self.onLotAlteration({
             newData: self.lot.toJSON()
@@ -109,6 +111,15 @@
       }
     }
 
+    function _clearAliquotError() {
+      $scope.formAliquot['fast-trigger'].$setValidity('customValidation', true);
+    }
+
+    function _setAliquotError(msg) {
+      self.error = msg;
+      $scope.formAliquot['fast-trigger'].$setValidity('customValidation', false);
+    }
+
 
     function selectAliquot(aliquot) {
       var aliquotIndex = self.selectedAliquots.indexOf(aliquot);
@@ -121,44 +132,30 @@
       }
     }
 
-    function _toastWrongTypeAliquot(aliquot) {
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent('A alíquota "' + aliquot.code + '" do tipo "'+aliquot.name+'" nâo pode ser inserida em um lote de "'+self.lot.aliquotName)
-          .hideDelay(timeShowMsg)
-      );
+    function _toastWrongTypeAliquot(foundAliquot) {
+      var aliquot = WorkAliquotFactory.create(foundAliquot);
+      var msg = 'A alíquota "' + aliquot.code + '" do tipo "'+aliquot.label+'" nâo pode ser inserida em um lote de "'+self.lot.aliquotLabel+'"';
+      _setAliquotError(msg);
     }
 
     function _toastError(aliquotCode) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A alíquota "' + aliquotCode + '" não foi encontrada.')
-        .hideDelay(timeShowMsg)
-      );
+      var msg = 'A alíquota "' + aliquotCode + '" não foi encontrada.';
+      _setAliquotError(msg);
     }
 
     function _toastDuplicated(aliquotCode) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A alíquota "' + aliquotCode + '" já esta no lote.')
-        .hideDelay(timeShowMsg)
-      );
+      var msg = 'A alíquota "' + aliquotCode + '" já esta no lote.';
+      _setAliquotError(msg);
     }
 
     function _toastInvalid(aliquotCode) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A alíquota "' + aliquotCode + '" não pertence a este centro ou não está em um lote de transporte.')
-        .hideDelay(timeShowMsg)
-      );
+      var msg = 'A alíquota "' + aliquotCode + '" não pertence a este centro ou não está em um lote de transporte.';
+      _setAliquotError(msg);
     }
 
     function _toastOtherLot(aliquotCode) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A alíquota "' + aliquotCode + '" já esta em outro lote.')
-        .hideDelay(timeShowMsg)
-      );
+      var msg = 'A alíquota "' + aliquotCode + '" já esta em outro lote.';
+      _setAliquotError(msg);
     }
 
     function _findAliquotInLot(code) {

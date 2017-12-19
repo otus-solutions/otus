@@ -15,6 +15,7 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
+    self.getAliquotConfiguration = getAliquotConfiguration;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
@@ -24,6 +25,10 @@
 
     function getAliquots() {
       return ProjectCollectionService.getAliquots();
+    }
+
+    function getAliquotConfiguration() {
+      return ProjectCollectionService.getAliquotConfiguration();
     }
 
 

@@ -30,6 +30,7 @@
 
     //Laboratory Project Public Methods
     self.getAliquots = getAliquots;
+    self.getAliquotConfiguration = getAliquotConfiguration;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getLots = getLots;
@@ -45,6 +46,22 @@
       .then(function(remoteStorage) {
          return remoteStorage
          .getAliquots()
+         .then(function(aliquots) {
+            request.resolve(aliquots);
+         });
+      });
+
+      return request.promise;
+    }
+
+    function getAliquotConfiguration() {
+      var request = $q.defer();
+
+      _remoteStorage
+      .whenReady()
+      .then(function(remoteStorage) {
+         return remoteStorage
+         .getAliquotConfiguration()
          .then(function(aliquots) {
             request.resolve(aliquots);
          });

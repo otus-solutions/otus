@@ -1,35 +1,41 @@
-<div>
-  <md-subheader class="md-no-sticky moment-type-title">
-    Filtros de Pesquisa
-  </md-subheader>
-  <div layout="row" layout-xs="column"  layout-align="center ">
-    <md-input-container class="remove-errors-spacer">
-      <label>Período Inicial</label>
-      <md-datepicker ng-model="$ctrl.creationBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
-    </md-input-container>
-    <md-input-container class="remove-errors-spacer">
-      <label>Período Fínal</label>
-      <md-datepicker ng-model="$ctrl.creationEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
-    </md-input-container>
-    <md-input-container class="remove-errors-spacer" style="margin-left:15px">
-      <label>Centro</label>
-      <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
-        <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-selected="$index == $ctrl.centerFilterselectedIndex">
-          {{center}}
-        </md-option>
-      </md-select>
-    </md-input-container>
-    <md-input-container class="remove-errors-spacer" style="margin-left:15px">
-      <label>Tipo de exame</label>
-      <md-select ng-model="$ctrl.examFilter" ng-change="$ctrl.onFilter()">
-        <md-option selected value="ALL">
-          Todos
-        </md-option>
-        <md-option ng-repeat="exam in $ctrl.exams track by $index" value="{{exam.name}}">
-          {{exam.label}}
-        </md-option>
-      </md-select>
-    </md-input-container>
+<div layout="row">
+  <div layout="column" flex>
+    <md-subheader class="md-no-sticky moment-type-title">
+      Filtros de Pesquisa
+    </md-subheader>
+    <div layout="row" layout-xs="column"  layout-align="center">
+      <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+        <label class="md-subheader">Laboratorio executor:</label>
+        <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
+          <md-tooltip >
+            Centro responsavel pela realização do exame
+          </md-tooltip>
+          <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-selected="$index == $ctrl.centerFilterSelectedIndex">
+            {{center}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+
+      <md-input-container class="remove-errors-spacer">
+        <label>Período Inicial</label>
+        <md-datepicker ng-model="$ctrl.creationBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
+      </md-input-container>
+      <md-input-container class="remove-errors-spacer">
+        <label>Período Fínal</label>
+        <md-datepicker ng-model="$ctrl.creationEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
+      </md-input-container>
+      <md-input-container class="remove-errors-spacer" style="margin-left:15px;">
+        <label class="md-subheader">Aliquota</label>
+        <md-select ng-model="$ctrl.examFilter" ng-change="$ctrl.onFilter()">
+          <md-option selected value="ALL">
+            Todos
+          </md-option>
+          <md-option ng-repeat="exam in $ctrl.exams track by $index" value="{{exam.name}}">
+            {{exam.label}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
   </div>
 </div>
 <md-divider></md-divider>

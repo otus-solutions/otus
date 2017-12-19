@@ -76,3 +76,22 @@
     border-radius:4px;
     -webkit-appearance: textfield;
 }
+
+.aliquot-exam-lot-input {
+  margin: 14px;
+  font-size: 14px;
+  box-sizing: border-box;
+  border: none;
+  -webkit-box-shadow: 4px 4px 14px -1px rgba(112,108,112,0.79);
+  -moz-box-shadow: 4px 4px 14px -1px rgba(112,108,112,0.79);
+  box-shadow: 4px 4px 14px -1px rgba(112,108,112,0.79);
+  outline: none;
+  background: transparent;
+  width: 650px;
+  padding: 0 15px;
+  line-height: 40px;
+  height: 40px;
+  border-radius:4px;
+  -webkit-appearance: textfield;
+}
+

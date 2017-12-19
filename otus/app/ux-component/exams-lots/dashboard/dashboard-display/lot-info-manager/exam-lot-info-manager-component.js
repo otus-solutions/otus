@@ -47,7 +47,7 @@
         self.lot = ExamLotService.createAliquotLot();
         self.lot.setAliquotName(laboratoryContextService.getSelectedExamType());
         self.lot.operator = self.stateData['user'].email;
-        self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter()};
+        self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedExamLotFieldCenter()};
         self.lot.realizationDate = new Date();
       }
       _buildDialogs();
@@ -182,7 +182,6 @@
           self.aliquotsInTransportLots.push(self.transportLots[i].aliquotList[j]);
         }
       }
-      console.log(self.aliquotsInTransportLots);
     }
 
     function _fetchCollectedAliquots() {

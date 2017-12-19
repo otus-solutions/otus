@@ -29,16 +29,29 @@
             <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
               Alíquotas
             </md-subheader>
-            <div layout="row" layout-align="center center" layout-padding>
-              <span class="">Código:</span>
-              <input type="text" class="aliquot-lot-input" flex placeholder="Alíquota" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)"/>
-              <div>
-                <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Alíquota">
-                  <md-tooltip md-direction="down">Adicionar</md-tooltip>
-                  <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
-                </md-button>
-              </div>
+
+            <div  layout-align="center center" layout-padding>
+              <form layout="row" name="formAliquot" flex>
+                <md-input-container flex>
+                  <label>Insira o código da aliquota:</label>
+                  <input type="text" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" flex/>
+                  <div ng-messages="formAliquot['fast-trigger'].$error" role="alert">
+                    <div ng-message="customValidation">{{$ctrl.error}}</div>
+                  </div>
+                </md-input-container>
+                <div>
+                  <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Alíquota">
+                    <md-tooltip md-direction="down">Adicionar</md-tooltip>
+                    <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
+                  </md-button>
+                </div>
+              </form>
+
+
             </div>
+            <!--<div layout="row" layout-padding ng-if="$ctrl.hasError" style="color:maroon" role="alert">-->
+              <!--<div>{{$ctrl.error}}</div>-->
+            <!--</div>-->
             <md-divider></md-divider>
             <dynamic-data-table flex
               headers="['Código', 'Tipo', 'Recipiente', 'Aliquotagem']"

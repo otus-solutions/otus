@@ -24,6 +24,7 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
+    self.getAliquotConfiguration = getAliquotConfiguration;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
     self.createLot = createLot;
@@ -54,6 +55,23 @@
       var deferred = $q.defer();
 
       ProjectRepositoryService.getAliquots()
+        .then(function(response) {
+          deferred.resolve(JSON.parse(response));
+          LoadingScreenService.finish();
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function getAliquotConfiguration() {
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
+      var deferred = $q.defer();
+
+      ProjectRepositoryService.getAliquotConfiguration()
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
           LoadingScreenService.finish();

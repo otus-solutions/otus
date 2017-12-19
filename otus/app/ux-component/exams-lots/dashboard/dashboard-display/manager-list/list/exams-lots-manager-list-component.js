@@ -27,14 +27,13 @@
   function Controller(ProjectFieldCenterService,ExamLotService,$mdToast,laboratoryContextService,dashboardContextService,$filter) {
     var self = this;
 
-
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     self.centerFilter = "";
     self.examFilter = "";
-    self.creationBeginFilter = "";
-    self.creationEndFilter = "";
+    self.realizationBeginFilter = "";
+    self.realizationEndFilter = "";
     self.centers = [];
     self.exams = [];
     self.lotsList = [];
@@ -51,10 +50,8 @@
     self.onFilter = onFilter;
 
     function onInit() {
-      console.log(self.csvData);
       ExamLotService.getDescriptors().then(function (result) {
         result.forEach(function (aliquotTypes) {
-          console.log(ExamLotService.getDescriptors());
           self.exams.push(aliquotTypes)
         });
       });
@@ -76,9 +73,14 @@
       dashboardContextService
         .getLoggedUser()
         .then(function(userData) {
-          self.centerFilter = userData.fieldCenter.acronym ? userData.fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter() ? laboratoryContextService.getSelectedFieldCenter() : "";
-          laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
-          self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
+          self.userHaveCenter = !!userData.fieldCenter.acronym;
+          self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : laboratoryContextService.getSelectedExamLotFieldCenter() ? laboratoryContextService.getSelectedExamLotFieldCenter() : "";
+
+          // laboratoryContextService.setSelectedExamLotFieldCenter(self.centerFilter);
+
+          self.centerFilterSelectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
+
+
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
         });
     }
@@ -113,7 +115,9 @@
     function onFilter(){
       self.selectedLots = [];
       self.show = self.limit;
-      laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
+      if(self.centerFilter != ""){
+        laboratoryContextService.setSelectedExamLotFieldCenter(self.centerFilter);
+      }
       laboratoryContextService.setSelectedExamType(self.examFilter);
       if(self.lotsListImutable.length) {
         self.lotsList = self.lotsListImutable
@@ -126,9 +130,9 @@
           })
           .filter(function (FilteredByCenter) {
             var lotFormattedData = $filter('date')(FilteredByCenter.realizationDate, 'yyyyMMdd');
-            if (self.creationBeginFilter && self.creationEndFilter) {
-              var initialDateFormatted = $filter('date')(self.creationBeginFilter, 'yyyyMMdd');
-              var finalDateFormatted = $filter('date')(self.creationEndFilter, 'yyyyMMdd');
+            if (self.realizationBeginFilter && self.realizationEndFilter) {
+              var initialDateFormatted = $filter('date')(self.realizationBeginFilter, 'yyyyMMdd');
+              var finalDateFormatted = $filter('date')(self.realizationEndFilter, 'yyyyMMdd');
               if(initialDateFormatted <= finalDateFormatted){
                 return (lotFormattedData >= initialDateFormatted && lotFormattedData <= finalDateFormatted);
               }else{
