@@ -3,9 +3,7 @@
 
   angular
     .module('otusjs.laboratory.business.project.exams')
-    .service(
-      'otusjs.laboratory.business.project.exams.ExamLotService',
-      service);
+    .service('otusjs.laboratory.business.project.exams.ExamLotService', service);
 
   service.$inject = [
     '$q',
