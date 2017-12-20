@@ -79,7 +79,6 @@
       var successInsertion = false;
 
       if (foundAliquot) {
-        var msg;
         if(self.lot.aliquotName !== foundAliquot.name){
           if(!hideMsgErrors) _toastWrongTypeAliquot(foundAliquot);
         } else if((foundAliquot.fieldCenter.acronym !== self.lot.fieldCenter.acronym) && (!_findAliquotsInTransportLots(newAliquotCode))){
