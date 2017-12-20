@@ -63,25 +63,21 @@
         result.forEach(function (fieldCenter) {
           self.centers.push(fieldCenter.acronym)
         });
-        _LoadLotsList();
-        setUserFieldCenter();
+        _setUserFieldCenter();
       });
       self.otusExamsLotsManager.listComponent = self;
     }
 
-    function setUserFieldCenter() {
+    function _setUserFieldCenter() {
       dashboardContextService
         .getLoggedUser()
         .then(function(userData) {
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : laboratoryContextService.getSelectedExamLotFieldCenter() ? laboratoryContextService.getSelectedExamLotFieldCenter() : "";
-
-          // laboratoryContextService.setSelectedExamLotFieldCenter(self.centerFilter);
-
+          laboratoryContextService.setSelectedExamLotFieldCenter(self.centerFilter);
           self.centerFilterSelectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
-
-
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
+          _LoadLotsList();
         });
     }
 
@@ -115,7 +111,7 @@
     function onFilter(){
       self.selectedLots = [];
       self.show = self.limit;
-      if(self.centerFilter != ""){
+      if(self.centerFilter.length){
         laboratoryContextService.setSelectedExamLotFieldCenter(self.centerFilter);
       }
       laboratoryContextService.setSelectedExamType(self.examFilter);
