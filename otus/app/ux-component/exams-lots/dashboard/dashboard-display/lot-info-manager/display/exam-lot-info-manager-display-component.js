@@ -18,17 +18,14 @@
     });
 
   Controller.$inject = [
-    '$mdToast',
     '$filter',
     'otusjs.laboratory.business.project.exams.ExamLotService',
     'otusjs.laboratory.WorkAliquotFactory',
     '$scope'
   ];
 
-  function Controller($mdToast, $filter, ExamLotService,WorkAliquotFactory,$scope) {
+  function Controller($filter, ExamLotService,WorkAliquotFactory,$scope) {
     var self = this;
-
-    const timeShowMsg = 3000;
 
     self.$onInit = onInit;
     self.changeNavItem = changeNavItem;
@@ -69,16 +66,17 @@
     function fastInsertion(newAliquotCode, hideMsgErrors) {
       var foundAliquot = _findAliquot(newAliquotCode);
       var successInsertion = false;
+      var foundInOtherLot;
 
       if (foundAliquot) {
         if(self.lot.aliquotName !== foundAliquot.name){
-          if(!hideMsgErrors) _toastWrongTypeAliquot(foundAliquot);
+          if(!hideMsgErrors) _setWrongTypeAliquotError(foundAliquot);
         } else if((foundAliquot.fieldCenter.acronym !== self.lot.fieldCenter.acronym) && (!_findAliquotsInTransportLots(newAliquotCode))){
-          if(!hideMsgErrors) _toastInvalid(newAliquotCode);
+          if(!hideMsgErrors) _setInvalidAliquotError(newAliquotCode);
         } else if (_findAliquotInLot(newAliquotCode)) {
-          if(!hideMsgErrors) _toastDuplicated(newAliquotCode);
-        } else if (_findAliquotsInOtherLots(newAliquotCode)) {
-          if(!hideMsgErrors) _toastOtherLot(newAliquotCode);
+          if(!hideMsgErrors) _setDuplicatedAliquotError(newAliquotCode);
+        } else if (foundInOtherLot = _findAliquotsInOtherLots(newAliquotCode)) {
+          if(!hideMsgErrors) _setAliquotInOtherLotError(foundInOtherLot);
         } else {
           _clearAliquotError();
           self.lot.insertAliquot(foundAliquot);
@@ -89,7 +87,7 @@
           if(!hideMsgErrors) _dynamicDataTableUpdate();
         }
       } else {
-        if(!hideMsgErrors) _toastError(newAliquotCode);
+        if(!hideMsgErrors) _setAliquotNotFoundError(newAliquotCode);
       }
       self.aliquotCode = "";
       return successInsertion;
@@ -122,29 +120,29 @@
       }
     }
 
-    function _toastWrongTypeAliquot(foundAliquot) {
+    function _setWrongTypeAliquotError(foundAliquot) {
       var aliquot = WorkAliquotFactory.create(foundAliquot);
       var msg = 'A alíquota "' + aliquot.code + '" do tipo "'+aliquot.label+'" nâo pode ser inserida em um lote de "'+self.lot.aliquotLabel+'"';
       _setAliquotError(msg);
     }
 
-    function _toastError(aliquotCode) {
+    function _setAliquotNotFoundError(aliquotCode) {
       var msg = 'A alíquota "' + aliquotCode + '" não foi encontrada.';
       _setAliquotError(msg);
     }
 
-    function _toastDuplicated(aliquotCode) {
+    function _setDuplicatedAliquotError(aliquotCode) {
       var msg = 'A alíquota "' + aliquotCode + '" já esta no lote.';
       _setAliquotError(msg);
     }
 
-    function _toastInvalid(aliquotCode) {
+    function _setInvalidAliquotError(aliquotCode) {
       var msg = 'A alíquota "' + aliquotCode + '" não pertence a este centro ou não está em um lote de transporte.';
       _setAliquotError(msg);
     }
 
-    function _toastOtherLot(aliquotCode) {
-      var msg = 'A alíquota "' + aliquotCode + '" já esta em outro lote.';
+    function _setAliquotInOtherLotError(aliquotData) {
+      var msg = 'A alíquota "' + aliquotData.aliquot.code + '" já esta no lote de codigo "' + aliquotData.lotCode + '"';
       _setAliquotError(msg);
     }
 
@@ -168,7 +166,7 @@
 
     function _findAliquotsInOtherLots(code) {
       return self.aliquotsInOtherLots.find(function(aliquotsInOtherLots) {
-        return aliquotsInOtherLots.code == code;
+        return aliquotsInOtherLots.aliquot.code == code;
       });
     }
   }
