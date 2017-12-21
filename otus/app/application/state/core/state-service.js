@@ -32,6 +32,9 @@
     self.activateSampleTransportationLotInfoManager = activateSampleTransportationLotInfoManager;
     self.activateSampleTransportationManagerList = activateSampleTransportationManagerList;
     self.activateActivityCategories = activateActivityCategories;
+    self.activateExamsLotsDashBoard = activateExamsLotsDashBoard;
+    self.activateExamsLotsManagerList = activateExamsLotsManagerList;
+    self.activateExamsLotInfoManager = activateExamsLotInfoManager;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -99,6 +102,18 @@
 
     function activateSampleTransportationLotInfoManager() {
       $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER);
+    }
+
+    function activateExamsLotsDashBoard() {
+      $state.go(STATE.EXAM_LOT_DASHBOARD);
+    }
+
+    function activateExamsLotsManagerList() {
+      $state.go(STATE.EXAM_LOT_MANAGER_LIST);
+    }
+
+    function activateExamsLotInfoManager() {
+      $state.go(STATE.EXAM_LOT_INFO_MANAGER);
     }
 
     function getCurrentState() {

@@ -45,10 +45,16 @@
 
     self.selectLot = selectLot;
     self.getSelectedLot = getSelectedLot;
+    self.setSelectedExamLot = setSelectedExamLot;
+    self.getSelectedExamLot = getSelectedExamLot;
+    self.setSelectedExamLotFieldCenter = setSelectedExamLotFieldCenter;
+    self.getSelectedExamLotFieldCenter = getSelectedExamLotFieldCenter;
     self.setLotInfoManagerAction = setLotInfoManagerAction;
     self.getLotInfoManagerAction = getLotInfoManagerAction;
     self.setSelectedFieldCenter = setSelectedFieldCenter;
     self.getSelectedFieldCenter = getSelectedFieldCenter;
+    self.setSelectedExamType = setSelectedExamType;
+    self.getSelectedExamType = getSelectedExamType;
 
     function begin() {
       _context.clear();
@@ -161,12 +167,36 @@
       return getData('selectedLot');
     }
 
+    function setSelectedExamLot(examLot) {
+      setData('selectedExamLot', examLot);
+    }
+
+    function getSelectedExamLot() {
+      return getData('selectedExamLot');
+    }
+
     function setSelectedFieldCenter(fieldcenter) {
       setData('selectedFieldcenter', fieldcenter);
     }
 
     function getSelectedFieldCenter() {
       return getData('selectedFieldcenter');
+    }
+
+    function setSelectedExamLotFieldCenter(fieldCenter) {
+      setData('selectedExamLotFieldCenter', fieldCenter);
+    }
+
+    function getSelectedExamLotFieldCenter() {
+      return getData('selectedExamLotFieldCenter');
+    }
+
+    function setSelectedExamType(ExamType) {
+      setData('selectedExamType', ExamType);
+    }
+
+    function getSelectedExamType() {
+      return getData('selectedExamType');
     }
 
     function setLotInfoManagerAction(action) {

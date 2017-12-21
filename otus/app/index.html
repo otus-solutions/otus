@@ -195,6 +195,7 @@
 <script src="app/deploy/rest/otus-api/laboratory/laboratory-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/sampleTransport/sample-transport-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/extraction/token-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/laboratory/exam/exams-rest-service.js"></script>
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
 <script src="app/deploy/state/access/access-state-provider.js"></script>
@@ -216,10 +217,14 @@
 <script src="app/deploy/state/sample-transportation/sample-transportation-lot-info-manager-state-provider.js"></script>
 <script src="app/deploy/state/sample-transportation/sample-transportation-manager-list-state-provider.js"></script>
 <script src="app/deploy/state/sample-transportation/sample-transportation-state-provider.js"></script>
+<script src="app/deploy/state/exam-lot/exam-lot-info-manager-state-provider.js"></script>
+<script src="app/deploy/state/exam-lot/exam-lot-dashboard-state-provider.js"></script>
+<script src="app/deploy/state/exam-lot/exam-lot-manager-list-state-provider.js"></script>
 <!-- # Deploy > Storage -->
 <script src="app/deploy/storage/storage-loader-service.js"></script>
 <script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
 <script src="app/deploy/storage/laboratory/laboratory-remote-storage-service.js"></script>
+<script src="app/deploy/storage/laboratory/project-remote-storage-service.js"></script>
 <!-- # Deploy > Loading Screen -->
 <script src="app/deploy/loading-screen/loading-screen-service.js"></script>
 <!-- endbuild -->
@@ -296,6 +301,9 @@
 <script src="app/module/laboratory/business/project/module.js"></script>
 <script src="app/module/laboratory/business/project/transportation/aliquot-transportation-module.js"></script>
 <script src="app/module/laboratory/business/project/transportation/aliquot-transportation-service.js"></script>
+<script src="app/module/laboratory/business/project/exams/module.js"></script>
+<script src="app/module/laboratory/business/project/exams/exam-lot-service.js"></script>
+
 
 
 <!-- # laboratory > core -->
@@ -308,6 +316,8 @@
 <script src="app/module/laboratory/repository/module.js"></script>
 <script src="app/module/laboratory/repository/laboratory/laboratory-collection-service.js"></script>
 <script src="app/module/laboratory/repository/laboratory/laboratory-repository-service.js"></script>
+<script src="app/module/laboratory/repository/laboratory/project/project-collection-service.js"></script>
+<script src="app/module/laboratory/repository/laboratory/project/project-repository-service.js"></script>
 
 <!-- # laboratory > storage -->
 <script src="app/module/laboratory/storage/module.js"></script>
@@ -418,6 +428,18 @@
 <script src="app/ux-component/installer/initial-config-controller.js"></script>
 <script src="app/ux-component/paper-activity-adder/paper-activity-adder-component.js"></script>
 
+<!-- exams-lots-ux -->
+<script src="app/ux-component/exams-lots/dashboard/exam-lot-dashboard-component.js"></script>
+<script src="app/ux-component/exams-lots/dashboard/dashboard-display/exam-lot-dashboard-display-component.js"></script>
+<script src="app/ux-component/exams-lots/dashboard/dashboard-display/manager-list/exams-lots-manager-component.js"></script>
+<script src="app/ux-component/exams-lots/dashboard/dashboard-display/manager-list/manager-toolbar/exams-lots-manager-toolbar-component.js"></script>
+<script src="app/ux-component/exams-lots/dashboard/dashboard-display/manager-list/list/exams-lots-manager-list-component.js"></script>
+<script src="app/ux-component/exams-lots/dashboard/dashboard-display/manager-list/info-sidenav/exam-lot-info-sidenav-component.js"></script>
+<script src="app/ux-component/exams-lots/dashboard/dashboard-display/manager-list/add-button/lot-add-button-component.js"></script>
+<script src="app/ux-component/exams-lots/dashboard/dashboard-display/lot-info-manager/display/exam-lot-info-manager-display-component.js"></script>
+<script src="app/ux-component/exams-lots/dashboard/dashboard-display/lot-info-manager/manager-toolbar/exam-lot-info-manager-toolbar-component.js"></script>
+<script src="app/ux-component/exams-lots/dashboard/dashboard-display/lot-info-manager/exam-lot-info-manager-component.js"></script>
+
 <!--  dynamic-data-table  -->
 <script src="app/ux-component/dynamic-data-table/dynamic-data-table-component.js"></script>
 
@@ -442,5 +464,4 @@
 <script src="app/ux-component/user-signup/signup-controller.js"></script>
 <!-- endbuild -->
 <!-- enduncache -->
-
 </html>

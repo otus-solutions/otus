@@ -10,11 +10,13 @@
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
     'otusjs.deploy.LaboratoryRemoteStorageService',
+    'otusjs.deploy.ProjectRemoteStorageService'
+
   ];
 
   function Service(
     ModuleService, ContextFactory, StorageService,
-    LaboratoryRemoteStorageService) {
+    LaboratoryRemoteStorageService,ProjectRemoteStorageService) {
 
     var self = this;
 
@@ -27,6 +29,7 @@
       configureContext(ContextFactory);
       configureStorage(StorageService.session);
       ModuleService.setLaboratoryRemoteStorage(LaboratoryRemoteStorageService);
+      ModuleService.setProjectRemoteStorage(ProjectRemoteStorageService);
     }
 
     function configureContext(context) {

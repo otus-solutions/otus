@@ -2,21 +2,19 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory.business.project.transportation')
-    .service(
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
-      service);
+    .module('otusjs.laboratory.business.project.exams')
+    .service('otusjs.laboratory.business.project.exams.ExamLotService', service);
 
   service.$inject = [
     '$q',
-    'otusjs.laboratory.transportation.TransportationService',
+    'otusjs.laboratory.exam.ExamService',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
-    'otusjs.laboratory.repository.LaboratoryRepositoryService',
+    'otusjs.laboratory.repository.ProjectRepositoryService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service($q, TransportationService, LaboratoryConfigurationService,
-                   LaboratoryRepositoryService, LoadingScreenService) {
+  function service($q, ExamService, LaboratoryConfigurationService,
+                   ProjectRepositoryService, LoadingScreenService) {
     var self = this;
 
     self.createAliquotLot = createAliquotLot;
@@ -24,12 +22,14 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
+    self.getAliquotConfiguration = getAliquotConfiguration;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
+    self.getDescriptors = getDescriptors;
 
     var messageLoading =
       'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
@@ -40,11 +40,11 @@
     }
 
     function createAliquotLot() {
-      return TransportationService.createAliquotLot();
+      return ExamService.createAliquotLot();
     }
 
     function loadAliquotLotFromJson(lotJSON) {
-      return TransportationService.buildAliquotLotFromJson(lotJSON);
+      return ExamService.buildAliquotLotFromJson(lotJSON);
     }
 
     function getAliquots() {
@@ -52,7 +52,24 @@
       LoadingScreenService.start();
       var deferred = $q.defer();
 
-      LaboratoryRepositoryService.getAliquots()
+      ProjectRepositoryService.getAliquots()
+        .then(function(response) {
+          deferred.resolve(JSON.parse(response));
+          LoadingScreenService.finish();
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function getAliquotConfiguration() {
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
+      var deferred = $q.defer();
+
+      ProjectRepositoryService.getAliquotConfiguration()
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
           LoadingScreenService.finish();
@@ -67,7 +84,7 @@
     function getAliquotsByCenter(center) {
       var deferred = $q.defer();
 
-      LaboratoryRepositoryService.getAliquotsByCenter(center)
+      ProjectRepositoryService.getAliquotsByCenter(center)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
         })
@@ -83,10 +100,10 @@
 
       LaboratoryConfigurationService.fetchAliquotsDescriptors()
         .then(function() {
-          LaboratoryRepositoryService.getLots()
+          ProjectRepositoryService.getLots()
             .then(function(response) {
               var lots = JSON.parse(response).map(function(lotJson) {
-                return TransportationService.buildAliquotLotFromJson(
+                return ExamService.buildAliquotLotFromJson(
                   lotJson);
               });
 
@@ -103,7 +120,7 @@
     function createLot(lotStructure) {
       var deferred = $q.defer();
 
-      LaboratoryRepositoryService.createLot(lotStructure)
+      ProjectRepositoryService.createLot(lotStructure)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
         })
@@ -117,7 +134,7 @@
     function updateLot(lotStructure) {
       var deferred = $q.defer();
 
-      LaboratoryRepositoryService.updateLot(lotStructure)
+      ProjectRepositoryService.updateLot(lotStructure)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
         })
@@ -131,9 +148,24 @@
     function deleteLot(lotCode) {
       var deferred = $q.defer();
 
-      LaboratoryRepositoryService.deleteLot(lotCode)
+      ProjectRepositoryService.deleteLot(lotCode)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function getDescriptors(){
+      var deferred = $q.defer();
+
+      ProjectRepositoryService.getAliquotsDescriptors()
+        .then(function(response) {
+          deferred.resolve(response.data);
+          LoadingScreenService.finish();
         })
         .catch(function(err) {
           deferred.reject(err);

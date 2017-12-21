@@ -52,7 +52,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-       APP_ROOT_PATH + 'static-resource/force-refresh-page.js'
+      APP_ROOT_PATH + 'static-resource/force-refresh-page.js'
     ],
 
     // preprocess matching files before serving them to the browser
