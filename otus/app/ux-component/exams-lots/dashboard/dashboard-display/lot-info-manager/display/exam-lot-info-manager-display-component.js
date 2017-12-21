@@ -48,7 +48,6 @@
     self.selectAliquot = selectAliquot;
 
     function onInit() {
-      _updateContainerLabel();
       self.aliquotCode = "";
       self.initialDate = new Date();
       self.finalDate = new Date();
@@ -58,13 +57,6 @@
       ExamLotService.dynamicDataTableFunction.updateDataTable();
       self.selectedAliquots = [];
     }
-
-    function _updateContainerLabel(){
-      self.lot.aliquotList.forEach(function(aliquot) {
-        aliquot.containerLabel = ExamLotService.getContainerLabelToAliquot(aliquot);
-      }, this);
-    }
-
 
     function aliquotInputkeydown(event) {
       var charCode = event.which || event.keyCode;
@@ -93,7 +85,6 @@
           self.onLotAlteration({
             newData: self.lot.toJSON()
           });
-          _updateContainerLabel();
           successInsertion = true;
           if(!hideMsgErrors) _dynamicDataTableUpdate();
         }

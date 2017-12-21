@@ -77,20 +77,6 @@
               hover-color=""
             >
             </dynamic-data-table>
-
-            <md-list ng-if="false">
-              <md-list-item ng-repeat="aliquot in $ctrl.lot.aliquotList | orderBy:['label', 'aliquotCollectionData.time', 'containerLabel'] track by $index"
-               ng-class="{ 'selectedState': aliquot.isSelected, 'regularState': !aliquot.isSelected}"
-               ng-click="$ctrl.selectAliquot(aliquot)" class="card-animated">
-                <div ng-class="{'md-list-item-text': true, 'error': aliquot.hasError}" flex>
-                  <span class="md-title" layout-margin>{{aliquot.code}}</span>
-                  <span>{{aliquot.containerLabel + " de " + aliquot.label}}</span>
-                  <span>{{aliquot.aliquotCollectionData.time | date:'dd/MM/yyyy'}}</span>
-                  <span>{{}}</span>
-                </div>
-                <md-divider></md-divider>
-              </md-list-item>
-            </md-list>
           </div>
         </div>
       </div>
