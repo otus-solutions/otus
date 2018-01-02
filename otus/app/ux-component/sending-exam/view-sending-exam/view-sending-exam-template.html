@@ -1,0 +1,90 @@
+<md-toolbar style="z-index: 1" class="md-primary md-hue-1">
+    <div class="md-toolbar-tools md-hue-2">
+        <span flex>Envios de exames</span>
+        <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Lote" ng-click="$ctrl.ChangeLot()">
+            <md-tooltip md-direction="down">Alterar Lote</md-tooltip>
+            <md-icon aria-label="Alterar Lote">edit</md-icon>
+        </md-button>
+        <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-click="$ctrl.DeleteLots()">
+            <md-tooltip md-direction="down">Excluir</md-tooltip>
+            <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
+        </md-button>
+    </div>
+</md-toolbar>
+<div layout="row">
+    <div layout="column" flex>
+        <md-subheader class="md-no-sticky moment-type-title">
+            Filtros de Pesquisa
+        </md-subheader>
+        <div layout="row" layout-xs="column" layout-align="center">
+            <md-input-container class="remove-errors-spacer">
+                <label>Período Inicial</label>
+                <md-datepicker ng-model="$ctrl.realizationBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
+            </md-input-container>
+            <md-input-container class="remove-errors-spacer">
+                <label>Período Fínal</label>
+                <md-datepicker ng-model="$ctrl.realizationEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
+            </md-input-container>
+        </div>
+    </div>
+</div>
+<md-divider></md-divider>
+<div layout="column" flex>
+    <md-content layout="column" flex>
+        <md-list flex>
+            <md-list-item class="md-1-line" style="margin-left:8px">
+                <div class="md-list-item-text" layout="column" flex>
+                    <div layout="row" layout-align="start center" layout-padding>
+                        <span layout="column">Código</span>
+                    </div>
+                </div>
+                <div class="md-list-item-text" layout="column" flex>
+                    <div layout="row" layout-align="start center" layout-padding>
+                        <span layout="column">Nome do arquivo</span>
+                    </div>
+                </div>
+                <div class="md-list-item-text" layout="column" flex>
+                    <div layout="row" layout-align="start center" layout-padding>
+                        <span layout="column">Data de envio</span>
+                    </div>
+                </div>
+                <div class="md-list-item-text" layout="column" flex>
+                    <div layout="row" layout-align="start " layout-padding>
+                        <span layout="column">Responsável</span>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+            <md-list-item ng-repeat="Lot in $ctrl.lotsList | orderBy: 'code' track by $index" ng-class="{ 'selectedState': Lot.isSelected, 'regularState': !Lot.isSelected }"
+                ng-click="$ctrl.selectLot(Lot)">
+                <div class="md-list-item-text" layout="column" flex>
+                    <div layout="row" layout-align="start center" layout-padding>
+                        <span layout="column">{{ Lot.code }}</span>
+                    </div>
+                </div>
+                <div class="md-list-item-text" layout="column" flex>
+                    <div layout="row" layout-align="start center" layout-padding>
+                        <span layout="column">{{ Lot.aliquotLabel }}</span>
+                    </div>
+                </div>
+                <div class="md-list-item-text" layout="column" flex>
+                    <div layout="row" layout-align="start center" layout-padding>
+                        <span layout="column">{{ Lot.realizationDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                    </div>
+                </div>
+                <div class="md-list-item-text" layout="column" flex>
+                    <div layout="row" layout-align="start center" layout-padding>
+                        <span layout="column">{{ Lot.operator}}</span>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</div>
+<md-button class="md-fab md-fab-bottom-right" aria-label="Realizar upload de resultados de exames" ng-click="$ctrl.onNewLot()">
+    <md-tooltip>
+        Realizar upload de resultados de exames
+    </md-tooltip>
+    <md-icon md-svg-icon="plus"></md-icon>
+</md-button>

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -16,12 +16,19 @@
 
   function Controller(ContextService, EventService, ApplicationStateService) {
     var self = this;
+    self.setFocus = setFocus;
     self.sampleTransportDashboard = sampleTransportDashboard;
     self.ExamsLotDashboard = ExamsLotDashboard;
-    self.setFocus = setFocus;
+    self.sendingExam = sendingExam;
     self.$onInit = onInit;
 
     /* Public methods */
+    function setFocus() {
+      setTimeout(function () {
+        document.querySelector('#participantSearchAutoCompleteId').focus();
+      }, 0);
+    }
+
     function sampleTransportDashboard() {
       ApplicationStateService.activateSampleTransportation();
     }
@@ -30,10 +37,8 @@
       ApplicationStateService.activateExamsLotsDashBoard();
     }
 
-    function setFocus() {
-      setTimeout(function() {
-        document.querySelector('#participantSearchAutoCompleteId').focus();
-      }, 0);
+    function sendingExam() {
+      ApplicationStateService.activateSendingExam();
     }
 
     function onInit() {
@@ -47,7 +52,7 @@
       } else {
         ContextService
           .getLoggedUser()
-          .then(function(userData) {
+          .then(function (userData) {
             self.loggedUser = userData;
           });
       }
