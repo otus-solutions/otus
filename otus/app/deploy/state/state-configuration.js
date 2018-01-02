@@ -8,7 +8,6 @@
       'ACTIVITY_ADDER': 'activity-adder',
       'ACTIVITY_CATEGORY_ADDER': 'activity-category-adder',
       'ACTIVITY_PLAYER': 'activity-player',
-      'PAPER_ACTIVITY_ADDER': 'paper-activity-adder',
       'PAPER_ACTIVITY_INITIALIZER': 'paper-activity-initializer',
       'APPLICATION': 'application',
       'DASHBOARD': 'dashboard',
@@ -39,7 +38,6 @@
     'otusjs.deploy.ActivityAdderStateProvider',
     'otusjs.deploy.ActivityCategoryStateProvider',
     'otusjs.deploy.ActivityPlayerStateProvider',
-    'otusjs.deploy.PaperActivityAdderStateProvider',
     'otusjs.deploy.PaperActivityInitializerStateProvider',
     'otusjs.deploy.DashboardStateProvider',
     'otusjs.deploy.ParticipantDashboardStateProvider',
@@ -64,7 +62,6 @@
     ActivityAdderStateProvider,
     ActivityCategoryStateProvider,
     ActivityPlayerStateProvider,
-    PaperActivityAdderStateProvider,
     PaperActivityInitializerStateProvider,
     DashboardProvider,
     ParticipantDashboardProvider,
@@ -87,7 +84,6 @@
     $stateProvider.state(ActivityAdderStateProvider.state);
     $stateProvider.state(ActivityCategoryStateProvider.state);
     $stateProvider.state(ActivityPlayerStateProvider.state);
-    $stateProvider.state(PaperActivityAdderStateProvider.state);
     $stateProvider.state(PaperActivityInitializerStateProvider.state);
     $stateProvider.state(LoginStateProvider.state);
     $stateProvider.state(SignupStateProvider.state);
