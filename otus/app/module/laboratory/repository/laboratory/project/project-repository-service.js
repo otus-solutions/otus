@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -22,6 +22,7 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.deleteSendingExam = deleteSendingExam;
 
     function getAliquots() {
       return ProjectCollectionService.getAliquots();
@@ -55,6 +56,11 @@
 
     function deleteLot(lotCode) {
       return ProjectCollectionService.deleteLot(lotCode);
+    }
+
+    function deleteSendingExam(Sendingcode) {
+      console.log('Opa');
+      //return ProjectCollectionService.deleteLot(Sendingcode);
     }
   }
 }());
