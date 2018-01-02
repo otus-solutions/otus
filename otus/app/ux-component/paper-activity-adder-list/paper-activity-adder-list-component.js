@@ -18,9 +18,13 @@
   function Controller(ActivityService) {
     var self = this;
     self.activities = [];
+    self.isListEmpty = true;
 
+    self.orderByField = 'surveyTemplate.identity.name';
+    self.reverseSort = false;
     /* Public methods */
     self.selectActivity = selectActivity;
+    self.changeSort = changeSort;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -37,6 +41,11 @@
       self.onActivitySelection({
         activity: activity
       });
+    }
+
+    function changeSort(field,order) {
+      self.orderByField = field;
+      self.reverseSort = order;
     }
   }
 }());
