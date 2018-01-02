@@ -17,11 +17,17 @@
   function Controller(ContextService, EventService, ApplicationStateService) {
     var self = this;
     self.sampleTransportDashboard = sampleTransportDashboard;
+    self.ExamsLotDashboard = ExamsLotDashboard;
     self.setFocus = setFocus;
     self.$onInit = onInit;
+
     /* Public methods */
     function sampleTransportDashboard() {
       ApplicationStateService.activateSampleTransportation();
+    }
+
+    function ExamsLotDashboard() {
+      ApplicationStateService.activateExamsLotsDashBoard();
     }
 
     function setFocus() {

@@ -14,6 +14,7 @@
   function Service($q, ContextService, EventService) {
     var self = this;
     var _laboratoryRemoteStorageDefer = $q.defer();
+    var _projectRemoteStorageDefer = $q.defer();
     var _surveyDataSourceDefer = $q.defer();
     var _currentUser;
 
@@ -25,7 +26,9 @@
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;
     self.getLaboratoryRemoteStorage = getLaboratoryRemoteStorage;
+    self.getProjectRemoteStorage = getProjectRemoteStorage;
     self.setLaboratoryRemoteStorage = setLaboratoryRemoteStorage;
+    self.setProjectRemoteStorage = setProjectRemoteStorage;
     self.setCurrentUser = setCurrentUser;
 
     function setCurrentUser(currentUser) {
@@ -56,6 +59,23 @@
     function setLaboratoryRemoteStorage(storage) {
       self.RemoteStorage.Laboratory = storage;
       _laboratoryRemoteStorageDefer.resolve(self.RemoteStorage.Laboratory);
+    }
+
+    function getProjectRemoteStorage() {
+      if (self.RemoteStorage.project) {
+        _projectRemoteStorageDefer = $q.defer();
+        _projectRemoteStorageDefer.resolve(self.RemoteStorage.project);
+      }
+      return {
+        whenReady: function() {
+          return _projectRemoteStorageDefer.promise;
+        }
+      };
+    }
+
+    function setProjectRemoteStorage(storage) {
+      self.RemoteStorage.project = storage;
+      _projectRemoteStorageDefer.resolve(self.RemoteStorage.project);
     }
 
   }

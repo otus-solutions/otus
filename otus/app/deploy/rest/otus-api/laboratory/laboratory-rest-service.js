@@ -26,6 +26,7 @@
     /* Laboratory Configuration Methods*/
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
+    self.getAliquotConfiguration = getAliquotConfiguration;
 
     function initialize() {
       _participantRest = OtusRestResourceService.getLaboratoryParticipantResource();
@@ -88,6 +89,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _configurationRest.getDescriptors().$promise;
+    }
+
+    function getAliquotConfiguration() {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _configurationRest.getAliquotConfiguration().$promise;
     }
 
     function getAliquotDescriptors() {

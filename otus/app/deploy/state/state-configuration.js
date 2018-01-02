@@ -24,7 +24,10 @@
       'LABORATORY': 'laboratory-participant',
       'SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER': 'sample-transportation-lot-info-manager',
       'SAMPLE_TRANSPORTATION_MANAGER_LIST': 'sample-transportation-manager-list',
-      'SAMPLE_TRANSPORTATION_DASHBOARD': 'sample-transportation-dashboard'
+      'SAMPLE_TRANSPORTATION_DASHBOARD': 'sample-transportation-dashboard',
+      'EXAM_LOT_DASHBOARD' : 'exam-lot-dashboard',
+      'EXAM_LOT_MANAGER_LIST' : 'exam-lot-manager-list',
+      'EXAM_LOT_INFO_MANAGER' : 'exam-lot-info-manager'
     })
     .config(Configuration);
 
@@ -49,7 +52,10 @@
     'otusjs.deploy.LaboratoryStateProvider',
     'otusjs.deploy.SampleTransportationLotAdderStateProvider',
     'otusjs.deploy.SampleTransportationManagerListStateProvider',
-    'otusjs.deploy.SampleTransportationStateProvider'
+    'otusjs.deploy.SampleTransportationStateProvider',
+    'otusjs.deploy.ExamLotDashboardStateProvider',
+    'otusjs.deploy.ExamLotManagerListStateProvider',
+    'otusjs.deploy.ExamLotInfoManagerStateProvider'
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
@@ -71,7 +77,10 @@
     LaboratoryStateProvider,
     SampleTransportationLotAdderProvider,
     SampleTransportationManagerListProvider,
-    SampleTransportationProvider
+    SampleTransportationProvider,
+    ExamLotStateProvider,
+    ExamLotManagerListState,
+    ExamLotInfoManagerState
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ActivityStateProvider.state);
@@ -92,6 +101,9 @@
     $stateProvider.state(SampleTransportationLotAdderProvider.state);
     $stateProvider.state(SampleTransportationManagerListProvider.state);
     $stateProvider.state(SampleTransportationProvider.state);
+    $stateProvider.state(ExamLotStateProvider.state);
+    $stateProvider.state(ExamLotManagerListState.state);
+    $stateProvider.state(ExamLotInfoManagerState.state);
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
     // $locationProvider.html5Mode(false);
