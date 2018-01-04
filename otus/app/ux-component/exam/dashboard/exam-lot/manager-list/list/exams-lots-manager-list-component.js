@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusExamsLotsManagerList', {
       controller: Controller,
-      templateUrl: 'app/ux-component/exams-lots/dashboard/dashboard-display/manager-list/list/exams-lots-manager-list-template.html',
+      templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/list/exams-lots-manager-list-template.html',
       bindings: {
         selectedLots: '=',
         csvData: '='

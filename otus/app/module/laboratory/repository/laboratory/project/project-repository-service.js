@@ -22,6 +22,8 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.getSendingForExams = getSendingForExams;
+    self.createSendExam = createSendExam;
     self.deleteSendingExam = deleteSendingExam;
 
     function getAliquots() {
@@ -42,6 +44,7 @@
       return ProjectCollectionService.getAliquotsByCenter(center);
     }
 
+    /* exam lot */
     function getLots() {
       return ProjectCollectionService.getLots();
     }
@@ -58,9 +61,17 @@
       return ProjectCollectionService.deleteLot(lotCode);
     }
 
-    function deleteSendingExam(Sendingcode) {
-      console.log('Opa');
-      //return ProjectCollectionService.deleteLot(Sendingcode);
+    /* sending exam */
+    function getSendingForExams() {
+      return ProjectCollectionService.getSendingForExams();
+    }
+
+    function createSendExam(SendStructure) {
+      return ProjectCollectionService.createSendExam(SendStructure);
+    }
+
+    function deleteSendingExam(SendingCode) {
+      return ProjectCollectionService.deleteSendingExam(SendingCode);
     }
   }
 }());

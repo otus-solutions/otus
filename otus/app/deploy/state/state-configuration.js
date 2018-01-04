@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -25,10 +25,10 @@
       'SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER': 'sample-transportation-lot-info-manager',
       'SAMPLE_TRANSPORTATION_MANAGER_LIST': 'sample-transportation-manager-list',
       'SAMPLE_TRANSPORTATION_DASHBOARD': 'sample-transportation-dashboard',
-      'EXAM_LOT_DASHBOARD' : 'exam-lot-dashboard',
-      'EXAM_LOT_MANAGER_LIST' : 'exam-lot-manager-list',
-      'EXAM_LOT_INFO_MANAGER' : 'exam-lot-info-manager',
-      'SENDING_EXAM' : 'sending-exam'
+      'EXAM_DASHBOARD': 'exam-dashboard',
+      'EXAM_LOT_MANAGER_LIST': 'exam-lot-manager-list',
+      'EXAM_LOT_INFO_MANAGER': 'exam-lot-info-manager',
+      'EXAM_SENDING': 'exam-sending'
     })
     .config(Configuration);
 

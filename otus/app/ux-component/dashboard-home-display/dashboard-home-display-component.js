@@ -18,7 +18,7 @@
     var self = this;
     self.setFocus = setFocus;
     self.sampleTransportDashboard = sampleTransportDashboard;
-    self.ExamsLotDashboard = ExamsLotDashboard;
+    self.ExamsDashboard = ExamsDashboard;
     self.sendingExam = sendingExam;
     self.$onInit = onInit;
 
@@ -33,12 +33,12 @@
       ApplicationStateService.activateSampleTransportation();
     }
 
-    function ExamsLotDashboard() {
-      ApplicationStateService.activateExamsLotsDashBoard();
+    function ExamsDashboard() {
+      ApplicationStateService.activateExamsDashBoard();
     }
 
     function sendingExam() {
-      ApplicationStateService.activateSendingExam();
+      ApplicationStateService.activateExamSending();
     }
 
     function onInit() {

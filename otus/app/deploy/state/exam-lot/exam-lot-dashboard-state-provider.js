@@ -20,9 +20,9 @@
 
     self.state = {
       parent: STATE.SESSION,
-      name: STATE.EXAM_LOT_DASHBOARD,
-      url: '/' + STATE.EXAM_LOT_DASHBOARD,
-      template: '<otus-exam-lot-dashboard layout="column" flex></otus-exam-lot-dashboard>',
+      name: STATE.EXAM_DASHBOARD,
+      url: '/' + STATE.EXAM_DASHBOARD,
+      template: '<otus-exam-dashboard layout="column" flex></otus-exam-dashboard>',
       data: {
         redirect: _redirect
       }

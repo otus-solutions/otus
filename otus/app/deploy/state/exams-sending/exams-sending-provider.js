@@ -19,10 +19,10 @@
     }
 
     self.state = {
-      parent: STATE.EXAM_LOT_DASHBOARD,
-      name: STATE.SENDING_EXAM,
-      url: '/' + STATE.SENDING_EXAM,
-      template: '<otus-view-sending-exam></otus-view-sending-exam>',
+      parent: STATE.EXAM_DASHBOARD,
+      name: STATE.EXAM_SENDING,
+      url: '/' + STATE.EXAM_SENDING,
+      template: '<otus-view-sending-exam layout="column" flex></otus-view-sending-exam>',
       data: {
         redirect: _redirect
       }

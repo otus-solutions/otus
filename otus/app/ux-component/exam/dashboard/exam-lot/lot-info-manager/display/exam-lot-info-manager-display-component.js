@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusExamLotInfoManagerDisplay', {
       controller: Controller,
-      templateUrl: 'app/ux-component/exams-lots/dashboard/dashboard-display/lot-info-manager/display/exam-lot-info-manager-display-template.html',
+      templateUrl: 'app/ux-component/exam/dashboard/exam-lot/lot-info-manager/display/exam-lot-info-manager-display-template.html',
       bindings: {
         lot: '=',
         selectedAliquots: '=',

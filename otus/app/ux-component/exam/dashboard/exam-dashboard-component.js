@@ -1,11 +1,11 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusExamLotDashboard', {
+    .component('otusExamDashboard', {
       controller: Controller,
-      templateUrl: 'app/ux-component/exams-lots/dashboard/exam-lot-dashboard-template.html'
+      templateUrl: 'app/ux-component/exam/dashboard/exam-dashboard-template.html'
     });
 
   Controller.$inject = [
@@ -21,8 +21,14 @@
 
     /* Public methods */
     function onInit() {
-      if(ApplicationStateService.getCurrentState() === STATE.EXAM_LOT_DASHBOARD){
+      //TODO:
+      /*
+      if(ApplicationStateService.getCurrentState() === STATE.EXAM_DASHBOARD){
         ApplicationStateService.activateExamsLotsManagerList();
+      }
+      */
+      if (ApplicationStateService.getCurrentState() === STATE.EXAM_DASHBOARD) {
+        ApplicationStateService.activateExamSending();
       }
     }
   }
