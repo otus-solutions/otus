@@ -22,7 +22,7 @@
     /* Public methods */
     function onInit() {
       if(ApplicationStateService.getCurrentState() === STATE.EXAM_LOT_DASHBOARD){
-        // ApplicationStateService.activateExamsLotsManagerList();
+        ApplicationStateService.activateExamsLotsManagerList();
       }
     }
   }

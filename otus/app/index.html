@@ -161,6 +161,7 @@
 <script src="app/deploy/bootstrap/application-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/participant-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/session-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/project-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/user-module-bootstrap.js"></script>
 <!-- # Deploy > Data Source -->
 <script src="app/deploy/data-source/data-source-loader-service.js"></script>
@@ -220,7 +221,8 @@
 <script src="app/deploy/state/exam-lot/exam-lot-info-manager-state-provider.js"></script>
 <script src="app/deploy/state/exam-lot/exam-lot-dashboard-state-provider.js"></script>
 <script src="app/deploy/state/exam-lot/exam-lot-manager-list-state-provider.js"></script>
-<script src="app/deploy/state/exam-result-upload/exam-result-upload-dashboard-state-provider.js"></script>
+<script src="app/deploy/state/exams-sending/exam-result-upload-dashboard-state-provider.js"></script>
+<script src="app/deploy/state/exams-sending/exam-results-visualizer.js"></script>
 <!-- # Deploy > Storage -->
 <script src="app/deploy/storage/storage-loader-service.js"></script>
 <script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
@@ -312,6 +314,16 @@
 <script src="app/module/laboratory/core/module-service.js"></script>
 <script src="app/module/laboratory/core/context-service.js"></script>
 <script src="app/module/laboratory/core/event-service.js"></script>
+
+<script src="app/module/laboratory/core/project/module.js"></script>
+<script src="app/module/laboratory/core/project/module-service.js"></script>
+<script src="app/module/laboratory/core/project/context-service.js"></script>
+
+
+<!-- # laboratory > core > project -->
+<script src="app/module/laboratory/core/project/module.js"></script>
+
+
 
 <!-- # laboratory > repository -->
 <script src="app/module/laboratory/repository/module.js"></script>
@@ -443,6 +455,7 @@
 
 <script src="app/ux-component/sending-exam/dashboard-component.js"></script>
 <script src="app/ux-component/sending-exam/exam-upload-button/exam-upload-button-component.js"></script>
+<script src="app/ux-component/sending-exam/results-visualizer/visualizer-component.js"></script>
 
 <!--  dynamic-data-table  -->
 <script src="app/ux-component/dynamic-data-table/dynamic-data-table-component.js"></script>

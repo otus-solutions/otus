@@ -12,25 +12,24 @@
     '$q',
     '$element',
     '$mdToast',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.laboratory.core.project.ContextService'
   ];
 
-  function Controller($q, $element, $mdToast, ApplicationStateService) {
+  function Controller($q, $element, $mdToast, ApplicationStateService,ContextService) {
     var self = this;
     var timeShowMsg = 3000;
     var fr = new FileReader();
 
     self.$onInit = onInit;
     self.upload = upload;
-    self.validateFile = validateFile;
+    // self.validateFile = validateFile;
 
     function onInit() {
       fr.onload = receivedText;
       self.input = $($element[0].querySelector('#fileInput'));
-
       self.input.on('change', function(e) {
-        validateFile(e.target.files[0]);
-
+        fr.readAsText(e.target.files[0]);
       });
     }
 
@@ -38,18 +37,11 @@
       self.input.click();
     }
 
-    function validateFile(file){
-      fr.onload = receivedText;
-      fr.readAsText(file).then(function () {
-        console.log(self.fileData);
-      });
-    }
-
     function receivedText(e) {
       var lines = e.target.result;
-      self.fileData = JSON.parse(lines).then(function () {
-        console.log(self.fileData);
-      });
+      ContextService.setFileToUpload(lines);
+      self.fileData = JSON.parse(lines);
+      ApplicationStateService.activateResultsVisualizer();
     }
 
     function _toastError() {
