@@ -10,10 +10,11 @@
 
   Controller.$inject = [
     'STATE',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.laboratory.core.project.ContextService'
   ];
 
-  function Controller(STATE, ApplicationStateService) {
+  function Controller(STATE, ApplicationStateService, ProjectContextService) {
     var self = this;
 
     // lifecycle hooks
@@ -22,12 +23,10 @@
     /* Public methods */
     function onInit() {
       //TODO:
-      /*
-      if(ApplicationStateService.getCurrentState() === STATE.EXAM_DASHBOARD){
+      
+      if(ProjectContextService.getStateToGo() === STATE.EXAM_LOT_MANAGER_LIST){
         ApplicationStateService.activateExamsLotsManagerList();
-      }
-      */
-      if (ApplicationStateService.getCurrentState() === STATE.EXAM_DASHBOARD) {
+      } else if (ProjectContextService.getStateToGo() === STATE.EXAM_SENDING) {
         ApplicationStateService.activateExamSending();
       }
     }

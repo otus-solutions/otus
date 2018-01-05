@@ -16,29 +16,24 @@
     var messageLoading =
       'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
 
-    self.getSendingForExams = getSendingForExams;
+    self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
     self.deleteSendingExam = deleteSendingExam;
 
-    function getSendingForExams() {
+    function getSendedExams() {
       LoadingScreenService.changeMessage(messageLoading);
       LoadingScreenService.start();
       var deferred = $q.defer();
 
-      LaboratoryConfigurationService.fetchAliquotsDescriptors()
-        .then(function () {
-          ProjectRepositoryService.getSendingForExams()
-            .then(function (response) {
-              var lots = JSON.parse(response).map(function (lotJson) {
-                return ExamService.buildAliquotLotFromJson(
-                  lotJson);
-              });
-              deferred.resolve(lots);
-              LoadingScreenService.finish();
-            })
-            .catch(function (err) {
-              deferred.reject(err);
-            });
+      ProjectRepositoryService.getSendedExams()
+        .then(function (response) {
+          var lots = JSON.parse(response);
+          deferred.resolve(lots);
+
+          LoadingScreenService.finish();
+        })
+        .catch(function (err) {
+          deferred.reject(err);
         });
 
       return deferred.promise;

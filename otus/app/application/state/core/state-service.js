@@ -36,6 +36,7 @@
     self.activateExamsLotsManagerList = activateExamsLotsManagerList;
     self.activateExamsLotInfoManager = activateExamsLotInfoManager;
     self.activateExamSending  = activateExamSending;
+    self.activateExamResultsVisualizer = activateExamResultsVisualizer;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -119,6 +120,10 @@
 
     function activateExamSending() {
       $state.go(STATE.EXAM_SENDING);
+    }
+
+    function activateExamResultsVisualizer() {
+      $state.go(STATE.EXAM_RESULT_VISUALIZER);
     }
 
     function getCurrentState() {

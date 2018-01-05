@@ -1,0 +1,7 @@
+<input id="fileInput" type="file" ng-model="file" accept='.json' class="ng-hide" ng-change="$ctrl.validateFile()">
+<md-button class="md-fab md-fab-bottom-right" aria-label="Carregar Resultados" ng-click="$ctrl.upload()">
+  <md-tooltip md-direction="left">
+    Realizar upload de resultados de exames
+  </md-tooltip>
+  <md-icon>file_upload</md-icon>
+</md-button>

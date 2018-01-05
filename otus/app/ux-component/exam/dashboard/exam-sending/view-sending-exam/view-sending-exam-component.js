@@ -9,16 +9,22 @@
     });
 
   Controller.$inject = [
+    '$filter',
     '$mdToast',
     '$mdDialog',
+    'otusjs.deploy.FieldCenterRestService',
+    'otusjs.otus.dashboard.core.ContextService',
+    'otusjs.laboratory.core.project.ContextService',
     'otusjs.laboratory.business.project.sending.SendingExamService'
   ];
 
-  function Controller($mdToast, $mdDialog, SendingExamService) {
+  function Controller($filter, $mdToast, $mdDialog, FieldCenterRestService, DashboardContextService, ProjectContextService, SendingExamService) {
     var self = this;
     var _confirmDeleteSelected;
     self.sendingList = [];
+    self.lotsListImutable = [];
     self.selectedSendings = [];
+    self.centers = [];
     self.realizationBeginFilter = "";
     self.realizationEndFilter = "";
 
@@ -32,7 +38,7 @@
 
 
     //TODO: criado para realização de teste, depois deve ser removido!
-    self.sendingList = [
+    self.fakeResponse = [
       {
         "code": "0001",
         "name": "arquivo-exame-01",
@@ -40,6 +46,9 @@
         "realizationDate": {
           "objectType": "ImmutableDate",
           "value": "2017-09-20 00:00:00.000"
+        },
+        "fieldCenter": {
+          "acronym": "RS"
         },
         "size": "1024kb",
         "operator": "vianna.emanoel@gmail.com"
@@ -52,12 +61,25 @@
           "objectType": "ImmutableDate",
           "value": "2017-08-20 00:00:00.000"
         },
+        "fieldCenter": {
+          "acronym": "RS"
+        },
         "size": "1024kb",
         "operator": "vianna.emanoel@gmail.com"
       }
     ]
 
     function onInit() {
+      FieldCenterRestService.loadCenters().then(function (result) {
+        self.lotDataSet = [];
+        self.colorSet = [];
+        self.centers = $filter('orderBy')(self.centers);
+        result.forEach(function (fieldCenter) {
+          self.centers.push(fieldCenter.acronym)
+        });
+        _setUserFieldCenter();
+      });
+
       _buildDialogs();
     }
 
@@ -66,7 +88,20 @@
     }
 
     function createSendExam() {
-      //TODO:
+
+    }
+
+    function _setUserFieldCenter() {
+      DashboardContextService
+        .getLoggedUser()
+        .then(function (userData) {
+          self.userHaveCenter = !!userData.fieldCenter.acronym;
+          self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : ProjectContextService.getFieldCenterInSendingExam() ? ProjectContextService.getFieldCenterInSendingExam() : "";
+          ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
+          self.centerFilterSelectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
+          self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
+          _LoadLotsList();
+        });
     }
 
     function _buildDialogs() {
@@ -129,7 +164,7 @@
       self.selectedLots = [];
       _setSessionData();
       if (self.lotsListImutable.length) {
-        self.lotsList = self.lotsListImutable
+        self.sendingList = self.lotsListImutable
           .filter(function (lot) {
             return _filterByCenter(lot);
           })
@@ -169,12 +204,19 @@
       }
     }
 
+    function _LoadLotsList() {
+      SendingExamService.getSendedExams().then(function (response) {
+        //self.sendingList = response;
+        //self.lotsListImutable = response;
+        self.sendingList = self.fakeResponse;
+        self.lotsListImutable = self.fakeResponse;
+        self.onFilter();
+      });
+    }
+
     function _setSessionData() {
       if (self.centerFilter.length) {
-        laboratoryContextService.setSelectedExamLotFieldCenter(self.centerFilter);
-      }
-      if (self.centerFilter.length) {
-        laboratoryContextService.setSelectedExamType(self.examFilter);
+        ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
       }
     }
 

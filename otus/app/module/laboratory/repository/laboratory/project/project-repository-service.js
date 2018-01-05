@@ -22,9 +22,9 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
-    self.getSendingForExams = getSendingForExams;
+    self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
-    self.deleteSendingExam = deleteSendingExam;
+    self.deleteSendedExams = deleteSendedExams;
 
     function getAliquots() {
       return ProjectCollectionService.getAliquots();
@@ -62,16 +62,16 @@
     }
 
     /* sending exam */
-    function getSendingForExams() {
-      return ProjectCollectionService.getSendingForExams();
+    function getSendedExams() {
+      return ProjectCollectionService.getSendedExams();
     }
 
     function createSendExam(SendStructure) {
       return ProjectCollectionService.createSendExam(SendStructure);
     }
 
-    function deleteSendingExam(SendingCode) {
-      return ProjectCollectionService.deleteSendingExam(SendingCode);
+    function deleteSendedExams(SendedExamCode) {
+      return ProjectCollectionService.deleteSendedExams(SendedExamCode);
     }
   }
 }());
