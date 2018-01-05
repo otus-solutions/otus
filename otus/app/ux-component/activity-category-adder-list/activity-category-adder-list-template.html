@@ -15,7 +15,7 @@
     </div>
     <md-divider></md-divider>
   </md-list-item>
-  <md-list-item ng-repeat="activity in $ctrl.activities">
+  <md-list-item ng-repeat="activity in $ctrl.activities" ng-if="$ctrl.activities.length>0">
     <div class="md-list-item-text" layout="column" flex>
       <div layout="row" layout-align="start center">
         <span layout="column">{{ activity.surveyTemplate.identity.name }}</span>
@@ -35,4 +35,13 @@
     </div>
     <md-divider></md-divider>
   </md-list-item>
+  <md-content layout="row" ng-if="!$ctrl.activities" layout-padding layout-align="center center" class="ng-scope _md md-default-theme layout-align-center-center layout-row flex" style="">
+    <div class="label-light-gray">
+      <h1 class="md-display-1">As atividades selecionadas não foram encontradas</h1>
+      <div>
+        <br>
+        <span class="md-body-1">Aguarde o redirecionamento e selecione novamente as atividades! Obrigado.</span>
+      </div>
+    </div>
+  </md-content>
 </md-content>

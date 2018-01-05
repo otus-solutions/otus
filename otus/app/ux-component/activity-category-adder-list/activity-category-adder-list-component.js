@@ -10,13 +10,14 @@
 
   Controller.$inject = [
     'otusjs.activity.business.ParticipantActivityService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    '$timeout'
   ];
 
-  function Controller(ActivityService, ApplicationStateService) {
+  function Controller(ActivityService, ApplicationStateService, $timeout) {
     var self = this;
 
-    self.returnToParticipantActivities = returnToParticipantActivities;
+    self.returnToActivitiesAdder = returnToActivitiesAdder;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -33,13 +34,15 @@
       });
 
       if(self.activities === undefined || self.activities.length<1){
-        returnToParticipantActivities();
+        var expiredActivities = function() {
+          returnToActivitiesAdder();
+        }
+        $timeout(expiredActivities, 4000);
       }
-
     }
 
-    function returnToParticipantActivities() {
-      ApplicationStateService.activateParticipantActivities();
+    function returnToActivitiesAdder() {
+      ApplicationStateService.activateActivityAdder();
     }
 
 

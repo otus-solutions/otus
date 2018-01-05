@@ -44,7 +44,6 @@
 
     function catchActivity(activity) {
       var activityIndex = _selectedActivities.indexOf(activity);
-
       if (activityIndex !== -1) {
         _selectedActivities.splice(activityIndex, 1);
       } else {

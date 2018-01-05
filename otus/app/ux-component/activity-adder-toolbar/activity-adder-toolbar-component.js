@@ -30,11 +30,18 @@
     }
 
     function addActivities() {
+      window.sessionStorage.setItem("categories", "true");
       self.onAddActivities();
     }
 
     function returnToParticipantActivities() {
-      ApplicationStateService.activateParticipantActivities();
+      var _categories = window.sessionStorage.getItem("categories");
+      window.sessionStorage.removeItem("categories");
+      if (_categories === "true") {
+        ApplicationStateService.activateActivityAdder();
+      } else {
+        ApplicationStateService.activateParticipantActivities();
+      }
     }
   }
 }());
