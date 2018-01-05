@@ -18,7 +18,6 @@
     var self = this;
     self.sampleTransportDashboard = sampleTransportDashboard;
     self.ExamsLotDashboard = ExamsLotDashboard;
-    self.ResultUploadDashboard = ResultUploadDashboard;
     self.setFocus = setFocus;
     self.$onInit = onInit;
 
@@ -29,10 +28,6 @@
 
     function ExamsLotDashboard() {
       ApplicationStateService.activateExamsLotsDashBoard();
-    }
-
-    function ResultUploadDashboard() {
-      ApplicationStateService.activateExamResultUpload();
     }
 
     function setFocus() {

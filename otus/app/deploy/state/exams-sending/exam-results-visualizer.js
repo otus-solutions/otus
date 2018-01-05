@@ -19,7 +19,7 @@
     }
 
     self.state = {
-      parent: STATE.RESULT_UPLOAD_DASHBOARD,
+      parent: STATE.SESSION,
       name: STATE.EXAM_RESULT_VISUALIZER,
       url: '/' + STATE.EXAM_RESULT_VISUALIZER,
       template: '<otus-result-visualizer layout="column" flex></otus-result-visualizer>',

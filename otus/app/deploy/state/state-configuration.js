@@ -28,7 +28,6 @@
       'EXAM_LOT_DASHBOARD' : 'exam-lot-dashboard',
       'EXAM_LOT_MANAGER_LIST' : 'exam-lot-manager-list',
       'EXAM_LOT_INFO_MANAGER' : 'exam-lot-info-manager',
-      'RESULT_UPLOAD_DASHBOARD' : 'result-upload-dashboard',
       'EXAM_RESULT_VISUALIZER' : 'exam-result-visualizer'
     })
     .config(Configuration);
@@ -58,7 +57,6 @@
     'otusjs.deploy.ExamLotDashboardStateProvider',
     'otusjs.deploy.ExamLotManagerListStateProvider',
     'otusjs.deploy.ExamLotInfoManagerStateProvider',
-    'otusjs.deploy.ResultUploadDashboardStateProvider',
     'otusjs.deploy.ExamResultsVisualizerProvider'
   ];
 
@@ -85,7 +83,6 @@
     ExamLotStateProvider,
     ExamLotManagerListState,
     ExamLotInfoManagerState,
-    ResultUploadDashboardState,
     ExamResultsVisualizer
   ) {
     $stateProvider.state(AccessStateProvider.state);
@@ -110,7 +107,6 @@
     $stateProvider.state(ExamLotStateProvider.state);
     $stateProvider.state(ExamLotManagerListState.state);
     $stateProvider.state(ExamLotInfoManagerState.state);
-    $stateProvider.state(ResultUploadDashboardState.state);
     $stateProvider.state(ExamResultsVisualizer.state);
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);

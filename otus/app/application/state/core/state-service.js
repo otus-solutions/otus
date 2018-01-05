@@ -35,8 +35,7 @@
     self.activateExamsLotsDashBoard = activateExamsLotsDashBoard;
     self.activateExamsLotsManagerList = activateExamsLotsManagerList;
     self.activateExamsLotInfoManager = activateExamsLotInfoManager;
-    self.activateExamResultUpload = activateExamResultUpload;
-    self.activateResultsVisualizer = activateResultsVisualizer;
+    self.activateExamResultsVisualizer = activateExamResultsVisualizer;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -118,11 +117,7 @@
       $state.go(STATE.EXAM_LOT_INFO_MANAGER);
     }
 
-    function activateExamResultUpload() {
-      $state.go(STATE.RESULT_UPLOAD_DASHBOARD);
-    }
-
-    function activateResultsVisualizer() {
+    function activateExamResultsVisualizer() {
       $state.go(STATE.EXAM_RESULT_VISUALIZER);
     }
 

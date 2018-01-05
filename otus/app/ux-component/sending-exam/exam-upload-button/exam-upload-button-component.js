@@ -41,7 +41,7 @@
       var lines = e.target.result;
       ContextService.setFileToUpload(lines);
       self.fileData = JSON.parse(lines);
-      ApplicationStateService.activateResultsVisualizer();
+      ApplicationStateService.activateExamResultsVisualizer();
     }
 
     function _toastError() {
