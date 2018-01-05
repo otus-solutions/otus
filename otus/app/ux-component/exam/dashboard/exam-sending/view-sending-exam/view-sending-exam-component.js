@@ -31,7 +31,6 @@
     /* Public methods */
     self.$onInit = onInit;
     self.viewSendingExam = viewSendingExam;
-    self.createSendExam = createSendExam;
     self.deleteSending = deleteSending;
     self.onFilter = onFilter;
     self.dynamicDataTableChange = dynamicDataTableChange;
@@ -48,7 +47,7 @@
           "value": "2017-09-20 00:00:00.000"
         },
         "fieldCenter": {
-          "acronym": "RS"
+          "acronym": "SP"
         },
         "size": "1024kb",
         "operator": "vianna.emanoel@gmail.com"
@@ -62,7 +61,7 @@
           "value": "2017-08-20 00:00:00.000"
         },
         "fieldCenter": {
-          "acronym": "RS"
+          "acronym": "SP"
         },
         "size": "1024kb",
         "operator": "vianna.emanoel@gmail.com"
@@ -87,10 +86,6 @@
       //TODO:
     }
 
-    function createSendExam() {
-
-    }
-
     function _setUserFieldCenter() {
       DashboardContextService
         .getLoggedUser()
@@ -100,7 +95,7 @@
           ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
           self.centerFilterSelectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
-          _LoadLotsList();
+          _LoadList();
         });
     }
 
@@ -172,6 +167,7 @@
             return _filterByPeriod(FilteredByCenter);
           });
       }
+      if(self.updateDataTable) self.updateDataTable();
     }
 
     function _filterByCenter(lot) {
@@ -204,14 +200,16 @@
       }
     }
 
-    function _LoadLotsList() {
+    function _LoadList() {
+      /*
       SendingExamService.getSendedExams().then(function (response) {
-        //self.sendingList = response;
-        //self.lotsListImutable = response;
-        self.sendingList = self.fakeResponse;
-        self.lotsListImutable = self.fakeResponse;
-        self.onFilter();
+        self.sendingList = response;
+        self.lotsListImutable = response;
       });
+      */
+      self.sendingList = self.fakeResponse;
+      self.lotsListImutable = self.fakeResponse;
+      self.onFilter();
     }
 
     function _setSessionData() {
