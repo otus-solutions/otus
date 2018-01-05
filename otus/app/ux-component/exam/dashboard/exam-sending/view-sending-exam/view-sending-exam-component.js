@@ -50,7 +50,7 @@
         "typeExam": "SORO BIOCHIMICO",
         "realizationDate": {
           "objectType": "ImmutableDate",
-          "value": "2017-09-20 00:00:00.000"
+          "value": "2017-08-20 00:00:00.000"
         },
         "size": "1024kb",
         "operator": "vianna.emanoel@gmail.com"
@@ -130,9 +130,20 @@
       _setSessionData();
       if (self.lotsListImutable.length) {
         self.lotsList = self.lotsListImutable
+          .filter(function (lot) {
+            return _filterByCenter(lot);
+          })
           .filter(function (FilteredByCenter) {
             return _filterByPeriod(FilteredByCenter);
-          })
+          });
+      }
+    }
+
+    function _filterByCenter(lot) {
+      if (self.centerFilter.length) {
+        return lot.fieldCenter.acronym == self.centerFilter;
+      } else {
+        return lot;
       }
     }
 
