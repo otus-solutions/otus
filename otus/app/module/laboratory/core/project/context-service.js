@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -31,9 +31,12 @@
     self.setData = setData;
     self.removeData = removeData;
 
+    self.setStateToGo = setStateToGo;
+    self.getStateToGo = getStateToGo;
     self.setFileToUpload = setFileToUpload;
     self.getFileToUpload = getFileToUpload;
-
+    self.setFieldCenterInSendingExam = setFieldCenterInSendingExam;
+    self.getFieldCenterInSendingExam = getFieldCenterInSendingExam;
 
     function begin() {
       _context.clear();
@@ -116,12 +119,28 @@
     //--------------------------------------------------------------------------------------------
     // Custom context methods
     //--------------------------------------------------------------------------------------------
+    function setStateToGo(state) {
+      setData('stateToGo', state);
+    }
+
+    function getStateToGo() {
+      return getData('stateToGo');
+    }
+
     function setFileToUpload(file) {
       setData('fileToUpload', file);
     }
 
     function getFileToUpload() {
       return getData('fileToUpload');
+    }
+
+    function setFieldCenterInSendingExam(center) {
+      setData('FieldCenterInSendingExam', center);
+    }
+
+    function getFieldCenterInSendingExam() {
+      return getData('FieldCenterInSendingExam');
     }
   }
 }());

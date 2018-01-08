@@ -218,11 +218,14 @@
 <script src="app/deploy/state/sample-transportation/sample-transportation-lot-info-manager-state-provider.js"></script>
 <script src="app/deploy/state/sample-transportation/sample-transportation-manager-list-state-provider.js"></script>
 <script src="app/deploy/state/sample-transportation/sample-transportation-state-provider.js"></script>
-<script src="app/deploy/state/exam/exam-dashboard-state-provider.js"></script>
-<script src="app/deploy/state/exam/exam-lot/exam-lot-info-manager-state-provider.js"></script>
-<script src="app/deploy/state/exam/exam-lot/exam-lot-manager-list-state-provider.js"></script>
-<script src="app/deploy/state/exam/exam-sending/exam-sending-provider.js"></script>
-<script src="app/deploy/state/exam/exam-sending/exam-results-visualizer-provider.js"></script>
+<script src="app/deploy/state/exam-lot/exam-lot-info-manager-state-provider.js"></script>
+<script src="app/deploy/state/exam-lot/exam-lot-dashboard-state-provider.js"></script>
+<script src="app/deploy/state/exam-lot/exam-lot-manager-list-state-provider.js"></script>
+<<<<<<< HEAD
+<script src="app/deploy/state/exams-sending/exams-sending-provider.js"></script>
+=======
+<script src="app/deploy/state/exams-sending/exam-results-visualizer.js"></script>
+>>>>>>> c4d45168eb89c355a6952a8d94ffdc76a1abbaf6
 <!-- # Deploy > Storage -->
 <script src="app/deploy/storage/storage-loader-service.js"></script>
 <script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
@@ -319,6 +322,8 @@
 <script src="app/module/laboratory/core/project/module.js"></script>
 <script src="app/module/laboratory/core/project/module-service.js"></script>
 <script src="app/module/laboratory/core/project/context-service.js"></script>
+
+
 
 <!-- # laboratory > repository -->
 <script src="app/module/laboratory/repository/module.js"></script>
@@ -448,9 +453,10 @@
 <script src="app/ux-component/exam/dashboard/exam-lot/lot-info-manager/exam-lot-info-manager-component.js"></script>
 
 <!-- sending-exams-ux -->
-<script src="app/ux-component/exam/dashboard/exam-sending/sending-view/exam-sending-view-component.js"></script>
-<script src="app/ux-component/exam/dashboard/exam-sending/upload-button/exam-upload-button-component.js"></script>
-<script src="app/ux-component/exam/dashboard/exam-sending/results-visualizer/visualizer-component.js"></script>
+<script src="app/ux-component/exam/dashboard/exam-sending/view-sending-exam/view-sending-exam-component.js"></script>
+
+<script src="app/ux-component/sending-exam/exam-upload-button/exam-upload-button-component.js"></script>
+<script src="app/ux-component/sending-exam/results-visualizer/visualizer-component.js"></script>
 
 <!--  dynamic-data-table  -->
 <script src="app/ux-component/dynamic-data-table/dynamic-data-table-component.js"></script>

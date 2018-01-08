@@ -2,7 +2,7 @@
  * LaboratoryCollectionService
  * @namespace Services
  */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -37,19 +37,22 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.getSendedExams = getSendedExams;
+    self.createSendExam = createSendExam;
+    self.deleteSendedExams = deleteSendedExams;
 
     function getAliquots() {
       var request = $q.defer();
 
       _remoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .getAliquots()
-         .then(function(aliquots) {
-            request.resolve(aliquots);
-         });
-      });
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getAliquots()
+            .then(function (aliquots) {
+              request.resolve(aliquots);
+            });
+        });
 
       return request.promise;
     }
@@ -58,14 +61,14 @@
       var request = $q.defer();
 
       _remoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .getAliquotConfiguration()
-         .then(function(aliquots) {
-            request.resolve(aliquots);
-         });
-      });
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getAliquotConfiguration()
+            .then(function (aliquots) {
+              request.resolve(aliquots);
+            });
+        });
 
       return request.promise;
     }
@@ -75,10 +78,10 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .getAliquotDescriptors()
-            .then(function(descriptors) {
+            .then(function (descriptors) {
               request.resolve(descriptors);
             });
         });
@@ -90,52 +93,58 @@
       var request = $q.defer();
 
       _remoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .getAliquotsByCenter(lotCode)
-         .then(function(aliquots) {
-            request.resolve(aliquots);
-         });
-      });
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getAliquotsByCenter(lotCode)
+            .then(function (aliquots) {
+              request.resolve(aliquots);
+            });
+        });
 
       return request.promise;
     }
 
+    /* exam lot */
+
+    /**
+     * get exam lot.
+     * @memberof ProjectCollectionService
+     */
     function getLots() {
       var request = $q.defer();
 
       _prjectRemoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .getLots()
-         .then(function(lots) {
-            request.resolve(lots);
-         });
-      });
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getLots()
+            .then(function (lots) {
+              request.resolve(lots);
+            });
+        });
 
       return request.promise;
     }
 
     /**
-     * Create the transport lot.
-     * @param {(object)} lotStructure - structure of transport lot
-     * @memberof LaboratoryCollectionService
+     * Create the exam lot.
+     * @param {(object)} lotStructure - structure of exam lot
+     * @memberof ProjectCollectionService
      */
     function createLot(lotStructure) {
       var request = $q.defer();
 
       _prjectRemoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .createLot(lotStructure)
-            .then(function(data) {
+            .then(function (data) {
               request.resolve(data);
             })
-            .catch(function(e){
-               request.reject(e);
+            .catch(function (e) {
+              request.reject(e);
             });
         });
 
@@ -143,23 +152,23 @@
     }
 
     /**
-     * Update the transport lot.
-     * @param {(object)} lotStructure - structure of transport lot
-     * @memberof LaboratoryCollectionService
+     * Update the exam lot.
+     * @param {(object)} lotStructure - structure of exam lot
+     * @memberof ProjectCollectionService
      */
     function updateLot(lotStructure) {
       var request = $q.defer();
 
       _prjectRemoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .updateLot(lotStructure)
-            .then(function(data) {
+            .then(function (data) {
               request.resolve(data);
             })
-            .catch(function(e){
-               request.reject(e);
+            .catch(function (e) {
+              request.reject(e);
             });
         });
 
@@ -167,23 +176,93 @@
     }
 
     /**
-     * Delete the transport lot.
-     * @param {(object)} lotCode - code of transport lot
-     * @memberof LaboratoryCollectionService
+     * Delete the exam lot.
+     * @param {(object)} lotCode - code of exam lot
+     * @memberof ProjectCollectionService
      */
     function deleteLot(lotCode) {
       var request = $q.defer();
 
       _prjectRemoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .deleteLot(lotCode)
-            .then(function(data) {
+            .then(function (data) {
               request.resolve(data);
             })
-            .catch(function(e){
-               request.reject(e);
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /* sending exam */
+
+    /**
+    * get Sended exams.
+    * @memberof ProjectCollectionService
+    */
+    function getSendedExams() {
+      var request = $q.defer();
+
+      _prjectRemoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getSendedExams()
+            .then(function (lots) {
+              request.resolve(lots);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Create the send exam.
+     * @param {(object)} sendStructure - structure of send exam
+     * @memberof ProjectCollectionService
+     */
+    function createSendExam(sendStructure) {
+      var request = $q.defer();
+
+      _prjectRemoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .createSendExam(sendStructure)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Delete the send exam.
+     * @param {(object)} sendedExamCode - code of exam lot
+     * @memberof ProjectCollectionService
+     */
+    function deleteSendedExams(sendedExamCode) {
+      var request = $q.defer();
+
+      _prjectRemoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .deleteSendedExams(sendedExamCode)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
             });
         });
 

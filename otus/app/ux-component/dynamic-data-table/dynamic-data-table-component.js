@@ -372,11 +372,18 @@
       return object[property];
     }
 
+
+    function _formatData(value){
+      return $filter('date')(new Date(value), self.formatData);
+    }
+
     function _getValueFormated(value, property, index){
+     
+
       if(self.formatDataIndexArray.filter(function(val){ return Number(val) === index }).length){
-        value = $filter('date')(value, self.formatData);
+        value = _formatData(value);
       } else if(self.formatDataPropertiesArray.filter(function(prop){ return prop === property }).length){
-        value = $filter('date')(value, self.formatData);
+        value = _formatData(value);
       }
 
       return value;
