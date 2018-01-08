@@ -152,7 +152,7 @@
             return _filterByPeriod(filteredByPeriod);
           });
       }
-      self.updateDataTable();
+      if (self.updateDataTable) self.updateDataTable();
     }
 
     function _filterByCenter(center) {
