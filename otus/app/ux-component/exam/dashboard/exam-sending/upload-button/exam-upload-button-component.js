@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusExamUploadAddButton', {
       controller: Controller,
-      templateUrl: 'app/ux-component/exam/dashboard/exam-sending/exam-upload-button/exam-upload-button-template.html'
+      templateUrl: 'app/ux-component/exam/dashboard/exam-sending/upload-button/exam-upload-button-template.html'
     });
 
   Controller.$inject = [

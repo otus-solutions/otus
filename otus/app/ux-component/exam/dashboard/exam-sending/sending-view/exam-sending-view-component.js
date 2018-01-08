@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusViewSendingExam', {
       controller: Controller,
-      templateUrl: 'app/ux-component/exam/dashboard/exam-sending/view-sending-exam/view-sending-exam-template.html'
+      templateUrl: 'app/ux-component/exam/dashboard/exam-sending/sending-view/exam-sending-view-template.html'
     });
 
   Controller.$inject = [
@@ -47,7 +47,7 @@
           "value": "2017-09-20 00:00:00.000"
         },
         "fieldCenter": {
-          "acronym": "SP"
+          "acronym": "RS"
         },
         "size": "1024kb",
         "operator": "vianna.emanoel@gmail.com"
@@ -167,7 +167,7 @@
             return _filterByPeriod(FilteredByCenter);
           });
       }
-      if(self.updateDataTable) self.updateDataTable();
+      if (self.updateDataTable) self.updateDataTable();
     }
 
     function _filterByCenter(lot) {

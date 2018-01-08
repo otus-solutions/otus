@@ -45,9 +45,9 @@
     <md-divider></md-divider>
     <div layout="column" flex>
         <md-content layout="column" flex>
-            <dynamic-data-table flex headers="['Código', 'Nome do arquivo', 'Tipo de exame', 'Data de envio', 'Tamanho', 'Operador']"
+            <dynamic-data-table flex headers="['Código', 'Centro', 'Nome do arquivo', 'Tipo de exame', 'Data de envio', 'Tamanho', 'Operador']"
                 elements-array="$ctrl.sendingList" 
-                elements-properties="['code', 'name', 'typeExam', 'realizationDate.value', 'size', 'operator']"
+                elements-properties="['code', 'fieldCenter.acronym', 'name', 'typeExam', 'realizationDate.value', 'size', 'operator']"
                 callback-after-change="$ctrl.dynamicDataTableChange" 
                 table-update-function="$ctrl.updateDataTable" 
                 order-indices="[0, 1, 2, 3, 4, 5]"
