@@ -16,7 +16,7 @@
     'otusjs.laboratory.core.project.ContextService'
   ];
 
-  function Controller($q, $element, $mdToast, ApplicationStateService,ContextService) {
+  function Controller($q, $element, $mdToast, ApplicationStateService, ProjectContextService) {
     var self = this;
     var timeShowMsg = 3000;
     var fr = new FileReader();
@@ -27,9 +27,13 @@
 
     function onInit() {
       fr.onload = receivedText;
+      self.fileData = {};
+
       self.input = $($element[0].querySelector('#fileInput'));
       self.input.on('change', function(e) {
+        self.fileData.size = e.target.files[0].size + "Kb";
         fr.readAsText(e.target.files[0]);
+        console.log(e.target.files);
       });
     }
 
@@ -39,8 +43,8 @@
 
     function receivedText(e) {
       var lines = e.target.result;
-      ContextService.setFileStructure(lines);
-      self.fileData = JSON.parse(lines);
+      self.fileData.results = JSON.parse(lines);
+      ProjectContextService.setFileStructure(lines);
       ApplicationStateService.activateExamResultsVisualizer();
     }
 

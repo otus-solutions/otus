@@ -49,7 +49,7 @@
           "acronym": "RS"
         }
       }
-    ]
+    ];
 
     function onInit() {
       ProjectFieldCenterService.loadCenters().then(function (result) {

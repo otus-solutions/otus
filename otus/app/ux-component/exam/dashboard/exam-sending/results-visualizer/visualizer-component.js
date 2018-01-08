@@ -19,7 +19,7 @@
     self.$onInit = onInit;
 
     function onInit() {
-      console.log(JSON.parse(ContextService.getFileToUpload()));
+      console.log(ContextService.getFileToUpload());
     }
   }
 }());
