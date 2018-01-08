@@ -34,20 +34,20 @@
 
     function addActivities() {
       if(_selectedActivities.length>0){
-        ActivityService.setActivitiesSelection(_selectedActivities);
         _selectedActivities = [];
         ApplicationStateService.activateActivityCategories();
       } else {
         $mdDialog.show(_exitDialog);
       }
     }
-
+    //TODO Método de adicionar atividade para categorias
     function catchActivity(activity) {
       var activityIndex = _selectedActivities.indexOf(activity);
       if (activityIndex !== -1) {
         _selectedActivities.splice(activityIndex, 1);
       } else {
-        _selectedActivities.push(activity);
+        _selectedActivities.push(activity.surveyTemplate.identity.acronym);
+        window.sessionStorage.setItem('selectedActivities',JSON.stringify(_selectedActivities));
       }
     }
   }

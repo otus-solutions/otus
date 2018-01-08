@@ -18,7 +18,7 @@
     var self = this;
 
     self.returnToActivitiesAdder = returnToActivitiesAdder;
-
+    self.filteredActivities = filteredActivities;
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -27,11 +27,31 @@
     }
 
     function _loadActivities() {
-      self.activities = ActivityService.getActivitiesSelection();
-      self.configuration = ActivityService.configurationStructure();
-      ActivityService.listAllCategories().then(function (response) {
-        self.categories = response;
+      self.selectedActivities = window.sessionStorage.getItem('selectedActivities');
+      ActivityService
+        .listAvailables()
+        .then(function(activities) {
+          self.activities = activities;
+          self.configuration = ActivityService.configurationStructure();
+          if (activities.length) {
+            self.isListEmpty = false;
+          }
+        });
+        ActivityService
+          .listAllCategories()
+          .then(function (response) {
+            self.categories = response;
+          });
+    }
+    //TODO FILTRO DAS ATIVIDADES SELECIONADAS
+    function filteredActivities() {
+      return self.activities.filter(function(activity) {
+        return self.selectedActivities.indexOf(activity.surveyTemplate.identity.acronym) !== -1;
       });
+    }
+
+    function _loadActivities() {
+      self.configuration = ActivityService.configurationStructure();
 
       if(self.activities === undefined || self.activities.length<1){
         var expiredActivities = function() {
