@@ -33,10 +33,12 @@
 
     self.setStateToGo = setStateToGo;
     self.getStateToGo = getStateToGo;
-    self.setFileToUpload = setFileToUpload;
-    self.getFileToUpload = getFileToUpload;
+    self.setFileStructure = setFileStructure;
+    self.getFileStructure = getFileStructure;
     self.setFieldCenterInSendingExam = setFieldCenterInSendingExam;
     self.getFieldCenterInSendingExam = getFieldCenterInSendingExam;
+    self.setExamSendingAction = setExamSendingAction;
+    self.getExamSendingAction = getExamSendingAction;
 
     function begin() {
       _context.clear();
@@ -127,12 +129,12 @@
       return getData('stateToGo');
     }
 
-    function setFileToUpload(file) {
-      setData('fileToUpload', file);
+    function setFileStructure(file) {
+      setData('fileStructure', file);
     }
 
-    function getFileToUpload() {
-      return getData('fileToUpload');
+    function getFileStructure() {
+      return getData('fileStructure');
     }
 
     function setFieldCenterInSendingExam(center) {
@@ -141,6 +143,14 @@
 
     function getFieldCenterInSendingExam() {
       return getData('FieldCenterInSendingExam');
+    }
+
+    function setExamSendingAction(action) {
+      setData('ExamSendingAction', action);
+    }
+
+    function getExamSendingAction() {
+      return getData('ExamSendingAction');
     }
   }
 }());

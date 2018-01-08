@@ -3,7 +3,7 @@
         <div class="md-toolbar-tools md-hue-2">
             <span flex>Lista de envios de exames</span>
             <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Lote" ng-if="$ctrl.selectedSendings.length == 1"
-                ng-click="$ctrl.viewSendingExam()">
+                ng-click="$ctrl.sendingView()">
                 <md-tooltip md-direction="down">Vizualizar o envio</md-tooltip>
                 <md-icon aria-label="Alterar Lote">information</md-icon>
             </md-button>
@@ -29,10 +29,10 @@
                     <md-datepicker ng-model="$ctrl.realizationEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
                 </md-input-container>
                 <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
-                    <label class="md-subheader">Centro de Realização</label>
-                    <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                    <label class="md-subheader">Centro de envio:</label>
+                    <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
                         <md-tooltip>
-                            Centro responsável pela realização do envio
+                            Centro responsável pelo envio do exame
                         </md-tooltip>
                         <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-selected="$index == $ctrl.centerFilterSelectedIndex">
                             {{center}}
@@ -45,16 +45,17 @@
     <md-divider></md-divider>
     <div layout="column" flex>
         <md-content layout="column" flex>
-            <dynamic-data-table flex headers="['Código', 'Centro', 'Nome do arquivo', 'Tipo de exame', 'Data de envio', 'Tamanho', 'Operador']"
+            <dynamic-data-table flex 
+                headers="['Data do envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
                 elements-array="$ctrl.sendingList" 
-                elements-properties="['code', 'fieldCenter.acronym', 'name', 'typeExam', 'realizationDate.value', 'size', 'operator']"
+                elements-properties="['realizationDate', 'name', 'fieldCenter.acronym', 'resultCounter', 'operator']"
                 callback-after-change="$ctrl.dynamicDataTableChange" 
                 table-update-function="$ctrl.updateDataTable" 
-                order-indices="[0, 1, 2, 3, 4, 5]"
+                order-indices="[0, 1, 2, 3, 4]"
                 number-fields-aligned-left="10" 
-                flex-array="[10, 30, 20, 10, 10, 10]" 
+                flex-array="[10, 20, 10, 20, 20]" 
                 format-data="" 
-                format-data-properties-array="['realizationDate.value']"
+                format-data-properties-array="['realizationDate']"
                 disable-filter="true">
             </dynamic-data-table>
         </md-content>

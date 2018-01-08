@@ -15,61 +15,44 @@
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.laboratory.core.project.ContextService',
-    'otusjs.laboratory.business.project.sending.SendingExamService'
+    'otusjs.laboratory.business.project.sending.SendingExamService',
+    'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller($filter, $mdToast, $mdDialog, FieldCenterRestService, DashboardContextService, ProjectContextService, SendingExamService) {
+  function Controller($filter, $mdToast, $mdDialog, ProjectFieldCenterService, DashboardContextService, ProjectContextService, SendingExamService, ApplicationStateService) {
     var self = this;
     var _confirmDeleteSelected;
     self.sendingList = [];
-    self.lotsListImutable = [];
+    self.listImutable = [];
     self.selectedSendings = [];
     self.centers = [];
     self.realizationBeginFilter = "";
     self.realizationEndFilter = "";
+    self.centerFilter = "";
 
     /* Public methods */
     self.$onInit = onInit;
-    self.viewSendingExam = viewSendingExam;
+    self.sendingView = sendingView;
     self.deleteSending = deleteSending;
     self.onFilter = onFilter;
     self.dynamicDataTableChange = dynamicDataTableChange;
 
-
     //TODO: criado para realização de teste, depois deve ser removido!
     self.fakeResponse = [
       {
-        "code": "0001",
+        "_id": "5a33e03f637b6c00e62ce7c8",
         "name": "arquivo-exame-01",
-        "typeExam": "SORO BIOCHIMICO",
-        "realizationDate": {
-          "objectType": "ImmutableDate",
-          "value": "2017-09-20 00:00:00.000"
-        },
+        "realizationDate": "00T00", //isoString
+        "resultCounter": 5,
+        "operator": "vianna.emanoel@gmail.com",
         "fieldCenter": {
           "acronym": "RS"
-        },
-        "size": "1024kb",
-        "operator": "vianna.emanoel@gmail.com"
-      },
-      {
-        "code": "0002",
-        "name": "arquivo-exame-02",
-        "typeExam": "SORO BIOCHIMICO",
-        "realizationDate": {
-          "objectType": "ImmutableDate",
-          "value": "2017-08-20 00:00:00.000"
-        },
-        "fieldCenter": {
-          "acronym": "SP"
-        },
-        "size": "1024kb",
-        "operator": "vianna.emanoel@gmail.com"
+        }
       }
     ]
 
     function onInit() {
-      FieldCenterRestService.loadCenters().then(function (result) {
+      ProjectFieldCenterService.loadCenters().then(function (result) {
         self.lotDataSet = [];
         self.colorSet = [];
         self.centers = $filter('orderBy')(self.centers);
@@ -82,8 +65,10 @@
       _buildDialogs();
     }
 
-    function viewSendingExam() {
-      //TODO:
+    function sendingView() {
+      self.action = ProjectContextService.setExamSendingAction('view');
+      ProjectContextService.setFileStructure(self.selectedSendings[0].toJSON());
+      ApplicationStateService.activateExamResultsVisualizer();
     }
 
     function _setUserFieldCenter() {
@@ -111,27 +96,27 @@
     function deleteSending() {
       $mdDialog.show(_confirmDeleteSelected).then(function () {
         _removeRecursive(self.selectedSendings, function () {
-          self.updateLotListOnDelete();
+          self.updateLotListOnDelete(); //TODO:
           self.selectedSendings = [];
         });
       });
     }
 
-    function _removeRecursive(lotArray, callback) {
-      SendingExamService.deleteSendingExam(lotArray[0].code).then(function () {
-        if (lotArray.length == 1) {
+    function _removeRecursive(array, callback) {
+      SendingExamService.deleteSendingExam(array[0].code).then(function () {
+        if (array.length == 1) {
           callback();
         } else {
-          lotArray.splice(0, 1);
-          _removeRecursive(lotArray, callback);
+          array.splice(0, 1);
+          _removeRecursive(array, callback);
         }
       })
         .catch(function (e) {
-          var msgLots = "Não foi possível excluir o envio " + lotArray[0].code + ".";
+          var msg = "Não foi possível excluir o envio " + array[0].code + ".";
 
           $mdToast.show(
             $mdToast.simple()
-              .textContent(msgLots)
+              .textContent(msg)
               .hideDelay(4000)
           );
           callback();
@@ -140,11 +125,11 @@
 
     function dynamicDataTableChange(change) {
       if (change.type === 'select' || change.type === 'deselect') {
-        _selectSend(change.element);
+        _selectedSend(change.element);
       }
     }
 
-    function _selectSend(send) {
+    function _selectedSend(send) {
       var activityIndex = self.selectedSendings.indexOf(send);
       if (activityIndex > -1) {
         self.selectedSendings.splice(activityIndex, 1);
@@ -156,35 +141,35 @@
     }
 
     function onFilter() {
-      self.selectedLots = [];
+      self.selectedSendings = [];
       _setSessionData();
-      if (self.lotsListImutable.length) {
-        self.sendingList = self.lotsListImutable
-          .filter(function (lot) {
-            return _filterByCenter(lot);
-          })
+      if (self.listImutable.length) {
+        self.sendingList = self.listImutable
           .filter(function (FilteredByCenter) {
-            return _filterByPeriod(FilteredByCenter);
+            return _filterByCenter(FilteredByCenter);
+          })
+          .filter(function (filteredByPeriod) {
+            return _filterByPeriod(filteredByPeriod);
           });
       }
-      if (self.updateDataTable) self.updateDataTable();
+      self.updateDataTable();
     }
 
-    function _filterByCenter(lot) {
+    function _filterByCenter(center) {
       if (self.centerFilter.length) {
-        return lot.fieldCenter.acronym == self.centerFilter;
+        return center.fieldCenter.acronym == self.centerFilter;
       } else {
-        return lot;
+        return center;
       }
     }
 
     function _filterByPeriod(FilteredByCenter) {
-      var lotFormattedData = $filter('date')(FilteredByCenter.realizationDate, 'yyyyMMdd');
+      var formattedData = $filter('date')(FilteredByCenter.realizationDate, 'yyyyMMdd');
       if (self.realizationBeginFilter && self.realizationEndFilter) {
         var initialDateFormatted = $filter('date')(self.realizationBeginFilter, 'yyyyMMdd');
         var finalDateFormatted = $filter('date')(self.realizationEndFilter, 'yyyyMMdd');
         if (initialDateFormatted <= finalDateFormatted) {
-          return (lotFormattedData >= initialDateFormatted && lotFormattedData <= finalDateFormatted);
+          return (formattedData >= initialDateFormatted && formattedData <= finalDateFormatted);
         } else {
           var msgDataInvalida = "Datas invalidas";
 
@@ -204,11 +189,11 @@
       /*
       SendingExamService.getSendedExams().then(function (response) {
         self.sendingList = response;
-        self.lotsListImutable = response;
+        self.listImutable = response;
       });
       */
       self.sendingList = self.fakeResponse;
-      self.lotsListImutable = self.fakeResponse;
+      self.listImutable = self.fakeResponse;
       self.onFilter();
     }
 
