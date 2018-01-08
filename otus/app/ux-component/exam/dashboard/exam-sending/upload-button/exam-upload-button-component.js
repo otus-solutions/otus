@@ -39,7 +39,7 @@
 
     function receivedText(e) {
       var lines = e.target.result;
-      ContextService.setFileToUpload(lines);
+      ContextService.setFileStructure(lines);
       self.fileData = JSON.parse(lines);
       ApplicationStateService.activateExamResultsVisualizer();
     }
