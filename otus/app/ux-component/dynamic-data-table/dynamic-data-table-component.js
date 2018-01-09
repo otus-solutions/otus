@@ -108,7 +108,7 @@
       };
 
       self.tableUpdateFunction = function (newElementsArray) {
-        self.elementsArray = newElementsArray;
+        self.elementsArray = newElementsArray || self.elementsArray;
         self.selectedItemCounter = 0;
         self.creacteTable();
       }
