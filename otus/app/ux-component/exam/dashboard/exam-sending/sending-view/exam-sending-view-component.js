@@ -41,10 +41,10 @@
     self.fakeResponse = [
       {
         "_id": "5a33e03f637b6c00e62ce7c8",
-        "name": "arquivo-exame-01",
+        "name": "meu-arquivo-com-nome-grande-de-exame-01-para-teste.otus",
         "realizationDate": "2017-12-15T14:45:00Z", //isoString
         "resultCounter": 5,
-        "operator": "vianna.emanoel@gmail.com",
+        "operator": "teste.sobre.email.emanoel@gmail.com",
         "fieldCenter": {
           "acronym": "RS"
         }
