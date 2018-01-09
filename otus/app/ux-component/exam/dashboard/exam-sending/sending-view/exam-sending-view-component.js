@@ -42,7 +42,7 @@
       {
         "_id": "5a33e03f637b6c00e62ce7c8",
         "name": "arquivo-exame-01",
-        "realizationDate": "00T00", //isoString
+        "realizationDate": "2017-12-15T14:45:00Z", //isoString
         "resultCounter": 5,
         "operator": "vianna.emanoel@gmail.com",
         "fieldCenter": {
@@ -52,7 +52,7 @@
       {
         "_id": "5a33e03f637b6c00e62ce7c7",
         "name": "arquivo-exame-02",
-        "realizationDate": "00T00", //isoString
+        "realizationDate": "2017-12-20T14:45:00Z", //isoString
         "resultCounter": 8,
         "operator": "vianna.emanoel@gmail.com",
         "fieldCenter": {
@@ -62,7 +62,7 @@
       {
         "_id": "5a33e03f637b6c00e62ce7c8",
         "name": "arquivo-exame-01",
-        "realizationDate": "00T00", //isoString
+        "realizationDate": "2017-12-15T14:45:00Z", //isoString
         "resultCounter": 8,
         "operator": "vianna.emanoel@gmail.com",
         "fieldCenter": {
