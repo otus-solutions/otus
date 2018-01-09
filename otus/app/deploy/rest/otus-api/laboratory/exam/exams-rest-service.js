@@ -60,8 +60,10 @@
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.deleteLot({id: lotCode}).$promise;
+      return _rest.deleteLot({ id: lotCode }).$promise;
     }
+
+    /* sending exam */
 
     function getSendedExams() {
       if (!_uploadRest) {
@@ -81,7 +83,7 @@
       if (!_uploadRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _uploadRest.delete({id: lotCode}).$promise;
+      return _uploadRest.delete({ id: lotCode }).$promise;
     }
   }
 }());

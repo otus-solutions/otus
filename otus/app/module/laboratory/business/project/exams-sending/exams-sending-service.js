@@ -18,7 +18,7 @@
 
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
-    self.deleteSendingExam = deleteSendingExam;
+    self.deleteSendedExams = deleteSendedExams;
 
     function getSendedExams() {
       LoadingScreenService.changeMessage(messageLoading);
@@ -51,10 +51,10 @@
       return deferred.promise;
     }
 
-    function deleteSendingExam(send) {
+    function deleteSendedExams(send) {
       var deferred = $q.defer();
 
-      ProjectRepositoryService.deleteSendingExam(send)
+      ProjectRepositoryService.deleteSendedExams(send)
         .then(function (response) {
           deferred.resolve(JSON.parse(response));
         })
