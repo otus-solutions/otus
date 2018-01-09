@@ -12,11 +12,12 @@
     '$q',
     '$element',
     '$mdToast',
+    'otusjs.application.session.core.ContextService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService'
   ];
 
-  function Controller($q, $element, $mdToast, ApplicationStateService,ContextService) {
+  function Controller($q, $element, $mdToast, SessionContextService, ApplicationStateService, ProjectContextService) {
     var self = this;
     var timeShowMsg = 3000;
     var fr = new FileReader();
@@ -27,9 +28,16 @@
 
     function onInit() {
       fr.onload = receivedText;
+      self.fileData = {};
+
       self.input = $($element[0].querySelector('#fileInput'));
       self.input.on('change', function(e) {
-        fr.readAsText(e.target.files[0]);
+        self.fileData.name = e.target.files[0].name;
+        self.fileData.realizationDate = new Date();
+        self.fileData.operator = SessionContextService.getData('loggedUser').email;
+        if(_validateFileToUpload(e.target.files[0])){
+          fr.readAsText(e.target.files[0]);
+        }
       });
     }
 
@@ -37,12 +45,32 @@
       self.input.click();
     }
 
-    function receivedText(e) {
-      var lines = e.target.result;
-      ContextService.setFileStructure(lines);
-      self.fileData = JSON.parse(lines);
-      ApplicationStateService.activateExamResultsVisualizer();
+    function _validateFileToUpload(file){
+      console.log(file);
+      if(!_typeIsValid(file.type)){
+
+      } else if (_structureIsValid()) {
+
+      }
+      return true;
     }
+
+    function _typeIsValid(type){
+      return type == "application/json";
+    }
+
+    function _structureIsValid(results) {
+
+    }
+
+    function receivedText(e) {
+      console.log(e);
+      var lines = e.target.result;
+      self.fileData.results = JSON.parse(lines);
+      ProjectContextService.setFileStructure(self.fileData);
+      // ApplicationStateService.activateExamResultsVisualizer();
+    }
+
 
     function _toastError() {
       $mdToast.show(

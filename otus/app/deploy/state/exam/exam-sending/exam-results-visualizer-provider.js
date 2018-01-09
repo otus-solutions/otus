@@ -25,9 +25,6 @@
       template: '<otus-result-visualizer layout="column" flex></otus-result-visualizer>',
       data: {
         redirect: _redirect
-      },
-      resolve:{
-        stateData: _loadStateData
       }
     };
 
@@ -47,27 +44,8 @@
       return deferred.promise;
     }
 
-    function _loadStateData(SessionContextService, ContextService, Application) {
-      return Application
-        .isDeployed()
-        .then(function() {
-          try {
-            SessionContextService.restore();
-            ContextService.restore();
-          } catch (e) {
-            console.log(e);
-          }
-        });
-    }
-
     _redirect.$inject = [
       '$q',
-      'otusjs.application.core.ModuleService'
-    ];
-
-    _loadStateData.$inject = [
-      'otusjs.application.session.core.ContextService',
-      'otusjs.laboratory.core.project.ContextService',
       'otusjs.application.core.ModuleService'
     ];
   }

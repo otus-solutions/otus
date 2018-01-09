@@ -23,11 +23,12 @@
     /* Public methods */
     function onInit() {
       //TODO:
-      
-      if(ProjectContextService.getStateToGo() === STATE.EXAM_LOT_MANAGER_LIST){
-        ApplicationStateService.activateExamsLotsManagerList();
-      } else if (ProjectContextService.getStateToGo() === STATE.EXAM_SENDING) {
-        ApplicationStateService.activateExamSending();
+      if(ApplicationStateService.getCurrentState() == STATE.EXAM_DASHBOARD) {
+        if (ProjectContextService.getStateToGo() === STATE.EXAM_LOT_MANAGER_LIST) {
+          ApplicationStateService.activateExamsLotsManagerList();
+        } else if (ProjectContextService.getStateToGo() === STATE.EXAM_SENDING) {
+          ApplicationStateService.activateExamSending();
+        }
       }
     }
   }

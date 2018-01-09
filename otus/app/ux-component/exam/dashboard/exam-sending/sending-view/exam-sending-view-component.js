@@ -69,7 +69,7 @@
           "acronym": "RJ"
         }
       }
-    ]
+    ];
 
     function onInit() {
       ProjectFieldCenterService.loadCenters().then(function (result) {
