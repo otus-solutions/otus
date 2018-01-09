@@ -23,7 +23,7 @@
     var self = this;
     var _confirmDeleteSelected;
     self.sendingList = [];
-    self.listImutable = [];
+    self.listImmutable = [];
     self.selectedSendings = [];
     self.centers = [];
     self.realizationBeginFilter = "";
@@ -48,6 +48,26 @@
         "fieldCenter": {
           "acronym": "RS"
         }
+      },
+      {
+        "_id": "5a33e03f637b6c00e62ce7c7",
+        "name": "arquivo-exame-02",
+        "realizationDate": "00T00", //isoString
+        "resultCounter": 8,
+        "operator": "vianna.emanoel@gmail.com",
+        "fieldCenter": {
+          "acronym": "RS"
+        }
+      },
+      {
+        "_id": "5a33e03f637b6c00e62ce7c8",
+        "name": "arquivo-exame-01",
+        "realizationDate": "00T00", //isoString
+        "resultCounter": 8,
+        "operator": "vianna.emanoel@gmail.com",
+        "fieldCenter": {
+          "acronym": "RJ"
+        }
       }
     ];
 
@@ -61,7 +81,6 @@
         });
         _setUserFieldCenter();
       });
-
       _buildDialogs();
     }
 
@@ -113,7 +132,6 @@
       })
         .catch(function (e) {
           var msg = "Não foi possível excluir o envio " + array[0].code + ".";
-
           $mdToast.show(
             $mdToast.simple()
               .textContent(msg)
@@ -143,8 +161,8 @@
     function onFilter() {
       self.selectedSendings = [];
       _setSessionData();
-      if (self.listImutable.length) {
-        self.sendingList = self.listImutable
+      if (self.listImmutable.length) {
+        self.sendingList = self.listImmutable
           .filter(function (FilteredByCenter) {
             return _filterByCenter(FilteredByCenter);
           })
@@ -152,15 +170,11 @@
             return _filterByPeriod(filteredByPeriod);
           });
       }
-      if (self.updateDataTable) self.updateDataTable();
+      if (self.updateDataTable) self.updateDataTable(self.sendingList);
     }
 
     function _filterByCenter(center) {
-      if (self.centerFilter.length) {
-        return center.fieldCenter.acronym == self.centerFilter;
-      } else {
-        return center;
-      }
+      return center.fieldCenter.acronym === self.centerFilter;
     }
 
     function _filterByPeriod(FilteredByCenter) {
@@ -188,12 +202,13 @@
     function _LoadList() {
       /*
       SendingExamService.getSendedExams().then(function (response) {
-        self.sendingList = response;
-        self.listImutable = response;
+        self.sendingList = self.fakeResponse;
+        self.listImmutable = self.fakeResponse;
+        self.onFilter();
       });
       */
       self.sendingList = self.fakeResponse;
-      self.listImutable = self.fakeResponse;
+      self.listImmutable = self.fakeResponse;
       self.onFilter();
     }
 

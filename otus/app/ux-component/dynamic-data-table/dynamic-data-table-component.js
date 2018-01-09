@@ -90,44 +90,45 @@
     function onInit() {
       _setOrderQuery();
 
-      if(!self.numberFieldsAlignedLeft) self.numberFieldsAlignedLeft = 1;
+      if (!self.numberFieldsAlignedLeft) self.numberFieldsAlignedLeft = 1;
 
-      if(!self.hoverColor) self.hoverColor = '#EEEEEE';
-      if(!self.selectedColor) self.selectedColor = '#F5F5F5';
-      if(!self.rowsPerPageArray) self.rowsPerPageArray = [10,25,50,100,250,500,1000];
-      if(!self.rowPerPageDefault) self.rowPerPageDefault = self.rowsPerPageArray.length >= 2 ? self.rowsPerPageArray[2] : self.rowsPerPageArray[0];
+      if (!self.hoverColor) self.hoverColor = '#EEEEEE';
+      if (!self.selectedColor) self.selectedColor = '#F5F5F5';
+      if (!self.rowsPerPageArray) self.rowsPerPageArray = [10, 25, 50, 100, 250, 500, 1000];
+      if (!self.rowPerPageDefault) self.rowPerPageDefault = self.rowsPerPageArray.length >= 2 ? self.rowsPerPageArray[2] : self.rowsPerPageArray[0];
 
-      if(!self.formatData) self.formatData = 'dd/MM/yyyy';
-      if(!self.formatDataIndexArray) self.formatDataIndexArray = [];
-      if(!self.formatDataPropertiesArray) self.formatDataPropertiesArray = [];
-      if(!self.hideDelayTime) self.hideDelayTime = 3000;
+      if (!self.formatData) self.formatData = 'dd/MM/yyyy';
+      if (!self.formatDataIndexArray) self.formatDataIndexArray = [];
+      if (!self.formatDataPropertiesArray) self.formatDataPropertiesArray = [];
+      if (!self.hideDelayTime) self.hideDelayTime = 3000;
 
       self.error = {
         isError: false,
         msg: "Devem ser informadas a mesma quantidade de valores e de cabeçalhos."
       };
 
-      self.tableUpdateFunction = function(){
+      self.tableUpdateFunction = function (newElementsArray) {
+        self.elementsArray = newElementsArray;
         self.selectedItemCounter = 0;
         self.creacteTable();
-      };
+      }
 
       creacteTable();
     }
 
-    function _havePagination(){
+    function _havePagination() {
       return (!self.disablePagination && self.viewPerPage && !self.filterAll);
     }
 
-    function _showMsg(msg){
+    function _showMsg(msg) {
       $mdToast.show(
         $mdToast.simple()
-        .textContent(msg)
-        .hideDelay(self.hideDelayTime)
+          .textContent(msg)
+          .hideDelay(self.hideDelayTime)
       );
     }
 
-    function filterAllChanged(value){
+    function filterAllChanged(value) {
       var newValue = value !== undefined ? value : !self.filterAll;
 
       self.filterAll = newValue;
@@ -135,7 +136,7 @@
       filterRows()
     }
 
-    function viewPerPageChanged(value){
+    function viewPerPageChanged(value) {
       var newValue = value !== undefined ? value : !self.viewPerPage;
 
       self.viewPerPage = newValue;
@@ -143,19 +144,19 @@
       filterRows()
     }
 
-    function mouseEnter(row){
+    function mouseEnter(row) {
       self.changeRowStyle(row, true)
     }
 
-    function mouseLeave(row){
+    function mouseLeave(row) {
       self.changeRowStyle(row)
     }
 
-    function changeRowStyle(row, isHover){
-      if(isHover){
+    function changeRowStyle(row, isHover) {
+      if (isHover) {
         row.style = row.styleHover;
       } else {
-        if(row.selected){
+        if (row.selected) {
           row.style = row.styleSelect;
         } else {
           row.style = {};
@@ -163,15 +164,15 @@
       }
     }
 
-    function filterRows(){
-      if(self.filter.length){
+    function filterRows() {
+      if (self.filter.length) {
         self.table.filteredRows = $filter('filter')(self.table.fullRows, self.filter);
 
         var count = self.table.filteredRows.length;
         var msg = '';
-        if(!count) {
+        if (!count) {
           msg = 'Nenhum registro foi encontrado.';
-        } else if (count === 1){
+        } else if (count === 1) {
           msg = count + ' Registro foi encontrado.'
         } else {
           msg = count + ' Registros foram encontrados.'
@@ -187,49 +188,49 @@
       pagesChage();
     }
 
-    function _changeDisplayRows(){
-      if(_havePagination()){
+    function _changeDisplayRows() {
+      if (_havePagination()) {
         self.table.currentPageRows = self.table.filteredRows.slice(self.table.startPage, self.table.endPage + 1);
       }
 
       self.table.rows = self.table.currentPageRows;
 
-      self.selectedItemCounter = self.table.rows.filter(function(row){
+      self.selectedItemCounter = self.table.rows.filter(function (row) {
         return row.selected;
       }).length;
     }
 
 
-    function getFlex(index){
+    function getFlex(index) {
       var value = self.flexArray[index];
 
-      if(value !== ''){
+      if (value !== '') {
         value = Number(value);
 
-        if(value === NaN){
+        if (value === NaN) {
           value = '';
         }
       }
       return value;
     }
 
-    function getColumnPositionClass(index, array){
+    function getColumnPositionClass(index, array) {
       var retClass = '';
-      if(array === undefined){
+      if (array === undefined) {
         array = [];
       }
 
-      if(index < self.numberFieldsAlignedLeft){
+      if (index < self.numberFieldsAlignedLeft) {
         retClass = retClass + ' dynamic-table-column-left ';
       } else {
         retClass = retClass + ' dynamic-table-column-right ';
       }
 
-      if(index === 0 && self.disableCheckbox){
-          retClass = retClass + ' dynamic-table-column-first ';
+      if (index === 0 && self.disableCheckbox) {
+        retClass = retClass + ' dynamic-table-column-first ';
       }
 
-      if((index + 1) === array.length){
+      if ((index + 1) === array.length) {
         retClass = retClass + ' dynamic-table-column-last ';
       }
 
@@ -237,13 +238,13 @@
     }
 
 
-    function runCallbackOnChange(row, type){
+    function runCallbackOnChange(row, type) {
       var change = {
         type: type,
         element: row.ref
       }
 
-      if(change.type === 'selected' || change.type === 'deselected'){
+      if (change.type === 'selected' || change.type === 'deselected') {
 
       }
 
@@ -251,34 +252,34 @@
     }
 
 
-    self.getOrderIcon = function(){
+    self.getOrderIcon = function () {
       return self.orderInverse ? 'dynamic-arrow-icon-inverse' : 'dynamic-arrow-icon';
     }
 
-    self.verifyOrderIcon = function(index){
+    self.verifyOrderIcon = function (index) {
       return self.orderQuery === 'column' + $index + '.value' ? true : false;
     }
 
 
-    function rowPerPageChange(){
+    function rowPerPageChange() {
       self.table.currentPage = 1;
       pagesChage();
     }
 
-    function nextPage(){
+    function nextPage() {
       self.disableAnimation = true;
       self.table.currentPage++;
       pagesChage();
     }
 
-    function previousPage(){
+    function previousPage() {
       self.disableAnimation = true;
       self.table.currentPage--;
       pagesChage();
     }
 
-    function pagesChage(){
-      if(self.table.currentPage === 1){
+    function pagesChage() {
+      if (self.table.currentPage === 1) {
         self.table.startPage = 0;
       } else {
         self.table.startPage = (self.table.currentPage - 1) * self.rowPerPageDefault;
@@ -286,7 +287,7 @@
 
       var tempEnd = (self.table.currentPage * self.rowPerPageDefault - 1);
 
-      if(tempEnd >= (length - 1)){
+      if (tempEnd >= (length - 1)) {
         self.table.endPage = tempEnd;
       } else {
         self.table.endPage = self.table.filteredRows.length - 1;
@@ -296,31 +297,31 @@
       _changeDisplayRows();
     }
 
-    function setCurrentPageText(){
+    function setCurrentPageText() {
       var tempEnd = (self.table.endPage + 1) > self.table.filteredRows.length ? self.table.filteredRows.length : (self.table.endPage + 1);
       self.table.textPage = "" + (self.table.startPage + 1) + "-" + (tempEnd) + " de " + self.table.filteredRows.length;
     }
 
-    function getIsNextPage(){
+    function getIsNextPage() {
       var activeNext = false;
-      if(self.table.currentPage * self.rowPerPageDefault < self.table.filteredRows.length){
+      if (self.table.currentPage * self.rowPerPageDefault < self.table.filteredRows.length) {
         activeNext = true;
       }
 
       return activeNext;
     }
 
-    function getIsPreviousPage(){
+    function getIsPreviousPage() {
       var activePrevious = false;
-      if(self.table.currentPage > 1){
+      if (self.table.currentPage > 1) {
         activePrevious = true;
       }
       return activePrevious;
     }
 
-    function creacteTable(){
+    function creacteTable() {
       self.table = {
-        headers:self.headers,
+        headers: self.headers,
         rows: [],
         fullRows: [],
         filteredRows: [],
@@ -332,7 +333,7 @@
       };
 
 
-      self.elementsArray.forEach(function(element, index) {
+      self.elementsArray.forEach(function (element, index) {
         self.table.fullRows.push(
           _createRow(element, index)
         );
@@ -343,10 +344,10 @@
       pagesChage();
     }
 
-    function changeOrder(index){
+    function changeOrder(index) {
       var columnName = "column" + index;
 
-      if(columnName + '.orderValue' === self.orderQuery){
+      if (columnName + '.orderValue' === self.orderQuery) {
         self.orderInverse = !self.orderInverse;
       } else {
         self.orderInverse = false;
@@ -355,47 +356,47 @@
     }
 
 
-    function _setOrderQuery(columnName){
-      if(columnName){
+    function _setOrderQuery(columnName) {
+      if (columnName) {
         self.orderQuery = columnName + '.orderValue';
       } else {
         self.orderQuery = [];
-        if(self.orderIndices){
-          self.orderIndices.forEach(function(orderIndex){
+        if (self.orderIndices) {
+          self.orderIndices.forEach(function (orderIndex) {
             self.orderQuery.push('column' + orderIndex + '.orderValue');
           });
         }
       }
     }
 
-    function _getObjectProperty(object,property){
+    function _getObjectProperty(object, property) {
       return object[property];
     }
 
 
-    function _formatData(value){
+    function _formatData(value) {
       return $filter('date')(new Date(value), self.formatData);
     }
 
-    function _getValueFormated(value, property, index){
-     
+    function _getValueFormated(value, property, index) {
 
-      if(self.formatDataIndexArray.filter(function(val){ return Number(val) === index }).length){
+
+      if (self.formatDataIndexArray.filter(function (val) { return Number(val) === index }).length) {
         value = _formatData(value);
-      } else if(self.formatDataPropertiesArray.filter(function(prop){ return prop === property }).length){
+      } else if (self.formatDataPropertiesArray.filter(function (prop) { return prop === property }).length) {
         value = _formatData(value);
       }
 
       return value;
     }
 
-    function _getValueFromElement(element,compositeProperty, index, formatValue){
+    function _getValueFromElement(element, compositeProperty, index, formatValue) {
       var propertyArray = compositeProperty.split('.');
       var value = undefined;
       var valueReturned;
 
-      propertyArray.forEach(function(property) {
-        if(value === undefined){
+      propertyArray.forEach(function (property) {
+        if (value === undefined) {
           value = _getObjectProperty(element, property);
         } else {
           value = _getObjectProperty(value, property);
@@ -404,38 +405,38 @@
 
       valueReturned = value;
 
-      if(formatValue){
+      if (formatValue) {
         valueReturned = _getValueFormated(value, compositeProperty, index);
       }
 
       return valueReturned;
     }
 
-    function clearError(){
+    function clearError() {
       self.error.isError = false;
       self.error.msg = '';
     }
 
-    function setError(msg){
+    function setError(msg) {
       self.error.isError = true;
       self.error.msg = msg;
     }
 
-    function selectDeselectAllRows(){
+    function selectDeselectAllRows() {
       var deselect = (self.selectedItemCounter === self.table.rows.length);
 
-      self.table.rows.forEach(function(row){
-        if(deselect){
+      self.table.rows.forEach(function (row) {
+        if (deselect) {
           _deselectRow(row);
         } else {
           _selectRow(row);
         }
         changeRowStyle(row);
-      },this);
+      }, this);
     }
 
-    function selectDeselectRow(row){
-      if(row.selected){
+    function selectDeselectRow(row) {
+      if (row.selected) {
         _deselectRow(row);
       } else {
         _selectRow(row);
@@ -443,37 +444,37 @@
       changeRowStyle(row);
     }
 
-    function _selectRow(row){
-      if(!row.selected){
+    function _selectRow(row) {
+      if (!row.selected) {
         row.selected = true;
         self.selectedItemCounter++;
-        self.runCallbackOnChange(row,'select');
+        self.runCallbackOnChange(row, 'select');
       }
     }
-    function _deselectRow(row){
-      if(row.selected){
+    function _deselectRow(row) {
+      if (row.selected) {
         row.selected = false;
         self.selectedItemCounter--;
-        self.runCallbackOnChange(row,'deselect');
+        self.runCallbackOnChange(row, 'deselect');
       }
     }
 
-    function _createRow(element, index){
+    function _createRow(element, index) {
       var row = {
-        type:"dynamicDataTableRow",
+        type: "dynamicDataTableRow",
         ref: element,
         columns: [],
         index: index,
         selected: false,
         hover: false,
-        styleSelect: {'background-color':self.selectedColor},
-        styleHover: {'background-color':self.hoverColor},
+        styleSelect: { 'background-color': self.selectedColor },
+        styleHover: { 'background-color': self.hoverColor },
         style: {}
       };
 
-      self.elementsProperties.forEach(function(elementProperty, index){
-        var value = _getValueFromElement(element,elementProperty, index, true);
-        var orderValue = _getValueFromElement(element,elementProperty, index);
+      self.elementsProperties.forEach(function (elementProperty, index) {
+        var value = _getValueFromElement(element, elementProperty, index, true);
+        var orderValue = _getValueFromElement(element, elementProperty, index);
 
         var column = _createColumn(
           row,
@@ -489,9 +490,9 @@
       return row;
     }
 
-    function _createColumn(row, value, orderValue, index){
+    function _createColumn(row, value, orderValue, index) {
       var column = {
-        type:"dynamicDataTableColumn",
+        type: "dynamicDataTableColumn",
         value: value,
         orderValue: orderValue,
         index: index,
