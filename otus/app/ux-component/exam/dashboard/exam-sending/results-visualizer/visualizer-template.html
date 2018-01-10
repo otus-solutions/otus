@@ -1,0 +1,30 @@
+<div ui-view flex>
+    <md-card>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">Informações relacionadas ao arquivo enviado</span>
+            </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+            <div class="md-list-item-text">
+                <p>Data do envio: {{$ctrl.fileStructure.realizationDate}} </p>
+                <p>Nome do arquivo: {{$ctrl.fileStructure.name}} </p>
+                <p>Centro de realização: {{$ctrl.fileStructure.fieldCenter.acronym}} </p>
+                <p>Quantidade de resultados: {{$ctrl.fileStructure.resultCounter}} </p>
+                <p>
+                    <strong>Operador responsável pelo envio do arquivo:</strong> {{$ctrl.fileStructure.operator}}</p>
+            </div>
+        </md-card-content>
+    </md-card>
+    <md-divider></md-divider>
+    <div layout="column" flex>
+        <md-content layout="column" flex>
+            <dynamic-data-table flex headers="['Data do envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
+                elements-array="$ctrl.sendingList" elements-properties="['realizationDate', 'name', 'fieldCenter.acronym', 'resultCounter', 'operator']"
+                callback-after-change="$ctrl.dynamicDataTableChange" table-update-function="$ctrl.updateDataTable" order-indices="[0, 1, 2, 3, 4]"
+                number-fields-aligned-left="10" flex-array="[10, 30, 10, 15, 20]" format-data="" format-data-properties-array="['realizationDate']"
+                disable-filter="true" disable-checkbox="true">
+            </dynamic-data-table>
+        </md-content>
+    </div>
+</div>
