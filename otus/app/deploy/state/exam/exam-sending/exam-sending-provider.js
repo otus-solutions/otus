@@ -25,8 +25,24 @@
       template: '<otus-view-sending-exam layout="column" flex></otus-view-sending-exam>',
       data: {
         redirect: _redirect
+      },
+      resolve: {
+        stateData: _loadStateData
       }
     };
+
+    function _loadStateData(SessionContextService, ProjectContextService, Application) {
+      return Application
+        .isDeployed()
+        .then(function () {
+          try {
+            SessionContextService.restore();
+            ProjectContextService.restore();
+          } catch (e) {
+            console.log(e);
+          }
+        });
+    }
 
     function _redirect($q, Application) {
       var deferred = $q.defer();
@@ -46,6 +62,12 @@
 
     _redirect.$inject = [
       '$q',
+      'otusjs.application.core.ModuleService'
+    ];
+
+    _loadStateData.$inject = [
+      'otusjs.application.session.core.ContextService',
+      'otusjs.laboratory.core.project.ContextService',
       'otusjs.application.core.ModuleService'
     ];
   }
