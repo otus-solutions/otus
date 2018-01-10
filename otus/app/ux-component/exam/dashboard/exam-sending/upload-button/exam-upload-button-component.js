@@ -68,7 +68,7 @@
       var lines = e.target.result;
       self.fileData.results = JSON.parse(lines);
       ProjectContextService.setFileStructure(self.fileData);
-      // ApplicationStateService.activateExamResultsVisualizer();
+      ApplicationStateService.activateExamResultsVisualizer();
     }
 
 

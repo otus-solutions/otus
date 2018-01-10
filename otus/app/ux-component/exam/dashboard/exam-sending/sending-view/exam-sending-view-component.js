@@ -87,7 +87,7 @@
 
     function examSendingView() {
       self.action = ProjectContextService.setExamSendingAction('view');
-      ProjectContextService.setFileStructure(self.selectedSendings[0].toJSON());
+      //ProjectContextService.setFileStructure(self.selectedSendings[0].toJSON());
       ApplicationStateService.activateExamResultsVisualizer();
     }
 
@@ -95,12 +95,12 @@
       DashboardContextService
         .getLoggedUser()
         .then(function (userData) {
-          console.log("resolvendo centro!")
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : ProjectContextService.getFieldCenterInSendingExam() ? ProjectContextService.getFieldCenterInSendingExam() : "";
           ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
           self.centerFilterSelectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
+          _loadList();
         });
     }
 

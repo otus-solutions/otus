@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -19,7 +19,8 @@
     self.$onInit = onInit;
 
     function onInit() {
-      console.log(ContextService.getFileStructure());
+      self.fileStructure = ContextService.getFileStructure();
+      console.log("self.fileStructure", self.fileStructure);
     }
   }
 }());
