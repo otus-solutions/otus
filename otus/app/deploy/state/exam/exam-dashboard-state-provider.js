@@ -32,7 +32,7 @@
     };
 
     function _loadStateData(SessionContextService, ContextService, Application) {
-      return Application
+      Application
         .isDeployed()
         .then(function() {
           try {
