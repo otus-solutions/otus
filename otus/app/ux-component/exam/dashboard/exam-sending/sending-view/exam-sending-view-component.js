@@ -79,6 +79,7 @@
         result.forEach(function (fieldCenter) {
           self.centers.push(fieldCenter.acronym)
         });
+        _loadList();
         _setUserFieldCenter();
       });
       _buildDialogs();
@@ -94,12 +95,12 @@
       DashboardContextService
         .getLoggedUser()
         .then(function (userData) {
+          console.log("resolvendo centro!")
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : ProjectContextService.getFieldCenterInSendingExam() ? ProjectContextService.getFieldCenterInSendingExam() : "";
           ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
           self.centerFilterSelectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
-          _LoadList();
         });
     }
 
@@ -112,11 +113,11 @@
         .cancel('Voltar');
     }
 
+    //TODO: Recurso ainda deve ser testado com o back-end.
     function deleteSending() {
       $mdDialog.show(_confirmDeleteSelected).then(function () {
         _removeRecursive(self.selectedSendings, function () {
-          self.updateLotListOnDelete(); //TODO:
-          self.selectedSendings = [];
+          _loadList();
         });
       });
     }
@@ -199,7 +200,7 @@
       }
     }
 
-    function _LoadList() {
+    function _loadList() {
       // TODO:
       /*
       SendingExamService.getSendedExams().then(function (c) {
