@@ -79,7 +79,6 @@
         .cancel('Voltar');
     }
 
-    //TODO: Recurso ainda deve ser testado com o back-end.
     function deleteSending() {
       $mdDialog.show(_confirmDeleteSelected).then(function () {
         _removeRecursive(self.selectedSendings, function () {
