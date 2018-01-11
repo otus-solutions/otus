@@ -37,40 +37,6 @@
     self.onFilter = onFilter;
     self.dynamicDataTableChange = dynamicDataTableChange;
 
-    //TODO: criado para realização de teste, depois deve ser removido!
-    self.fakeResponse = [
-      {
-        "_id": "5a33e03f637b6c00e62ce7c8",
-        "name": "meu-arquivo-com-nome-grande-de-exame-01-para-teste.otus",
-        "realizationDate": "2017-12-15T14:45:00Z", //isoString
-        "resultCounter": 5,
-        "operator": "teste.sobre.email.emanoel@gmail.com",
-        "fieldCenter": {
-          "acronym": "RS"
-        }
-      },
-      {
-        "_id": "5a33e03f637b6c00e62ce7c7",
-        "name": "arquivo-exame-02",
-        "realizationDate": "2017-12-20T14:45:00Z", //isoString
-        "resultCounter": 8,
-        "operator": "vianna.emanoel@gmail.com",
-        "fieldCenter": {
-          "acronym": "RS"
-        }
-      },
-      {
-        "_id": "5a33e03f637b6c00e62ce7c8",
-        "name": "arquivo-exame-01",
-        "realizationDate": "2017-12-15T14:45:00Z", //isoString
-        "resultCounter": 8,
-        "operator": "vianna.emanoel@gmail.com",
-        "fieldCenter": {
-          "acronym": "RJ"
-        }
-      }
-    ];
-
     function onInit() {
       ProjectFieldCenterService.loadCenters().then(function (result) {
         self.lotDataSet = [];
@@ -87,7 +53,7 @@
 
     function examSendingView() {
       self.action = ProjectContextService.setExamSendingAction('view');
-      //ProjectContextService.setFileStructure(self.selectedSendings[0].toJSON());
+      ProjectContextService.setFileStructure(self.selectedSendings[0].toJSON());
       ApplicationStateService.activateExamResultsVisualizer();
     }
 
@@ -123,7 +89,7 @@
     }
 
     function _removeRecursive(array, callback) {
-      SendingExamService.deleteSendedExams(array[0].code).then(function () {
+      SendingExamService.deleteSendedExams(array[0]._id).then(function () {
         if (array.length == 1) {
           callback();
         } else {
@@ -132,7 +98,7 @@
         }
       })
         .catch(function (e) {
-          var msg = "Não foi possível excluir o envio " + array[0].code + ".";
+          var msg = "Não foi possível excluir o envio " + array[0]._id + ".";
           $mdToast.show(
             $mdToast.simple()
               .textContent(msg)
@@ -201,17 +167,11 @@
     }
 
     function _loadList() {
-      // TODO:
-      /*
-      SendingExamService.getSendedExams().then(function (c) {
+      SendingExamService.getSendedExams().then(function (response) {
         self.sendingList = response;
         self.listImmutable = response;
         self.onFilter();
       });
-      */
-      self.sendingList = self.fakeResponse;
-      self.listImmutable = self.fakeResponse;
-      self.onFilter();
     }
 
     function _setSessionData() {
