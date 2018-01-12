@@ -38,9 +38,12 @@
 
       getSelectedParticipant()
       .then(function(selectedParticipant) {
+        _paperActivityCheckerData = window.sessionStorage.getItem('activityPaper');
         if (_paperActivityCheckerData) {
           ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData, self.activityConfigurations);
           _paperActivityCheckerData = null;
+          window.sessionStorage.removeItem('activityPaper');
+          window.sessionStorage.removeItem('activityType');
         } else {
           ActivityRepositoryService.createFromSurvey(self.listSurveys, loggedUser, selectedParticipant, self.activityConfigurations);
         }
@@ -69,6 +72,7 @@
     }
 
     function initializePaperActivityData(paperActivityCheckerData) {
+      window.sessionStorage.setItem('activityPaper', paperActivityCheckerData);
       _paperActivityCheckerData = paperActivityCheckerData;
     }
 

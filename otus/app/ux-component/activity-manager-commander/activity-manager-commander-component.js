@@ -20,10 +20,12 @@
     self.goToPaperActivityInitializer = goToPaperActivityInitializer;
 
     function goToActivityAdder() {
+      window.sessionStorage.setItem('activityType', "Online");
       ApplicationStateService.activateActivityAdder();
     }
 
     function goToPaperActivityInitializer() {
+      window.sessionStorage.setItem('activityType', "em Papel");
       ApplicationStateService.activatePaperActivityInitializer();
     }
   }

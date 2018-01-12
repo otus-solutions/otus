@@ -10,13 +10,14 @@
 
   Controller.$inject = [
     'otusjs.activity.business.ParticipantActivityService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    '$timeout'
   ];
 
-  function Controller(ActivityService, ApplicationStateService) {
+  function Controller(ActivityService, ApplicationStateService, $timeout) {
     var self = this;
 
-    self.returnToParticipantActivities = returnToParticipantActivities;
+    self.returnToActivitiesAdder = returnToActivitiesAdder;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -25,23 +26,51 @@
       _loadActivities();
     }
 
-    function _loadActivities() {
-      self.activities = ActivityService.getActivitiesSelection();
-      self.configuration = ActivityService.configurationStructure();
-      ActivityService.listAllCategories().then(function (response) {
-        self.categories = response;
-      });
+    function _loadCategories() {
+      ActivityService
+        .listAllCategories()
+        .then(function(response) {
+          self.categories = response;
+        });
+    }
 
-      if(self.activities === undefined || self.activities.length<1){
-        returnToParticipantActivities();
+    function _getSelectedActivities() {
+      return JSON.parse(window.sessionStorage.getItem('selectedActivities'));
+    }
+
+    function _isActivities() {
+      if (self.activities === undefined || self.activities.length < 1) {
+        returnToActivitiesAdder();
       }
-
     }
 
-    function returnToParticipantActivities() {
-      ApplicationStateService.activateParticipantActivities();
+    function _configurationCategories() {
+      ActivityService.setActivitiesSelection(self.activities);
+      self.configuration = ActivityService.configurationStructure();
     }
 
+    function _loadActivities() {
+      self.selectedActivities = _getSelectedActivities();
+      self.activities = [];
+      ActivityService
+        .listAvailables()
+        .then(function(activities) {
+          activities.forEach(function(activity) {
+            self.selectedActivities.forEach(function(acronym) {
+              if(activity.surveyTemplate.identity.acronym === acronym){
+                self.activities.push(activity);
+              }
+            });
+          });
+          _isActivities()
+          _loadCategories();
+          _configurationCategories();
+        });
+
+    }
+    function returnToActivitiesAdder() {
+      ApplicationStateService.activateActivityAdder();
+    }
 
   }
 }());
