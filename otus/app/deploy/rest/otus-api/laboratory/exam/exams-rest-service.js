@@ -83,7 +83,7 @@
       if (!_uploadRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _uploadRest.delete({ id: lotCode }).$promise;
+      return _uploadRest.delete({ id: sendedResultsLotCode }).$promise;
     }
   }
 }());

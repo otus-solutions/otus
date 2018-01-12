@@ -27,7 +27,7 @@
 
       ProjectRepositoryService.getSendedExams()
         .then(function (response) {
-          deferred.resolve(JSON.parse(response));
+          deferred.resolve(response);
           LoadingScreenService.finish();
         })
         .catch(function (err) {
