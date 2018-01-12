@@ -32,9 +32,11 @@
 
       self.input = $($element[0].querySelector('#fileInput'));
       self.input.on('change', function(e) {
+        self.fileData.fieldCenter = {};
         self.fileData.name = e.target.files[0].name;
         self.fileData.realizationDate = new Date();
         self.fileData.operator = SessionContextService.getData('loggedUser').email;
+        self.fileData.fieldCenter.acronym = ProjectContextService.getFieldCenterInSendingExam();
         if(_validateFileToUpload(e.target.files[0])){
           fr.readAsText(e.target.files[0]);
         }
@@ -64,10 +66,10 @@
     }
 
     function receivedText(e) {
-      console.log(e);
       var lines = e.target.result;
       self.fileData.results = JSON.parse(lines);
       ProjectContextService.setFileStructure(self.fileData);
+      self.action = ProjectContextService.setExamSendingAction('upload');
       ApplicationStateService.activateExamResultsVisualizer();
     }
 

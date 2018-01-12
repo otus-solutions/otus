@@ -3,15 +3,42 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusLotInfoManagerToolbar', {
+    .component('otusResultVisualizerManagerToolbar', {
       controller: Controller,
       templateUrl: 'app/ux-component/exam/dashboard/exam-sending/results-visualizer/toolbar/results-visualizer-toolbar-template.html',
       bindings: {
-        onLotDelete: '&'
+        onLotDelete: '&',
+        action: '<',
+        fileStructure: '<'
       }
     });
 
-  function Controller() {
+  Controller.$inject = [
+    'otusjs.laboratory.business.project.sending.SendingExamService',
+    'otusjs.laboratory.core.project.ContextService',
+    'otusjs.application.state.ApplicationStateService'
+  ];
+
+  function Controller(SendingExamService, ProjectContextService, ApplicationStateService) {
     var self = this;
+
+    self.$onInit = onInit;
+    self.cancelUpload = cancelUpload;
+    self.saveUpload = saveUpload;
+
+    function onInit() {
+      console.log(self.action);
+    }
+
+    function cancelUpload() {
+      ProjectContextService.clearFileStructure();
+      ApplicationStateService.activateExamSending();
+    }
+
+    function saveUpload() {
+      SendingExamService.createSendExam(self.fileStructure);
+      ProjectContextService.clearFileStructure();
+      ApplicationStateService.activateExamSending();
+    }
   }
 }());

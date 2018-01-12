@@ -1,37 +1,41 @@
 <div ui-view flex>
-    <md-card>
-        <md-card-title>
+  <otus-result-visualizer-manager-toolbar action="$ctrl.action" file-structure="$ctrl.fileStructure"></otus-result-visualizer-manager-toolbar>
+    <md-card flex>
+        <md-card-title flex>
             <md-card-title-text>
                 <span class="md-headline">Informações relacionadas ao arquivo enviado</span>
             </md-card-title-text>
         </md-card-title>
-        <md-card-content>
-            <div class="md-list-item-text">
-                <p>Data do envio: {{$ctrl.fileStructure.realizationDate}} </p>
+        <md-card-content flex>
+            <div class="md-list-item-text" layout="row" flex>
+              <div layout="column" flex>
+                <p>Data do envio: {{$ctrl.formattedDate}} </p>
                 <p>Nome do arquivo: {{$ctrl.fileStructure.name}} </p>
                 <p>Centro de realização: {{$ctrl.fileStructure.fieldCenter.acronym}} </p>
-                <p>Quantidade de resultados: {{$ctrl.fileStructure.resultCounter}} </p>
-                <p>
-                    <strong>Operador responsável pelo envio do arquivo:</strong> {{$ctrl.fileStructure.operator}}</p>
+              </div>
+              <div layout="column" flex>
+                <p>Quantidade de resultados: {{$ctrl.fileStructure.results.length}} </p>
+                <p>Operador responsável pelo envio do arquivo:{{$ctrl.fileStructure.operator}}</p>
+              </div>
             </div>
         </md-card-content>
     </md-card>
     <md-divider></md-divider>
     <div layout="column" flex>
         <md-content layout="column" flex>
-            <dynamic-data-table flex 
-                headers="['Data do envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
-                elements-array="$ctrl.sendingList" 
-                elements-properties="['realizationDate', 'name', 'fieldCenter.acronym', 'resultCounter', 'operator']"
-                callback-after-change="$ctrl.dynamicDataTableChange" 
-                table-update-function="$ctrl.updateDataTable" 
-                order-indices="[0, 1, 2, 3, 4]"
-                number-fields-aligned-left="10" 
-                flex-array="[10, 30, 10, 15, 20]" 
-                format-data="" 
+            <dynamic-data-table flex
+                headers="['Codigo da aliquota', 'Nome do exame', 'nome do resultado', 'Valor']"
+                elements-array="$ctrl.fileStructure.results"
+                elements-properties="['aliquotCode', 'examName', 'resultName', 'value']"
+                callback-after-change="$ctrl.dynamicDataTableChange"
+                table-update-function="$ctrl.updateDataTable"
+                order-indices="[0, 1, 2, 3, 4, 5]"
+                number-fields-aligned-left="10"
+                flex-array="[10, 15, 10, 15, 20]"
+                format-data=""
                 format-data-properties-array="['realizationDate']"
-                disable-filter="true" 
-                disable-pagination="true"  
+                disable-filter="true"
+                disable-pagination="true"
                 disable-checkbox="true">
             </dynamic-data-table>
         </md-content>

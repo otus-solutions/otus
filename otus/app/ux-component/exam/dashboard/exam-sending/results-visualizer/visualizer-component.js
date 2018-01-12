@@ -9,18 +9,25 @@
     });
 
   Controller.$inject = [
+    '$filter',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService'
   ];
 
-  function Controller(ApplicationStateService, ContextService) {
+  function Controller($filter, ApplicationStateService, ProjectContextService) {
     var self = this;
 
     self.$onInit = onInit;
+    self.dynamicDataTableChange = dynamicDataTableChange;
 
     function onInit() {
-      self.fileStructure = ContextService.getFileStructure();
-      console.log("self.fileStructure", self.fileStructure);
+      self.action = ProjectContextService.getExamSendingAction();
+      self.fileStructure = ProjectContextService.getFileStructure();
+      console.log(self.fileStructure);
+      self.formattedDate = $filter('date')(self.fileStructure.realizationDate, 'dd/MM/yyyy');
     }
+
+    function dynamicDataTableChange() {}
+
   }
 }());

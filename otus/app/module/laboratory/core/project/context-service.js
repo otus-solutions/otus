@@ -39,6 +39,7 @@
     self.getFieldCenterInSendingExam = getFieldCenterInSendingExam;
     self.setExamSendingAction = setExamSendingAction;
     self.getExamSendingAction = getExamSendingAction;
+    self.clearFileStructure = clearFileStructure;
 
     function begin() {
       _context.clear();
@@ -151,6 +152,10 @@
 
     function getExamSendingAction() {
       return getData('ExamSendingAction');
+    }
+
+    function clearFileStructure() {
+      removeData('fileStructure');
     }
   }
 }());
