@@ -101,7 +101,7 @@
           $mdToast.show(
             $mdToast.simple()
               .textContent(msg)
-              .hideDelay(4000)
+              .hideDelay(3000)
           );
           callback();
         });
@@ -117,10 +117,9 @@
       var activityIndex = self.selectedSendings.indexOf(send);
       if (activityIndex > -1) {
         self.selectedSendings.splice(activityIndex, 1);
-        send.isSelected = false;
       } else {
-        self.selectedSendings.push(send);
-        send.isSelected = true;
+        send = JSON.stringify(send);
+        self.selectedSendings.push(SendingExamService.loadExamSendingFromJson(send));
       }
     }
 
@@ -151,12 +150,12 @@
         if (initialDateFormatted <= finalDateFormatted) {
           return (formattedData >= initialDateFormatted && formattedData <= finalDateFormatted);
         } else {
-          var msgDataInvalida = "Datas invalidas";
+          var msgDataInvalida = "Filtro de datas com intervalo invalido";
 
           $mdToast.show(
             $mdToast.simple()
               .textContent(msgDataInvalida)
-              .hideDelay(4000)
+              .hideDelay(3000)
           );
           return FilteredByCenter;
         }

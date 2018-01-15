@@ -7,18 +7,30 @@
 
   service.$inject = [
     '$q',
+    'otusjs.laboratory.exam.sending.ExamResultLotSerive',
     'otusjs.laboratory.repository.ProjectRepositoryService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service($q, ProjectRepositoryService, LoadingScreenService) {
+  function service($q, ExamResultLotSerive, ProjectRepositoryService, LoadingScreenService) {
     var self = this;
     var messageLoading =
       'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
 
+    /* Public methods */
+    self.createExamSending = createExamSending;
+    self.loadExamSendingFromJson = loadExamSendingFromJson;
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
     self.deleteSendedExams = deleteSendedExams;
+
+    function createExamSending() {
+      return ExamResultLotSerive.createExamSending();
+    }
+
+    function loadExamSendingFromJson(lotJSON) {
+      return ExamResultLotSerive.buildExamSendingFromJson(lotJSON);
+    }
 
     function getSendedExams() {
       LoadingScreenService.changeMessage(messageLoading);
