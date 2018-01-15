@@ -23,8 +23,8 @@
     function onInit() {
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
-      console.log(self.fileStructure);
-      self.formattedDate = $filter('date')(self.fileStructure.realizationDate, 'dd/MM/yyyy');
+      // console.log(self.fileStructure);
+      self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy HH:MM');
     }
 
     function dynamicDataTableChange() {}

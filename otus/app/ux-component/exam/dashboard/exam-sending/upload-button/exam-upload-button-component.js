@@ -29,14 +29,15 @@
     function onInit() {
       fr.onload = receivedText;
       self.fileData = {};
+      self.fileData.examResultLot = {};
+      self.fileData.examResultLot.fieldCenter = {};
 
       self.input = $($element[0].querySelector('#fileInput'));
       self.input.on('change', function(e) {
-        self.fileData.fieldCenter = {};
-        self.fileData.name = e.target.files[0].name;
-        self.fileData.realizationDate = new Date();
-        self.fileData.operator = SessionContextService.getData('loggedUser').email;
-        self.fileData.fieldCenter.acronym = ProjectContextService.getFieldCenterInSendingExam();
+        self.fileData.examResultLot.operator = SessionContextService.getData('loggedUser').email;
+        self.fileData.examResultLot.fileName = e.target.files[0].name;
+        self.fileData.examResultLot.realizationDate = new Date();
+        self.fileData.examResultLot.fieldCenter.acronym = ProjectContextService.getFieldCenterInSendingExam();
         if(_validateFileToUpload(e.target.files[0])){
           fr.readAsText(e.target.files[0]);
         }
@@ -67,7 +68,7 @@
 
     function receivedText(e) {
       var lines = e.target.result;
-      self.fileData.results = JSON.parse(lines);
+      self.fileData.examResults = JSON.parse(lines);
       ProjectContextService.setFileStructure(self.fileData);
       self.action = ProjectContextService.setExamSendingAction('upload');
       ApplicationStateService.activateExamResultsVisualizer();

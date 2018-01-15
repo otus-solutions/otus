@@ -10,12 +10,12 @@
             <div class="md-list-item-text" layout="row" flex>
               <div layout="column" flex>
                 <p>Data do envio: {{$ctrl.formattedDate}} </p>
-                <p>Nome do arquivo: {{$ctrl.fileStructure.name}} </p>
-                <p>Centro de realização: {{$ctrl.fileStructure.fieldCenter.acronym}} </p>
+                <p>Nome do arquivo: {{$ctrl.fileStructure.examResultLot.fileName}} </p>
+                <p>Centro de realização: {{$ctrl.fileStructure.examResultLot.fieldCenter.acronym}} </p>
               </div>
               <div layout="column" flex>
-                <p>Quantidade de resultados: {{$ctrl.fileStructure.results.length}} </p>
-                <p>Operador responsável pelo envio do arquivo:{{$ctrl.fileStructure.operator}}</p>
+                <p>Quantidade de resultados: {{$ctrl.fileStructure.examResults.length}} </p>
+                <p>Operador responsável pelo envio do arquivo: {{$ctrl.fileStructure.examResultLot.operator}}</p>
               </div>
             </div>
         </md-card-content>
@@ -24,16 +24,16 @@
     <div layout="column" flex>
         <md-content layout="column" flex>
             <dynamic-data-table flex
-                headers="['Codigo da aliquota', 'Nome do exame', 'nome do resultado', 'Valor']"
-                elements-array="$ctrl.fileStructure.results"
-                elements-properties="['aliquotCode', 'examName', 'resultName', 'value']"
+                headers="['Codigo da aliquota', 'Nome do exame', 'nome do resultado', 'Valor', 'Data']"
+                elements-array="$ctrl.fileStructure.examResults"
+                elements-properties="['aliquotCode', 'examName', 'resultName', 'value', 'releaseDate']"
                 callback-after-change="$ctrl.dynamicDataTableChange"
                 table-update-function="$ctrl.updateDataTable"
                 order-indices="[0, 1, 2, 3, 4, 5]"
                 number-fields-aligned-left="10"
                 flex-array="[10, 15, 10, 15, 20]"
                 format-data=""
-                format-data-properties-array="['realizationDate']"
+                format-data-properties-array="['releaseDate']"
                 disable-filter="true"
                 disable-pagination="true"
                 disable-checkbox="true">

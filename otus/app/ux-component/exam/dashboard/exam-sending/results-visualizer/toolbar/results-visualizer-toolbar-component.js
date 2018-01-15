@@ -27,7 +27,7 @@
     self.saveUpload = saveUpload;
 
     function onInit() {
-      console.log(self.action);
+      // console.log(JSON.stringify(self.fileStructure));
     }
 
     function cancelUpload() {
@@ -36,7 +36,7 @@
     }
 
     function saveUpload() {
-      SendingExamService.createSendExam(self.fileStructure);
+      SendingExamService.createSendExam(JSON.stringify(self.fileStructure));
       ProjectContextService.clearFileStructure();
       ApplicationStateService.activateExamSending();
     }

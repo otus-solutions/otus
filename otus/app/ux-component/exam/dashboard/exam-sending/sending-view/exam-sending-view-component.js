@@ -165,11 +165,11 @@
     }
 
     function _loadList() {
-      // SendingExamService.getSendedExams().then(function (response) {
-      //   self.sendingList = response;
-      //   self.listImmutable = response;
-      //   self.onFilter();
-      // });
+      SendingExamService.getSendedExams().then(function (response) {
+        self.sendingList = response;
+        self.listImmutable = response;
+        self.onFilter();
+      });
     }
 
     function _setSessionData() {
