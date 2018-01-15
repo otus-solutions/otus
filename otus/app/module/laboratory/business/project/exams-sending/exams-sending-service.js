@@ -28,8 +28,8 @@
       return ExamResultLotSerive.createExamSending();
     }
 
-    function loadExamSendingFromJson(lotJSON) {
-      return ExamResultLotSerive.buildExamSendingFromJson(lotJSON);
+    function loadExamSendingFromJson(examResultLot, examResults) {
+      return ExamResultLotSerive.buildExamSendingFromJson(examResultLot, examResults);
     }
 
     function getSendedExams() {

@@ -88,7 +88,7 @@
     }
 
     function _removeRecursive(array, callback) {
-      SendingExamService.deleteSendedExams(array[0]._id).then(function () {
+      SendingExamService.deleteSendedExams(array[0].examResultLot._id).then(function () {
         if (array.length == 1) {
           callback();
         } else {
@@ -118,8 +118,7 @@
       if (activityIndex > -1) {
         self.selectedSendings.splice(activityIndex, 1);
       } else {
-        send = JSON.stringify(send);
-        self.selectedSendings.push(SendingExamService.loadExamSendingFromJson(send));
+        self.selectedSendings.push(SendingExamService.loadExamSendingFromJson(send, {}));
       }
     }
 
