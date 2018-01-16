@@ -24,10 +24,15 @@
     function onInit() {
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
-      if (_isEmpty(self.fileStructure.examResults)) {
+      if(self.action === 'view'){
         _loadList();
       }
+      console.log(self.fileStructure);
+      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examResultLot, self.fileStructure.examResults);
+      self.sendingExam.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
+      self.fileStructure.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
       self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy');
+      // console.log(self.sendingExam);
     }
 
     function _loadList() {
@@ -35,13 +40,6 @@
         self.fileStructure.examResults = response;
         self.updateDataTable(self.fileStructure.examResults);
       });
-    }
-
-    function _isEmpty(list) {
-      if (list.length === 0)
-        return true;
-      else
-        return false;
     }
 
     function dynamicDataTableChange() { }

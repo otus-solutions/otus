@@ -119,7 +119,7 @@
     }
 
     function activateExamSending() {
-      $state.go(STATE.EXAM_SENDING);
+      $state.go(STATE.EXAM_SENDING,{},{reload:true});
     }
 
     function activateExamResultsVisualizer() {

@@ -15,21 +15,21 @@
                     </div>
                     <div layout="row">
                         <li>Nome do arquivo:</li>
-                        <p style="margin-left: 10px;">{{$ctrl.fileStructure.examResultLot.fileName}}</p>
+                        <p style="margin-left: 10px;">{{$ctrl.sendingExam.examResultLot.fileName}}</p>
                     </div>
                     <div layout="row">
                         <li>Centro de realização:</li>
-                        <p style="margin-left: 10px;"></p>{{$ctrl.fileStructure.examResultLot.fieldCenter.acronym}}</p>
+                        <p style="margin-left: 10px;"></p>{{$ctrl.sendingExam.examResultLot.fieldCenter.acronym}}</p>
                     </div>
                 </div>
                 <div layout="column" flex>
                     <div layout="row">
                         <li>Quantidade de resultados:</li>
-                        <p style="margin-left: 10px;">{{$ctrl.fileStructure.examResults.length}}</p>
+                        <p style="margin-left: 10px;">{{$ctrl.sendingExam.examResultLot.resultsQuantity}}</p>
                     </div>
                     <div layout="row">
                         <li>Operador responsável:</li>
-                        <p style="margin-left: 10px;">{{$ctrl.fileStructure.examResultLot.operator}}</p>
+                        <p style="margin-left: 10px;">{{$ctrl.sendingExam.examResultLot.operator}}</p>
                     </div>
                 </div>
             </div>
@@ -38,19 +38,19 @@
     <md-divider></md-divider>
     <div layout="column" flex>
         <md-content layout="column" flex>
-            <dynamic-data-table flex 
+            <dynamic-data-table flex
                 headers="['Codigo da aliquota', 'Nome do exame', 'Nome do resultado', 'Valor do resultado', 'Data de realização']"
-                elements-array="$ctrl.fileStructure.examResults" 
+                elements-array="$ctrl.sendingExam.examResults"
                 elements-properties="['aliquotCode', 'examName', 'resultName', 'value', 'releaseDate']"
-                callback-after-change="$ctrl.dynamicDataTableChange" 
-                table-update-function="$ctrl.updateDataTable" 
+                callback-after-change="$ctrl.dynamicDataTableChange"
+                table-update-function="$ctrl.updateDataTable"
                 order-indices="[0, 1, 2, 3, 4, 5]"
-                number-fields-aligned-left="10" 
-                flex-array="[20, 20, 20, 20, 20]" 
-                format-data="" 
+                number-fields-aligned-left="10"
+                flex-array="[20, 20, 20, 20, 20]"
+                format-data=""
                 format-data-properties-array="['releaseDate']"
-                disable-filter="true" 
-                disable-pagination="true" 
+                disable-filter="true"
+                disable-pagination="true"
                 disable-checkbox="true">
             </dynamic-data-table>
         </md-content>
