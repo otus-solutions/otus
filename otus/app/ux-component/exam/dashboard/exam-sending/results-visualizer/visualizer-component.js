@@ -24,7 +24,6 @@
     function onInit() {
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
-      console.log(self.fileStructure);
       if (_isEmpty(self.fileStructure.examResults)) {
         _loadList();
       }
@@ -34,7 +33,7 @@
     function _loadList() {
       SendingExamService.getSendedExamById(self.fileStructure.examResultLot._id).then(function (response) {
         self.fileStructure.examResults = response;
-        self.updateDataTable(self.fileStructure);
+        self.updateDataTable(self.fileStructure.examResults);
       });
     }
 

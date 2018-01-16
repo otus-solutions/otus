@@ -72,7 +72,7 @@
 
       ProjectRepositoryService.createSendExam(sendStructure)
         .then(function (response) {
-          deferred.resolve(JSON.parse(response));
+          deferred.resolve(response);
         })
         .catch(function (err) {
           deferred.reject(err);
