@@ -37,6 +37,7 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.getSendedExamById = getSendedExamById;
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
     self.deleteSendedExams = deleteSendedExams;
@@ -200,6 +201,28 @@
     }
 
     /* sending exam */
+
+    /**
+     * get Sended exams by id.
+     * @param {(object)} id - code of sended exam
+     * @memberof ProjectCollectionService
+     */
+    function getSendedExamById(id) {
+      var request = $q.defer();
+
+      _prjectRemoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getSendedExamById(id)
+            .then(function (data) {
+              request.resolve(data);
+            });
+        });
+
+      return request.promise;
+    }
+
 
     /**
     * get Sended exams.

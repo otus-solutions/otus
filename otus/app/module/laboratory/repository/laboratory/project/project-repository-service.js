@@ -22,6 +22,7 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.getSendedExamById = getSendedExamById;
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
     self.deleteSendedExams = deleteSendedExams;
@@ -62,6 +63,10 @@
     }
 
     /* sending exam */
+    function getSendedExamById(id) {
+      return ProjectCollectionService.getSendedExamById(id);
+    }
+
     function getSendedExams() {
       return ProjectCollectionService.getSendedExams();
     }

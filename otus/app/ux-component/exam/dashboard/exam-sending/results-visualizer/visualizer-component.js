@@ -11,10 +11,11 @@
   Controller.$inject = [
     '$filter',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.laboratory.core.project.ContextService'
+    'otusjs.laboratory.core.project.ContextService',
+    'otusjs.laboratory.business.project.sending.SendingExamService'
   ];
 
-  function Controller($filter, ApplicationStateService, ProjectContextService) {
+  function Controller($filter, ApplicationStateService, ProjectContextService, SendingExamService) {
     var self = this;
 
     self.$onInit = onInit;
@@ -23,11 +24,28 @@
     function onInit() {
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
-      // console.log(self.fileStructure);
-      self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy HH:MM');
+      console.log(self.fileStructure);
+      if (_isEmpty(self.fileStructure.examResults)) {
+        _loadList();
+      }
+      self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy');
     }
 
-    function dynamicDataTableChange() {}
+    function _loadList() {
+      SendingExamService.getSendedExamById(self.fileStructure.examResultLot._id).then(function (response) {
+        self.fileStructure.examResults = response;
+        self.updateDataTable(self.fileStructure);
+      });
+    }
+
+    function _isEmpty(list) {
+      if (list.length === 0)
+        return true;
+      else
+        return false;
+    }
+
+    function dynamicDataTableChange() { }
 
   }
 }());

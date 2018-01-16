@@ -20,6 +20,7 @@
     /* Public methods */
     self.createExamSending = createExamSending;
     self.loadExamSendingFromJson = loadExamSendingFromJson;
+    self.getSendedExamById = getSendedExamById;
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
     self.deleteSendedExams = deleteSendedExams;
@@ -30,6 +31,23 @@
 
     function loadExamSendingFromJson(examResultLot, examResults) {
       return ExamResultLotSerive.buildExamSendingFromJson(examResultLot, examResults);
+    }
+
+    function getSendedExamById(id) {
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
+      var deferred = $q.defer();
+
+      ProjectRepositoryService.getSendedExamById(id)
+        .then(function (response) {
+          deferred.resolve(response);
+          LoadingScreenService.finish();
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
     }
 
     function getSendedExams() {
