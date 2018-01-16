@@ -9,15 +9,11 @@
         <md-icon style="color: white" md-font-set="material-icons" aria-label="Cancelar">clear</md-icon>
       </md-button>
 
-      <md-button ng-click="$ctrl.saveUpload()" class="md-raised md-accent md-icon-button" aria-label="Salvar">
+      <md-button ng-click="$ctrl.saveUpload()"  ng-if="$ctrl.action == 'upload'" class="md-raised md-accent md-icon-button" aria-label="Salvar">
         <md-tooltip md-direction="down">Salvar</md-tooltip>
         <md-icon aria-label="Adicionar">save</md-icon>
       </md-button>
 
-      <md-button class="md-raised md-icon-button" aria-label="Excluir" ng-if="$ctrl.action == 'view'" style="background-color: grey" ng-click="$ctrl.onRemoveAliquots()">
-        <md-tooltip md-direction="down">Excluir</md-tooltip>
-        <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
-      </md-button>
     </div>
   </md-toolbar>
 </div>

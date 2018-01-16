@@ -172,7 +172,7 @@
     }
 
     function _setSessionData() {
-      if (!self.centerFilter.length) {
+      if (self.centerFilter.length) {
         ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
       }
     }

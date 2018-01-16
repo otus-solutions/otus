@@ -27,7 +27,7 @@
     self.saveUpload = saveUpload;
 
     function onInit() {
-      // console.log(JSON.stringify(self.fileStructure));
+      console.log(JSON.stringify(self.fileStructure));
     }
 
     function cancelUpload() {
@@ -36,9 +36,10 @@
     }
 
     function saveUpload() {
-      SendingExamService.createSendExam(JSON.stringify(self.fileStructure));
-      ProjectContextService.clearFileStructure();
-      ApplicationStateService.activateExamSending();
+      SendingExamService.createSendExam(JSON.stringify(self.fileStructure)).then(function (){
+        ProjectContextService.clearFileStructure();
+        ApplicationStateService.activateExamSending();
+      });
     }
   }
 }());
