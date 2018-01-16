@@ -7,16 +7,17 @@
       templateUrl: 'app/ux-component/dynamic-data-table/dynamic-data-table-template.html',
       bindings: {
         headers: '<',
-        elementsArray: '<',
+        elementsArray: '=?',
         elementsProperties: '<',
-        callbackAfterChange: '=',
-        tableUpdateFunction: '=',
+        callbackAfterChange: '=?',
+        tableUpdateFunction: '=?',
 
         formatData: '<',
         formatDataIndexArray: '<',
         formatDataPropertiesArray: '<',
 
         tableTitle: '<',
+        alignArray: '<',
         flexArray: '<',
         orderIndices: '<',
         numberFieldsAlignedLeft: '<',
@@ -32,7 +33,9 @@
         rowsPerPageArray: '<',
         rowPerPageDefault: '<',
 
-        hideDelayTime: '<'
+        hideDelayTime: '<',
+
+        dynamicTableSettings: '='
       },
       controller: Controller
     });
@@ -48,6 +51,8 @@
     self.selectedItemCounter = 0;
 
     self.table;
+
+    self.defaultAlign = 'left';
 
     self.orderQuery;
     self.orderInverse = false;
@@ -73,9 +78,12 @@
     self.mouseEnter = mouseEnter;
     self.mouseLeave = mouseLeave;
     self.changeRowStyle = changeRowStyle;
+    self.leaveFocus = leaveFocus;
 
     self.nextPage = nextPage;
     self.previousPage = previousPage;
+
+    self.iconButtonClick = iconButtonClick;
 
     self.disableAnimation = false;
 
@@ -87,11 +95,52 @@
     self.viewPerPageChanged = viewPerPageChanged;
 
 
+    self.currentRowOnHover;
+
     function onInit() {
+      _initializeDefaultValues()
       _setOrderQuery();
 
-      if (!self.numberFieldsAlignedLeft) self.numberFieldsAlignedLeft = 1;
 
+      self.tableUpdateFunction = _refreshGrid;
+
+      creacteTable();
+    }
+
+
+    function _initializeDefaultValues() {
+      if (self.dynamicTableSettings) {
+        var _settings = self.dynamicTableSettings;
+        _settings = _settings.getSettings ? _settings.getSettings() : _settings;
+
+        self.headers = _settings.headers;
+        self.elementsArray = _settings.elementsArray;
+        self.elementsProperties = _settings.elementsProperties;
+        self.callbackAfterChange = _settings.callbackAfterChange;
+        self.tableUpdateFunction = _settings.tableUpdateFunction;
+        self.formatData = _settings.formatData;
+        self.formatDataIndexArray = _settings.formatDataIndexArray;
+        self.formatDataPropertiesArray = _settings.formatDataPropertiesArray;
+        self.tableTitle = _settings.tableTitle;
+        self.flexArray = _settings.flexArray;
+        self.alignArray = _settings.alignArray;
+        self.orderIndices = _settings.orderIndices;
+        self.numberFieldsAlignedLeft = _settings.numberFieldsAlignedLeft;
+        self.selectedColor = _settings.selectedColor;
+        self.hoverColor = _settings.hoverColor;
+        self.disableCheckbox = _settings.disableCheckbox;
+        self.disableReorder = _settings.disableReorder;
+        self.disableFilter = _settings.disableFilter;
+        self.disablePagination = _settings.disablePagination;
+        self.rowsPerPageArray = _settings.rowsPerPageArray;
+        self.rowPerPageDefault = _settings.rowPerPageDefault;
+        self.hideDelayTime = _settings.hideDelayTime;
+      }
+
+      // if(!self.numberFieldsAlignedLeft) self.numberFieldsAlignedLeft = 1;
+
+      if (!self.flexArray) self.flexArray = [];
+      if (!self.alignArray) self.alignArray = [];
       if (!self.hoverColor) self.hoverColor = '#EEEEEE';
       if (!self.selectedColor) self.selectedColor = '#F5F5F5';
       if (!self.rowsPerPageArray) self.rowsPerPageArray = [10, 25, 50, 100, 250, 500, 1000];
@@ -101,19 +150,75 @@
       if (!self.formatDataIndexArray) self.formatDataIndexArray = [];
       if (!self.formatDataPropertiesArray) self.formatDataPropertiesArray = [];
       if (!self.hideDelayTime) self.hideDelayTime = 3000;
+      if (!self.callbackAfterChange) self.callbackAfterChange = function () { };
+
+      _alignArrayPopulate();
 
       self.error = {
         isError: false,
         msg: "Devem ser informadas a mesma quantidade de valores e de cabeçalhos."
       };
+    }
 
-      self.tableUpdateFunction = function (newElementsArray) {
-        self.elementsArray = newElementsArray || self.elementsArray;
-        self.selectedItemCounter = 0;
-        self.creacteTable();
+    function _resetSelectedItemCounter() {
+      self.selectedItemCounter = 0;
+
+      self.table.rows.forEach(function (row) {
+        if (row.selected) {
+          self.selectedItemCounter++;
+        }
+        changeRowStyle(row);
+      });
+    }
+
+    function _getAlignAccepted(align) {
+      var avaliableAlignArray = ['right', 'left', 'center'];
+      var alignAccepted = align;
+      var alignmentAccepted = false;
+
+      if (typeof align !== 'string') alignAccepted = '';
+
+      for (var i = 0; i < avaliableAlignArray.length; i++) {
+        var avaliableAlign = avaliableAlignArray[i];
+        if (alignAccepted.toLowerCase().trim() === avaliableAlign) {
+          alignAccepted = avaliableAlign;
+          alignmentAccepted = true;
+          break;
+        }
       }
 
-      creacteTable();
+      if (!alignmentAccepted) alignAccepted = self.defaultAlign;
+
+      return alignAccepted;
+    }
+
+    function _alignArrayPopulate() {
+      var newAlignArray = [];
+
+      if (self.alignArray && self.alignArray.length) {
+        self.alignArray.forEach(function (align) {
+          newAlignArray.push(_getAlignAccepted(align));
+        });
+      } else if (self.numberFieldsAlignedLeft) {
+        self.elementsProperties.forEach(function (element, index) {
+          var tmpAlign = index < self.numberFieldsAlignedLeft ? 'left' : 'right';
+          newAlignArray.push(tmpAlign);
+        });
+      }
+
+      self.elementsProperties.forEach(function (element, index) {
+        if (newAlignArray[index] === undefined) {
+          newAlignArray.push(self.defaultAlign);
+        }
+      });
+
+      self.alignArray = newAlignArray;
+    }
+
+    function _refreshGrid(newElementsArray) {
+      self.elementsArray = newElementsArray || self.elementsArray;
+      self.selectedItemCounter = 0;
+      self.creacteTable();
     }
 
     function _havePagination() {
@@ -144,12 +249,23 @@
       filterRows()
     }
 
+    function leaveFocus() {
+      if (self.currentRowOnHover) {
+        self.changeRowStyle(self.currentRowOnHover);
+        self.currentRowOnHover = undefined;
+      }
+    }
+
     function mouseEnter(row) {
-      self.changeRowStyle(row, true)
+      if (!self.currentRowOnHover || self.currentRowOnHover.index !== row.index) {
+        if (self.currentRowOnHover) self.changeRowStyle(self.currentRowOnHover);
+        self.currentRowOnHover = row;
+        self.changeRowStyle(row, true);
+      }
     }
 
     function mouseLeave(row) {
-      self.changeRowStyle(row)
+      //self.changeRowStyle(row);
     }
 
     function changeRowStyle(row, isHover) {
@@ -220,11 +336,7 @@
         array = [];
       }
 
-      if (index < self.numberFieldsAlignedLeft) {
-        retClass = retClass + ' dynamic-table-column-left ';
-      } else {
-        retClass = retClass + ' dynamic-table-column-right ';
-      }
+      retClass = retClass + ' dynamic-table-column-' + self.alignArray[index] || self.defaultAlign + ' ';
 
       if (index === 0 && self.disableCheckbox) {
         retClass = retClass + ' dynamic-table-column-first ';
@@ -303,20 +415,26 @@
     }
 
     function getIsNextPage() {
-      var activeNext = false;
-      if (self.table.currentPage * self.rowPerPageDefault < self.table.filteredRows.length) {
-        activeNext = true;
-      }
-
-      return activeNext;
+      return _haveThisPage(self.table.currentPage + 1);
     }
 
     function getIsPreviousPage() {
-      var activePrevious = false;
-      if (self.table.currentPage > 1) {
-        activePrevious = true;
+      return self.table.currentPage > 1 ? true : false;
+    }
+
+    function _haveThisPage(page) {
+      var havePage = false;
+      if (page > 0) {
+        var previousPage = page - 1;
+        if (page === 1) {
+          havePage = true;
+        } else {
+          if (previousPage * self.rowPerPageDefault < self.table.filteredRows.length) {
+            havePage = true;
+          }
+        }
       }
-      return activePrevious;
+      return havePage;
     }
 
     function creacteTable() {
@@ -373,18 +491,11 @@
       return object[property];
     }
 
-
-    function _formatData(value) {
-      return $filter('date')(new Date(value), self.formatData);
-    }
-
     function _getValueFormated(value, property, index) {
-
-
       if (self.formatDataIndexArray.filter(function (val) { return Number(val) === index }).length) {
-        value = _formatData(value);
+        value = $filter('date')(value, self.formatData);
       } else if (self.formatDataPropertiesArray.filter(function (prop) { return prop === property }).length) {
-        value = _formatData(value);
+        value = $filter('date')(value, self.formatData);
       }
 
       return value;
@@ -436,12 +547,15 @@
     }
 
     function selectDeselectRow(row) {
-      if (row.selected) {
-        _deselectRow(row);
-      } else {
-        _selectRow(row);
+      if (!row.specialFieldClicked) {
+        if (row.selected) {
+          _deselectRow(row);
+        } else {
+          _selectRow(row);
+        }
+        changeRowStyle(row);
       }
-      changeRowStyle(row);
+      row.specialFieldClicked = false;
     }
 
     function _selectRow(row) {
@@ -469,18 +583,26 @@
         hover: false,
         styleSelect: { 'background-color': self.selectedColor },
         styleHover: { 'background-color': self.hoverColor },
-        style: {}
+        style: {},
+        specialFieldClicked: false
       };
 
       self.elementsProperties.forEach(function (elementProperty, index) {
-        var value = _getValueFromElement(element, elementProperty, index, true);
-        var orderValue = _getValueFromElement(element, elementProperty, index);
+        var specialField = undefined;
+
+        if (typeof elementProperty === "string") {
+          var value = _getValueFromElement(element, elementProperty, index, true);
+          var orderValue = _getValueFromElement(element, elementProperty, index);
+        } else {
+          specialField = _specialFieldConstruction(elementProperty);
+        }
 
         var column = _createColumn(
           row,
           value,
           orderValue,
-          index
+          index,
+          specialField
         );
 
         row.columns.push(column);
@@ -490,16 +612,125 @@
       return row;
     }
 
-    function _createColumn(row, value, orderValue, index) {
+    function _createColumn(row, value, orderValue, index, specialField) {
       var column = {
         type: "dynamicDataTableColumn",
         value: value,
         orderValue: orderValue,
         index: index,
-        name: "column" + index
+        name: "column" + index,
+        specialField: specialField
       };
 
       return column;
+    }
+
+    function _specialFieldConstruction(elementProperty) {
+      var specialFieldStructure = undefined;
+      var iconButton = elementProperty.iconButton;
+
+      if (iconButton) {
+        specialFieldStructure = {
+          iconButton: {
+            icon: iconButton.icon,
+            tooltip: iconButton.tooltip || "",
+            classButton: iconButton.classButton || "",
+            successMsg: iconButton.successMsg || "",
+            buttonFuntion: iconButton.buttonFuntion,
+            returnsSuccess: iconButton.returnsSuccess || false,
+            renderElement: iconButton.renderElement || false,
+            renderGrid: iconButton.renderGrid || false,
+            removeElement: iconButton.removeElement || false,
+            receiveCallback: iconButton.receiveCallback || false
+          }
+        }
+      }
+
+      return specialFieldStructure;
+    }
+
+    function _refreshGridAndKeepCurrentPage() {
+      var _currentPage = self.table.currentPage;
+      _refreshGrid();
+      if (_havePagination()) {
+        for (var i = _currentPage; i >= 1; i--) {
+          if (_haveThisPage(i)) {
+            self.table.currentPage = i;
+            pagesChage();
+            break;
+          }
+        }
+      }
+    }
+
+    function _removeRow(row) {
+      self.elementsArray.splice(row.index, 1);
+    }
+
+    function _updateRow(element, row) {
+      var updatedRow = _createRow(element, row.index);
+
+      row.ref = updatedRow.ref;
+      row.columns = updatedRow.columns;
+    }
+
+    function _isValidElement(element) {
+      var isvalid = false;
+      if (element && self.elementsProperties.length) {
+        for (var i = 0; i < self.elementsProperties.length; i++) {
+          var fullProperty = self.elementsProperties[i];
+          if (typeof fullProperty === "string") {
+            var property = fullProperty.split(".")[0];
+            if (element[property]) {
+              isvalid = true;
+              break;
+            }
+          }
+        }
+      }
+      return isvalid;
+    }
+
+    function iconButtonClick(structure, row) {
+      row.specialFieldClicked = true;
+
+      var _actionFuntion = function (returnedElement) {
+        if (!_isValidElement(returnedElement)) {
+          returnedElement = self.table.fullRows[row.index];
+        }
+
+        if (structure.renderElement && returnedElement && !structure.removeElement) {
+          _updateRow(returnedElement, row);
+        }
+
+        if (structure.removeElement) {
+          _removeRow(row);
+          _refreshGridAndKeepCurrentPage();
+        }
+
+        if (structure.renderGrid && !structure.removeElement) {
+          _refreshGridAndKeepCurrentPage();
+        }
+
+        if (structure.successMsg) {
+          _showMsg(structure.successMsg);
+        }
+      }
+
+      if (structure.buttonFuntion) {
+        var returnedElement = undefined;
+        if (structure.receiveCallback) {
+          structure.buttonFuntion(row.ref, _actionFuntion);
+        } else {
+          if (structure.returnsSuccess) {
+            if (structure.buttonFuntion(row.ref)) _actionFuntion();
+          } else {
+            _actionFuntion(structure.buttonFuntion(row.ref));
+          }
+        }
+      } else {
+        _actionFuntion();
+      }
     }
   }
 }());

@@ -109,27 +109,9 @@
             <md-divider></md-divider>
 
             <dynamic-data-table flex
-              headers="['Código', 'Tipo', 'Recipiente', 'Aliquotagem']"
-              elements-array="$ctrl.lot.aliquotList"
-              elements-properties="['code', 'label', 'containerLabel', 'aliquotCollectionData.time']"
-              callback-after-change="$ctrl.dynamicDataTableChange"
+              dynamic-table-settings="$ctrl.dynamicTableSettings"
               table-update-function="$ctrl.AliquotTransportationService.dynamicDataTableFunction.updateDataTable"
-
-              table-title="'Lista de Alíquotas'"
-              order-indices="[1,3,2,0]"
-              number-fields-aligned-left="10"
-
-              flex-array="[20, 40, 20,20]"
-              format-data=""
-              format-data-properties-array="['aliquotCollectionData.time']"
-              format-data-index-array="[]"
-
-              disable-checkbox="false"
-              disable-filter="false"
-              disable-reorder="false"
-              disable-pagination="false"
-              selected-color=""
-              hover-color="">
+            >
             </dynamic-data-table>
           </div>
         </div>
