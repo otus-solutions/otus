@@ -28,6 +28,7 @@
         _loadList();
       } else {
         _buildExamSending();
+        self.sendingExam.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
       }
 
       self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy');
@@ -43,7 +44,6 @@
 
     function _buildExamSending(){
       self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examResultLot, self.fileStructure.examResults);
-      self.sendingExam.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
     }
 
     function dynamicDataTableChange() { }
