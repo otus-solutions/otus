@@ -24,7 +24,6 @@
 
     self.$onInit = onInit;
     self.upload = upload;
-    // self.validateFile = validateFile;
 
     function onInit() {
       fr.onload = receivedText;
@@ -50,20 +49,15 @@
 
     function _validateFileToUpload(file){
       console.log(file);
-      if(!_typeIsValid(file.type)){
-
-      } else if (_structureIsValid()) {
-
+      if(_typeIsValid(file.type)){
+        return true;
+      } else {
+        _toastError();
       }
-      return true;
     }
 
     function _typeIsValid(type){
       return type == "application/json";
-    }
-
-    function _structureIsValid(results) {
-
     }
 
     function receivedText(e) {
@@ -74,11 +68,10 @@
       ApplicationStateService.activateExamResultsVisualizer();
     }
 
-
     function _toastError() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('Selecione um tipo de aliquota')
+          .textContent('Tipo invalido')
           .hideDelay(timeShowMsg)
       );
     }
