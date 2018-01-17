@@ -33,7 +33,7 @@
         self.sendingExam.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
       }
 
-      self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy');
+      self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy HH:mm');
     }
 
     function _loadList() {
