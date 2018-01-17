@@ -45,8 +45,8 @@
         result.forEach(function (fieldCenter) {
           self.centers.push(fieldCenter.acronym)
         });
-        _loadList();
         _setUserFieldCenter();
+        _loadList();
       });
       _buildDialogs();
     }
@@ -63,10 +63,11 @@
         .then(function (userData) {
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : ProjectContextService.getFieldCenterInSendingExam() ? ProjectContextService.getFieldCenterInSendingExam() : "";
-          ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
-          self.centerFilterSelectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
-          _loadList();
+          if(!self.centerFilter){
+            self.centerFilter = self.centers[0];
+          }
+          ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
         });
     }
 
