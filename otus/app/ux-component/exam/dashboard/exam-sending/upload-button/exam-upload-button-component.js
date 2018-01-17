@@ -48,7 +48,6 @@
     }
 
     function _validateFileToUpload(file){
-      console.log(file);
       if(_typeIsValid(file.type)){
         return true;
       } else {
@@ -57,7 +56,7 @@
     }
 
     function _typeIsValid(type){
-      return type == "application/json";
+      return type === "application/json";
     }
 
     function receivedText(e) {
@@ -71,7 +70,7 @@
     function _toastError() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('Tipo invalido')
+          .textContent('Arquivo invalido')
           .hideDelay(timeShowMsg)
       );
     }
