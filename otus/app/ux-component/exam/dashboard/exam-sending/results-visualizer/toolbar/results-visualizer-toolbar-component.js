@@ -34,6 +34,7 @@
     }
 
     function saveUpload() {
+      console.log(JSON.stringify(self.sendingExam));
       SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function (){
         ProjectContextService.clearFileStructure();
         ApplicationStateService.activateExamSending();

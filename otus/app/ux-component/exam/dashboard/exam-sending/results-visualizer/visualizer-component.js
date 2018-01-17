@@ -24,7 +24,9 @@
     function onInit() {
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
-      if(self.action === 'view'){
+      if (self.action === 'view') {
+        self.sendingExam = [];
+        self.sendingExam.examResults = [];
         _loadList();
       } else {
         _buildExamSending();
@@ -42,7 +44,7 @@
       });
     }
 
-    function _buildExamSending(){
+    function _buildExamSending() {
       self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examResultLot, self.fileStructure.examResults);
     }
 

@@ -48,15 +48,15 @@
       <md-content layout="column" flex>
         <dynamic-data-table flex
                             headers="['Data do envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
-                            elements-array="$ctrl.sendingList"
-                            elements-properties="['realizationDate', 'fileName', 'fieldCenter.acronym', 'resultsQuantity', 'operator']"
+                            elements-array="$ctrl.sendingList || []"
+                            elements-properties="['examResultLot.realizationDate', 'examResultLot.fileName', 'examResultLot.fieldCenter.acronym', 'examResultLot.resultsQuantity', 'examResultLot.operator']"
                             callback-after-change="$ctrl.dynamicDataTableChange"
                             table-update-function="$ctrl.updateDataTable"
                             order-indices="[0, 1, 2, 3, 4]"
                             number-fields-aligned-left="10"
                             flex-array="[10, 30, 15, 15, 20]"
                             format-data=""
-                            format-data-properties-array="['realizationDate']"
+                            format-data-properties-array="['examResultLot.realizationDate']"
                             disable-filter="true">
         </dynamic-data-table>
       </md-content>

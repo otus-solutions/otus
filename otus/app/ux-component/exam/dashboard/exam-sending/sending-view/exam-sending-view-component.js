@@ -119,7 +119,7 @@
       if (activityIndex > -1) {
         self.selectedSendings.splice(activityIndex, 1);
       } else {
-        self.selectedSendings.push(SendingExamService.loadExamSendingFromJson(send, {}));
+        self.selectedSendings.push(send);
       }
     }
 
@@ -138,12 +138,12 @@
       if (self.updateDataTable) self.updateDataTable(self.sendingList);
     }
 
-    function _filterByCenter(center) {
-      return center.fieldCenter.acronym === self.centerFilter;
+    function _filterByCenter(FilteredByCenter) {
+      return FilteredByCenter.examResultLot.fieldCenter.acronym === self.centerFilter;
     }
 
     function _filterByPeriod(FilteredByCenter) {
-      var formattedData = $filter('date')(FilteredByCenter.realizationDate, 'yyyyMMdd');
+      var formattedData = $filter('date')(FilteredByCenter.examResultLot.realizationDate, 'yyyyMMdd');
       if (self.realizationBeginFilter && self.realizationEndFilter) {
         var initialDateFormatted = $filter('date')(self.realizationBeginFilter, 'yyyyMMdd');
         var finalDateFormatted = $filter('date')(self.realizationEndFilter, 'yyyyMMdd');
@@ -165,9 +165,13 @@
     }
 
     function _loadList() {
+      self.sendingList = [];
+      self.listImmutable = [];
       SendingExamService.getSendedExams().then(function (response) {
-        self.sendingList = response;
-        self.listImmutable = response;
+        response.forEach(function(lot){
+          self.sendingList.push(SendingExamService.loadExamSendingFromJson(lot, {}));
+          self.listImmutable.push(SendingExamService.loadExamSendingFromJson(lot, {}));
+        });
         self.onFilter();
       });
     }
