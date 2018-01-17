@@ -32,7 +32,6 @@
       self.sendingExam.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
       self.fileStructure.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
       self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy');
-      // console.log(self.sendingExam);
     }
 
     function _loadList() {

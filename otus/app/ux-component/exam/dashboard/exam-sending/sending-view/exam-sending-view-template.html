@@ -1,66 +1,66 @@
 <div ui-view layout="row" flex>
   <md-content layout="column" flex>
-      <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
-          <div class="md-toolbar-tools md-hue-2">
-              <span flex>Lista de envio de exames</span>
-              <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Lote" ng-if="$ctrl.selectedSendings.length == 1"
-                  ng-click="$ctrl.examSendingView()">
-                  <md-tooltip md-direction="down">Vizualizar o envio</md-tooltip>
-                  <md-icon aria-label="Alterar Lote">information</md-icon>
-              </md-button>
-              <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-if="$ctrl.selectedSendings.length >= 1"
-                  ng-click="$ctrl.deleteSending()">
-                  <md-tooltip md-direction="down">Excluir o envio</md-tooltip>
-                  <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
-              </md-button>
-          </div>
-      </md-toolbar>
-      <div layout="row">
-          <div layout="column" flex>
-              <md-subheader class="md-no-sticky moment-type-title">
-                  Filtros de Pesquisa
-              </md-subheader>
-              <div layout="row" layout-xs="column" layout-align="center">
-                  <md-input-container class="remove-errors-spacer">
-                      <label>Período Inicial</label>
-                      <md-datepicker ng-model="$ctrl.realizationBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
-                  </md-input-container>
-                  <md-input-container class="remove-errors-spacer">
-                      <label>Período Fínal</label>
-                      <md-datepicker ng-model="$ctrl.realizationEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
-                  </md-input-container>
-                  <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
-                      <label class="md-subheader">Centro de envio:</label>
-                      <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
-                          <md-tooltip>
-                              Centro responsável pelo envio do exame
-                          </md-tooltip>
-                          <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}">
-                              {{center}}
-                          </md-option>
-                      </md-select>
-                  </md-input-container>
-              </div>
-          </div>
+    <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
+      <div class="md-toolbar-tools md-hue-2">
+        <span flex>Lista de envio de exames</span>
+        <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Lote" ng-if="$ctrl.selectedSendings.length == 1"
+                   ng-click="$ctrl.examSendingView()">
+          <md-tooltip md-direction="down">Vizualizar o envio</md-tooltip>
+          <md-icon aria-label="Alterar Lote">information</md-icon>
+        </md-button>
+        <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-if="$ctrl.selectedSendings.length >= 1"
+                   ng-click="$ctrl.deleteSending()">
+          <md-tooltip md-direction="down">Excluir o envio</md-tooltip>
+          <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
+        </md-button>
       </div>
-      <md-divider></md-divider>
+    </md-toolbar>
+    <div layout="row">
       <div layout="column" flex>
-          <md-content layout="column" flex>
-              <dynamic-data-table flex
-                  headers="['Data do envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
-                  elements-array="$ctrl.sendingList"
-                  elements-properties="['realizationDate', 'fileName', 'fieldCenter.acronym', 'resultsQuantity', 'operator']"
-                  callback-after-change="$ctrl.dynamicDataTableChange"
-                  table-update-function="$ctrl.updateDataTable"
-                  order-indices="[0, 1, 2, 3, 4]"
-                  number-fields-aligned-left="10"
-                  flex-array="[10, 30, 15, 15, 20]"
-                  format-data=""
-                  format-data-properties-array="['realizationDate']"
-                  disable-filter="true">
-              </dynamic-data-table>
-          </md-content>
+        <md-subheader class="md-no-sticky moment-type-title">
+          Filtros de Pesquisa
+        </md-subheader>
+        <div layout="row" layout-xs="column" layout-align="center">
+          <md-input-container class="remove-errors-spacer">
+            <label>Período Inicial</label>
+            <md-datepicker ng-model="$ctrl.realizationBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
+          </md-input-container>
+          <md-input-container class="remove-errors-spacer">
+            <label>Período Fínal</label>
+            <md-datepicker ng-model="$ctrl.realizationEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
+          </md-input-container>
+          <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+            <label class="md-subheader">Centro de envio:</label>
+            <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
+              <md-tooltip>
+                Centro responsável pelo envio do exame
+              </md-tooltip>
+              <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}">
+                {{center}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
       </div>
+    </div>
+    <md-divider></md-divider>
+    <div layout="column" flex>
+      <md-content layout="column" flex>
+        <dynamic-data-table flex
+                            headers="['Data do envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
+                            elements-array="$ctrl.sendingList"
+                            elements-properties="['realizationDate', 'fileName', 'fieldCenter.acronym', 'resultsQuantity', 'operator']"
+                            callback-after-change="$ctrl.dynamicDataTableChange"
+                            table-update-function="$ctrl.updateDataTable"
+                            order-indices="[0, 1, 2, 3, 4]"
+                            number-fields-aligned-left="10"
+                            flex-array="[10, 30, 15, 15, 20]"
+                            format-data=""
+                            format-data-properties-array="['realizationDate']"
+                            disable-filter="true">
+        </dynamic-data-table>
+      </md-content>
+    </div>
   </md-content>
   <otus-exam-upload-add-button></otus-exam-upload-add-button>
 </div>
