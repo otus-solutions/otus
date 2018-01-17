@@ -9,7 +9,7 @@
       bindings: {
         onLotDelete: '&',
         action: '<',
-        fileStructure: '<'
+        sendingExam: '<'
       }
     });
 
@@ -26,9 +26,7 @@
     self.cancelUpload = cancelUpload;
     self.saveUpload = saveUpload;
 
-    function onInit() {
-      console.log(JSON.stringify(self.fileStructure));
-    }
+    function onInit() {}
 
     function cancelUpload() {
       ProjectContextService.clearFileStructure();
@@ -36,7 +34,7 @@
     }
 
     function saveUpload() {
-      SendingExamService.createSendExam(JSON.stringify(self.fileStructure)).then(function (){
+      SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function (){
         ProjectContextService.clearFileStructure();
         ApplicationStateService.activateExamSending();
       });

@@ -1,7 +1,7 @@
 <div ui-view layout="column">
-  <otus-result-visualizer-manager-toolbar action="$ctrl.action" file-structure="$ctrl.fileStructure"></otus-result-visualizer-manager-toolbar>
-  <md-content layout="column" flex>
-    <md-card flex>
+  <otus-result-visualizer-manager-toolbar action="$ctrl.action" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
+  <md-content layout="column">
+    <md-card flex style="min-height: 150px">
       <md-card-title flex>
         <md-card-title-text>
           <span class="md-headline">Informações relacionadas ao arquivo que será enviado</span>
@@ -11,26 +11,21 @@
         <div layout="row" flex>
           <div layout="column" flex>
             <div layout="row">
-              <li>Data do envio:</li>
-              <p style="margin-left: 10px;">{{$ctrl.formattedDate}}</p>
+              <li>Data do envio: {{$ctrl.formattedDate}}</li>
             </div>
             <div layout="row">
-              <li>Nome do arquivo:</li>
-              <p style="margin-left: 10px;">{{$ctrl.sendingExam.examResultLot.fileName}}</p>
+              <li>Nome do arquivo: {{$ctrl.sendingExam.examResultLot.fileName}}</li>
             </div>
             <div layout="row">
-              <li>Centro de realização:</li>
-              <p style="margin-left: 10px;"></p>{{$ctrl.sendingExam.examResultLot.fieldCenter.acronym}}</p>
+              <li>Centro de realização: {{$ctrl.sendingExam.examResultLot.fieldCenter.acronym}}</li>
             </div>
           </div>
           <div layout="column" flex>
             <div layout="row">
-              <li>Quantidade de resultados:</li>
-              <p style="margin-left: 10px;">{{$ctrl.sendingExam.examResultLot.resultsQuantity}}</p>
+              <li>Quantidade de resultados: {{$ctrl.sendingExam.examResultLot.resultsQuantity}}</li>
             </div>
             <div layout="row">
-              <li>Operador responsável pelo envio do arquivo:</li>
-              <p style="margin-left: 10px;">{{$ctrl.sendingExam.examResultLot.operator}}</p>
+              <li>Operador: {{$ctrl.sendingExam.examResultLot.operator}}</li>
             </div>
           </div>
         </div>

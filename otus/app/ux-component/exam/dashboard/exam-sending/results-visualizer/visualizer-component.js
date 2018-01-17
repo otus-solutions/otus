@@ -26,19 +26,24 @@
       self.fileStructure = ProjectContextService.getFileStructure();
       if(self.action === 'view'){
         _loadList();
+      } else {
+        _buildExamSending();
       }
-      console.log(self.fileStructure);
-      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examResultLot, self.fileStructure.examResults);
-      self.sendingExam.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
-      self.fileStructure.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
+
       self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy');
     }
 
     function _loadList() {
       SendingExamService.getSendedExamById(self.fileStructure.examResultLot._id).then(function (response) {
         self.fileStructure.examResults = response;
+        _buildExamSending();
         self.updateDataTable(self.fileStructure.examResults);
       });
+    }
+
+    function _buildExamSending(){
+      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examResultLot, self.fileStructure.examResults);
+      self.sendingExam.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
     }
 
     function dynamicDataTableChange() { }
