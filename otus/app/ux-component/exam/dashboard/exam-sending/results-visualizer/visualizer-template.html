@@ -1,5 +1,7 @@
-<div ui-view flex>
+<div ui-view layout="column">
+
     <otus-result-visualizer-manager-toolbar action="$ctrl.action" file-structure="$ctrl.fileStructure"></otus-result-visualizer-manager-toolbar>
+  <md-content layout="column" flex>
     <md-card flex>
         <md-card-title flex>
             <md-card-title-text>
@@ -36,8 +38,7 @@
         </md-card-content>
     </md-card>
     <md-divider></md-divider>
-    <div layout="column" flex>
-        <md-content layout="column" flex>
+
             <dynamic-data-table flex
                 headers="['Codigo da aliquota', 'Nome do exame', 'Nome do resultado', 'Valor do resultado', 'Data de realização']"
                 elements-array="$ctrl.sendingExam.examResults"
@@ -53,6 +54,6 @@
                 disable-pagination="true"
                 disable-checkbox="true">
             </dynamic-data-table>
-        </md-content>
-    </div>
+
+  </md-content>
 </div>
