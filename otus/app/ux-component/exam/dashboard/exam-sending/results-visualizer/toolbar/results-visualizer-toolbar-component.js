@@ -21,8 +21,9 @@
   ];
 
   function Controller($mdDialog, SendingExamService, ProjectContextService, ApplicationStateService) {
+    const ALIQUOT_NOT_FOUND_BACKEND_MESSAGE = "Data Validation Fail: Aliquots not found";
     var self = this;
-    var _AliquotsNotFound;
+    var aliquotsNotFound;
 
     self.$onInit = onInit;
     self.cancelUpload = cancelUpload;
@@ -42,12 +43,21 @@
         ProjectContextService.clearFileStructure();
         ApplicationStateService.activateExamSending();
       },function (reason) {
-        _AliquotsNotFound.textContent(
-          'Aliquota(s): '
-          + _convertArrayToStringIncludesLastPosition(reason.data.CONTENT,' e ')
-          + ' não encontrada(s) no sistema '
-        );
-        $mdDialog.show(_AliquotsNotFound).then(function() {});
+        console.log(reason);
+        if(reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE){
+          aliquotsNotFound
+          .title('Aliquota(s) não encontrada(s)')
+          .textContent(
+            'A(s) seguinte(s) aliquota(s) não existe(m) no sistema: '
+            + _convertArrayToStringIncludesLastPosition(reason.data.CONTENT,' e ')
+            + '.'
+          );
+        } else {
+          aliquotsNotFound
+          .title('Falha no envio do arquivo')
+          .textContent('Ocorreu algum problema ao enviar os resultados.');
+        }
+        $mdDialog.show(aliquotsNotFound).then(function() {});
       });
     }
 
@@ -69,8 +79,7 @@
     }
 
     function _buildDialogs() {
-      _AliquotsNotFound = $mdDialog.confirm()
-        .title('Aliquota(s) não encontradas')
+      aliquotsNotFound = $mdDialog.confirm()
         .ariaLabel('Confirmação de cancelamento')
         .ok('Ok');
     }
