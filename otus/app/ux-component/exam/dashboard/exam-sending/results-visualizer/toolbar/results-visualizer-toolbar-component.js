@@ -79,7 +79,7 @@
     }
 
     function _buildDialogs() {
-      aliquotsNotFound = $mdDialog.confirm()
+      aliquotsNotFound = $mdDialog.alert()
         .ariaLabel('Confirmação de cancelamento')
         .ok('Ok');
     }
