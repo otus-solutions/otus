@@ -1,4 +1,4 @@
-<div ui-view layout="column">
+<div ui-view layout="column" ng-if="$ctrl.fileStructure">
   <otus-result-visualizer-manager-toolbar action="$ctrl.action" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
   <md-content layout="column">
     <md-card flex style="min-height: 150px">
@@ -48,4 +48,7 @@
                         disable-checkbox="true">
     </dynamic-data-table>
   </md-content>
+</div>
+<div layout="column" layout-align="center center">
+  <img src="app/static-resource/image/otus-crash.png" ng-if="!$ctrl.fileStructure" flex>
 </div>

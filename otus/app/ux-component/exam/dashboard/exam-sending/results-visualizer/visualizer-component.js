@@ -9,31 +9,39 @@
     });
 
   Controller.$inject = [
+    '$mdDialog',
     '$filter',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.laboratory.business.project.sending.SendingExamService'
   ];
 
-  function Controller($filter, ApplicationStateService, ProjectContextService, SendingExamService) {
+  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, SendingExamService) {
     var self = this;
+    var therIsNoDataToShow;
 
     self.$onInit = onInit;
     self.dynamicDataTableChange = dynamicDataTableChange;
 
     function onInit() {
+      _buildDialogs();
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
-      if (self.action === 'view') {
-        self.sendingExam = [];
-        self.sendingExam.examResults = [];
-        _loadList();
+      if(!self.fileStructure){
+        $mdDialog.show(therIsNoDataToShow).then(function() {
+          ApplicationStateService.activateExamSending();
+        });
       } else {
-        _buildExamSending();
-        self.sendingExam.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
+        if (self.action === 'view') {
+          self.sendingExam = [];
+          self.sendingExam.examResults = [];
+          _loadList();
+        } else {
+          _buildExamSending();
+          self.sendingExam.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
+        }
+        self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy HH:mm');
       }
-
-      self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy HH:mm');
     }
 
     function _loadList() {
@@ -50,5 +58,12 @@
 
     function dynamicDataTableChange() { }
 
+    function _buildDialogs() {
+      therIsNoDataToShow = $mdDialog.alert()
+        .title('Erro ao entrar na tela de visualização de resultados')
+        .textContent('Para acessar a tela de visualização de resultados você deve enviar um novo arquivo ou selecionar algum envio anterior.')
+        .ariaLabel('erro')
+        .ok('Ok');
+    }
   }
 }());

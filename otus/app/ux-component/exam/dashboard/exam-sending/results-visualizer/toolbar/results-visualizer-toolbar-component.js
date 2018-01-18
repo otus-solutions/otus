@@ -69,7 +69,7 @@
     }
 
     function _buildDialogs() {
-      _AliquotsNotFound = $mdDialog.confirm()
+      _AliquotsNotFound = $mdDialog.alert()
         .title('Aliquota(s) não encontradas')
         .ariaLabel('Confirmação de cancelamento')
         .ok('Ok');
