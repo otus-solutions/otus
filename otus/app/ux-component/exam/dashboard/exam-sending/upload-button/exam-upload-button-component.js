@@ -61,10 +61,33 @@
 
     function receivedText(e) {
       var lines = e.target.result;
-      self.fileData.examResults = JSON.parse(lines);
-      ProjectContextService.setFileStructure(self.fileData);
-      self.action = ProjectContextService.setExamSendingAction('upload');
-      ApplicationStateService.activateExamResultsVisualizer();
+      if(!_fileIsEmpty(lines)){
+        self.fileData.examResults = JSON.parse(lines);
+        ProjectContextService.setFileStructure(self.fileData);
+        self.action = ProjectContextService.setExamSendingAction('upload');
+        ApplicationStateService.activateExamResultsVisualizer();
+      } else {
+        self.input[0].value='';
+        _toastEmptyFile();
+      }
+    }
+
+    function _fileIsEmpty(lines){
+      if(!lines){
+        return true;
+      } else if(!JSON.parse(lines).length){
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function _toastEmptyFile() {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('O arquivo esta vazio')
+          .hideDelay(timeShowMsg)
+      );
     }
 
     function _toastError() {

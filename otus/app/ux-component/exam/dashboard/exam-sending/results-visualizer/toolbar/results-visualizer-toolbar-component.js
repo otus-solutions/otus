@@ -22,6 +22,7 @@
 
   function Controller($mdDialog, SendingExamService, ProjectContextService, ApplicationStateService) {
     const ALIQUOT_NOT_FOUND_BACKEND_MESSAGE = "Data Validation Fail: Aliquots not found";
+    const EMPTY_LOT_BACKEND_MESSAGE = "Data Validation Fail: Empty Lot";
     var self = this;
     var aliquotsNotFound;
 
@@ -51,6 +52,12 @@
             + _convertArrayToStringIncludesLastPosition(reason.data.CONTENT,' e ')
             + '.'
           );
+        }else if(reason.data.MESSAGE === EMPTY_LOT_BACKEND_MESSAGE){
+          aliquotsNotFound
+            .title('O lote não possue resultados')
+            .textContent(
+              'Um lote vazio não pode ser enviado.'
+            );
         } else {
           aliquotsNotFound
           .title('Falha no envio do arquivo')
