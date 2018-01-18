@@ -43,7 +43,6 @@
         ProjectContextService.clearFileStructure();
         ApplicationStateService.activateExamSending();
       },function (reason) {
-        console.log(reason);
         if(reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE){
           aliquotsNotFound
           .title('Aliquota(s) não encontrada(s)')
