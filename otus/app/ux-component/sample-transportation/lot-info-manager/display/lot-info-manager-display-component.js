@@ -22,16 +22,18 @@
     '$mdDialog',
     '$mdToast',
     '$filter',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
+    'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+    'otusjs.otus.uxComponent.DynamicTableSettingsFactory'
   ];
 
-  function Controller($mdDialog, $mdToast, $filter, AliquotTransportationService) {
+  function Controller($mdDialog, $mdToast, $filter, AliquotTransportationService, DynamicTableSettingsFactory) {
     var self = this;
 
     const timeShowMsg = 3000;
 
     self.$onInit = onInit;
 
+    self.dynamicTableSettings;
     self.currentNavItem = "insertionByPeriod";
     self.changeNavItem = changeNavItem;
 
@@ -41,6 +43,7 @@
     self.insertAliquotsByPeriod = insertAliquotsByPeriod;
     self.periodInputkeydown = periodInputkeydown;
     self.dynamicDataTableChange = dynamicDataTableChange;
+    self.removeElement = removeElement;
 
     var _confirmAliquotsInsertionByPeriod;
 
@@ -58,6 +61,63 @@
       self.initialDate = new Date();
       self.finalDate = new Date();
       _buildDialogs();
+
+      _buildDynamicTableSettings();
+    }
+
+
+    function _buildDynamicTableSettings(){      
+      self.dynamicTableSettings = DynamicTableSettingsFactory.create()
+      //header, flex, align, ordinationPriorityIndex
+      .addHeader('Código', '20', 'left', 4)
+      //property, formatType
+      .addColumnProperty('code')
+
+      //header, flex, align, ordinationPriorityIndex
+      .addHeader('Tipo', '30', '', 1)
+      //property, formatType
+      .addColumnProperty('label')
+
+      //header, flex, align, ordinationPriorityIndex
+      .addHeader('Recipiente', '20', '', 3)
+      //property, formatType
+      .addColumnProperty('containerLabel')
+
+      //header, flex, align, ordinationPriorityIndex
+      .addHeader('Aliquotagem', '20', '', 2)
+      //property, formatType
+      .addColumnProperty('aliquotCollectionData.time', 'DATE')
+
+      //icon, tooltip, classButton, successMsg,
+      //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
+      .addColumnIconButton(
+        'delete_forever', 'Remover Alíquota', '', 'A Alíquota foi removida',
+        self.removeElement, false, false, true, false, false
+      )
+            
+      .setElementsArray(self.lot.aliquotList)
+      .setTitle('Lista de Arquivos')
+      .setCallbackAfterChange(self.dynamicDataTableChange)
+      //Don't use with Service, in this case pass Service as attribute in the template
+      // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
+      /*
+        //Optional Config's
+        .setFormatData("'Dia - 'dd/MM/yy")
+        .setCheckbox(false)
+        .setFilter(true)
+        .setReorder(true)
+        .setPagination(true)
+        .setSelectedColor()
+        .setHoverColor()
+        
+      */    
+      .getSettings();
+    }
+
+    function removeElement(element){
+      _unselectedAllAliquot();
+      var aliquotIndex = self.lot.aliquotList.indexOf(element);
+      self.lot.removeAliquotByIndex(aliquotIndex);
     }
 
     function _buildDialogs() {
@@ -158,6 +218,13 @@
       }
     }
 
+    function _unselectedAllAliquot(){
+      self.selectedAliquots = [];
+      
+      self.lot.aliquotList.forEach(function(aliquot){
+        aliquot.isSelected = false;
+      });
+    }
 
     function selectAliquot(aliquot) {
       var aliquotIndex = self.selectedAliquots.indexOf(aliquot);

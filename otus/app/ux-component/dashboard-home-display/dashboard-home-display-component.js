@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -11,29 +11,38 @@
   Controller.$inject = [
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.otus.dashboard.core.EventService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.laboratory.core.project.ContextService',
+    'STATE'
   ];
 
-  function Controller(ContextService, EventService, ApplicationStateService) {
+  function Controller(ContextService, EventService, ApplicationStateService, ProjectContextService, STATE) {
     var self = this;
-    self.sampleTransportDashboard = sampleTransportDashboard;
-    self.ExamsLotDashboard = ExamsLotDashboard;
     self.setFocus = setFocus;
+    self.sampleTransportDashboard = sampleTransportDashboard;
+    self.ExamsDashboard = ExamsDashboard;
+    self.sendingExam = sendingExam;
     self.$onInit = onInit;
 
     /* Public methods */
+    function setFocus() {
+      setTimeout(function () {
+        document.querySelector('#participantSearchAutoCompleteId').focus();
+      }, 0);
+    }
+
     function sampleTransportDashboard() {
       ApplicationStateService.activateSampleTransportation();
     }
 
-    function ExamsLotDashboard() {
-      ApplicationStateService.activateExamsLotsDashBoard();
+    function ExamsDashboard() {
+      ProjectContextService.setStateToGo(STATE.EXAM_LOT_MANAGER_LIST);
+      ApplicationStateService.activateExamsDashBoard();
     }
 
-    function setFocus() {
-      setTimeout(function() {
-        document.querySelector('#participantSearchAutoCompleteId').focus();
-      }, 0);
+    function sendingExam() {
+      ProjectContextService.setStateToGo(STATE.EXAM_SENDING);
+      ApplicationStateService.activateExamSending();
     }
 
     function onInit() {
@@ -47,7 +56,7 @@
       } else {
         ContextService
           .getLoggedUser()
-          .then(function(userData) {
+          .then(function (userData) {
             self.loggedUser = userData;
           });
       }

@@ -2,7 +2,7 @@
  * ProjectRemoteStorageService
  * @namespace Services
  */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -33,6 +33,10 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.getSendedExamById = getSendedExamById;
+    self.getSendedExams = getSendedExams;
+    self.createSendExam = createSendExam;
+    self.deleteSendedExams = deleteSendedExams;
 
     /**
      * Exam Lot
@@ -44,7 +48,7 @@
 
       ExamsRestService
         .getLots()
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
         });
 
@@ -61,10 +65,10 @@
       var deferred = $q.defer();
       ExamsRestService
         .createLot(lotStructure)
-        .then(function(response){
+        .then(function (response) {
           deferred.resolve(response.data);
         })
-        .catch(function(e){
+        .catch(function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
@@ -80,10 +84,10 @@
       var deferred = $q.defer();
       ExamsRestService
         .updateLot(lotStructure)
-        .then(function(response){
+        .then(function (response) {
           deferred.resolve(response.data);
         })
-        .catch(function(e){
+        .catch(function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
@@ -99,10 +103,85 @@
       var deferred = $q.defer();
       ExamsRestService
         .deleteLot(lotCode)
-        .then(function(response){
+        .then(function (response) {
           deferred.resolve(response.data);
         })
-        .catch(function(e){
+        .catch(function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    /* sending exam */
+
+    /**
+     * get sended exams
+     * @returns {Promise} promise
+     * @memberof ProjectRemoteStorageService
+     */
+    function getSendedExamById(id) {
+      var deferred = $q.defer();
+
+      ExamsRestService
+        .getSendedExamById(id)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        });
+
+      return deferred.promise;
+    }
+
+    /**
+     * get sended exams
+     * @returns {Promise} promise
+     * @memberof ProjectRemoteStorageService
+     */
+    function getSendedExams() {
+      var deferred = $q.defer();
+      ExamsRestService
+        .getSendedExams()
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    /**
+     * Create send exam
+     * @param {(object)} sendStructure - the structure of lof
+     * @returns {Promise} promise
+     * @memberof ProjectRemoteStorageService
+     */
+    function createSendExam(sendStructure) {
+      var deferred = $q.defer();
+      ExamsRestService
+        .createSendExam(sendStructure)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    /**
+     * Delete sended exams
+     * @param {(object)} sendedCode - the code of lot
+     * @returns {Promise} promise
+     * @memberof ProjectRemoteStorageService
+     */
+    function deleteSendedExams(sendedCode) {
+      var deferred = $q.defer();
+      ExamsRestService
+        .deleteSendedExams(sendedCode)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
