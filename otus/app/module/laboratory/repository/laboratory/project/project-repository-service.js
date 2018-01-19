@@ -71,12 +71,12 @@
       return ProjectCollectionService.getSendedExams();
     }
 
-    function createSendExam(SendStructure) {
-      return ProjectCollectionService.createSendExam(SendStructure);
+    function createSendExam(sendStructure) {
+      return ProjectCollectionService.createSendExam(sendStructure);
     }
 
-    function deleteSendedExams(SendedExamCode) {
-      return ProjectCollectionService.deleteSendedExams(SendedExamCode);
+    function deleteSendedExams(sendedExamCode) {
+      return ProjectCollectionService.deleteSendedExams(sendedExamCode);
     }
   }
 }());

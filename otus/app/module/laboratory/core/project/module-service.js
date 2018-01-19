@@ -16,7 +16,6 @@
     var _currentUser;
 
     self.RemoteStorage = {};
-    self.DataSource = {};
 
     /* Public methods */
     self.configureContext = configureContext;

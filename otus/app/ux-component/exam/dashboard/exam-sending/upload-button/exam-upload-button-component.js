@@ -85,7 +85,7 @@
     function _toastEmptyFile() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('O arquivo esta vazio')
+          .textContent('O arquivo está vazio')
           .hideDelay(timeShowMsg)
       );
     }
@@ -93,7 +93,7 @@
     function _toastError() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('Arquivo invalido')
+          .textContent('Arquivo inválido')
           .hideDelay(timeShowMsg)
       );
     }

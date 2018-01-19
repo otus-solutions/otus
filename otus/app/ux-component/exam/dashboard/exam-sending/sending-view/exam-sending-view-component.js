@@ -128,8 +128,8 @@
       _setSessionData();
       if (self.listImmutable.length) {
         self.sendingList = self.listImmutable
-          .filter(function (FilteredByCenter) {
-            return _filterByCenter(FilteredByCenter);
+          .filter(function (filteredByCenter) {
+            return _filterByCenter(filteredByCenter);
           })
           .filter(function (filteredByPeriod) {
             return _filterByPeriod(filteredByPeriod);
@@ -138,29 +138,29 @@
       if (self.updateDataTable) self.updateDataTable(self.sendingList);
     }
 
-    function _filterByCenter(FilteredByCenter) {
-      return FilteredByCenter.examResultLot.fieldCenter.acronym === self.centerFilter;
+    function _filterByCenter(filteredByCenter) {
+      return filteredByCenter.examResultLot.fieldCenter.acronym === self.centerFilter;
     }
 
-    function _filterByPeriod(FilteredByCenter) {
-      var formattedData = $filter('date')(FilteredByCenter.examResultLot.realizationDate, 'yyyyMMdd');
+    function _filterByPeriod(filteredByCenter) {
+      var formattedData = $filter('date')(filteredByCenter.examResultLot.realizationDate, 'yyyyMMdd');
       if (self.realizationBeginFilter && self.realizationEndFilter) {
         var initialDateFormatted = $filter('date')(self.realizationBeginFilter, 'yyyyMMdd');
         var finalDateFormatted = $filter('date')(self.realizationEndFilter, 'yyyyMMdd');
         if (initialDateFormatted <= finalDateFormatted) {
           return (formattedData >= initialDateFormatted && formattedData <= finalDateFormatted);
         } else {
-          var msgDataInvalida = "Filtro de datas com intervalo invalido";
+          var msgDataInvalida = "Filtro de datas com intervalo inválido";
 
           $mdToast.show(
             $mdToast.simple()
               .textContent(msgDataInvalida)
               .hideDelay(3000)
           );
-          return FilteredByCenter;
+          return filteredByCenter;
         }
       } else {
-        return FilteredByCenter;
+        return filteredByCenter;
       }
     }
 

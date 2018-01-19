@@ -1,5 +1,5 @@
 /**
- * LaboratoryCollectionService
+ * ProjectCollectionService
  * @namespace Services
  */
 (function () {
@@ -15,18 +15,15 @@
   ];
 
   /**
-   * LaboratoryCollectionService represents to application the activity collection. It abstracts to
-   * other layers the storage implementation. Currently, are two storages wrapped in this service: a
-   * remote storage and a local storage. Basically the oprations workflow is try to send/retrieve data
-   * from remote storage and after the same operation is done into local storage.
-   * @namespace LaboratoryCollectionService
+   * ProjectCollectionService represents to application the activity collection. It abstracts to
+   * other layers the storage implementation.
+   * @namespace ProjectCollectionService
    * @memberof Services
    */
   function Service($q, ModuleService) {
     var self = this;
     var _remoteStorage = ModuleService.getLaboratoryRemoteStorage();
-    var _prjectRemoteStorage = ModuleService.getProjectRemoteStorage();
-    var _participant = null;
+    var _projectRemoteStorage = ModuleService.getProjectRemoteStorage();
 
     //Laboratory Project Public Methods
     self.getAliquots = getAliquots;
@@ -115,7 +112,7 @@
     function getLots() {
       var request = $q.defer();
 
-      _prjectRemoteStorage
+      _projectRemoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
@@ -136,7 +133,7 @@
     function createLot(lotStructure) {
       var request = $q.defer();
 
-      _prjectRemoteStorage
+      _projectRemoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           remoteStorage
@@ -160,7 +157,7 @@
     function updateLot(lotStructure) {
       var request = $q.defer();
 
-      _prjectRemoteStorage
+      _projectRemoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           remoteStorage
@@ -184,7 +181,7 @@
     function deleteLot(lotCode) {
       var request = $q.defer();
 
-      _prjectRemoteStorage
+      _projectRemoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           remoteStorage
@@ -210,7 +207,7 @@
     function getSendedExamById(id) {
       var request = $q.defer();
 
-      _prjectRemoteStorage
+      _projectRemoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
@@ -231,7 +228,7 @@
     function getSendedExams() {
       var request = $q.defer();
 
-      _prjectRemoteStorage
+      _projectRemoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
@@ -252,7 +249,7 @@
     function createSendExam(sendStructure) {
       var request = $q.defer();
 
-      _prjectRemoteStorage
+      _projectRemoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           remoteStorage
@@ -276,7 +273,7 @@
     function deleteSendedExams(sendedExamCode) {
       var request = $q.defer();
 
-      _prjectRemoteStorage
+      _projectRemoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           remoteStorage
