@@ -28,8 +28,6 @@
     self.settings = {
       elementsArray: [],
       elementsProperties: [],
-      errorArray: [],
-      propertyToValidateStatus: undefined,
       headers: [],
       callbackAfterChange: undefined,
       tableUpdateFunction: undefined,
@@ -39,6 +37,7 @@
       flexArray: [],
       alignArray: [],
       formatData: undefined,
+      IconWithFunction: undefined,
       selectUnselectFunction: undefined,
       formatDataPropertiesArray: [],
       formatDataIndexArray: [],
@@ -71,15 +70,25 @@
     self.setPagination = setPagination;
     self.setSelectedColor = setSelectedColor;
     self.setHoverColor = setHoverColor;
-    self.setPropertyToValidateStatus = setPropertyToValidateStatus;
-    self.setStatusArray = setStatusArray;
 
     self.addHeader = addHeader;
     self.addColumnProperty = addColumnProperty;
     self.addColumnIconButton = addColumnIconButton;
-    self.addStatusColumn = addStatusColumn;
+    self.addIconWithFunction = addIconWithFunction;
 
     function setProperty() {
+      return self;
+    }
+
+    function addIconWithFunction(validate){
+      self.settings.elementsProperties.push(
+        {
+          iconWithFunction: {
+            iconFunction: validate || function(){}
+          }
+        }
+      );
+      _addEmptyHeaderIfNeed('10','center');
       return self;
     }
 
@@ -119,18 +128,6 @@
       return self;
     }
 
-    function setPropertyToValidateStatus(property) {
-
-      self.settings.propertyToValidateStatus = property;
-
-      return self;
-    }
-
-    function setStatusArray(statusArray) {
-      self.errorArray = statusArray;
-      return self;
-    }
-
     function addColumnProperty(property, formatType) {
       self.settings.elementsProperties.push(
         property || ''
@@ -167,31 +164,6 @@
         }
       );
       _addEmptyHeaderIfNeed('10','center');
-      return self;
-    }
-
-    function addStatusColumn(header, flex, align) {
-      self.addHeader(header, flex, align);
-      _addStatusDefaultIcon();
-      return self;
-    }
-
-    function _addStatusDefaultIcon(icon, tooltip, classButton) {
-      self.settings.elementsProperties.push(
-        {
-          iconSuccess: {
-            icon: icon || 'done',
-            tooltip: tooltip || 'ok',
-            classButton: classButton || 'md-primary'
-          },
-          iconError: {
-            icon: icon || 'warning',
-            tooltip: tooltip || 'fail',
-            classButton: classButton || 'md-warn'
-          }
-        }
-      );
-
       return self;
     }
 

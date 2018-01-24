@@ -11,6 +11,7 @@
         sendingExam: '<',
         onLotDelete: '&',
         errorAliquots: '=',
+        buildDynamicTableSettings: '&',
         dynamicDataTableChange: '&'
       }
     });
@@ -66,7 +67,9 @@
           .title('Falha no envio do arquivo')
           .textContent('Ocorreu algum problema ao enviar os resultados.');
         }
-        $mdDialog.show(aliquotsNotFound).then(function() { self.dynamicDataTableChange(); });
+        $mdDialog.show(aliquotsNotFound).then(function() {
+          self.dynamicDataTableChange();
+        });
       });
     }
 

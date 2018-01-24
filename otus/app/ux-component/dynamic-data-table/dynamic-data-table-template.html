@@ -199,14 +199,9 @@
             {{column.value}}
           </span>
 
-          <div ng-if="!row.hasError && column.specialField && column.specialField.iconSuccess">
-            <md-tooltip ng-if="column.specialField.iconSuccess.tooltip">{{column.specialField.iconSuccess.tooltip}}</md-tooltip>
-            <md-icon class=" material-icons {{column.specialField.iconSuccess.classButton}}">{{column.specialField.iconSuccess.icon}}</md-icon>
-          </div>
-
-          <div ng-if="row.hasError && column.specialField && column.specialField.iconError">
-            <md-tooltip ng-if="column.specialField.iconError.tooltip">{{column.specialField.iconError.tooltip}}</md-tooltip>
-            <md-icon class=" material-icons {{column.specialField.iconError.classButton}}">{{column.specialField.iconError.icon}}</md-icon>
+          <div ng-if="column.specialField && column.specialField.iconStructure">
+            <md-tooltip ng-if="column.specialField.iconStructure.tooltip">{{column.specialField.iconStructure.tooltip}}</md-tooltip>
+            <md-icon class=" material-icons {{column.specialField.iconStructure.class}}">{{column.specialField.iconStructure.icon}}</md-icon>
           </div>
 
           <md-button ng-if="column.specialField && column.specialField.iconButton"
