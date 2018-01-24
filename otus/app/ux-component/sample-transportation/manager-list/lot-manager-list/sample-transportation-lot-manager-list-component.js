@@ -20,18 +20,20 @@
     '$mdToast',
     'otusjs.laboratory.core.ContextService',
     'otusjs.otus.dashboard.core.ContextService',
-    '$filter'
+    '$filter',
+    'otusjs.deploy.model.AliquotFacadeService'
   ];
 
-  function Controller(ProjectFieldCenterService,AliquotTransportationService,$mdToast,laboratoryContextService,dashboardContextService,$filter) {
+  function Controller(ProjectFieldCenterService, AliquotTransportationService, $mdToast, laboratoryContextService, dashboardContextService, $filter, AliquotFacadeService) {
     var self = this;
 
     //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
-    var color = ["#F44336","#E91E63","#9C27B0","#673AB7","#3F51B5","#2196F3",
-                "#03A9F4","#00BCD4","#009688","#4CAF50","#8BC34A","#CDDC39",
-                "#FFEB3B","#FFC107","#FF9800","#FF5722","#795548","#9E9E9E",
-                "#9E9E9E","#000000","#B71C1C","#880E4F","#4A148C","#311B92",
-                "#1A237E","#0D47A1","#01579B","#006064","#004D40","#1B5E20"];
+    var color = ["#F44336", "#E91E63", "#9C27B0", "#673AB7", "#3F51B5", "#2196F3",
+      "#03A9F4", "#00BCD4", "#009688", "#4CAF50", "#8BC34A", "#CDDC39",
+      "#FFEB3B", "#FFC107", "#FF9800", "#FF5722", "#795548", "#9E9E9E",
+      "#9E9E9E", "#000000", "#B71C1C", "#880E4F", "#4A148C", "#311B92",
+      "#1A237E", "#0D47A1", "#01579B", "#006064", "#004D40", "#1B5E20"
+    ];
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -48,8 +50,9 @@
     self.lotsListImutable = [];
 
     self.showMore = showMore;
-    function showMore(){
-      self.show+= self.limit;
+
+    function showMore() {
+      self.show += self.limit;
 
     }
     /* Public methods */
@@ -58,11 +61,11 @@
     self.onFilter = onFilter;
 
     function onInit() {
-      ProjectFieldCenterService.loadCenters().then(function (result) {
+      ProjectFieldCenterService.loadCenters().then(function(result) {
         self.lotDataSet = [];
         self.colorSet = [];
         self.centers = $filter('orderBy')(self.centers);
-        result.forEach(function (fieldCenter) {
+        result.forEach(function(fieldCenter) {
           self.centers.push(fieldCenter.acronym)
         });
         _LoadLotsList();
@@ -106,31 +109,31 @@
       });
     }
 
-    function onFilter(){
+    function onFilter() {
       self.selectedLots = [];
       self.show = self.limit;
       laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
-      if(self.lotsListImutable.length) {
-        self.lotsList = self.lotsListImutable.filter(function (lot) {
+      if (self.lotsListImutable.length) {
+        self.lotsList = self.lotsListImutable.filter(function(lot) {
           if (self.centerFilter.length) {
             return lot.fieldCenter.acronym == self.centerFilter;
           } else {
             return lot;
           }
-        }).filter(function (FilteredByCenter) {
+        }).filter(function(FilteredByCenter) {
           var lotFormatedData = $filter('date')(FilteredByCenter.shipmentDate, 'yyyyMMdd');
           if (self.shipmentBeginFilter && self.shipmentEndFilter) {
             var initialDateFormated = $filter('date')(self.shipmentBeginFilter, 'yyyyMMdd');
             var finalDateFormated = $filter('date')(self.shipmentEndFilter, 'yyyyMMdd');
-            if(initialDateFormated <= finalDateFormated){
+            if (initialDateFormated <= finalDateFormated) {
               return (lotFormatedData >= initialDateFormated && lotFormatedData <= finalDateFormated);
-            }else{
+            } else {
               var msgDataInvalida = "Datas invalidas";
 
               $mdToast.show(
                 $mdToast.simple()
-                  .textContent(msgDataInvalida)
-                  .hideDelay(4000)
+                .textContent(msgDataInvalida)
+                .hideDelay(4000)
               );
               return FilteredByCenter;
             }
@@ -141,40 +144,51 @@
         _setChartData();
       }
     }
-
+    // TODO: Realizar calculo do model
     function _setChartData() {
       self.lotDataSet = [];
-      self.lotsList.forEach(function (lot) {
-        lot.isSelected = false;
-        var labelsCount = {};
-
-        var dataSet = [];
-        dataSet.backgroundColor = [];
-        dataSet.data = [];
-        dataSet.labels = [];
-        dataSet.fieldCenter = lot.fieldCenter;
-        dataSet.chartId = lot.code;
-
-        lot.aliquotList.forEach(function (aliquot) {
-          if(labelsCount[aliquot.label]){
-            labelsCount[aliquot.label] = labelsCount[aliquot.label]  + 1;
-          } else {
-            labelsCount[aliquot.label] = 1;
-            dataSet.labels.push(aliquot.label);
-          }
-          if(!self.colorSet[aliquot.label]){
-            self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length];
-          }
-        });
-
-        for(var key in labelsCount) {
-          dataSet.data.push(labelsCount[key]);
-          dataSet.backgroundColor.push(self.colorSet[key]);
-        }
-
+      AliquotFacadeService.setLotsList(self.lotsList);
+      var _lots = AliquotFacadeService.getChartData();
+      _lots.then(function(dataSet) {
         self.lotDataSet.push(dataSet);
       });
 
     }
+
+    //TODO: remover
+    // function _setChartData() {
+    //   self.lotDataSet = [];
+    //   self.lotsList.forEach(function (lot) {
+    //     lot.isSelected = false;
+    //     var labelsCount = {};
+    //
+    //     var dataSet = [];
+    //     dataSet.backgroundColor = [];
+    //     dataSet.data = [];
+    //     dataSet.labels = [];
+    //     dataSet.fieldCenter = lot.fieldCenter;
+    //     dataSet.chartId = lot.code;
+    //
+    //     lot.aliquotList.forEach(function (aliquot) {
+    //       if(labelsCount[aliquot.label]){
+    //         labelsCount[aliquot.label] = labelsCount[aliquot.label]  + 1;
+    //       } else {
+    //         labelsCount[aliquot.label] = 1;
+    //         dataSet.labels.push(aliquot.label);
+    //       }
+    //       if(!self.colorSet[aliquot.label]){
+    //         self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length];
+    //       }
+    //     });
+    //
+    //     for(var key in labelsCount) {
+    //       dataSet.data.push(labelsCount[key]);
+    //       dataSet.backgroundColor.push(self.colorSet[key]);
+    //     }
+    //
+    //     self.lotDataSet.push(dataSet);
+    //   });
+    //
+    // }
   }
 }());
