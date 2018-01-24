@@ -8,6 +8,7 @@
       bindings: {
         headers: '<',
         elementsArray: '=?',
+        elementsErrorArray: '<?',
         elementsProperties: '<',
         callbackAfterChange: '=?',
         tableUpdateFunction: '=?',
@@ -135,6 +136,8 @@
         self.rowsPerPageArray = _settings.rowsPerPageArray;
         self.rowPerPageDefault = _settings.rowPerPageDefault;
         self.hideDelayTime = _settings.hideDelayTime;
+        self.propertyToValidateStatus = _settings.propertyToValidateStatus;
+        console.log(_settings);
       }
 
       // if(!self.numberFieldsAlignedLeft) self.numberFieldsAlignedLeft = 1;
@@ -142,6 +145,8 @@
       if (!self.flexArray) self.flexArray = [];
       if (!self.alignArray) self.alignArray = [];
       if (!self.hoverColor) self.hoverColor = '#EEEEEE';
+      if (!self.errorColor) self.errorColor = '#ff6666';
+      if (!self.errorColorHover) self.errorColorHover = '#84020b';
       if (!self.selectedColor) self.selectedColor = '#F5F5F5';
       if (!self.rowsPerPageArray) self.rowsPerPageArray = [10, 25, 50, 100, 250, 500, 1000];
       if (!self.rowPerPageDefault) self.rowPerPageDefault = self.rowsPerPageArray.length >= 2 ? self.rowsPerPageArray[2] : self.rowsPerPageArray[0];
@@ -150,8 +155,8 @@
       if (!self.formatDataIndexArray) self.formatDataIndexArray = [];
       if (!self.formatDataPropertiesArray) self.formatDataPropertiesArray = [];
       if (!self.hideDelayTime) self.hideDelayTime = 3000;
-      if (!self.callbackAfterChange) self.callbackAfterChange = function () { };
-
+      if (!self.callbackAfterChange) self.callbackAfterChange = function () {};
+      if (self.propertyToValidateStatus && !self.errorColumnIndex) self.errorColumnIndex = self.elementsProperties.indexOf(self.propertyToValidateStatus);
       _alignArrayPopulate();
 
       self.error = {
@@ -583,8 +588,11 @@
         hover: false,
         styleSelect: { 'background-color': self.selectedColor },
         styleHover: { 'background-color': self.hoverColor },
+        styleError: { 'background-color': self.errorColor },
+        styleErrorHover: { 'background-color': self.errorColorHover },
         style: {},
-        specialFieldClicked: false
+        specialFieldClicked: false,
+        hasError : false
       };
 
       self.elementsProperties.forEach(function (elementProperty, index) {
@@ -600,10 +608,17 @@
         var column = _createColumn(
           row,
           value,
-          orderValue,
+          orderValue || specialField.orderValue,
           index,
           specialField
         );
+
+        if(self.elementsErrorArray && (column.index === self.errorColumnIndex && self.elementsErrorArray.includes(column.value))
+        ){
+            console.log(self.elementsErrorArray);
+            row.hasError=true;
+        }
+        // console.log(self.elementsErrorArray);
 
         row.columns.push(column);
         row[column.name] = column;
@@ -628,6 +643,8 @@
     function _specialFieldConstruction(elementProperty) {
       var specialFieldStructure = undefined;
       var iconButton = elementProperty.iconButton;
+      var iconSuccess = elementProperty.iconSuccess;
+      var iconError = elementProperty.iconError;
 
       if (iconButton) {
         specialFieldStructure = {
@@ -643,6 +660,40 @@
             removeElement: iconButton.removeElement || false,
             receiveCallback: iconButton.receiveCallback || false
           }
+        }
+      } else if(iconSuccess){ //iconWithFunction
+        // var structure = iconWithFunction.functionValidade(element);
+        //
+        // specialFieldStructure = {
+        //   iconSuccess: {
+        //     icon: iconSuccess.icon,
+        //     tooltip: iconSuccess.tooltip || "",
+        //     classButton: iconSuccess.classButton || "",
+        //     successMsg: iconSuccess.successMsg || ""
+        //   },
+        //   iconError: {
+        //     icon: iconError.icon,
+        //     tooltip: iconError.tooltip || "",
+        //     classButton: iconError.classButton || "",
+        //     successMsg: iconError.successMsg || ""
+        //   },
+        //   orderValue : iconSuccess ? iconSuccess.icon : iconError.icon
+        // }
+
+        specialFieldStructure = {
+          iconSuccess: {
+            icon: iconSuccess.icon,
+            tooltip: iconSuccess.tooltip || "",
+            classButton: iconSuccess.classButton || "",
+            successMsg: iconSuccess.successMsg || ""
+          },
+          iconError: {
+            icon: iconError.icon,
+            tooltip: iconError.tooltip || "",
+            classButton: iconError.classButton || "",
+            successMsg: iconError.successMsg || ""
+          },
+          orderValue : iconSuccess ? iconSuccess.icon : iconError.icon
         }
       }
 

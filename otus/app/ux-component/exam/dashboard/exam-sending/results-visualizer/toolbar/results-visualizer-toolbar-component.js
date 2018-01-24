@@ -7,9 +7,11 @@
       controller: Controller,
       templateUrl: 'app/ux-component/exam/dashboard/exam-sending/results-visualizer/toolbar/results-visualizer-toolbar-template.html',
       bindings: {
-        onLotDelete: '&',
         action: '<',
-        sendingExam: '<'
+        sendingExam: '<',
+        onLotDelete: '&',
+        errorAliquots: '=',
+        dynamicDataTableChange: '&'
       }
     });
 
@@ -45,6 +47,7 @@
         ApplicationStateService.activateExamSending();
       },function (reason) {
         if(reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE){
+          self.errorAliquots = reason.data.CONTENT;
           aliquotsNotFound
           .title('Aliquota(s) não encontrada(s)')
           .textContent(
@@ -63,7 +66,7 @@
           .title('Falha no envio do arquivo')
           .textContent('Ocorreu algum problema ao enviar os resultados.');
         }
-        $mdDialog.show(aliquotsNotFound).then(function() {});
+        $mdDialog.show(aliquotsNotFound).then(function() { self.dynamicDataTableChange(); });
       });
     }
 

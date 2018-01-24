@@ -1,5 +1,5 @@
 <div ui-view layout="column" ng-if="$ctrl.fileStructure">
-  <otus-result-visualizer-manager-toolbar action="$ctrl.action" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
+  <otus-result-visualizer-manager-toolbar action="$ctrl.action" dynamic-data-table-change="$ctrl.updateDataTable()" error-aliquots="$ctrl.errorAliquots" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
   <md-content layout="column">
     <md-card flex style="min-height: 150px">
       <md-card-title flex>
@@ -33,19 +33,10 @@
     </md-card>
     <md-divider></md-divider>
     <dynamic-data-table flex
-                        headers="['Codigo da aliquota', 'Nome do exame', 'Nome do resultado', 'Valor do resultado', 'Data de realização']"
-                        elements-array="$ctrl.sendingExam.examResults"
-                        elements-properties="['aliquotCode', 'examName', 'resultName', 'value', 'releaseDate']"
-                        callback-after-change="$ctrl.dynamicDataTableChange"
+                        dynamic-table-settings="$ctrl.dynamicTableSettings"
                         table-update-function="$ctrl.updateDataTable"
-                        order-indices="[0, 1, 2, 3, 4, 5]"
-                        number-fields-aligned-left="10"
-                        flex-array="[20, 20, 20, 20, 20]"
-                        format-data=""
-                        format-data-properties-array="['releaseDate']"
-                        disable-filter="true"
-                        disable-pagination="true"
-                        disable-checkbox="true">
+                        elements-error-array="$ctrl.errorAliquots"
+                        >
     </dynamic-data-table>
   </md-content>
 </div>

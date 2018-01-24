@@ -166,7 +166,7 @@
       <div class="dynamic-table-header-row" layout="row" layout-align="start center" flex>
         <div style="padding-left:15px" ng-if="!$ctrl.disableCheckbox" layout="column" flex="5" layout-align="center center">
           <md-checkbox flex aria-label="Selecionar Todos os Registros" class="md-primary" ng-checked="$ctrl.selectedItemCounter === $ctrl.table.rows.length"
-            md-indeterminate="$ctrl.selectedItemCounter !== $ctrl.table.rows.length && $ctrl.selectedItemCounter>0" ng-click="$ctrl.selectDeselectAllRows()">
+                       md-indeterminate="$ctrl.selectedItemCounter !== $ctrl.table.rows.length && $ctrl.selectedItemCounter>0" ng-click="$ctrl.selectDeselectAllRows()">
           </md-checkbox>
           <md-tooltip md-direction="top">
             {{$ctrl.selectedItemCounter === $ctrl.table.rows.length ? 'Deseleciona Todos' : 'Seleciona Todos'}}
@@ -175,7 +175,7 @@
         <div ng-if="$ctrl.disableCheckbox"style="padding-top:40px"></div>
 
         <div class="{{'dynamic-table-header-column ' + $ctrl.getColumnPositionClass($index, $ctrl.table.headers)}}" ng-repeat="header in $ctrl.table.headers track by $index"
-          flex="{{$ctrl.getFlex($index)}}" ng-click="$ctrl.changeOrder($index)">
+             flex="{{$ctrl.getFlex($index)}}" ng-click="$ctrl.changeOrder($index)">
           {{header}}
           <md-icon ng-if="$ctrl.orderQuery === 'column' + $index + '.orderValue'" ng-class="$ctrl.getOrderIcon()" md-font-set="material-icons">arrow_drop_up</md-icon>
         </div>
@@ -184,29 +184,41 @@
 
     <div class="dynamic-table-body" layout="column" flex id="dynamic-body">
       <div class="dynamic-table-body-row {{($ctrl.disablePagination || !$ctrl.viewPerPage || $ctrl.filterAll) ? ' dynamic-table-animated ' : ''}}"
-        layout="row" layout-align="start center" flex ng-repeat="row in $ctrl.table.rows | orderBy:$ctrl.orderQuery:$ctrl.orderInverse"
-        ng-click="$ctrl.selectDeselectRow(row)" name="bodyRow{{row.index}}" id="bodyRow{{row.index}}" ng-mouseenter="$ctrl.mouseEnter(row)"
-        ng-mouseleave="$ctrl.mouseLeave(row)" ng-style="row.style">
+           layout="row" layout-align="start center" flex ng-repeat="row in $ctrl.table.rows | orderBy:$ctrl.orderQuery:$ctrl.orderInverse"
+           ng-click="$ctrl.selectDeselectRow(row)" name="bodyRow{{row.index}}" id="bodyRow{{row.index}}" ng-mouseenter="$ctrl.mouseEnter(row)"
+           ng-mouseleave="$ctrl.mouseLeave(row)" ng-style="row.style">
         <div style="padding-left:15px" ng-if="!$ctrl.disableCheckbox" layout="column" flex="5" layout-align="center center">
           <md-checkbox ng-checked="row.selected" aria-label="Checkbox registro da linha {{row.index}}" class="md-primary">
           </md-checkbox>
         </div>
         <div ng-if="$ctrl.disableCheckbox"style="padding-top:40px"></div>
+
         <div class="{{'dynamic-table-body-column ' + $ctrl.getColumnPositionClass(column.index,row.columns)}}" ng-repeat="column in row.columns"
-          flex="{{$ctrl.getFlex(column.index)}}">
+             flex="{{$ctrl.getFlex(column.index)}}">
           <span ng-if="!column.specialField" class="md-body-1">
             {{column.value}}
           </span>
-          <!-- ................ -->
-          <md-button ng-if="column.specialField && column.specialField.iconButton" 
-            class="md-icon-button {{column.specialField.iconButton.classButton}}"
-            ng-click="$ctrl.iconButtonClick(column.specialField.iconButton, row)">
+
+          <div ng-if="!row.hasError && column.specialField && column.specialField.iconSuccess">
+            <md-tooltip ng-if="column.specialField.iconSuccess.tooltip">{{column.specialField.iconSuccess.tooltip}}</md-tooltip>
+            <md-icon class=" material-icons {{column.specialField.iconSuccess.classButton}}">{{column.specialField.iconSuccess.icon}}</md-icon>
+          </div>
+
+          <div ng-if="row.hasError && column.specialField && column.specialField.iconError">
+            <md-tooltip ng-if="column.specialField.iconError.tooltip">{{column.specialField.iconError.tooltip}}</md-tooltip>
+            <md-icon class=" material-icons {{column.specialField.iconError.classButton}}">{{column.specialField.iconError.icon}}</md-icon>
+          </div>
+
+          <md-button ng-if="column.specialField && column.specialField.iconButton"
+                     class="md-icon-button {{column.specialField.iconButton.classButton}}"
+                     ng-click="$ctrl.iconButtonClick(column.specialField.iconButton, row)">
             <md-tooltip ng-if="column.specialField.iconButton.tooltip">{{column.specialField.iconButton.tooltip}}</md-tooltip>
-              <md-icon md-font-set="material-icons">{{column.specialField.iconButton.icon}}</md-icon>
-            </md-button>
+            <md-icon md-font-set="material-icons">{{column.specialField.iconButton.icon}}</md-icon>
+          </md-button>
         </div>
       </div>
     </div>
+
     <div ng-if="!$ctrl.disablePagination" ng-mouseenter="$ctrl.leaveFocus()" class="dynamic-pagination" layout="row" layout-align="start center" flex>
       <div>
         <div layout="row" class="md-body-1" layout-margin>
@@ -257,5 +269,6 @@
         </div>
       </div>
     </div>
+
   </div>
 </md-whiteframe>

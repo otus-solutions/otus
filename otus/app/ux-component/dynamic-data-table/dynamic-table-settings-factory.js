@@ -24,10 +24,12 @@
     var _ordenationPriorityIndexArray = [
       //{headerIndex: 0, ordenationPriorityIndex: 1}
     ];
-    
+
     self.settings = {
       elementsArray: [],
       elementsProperties: [],
+      errorArray: [],
+      propertyToValidateStatus: undefined,
       headers: [],
       callbackAfterChange: undefined,
       tableUpdateFunction: undefined,
@@ -69,10 +71,13 @@
     self.setPagination = setPagination;
     self.setSelectedColor = setSelectedColor;
     self.setHoverColor = setHoverColor;
+    self.setPropertyToValidateStatus = setPropertyToValidateStatus;
+    self.setStatusArray = setStatusArray;
 
     self.addHeader = addHeader;
     self.addColumnProperty = addColumnProperty;
     self.addColumnIconButton = addColumnIconButton;
+    self.addStatusColumn = addStatusColumn;
 
     function setProperty() {
       return self;
@@ -82,24 +87,24 @@
       self.settings.headers.push(
         header || ''
       );
-      
+
       if (flex === undefined) flex = '';
       self.settings.flexArray.push(flex);
-      
+
       var alignmentAccepted = false;
       var avaliableAlignArray = ['right', 'left', 'center'];
       if(typeof align !== 'string') align = '';
-      
+
       for (var i = 0; i < avaliableAlignArray.length; i++) {
         var avaliableAlign = avaliableAlignArray[i];
-        
+
         if(align.toLowerCase().trim() === avaliableAlign){
           align = avaliableAlign;
           alignmentAccepted = true;
           break;
         }
       }
-      
+
       if(!alignmentAccepted) align = '';
       self.settings.alignArray.push(align);
 
@@ -111,6 +116,18 @@
           }
         );
       }
+      return self;
+    }
+
+    function setPropertyToValidateStatus(property) {
+
+      self.settings.propertyToValidateStatus = property;
+
+      return self;
+    }
+
+    function setStatusArray(statusArray) {
+      self.errorArray = statusArray;
       return self;
     }
 
@@ -150,6 +167,31 @@
         }
       );
       _addEmptyHeaderIfNeed('10','center');
+      return self;
+    }
+
+    function addStatusColumn(header, flex, align) {
+      self.addHeader(header, flex, align);
+      _addStatusDefaultIcon();
+      return self;
+    }
+
+    function _addStatusDefaultIcon(icon, tooltip, classButton) {
+      self.settings.elementsProperties.push(
+        {
+          iconSuccess: {
+            icon: icon || 'done',
+            tooltip: tooltip || 'ok',
+            classButton: classButton || 'md-primary'
+          },
+          iconError: {
+            icon: icon || 'warning',
+            tooltip: tooltip || 'fail',
+            classButton: classButton || 'md-warn'
+          }
+        }
+      );
+
       return self;
     }
 
