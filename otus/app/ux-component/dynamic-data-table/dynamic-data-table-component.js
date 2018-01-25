@@ -595,7 +595,7 @@
           var orderValue = _getValueFromElement(element, elementProperty, index);
         } else {
           specialField = _specialFieldConstruction(elementProperty,element);
-          orderValue = specialField.iconStructure.icon;
+          var orderValue = specialField.iconStructure.icon;
         }
 
         var column = _createColumn(

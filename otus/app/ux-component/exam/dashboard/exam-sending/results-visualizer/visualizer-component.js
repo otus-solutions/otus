@@ -80,12 +80,12 @@
 
               if(self.errorAliquots.length){
                 if(!self.errorAliquots.includes(element.aliquotCode)){
-                  structureIcon = {icon: "done", class: "md-primary", tooltip: "Aliquota ok", orderValue: "done"};
+                  structureIcon = {icon: "done", class: "md-primary", tooltip: "Aliquota válida", orderValue: "done"};
                 } else {
-                  structureIcon = {icon: "warning", class: "md-warn", tooltip: "Aliquota fail", orderValue: "warning"};
+                  structureIcon = {icon: "warning", class: "md-warn", tooltip: "Aliquota não existe", orderValue: "warning"};
                 }
               } else {
-                structureIcon = {icon: "query_builder", class: "", tooltip: "Aquardando", orderValue: "file_upload"};
+                structureIcon = {icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "file_upload"};
               }
               return structureIcon;
             })

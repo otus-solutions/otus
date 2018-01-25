@@ -69,52 +69,49 @@
     function _buildDynamicTableSettings(){
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
       //header, flex, align, ordinationPriorityIndex
-        .addHeader('Código', '20', 'left', 4)
-        //property, formatType
-        .addColumnProperty('code')
+      .addHeader('Código', '20', 'left', 4)
+      //property, formatType
+      .addColumnProperty('code')
 
-        //header, flex, align, ordinationPriorityIndex
-        .addHeader('Tipo', '30', '', 1)
-        //property, formatType
-        .addColumnProperty('label')
+      //header, flex, align, ordinationPriorityIndex
+      .addHeader('Tipo', '30', '', 1)
+      //property, formatType
+      .addColumnProperty('label')
 
-        //header, flex, align, ordinationPriorityIndex
-        .addHeader('Recipiente', '20', '', 3)
-        //property, formatType
-        .addColumnProperty('containerLabel')
+      //header, flex, align, ordinationPriorityIndex
+      .addHeader('Recipiente', '20', '', 3)
+      //property, formatType
+      .addColumnProperty('containerLabel')
 
-        //header, flex, align, ordinationPriorityIndex
-        .addHeader('Aliquotagem', '20', '', 2)
-        //property, formatType
-        .addColumnProperty('aliquotCollectionData.time', 'DATE')
+      //header, flex, align, ordinationPriorityIndex
+      .addHeader('Aliquotagem', '20', '', 2)
+      //property, formatType
+      .addColumnProperty('aliquotCollectionData.time', 'DATE')
 
-        //icon, tooltip, classButton, successMsg,
-        //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
-        .addColumnIconButton(
-          'delete_forever', 'Remover Alíquota', '', 'A Alíquota foi removida',
-          self.removeElement, false, false, true, false, false
-        )
+      //icon, tooltip, classButton, successMsg,
+      //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
+      .addColumnIconButton(
+        'delete_forever', 'Remover Alíquota', '', 'A Alíquota foi removida',
+        self.removeElement, false, false, true, false, false
+      )
 
-        //header, flex
-        .addStatusColumn('Status', 5, 'center')
+      .setElementsArray(self.lot.aliquotList)
+      .setTitle('Lista de Arquivos')
+      .setCallbackAfterChange(self.dynamicDataTableChange)
+      //Don't use with Service, in this case pass Service as attribute in the template
+      // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
+      /*
+        //Optional Config's
+        .setFormatData("'Dia - 'dd/MM/yy")
+        .setCheckbox(false)
+        .setFilter(true)
+        .setReorder(true)
+        .setPagination(true)
+        .setSelectedColor()
+        .setHoverColor()
 
-        .setElementsArray(self.lot.aliquotList)
-        .setTitle('Lista de Arquivos')
-        .setCallbackAfterChange(self.dynamicDataTableChange)
-        //Don't use with Service, in this case pass Service as attribute in the template
-        // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
-        /*
-          //Optional Config's
-          .setFormatData("'Dia - 'dd/MM/yy")
-          .setCheckbox(false)
-          .setFilter(true)
-          .setReorder(true)
-          .setPagination(true)
-          .setSelectedColor()
-          .setHoverColor()
-
-        */
-        .getSettings();
+      */
+      .getSettings();
     }
 
     function removeElement(element){
@@ -150,7 +147,7 @@
 
         if(self.initialDate <= self.finalDate){
           _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no lote as Alíquotas realizadas no período'
-            + ' entre ' + $filter('date')(self.initialDate,'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate,'dd/MM/yyyy') + '.');
+          + ' entre ' + $filter('date')(self.initialDate,'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate,'dd/MM/yyyy') + '.');
 
           $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
             var successInsertion = false;
@@ -243,64 +240,64 @@
     function _toastError(aliquotCode) {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('A alíquota "' + aliquotCode + '" não foi encontrada.')
-          .hideDelay(timeShowMsg)
+        .textContent('A alíquota "' + aliquotCode + '" não foi encontrada.')
+        .hideDelay(timeShowMsg)
       );
     }
 
     function _toastDuplicated(aliquotCode) {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('A alíquota "' + aliquotCode + '" já esta no lote.')
-          .hideDelay(timeShowMsg)
+        .textContent('A alíquota "' + aliquotCode + '" já esta no lote.')
+        .hideDelay(timeShowMsg)
       );
     }
 
     function _toastWrongFieldCenter(aliquotCode) {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('A alíquota "' + aliquotCode + '" não pertence a este centro.')
-          .hideDelay(timeShowMsg)
+        .textContent('A alíquota "' + aliquotCode + '" não pertence a este centro.')
+        .hideDelay(timeShowMsg)
       );
     }
 
     function _toastOtherLot(aliquotCode) {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('A alíquota "' + aliquotCode + '" já esta em outro lote.')
-          .hideDelay(timeShowMsg)
+        .textContent('A alíquota "' + aliquotCode + '" já esta em outro lote.')
+        .hideDelay(timeShowMsg)
       );
     }
 
     function _unselectedPeriod() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('Por favor, selecione o Período Inicial e o Período Final antes de prosseguir.')
-          .hideDelay(timeShowMsg)
+        .textContent('Por favor, selecione o Período Inicial e o Período Final antes de prosseguir.')
+        .hideDelay(timeShowMsg)
       );
     }
 
     function _invalidPeriodInterval() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('O Início do Período, não pode ser superior ao Final do Período.')
-          .hideDelay(timeShowMsg)
+        .textContent('O Início do Período, não pode ser superior ao Final do Período.')
+        .hideDelay(timeShowMsg)
       );
     }
 
     function _successInAliquotInsertion() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('A(s) alíquota(s) foi(ram) inserida(s) com sucesso.')
-          .hideDelay(timeShowMsg)
+        .textContent('A(s) alíquota(s) foi(ram) inserida(s) com sucesso.')
+        .hideDelay(timeShowMsg)
       );
     }
 
     function _notAliquotsInserted() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('Nenhuma alíquota foi inserida.')
-          .hideDelay(timeShowMsg)
+        .textContent('Nenhuma alíquota foi inserida.')
+        .hideDelay(timeShowMsg)
       );
     }
 

@@ -9,7 +9,6 @@
       bindings: {
         action: '<',
         sendingExam: '<',
-        onLotDelete: '&',
         errorAliquots: '=',
         errorExamResults: '=',
         dynamicDataTableChange: '&'
@@ -78,23 +77,6 @@
           self.dynamicDataTableChange();
         });
       });
-    }
-
-    function _convertArrayToStringIncludesLastPosition(array, includes){
-      var text = "";
-      array.forEach(function(value, index) {
-        if(index == 0){
-          text = text + value;
-        } else {
-          if(index == array.length - 1){
-            text = text + includes + value;
-          } else {
-            text = text + ', ' + value;
-          }
-        }
-      }, this);
-
-      return text;
     }
 
     function _getUnique(array){
