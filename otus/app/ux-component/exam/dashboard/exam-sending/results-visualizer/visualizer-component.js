@@ -70,27 +70,30 @@
 
 
     function _buildDynamicTableSettings(){
-      self.dynamicTableSettings = DynamicTableSettingsFactory.create()
+      self.dynamicTableSettings = DynamicTableSettingsFactory.create();
 
-      //header, flex
-        .addHeader('Status', '10', 'center', 0)
-        .addIconWithFunction(function (element) {
-          var structureIcon = {icon: "", class: "", tooltip: ""};
+        if(self.action === 'upload'){
+          //header, flex
+          self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
+            .addIconWithFunction(function (element) {
+              var structureIcon = {icon: "", class: "", tooltip: ""};
 
-          if(self.errorAliquots.length){
-            if(!self.errorAliquots.includes(element.aliquotCode)){
-              structureIcon = {icon: "done", class: "md-primary", tooltip: "Aliquota ok", orderValue: "done"};
-            } else {
-              structureIcon = {icon: "warning", class: "md-warn", tooltip: "Aliquota fail", orderValue: "warning"};
-            }
-          } else {
-            structureIcon = {icon: "query_builder", class: "", tooltip: "Aquardando", orderValue: "file_upload"};
-          }
-          return structureIcon;
-        })
+              if(self.errorAliquots.length){
+                if(!self.errorAliquots.includes(element.aliquotCode)){
+                  structureIcon = {icon: "done", class: "md-primary", tooltip: "Aliquota ok", orderValue: "done"};
+                } else {
+                  structureIcon = {icon: "warning", class: "md-warn", tooltip: "Aliquota fail", orderValue: "warning"};
+                }
+              } else {
+                structureIcon = {icon: "query_builder", class: "", tooltip: "Aquardando", orderValue: "file_upload"};
+              }
+              return structureIcon;
+            })
+        }
+
 
         //header, flex, align, ordinationPriorityIndex
-        .addHeader('Codigo da aliquota', '20', 'left', 1)
+        self.dynamicTableSettings.addHeader('Codigo da aliquota', '20', 'left', 1)
         //property, formatType
         .addColumnProperty('aliquotCode')
 
@@ -122,7 +125,7 @@
 
         .setElementsArray(self.sendingExam.examResults)
         // .setTitle('Lista de Arquivos')
-        .setCallbackAfterChange(self.dynamicDataTableChange)
+        .setCallbackAfterChange(self.dynamicDataTableChange);
         //Don't use with Service, in this case pass Service as attribute in the template
         // .setTableUpdateFunction(self.updateDataTable)
         /*
@@ -136,7 +139,7 @@
           .setHoverColor()
 
         */
-        .getSettings();
+        self.settings = self.dynamicTableSettings.getSettings();
     }
 
     function _buildDialogs() {
