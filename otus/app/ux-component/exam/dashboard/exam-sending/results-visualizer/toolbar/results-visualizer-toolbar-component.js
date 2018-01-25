@@ -11,7 +11,7 @@
         sendingExam: '<',
         onLotDelete: '&',
         errorAliquots: '=',
-        buildDynamicTableSettings: '&',
+        errorExamResults: '=',
         dynamicDataTableChange: '&'
       }
     });
@@ -48,13 +48,20 @@
         ApplicationStateService.activateExamSending();
       },function (reason) {
         if(reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE){
-          self.errorAliquots = reason.data.CONTENT;
+          var uniqueErrorAliquots = _getUnique(reason.data.CONTENT);
+          self.errorAliquots = uniqueErrorAliquots;
+          self.errorExamResults = [];
+          uniqueErrorAliquots.forEach(function (errorAliquot) {
+            self.sendingExam.examResults.forEach(function (examResult) {
+              if(errorAliquot === examResult.aliquotCode){
+                self.errorExamResults.push(examResult);
+              }
+            });
+          });
           aliquotsNotFound
           .title('Aliquota(s) não encontrada(s)')
           .textContent(
-            'A(s) seguinte(s) aliquota(s) não existe(m) no sistema: '
-            + _convertArrayToStringIncludesLastPosition(reason.data.CONTENT,' e ')
-            + '.'
+            'A(s) aliquota(s) não encontrada(s) sera(ão) apontada(s) na lista: '
           );
         }else if(reason.data.MESSAGE === EMPTY_LOT_BACKEND_MESSAGE){
           aliquotsNotFound
@@ -88,6 +95,15 @@
       }, this);
 
       return text;
+    }
+
+    function _getUnique(array){
+      var uniqueValues = [];
+      array.forEach(function (value) {
+        if(!uniqueValues.includes(value))
+          uniqueValues.push(value)
+      });
+      return uniqueValues;
     }
 
     function _buildDialogs() {

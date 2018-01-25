@@ -23,12 +23,14 @@
 
     self.$onInit = onInit;
     self.dynamicDataTableChange = dynamicDataTableChange;
+    self.changeResults = changeResults;
 
     function onInit() {
       _buildDialogs();
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
       self.errorAliquots = [];
+      self.errorExamResults = [];
       if(!self.fileStructure){
         $mdDialog.show(therIsNoDataToShow).then(function() {
           ApplicationStateService.activateExamSending();
@@ -45,6 +47,11 @@
         self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy HH:mm');
       }
       _buildDynamicTableSettings();
+    }
+
+    function changeResults(resultsToShow) {
+      self.changedResults = resultsToShow;
+      self.updateDataTable(self.changedResults);
     }
 
     function _loadList() {
@@ -77,7 +84,7 @@
               structureIcon = {icon: "warning", class: "md-warn", tooltip: "Aliquota fail", orderValue: "warning"};
             }
           } else {
-            structureIcon = {icon: "file_upload", class: "", tooltip: "Aquardando", orderValue: "file_upload"};
+            structureIcon = {icon: "query_builder", class: "", tooltip: "Aquardando", orderValue: "file_upload"};
           }
           return structureIcon;
         })
@@ -109,7 +116,7 @@
 
         .setFilter(false)
 
-        .setPagination(false)
+        .setShowAll(false)
 
         .setCheckbox(false)
 
@@ -117,7 +124,7 @@
         // .setTitle('Lista de Arquivos')
         .setCallbackAfterChange(self.dynamicDataTableChange)
         //Don't use with Service, in this case pass Service as attribute in the template
-        // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
+        // .setTableUpdateFunction(self.updateDataTable)
         /*
           //Optional Config's
           .setFormatData("'Dia - 'dd/MM/yy")

@@ -44,6 +44,7 @@
       disableCheckbox: false,
       disableFilter: false,
       disableReorder: false,
+      disableShowAll: false,
       disablePagination: false,
       selectedColor: undefined,
       hoverColor: undefined,
@@ -66,6 +67,7 @@
     self.setSelectUnselectFunction = setSelectUnselectFunction;
     self.setCheckbox = setCheckbox;
     self.setFilter = setFilter;
+    self.setShowAll = setShowAll;
     self.setReorder = setReorder;
     self.setPagination = setPagination;
     self.setSelectedColor = setSelectedColor;
@@ -249,6 +251,12 @@
     function setFilter(showFilter) {
       showFilter = showFilter ? true : false;
       self.settings.disableFilter = !showFilter;
+      return self;
+    }
+
+    function setShowAll(showAllButton) {
+      showAllButton = showAllButton ? true : false;
+      self.settings.disableShowAll = !showAllButton;
       return self;
     }
 

@@ -98,7 +98,7 @@
     self.currentRowOnHover;
 
     function onInit() {
-      _initializeDefaultValues()
+      _initializeDefaultValues();
       _setOrderQuery();
 
       self.tableUpdateFunction = _refreshGrid;
@@ -135,6 +135,7 @@
         self.rowsPerPageArray = _settings.rowsPerPageArray;
         self.rowPerPageDefault = _settings.rowPerPageDefault;
         self.hideDelayTime = _settings.hideDelayTime;
+        self.disableShowAll = _settings.disableShowAll;
       }
 
       // if(!self.numberFieldsAlignedLeft) self.numberFieldsAlignedLeft = 1;
@@ -214,12 +215,9 @@
       self.alignArray = newAlignArray;
     }
 
-    function _refreshGrid(newElementsArray, dynamicTableSettings) {
-      self.dynamicTableSettings = dynamicTableSettings || self.dynamicTableSettings;
+    function _refreshGrid(newElementsArray) {
       self.elementsArray = newElementsArray || self.elementsArray;
       self.selectedItemCounter = 0;
-      _initializeDefaultValues();
-      _setOrderQuery();
       self.creacteTable();
     }
 

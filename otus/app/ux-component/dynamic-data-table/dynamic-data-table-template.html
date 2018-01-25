@@ -216,7 +216,7 @@
 
     <div ng-if="!$ctrl.disablePagination" ng-mouseenter="$ctrl.leaveFocus()" class="dynamic-pagination" layout="row" layout-align="start center" flex>
       <div>
-        <div layout="row" class="md-body-1" layout-margin>
+        <div ng-if="!$ctrl.disableShowAll" layout="row" class="md-body-1" layout-margin>
           <md-button class="md-accent" flex ng-click="$ctrl.viewPerPageChanged()" ng-disabled="$ctrl.filterAll">
             <md-tooltip>{{$ctrl.viewPerPage ? 'Exibir todos os Registros: Desabilita Paginação' : 'Exibir Registros por Página: Habilita Paginação'}}</md-tooltip>
             <span class="md-body-1">
