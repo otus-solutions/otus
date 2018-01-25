@@ -10,7 +10,7 @@
           <md-tooltip >
             Centro responsável pela realização do exame
           </md-tooltip>
-          <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-selected="$index == $ctrl.centerFilterSelectedIndex">
+          <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-selected="$index == $ctrl.centerFilterSelectedIndex" ng-click="$ctrl.loadExamDescriptors(center)">
             {{center}}
           </md-option>
         </md-select>

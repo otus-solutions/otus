@@ -33,6 +33,7 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.getAvailableExams = getAvailableExams;
     self.getSendedExamById = getSendedExamById;
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
@@ -103,6 +104,25 @@
       var deferred = $q.defer();
       ExamsRestService
         .deleteLot(lotCode)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    /**
+     * Exam Lot
+     * @param {(object)} center - the central center of exams lot
+     * @returns {Promise} promise
+     * @memberof ProjectRemoteStorageService
+     */
+    function getAvailableExams(center) {
+      var deferred = $q.defer();
+      ExamsRestService
+        .getAvailableExams(center)
         .then(function (response) {
           deferred.resolve(response.data);
         })
