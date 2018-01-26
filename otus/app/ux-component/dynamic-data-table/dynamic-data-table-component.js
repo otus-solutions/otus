@@ -595,7 +595,7 @@
           var orderValue = _getValueFromElement(element, elementProperty, index);
         } else {
           specialField = _specialFieldConstruction(elementProperty,element);
-          var orderValue = specialField.iconStructure.icon;
+          var orderValue = specialField.orderValue || '';
         }
 
         var column = _createColumn(
@@ -644,11 +644,15 @@
             renderGrid: iconButton.renderGrid || false,
             removeElement: iconButton.removeElement || false,
             receiveCallback: iconButton.receiveCallback || false
-          }
+          },
+          orderValue: iconButton.icon
         }
       } else if(iconWithFunction){
         var structure = iconWithFunction.iconFunction(element);
-        specialFieldStructure = { iconStructure : structure }
+        specialFieldStructure = {
+          iconStructure : structure,
+          orderValue: structure.orderValue
+        }
       }
 
       return specialFieldStructure;
