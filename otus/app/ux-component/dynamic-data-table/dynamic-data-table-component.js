@@ -116,7 +116,6 @@
         self.elementsArray = _settings.elementsArray;
         self.elementsProperties = _settings.elementsProperties;
         self.callbackAfterChange = _settings.callbackAfterChange;
-        self.iconWithFunction = _settings.iconWithFunction;
         self.tableUpdateFunction = _settings.tableUpdateFunction;
         self.formatData = _settings.formatData;
         self.formatDataIndexArray = _settings.formatDataIndexArray;

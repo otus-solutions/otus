@@ -37,7 +37,6 @@
       flexArray: [],
       alignArray: [],
       formatData: undefined,
-      IconWithFunction: undefined,
       selectUnselectFunction: undefined,
       formatDataPropertiesArray: [],
       formatDataIndexArray: [],
