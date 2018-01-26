@@ -65,8 +65,7 @@
       _buildDynamicTableSettings();
     }
 
-
-    function _buildDynamicTableSettings(){      
+    function _buildDynamicTableSettings(){
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
       //header, flex, align, ordinationPriorityIndex
       .addHeader('Código', '20', 'left', 4)
@@ -94,7 +93,7 @@
         'delete_forever', 'Remover Alíquota', '', 'A Alíquota foi removida',
         self.removeElement, false, false, true, false, false
       )
-            
+
       .setElementsArray(self.lot.aliquotList)
       .setTitle('Lista de Arquivos')
       .setCallbackAfterChange(self.dynamicDataTableChange)
@@ -109,8 +108,8 @@
         .setPagination(true)
         .setSelectedColor()
         .setHoverColor()
-        
-      */    
+
+      */
       .getSettings();
     }
 
@@ -220,7 +219,7 @@
 
     function _unselectedAllAliquot(){
       self.selectedAliquots = [];
-      
+
       self.lot.aliquotList.forEach(function(aliquot){
         aliquot.isSelected = false;
       });

@@ -20,11 +20,10 @@
     '$mdToast',
     'otusjs.laboratory.core.ContextService',
     'otusjs.otus.dashboard.core.ContextService',
-    '$filter',
-    'otusjs.deploy.model.AliquotFacadeService'
+    '$filter'
   ];
 
-  function Controller(ProjectFieldCenterService, AliquotTransportationService, $mdToast, laboratoryContextService, dashboardContextService, $filter, AliquotFacadeService) {
+  function Controller(ProjectFieldCenterService, AliquotTransportationService, $mdToast, laboratoryContextService, dashboardContextService, $filter) {
     var self = this;
 
     //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
@@ -144,51 +143,11 @@
         _setChartData();
       }
     }
-    // TODO: Realizar calculo do model
+
     function _setChartData() {
-      self.lotDataSet = [];
-      AliquotFacadeService.setLotsList(self.lotsList);
-      var _lots = AliquotFacadeService.getChartData();
-      _lots.then(function(dataSet) {
-        self.lotDataSet.push(dataSet);
+      self.lotsList.forEach(function(lot) {
+        lot.chartDataSet.backgroundColor = color;
       });
-
     }
-
-    //TODO: remover
-    // function _setChartData() {
-    //   self.lotDataSet = [];
-    //   self.lotsList.forEach(function (lot) {
-    //     lot.isSelected = false;
-    //     var labelsCount = {};
-    //
-    //     var dataSet = [];
-    //     dataSet.backgroundColor = [];
-    //     dataSet.data = [];
-    //     dataSet.labels = [];
-    //     dataSet.fieldCenter = lot.fieldCenter;
-    //     dataSet.chartId = lot.code;
-    //
-    //     lot.aliquotList.forEach(function (aliquot) {
-    //       if(labelsCount[aliquot.label]){
-    //         labelsCount[aliquot.label] = labelsCount[aliquot.label]  + 1;
-    //       } else {
-    //         labelsCount[aliquot.label] = 1;
-    //         dataSet.labels.push(aliquot.label);
-    //       }
-    //       if(!self.colorSet[aliquot.label]){
-    //         self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length];
-    //       }
-    //     });
-    //
-    //     for(var key in labelsCount) {
-    //       dataSet.data.push(labelsCount[key]);
-    //       dataSet.backgroundColor.push(self.colorSet[key]);
-    //     }
-    //
-    //     self.lotDataSet.push(dataSet);
-    //   });
-    //
-    // }
   }
 }());

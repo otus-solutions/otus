@@ -209,39 +209,8 @@
     }
 
     function setChartData() {
-      self.lotDataSet = [];
-      self.colorSet = [];
-      var labelsCount = {};
-
-      var dataSet = [];
-      dataSet.backgroundColor = [];
-      dataSet.data = [];
-      dataSet.labels = [];
-      dataSet.fieldCenter = self.lot.fieldCenter;
-      if(self.lot.code){
-        dataSet.chartId = self.lot.code;
-      } else {
-        dataSet.chartId = "aliquotsChart";
-      }
-
-      self.lot.aliquotList.forEach(function (aliquot) {
-        if(labelsCount[aliquot.label]){
-          labelsCount[aliquot.label] = labelsCount[aliquot.label]  + 1;
-        } else {
-          labelsCount[aliquot.label] = 1;
-          dataSet.labels.push(aliquot.label);
-        }
-        if(!self.colorSet[aliquot.label]){
-          self.colorSet[aliquot.label] = color[Object.keys(self.colorSet).length];
-        }
-      });
-
-      for(var key in labelsCount) {
-        dataSet.data.push(labelsCount[key]);
-        dataSet.backgroundColor.push(self.colorSet[key]);
-      }
-
-      self.lotDataSet = dataSet;
+      self.lot.chartDataSet.backgroundColor = color;
     }
+
   }
 }());
