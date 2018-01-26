@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -8,7 +8,6 @@
       'ACTIVITY_ADDER': 'activity-adder',
       'ACTIVITY_CATEGORY_ADDER': 'activity-category-adder',
       'ACTIVITY_PLAYER': 'activity-player',
-      'PAPER_ACTIVITY_ADDER': 'paper-activity-adder',
       'PAPER_ACTIVITY_INITIALIZER': 'paper-activity-initializer',
       'APPLICATION': 'application',
       'DASHBOARD': 'dashboard',
@@ -25,9 +24,11 @@
       'SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER': 'sample-transportation-lot-info-manager',
       'SAMPLE_TRANSPORTATION_MANAGER_LIST': 'sample-transportation-manager-list',
       'SAMPLE_TRANSPORTATION_DASHBOARD': 'sample-transportation-dashboard',
-      'EXAM_LOT_DASHBOARD' : 'exam-lot-dashboard',
-      'EXAM_LOT_MANAGER_LIST' : 'exam-lot-manager-list',
-      'EXAM_LOT_INFO_MANAGER' : 'exam-lot-info-manager'
+      'EXAM_DASHBOARD': 'exam-dashboard',
+      'EXAM_LOT_MANAGER_LIST': 'exam-lot-manager-list',
+      'EXAM_LOT_INFO_MANAGER': 'exam-lot-info-manager',
+      'EXAM_SENDING': 'exam-sending',
+      'EXAM_RESULT_VISUALIZER' : 'exam-result-visualizer'
     })
     .config(Configuration);
 
@@ -39,7 +40,6 @@
     'otusjs.deploy.ActivityAdderStateProvider',
     'otusjs.deploy.ActivityCategoryStateProvider',
     'otusjs.deploy.ActivityPlayerStateProvider',
-    'otusjs.deploy.PaperActivityAdderStateProvider',
     'otusjs.deploy.PaperActivityInitializerStateProvider',
     'otusjs.deploy.DashboardStateProvider',
     'otusjs.deploy.ParticipantDashboardStateProvider',
@@ -55,7 +55,9 @@
     'otusjs.deploy.SampleTransportationStateProvider',
     'otusjs.deploy.ExamLotDashboardStateProvider',
     'otusjs.deploy.ExamLotManagerListStateProvider',
-    'otusjs.deploy.ExamLotInfoManagerStateProvider'
+    'otusjs.deploy.ExamLotInfoManagerStateProvider',
+    'otusjs.deploy.SendingExamStateProvider',
+    'otusjs.deploy.ExamResultsVisualizerProvider'
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
@@ -64,7 +66,6 @@
     ActivityAdderStateProvider,
     ActivityCategoryStateProvider,
     ActivityPlayerStateProvider,
-    PaperActivityAdderStateProvider,
     PaperActivityInitializerStateProvider,
     DashboardProvider,
     ParticipantDashboardProvider,
@@ -80,14 +81,15 @@
     SampleTransportationProvider,
     ExamLotStateProvider,
     ExamLotManagerListState,
-    ExamLotInfoManagerState
+    ExamLotInfoManagerState,
+    SendingExamState,
+    ExamResultsVisualizer
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ActivityStateProvider.state);
     $stateProvider.state(ActivityAdderStateProvider.state);
     $stateProvider.state(ActivityCategoryStateProvider.state);
     $stateProvider.state(ActivityPlayerStateProvider.state);
-    $stateProvider.state(PaperActivityAdderStateProvider.state);
     $stateProvider.state(PaperActivityInitializerStateProvider.state);
     $stateProvider.state(LoginStateProvider.state);
     $stateProvider.state(SignupStateProvider.state);
@@ -104,6 +106,8 @@
     $stateProvider.state(ExamLotStateProvider.state);
     $stateProvider.state(ExamLotManagerListState.state);
     $stateProvider.state(ExamLotInfoManagerState.state);
+    $stateProvider.state(SendingExamState.state);
+    $stateProvider.state(ExamResultsVisualizer.state);
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
     // $locationProvider.html5Mode(false);

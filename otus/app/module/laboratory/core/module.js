@@ -2,7 +2,9 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory.core', [])
+    .module('otusjs.laboratory.core', [
+      // 'otusjs.laboratory.core.project'
+    ])
     .run(Runner);
 
   Runner.$inject = [

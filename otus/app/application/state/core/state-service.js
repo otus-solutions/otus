@@ -16,7 +16,6 @@
     /* Public Interface */
     self.activateActivityAdder = activateActivityAdder;
     self.activateActivityPlayer = activateActivityPlayer;
-    self.activatePaperActivityAdder = activatePaperActivityAdder;
     self.activatePaperActivityInitializer = activatePaperActivityInitializer;
     self.activateInstaller = activateInstaller;
     self.activateLogin = activateLogin;
@@ -32,9 +31,11 @@
     self.activateSampleTransportationLotInfoManager = activateSampleTransportationLotInfoManager;
     self.activateSampleTransportationManagerList = activateSampleTransportationManagerList;
     self.activateActivityCategories = activateActivityCategories;
-    self.activateExamsLotsDashBoard = activateExamsLotsDashBoard;
+    self.activateExamsDashBoard = activateExamsDashBoard;
     self.activateExamsLotsManagerList = activateExamsLotsManagerList;
     self.activateExamsLotInfoManager = activateExamsLotInfoManager;
+    self.activateExamSending  = activateExamSending;
+    self.activateExamResultsVisualizer = activateExamResultsVisualizer;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateActivityAdder() {
@@ -43,10 +44,6 @@
 
     function activateActivityPlayer() {
       $state.go(STATE.ACTIVITY_PLAYER);
-    }
-
-    function activatePaperActivityAdder() {
-      $state.go(STATE.PAPER_ACTIVITY_ADDER);
     }
 
     function activatePaperActivityInitializer() {
@@ -104,8 +101,8 @@
       $state.go(STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER);
     }
 
-    function activateExamsLotsDashBoard() {
-      $state.go(STATE.EXAM_LOT_DASHBOARD);
+    function activateExamsDashBoard() {
+      $state.go(STATE.EXAM_DASHBOARD);
     }
 
     function activateExamsLotsManagerList() {
@@ -114,6 +111,14 @@
 
     function activateExamsLotInfoManager() {
       $state.go(STATE.EXAM_LOT_INFO_MANAGER);
+    }
+
+    function activateExamSending() {
+      $state.go(STATE.EXAM_SENDING,{},{reload:true});
+    }
+
+    function activateExamResultsVisualizer() {
+      $state.go(STATE.EXAM_RESULT_VISUALIZER);
     }
 
     function getCurrentState() {

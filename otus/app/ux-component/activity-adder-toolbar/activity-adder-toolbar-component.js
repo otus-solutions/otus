@@ -7,7 +7,6 @@
       controller: Controller,
       templateUrl: 'app/ux-component/activity-adder-toolbar/activity-adder-toolbar-template.html',
       bindings: {
-        activityType: '<',
         onAddActivities: '&',
         title: '@'
       }
@@ -20,16 +19,29 @@
   function Controller(ApplicationStateService) {
     var self = this;
 
+    /* Lifecycle hooks */
+    self.$onInit = onInit;
     /* Public methods */
     self.addActivities = addActivities;
     self.returnToParticipantActivities = returnToParticipantActivities;
 
+    function onInit() {
+      self.activityType = window.sessionStorage.getItem('activityType');
+    }
+
     function addActivities() {
+      window.sessionStorage.setItem("categories", "true");
       self.onAddActivities();
     }
 
     function returnToParticipantActivities() {
-      ApplicationStateService.activateParticipantActivities();
+      var _categories = window.sessionStorage.getItem("categories");
+      window.sessionStorage.removeItem("categories");
+      if (_categories === "true") {
+        ApplicationStateService.activateActivityAdder();
+      } else {
+        ApplicationStateService.activateParticipantActivities();
+      }
     }
   }
 }());

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -22,6 +22,10 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.getSendedExamById = getSendedExamById;
+    self.getSendedExams = getSendedExams;
+    self.createSendExam = createSendExam;
+    self.deleteSendedExams = deleteSendedExams;
 
     function getAliquots() {
       return ProjectCollectionService.getAliquots();
@@ -41,6 +45,7 @@
       return ProjectCollectionService.getAliquotsByCenter(center);
     }
 
+    /* exam lot */
     function getLots() {
       return ProjectCollectionService.getLots();
     }
@@ -55,6 +60,23 @@
 
     function deleteLot(lotCode) {
       return ProjectCollectionService.deleteLot(lotCode);
+    }
+
+    /* sending exam */
+    function getSendedExamById(id) {
+      return ProjectCollectionService.getSendedExamById(id);
+    }
+
+    function getSendedExams() {
+      return ProjectCollectionService.getSendedExams();
+    }
+
+    function createSendExam(sendStructure) {
+      return ProjectCollectionService.createSendExam(sendStructure);
+    }
+
+    function deleteSendedExams(sendedExamCode) {
+      return ProjectCollectionService.deleteSendedExams(sendedExamCode);
     }
   }
 }());

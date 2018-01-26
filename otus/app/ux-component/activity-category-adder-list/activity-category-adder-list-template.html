@@ -15,7 +15,7 @@
     </div>
     <md-divider></md-divider>
   </md-list-item>
-  <md-list-item ng-repeat="activity in $ctrl.activities">
+  <md-list-item ng-repeat="activity in $ctrl.activities" ng-if="$ctrl.activities.length>0">
     <div class="md-list-item-text" layout="column" flex>
       <div layout="row" layout-align="start center">
         <span layout="column">{{ activity.surveyTemplate.identity.name }}</span>
