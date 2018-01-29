@@ -13,20 +13,24 @@
     '$filter',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService',
+    'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
     'otusjs.laboratory.business.project.sending.SendingExamService'
   ];
 
-  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, SendingExamService) {
+  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService) {
     var self = this;
     var therIsNoDataToShow;
 
     self.$onInit = onInit;
     self.dynamicDataTableChange = dynamicDataTableChange;
+    self.changeResults = changeResults;
 
     function onInit() {
       _buildDialogs();
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
+      self.errorAliquots = [];
+      self.errorExamResults = [];
       if(!self.fileStructure){
         $mdDialog.show(therIsNoDataToShow).then(function() {
           ApplicationStateService.activateExamSending();
@@ -42,6 +46,12 @@
         }
         self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy HH:mm');
       }
+      _buildDynamicTableSettings();
+    }
+
+    function changeResults(resultsToShow) {
+      self.changedResults = resultsToShow;
+      self.updateDataTable(self.changedResults);
     }
 
     function _loadList() {
@@ -56,7 +66,81 @@
       self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examResultLot, self.fileStructure.examResults);
     }
 
-    function dynamicDataTableChange() { }
+    function dynamicDataTableChange() {}
+
+
+    function _buildDynamicTableSettings(){
+      self.dynamicTableSettings = DynamicTableSettingsFactory.create();
+
+        if(self.action === 'upload'){
+          //header, flex
+          self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
+            .addIconWithFunction(function (element) {
+              var structureIcon = {icon: "", class: "", tooltip: ""};
+
+              if(self.errorAliquots.length){
+                if(!self.errorAliquots.includes(element.aliquotCode)){
+                  structureIcon = {icon: "done", class: "md-primary", tooltip: "Aliquota válida", orderValue: "done"};
+                } else {
+                  structureIcon = {icon: "warning", class: "md-warn", tooltip: "Aliquota não existe", orderValue: "warning"};
+                }
+              } else {
+                structureIcon = {icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "file_upload"};
+              }
+              return structureIcon;
+            })
+        }
+
+
+        //header, flex, align, ordinationPriorityIndex
+        self.dynamicTableSettings.addHeader('Codigo da aliquota', '20', 'left', 1)
+        //property, formatType
+        .addColumnProperty('aliquotCode')
+
+        //header, flex, align, ordinationPriorityIndex
+        .addHeader('Nome do exame', '20', 'left', 2)
+        //property, formatType
+        .addColumnProperty('examName')
+
+        //header, flex, align, ordinationPriorityIndex
+        .addHeader('Nome do resultado', '20', 'left', 3)
+        //property, formatType
+        .addColumnProperty('resultName')
+
+        //header, flex, align, ordinationPriorityIndex
+        .addHeader('Valor do resultado', '20', 'left', 4)
+        //property, formatType
+        .addColumnProperty('value')
+
+        //header, flex, align, ordinationPriorityIndex
+        .addHeader('Data de realização', '15', 'left', 5)
+        //property, formatType
+        .addColumnProperty('releaseDate', 'DATE')
+
+        .setFilter(false)
+
+        .setShowAll(false)
+
+        .setCheckbox(false)
+
+        .setElementsArray(self.sendingExam.examResults)
+        // .setTitle('Lista de Arquivos')
+        .setCallbackAfterChange(self.dynamicDataTableChange);
+        //Don't use with Service, in this case pass Service as attribute in the template
+        // .setTableUpdateFunction(self.updateDataTable)
+        /*
+          //Optional Config's
+          .setFormatData("'Dia - 'dd/MM/yy")
+          .setCheckbox(false)
+          .setFilter(true)
+          .setReorder(true)
+          .setPagination(true)
+          .setSelectedColor()
+          .setHoverColor()
+
+        */
+        self.settings = self.dynamicTableSettings.getSettings();
+    }
 
     function _buildDialogs() {
       therIsNoDataToShow = $mdDialog.alert()

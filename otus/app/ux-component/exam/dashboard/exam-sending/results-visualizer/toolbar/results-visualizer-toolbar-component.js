@@ -7,9 +7,11 @@
       controller: Controller,
       templateUrl: 'app/ux-component/exam/dashboard/exam-sending/results-visualizer/toolbar/results-visualizer-toolbar-template.html',
       bindings: {
-        onLotDelete: '&',
         action: '<',
-        sendingExam: '<'
+        sendingExam: '<',
+        errorAliquots: '=',
+        errorExamResults: '=',
+        dynamicDataTableChange: '&'
       }
     });
 
@@ -45,12 +47,20 @@
         ApplicationStateService.activateExamSending();
       },function (reason) {
         if(reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE){
+          var uniqueErrorAliquots = _getUnique(reason.data.CONTENT);
+          self.errorAliquots = uniqueErrorAliquots;
+          self.errorExamResults = [];
+          uniqueErrorAliquots.forEach(function (errorAliquot) {
+            self.sendingExam.examResults.forEach(function (examResult) {
+              if(errorAliquot === examResult.aliquotCode){
+                self.errorExamResults.push(examResult);
+              }
+            });
+          });
           aliquotsNotFound
           .title('Aliquota(s) não encontrada(s)')
           .textContent(
-            'A(s) seguinte(s) aliquota(s) não existe(m) no sistema: '
-            + _convertArrayToStringIncludesLastPosition(reason.data.CONTENT,' e ')
-            + '.'
+            'A(s) aliquota(s) não encontrada(s) sera(ão) apontada(s) na lista: '
           );
         }else if(reason.data.MESSAGE === EMPTY_LOT_BACKEND_MESSAGE){
           aliquotsNotFound
@@ -63,25 +73,19 @@
           .title('Falha no envio do arquivo')
           .textContent('Ocorreu algum problema ao enviar os resultados.');
         }
-        $mdDialog.show(aliquotsNotFound).then(function() {});
+        $mdDialog.show(aliquotsNotFound).then(function() {
+          self.dynamicDataTableChange();
+        });
       });
     }
 
-    function _convertArrayToStringIncludesLastPosition(array, includes){
-      var text = "";
-      array.forEach(function(value, index) {
-        if(index == 0){
-          text = text + value;
-        } else {
-          if(index == array.length - 1){
-            text = text + includes + value;
-          } else {
-            text = text + ', ' + value;
-          }
-        }
-      }, this);
-
-      return text;
+    function _getUnique(array){
+      var uniqueValues = [];
+      array.forEach(function (value) {
+        if(!uniqueValues.includes(value))
+          uniqueValues.push(value)
+      });
+      return uniqueValues;
     }
 
     function _buildDialogs() {
