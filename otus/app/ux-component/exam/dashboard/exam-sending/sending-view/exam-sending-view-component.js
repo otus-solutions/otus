@@ -55,6 +55,7 @@
       self.action = ProjectContextService.setExamSendingAction('view');
       ProjectContextService.setFileStructure(self.selectedSendings[0].toJSON());
       ApplicationStateService.activateExamResultsVisualizer();
+      self.selectedSendings = [];
     }
 
     function _setUserFieldCenter() {
@@ -64,7 +65,7 @@
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : ProjectContextService.getFieldCenterInSendingExam() ? ProjectContextService.getFieldCenterInSendingExam() : "";
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
-          if(!self.centerFilter){
+          if (!self.centerFilter) {
             self.centerFilter = self.centers[0];
           }
           ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
@@ -168,7 +169,7 @@
       self.sendingList = [];
       self.listImmutable = [];
       SendingExamService.getSendedExams().then(function (response) {
-        response.forEach(function(lot){
+        response.forEach(function (lot) {
           self.sendingList.push(SendingExamService.loadExamSendingFromJson(lot, {}));
           self.listImmutable.push(SendingExamService.loadExamSendingFromJson(lot, {}));
         });
