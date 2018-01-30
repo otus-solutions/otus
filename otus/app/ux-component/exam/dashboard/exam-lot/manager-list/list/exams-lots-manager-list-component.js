@@ -63,7 +63,6 @@
     function loadExamDescriptors(center) {
       self.exams = [];
       ExamLotService.getDescriptors().then(function (result) {
-        console.log(center);
         result.forEach(function (aliquotTypes) {
           self.exams.push(aliquotTypes);
         });
@@ -78,7 +77,6 @@
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : laboratoryContextService.getSelectedExamLotFieldCenter() ? laboratoryContextService.getSelectedExamLotFieldCenter() : "";
           loadExamDescriptors(self.centerFilter);
           laboratoryContextService.setSelectedExamLotFieldCenter(self.centerFilter);
-          self.centerFilterSelectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
           _LoadLotsList();
         });
@@ -112,7 +110,6 @@
     }
 
     function onFilter(){
-
       self.selectedLots = [];
       _setSessionData();
       if(self.lotsListImutable.length) {
@@ -131,6 +128,7 @@
 
     function _filterByCenter(lot) {
       if (self.centerFilter.length) {
+
         return lot.fieldCenter.acronym == self.centerFilter;
       } else {
         return lot;
