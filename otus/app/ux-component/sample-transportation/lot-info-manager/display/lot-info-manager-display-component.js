@@ -87,6 +87,9 @@
       //property, formatType
       .addColumnProperty('aliquotCollectionData.time', 'DATE')
 
+        .addHeader('Função', '10', '', 5)
+        .addColumnProperty('roleLabel')
+
       //icon, tooltip, classButton, successMsg,
       //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
       .addColumnIconButton(
