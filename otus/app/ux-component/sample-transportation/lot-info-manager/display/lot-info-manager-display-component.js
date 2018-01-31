@@ -65,7 +65,6 @@
       _buildDynamicTableSettings();
     }
 
-
     function _buildDynamicTableSettings(){
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
       //header, flex, align, ordinationPriorityIndex

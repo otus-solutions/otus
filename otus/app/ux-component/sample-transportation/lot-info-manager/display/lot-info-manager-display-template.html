@@ -97,11 +97,11 @@
 
             <div layout="row" layout-margin>
               <div layout="column" flex-gt-sm="40" flex-gt-md="25" flex="40">
-                <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lotDataSet"></otus-sample-transportation-lot-aliquots-chart>
+                <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lot.chartDataSet"></otus-sample-transportation-lot-aliquots-chart>
               </div>
               <div layout="column" style="height: 200px;" flex>
                 <md-content class="no-background-color">
-                  <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lotDataSet" flex></otus-sample-transportation-lot-chart-subtitle-table>
+                  <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lot.chartDataSet" flex></otus-sample-transportation-lot-chart-subtitle-table>
                 </md-content>
               </div>
             </div>
@@ -117,5 +117,3 @@
         </div>
       </div>
 </md-content>
-
-

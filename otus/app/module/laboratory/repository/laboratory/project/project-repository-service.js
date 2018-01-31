@@ -11,12 +11,12 @@
 
   function Service(ProjectCollectionService) {
     var self = this;
-    var laboratory = {};
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
     self.getAliquotConfiguration = getAliquotConfiguration;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
+    self.getAvailableExams = getAvailableExams;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
     self.createLot = createLot;
@@ -35,10 +35,12 @@
       return ProjectCollectionService.getAliquotConfiguration();
     }
 
-
     function getAliquotsDescriptors() {
       return ProjectCollectionService.getAliquotDescriptors();
-      // return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
+    }
+
+    function getAvailableExams(center) {
+      return ProjectCollectionService.getAvailableExams(center);
     }
 
     function getAliquotsByCenter(center) {

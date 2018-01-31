@@ -30,6 +30,7 @@
     self.getAliquotConfiguration = getAliquotConfiguration;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getAliquotDescriptors = getAliquotDescriptors;
+    self.getAvailableExams = getAvailableExams;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -288,5 +289,22 @@
 
       return request.promise;
     }
+
+    function getAvailableExams(center) {
+      var request = $q.defer();
+
+      _projectRemoteStorage
+      .whenReady()
+      .then(function (remoteStorage) {
+        return remoteStorage
+        .getAvailableExams(center)
+        .then(function (descriptors) {
+          request.resolve(descriptors);
+        });
+      });
+
+      return request.promise;
+    }
+
   }
 }());

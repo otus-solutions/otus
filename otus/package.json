@@ -40,7 +40,7 @@
     "angular-ui-router": "^0.3.1",
     "chart.js": "^2.7.0",
     "fuse.js": "^2.6.2",
-    "jquery": "2.2.0",
+    "jquery": "3.0.0",
     "jsbarcode": "^3.5.7",
     "json2csv": "^3.11.5",
     "lokijs": "1.4.2",
