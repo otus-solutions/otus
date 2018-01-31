@@ -62,7 +62,7 @@
 
     function loadExamDescriptors(center) {
       self.exams = [];
-      ExamLotService.getDescriptors().then(function (result) {
+      ExamLotService.getAvailableExams(center).then(function (result) {
         result.forEach(function (aliquotTypes) {
           self.exams.push(aliquotTypes);
         });
@@ -75,6 +75,9 @@
         .then(function(userData) {
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : laboratoryContextService.getSelectedExamLotFieldCenter() ? laboratoryContextService.getSelectedExamLotFieldCenter() : "";
+          if(!self.centerFilter){
+            self.centerFilter = self.centers[0];
+          }
           loadExamDescriptors(self.centerFilter);
           laboratoryContextService.setSelectedExamLotFieldCenter(self.centerFilter);
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
