@@ -209,6 +209,10 @@
     }
 
     function setChartData() {
+      if (!self.lot.chartDataSet.chartId) {
+        self.lot.chartDataSet.chartId = "1";
+      }
+      self.lot.chartDataSet.fieldCenter = self.lot.fieldCenter;
       self.lot.chartDataSet.backgroundColor = color;
     }
 

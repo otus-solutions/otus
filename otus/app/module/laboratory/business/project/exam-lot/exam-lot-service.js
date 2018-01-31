@@ -180,7 +180,7 @@
 
       ProjectRepositoryService.getAvailableExams(center)
         .then(function(response) {
-          deferred.resolve(response.data);
+          deferred.resolve(response);
           LoadingScreenService.finish();
         })
         .catch(function(err) {
