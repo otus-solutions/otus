@@ -48,7 +48,7 @@
     "label-maker-js": "https://github.com/ccem-dev/label-maker-js.git#v1.1",
     "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#v1.6",
     "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#v1.0",
-    "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#v1.9",
+    "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#dev",
     "otus-preview-js": "https://github.com/ccem-dev/otus-preview-js.git#v1.7",
     "otus-validation-js": "https://github.com/ccem-dev/otus-validation-js.git#v1.0",
     "please-wait": "0.0.5",
