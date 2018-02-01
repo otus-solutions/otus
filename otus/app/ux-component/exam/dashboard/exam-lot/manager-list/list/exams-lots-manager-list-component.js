@@ -35,7 +35,7 @@
     self.realizationBeginFilter = "";
     self.realizationEndFilter = "";
     self.centers = [];
-    self.exams = [];
+    // self.exams = [];
     self.lotsList = [];
     self.lotsListImutable = [];
 
@@ -44,14 +44,9 @@
     self.selectLot = selectLot;
     self.updateOnDelete = updateOnDelete;
     self.onFilter = onFilter;
+    self.loadExamDescriptors = loadExamDescriptors;
 
     function onInit() {
-      ExamLotService.getDescriptors().then(function (result) {
-        result.forEach(function (aliquotTypes) {
-          self.exams.push(aliquotTypes)
-        });
-      });
-
       ProjectFieldCenterService.loadCenters().then(function (result) {
         self.lotDataSet = [];
         self.colorSet = [];
@@ -60,8 +55,18 @@
           self.centers.push(fieldCenter.acronym)
         });
         _setUserFieldCenter();
+
       });
       self.otusExamsLotsManager.listComponent = self;
+    }
+
+    function loadExamDescriptors(center) {
+      self.exams = [];
+      ExamLotService.getAvailableExams(center).then(function (result) {
+        result.forEach(function (aliquotTypes) {
+          self.exams.push(aliquotTypes);
+        });
+      });
     }
 
     function _setUserFieldCenter() {
@@ -70,8 +75,11 @@
         .then(function(userData) {
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : laboratoryContextService.getSelectedExamLotFieldCenter() ? laboratoryContextService.getSelectedExamLotFieldCenter() : "";
+          if(!self.centerFilter){
+            self.centerFilter = self.centers[0];
+          }
+          loadExamDescriptors(self.centerFilter);
           laboratoryContextService.setSelectedExamLotFieldCenter(self.centerFilter);
-          self.centerFilterSelectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
           _LoadLotsList();
         });
@@ -123,6 +131,7 @@
 
     function _filterByCenter(lot) {
       if (self.centerFilter.length) {
+
         return lot.fieldCenter.acronym == self.centerFilter;
       } else {
         return lot;

@@ -21,6 +21,7 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+    self.getAvailableExams = getAvailableExams;
     self.getSendedExamById = getSendedExamById;
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
@@ -64,6 +65,12 @@
       return _rest.deleteLot({ id: lotCode }).$promise;
     }
 
+    function getAvailableExams(center) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getAvailableExams({center: center}).$promise;
+    }
     /* sending exam */
 
     function getSendedExamById(id) {

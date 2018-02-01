@@ -65,8 +65,7 @@
       _buildDynamicTableSettings();
     }
 
-
-    function _buildDynamicTableSettings(){      
+    function _buildDynamicTableSettings(){
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
       //header, flex, align, ordinationPriorityIndex
       .addHeader('Código', '20', 'left', 4)
@@ -88,13 +87,16 @@
       //property, formatType
       .addColumnProperty('aliquotCollectionData.time', 'DATE')
 
+        .addHeader('Função', '10', '', 5)
+        .addColumnProperty('roleLabel')
+
       //icon, tooltip, classButton, successMsg,
       //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
       .addColumnIconButton(
         'delete_forever', 'Remover Alíquota', '', 'A Alíquota foi removida',
         self.removeElement, false, false, true, false, false
       )
-            
+
       .setElementsArray(self.lot.aliquotList)
       .setTitle('Lista de Arquivos')
       .setCallbackAfterChange(self.dynamicDataTableChange)
@@ -109,8 +111,8 @@
         .setPagination(true)
         .setSelectedColor()
         .setHoverColor()
-        
-      */    
+
+      */
       .getSettings();
     }
 
@@ -220,7 +222,7 @@
 
     function _unselectedAllAliquot(){
       self.selectedAliquots = [];
-      
+
       self.lot.aliquotList.forEach(function(aliquot){
         aliquot.isSelected = false;
       });

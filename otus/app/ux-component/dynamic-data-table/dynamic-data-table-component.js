@@ -98,9 +98,8 @@
     self.currentRowOnHover;
 
     function onInit() {
-      _initializeDefaultValues()
+      _initializeDefaultValues();
       _setOrderQuery();
-
 
       self.tableUpdateFunction = _refreshGrid;
 
@@ -135,6 +134,7 @@
         self.rowsPerPageArray = _settings.rowsPerPageArray;
         self.rowPerPageDefault = _settings.rowPerPageDefault;
         self.hideDelayTime = _settings.hideDelayTime;
+        self.disableShowAll = _settings.disableShowAll;
       }
 
       // if(!self.numberFieldsAlignedLeft) self.numberFieldsAlignedLeft = 1;
@@ -150,8 +150,7 @@
       if (!self.formatDataIndexArray) self.formatDataIndexArray = [];
       if (!self.formatDataPropertiesArray) self.formatDataPropertiesArray = [];
       if (!self.hideDelayTime) self.hideDelayTime = 3000;
-      if (!self.callbackAfterChange) self.callbackAfterChange = function () { };
-
+      if (!self.callbackAfterChange) self.callbackAfterChange = function () {};
       _alignArrayPopulate();
 
       self.error = {
@@ -594,7 +593,8 @@
           var value = _getValueFromElement(element, elementProperty, index, true);
           var orderValue = _getValueFromElement(element, elementProperty, index);
         } else {
-          specialField = _specialFieldConstruction(elementProperty);
+          specialField = _specialFieldConstruction(elementProperty,element);
+          var orderValue = specialField.orderValue || '';
         }
 
         var column = _createColumn(
@@ -625,9 +625,10 @@
       return column;
     }
 
-    function _specialFieldConstruction(elementProperty) {
+    function _specialFieldConstruction(elementProperty,element) {
       var specialFieldStructure = undefined;
       var iconButton = elementProperty.iconButton;
+      var iconWithFunction = elementProperty.iconWithFunction;
 
       if (iconButton) {
         specialFieldStructure = {
@@ -642,7 +643,14 @@
             renderGrid: iconButton.renderGrid || false,
             removeElement: iconButton.removeElement || false,
             receiveCallback: iconButton.receiveCallback || false
-          }
+          },
+          orderValue: iconButton.icon
+        }
+      } else if(iconWithFunction){
+        var structure = iconWithFunction.iconFunction(element);
+        specialFieldStructure = {
+          iconStructure : structure,
+          orderValue: structure.orderValue
         }
       }
 
