@@ -7,12 +7,12 @@
 
   service.$inject = [
     '$q',
-    'otusjs.laboratory.exam.sending.ExamResultLotSerive',
+    'otusjs.laboratory.exam.sending.ExamLotService',
     'otusjs.laboratory.repository.ProjectRepositoryService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service($q, ExamResultLotSerive, ProjectRepositoryService, LoadingScreenService) {
+  function service($q, ExamLotService, ProjectRepositoryService, LoadingScreenService) {
     var self = this;
     var messageLoading =
       'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
@@ -20,6 +20,7 @@
     /* Public methods */
     self.createExamSending = createExamSending;
     self.loadExamSendingFromJson = loadExamSendingFromJson;
+    self.getExamList = getExamList;
     self.getSendedExamById = getSendedExamById;
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
@@ -27,11 +28,15 @@
 
     //TODO: Corrigir o problema do nome errado lá no model!
     function createExamSending() {
-      return ExamResultLotSerive.createExamSending();
+      return ExamLotService.createExamSending();
     }
 
     function loadExamSendingFromJson(examResultLot, examResults) {
-      return ExamResultLotSerive.buildExamSendingFromJson(examResultLot, examResults);
+      return ExamLotService.buildExamSendingFromJson(examResultLot, examResults);
+    }
+
+    function getExamList() {
+      return ExamLotService.getExamList();
     }
 
     function getSendedExamById(id) {

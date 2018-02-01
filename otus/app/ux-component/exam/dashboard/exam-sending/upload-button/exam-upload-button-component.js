@@ -28,15 +28,15 @@
     function onInit() {
       fr.onload = receivedText;
       self.fileData = {};
-      self.fileData.examResultLot = {};
-      self.fileData.examResultLot.fieldCenter = {};
+      self.fileData.examLot = {};
+      self.fileData.examLot.fieldCenter = {};
 
       self.input = $($element[0].querySelector('#fileInput'));
       self.input.on('change', function (e) {
-        self.fileData.examResultLot.operator = SessionContextService.getData('loggedUser').email;
-        self.fileData.examResultLot.fileName = e.target.files[0].name;
-        self.fileData.examResultLot.realizationDate = new Date();
-        self.fileData.examResultLot.fieldCenter.acronym = ProjectContextService.getFieldCenterInSendingExam();
+        self.fileData.examLot.operator = SessionContextService.getData('loggedUser').email;
+        self.fileData.examLot.fileName = e.target.files[0].name;
+        self.fileData.examLot.realizationDate = new Date();
+        self.fileData.examLot.fieldCenter.acronym = ProjectContextService.getFieldCenterInSendingExam();
         if (_validateFileToUpload(e.target.files[0])) {
           fr.readAsText(e.target.files[0]);
         }
@@ -101,8 +101,7 @@
     function _JSONContainsPropertyOfExam(file) {
       var data = JSON.parse(file);
       try {
-        //TODO: acresentar mais propriedades importantes
-        return data.hasOwnProperty('examLot');
+        return data.hasOwnProperty('examLot') && data.hasOwnProperty('exams');
       } catch (e) {
         return false;
       }

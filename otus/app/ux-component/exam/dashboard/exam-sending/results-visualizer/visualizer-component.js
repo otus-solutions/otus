@@ -37,13 +37,11 @@
         });
       } else {
         if (self.action === 'view') {
-          self.sendingExam = [];
-          self.sendingExam.exam = [];
+          self.examList = []
           _loadList();
         } else {
           _buildExamSending();
-          //TODO: Verificar como irá ser realizado o calculo agora com o novo modelo
-          // self.sendingExam.examLot.resultsQuantity = self.fileStructure.exam.length;
+          self.sendingExam.examLot.resultsQuantity = self.examList.length;
         }
         self.formattedDate = $filter('date')(self.fileStructure.examLot.realizationDate, 'dd/MM/yyyy HH:mm');
       }
@@ -55,20 +53,21 @@
       self.updateDataTable(self.changedResults);
     }
 
+    //TODO: Ainda está funcionando?
     function _loadList() {
       SendingExamService.getSendedExamById(self.fileStructure.examLot._id).then(function (response) {
-        self.fileStructure.exam = response;
+        self.fileStructure.exams = response;
         _buildExamSending();
-        self.updateDataTable(self.fileStructure.exam);
+        self.updateDataTable(self.fileStructure.exams);
       });
     }
 
     function _buildExamSending() {
-      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examLot, self.fileStructure.exam);
+      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examLot, self.fileStructure.exams);
+      self.examList = self.sendingExam.getExamList();
     }
 
     function dynamicDataTableChange() { }
-
 
     function _buildDynamicTableSettings() {
       self.dynamicTableSettings = DynamicTableSettingsFactory.create();
@@ -92,10 +91,9 @@
           })
       }
 
-
       //header, flex, align, ordinationPriorityIndex
       self.dynamicTableSettings.addHeader('Codigo da aliquota', '20', 'left', 1)
-        .setElementsArray(self.sendingExam.exams)
+        .setElementsArray(self.examList)
 
         //property, formatType
         .addColumnProperty('aliquotCode')
