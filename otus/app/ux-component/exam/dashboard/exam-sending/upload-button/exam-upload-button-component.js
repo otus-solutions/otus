@@ -74,13 +74,7 @@
 
     function _fileIsEmpty(file) {
       try {
-        if (file) {
-          return false;
-        } else if (JSON.parse(file)) {
-          return false;
-        } else {
-          return true;
-        }
+        file ? false : true;
       } catch (e) {
         return true;
       }
@@ -88,19 +82,15 @@
 
     function _isJSONValid(file) {
       try {
-        if (JSON.parse(file)) {
-          return true;
-        } else {
-          return false;
-        }
+        return JSON.parse(file) instanceof Object
       } catch (e) {
         return false;
       }
     }
 
     function _JSONContainsPropertyOfExam(file) {
-      var data = JSON.parse(file);
       try {
+        var data = JSON.parse(file);
         return data.hasOwnProperty('examLot') && data.hasOwnProperty('exams');
       } catch (e) {
         return false;

@@ -62,6 +62,7 @@
       });
     }
 
+    //TODO: Verificar como irá ficar a data
     function _buildExamSending() {
       self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examLot, self.fileStructure.exams);
       self.examList = self.sendingExam.getExamList();
