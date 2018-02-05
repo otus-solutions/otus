@@ -47,24 +47,25 @@
       self.input.click();
     }
 
-    function _validateFileToUpload(file) {
-      if (_typeIsValid(file.type)) {
-        return true;
-      } else {
-        _toastError();
-      }
-    }
-
     function receivedText(e) {
-      var lines = e.target.result;
-      if (!_fileIsEmpty(lines) && _isJSONValid(lines) && _JSONContainsPropertyOfExam(lines)) {
-        self.fileData = JSON.parse(lines);
+      var fileLines = e.target.result;
+      if (!_fileIsEmpty(fileLines) && _isJSONValid(fileLines) && _JSONContainsPropertyOfExam(fileLines)) {
+        var resultJSON = JSON.parse(fileLines);
+        self.fileData.exams = resultJSON.exams;
         ProjectContextService.setFileStructure(self.fileData);
         self.action = ProjectContextService.setExamSendingAction('upload');
         ApplicationStateService.activateExamResultsVisualizer();
       } else {
         self.input[0].value = '';
         _toastEmptyFile();
+      }
+    }
+
+    function _validateFileToUpload(file) {
+      if (_typeIsValid(file.type)) {
+        return true;
+      } else {
+        _toastError();
       }
     }
 

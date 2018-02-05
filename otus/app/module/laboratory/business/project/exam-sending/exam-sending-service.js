@@ -26,7 +26,6 @@
     self.createSendExam = createSendExam;
     self.deleteSendedExams = deleteSendedExams;
 
-    //TODO: Corrigir o problema do nome errado lá no model!
     function createExamSending() {
       return ExamLotService.createExamSending();
     }

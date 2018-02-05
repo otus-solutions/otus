@@ -47,7 +47,7 @@
     <div layout="column" flex>
       <md-content layout="column" flex>
         <dynamic-data-table flex
-                            headers="['Data do envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
+                            headers="['Data e hora de envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
                             elements-array="$ctrl.sendingList || []"
                             elements-properties="['examLot.realizationDate', 'examLot.fileName', 'examLot.fieldCenter.acronym', 'examLot.resultsQuantity', 'examLot.operator']"
                             callback-after-change="$ctrl.dynamicDataTableChange"

@@ -37,7 +37,7 @@
         });
       } else {
         if (self.action === 'view') {
-          self.examList = []
+          self.examList = [];
           _loadList();
         } else {
           _buildExamSending();
@@ -53,16 +53,14 @@
       self.updateDataTable(self.changedResults);
     }
 
-    //TODO: Ainda está funcionando?
     function _loadList() {
       SendingExamService.getSendedExamById(self.fileStructure.examLot._id).then(function (response) {
         self.fileStructure.exams = response;
         _buildExamSending();
-        self.updateDataTable(self.fileStructure.exams);
+        self.updateDataTable(self.examList);
       });
     }
 
-    //TODO: Verificar como irá ficar a data
     function _buildExamSending() {
       self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examLot, self.fileStructure.exams);
       self.examList = self.sendingExam.getExamList();
