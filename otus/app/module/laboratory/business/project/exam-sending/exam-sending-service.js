@@ -14,7 +14,9 @@
 
   function service($q, ExamLotService, ProjectRepositoryService, LoadingScreenService) {
     var self = this;
-    var messageLoading =
+    var messageLoadingToGet =
+      'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
+    var messageLoadingToCreate =
       'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
 
     /* Public methods */
@@ -39,7 +41,7 @@
     }
 
     function getSendedExamById(id) {
-      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.changeMessage(messageLoadingToGet);
       LoadingScreenService.start();
       var deferred = $q.defer();
 
@@ -56,7 +58,7 @@
     }
 
     function getSendedExams() {
-      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.changeMessage(messageLoadingToGet);
       LoadingScreenService.start();
       var deferred = $q.defer();
 
@@ -74,10 +76,12 @@
 
     function createSendExam(sendStructure) {
       var deferred = $q.defer();
-
+      LoadingScreenService.changeMessage(messageLoadingToCreate);
+      LoadingScreenService.start();
       ProjectRepositoryService.createSendExam(sendStructure)
         .then(function (response) {
           deferred.resolve(response);
+          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);

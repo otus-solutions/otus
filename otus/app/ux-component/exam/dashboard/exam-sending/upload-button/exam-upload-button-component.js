@@ -19,7 +19,7 @@
 
   function Controller($q, $element, $mdToast, SessionContextService, ApplicationStateService, ProjectContextService) {
     var self = this;
-    var timeShowMsg = 3000;
+    var timeShowMsg = 5000;
     var fr = new FileReader();
 
     self.$onInit = onInit;
@@ -36,7 +36,6 @@
         self.fileData.examLot.operator = SessionContextService.getData('loggedUser').email;
         self.fileData.examLot.fileName = e.target.files[0].name;
         self.fileData.examLot.realizationDate = new Date();
-        self.fileData.examLot.fieldCenter.acronym = ProjectContextService.getFieldCenterInSendingExam();
         if (_validateFileToUpload(e.target.files[0])) {
           fr.readAsText(e.target.files[0]);
         }
@@ -51,14 +50,23 @@
       var fileLines = e.target.result;
       if (!_fileIsEmpty(fileLines) && _isJSONValid(fileLines) && _JSONContainsPropertyOfExam(fileLines)) {
         var resultJSON = JSON.parse(fileLines);
-        self.fileData.exams = resultJSON.exams;
-        ProjectContextService.setFileStructure(self.fileData);
-        self.action = ProjectContextService.setExamSendingAction('upload');
-        ApplicationStateService.activateExamResultsVisualizer();
+        if (isCompatibleFieldCenter(resultJSON.examLot.fieldCenter.acronym)) {
+          self.fileData.exams = resultJSON.exams;
+          ProjectContextService.setFileStructure(self.fileData);
+          self.action = ProjectContextService.setExamSendingAction('upload');
+          ApplicationStateService.activateExamResultsVisualizer();
+        } else {
+          self.input[0].value = '';
+          _toastErrorFieldCenter(ProjectContextService.getFieldCenterInSendingExam(), resultJSON.examLot.fieldCenter.acronym);
+        }
       } else {
         self.input[0].value = '';
         _toastEmptyFile();
       }
+    }
+
+    function isCompatibleFieldCenter(acronym) {
+      return acronym == ProjectContextService.getFieldCenterInSendingExam() ? true : false;
     }
 
     function _validateFileToUpload(file) {
@@ -101,7 +109,7 @@
     function _toastEmptyFile() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('O arquivo está vazio')
+          .textContent('O arquivo está vazio ou com algum formato inesperado')
           .hideDelay(timeShowMsg)
       );
     }
@@ -110,6 +118,17 @@
       $mdToast.show(
         $mdToast.simple()
           .textContent('Arquivo inválido')
+          .hideDelay(timeShowMsg)
+      );
+    }
+
+    function _toastErrorFieldCenter(userFieldCenter, fileFieldCenter) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Seu centro: '
+          + userFieldCenter +
+          ' é diferente do centro definido no arquivo: '
+          + fileFieldCenter)
           .hideDelay(timeShowMsg)
       );
     }
