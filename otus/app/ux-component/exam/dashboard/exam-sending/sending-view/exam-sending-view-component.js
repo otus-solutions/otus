@@ -74,8 +74,8 @@
 
     function _buildDialogs() {
       _confirmDeleteSelected = $mdDialog.confirm()
-        .title('Confirmar exclusão de envio(s):')
-        .textContent('O(s) envio(s) será(ão) excluido(s)')
+        .title('Confirmação para exclusão de arquivos')
+        .textContent('Atenção: Os arquivos selecionados serão excluídos')
         .ariaLabel('Confirmação de exclusão')
         .ok('Ok')
         .cancel('Voltar');
