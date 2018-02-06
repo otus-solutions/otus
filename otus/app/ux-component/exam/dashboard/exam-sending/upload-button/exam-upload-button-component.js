@@ -35,7 +35,6 @@
       self.input.on('change', function (e) {
         self.fileData.examLot.operator = SessionContextService.getData('loggedUser').email;
         self.fileData.examLot.fileName = e.target.files[0].name;
-        self.fileData.examLot.realizationDate = new Date();
         if (_validateFileToUpload(e.target.files[0])) {
           fr.readAsText(e.target.files[0]);
         }
@@ -51,7 +50,11 @@
       if (!_fileIsEmpty(fileLines) && _isJSONValid(fileLines) && _JSONContainsPropertyOfExam(fileLines)) {
         var resultJSON = JSON.parse(fileLines);
         if (isCompatibleFieldCenter(resultJSON.examLot.fieldCenter.acronym)) {
+
+          self.fileData.examLot.fieldCenter.acronym = ProjectContextService.getFieldCenterInSendingExam();
           self.fileData.exams = resultJSON.exams;
+          self.fileData.examLot.realizationDate = new Date();
+
           ProjectContextService.setFileStructure(self.fileData);
           self.action = ProjectContextService.setExamSendingAction('upload');
           ApplicationStateService.activateExamResultsVisualizer();

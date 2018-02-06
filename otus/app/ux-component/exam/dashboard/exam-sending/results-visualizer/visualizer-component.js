@@ -79,9 +79,9 @@
 
             if (self.errorAliquots.length) {
               if (!self.errorAliquots.includes(element.aliquotCode)) {
-                structureIcon = { icon: "done", class: "md-primary", tooltip: "Aliquota válida", orderValue: "done" };
+                structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota válida", orderValue: "done" };
               } else {
-                structureIcon = { icon: "warning", class: "md-warn", tooltip: "Aliquota não existe", orderValue: "warning" };
+                structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não existe", orderValue: "warning" };
               }
             } else {
               structureIcon = { icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "file_upload" };
@@ -91,7 +91,7 @@
       }
 
       //header, flex, align, ordinationPriorityIndex
-      self.dynamicTableSettings.addHeader('Codigo da aliquota', '20', 'left', 1)
+      self.dynamicTableSettings.addHeader('Código da alíquota', '20', 'left', 1)
         .setElementsArray(self.examList)
 
         //property, formatType
