@@ -72,7 +72,6 @@
       self.dynamicTableSettings = DynamicTableSettingsFactory.create();
 
       if (self.action === 'upload') {
-        //header, flex
         self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
           .addIconWithFunction(function (element) {
             var structureIcon = { icon: "", class: "", tooltip: "" };

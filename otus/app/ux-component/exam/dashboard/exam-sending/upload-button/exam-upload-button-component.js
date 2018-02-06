@@ -112,7 +112,7 @@
     function _toastEmptyFile() {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('O arquivo está vazio ou com algum formato inesperado')
+          .textContent('O arquivo está vazio ou inconsistente')
           .hideDelay(timeShowMsg)
       );
     }
