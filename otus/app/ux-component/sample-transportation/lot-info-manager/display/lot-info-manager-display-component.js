@@ -65,7 +65,6 @@
       _buildDynamicTableSettings();
     }
 
-
     function _buildDynamicTableSettings(){
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
       //header, flex, align, ordinationPriorityIndex
@@ -87,6 +86,9 @@
       .addHeader('Aliquotagem', '20', '', 2)
       //property, formatType
       .addColumnProperty('aliquotCollectionData.time', 'DATE')
+
+        .addHeader('Função', '10', '', 5)
+        .addColumnProperty('roleLabel')
 
       //icon, tooltip, classButton, successMsg,
       //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback

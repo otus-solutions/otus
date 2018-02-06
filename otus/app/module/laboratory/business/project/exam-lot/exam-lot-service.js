@@ -29,6 +29,7 @@
     self.deleteLot = deleteLot;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
     self.getDescriptors = getDescriptors;
+    self.getAvailableExams = getAvailableExams;
 
     var messageLoading =
       'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
@@ -167,6 +168,21 @@
           LoadingScreenService.finish();
         })
         .catch(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function getAvailableExams(center){
+      var deferred = $q.defer();
+
+      ProjectRepositoryService.getAvailableExams(center)
+        .then(function(response) {
+          deferred.resolve(response);
+          LoadingScreenService.finish();
+        })
+        .catch(function(err) {
           deferred.reject(err);
         });
 
