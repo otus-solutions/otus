@@ -52,6 +52,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -69,6 +70,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -85,6 +87,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;

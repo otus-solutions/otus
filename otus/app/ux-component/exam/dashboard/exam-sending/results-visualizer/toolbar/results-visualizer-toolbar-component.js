@@ -59,15 +59,17 @@
         self.errorAliquots = uniqueErrorAliquots;
         self.errorExamResults = [];
         uniqueErrorAliquots.forEach(function (errorAliquot) {
-          self.sendingExam.examResults.forEach(function (examResult) {
-            if (errorAliquot === examResult.aliquotCode) {
-              self.errorExamResults.push(examResult);
-            }
+          self.sendingExam.exams.forEach(function (exam) {
+            exam.examResults.forEach(function (result) {
+              if (errorAliquot == result.aliquotCode) {
+                self.errorExamResults.push(result);
+              }
+            });
           });
         });
         aliquotsNotFound
           .title('Aliquota(s) não encontrada(s)')
-          .textContent('A(s) aliquota(s) não encontrada(s) sera(ão) apontada(s) na lista: ');
+          .textContent('A(s) aliquota(s) não encontrada(s) sera(ão) apontada(s) com um icone de alerta.');
       } else if (reason.data.MESSAGE === EMPTY_LOT_BACKEND_MESSAGE) {
         aliquotsNotFound
           .title('O lote não possue resultados')
