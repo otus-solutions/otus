@@ -55,6 +55,7 @@
       self.action = ProjectContextService.setExamSendingAction('view');
       ProjectContextService.setFileStructure(self.selectedSendings[0].toJSON());
       ApplicationStateService.activateExamResultsVisualizer();
+      self.selectedSendings = [];
     }
 
     function _setUserFieldCenter() {
@@ -64,7 +65,7 @@
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : ProjectContextService.getFieldCenterInSendingExam() ? ProjectContextService.getFieldCenterInSendingExam() : "";
           self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
-          if(!self.centerFilter){
+          if (!self.centerFilter) {
             self.centerFilter = self.centers[0];
           }
           ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
@@ -73,8 +74,8 @@
 
     function _buildDialogs() {
       _confirmDeleteSelected = $mdDialog.confirm()
-        .title('Confirmar exclusão de envio(s):')
-        .textContent('O(s) envio(s) será(ão) excluido(s)')
+        .title('Confirmação para exclusão de arquivos')
+        .textContent('Atenção: Os arquivos selecionados serão excluídos')
         .ariaLabel('Confirmação de exclusão')
         .ok('Ok')
         .cancel('Voltar');
@@ -89,7 +90,7 @@
     }
 
     function _removeRecursive(array, callback) {
-      SendingExamService.deleteSendedExams(array[0].examResultLot._id).then(function () {
+      SendingExamService.deleteSendedExams(array[0].examLot._id).then(function () {
         if (array.length == 1) {
           callback();
         } else {
@@ -139,11 +140,11 @@
     }
 
     function _filterByCenter(filteredByCenter) {
-      return filteredByCenter.examResultLot.fieldCenter.acronym === self.centerFilter;
+      return filteredByCenter.examLot.fieldCenter.acronym === self.centerFilter;
     }
 
     function _filterByPeriod(filteredByCenter) {
-      var formattedData = $filter('date')(filteredByCenter.examResultLot.realizationDate, 'yyyyMMdd');
+      var formattedData = $filter('date')(filteredByCenter.examLot.realizationDate, 'yyyyMMdd');
       if (self.realizationBeginFilter && self.realizationEndFilter) {
         var initialDateFormatted = $filter('date')(self.realizationBeginFilter, 'yyyyMMdd');
         var finalDateFormatted = $filter('date')(self.realizationEndFilter, 'yyyyMMdd');
@@ -168,7 +169,7 @@
       self.sendingList = [];
       self.listImmutable = [];
       SendingExamService.getSendedExams().then(function (response) {
-        response.forEach(function(lot){
+        response.forEach(function (lot) {
           self.sendingList.push(SendingExamService.loadExamSendingFromJson(lot, {}));
           self.listImmutable.push(SendingExamService.loadExamSendingFromJson(lot, {}));
         });

@@ -34,7 +34,7 @@
     self.activateExamsDashBoard = activateExamsDashBoard;
     self.activateExamsLotsManagerList = activateExamsLotsManagerList;
     self.activateExamsLotInfoManager = activateExamsLotInfoManager;
-    self.activateExamSending  = activateExamSending;
+    self.activateExamSending = activateExamSending;
     self.activateExamResultsVisualizer = activateExamResultsVisualizer;
     // self.activateErrorOffline = activateErrorOffline;
 
@@ -114,7 +114,7 @@
     }
 
     function activateExamSending() {
-      $state.go(STATE.EXAM_SENDING,{},{reload:true});
+      $state.go(STATE.EXAM_SENDING, {}, { reload: true });
     }
 
     function activateExamResultsVisualizer() {

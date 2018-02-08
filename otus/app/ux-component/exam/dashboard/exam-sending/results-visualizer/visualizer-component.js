@@ -30,21 +30,20 @@
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
       self.errorAliquots = [];
-      self.errorExamResults = [];
-      if(!self.fileStructure){
-        $mdDialog.show(therIsNoDataToShow).then(function() {
+      self.errorexam = [];
+      if (!self.fileStructure) {
+        $mdDialog.show(therIsNoDataToShow).then(function () {
           ApplicationStateService.activateExamSending();
         });
       } else {
         if (self.action === 'view') {
-          self.sendingExam = [];
-          self.sendingExam.examResults = [];
+          self.examList = [];
           _loadList();
         } else {
           _buildExamSending();
-          self.sendingExam.examResultLot.resultsQuantity = self.fileStructure.examResults.length;
+          self.sendingExam.examLot.resultsQuantity = self.examList.length;
         }
-        self.formattedDate = $filter('date')(self.fileStructure.examResultLot.realizationDate, 'dd/MM/yyyy HH:mm');
+        self.formattedDate = $filter('date')(self.fileStructure.examLot.realizationDate, 'dd/MM/yyyy HH:mm');
       }
       _buildDynamicTableSettings();
     }
@@ -55,45 +54,45 @@
     }
 
     function _loadList() {
-      SendingExamService.getSendedExamById(self.fileStructure.examResultLot._id).then(function (response) {
-        self.fileStructure.examResults = response;
+      SendingExamService.getSendedExamById(self.fileStructure.examLot._id).then(function (response) {
+        self.fileStructure.exams = response;
         _buildExamSending();
-        self.updateDataTable(self.fileStructure.examResults);
+        self.updateDataTable(self.examList);
       });
     }
 
     function _buildExamSending() {
-      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examResultLot, self.fileStructure.examResults);
+      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examLot, self.fileStructure.exams);
+      self.examList = self.sendingExam.getExamList();
     }
 
-    function dynamicDataTableChange() {}
+    function dynamicDataTableChange() { }
 
-
-    function _buildDynamicTableSettings(){
+    function _buildDynamicTableSettings() {
       self.dynamicTableSettings = DynamicTableSettingsFactory.create();
 
-        if(self.action === 'upload'){
-          //header, flex
-          self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
-            .addIconWithFunction(function (element) {
-              var structureIcon = {icon: "", class: "", tooltip: ""};
+      if (self.action === 'upload') {
+        self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
+          .addIconWithFunction(function (element) {
+            var structureIcon = { icon: "", class: "", tooltip: "" };
 
-              if(self.errorAliquots.length){
-                if(!self.errorAliquots.includes(element.aliquotCode)){
-                  structureIcon = {icon: "done", class: "md-primary", tooltip: "Aliquota válida", orderValue: "done"};
-                } else {
-                  structureIcon = {icon: "warning", class: "md-warn", tooltip: "Aliquota não existe", orderValue: "warning"};
-                }
+            if (self.errorAliquots.length) {
+              if (!errorsIncludesCode(self.errorAliquots, element.aliquotCode)) {
+                structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota válida", orderValue: "done" };
               } else {
-                structureIcon = {icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "file_upload"};
+                structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não existe", orderValue: "warning" };
               }
-              return structureIcon;
-            })
-        }
+            } else {
+              structureIcon = { icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "file_upload" };
+            }
+            return structureIcon;
+          })
+      }
 
+      //header, flex, align, ordinationPriorityIndex
+      self.dynamicTableSettings.addHeader('Código da alíquota', '20', 'left', 1)
+        .setElementsArray(self.examList)
 
-        //header, flex, align, ordinationPriorityIndex
-        self.dynamicTableSettings.addHeader('Codigo da aliquota', '20', 'left', 1)
         //property, formatType
         .addColumnProperty('aliquotCode')
 
@@ -123,23 +122,32 @@
 
         .setCheckbox(false)
 
-        .setElementsArray(self.sendingExam.examResults)
         // .setTitle('Lista de Arquivos')
         .setCallbackAfterChange(self.dynamicDataTableChange);
-        //Don't use with Service, in this case pass Service as attribute in the template
-        // .setTableUpdateFunction(self.updateDataTable)
-        /*
-          //Optional Config's
-          .setFormatData("'Dia - 'dd/MM/yy")
-          .setCheckbox(false)
-          .setFilter(true)
-          .setReorder(true)
-          .setPagination(true)
-          .setSelectedColor()
-          .setHoverColor()
+      //Don't use with Service, in this case pass Service as attribute in the template
+      // .setTableUpdateFunction(self.updateDataTable)
+      /*
+        //Optional Config's
+        .setFormatData("'Dia - 'dd/MM/yy")
+        .setCheckbox(false)
+        .setFilter(true)
+        .setReorder(true)
+        .setPagination(true)
+        .setSelectedColor()
+        .setHoverColor()
 
-        */
-        self.settings = self.dynamicTableSettings.getSettings();
+      */
+      self.settings = self.dynamicTableSettings.getSettings();
+    }
+
+    function errorsIncludesCode(values, code) {
+      var includes = false;
+      values.forEach(function (value) {
+        if (value == code) {
+          includes = true;
+        }
+      });
+      return includes;
     }
 
     function _buildDialogs() {

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -42,47 +42,49 @@
     }
 
     function saveUpload() {
-      SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function (){
+      SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function () {
         ProjectContextService.clearFileStructure();
         ApplicationStateService.activateExamSending();
-      },function (reason) {
-        if(reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE){
-          var uniqueErrorAliquots = _getUnique(reason.data.CONTENT);
-          self.errorAliquots = uniqueErrorAliquots;
-          self.errorExamResults = [];
-          uniqueErrorAliquots.forEach(function (errorAliquot) {
-            self.sendingExam.examResults.forEach(function (examResult) {
-              if(errorAliquot === examResult.aliquotCode){
-                self.errorExamResults.push(examResult);
-              }
-            });
-          });
-          aliquotsNotFound
-          .title('Aliquota(s) não encontrada(s)')
-          .textContent(
-            'A(s) aliquota(s) não encontrada(s) sera(ão) apontada(s) na lista: '
-          );
-        }else if(reason.data.MESSAGE === EMPTY_LOT_BACKEND_MESSAGE){
-          aliquotsNotFound
-            .title('O lote não possue resultados')
-            .textContent(
-              'Um lote vazio não pode ser enviado.'
-            );
-        } else {
-          aliquotsNotFound
-          .title('Falha no envio do arquivo')
-          .textContent('Ocorreu algum problema ao enviar os resultados.');
-        }
-        $mdDialog.show(aliquotsNotFound).then(function() {
+      }, function (reason) {
+        _handleFailuresToSend(reason);
+        $mdDialog.show(aliquotsNotFound).then(function () {
           self.dynamicDataTableChange();
         });
       });
     }
 
-    function _getUnique(array){
+    function _handleFailuresToSend(reason) {
+      if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE) {
+        var uniqueErrorAliquots = _getUnique(reason.data.CONTENT);
+        self.errorAliquots = uniqueErrorAliquots;
+        self.errorExamResults = [];
+        uniqueErrorAliquots.forEach(function (errorAliquot) {
+          self.sendingExam.exams.forEach(function (exam) {
+            exam.examResults.forEach(function (result) {
+              if (errorAliquot == result.aliquotCode) {
+                self.errorExamResults.push(result);
+              }
+            });
+          });
+        });
+        aliquotsNotFound
+          .title('Aliquota(s) não encontrada(s)')
+          .textContent('A(s) aliquota(s) não encontrada(s) sera(ão) apontada(s) com um icone de alerta.');
+      } else if (reason.data.MESSAGE === EMPTY_LOT_BACKEND_MESSAGE) {
+        aliquotsNotFound
+          .title('O lote não possue resultados')
+          .textContent('Um lote vazio não pode ser enviado.');
+      } else {
+        aliquotsNotFound
+          .title('Falha no envio do arquivo')
+          .textContent('Ocorreu algum problema ao enviar os resultados.');
+      }
+    }
+
+    function _getUnique(array) {
       var uniqueValues = [];
       array.forEach(function (value) {
-        if(!uniqueValues.includes(value))
+        if (!uniqueValues.includes(value))
           uniqueValues.push(value)
       });
       return uniqueValues;
