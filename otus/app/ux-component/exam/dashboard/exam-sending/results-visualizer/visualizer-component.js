@@ -77,7 +77,7 @@
             var structureIcon = { icon: "", class: "", tooltip: "" };
 
             if (self.errorAliquots.length) {
-              if (!self.errorAliquots.includes(element.aliquotCode)) {
+              if (!errorsIncludesCode(self.errorAliquots, element.aliquotCode)) {
                 structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota válida", orderValue: "done" };
               } else {
                 structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não existe", orderValue: "warning" };
@@ -138,6 +138,16 @@
 
       */
       self.settings = self.dynamicTableSettings.getSettings();
+    }
+
+    function errorsIncludesCode(values, element) {
+      var includes = false;
+      values.forEach(function (value) {
+        if (value == element) {
+          includes = true;
+        }
+      });
+      return includes;
     }
 
     function _buildDialogs() {
