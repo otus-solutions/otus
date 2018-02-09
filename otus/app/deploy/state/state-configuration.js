@@ -28,7 +28,8 @@
       'EXAM_LOT_MANAGER_LIST': 'exam-lot-manager-list',
       'EXAM_LOT_INFO_MANAGER': 'exam-lot-info-manager',
       'EXAM_SENDING': 'exam-sending',
-      'EXAM_RESULT_VISUALIZER' : 'exam-result-visualizer'
+      'EXAM_RESULT_VISUALIZER': 'exam-result-visualizer',
+      'PARTICIPANT_REPORT_VISUALIZER': 'participant-report-visualizer'
     })
     .config(Configuration);
 
@@ -46,6 +47,7 @@
     'otusjs.deploy.InstallerStateProvider',
     'otusjs.deploy.LoginStateProvider',
     'otusjs.deploy.ParticipantStateProvider',
+    'otusjs.deploy.ParticipantReportStateProvider',
     'otusjs.deploy.SignupStateProvider',
     'otusjs.deploy.SignupResultStateProvider',
     'otusjs.deploy.SessionStateProvider',
@@ -61,30 +63,30 @@
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
-    AccessStateProvider,
-    ActivityStateProvider,
-    ActivityAdderStateProvider,
-    ActivityCategoryStateProvider,
-    ActivityPlayerStateProvider,
-    PaperActivityInitializerStateProvider,
-    DashboardProvider,
-    ParticipantDashboardProvider,
-    InstallerProvider,
-    LoginStateProvider,
-    ParticipantStateProvider,
-    SignupStateProvider,
-    SignupResultStateProvider,
-    SessionStateProvider,
-    LaboratoryStateProvider,
-    SampleTransportationLotAdderProvider,
-    SampleTransportationManagerListProvider,
-    SampleTransportationProvider,
-    ExamLotStateProvider,
-    ExamLotManagerListState,
-    ExamLotInfoManagerState,
-    SendingExamState,
-    ExamResultsVisualizer
-  ) {
+                         AccessStateProvider,
+                         ActivityStateProvider,
+                         ActivityAdderStateProvider,
+                         ActivityCategoryStateProvider,
+                         ActivityPlayerStateProvider,
+                         PaperActivityInitializerStateProvider,
+                         DashboardProvider,
+                         ParticipantDashboardProvider,
+                         InstallerProvider,
+                         LoginStateProvider,
+                         ParticipantStateProvider,
+                         ParticipantReportStateProvider,
+                         SignupStateProvider,
+                         SignupResultStateProvider,
+                         SessionStateProvider,
+                         LaboratoryStateProvider,
+                         SampleTransportationLotAdderProvider,
+                         SampleTransportationManagerListProvider,
+                         SampleTransportationProvider,
+                         ExamLotStateProvider,
+                         ExamLotManagerListState,
+                         ExamLotInfoManagerState,
+                         SendingExamState,
+                         ExamResultsVisualizer) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ActivityStateProvider.state);
     $stateProvider.state(ActivityAdderStateProvider.state);
@@ -96,6 +98,7 @@
     $stateProvider.state(SignupResultStateProvider.state);
     $stateProvider.state(DashboardProvider.state);
     $stateProvider.state(ParticipantDashboardProvider.state);
+    $stateProvider.state(ParticipantReportStateProvider.state);
     $stateProvider.state(InstallerProvider.state);
     $stateProvider.state(ParticipantStateProvider.state);
     $stateProvider.state(SessionStateProvider.state);

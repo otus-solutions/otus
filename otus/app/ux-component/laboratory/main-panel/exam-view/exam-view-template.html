@@ -1,25 +1,12 @@
 eita
-<otus-dashboard-sidenav layout="row">
-  <hide-participant-box></hide-participant-box>
-</otus-dashboard-sidenav>
-<otus-dashboard-toolbar layout="row">
-  <div flex layout="row" layout-align="center center" layout-margin>
-    <span layout-align="center center">Exames do Participante</span>
-  </div>
-</otus-dashboard-toolbar>
-<!--<dynamic-data-table-->
-<!--headers="['Nome', 'Disponível', 'Entregue']"-->
-<!--elements-array="$ctrl.exams",-->
-<!--elements-properties="['examName', 'isAvailable', 'hasBeenDelivered']"-->
-<!--&gt;</dynamic-data-table>-->
 <div layout="row">
 
   <md-content flex="30">
     <md-list class="md-dense" flex>
-      <md-subheader class="md-no-sticky">Exames para o centro</md-subheader>
+      <md-subheader class="md-no-sticky">Relatórios do Participante</md-subheader>
       <md-list-item class="md-2-line" ng-repeat="exam in $ctrl.exams" ng-click="null">
         <!--<img ng-src="{{exam.face}}?{{$index}}" class="md-avatar" alt="{{exam.who}}" />-->
-        <div class="md-list-item-text" layout="column">
+        <md-card class="md-list-item-text" layout="column">
           <div layout="row" layout-align="start center">
             <div flex-gt-sm="5" flex="10">
               <div ng-show="exam.isAvailable != null"
@@ -31,15 +18,8 @@ eita
           </div>
           <p ng-show="exam.hasBeenDelivered">Já entregue</p>
           <md-divider></md-divider>
-        </div>
+        </md-card>
       </md-list-item>
-      <!--<md-list-item class="md-2-line" ng-repeat="exam in $ctrl.exams">-->
-      <!--<img ng-src="{{todos[0].face}}?20" class="md-avatar" alt="{{todos[0].who}}"/>-->
-      <!--<div class="md-list-item-text">-->
-      <!--<h2>primary</h2>-->
-      <!--<p>Secondary text</p>-->
-      <!--</div>-->
-      <!--</md-list-item>-->
     </md-list>
   </md-content>
 </div>

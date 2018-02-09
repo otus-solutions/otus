@@ -16,6 +16,6 @@
   function controller(ParticipantExamWidgetFactory) {
     var self = this;
 
-    self.exams = ParticipantExamWidgetFactory.createExamList();
+    // self.exams = ParticipantExamWidgetFactory.createExamList();
   }
 }());
