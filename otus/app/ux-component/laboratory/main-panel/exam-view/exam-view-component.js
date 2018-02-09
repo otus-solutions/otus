@@ -9,27 +9,13 @@
       controller: controller
     });
 
-  controller.$inject = [];
+  controller.$inject = [
+    'otusjs.otus.uxComponent.ParticipantExamWidgetFactory'
+  ];
 
-  function controller() {
+  function controller(ParticipantExamWidgetFactory) {
     var self = this;
 
-    self.exams = [
-      {
-        name:'Hemograma',
-        isAvailable: null,
-        hasBeenDelivered: false,
-        requestList: [],
-        statusColor:'red'
-      },
-      {
-        name:'Glicemia',
-        isAvailable: true,
-        hasBeenDelivered: true,
-        requestList: [],
-        statusColor:'green'
-      }
-
-    ];
+    self.exams = ParticipantExamWidgetFactory.createExamList();
   }
 }());

@@ -7,25 +7,47 @@
 
 
   factory.$inject = [
-    '$q'
+    '$q',
+    'otusjs.otus.uxComponent.ParticipantExamService'
   ];
 
-  function factory() {
+  function factory($q, ParticipantExamService) {
     var self = this;
 
-    self.name = 'Hemograma';
+    self.createExamList = createExamList;
+
+    function createExamList() {
+      var defer = $q.defer;
+      ParticipantExamService.fetchExams()
+        .then(function (data) {
+          defer.resolve(data.exams.map(exam => new ParticipantExam(exam)));
+        });
+      return defer.promise;
+    }
+  }
+
+  function ParticipantExam(examInfo) {
+    var self = this;
+
+    self.name = examInfo.name;
     self.isAvailable = null;
-    self.hasBeenDelivered = false;
+    self.hasBeenDelivered = examInfo.hasBeenDelivered;
     self.requestList = [];
-    self.statusColor = 'red';
+    self.statusColor = self.isAvailable === true ? 'green' : 'red';
+
+    self.setDependencies = setPromiseChain;
 
 
-    $q.all(self.requestList)
-      .then(function (data) {
-        self.isAvailable = true
-      })
-      .catch(function (data) {
-        self.isAvailable = false;
-      });
+    function setPromiseChain(promise) {
+      promise
+        .then(function (data) {
+          self.isAvailable = true;
+          //do something with data;
+        })
+        .catch(function (e) {
+          self.isAvailable = false;
+          //do something with e
+        });
+    }
   }
 }());
