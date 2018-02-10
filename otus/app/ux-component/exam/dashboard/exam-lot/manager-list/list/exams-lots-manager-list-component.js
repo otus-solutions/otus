@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusExamsLotsManagerList', {
       controller: Controller,
-      templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/list/exams-lots-manager-list-template.html',
+      templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/list/reports-lots-manager-list-template.html',
       bindings: {
         selectedLots: '=',
         csvData: '='
@@ -17,7 +17,7 @@
 
   Controller.$inject = [
     'otusjs.deploy.FieldCenterRestService',
-    'otusjs.laboratory.business.project.exams.ExamLotService',
+    'otusjs.laboratory.business.project.reports.ExamLotService',
     '$mdToast',
     'otusjs.laboratory.core.ContextService',
     'otusjs.otus.dashboard.core.ContextService',
@@ -35,7 +35,7 @@
     self.realizationBeginFilter = "";
     self.realizationEndFilter = "";
     self.centers = [];
-    // self.exams = [];
+    // self.reports = [];
     self.lotsList = [];
     self.lotsListImutable = [];
 
@@ -61,10 +61,10 @@
     }
 
     function loadExamDescriptors(center) {
-      self.exams = [];
+      self.reports = [];
       ExamLotService.getAvailableExams(center).then(function (result) {
         result.forEach(function (aliquotTypes) {
-          self.exams.push(aliquotTypes);
+          self.reports.push(aliquotTypes);
         });
       });
     }

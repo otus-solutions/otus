@@ -1,22 +1,20 @@
-eita
 <div layout="row">
 
   <md-content flex="30">
     <md-list class="md-dense" flex>
       <md-subheader class="md-no-sticky">Relatórios do Participante</md-subheader>
-      <md-list-item class="md-2-line" ng-repeat="exam in $ctrl.exams" ng-click="null">
-        <!--<img ng-src="{{exam.face}}?{{$index}}" class="md-avatar" alt="{{exam.who}}" />-->
+      <md-list-item class="md-2-line" ng-repeat="report in $ctrl.reports" ng-click="null">
         <md-card class="md-list-item-text" layout="column">
           <div layout="row" layout-align="start center">
             <div flex-gt-sm="5" flex="10">
-              <div ng-show="exam.isAvailable != null"
-                ng-style="{'background-color': exam.isAvailable == true ? 'green' : 'red', 'border-radius':'30%', width:'13px', height:'13px'}">
+              <div ng-show="report.isAvailable != null"
+                ng-style="{'background-color': report.isAvailable == true ? 'green' : 'red', 'border-radius':'30%', width:'13px', height:'13px'}">
               </div>
               <md-progress-circular md-diameter="13px" md-mode="indeterminate"></md-progress-circular>
             </div>
-            <h2>{{ exam.name}}</h2>
+            <h2>{{ report.name}}</h2>
           </div>
-          <p ng-show="exam.hasBeenDelivered">Já entregue</p>
+          <p ng-show="report.hasBeenDelivered">Já entregue</p>
           <md-divider></md-divider>
         </md-card>
       </md-list-item>

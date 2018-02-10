@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .service('otusjs.otus.uxComponent.ParticipantExamService', service);
+    .service('otusjs.otus.uxComponent.ParticipantReportService', service);
 
   service.$inject = [
     '$q'
@@ -20,19 +20,43 @@
       let defer = $q.defer();
 
       let fakeData = {
-        exams: [
+        reports: [
           {
             name: 'Hemograma',
             hasBeenDelivered: false,
-            requestList: []
+            datasources: [
+              {
+                key: "ultimo_rcpc",
+                datasource: "Activity",
+                result: {}
+              }
+            ]
           },
           {
             name: 'Glicemia',
             hasBeenDelivered: true,
-            requestList: []
+            datasources: [
+              {
+                key: "ultimo_rcpc",
+                datasource: "Activity",
+                result: {}
+              }
+            ]
+          },
+          {
+            id: 132465,
+            template: "<span>{{datasources.ultimo_rcpc.getAnswerById(rcpc_1)}}<span>",
+            datasources: [
+              {
+                key: "ultimo_rcpc",
+                datasource: "Activity",
+                result: {}
+              }
+            ]
           }
         ]
       };
+
       defer.resolve(fakeData);
 
       return defer.promise;

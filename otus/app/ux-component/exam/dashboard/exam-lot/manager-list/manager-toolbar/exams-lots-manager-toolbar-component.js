@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusExamsLotsManagerToolbar', {
       controller: Controller,
-      templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/manager-toolbar/exams-lots-manager-toolbar-template.html',
+      templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/manager-toolbar/reports-lots-manager-toolbar-template.html',
       bindings: {
         onViewInfo: '&',
         updateLotListOnDelete: '&',
@@ -19,7 +19,7 @@
     '$mdToast',
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.laboratory.business.project.exams.ExamLotService',
+    'otusjs.laboratory.business.project.reports.ExamLotService',
     'otusjs.application.state.ApplicationStateService'
   ];
 

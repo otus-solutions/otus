@@ -3,12 +3,12 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .factory('otusjs.otus.uxComponent.ParticipantExamWidgetFactory', factory);
+    .factory('otusjs.otus.uxComponent.ParticipantReportWidgetFactory', factory);
 
 
   factory.$inject = [
     '$q',
-    'otusjs.otus.uxComponent.ParticipantExamService'
+    'otusjs.otus.uxComponent.ParticipantReportService'
   ];
 
   function factory($q, ParticipantExamService) {
@@ -19,19 +19,19 @@
     function createExamList() {
       var defer = $q.defer;
       ParticipantExamService.fetchExams()
-        .then(function (data) {
-          defer.resolve(data.exams.map(exam => new ParticipantExam(exam)));
+        .then(function (reports) {
+          defer.resolve(reports.map(exam => new ParticipantExam(exam)));
         });
       return defer.promise;
     }
   }
 
-  function ParticipantExam(examInfo) {
-    var self = this;
+  function ParticipantExam(exam) {
+    var self = Object.assign(this, exam); //extends. A ideia aqui é manter referência com o exam(que pode ser um objeto gerado pelo model).
 
-    self.name = examInfo.name;
-    self.isAvailable = null;
-    self.hasBeenDelivered = examInfo.hasBeenDelivered;
+    self.name = exam.name;
+    self.isAvailable = null;  //null when we don't know yet if it's available
+    self.hasBeenDelivered = exam.hasBeenDelivered;
     self.requestList = [];
     self.statusColor = self.isAvailable === true ? 'green' : 'red';
 

@@ -22,7 +22,7 @@
       parent: STATE.PARTICIPANT,
       name: STATE.PARTICIPANT_REPORT,
       url: '/' + STATE.PARTICIPANT_REPORT,
-      template: '<otus-participant-exams layout="column" flex></otus-participant-exams>',
+      template: '<otus-participant-reports layout="column" flex></otus-participant-reports>',
       data: {
         redirect: _redirect
       },

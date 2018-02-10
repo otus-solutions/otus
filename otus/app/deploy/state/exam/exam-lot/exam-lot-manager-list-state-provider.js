@@ -22,7 +22,7 @@
       parent: STATE.EXAM_DASHBOARD,
       name: STATE.EXAM_LOT_MANAGER_LIST,
       url: '/' + STATE.EXAM_LOT_MANAGER_LIST,
-      template: '<otus-exams-lots-manager lots="$resolve.lots" layout="column" flex></otus-exams-lots-manager>',
+      template: '<otus-reports-lots-manager lots="$resolve.lots" layout="column" flex></otus-reports-lots-manager>',
       resolve:{
         stateData: _loadStateData,
         lots: _resolveLots
@@ -47,7 +47,7 @@
     }
 
     _resolveLots.$inject = [
-      'otusjs.laboratory.business.project.exams.ExamLotService'
+      'otusjs.laboratory.business.project.reports.ExamLotService'
     ];
 
     _loadStateData.$inject = [

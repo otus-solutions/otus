@@ -130,7 +130,7 @@
     }
 
     function fillAliquotsErrors(aliquotConflicts, msgErro){
-      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+      var aliquotsArray = self.selectedMomentType.reports.concat(self.selectedMomentType.stores);
 
       aliquotConflicts.forEach(function(conflict) {
         aliquotsArray.forEach(function(aliquot) {
@@ -142,7 +142,7 @@
     }
 
     function fillTubesErrors(tubeConflicts, msgErro){
-      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+      var aliquotsArray = self.selectedMomentType.reports.concat(self.selectedMomentType.stores);
 
       tubeConflicts.forEach(function(tubeCode) {
         aliquotsArray.forEach(function(aliquot) {
@@ -186,11 +186,11 @@
         , clearTubeError
         , setAliquotError
         , setTubeError
-        , self.selectedMomentType.exams
+        , self.selectedMomentType.reports
         , self.selectedMomentType.stores
       );
 
-      completePlaceholder(self.selectedMomentType.exams);
+      completePlaceholder(self.selectedMomentType.reports);
       completePlaceholder(self.selectedMomentType.stores);
 
       setTimeout(function() {
@@ -203,7 +203,7 @@
     }
 
     function _defaultCustomValidation() {
-      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+      var aliquotsArray = self.selectedMomentType.reports.concat(self.selectedMomentType.stores);
 
       aliquotsArray.forEach(function(aliquot) {
         clearAliquotError(aliquot);
@@ -331,7 +331,7 @@
       if(self.aliquotLengths.length > 1){
         if(charCode == '13') {
           //Enter pressed
-          var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
+          var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.reports : self.selectedMomentType.stores;
           var runCompletePlaceholder = false;
           
           if(aliquot.aliquotCode.length == self.tubeLength && Validation.isTube(aliquot.aliquotCode)){
@@ -357,7 +357,7 @@
       _clearContainer(aliquot);
 
       if(self.aliquotLengths.length === 1){
-        var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
+        var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.reports : self.selectedMomentType.stores;
         var runCompletePlaceholder = false;
   
         if (aliquot.aliquotCode && (aliquot.aliquotCode.length == self.aliquotMaxLength || aliquot.aliquotCode.length == self.tubeLength)) {
@@ -380,7 +380,7 @@
 
 
     function tubeInputOnChange(aliquot, tubeOrAliquot) {
-      var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
+      var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.reports : self.selectedMomentType.stores;
       var runCompletePlaceholder = false;
 
       runCompletePlaceholder = true;
@@ -396,7 +396,7 @@
 
     function _nextFocusNotFilled(currentAliquot) {
       var newFocus = "";
-      var aliquotArray = self.selectedMomentType.stores.concat(self.selectedMomentType.exams);
+      var aliquotArray = self.selectedMomentType.stores.concat(self.selectedMomentType.reports);
       var current = {
         index: currentAliquot.index + 1,
         role: currentAliquot.role,
@@ -405,7 +405,7 @@
       var aliquot;
 
       if (Validation.fieldIsExam(currentAliquot.role))
-        aliquotArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+        aliquotArray = self.selectedMomentType.reports.concat(self.selectedMomentType.stores);
 
       for (var i = 0; i < aliquotArray.length; i++) {
         aliquot = aliquotArray[i];
