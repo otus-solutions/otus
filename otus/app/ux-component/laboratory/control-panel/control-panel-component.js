@@ -29,6 +29,7 @@
     var confirmAliquotingExitDialog;
     var confirmFinish;
     var hideDelayTime = 3000;
+    self.processingDate = new Date();
 
     self.$onInit = onInit;
     self.changeState = changeState;
@@ -40,18 +41,18 @@
     self.saveAliquots = saveAliquots;
     self.cancelAliquots = cancelAliquots;
 
-    function saveAliquots(){
+    function saveAliquots() {
       Publisher.publish('save-changed-aliquots');
     }
 
-    function cancelAliquots(){
+    function cancelAliquots() {
       var changedAliquots;
-      
-      Publisher.publish('have-aliquots-changed', function(result){
+
+      Publisher.publish('have-aliquots-changed', function(result) {
         changedAliquots = result;
       });
-      
-      if(changedAliquots){
+
+      if (changedAliquots) {
         $mdDialog.show(confirmAliquotingExitDialog).then(function() {
           _returnMain();
         });
@@ -68,15 +69,15 @@
       Publisher.publish('refresh-laboratory-participant', moment);
       self.state = moment;
     }
-    
+
     function saveChangedTubes() {
       var haveTubesChanged;
-      
-      Publisher.publish('have-tubes-changed', function(result){
+
+      Publisher.publish('have-tubes-changed', function(result) {
         haveTubesChanged = result;
       });
 
-      if(haveTubesChanged){
+      if (haveTubesChanged) {
         _updateChangedTubes();
       } else {
         $mdToast.show(
@@ -92,8 +93,8 @@
       var updateChangedTubesStructure = {
         tubes: []
       };
-      
-      Publisher.publish('get-changed-tubes', function(result){
+
+      Publisher.publish('get-changed-tubes', function(result) {
         changedTubes = result;
       });
 
@@ -104,7 +105,7 @@
       $mdDialog.show(confirmFinish).then(function() {
         ParticipantLaboratoryService.updateTubeCollectionData(updateChangedTubesStructure).then(function() {
           self.labParticipant.updateTubeList();
-          Publisher.publish('fill-original-tube-list',self.labParticipant.tubes);
+          Publisher.publish('fill-original-tube-list', self.labParticipant.tubes);
           Publisher.publish('refresh-laboratory-participant', 'coleta');
           _showToastMsg('Registrado com sucesso!');
         }).catch(function(e) {
@@ -116,12 +117,12 @@
 
     function cancelTubeCollectionAndReturn() {
       var changedTubes;
-      
-      Publisher.publish('have-tubes-changed', function(result){
+
+      Publisher.publish('have-tubes-changed', function(result) {
         changedTubes = result;
       });
 
-      if(changedTubes){
+      if (changedTubes) {
         $mdDialog.show(confirmCancel).then(function() {
           _returnMain();
         });
@@ -129,8 +130,8 @@
         _returnMain();
       }
     }
-    
-    function _returnMain(){
+
+    function _returnMain() {
       LoadingScreenService.start();
       _reloadTubeList();
       changeState('main');
@@ -141,11 +142,11 @@
     function cancelCollect() {
       var changedTubes;
 
-      Publisher.publish('have-tubes-changed', function(result){
+      Publisher.publish('have-tubes-changed', function(result) {
         changedTubes = result;
       });
 
-      if(changedTubes){
+      if (changedTubes) {
         $mdDialog.show(confirmCancel).then(function() {
           _reloadTubeList();
           Publisher.publish('refresh-laboratory-participant', 'coleta');
@@ -156,17 +157,17 @@
       }
     }
 
-    function _reloadTubeList(){
+    function _reloadTubeList() {
       self.labParticipant.reloadTubeList();
-      Publisher.publish('fill-original-tube-list',self.labParticipant.tubes);
+      Publisher.publish('fill-original-tube-list', self.labParticipant.tubes);
     }
 
-    function _showToastMsg(msg){
+    function _showToastMsg(msg) {
       $mdToast.show(
         $mdToast.simple()
         .textContent(msg)
         .hideDelay(hideDelayTime)
-     );
+      );
     }
 
     function _buildDialogs() {
@@ -191,6 +192,49 @@
         .ok('Ok')
         .cancel('Voltar');
     }
+
+    self.update = function(e) {
+      var _answer = {};
+
+      if (e.target.validity.valid) {
+        _answer = self.answer;
+        if (self.answer === null) {
+          _answer = {};
+        } else {
+          if (self.answer.hasOwnProperty('date')) {
+            if (self.answer.date === null || self.answer.date === undefined) {
+              _answer = {};
+            }
+          }
+        }
+      } else {
+        _answer = "invalid format";
+      }
+
+
+
+      self.onUpdate({
+        valueType: 'answer',
+        value: _answer
+      });
+    };
+
+
+    self.clear = function() {
+      CurrentItemService.getFilling().answer.clear();
+      delete self.answer;
+    };
+
+    self.currentTime = function(e) {
+      var imuDate = new ImmutableDate()
+
+      imuDate.setSeconds(0);
+      imuDate.setMilliseconds(0);
+
+      self.answer = imuDate;
+
+      $element.find('#inputtime').blur();
+    };
 
     return self;
   }

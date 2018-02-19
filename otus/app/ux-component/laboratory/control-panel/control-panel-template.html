@@ -11,8 +11,7 @@
     </div>
   </div>
 
-  <div class="" layout="row" layout-xs="column" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'"
-    flex>
+  <div class="" layout="row" layout-xs="column" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'" flex>
     <div layout="row" layout-align="start center" flex>
       <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelTubeCollectionAndReturn()">Voltar</md-button>
       <md-button class="md-primary md-raised" aria-label="cancelar coleta" ng-click="$ctrl.cancelCollect()">Cancelar</md-button>
@@ -35,8 +34,34 @@
       <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAliquots()">Voltar</md-button>
       <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-click="$ctrl.saveAliquots()">Salvar</md-button>
     </div>
+
+
     <div layout="row" layout-align="end center" flex style="padding-top: 12px">
       <laboratory-refresh-button state="$ctrl.state" />
     </div>
   </div>
+
 </div>
+
+<div layout="column" md-whiteframe="1" flex>
+  <div class="control-panel" layout="row" layout-padding layout-align="center start" ng-if="$ctrl.state === 'aliquots'">
+    <div layout="column" layout-align="center center">
+      <label>Data de Processamento</label>
+      <div layout="row">
+        <md-input-container>
+          <md-datepicker ng-model="$ctrl.processingDate" ng-change="$ctrl.onFilter()" aria-label="Data de Processamento"></md-datepicker>
+        </md-input-container>
+        <md-button ng-click="$ctrl.currentTime()" class="md-fab md-raised md-mini" aria-label="Hora Atual">
+          <md-icon>access_time</md-icon>
+          <md-tooltip md-direction="down">
+            Hora Atual
+          </md-tooltip>
+        </md-button>
+
+        <md-input-container class="md-block">
+          <input id="inputtime" type="time" ng-model="$ctrl.answer.date" ng-blur="$ctrl.update($event)" aria-label="Tempo" />
+        </md-input-container>
+      </div>
+    </div>
+  </div>
+  </div>

@@ -30,9 +30,9 @@
     self.tubeLength = 9;
     self.aliquotLengths;
     self.aliquotMaxLength;
-    
+
     self.validations;
-    
+
     self.tubeList = self.participantLaboratory.tubes;
 
     self.$onInit = onInit;
@@ -45,16 +45,15 @@
     self.tubeInputOnBlur = tubeInputOnBlur;
     self.aliquotInputOnBlur = aliquotInputOnBlur;
     self.setFocus = setFocus;
-
-
+    
     function onInit() {
       _buildMomentTypeList();
 
       var codeConfiguration = LaboratoryConfigurationService.getCodeConfiguration();
-      
+
       self.aliquotLengths = LaboratoryConfigurationService.getAliquotLengths();
       self.aliquotMaxLength = Math.max.apply(null,self.aliquotLengths);
-      
+
       self.validations = {
         wave:{
           value: codeConfiguration.waveNumberToken,
@@ -76,8 +75,8 @@
           value: codeConfiguration.palletToken,
           position: 2
         }
-      };        
-      
+      };
+
       selecMomentType(self.momentTypeList[0]);
 
       Publisher.unsubscribe('have-aliquots-changed');
@@ -93,14 +92,14 @@
 
     function _haveAliquotsChanged(callbackResult) {
       var hasChanged = AliquotTubeService.areFieldsChanged(self.selectedMomentType);
-      
+
       if(callbackResult && typeof callbackResult === "function"){
         callbackResult(hasChanged);
       }
 
       return hasChanged;
     }
-    
+
     function _saveAliquots() {
       if (AliquotTubeService.areFieldsChanged(self.selectedMomentType)) {
         if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
@@ -248,7 +247,7 @@
     function _fillContainer(aliquot) {
       aliquot.container = LaboratoryConfigurationService.getAliquotContainer(aliquot.aliquotCode);
       var label = Validation.isValidPallet(aliquot.aliquotCode) ? Validation.palletLabel : Validation.cryotubeLabel;
-      
+
       aliquot.containerLabel = label + " de " + aliquot.label;
     }
 
@@ -327,13 +326,13 @@
 
     function aliquotInputOnKeyDown(event,aliquot) {
       var charCode = event.which || event.keyCode;
-      
+
       if(self.aliquotLengths.length > 1){
         if(charCode == '13') {
           //Enter pressed
           var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
           var runCompletePlaceholder = false;
-          
+
           if(aliquot.aliquotCode.length == self.tubeLength && Validation.isTube(aliquot.aliquotCode)){
             aliquot.tubeCode = aliquot.aliquotCode;
             aliquot.aliquotCode = "";
@@ -343,7 +342,7 @@
             $element.find('#' + aliquot.aliquotId).blur();
             _nextFocus(aliquot);
           }
-          
+
           if(runCompletePlaceholder) {
             completePlaceholder(aliquotsArray);
             _callBlurTubes(aliquotsArray, aliquot);
@@ -359,7 +358,7 @@
       if(self.aliquotLengths.length === 1){
         var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
         var runCompletePlaceholder = false;
-  
+
         if (aliquot.aliquotCode && (aliquot.aliquotCode.length == self.aliquotMaxLength || aliquot.aliquotCode.length == self.tubeLength)) {
           if (aliquot.aliquotCode.length == self.tubeLength && Validation.isTube(aliquot.aliquotCode)) {
             aliquot.tubeCode = aliquot.aliquotCode;
