@@ -20,22 +20,26 @@
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.uxComponent.Publisher'
+    'otusjs.otus.uxComponent.Publisher',
+    '$element'
   ];
 
-  function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService, Publisher) {
+  function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService, Publisher, $element) {
     var self = this;
     var confirmCancel;
     var confirmAliquotingExitDialog;
     var confirmFinish;
+    var invalidDate;
+    var _time;
     var hideDelayTime = 3000;
-    self.processingDate = new Date();
 
     self.$onInit = onInit;
     self.changeState = changeState;
     self.saveChangedTubes = saveChangedTubes;
     self.cancelCollect = cancelCollect;
     self.cancelTubeCollectionAndReturn = cancelTubeCollectionAndReturn;
+    self.verifyDate = verifyDate;
+    self.currentTime = currentTime;
 
 
     self.saveAliquots = saveAliquots;
@@ -63,6 +67,16 @@
 
     function onInit() {
       _buildDialogs();
+      self.processingDate = new Date();
+      currentTime();
+      verifyDate();
+    }
+
+    function _getDateTimeProcessing(callback) {
+      callback({
+        date: self.processingDate,
+        time: self.processingTime
+      })
     }
 
     function changeState(moment) {
@@ -191,50 +205,34 @@
         .ariaLabel('Confirmação de finalização')
         .ok('Ok')
         .cancel('Voltar');
+
+      invalidDate = $mdDialog.confirm()
+        .title('DATA INVÁLIDA')
+        .textContent('Não é possivel informar datas futuras!')
+        .ariaLabel('Confirmação de data')
+        .ok('Ok');
     }
 
-    self.update = function(e) {
-      var _answer = {};
-
-      if (e.target.validity.valid) {
-        _answer = self.answer;
-        if (self.answer === null) {
-          _answer = {};
-        } else {
-          if (self.answer.hasOwnProperty('date')) {
-            if (self.answer.date === null || self.answer.date === undefined) {
-              _answer = {};
-            }
-          }
-        }
-      } else {
-        _answer = "invalid format";
+    function verifyDate() {
+      var _now = new Date();
+      if (self.processingDate > _now) {
+        $mdDialog.show(invalidDate);
+        self.processingDate = new Date();
       }
+      if (self.processingTime > _now) {
+        $mdDialog.show(invalidDate);
+        currentTime();
+      }
+      Publisher.unsubscribe('datetime-processing');
+      Publisher.subscribe('datetime-processing', _getDateTimeProcessing);
+    }
 
-
-
-      self.onUpdate({
-        valueType: 'answer',
-        value: _answer
-      });
-    };
-
-
-    self.clear = function() {
-      CurrentItemService.getFilling().answer.clear();
-      delete self.answer;
-    };
-
-    self.currentTime = function(e) {
-      var imuDate = new ImmutableDate()
-
-      imuDate.setSeconds(0);
-      imuDate.setMilliseconds(0);
-
-      self.answer = imuDate;
-
+    function currentTime() {
+      self.processingTime = self.processingDate;
+      self.processingTime.setSeconds(0);
+      self.processingTime.setMilliseconds(0);
       $element.find('#inputtime').blur();
-    };
+    }
 
     return self;
   }

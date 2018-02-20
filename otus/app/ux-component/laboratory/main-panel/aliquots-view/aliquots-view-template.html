@@ -110,7 +110,11 @@
                     </md-content>
 
                     <div ng-show="exam.isSaved && exam.aliquotMessage == ''" class="input-footer-message">
-                      {{exam.date + " " + exam.time}}
+                      {{exam.date | date : 'dd/MM/yyyy HH:mm'}}
+                    </div>
+                    <div class="input-footer-message" ng-click="$ctrl.changeDate(this.exam.aliquotId)">
+                      Processamento:
+                      <span id="{{exam.aliquotId}}" style="background: none;border:none" contenteditable="true">{{exam.processingDate | date : 'dd/MM/yyyy HH:mm'}}</span>
                     </div>
                   </div>
                 </div>
@@ -168,7 +172,13 @@
                     </md-content>
 
                     <div ng-show="storage.isSaved && storage.aliquotMessage == ''" class="input-footer-message">
-                      {{storage.date + " " + storage.time}}
+                      {{storage.date | date : 'dd/MM/yyyy HH:mm'}}
+                    </div>
+                    <div class="input-footer-message" ng-click="$ctrl.changeDate(this.storage.aliquotId)">
+                      Processamento:
+
+                      <input id="{{storage.aliquotId}}" value="{{storage.processingDate | date : 'dd/MM/yyyy HH:mm' || 'Não informado'}}" style="background: none;border:none" disabled>
+
                     </div>
                   </div>
                 </div>
