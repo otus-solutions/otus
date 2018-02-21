@@ -189,3 +189,11 @@ md-input-container.input-container-lot-margin{
 md-content.no-background-color{
   background-color: transparent;
 }
+
+.fieldProcessingDate {
+  background: none;
+  border: none;
+  opacity :0.8;
+  color: grey;
+  font-weight: bold;
+}

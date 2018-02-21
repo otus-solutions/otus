@@ -19,10 +19,11 @@
     'otusjs.laboratory.business.participant.aliquot.AliquotValidationService',
     'otusjs.otus.uxComponent.Publisher',
     '$scope',
-    '$element'
+    '$element',
+    '$filter'
   ];
 
-  function Controller(AliquotTubeService, LaboratoryConfigurationService, ParticipantLaboratoryService, AliquotMessagesService, Validation, Publisher, $scope, $element) {
+  function Controller(AliquotTubeService, LaboratoryConfigurationService, ParticipantLaboratoryService, AliquotMessagesService, Validation, Publisher, $scope, $element, $filter) {
     var self = this;
 
     const timeShowMsg = 2000;
@@ -45,6 +46,10 @@
     self.tubeInputOnBlur = tubeInputOnBlur;
     self.aliquotInputOnBlur = aliquotInputOnBlur;
     self.setFocus = setFocus;
+    self.validDate = validDate;
+    self.activeField = activeField;
+    self.disableField = disableField;
+
 
     function onInit() {
       _buildMomentTypeList();
@@ -264,9 +269,9 @@
 
       if (aliquot.aliquotCode) {
         if (Validation.isAliquot(aliquot.aliquotCode)) {
-          console.log(aliquot);
           if (aliquot.date.length === 0) {
               _getDateTimeProcessing(aliquot);
+              validDate(aliquot);
           }
           _fillContainer(aliquot);
           clearAliquotError(aliquot);
@@ -283,20 +288,8 @@
 
     function _getDateTimeProcessing(aliquot) {
       Publisher.publish('datetime-processing', function(result) {
-        aliquot.processingDate = result.date;
-        console.log(aliquot);
+        aliquot.processing = result.date;
       });
-    }
-    self.changeDate = changeDate;
-
-    function changeDate(element) {
-      var id = '#'+element;
-      document.getElementById("STORAGEAliquot0").setAttribute("readonly", false);
-      // $('#STORAGEAliquot0').attr('disabled',false);
-      // $element.find(id)
-      // $element.find(id)[0];
-      // $element.find(id).prop('disabled',false)
-      console.log(element);
     }
 
     function tubeInputOnBlur(aliquot) {
@@ -445,6 +438,30 @@
     function setFocus(id) {
       $element.find('#' + id).focus();
     }
+
+    function validDate(aliquot) {
+      var fieldDate = $element.find('#' + aliquot.aliquotId + 'Date').val();
+      if(fieldDate.length>0){
+        try{
+          var _date = new Date(fieldDate.substr(3,2)+'/'+fieldDate.substr(0,2)+'/'+fieldDate.substr(6)).toISOString();
+        }catch(err){
+          aliquot.processing = new Date().toISOString();
+          console.log(err.message);
+        }
+      }
+    }
+
+    function activeField(id) {
+      if($element.find('#' + id + 'Date').val() != ""){
+          $element.find('#' + id + 'Date').removeAttr("readonly");
+      }
+    }
+
+    function disableField(id) {
+        $element.find('#' + id + 'Date').attr("readonly");
+    }
+
+
 
   }
 }());

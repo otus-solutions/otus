@@ -102,7 +102,7 @@
                                   operator: "",
                                   date: "",
                                   time:"",
-                                  processingDate:"",
+                                  processing:"",
                                   isSaved: false
                                 };
 

@@ -112,9 +112,13 @@
                     <div ng-show="exam.isSaved && exam.aliquotMessage == ''" class="input-footer-message">
                       {{exam.date | date : 'dd/MM/yyyy HH:mm'}}
                     </div>
-                    <div class="input-footer-message" ng-click="$ctrl.changeDate(this.exam.aliquotId)">
-                      Processamento:
-                      <span id="{{exam.aliquotId}}" style="background: none;border:none" contenteditable="true">{{exam.processingDate | date : 'dd/MM/yyyy HH:mm'}}</span>
+                    <div class="input-footer-message">
+                      Processado:
+                      <input id="{{exam.aliquotId + 'Date'}}" class="fieldProcessingDate"
+                      readonly ng-click="$ctrl.activeField(exam.aliquotId)"
+                      value="{{exam.processing | date : 'dd/MM/yyyy HH:mm'}}"
+                      ng-blur="$ctrl.disableField(exam.aliquotId);$ctrl.aliquotInputOnBlur(exam)"/>
+
                     </div>
                   </div>
                 </div>
@@ -175,10 +179,11 @@
                       {{storage.date | date : 'dd/MM/yyyy HH:mm'}}
                     </div>
                     <div class="input-footer-message" ng-click="$ctrl.changeDate(this.storage.aliquotId)">
-                      Processamento:
-
-                      <input id="{{storage.aliquotId}}" value="{{storage.processingDate | date : 'dd/MM/yyyy HH:mm' || 'Não informado'}}" style="background: none;border:none" disabled>
-
+                      Processado:
+                      <input id="{{storage.aliquotId + 'Date'}}" class="fieldProcessingDate"
+                      readonly ng-click="$ctrl.activeField(storage.aliquotId)"
+                      value="{{storage.processing | date : 'dd/MM/yyyy HH:mm'}}"
+                      ng-blur="$ctrl.disableField(storage.aliquotId);$ctrl.aliquotInputOnBlur(storage)"/>
                     </div>
                   </div>
                 </div>
