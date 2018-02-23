@@ -39,9 +39,6 @@
     self.cancelCollect = cancelCollect;
     self.cancelTubeCollectionAndReturn = cancelTubeCollectionAndReturn;
     self.verifyDate = verifyDate;
-    self.currentTime = currentTime;
-
-
     self.saveAliquots = saveAliquots;
     self.cancelAliquots = cancelAliquots;
 
@@ -68,14 +65,13 @@
     function onInit() {
       _buildDialogs();
       self.processingDate = new Date();
-      currentTime();
+      self.now = new Date();
       verifyDate();
     }
 
     function _getDateTimeProcessing(callback) {
       callback({
-        date: self.processingDate,
-        time: self.processingTime
+        date: self.processingDate
       })
     }
 
@@ -127,7 +123,6 @@
         });
       });
     }
-
 
     function cancelTubeCollectionAndReturn() {
       var changedTubes;
@@ -207,31 +202,19 @@
         .cancel('Voltar');
 
       invalidDate = $mdDialog.confirm()
-        .title('DATA INVÁLIDA')
-        .textContent('Não é possivel informar datas futuras!')
+        .title('Atenção')
+        .textContent('Campo obrigatório!')
         .ariaLabel('Confirmação de data')
         .ok('Ok');
     }
 
     function verifyDate() {
-      var _now = new Date();
-      if (self.processingDate > _now) {
+      if (!self.processingDate) {
         $mdDialog.show(invalidDate);
         self.processingDate = new Date();
       }
-      if (self.processingTime > _now) {
-        $mdDialog.show(invalidDate);
-        currentTime();
-      }
       Publisher.unsubscribe('datetime-processing');
       Publisher.subscribe('datetime-processing', _getDateTimeProcessing);
-    }
-
-    function currentTime() {
-      self.processingTime = self.processingDate;
-      self.processingTime.setSeconds(0);
-      self.processingTime.setMilliseconds(0);
-      $element.find('#inputtime').blur();
     }
 
     return self;

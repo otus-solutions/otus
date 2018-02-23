@@ -2,6 +2,6 @@
   'use strict';
 
   angular
-    .module('otusjs.otus.uxComponent', []);
+    .module('otusjs.otus.uxComponent', ['ngMaterialDatePicker']);
 
 }());

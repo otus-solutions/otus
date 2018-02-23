@@ -37,20 +37,16 @@
 
     <div layout="column" layout-align="center center" flex>
       <div layout="row" style="height:50px">
-        <label style="position:relative;top:1.8em">Data/Hora de Processamento:</label>
-        <md-input-container>
-          <md-datepicker id="inputdate" ng-model="$ctrl.processingDate" aria-label="Data de Processamento" ng-change="$ctrl.verifyDate()" ng-blur="$ctrl.currentTime()"></md-datepicker>
+        <label style="position:relative;top:1.8em">Processamento:</label>
+        <md-input-container class="md-input-has-placeholder md-input-has-value">
+          <input mdc-datetime-picker="" ng-change="$ctrl.verifyDate()"
+          show-icon="true" date="true" time="true"
+          type="text" id="datetime" show-todays-date=""
+          max-date="$ctrl.now" ng-model="$ctrl.processingDate"
+          class="md-input" readonly="readonly" format="DD-MM-YYYY HH:mm"
+            disable-parent-scroll="true">
         </md-input-container>
 
-        <md-button ng-click="$ctrl.currentTime()" class="md-datepicker-button md-icon-button md-button md-default-theme md-ink-ripple" aria-label="Hora Atual" style="top:1.2em">
-          <md-icon>access_time</md-icon>
-          <md-tooltip md-direction="down">
-            Hora Atual
-          </md-tooltip>
-        </md-button>
-        <md-input-container class="md-block">
-          <input id="inputtime" type="time" ng-model="$ctrl.processingTime" ng-change="$ctrl.verifyDate()" aria-label="Tempo"/>
-        </md-input-container>
       </div>
     </div>
 

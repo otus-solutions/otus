@@ -114,11 +114,14 @@
                     </div>
                     <div class="input-footer-message">
                       Processado:
-                      <input id="{{exam.aliquotId + 'Date'}}" class="fieldProcessingDate"
-                      readonly ng-click="$ctrl.activeField(exam.aliquotId)"
-                      value="{{exam.processing | date : 'dd/MM/yyyy HH:mm'}}"
-                      ng-blur="$ctrl.disableField(exam.aliquotId);$ctrl.aliquotInputOnBlur(exam)"/>
-
+                      <input class="fieldProcessingDate"
+                        placeholder="Não Informado"
+                        mdc-datetime-picker=""
+                        date="true" time="true"
+                        type="text" id="datetime"
+                        show-todays-date="" max-date="$ctrl.now"
+                        ng-model="exam.processing"
+                        readonly="readonly" format="DD-MM-YYYY HH:mm" ng-disabled="{{exam.isSaved}}"/>
                     </div>
                   </div>
                 </div>
@@ -178,12 +181,16 @@
                     <div ng-show="storage.isSaved && storage.aliquotMessage == ''" class="input-footer-message">
                       {{storage.date | date : 'dd/MM/yyyy HH:mm'}}
                     </div>
-                    <div class="input-footer-message" ng-click="$ctrl.changeDate(this.storage.aliquotId)">
+                    <div class="input-footer-message">
                       Processado:
-                      <input id="{{storage.aliquotId + 'Date'}}" class="fieldProcessingDate"
-                      readonly ng-click="$ctrl.activeField(storage.aliquotId)"
-                      value="{{storage.processing | date : 'dd/MM/yyyy HH:mm'}}"
-                      ng-blur="$ctrl.disableField(storage.aliquotId);$ctrl.aliquotInputOnBlur(storage)"/>
+                      <input class="fieldProcessingDate md-input"
+                        placeholder="Não Informado"
+                        mdc-datetime-picker=""
+                        date="true" time="true"
+                        type="text" id="datetime"
+                        show-todays-date="" max-date="$ctrl.now"
+                        ng-model="storage.processing"
+                        readonly="readonly" format="DD-MM-YYYY HH:mm" ng-disabled="{{storage.isSaved}}"/>
                     </div>
                   </div>
                 </div>

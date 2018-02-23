@@ -20,18 +20,30 @@
     'otusjs.otus.uxComponent.Publisher',
     '$scope',
     '$element',
-    '$filter'
+    '$filter',
+    'mdcDefaultParams'
   ];
 
-  function Controller(AliquotTubeService, LaboratoryConfigurationService, ParticipantLaboratoryService, AliquotMessagesService, Validation, Publisher, $scope, $element, $filter) {
+  function Controller(
+    AliquotTubeService,
+    LaboratoryConfigurationService,
+    ParticipantLaboratoryService,
+    AliquotMessagesService,
+    Validation,
+    Publisher,
+    $scope,
+    $element,
+    $filter,
+    mdcDefaultParams) {
     var self = this;
+
+    mdcDefaultParams({ lang: 'pt', cancelText: 'cancelar', todayText: 'hoje', okText: 'ok' });
 
     const timeShowMsg = 2000;
 
     self.tubeLength = 9;
     self.aliquotLengths;
     self.aliquotMaxLength;
-
     self.validations;
 
     self.tubeList = self.participantLaboratory.tubes;
@@ -46,12 +58,9 @@
     self.tubeInputOnBlur = tubeInputOnBlur;
     self.aliquotInputOnBlur = aliquotInputOnBlur;
     self.setFocus = setFocus;
-    self.validDate = validDate;
-    self.activeField = activeField;
-    self.disableField = disableField;
-
 
     function onInit() {
+      self.now = new Date();
       _buildMomentTypeList();
 
       var codeConfiguration = LaboratoryConfigurationService.getCodeConfiguration();
@@ -271,8 +280,8 @@
         if (Validation.isAliquot(aliquot.aliquotCode)) {
           if (aliquot.date.length === 0) {
               _getDateTimeProcessing(aliquot);
-              validDate(aliquot);
           }
+
           _fillContainer(aliquot);
           clearAliquotError(aliquot);
 
@@ -438,30 +447,6 @@
     function setFocus(id) {
       $element.find('#' + id).focus();
     }
-
-    function validDate(aliquot) {
-      var fieldDate = $element.find('#' + aliquot.aliquotId + 'Date').val();
-      if(fieldDate.length>0){
-        try{
-          var _date = new Date(fieldDate.substr(3,2)+'/'+fieldDate.substr(0,2)+'/'+fieldDate.substr(6)).toISOString();
-        }catch(err){
-          aliquot.processing = new Date().toISOString();
-          console.log(err.message);
-        }
-      }
-    }
-
-    function activeField(id) {
-      if($element.find('#' + id + 'Date').val() != ""){
-          $element.find('#' + id + 'Date').removeAttr("readonly");
-      }
-    }
-
-    function disableField(id) {
-        $element.find('#' + id + 'Date').attr("readonly");
-    }
-
-
 
   }
 }());
