@@ -53,7 +53,7 @@
         self.changedResults = self.sendingExam.getExamList();
         self.updateDataTable(self.changedResults);
       } else if (resultsToShow == "resultsWithErrors") {
-        self.changedResults = self.errorExamResults;
+        self.changedResults = self.aliquotsNotIdentified;
         self.updateDataTable(self.changedResults);
       }
     }

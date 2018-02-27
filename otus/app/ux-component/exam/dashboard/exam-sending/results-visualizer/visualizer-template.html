@@ -1,5 +1,5 @@
 <div ui-view layout="column" ng-if="$ctrl.fileStructure">
-  <otus-result-visualizer-manager-toolbar action="$ctrl.action" error-exam-results="$ctrl.errorExamResults" dynamic-data-table-change="$ctrl.updateDataTable()"
+  <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-not-identified="$ctrl.aliquotsNotIdentified" dynamic-data-table-change="$ctrl.updateDataTable()"
     error-aliquots="$ctrl.errorAliquots" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
   <md-content layout="column">
     <div>
@@ -33,14 +33,14 @@
           </div>
         </md-card-content>
       </md-card>
-      <div layout="row" ng-if="$ctrl.errorExamResults.length && ($ctrl.errorExamResults.length != $ctrl.changedResults.length)"
+      <div layout="row" ng-if="$ctrl.aliquotsNotIdentified.length && ($ctrl.aliquotsNotIdentified.length != $ctrl.changedResults.length)"
         flex>
         <md-button ng-click="$ctrl.changeResults('resultsWithErrors')" class="md-warn md-accent" aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir resultados com erro
         </md-button>
       </div>
-      <div layout="row" ng-if="$ctrl.errorExamResults.length && ($ctrl.errorExamResults.length === $ctrl.changedResults.length)"
+      <div layout="row" ng-if="$ctrl.aliquotsNotIdentified.length && ($ctrl.aliquotsNotIdentified.length === $ctrl.changedResults.length)"
         flex>
         <md-button ng-click="$ctrl.changeResults('all')" class="md-accent" aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>

@@ -10,7 +10,7 @@
         action: '<',
         sendingExam: '<',
         errorAliquots: '=',
-        errorExamResults: '=',
+        aliquotsNotIdentified: '=',
         dynamicDataTableChange: '&'
       }
     });
@@ -44,7 +44,7 @@
 
     function saveUpload() {
       //TODO: mudar o nome da variavel que identifica o erro, deixar mais claro! examsResultsNotIdentified
-      if (self.errorExamResults) {
+      if (self.aliquotsNotIdentified) {
         _buildMessageForceSendOfAliquots();
         _forceSendOfAliquots();
       } else {
@@ -64,12 +64,12 @@
       if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE) {
         var uniqueErrorAliquots = _getUnique(reason.data.CONTENT);
         self.errorAliquots = uniqueErrorAliquots;
-        self.errorExamResults = [];
+        self.aliquotsNotIdentified = [];
         uniqueErrorAliquots.forEach(function (errorAliquot) {
           self.sendingExam.exams.forEach(function (exam) {
             exam.examResults.forEach(function (result) {
               if (errorAliquot == result.aliquotCode) {
-                self.errorExamResults.push(result);
+                self.aliquotsNotIdentified.push(result);
               }
             });
           });
@@ -124,7 +124,7 @@
     function _addFlagOfForcedSend() {
       self.sendingExam.exams.forEach(function (exam) {
         exam.examResults.forEach(function (result) {
-          self.errorExamResults.map(function (resultNotIdentified) {
+          self.aliquotsNotIdentified.map(function (resultNotIdentified) {
             if (resultNotIdentified.aliquotCode === result.aliquotCode) {
               result.forceSave = true;
             }
