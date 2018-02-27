@@ -43,7 +43,6 @@
     }
 
     function saveUpload() {
-      //TODO: Já tentou enviar e foram identificados problemas
       //TODO: mudar o nome da variavel que identifica o erro, deixar mais claro! examsResultsNotIdentified
       if (self.errorExamResults) {
         _buildMessageForceSendOfAliquots();
@@ -77,7 +76,7 @@
         });
         aliquotsNotFound
           .title('Aliquota(s) não encontrada(s)')
-          .textContent('A(s) aliquota(s) não encontrada(s) sera(ão) apontada(s) com um icone de alerta. Se desejar você pode forçar o envio, clicando novamente em salvar.');
+          .textContent('Se desejar você pode forçar o envio, clicando novamente em salvar.');
       } else if (reason.data.MESSAGE === EMPTY_LOT_BACKEND_MESSAGE) {
         aliquotsNotFound
           .title('O lote não possue resultados')
@@ -100,8 +99,8 @@
 
     function _buildMessageForceSendOfAliquots() {
       _confirmForceSendOfAliquots = $mdDialog.confirm()
-        .title('Atenção!')
-        .textContent('Você tem certeza que deseja forçar o sistema a salvar aliquota(s) não encontrada(s)?')
+        .title('Atenção! Aliquota(s) não encontrada(s)')
+        .textContent('Você deseja forçar o sistema a salvar?')
         .ariaLabel('Confirmar o desejo de forçar o sistema a salvar aliquota(s) não encontrada(s)')
         .ok('Sim')
         .cancel('Não');
@@ -109,9 +108,7 @@
 
     function _forceSendOfAliquots() {
       $mdDialog.show(_confirmForceSendOfAliquots).then(function () {
-        //TODO: adicionar flag aliquotIdentified, atualizando o modelo do objeto
         _addFlagOfForcedSend();
-        //TODO: enviar novamente ao backend
         SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function () {
           ProjectContextService.clearFileStructure();
           ApplicationStateService.activateExamSending();
