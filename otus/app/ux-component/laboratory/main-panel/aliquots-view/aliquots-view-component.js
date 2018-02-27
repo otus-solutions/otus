@@ -20,7 +20,6 @@
     'otusjs.otus.uxComponent.Publisher',
     '$scope',
     '$element',
-    '$filter',
     'mdcDefaultParams'
   ];
 
@@ -33,7 +32,6 @@
     Publisher,
     $scope,
     $element,
-    $filter,
     mdcDefaultParams) {
     var self = this;
 

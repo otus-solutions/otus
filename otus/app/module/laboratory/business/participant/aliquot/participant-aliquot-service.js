@@ -159,8 +159,12 @@
             aliquot.operator = collectedAliquot.aliquotCollectionData.operator.toLowerCase();
             var dateTime = new Date(collectedAliquot.aliquotCollectionData.time);
             var dateProcessing = new Date(collectedAliquot.aliquotCollectionData.processing);
+            if (isNaN(dateProcessing)) {
+              aliquot.processing = "";
+            } else {
+              aliquot.processing = dateProcessing;
+            }
             aliquot.date = dateTime;
-            aliquot.processing = dateProcessing;
             endLoop = true;
           }
         }

@@ -20,11 +20,10 @@
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.uxComponent.Publisher',
-    '$element'
-  ];
+    'otusjs.otus.uxComponent.Publisher'
+    ];
 
-  function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService, Publisher, $element) {
+  function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService, Publisher) {
     var self = this;
     var confirmCancel;
     var confirmAliquotingExitDialog;
