@@ -121,11 +121,12 @@
     }
 
     function _addFlagOfForcedSend() {
+      self.sendingExam.examLot.forcedSave = true;
       self.sendingExam.exams.forEach(function (exam) {
         exam.examResults.forEach(function (result) {
           self.aliquotsNotIdentified.map(function (resultNotIdentified) {
             if (resultNotIdentified.aliquotCode === result.aliquotCode) {
-              result.forceSave = true;
+              result.aliquotValid = false;
             }
           });
         });
