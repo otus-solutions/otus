@@ -43,7 +43,6 @@
     }
 
     function saveUpload() {
-      //TODO: mudar o nome da variavel que identifica o erro, deixar mais claro! examsResultsNotIdentified
       if (self.aliquotsNotIdentified) {
         _buildMessageForceSendOfAliquots();
         _forceSendOfAliquots();
