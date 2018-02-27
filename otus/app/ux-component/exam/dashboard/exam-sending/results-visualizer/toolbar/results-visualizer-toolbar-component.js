@@ -122,8 +122,8 @@
 
     function _addFlagOfForcedSend() {
       self.sendingExam.examLot.forcedSave = true;
-      self.sendingExam.exams.forEach(function (exam) {
-        exam.examResults.forEach(function (result) {
+      self.sendingExam.exams.map(function (exam) {
+        exam.examResults.map(function (result) {
           self.aliquotsNotIdentified.map(function (resultNotIdentified) {
             if (resultNotIdentified.aliquotCode === result.aliquotCode) {
               result.aliquotValid = false;
