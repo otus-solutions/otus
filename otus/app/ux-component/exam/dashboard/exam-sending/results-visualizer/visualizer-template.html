@@ -35,18 +35,19 @@
       </md-card>
       <div layout="row" ng-if="$ctrl.errorExamResults.length && ($ctrl.errorExamResults.length != $ctrl.changedResults.length)"
         flex>
-        <md-button ng-click="$ctrl.changeResults($ctrl.errorExamResults)" class="md-warn md-accent" aria-label="Salvar">
+        <md-button ng-click="$ctrl.changeResults('resultsWithErrors')" class="md-warn md-accent" aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir resultados com erro
         </md-button>
       </div>
       <div layout="row" ng-if="$ctrl.errorExamResults.length && ($ctrl.errorExamResults.length === $ctrl.changedResults.length)"
         flex>
-        <md-button ng-click="$ctrl.changeResults($ctrl.sendingExam.examResults)" class="md-accent" aria-label="Salvar">
+        <md-button ng-click="$ctrl.changeResults('all')" class="md-accent" aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir todos resultados
         </md-button>
       </div>
+
       <md-divider></md-divider>
 
       <dynamic-data-table flex dynamic-table-settings="$ctrl.settings" table-update-function="$ctrl.updateDataTable">

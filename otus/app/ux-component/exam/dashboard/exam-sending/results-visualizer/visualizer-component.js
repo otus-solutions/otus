@@ -49,8 +49,13 @@
     }
 
     function changeResults(resultsToShow) {
-      self.changedResults = resultsToShow;
-      self.updateDataTable(self.changedResults);
+      if (resultsToShow == "all") {
+        self.changedResults = self.sendingExam.getExamList();
+        self.updateDataTable(self.changedResults);
+      } else if (resultsToShow == "resultsWithErrors") {
+        self.changedResults = self.errorExamResults;
+        self.updateDataTable(self.changedResults);
+      }
     }
 
     function _loadList() {
@@ -86,7 +91,20 @@
               structureIcon = { icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "file_upload" };
             }
             return structureIcon;
-          })
+          });
+      } else if (self.action === 'view') {
+        self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
+          .addIconWithFunction(function (element) {
+            var structureIcon = { icon: "", class: "", tooltip: "" };
+
+            if (element && element.forceSave) {
+              structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não identificada no sistema", orderValue: "warning" };
+            } else {
+              structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
+            }
+
+            return structureIcon;
+          });
       }
 
       //header, flex, align, ordinationPriorityIndex
