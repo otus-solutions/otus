@@ -110,7 +110,7 @@
                     </md-content>
 
                     <div ng-show="exam.isSaved && exam.aliquotMessage == ''" class="input-footer-message">
-                      {{exam.date | date : 'dd/MM/yyyy HH:mm'}}
+                      {{exam.date | date : 'dd/MM/yyyy hh:mm a'}}
                     </div>
                     <div class="input-footer-message">
                       Processado:
@@ -121,7 +121,7 @@
                         type="text" id="datetime"
                         show-todays-date="" max-date="$ctrl.now"
                         ng-model="exam.processing"
-                        readonly="readonly" format="DD-MM-YYYY HH:mm" ng-disabled="{{exam.isSaved}}"/>
+                        readonly="readonly" format="DD-MM-YYYY hh:mm A" short-time="true" ng-disabled="{{exam.isSaved}}"/>
                     </div>
                   </div>
                 </div>
@@ -179,7 +179,7 @@
                     </md-content>
 
                     <div ng-show="storage.isSaved && storage.aliquotMessage == ''" class="input-footer-message">
-                      {{storage.date | date : 'dd/MM/yyyy HH:mm'}}
+                      {{storage.date | date : 'dd/MM/yyyy HH:mm a'}}
                     </div>
                     <div class="input-footer-message">
                       Processado:
@@ -190,7 +190,7 @@
                         type="text" id="datetime"
                         show-todays-date="" max-date="$ctrl.now"
                         ng-model="storage.processing"
-                        readonly="readonly" format="DD-MM-YYYY HH:mm" ng-disabled="{{storage.isSaved}}"/>
+                        readonly="readonly" format="DD-MM-YYYY hh:mm A" short-time="true" ng-disabled="{{storage.isSaved}}"/>
                     </div>
                   </div>
                 </div>

@@ -222,3 +222,8 @@ md-content.no-background-color{
 .dtp .dtp-hand.on{
   background: rgb(0,150,136) !important;
 }
+
+.dtp .dtp-actual-meridien a.selected{
+  background: rgb(0,150,136) !important;
+
+}
