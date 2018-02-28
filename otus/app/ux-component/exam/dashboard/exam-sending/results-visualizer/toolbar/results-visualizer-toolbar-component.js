@@ -50,6 +50,7 @@
         SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function () {
           ProjectContextService.clearFileStructure();
           ApplicationStateService.activateExamSending();
+          self.aliquotsNotIdentified = [];
         }, function (reason) {
           _handleFailuresToSend(reason);
           $mdDialog.show(aliquotsNotFound).then(function () {
@@ -111,6 +112,7 @@
         SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function () {
           ProjectContextService.clearFileStructure();
           ApplicationStateService.activateExamSending();
+          self.aliquotsNotIdentified = [];
         }, function (reason) {
           _handleFailuresToSend(reason);
           $mdDialog.show(aliquotsNotFound).then(function () {
