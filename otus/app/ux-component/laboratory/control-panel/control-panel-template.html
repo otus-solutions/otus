@@ -11,8 +11,7 @@
     </div>
   </div>
 
-  <div class="" layout="row" layout-xs="column" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'"
-    flex>
+  <div class="" layout="row" layout-xs="column" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'" flex>
     <div layout="row" layout-align="start center" flex>
       <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelTubeCollectionAndReturn()">Voltar</md-button>
       <md-button class="md-primary md-raised" aria-label="cancelar coleta" ng-click="$ctrl.cancelCollect()">Cancelar</md-button>
@@ -35,8 +34,26 @@
       <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAliquots()">Voltar</md-button>
       <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-click="$ctrl.saveAliquots()">Salvar</md-button>
     </div>
-    <div layout="row" layout-align="end center" flex style="padding-top: 12px">
+
+    <div layout="column" layout-align="center center" flex>
+      <div layout="row" style="height:50px">
+        <label style="position:relative;top:1.8em">Processamento:</label>
+        <md-input-container class="md-input-has-placeholder md-input-has-value">
+          <input mdc-datetime-picker="" ng-change="$ctrl.verifyDate()"
+          show-icon="true" date="true" time="true"
+          type="text" id="datetime" show-todays-date=""
+          max-date="$ctrl.now" ng-model="$ctrl.processingDate"
+          class="md-input" readonly="readonly" short-time="true" format="DD-MM-YYYY HH:mm A"
+            disable-parent-scroll="true">
+        </md-input-container>
+
+      </div>
+    </div>
+
+
+    <div layout="row" layout-align="end center" flex="10" style="padding-top: 12px">
       <laboratory-refresh-button state="$ctrl.state" />
     </div>
   </div>
+
 </div>
