@@ -28,13 +28,13 @@
     function onInit() {
       fr.onload = receivedText;
       self.fileData = {};
-      self.fileData.examLot = {};
-      self.fileData.examLot.fieldCenter = {};
+      self.fileData.examSendingLot = {};
+      self.fileData.examSendingLot.fieldCenter = {};
 
       self.input = $($element[0].querySelector('#fileInput'));
       self.input.on('change', function (e) {
-        self.fileData.examLot.operator = SessionContextService.getData('loggedUser').email;
-        self.fileData.examLot.fileName = e.target.files[0].name;
+        self.fileData.examSendingLot.operator = SessionContextService.getData('loggedUser').email;
+        self.fileData.examSendingLot.fileName = e.target.files[0].name;
         if (_validateFileToUpload(e.target.files[0])) {
           fr.readAsText(e.target.files[0]);
         }
@@ -49,18 +49,18 @@
       var fileLines = e.target.result;
       if (!_fileIsEmpty(fileLines) && _isJSONValid(fileLines) && _JSONContainsPropertyOfExam(fileLines)) {
         var resultJSON = JSON.parse(fileLines);
-        if (isCompatibleFieldCenter(resultJSON.examLot.fieldCenter.acronym)) {
+        if (isCompatibleFieldCenter(resultJSON.examSendingLot.fieldCenter.acronym)) {
 
-          self.fileData.examLot.fieldCenter.acronym = ProjectContextService.getFieldCenterInSendingExam();
+          self.fileData.examSendingLot.fieldCenter.acronym = ProjectContextService.getFieldCenterInSendingExam();
           self.fileData.exams = resultJSON.exams;
-          self.fileData.examLot.realizationDate = new Date();
+          self.fileData.examSendingLot.realizationDate = new Date();
 
           ProjectContextService.setFileStructure(self.fileData);
           self.action = ProjectContextService.setExamSendingAction('upload');
           ApplicationStateService.activateExamResultsVisualizer();
         } else {
           self.input[0].value = '';
-          _toastErrorFieldCenter(ProjectContextService.getFieldCenterInSendingExam(), resultJSON.examLot.fieldCenter.acronym);
+          _toastErrorFieldCenter(ProjectContextService.getFieldCenterInSendingExam(), resultJSON.examSendingLot.fieldCenter.acronym);
         }
       } else {
         self.input[0].value = '';
@@ -103,7 +103,7 @@
     function _JSONContainsPropertyOfExam(file) {
       try {
         var data = JSON.parse(file);
-        return data.hasOwnProperty('examLot') && data.hasOwnProperty('exams');
+        return data.hasOwnProperty('examSendingLot') && data.hasOwnProperty('exams');
       } catch (e) {
         return false;
       }

@@ -123,7 +123,7 @@
     }
 
     function _addFlagOfForcedSend() {
-      self.sendingExam.examLot.forcedSave = true;
+      self.sendingExam.examSendingLot.forcedSave = true;
       self.sendingExam.exams.map(function (exam) {
         exam.examResults.map(function (result) {
           self.aliquotsNotIdentified.map(function (resultNotIdentified) {

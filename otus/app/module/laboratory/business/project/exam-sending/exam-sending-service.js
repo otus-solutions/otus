@@ -7,12 +7,12 @@
 
   service.$inject = [
     '$q',
-    'otusjs.laboratory.exam.sending.ExamLotService',
+    'otusjs.laboratory.exam.sending.ExamSendingLotService',
     'otusjs.laboratory.repository.ProjectRepositoryService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service($q, ExamLotService, ProjectRepositoryService, LoadingScreenService) {
+  function service($q, ExamSendingLotService, ProjectRepositoryService, LoadingScreenService) {
     var self = this;
     var messageLoadingToGet =
       'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
@@ -29,15 +29,15 @@
     self.deleteSendedExams = deleteSendedExams;
 
     function createExamSending() {
-      return ExamLotService.createExamSending();
+      return ExamSendingLotService.createExamSending();
     }
 
     function loadExamSendingFromJson(examResultLot, examResults) {
-      return ExamLotService.buildExamSendingFromJson(examResultLot, examResults);
+      return ExamSendingLotService.buildExamSendingFromJson(examResultLot, examResults);
     }
 
     function getExamList() {
-      return ExamLotService.getExamList();
+      return ExamSendingLotService.getExamList();
     }
 
     function getSendedExamById(id) {

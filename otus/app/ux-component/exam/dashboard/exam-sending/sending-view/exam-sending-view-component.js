@@ -90,7 +90,7 @@
     }
 
     function _removeRecursive(array, callback) {
-      SendingExamService.deleteSendedExams(array[0].examLot._id).then(function () {
+      SendingExamService.deleteSendedExams(array[0].examSendingLot._id).then(function () {
         if (array.length == 1) {
           callback();
         } else {
@@ -140,11 +140,11 @@
     }
 
     function _filterByCenter(filteredByCenter) {
-      return filteredByCenter.examLot.fieldCenter.acronym === self.centerFilter;
+      return filteredByCenter.examSendingLot.fieldCenter.acronym === self.centerFilter;
     }
 
     function _filterByPeriod(filteredByCenter) {
-      var formattedData = $filter('date')(filteredByCenter.examLot.realizationDate, 'yyyyMMdd');
+      var formattedData = $filter('date')(filteredByCenter.examSendingLot.realizationDate, 'yyyyMMdd');
       if (self.realizationBeginFilter && self.realizationEndFilter) {
         var initialDateFormatted = $filter('date')(self.realizationBeginFilter, 'yyyyMMdd');
         var finalDateFormatted = $filter('date')(self.realizationEndFilter, 'yyyyMMdd');

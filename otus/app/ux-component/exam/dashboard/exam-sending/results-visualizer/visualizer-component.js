@@ -41,9 +41,9 @@
           _loadList();
         } else {
           _buildExamSending();
-          self.sendingExam.examLot.resultsQuantity = self.examList.length;
+          self.sendingExam.examSendingLot.resultsQuantity = self.examList.length;
         }
-        self.formattedDate = $filter('date')(self.fileStructure.examLot.realizationDate, 'dd/MM/yyyy HH:mm');
+        self.formattedDate = $filter('date')(self.fileStructure.examSendingLot.realizationDate, 'dd/MM/yyyy HH:mm');
       }
       _buildDynamicTableSettings();
     }
@@ -59,7 +59,7 @@
     }
 
     function _loadList() {
-      SendingExamService.getSendedExamById(self.fileStructure.examLot._id).then(function (response) {
+      SendingExamService.getSendedExamById(self.fileStructure.examSendingLot._id).then(function (response) {
         self.fileStructure.exams = response;
         _buildExamSending();
         self.updateDataTable(self.examList);
@@ -67,7 +67,7 @@
     }
 
     function _buildExamSending() {
-      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examLot, self.fileStructure.exams);
+      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examSendingLot, self.fileStructure.exams);
       self.examList = self.sendingExam.getExamList();
     }
 
