@@ -115,7 +115,7 @@
                     <div ng-show="exam.aliquotCode != ''" class="input-footer-message">
                       Processado:
                       <input ng-class="{fieldProcessingDateDisable: exam.isSaved, fieldProcessingDateActive: !exam.isSaved}"
-                        placeholder="Não Informado"
+                        placeholder="Não Informado" tabindex="-1"
                         mdc-datetime-picker=""
                         date="true" time="true"
                         type="text" id="datetime"
@@ -183,9 +183,9 @@
                     </div>
                     <div class="input-footer-message">
                       Processado:
-                      <input ng-class="{fieldProcessingDateDisable: exam.isSaved, fieldProcessingDateActive: !exam.isSaved}"
+                      <input ng-class="{fieldProcessingDateDisable: storage.isSaved, fieldProcessingDateActive: !storage.isSaved}"
                         placeholder="Não Informado"
-                        mdc-datetime-picker=""
+                        mdc-datetime-picker="" tabindex="-1"
                         date="true" time="true"
                         type="text" id="datetime"
                         show-todays-date="" max-date="$ctrl.now"
