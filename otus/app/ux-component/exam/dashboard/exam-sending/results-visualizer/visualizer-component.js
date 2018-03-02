@@ -97,10 +97,10 @@
           .addIconWithFunction(function (element) {
             var structureIcon = { icon: "", class: "", tooltip: "" };
 
-            if (element && element.forceSave) {
-              structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não identificada no sistema", orderValue: "warning" };
-            } else {
+            if (element.aliquotValid) {
               structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
+            } else {
+              structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não identificada no sistema", orderValue: "warning" };
             }
 
             return structureIcon;
