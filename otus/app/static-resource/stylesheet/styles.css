@@ -190,21 +190,24 @@ md-content.no-background-color{
   background-color: transparent;
 }
 
-.fieldProcessingDateActive {
+.fieldActive {
   border: none;
   outline: 0;
+  opacity: 0.9;
   background: none;
   color: #00008B;
   font-weight: bold;
   cursor:pointer;
 }
 
-.fieldProcessingDateDisable {
+.fieldDisable {
   border: none;
   outline: 0;
+  opacity: 0.8;
   background: none;
-  color: gray;
+  color: #292828;
   font-weight: bold;
+  font-family: arial;
 }
 
 .dtp>.dtp-content>.dtp-date-view>header.dtp-header{
