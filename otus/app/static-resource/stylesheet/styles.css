@@ -189,3 +189,48 @@ md-input-container.input-container-lot-margin{
 md-content.no-background-color{
   background-color: transparent;
 }
+
+.fieldProcessingDateActive {
+  border: none;
+  outline: 0;
+  background: none;
+  color: #00008B;
+  font-weight: bold;
+  cursor:pointer;
+}
+
+.fieldProcessingDateDisable {
+  border: none;
+  outline: 0;
+  background: none;
+  color: gray;
+  font-weight: bold;
+}
+
+.dtp>.dtp-content>.dtp-date-view>header.dtp-header{
+  background: rgb(0,121,107) !important;
+}
+.dtp div.dtp-date, .dtp div.dtp-time{
+  background: rgb(0,150,136) !important;
+}
+
+.dtp table.dtp-picker-days tr>td>a.selected{
+  background: rgb(0,121,107) !important;
+
+}
+.dtp table.dtp-picker-days tr>td>a.hilite:not(.selected){
+  color: rgb(0,150,136) !important;
+}
+
+.dtp .dtp-picker-time>a.dtp-select-hour.selected{
+  background: rgb(0,121,107) !important;
+}
+
+.dtp .dtp-hand.on{
+  background: rgb(0,150,136) !important;
+}
+
+.dtp .dtp-actual-meridien a.selected{
+  background: rgb(0,150,136) !important;
+
+}
