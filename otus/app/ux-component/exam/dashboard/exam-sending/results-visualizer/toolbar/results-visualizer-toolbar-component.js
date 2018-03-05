@@ -44,26 +44,38 @@
       ApplicationStateService.activateExamSending();
     }
 
-    function saveUpload() {
+    function _loadWait() {
       LoadingScreenService.changeMessage(MESSAGE_LOADING);
       LoadingScreenService.start();
-      if (self.aliquotsNotIdentified) {
-        _buildMessageForceSendOfAliquots();
-        _forceSendOfAliquots();
-      } else {
-        SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function () {
-          ProjectContextService.clearFileStructure();
-          ApplicationStateService.activateExamSending();
-          self.aliquotsNotIdentified = [];
-          LoadingScreenService.finish();
-        }, function (reason) {
-          _handleFailuresToSend(reason);
-          LoadingScreenService.finish();
-          $mdDialog.show(aliquotsNotFound).then(function () {
-            self.dynamicDataTableChange();
-          });
+    }
+
+    function saveUpload() {
+      Promise.resolve()
+        .then(_loadWait)
+        .then(function () {
+          if (self.aliquotsNotIdentified) {
+            _buildMessageForceSendOfAliquots();
+            _forceSendOfAliquots();
+          } else {
+            _sendExam();
+          }
         });
-      }
+    }
+
+    function _sendExam() {
+      SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function () {
+        ProjectContextService.clearFileStructure();
+        ApplicationStateService.activateExamSending();
+        self.aliquotsNotIdentified = [];
+        LoadingScreenService.finish();
+      }, function (reason) {
+        _handleFailuresToSend(reason);
+        _addFlagOfForcedSend();
+        LoadingScreenService.finish();
+        $mdDialog.show(aliquotsNotFound).then(function () {
+          self.dynamicDataTableChange();
+        });
+      });
     }
 
     function _handleFailuresToSend(reason) {
@@ -115,21 +127,11 @@
     function _forceSendOfAliquots() {
       LoadingScreenService.finish();
       $mdDialog.show(_confirmForceSendOfAliquots).then(function () {
-        LoadingScreenService.changeMessage(MESSAGE_LOADING);
-        LoadingScreenService.start();
-        _addFlagOfForcedSend();
-        SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function () {
-          ProjectContextService.clearFileStructure();
-          ApplicationStateService.activateExamSending();
-          self.aliquotsNotIdentified = [];
-          LoadingScreenService.finish();
-        }, function (reason) {
-          _handleFailuresToSend(reason);
-          LoadingScreenService.finish();
-          $mdDialog.show(aliquotsNotFound).then(function () {
-            self.dynamicDataTableChange();
+        Promise.resolve()
+          .then(_loadWait)
+          .then(function () {
+            _sendExam();
           });
-        });
       });
     }
 
