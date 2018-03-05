@@ -40,7 +40,7 @@
         $mdDialog.show(_exitDialog);
       }
     }
-    //TODO Método de adicionar atividade para categorias
+    
     function catchActivity(activity) {
       var activityIndex = _selectedActivities.indexOf(activity.surveyTemplate.identity.acronym);
       if (activityIndex !== -1) {
