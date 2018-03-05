@@ -20,6 +20,7 @@
         alignArray: '<',
         flexArray: '<',
         orderIndices: '<',
+        orderByInsertion:'<',
         numberFieldsAlignedLeft: '<',
 
         selectedColor: '<',
@@ -61,6 +62,7 @@
     self.$onInit = onInit;
 
     self.changeOrder = changeOrder;
+    self.orderByIndex = orderByIndex;
     self.creacteTable = creacteTable;
     self.selectDeselectRow = selectDeselectRow;
     self.selectDeselectAllRows = selectDeselectAllRows;
@@ -98,8 +100,9 @@
     self.currentRowOnHover;
 
     function onInit() {
+      console.log('a', self.orderByInsertion);
       _initializeDefaultValues();
-      _setOrderQuery();
+      self.orderByInsertion ? orderByIndex() : _setOrderQuery();
 
       self.tableUpdateFunction = _refreshGrid;
 
@@ -472,10 +475,20 @@
       }
     }
 
+    function orderByIndex() {
+      _setOrderQuery('$index');
+      self.orderInverse = !self.orderInverse;
+    }
 
-    function _setOrderQuery(columnName) {
-      if (columnName) {
-        self.orderQuery = columnName + '.orderValue';
+
+    function _setOrderQuery(propertyName) {
+      if (propertyName) {
+        if (propertyName === '$index'){
+          self.orderQuery = propertyName;
+        }
+        else {
+          self.orderQuery = propertyName + '.orderValue';
+        }
       } else {
         self.orderQuery = [];
         if (self.orderIndices) {
@@ -491,9 +504,13 @@
     }
 
     function _getValueFormated(value, property, index) {
-      if (self.formatDataIndexArray.filter(function (val) { return Number(val) === index }).length) {
+      if (self.formatDataIndexArray.filter(function (val) {
+          return Number(val) === index
+        }).length) {
         value = $filter('date')(value, self.formatData);
-      } else if (self.formatDataPropertiesArray.filter(function (prop) { return prop === property }).length) {
+      } else if (self.formatDataPropertiesArray.filter(function (prop) {
+          return prop === property
+        }).length) {
         value = $filter('date')(value, self.formatData);
       }
 
@@ -564,6 +581,7 @@
         self.runCallbackOnChange(row, 'select');
       }
     }
+
     function _deselectRow(row) {
       if (row.selected) {
         row.selected = false;
@@ -593,7 +611,7 @@
           var value = _getValueFromElement(element, elementProperty, index, true);
           var orderValue = _getValueFromElement(element, elementProperty, index);
         } else {
-          specialField = _specialFieldConstruction(elementProperty,element);
+          specialField = _specialFieldConstruction(elementProperty, element);
           var orderValue = specialField.orderValue || '';
         }
 
@@ -625,7 +643,7 @@
       return column;
     }
 
-    function _specialFieldConstruction(elementProperty,element) {
+    function _specialFieldConstruction(elementProperty, element) {
       var specialFieldStructure = undefined;
       var iconButton = elementProperty.iconButton;
       var iconWithFunction = elementProperty.iconWithFunction;
@@ -646,10 +664,10 @@
           },
           orderValue: iconButton.icon
         }
-      } else if(iconWithFunction){
+      } else if (iconWithFunction) {
         var structure = iconWithFunction.iconFunction(element);
         specialFieldStructure = {
-          iconStructure : structure,
+          iconStructure: structure,
           orderValue: structure.orderValue
         }
       }
