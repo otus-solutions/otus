@@ -14,10 +14,13 @@
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
-    'otusjs.laboratory.business.project.sending.SendingExamService'
+    'otusjs.laboratory.business.project.sending.SendingExamService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService) {
+  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService, LoadingScreenService) {
+    const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
+
     var self = this;
     var therIsNoDataToShow;
 
@@ -59,10 +62,13 @@
     }
 
     function _loadList() {
+      LoadingScreenService.changeMessage(MESSAGE_LOADING);
+      LoadingScreenService.start();
       SendingExamService.getSendedExamById(self.fileStructure.examSendingLot._id).then(function (response) {
         self.fileStructure.exams = response;
         _buildExamSending();
         self.updateDataTable(self.examList);
+        LoadingScreenService.finish();
       });
     }
 

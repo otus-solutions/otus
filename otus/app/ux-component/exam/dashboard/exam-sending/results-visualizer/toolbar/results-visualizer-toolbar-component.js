@@ -19,10 +19,12 @@
     '$mdDialog',
     'otusjs.laboratory.business.project.sending.SendingExamService',
     'otusjs.laboratory.core.project.ContextService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdDialog, SendingExamService, ProjectContextService, ApplicationStateService) {
+  function Controller($mdDialog, SendingExamService, ProjectContextService, ApplicationStateService, LoadingScreenService) {
+    const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_NOT_FOUND_BACKEND_MESSAGE = "Data Validation Fail: Aliquots not found";
     const EMPTY_LOT_BACKEND_MESSAGE = "Data Validation Fail: Empty Lot";
 
@@ -43,6 +45,8 @@
     }
 
     function saveUpload() {
+      LoadingScreenService.changeMessage(MESSAGE_LOADING);
+      LoadingScreenService.start();
       if (self.aliquotsNotIdentified) {
         _buildMessageForceSendOfAliquots();
         _forceSendOfAliquots();
@@ -51,8 +55,10 @@
           ProjectContextService.clearFileStructure();
           ApplicationStateService.activateExamSending();
           self.aliquotsNotIdentified = [];
+          LoadingScreenService.finish();
         }, function (reason) {
           _handleFailuresToSend(reason);
+          LoadingScreenService.finish();
           $mdDialog.show(aliquotsNotFound).then(function () {
             self.dynamicDataTableChange();
           });
@@ -107,14 +113,19 @@
     }
 
     function _forceSendOfAliquots() {
+      LoadingScreenService.finish();
       $mdDialog.show(_confirmForceSendOfAliquots).then(function () {
+        LoadingScreenService.changeMessage(MESSAGE_LOADING);
+        LoadingScreenService.start();
         _addFlagOfForcedSend();
         SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function () {
           ProjectContextService.clearFileStructure();
           ApplicationStateService.activateExamSending();
           self.aliquotsNotIdentified = [];
+          LoadingScreenService.finish();
         }, function (reason) {
           _handleFailuresToSend(reason);
+          LoadingScreenService.finish();
           $mdDialog.show(aliquotsNotFound).then(function () {
             self.dynamicDataTableChange();
           });

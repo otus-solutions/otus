@@ -8,16 +8,11 @@
   service.$inject = [
     '$q',
     'otusjs.laboratory.exam.sending.ExamSendingLotService',
-    'otusjs.laboratory.repository.ProjectRepositoryService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.laboratory.repository.ProjectRepositoryService'
   ];
 
-  function service($q, ExamSendingLotService, ProjectRepositoryService, LoadingScreenService) {
+  function service($q, ExamSendingLotService, ProjectRepositoryService) {
     var self = this;
-    var messageLoadingToGet =
-      'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
-    var messageLoadingToCreate =
-      'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
 
     /* Public methods */
     self.createExamSending = createExamSending;
@@ -41,36 +36,28 @@
     }
 
     function getSendedExamById(id) {
-      LoadingScreenService.changeMessage(messageLoadingToGet);
-      LoadingScreenService.start();
       var deferred = $q.defer();
 
       ProjectRepositoryService.getSendedExamById(id)
         .then(function (response) {
           deferred.resolve(response);
-          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
-          LoadingScreenService.finish();
         });
 
       return deferred.promise;
     }
 
     function getSendedExams() {
-      LoadingScreenService.changeMessage(messageLoadingToGet);
-      LoadingScreenService.start();
       var deferred = $q.defer();
 
       ProjectRepositoryService.getSendedExams()
         .then(function (response) {
           deferred.resolve(response);
-          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
-          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -78,16 +65,12 @@
 
     function createSendExam(sendStructure) {
       var deferred = $q.defer();
-      LoadingScreenService.changeMessage(messageLoadingToCreate);
-      LoadingScreenService.start();
       ProjectRepositoryService.createSendExam(sendStructure)
         .then(function (response) {
           deferred.resolve(response);
-          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
-          LoadingScreenService.finish();
         });
 
       return deferred.promise;

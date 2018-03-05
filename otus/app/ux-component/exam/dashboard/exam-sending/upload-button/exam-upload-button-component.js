@@ -14,10 +14,13 @@
     '$mdToast',
     'otusjs.application.session.core.ContextService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.laboratory.core.project.ContextService'
+    'otusjs.laboratory.core.project.ContextService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($q, $element, $mdToast, SessionContextService, ApplicationStateService, ProjectContextService) {
+  function Controller($q, $element, $mdToast, SessionContextService, ApplicationStateService, ProjectContextService, LoadingScreenService) {
+    const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
+
     var self = this;
     var timeShowMsg = 5000;
     var fr = new FileReader();
@@ -50,6 +53,8 @@
       if (!_fileIsEmpty(fileLines) && _isJSONValid(fileLines) && _JSONContainsPropertyOfExam(fileLines)) {
         var resultJSON = JSON.parse(fileLines);
         if (isCompatibleFieldCenter(resultJSON.examSendingLot.fieldCenter.acronym)) {
+          LoadingScreenService.changeMessage(MESSAGE_LOADING);
+          LoadingScreenService.start();
 
           self.fileData.examSendingLot.fieldCenter.acronym = ProjectContextService.getFieldCenterInSendingExam();
           self.fileData.exams = resultJSON.exams;
@@ -66,6 +71,7 @@
         self.input[0].value = '';
         _toastEmptyFile();
       }
+      LoadingScreenService.finish();
     }
 
     function isCompatibleFieldCenter(acronym) {
