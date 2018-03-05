@@ -39,14 +39,14 @@
     transition-property: transform;
   }
 
-  .dynamic-table md-icon.dynamic-arrow-icon {
+  md-icon.dynamic-arrow-icon {
     -moz-transform: rotate(0deg);
     -webkit-transform: rotate(0deg);
     -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
 
-  .dynamic-table md-icon.dynamic-arrow-icon-inverse {
+  md-icon.dynamic-arrow-icon-inverse {
     -moz-transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
     -webkit-transform: rotate(180deg);
@@ -72,8 +72,6 @@
     padding-right: 16px;
   }
 
-
-
   .dynamic-table-column-left {
     text-align: left;
   }
@@ -89,7 +87,6 @@
   .dynamic-table-expand-filter {
     margin-top: 20px;
   }
-
 
   .dynamic-table-animated {
     -moz-transition: transform 0.5s;
@@ -128,10 +125,21 @@
   }
 </style>
 <md-whiteframe class="md-whiteframe-1dp dynamic-structure" layout="column" flex>
-  <div ng-if="$ctrl.tableTitle">
+  <div ng-if="$ctrl.tableTitle" layout="row" layout-align="space-between">
     <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
       {{$ctrl.tableTitle}}
     </md-subheader>
+
+    <!--order by index button-->
+    <md-button class="md-icon-button md-raised" ng-click="$ctrl.orderByIndex()">
+      <md-tooltip md-direction="top">
+        Exibir em ordem de inserção
+      </md-tooltip>
+      <md-icon md-font-set="material-icons">
+        format_list_numbered
+      </md-icon>
+    </md-button>
+    <!--/order by index button-->
   </div>
 
   <div ng-if="!$ctrl.tableTitle && !$ctrl.disableFilter" class="dynamic-table-expand-filter"></div>
@@ -139,13 +147,16 @@
   <div ng-if="!$ctrl.disableFilter" layout="row" layout-align="center center" flex>
     <div layout="row" layout-margin flex>
       <md-input-container class="remove-errors-spacer" flex>
-        <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter" ng-change="$ctrl.filterRows()" ng-model-options="{ allowInvalid: true, debounce: 500 }"
+        <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter" ng-change="$ctrl.filterRows()"
+               ng-model-options="{ allowInvalid: true, debounce: 500 }"
         />
       </md-input-container>
     </div>
 
-    <div ng-if="(!$ctrl.disablePagination && $ctrl.filter.length && $ctrl.viewPerPage)" style="padding-right:15px" class="dynamic-table-animated">
-      <md-checkbox flex style="margin:0;" aria-label="Filtrar todos" class="md-primary" ng-checked="$ctrl.filterAll" ng-click="$ctrl.filterAllChanged()">
+    <div ng-if="(!$ctrl.disablePagination && $ctrl.filter.length && $ctrl.viewPerPage)" style="padding-right:15px"
+         class="dynamic-table-animated">
+      <md-checkbox flex style="margin:0;" aria-label="Filtrar todos" class="md-primary" ng-checked="$ctrl.filterAll"
+                   ng-click="$ctrl.filterAllChanged()">
         <span class="md-body-1">
             Filtrar Todos
           </span>
@@ -164,61 +175,81 @@
   <div ng-if="!$ctrl.error.isError" class="dynamic-table" flex>
     <div ng-mouseenter="$ctrl.leaveFocus()" class="dynamic-table-header" layout="row" flex>
       <div class="dynamic-table-header-row" layout="row" layout-align="start center" flex>
-        <div style="padding-left:15px" ng-if="!$ctrl.disableCheckbox" layout="column" flex="5" layout-align="center center">
-          <md-checkbox flex aria-label="Selecionar Todos os Registros" class="md-primary" ng-checked="$ctrl.selectedItemCounter === $ctrl.table.rows.length"
-                       md-indeterminate="$ctrl.selectedItemCounter !== $ctrl.table.rows.length && $ctrl.selectedItemCounter>0" ng-click="$ctrl.selectDeselectAllRows()">
+        <div style="padding-left:15px" ng-if="!$ctrl.disableCheckbox" layout="column" flex="5"
+             layout-align="center center">
+          <md-checkbox flex aria-label="Selecionar Todos os Registros" class="md-primary"
+                       ng-checked="$ctrl.selectedItemCounter === $ctrl.table.rows.length"
+                       md-indeterminate="$ctrl.selectedItemCounter !== $ctrl.table.rows.length && $ctrl.selectedItemCounter>0"
+                       ng-click="$ctrl.selectDeselectAllRows()">
           </md-checkbox>
           <md-tooltip md-direction="top">
             {{$ctrl.selectedItemCounter === $ctrl.table.rows.length ? 'Deseleciona Todos' : 'Seleciona Todos'}}
           </md-tooltip>
         </div>
-        <div ng-if="$ctrl.disableCheckbox"style="padding-top:40px"></div>
+        <div ng-if="$ctrl.disableCheckbox" style="padding-top:40px"></div>
 
-        <div class="{{'dynamic-table-header-column ' + $ctrl.getColumnPositionClass($index, $ctrl.table.headers)}}" ng-repeat="header in $ctrl.table.headers track by $index"
+        <div class="{{'dynamic-table-header-column ' + $ctrl.getColumnPositionClass($index, $ctrl.table.headers)}}"
+             ng-repeat="header in $ctrl.table.headers track by $index"
              flex="{{$ctrl.getFlex($index)}}" ng-click="$ctrl.changeOrder($index)">
           {{header}}
-          <md-icon ng-if="$ctrl.orderQuery === 'column' + $index + '.orderValue'" ng-class="$ctrl.getOrderIcon()" md-font-set="material-icons">arrow_drop_up</md-icon>
+          <md-icon ng-if="$ctrl.orderQuery === 'column' + $index + '.orderValue'" ng-class="$ctrl.getOrderIcon()"
+                   md-font-set="material-icons">arrow_drop_up
+          </md-icon>
         </div>
       </div>
     </div>
 
     <div class="dynamic-table-body" layout="column" flex id="dynamic-body">
-      <div class="dynamic-table-body-row {{($ctrl.disablePagination || !$ctrl.viewPerPage || $ctrl.filterAll) ? ' dynamic-table-animated ' : ''}}"
-           layout="row" layout-align="start center" flex ng-repeat="row in $ctrl.table.rows | orderBy:$ctrl.orderQuery:$ctrl.orderInverse"
-           ng-click="$ctrl.selectDeselectRow(row)" name="bodyRow{{row.index}}" id="bodyRow{{row.index}}" ng-mouseenter="$ctrl.mouseEnter(row)"
-           ng-mouseleave="$ctrl.mouseLeave(row)" ng-style="row.style">
-        <div style="padding-left:15px" ng-if="!$ctrl.disableCheckbox" layout="column" flex="5" layout-align="center center">
-          <md-checkbox ng-checked="row.selected" aria-label="Checkbox registro da linha {{row.index}}" class="md-primary">
+      <div
+        class="dynamic-table-body-row {{($ctrl.disablePagination || !$ctrl.viewPerPage || $ctrl.filterAll) ? ' dynamic-table-animated ' : ''}}"
+        layout="row" layout-align="start center" flex
+        ng-repeat="row in $ctrl.table.rows | orderBy:$ctrl.orderQuery:$ctrl.orderInverse"
+        ng-click="$ctrl.selectDeselectRow(row)" name="bodyRow{{row.index}}" id="bodyRow{{row.index}}"
+        ng-mouseenter="$ctrl.mouseEnter(row)"
+        ng-mouseleave="$ctrl.mouseLeave(row)" ng-style="row.style">
+        <div style="padding-left:15px" ng-if="!$ctrl.disableCheckbox" layout="column" flex="5"
+             layout-align="center center">
+          <md-checkbox ng-checked="row.selected" aria-label="Checkbox registro da linha {{row.index}}"
+                       class="md-primary">
           </md-checkbox>
         </div>
-        <div ng-if="$ctrl.disableCheckbox"style="padding-top:40px"></div>
+        <div ng-if="$ctrl.disableCheckbox" style="padding-top:40px"></div>
 
-        <div class="{{'dynamic-table-body-column ' + $ctrl.getColumnPositionClass(column.index,row.columns)}}" ng-repeat="column in row.columns"
+        <div class="{{'dynamic-table-body-column ' + $ctrl.getColumnPositionClass(column.index,row.columns)}}"
+             ng-repeat="column in row.columns"
              flex="{{$ctrl.getFlex(column.index)}}">
           <span ng-if="!column.specialField" class="md-body-1">
             {{column.value}}
           </span>
 
           <div ng-if="column.specialField && column.specialField.iconStructure">
-            <md-tooltip ng-if="column.specialField.iconStructure.tooltip">{{column.specialField.iconStructure.tooltip}}</md-tooltip>
-            <md-icon class=" material-icons {{column.specialField.iconStructure.class}}">{{column.specialField.iconStructure.icon}}</md-icon>
+            <md-tooltip ng-if="column.specialField.iconStructure.tooltip">
+              {{column.specialField.iconStructure.tooltip}}
+            </md-tooltip>
+            <md-icon class=" material-icons {{column.specialField.iconStructure.class}}">
+              {{column.specialField.iconStructure.icon}}
+            </md-icon>
           </div>
 
           <md-button ng-if="column.specialField && column.specialField.iconButton"
                      class="md-icon-button {{column.specialField.iconButton.classButton}}"
                      ng-click="$ctrl.iconButtonClick(column.specialField.iconButton, row)">
-            <md-tooltip ng-if="column.specialField.iconButton.tooltip">{{column.specialField.iconButton.tooltip}}</md-tooltip>
+            <md-tooltip ng-if="column.specialField.iconButton.tooltip">{{column.specialField.iconButton.tooltip}}
+            </md-tooltip>
             <md-icon md-font-set="material-icons">{{column.specialField.iconButton.icon}}</md-icon>
           </md-button>
         </div>
       </div>
     </div>
 
-    <div ng-if="!$ctrl.disablePagination" ng-mouseenter="$ctrl.leaveFocus()" class="dynamic-pagination" layout="row" layout-align="start center" flex>
+    <div ng-if="!$ctrl.disablePagination" ng-mouseenter="$ctrl.leaveFocus()" class="dynamic-pagination" layout="row"
+         layout-align="start center" flex>
       <div>
         <div ng-if="!$ctrl.disableShowAll" layout="row" class="md-body-1" layout-margin>
           <md-button class="md-accent" flex ng-click="$ctrl.viewPerPageChanged()" ng-disabled="$ctrl.filterAll">
-            <md-tooltip>{{$ctrl.viewPerPage ? 'Exibir todos os Registros: Desabilita Paginação' : 'Exibir Registros por Página: Habilita Paginação'}}</md-tooltip>
+            <md-tooltip>{{$ctrl.viewPerPage ? 'Exibir todos os Registros: Desabilita Paginação' : 'Exibir Registros por
+              Página: Habilita Paginação'}}
+            </md-tooltip>
             <span class="md-body-1">
               {{$ctrl.viewPerPage ? 'Exibir Todos' : 'Exibir por Página'}}
             </span>
@@ -233,7 +264,8 @@
           </span>
         </div>
         <div>
-          <md-select ng-model="$ctrl.rowPerPageDefault" aria-label="Página " style="margin:0" ng-change="$ctrl.rowPerPageChange()">
+          <md-select ng-model="$ctrl.rowPerPageDefault" aria-label="Página " style="margin:0"
+                     ng-change="$ctrl.rowPerPageChange()">
             <md-option ng-repeat="rowPerPage in $ctrl.rowsPerPageArray" value="{{rowPerPage}}">
               <span class="md-body-1">
                 {{rowPerPage}}
@@ -247,7 +279,8 @@
           </span>
         </div>
         <div>
-          <md-button class="md-icon-button" aria-label="Página Anterior" ng-disabled="!$ctrl.getIsPreviousPage()" ng-click="$ctrl.previousPage()">
+          <md-button class="md-icon-button" aria-label="Página Anterior" ng-disabled="!$ctrl.getIsPreviousPage()"
+                     ng-click="$ctrl.previousPage()">
             <md-tooltip>Página Anterior</md-tooltip>
             <md-icon md-font-set="material-icons">
               keyboard_arrow_left
@@ -255,7 +288,8 @@
           </md-button>
         </div>
         <div>
-          <md-button class="md-icon-button" aria-label="Página Seguinte" ng-disabled="!$ctrl.getIsNextPage()" ng-click="$ctrl.nextPage()">
+          <md-button class="md-icon-button" aria-label="Página Seguinte" ng-disabled="!$ctrl.getIsNextPage()"
+                     ng-click="$ctrl.nextPage()">
             <md-tooltip>Próxima Página</md-tooltip>
             <md-icon md-font-set="material-icons">
               keyboard_arrow_right
