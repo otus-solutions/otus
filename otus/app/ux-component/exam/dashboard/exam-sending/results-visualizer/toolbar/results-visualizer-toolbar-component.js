@@ -70,7 +70,7 @@
         LoadingScreenService.finish();
       }, function (reason) {
         _handleFailuresToSend(reason);
-        _addFlagOfForcedSend();
+        _addFlagOfForcedSend(reason);
         LoadingScreenService.finish();
         $mdDialog.show(aliquotsNotFound).then(function () {
           self.dynamicDataTableChange();
@@ -135,17 +135,19 @@
       });
     }
 
-    function _addFlagOfForcedSend() {
-      self.sendingExam.examSendingLot.forcedSave = true;
-      self.sendingExam.exams.map(function (exam) {
-        exam.examResults.map(function (result) {
-          self.aliquotsNotIdentified.map(function (resultNotIdentified) {
-            if (resultNotIdentified.aliquotCode === result.aliquotCode) {
-              result.aliquotValid = false;
-            }
+    function _addFlagOfForcedSend(reason) {
+      if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE) {
+        self.sendingExam.examSendingLot.forcedSave = true;
+        self.sendingExam.exams.map(function (exam) {
+          exam.examResults.map(function (result) {
+            self.aliquotsNotIdentified.map(function (resultNotIdentified) {
+              if (resultNotIdentified.aliquotCode === result.aliquotCode) {
+                result.aliquotValid = false;
+              }
+            });
           });
         });
-      });
+      }
     }
 
     function _buildDialogs() {
