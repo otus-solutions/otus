@@ -19,7 +19,7 @@
 
   Controller.$inject = [
     '$filter',
-    'otusjs.laboratory.business.project.reports.ExamLotService',
+    'otusjs.laboratory.business.project.exams.ExamLotService',
     'otusjs.laboratory.WorkAliquotFactory',
     '$scope'
   ];

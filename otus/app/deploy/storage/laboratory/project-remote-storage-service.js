@@ -115,7 +115,7 @@
 
     /**
      * Exam Lot
-     * @param {(object)} center - the central center of reports lot
+     * @param {(object)} center - the central center of exams lot
      * @returns {Promise} promise
      * @memberof ProjectRemoteStorageService
      */
@@ -135,7 +135,7 @@
     /* sending exam */
 
     /**
-     * get sended reports
+     * get sended exams
      * @returns {Promise} promise
      * @memberof ProjectRemoteStorageService
      */
@@ -152,7 +152,7 @@
     }
 
     /**
-     * get sended reports
+     * get sended exams
      * @returns {Promise} promise
      * @memberof ProjectRemoteStorageService
      */
@@ -189,7 +189,7 @@
     }
 
     /**
-     * Delete sended reports
+     * Delete sended exams
      * @param {(object)} sendedCode - the code of lot
      * @returns {Promise} promise
      * @memberof ProjectRemoteStorageService

@@ -30,7 +30,7 @@
           <md-option selected value="ALL">
             Todos
           </md-option>
-          <md-option ng-repeat="exam in $ctrl.reports | orderBy:'label' track by $index " value="{{exam.name}}">
+          <md-option ng-repeat="exam in $ctrl.exams | orderBy:'label' track by $index " value="{{exam.name}}">
             {{exam.label}}
           </md-option>
         </md-select>

@@ -4,7 +4,7 @@
             <md-subheader class="md-no-sticky moment-type-title">
                 Tipo e Momento
             </md-subheader>
-
+    
             <md-list ng-repeat="momentType in $ctrl.momentTypeList" >
                 <div class="tube-list-view">
                     <md-card ng-click="$ctrl.selecMomentType(momentType)"
@@ -32,12 +32,12 @@
                                         <!--<span class="md-caption">{{$ctrl.tube.tubeCollectionData.time | date : 'dd/MM/yyyy HH:mm'}}</span>-->
                                     </div>
                                     <div layout="column" flex="50" style="text-align:right">
-
+    
                                         <!-- Implementar Icones de Status -->
                                         <!--done : Aliquotagem Parcial -->
                                         <!--done_all : Aliquotagem Completa -->
                                         <!--error_outline : Erros Impossivel Salvar -->
-
+    
                                         <!--<a class="md-caption" ng-show="$ctrl.tube.tubeCollectionData.isCollected && $ctrl.tube.tubeCollectionData.metadata">Volume Parcial</a>
                                         <a class="md-caption" ng-show="!$ctrl.tube.tubeCollectionData.isCollected && $ctrl.tube.tubeCollectionData.metadata">Não Coletado</a>-->
                                     </div>
@@ -49,24 +49,24 @@
             </md-list>
         </div>
     <!--List MomentType - End-->
-
-
+    
+    
         <div layout="column" flex="70" flex-offset="5">
             <md-subheader class="md-no-sticky moment-type-title">
                 Aliquotagem: {{$ctrl.selectedMomentType.typeLabel}} - {{$ctrl.selectedMomentType.momentLabel}}
             </md-subheader>
-
+    
             <form name="formAliquot" layout-align="start stretch">
                 <md-list flex>
                     <div class="tube-list-view" flex>
                         <div layout="column" class="boxWithHeight tela" layout-padding flex >
-
+    
                             <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex layout-padding>
                                 <div class="aliquot-whiteframe-title">
                                     Exame:
                                 </div>
-
-                                <div ng-repeat="exam in $ctrl.selectedMomentType.reports" layout="row">
+    
+                                <div ng-repeat="exam in $ctrl.selectedMomentType.exams" layout="row">
     <!-- Mount Tube Input - Exam - Begin -->
                                     <div class="input-tube" flex>
                                         <div class="md-list-item-text" layout="column" flex>
@@ -93,17 +93,17 @@
                                             <div ng-show="exam.isSaved" class="input-footer-message">
                                                 {{"Aliquotado por: " + exam.operator}}
                                             </div>
-
+    
                                         </div>
                                     </div>
     <!-- Mount Tube Input - Exam - End -->
-
+    
                                     <div flex=10 layout="row" layout-align="center center" class="aliquot-arrow-icon">
                                         <div class="{{exam.isSaved ? 'aliquot-arrow-icon-up' : ''}}">
                                             <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
                                         </div>
                                     </div>
-
+    
     <!-- Mount Aliquot Input - Exam - Begin -->
                                     <div class="input-aloquot" flex>
                                         <div class="md-list-item-text" layout="column" flex>
@@ -125,7 +125,7 @@
                                                     </div>
                                                 </md-input-container>
                                             </md-content>
-
+    
                                             <div ng-show="exam.isSaved && exam.aliquotMessage == ''" class="input-footer-message">
                                                 {{exam.date + " " + exam.time}}
                                             </div>
@@ -135,12 +135,12 @@
                                 </div>
                                 <br>
                             </md-whiteframe>
-
+    
                             <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex layout-padding>
                                 <div class="aliquot-whiteframe-title">
                                     Armazenamento:
                                 </div>
-
+    
                                 <div ng-repeat="storage in $ctrl.selectedMomentType.stores" layout="row">
     <!-- Mount Tube Input - Storage - Begin -->
                                     <div class="input-tube" flex>
@@ -165,20 +165,20 @@
                                                     </div>
                                                 </md-input-container>
                                             </md-content>
-
+    
                                             <div ng-show="storage.isSaved" class="input-footer-message">
                                                 {{"Aliquotado por: " + storage.operator}}
                                             </div>
                                         </div>
                                     </div>
     <!-- Mount Tube Input - Storage - End -->
-
+    
                                     <div flex=10 layout="row" layout-align="center center" class="aliquot-arrow-icon">
                                         <div class="{{storage.isSaved ? 'aliquot-arrow-icon-up' : ''}}">
                                             <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
                                         </div>
                                     </div>
-
+    
     <!-- Mount Aliquot Input - Storage - Begin -->
                                     <div class="input-aloquot" flex>
                                         <div class="md-list-item-text" layout="column" flex>
@@ -200,7 +200,7 @@
                                                     </div>
                                                 </md-input-container>
                                             </md-content>
-
+    
                                             <div ng-show="storage.isSaved && storage.aliquotMessage == ''" class="input-footer-message">
                                                 {{storage.date + " " + storage.time}}
                                             </div>
@@ -215,10 +215,10 @@
                 </md-list>
             </form>
         </div>
-
+    
         <div flex-offset="5">
-
+    
         </div>
     </md-content>
-
-
+    
+    

@@ -26,13 +26,13 @@
     function updateAliquots(updateStructure, fakeMe) {
       return ParticipantLaboratoryService.updateAliquots(updateStructure);
     }
-
+    
     function areFieldsChanged(momentType){
       var changed = false;
 
       if(momentType){
         var originalAliquots = momentType.originalExams.concat(momentType.originalStores);
-        var newAliquots = momentType.reports.concat(momentType.stores);
+        var newAliquots = momentType.exams.concat(momentType.stores);
 
         for (var i = 0; i < newAliquots.length; i++) {
           if(originalAliquots[i].tubeCode != newAliquots[i].tubeCode
@@ -42,13 +42,13 @@
           }
         }
       }
-
+      
       return changed;
     }
 
     function getNewAliquots(momentType){
       var originalAliquots = momentType.originalExams.concat(momentType.originalStores);
-      var aliquotArray = momentType.reports.concat(momentType.stores);
+      var aliquotArray = momentType.exams.concat(momentType.stores);
       var newAliquotsArray = [];
 
       for (var i = 0; i < aliquotArray.length; i++) {
@@ -65,7 +65,7 @@
 
     function aliquotsWithErrors(momentType){
       var hasErrors = false;
-      var aliquotArray = momentType.reports.concat(momentType.stores);
+      var aliquotArray = momentType.exams.concat(momentType.stores);
 
       for (var i = 0; i < aliquotArray.length; i++) {
         if(aliquotArray[i].aliquotMessage || aliquotArray[i].tubeMessage){
@@ -125,18 +125,18 @@
           stores.push(aliquotStructure);
           indexStorage++;
         } else {
-          reports.push(aliquotStructure);
+          exams.push(aliquotStructure);
           indexExam++;
         }
       });
 
       momentType.stores = stores;
-      momentType.reports = reports;
+      momentType.exams = exams;
 
       momentType = fillAliquotsWithCollectedAliquots(momentType);
 
       momentType.originalStores = JSON.parse(JSON.stringify(momentType.stores));
-      momentType.originalExams = JSON.parse(JSON.stringify(momentType.reports));
+      momentType.originalExams = JSON.parse(JSON.stringify(momentType.exams));
 
       momentType.repeatedAliquots = [];
 
@@ -145,7 +145,7 @@
 
     function fillAliquotsWithCollectedAliquots(momentType){
       momentType.collectedAliquots.forEach(function(collectedAliquot){
-        var arrayAliquots = momentType.reports;
+        var arrayAliquots = momentType.exams;
 
         if(collectedAliquot.role.toUpperCase() == "STORAGE") arrayAliquots = momentType.stores;
 

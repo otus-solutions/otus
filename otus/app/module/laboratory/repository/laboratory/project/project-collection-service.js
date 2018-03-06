@@ -201,7 +201,7 @@
     /* sending exam */
 
     /**
-     * get Sended reports by id.
+     * get Sended exams by id.
      * @param {(object)} id - code of sended exam
      * @memberof ProjectCollectionService
      */
@@ -223,7 +223,7 @@
 
 
     /**
-    * get Sended reports.
+    * get Sended exams.
     * @memberof ProjectCollectionService
     */
     function getSendedExams() {
