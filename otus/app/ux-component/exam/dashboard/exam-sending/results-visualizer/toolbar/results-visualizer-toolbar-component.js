@@ -50,16 +50,24 @@
     }
 
     function saveUpload() {
+      if (self.aliquotsNotIdentified) {
+        _saveForced();
+      } else {
+        _save();
+      }
+    }
+
+    function _save(){
       Promise.resolve()
         .then(_loadWait)
         .then(function () {
-          if (self.aliquotsNotIdentified) {
-            _buildMessageForceSendOfAliquots();
-            _forceSendOfAliquots();
-          } else {
-            _sendExam();
-          }
+          _sendExam();
         });
+    }
+
+    function _saveForced(){
+      _buildMessageForceSendOfAliquots();
+      _forceSendOfAliquots();
     }
 
     function _sendExam() {
@@ -70,7 +78,7 @@
         LoadingScreenService.finish();
       }, function (reason) {
         _handleFailuresToSend(reason);
-        _addFlagOfForcedSend(reason);
+        _changeValidAliquotFlag(reason);
         LoadingScreenService.finish();
         $mdDialog.show(aliquotsNotFound).then(function () {
           self.dynamicDataTableChange();
@@ -125,7 +133,6 @@
     }
 
     function _forceSendOfAliquots() {
-      LoadingScreenService.finish();
       $mdDialog.show(_confirmForceSendOfAliquots).then(function () {
         Promise.resolve()
           .then(_loadWait)
@@ -135,7 +142,7 @@
       });
     }
 
-    function _addFlagOfForcedSend(reason) {
+    function _changeValidAliquotFlag(reason) {
       if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE) {
         self.sendingExam.examSendingLot.forcedSave = true;
         self.sendingExam.exams.map(function (exam) {
