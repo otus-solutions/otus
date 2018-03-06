@@ -39,8 +39,8 @@
       getSelectedParticipant()
         .then(function (selectedParticipant) {
           _paperActivityCheckerData = JSON.parse(window.sessionStorage.getItem('activityPaper'));
-          _paperActivityCheckerData.realizationDate = new Date(_paperActivityCheckerData.realizationDate);
           if (_paperActivityCheckerData) {
+            _paperActivityCheckerData.realizationDate = new Date(_paperActivityCheckerData.realizationDate);
             ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData, self.activityConfigurations);
             _paperActivityCheckerData = null;
             window.sessionStorage.removeItem('activityPaper');
