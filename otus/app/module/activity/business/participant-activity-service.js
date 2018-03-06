@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -37,17 +37,18 @@
       var loggedUser = ContextService.getLoggedUser();
 
       getSelectedParticipant()
-      .then(function(selectedParticipant) {
-        _paperActivityCheckerData = window.sessionStorage.getItem('activityPaper');
-        if (_paperActivityCheckerData) {
-          ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData, self.activityConfigurations);
-          _paperActivityCheckerData = null;
-          window.sessionStorage.removeItem('activityPaper');
-          window.sessionStorage.removeItem('activityType');
-        } else {
-          ActivityRepositoryService.createFromSurvey(self.listSurveys, loggedUser, selectedParticipant, self.activityConfigurations);
-        }
-      });
+        .then(function (selectedParticipant) {
+          _paperActivityCheckerData = JSON.parse(window.sessionStorage.getItem('activityPaper'));
+          _paperActivityCheckerData.realizationDate = new Date(_paperActivityCheckerData.realizationDate);
+          if (_paperActivityCheckerData) {
+            ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData, self.activityConfigurations);
+            _paperActivityCheckerData = null;
+            window.sessionStorage.removeItem('activityPaper');
+            window.sessionStorage.removeItem('activityType');
+          } else {
+            ActivityRepositoryService.createFromSurvey(self.listSurveys, loggedUser, selectedParticipant, self.activityConfigurations);
+          }
+        });
     }
 
     function setActivitiesSelection(surveys) {
@@ -61,7 +62,7 @@
 
     function listAll() {
       return getSelectedParticipant()
-        .then(function(selectedParticipant) {
+        .then(function (selectedParticipant) {
           return ActivityRepositoryService.listAll(selectedParticipant);
         });
     }
@@ -72,7 +73,7 @@
     }
 
     function initializePaperActivityData(paperActivityCheckerData) {
-      window.sessionStorage.setItem('activityPaper', paperActivityCheckerData);
+      window.sessionStorage.setItem('activityPaper', JSON.stringify(paperActivityCheckerData));
       _paperActivityCheckerData = paperActivityCheckerData;
     }
 
@@ -86,7 +87,7 @@
           return ContextService.getSelectedActivities();
         },
         discard: function discard() {
-          var toDiscard = ContextService.getSelectedActivities().map(function(activity) {
+          var toDiscard = ContextService.getSelectedActivities().map(function (activity) {
             activity.isDiscarded = true;
             return activity;
           });
@@ -124,7 +125,7 @@
     }
 
     function listAllCategories() {
-        return ActivityRepositoryService.listAllCategories();
+      return ActivityRepositoryService.listAllCategories();
     }
 
   }
