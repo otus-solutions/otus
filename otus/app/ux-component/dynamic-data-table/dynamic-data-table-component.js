@@ -367,11 +367,6 @@
       return self.orderInverse ? 'dynamic-arrow-icon-inverse' : 'dynamic-arrow-icon';
     }
 
-    self.verifyOrderIcon = function (index) {
-      return self.orderQuery === 'column' + $index + '.value' ? true : false;
-    }
-
-
     function rowPerPageChange() {
       self.table.currentPage = 1;
       pagesChage();
