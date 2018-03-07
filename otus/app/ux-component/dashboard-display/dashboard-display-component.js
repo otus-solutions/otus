@@ -8,7 +8,23 @@
       templateUrl: 'app/ux-component/dashboard-display/dashboard-display-template.html'
     });
 
-  function Controller() {
+    Controller.$inject = [
+      'otusjs.application.state.ApplicationStateService'
+    ];
+
+  function Controller(ApplicationStateService) {
     var self = this;
+
+    self.reportDashboard = reportDashboard;
+
+
+
+
+
+
+    //TODO: ALTERAR STATE
+    function reportDashboard() {
+      ApplicationStateService.activateReportDashboard();
+    }
   }
 }());
