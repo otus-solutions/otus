@@ -13,10 +13,11 @@
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.otus.dashboard.core.EventService',
-    'otusjs.otus.dashboard.service.DashboardService'
+    'otusjs.otus.dashboard.service.DashboardService',
+    'otusjs.otus.uxComponent.ParticipantReportWidgetFactory'
   ];
 
-  function Controller(STATE, ApplicationStateService, ProjectContextService, EventService, DashboardService) {
+  function Controller(STATE, ApplicationStateService, ProjectContextService, EventService, DashboardService, ParticipantReportWidgetFactory) {
     var self = this;
 
     /* Public methods */
