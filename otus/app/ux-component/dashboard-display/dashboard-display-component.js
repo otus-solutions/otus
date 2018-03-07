@@ -24,7 +24,7 @@
 
     //TODO: ALTERAR STATE
     function reportDashboard() {
-      ApplicationStateService.activateReportDashboard();
+      ApplicationStateService.activateParticipantReports();
     }
   }
 }());

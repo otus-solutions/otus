@@ -22,7 +22,7 @@
     self.activateLaboratory = activateLaboratory;
     self.activateDashboard = activateDashboard;
     self.activateParticipantDashboard = activateParticipantDashboard;
-    self.activateReportDashboard = activateReportDashboard;
+    // self.activateReportDashboard = activateReportDashboard;
     self.activateParticipantActivities = activateParticipantActivities;
     self.activateParticipantReports = activateParticipantReports;
     self.activateSignup = activateSignup;
@@ -71,9 +71,9 @@
       $state.go(STATE.PARTICIPANT_DASHBOARD);
     }
 
-    function activateReportDashboard() {
-      $state.go(STATE.REPORT_VISUALIZER);
-    }
+    // function activateReportDashboard() {
+    //   $state.go(STATE.REPORT_VISUALIZER);
+    // }
 
     function activateActivityCategories() {
       $state.go(STATE.ACTIVITY_CATEGORY_ADDER);
