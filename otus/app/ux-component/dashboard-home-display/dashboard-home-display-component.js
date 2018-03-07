@@ -20,6 +20,7 @@
     var self = this;
     self.setFocus = setFocus;
     self.sampleTransportDashboard = sampleTransportDashboard;
+    self.reportDashboard = reportDashboard;
     self.ExamsDashboard = ExamsDashboard;
     self.sendingExam = sendingExam;
     self.$onInit = onInit;
@@ -33,6 +34,10 @@
 
     function sampleTransportDashboard() {
       ApplicationStateService.activateSampleTransportation();
+    }
+    //TODO: ALTERAR STATE
+    function reportDashboard() {
+      ApplicationStateService.activateReportDashboard();
     }
 
     function ExamsDashboard() {
