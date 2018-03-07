@@ -1,3 +1,27 @@
-<div ui-view layout="column" flex >
-    <md-icon  md-svg-icon="home" aria-label="Home" class="md-accent" flex style="font-size:100px;height:100px;width:100px;"></md-icon>
+<div ui-view layout="column" flex>
+  <div layout="column" layout-align="center center" layout-padding flex>
+    <div layout="row">
+      <div flex>
+        <div layout="row" layout-padding>
+          <div layout="column" layout-padding layout-align="center center">
+
+            <span layout="row" class="md-headline">Utilize as opções a seguir para navegar no sistema.</span>
+          </div>
+        </div>
+        <div layout="row" layout-padding></div>
+        <md-content class="md-padding" layout-xs="column" layout="row">
+
+          <div flex-xs flex-gt-xs="35" layout="column">
+
+            <md-card layout-align="center center" style="cursor:pointer;" ng-click="$ctrl.reportDashboard()">
+              <md-card-content>
+                <md-icon style="font-size:50px;height:50px;width:50px;">description</md-icon>
+              </md-card-content>
+              <span class="md-body-1" layout-padding>Relatórios</span>
+            </md-card>
+          </div>
+        </md-content>
+      </div>
+    </div>
+  </div>
 </div>

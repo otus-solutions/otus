@@ -97,19 +97,19 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
   white-space: normal;
 }
 
-otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
   color: rgb(255, 255, 255) !important;
 }
 
-otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
   color: rgb(255, 255, 255) !important;
 }
 
-otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {
   fill: rgb(255, 254, 254) !important;
 }
 
-otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete {
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete {
   color: rgb(255, 255, 255) !important;
 }
 
