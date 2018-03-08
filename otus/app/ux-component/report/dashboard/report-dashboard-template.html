@@ -5,10 +5,12 @@
 </div>
 <div flex="100" layout="row">
   <span flex></span>
-  <div flex="80" layout="row" layout-wrap layout-align="start start">
+  <div flex="60" layout="row" layout-wrap layout-align="center center">
+
+
     <md-card layout-align="start start"
     layout="column" ng-repeat="report in $ctrl.reports"
-    ng-if="$ctrl.ready" flex="30" ng-init="collapsed = true">
+    ng-if="$ctrl.ready" flex="60" ng-init="collapsed = true">
       <md-card-header class="md-toolbar-tools">
         <md-icon class="md-avatar-icon">description</md-icon>
         <md-card-header-text>
@@ -24,15 +26,18 @@
       </md-card-header>
       <md-card-content class="slide" ng-hide="collapsed">
 
-        <span ng-show="{{report.hasBeenDelivered}}">
+        <span ng-show="{{report.hasBeenDelivered}}" ng-style="{color:report.statusColor}">
           <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
           Disponível</span>
         <span ng-show="{{!report.hasBeenDelivered}}" ng-style="{color:report.statusColor}">
           <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
           Indisponível</span>
+          <span flex></span>
+          <md-button ng-show="{{report.hasBeenDelivered}}">Visualizar</md-button>
 
       </md-card-content>
     </md-card>
+
   </div>
   <span flex></span>
 </div>
