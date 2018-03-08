@@ -1,8 +1,38 @@
-<md-card layout-align="center center" style="cursor:pointer;" ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready"">
-  <md-card-content>
-    <md-icon style="font-size:50px;height:50px;width:50px;">description</md-icon>
-  </md-card-content>
-  <span class="md-body-1" layout-padding>{{report.name}}</span>
+<div flex="100" layout="row" layout-padding layout-margin>
+  <span flex></span>
+<h1>Relatórios</h1>
+<span flex></span>
+</div>
+<div flex="100" layout="row">
+  <span flex></span>
+  <div flex="80" layout="row" layout-wrap layout-align="start start">
+    <md-card layout-align="start start"
+    layout="column" ng-repeat="report in $ctrl.reports"
+    ng-if="$ctrl.ready" flex="30" ng-init="collapsed = true">
+      <md-card-header class="md-toolbar-tools">
+        <md-icon class="md-avatar-icon">description</md-icon>
+        <md-card-header-text>
+          <span class="md-body-1" layout-padding>{{report.name}}</span>
+        </md-card-header-text>
+        <span flex="100"></span>
+        <md-card-title-media>
+          <md-button class="md-icon-button" ng-click="collapsed=!collapsed" >
+            <md-icon ng-show="collapsed">keyboard_arrow_down</md-icon>
+            <md-icon ng-show="!collapsed">keyboard_arrow_up</md-icon>
+          </md-button>
+        </md-card-title-media>
+      </md-card-header>
+      <md-card-content class="slide" ng-hide="collapsed">
 
-</md-card>
-<span>Relatórios</span>
+        <span ng-show="{{report.hasBeenDelivered}}">
+          <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
+          Disponível</span>
+        <span ng-show="{{!report.hasBeenDelivered}}" ng-style="{color:report.statusColor}">
+          <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
+          Indisponível</span>
+
+      </md-card-content>
+    </md-card>
+  </div>
+  <span flex></span>
+</div>

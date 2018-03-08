@@ -37,7 +37,7 @@
     self.hasBeenDelivered = exam.hasBeenDelivered;
     self.requestList = [];
     self.statusColor = self.isAvailable === true ? 'green' : 'red';
-    self.statusIcon = self.isAvailable === true ? 'ok' : 'not_ok';
+    self.statusIcon = self.isAvailable === true ? 'done' : 'cancel';
 
     self.setDependencies = setPromiseChain;
 
