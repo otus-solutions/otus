@@ -43,7 +43,7 @@
     self.isAvailable = null;  //null when we don't know yet if it's available
     self.loading = false;
     self.statusColor = self.isAvailable === true ? 'green' : 'red';
-    self.statusIcon = self.isAvailable === true ? 'ok' : 'not_ok';
+    self.statusIcon = self.isAvailable === true ? 'done' : 'cancel';
 
 
 
