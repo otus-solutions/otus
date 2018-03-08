@@ -34,6 +34,19 @@
       self.selectedParticipant = null;
     }
 
+
+
+    function _fetchReports(){
+      ParticipantReportWidgetFactory.getParticipantReportList()
+        .then(reports=>{
+          self.reports = reports;
+          self.ready = true;
+          console.log(reports);
+        });
+    }
+
+
+    // participant selector
     function selectParticipant(selectedParticipant) {
       self.selectedParticipant = selectedParticipant;
     }
@@ -46,12 +59,14 @@
       if (participantData) {
         self.selectedParticipant = participantData;
         self.isEmpty = false;
+        _fetchReports();
       } else {
         DashboardService
           .getSelectedParticipant()
           .then(function(participantData) {
             self.selectedParticipant = participantData;
             self.isEmpty = false;
+            _fetchReports();
           });
       }
     }

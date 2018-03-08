@@ -44,6 +44,7 @@
             ]
           },
           {
+            name:'Urina',
             id: 132465,
             template: "<span>{{datasources.ultimo_rcpc.getAnswerById(rcpc_1)}}<span>",
             datasources: [
@@ -57,7 +58,7 @@
         ]
       };
 
-      defer.resolve(fakeData);
+      defer.resolve(fakeData.reports);
 
       return defer.promise;
     }

@@ -1,9 +1,8 @@
-<otus-dashboard-sidenav layout="row">
-</otus-dashboard-sidenav>
-<otus-dashboard-toolbar layout="row">
-  <div flex layout="row" layout-align="center center" layout-margin>
-    <span layout-align="center center">Relatórios</span>
-  </div>
-</otus-dashboard-toolbar>
-<div ui-view layout="column" flex>
-</div>
+<md-card layout-align="center center" style="cursor:pointer;" ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready"">
+  <md-card-content>
+    <md-icon style="font-size:50px;height:50px;width:50px;">description</md-icon>
+  </md-card-content>
+  <span class="md-body-1" layout-padding>{{report.name}}</span>
+
+</md-card>
+<span>Relatórios</span>

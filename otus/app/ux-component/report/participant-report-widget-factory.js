@@ -14,13 +14,13 @@
   function factory($q, ParticipantExamService) {
     var self = this;
 
-    self.createExamList = createExamList;
+    self.getParticipantReportList = getParticipantReportList;
 
-    function createExamList() {
-      var defer = $q.defer;
+    function getParticipantReportList() {
+      var defer = $q.defer();
       ParticipantExamService.fetchExams()
         .then(function (reports) {
-          defer.resolve(reports.map(exam => new ParticipantExam(exam)));
+          defer.resolve(reports.map(exam => new ParticipantReport(exam)));
         });
       return defer.promise;
     }
@@ -28,14 +28,16 @@
     return self;
   }
 
-  function ParticipantExam(exam) {
-    var self = Object.assign(this, exam); //extends. A ideia aqui é manter referência com o exam(que pode ser um objeto gerado pelo model).
+  function ParticipantReport(exam) {
+    var self = Object.assign(this, exam); // exam pode ser um objeto gerado pelo model.
+    // var self = exam;
 
     self.name = exam.name;
     self.isAvailable = null;  //null when we don't know yet if it's available
     self.hasBeenDelivered = exam.hasBeenDelivered;
     self.requestList = [];
     self.statusColor = self.isAvailable === true ? 'green' : 'red';
+    self.statusIcon = self.isAvailable === true ? 'ok' : 'not_ok';
 
     self.setDependencies = setPromiseChain;
 
