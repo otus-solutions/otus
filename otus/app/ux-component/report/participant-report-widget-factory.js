@@ -11,16 +11,16 @@
     'otusjs.otus.uxComponent.ParticipantReportService'
   ];
 
-  function factory($q, ParticipantExamService) {
+  function factory($q, ParticipantReportService) {
     var self = this;
 
     self.getParticipantReportList = getParticipantReportList;
 
     function getParticipantReportList() {
       var defer = $q.defer();
-      ParticipantExamService.fetchExams()
+      ParticipantReportService.fetchReportList()
         .then(function (reports) {
-          defer.resolve(reports.map(exam => new ParticipantReport(exam)));
+          defer.resolve(reports.map(exam => new ParticipantReport(ParticipantReportService, exam)));
         });
       return defer.promise;
     }
@@ -28,29 +28,35 @@
     return self;
   }
 
-  function ParticipantReport(exam) {
+  function ParticipantReport(ParticipantReportService, exam) {
+    //todo: decidir pelo tipo de inicialização
     var self = Object.assign(this, exam); // exam pode ser um objeto gerado pelo model.
     // var self = exam;
+    // var self = this;
 
+    self.id = exam.id;
     self.name = exam.name;
-    self.isAvailable = null;  //null when we don't know yet if it's available
     self.hasBeenDelivered = exam.hasBeenDelivered;
-    self.requestList = [];
+    self.getReportTemplate = getReportTemplate;
+
+    //ux-properties
+    self.isAvailable = null;  //null when we don't know yet if it's available
+    self.loading = false;
     self.statusColor = self.isAvailable === true ? 'green' : 'red';
     self.statusIcon = self.isAvailable === true ? 'ok' : 'not_ok';
 
-    self.setDependencies = setPromiseChain;
 
 
-    function setPromiseChain(promise) {
-      promise
-        .then(function (data) {
-          self.isAvailable = true;
-          //do something with data;
+    function getReportTemplate(){
+      self.loading = true;
+      ParticipantReportService.getFullReport(self.id)
+        .then(data => {
+          console.log(data);
+          self.loading = false;
         })
-        .catch(function (e) {
-          self.isAvailable = false;
-          //do something with e
+        .catch(function(e){
+          console.log(e);
+          self.loading = false;
         });
     }
   }
