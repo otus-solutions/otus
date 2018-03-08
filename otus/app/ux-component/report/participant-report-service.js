@@ -48,7 +48,7 @@
         1: {
           name: 'Hemograma',
           hasBeenDelivered: false,
-          datasources: [
+          dataSources: [
             {
               key: "ultimo_rcpc",
               datasource: "Activity",
@@ -59,7 +59,7 @@
         2: {
           name: 'Glicemia',
           hasBeenDelivered: true,
-          datasources: [
+          dataSources: [
             {
               key: "ultimo_rcpc",
               datasource: "Activity",
@@ -70,8 +70,8 @@
         3: {
           name: 'Urina',
           id: 132465,
-          template: "<span>{{datasources.ultimo_rcpc.getAnswerById(rcpc_1)}}<span>",
-          datasources: [
+          template: "<span>{{dataSources.ultimo_rcpc.getAnswerById(rcpc_1)}}<span>",
+          dataSources: [
             {
               key: "ultimo_rcpc",
               datasource: "Activity",
@@ -80,7 +80,7 @@
           ]
         },
         4: {
-          "template": "<span>{{datasources.Participant.recruitmentNumber}}<span>",
+          "template": "<span>{{dataSources.Participant.recruitmentNumber}}<span>",
           "dataSources": [
             {
               "key": "cabeçalho",
@@ -146,7 +146,7 @@
           name: 'Urina',
         },
         {
-          id: '3',
+          id: '4',
           name: 'Data de coleta',
         }
       ]

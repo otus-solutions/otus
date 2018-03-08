@@ -12,12 +12,12 @@
   ];
 
   function factory($q, ParticipantReportService) {
-    var self = this;
+    let self = this;
 
     self.getParticipantReportList = getParticipantReportList;
 
     function getParticipantReportList() {
-      var defer = $q.defer();
+      let defer = $q.defer();
       ParticipantReportService.fetchReportList()
         .then(function (reports) {
           defer.resolve(reports.map(exam => new ParticipantReport(ParticipantReportService, exam)));
@@ -29,35 +29,69 @@
   }
 
   function ParticipantReport(ParticipantReportService, exam) {
-    //todo: decidir pelo tipo de inicialização
-    var self = Object.assign(this, exam); // exam pode ser um objeto gerado pelo model.
+    // todo: decidir pelo tipo de inicialização
+    // var self = Object.assign(this, exam); // exam pode ser um objeto gerado pelo model.
     // var self = exam;
-    // var self = this;
+    let self = this;
 
     self.id = exam.id;
     self.name = exam.name;
-    self.hasBeenDelivered = exam.hasBeenDelivered;
-    self.getReportTemplate = getReportTemplate;
+    self.hasBeenDelivered = exam.hasBeenDelivered; //will this come at first consult?
+
+    self.template = '';
+    self.dataSources = {};
 
     //ux-properties
     self.isAvailable = null;  //null when we don't know yet if it's available
     self.loading = false;
-    self.statusColor = self.isAvailable === true ? 'green' : 'red';
-    self.statusIcon = self.isAvailable === true ? 'done' : 'cancel';
+    self.statusColor = 'gray';
+    self.statusIcon = 'priority_high';
 
+    self.getReportTemplate = getReportTemplate;
+    self.getReportTemplate();
 
+    function getReportTemplate() {
+      let defer = $q.defer();
 
-    function getReportTemplate(){
       self.loading = true;
       ParticipantReportService.getFullReport(self.id)
         .then(data => {
           console.log(data);
+          if (data) {
+            _manageDatasources(data.dataSources);
+          }
           self.loading = false;
+          defer.resolve(true);  //necessary?
         })
-        .catch(function(e){
+        .catch(function (e) {
           console.log(e);
           self.loading = false;
+          defer.reject(false);
         });
+    }
+
+    function _manageDatasources(dataSourceList) {
+      let missing = [];
+
+      dataSourceList.forEach(function (ds) {
+        let dsKey = ds.key;
+        if (ds.result.length > 0) {
+          self.dataSources[dsKey] = ds.result;
+        } else {
+          missing.push(dsKey);
+        }
+      });
+      if(missing.length > 0){
+        _setAvailability(false);
+      }else{
+        _setAvailability(true);
+      }
+    }
+
+    function _setAvailability(isAvailable){
+      self.isAvailable = isAvailable;
+      self.statusColor = isAvailable === true ? 'green' : 'red';
+      self.statusIcon = isAvailable === true ? 'done' : 'cancel';
     }
   }
 }());
