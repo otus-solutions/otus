@@ -45,7 +45,6 @@
         });
     }
 
-
     // participant selector
     function selectParticipant(selectedParticipant) {
       self.selectedParticipant = selectedParticipant;

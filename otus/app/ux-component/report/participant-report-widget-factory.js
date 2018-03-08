@@ -20,7 +20,7 @@
       let defer = $q.defer();
       ParticipantReportService.fetchReportList()
         .then(function (reports) {
-          defer.resolve(reports.map(exam => new ParticipantReport(ParticipantReportService, exam)));
+          defer.resolve(reports.map(exam => new ParticipantReport($q, ParticipantReportService, exam)));
         });
       return defer.promise;
     }
@@ -28,7 +28,7 @@
     return self;
   }
 
-  function ParticipantReport(ParticipantReportService, exam) {
+  function ParticipantReport($q, ParticipantReportService, exam) {
     // todo: decidir pelo tipo de inicialização
     // var self = Object.assign(this, exam); // exam pode ser um objeto gerado pelo model.
     // var self = exam;
@@ -48,12 +48,13 @@
     self.statusIcon = 'priority_high';
 
     self.getReportTemplate = getReportTemplate;
-    self.getReportTemplate();
+
 
     function getReportTemplate() {
       let defer = $q.defer();
 
       self.loading = true;
+      // LoadingScreenService.start();
       ParticipantReportService.getFullReport(self.id)
         .then(data => {
           console.log(data);
@@ -68,6 +69,8 @@
           self.loading = false;
           defer.reject(false);
         });
+
+        return defer.promise;
     }
 
     function _manageDatasources(dataSourceList) {
