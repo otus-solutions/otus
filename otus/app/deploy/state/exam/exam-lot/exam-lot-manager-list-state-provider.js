@@ -47,7 +47,7 @@
     }
 
     _resolveLots.$inject = [
-      'otusjs.laboratory.business.project.exams.ExamLotService'
+      'otusjs.laboratory.business.project.reports.ExamLotService'
     ];
 
     _loadStateData.$inject = [
