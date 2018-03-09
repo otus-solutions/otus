@@ -11,26 +11,26 @@
   ];
 
   function service($q, $timeout) {
-    let self = this;
+    var self = this;
 
     self.fetchReportList = fetchReportList;
     self.getFullReport = getFullReport;
 
 
     function fetchReportList() {
-      let defer = $q.defer();
+      var defer = $q.defer();
 
 
-      defer.resolve(fakeData.reportList);
+      defer.resolve(self.fakeData.reportList);
 
       return defer.promise;
     }
 
     function getFullReport(id) {
-      let defer = $q.defer();
+      var defer = $q.defer();
 
       $timeout(function () {
-        defer.resolve(fakeData.reports[id])
+        defer.resolve(self.fakeData.reports[id])
 
       }, getRandomTimeout(7));
       return defer.promise;
@@ -43,7 +43,7 @@
       return Math.floor(Math.random() * Math.floor(maxSeconds))*1000;
     }
 
-    let fakeData = {
+    self.fakeData = {
       reports: {
         1: {
           name: 'Hemograma',
@@ -70,7 +70,7 @@
         3: {
           name: 'Urina',
           id: 132465,
-          template: "<span>{{dataSources.ultimo_rcpc.getAnswerById(rcpc_1)}}<span>",
+          template: "<span>{{dataSources.ultimo_rcpc.getAnswerById(rcpc_1)}}</span>",
           dataSources: [
             {
               key: "ultimo_rcpc",
@@ -80,12 +80,12 @@
           ]
         },
         4: {
-          "template": "<span>{{dataSources.Participant.recruitmentNumber}}<span>",
-          "dataSources": [
+          "template": "<span>{{dataSources.Participant.recruitmentNumber}}</span>",
+          dataSources: [
             {
-              "key": "cabeçalho",
-              "dataSource": "Participant",
-              "result": [
+              key: "cabeçalho",
+              dataSource: "Participant",
+              result: [
                 {
                   "recruitmentNumber": 3051442,
                   "name": "ANDRÃƒâ€°IA APARECIDA",

@@ -1,12 +1,12 @@
-<div flex="100" layout="row" layout-padding layout-margin>
+<div flex="100" layout="row">
   <span flex></span>
   <h1>Relatórios</h1>
   <span flex></span>
 </div>
 <div flex="100" layout="row">
-  <span flex></span>
-  <div flex="60" layout="row" layout-wrap layout-align="center center">
-    <md-card layout-align="start start" layout="column" ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready" flex="60" ng-init="collapsed = true">
+
+  <div layout="row" layout-wrap layout-align="start start" flex>
+    <md-card ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready" flex="30" ng-init="collapsed = true">
       <md-card-header class="md-toolbar-tools">
         <md-icon class="md-avatar-icon">description</md-icon>
         <md-card-header-text>
@@ -19,28 +19,36 @@
           </md-button>
         </md-card-title-media>
       </md-card-header>
-      <md-card-content ng-if="!collapsed" layout="row">
+      <div layout-align="center center" layout="row">
         <md-progress-circular class="md-hue-2" ng-show="report.loading" md-diameter="20px"></md-progress-circular>
         <span ng-show="report.loading" class="md-caption">&nbsp;Aguarde</span>
-        <div ng-show="!report.loading">
-          <span flex="30"></span>
-          <div ng-if="report.isAvailable" layout="column" flex>
-            <span ng-style="{color:report.statusColor}">
+      </div>
+      <md-card-content ng-if="!collapsed" layout="row" layout-align="start start">
+
+
+      </md-card-content>
+      <md-divider ng-if="report.isAvailable && !collapsed"></md-divider>
+      <md-card-actions layout="row" layout-align="end center" ng-if="!report.loading && !collapsed">
+        <div ng-show="!report.loading"  layout-align="start start" layout="row" flex>
+
+          <div ng-if="report.isAvailable" flex>
+            <span ng-style="{color:report.statusColor}" class="md-body-1">
               <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
               Disponível</span>
-              <span flex></span>
-            <md-button>Baixar</md-button>
-          </div>
-          <div ng-if="!report.isAvailable">
-            <span ng-style="{color:report.statusColor}">
-              <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
-              Indisponível</span>
-          </div>
-        </div>
-        <span flex></span>
-        <md-button ng-show="{{report.hasBeenDelivered}}">Visualizar</md-button>
-      </md-card-content>
+
+            </div>
+            <div ng-if="!report.isAvailable">
+              <span ng-style="{color:report.statusColor}" class="md-body-1">
+                <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
+                Indisponível</span>
+              </div>
+            </div>
+      <md-button class="md-icon-button" ng-if="report.isAvailable"><md-icon class="iconInverted">reply</md-icon>
+        <md-tooltip md-direction="bottom">Download</md-tooltip>
+
+      </md-button>
+    </md-card-actions>
     </md-card>
   </div>
-  <span flex></span>
+
 </div>

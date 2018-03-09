@@ -52,13 +52,15 @@
     });
 
     gulp.task('compress-compress', function() {
-      return gulp.src('app/*.html',{allowEmpty: true})
+      return gulp.src('app/*.html')
         .pipe(useref({
           transformPath: function(filePath) {
             return filePath.replace('otus/app', 'otus');
           }
         }))
-        .pipe(gulpif('*.js', uglify()))
+        .pipe(gulpif('*.js', uglify().on('error', function(e){
+            console.log(e);
+          })))
         .pipe(gulpif('*.css', minifyCss()))
         .pipe(gulpif('*.css', replace('url(../../static-resource/', 'url(/otus/app/static-resource/')))
         .pipe(gulpif('index.html', replace('href="css', 'href="dist/otus/css')))
