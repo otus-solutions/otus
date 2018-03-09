@@ -11,14 +11,14 @@
   ];
 
   function service($q, $timeout) {
-    let self = this;
+    var self = this;
 
     self.fetchReportList = fetchReportList;
     self.getFullReport = getFullReport;
 
 
     function fetchReportList() {
-      let defer = $q.defer();
+      var defer = $q.defer();
 
 
       defer.resolve(fakeData.reportList);
@@ -27,7 +27,7 @@
     }
 
     function getFullReport(id) {
-      let defer = $q.defer();
+      var defer = $q.defer();
 
       $timeout(function () {
         defer.resolve(fakeData.reports[id])
@@ -43,7 +43,7 @@
       return Math.floor(Math.random() * Math.floor(maxSeconds))*1000;
     }
 
-    let fakeData = {
+    var fakeData = {
       reports: {
         1: {
           name: 'Hemograma',

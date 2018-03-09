@@ -38,7 +38,7 @@
 
     function _fetchReports(){
       ParticipantReportWidgetFactory.getParticipantReportList()
-        .then(reports=>{
+        .then(function(reports){
           self.reports = reports;
           self.ready = true;
           console.log(reports);

@@ -12,15 +12,15 @@
   ];
 
   function factory($q, ParticipantReportService) {
-    let self = this;
+    var self = this;
 
     self.getParticipantReportList = getParticipantReportList;
 
     function getParticipantReportList() {
-      let defer = $q.defer();
+      var defer = $q.defer();
       ParticipantReportService.fetchReportList()
         .then(function (reports) {
-          defer.resolve(reports.map(exam => new ParticipantReport($q, ParticipantReportService, exam)));
+          defer.resolve(reports.map(function(exam) {new ParticipantReport($q, ParticipantReportService, exam)}));
         });
       return defer.promise;
     }
@@ -32,7 +32,7 @@
     // todo: decidir pelo tipo de inicialização
     // var self = Object.assign(this, exam); // exam pode ser um objeto gerado pelo model.
     // var self = exam;
-    let self = this;
+    var self = this;
 
     self.id = exam.id;
     self.name = exam.name;
@@ -51,12 +51,12 @@
 
 
     function getReportTemplate() {
-      let defer = $q.defer();
+      var defer = $q.defer();
 
       self.loading = true;
       // LoadingScreenService.start();
       ParticipantReportService.getFullReport(self.id)
-        .then(data => {
+        .then(function(data) {
           console.log(data);
           if (data) {
             _manageDatasources(data.dataSources);
@@ -74,10 +74,10 @@
     }
 
     function _manageDatasources(dataSourceList) {
-      let missing = [];
+      var missing = [];
 
       dataSourceList.forEach(function (ds) {
-        let dsKey = ds.key;
+        var dsKey = ds.key;
         if (ds.result.length > 0) {
           self.dataSources[dsKey] = ds.result;
         } else {
