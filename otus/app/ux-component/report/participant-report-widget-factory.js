@@ -20,7 +20,7 @@
       var defer = $q.defer();
       ParticipantReportService.fetchReportList()
         .then(function (reports) {
-          defer.resolve(reports.map(function(exam) {new ParticipantReport($q, ParticipantReportService, exam)}));
+          defer.resolve(reports.map(function(report) {return new ParticipantReport($q, ParticipantReportService, report)}));
         });
       return defer.promise;
     }
@@ -28,15 +28,15 @@
     return self;
   }
 
-  function ParticipantReport($q, ParticipantReportService, exam) {
+  function ParticipantReport($q, ParticipantReportService, report) {
     // todo: decidir pelo tipo de inicialização
-    // var self = Object.assign(this, exam); // exam pode ser um objeto gerado pelo model.
-    // var self = exam;
+    // var self = Object.assign(this, report); // report pode ser um objeto gerado pelo model.
+    // var self = report;
     var self = this;
 
-    self.id = exam.id;
-    self.name = exam.name;
-    self.hasBeenDelivered = exam.hasBeenDelivered; //will this come at first consult?
+    self.id = report.id;
+    self.name = report.name;
+    self.hasBeenDelivered = report.hasBeenDelivered; //will this come at first consult?
 
     self.template = '';
     self.dataSources = {};
