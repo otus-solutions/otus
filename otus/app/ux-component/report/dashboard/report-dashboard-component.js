@@ -9,7 +9,6 @@
     });
 
   Controller.$inject = [
-    'STATE',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.otus.dashboard.core.EventService',
@@ -17,7 +16,7 @@
     'otusjs.otus.uxComponent.ParticipantReportWidgetFactory'
   ];
 
-  function Controller(STATE, ApplicationStateService, ProjectContextService, EventService, DashboardService, ParticipantReportWidgetFactory) {
+  function Controller(ApplicationStateService, ProjectContextService, EventService, DashboardService, ParticipantReportWidgetFactory) {
     var self = this;
 
     /* Public methods */
@@ -25,7 +24,7 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
     self.getCurrentState = getCurrentState;
-    self.STATE = STATE;
+
 
     /* Lifecycle methods */
     function onInit() {
