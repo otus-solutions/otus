@@ -4,8 +4,8 @@
   <span flex></span>
 </div>
 <div flex="100" layout="row">
-
-  <div layout="row" layout-wrap layout-align="start start" flex>
+  <span flex></span>
+  <div layout="row" layout-wrap layout-align="start start" flex="80">
     <md-card ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready" flex="30" ng-init="collapsed = true">
       <md-card-header class="md-toolbar-tools">
         <md-icon class="md-avatar-icon">description</md-icon>
@@ -29,7 +29,7 @@
       </md-card-content>
       <md-divider ng-if="report.isAvailable && !collapsed"></md-divider>
       <md-card-actions layout="row" layout-align="end center" ng-if="!report.loading && !collapsed">
-        <div ng-show="!report.loading"  layout-align="start start" layout="row" flex>
+        <div ng-show="!report.loading"  layout-align="start start" layout="row" flex layout-padding>
 
           <div ng-if="report.isAvailable" flex>
             <span ng-style="{color:report.statusColor}" class="md-body-1">
@@ -50,5 +50,6 @@
     </md-card-actions>
     </md-card>
   </div>
+    <span flex></span>
 
 </div>
