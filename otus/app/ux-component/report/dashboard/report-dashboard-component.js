@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -35,9 +35,9 @@
 
 
 
-    function _fetchReports(){
+    function _fetchReports() {
       ParticipantReportWidgetFactory.getParticipantReportList()
-        .then(function(reports){
+        .then(function(reports) {
           self.reports = reports;
           self.ready = true;
           console.log(reports);
@@ -51,6 +51,10 @@
 
     function getCurrentState() {
       return ApplicationStateService.getCurrentState();
+    }
+
+    function isEmpty(obj) {
+      return Object.keys(obj).length === 0;
     }
 
     function _loadSelectedParticipant(participantData) {

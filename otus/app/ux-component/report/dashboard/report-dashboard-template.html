@@ -13,8 +13,8 @@
           <span class="md-body-1" layout-margin>{{report.name}}</span>
         </md-card-header-text>
         <md-card-title-media>
-          <md-button class="md-icon-button" ng-click="report.getReportTemplate(); collapsed=!collapsed">
-            <md-icon ng-show="collapsed" ng-click="$ctrl.load(report.loading)">keyboard_arrow_down</md-icon>
+          <md-button class="md-icon-button" ng-click="collapsed=!collapsed">
+            <md-icon ng-show="collapsed" ng-click="$ctrl.load(report.loading); report.getReportTemplate();">keyboard_arrow_down</md-icon>
             <md-icon ng-show="!collapsed">keyboard_arrow_up</md-icon>
           </md-button>
         </md-card-title-media>
@@ -24,7 +24,7 @@
         <span ng-show="report.loading" class="md-caption">&nbsp;Aguarde</span>
       </div>
       <md-card-content ng-if="!collapsed" layout="row" layout-align="start start">
-
+  
 
       </md-card-content>
       <md-divider ng-if="!collapsed"></md-divider>
@@ -46,7 +46,7 @@
       <md-button class="md-icon-button" ng-if="report.isAvailable"><md-icon class="iconInverted">reply</md-icon>
         <md-tooltip md-direction="bottom">Download</md-tooltip>
       </md-button>
-      <md-button class="md-icon-button" ng-if="!report.isAvailable"><md-icon class="iconInverted">block</md-icon>
+      <md-button class="md-icon-button" ng-if="!report.isAvailable" ng-disable="true"><md-icon class="iconInverted">block</md-icon>
         <md-tooltip md-direction="bottom">Não encontrado</md-tooltip>
       </md-button>
     </md-card-actions>
