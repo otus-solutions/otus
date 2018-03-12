@@ -27,25 +27,27 @@
 
 
       </md-card-content>
-      <md-divider ng-if="report.isAvailable && !collapsed"></md-divider>
+      <md-divider ng-if="!collapsed"></md-divider>
       <md-card-actions layout="row" layout-align="end center" ng-if="!report.loading && !collapsed">
-        <div ng-show="!report.loading"  layout-align="start start" layout="row" flex layout-padding>
+        <div ng-show="!report.loading"  layout-align="start start" layout="row" flex>
 
           <div ng-if="report.isAvailable" flex>
-            <span ng-style="{color:report.statusColor}" class="md-body-1">
+            <span ng-style="{color:report.statusColor}" class="md-body-1" style="padding-left:8px">
               <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
               Disponível</span>
 
             </div>
-            <div ng-if="!report.isAvailable">
-              <span ng-style="{color:report.statusColor}" class="md-body-1">
+            <div ng-if="!report.isAvailable" flex>
+              <span ng-style="{color:report.statusColor}" class="md-body-1" style="padding-left:8px">
                 <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
                 Indisponível</span>
               </div>
             </div>
       <md-button class="md-icon-button" ng-if="report.isAvailable"><md-icon class="iconInverted">reply</md-icon>
         <md-tooltip md-direction="bottom">Download</md-tooltip>
-
+      </md-button>
+      <md-button class="md-icon-button" ng-if="!report.isAvailable"><md-icon class="iconInverted">block</md-icon>
+        <md-tooltip md-direction="bottom">Não encontrado</md-tooltip>
       </md-button>
     </md-card-actions>
     </md-card>
