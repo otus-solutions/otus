@@ -20,7 +20,9 @@
       var defer = $q.defer();
       ParticipantReportService.fetchReportList()
         .then(function (reports) {
-          defer.resolve(reports.map(function(report) {return new ParticipantReport($q, ParticipantReportService, report)}));
+          defer.resolve(reports.map(function (report) {
+            return new ParticipantReport($q, ParticipantReportService, report)
+          }));
         });
       return defer.promise;
     }
@@ -40,6 +42,8 @@
 
     self.template = '';
     self.dataSources = {};
+    self.missingDataSources = [];
+    self.hasError = false;
 
     //ux-properties
     self.isAvailable = null;  //null when we don't know yet if it's available
@@ -51,47 +55,40 @@
 
 
     function getReportTemplate() {
-      var defer = $q.defer();
-
       self.loading = true;
-      // LoadingScreenService.start();
+      self.hasError = false;
+
       ParticipantReportService.getFullReport(self.id)
-        .then(function(data) {
+        .then(function (data) {
           console.log(data);
-          if (data) {
-            _manageDatasources(data.dataSources);
-          }
+          _manageDatasources(data.dataSources);
           self.loading = false;
-          defer.resolve(true);  //necessary?
         })
         .catch(function (e) {
-          console.log(e);
+          self.hasError = true;
           self.loading = false;
-          defer.reject(false);
         });
-
-        return defer.promise;
     }
 
     function _manageDatasources(dataSourceList) {
-      var missing = [];
+      self.missingDataSources = [];
 
       dataSourceList.forEach(function (ds) {
         var dsKey = ds.key;
         if (ds.result.length > 0) {
           self.dataSources[dsKey] = ds.result;
         } else {
-          missing.push(dsKey);
+          self.missingDataSources.push(dsKey);
         }
       });
-      if(missing.length > 0){
+      if (self.missingDataSources.length > 0) {
         _setAvailability(false);
-      }else{
+      } else {
         _setAvailability(true);
       }
     }
 
-    function _setAvailability(isAvailable){
+    function _setAvailability(isAvailable) {
       self.isAvailable = isAvailable;
       self.statusColor = isAvailable === true ? 'green' : 'red';
       self.statusIcon = isAvailable === true ? 'done' : 'cancel';

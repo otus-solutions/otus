@@ -30,7 +30,12 @@
       var defer = $q.defer();
 
       $timeout(function () {
-        defer.resolve(self.fakeData.reports[id])
+        var fullReport = self.fakeData.reports[id];
+        if(fullReport){
+          defer.resolve(fullReport);
+        }else{
+          defer.reject(new Error('some error'));
+        }
 
       }, getRandomTimeout(7));
       return defer.promise;
@@ -148,7 +153,22 @@
         {
           id: '4',
           name: 'Data de coleta',
-        }
+        },
+        {
+          id: '5',
+          name: 'Relatório 5',
+        },
+        { id: 6, name: 'Relatório 6' },
+        { id: 7, name: 'Relatório 7' },
+        { id: 8, name: 'Relatório 8' },
+        { id: 9, name: 'Relatório 9' },
+        { id: 10, name: 'Relatório 10' },
+        { id: 11, name: 'Relatório 11' },
+        { id: 12, name: 'Relatório 12' },
+        { id: 13, name: 'Relatório 13' },
+        { id: 14, name: 'Relatório 14' },
+        { id: 15, name: 'Relatório 15' },
+        { id: 16, name: 'Relatório 16' }
       ]
     };
 
