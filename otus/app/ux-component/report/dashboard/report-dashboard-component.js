@@ -25,6 +25,8 @@
     self.$onInit = onInit;
     self.getCurrentState = getCurrentState;
 
+    self.getFullReport = getFullReport;
+    self.reloadReport = reloadReport;
 
     /* Lifecycle methods */
     function onInit() {
@@ -33,6 +35,16 @@
       self.selectedParticipant = null;
     }
 
+    function getFullReport(report){
+      console.log(report)
+      if(report.isAvailable === null) {
+        report.getReportTemplate();
+      }
+    }
+
+    function reloadReport(report){
+      report.getFullReport();
+    }
 
 
     function _fetchReports() {
@@ -53,8 +65,8 @@
       return ApplicationStateService.getCurrentState();
     }
 
-    function isEmpty(obj) {
-      return Object.keys(obj).length === 0;
+    self.spy = function(teste) {
+      console.log(teste);
     }
 
     function _loadSelectedParticipant(participantData) {

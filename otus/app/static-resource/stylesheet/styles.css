@@ -255,3 +255,10 @@ md-content.no-background-color{
 
 .checkboxdemoSelectAll .demo-select-all-checkboxes {
   padding-left: 30px; }
+
+  .truncate {
+    overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  
+}

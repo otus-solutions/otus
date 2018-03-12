@@ -31,6 +31,7 @@
 
       $timeout(function () {
         var fullReport = self.fakeData.reports[id];
+        console.log(fullReport);
         if(fullReport){
           defer.resolve(fullReport);
         }else{
@@ -140,7 +141,7 @@
       reportList: [
         {
           id: '1',
-          name: 'Hemograma',
+          name: 'Hemograma rgdfgdsfgadfgadfgadfgadfgsdfgadghsfghadsfhdsghsfghssfghsg',
         },
         {
           id: '2',
