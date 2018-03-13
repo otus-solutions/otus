@@ -23,10 +23,10 @@
     self.getNewAliquots = getNewAliquots;
     self.updateAliquots = updateAliquots;
 
-    function updateAliquots(updateStructure, fakeMe) {
+    function updateAliquots(updateStructure) {
       return ParticipantLaboratoryService.updateAliquots(updateStructure);
     }
-    
+
     function areFieldsChanged(momentType){
       var changed = false;
 
@@ -42,7 +42,7 @@
           }
         }
       }
-      
+
       return changed;
     }
 
@@ -101,6 +101,7 @@
                                   operator: "",
                                   date: "",
                                   time:"",
+                                  processing:"",
                                   isSaved: false
                                 };
 
@@ -157,8 +158,13 @@
             aliquot.isSaved = true;
             aliquot.operator = collectedAliquot.aliquotCollectionData.operator.toLowerCase();
             var dateTime = new Date(collectedAliquot.aliquotCollectionData.time);
-            aliquot.date = dateTime.toLocaleDateString();
-            aliquot.time = dateTime.toLocaleTimeString();
+            var dateProcessing = new Date(collectedAliquot.aliquotCollectionData.processing);
+            if (isNaN(dateProcessing)) {
+              aliquot.processing = "";
+            } else {
+              aliquot.processing = dateProcessing;
+            }
+            aliquot.date = dateTime;
             endLoop = true;
           }
         }

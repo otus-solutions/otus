@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>otus</artifactId>
   <groupId>org.ccem.otus</groupId>
-  <version>1.11.4</version>
+  <version>1.12</version>
   <packaging>war</packaging>
   <name>otus</name>
 
@@ -189,13 +189,13 @@
           </flowInitContext>
           <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
         </configuration>
-				<dependencies>
-					<dependency>
-						<groupId>org.apache.maven.wagon</groupId>
-						<artifactId>wagon-ssh</artifactId>
-						<version>2.12</version>
-					</dependency>
-				</dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven.wagon</groupId>
+			<artifactId>wagon-ssh</artifactId>
+			<version>2.12</version>
+		</dependency>
+	</dependencies>
       </plugin>
     </plugins>
   </build>

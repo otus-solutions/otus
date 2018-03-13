@@ -1,5 +1,6 @@
 <div ui-view layout="column" ng-if="$ctrl.fileStructure">
-  <otus-result-visualizer-manager-toolbar action="$ctrl.action" error-exam-results="$ctrl.errorExamResults" dynamic-data-table-change="$ctrl.updateDataTable()" error-aliquots="$ctrl.errorAliquots" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
+  <otus-result-visualizer-manager-toolbar action="$ctrl.action" error-exam-results="$ctrl.errorExamResults" dynamic-data-table-change="$ctrl.updateDataTable()"
+    error-aliquots="$ctrl.errorAliquots" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
   <md-content layout="column">
     <div>
       <md-card flex style="min-height: 150px">
@@ -12,33 +13,35 @@
           <div layout="row" flex>
             <div layout="column" flex>
               <div layout="row">
-                <li>Data do envio: {{$ctrl.formattedDate}}</li>
+                <li>Data e hora de envio: {{$ctrl.formattedDate}}</li>
               </div>
               <div layout="row">
-                <li>Nome do arquivo: {{$ctrl.sendingExam.examResultLot.fileName}}</li>
+                <li>Nome do arquivo: {{$ctrl.sendingExam.examLot.fileName}}</li>
               </div>
               <div layout="row">
-                <li>Centro de realização: {{$ctrl.sendingExam.examResultLot.fieldCenter.acronym}}</li>
+                <li>Centro de realização: {{$ctrl.sendingExam.examLot.fieldCenter.acronym}}</li>
               </div>
             </div>
             <div layout="column" flex>
               <div layout="row">
-                <li>Quantidade de resultados: {{$ctrl.sendingExam.examResultLot.resultsQuantity}}</li>
+                <li>Quantidade de resultados: {{$ctrl.sendingExam.examLot.resultsQuantity}}</li>
               </div>
               <div layout="row">
-                <li>Operador: {{$ctrl.sendingExam.examResultLot.operator}}</li>
+                <li>Operador: {{$ctrl.sendingExam.examLot.operator}}</li>
               </div>
             </div>
           </div>
         </md-card-content>
       </md-card>
-      <div layout="row" ng-if="$ctrl.errorExamResults.length && ($ctrl.errorExamResults.length != $ctrl.changedResults.length)" flex>
+      <div layout="row" ng-if="$ctrl.errorExamResults.length && ($ctrl.errorExamResults.length != $ctrl.changedResults.length)"
+        flex>
         <md-button ng-click="$ctrl.changeResults($ctrl.errorExamResults)" class="md-warn md-accent" aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir resultados com erro
         </md-button>
       </div>
-      <div layout="row" ng-if="$ctrl.errorExamResults.length && ($ctrl.errorExamResults.length === $ctrl.changedResults.length)" flex>
+      <div layout="row" ng-if="$ctrl.errorExamResults.length && ($ctrl.errorExamResults.length === $ctrl.changedResults.length)"
+        flex>
         <md-button ng-click="$ctrl.changeResults($ctrl.sendingExam.examResults)" class="md-accent" aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir todos resultados
@@ -46,9 +49,7 @@
       </div>
       <md-divider></md-divider>
 
-      <dynamic-data-table flex
-                          dynamic-table-settings="$ctrl.settings"
-                          table-update-function="$ctrl.updateDataTable">
+      <dynamic-data-table flex dynamic-table-settings="$ctrl.settings" table-update-function="$ctrl.updateDataTable">
       </dynamic-data-table>
     </div>
   </md-content>

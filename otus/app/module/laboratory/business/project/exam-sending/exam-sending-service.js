@@ -7,34 +7,41 @@
 
   service.$inject = [
     '$q',
-    'otusjs.laboratory.exam.sending.ExamResultLotSerive',
+    'otusjs.laboratory.exam.sending.ExamLotService',
     'otusjs.laboratory.repository.ProjectRepositoryService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service($q, ExamResultLotSerive, ProjectRepositoryService, LoadingScreenService) {
+  function service($q, ExamLotService, ProjectRepositoryService, LoadingScreenService) {
     var self = this;
-    var messageLoading =
+    var messageLoadingToGet =
+      'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
+    var messageLoadingToCreate =
       'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
 
     /* Public methods */
     self.createExamSending = createExamSending;
     self.loadExamSendingFromJson = loadExamSendingFromJson;
+    self.getExamList = getExamList;
     self.getSendedExamById = getSendedExamById;
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
     self.deleteSendedExams = deleteSendedExams;
 
     function createExamSending() {
-      return ExamResultLotSerive.createExamSending();
+      return ExamLotService.createExamSending();
     }
 
     function loadExamSendingFromJson(examResultLot, examResults) {
-      return ExamResultLotSerive.buildExamSendingFromJson(examResultLot, examResults);
+      return ExamLotService.buildExamSendingFromJson(examResultLot, examResults);
+    }
+
+    function getExamList() {
+      return ExamLotService.getExamList();
     }
 
     function getSendedExamById(id) {
-      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.changeMessage(messageLoadingToGet);
       LoadingScreenService.start();
       var deferred = $q.defer();
 
@@ -45,13 +52,14 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
     }
 
     function getSendedExams() {
-      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.changeMessage(messageLoadingToGet);
       LoadingScreenService.start();
       var deferred = $q.defer();
 
@@ -62,6 +70,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -69,13 +78,16 @@
 
     function createSendExam(sendStructure) {
       var deferred = $q.defer();
-
+      LoadingScreenService.changeMessage(messageLoadingToCreate);
+      LoadingScreenService.start();
       ProjectRepositoryService.createSendExam(sendStructure)
         .then(function (response) {
           deferred.resolve(response);
+          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;

@@ -305,7 +305,7 @@
 
     function _findAliquotByPeriod(initialDate, finalDate) {
       return self.fullAliquotsList.filter(function(availableAliquot) {
-        var aliquotFormatedData = $filter('date')(availableAliquot.aliquotCollectionData.time,'yyyyMMdd');
+        var aliquotFormatedData = $filter('date')(availableAliquot.aliquotCollectionData.processing,'yyyyMMdd');
         var initialDateFormated = $filter('date')(initialDate,'yyyyMMdd');
         var finalDateFormated = $filter('date')(finalDate,'yyyyMMdd');
 

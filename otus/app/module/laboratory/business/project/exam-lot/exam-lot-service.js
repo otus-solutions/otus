@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -13,8 +13,7 @@
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function service($q, ExamService, LaboratoryConfigurationService,
-                   ProjectRepositoryService, LoadingScreenService) {
+  function service($q, ExamService, LaboratoryConfigurationService, ProjectRepositoryService, LoadingScreenService) {
     var self = this;
 
     self.createAliquotLot = createAliquotLot;
@@ -54,11 +53,11 @@
       var deferred = $q.defer();
 
       ProjectRepositoryService.getAliquots()
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(JSON.parse(response));
           LoadingScreenService.finish();
         })
-        .catch(function(err) {
+        .catch(function (err) {
           deferred.reject(err);
         });
 
@@ -71,11 +70,11 @@
       var deferred = $q.defer();
 
       ProjectRepositoryService.getAliquotConfiguration()
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(JSON.parse(response));
           LoadingScreenService.finish();
         })
-        .catch(function(err) {
+        .catch(function (err) {
           deferred.reject(err);
         });
 
@@ -86,10 +85,10 @@
       var deferred = $q.defer();
 
       ProjectRepositoryService.getAliquotsByCenter(center)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(JSON.parse(response));
         })
-        .catch(function(err) {
+        .catch(function (err) {
           deferred.reject(err);
         });
 
@@ -100,17 +99,17 @@
       var deferred = $q.defer();
 
       LaboratoryConfigurationService.fetchAliquotsDescriptors()
-        .then(function() {
+        .then(function () {
           ProjectRepositoryService.getLots()
-            .then(function(response) {
-              var lots = JSON.parse(response).map(function(lotJson) {
+            .then(function (response) {
+              var lots = JSON.parse(response).map(function (lotJson) {
                 return ExamService.buildAliquotLotFromJson(
                   lotJson);
               });
 
               deferred.resolve(lots);
             })
-            .catch(function(err) {
+            .catch(function (err) {
               deferred.reject(err);
             });
         });
@@ -122,10 +121,10 @@
       var deferred = $q.defer();
 
       ProjectRepositoryService.createLot(lotStructure)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(JSON.parse(response));
         })
-        .catch(function(err) {
+        .catch(function (err) {
           deferred.reject(err);
         });
 
@@ -136,10 +135,10 @@
       var deferred = $q.defer();
 
       ProjectRepositoryService.updateLot(lotStructure)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(JSON.parse(response));
         })
-        .catch(function(err) {
+        .catch(function (err) {
           deferred.reject(err);
         });
 
@@ -150,25 +149,25 @@
       var deferred = $q.defer();
 
       ProjectRepositoryService.deleteLot(lotCode)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(JSON.parse(response));
         })
-        .catch(function(err) {
+        .catch(function (err) {
           deferred.reject(err);
         });
 
       return deferred.promise;
     }
 
-    function getDescriptors(){
+    function getDescriptors() {
       var deferred = $q.defer();
 
       ProjectRepositoryService.getAliquotsDescriptors()
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
           LoadingScreenService.finish();
         })
-        .catch(function(err) {
+        .catch(function (err) {
           deferred.reject(err);
         });
 
