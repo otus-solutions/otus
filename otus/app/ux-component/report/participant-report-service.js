@@ -141,7 +141,7 @@
       reportList: [
         {
           id: '1',
-          name: 'Hemograma rgdfgdsfgadfgadfgadfgadfgsdfgadghsfghadsfhdsghsfghssfghsg',
+          name: 'Hemograma',
         },
         {
           id: '2',

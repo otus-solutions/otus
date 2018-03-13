@@ -36,7 +36,7 @@
     }
 
     function getFullReport(report){
-      console.log(report)
+      console.log(report);
       if(report.isAvailable === null) {
         report.getReportTemplate();
       }
@@ -50,9 +50,9 @@
     function _fetchReports() {
       ParticipantReportWidgetFactory.getParticipantReportList()
         .then(function(reports) {
+          console.log(reports);
           self.reports = reports;
           self.ready = true;
-          console.log(reports);
         });
     }
 
