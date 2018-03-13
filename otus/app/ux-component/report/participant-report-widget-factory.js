@@ -78,7 +78,7 @@
         if (ds.result.length > 0) {
           self.dataSources[dsKey] = ds.result;
         } else {
-          self.missingDataSources.push(dsKey);
+          self.missingDataSources.push(ds.label);
         }
       });
       if (self.missingDataSources.length > 0) {

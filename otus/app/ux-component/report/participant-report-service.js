@@ -90,6 +90,7 @@
           dataSources: [
             {
               key: "cabeçalho",
+              label:"",
               dataSource: "Participant",
               result: [
                 {
