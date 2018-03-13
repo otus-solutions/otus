@@ -3,7 +3,7 @@
   <h1>Relatórios</h1>
   <span flex></span>
 </div>
-<div layout="row" flex layout-align="center center" ng-if="$ctrl.ready">
+<div layout="row" flex layout-align="center center">
   <span flex></span>
   <div layout="row" flex="80" layout-align="center center">
     <div layout-gt-md="row" layout-wrap layout-align="start start" flex="80" layout-align-md="space-around stretch" layout-md="column">
@@ -15,9 +15,13 @@
             <span class="md-body-1 truncate" layout-margin ng-style="{color:report.statusColor}">{{report.name}}</span>
           </md-card-header-text>
           <md-card-title-media>
-            <md-button class="md-icon-button" ng-click="collapsed=!collapsed">
-              <md-icon ng-show="collapsed" ng-click="$ctrl.load(report.loading); $ctrl.getFullReport(report);">keyboard_arrow_down</md-icon>
-              <md-icon ng-show="!collapsed">keyboard_arrow_up</md-icon>
+            <md-button class="md-icon-button" ng-click="collapsed=!collapsed" ng-show="!$ctrl.loading">
+              <div ng-show="!$ctrl.loading">
+
+                <md-icon ng-show="collapsed" ng-click="$ctrl.reloadReport(report.loading); $ctrl.getFullReport(report);">keyboard_arrow_down</md-icon>
+              </div>
+
+              <md-icon ng-show="!collapsed && !report.loading">keyboard_arrow_up</md-icon>
             </md-button>
           </md-card-title-media>
         </md-card-header>
@@ -25,8 +29,8 @@
           <md-progress-circular class="md-hue-2" ng-show="report.loading && !collapsed" md-diameter="20px"></md-progress-circular>
           <span ng-show="report.loading && !collapsed" class="md-caption">&nbsp;Aguarde</span>
         </div>
-        <md-card-content ng-if="!collapsed" layout="row" layout-align="start start">
-        <span ng-repeat="ds in report.missingDataSources" class="md-caption" layout-padding>{{ds + ": não encontrado"}}</span>
+        <md-card-content ng-if="!collapsed" layout="column" layout-align="space-around start">
+        <span ng-repeat="datasource in report.missingDataSources" class="md-caption" ng-if="datasource" >{{datasource + ": não encontrado"}}</span>
 
         </md-card-content>
         <md-divider ng-if="!collapsed"></md-divider>
@@ -34,18 +38,18 @@
           <div ng-show="!report.loading" layout-align="start start" layout="row" flex>
 
             <div ng-if="report.isAvailable" flex>
-              <span ng-style="{color:report.statusColor}" class="md-caption" style="padding-left:15px">
+              <span ng-style="{color:report.statusColor}" class="md-caption" layout-margin layout-padding>
 
               Disponível</span>
 
             </div>
             <div ng-if="report.isAvailable == false" flex>
-              <span ng-style="{color:report.statusColor}" class="md-caption" style="padding-left:15px">
+              <span ng-style="{color:report.statusColor}" class="md-caption" layout-margin layout-padding>
 
                 Indisponível</span>
             </div>
             <div ng-if="report.hasError" flex>
-              <span ng-style="{color:report.statusColor}" class="md-caption" style="padding-left:15px">
+              <span ng-style="{color:report.statusColor}" class="md-caption" layout-margin layout-padding>
                   Não encontrado</span>
             </div>
           </div>

@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -13,13 +13,11 @@
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.otus.dashboard.core.EventService',
     'otusjs.otus.dashboard.service.DashboardService',
-    'otusjs.otus.uxComponent.ParticipantReportWidgetFactory',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.otus.uxComponent.ParticipantReportWidgetFactory'
   ];
 
-  function Controller(ApplicationStateService, ProjectContextService, EventService, DashboardService, ParticipantReportWidgetFactory, LoadingScreenService) {
+  function Controller(ApplicationStateService, ProjectContextService, EventService, DashboardService, ParticipantReportWidgetFactory) {
     var self = this;
-
 
     /* Public methods */
     self.selectParticipant = selectParticipant;
@@ -32,9 +30,7 @@
 
     /* Lifecycle methods */
     function onInit() {
-      self.ready = false;
-      LoadingScreenService.start();
-
+      self.loading = false;
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       self.selectedParticipant = null;
@@ -45,28 +41,22 @@
       if (report.isAvailable === null) {
         report.getReportTemplate();
       }
+      self.loading = false;
     }
-
+    //TODO: VERIFICAR
     function reloadReport(report) {
+      self.loading = true;
       report.getFullReport();
     }
 
 
     function _fetchReports() {
-      var promise = ParticipantReportWidgetFactory.getParticipantReportList();
-      promise
-        .then(function (reports) {
+      ParticipantReportWidgetFactory.getParticipantReportList()
+        .then(function(reports) {
           console.log(reports);
           self.reports = reports;
           self.ready = true;
-          LoadingScreenService.finish();
-        })
-        .catch(function (e) {
-          console.log(e);
-          self.ready = true;
-          LoadingScreenService.finish();
-        })
-      ;
+        });
     }
 
     // participant selector
@@ -78,16 +68,11 @@
       return ApplicationStateService.getCurrentState();
     }
 
-    self.spy = function (teste) {
+    self.spy = function(teste) {
       console.log(teste);
     }
 
     function _loadSelectedParticipant(participantData) {
-      var currentState = getCurrentState();
-
-      if (currentState !== "participant-dashboard") {
-        return;
-      }
       if (participantData) {
         self.selectedParticipant = participantData;
         self.isEmpty = false;
@@ -95,7 +80,7 @@
       } else {
         DashboardService
           .getSelectedParticipant()
-          .then(function (participantData) {
+          .then(function(participantData) {
             self.selectedParticipant = participantData;
             self.isEmpty = false;
             _fetchReports();

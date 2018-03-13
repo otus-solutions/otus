@@ -80,6 +80,13 @@
           dataSources: [
             {
               key: "ultimo_rcpc",
+              label:"TESTE",
+              datasource: "Activity",
+              result: []
+            },
+            {
+              key: "ultimo_rcpc",
+              label:"TESTE 2",
               datasource: "Activity",
               result: []
             }
@@ -90,7 +97,6 @@
           dataSources: [
             {
               key: "cabeçalho",
-              label:"",
               dataSource: "Participant",
               result: [
                 {
