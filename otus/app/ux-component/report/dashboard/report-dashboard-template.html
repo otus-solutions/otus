@@ -26,7 +26,7 @@
           <span ng-show="report.loading && !collapsed" class="md-caption">&nbsp;Aguarde</span>
         </div>
         <md-card-content ng-if="!collapsed" layout="row" layout-align="start start">
-
+        <span ng-repeat="ds in report.missingDataSources" class="md-caption" layout-padding>{{ds + ": não encontrado"}}</span>
 
         </md-card-content>
         <md-divider ng-if="!collapsed"></md-divider>
@@ -34,24 +34,23 @@
           <div ng-show="!report.loading" layout-align="start start" layout="row" flex>
 
             <div ng-if="report.isAvailable" flex>
-              <span ng-style="{color:report.statusColor}" class="md-caption" style="padding-left:8px">
-              <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
+              <span ng-style="{color:report.statusColor}" class="md-caption" style="padding-left:15px">
+
               Disponível</span>
 
             </div>
             <div ng-if="report.isAvailable == false" flex>
-              <span ng-style="{color:report.statusColor}" class="md-caption" style="padding-left:8px">
-                <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
+              <span ng-style="{color:report.statusColor}" class="md-caption" style="padding-left:15px">
+
                 Indisponível</span>
             </div>
-            <div ng-if="report.isAvailable == null" flex>
-              <span ng-style="{color:report.statusColor}" class="md-caption" style="padding-left:8px">
-                <md-icon ng-style="{color:report.statusColor}">{{report.statusIcon}}</md-icon>
-                Não encontrado</span>
+            <div ng-if="report.hasError" flex>
+              <span ng-style="{color:report.statusColor}" class="md-caption" style="padding-left:15px">
+                  Não encontrado</span>
             </div>
           </div>
           <md-button class="md-icon-button" ng-if="report.isAvailable" ng-click="$ctrl.spy(report)">
-            <md-icon class="iconInverted">remove_red_eye</md-icon>
+            <md-icon class="iconInverted">reply</md-icon>
             <md-tooltip md-direction="bottom">Visualizar</md-tooltip>
           </md-button>
           <md-button class="md-icon-button" ng-if="!report.isAvailable && !report.hasError" ng-click="$ctrl.spy(report)" ng-disable="true">
