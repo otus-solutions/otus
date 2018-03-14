@@ -30,6 +30,8 @@
 
     /* Lifecycle methods */
     function onInit() {
+      self.ready = false;
+      // LoadingScreenService.start();
       self.loading = false;
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
@@ -43,10 +45,11 @@
       }
       self.loading = false;
     }
-    //TODO: VERIFICAR
+
     function reloadReport(report) {
+      console.log(report);
       self.loading = true;
-      report.getFullReport();
+      report.getReportTemplate();
     }
 
 
@@ -56,7 +59,12 @@
           console.log(reports);
           self.reports = reports;
           self.ready = true;
-        });
+        })
+        .catch(function (e) {
+          console.log(e);
+          self.ready = true;
+        })
+      ;
     }
 
     // participant selector
@@ -73,6 +81,11 @@
     }
 
     function _loadSelectedParticipant(participantData) {
+      var currentState = getCurrentState();
+
+      if (currentState !== "participant-dashboard") {
+        return;
+      }
       if (participantData) {
         self.selectedParticipant = participantData;
         self.isEmpty = false;

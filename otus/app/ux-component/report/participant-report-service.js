@@ -97,6 +97,7 @@
           dataSources: [
             {
               key: "cabeçalho",
+              label:"Informações básicas do Participante",
               dataSource: "Participant",
               result: [
                 {
