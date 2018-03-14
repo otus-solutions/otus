@@ -16,7 +16,7 @@
       restrict: 'EA',
       scope: {},
       transclude: true,
-      templateUrl: 'app/ux-component/dynamic-report/dynamic-report-template.html',
+      template: '<div></div>',
       controller: Controller,
       controllerAs: '$ctrl',
     };

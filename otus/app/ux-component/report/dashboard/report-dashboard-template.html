@@ -46,10 +46,11 @@
               <span ng-style="{color:report.statusColor}" class="md-caption" layout-margin layout-padding>Não encontrado</span>
             </div>
           </div>
-          <md-button class="md-icon-button" ng-if="report.isAvailable" ng-click="$ctrl.spy(report)">
+          <dynamic-report />
+          <!-- <md-button class="md-icon-button" ng-if="report.isAvailable" ng-click="$ctrl.spy(report)">
             <md-icon class="iconInverted">reply</md-icon>
             <md-tooltip md-direction="bottom">Visualizar</md-tooltip>
-          </md-button>
+          </md-button> -->
           <md-button class="md-icon-button" ng-if="!report.isAvailable && !report.hasError" ng-click="$ctrl.spy(report)" ng-disable="true">
             <md-icon class="iconInverted">block</md-icon>
             <md-tooltip md-direction="bottom">Indisponível</md-tooltip>
