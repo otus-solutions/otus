@@ -28,7 +28,8 @@
       'EXAM_LOT_MANAGER_LIST': 'exam-lot-manager-list',
       'EXAM_LOT_INFO_MANAGER': 'exam-lot-info-manager',
       'EXAM_SENDING': 'exam-sending',
-      'EXAM_RESULT_VISUALIZER' : 'exam-result-visualizer'
+      'EXAM_RESULT_VISUALIZER': 'exam-result-visualizer',
+      'PARTICIPANT_REPORT_VISUALIZER': 'participant-report-visualizer'
     })
     .config(Configuration);
 
@@ -47,6 +48,7 @@
     'otusjs.deploy.InstallerStateProvider',
     'otusjs.deploy.LoginStateProvider',
     'otusjs.deploy.ParticipantStateProvider',
+    'otusjs.deploy.ParticipantReportStateProvider',
     'otusjs.deploy.SignupStateProvider',
     'otusjs.deploy.SignupResultStateProvider',
     'otusjs.deploy.SessionStateProvider',
@@ -74,6 +76,7 @@
     InstallerProvider,
     LoginStateProvider,
     ParticipantStateProvider,
+    ParticipantReportStateProvider,
     SignupStateProvider,
     SignupResultStateProvider,
     SessionStateProvider,
