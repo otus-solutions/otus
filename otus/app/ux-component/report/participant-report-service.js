@@ -11,26 +11,32 @@
   ];
 
   function service($q, $timeout) {
-    let self = this;
+    var self = this;
 
     self.fetchReportList = fetchReportList;
     self.getFullReport = getFullReport;
 
 
     function fetchReportList() {
-      let defer = $q.defer();
+      var defer = $q.defer();
 
 
-      defer.resolve(fakeData.reportList);
+      defer.resolve(self.fakeData.reportList);
 
       return defer.promise;
     }
 
     function getFullReport(id) {
-      let defer = $q.defer();
+      var defer = $q.defer();
 
       $timeout(function () {
-        defer.resolve(fakeData.reports[id])
+        var fullReport = self.fakeData.reports[id];
+        console.log(fullReport);
+        if(fullReport){
+          defer.resolve(fullReport);
+        }else{
+          defer.reject(new Error('some error'));
+        }
 
       }, getRandomTimeout(7));
       return defer.promise;
@@ -43,7 +49,7 @@
       return Math.floor(Math.random() * Math.floor(maxSeconds))*1000;
     }
 
-    let fakeData = {
+    self.fakeData = {
       reports: {
         1: {
           name: 'Hemograma',
@@ -70,22 +76,30 @@
         3: {
           name: 'Urina',
           id: 132465,
-          template: "<span>{{dataSources.ultimo_rcpc.getAnswerById(rcpc_1)}}<span>",
+          template: "<span>{{dataSources.ultimo_rcpc.getAnswerById(rcpc_1)}}</span>",
           dataSources: [
             {
               key: "ultimo_rcpc",
+              label:"TESTE",
+              datasource: "Activity",
+              result: []
+            },
+            {
+              key: "ultimo_rcpc",
+              label:"TESTE 2",
               datasource: "Activity",
               result: []
             }
           ]
         },
         4: {
-          "template": "<span>{{dataSources.Participant.recruitmentNumber}}<span>",
-          "dataSources": [
+          "template": "<span>{{dataSources.Participant.recruitmentNumber}}</span>",
+          dataSources: [
             {
-              "key": "cabeçalho",
-              "dataSource": "Participant",
-              "result": [
+              key: "cabeçalho",
+              label:"Informações básicas do Participante",
+              dataSource: "Participant",
+              result: [
                 {
                   "recruitmentNumber": 3051442,
                   "name": "ANDRÃƒâ€°IA APARECIDA",
@@ -148,7 +162,22 @@
         {
           id: '4',
           name: 'Data de coleta',
-        }
+        },
+        {
+          id: '5',
+          name: 'Relatório 5',
+        },
+        { id: 6, name: 'Relatório 6' },
+        { id: 7, name: 'Relatório 7' },
+        { id: 8, name: 'Relatório 8' },
+        { id: 9, name: 'Relatório 9' },
+        { id: 10, name: 'Relatório 10' },
+        { id: 11, name: 'Relatório 11' },
+        { id: 12, name: 'Relatório 12' },
+        { id: 13, name: 'Relatório 13' },
+        { id: 14, name: 'Relatório 14' },
+        { id: 15, name: 'Relatório 15' },
+        { id: 16, name: 'Relatório 16' }
       ]
     };
 

@@ -22,7 +22,7 @@
       parent: STATE.PARTICIPANT_DASHBOARD,
       name: STATE.PARTICIPANT_REPORT,
       url: '/' + STATE.PARTICIPANT_REPORT,
-      template: '<otus-report-dashboard/>',
+      template: '<otus-report-dashboard></otus-report-dashboard>',
       data: {
         redirect: _redirect
       },

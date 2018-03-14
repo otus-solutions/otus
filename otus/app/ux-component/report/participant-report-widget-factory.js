@@ -12,15 +12,17 @@
   ];
 
   function factory($q, ParticipantReportService) {
-    let self = this;
+    var self = this;
 
     self.getParticipantReportList = getParticipantReportList;
 
     function getParticipantReportList() {
-      let defer = $q.defer();
+      var defer = $q.defer();
       ParticipantReportService.fetchReportList()
         .then(function (reports) {
-          defer.resolve(reports.map(exam => new ParticipantReport($q, ParticipantReportService, exam)));
+          defer.resolve(reports.map(function (report) {
+            return new ParticipantReport($q, ParticipantReportService, report)
+          }));
         });
       return defer.promise;
     }
@@ -28,18 +30,20 @@
     return self;
   }
 
-  function ParticipantReport($q, ParticipantReportService, exam) {
+  function ParticipantReport($q, ParticipantReportService, report) {
     // todo: decidir pelo tipo de inicialização
-    // var self = Object.assign(this, exam); // exam pode ser um objeto gerado pelo model.
-    // var self = exam;
-    let self = this;
+    // var self = Object.assign(this, report); // report pode ser um objeto gerado pelo model.
+    // var self = report;
+    var self = this;
 
-    self.id = exam.id;
-    self.name = exam.name;
-    self.hasBeenDelivered = exam.hasBeenDelivered; //will this come at first consult?
+    self.id = report.id;
+    self.name = report.name;
+    self.hasBeenDelivered = report.hasBeenDelivered; //will this come at first consult?
 
     self.template = '';
     self.dataSources = {};
+    self.missingDataSources = [];
+    self.hasError = false;
 
     //ux-properties
     self.isAvailable = null;  //null when we don't know yet if it's available
@@ -51,47 +55,40 @@
 
 
     function getReportTemplate() {
-      let defer = $q.defer();
-
       self.loading = true;
-      // LoadingScreenService.start();
+      self.hasError = false;
+
       ParticipantReportService.getFullReport(self.id)
-        .then(data => {
+        .then(function (data) {
           console.log(data);
-          if (data) {
-            _manageDatasources(data.dataSources);
-          }
+          _manageDatasources(data.dataSources);
           self.loading = false;
-          defer.resolve(true);  //necessary?
         })
         .catch(function (e) {
-          console.log(e);
+          self.hasError = true;
           self.loading = false;
-          defer.reject(false);
         });
-
-        return defer.promise;
     }
 
     function _manageDatasources(dataSourceList) {
-      let missing = [];
+      self.missingDataSources = [];
 
       dataSourceList.forEach(function (ds) {
-        let dsKey = ds.key;
+        var dsKey = ds.key;
         if (ds.result.length > 0) {
           self.dataSources[dsKey] = ds.result;
         } else {
-          missing.push(dsKey);
+          self.missingDataSources.push(ds.label);
         }
       });
-      if(missing.length > 0){
+      if (self.missingDataSources.length > 0) {
         _setAvailability(false);
-      }else{
+      } else {
         _setAvailability(true);
       }
     }
 
-    function _setAvailability(isAvailable){
+    function _setAvailability(isAvailable) {
       self.isAvailable = isAvailable;
       self.statusColor = isAvailable === true ? 'green' : 'red';
       self.statusIcon = isAvailable === true ? 'done' : 'cancel';
