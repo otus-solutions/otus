@@ -1,0 +1,93 @@
+@page {
+  size: 60mm 30mm;
+  margin: 0mm;
+}
+
+* {
+  padding: 0px;
+  margin: 0px;
+  /*visibility: hidden;*/
+}
+
+#print-page {
+  font-family: monospace;
+  margin: auto;
+  overflow:hidden;
+}
+
+#print-page, #print-page * {
+  visibility: visible;
+}
+
+.label {
+  width: 55mm;
+  height: 23mm;
+  margin-bottom: 3mm !important;
+  position: relative;
+  /* margin: auto; */
+  padding: 5px 3px 3px 5px;
+  background-color: #fff;
+  line-height: 14px;
+}
+
+.label p {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: bolder;
+  letter-spacing: 0.1em;
+}
+
+.label .label-text {
+  font-family: Verdana, Geneva, sans-serif;
+  font-size: 10px;
+  line-height: 15px;
+  letter-spacing: 0.1em;
+}
+
+.label .barcode {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, -5%) !important;
+  background-color: white;
+}
+
+@media print {
+  .no-print, .no-print * {
+    display: none !important;
+  }
+}
+
+@media screen {
+  .no-print, .no-print * {
+    visibility: visible;
+  }
+}
+
+.print-button:hover {
+  overflow:auto;
+  background-color: #448AFF;
+  color: white;
+}
+
+.print-button {
+  position: fixed;
+  left: 15em;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s;/* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white;
+  color: black;
+  border: 2px solid #448AFF;
+  border-radius: 3px;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+  width: 100px;
+  height: 40px;
+}
