@@ -9,14 +9,15 @@
     });
 
   Controller.$inject = [
-    'otusjs.application.state.ApplicationStateService',
-    'otusjs.laboratory.core.project.ContextService',
-    'otusjs.otus.dashboard.core.EventService',
-    'otusjs.otus.dashboard.service.DashboardService',
-    'otusjs.otus.uxComponent.ParticipantReportWidgetFactory'
+    "otusjs.application.state.ApplicationStateService",
+    "otusjs.laboratory.core.project.ContextService",
+    "otusjs.otus.dashboard.core.EventService",
+    "otusjs.otus.dashboard.service.DashboardService",
+    "otusjs.otus.uxComponent.ParticipantReportWidgetFactory",
+    "otusjs.deploy.LoadingScreenService"
   ];
 
-  function Controller(ApplicationStateService, ProjectContextService, EventService, DashboardService, ParticipantReportWidgetFactory) {
+  function Controller(ApplicationStateService, ProjectContextService, EventService, DashboardService, ParticipantReportWidgetFactory, LoadingScreenService) {
     var self = this;
 
     /* Public methods */
@@ -31,8 +32,6 @@
     /* Lifecycle methods */
     function onInit() {
       self.ready = false;
-      // LoadingScreenService.start();
-      self.loading = false;
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       self.selectedParticipant = null;
@@ -43,28 +42,26 @@
       if (report.isAvailable === null) {
         report.getReportTemplate();
       }
-      self.loading = false;
+
     }
 
     function reloadReport(report) {
-      console.log(report);
-      self.loading = true;
       report.getReportTemplate();
     }
 
-
     function _fetchReports() {
+      LoadingScreenService.start();
       ParticipantReportWidgetFactory.getParticipantReportList()
-        .then(function(reports) {
-          console.log(reports);
-          self.reports = reports;
-          self.ready = true;
-        })
-        .catch(function (e) {
-          console.log(e);
-          self.ready = true;
-        })
-      ;
+      .then(function(reports) {
+        console.log(reports);
+        self.reports = reports;
+        self.ready = true;
+        LoadingScreenService.finish();
+      })
+      .catch(function(e) {
+        console.log(e);
+        self.ready = true;
+        });
     }
 
     // participant selector
@@ -78,7 +75,7 @@
 
     self.spy = function(teste) {
       console.log(teste);
-    }
+    };
 
     function _loadSelectedParticipant(participantData) {
       var currentState = getCurrentState();
@@ -91,13 +88,13 @@
         self.isEmpty = false;
         _fetchReports();
       } else {
-        DashboardService
-          .getSelectedParticipant()
-          .then(function(participantData) {
-            self.selectedParticipant = participantData;
-            self.isEmpty = false;
-            _fetchReports();
-          });
+        DashboardService.getSelectedParticipant().then(function(
+          participantData
+        ) {
+          self.selectedParticipant = participantData;
+          self.isEmpty = false;
+          _fetchReports();
+        });
       }
     }
   }
