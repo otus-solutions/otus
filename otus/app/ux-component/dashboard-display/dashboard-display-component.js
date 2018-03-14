@@ -19,12 +19,9 @@
 
 
 
-
-
-
     //TODO: ALTERAR STATE
     function reportDashboard() {
-      ApplicationStateService.activateParticipantReports();
+      ApplicationStateService.activateReportDashboard();
     }
   }
 }());

@@ -9,14 +9,15 @@
     });
 
   Controller.$inject = [
-    'otusjs.application.state.ApplicationStateService',
-    'otusjs.laboratory.core.project.ContextService',
-    'otusjs.otus.dashboard.core.EventService',
-    'otusjs.otus.dashboard.service.DashboardService',
-    'otusjs.otus.uxComponent.ParticipantReportWidgetFactory'
+    "otusjs.application.state.ApplicationStateService",
+    "otusjs.laboratory.core.project.ContextService",
+    "otusjs.otus.dashboard.core.EventService",
+    "otusjs.otus.dashboard.service.DashboardService",
+    "otusjs.otus.uxComponent.ParticipantReportWidgetFactory",
+    "otusjs.deploy.LoadingScreenService"
   ];
 
-  function Controller(ApplicationStateService, ProjectContextService, EventService, DashboardService, ParticipantReportWidgetFactory) {
+  function Controller(ApplicationStateService, ProjectContextService, EventService, DashboardService, ParticipantReportWidgetFactory, LoadingScreenService) {
     var self = this;
 
     /* Public methods */
@@ -30,7 +31,6 @@
     /* Lifecycle methods */
     function onInit() {
       self.ready = false;
-      self.loading = false;
       _loadParticipantReports();
       EventService.onParticipantSelected(_loadParticipantReports);
       self.selectedParticipant = null;
@@ -45,11 +45,9 @@
       if (report.isAvailable === null) {
         report.getReportTemplate();
       }
-      self.loading = false;
     }
 
     function reloadReport(report) {
-      self.loading = true;
       report.getReportTemplate();
     }
 
