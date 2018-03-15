@@ -4,12 +4,14 @@
     <!-- <h1>Relatórios</h1> -->
     <!--
     </div> -->
-    <otus-participant-info></otus-participant-info>
-    <div layout="row" flex="100" ng-if="$ctrl.ready">
-      <span flex></span>
+    <!-- <div layout="row" flex ng-if="$ctrl.ready"> -->
+      <!-- </div> -->
+      <div layout="row" flex="100" ng-if="$ctrl.ready">
+        <span flex></span>
 
 
-      <div layout-gt-md="row" layout-wrap layout-align="center start" flex="80" layout-align-md="space-around stretch" layout-md="column">
+        <div layout-gt-md="row" layout-wrap layout-align="center start" flex="80" layout-align-md="space-around stretch" layout-md="column">
+            <otus-participant-info flex="80"></otus-participant-info>
 
       <md-card ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready" flex-gt-md="30" ng-init="collapsed = true" class="md-whiteframe-6dp" flex>
         <md-card-header class="md-toolbar-tools">

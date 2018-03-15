@@ -39,10 +39,10 @@
 
     /* Lifecycle methods */
     function onInit() {
-      _loadSelectedParticipant();
-      EventService.onParticipantSelected(_loadSelectedParticipant);
-      self.selectedParticipant = null;
-    }
+         _loadSelectedParticipant();
+        EventService.onParticipantSelected(_loadSelectedParticipant);
+        self.selectedParticipant = null;
+     }
 
     function getCurrentState() {
       return ApplicationStateService.getCurrentState();
@@ -56,8 +56,9 @@
         self.isEmpty = false;
       } else {
         DashboardService
-          .getSelectedParticipant()
-          .then(function(participantData) {
+        .getSelectedParticipant()
+        .then(function(participantData) {
+          console.log(participantData);
             self.selectedParticipant = participantData;
             self.isEmpty = false;
           });
