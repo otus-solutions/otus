@@ -122,7 +122,7 @@
                 }
               },
               "key": "HS",
-              label:"Alguma atividade"
+              label:"Alguma atividade",
               "dataSource": "Activity",
               "result": [
                 {
