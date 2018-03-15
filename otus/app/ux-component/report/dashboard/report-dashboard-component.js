@@ -29,9 +29,7 @@
     function onInit() {
       self.ready = false;
       _loadParticipantReports();
-
       EventService.onParticipantSelected(_loadParticipantReports);
-
       self.selectedParticipant = null;
     }
 
@@ -49,11 +47,6 @@
     function reloadReport(report) {
       report.getReportTemplate();
     }
-
-    //todo: remove
-    self.spy = function (teste) {
-      console.log(teste);
-    };
 
     function _loadParticipantReports(participantData) {
       if (participantData) {

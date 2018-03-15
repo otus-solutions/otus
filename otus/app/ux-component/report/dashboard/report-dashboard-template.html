@@ -1,19 +1,9 @@
 <md-content layout="column" flex="100" layout-padding>
-  <!-- <div flex="80" layout="row" layout-align="center center"> -->
-
-    <!-- <h1>Relatórios</h1> -->
-    <!--
-    </div> -->
-    <!-- <div layout="row" flex ng-if="$ctrl.ready"> -->
-      <!-- </div> -->
-      <div layout="row" flex="100" ng-if="$ctrl.ready">
-        <span flex></span>
-
-
-        <div layout-gt-md="row" layout-wrap layout-align="center start" flex="80" layout-align-md="center start" >
-            <!-- <otus-participant-info flex="95"></otus-participant-info> -->
-
-      <md-card ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready" flex-gt-md="30" flex-md ng-init="collapsed = true" class="md-whiteframe-6dp" flex="100">
+  <div layout="row" flex="100" ng-if="$ctrl.ready">
+    <span flex></span>
+    <div layout-gt-md="row" layout-wrap layout-align="center start" flex="80" layout-align-md="center start">
+      <md-card ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready" flex-gt-md="30" flex-md ng-init="collapsed = true" class="md-whiteframe-6dp"
+        flex="100">
         <md-card-header class="md-toolbar-tools">
           <md-icon class="md-avatar-icon" ng-if="report.isAvailable == null && !report.hasError">description</md-icon>
           <md-icon ng-style="{color:report.statusColor}" ng-if="report.isAvailable == true || report.isAvailable == false || report.hasError">
@@ -49,11 +39,7 @@
               <span ng-style="{color:report.statusColor}" class="md-caption" layout-margin layout-padding>Não encontrado</span>
             </div>
           </div>
-          <dynamic-report />
-          <!-- <md-button class="md-icon-button" ng-if="report.isAvailable" ng-click="$ctrl.spy(report)">
-            <md-icon class="iconInverted">reply</md-icon>
-            <md-tooltip md-direction="bottom">Visualizar</md-tooltip>
-          </md-button> -->
+          <dynamic-report ng-if="report.isAvailable"/>
           <md-button class="md-icon-button" ng-if="!report.isAvailable && !report.hasError" ng-click="$ctrl.spy(report)" ng-disable="true">
             <md-icon class="iconInverted">block</md-icon>
             <md-tooltip md-direction="bottom">Indisponível</md-tooltip>
@@ -64,9 +50,7 @@
           </md-button>
         </md-card-actions>
       </md-card>
-
     </div>
-
     <span flex></span>
   </div>
 </md-content>
