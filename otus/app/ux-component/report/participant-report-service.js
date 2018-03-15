@@ -31,7 +31,6 @@
 
       $timeout(function () {
         var fullReport = self.fakeData.reports[id];
-        console.log(fullReport);
         if(fullReport){
           defer.resolve(fullReport);
         }else{
@@ -53,41 +52,40 @@
       reports: {
         1: {
           name: 'Hemograma',
-          hasBeenDelivered: false,
           dataSources: [
             {
               key: "ultimo_rcpc",
-              datasource: "Activity",
+              label: "Basófilos",
+              dataSource: "Activity",
               result: []
             }
           ]
         },
         2: {
           name: 'Glicemia',
-          hasBeenDelivered: true,
           dataSources: [
             {
               key: "ultimo_rcpc",
-              datasource: "Activity",
+              label: "Resultado Glicemia",
+              dataSource: "Activity",
               result: []
             }
           ]
         },
         3: {
           name: 'Urina',
-          id: 132465,
           template: "<span>{{dataSources.ultimo_rcpc.getAnswerById(rcpc_1)}}</span>",
           dataSources: [
             {
               key: "ultimo_rcpc",
-              label:"TESTE",
-              datasource: "Activity",
+              label:"Último RCPC",
+              dataSource: "Activity",
               result: []
             },
             {
               key: "ultimo_rcpc",
-              label:"TESTE 2",
-              datasource: "Activity",
+              label:"Outra atividade",
+              dataSource: "Activity",
               result: []
             }
           ]
@@ -124,6 +122,7 @@
                 }
               },
               "key": "HS",
+              label:"Alguma atividade"
               "dataSource": "Activity",
               "result": [
                 {
