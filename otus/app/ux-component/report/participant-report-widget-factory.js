@@ -16,9 +16,9 @@
 
     self.getParticipantReportList = getParticipantReportList;
 
-    function getParticipantReportList() {
+    function getParticipantReportList(rn) {
       var defer = $q.defer();
-      ParticipantReportService.fetchReportList()
+      ParticipantReportService.fetchReportList(rn)
         .then(function (reports) {
           defer.resolve(reports.map(function (report) {
             return new ParticipantReport($q, ParticipantReportService, report)

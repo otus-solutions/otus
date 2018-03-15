@@ -9,15 +9,13 @@
     });
 
   Controller.$inject = [
-    "otusjs.application.state.ApplicationStateService",
-    "otusjs.laboratory.core.project.ContextService",
     "otusjs.otus.dashboard.core.EventService",
     "otusjs.otus.dashboard.service.DashboardService",
     "otusjs.otus.uxComponent.ParticipantReportWidgetFactory",
     "otusjs.deploy.LoadingScreenService"
   ];
 
-  function Controller(ApplicationStateService, ProjectContextService, EventService, DashboardService, ParticipantReportWidgetFactory, LoadingScreenService) {
+  function Controller(EventService, DashboardService, ParticipantReportWidgetFactory, LoadingScreenService) {
     var self = this;
 
     /* Public methods */
@@ -32,7 +30,9 @@
     function onInit() {
       self.ready = false;
       _loadParticipantReports();
+
       EventService.onParticipantSelected(_loadParticipantReports);
+
       self.selectedParticipant = null;
     }
 
@@ -73,15 +73,9 @@
     }
 
     function _fetchReports() {
-      console.log('fetch');
-      ParticipantReportWidgetFactory.getParticipantReportList()
+      ParticipantReportWidgetFactory.getParticipantReportList(self.selectedParticipant.recruitmentNumber)
         .then(function (reports) {
-          // self.reports = reports;
-          //todo: remove
-          self.reports = reports.map(function (report) {
-            report.name = self.selectedParticipant.name;
-            return report;
-          });
+          self.reports = reports;
           self.ready = true;
         })
         .catch(function () {
