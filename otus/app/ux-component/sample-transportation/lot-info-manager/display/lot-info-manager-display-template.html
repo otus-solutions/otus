@@ -43,7 +43,7 @@
                 </md-input-container>
               </div>
               <md-divider></md-divider>
-              <div layout="row">
+              <div layout="row" layout-align="start center">
                 <span>Responsável: </span> <span class="md-body-1" layout-margin layout-padding>{{$ctrl.lot.operator}}</span>
               </div>
             </div>
@@ -68,7 +68,6 @@
           <div layout="row">
           </div>
         </md-nav-bar>
-
         <div ng-if="$ctrl.currentNavItem == 'insertionByPeriod'" layout="row" layout-align="start center"
              layout-padding>
           <div layout="row" layout-xs="column" layout-align="center center">
@@ -79,7 +78,6 @@
                              ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
             </md-input-container>
           </div>
-
           <div layout="row" layout-xs="column" layout-align="center center">
             <span>Período Final:</span>
 
@@ -88,7 +86,6 @@
                              ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
             </md-input-container>
           </div>
-
           <div>
             <md-button ng-click="$ctrl.insertAliquotsByPeriod()" class="md-raised md-primary"
                        aria-label="Adicionar Alíquotas por Período">
@@ -110,7 +107,6 @@
             </md-button>
           </div>
         </div>
-
         <div layout="row" layout-margin>
           <div layout="column" flex-gt-sm="40" flex-gt-md="25" flex="40">
             <otus-sample-transportation-lot-aliquots-chart
@@ -132,6 +128,5 @@
         >
         </dynamic-data-table>
     </div>
-  </div>
   </div>
 </md-content>

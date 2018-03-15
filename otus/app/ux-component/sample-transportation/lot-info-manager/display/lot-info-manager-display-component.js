@@ -12,7 +12,6 @@
         lotDataSet: '<',
         aliquotsInOtherLotsList: '<',
         fullAliquotsList: '<',
-        action: '<',
         setChartData: '&',
         onLotAlteration: '&'
       }
@@ -83,7 +82,7 @@
       .addColumnProperty('containerLabel')
 
       //header, flex, align, ordinationPriorityIndex
-      .addHeader('Aliquotagem', '20', '', 2)
+      .addHeader('Processamento', '20', '', 2)
       //property, formatType
       .addColumnProperty('aliquotCollectionData.time', 'DATE')
 
