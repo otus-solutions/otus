@@ -267,3 +267,7 @@ md-content.no-background-color {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.toolbarInfo {
+  background-color: rgb(0, 145, 234) !important;
+}

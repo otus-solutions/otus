@@ -1,16 +1,19 @@
-<md-content layout="column" flex layout-padding>
-  <div flex="10" layout="row" layout-align="center center">
+<md-content layout="column" flex="100" layout-padding>
+  <!-- <div flex="80" layout="row" layout-align="center center"> -->
 
-  <h1>Relatórios</h1>
+    <!-- <h1>Relatórios</h1> -->
+    <!--
+    </div> -->
+    <!-- <div layout="row" flex ng-if="$ctrl.ready"> -->
+      <!-- </div> -->
+      <div layout="row" flex="100" ng-if="$ctrl.ready">
+        <span flex></span>
 
-</div>
-  <div layout="row" flex="100" ng-if="$ctrl.ready">
-    <span flex></span>
 
+        <div layout-gt-md="row" layout-wrap layout-align="center start" flex="80" layout-align-md="space-around stretch" layout-md="column">
+            <otus-participant-info flex="80"></otus-participant-info>
 
-    <div layout-gt-md="row" layout-wrap layout-align="center start" flex="80" layout-align-md="space-around stretch" layout-md="column">
-
-      <md-card ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready" flex-gt-md="25" ng-init="collapsed = true" class="md-whiteframe-6dp" flex>
+      <md-card ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready" flex-gt-md="30" ng-init="collapsed = true" class="md-whiteframe-6dp" flex>
         <md-card-header class="md-toolbar-tools">
           <md-icon class="md-avatar-icon" ng-if="report.isAvailable == null && !report.hasError">description</md-icon>
           <md-icon ng-style="{color:report.statusColor}" ng-if="report.isAvailable == true || report.isAvailable == false || report.hasError">
