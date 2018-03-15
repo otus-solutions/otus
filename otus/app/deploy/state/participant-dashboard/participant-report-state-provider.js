@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.ParticipantDashboardState', Provider);
+    .provider('otusjs.deploy.ParticipantReportState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -19,10 +19,10 @@
     }
 
     self.state = {
-      parent: STATE.SESSION,
-      name: STATE.PARTICIPANT_DASHBOARD,
-      url: '/' + STATE.PARTICIPANT_DASHBOARD,
-      template: '<otus-participant-dashboard layout="column" flex></otus-participant-dashboard>',
+      parent: STATE.PARTICIPANT,
+      name: STATE.PARTICIPANT_REPORT,
+      url: '/' + STATE.PARTICIPANT_REPORT,
+      template: '<otus-participant-reports layout="column" flex></otus-participant-reports>',
       data: {
         redirect: _redirect
       },
@@ -31,14 +31,13 @@
       }
     };
 
-    function _redirect($q, DashboardContextService, ParticipantContextService, Application) {
+    function _redirect($q, DashboardContextService, Application) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
         .then(function() {
           try {
-            ParticipantContextService.restore();
             DashboardContextService.isValid();
             deferred.resolve();
           } catch (e) {
@@ -65,7 +64,6 @@
     _redirect.$inject = [
       '$q',
       'otusjs.otus.dashboard.core.ContextService',
-      'otusjs.participant.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
     _loadParticipantContext.$inject = [

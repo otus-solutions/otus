@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -21,81 +21,73 @@
     var self = this;
 
     /* Public methods */
-    self.selectParticipant = selectParticipant;
-    /* Lifecycle hooks */
-    self.$onInit = onInit;
-    self.getCurrentState = getCurrentState;
-
     self.getFullReport = getFullReport;
     self.reloadReport = reloadReport;
+
+    /* Lifecycle hooks */
+    self.$onInit = onInit;
+    self.$onDestroy = onDestroy;
 
     /* Lifecycle methods */
     function onInit() {
       self.ready = false;
-      _loadSelectedParticipant();
-      EventService.onParticipantSelected(_loadSelectedParticipant);
+      _loadParticipantReports();
+      EventService.onParticipantSelected(_loadParticipantReports);
       self.selectedParticipant = null;
     }
 
+    function onDestroy() {
+      EventService.unsubscribeOnParticipantSelected(_loadParticipantReports);
+    }
+
+    /* Public methods */
     function getFullReport(report) {
-      console.log(report);
       if (report.isAvailable === null) {
         report.getReportTemplate();
       }
-
     }
 
     function reloadReport(report) {
       report.getReportTemplate();
     }
 
-    function _fetchReports() {
-      LoadingScreenService.start();
-      ParticipantReportWidgetFactory.getParticipantReportList()
-      .then(function(reports) {
-        console.log(reports);
-        self.reports = reports;
-        self.ready = true;
-        LoadingScreenService.finish();
-      })
-      .catch(function(e) {
-        console.log(e);
-        self.ready = true;
-        });
-    }
-
-    // participant selector
-    function selectParticipant(selectedParticipant) {
-      self.selectedParticipant = selectedParticipant;
-    }
-
-    function getCurrentState() {
-      return ApplicationStateService.getCurrentState();
-    }
-
-    self.spy = function(teste) {
+    //todo: remove
+    self.spy = function (teste) {
       console.log(teste);
     };
 
-    function _loadSelectedParticipant(participantData) {
-      var currentState = getCurrentState();
-
-      if (currentState !== "participant-dashboard") {
-        return;
-      }
+    function _loadParticipantReports(participantData) {
       if (participantData) {
         self.selectedParticipant = participantData;
         self.isEmpty = false;
         _fetchReports();
       } else {
-        DashboardService.getSelectedParticipant().then(function(
-          participantData
-        ) {
-          self.selectedParticipant = participantData;
-          self.isEmpty = false;
-          _fetchReports();
-        });
+        DashboardService
+          .getSelectedParticipant()
+          .then(function (participantData) {
+            self.selectedParticipant = participantData;
+            self.isEmpty = false;
+            _fetchReports();
+          });
       }
+    }
+
+    function _fetchReports() {
+      console.log('fetch');
+      ParticipantReportWidgetFactory.getParticipantReportList()
+        .then(function (reports) {
+          // self.reports = reports;
+          //todo: remove
+          self.reports = reports.map(function (report) {
+            report.name = self.selectedParticipant.name;
+            return report;
+          });
+          self.ready = true;
+        })
+        .catch(function () {
+          self.ready = true;
+        })
+      ;
     }
   }
 }());
