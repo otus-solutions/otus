@@ -37,7 +37,9 @@
           defer.reject(new Error('some error'));
         }
 
-      }, getRandomTimeout(7));
+      }, 
+      //getRandomTimeout(7)
+    );
       return defer.promise;
 
     }

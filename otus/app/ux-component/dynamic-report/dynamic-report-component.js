@@ -48,20 +48,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <style type="text/css">
+  otus-script {
+    display: none;
+  }
+  </style>
 </head>
 
 <body>
   <div>
 
+    <otus-script>
+    {{data.imc = 15.4}}
+    {{data.sexo = ""}}
+    {{
+      required("sexo", data.sexo, "é um campo obrigatório")
+    }}
+    {{
+      required("imc", data.imc, "é um campo obrigatório")
+    }}
+    {{}}
+    </otus-script>
     
-      {{
-          "oi"
-        }}
     
-
-    <span>Participante: {{ds.participant.name}}</span>
-    <span>IMC do Participante: {{data.imc}}</span>
-    <span>Sexo: {{data.sexo}}</span>
+    <span ng-style="style.participant">Participante: {{ds.participant[0].name}}</span><br>
+    <span ng-style="style.imc">IMC do Participante: {{data.imc}}</span><br>
+    <span ng-style="style.sexo">Sexo: {{data.sexo}}</span><br>
   </div>
 </body>
 
@@ -90,17 +102,29 @@
       scope.template = self.templateStructure.template;
       // scope.template = "<div><div><div><div><div></div></div></div></div></div>";
       scope.setup = function(cb) { console.log('cb',cb); scope.data = cb()}
+      scope.fieldRequiredArray = [];
+      scope.style = {}
+      scope.required = function(fieldName, value, msg){ 
+        var requiredStyle = {"color":"red", "content": "Joe's Task:"};
+        var defaultStyle = {"color": "blue"};
+
+        if(scope.style[fieldName] === undefined){
+          var field = {
+            fieldName: fieldName,
+            valid: value ? true: false,
+            msg: msg,
+          };
+          scope.fieldRequiredArray.push(field);
+          scope.style[fieldName] = field.valid ? defaultStyle : requiredStyle;
+        }
+      }
       scope.ds = self.templateStructure.dataSources;
       scope.data = {};
       //var report = $compile(LABEL_PAGE)(scope);
       var report = $compile(scope.template)(scope);
       console.log(report)
       console.log(scope)
-      setTimeout(()=>{
-        scope.$apply()
-        openInNewTab(report, scope.template)
-
-      },1000)
+      openInNewTab(report, scope.template)
     }
 
     function openInNewTab(report, textHtml){
