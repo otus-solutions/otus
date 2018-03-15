@@ -1,0 +1,32 @@
+<div layout="column" layout-align="center center" flex>
+  <span flex></span>
+  <md-card flex style="width:900px">
+
+    <md-card-content flex layout-padding>
+
+      <div layout="row">
+        <md-icon style="font-size: 120px" flex="10" layout-fill>account_circle</md-icon>
+        <span flex="10"></span>
+        <div layout="column" flex>
+
+          <div class="md-headline md-padding">{{$ctrl.selectedParticipant.name}}</div>
+            <span class="md-caption">
+              NR: {{$ctrl.selectedParticipant.recruitmentNumber}}
+            </span>
+            <span class="md-caption">
+
+              Sexo: {{$ctrl.getSex($ctrl.selectedParticipant.sex)}}
+            </span>
+            <span class="md-caption">
+              Data de nascimento: {{$ctrl.selectedParticipant.birthdate.value | date: "dd/MM/y"}}
+
+            </span>
+          </div>
+
+      </div>
+
+    </md-card-content>
+  </md-card>
+
+  <span flex></span>
+</div>
