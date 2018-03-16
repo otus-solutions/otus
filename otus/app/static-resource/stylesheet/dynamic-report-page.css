@@ -1,5 +1,5 @@
 @page {
-  size: 60mm 30mm;
+  size: 210mm 297mm;
   margin: 0mm;
 }
 
@@ -55,7 +55,9 @@
 }
 
 @media print {
-  .no-print, .no-print * {
+  .no-print, .no-print *,
+  otus-script, otus-script *,
+  otus-datasource, otus-datasource * {
     display: none !important;
   }
 }
@@ -90,4 +92,12 @@
   box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
   width: 100px;
   height: 40px;
+}
+
+otus-script {
+  display: none;
+}
+
+otus-datasource {
+  display: none;
 }
