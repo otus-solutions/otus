@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.otus.uxComponent')
-    .factory('otusjs.otus.uxComponent.ParticipantReportWidgetFactory', factory);
+    .module('otusjs.report.business')
+    .factory('otusjs.report.business.ParticipantReportWidgetFactory', factory);
 
 
   factory.$inject = [
