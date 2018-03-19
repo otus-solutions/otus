@@ -1,4 +1,4 @@
-describe('otusResultVisualizerManagerToolbar', () => {
+xdescribe('otusResultVisualizerManagerToolbar', () => {
   var parentScope;
   var element;
 
