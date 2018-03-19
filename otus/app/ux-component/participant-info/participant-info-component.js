@@ -27,7 +27,6 @@
 
     function getSex(sex){
       if(sex){
-
         return sex == 'F' || sex == 'f' ? 'Feminino' : 'Masculino';
       }
     }
@@ -52,14 +51,13 @@
       if (participantData) {
         self.selectedParticipant = participantData;
         self.selectedParticipant.birthdate.value = new Date(participantData.birthdate.value).toISOString();
-        console.log(participantData);
         self.isEmpty = false;
       } else {
         DashboardService
         .getSelectedParticipant()
         .then(function(participantData) {
-          console.log(participantData);
             self.selectedParticipant = participantData;
+            self.selectedParticipant.birthdate.value = new Date(participantData.birthdate.value).toISOString();
             self.isEmpty = false;
           });
       }
