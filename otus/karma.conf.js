@@ -1,7 +1,7 @@
 // Karma configuration
 // Generated on Wed Jan 27 2016 14:11:34 GMT-0200 (Horário brasileiro de verão)
 
-module.exports = function(config) {
+module.exports = function (config) {
   var APP_ROOT_PATH = 'app/';
   var DEPENDENCIES_ROOT_PATH = 'app/shared/';
   var NODE_MODULES_ROOT_PATH = 'node_modules/';
@@ -13,7 +13,7 @@ module.exports = function(config) {
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['browserify','jasmine'],
+    frameworks: ['browserify', 'jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -38,6 +38,7 @@ module.exports = function(config) {
       /* Otus platform*/
       NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
       NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
+      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model.min.js',
       /* Static resources files */
       APP_ROOT_PATH + 'static-resource/**/*.js',
       /* Application files */
@@ -58,8 +59,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './app/**/*.js': ['browserify','coverage'],
-      './tests/unit/**/*-spec.js': ['browserify','coverage']
+      './app/**/*.js': ['browserify', 'coverage'],
+      './tests/unit/**/*-spec.js': ['browserify', 'coverage']
     },
 
     browserify: {

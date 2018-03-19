@@ -16,10 +16,13 @@
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.laboratory.business.project.sending.SendingExamService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($filter, $mdToast, $mdDialog, ProjectFieldCenterService, DashboardContextService, ProjectContextService, SendingExamService, ApplicationStateService) {
+  function Controller($filter, $mdToast, $mdDialog, ProjectFieldCenterService, DashboardContextService, ProjectContextService, SendingExamService, ApplicationStateService, LoadingScreenService) {
+    const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
+
     var self = this;
     var _confirmDeleteSelected;
     self.sendingList = [];
@@ -83,30 +86,32 @@
 
     function deleteSending() {
       $mdDialog.show(_confirmDeleteSelected).then(function () {
+        LoadingScreenService.changeMessage(MESSAGE_LOADING);
+        LoadingScreenService.start();
         _removeRecursive(self.selectedSendings, function () {
           _loadList();
+          LoadingScreenService.finish();
         });
       });
     }
 
     function _removeRecursive(array, callback) {
-      SendingExamService.deleteSendedExams(array[0].examLot._id).then(function () {
+      SendingExamService.deleteSendedExams(array[0].examSendingLot._id).then(function () {
         if (array.length == 1) {
           callback();
         } else {
           array.splice(0, 1);
           _removeRecursive(array, callback);
         }
-      })
-        .catch(function (e) {
-          var msg = "Não foi possível excluir o envio " + array[0]._id + ".";
-          $mdToast.show(
-            $mdToast.simple()
-              .textContent(msg)
-              .hideDelay(3000)
-          );
-          callback();
-        });
+      }).catch(function (e) {
+        var msg = "Não foi possível excluir o envio " + array[0]._id + ".";
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(msg)
+            .hideDelay(3000)
+        );
+        callback();
+      });
     }
 
     function dynamicDataTableChange(change) {
@@ -126,6 +131,8 @@
 
     function onFilter() {
       self.selectedSendings = [];
+      LoadingScreenService.changeMessage(MESSAGE_LOADING);
+      LoadingScreenService.start();
       _setSessionData();
       if (self.listImmutable.length) {
         self.sendingList = self.listImmutable
@@ -136,15 +143,17 @@
             return _filterByPeriod(filteredByPeriod);
           });
       }
-      if (self.updateDataTable) self.updateDataTable(self.sendingList);
+      if (self.updateDataTable)
+        self.updateDataTable(self.sendingList);
+      LoadingScreenService.finish();
     }
 
     function _filterByCenter(filteredByCenter) {
-      return filteredByCenter.examLot.fieldCenter.acronym === self.centerFilter;
+      return filteredByCenter.examSendingLot.fieldCenter.acronym === self.centerFilter;
     }
 
     function _filterByPeriod(filteredByCenter) {
-      var formattedData = $filter('date')(filteredByCenter.examLot.realizationDate, 'yyyyMMdd');
+      var formattedData = $filter('date')(filteredByCenter.examSendingLot.realizationDate, 'yyyyMMdd');
       if (self.realizationBeginFilter && self.realizationEndFilter) {
         var initialDateFormatted = $filter('date')(self.realizationBeginFilter, 'yyyyMMdd');
         var finalDateFormatted = $filter('date')(self.realizationEndFilter, 'yyyyMMdd');
@@ -168,12 +177,15 @@
     function _loadList() {
       self.sendingList = [];
       self.listImmutable = [];
+      LoadingScreenService.changeMessage(MESSAGE_LOADING);
+      LoadingScreenService.start();
       SendingExamService.getSendedExams().then(function (response) {
         response.forEach(function (lot) {
           self.sendingList.push(SendingExamService.loadExamSendingFromJson(lot, {}));
           self.listImmutable.push(SendingExamService.loadExamSendingFromJson(lot, {}));
         });
         self.onFilter();
+        LoadingScreenService.finish();
       });
     }
 
