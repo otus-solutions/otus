@@ -8,7 +8,7 @@
 
   factory.$inject = [
     '$q',
-    'otusjs.otus.uxComponent.ParticipantReportService'
+    'otusjs.report.business.ParticipantReportService'
   ];
 
   function factory($q, ParticipantReportService) {
