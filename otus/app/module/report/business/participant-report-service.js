@@ -2,15 +2,16 @@
   'use strict';
 
   angular
-    .module('otusjs.otus.uxComponent')
-    .service('otusjs.otus.uxComponent.ParticipantReportService', service);
+    .module('otusjs.report.business')
+    .service('otusjs.report.business.ParticipantReportService', service);
 
   service.$inject = [
     '$q',
-    '$timeout'
+    '$timeout',
+    'otusjs.report.repository.ParticipantReportCollectionService'
   ];
 
-  function service($q, $timeout) {
+  function service($q, $timeout, ParticipantReportCollectionService) {
     var self = this;
 
     self.fetchReportList = fetchReportList;
@@ -37,7 +38,9 @@
           defer.reject(new Error('some error'));
         }
 
-      }, getRandomTimeout(7));
+      },
+      //getRandomTimeout(7)
+    );
       return defer.promise;
 
     }

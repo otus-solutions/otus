@@ -2,13 +2,13 @@
   'use strict';
 
   angular
-    .module('otusjs.otus.uxComponent')
-    .factory('otusjs.otus.uxComponent.ParticipantReportWidgetFactory', factory);
+    .module('otusjs.report.business')
+    .factory('otusjs.report.business.ParticipantReportWidgetFactory', factory);
 
 
   factory.$inject = [
     '$q',
-    'otusjs.otus.uxComponent.ParticipantReportService'
+    'otusjs.report.business.ParticipantReportService'
   ];
 
   function factory($q, ParticipantReportService) {

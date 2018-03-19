@@ -11,7 +11,7 @@
   Controller.$inject = [
     "otusjs.otus.dashboard.core.EventService",
     "otusjs.otus.dashboard.service.DashboardService",
-    "otusjs.otus.uxComponent.ParticipantReportWidgetFactory"
+    "otusjs.report.business.ParticipantReportWidgetFactory"
   ];
 
   function Controller(EventService, DashboardService, ParticipantReportWidgetFactory) {

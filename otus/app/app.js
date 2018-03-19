@@ -9,6 +9,7 @@
       'otusjs.user.access',
       'otusjs.otus.installer',
       'otusjs.otus.laboratory',
+      'otusjs.otus.report',
       'otusjs.otus.dashboard',
       'otusjs.otus.uxComponent',
       'otusjs.application',
