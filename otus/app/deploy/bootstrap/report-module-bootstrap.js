@@ -26,7 +26,7 @@
       console.log('boot');
       configureContext(ContextFactory);
       configureStorage(StorageService.session);
-      // configureRemoteStorage(RestService)
+      configureRemoteStorage(RestService)
     }
 
     function configureContext(context) {
