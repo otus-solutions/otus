@@ -45,7 +45,7 @@
     }
 
     function reloadReport(report) {
-      report.getReportTemplate();
+      report.reloadTemplate();
     }
 
     function _loadParticipantReports(participantData) {

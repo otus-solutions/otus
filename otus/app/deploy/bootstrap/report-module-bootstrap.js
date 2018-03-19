@@ -23,7 +23,6 @@
     self.configureStorage = configureStorage;
 
     function bootstrap() {
-      console.log('boot');
       configureContext(ContextFactory);
       configureStorage(StorageService.session);
       configureRemoteStorage(RestService)

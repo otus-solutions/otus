@@ -21,7 +21,7 @@
       ParticipantReportService.fetchReportList(rn)
         .then(function (reports) {
           defer.resolve(reports.map(function (report) {
-            return new ParticipantReport($q, ParticipantReportService, report)
+            return new ParticipantReport(ParticipantReportService, report)
           }));
         });
       return defer.promise;
@@ -30,10 +30,7 @@
     return self;
   }
 
-  function ParticipantReport($q, ParticipantReportService, report) {
-    // todo: decidir pelo tipo de inicialização
-    // var self = Object.assign(this, report); // report pode ser um objeto gerado pelo model.
-    // var self = report;
+  function ParticipantReport(ParticipantReportService, report) {
     var self = this;
 
     self.id = report.id;
@@ -52,6 +49,7 @@
     self.statusIcon = 'priority_high';
 
     self.getReportTemplate = getReportTemplate;
+    self.reloadTemplate = reloadTemplate;
 
 
     function getReportTemplate() {
@@ -60,7 +58,6 @@
 
       ParticipantReportService.getFullReport(self.id)
         .then(function (data) {
-          console.log(data);
           _manageDatasources(data.dataSources);
           self.loading = false;
         })
@@ -68,6 +65,10 @@
           self.hasError = true;
           self.loading = false;
         });
+    }
+
+    function reloadTemplate(){
+      self.getReportTemplate();
     }
 
     function _manageDatasources(dataSourceList) {

@@ -15,18 +15,26 @@
 
     /* Public methods */
     self.initialize = initialize;
-    self.getAvailableReports = getAvailableReports;
+    self.list = list;
+    self.getReport = getReport;
 
     function initialize() {
-      // _rest = OtusRestResourceService.getExamLotResource();
-
+      _rest = OtusRestResourceService.getReportResourceFactory();
     }
 
-    function getAvailableReports(center) {
+    function list(rn) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.getAvailableReports({center: center}).$promise;
+      return _rest.listAll({rn:rn}).$promise;
+    }
+
+    //returns full participant report
+    function getReport(rn, id){
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.getById({rn:rn, id: id}).$promise;
     }
   }
 }());

@@ -15,17 +15,34 @@
 
     //Participant Report Methods
     self.getParticipantReportList = getParticipantReportList;
+    self.getFullReport = getFullReport;
 
-    function getParticipantReportList() {
+    function getParticipantReportList(rn) {
       var request = $q.defer();
 
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getParticipantReportList()
-            .then(function (list) {
-              request.resolve(list);
+            .list(rn)
+            .then(function (response) {
+              request.resolve(response.data);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getFullReport(rn, id) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getReport(rn, id)
+            .then(function (response) {
+              request.resolve(response.data);
             });
         });
 

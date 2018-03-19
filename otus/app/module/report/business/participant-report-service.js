@@ -7,40 +7,56 @@
 
   service.$inject = [
     '$q',
-    '$timeout',
     'otusjs.report.repository.ParticipantReportCollectionService'
   ];
 
-  function service($q, $timeout, ParticipantReportCollectionService) {
+  function service($q, ParticipantReportCollectionService) {
     var self = this;
 
-    self.fetchReportList = fetchReportList;
-    self.getFullReport = getFullReport;
+    self.fetchReportList = fetchFakeReportList;
+    self.getFullReport = getFakeFullReport;  //todo reassign
 
 
-    function fetchReportList() {
+    function fetchReportList(participant) {
       var defer = $q.defer();
 
 
-      defer.resolve(self.fakeData.reportList);
+      ParticipantReportCollectionService
+        .getParticipantReportList(participant)
+        .then(function (list) {
+          defer.resolve(JSON.parse(list));
 
+        })
+        .catch(function(e){
+          defer.reject(e);
+        });
       return defer.promise;
     }
 
-    function getFullReport(id) {
+    function getFullReport(reportId) {
+
+    }
+
+
+    //todo: remover daqui pra baixo
+    function fetchFakeReportList() {
+    }
+
+
+    function getFakeFullReport(id) {
       var defer = $q.defer();
 
       $timeout(function () {
-        var fullReport = self.fakeData.reports[id];
-        if(fullReport){
-          defer.resolve(fullReport);
-        }else{
-          defer.reject(new Error('some error'));
-        }
+          var fullReport = self.fakeData.reports[id];
+          if (fullReport) {
+            defer.resolve(fullReport);
+          } else {
+            defer.reject(new Error('some error'));
+          }
 
-      },
-      //getRandomTimeout(7)
-    );
+        },
+        //getRandomTimeout(7)
+      );
       return defer.promise;
 
     }
@@ -48,7 +64,7 @@
 
     // temporary resources
     function getRandomTimeout(maxSeconds) {
-      return Math.floor(Math.random() * Math.floor(maxSeconds))*1000;
+      return Math.floor(Math.random() * Math.floor(maxSeconds)) * 1000;
     }
 
     self.fakeData = {
@@ -81,13 +97,13 @@
           dataSources: [
             {
               key: "ultimo_rcpc",
-              label:"Último RCPC",
+              label: "Último RCPC",
               dataSource: "Activity",
               result: []
             },
             {
               key: "ultimo_rcpc",
-              label:"Outra atividade",
+              label: "Outra atividade",
               dataSource: "Activity",
               result: []
             }
@@ -98,7 +114,7 @@
           dataSources: [
             {
               key: "cabeçalho",
-              label:"Informações básicas do Participante",
+              label: "Informações básicas do Participante",
               dataSource: "Participant",
               result: [
                 {
@@ -125,7 +141,7 @@
                 }
               },
               "key": "HS",
-              label:"Alguma atividade",
+              label: "Alguma atividade",
               "dataSource": "Activity",
               "result": [
                 {
@@ -169,57 +185,57 @@
           id: '5',
           name: 'Relatório 5',
         },
-        { id: 6, name: 'Relatório 6' },
-        { id: 7, name: 'Relatório 7' },
-        { id: 8, name: 'Relatório 8' },
-        { id: 9, name: 'Relatório 9' },
-        { id: 10, name: 'Relatório 10' },
-        { id: 11, name: 'Relatório 11' },
-        { id: 12, name: 'Relatório 12' },
-        { id: 13, name: 'Relatório 13' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 14, name: 'Relatório 14' },
-        { id: 15, name: 'Relatório 15' },
-        { id: 16, name: 'Relatório 35' }
+        {id: 6, name: 'Relatório 6'},
+        {id: 7, name: 'Relatório 7'},
+        {id: 8, name: 'Relatório 8'},
+        {id: 9, name: 'Relatório 9'},
+        {id: 10, name: 'Relatório 10'},
+        {id: 11, name: 'Relatório 11'},
+        {id: 12, name: 'Relatório 12'},
+        {id: 13, name: 'Relatório 13'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 14, name: 'Relatório 14'},
+        {id: 15, name: 'Relatório 15'},
+        {id: 16, name: 'Relatório 35'}
       ]
     };
 
