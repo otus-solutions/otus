@@ -6,14 +6,15 @@
     .service('otusjs.report.core.ModuleService', Service);
 
   Service.$inject = [
+    '$q',
     'otusjs.report.core.ContextService',
     'otusjs.report.core.EventService'
   ];
 
-  function Service(ContextService, EventService) {
+  function Service($q, ContextService, EventService) {
     var self = this;
     var _remoteStorage;
-    var _remoteStorageDefer;
+    var _remoteStorageDefer = $q.defer();
 
     self.Event = EventService;
 
@@ -33,12 +34,13 @@
 
     function configureRemoteStorage(restService) {
       _remoteStorage = restService;
+      _remoteStorageDefer.resolve(_remoteStorage);
     }
 
     function getParticipantReportRemoteStorage(){
         if (_remoteStorage) {
-          _remoteStorageDefer = $q.defer();
           _remoteStorageDefer.resolve(_remoteStorage);
+          _remoteStorageDefer = $q.defer();
         }
         return {
           whenReady: function() {

@@ -23,6 +23,7 @@
     }
 
     function list(rn) {
+      console.log('list');
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }

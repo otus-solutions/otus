@@ -6,10 +6,11 @@
     .service('otusjs.report.repository.ParticipantReportCollectionService', Service);
 
   Service.$inject = [
+    '$q',
     'otusjs.report.core.ModuleService'
   ];
 
-  function Service(ModuleService) {
+  function Service($q, ModuleService) {
     var self = this;
     var _remoteStorage = ModuleService.getParticipantReportRemoteStorage();
 
@@ -19,7 +20,6 @@
 
     function getParticipantReportList(rn) {
       var request = $q.defer();
-
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {

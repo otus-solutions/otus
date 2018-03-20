@@ -7,39 +7,33 @@
 
   service.$inject = [
     '$q',
-    'otusjs.report.repository.ParticipantReportCollectionService'
+    'otusjs.report.repository.ParticipantReportRepositoryService'
   ];
 
   function service($q, ParticipantReportCollectionService) {
     var self = this;
 
-    self.fetchReportList = fetchFakeReportList;
-    self.getFullReport = getFakeFullReport;  //todo reassign
+    self.fetchReportList = fetchReportList;
+    self.getFullReport = getFullReport;  //todo reassign
 
 
     function fetchReportList(participant) {
-      var defer = $q.defer();
-
-
-      ParticipantReportCollectionService
-        .getParticipantReportList(participant)
-        .then(function (list) {
-          defer.resolve(JSON.parse(list));
-
-        })
-        .catch(function(e){
-          defer.reject(e);
-        });
-      return defer.promise;
+      return ParticipantReportCollectionService.getParticipantReportList(participant.recruitmentNumber)
     }
 
-    function getFullReport(reportId) {
-
+    function getFullReport(participant, reportId) {
+      return ParticipantReportCollectionService.getFullReport(participant.recruitmentNumber, reportId)
     }
 
 
     //todo: remover daqui pra baixo
     function fetchFakeReportList() {
+      var defer = $q.defer();
+
+
+      defer.resolve(self.fakeData.reportList);
+
+      return defer.promise;
     }
 
 
