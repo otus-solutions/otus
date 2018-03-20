@@ -36,7 +36,12 @@
     self.activateExamsLotInfoManager = activateExamsLotInfoManager;
     self.activateExamSending = activateExamSending;
     self.activateExamResultsVisualizer = activateExamResultsVisualizer;
+    self.activateMonitoring = activateMonitoring;
     // self.activateErrorOffline = activateErrorOffline;
+
+    function activateMonitoring() {
+      $state.go(STATE.MONITORING);
+    }
 
     function activateActivityAdder() {
       $state.go(STATE.ACTIVITY_ADDER);

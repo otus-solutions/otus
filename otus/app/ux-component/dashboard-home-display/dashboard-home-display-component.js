@@ -23,8 +23,14 @@
     self.ExamsDashboard = ExamsDashboard;
     self.sendingExam = sendingExam;
     self.$onInit = onInit;
+    self.startMonitoring = startMonitoring;
 
     /* Public methods */
+    function startMonitoring() {
+        ApplicationStateService.activateMonitoring();
+        console.log("Hello");
+    }
+
     function setFocus() {
       setTimeout(function () {
         document.querySelector('#participantSearchAutoCompleteId').focus();
