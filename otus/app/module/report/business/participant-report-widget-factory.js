@@ -34,8 +34,7 @@
     var self = this;
 
     self.id = report.id;
-    self.name = report.name;
-    self.hasBeenDelivered = report.hasBeenDelivered; //will this come at first consult?
+    self.label = report.label;
 
     self.template = '';
     self.dataSources = {};

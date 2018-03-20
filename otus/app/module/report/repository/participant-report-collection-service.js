@@ -27,6 +27,9 @@
             .list(rn)
             .then(function (response) {
               request.resolve(response.data);
+            })
+            .catch(function(e){
+              request.reject(e);
             });
         });
 
@@ -43,6 +46,9 @@
             .getReport(rn, id)
             .then(function (response) {
               request.resolve(response.data);
+            })
+            .catch(function(e){
+              request.reject(e);
             });
         });
 

@@ -39,8 +39,8 @@
 
     function getParticipantReportRemoteStorage(){
         if (_remoteStorage) {
-          _remoteStorageDefer.resolve(_remoteStorage);
           _remoteStorageDefer = $q.defer();
+          _remoteStorageDefer.resolve(_remoteStorage);
         }
         return {
           whenReady: function() {
