@@ -2,13 +2,13 @@
   'use strict';
 
   angular
-    .module('otusjs.otus.uxComponent')
-    .factory('otusjs.otus.uxComponent.ParticipantReportWidgetFactory', factory);
+    .module('otusjs.report.business')
+    .factory('otusjs.report.business.ParticipantReportWidgetFactory', factory);
 
 
   factory.$inject = [
     '$q',
-    'otusjs.otus.uxComponent.ParticipantReportService',
+    'otusjs.report.business.ParticipantReportService',
     'otusjs.otus.uxComponent.DynamicReportService'
   ];
 
@@ -22,7 +22,7 @@
       ParticipantReportService.fetchReportList(rn)
         .then(function (reports) {
           defer.resolve(reports.map(function (report) {
-            return new ParticipantReport($q, ParticipantReportService, DynamicReportService, report)
+            return new ParticipantReport(ParticipantReportService, DynamicReportService, report)
           }));
         });
       return defer.promise;
@@ -31,15 +31,11 @@
     return self;
   }
 
-  function ParticipantReport($q, ParticipantReportService, DynamicReportService, report) {
-    // todo: decidir pelo tipo de inicialização
-    // var self = Object.assign(this, report); // report pode ser um objeto gerado pelo model.
-    // var self = report;
+  function ParticipantReport(ParticipantReportService, DynamicReportService, report) {
     var self = this;
 
     self.id = report.id;
-    self.name = report.name;
-    self.hasBeenDelivered = report.hasBeenDelivered; //will this come at first consult?
+    self.label = report.label;
 
     self.template = '';
     self.dataSources = {};
@@ -55,6 +51,7 @@
     self.statusIcon = 'priority_high';
 
     self.getReportTemplate = getReportTemplate;
+    self.reloadTemplate = reloadTemplate;
 
 
     function getReportTemplate() {
@@ -63,7 +60,6 @@
 
       ParticipantReportService.getFullReport(self.id)
         .then(function (data) {
-          console.log(data);
           _manageDatasources(data.dataSources);
           _precompileTemplate(function(){
             self.loading = false;
@@ -87,6 +83,10 @@
       .catch(function(erro) {
         callback();
       });
+    }
+
+    function reloadTemplate(){
+      self.getReportTemplate();
     }
 
     function _manageDatasources(dataSourceList) {

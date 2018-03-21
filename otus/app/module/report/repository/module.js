@@ -2,5 +2,6 @@
   'use strict';
 
   angular
-    .module('otusjs.laboratory.core', []);
+    .module('otusjs.report.repository', []);
+
 }());

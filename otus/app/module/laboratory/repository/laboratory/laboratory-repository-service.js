@@ -47,7 +47,6 @@
     function getLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
       return LaboratoryCollectionService.getLaboratory();
-      // return $http.get('app/module/laboratory/repository/laboratory/lab-participant.json');
     }
 
     function updateLaboratoryParticipant(laboratory) {
@@ -64,12 +63,10 @@
 
     function getLaboratoryDescriptors() {
       return LaboratoryCollectionService.getDescriptors();
-      // return $http.get('app/module/laboratory/repository/laboratory/lab-config.json');
     }
 
     function getAliquotsDescriptors() {
       return LaboratoryCollectionService.getAliquotDescriptors();
-      // return $http.get('app/module/laboratory/repository/laboratory/aliquots-descriptors.json');
     }
 
 

@@ -3,20 +3,17 @@
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.LaboratoryModuleBootstrap', Service);
+    .service('otusjs.deploy.ReportModuleBootstrap', Service);
 
   Service.$inject = [
-    'otusjs.laboratory.core.ModuleService',
+    'otusjs.report.core.ModuleService',
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
-    'otusjs.deploy.LaboratoryRemoteStorageService',
-    'otusjs.deploy.ProjectRemoteStorageService'
-
+    'otusjs.deploy.ParticipantReportRestService'
   ];
 
   function Service(
-    ModuleService, ContextFactory, StorageService,
-    LaboratoryRemoteStorageService,ProjectRemoteStorageService) {
+    ModuleService, ContextFactory, StorageService, RestService) {
 
     var self = this;
 
@@ -28,8 +25,7 @@
     function bootstrap() {
       configureContext(ContextFactory);
       configureStorage(StorageService.session);
-      ModuleService.setLaboratoryRemoteStorage(LaboratoryRemoteStorageService);
-      ModuleService.setProjectRemoteStorage(ProjectRemoteStorageService);
+      configureRemoteStorage(RestService)
     }
 
     function configureContext(context) {
@@ -39,5 +35,10 @@
     function configureStorage(storage) {
       ModuleService.configureStorage(storage);
     }
+
+    function configureRemoteStorage(storage) {
+      ModuleService.configureRemoteStorage(storage);
+    }
+
   }
 }());

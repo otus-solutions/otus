@@ -11,11 +11,10 @@
   Controller.$inject = [
     "otusjs.otus.dashboard.core.EventService",
     "otusjs.otus.dashboard.service.DashboardService",
-    "otusjs.otus.uxComponent.ParticipantReportWidgetFactory",
-    'otusjs.otus.uxComponent.DynamicReportService'
+    "otusjs.report.business.ParticipantReportWidgetFactory"
   ];
 
-  function Controller(EventService, DashboardService, ParticipantReportWidgetFactory, DynamicReportService) {
+  function Controller(EventService, DashboardService, ParticipantReportWidgetFactory) {
     var self = this;
 
     /* Public methods */
@@ -46,7 +45,7 @@
     }
 
     function reloadReport(report) {
-      report.getReportTemplate();
+      report.reloadTemplate();
     }
 
     function _loadParticipantReports(participantData) {
