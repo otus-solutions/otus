@@ -25,6 +25,7 @@
         </div>
         <md-card-content ng-if="!collapsed" layout="column" layout-align="space-around start">
           <span ng-repeat="datasource in report.missingDataSources" class="md-caption" ng-if="datasource">{{datasource + ": não encontrado"}}</span>
+          <span ng-repeat="field in report.fieldsError" class="md-caption" ng-if="report.fieldsError.length">{{'O Campo "' + field.fieldName + '" ' + (field.msg || 'é obrigatório')}}</span>
         </md-card-content>
         <md-divider ng-if="!collapsed"></md-divider>
         <md-card-actions layout="row" layout-align="end center" ng-if="!report.loading && !collapsed">

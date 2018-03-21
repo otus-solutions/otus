@@ -11,10 +11,11 @@
   Controller.$inject = [
     "otusjs.otus.dashboard.core.EventService",
     "otusjs.otus.dashboard.service.DashboardService",
-    "otusjs.otus.uxComponent.ParticipantReportWidgetFactory"
+    "otusjs.otus.uxComponent.ParticipantReportWidgetFactory",
+    'otusjs.otus.uxComponent.DynamicReportService'
   ];
 
-  function Controller(EventService, DashboardService, ParticipantReportWidgetFactory) {
+  function Controller(EventService, DashboardService, ParticipantReportWidgetFactory, DynamicReportService) {
     var self = this;
 
     /* Public methods */

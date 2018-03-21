@@ -64,6 +64,7 @@
     "browserify": "^14.4.0",
     "concurrently": "^1.0.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
     "gulp-bump": "2.1.0",
     "gulp-concat": "2.6.0",
     "gulp-minify": "0.0.11",
