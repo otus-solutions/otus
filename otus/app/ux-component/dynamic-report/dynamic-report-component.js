@@ -80,10 +80,10 @@
   <span ng-style="style.imc">IMC do Participante: {{data.imc}}</span><br>
   <span ng-style="style.sexo">Sexo: {{data.sexo}}</span><br>
 </div>
-<md-button class="md-fab md-mini" aria-label="Eat cake">
-            <md-icon md-svg-src="img/icons/cake.svg"></md-icon>
+<md-button class="md-fab md-mini md-primary" aria-label="Eat cake">
+<md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
         </md-button>
-        `,
+`,
         "dataSources": {
           "participant": [
             {
@@ -143,32 +143,127 @@
         newWindow.document.write(`
         <html>
           <head>
-            <title>Etiquetas</title>
-            <base href="/otus/" />
-            <link rel="stylesheet" type="text/css" href="app/static-resource/stylesheet/dynamic-report-page.css"/>
-                                                        
-            <link href="app/static-resource/image/coruja_pesquisadora.png" rel="icon" />
+            <title>Relatório: @templateLabel</title>
             <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet" />
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-            <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
-            <link href="app/static-resource/stylesheet/styles.css" rel="stylesheet" />
-            <link href="app/static-resource/stylesheet/initial-config.css" rel="stylesheet" />
-            <link href="app/static-resource/stylesheet/please-wait-style.css" rel="stylesheet">
-            
+            <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+            <style>
+              @page {
+                size: 210mm 297mm;
+                margin: 0mm;
+              }
+              
+              * {
+                padding: 0px;
+                margin: 0px;
+                /*visibility: hidden;*/
+              }
+              
+              #print-page {
+                font-family: monospace;
+                margin: auto;
+                overflow:hidden;
+              }
+              
+              #print-page, #print-page * {
+                visibility: visible;
+              }
+              
+              .label {
+                width: 55mm;
+                height: 23mm;
+                margin-bottom: 3mm !important;
+                position: relative;
+                /* margin: auto; */
+                padding: 5px 3px 3px 5px;
+                background-color: #fff;
+                line-height: 14px;
+              }
+              
+              .label p {
+                font-family: Verdana, Geneva, sans-serif;
+                font-size: 12px;
+                line-height: 15px;
+                font-weight: bolder;
+                letter-spacing: 0.1em;
+              }
+              
+              .label .label-text {
+                font-family: Verdana, Geneva, sans-serif;
+                font-size: 10px;
+                line-height: 15px;
+                letter-spacing: 0.1em;
+              }
+              
+              .label .barcode {
+                position: absolute;
+                top: 70%;
+                left: 50%;
+                bottom: 0;
+                transform: translate(-50%, -5%) !important;
+                background-color: white;
+              }
+              
+              @media print {
+                .no-print, .no-print *,
+                otus-script, otus-script *,
+                otus-datasource, otus-datasource * {
+                  display: none !important;
+                }
+              }
+              
+              @media screen {
+                .no-print, .no-print * {
+                  visibility: visible;
+                }
+              }
+              
+              .print-button:hover {
+                overflow:auto;
+                background-color: #448AFF;
+                color: white;
+              }
+              
+              .print-button {
+                position: fixed;
+                left: 15em;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                -webkit-transition-duration: 0.4s;/* Safari */
+                transition-duration: 0.4s;
+                cursor: pointer;
+                background-color: white;
+                color: black;
+                border: 2px solid #448AFF;
+                border-radius: 3px;
+                box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+                width: 100px;
+                height: 40px;
+              }
+              
+              otus-script {
+                display: none;
+              }
+              
+              otus-datasource {
+                display: none;
+              }
+            </style>
           </head>
           <body>
-          <script src="node_modules/jquery/dist/jquery.min.js"></script>
-<!-- ************************************* Angular ************************************* -->
-<script src="node_modules/angular/angular.min.js"></script>
-<script src="node_modules/angular-animate/angular-animate.min.js"></script>
-<script src="node_modules/angular-aria/angular-aria.min.js"></script>
-<script src="node_modules/angular-bind-html-compile-ci-dev/angular-bind-html-compile.js"></script>
-<script src="node_modules/angular-messages/angular-messages.min.js"></script>
-<script src="node_modules/angular-ui-mask/dist/mask.min.js"></script>
-<script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
-<script src="node_modules/angular-resource/angular-resource.min.js"></script>
-<!-- ************************************* Angular Material ************************************* -->
-<script src="node_modules/angular-material/angular-material.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+            <!-- ************************************* Angular ************************************* -->
+            <!-- Angular Material requires Angular.js Libraries -->
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+            <!-- Angular Material Library -->
+            <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
           </body>
         </html>
         `);

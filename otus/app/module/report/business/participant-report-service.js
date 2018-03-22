@@ -18,11 +18,13 @@
 
 
     function fetchReportList(participant) {
-      return ParticipantReportCollectionService.getParticipantReportList(participant.recruitmentNumber)
+      //return ParticipantReportCollectionService.getParticipantReportList(participant.recruitmentNumber);
+      return fetchFakeReportList();
     }
 
     function getFullReport(participant, reportId) {
-      return ParticipantReportCollectionService.getFullReport(participant.recruitmentNumber, reportId)
+      //return ParticipantReportCollectionService.getFullReport(participant.recruitmentNumber, reportId);
+      return getFakeFullReport(participant, reportId);
     }
 
 
@@ -40,7 +42,7 @@
     function getFakeFullReport(participant, id) {
       var defer = $q.defer();
 
-      $timeout(function () {
+      setTimeout(function () {
           var fullReport = self.fakeData.reports[id];
           if (fullReport) {
             defer.resolve(fullReport);

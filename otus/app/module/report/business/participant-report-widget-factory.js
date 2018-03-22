@@ -8,10 +8,11 @@
 
   factory.$inject = [
     '$q',
-    'otusjs.report.business.ParticipantReportService'
+    'otusjs.report.business.ParticipantReportService',
+    'otusjs.otus.uxComponent.DynamicReportService'
   ];
 
-  function factory($q, ParticipantReportService) {
+  function factory($q, ParticipantReportService, DynamicReportService) {
     var self = this;
 
     self.getParticipantReportList = getParticipantReportList;
@@ -33,7 +34,7 @@
     return self;
   }
 
-  function ParticipantReport(ParticipantReportService, report, participant) {
+  function ParticipantReport(ParticipantReportService, DynamicReportService, report, participant) {
     var self = this;
     var _participantInfo = participant;
 
@@ -44,11 +45,23 @@
     self.template = '';
     self.dataSources = {};
     self.missingDataSources = [];
+    self.fieldsError = [];
+    self.compiledTemplate = undefined;
     self.hasError = false;
 
     //ux-properties
+    self.hasAllDatasources = false;
+    self.isAvailable = null;
     self.isAvailable = null;  //null when we don't know yet if it's available
     self.loading = false;
+    self.status = {
+      color: 'gray',
+      icon: 'description',
+      bottomIcon: '',
+      bottomIconClass: '',
+      tooltip: '',
+      msg: ''
+    };
     self.statusColor = 'gray';
     self.statusIcon = 'priority_high';
 
@@ -64,12 +77,35 @@
         .then(function (data) {
           _manageDatasources(data.dataSources);
           _manageTemplate(data.template);
-          self.loading = false;
+          if(self.isAvailable){
+            _precompileTemplate(_endLoading);
+          } else {
+            _endLoading();
+          }
         })
         .catch(function (e) {
           self.hasError = true;
-          self.loading = false;
+          _endLoading();
         });
+    }
+
+    function _endLoading(){
+      _setStatus();
+      self.loading = false;
+    }
+
+    function _precompileTemplate(callback) {
+      DynamicReportService.precompile().then(function(structure) {
+        console.log(structure)
+        self.compiledTemplate = structure.compiledTemplate;
+        self.fieldsError = structure.fieldsError;
+        if(self.fieldsError.length) self.hasError = true;
+        _setAvailability(!self.hasError)
+        callback();
+      })
+      .catch(function(erro) {
+        callback();
+      });
     }
 
     function reloadTemplate() {
@@ -87,15 +123,53 @@
           self.missingDataSources.push(ds.label);
         }
       });
-      if (self.missingDataSources.length > 0) {
-        _setAvailability(false);
-      } else {
-        _setAvailability(true);
-      }
+      self.hasAllDatasources = self.missingDataSources.length ? false : true;
     }
 
     function _manageTemplate(template){
       self.template = template;
+    }
+
+    function _setStatus() {      
+      if(self.hasError){
+        self.status = {
+          color: '#CC6600',
+          icon: 'priority_high',
+          bottomIcon: 'help',
+          bottomIconClass: '',
+          tooltip: 'Não encontrado',
+          msg: 'Não encontrado'
+        };
+      } else if(!self.hasAllDatasources){
+        self.status = {
+          color: 'red',
+          icon: 'cancel',
+          bottomIcon: 'block',
+          bottomIconClass: '',
+          tooltip: 'Indisponível',
+          msg: 'Indisponível'
+        };
+      } else if(self.fieldsError.length){
+        self.status = {
+          color: 'red',
+          icon: 'cancel',
+          bottomIcon: 'block',
+          bottomIconClass: '',
+          tooltip: 'Indisponível',
+          msg: 'Indisponível'
+        };
+      } else {
+        self.status = {
+          color: 'green',
+          icon: 'done',
+          bottomIcon: 'reply',
+          bottomIconClass: 'iconInverted',
+          tooltip: 'Visualizar',
+          msg: 'Disponível'
+        };
+      }
+      self.statusColor = self.isAvailable ? 'green' : 'red';
+      self.statusIcon = self.isAvailable === true ? 'done' : 'cancel';
     }
 
     function _setAvailability(isAvailable) {
