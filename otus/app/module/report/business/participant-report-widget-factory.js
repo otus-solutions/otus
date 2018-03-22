@@ -22,13 +22,13 @@
       return ParticipantReportService.fetchReportList(participant)
         .then(function (reports) {
           return reports.map(function (report) {
-            return new ParticipantReport(ParticipantReportService, report, participant)
+            return new ParticipantReport(ParticipantReportService, DynamicReportService, report, participant)
           });
         });
     }
 
     function fromJson(jsonReport, participant) {
-      return new ParticipantReport(ParticipantReportService, jsonReport, participant)
+      return new ParticipantReport(ParticipantReportService, DynamicReportService, jsonReport, participant)
     }
 
     return self;
@@ -77,7 +77,7 @@
         .then(function (data) {
           _manageDatasources(data.dataSources);
           _manageTemplate(data.template);
-          if(self.isAvailable){
+          if (self.isAvailable) {
             _precompileTemplate(_endLoading);
           } else {
             _endLoading();
@@ -89,23 +89,23 @@
         });
     }
 
-    function _endLoading(){
+    function _endLoading() {
       _setStatus();
       self.loading = false;
     }
 
     function _precompileTemplate(callback) {
-      DynamicReportService.precompile().then(function(structure) {
+      DynamicReportService.precompile().then(function (structure) {
         console.log(structure)
         self.compiledTemplate = structure.compiledTemplate;
         self.fieldsError = structure.fieldsError;
-        if(self.fieldsError.length) self.hasError = true;
+        if (self.fieldsError.length) self.hasError = true;
         _setAvailability(!self.hasError)
         callback();
       })
-      .catch(function(erro) {
-        callback();
-      });
+        .catch(function (erro) {
+          callback();
+        });
     }
 
     function reloadTemplate() {
@@ -126,12 +126,12 @@
       self.hasAllDatasources = self.missingDataSources.length ? false : true;
     }
 
-    function _manageTemplate(template){
+    function _manageTemplate(template) {
       self.template = template;
     }
 
-    function _setStatus() {      
-      if(self.hasError){
+    function _setStatus() {
+      if (self.hasError) {
         self.status = {
           color: '#CC6600',
           icon: 'priority_high',
@@ -140,7 +140,7 @@
           tooltip: 'Não encontrado',
           msg: 'Não encontrado'
         };
-      } else if(!self.hasAllDatasources){
+      } else if (!self.hasAllDatasources) {
         self.status = {
           color: 'red',
           icon: 'cancel',
@@ -149,7 +149,7 @@
           tooltip: 'Indisponível',
           msg: 'Indisponível'
         };
-      } else if(self.fieldsError.length){
+      } else if (self.fieldsError.length) {
         self.status = {
           color: 'red',
           icon: 'cancel',
