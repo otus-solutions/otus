@@ -37,7 +37,7 @@
     }
 
 
-    function getFakeFullReport(id) {
+    function getFakeFullReport(participant, id) {
       var defer = $q.defer();
 
       $timeout(function () {
@@ -70,7 +70,7 @@
               key: "ultimo_rcpc",
               label: "Basófilos",
               dataSource: "Activity",
-              result: []
+              result: [null]
             }
           ]
         },
@@ -81,7 +81,7 @@
               key: "ultimo_rcpc",
               label: "Resultado Glicemia",
               dataSource: "Activity",
-              result: []
+              result: [null]
             }
           ]
         },
@@ -93,13 +93,13 @@
               key: "ultimo_rcpc",
               label: "Último RCPC",
               dataSource: "Activity",
-              result: []
+              result: [null]
             },
             {
               key: "ultimo_rcpc",
               label: "Outra atividade",
               dataSource: "Activity",
-              result: []
+              result: [null]
             }
           ]
         },
