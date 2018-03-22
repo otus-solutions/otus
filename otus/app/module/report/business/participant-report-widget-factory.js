@@ -16,24 +16,29 @@
     var self = this;
 
     self.getParticipantReportList = getParticipantReportList;
+    self.fromJson = fromJson;
 
-    function getParticipantReportList(rn) {
-      var defer = $q.defer();
-      ParticipantReportService.fetchReportList(rn)
+    function getParticipantReportList(participant) {
+      return ParticipantReportService.fetchReportList(participant)
         .then(function (reports) {
-          defer.resolve(reports.map(function (report) {
-            return new ParticipantReport(ParticipantReportService, DynamicReportService, report)
-          }));
+          return reports.map(function (report) {
+            return new ParticipantReport(ParticipantReportService, DynamicReportService, report, participant)
+          });
         });
-      return defer.promise;
+    }
+
+    function fromJson(jsonReport, participant) {
+      return new ParticipantReport(ParticipantReportService, DynamicReportService, jsonReport, participant)
     }
 
     return self;
   }
 
-  function ParticipantReport(ParticipantReportService, DynamicReportService, report) {
+  function ParticipantReport(ParticipantReportService, DynamicReportService, report, participant) {
     var self = this;
+    var _participantInfo = participant;
 
+    self.objectType = 'ParticipantReport';
     self.id = report.id;
     self.label = report.label;
 
@@ -79,10 +84,10 @@
       self.loading = true;
       self.hasError = false;
 
-      ParticipantReportService.getFullReport(self.id)
+      return ParticipantReportService.getFullReport(_participantInfo, self.id)
         .then(function (data) {
           _manageDatasources(data.dataSources);
-          self.template = data.template;
+          _manageTemplate(data.template);
           if (self.hasAllDatasources) {
             _precompileTemplate(_endLoading);
           } else {
@@ -121,13 +126,17 @@
 
       dataSourceList.forEach(function (ds) {
         var dsKey = ds.key;
-        if (ds.result.length > 0) {
+        if (ds.result[0]) {
           self.dataSources[dsKey] = ds.result;
         } else {
           self.missingDataSources.push(ds.label);
         }
       });
       self.hasAllDatasources = self.missingDataSources.length ? false : true;
+    }
+
+    function _manageTemplate(template) {
+      self.template = template;
     }
 
     function _setStatus() {

@@ -60,7 +60,7 @@
     }
 
     function _fetchReports() {
-      ParticipantReportWidgetFactory.getParticipantReportList(self.selectedParticipant.recruitmentNumber)
+      ParticipantReportWidgetFactory.getParticipantReportList(self.selectedParticipant)
         .then(function (reports) {
           self.reports = reports;
           self.ready = true;
