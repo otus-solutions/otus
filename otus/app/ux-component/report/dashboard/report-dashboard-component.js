@@ -20,7 +20,6 @@
     self.collapsed = false;
 
     /* Public methods */
-    self.getFullReport = getFullReport;
     self.reloadReport = reloadReport;
 
     /* Lifecycle hooks */
@@ -40,12 +39,6 @@
     }
 
     /* Public methods */
-    function getFullReport(report) {
-      if (report.isAvailable === null) {
-        report.getReportTemplate();
-      }
-    }
-
     function reloadReport(report) {
       report.reloadTemplate();
     }
