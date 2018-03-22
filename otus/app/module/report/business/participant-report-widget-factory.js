@@ -45,8 +45,18 @@
     self.hasError = false;
 
     //ux-properties
+    self.hasAllDatasources = false;
+    self.isAvailable = null;
     self.isAvailable = null;  //null when we don't know yet if it's available
     self.loading = false;
+    self.status = {
+      color: 'gray',
+      icon: 'description',
+      bottomIcon: '',
+      bottomIconClass: '',
+      tooltip: '',
+      msg: ''
+    };
     self.statusColor = 'gray';
     self.statusIcon = 'priority_high';
 
@@ -61,14 +71,21 @@
       ParticipantReportService.getFullReport(self.id)
         .then(function (data) {
           _manageDatasources(data.dataSources);
-          _precompileTemplate(function(){
-            self.loading = false;
-          });
+          if(self.isAvailable){
+            _precompileTemplate(_endLoading);
+          } else {
+            _endLoading();
+          }
         })
         .catch(function (e) {
           self.hasError = true;
-          self.loading = false;
+          _endLoading();
         });
+    }
+
+    function _endLoading(){
+      _setStatus();
+      self.loading = false;
     }
 
     function _precompileTemplate(callback) {
@@ -100,11 +117,49 @@
           self.missingDataSources.push(ds.label);
         }
       });
-      if (self.missingDataSources.length > 0) {
-        _setAvailability(false);
+      self.hasAllDatasources = self.missingDataSources.length ? false : true;
+    }
+
+    function _setStatus() {      
+      if(self.hasError){
+        self.status = {
+          color: '#CC6600',
+          icon: 'priority_high',
+          bottomIcon: 'help',
+          bottomIconClass: '',
+          tooltip: 'Não encontrado',
+          msg: 'Não encontrado'
+        };
+      } else if(!self.hasAllDatasources){
+        self.status = {
+          color: 'red',
+          icon: 'cancel',
+          bottomIcon: 'block',
+          bottomIconClass: '',
+          tooltip: 'Indisponível',
+          msg: 'Indisponível'
+        };
+      } else if(self.fieldsError.length){
+        self.status = {
+          color: 'red',
+          icon: 'cancel',
+          bottomIcon: 'block',
+          bottomIconClass: '',
+          tooltip: 'Indisponível',
+          msg: 'Indisponível'
+        };
       } else {
-        _setAvailability(true);
+        self.status = {
+          color: 'green',
+          icon: 'done',
+          bottomIcon: 'reply',
+          bottomIconClass: 'iconInverted',
+          tooltip: 'Visualizar',
+          msg: 'Disponível'
+        };
       }
+      self.statusColor = self.isAvailable ? 'green' : 'red';
+      self.statusIcon = self.isAvailable === true ? 'done' : 'cancel';
     }
 
     function _setAvailability(isAvailable) {

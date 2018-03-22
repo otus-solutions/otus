@@ -17,6 +17,8 @@
   function Controller(EventService, DashboardService, ParticipantReportWidgetFactory) {
     var self = this;
 
+    self.collapsed = false;
+
     /* Public methods */
     self.getFullReport = getFullReport;
     self.reloadReport = reloadReport;

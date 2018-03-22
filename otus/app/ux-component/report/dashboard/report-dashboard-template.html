@@ -5,16 +5,17 @@
       <md-card ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready" flex-gt-md="30" flex-md ng-init="collapsed = true" class="md-whiteframe-6dp"
         flex="100">
         <md-card-header class="md-toolbar-tools">
-          <md-icon class="md-avatar-icon" ng-if="report.isAvailable == null && !report.hasError">description</md-icon>
+          <md-icon ng-style="{color:report.status.color}">{{report.status.icon}}</md-icon>
+          <!-- <md-icon ng-if="report.isAvailable == null && !report.hasError">description</md-icon>
           <md-icon ng-style="{color:report.statusColor}" ng-if="report.isAvailable == true || report.isAvailable == false || report.hasError">
             {{report.statusIcon}}
-          </md-icon>
+          </md-icon> -->
           <md-card-header-text class="truncate">
-            <span class="md-body-1 truncate" layout-margin ng-style="{color:report.statusColor}">{{report.label}}</span>
+            <span class="md-body-1 truncate" layout-margin ng-style="{color:report.status.color}">{{report.label}}</span>
           </md-card-header-text>
           <md-card-title-media>
-            <md-button class="md-icon-button" ng-click="collapsed=!collapsed" ng-show="!$ctrl.loading">
-              <md-icon ng-show="collapsed" ng-click="$ctrl.getFullReport(report);">keyboard_arrow_down</md-icon>
+            <md-button class="md-icon-button" ng-click="collapsed=!collapsed; $ctrl.getFullReport(report)" ng-show="!$ctrl.loading">
+              <md-icon ng-show="collapsed">keyboard_arrow_down</md-icon>
               <md-icon ng-show="!collapsed && !report.loading">keyboard_arrow_up</md-icon>
             </md-button>
           </md-card-title-media>
@@ -30,7 +31,10 @@
         <md-divider ng-if="!collapsed"></md-divider>
         <md-card-actions layout="row" layout-align="end center" ng-if="!report.loading && !collapsed">
           <div ng-show="!report.loading" layout-align="start start" layout="row" flex>
-            <div ng-if="report.isAvailable" flex>
+            <div flex>
+              <span ng-style="{color:report.status.color}" class="md-caption" layout-margin layout-padding>{{report.status.msg}}</span>
+            </div> 
+            <!-- <div ng-if="report.isAvailable" flex>
               <span ng-style="{color:report.statusColor}" class="md-caption" layout-margin layout-padding>Disponível</span>
             </div>
             <div ng-if="report.isAvailable == false" flex>
@@ -38,13 +42,22 @@
             </div>
             <div ng-if="report.hasError" flex>
               <span ng-style="{color:report.statusColor}" class="md-caption" layout-margin layout-padding>Não encontrado</span>
-            </div>
+            </div> -->
           </div>
-          <dynamic-report ng-if="report.isAvailable"/>
+          <div ng-if="report.isAvailable">
+            <dynamic-report />
+
+            <md-button class="md-icon-button" ng-click="$ctrl.generateReportPage()">
+              <md-icon class="iconInverted">reply</md-icon>
+              <md-tooltip md-direction="bottom">Visualizar</md-tooltip>
+            </md-button>
+
+          </div>
           <md-button class="md-icon-button" ng-if="!report.isAvailable && !report.hasError" ng-click="$ctrl.spy(report)" ng-disable="true">
             <md-icon class="iconInverted">block</md-icon>
             <md-tooltip md-direction="bottom">Indisponível</md-tooltip>
           </md-button>
+
           <md-button class="md-icon-button" ng-if="report.hasError" ng-click="$ctrl.spy(report)" ng-disable="true">
             <md-icon>help</md-icon>
             <md-tooltip md-direction="bottom">Não encontrado</md-tooltip>

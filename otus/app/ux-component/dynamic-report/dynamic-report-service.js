@@ -48,7 +48,7 @@
           </otus-datasource>
           <otus-script>
             {{data.imc = 15.4}}
-            {{data.sexo = ""}}
+            {{data.sexo = "1"}}
             {{
               required("sexo", data.sexo, "é um campo obrigatório")
             }}
@@ -59,7 +59,7 @@
           </otus-script>
 
           <div layout-padding>
-            <span ng-style="style.participant">Participante: {{ds.participant[0].name}}</span><br>
+            <span ng-style="style.participant">Participante: {{data.participant[0].name}}</span><br>
             <span ng-style="style.imc">IMC do Participante: {{data.imc}}</span><br>
             <span ng-style="style.sexo">Sexo: {{data.sexo}}</span><br>
           </div>
@@ -124,22 +124,14 @@
       }
       scope.ds = self.templateStructure.dataSources;
       scope.data = {};
-      //var report = $compile(LABEL_PAGE)(scope);
       returned.compiledTemplate = $compile(scope.template)(scope);
-      console.log(report)
-      console.log(scope)
       //openInNewTab(report, scope.template)
 
       
       scope.$watch('data.testEndChangeScope', function () {
-        console.log("myscope",scope)
         if(scope.data.testEndChangeScope === true){
           returned.scope = scope;
-          console.log("scope.fieldsError.length",scope.fieldsError.length)
-          if(scope.fieldsError && scope.fieldsError.length){
-            returned.fieldsError =  scope.fieldsError;
-          }
-          console.log("myscope",true)
+          returned.fieldsError =  scope.fieldsError;
           deferred.resolve(returned);
         }
       });
