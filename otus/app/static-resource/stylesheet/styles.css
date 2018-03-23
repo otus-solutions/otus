@@ -164,6 +164,10 @@ md-input-container.input-container-lot-margin {
   background-color: unset;
 }
 
+md-content.md-default-theme.backgroud-color-default{
+  background-color: unset;
+}
+
 .md-subheader.left-alignment {
   text-align: left;
 }
