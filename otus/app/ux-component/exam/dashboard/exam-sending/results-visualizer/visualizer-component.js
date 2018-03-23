@@ -14,10 +14,13 @@
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
-    'otusjs.laboratory.business.project.sending.SendingExamService'
+    'otusjs.laboratory.business.project.sending.SendingExamService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService) {
+  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService, LoadingScreenService) {
+    const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
+
     var self = this;
     var therIsNoDataToShow;
 
@@ -41,28 +44,36 @@
           _loadList();
         } else {
           _buildExamSending();
-          self.sendingExam.examLot.resultsQuantity = self.examList.length;
+          self.sendingExam.examSendingLot.resultsQuantity = self.examList.length;
         }
-        self.formattedDate = $filter('date')(self.fileStructure.examLot.realizationDate, 'dd/MM/yyyy HH:mm');
+        self.formattedDate = $filter('date')(self.fileStructure.examSendingLot.realizationDate, 'dd/MM/yyyy HH:mm');
       }
       _buildDynamicTableSettings();
     }
 
     function changeResults(resultsToShow) {
-      self.changedResults = resultsToShow;
-      self.updateDataTable(self.changedResults);
+      if (resultsToShow == "all") {
+        self.changedResults = self.sendingExam.getExamList();
+        self.updateDataTable(self.changedResults);
+      } else if (resultsToShow == "resultsWithErrors") {
+        self.changedResults = self.aliquotsNotIdentified;
+        self.updateDataTable(self.changedResults);
+      }
     }
 
     function _loadList() {
-      SendingExamService.getSendedExamById(self.fileStructure.examLot._id).then(function (response) {
+      LoadingScreenService.changeMessage(MESSAGE_LOADING);
+      LoadingScreenService.start();
+      SendingExamService.getSendedExamById(self.fileStructure.examSendingLot._id).then(function (response) {
         self.fileStructure.exams = response;
         _buildExamSending();
         self.updateDataTable(self.examList);
+        LoadingScreenService.finish();
       });
     }
 
     function _buildExamSending() {
-      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examLot, self.fileStructure.exams);
+      self.sendingExam = SendingExamService.loadExamSendingFromJson(self.fileStructure.examSendingLot, self.fileStructure.exams);
       self.examList = self.sendingExam.getExamList();
     }
 
@@ -86,7 +97,20 @@
               structureIcon = { icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "file_upload" };
             }
             return structureIcon;
-          })
+          });
+      } else if (self.action === 'view') {
+        self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
+          .addIconWithFunction(function (element) {
+            var structureIcon = { icon: "", class: "", tooltip: "" };
+
+            if (element.aliquotValid) {
+              structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
+            } else {
+              structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não identificada no sistema", orderValue: "warning" };
+            }
+
+            return structureIcon;
+          });
       }
 
       //header, flex, align, ordinationPriorityIndex

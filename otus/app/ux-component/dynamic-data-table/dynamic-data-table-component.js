@@ -100,7 +100,6 @@
     self.currentRowOnHover;
 
     function onInit() {
-      console.log('a', self.orderByInsertion);
       _initializeDefaultValues();
       self.orderByInsertion ? orderByIndex() : _setOrderQuery();
 
