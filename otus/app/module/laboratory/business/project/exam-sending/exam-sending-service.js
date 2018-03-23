@@ -7,17 +7,12 @@
 
   service.$inject = [
     '$q',
-    'otusjs.laboratory.exam.sending.ExamLotService',
-    'otusjs.laboratory.repository.ProjectRepositoryService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.laboratory.exam.sending.ExamSendingLotService',
+    'otusjs.laboratory.repository.ProjectRepositoryService'
   ];
 
-  function service($q, ExamLotService, ProjectRepositoryService, LoadingScreenService) {
+  function service($q, ExamSendingLotService, ProjectRepositoryService) {
     var self = this;
-    var messageLoadingToGet =
-      'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
-    var messageLoadingToCreate =
-      'Por favor aguarde o carregamento da lista de envio.<br> Esse processo pode demorar um pouco...';
 
     /* Public methods */
     self.createExamSending = createExamSending;
@@ -29,48 +24,40 @@
     self.deleteSendedExams = deleteSendedExams;
 
     function createExamSending() {
-      return ExamLotService.createExamSending();
+      return ExamSendingLotService.createExamSending();
     }
 
     function loadExamSendingFromJson(examResultLot, examResults) {
-      return ExamLotService.buildExamSendingFromJson(examResultLot, examResults);
+      return ExamSendingLotService.buildExamSendingFromJson(examResultLot, examResults);
     }
 
     function getExamList() {
-      return ExamLotService.getExamList();
+      return ExamSendingLotService.getExamList();
     }
 
     function getSendedExamById(id) {
-      LoadingScreenService.changeMessage(messageLoadingToGet);
-      LoadingScreenService.start();
       var deferred = $q.defer();
 
       ProjectRepositoryService.getSendedExamById(id)
         .then(function (response) {
           deferred.resolve(response);
-          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
-          LoadingScreenService.finish();
         });
 
       return deferred.promise;
     }
 
     function getSendedExams() {
-      LoadingScreenService.changeMessage(messageLoadingToGet);
-      LoadingScreenService.start();
       var deferred = $q.defer();
 
       ProjectRepositoryService.getSendedExams()
         .then(function (response) {
           deferred.resolve(response);
-          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
-          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -78,16 +65,12 @@
 
     function createSendExam(sendStructure) {
       var deferred = $q.defer();
-      LoadingScreenService.changeMessage(messageLoadingToCreate);
-      LoadingScreenService.start();
       ProjectRepositoryService.createSendExam(sendStructure)
         .then(function (response) {
           deferred.resolve(response);
-          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
-          LoadingScreenService.finish();
         });
 
       return deferred.promise;
