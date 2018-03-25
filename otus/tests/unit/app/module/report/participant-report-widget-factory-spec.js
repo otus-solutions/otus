@@ -50,13 +50,14 @@ fdescribe('ParticipantReportWidgetFactory', function () {
 
     beforeEach(function () {
       report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
-      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
       spyOn(Mock.DynamicReportService, "precompile").and.returnValue(Promise.resolve());
-
-      promise = report.getReportTemplate();
     });
 
     it('should precompile when get the template', function () {
+      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
+
+      promise = report.getReportTemplate();
+
       promise.then(function () {
         expect(Mock.DynamicReportService.precompile).toHaveBeenCalled();
         done();
@@ -64,6 +65,10 @@ fdescribe('ParticipantReportWidgetFactory', function () {
     });
 
     it('should be available when get a complete set of datasources', function (done) {
+      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
+
+      promise = report.getReportTemplate();
+
       promise.then(function () {
         expect(report.isAvailable).toBe(true);
         done();
@@ -93,6 +98,17 @@ fdescribe('ParticipantReportWidgetFactory', function () {
         expect(report.hasError).toBe(true);
         done();
       });
+    });
+  });
+
+  describe('the generateReport method', function(){
+    it('should call DynamicReportService.openReportInNewTab', function(){
+      let report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
+      spy(Mock.DynamicReportService,"openReportInNewTab");
+
+      report.generateReport();
+
+      expect(Mock.DynamicReportService.openReportInNewTab).toHaveBeenCalled();
     });
   });
 
