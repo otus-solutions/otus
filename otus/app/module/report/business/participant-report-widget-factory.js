@@ -54,7 +54,7 @@
     self.isAvailable = false;
     self.loading = false;
     self.status = {
-      color: 'gray',
+      color: '#666666',
       icon: 'description',
       bottomIcon: '',
       bottomIconClass: '',

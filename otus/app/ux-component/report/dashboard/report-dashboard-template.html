@@ -1,42 +1,58 @@
-<md-content layout="column" flex="100" layout-padding>
-  <div layout="row" flex="100" ng-if="$ctrl.ready">
-    <span flex></span>
-    <div layout-gt-md="row" layout-wrap layout-align="center start" flex="80" layout-align-md="center start">
-      <md-card ng-repeat="report in $ctrl.reports" ng-if="$ctrl.ready" flex-gt-md="30" flex-md class="md-whiteframe-6dp"
-        flex="100">
-        <md-card-header class="md-toolbar-tools">
-          <md-icon ng-style="{color:report.status.color}">{{report.status.icon}}</md-icon>
-          <md-card-header-text class="truncate">
-            <span class="md-body-1 truncate" layout-margin ng-style="{color:report.status.color}">{{report.label}}</span>
-          </md-card-header-text>
-          <md-card-title-media>
-            <md-button class="md-icon-button" ng-click="report.expandAndCollapse()" ng-show="!$ctrl.loading">
-              <md-icon>{{report.status.expandAndCollapseIcon}}</md-icon>
-            </md-button>
-          </md-card-title-media>
-        </md-card-header>
-        <div layout-align="center center" layout="row" ng-show="report.loading && report.status.expanded">
-          <md-progress-circular class="md-hue-2" md-diameter="20px"></md-progress-circular>
-          <span class="md-caption">&nbsp;Aguarde</span>
-        </div>
-        <md-card-content ng-if="report.status.expanded" layout="column" layout-align="space-around start">
-          <span ng-repeat="datasource in report.missingDataSources" class="md-caption" ng-if="datasource">{{datasource + ": não encontrado"}}</span>
-          <span ng-repeat="field in report.fieldsError" class="md-caption" ng-if="report.fieldsError.length">{{'O Campo "' + field.fieldName + '" ' + (field.msg || 'é obrigatório')}}</span>
-        </md-card-content>
-        <md-divider ng-if="report.status.expanded"></md-divider>
-        <md-card-actions layout="row" layout-align="end center" ng-if="!report.loading && report.status.expanded">
-          <div layout-align="start start" layout="row" flex>
-            <div flex>
-              <span ng-style="{color:report.status.color}" class="md-caption" layout-margin layout-padding>{{report.status.msg}}</span>
-            </div> 
-          </div>
-          <md-button class="md-icon-button" ng-click="report.generateReport()" ng-disabled="!report.status.buttonEnabled">
-            <md-icon ng-class="report.status.bottomIconClass">{{report.status.bottomIcon}}</md-icon>
-            <md-tooltip md-direction="bottom">{{report.status.tooltip}}</md-tooltip>
-          </md-button>
-        </md-card-actions>
-      </md-card>
+<div style>
+  <div class="md-whiteframe-1dp" flex="90" flex-offset="5" layout="column" 
+    style="margin-top: 50px; background-color: #f5f7f9" ng-if="$ctrl.ready"
+    >
+    <div layout-padding layout-margin layout="column">
+      <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment" 
+        style="color:white;
+              background-color: #299288; 
+              background: linear-gradient(to right, #299288, #24baaa);
+              border-radius: 3px; 
+              position: relative; 
+              top: -50px;
+              margin-bottom: -60px;
+          ">
+        Relatórios
+      </md-subheader>
     </div>
-    <span flex></span>
+
+    <div layout-align="center start" layout-wrap layout="row" flex style="margin:10px">
+      <div ng-repeat="report in $ctrl.reports" layout="row" style="width: 360px;">
+        <md-card class="md-whiteframe-3dp" ng-if="$ctrl.ready" style="background-color: #ffffff" flex>
+          <md-card-header class="md-toolbar-tools">
+            <md-icon ng-style="{color:report.status.color}">{{report.status.icon}}</md-icon>
+            <md-card-header-text class="truncate">
+              <span class="md-body-1 truncate" layout-margin ng-style="{color:report.status.color}">{{report.label}}</span>
+            </md-card-header-text>
+            <md-card-title-media>
+              <md-button class="md-icon-button" ng-click="report.expandAndCollapse()" ng-show="!$ctrl.loading">
+                <md-icon>{{report.status.expandAndCollapseIcon}}</md-icon>
+              </md-button>
+            </md-card-title-media>
+          </md-card-header>
+          <div layout-align="center center" layout="row" ng-show="report.loading && report.status.expanded">
+            <md-progress-circular class="md-hue-2" md-diameter="20px"></md-progress-circular>
+            <span class="md-caption">&nbsp;Aguarde</span>
+          </div>
+          <md-card-content ng-if="report.status.expanded" layout="column" layout-align="space-around start">
+            <span ng-repeat="datasource in report.missingDataSources" class="md-caption" ng-if="datasource">{{datasource + ": não encontrado"}}</span>
+            <span ng-repeat="field in report.fieldsError" class="md-caption" ng-if="report.fieldsError.length">{{'O Campo "' + field.fieldName + '" ' + (field.msg || 'é obrigatório')}}</span>
+          </md-card-content>
+          <md-divider ng-if="report.status.expanded"></md-divider>
+          <md-card-actions layout="row" layout-align="end center" ng-if="!report.loading && report.status.expanded">
+            <div layout-align="start start" layout="row" flex>
+              <div flex>
+                <span ng-style="{color:report.status.color}" class="md-caption" layout-margin layout-padding>{{report.status.msg}}</span>
+              </div>
+            </div>
+            <md-button class="md-icon-button" ng-click="report.generateReport()" ng-disabled="!report.status.buttonEnabled">
+              <md-icon ng-class="report.status.bottomIconClass">{{report.status.bottomIcon}}</md-icon>
+              <md-tooltip md-direction="bottom">{{report.status.tooltip}}</md-tooltip>
+            </md-button>
+          </md-card-actions>
+        </md-card>
+      </div>
+    </div>
   </div>
-</md-content>
+</div>
+<br/>
