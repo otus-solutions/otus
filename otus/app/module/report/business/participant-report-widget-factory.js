@@ -145,7 +145,6 @@
       if (self.hasError) {
         self.status.color = 'red';
         self.status.icon = 'cancel';
-        //self.status.bottomIcon = 'help';  todo: uncomment
         self.status.bottomIcon = 'block';
         self.status.bottomIconClass = '';
         self.status.tooltip = 'Não encontrado';

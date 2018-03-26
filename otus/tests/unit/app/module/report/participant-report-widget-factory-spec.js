@@ -125,8 +125,10 @@ describe('ParticipantReportWidgetFactory', function () {
       expect(report.hasError).toBe(false);
       expect(report.isAvailable).toBe(false);
       expect(report.loading).toBe(false);
-      expect(report.status.color).toEqual("gray");
+      expect(report.status.color).toEqual("#666666");
       expect(report.status.icon).toEqual("description");
+      expect(report.status.expanded).toBeDefined();
+      expect(report.status.expandAndCollapseIcon).toBeDefined();
     });
 
     it('should display loading while loading', function (done) {
@@ -160,8 +162,6 @@ describe('ParticipantReportWidgetFactory', function () {
         expect(report.status.bottomIconClass).toBeDefined();
         expect(report.status.tooltip).toBeDefined();
         expect(report.status.msg).toBeDefined();
-        expect(report.status.expanded).toBeDefined();
-        expect(report.status.expandAndCollapseIcon).toBeDefined();
         expect(report.status.buttonEnabled).toBeDefined();
         done();
       });
@@ -178,6 +178,13 @@ describe('ParticipantReportWidgetFactory', function () {
       promise.then(function () {
         expect(report.isAvailable).toBe(false);
         expect(report.hasError).toBe(false);
+
+        expect(report.status.color).toBeDefined();
+        expect(report.status.icon).toBeDefined();
+        expect(report.status.bottomIcon).toBeDefined();
+        expect(report.status.bottomIconClass).toBeDefined();
+        expect(report.status.tooltip).toBeDefined();
+        expect(report.status.msg).toBeDefined();
         done();
       });
     });
@@ -191,6 +198,13 @@ describe('ParticipantReportWidgetFactory', function () {
       //solved promise
       promise.then(function () {
         expect(report.hasError).toBe(true);
+
+        expect(report.status.color).toBeDefined();
+        expect(report.status.icon).toBeDefined();
+        expect(report.status.bottomIcon).toBeDefined();
+        expect(report.status.bottomIconClass).toBeDefined();
+        expect(report.status.tooltip).toBeDefined();
+        expect(report.status.msg).toBeDefined();
         done();
       });
     });
