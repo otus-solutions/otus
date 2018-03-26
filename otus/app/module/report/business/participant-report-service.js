@@ -18,13 +18,11 @@
 
 
     function fetchReportList(participant) {
-      //return ParticipantReportCollectionService.getParticipantReportList(participant.recruitmentNumber);
-      return fetchFakeReportList();
+      return ParticipantReportCollectionService.getParticipantReportList(participant.recruitmentNumber);
     }
 
     function getFullReport(participant, reportId) {
-      //return ParticipantReportCollectionService.getFullReport(participant.recruitmentNumber, reportId);
-      return getFakeFullReport(participant, reportId);
+      return ParticipantReportCollectionService.getFullReport(participant.recruitmentNumber, reportId);
     }
 
 

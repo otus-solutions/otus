@@ -39,7 +39,7 @@
     var _participantInfo = participant;
 
     self.objectType = 'ParticipantReport';
-    self.id = report.id;
+    self.id = report._id;
     self.label = report.label;
 
     self.template = '';

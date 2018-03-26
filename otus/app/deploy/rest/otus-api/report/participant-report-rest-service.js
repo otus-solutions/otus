@@ -34,7 +34,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.getById({rn:rn, id: id}).$promise;
+      return _rest.getByRecruitmentNumber({rn:rn, id: id}).$promise;
     }
   }
 }());
