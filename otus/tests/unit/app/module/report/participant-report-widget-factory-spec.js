@@ -20,10 +20,11 @@ fdescribe('ParticipantReportWidgetFactory', function () {
     });
   });
 
-  describe('basic successful behavior', function () {
+  //Factory Tests
+  describe('the creation methods', function () {
     it('should fetch data and build basic report list', function (done) {
       spyOn(Mock.ParticipantReportService, "fetchReportList")
-        .and.returnValue(Promise.resolve(Mock.reportList));
+        .and.returnValue(Mock.$q.when(Mock.reportList));
 
       factory.getParticipantReportList(Mock.selectedParticipant)
         .then(function (data) {
@@ -40,89 +41,58 @@ fdescribe('ParticipantReportWidgetFactory', function () {
       expect(report.dataSources).toEqual({});
       expect(report.missingDataSources.length).toEqual(0);
     });
+  });
 
-    it('should be available gets a complete set of datasources', function (done) {
-      let report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
+  //Participant Report Tests
+  describe('the getFullReport method', function () {
+    var report;
+    var promise;
 
+    beforeEach(function () {
+      report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
+      spyOn(Mock.DynamicReportService, "precompile").and.returnValue(Promise.resolve());
+    });
+
+    it('should precompile when get the template', function () {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
 
-      let promise = report.getReportTemplate();
+      promise = report.getReportTemplate();
 
+      promise.then(function () {
+        expect(Mock.DynamicReportService.precompile).toHaveBeenCalled();
+        done();
+      });
+    });
+
+    it('should be available when get a complete set of datasources', function (done) {
+      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
+
+      promise = report.getReportTemplate();
 
       promise.then(function () {
         expect(report.isAvailable).toBe(true);
         done();
-
-      });
-
-
-    });
-
-    //ux properties
-    it('should initiate the ux properties', function (done) {
-      let report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
-      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
-
-      expect(report.hasError).toBe(false);
-      expect(report.isAvailable).toBe(null);
-      expect(report.loading).toBe(false);
-      expect(report.statusColor).toEqual("gray");
-      expect(report.statusIcon).toEqual("priority_high");
-
-
-      //requisition time
-      let promise = report.getReportTemplate();
-      //loading
-      expect(report.loading).toBe(true);
-
-      //solved promise
-      promise.then(function () {
-        expect(report.loading).toBe(false);
-        done();
       });
     });
-  });
 
-  //missing dataSource behavior
-  describe('missing datasource behavior', function () {
     it('should be unavailable when missing a datasource', function (done) {
-      let report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
-
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportIncomplete));
 
-      let promise = report.getReportTemplate();
-
-      expect(report.loading).toBe(true);
-      expect(report.hasError).toBe(false);
-
+      promise = report.getReportTemplate();
 
       promise.then(function () {
         expect(report.isAvailable).toBe(false);
         done();
 
       });
-
-
       done();
-
     });
-  });
 
-  describe('request error behavior', function () {
-
-
-    //ux properties
-    it('should initiate the ux properties', function (done) {
-      let report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
+    it('should show error as true when getFullReport rejects', function (done) {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.reject());
 
-      //requisition time
-      let promise = report.getReportTemplate();
+      promise = report.getReportTemplate();
 
-      //loading
-      expect(report.loading).toBe(true);
-
-      //solved promise
       promise.then(function () {
         expect(report.loading).toBe(false);
         expect(report.hasError).toBe(true);
@@ -131,13 +101,101 @@ fdescribe('ParticipantReportWidgetFactory', function () {
     });
   });
 
+  describe('the generateReport method', function(){
+    it('should call DynamicReportService.openReportInNewTab', function(){
+      let report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
+      spy(Mock.DynamicReportService,"openReportInNewTab");
+
+      report.generateReport();
+
+      expect(Mock.DynamicReportService.openReportInNewTab).toHaveBeenCalled();
+    });
+  });
+
+  //ux properties
+  describe('the ux properties', function () {
+    var report;
+
+    beforeEach(function () {
+      report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
+      spyOn(Mock.DynamicReportService, "precompile").and.returnValue(Promise.resolve());
+    });
+
+    it('should be initiated', function () {
+      expect(report.hasError).toBe(false);
+      expect(report.isAvailable).toBe(null);
+      expect(report.loading).toBe(false);
+      expect(report.statusColor).toEqual("gray");
+      expect(report.statusIcon).toEqual("priority_high");
+    });
+
+    it('should display loading', function (done) {
+      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
+
+      //requisition time
+      let promise = report.getReportTemplate();
+      //loading
+      expect(report.loading).toBe(true);
+
+      //solved promise
+      promise.then(function () {
+        expect(report.loading).toBe(false);
+        done();
+      });
+    });
+
+    it('should show available when get a complete report', function (done) {
+      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
+
+      //requisition time
+      let promise = report.getReportTemplate();
+
+      //solved promise
+      promise.then(function () {
+        expect(report.isAvailable).toBe(true);
+        expect(report.hasError).toBe(false);
+        done();
+      });
+    });
+
+    //datasource Missing
+    it('should show unavailable when missing a datasource', function (done) {
+      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportIncomplete));
+
+      //requisition time
+      let promise = report.getReportTemplate();
+
+      //solved promise
+      promise.then(function () {
+        expect(report.isAvailable).toBe(true);
+        expect(report.hasError).toBe(false);
+        done();
+      });
+    });
+
+    it('should show error when the getFullReport rejects', function (done) {
+        spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.reject());
+
+        //requisition time
+        let promise = report.getReportTemplate();
+
+        //solved promise
+        promise.then(function () {
+          expect(report.hasError).toBe(true);
+          done();
+        });
+    });
+  });
+
   //-----Mock Functions
 
   function mockInjections($injector, $q) {
     Mock.ParticipantReportService = $injector.get('otusjs.report.business.ParticipantReportService');
+    Mock.DynamicReportService = $injector.get('otusjs.report.business.DynamicReportService');
     Mock.$q = $q;
 
     Injections.ParticipantReportService = Mock.ParticipantReportService;
+    Injections.DynamicReportService = Mock.DynamicReportService;
     Injections.$q = Mock.$q;
 
 

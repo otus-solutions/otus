@@ -66,7 +66,6 @@
     };
 
     self.getReportTemplate = getReportTemplate;
-    self.reloadTemplate = reloadTemplate;
     self.expandAndCollapse = expandAndCollapse;
     self.generateReport = generateReport;
 
@@ -112,7 +111,7 @@
           self.fieldsError = structure.fieldsError;
           callback();
         })
-        .catch(function (erro) {
+        .catch(function (error) {
           callback();
         });
     }
@@ -146,7 +145,7 @@
       if (self.hasError) {
         self.status.color = 'red';
         self.status.icon = 'cancel';
-        //self.status.bottomIcon = 'help';
+        //self.status.bottomIcon = 'help';  todo: uncomment
         self.status.bottomIcon = 'block';
         self.status.bottomIconClass = '';
         self.status.tooltip = 'Não encontrado';
