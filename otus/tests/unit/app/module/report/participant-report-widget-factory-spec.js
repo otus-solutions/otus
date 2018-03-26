@@ -1,4 +1,4 @@
-fdescribe('ParticipantReportWidgetFactory', function () {
+describe('ParticipantReportWidgetFactory', function () {
 
   var UNIT_NAME = 'otusjs.report.business.ParticipantReportWidgetFactory';
   var Mock = {};
@@ -101,10 +101,10 @@ fdescribe('ParticipantReportWidgetFactory', function () {
     });
   });
 
-  describe('the generateReport method', function(){
-    it('should call DynamicReportService.openReportInNewTab', function(){
+  describe('the generateReport method', function () {
+    it('should call DynamicReportService.openReportInNewTab', function () {
       let report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
-      spy(Mock.DynamicReportService,"openReportInNewTab");
+      spyOn(Mock.DynamicReportService, "openReportInNewTab");
 
       report.generateReport();
 
@@ -123,13 +123,13 @@ fdescribe('ParticipantReportWidgetFactory', function () {
 
     it('should be initiated', function () {
       expect(report.hasError).toBe(false);
-      expect(report.isAvailable).toBe(null);
+      expect(report.isAvailable).toBe(false);
       expect(report.loading).toBe(false);
-      expect(report.statusColor).toEqual("gray");
-      expect(report.statusIcon).toEqual("priority_high");
+      expect(report.status.color).toEqual("gray");
+      expect(report.status.icon).toEqual("description");
     });
 
-    it('should display loading', function (done) {
+    it('should display loading while loading', function (done) {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
 
       //requisition time
@@ -154,6 +154,15 @@ fdescribe('ParticipantReportWidgetFactory', function () {
       promise.then(function () {
         expect(report.isAvailable).toBe(true);
         expect(report.hasError).toBe(false);
+        expect(report.status.color).toBeDefined();
+        expect(report.status.icon).toBeDefined();
+        expect(report.status.bottomIcon).toBeDefined();
+        expect(report.status.bottomIconClass).toBeDefined();
+        expect(report.status.tooltip).toBeDefined();
+        expect(report.status.msg).toBeDefined();
+        expect(report.status.expanded).toBeDefined();
+        expect(report.status.expandAndCollapseIcon).toBeDefined();
+        expect(report.status.buttonEnabled).toBeDefined();
         done();
       });
     });
@@ -167,23 +176,23 @@ fdescribe('ParticipantReportWidgetFactory', function () {
 
       //solved promise
       promise.then(function () {
-        expect(report.isAvailable).toBe(true);
+        expect(report.isAvailable).toBe(false);
         expect(report.hasError).toBe(false);
         done();
       });
     });
 
     it('should show error when the getFullReport rejects', function (done) {
-        spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.reject());
+      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.reject());
 
-        //requisition time
-        let promise = report.getReportTemplate();
+      //requisition time
+      let promise = report.getReportTemplate();
 
-        //solved promise
-        promise.then(function () {
-          expect(report.hasError).toBe(true);
-          done();
-        });
+      //solved promise
+      promise.then(function () {
+        expect(report.hasError).toBe(true);
+        done();
+      });
     });
   });
 

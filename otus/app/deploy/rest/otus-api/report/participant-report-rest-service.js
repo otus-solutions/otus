@@ -26,7 +26,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.listAll({rn:rn}).$promise;
+      return _rest.list({rn:rn}).$promise;
     }
 
     //returns full participant report
