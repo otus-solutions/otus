@@ -39,7 +39,7 @@
     var _participantInfo = participant;
 
     self.objectType = 'ParticipantReport';
-    self.id = report.id;
+    self.id = report._id;
     self.label = report.label;
 
     self.template = '';
@@ -145,7 +145,6 @@
       if (self.hasError) {
         self.status.color = 'red';
         self.status.icon = 'cancel';
-        //self.status.bottomIcon = 'help';  todo: uncomment
         self.status.bottomIcon = 'block';
         self.status.bottomIconClass = '';
         self.status.tooltip = 'Não encontrado';
