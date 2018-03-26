@@ -275,3 +275,21 @@ md-content.no-background-color {
 .toolbarInfo {
   background-color: rgb(0, 145, 234) !important;
 }
+
+.otus-panel{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #f5f7f9;
+  padding: 10px;
+}
+
+.otus-panel-subheader{
+  color:white;
+  font-size: 1.2em;
+  background: linear-gradient(to right, #299288, #24baaa);
+  border-radius: 3px; 
+  position: relative; 
+  top: -50px;
+  margin-bottom: -60px;
+  padding: 20px;
+}
