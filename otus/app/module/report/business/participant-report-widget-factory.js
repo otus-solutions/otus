@@ -22,19 +22,19 @@
       return ParticipantReportService.fetchReportList(participant)
         .then(function (reports) {
           return reports.map(function (report) {
-            return new ParticipantReport(ParticipantReportService, DynamicReportService, report, participant)
+            return new ParticipantReport($q, ParticipantReportService, DynamicReportService, report, participant)
           });
         });
     }
 
     function fromJson(jsonReport, participant) {
-      return new ParticipantReport(ParticipantReportService, DynamicReportService, jsonReport, participant)
+      return new ParticipantReport($q, ParticipantReportService, DynamicReportService, jsonReport, participant)
     }
 
     return self;
   }
 
-  function ParticipantReport(ParticipantReportService, DynamicReportService, report, participant) {
+  function ParticipantReport($q, ParticipantReportService, DynamicReportService, report, participant) {
     var self = this;
     var _participantInfo = participant;
 
@@ -68,6 +68,7 @@
     self.getReportTemplate = getReportTemplate;
     self.expandAndCollapse = expandAndCollapse;
     self.generateReport = generateReport;
+    self.reloadReport = reloadReport;
 
     function expandAndCollapse() {
       self.status.expanded = !self.status.expanded;
@@ -79,7 +80,17 @@
       DynamicReportService.openReportInNewTab(self);
     }
 
-    function getReportTemplate() {
+    function reloadReport(){
+      return getReportTemplate(true);
+    }
+
+    function getReportTemplate(forceReload) {
+      if(self.compiledTemplate && !forceReload){
+        var defer = $q.defer();
+        defer.resolve(true);
+        return defer.promise;
+      }
+
       self.loading = true;
       self.hasError = false;
 
@@ -114,10 +125,6 @@
         .catch(function (error) {
           callback();
         });
-    }
-
-    function reloadTemplate() {
-      self.getReportTemplate();
     }
 
     function _manageDatasources(dataSourceList) {
