@@ -37,6 +37,7 @@
       if (self.loading_screen) {
         self.loading_screen.finish();
         self.loading_screen = null;
+        changeMessage();
       }
     }
 

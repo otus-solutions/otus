@@ -67,7 +67,7 @@
     }
 
 
-    function openReportInNewTab(report) {
+    function openReportInNewTab(report, callback) {
       let initialHtmlStructure = `
       <html>
         <head>
@@ -126,9 +126,19 @@
       newWindow.setTimeout(function(){ 
         newWindow.print(); 
         newWindow.close();
+        callback();
       }, 500);
+
+      window.otusCloseDynamicReport = function(){
+        if(newWindow){
+          try {
+            newWindow.close();
+            if(callback) callback();
+          } catch (error) {
+            
+          }
+        }
+      }
     }
-
-
   }
 }());

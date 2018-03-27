@@ -286,7 +286,6 @@ md-content.no-background-color {
 .otus-panel-subheader{
   color:white;
   font-size: 1.2em;
-  background: linear-gradient(to right, #299288, #24baaa);
   border-radius: 3px; 
   position: relative; 
   top: -50px;

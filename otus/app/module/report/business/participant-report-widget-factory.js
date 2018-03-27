@@ -9,10 +9,11 @@
   factory.$inject = [
     '$q',
     'otusjs.report.business.ParticipantReportService',
-    'otusjs.report.business.DynamicReportService'
+    'otusjs.report.business.DynamicReportService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function factory($q, ParticipantReportService, DynamicReportService) {
+  function factory($q, ParticipantReportService, DynamicReportService, LoadingScreenService) {
     var self = this;
 
     self.getParticipantReportList = getParticipantReportList;
@@ -22,21 +23,47 @@
       return ParticipantReportService.fetchReportList(participant)
         .then(function (reports) {
           return reports.map(function (report) {
-            return new ParticipantReport(ParticipantReportService, DynamicReportService, report, participant)
+            return new ParticipantReport(ParticipantReportService, DynamicReportService, LoadingScreenService, report, participant)
           });
         });
     }
 
     function fromJson(jsonReport, participant) {
-      return new ParticipantReport(ParticipantReportService, DynamicReportService, jsonReport, participant)
+      return new ParticipantReport(ParticipantReportService, DynamicReportService, LoadingScreenService, jsonReport, participant)
     }
 
     return self;
   }
 
-  function ParticipantReport(ParticipantReportService, DynamicReportService, report, participant) {
+  function ParticipantReport(ParticipantReportService, DynamicReportService, LoadingScreenService, report, participant) {
     var self = this;
     var _participantInfo = participant;
+    const messageLoading = `
+    <style>
+      .close-button:hover {
+        background-color: #3b4796;
+        border: 2px solid #3b4796;
+        color: white;
+      }
+      .close-button {
+        padding: 10px;
+        text-align: center;
+        -webkit-transition-duration: 0.4s;/* Safari */
+        transition-duration: 0.4s;
+        background-color: #3883ff;
+        border: 2px solid #3883ff;
+        color: white;
+        border-radius: 3px;
+        box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
+     }
+    </style>
+    Aguardando o fim da impressão, ou fechamento da visualização do relatório. 
+    <br/>
+    <br/>
+    <button class="close-button" onclick="window.otusCloseDynamicReport()">
+      Fechar Relatório
+    </button>
+    `;
 
     self.objectType = 'ParticipantReport';
     self.id = report._id;
@@ -76,7 +103,11 @@
     }
 
     function generateReport() {
-      DynamicReportService.openReportInNewTab(self);
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
+      DynamicReportService.openReportInNewTab(self, function(){
+        LoadingScreenService.finish();
+      });
     }
 
     function getReportTemplate() {
