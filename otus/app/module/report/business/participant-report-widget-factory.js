@@ -23,19 +23,19 @@
       return ParticipantReportService.fetchReportList(participant)
         .then(function (reports) {
           return reports.map(function (report) {
-            return new ParticipantReport(ParticipantReportService, DynamicReportService, LoadingScreenService, report, participant)
+            return new ParticipantReport($q, ParticipantReportService, DynamicReportService, LoadingScreenService, report, participant)
           });
         });
     }
 
     function fromJson(jsonReport, participant) {
-      return new ParticipantReport(ParticipantReportService, DynamicReportService, LoadingScreenService, jsonReport, participant)
+      return new ParticipantReport($q, ParticipantReportService, DynamicReportService, LoadingScreenService, jsonReport, participant)
     }
 
     return self;
   }
 
-  function ParticipantReport(ParticipantReportService, DynamicReportService, LoadingScreenService, report, participant) {
+  function ParticipantReport($q, ParticipantReportService, DynamicReportService, LoadingScreenService, report, participant) {
     var self = this;
     var _participantInfo = participant;
     const messageLoading = `
@@ -95,6 +95,7 @@
     self.getReportTemplate = getReportTemplate;
     self.expandAndCollapse = expandAndCollapse;
     self.generateReport = generateReport;
+    self.reloadReport = reloadReport;
 
     function expandAndCollapse() {
       self.status.expanded = !self.status.expanded;
@@ -110,7 +111,17 @@
       });
     }
 
-    function getReportTemplate() {
+    function reloadReport(){
+      return getReportTemplate(true);
+    }
+
+    function getReportTemplate(forceReload) {
+      if(self.compiledTemplate && !forceReload){
+        var defer = $q.defer();
+        defer.resolve(true);
+        return defer.promise;
+      }
+
       self.loading = true;
       self.hasError = false;
 
@@ -145,10 +156,6 @@
         .catch(function (error) {
           callback();
         });
-    }
-
-    function reloadTemplate() {
-      self.getReportTemplate();
     }
 
     function _manageDatasources(dataSourceList) {

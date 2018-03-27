@@ -19,9 +19,6 @@
 
     self.collapsed = false;
 
-    /* Public methods */
-    self.reloadReport = reloadReport;
-
     /* Lifecycle hooks */
     self.$onInit = onInit;
     self.$onDestroy = onDestroy;
@@ -36,11 +33,6 @@
 
     function onDestroy() {
       EventService.unsubscribeOnParticipantSelected(_loadParticipantReports);
-    }
-
-    /* Public methods */
-    function reloadReport(report) {
-      report.reloadTemplate();
     }
 
     function _loadParticipantReports(participantData) {

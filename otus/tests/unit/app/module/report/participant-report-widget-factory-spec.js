@@ -64,6 +64,18 @@ describe('ParticipantReportWidgetFactory', function () {
       });
     });
 
+    it('should should not fetch when already have a compiled template', function () {
+      spyOn(Mock.ParticipantReportService, "getFullReport");
+
+      report.compiledTemplate = "<span></span>";
+      promise = report.getReportTemplate();
+
+      promise.then(function () {
+        expect(Mock.DynamicReportService.precompile).not.toHaveBeenCalled();
+        done();
+      });
+    });
+
     it('should be available when get a complete set of datasources', function (done) {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
 
@@ -99,6 +111,27 @@ describe('ParticipantReportWidgetFactory', function () {
         done();
       });
     });
+  });
+
+  describe('the reload report method', function () {
+
+
+    it('should fetch even when already have a compiled template', function () {
+      let report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
+      spyOn(Mock.DynamicReportService, "precompile").and.returnValue(Promise.resolve());
+      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
+
+
+      report.compiledTemplate = "<span></span>";
+
+      let promise = report.reloadReport();
+
+      promise.then(function () {
+        expect(Mock.DynamicReportService.precompile).toHaveBeenCalled();
+        done();
+      });
+    });
+
   });
 
   describe('the generateReport method', function () {
