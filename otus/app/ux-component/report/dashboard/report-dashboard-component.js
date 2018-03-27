@@ -17,7 +17,10 @@
   function Controller(EventService, DashboardService, ParticipantReportWidgetFactory) {
     var self = this;
 
-    self.collapsed = false;
+    self.ready;
+    self.reports;
+    self.isEmpty;
+    self.selectedParticipant;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -52,6 +55,7 @@
     }
 
     function _fetchReports() {
+      self.ready = false;
       ParticipantReportWidgetFactory.getParticipantReportList(self.selectedParticipant)
         .then(function (reports) {
           self.reports = reports;
@@ -59,8 +63,7 @@
         })
         .catch(function () {
           self.ready = true;
-        })
-      ;
+        });
     }
   }
 }());

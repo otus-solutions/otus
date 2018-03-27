@@ -6,7 +6,7 @@
     .component('otusPanel', {
       templateUrl: 'app/ux-component/otus-panel/otus-panel-template.html',
       bindings: {
-        title: '<',
+        headerLabel: '<',
         colorLeft: '<',
         colorRight: '<',
         align: '<'

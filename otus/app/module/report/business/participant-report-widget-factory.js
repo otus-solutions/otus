@@ -68,6 +68,7 @@
     self.objectType = 'ParticipantReport';
     self.id = report._id;
     self.label = report.label;
+    self.dirty = false;
 
     self.template = '';
     self.dataSources = {};
@@ -102,7 +103,7 @@
       self.status.expandAndCollapseIcon = self.status.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
       if (self.status.expanded) getReportTemplate();
     }
-
+    
     function generateReport() {
       LoadingScreenService.changeMessage(messageLoading);
       LoadingScreenService.start();
@@ -110,23 +111,24 @@
         LoadingScreenService.finish();
       });
     }
-
+    
     function reloadReport(){
       return getReportTemplate(true);
     }
-
+    
     function getReportTemplate(forceReload) {
-      if(self.compiledTemplate && !forceReload){
+      if(self.dirty && !forceReload){
         var defer = $q.defer();
         defer.resolve(true);
         return defer.promise;
       }
-
+      self.dirty = true;
+      
       self.loading = true;
       self.hasError = false;
-
+      
       return ParticipantReportService.getFullReport(_participantInfo, self.id)
-        .then(function (data) {
+      .then(function (data) {
           _manageDatasources(data.dataSources);
           _manageTemplate(data.template);
           if (self.hasAllDatasources) {
