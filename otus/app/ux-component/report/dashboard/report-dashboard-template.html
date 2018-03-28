@@ -33,7 +33,7 @@
           <md-icon aria-label="Alterar Lote" ng-class="rotateClass">autorenew</md-icon>
         </md-button>
 
-        <md-button class="md-icon-button" ng-click="report.generateReport()" ng-disabled="!report.status.buttonEnabled">
+        <md-button class="md-icon-button" ng-click="$ctrl.generateReport(report)" ng-disabled="!report.status.buttonEnabled">
           <md-icon ng-class="report.status.bottomIconClass">{{report.status.bottomIcon}}</md-icon>
           <md-tooltip md-direction="bottom">{{report.status.tooltip}}</md-tooltip>
         </md-button>

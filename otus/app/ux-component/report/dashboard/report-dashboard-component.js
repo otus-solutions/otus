@@ -11,10 +11,11 @@
   Controller.$inject = [
     "otusjs.otus.dashboard.core.EventService",
     "otusjs.otus.dashboard.service.DashboardService",
-    "otusjs.report.business.ParticipantReportWidgetFactory"
+    "otusjs.report.business.ParticipantReportWidgetFactory",
+    "otusjs.deploy.LoadingScreenService"
   ];
 
-  function Controller(EventService, DashboardService, ParticipantReportWidgetFactory) {
+  function Controller(EventService, DashboardService, ParticipantReportWidgetFactory,LoadingScreenService) {
     var self = this;
 
     self.ready;
@@ -25,6 +26,17 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
     self.$onDestroy = onDestroy;
+
+
+    /* Public Methods*/
+    self.generateReport = generateReport;
+
+
+    function generateReport(report) {
+      LoadingScreenService.changeMessage(report.getLoadingMessage());
+      LoadingScreenService.start();
+      report.generateReport(LoadingScreenService.finish());
+    }
 
     /* Lifecycle methods */
     function onInit() {
@@ -53,6 +65,7 @@
           });
       }
     }
+
 
     function _fetchReports() {
       self.ready = false;

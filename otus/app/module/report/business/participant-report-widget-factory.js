@@ -9,11 +9,10 @@
   factory.$inject = [
     '$q',
     'otusjs.report.business.ParticipantReportService',
-    'otusjs.report.business.DynamicReportService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.report.business.DynamicReportService'
   ];
 
-  function factory($q, ParticipantReportService, DynamicReportService, LoadingScreenService) {
+  function factory($q, ParticipantReportService, DynamicReportService) {
     var self = this;
 
     self.getParticipantReportList = getParticipantReportList;
@@ -23,22 +22,22 @@
       return ParticipantReportService.fetchReportList(participant)
         .then(function (reports) {
           return reports.map(function (report) {
-            return new ParticipantReport($q, ParticipantReportService, DynamicReportService, LoadingScreenService, report, participant)
+            return new ParticipantReport($q, ParticipantReportService, DynamicReportService, report, participant)
           });
         });
     }
 
     function fromJson(jsonReport, participant) {
-      return new ParticipantReport($q, ParticipantReportService, DynamicReportService, LoadingScreenService, jsonReport, participant)
+      return new ParticipantReport($q, ParticipantReportService, DynamicReportService, jsonReport, participant)
     }
 
     return self;
   }
 
-  function ParticipantReport($q, ParticipantReportService, DynamicReportService, LoadingScreenService, report, participant) {
+  function ParticipantReport($q, ParticipantReportService, DynamicReportService, report, participant) {
     var self = this;
     var _participantInfo = participant;
-    const messageLoading = `
+    const _loadingMessage = `
     <style>
       .close-button:hover {
         background-color: #3b4796;
@@ -97,25 +96,28 @@
     self.expandAndCollapse = expandAndCollapse;
     self.generateReport = generateReport;
     self.reloadReport = reloadReport;
+    self.getLoadingMessage = getLoadingMessage;
 
     function expandAndCollapse() {
       self.status.expanded = !self.status.expanded;
       self.status.expandAndCollapseIcon = self.status.expanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down';
       if (self.status.expanded) getReportTemplate();
     }
-    
-    function generateReport() {
-      LoadingScreenService.changeMessage(messageLoading);
-      LoadingScreenService.start();
+
+    function getLoadingMessage(){
+      return _loadingMessage;
+    }
+
+    function generateReport(callback) {
       DynamicReportService.openReportInNewTab(self, function(){
-        LoadingScreenService.finish();
+        callback();
       });
     }
-    
+
     function reloadReport(){
       return getReportTemplate(true);
     }
-    
+
     function getReportTemplate(forceReload) {
       if(self.dirty && !forceReload){
         var defer = $q.defer();
@@ -123,10 +125,10 @@
         return defer.promise;
       }
       self.dirty = true;
-      
+
       self.loading = true;
       self.hasError = false;
-      
+
       return ParticipantReportService.getFullReport(_participantInfo, self.id)
       .then(function (data) {
           _manageDatasources(data.dataSources);
