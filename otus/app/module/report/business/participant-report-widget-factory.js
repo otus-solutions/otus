@@ -9,7 +9,7 @@
   factory.$inject = [
     '$q',
     'otusjs.report.business.ParticipantReportService',
-    'otusjs.report.business.DynamicReportService',
+    'otusjs.report.business.dynamicReport.DynamicReportService',
     'otusjs.deploy.LoadingScreenService'
   ];
 

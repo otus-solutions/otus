@@ -2,18 +2,18 @@
   'use strict';
 
   angular
-    .module('otusjs.report.business')
-    .service('otusjs.report.business.DynamicReportService', Service);
+    .module('otusjs.report.business.dynamicReport')
+    .service('otusjs.report.business.dynamicReport.DynamicReportService', Service);
 
   Service.$inject = [
-    '$rootScope',
-    '$compile',
+    '$q',
     '$window',
-    '$filter',
-    '$q'
+    '$compile',
+    '$rootScope',
+    'otusjs.report.business.dynamicReport.scope.ScopeReportFactory'
   ];
 
-  function Service($rootScope, $compile, $window, $filter, $q) {
+  function Service($q, $window, $compile, $rootScope, ScopeReportFactory) {
     var self = this;
 
     self.precompile = precompile;
@@ -22,39 +22,21 @@
     function precompile(report) {
       let returned = {};
       let deferred = $q.defer();
-      let scope = $rootScope.$new();
       let currentTemplate = report.template;
+      let scopeReport = ScopeReportFactory.create();
+      let scope;
+
+      scopeReport.setDatasource(report.dataSources);
+      scope = scopeReport.scope;
 
       currentTemplate = `${currentTemplate}
         <otus-script>
             {{data.testEndChangeScope = true}}
         </otus-script>
-        `;
-      
-      scope.fieldRequiredArray = [];
-      scope.style = {};
-      scope.fieldsError = [];
-      scope.required = function (fieldName, value, msg) {
-        var requiredStyle = { "color": "red", "content": "Joe's Task:" };
-        var defaultStyle = {};
-        if (scope.style[fieldName] === undefined) {
-          var field = {
-            fieldName: fieldName,
-            valid: value ? true : false,
-            msg: msg,
-          };
-          scope.fieldRequiredArray.push(field);
-          scope.style[fieldName] = field.valid ? defaultStyle : requiredStyle;
-          if (field.valid === false) {
-            scope.fieldsError.push(field);
-          }
-        }
-      }
-      scope.ds = report.dataSources;
-      scope.data = {};
-      scope.aux = {};
-      scope.aux.formatDate = (value, format='dd/MM/yyyy') => $filter('date')(new Date(value), format);
+      `;
+
       returned.compiledTemplate = $compile(currentTemplate)(scope);
+
       scope.$watch('data.testEndChangeScope', function () {
         if (scope.data.testEndChangeScope === true) {
           returned.scope = scope;
