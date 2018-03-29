@@ -49,6 +49,22 @@
       _setRequired();
       _fillHelper();
     }
+    
+    function _valueIsValid(value) {
+      let isValue = false;
+      if(value !== undefined){
+        if(typeof value == 'string'){
+          if(value.trim().length) isValue = true;
+        } else if(Array.isArray(value)){
+          if(value.length) isValue = true;
+        } else if(typeof value == 'object'){
+          if(JSON.stringify(value) !== JSON.stringify({})) isValue = true;
+        } else {
+          isValue = true;
+        }
+      }
+      return isValue;
+    }
 
     function _setRequired() {
       self.scope.required = function (fieldName, value, msg) {
@@ -57,8 +73,9 @@
         if (self.scope.style[fieldName] === undefined) {
           var field = {
             fieldName: fieldName,
-            valid: value ? true : false,
-            msg: msg,
+            valid: _valueIsValid(value),
+            value: value,
+            msg: msg
           };
           self.scope.fieldRequiredArray.push(field);
           self.scope.style[fieldName] = field.valid ? defaultStyle : requiredStyle;
