@@ -246,7 +246,7 @@ describe('ParticipantReportWidgetFactory', function () {
 
   function mockInjections($injector, $q) {
     Mock.ParticipantReportService = $injector.get('otusjs.report.business.ParticipantReportService');
-    Mock.DynamicReportService = $injector.get('otusjs.report.business.DynamicReportService');
+    Mock.DynamicReportService = $injector.get('otusjs.report.business.dynamicReport.DynamicReportService');
     Mock.$q = $q;
 
     Injections.$q = Mock.$q;
