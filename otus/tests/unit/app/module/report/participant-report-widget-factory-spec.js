@@ -6,7 +6,6 @@ describe('ParticipantReportWidgetFactory', function () {
   var factory = {};
   var scope;
 
-
   beforeEach(angular.mock.module('otusjs.otus.report'));
   beforeEach(function () {
 
@@ -64,10 +63,10 @@ describe('ParticipantReportWidgetFactory', function () {
       });
     });
 
-    it('should should not fetch when already have a compiled template', function () {
+    it('should not fetch when already have a compiled template', function () {
       spyOn(Mock.ParticipantReportService, "getFullReport");
 
-      report.compiledTemplate = "<span></span>";
+      report.dirty = true;
       promise = report.getReportTemplate();
 
       promise.then(function () {
@@ -122,7 +121,7 @@ describe('ParticipantReportWidgetFactory', function () {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
 
 
-      report.compiledTemplate = "<span></span>";
+      report.dirty = true;
 
       let promise = report.reloadReport();
 
@@ -250,9 +249,9 @@ describe('ParticipantReportWidgetFactory', function () {
     Mock.DynamicReportService = $injector.get('otusjs.report.business.DynamicReportService');
     Mock.$q = $q;
 
+    Injections.$q = Mock.$q;
     Injections.ParticipantReportService = Mock.ParticipantReportService;
     Injections.DynamicReportService = Mock.DynamicReportService;
-    Injections.$q = Mock.$q;
 
 
   }

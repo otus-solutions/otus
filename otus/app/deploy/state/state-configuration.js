@@ -16,7 +16,6 @@
       'LOGIN': 'login',
       'PARTICIPANT': 'participant',
       'PARTICIPANT_ACTIVITY': 'activity',
-      'PARTICIPANT_REPORT': 'report',
       'SESSION': 'session',
       'SIGNUP': 'signup',
       'SIGNUP_RESULT': 'signup-result',
@@ -28,8 +27,7 @@
       'EXAM_LOT_MANAGER_LIST': 'exam-lot-manager-list',
       'EXAM_LOT_INFO_MANAGER': 'exam-lot-info-manager',
       'EXAM_SENDING': 'exam-sending',
-      'EXAM_RESULT_VISUALIZER': 'exam-result-visualizer',
-      'PARTICIPANT_REPORT_VISUALIZER': 'participant-report-visualizer'
+      'EXAM_RESULT_VISUALIZER': 'exam-result-visualizer'
     })
     .config(Configuration);
 
@@ -43,7 +41,6 @@
     'otusjs.deploy.ActivityPlayerStateProvider',
     'otusjs.deploy.PaperActivityInitializerStateProvider',
     'otusjs.deploy.DashboardStateProvider',
-    'otusjs.deploy.ParticipantReportStateProvider',
     'otusjs.deploy.ParticipantDashboardStateProvider',
     'otusjs.deploy.InstallerStateProvider',
     'otusjs.deploy.LoginStateProvider',
@@ -70,7 +67,6 @@
     ActivityPlayerStateProvider,
     PaperActivityInitializerStateProvider,
     DashboardProvider,
-    ParticipantReportStateProvider,
     ParticipantDashboardProvider,
     InstallerProvider,
     LoginStateProvider,
@@ -99,7 +95,6 @@
     $stateProvider.state(SignupResultStateProvider.state);
     $stateProvider.state(DashboardProvider.state);
     $stateProvider.state(ParticipantDashboardProvider.state);
-    $stateProvider.state(ParticipantReportStateProvider.state);
     $stateProvider.state(InstallerProvider.state);
     $stateProvider.state(ParticipantStateProvider.state);
     $stateProvider.state(SessionStateProvider.state);

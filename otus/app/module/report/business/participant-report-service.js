@@ -6,11 +6,10 @@
     .service('otusjs.report.business.ParticipantReportService', service);
 
   service.$inject = [
-    '$q',
     'otusjs.report.repository.ParticipantReportRepositoryService'
   ];
 
-  function service($q, ParticipantReportCollectionService) {
+  function service(ParticipantReportRepositoryService) {
     var self = this;
 
     self.fetchReportList = fetchReportList;
@@ -18,11 +17,11 @@
 
 
     function fetchReportList(participant) {
-      return ParticipantReportCollectionService.getParticipantReportList(participant.recruitmentNumber);
+      return ParticipantReportRepositoryService.getParticipantReportList(participant.recruitmentNumber);
     }
 
     function getFullReport(participant, reportId) {
-      return ParticipantReportCollectionService.getFullReport(participant.recruitmentNumber, reportId);
+      return ParticipantReportRepositoryService.getFullReport(participant.recruitmentNumber, reportId);
     }
   }
 
