@@ -31,7 +31,7 @@
 
       currentTemplate = `${currentTemplate}
         <otus-script>
-            {{data.testEndChangeScope = true}}
+          {{data.testEndChangeScope = true}}
         </otus-script>
       `;
 

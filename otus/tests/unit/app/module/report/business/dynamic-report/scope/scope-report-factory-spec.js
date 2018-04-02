@@ -16,7 +16,6 @@ describe('the Scope Report factory ', function () {
         'otusjs.report.business.dynamicReport.scope.ScopeReportFactory',
         injections
       );
-      //TODO: call mocks
     });
   });
 

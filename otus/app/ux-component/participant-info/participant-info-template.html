@@ -1,11 +1,11 @@
-<div layout-align="center center" layout-margin layout-padding >
+<div layout-align="center center" layout-margin layout-padding>
   <md-card style="width: 800px; margin: 0 auto;" flex>
     <md-card-content>
       <div layout="row" layout-align="space-between stretch">
         <div layout="column" layout-align="space-around stretch" hide-sm hide-xs>
           <md-icon style="font-size: 8em;" flex hide-xs>account_circle</md-icon>
         </div>
-         <div layout="column">
+        <div layout="column">
           <div class="md-headline truncate">{{$ctrl.selectedParticipant.name}}</div>
           <span class="md-caption">
             NR: {{$ctrl.selectedParticipant.recruitmentNumber}}
@@ -15,6 +15,9 @@
           </span>
           <span class="md-caption">
             Nascimento: {{$ctrl.selectedParticipant.birthdate.value | date: "dd/MM/y"}}
+          </span>
+          <span class="md-caption">
+            Centro: {{$ctrl.selectedParticipant.fieldCenter.acronym}}
           </span>
         </div>
         <div layout="column" layout-align="start end">

@@ -23,14 +23,14 @@
       let isEqual = false;
       for (let i = 0; i < keysArray.length; i++) {
         const property = keysArray[i];
-        isEqual = item[property] === json[property];
+        isEqual = item.hasOwnProperty(property) && item[property] === json[property];
         if(!isEqual) break;
       }
       return isEqual;
     }
 
     function _find(array, property, value) {
-      return array.find(item => item[property] == value);
+      return array.find(item => item.hasOwnProperty(property) && item[property] == value);
     }
 
     function formatDate(value, format = 'dd/MM/yyyy') {
@@ -38,6 +38,7 @@
     };
 
     function getObjectByArray(array, propertyOrJson, value){
+      if(propertyOrJson === undefined) return undefined;
       if(typeof propertyOrJson === "object"){
         let itemFound = undefined;
         for (let i = 0; i < array.length; i++) {

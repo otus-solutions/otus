@@ -21,7 +21,7 @@ describe('ParticipantReportWidgetFactory', function () {
 
   //Factory Tests
   describe('the creation methods', function () {
-    it('should fetch data and build basic report list', function (done) {
+    it('should fetch data and build basic report list', function () {
       spyOn(Mock.ParticipantReportService, "fetchReportList")
         .and.returnValue(Mock.$q.when(Mock.reportList));
 
@@ -29,7 +29,6 @@ describe('ParticipantReportWidgetFactory', function () {
         .then(function (data) {
           expect(Mock.reportList.length).toEqual(data.length);
         });
-      done();
     });
 
     it('should create basic report', function () {
@@ -59,7 +58,6 @@ describe('ParticipantReportWidgetFactory', function () {
 
       promise.then(function () {
         expect(Mock.DynamicReportService.precompile).toHaveBeenCalled();
-        done();
       });
     });
 
@@ -71,35 +69,31 @@ describe('ParticipantReportWidgetFactory', function () {
 
       promise.then(function () {
         expect(Mock.DynamicReportService.precompile).not.toHaveBeenCalled();
-        done();
       });
     });
 
-    it('should be available when get a complete set of datasources', function (done) {
+    it('should be available when get a complete set of datasources', function () {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
 
       promise = report.getReportTemplate();
 
       promise.then(function () {
         expect(report.isAvailable).toBe(true);
-        done();
       });
     });
 
-    it('should be unavailable when missing a datasource', function (done) {
+    it('should be unavailable when missing a datasource', function () {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportIncomplete));
 
       promise = report.getReportTemplate();
 
       promise.then(function () {
         expect(report.isAvailable).toBe(false);
-        done();
 
       });
-      done();
     });
 
-    it('should show error as true when getFullReport rejects', function (done) {
+    it('should show error as true when getFullReport rejects', function () {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.reject());
 
       promise = report.getReportTemplate();
@@ -107,7 +101,6 @@ describe('ParticipantReportWidgetFactory', function () {
       promise.then(function () {
         expect(report.loading).toBe(false);
         expect(report.hasError).toBe(true);
-        done();
       });
     });
   });
@@ -127,7 +120,7 @@ describe('ParticipantReportWidgetFactory', function () {
 
       promise.then(function () {
         expect(Mock.DynamicReportService.precompile).toHaveBeenCalled();
-        done();
+        
       });
     });
 
@@ -163,7 +156,7 @@ describe('ParticipantReportWidgetFactory', function () {
       expect(report.status.expandAndCollapseIcon).toBeDefined();
     });
 
-    it('should display loading while loading', function (done) {
+    it('should display loading while loading', function () {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
 
       //requisition time
@@ -174,11 +167,10 @@ describe('ParticipantReportWidgetFactory', function () {
       //solved promise
       promise.then(function () {
         expect(report.loading).toBe(false);
-        done();
       });
     });
 
-    it('should show available when get a complete report', function (done) {
+    it('should show available when get a complete report', function () {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
 
       //requisition time
@@ -195,12 +187,11 @@ describe('ParticipantReportWidgetFactory', function () {
         expect(report.status.tooltip).toBeDefined();
         expect(report.status.msg).toBeDefined();
         expect(report.status.buttonEnabled).toBeDefined();
-        done();
       });
     });
 
     //datasource Missing
-    it('should show unavailable when missing a datasource', function (done) {
+    it('should show unavailable when missing a datasource', function () {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportIncomplete));
 
       //requisition time
@@ -217,11 +208,10 @@ describe('ParticipantReportWidgetFactory', function () {
         expect(report.status.bottomIconClass).toBeDefined();
         expect(report.status.tooltip).toBeDefined();
         expect(report.status.msg).toBeDefined();
-        done();
       });
     });
 
-    it('should show error when the getFullReport rejects', function (done) {
+    it('should show error when the getFullReport rejects', function () {
       spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.reject());
 
       //requisition time
@@ -237,7 +227,6 @@ describe('ParticipantReportWidgetFactory', function () {
         expect(report.status.bottomIconClass).toBeDefined();
         expect(report.status.tooltip).toBeDefined();
         expect(report.status.msg).toBeDefined();
-        done();
       });
     });
   });

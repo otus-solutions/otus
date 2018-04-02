@@ -1,4 +1,4 @@
-xdescribe('the Scope Helper service ', function () {
+describe('the Scope Helper service ', function () {
   var Mock = {};
   var service = {};
   var scope;
@@ -13,97 +13,94 @@ xdescribe('the Scope Helper service ', function () {
         'otusjs.report.business.dynamicReport.scope.ScopeHelperService',
         injections
       );
-      //TODO: call mocks
     });
   });
 
-  describe('the creation method ', function () {
+  describe('fillScopeHelper method ', function () {
     beforeEach(function () {
-      mockHelper();
+      mockScope();
+      service.fillScopeHelper(Mock.Scope);
     });
-    it('should create scope report', function () {
-      expect(Mock.Helper.objectType).toEqual('Helper');
+    it('the scope should have "helper" sctructure', function () {
+      expect(Mock.Scope.helper).not.toBe(undefined);
     });
-    it('should have the required attribute on object', function () {
-      expect(Mock.Helper.scope.required).not.toEqual(undefined);
+    it('the scope.helper should have "formatDate" method', function () {
+      expect(typeof Mock.Scope.helper.formatDate).toEqual("function");
+    });
+    it('the scope.helper should have "getObjectByArray" method', function () {
+      expect(typeof Mock.Scope.helper.getObjectByArray).toEqual("function");
     });
   });
 
-  describe('required method ', function () {
+  describe('formatDate method ', function () {
     beforeEach(function () {
-      mockHelper();
-      mockFieldValid();
-      mockFieldValid2();
-      mockFieldInvalid();
-      mockFieldInvalid2();
-      mockRequired(Mock.FieldValid);
-      mockRequired(Mock.FieldInvalid);
+      mockDate();
+      mockDateISOString();
+      mockScopeWithHelper();
     });
-    it('the fieldRequiredArray.length should be equal to 2', function () {
-      expect(Mock.Helper.scope.fieldRequiredArray.length).toEqual(2);
+    it('the return should be equal to "02/04/2018"', function () {
+      expect(Mock.ScopeWithHelper.helper.formatDate(Mock.Date)).toEqual("02/04/2018");
     });
-    it('the fieldsError.length should be equal to 1', function () {
-      expect(Mock.Helper.scope.fieldsError.length).toEqual(1);
-    });
-    it('the fieldsError.length should be equal to 2', function () {
-      mockRequired(Mock.FieldInvalid2);
-      expect(Mock.Helper.scope.fieldsError.length).toEqual(2);
-    });
-    it('the fieldsError[1] should be equal to FieldInvalid2', function () {
-      mockRequired(Mock.FieldInvalid2);
-      expect(Mock.Helper.scope.fieldsError[1].fieldName).toEqual(Mock.FieldInvalid2.fieldName);
-      expect(Mock.Helper.scope.fieldsError[1].valid).toEqual(Mock.FieldInvalid2.valid);
-      expect(Mock.Helper.scope.fieldsError[1].value).toEqual(Mock.FieldInvalid2.value);
-      expect(Mock.Helper.scope.fieldsError[1].msg).toEqual(Mock.FieldInvalid2.msg);
+    it('the return should be equal to "2018/04/02-12:37:55"', function () {
+      expect(Mock.ScopeWithHelper.helper.formatDate(Mock.DateISOString,'yyyy/MM/dd-hh:mm:ss')).toEqual("2018/04/02-12:37:55");
     });
   });
 
-  function mockHelper() {
-    Mock.Helper = {};
+  describe('getObjectByArray method ', function () {
+    beforeEach(function () {
+      mockScopeWithHelper();
+      mockItensArray();
+    });
+    it('(1)should return undefined', function () {
+      let item = Mock.ScopeWithHelper.helper.getObjectByArray(Mock.ItensArray, 'a');
+      expect(item).toBe(undefined);
+    });
+    it('(2)should return undefined', function () {
+      let item = Mock.ScopeWithHelper.helper.getObjectByArray(Mock.ItensArray, 'other');
+      expect(item).toBe(undefined);
+    });
+    it('(3)should return undefined', function () {
+      let item = Mock.ScopeWithHelper.helper.getObjectByArray(Mock.ItensArray, {'a':1, 'other':undefined});
+      expect(item).toBe(undefined);
+    });
+    it('(4)should return undefined', function () {
+      let item = Mock.ScopeWithHelper.helper.getObjectByArray(Mock.ItensArray, {'a':1, 'b':999999});
+      expect(item).toBe(undefined);
+    });
+    it('(1)should return the searched item', function () {
+      let item = Mock.ScopeWithHelper.helper.getObjectByArray(Mock.ItensArray, 'a', 1);
+      expect(item).toEqual(Mock.ItensArray[0]);
+    });
+    it('(2)should return the searched item', function () {
+      let item = Mock.ScopeWithHelper.helper.getObjectByArray(Mock.ItensArray, {'a':4, 'b':5, 'c':6});
+      expect(item).toEqual(Mock.ItensArray[1]);
+    });
+  });
+
+  function mockScope() {
+    Mock.Scope = {};
   }
 
-  function mockFillScopeHelper() {
-    service.fillScopeHelper(Mock.Helper);
+  function mockScopeWithHelper() {
+    Mock.ScopeWithHelper = {}
+    service.fillScopeHelper(Mock.ScopeWithHelper);
   }
 
-  function mockFieldValid() {
-    Mock.FieldValid = {
-      fieldName: "campoValido",
-      valid: true,
-      value: "valor",
-      msg: "é obrigatório",
-    };
+  function mockDate() {
+    Mock.Date = new Date(2018,3,2,12,37,55,0);
   }
 
-  function mockFieldValid2() {
-    Mock.FieldValid2 = {
-      fieldName: "campoValido2",
-      valid: true,
-      value: "valor2",
-      msg: "é obrigatório",
-    };
+  function mockDateISOString() {
+    if(!Mock.Date) mockDate();
+    Mock.DateISOString = Mock.Date.toISOString();
   }
-
-  function mockFieldInvalid() {
-    Mock.FieldInvalid = {
-      fieldName: "campoInvalido",
-      valid: false,
-      value: [],
-      msg: "é obrigatório",
-    };
-  }
-
-  function mockFieldInvalid2() {
-    Mock.FieldInvalid2 = {
-      fieldName: "campoInvalido2",
-      valid: false,
-      value: {},
-      msg: "é obrigatório",
-    };
-  }
-
-  function mockRequired(field) {
-    Mock.Helper.scope.required(field.fieldName, field.value, field.msg);
+  
+  function mockItensArray() {
+    Mock.ItensArray = [
+      { a:1, b:2, c:3 },
+      { a:4, b:5, c:6 },
+      { a:7, b:8, c:9 }
+    ];
   }
 
 });
