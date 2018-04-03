@@ -12,9 +12,9 @@
           </md-button>
         </md-card-title-media>
       </md-card-header>
-      <div layout-align="center center" layout="row" ng-show="report.loading && report.status.expanded">
+      <div layout-align="center center" layout="row" ng-show="report.loading && report.status.expanded" style="padding: 35px">
         <md-progress-circular class="md-hue-2" md-diameter="20px"></md-progress-circular>
-        <span class="md-caption">&nbsp;Aguarde</span>
+        <span class="md-caption">&nbsp;&nbsp;Carregando</span>
       </div>
       <md-card-content ng-if="report.status.expanded && !report.loading" layout="column" layout-align="space-around start">
         <span ng-repeat="datasource in report.missingDataSources" class="md-caption" ng-if="datasource">{{datasource + ": não encontrado"}}</span>
@@ -27,12 +27,10 @@
             <span ng-style="{color:report.status.color}" class="md-caption" layout-margin layout-padding>{{report.status.msg}}</span>
           </div>
         </div>
-
         <md-button class="md-icon-button" aria-label="Recarregar Relatório" ng-click="report.reloadReport()">
           <md-tooltip md-direction="down">Recarregar Relatório</md-tooltip>
           <md-icon aria-label="Alterar Lote" ng-class="rotateClass">autorenew</md-icon>
         </md-button>
-
         <md-button class="md-icon-button" ng-click="$ctrl.generateReport(report)" ng-disabled="!report.status.buttonEnabled">
           <md-icon ng-class="report.status.bottomIconClass">{{report.status.bottomIcon}}</md-icon>
           <md-tooltip md-direction="bottom">{{report.status.tooltip}}</md-tooltip>
