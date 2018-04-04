@@ -5,6 +5,7 @@
         <md-icon ng-style="{color:report.status.color}">{{report.status.icon}}</md-icon>
         <md-card-header-text class="truncate">
           <span class="md-body-1 truncate" layout-margin ng-style="{color:report.status.color}">{{report.label}}</span>
+          <md-tooltip>{{report.label}}</md-tooltip>
         </md-card-header-text>
         <md-card-title-media>
           <md-button class="md-icon-button" ng-click="report.expandAndCollapse()" ng-show="!$ctrl.loading">

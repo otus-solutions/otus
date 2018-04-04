@@ -17,6 +17,8 @@
   function Controller(ApplicationStateService, EventService, DashboardService) {
     var self = this;
 
+    self.participantBirthdate;
+
     /* Public methods */
     self.selectParticipant = selectParticipant;
     /* Lifecycle hooks */
@@ -50,14 +52,14 @@
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = participantData;
-        self.selectedParticipant.birthdate.value = new Date(participantData.birthdate.value).toISOString();
+        self.participantBirthdate = new Date(self.selectedParticipant.birthdate.value);
         self.isEmpty = false;
       } else {
         DashboardService
         .getSelectedParticipant()
         .then(function(participantData) {
             self.selectedParticipant = participantData;
-            self.selectedParticipant.birthdate.value = new Date(participantData.birthdate.value).toISOString();
+            self.participantBirthdate = new Date(self.selectedParticipant.birthdate.value);
             self.isEmpty = false;
           });
       }

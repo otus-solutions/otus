@@ -14,7 +14,7 @@
             Sexo: {{$ctrl.getSex($ctrl.selectedParticipant.sex)}}
           </span>
           <span class="md-caption">
-            Nascimento: {{$ctrl.selectedParticipant.birthdate.value | date: "dd/MM/y"}}
+            Nascimento: {{$ctrl.participantBirthdate | date: "dd/MM/yyyy"}}
           </span>
           <span class="md-caption">
             Centro: {{$ctrl.selectedParticipant.fieldCenter.acronym}}
