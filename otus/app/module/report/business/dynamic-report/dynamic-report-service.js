@@ -60,7 +60,10 @@
           <style>
             @page {
               size: 210mm 297mm;
-              margin-left: 2.25cm; margin-right: 3cm; margin-top: 1.25cm; margin-bottom: 1.25cm;
+              margin-left: 225mm; 
+              margin-right: 300mm; 
+              margin-top: 125mm; 
+              margin-bottom: 125mm;
             }
          
             @media print {
