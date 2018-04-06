@@ -28,7 +28,7 @@
     var _db = null;
     var _dataDeferred = $q.defer();
 
-    self.collectionName = 'laboratory_participant';
+    self.collectionName = 'laboratory_participant';  //todo: rename
     self.options = {
       unique: ['_id']
     };
@@ -38,6 +38,7 @@
     self.insert = insert;
     self.update = update;
     self.clear = clear;
+    self.get = get;
 
     /**
      * Binds this service to collection "laboratories" from LokiJS database instance.
@@ -48,6 +49,8 @@
     function initialize(collection, db) {
       _collection = collection;
       _db = db;
+      console.log(_collection, _db)
+      
     }
 
     /**
@@ -70,6 +73,10 @@
     function update(laboratories) {
       _collection.update(laboratories);
       _db.saveDatabase();
+    }
+
+    function get(ix) {
+      return _collection.get(ix);  
     }
 
     /**

@@ -6,13 +6,15 @@
     .service('otusjs.laboratory.core.project.ContextService', Service);
 
   Service.$inject = [
-    '$q'
+    '$q',
+    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
   ];
 
-  function Service($q) {
+  function Service($q, LaboratoryLocalStorageService) {
     var self = this;
     var _context = null;
     var _storage = null;
+
 
     var LABORATORY_CONTEXT = 'project_context';
 
@@ -131,11 +133,15 @@
     }
 
     function setFileStructure(file) {
-      setData('fileStructure', file);
+      LaboratoryLocalStorageService.clear();
+      LaboratoryLocalStorageService.insert(file);
+      setData('fileStructureAddress', file.$loki);
     }
 
     function getFileStructure() {
-      return getData('fileStructure');
+      var index =  getData('fileStructureAddress');
+      return LaboratoryLocalStorageService.get(index);
+
     }
 
     function setFieldCenterInSendingExam(center) {
