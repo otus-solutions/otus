@@ -218,6 +218,7 @@
     }
 
     function _refreshGrid(newElementsArray) {
+      _initializeDefaultValues();
       self.elementsArray = newElementsArray || self.elementsArray;
       self.selectedItemCounter = 0;
       self.creacteTable();

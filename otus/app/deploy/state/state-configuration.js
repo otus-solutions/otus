@@ -112,6 +112,7 @@
     $stateProvider.state(SendingExamState.state);
     $stateProvider.state(ExamResultsVisualizer.state);
     $stateProvider.state(MonitoringStateProvider.state);
+    
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
     // $locationProvider.html5Mode(false);

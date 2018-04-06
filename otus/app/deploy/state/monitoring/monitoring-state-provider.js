@@ -22,7 +22,7 @@
         parent: STATE.SESSION,
         name: STATE.MONITORING,
         url: '/' + STATE.MONITORING,
-        template: '<otus-monitoring-dashboard flex></otus-monitoring-dashboard>',
+        template: '<otus-monitoring-dashboard layout="column" flex></otus-monitoring-dashboard>',
         data: {
           redirect: _redirect
         }

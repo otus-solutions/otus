@@ -28,7 +28,6 @@
     /* Public methods */
     function startMonitoring() {
         ApplicationStateService.activateMonitoring();
-        console.log("Hello");
     }
 
     function setFocus() {

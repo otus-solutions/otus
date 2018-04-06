@@ -1,9 +1,26 @@
-<otus-dashboard-sidenav layout="row">
+<div layout="column" flex>
+  <otus-dashboard-sidenav layout="row">
     <hide-participant-box></hide-participant-box>
   </otus-dashboard-sidenav>
   <otus-dashboard-toolbar layout="row">
     <div flex layout="row" layout-align="center center" layout-margin>
-      <span layout-align="center center">Exames</span>
+      <span layout-align="center center">Monitoramento</span>
     </div>
   </otus-dashboard-toolbar>
-  <div ui-view layout="column" flex></div>
+  <div ui-view layout="column" flex>
+    <monitoring-filter-view-component parse-data="$ctrl.parseData" questionnaires-list="$ctrl.questionnairesList"></monitoring-filter-view-component>
+    <div layout="row" flex>
+      <md-content layout="column" flex>
+        <monitoring-information-cards-component></monitoring-information-cards-component>
+        <div flex layout="row">
+          <monitoring-spreadsheet-component create-questionnaire-spreadsheet="$ctrl.createQuestionnaireSpreadsheet" style="display:inline-block;width:70vw;"
+            flex="45"></monitoring-spreadsheet-component>
+          <monitoring-overview-visualization-component questionnaire-data="$ctrl.questionnaireData" create-questionnaire-line-chart="$ctrl.createQuestionnaireLineChart"
+            style="display:inline-block;width:70vw;" flex="55"></monitoring-overview-visualization-component>
+          <!--<monitoring-centers-goals-visualization-component style="display:inline-block;width:30vw;" flex="35"></monitoring-centers-goals-visualization-component>-->
+        </div>
+      </md-content>
+    </div>
+
+  </div>
+</div>
