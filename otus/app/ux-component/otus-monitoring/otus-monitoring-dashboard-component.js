@@ -37,6 +37,7 @@
       console.log(MonitoringRestService.create());
 
       preProcessingData();
+      
     }
 
     function preProcessingData() {
@@ -89,8 +90,9 @@
           return index == self.indexOf(elem);
         });
 
-
+        parseData("",self.questionnairesList[0]);
       });
+      
     }
 
     function parseData(fieldCenter, acronym) {
