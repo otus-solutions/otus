@@ -15,6 +15,14 @@
           </md-option>
         </md-select>
       </md-input-container>
+
+      
+        <md-input-container ng-repeat="center in $ctrl.centers" class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+          <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.selectedFieldCenters[center]" >
+            {{center}}
+          </md-checkbox>
+        </md-input-container>
+      
       <!--
       <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
         <label class="md-subheader">Centro de Realização:</label>
@@ -35,8 +43,8 @@
       <md-input-container class="remove-errors-spacer">
         <label>Período Fínal</label>
         <md-datepicker ng-model="$ctrl.realizationEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
-      </md-input-container>
-    -->
+      </md-input-container>-->
+
     </div>
   </div>
 </div>

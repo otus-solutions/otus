@@ -24,6 +24,7 @@
 
     self.questionnaireData;
 
+
     self.createQuestionnaireSpreadsheet;
     self.createQuestionnaireLineChart;
     self.parseData = parseData;
@@ -90,13 +91,13 @@
           return index == self.indexOf(elem);
         });
 
-        parseData("",self.questionnairesList[0]);
+        parseData(self.fieldCentersList,self.questionnairesList[0]);
       });
       
     }
 
-    function parseData(fieldCenter, acronym) {
-
+    function parseData(selectedFieldCentersList, acronym) {
+      console.log(selectedFieldCentersList);
       if (self.createQuestionnaireLineChart) {
 
         var datasetInformation = {
@@ -121,10 +122,14 @@
           });
 
 
-          for (var j = 0; j < self.fieldCentersList.length; j++) {
+          for (var j = 0; j < selectedFieldCentersList.length; j++) {
+
+            //if(!selectedFieldCentersList[self.fieldCentersList[j]])
+             // return;
+
             var dataByFieldCenter = rawData.filter(function(value){
               return value.fieldCenter == this;
-            }, self.fieldCentersList[j]);
+            }, selectedFieldCentersList[j]);
             var i = 0;
             var fieldCenterDataset = [];
             for (var k = 0; k < self.uniqueDatesList.length; k++) {
@@ -146,10 +151,10 @@
             }
             //console.log(dataByFieldCenter);
             datasets[j] = {
-              label: datasetInformation[self.fieldCentersList[j]].name,
+              label: datasetInformation[selectedFieldCentersList[j]].name,
               data: fieldCenterDataset,
-              backgroundColor: datasetInformation[self.fieldCentersList[j]].backgroundColor,
-              borderColor: datasetInformation[self.fieldCentersList[j]].borderColor,
+              backgroundColor: datasetInformation[selectedFieldCentersList[j]].backgroundColor,
+              borderColor: datasetInformation[selectedFieldCentersList[j]].borderColor,
               borderWidth: 1
             }
 
@@ -161,7 +166,7 @@
 
           self.questionnaireData = {
             data: datasets,
-            fieldCenters: self.fieldCentersList,
+            fieldCenters: selectedFieldCentersList,
             dates: self.uniqueDatesList
           };
 

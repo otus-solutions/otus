@@ -30,6 +30,7 @@
     self.$onInit = onInit;
 
     self.fieldCenter = "";
+    self.selectedFieldCenters = [];
     self.questionnaireInfo = "ACTA";
     self.examFilter = "";
     self.realizationBeginFilter = "";
@@ -49,6 +50,10 @@
           self.centers.push(fieldCenter.acronym)
         });
 
+        for(var i=0; i<self.centers.length; i++)
+        {
+          self.selectedFieldCenters[self.centers[i]] = true;
+        }
 
       });
      // self.otusExamsLotsManager.listComponent = self;
@@ -57,7 +62,15 @@
 
     function onFilter(){
 
-      self.parseData(self.fieldCenter,self.questionnaireInfo);
+      var selected = [];
+      for (var center in self.selectedFieldCenters)
+      {
+        if(self.selectedFieldCenters[center])
+          selected.push(center);
+      }
+
+
+      self.parseData(selected,self.questionnaireInfo);
       /*
       self.selectedLots = [];
       _setSessionData();

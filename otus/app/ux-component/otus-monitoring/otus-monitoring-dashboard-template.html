@@ -11,9 +11,9 @@
     <monitoring-filter-view-component parse-data="$ctrl.parseData" questionnaires-list="$ctrl.questionnairesList"></monitoring-filter-view-component>
     <div layout="row" flex>
       <md-content layout="column" flex>
-        <monitoring-information-cards-component></monitoring-information-cards-component>
+        <!--<monitoring-information-cards-component></monitoring-information-cards-component>-->
         <div flex layout="row">
-          <monitoring-spreadsheet-component create-questionnaire-spreadsheet="$ctrl.createQuestionnaireSpreadsheet" style="display:inline-block;width:70vw;"
+          <monitoring-spreadsheet-component create-questionnaire-spreadsheet="$ctrl.createQuestionnaireSpreadsheet" layout="column" style="display:inline-block;width:70vw;"
             flex="45"></monitoring-spreadsheet-component>
           <monitoring-overview-visualization-component questionnaire-data="$ctrl.questionnaireData" create-questionnaire-line-chart="$ctrl.createQuestionnaireLineChart"
             style="display:inline-block;width:70vw;" flex="55"></monitoring-overview-visualization-component>

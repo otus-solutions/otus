@@ -62,6 +62,8 @@
                     },
                     options: {
                         showTooltips: false,
+                        responsive: true,
+                        maintainAspectRatio:false,
                         scales: {
                             yAxes: [{
                                 ticks: {
