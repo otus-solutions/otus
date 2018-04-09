@@ -38,7 +38,7 @@
       self.input.on('change', function (e) {
         self.fileData.examSendingLot.operator = SessionContextService.getData('loggedUser').email;
         self.fileData.examSendingLot.fileName = e.target.files[0].name;
-        if (_validateFileToUpload(e.target.files[0])) {
+        if(e.target.files[0]){
           fr.readAsText(e.target.files[0]);
         }
       });
