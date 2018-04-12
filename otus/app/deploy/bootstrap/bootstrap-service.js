@@ -15,24 +15,40 @@
     'otusjs.deploy.SessionModuleBootstrap',
     'otusjs.deploy.UserModuleBootstrap',
     'otusjs.deploy.LaboratoryModuleBootstrap',
-    'otusjs.user.access.core.ModuleService',
+    'otusjs.user.access.core.ModuleService', //AccessModule
     'otusjs.activity.core.ModuleService',
     'otusjs.laboratory.core.ModuleService',
     'otusjs.application.core.ModuleService',
     'otusjs.otus.dashboard.core.ModuleService',
     'otusjs.participant.core.ModuleService',
-    'otusjs.application.session.core.ModuleService',
+    'otusjs.application.session.core.ModuleService', //SessionModule
     'otusjs.user.core.ModuleService',
     'otusjs.deploy.StorageLoaderService',
-    'otusjs.deploy.ProjectModuleBootstrap'
+    'otusjs.deploy.ProjectModuleBootstrap',
+    'otusjs.deploy.ReportModuleBootstrap'
   ];
 
   function Service(
-    OtusApiService, DataSourceLoaderService,
-    AccessModuleBootstrap, ActivityModuleBootstrap, ApplicationModuleBootstrap,
-    ParticipantModuleBootstrap, SessionModuleBootstrap, UserModuleBootstrap, LaboratoryModuleBootstrap,
-    AccessModule, ActivityModule, LaboratoryModule, ApplicationModule, DashboardModule, ParticipantModule, SessionModule, UserModule,
-    StorageLoaderService,ProjectModuleBootstrap) {
+    OtusApiService,
+    DataSourceLoaderService,
+    AccessModuleBootstrap,
+    ActivityModuleBootstrap,
+    ApplicationModuleBootstrap,
+    ParticipantModuleBootstrap,
+    SessionModuleBootstrap,
+    UserModuleBootstrap,
+    LaboratoryModuleBootstrap,
+    AccessModule,
+    ActivityModule,
+    LaboratoryModule,
+    ApplicationModule,
+    DashboardModule,
+    ParticipantModule,
+    SessionModule,
+    UserModule,
+    StorageLoaderService,
+    ProjectModuleBootstrap,
+    ReportModuleBootstrap) {
 
     var self = this;
 
@@ -47,6 +63,7 @@
       UserModuleBootstrap.bootstrap();
       LaboratoryModuleBootstrap.bootstrap();
       ProjectModuleBootstrap.bootstrap();
+      ReportModuleBootstrap.bootstrap();
 
       //--------------------------------------------------------------------------------------------
       // Here the application identifies if should recover a "logged state" or request a new

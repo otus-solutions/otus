@@ -18,6 +18,7 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       /* External dependencies */
+      NODE_MODULES_ROOT_PATH + 'babel-polyfill/dist/polyfill.js',
       NODE_MODULES_ROOT_PATH + 'jquery/dist/jquery.min.js',
       NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
