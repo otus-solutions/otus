@@ -15,7 +15,6 @@
     var _context = null;
     var _storage = null;
 
-
     var LABORATORY_CONTEXT = 'project_context';
 
     /* Public methods */
@@ -78,7 +77,7 @@
     //--------------------------------------------------------------------------------------------
     function getData(dataKey) {
       _testInternalState();
-      return _context.getData(dataKey);
+      //return _context.getData(dataKey);
     }
 
     function setData(dataKey, dataValue) {

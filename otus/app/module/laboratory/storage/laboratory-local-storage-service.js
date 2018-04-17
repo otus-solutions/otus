@@ -49,8 +49,6 @@
     function initialize(collection, db) {
       _collection = collection;
       _db = db;
-      console.log(_collection, _db)
-      
     }
 
     /**

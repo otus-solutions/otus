@@ -85,8 +85,6 @@
 
     function deleteDatabase() {
       _dbManager.otus.lokiDb.collections.forEach(function(collection) {
-        // console.log(undefined);
-        // console.log(collection.count());
         collection.clear();
       });
       // _dbManager.otus.lokiDb.deleteDatabase();
