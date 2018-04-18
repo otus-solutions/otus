@@ -1,29 +1,60 @@
-<div layout="row">
-  <div layout="column" flex>
-    <md-subheader class="md-no-sticky moment-type-title">
-      Filtros de Pesquisa
-    </md-subheader>
-    <div layout="row" layout-xs="column" layout-align="center">
-      <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
-        <label class="md-subheader">Sigla do Questionário:</label>
-        <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
-          <md-tooltip>
-            Sigla do questionário a ser visualizado
-          </md-tooltip>
-          <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" value="{{questionnaire}}" ng-click="">
-            {{questionnaire}}
-          </md-option>
-        </md-select>
-      </md-input-container>
+<div flex>
+  <div layout="row" flex>
+    <div layout="column" flex>
+      <md-subheader class="md-no-sticky moment-type-title">
+        Filtros de Pesquisa
+      </md-subheader>
 
-      
-        <md-input-container ng-repeat="center in $ctrl.centers" class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
-          <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.selectedFieldCenters[center]" >
-            {{center}}
-          </md-checkbox>
-        </md-input-container>
-      
-      <!--
+      <div layout="row" layout-xs="column" layout-align="center">
+
+        <div style="vertical-align: middle;text-align:center;" >
+
+          <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+            <label class="md-subheader">Período Inicial:</label>
+            <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
+              <md-tooltip>
+                Sigla do questionário a ser visualizado
+              </md-tooltip>
+              <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" value="{{questionnaire}}" ng-click="">
+                {{questionnaire}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+            <label class="md-subheader">Período Final:</label>
+            <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
+              <md-tooltip>
+                Sigla do questionário a ser visualizado
+              </md-tooltip>
+              <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" value="{{questionnaire}}" ng-click="">
+                {{questionnaire}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+            <label class="md-subheader">Sigla do Questionário:</label>
+            <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
+              <md-tooltip>
+                Sigla do questionário a ser visualizado
+              </md-tooltip>
+              <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" value="{{questionnaire}}" ng-click="">
+                {{questionnaire}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+        </div>
+
+        <div flex style="vertical-align: middle;text-align:center;">
+          <md-input-container ng-repeat="center in $ctrl.centers" class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+            <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.selectedFieldCenters[center]">
+              {{center}}
+            </md-checkbox>
+          </md-input-container>
+        </div>
+        <!--
       <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
         <label class="md-subheader">Centro de Realização:</label>
         <md-select ng-model="$ctrl.fieldCenter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
@@ -45,7 +76,9 @@
         <md-datepicker ng-model="$ctrl.realizationEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
       </md-input-container>-->
 
+      </div>
     </div>
+
   </div>
 </div>
 <md-divider></md-divider>

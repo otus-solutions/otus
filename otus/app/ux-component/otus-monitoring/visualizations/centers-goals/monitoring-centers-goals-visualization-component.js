@@ -178,10 +178,7 @@
                 options: {
                     scales: {
                         xAxes: [{
-                            stacked: true,
-                            ticks: {
-                                beginAtZero: false
-                              }
+                            stacked: true
                         }],
                         yAxes: [{
                             stacked:true,

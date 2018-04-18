@@ -55,7 +55,7 @@
 
                 var ctx = document.getElementById("myLineChart");
                 self.lineChart = new Chart(ctx, {
-                    type: 'line',
+                    type: 'bar',
                     data: {
                         labels: qData.dates,
                         datasets: qData.data
