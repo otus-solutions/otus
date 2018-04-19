@@ -50,7 +50,6 @@
 
         function createLineChart(qData) {
 
-
             if (!self.lineChart) {
 
                 var ctx = document.getElementById("myLineChart");
@@ -79,7 +78,9 @@
             }
             else {
 
-                self.lineChart.labels = (qData.dates);
+                
+                //self.lineChart.scale.xLabels = (qData.dates);
+                self.lineChart.config.data.labels = (qData.dates);
                 self.lineChart.data.datasets = (qData.data);
                 self.lineChart.update();
             }

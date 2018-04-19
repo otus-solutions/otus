@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -10,7 +10,8 @@
         selectedLots: '=',
         csvData: '=',
         parseData: '=',
-        questionnairesList:'='
+        questionnairesList: '=',
+        uniqueDatesList: '='
       }
     });
 
@@ -23,7 +24,7 @@
     '$filter'
   ];
 
-  function Controller(ProjectFieldCenterService,ExamLotService,$mdToast,laboratoryContextService,dashboardContextService,$filter) {
+  function Controller(ProjectFieldCenterService, ExamLotService, $mdToast, laboratoryContextService, dashboardContextService, $filter) {
     var self = this;
 
     /* Lifecycle hooks */
@@ -32,6 +33,8 @@
     self.fieldCenter = "";
     self.selectedFieldCenters = [];
     self.questionnaireInfo = "ACTA";
+    self.startDateInfo;
+    self.endDateInfo;
     self.examFilter = "";
     self.realizationBeginFilter = "";
     self.realizationEndFilter = "";
@@ -50,27 +53,47 @@
           self.centers.push(fieldCenter.acronym)
         });
 
-        for(var i=0; i<self.centers.length; i++)
-        {
+        for (var i = 0; i < self.centers.length; i++) {
           self.selectedFieldCenters[self.centers[i]] = true;
         }
+        //console.log(datesList);
 
       });
-     // self.otusExamsLotsManager.listComponent = self;
-      
+      // self.otusExamsLotsManager.listComponent = self;
+
     }
 
-    function onFilter(){
+    function onFilter() {
 
       var selected = [];
-      for (var center in self.selectedFieldCenters)
-      {
-        if(self.selectedFieldCenters[center])
+      for (var center in self.selectedFieldCenters) {
+        if (self.selectedFieldCenters[center])
           selected.push(center);
       }
 
+      // checa se a data de inicio e fim fazem sentido
+      if (self.startDateInfo && self.endDateInfo) {
 
-      self.parseData(selected,self.questionnaireInfo);
+        var startNumbers = self.startDateInfo.split('/').map(function (item) {
+          return parseInt(item, 10);
+        });
+
+        var endNumbers = self.endDateInfo.split('/').map(function (item) {
+          return parseInt(item, 10);
+        });
+
+        if ((startNumbers[1] - endNumbers[1] == 0) && (startNumbers[0] - endNumbers[0] > 0)) {
+          showInvalidDateMessage();
+        }
+        else if (startNumbers[1] - endNumbers[1] > 0) {
+          showInvalidDateMessage();
+        }
+        else {
+          self.parseData(selected, self.questionnaireInfo, self.startDateInfo,self.endDateInfo);
+        }
+
+      }
+
       /*
       self.selectedLots = [];
       _setSessionData();
@@ -86,6 +109,15 @@
             return _filterByExam(filteredByPeriod)
         });
       }*/
+    }
+
+    function showInvalidDateMessage() {
+      var msgDataInvalida = "Datas inválidas! A data inicial deve ser menor que a data final.";
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msgDataInvalida)
+          .hideDelay(4000)
+      );
     }
 
     function _filterByCenter(lot) { /*

@@ -11,24 +11,24 @@
 
           <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
             <label class="md-subheader">Período Inicial:</label>
-            <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
+            <md-select ng-model="$ctrl.startDateInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
               <md-tooltip>
-                Sigla do questionário a ser visualizado
+                Mês a partir do qual dados serão mostrados
               </md-tooltip>
-              <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" value="{{questionnaire}}" ng-click="">
-                {{questionnaire}}
+              <md-option ng-repeat="date in $ctrl.uniqueDatesList track by $index" value="{{date}}" ng-click="" ng-selected="$first">
+                {{date}}
               </md-option>
             </md-select>
           </md-input-container>
 
           <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
             <label class="md-subheader">Período Final:</label>
-            <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
+            <md-select ng-model="$ctrl.endDateInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
               <md-tooltip>
-                Sigla do questionário a ser visualizado
+                Mês até o qual dados serão mostrados
               </md-tooltip>
-              <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" value="{{questionnaire}}" ng-click="">
-                {{questionnaire}}
+              <md-option ng-repeat="date in $ctrl.uniqueDatesList track by $index" value="{{date}}" ng-click="" ng-selected="$last">
+                {{date}}
               </md-option>
             </md-select>
           </md-input-container>

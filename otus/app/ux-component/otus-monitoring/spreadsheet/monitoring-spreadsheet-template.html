@@ -3,8 +3,9 @@
                     table-update-function="$ctrl.updateSpreadsheet">
 </dynamic-data-table>-->
 <div layout="column" flex>
+
     <md-card flex>
-        <md-card-content >
+        <md-card-content>
             <div layout="column" flex>
                 <div layout="column" flex>
                     <md-list flex>
@@ -21,7 +22,7 @@
                 </div>-->
                             <md-list-item ng-repeat="Center in $ctrl.fieldCenters">
                                 <div class="md-list-item-text" layout="column" flex>
-                                    <div layout="row"  layout-padding>
+                                    <div layout="row" layout-padding>
                                         <span layout="column" style="text-align:center;">{{Center}}</span>
                                     </div>
                                 </div>
@@ -36,8 +37,8 @@
                             </div>
                             <md-list-item ng-repeat="(centerIndex,center) in $ctrl.fieldCenters">
                                 <div class="md-list-item-text" layout="column" flex>
-                                    <div  layout="row" layout-align="start center" layout-padding>
-                                        <span layout="column" >{{$ctrl.datasets[centerIndex].data[dateIndex]}}</span>
+                                    <div layout="row" layout-align="start center" layout-padding>
+                                        <span layout="column">{{$ctrl.datasets[centerIndex].data[dateIndex]}}</span>
                                     </div>
                                 </div>
                             </md-list-item>
@@ -64,5 +65,7 @@
 
             </div>
         </md-card-content>
+
     </md-card>
+
 </div>
