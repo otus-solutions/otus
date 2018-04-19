@@ -35,7 +35,7 @@
     mdcDefaultParams) {
     var self = this;
 
-    mdcDefaultParams({ lang: 'pt', cancelText: 'cancelar', todayText: 'hoje', okText: 'ok' });
+    mdcDefaultParams({ lang: 'pt-br', cancelText: 'cancelar', todayText: 'hoje', okText: 'ok' });
 
     const timeShowMsg = 2000;
 
