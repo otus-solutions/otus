@@ -77,7 +77,7 @@
     //--------------------------------------------------------------------------------------------
     function getData(dataKey) {
       _testInternalState();
-      //return _context.getData(dataKey);
+      return _context.getData(dataKey);
     }
 
     function setData(dataKey, dataValue) {
