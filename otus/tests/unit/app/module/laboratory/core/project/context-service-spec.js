@@ -59,11 +59,6 @@ describe('the Laboratory Core Context Service', function() {
     });
   });
 
-  it('getFileStructure', function() {
-    service.getFileStructure();
-    expect(Mock.context.getData(dataKeySending)).toEqual('FieldCenterInSendingExam');
-  });
-
   describe('getData method', function() {
     it('should call the context.getData with "PARAMETER"', function() {
       service.getData('PARAMETER');
