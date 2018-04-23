@@ -31,13 +31,14 @@
       }
     };
 
-    function _redirect($q, DashboardContextService, Application) {
+    function _redirect($q, DashboardContextService, ParticipantContextService, Application) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
         .then(function() {
           try {
+            ParticipantContextService.restore();
             DashboardContextService.isValid();
             deferred.resolve();
           } catch (e) {
@@ -64,6 +65,7 @@
     _redirect.$inject = [
       '$q',
       'otusjs.otus.dashboard.core.ContextService',
+      'otusjs.participant.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
     _loadParticipantContext.$inject = [

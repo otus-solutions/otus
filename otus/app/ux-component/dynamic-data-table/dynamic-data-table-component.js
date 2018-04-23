@@ -100,7 +100,6 @@
     self.currentRowOnHover;
 
     function onInit() {
-      console.log('a', self.orderByInsertion);
       _initializeDefaultValues();
       self.orderByInsertion ? orderByIndex() : _setOrderQuery();
 
@@ -369,11 +368,6 @@
     self.getOrderIcon = function () {
       return self.orderInverse ? 'dynamic-arrow-icon-inverse' : 'dynamic-arrow-icon';
     }
-
-    self.verifyOrderIcon = function (index) {
-      return self.orderQuery === 'column' + $index + '.value' ? true : false;
-    }
-
 
     function rowPerPageChange() {
       self.table.currentPage = 1;

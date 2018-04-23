@@ -16,7 +16,6 @@
       'LOGIN': 'login',
       'PARTICIPANT': 'participant',
       'PARTICIPANT_ACTIVITY': 'activity',
-      'PARTICIPANT_REPORT': 'report',
       'SESSION': 'session',
       'SIGNUP': 'signup',
       'SIGNUP_RESULT': 'signup-result',
@@ -28,7 +27,7 @@
       'EXAM_LOT_MANAGER_LIST': 'exam-lot-manager-list',
       'EXAM_LOT_INFO_MANAGER': 'exam-lot-info-manager',
       'EXAM_SENDING': 'exam-sending',
-      'EXAM_RESULT_VISUALIZER' : 'exam-result-visualizer'
+      'EXAM_RESULT_VISUALIZER': 'exam-result-visualizer'
     })
     .config(Configuration);
 
