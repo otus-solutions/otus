@@ -82,36 +82,21 @@
     function _buildDynamicTableSettings() {
       self.dynamicTableSettings = DynamicTableSettingsFactory.create();
 
-      if (self.action === 'upload') {
-        self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
-          .addIconWithFunction(function (element) {
-            var structureIcon = { icon: "", class: "", tooltip: "" };
+      self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
+        .addIconWithFunction(function (element) {
+          var structureIcon = { icon: "", class: "", tooltip: "" };
 
-            if (self.errorAliquots.length) {
-              if (!errorsIncludesCode(self.errorAliquots, element.aliquotCode)) {
-                structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota válida", orderValue: "done" };
-              } else {
-                structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não existe", orderValue: "warning" };
-              }
-            } else {
-              structureIcon = { icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "file_upload" };
-            }
-            return structureIcon;
-          });
-      } else if (self.action === 'view') {
-        self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
-          .addIconWithFunction(function (element) {
-            var structureIcon = { icon: "", class: "", tooltip: "" };
-
+          if (self.action === 'view' || self.errorAliquots.length) {
             if (element.aliquotValid) {
               structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
             } else {
               structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não identificada no sistema", orderValue: "warning" };
             }
-
-            return structureIcon;
-          });
-      }
+          } else {
+            structureIcon = { icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "query_builder" };
+          }
+          return structureIcon;
+        });
 
       //header, flex, align, ordinationPriorityIndex
       self.dynamicTableSettings.addHeader('Código da alíquota', '20', 'left', 1)

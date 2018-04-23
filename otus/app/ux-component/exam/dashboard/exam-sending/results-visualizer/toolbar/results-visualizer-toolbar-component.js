@@ -8,14 +8,15 @@
       templateUrl: 'app/ux-component/exam/dashboard/exam-sending/results-visualizer/toolbar/results-visualizer-toolbar-template.html',
       bindings: {
         action: '<',
-        sendingExam: '<',
+        sendingExam: '=',
         errorAliquots: '=',
         aliquotsNotIdentified: '=',
-        dynamicDataTableChange: '&'
+        dynamicDataTableChange: '='
       }
     });
 
   Controller.$inject = [
+    '$scope',
     '$mdDialog',
     'otusjs.laboratory.business.project.sending.SendingExamService',
     'otusjs.laboratory.core.project.ContextService',
@@ -23,7 +24,7 @@
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdDialog, SendingExamService, ProjectContextService, ApplicationStateService, LoadingScreenService) {
+  function Controller($scope, $mdDialog, SendingExamService, ProjectContextService, ApplicationStateService, LoadingScreenService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_NOT_FOUND_BACKEND_MESSAGE = "Data Validation Fail: Aliquots not found";
     const EMPTY_LOT_BACKEND_MESSAGE = "Data Validation Fail: Empty Lot";
@@ -71,35 +72,40 @@
     }
 
     function _sendExam() {
-      SendingExamService.createSendExam(JSON.stringify(self.sendingExam)).then(function () {
+      SendingExamService.createSendExam(JSON.stringify(self.sendingExam))
+      .then(function () {
         ProjectContextService.clearFileStructure();
         ApplicationStateService.activateExamSending();
         self.aliquotsNotIdentified = [];
         LoadingScreenService.finish();
-      }, function (reason) {
+      })
+      .catch(function (reason) {
         _handleFailuresToSend(reason);
-        _changeValidAliquotFlag(reason);
-        LoadingScreenService.finish();
-        $mdDialog.show(aliquotsNotFound).then(function () {
-          self.dynamicDataTableChange();
+        // _changeValidAliquotFlag(reason);
+        $scope.$$postDigest(function(){
+          self.dynamicDataTableChange(self.sendingExam.getExamList());
+          LoadingScreenService.finish();
+          $mdDialog.show(aliquotsNotFound).then(function () {            
+
+          });
         });
       });
     }
 
     function _handleFailuresToSend(reason) {
       if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE) {
-        var uniqueErrorAliquots = _getUnique(reason.data.CONTENT);
-        self.errorAliquots = uniqueErrorAliquots;
         self.aliquotsNotIdentified = [];
-        uniqueErrorAliquots.forEach(function (errorAliquot) {
-          self.sendingExam.exams.forEach(function (exam) {
-            exam.examResults.forEach(function (result) {
-              if (errorAliquot == result.aliquotCode) {
-                self.aliquotsNotIdentified.push(result);
-              }
-            });
+        self.errorAliquots = _getUnique(reason.data.CONTENT);
+        self.sendingExam.exams.forEach(function (exam) {
+          exam.examResults.forEach(function (result) {
+            var invalidAliquotCode = self.errorAliquots.find(function(aliquotCode){ return aliquotCode == result.aliquotCode });
+            if (invalidAliquotCode) {
+              result.aliquotValid = false;
+              self.aliquotsNotIdentified.push(result);
+            }
           });
         });
+
         aliquotsNotFound
           .title('Aliquota(s) não encontrada(s)')
           .textContent('Se desejar você pode forçar o envio, clicando novamente em salvar.');
