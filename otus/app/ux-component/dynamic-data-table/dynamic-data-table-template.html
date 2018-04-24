@@ -130,16 +130,18 @@
       {{$ctrl.tableTitle}}
     </md-subheader>
 
-    <!--order by index button-->
-    <md-button class="md-icon-button md-raised" ng-click="$ctrl.orderByIndex()">
-      <md-tooltip md-direction="top">
-        Exibir em ordem de inserção
-      </md-tooltip>
-      <md-icon md-font-set="material-icons">
-        format_list_numbered
-      </md-icon>
-    </md-button>
-    <!--/order by index button-->
+    <md-menu md-position-mode="target-right target" >
+      <md-button class="md-icon-button" ng-click="$mdOpenMenu()" >
+        <md-icon md-font-set="material-icons">menu</md-icon>
+      </md-button>
+      <md-menu-content>
+        <md-menu-item>
+          <md-button ng-click="$ctrl.orderByIndex()">
+            Ordenar por inserção
+            <!-- <md-icon md-font-set="material-icons" md-menu-align-target>arrow_drop_up</md-icon> -->
+          </md-button>
+        </md-menu-item>
+    </md-menu>
   </div>
 
   <div ng-if="!$ctrl.tableTitle && !$ctrl.disableFilter" class="dynamic-table-expand-filter"></div>
@@ -153,7 +155,7 @@
       </md-input-container>
     </div>
 
-    <div ng-if="(!$ctrl.disablePagination && $ctrl.filter.length && $ctrl.viewPerPage)" style="padding-right:15px"
+    <div ng-if="!$ctrl.disableShowAll && (!$ctrl.disablePagination && $ctrl.filter.length && $ctrl.viewPerPage)" style="padding-right:15px"
          class="dynamic-table-animated">
       <md-checkbox flex style="margin:0;" aria-label="Filtrar todos" class="md-primary" ng-checked="$ctrl.filterAll"
                    ng-click="$ctrl.filterAllChanged()">

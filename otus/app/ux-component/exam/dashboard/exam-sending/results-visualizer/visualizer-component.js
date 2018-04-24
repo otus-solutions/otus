@@ -63,12 +63,12 @@
 
     function _loadList() {
       LoadingScreenService.changeMessage(MESSAGE_LOADING);
-      LoadingScreenService.start();
+      LoadingScreenService.startingLockedByKey('LOAD_LIST_VIZUALIZER_EXAM_RESULT');
       SendingExamService.getSendedExamById(self.fileStructure.examSendingLot._id).then(function (response) {
         self.fileStructure.exams = response;
         _buildExamSending();
         self.updateDataTable(self.examList);
-        LoadingScreenService.finish();
+        LoadingScreenService.finishUnlockedByKey('LOAD_LIST_VIZUALIZER_EXAM_RESULT');
       });
     }
 
@@ -124,8 +124,8 @@
         .addHeader('Data de realização', '15', 'left', 5)
         //property, formatType
         .addColumnProperty('releaseDate', 'DATE')
-
-        .setFilter(false)
+        
+        .setFilter(true)
 
         .setShowAll(false)
 

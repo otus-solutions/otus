@@ -81,7 +81,6 @@
       })
       .catch(function (reason) {
         _handleFailuresToSend(reason);
-        // _changeValidAliquotFlag(reason);
         $scope.$$postDigest(function(){
           self.dynamicDataTableChange(self.sendingExam.getExamList());
           LoadingScreenService.finish();
@@ -94,6 +93,7 @@
 
     function _handleFailuresToSend(reason) {
       if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE) {
+        self.sendingExam.examSendingLot.forcedSave = true;
         self.aliquotsNotIdentified = [];
         self.errorAliquots = _getUnique(reason.data.CONTENT);
         self.sendingExam.exams.forEach(function (exam) {
@@ -146,21 +146,6 @@
             _sendExam();
           });
       });
-    }
-
-    function _changeValidAliquotFlag(reason) {
-      if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE) {
-        self.sendingExam.examSendingLot.forcedSave = true;
-        self.sendingExam.exams.map(function (exam) {
-          exam.examResults.map(function (result) {
-            self.aliquotsNotIdentified.map(function (resultNotIdentified) {
-              if (resultNotIdentified.aliquotCode === result.aliquotCode) {
-                result.aliquotValid = false;
-              }
-            });
-          });
-        });
-      }
     }
 
     function _buildDialogs() {
