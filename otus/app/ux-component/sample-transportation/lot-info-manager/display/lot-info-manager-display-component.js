@@ -84,7 +84,7 @@
       //header, flex, align, ordinationPriorityIndex
       .addHeader('Processamento', '20', '', 2)
       //property, formatType
-      .addColumnProperty('aliquotCollectionData.time', 'DATE')
+      .addColumnProperty('aliquotCollectionData.processing', 'DATE')
 
         .addHeader('Função', '10', '', 5)
         .addColumnProperty('roleLabel')
