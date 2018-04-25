@@ -33,6 +33,7 @@
         self.datasets = [];
         self.dates = [];
         self.fieldCenters = [];
+        self.isShown = false;
 
 
 

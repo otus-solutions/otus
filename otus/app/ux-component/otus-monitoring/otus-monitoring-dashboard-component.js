@@ -25,6 +25,9 @@
     self.questionnaireData;
 
 
+    self.createInformationCards;
+    self.createCentersGoalsChart;
+    self.createCumulativeResultsChart;
     self.createQuestionnaireSpreadsheet;
     self.createQuestionnaireLineChart;
     self.parseData = parseData;
@@ -108,12 +111,12 @@
       if (self.createQuestionnaireLineChart) {
 
         var datasetInformation = {
-          "MG": { "name": "Minas Gerais", "backgroundColor": "rgba(255, 99, 132, 0.2)", "borderColor": "rgba(255, 99, 132, 1)" },
-          "SP": { "name": "São Paulo", "backgroundColor": "rgba(54, 162, 235, 0.2)", "borderColor": "rgba(54, 162, 235, 1)" },
-          "RS": { "name": "Rio Grande do Sul", "backgroundColor": "rgba(75, 192, 192, 0.2)", "borderColor": "rgba(75, 192, 192, 1)" },
-          "RJ": { "name": "Rio de Janeiro", "backgroundColor": "rgba(127, 190, 102, 0.2)", "borderColor": "rgba(127, 190, 102, 1)" },
-          "ES": { "name": "Espírito Santo", "backgroundColor": "rgba(153, 102, 255, 0.2)", "borderColor": "rgba(153, 102, 255, 1)" },
-          "BA": { "name": "Bahia", "backgroundColor": "rgba(255, 163, 102, 0.2)", "borderColor": "rgba(255, 163, 102, 1)" }
+          "MG": { "name": "Minas Gerais", "goal": 3025, "backgroundColor": "rgba(255, 99, 132, 0.2)", "borderColor": "rgba(255, 99, 132, 1)" },
+          "SP": { "name": "São Paulo", "goal": 4895, "backgroundColor": "rgba(54, 162, 235, 0.2)", "borderColor": "rgba(54, 162, 235, 1)" },
+          "RS": { "name": "Rio Grande do Sul", "goal": 1999, "backgroundColor": "rgba(75, 192, 192, 0.2)", "borderColor": "rgba(75, 192, 192, 1)" },
+          "RJ": { "name": "Rio de Janeiro", "goal": 1745, "backgroundColor": "rgba(127, 190, 102, 0.2)", "borderColor": "rgba(127, 190, 102, 1)" },
+          "ES": { "name": "Espírito Santo", "goal": 1024, "backgroundColor": "rgba(153, 102, 255, 0.2)", "borderColor": "rgba(153, 102, 255, 1)" },
+          "BA": { "name": "Bahia", "goal": 1945, "backgroundColor": "rgba(255, 163, 102, 0.2)", "borderColor": "rgba(255, 163, 102, 1)" }
         };
 
         $.getJSON("app/ux-component/otus-monitoring/relatorio-acompanhamento.json", function (json) {
@@ -126,7 +129,7 @@
           var startNumbers = startDate.split('/').map(function (item) {
             return parseInt(item, 10);
           });
-    
+     
           // filtra as informacoes de datas fora do intervalo
           rawData = rawData.filter(function (value) {
             return (((this[1] - value.year == 0) &&
@@ -159,39 +162,36 @@
 
             for (var k = 0; k < filteredDates.length; k++) {
 
-              if (dataByFieldCenter[i]) {
-
                 // parser da data, para adquirir valor de mes e ano
                 var date = filteredDates[k].split('/').map(function (item) {
                   return parseInt(item, 10);
                 });
 
-                // testa se 
-                if (dataByFieldCenter[i].month == date[0] &&
-                  dataByFieldCenter[i].year == date[1]) {
+                
+                if (dataByFieldCenter[i] && 
+                    dataByFieldCenter[i].month == date[0] &&
+                    dataByFieldCenter[i].year == date[1]) {
 
-                  if (k > 0) {
-                    fieldCenterDataset[k] = dataByFieldCenter[i].sum + fieldCenterDataset[k - 1];
-                  }
-                  else {
+                 // if (k > 0) {
+                  //  fieldCenterDataset[k] = dataByFieldCenter[i].sum + fieldCenterDataset[k - 1];
+                  //}
+                  //else {
                     fieldCenterDataset[k] = dataByFieldCenter[i].sum;
-                  }
+                  //}
                   i++;
                 }
                 else {
-
-
-
                   fieldCenterDataset[k] = 0;
                 }
-              }
+              
 
 
             }
-            //console.log(dataByFieldCenter);
+      
             datasets[j] = {
               label: datasetInformation[selectedFieldCentersList[j]].name,
               data: fieldCenterDataset,
+              goal: datasetInformation[selectedFieldCentersList[j]].goal,
               backgroundColor: datasetInformation[selectedFieldCentersList[j]].backgroundColor,
               borderColor: datasetInformation[selectedFieldCentersList[j]].borderColor,
               borderWidth: 1
@@ -208,14 +208,24 @@
             fieldCenters: selectedFieldCentersList,
             dates: filteredDates
           };
-          console.log(self.questionnaireData);
+
           self.createQuestionnaireLineChart(self.questionnaireData);
           self.createQuestionnaireSpreadsheet(self.questionnaireData);
+          self.createInformationCards(self.questionnaireData);
+          self.createCumulativeResultsChart(self.questionnaireData);
+          self.createCentersGoalsChart(self.questionnaireData);
 
         });
 
 
       }
+    }
+
+    function parseOverviewData()
+    {
+      $.getJSON("app/ux-component/otus-monitoring/relatorio-acompanhamento.json", function (json) {
+
+      });
     }
   }
 }());

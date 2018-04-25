@@ -8,7 +8,8 @@
             templateUrl: 'app/ux-component/otus-monitoring/visualizations/centers-goals/monitoring-centers-goals-visualization-template.html',
             bindings: {
                 selectedLots: '=',
-                csvData: '='
+                csvData: '=',
+                createCentersGoalsChart: '='
             }
         });
 
@@ -24,44 +25,8 @@
         self.$onInit = onInit;
 
         /* public functions */
-        self.createDoughnutChart = createDoughnutChart;
-        self.createBarChart = createBarChart;
         self.centers = [];
-        self.generalInformation = {
-            "goal": 2140,
-            "deaths": 35,
-            "completed": 1400,
-            "MG": {
-                "goal": 3115,
-                "deaths": 23,
-                "completed": 2937
-            },
-            "SP": {
-                "goal": 5061,
-                "deaths": 67,
-                "completed": 4688
-            },
-            "RS": {
-                "goal": 2061,
-                "deaths": 25,
-                "completed": 1921
-            },
-            "RJ": {
-                "goal": 1784,
-                "deaths": 17,
-                "completed": 1672
-            },
-            "ES": {
-                "goal": 1055,
-                "deaths": 18,
-                "completed": 961
-            },
-            "BA": {
-                "goal": 2029,
-                "deaths": 47,
-                "completed": 1847
-            }
-        }
+        self.chart;
 
 
 
@@ -73,122 +38,64 @@
                 result.forEach(function (fieldCenter) {
                     self.centers.push(fieldCenter.acronym)
                 });
-                createBarChart();
             });
-            // self.otusExamsLotsManager.listComponent = self;
 
-            //createBarChart();
-            //createDoughnutChart();
-
+            self.createCentersGoalsChart = createCentersGoalsChart;
 
         }
 
-        function createBarChart() {
+        function createCentersGoalsChart(qData) {
+            var cumulativeInfo = [];
 
-            var centersCompleted = [
-                self.generalInformation.MG.completed,
-                self.generalInformation.SP.completed,
-                self.generalInformation.RS.completed,
-                self.generalInformation.RJ.completed,
-                self.generalInformation.ES.completed,
-                self.generalInformation.BA.completed 
-            ];
 
-            var centersGoals = [
-                self.generalInformation.MG.goal - self.generalInformation.MG.completed - self.generalInformation.MG.deaths,
-                self.generalInformation.SP.goal - self.generalInformation.SP.completed - self.generalInformation.SP.deaths,
-                self.generalInformation.RS.goal - self.generalInformation.RS.completed - self.generalInformation.RS.deaths,
-                self.generalInformation.RJ.goal - self.generalInformation.RJ.completed - self.generalInformation.RJ.deaths,
-                self.generalInformation.ES.goal - self.generalInformation.ES.completed - self.generalInformation.ES.deaths,
-                self.generalInformation.BA.goal - self.generalInformation.BA.completed - self.generalInformation.BA.deaths
-                
-            ];
+            for (var i = 0; i < qData.data.length; i++) {
+                var total = (qData.data[i].data.reduce(function (a, b) {
+                    return a + b;
+                }, 0));
 
-            var centersDeaths = [
-                self.generalInformation.MG.deaths,
-                self.generalInformation.SP.deaths,
-                self.generalInformation.RS.deaths,
-                self.generalInformation.RJ.deaths,
-                self.generalInformation.ES.deaths,
-                self.generalInformation.BA.deaths
-            ];
-            
-            var ctx = document.getElementById("centersGoalsDoughnutChart");
-            var myChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: self.centers,
-                    datasets: [{
-                        label: 'Meta Cumprida',
-                        data: centersCompleted,
-                        backgroundColor: [
-                            'rgba(49, 216, 88, 0.2)',
-                            'rgba(49, 216, 88, 0.2)',
-                            'rgba(49, 216, 88, 0.2)',
-                            'rgba(49, 216, 88, 0.2)',
-                            'rgba(49, 216, 88, 0.2)',
-                            'rgba(49, 216, 88, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(49, 216, 88, 1)',
-                            'rgba(49, 216, 88, 1)',
-                            'rgba(49, 216, 88, 1)',
-                            'rgba(49, 216, 88, 1)',
-                            'rgba(49, 216, 88, 1)',
-                            'rgba(49, 216, 88, 1)'
-                        ],
-
-                        borderWidth: 1.5
-                    },
-                    {
-                        label: 'Meta Restante',
-                        data: centersGoals,
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(127, 190, 102, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 163, 102, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(127, 190, 102, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 163, 102, 1)'
-                        ],
-
-                        borderWidth: 1.5
-                    },
-                    {
-                        label: 'Falecimentos',
-                        data: centersDeaths,
-                        backgroundColor: [
-                            //'rgba(255, 99, 132, 0.2)'
-                        ],
-                        borderColor: [
-                            //'rgba(255, 99, 132, 1)'
-                        ],
-
-                        borderWidth: 1.5
-                    }]
-                },
-                options: {
-                    scales: {
-                        xAxes: [{
-                            stacked: true
-                        }],
-                        yAxes: [{
-                            stacked:true,
-                            ticks: {
-                                beginAtZero: false
-                              }
-                        }]
-                    }
+                var info = {
+                    label: [qData.data[i].label, ""],
+                    data: [(total / qData.data[i].goal) * 100, 100 - ((total / qData.data[i].goal) * 100)],
+                    backgroundColor: [qData.data[i].backgroundColor, 'rgba(250, 250, 250, 0.5)'],
+                    borderColor: [qData.data[i].borderColor, 'rgba(240, 240, 240, 1)'],
+                    borderWidth: 1
                 }
-            });
+                cumulativeInfo[i] = info;
+            }
+            console.log(cumulativeInfo);
+
+            if (!self.chart) {
+
+                var ctx = document.getElementById("centersGoalsDoughnutChart");
+                self.chart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        datasets: cumulativeInfo
+                    },
+                    options: {
+                        //responsive: false,
+                        maintainAspectRatio: true,
+                        cutoutPercentage: 40,
+                        title: {
+                            display: true,
+                            fontSize:20,
+                            text: 'Porcentagem de Participantes Contemplados por Centro'
+                        },
+                        //cutoutPercentage: 70,
+                        legend: {
+                            //display: false
+                        },
+                        tooltips: {
+                            //enabled: false
+                        }
+                    }
+                });
+            }
+            else {
+                //self.chart.config.data.labels = (qData.fieldCenters);
+                self.chart.data.datasets = (cumulativeInfo);
+                self.chart.update();
+            }
 
         }
 
@@ -228,93 +135,94 @@
                         'percentagem da meta a ser cumprida'
                     ],
                     datasets: [{
-                        label: '% da meta cumprida',
+                        label: '% da meta de Minal Gerais cumprida',
                         data: dataMG,
                         backgroundColor: [
-                            'rgba(49, 216, 88, 0.5)',
+                            "rgba(255, 99, 132, 0.2)",
                             'rgba(250, 250, 250, 0.5)'
                         ],
                         borderColor: [
-                            'rgba(49, 216, 88, 1)',
+                            "rgba(255, 99, 132, 1)",
                             'rgba(240, 240, 240, 1)'
                         ],
 
-                        borderWidth: 1.5
+                        borderWidth: 1
                     },
                     {
-                        label: '% da meta cumprida',
+                        label: '% da meta de São Paulo cumprida',
                         data: dataSP,
                         backgroundColor: [
-                            'rgba(49, 216, 88, 0.5)',
+                            "rgba(54, 162, 235, 0.2)",
                             'rgba(250, 250, 250, 0.5)'
                         ],
                         borderColor: [
-                            'rgba(49, 216, 88, 1)',
+                            "rgba(54, 162, 235, 1)",
                             'rgba(240, 240, 240, 1)'
                         ],
 
-                        borderWidth: 1.5
+                        borderWidth: 1
                     },
                     {
-                        label: '% da meta cumprida',
+                        label: '% da meta de Rio Grande do Sul cumprida',
                         data: dataRS,
                         backgroundColor: [
-                            'rgba(49, 216, 88, 0.5)',
+                            "rgba(75, 192, 192, 0.2)",
                             'rgba(250, 250, 250, 0.5)'
                         ],
                         borderColor: [
-                            'rgba(49, 216, 88, 1)',
+                            "rgba(75, 192, 192, 1)",
                             'rgba(240, 240, 240, 1)'
                         ],
 
-                        borderWidth: 1.5
+                        borderWidth: 1
                     },
                     {
-                        label: '% da meta cumprida',
+                        label: '% da meta de Rio de Janeiro cumprida',
                         data: dataRJ,
                         backgroundColor: [
-                            'rgba(49, 216, 88, 0.5)',
+                            "rgba(127, 190, 102, 0.2)",
                             'rgba(250, 250, 250, 0.5)'
                         ],
                         borderColor: [
-                            'rgba(49, 216, 88, 1)',
+                            "rgba(127, 190, 102, 1)",
                             'rgba(240, 240, 240, 1)'
                         ],
 
-                        borderWidth: 1.5
+                        borderWidth: 1
                     },
                     {
-                        label: '% da meta cumprida',
+                        label: '% da meta de Espírito Santo cumprida',
                         data: dataES,
                         backgroundColor: [
-                            'rgba(49, 216, 88, 0.5)',
+                            "rgba(153, 102, 255, 0.2)",
                             'rgba(250, 250, 250, 0.5)'
                         ],
                         borderColor: [
-                            'rgba(49, 216, 88, 1)',
+                            "rgba(153, 102, 255, 1)",
                             'rgba(240, 240, 240, 1)'
                         ],
 
-                        borderWidth: 1.5
+                        borderWidth: 1
                     },
                     {
-                        label: '% da meta cumprida',
+                        label: '% da meta de Bahia cumprida',
                         data: dataBA,
                         backgroundColor: [
-                            'rgba(49, 216, 88, 0.5)',
+                            "rgba(255, 163, 102, 0.2)",
                             'rgba(250, 250, 250, 0.5)'
                         ],
                         borderColor: [
-                            'rgba(49, 216, 88, 1)',
+                            "rgba(255, 163, 102, 1)",
                             'rgba(240, 240, 240, 1)'
                         ],
 
-                        borderWidth: 1.5
+                        borderWidth: 1
                     }]
                 },
                 options: {
                     //responsive: false,
-                    //maintainAspectRatio: true,
+                    maintainAspectRatio: true,
+                    cutoutPercentage: 40,
                     //cutoutPercentage: 70,
                     legend: {
                         //display: false

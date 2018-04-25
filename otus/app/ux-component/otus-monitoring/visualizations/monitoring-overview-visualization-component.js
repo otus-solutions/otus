@@ -49,7 +49,7 @@
 
 
         function createLineChart(qData) {
-
+            console.log(qData);
             if (!self.lineChart) {
 
                 var ctx = document.getElementById("myLineChart");
@@ -63,14 +63,20 @@
                         showTooltips: false,
                         responsive: true,
                         maintainAspectRatio:false,
+                        title: {
+                            display: true,
+                            fontSize:20,
+                            text: 'Número de Questionários Completos de Cada Centro por Mês'
+                        },
                         scales: {
+                            xAxes: [{
+                                stacked: false
+                            }],
                             yAxes: [{
+                                stacked:false,
                                 ticks: {
-                                    beginAtZero: true/*,
-                                        callback: function (value) {
-                                            return value + "%";
-                                        }*/
-                                }
+                                    beginAtZero: false
+                                  }
                             }]
                         }
                     }

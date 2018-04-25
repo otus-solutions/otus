@@ -6,7 +6,12 @@
 
     <md-card flex>
         <md-card-content>
-            <div layout="column" flex>
+            <div flex >
+                <md-checkbox ng-model="$ctrl.isShown">
+                    Mostrar/Esconder tabela de dados
+                </md-checkbox>
+            </div>
+            <div ng-if="$ctrl.isShown" layout="column" flex>
                 <div layout="column" flex>
                     <md-list flex>
                         <md-list-item class="md-1-line" style="margin-left:8px">
