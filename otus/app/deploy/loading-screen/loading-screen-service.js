@@ -11,13 +11,19 @@
     const LOGO_SOURCE = "app/static-resource/image/coruja_pesquisadora.png";
     const BACKGROUND_COLOR = "#009688";
     const MESSAGE = "Por favor, aguarde o carregamento.";
-
+    const LOCKED_MESSAGE = "Loading bloqueado pela chave: ";
+    const NEW_KEY_NOT_ADDED = "Não foi possível atribuir a nova chave: ";
+    const NOT_FINISHED_WITH_KEY = "Não foi possível encerrar o loding com a chave: ";
+    
     var self = this;
+    self.key = '';
     /* Lifecycle hooks */
     self.$onInit = onInit;
     /* Public methods */
     self.start = start;
     self.finish = finish;
+    self.startingLockedByKey = startingLockedByKey;
+    self.finishUnlockedByKey = finishUnlockedByKey;
     self.changeMessage = changeMessage;
 
     onInit();
@@ -27,17 +33,50 @@
       self.loading_screen = null;
       changeMessage();
     }
+    
+    function _printKeyMsg(key, msg) {
+      var fullMsg = LOCKED_MESSAGE + self.key;
+      if(key || msg) fullMsg+= ' - ' + msg + key;
+      console.log(fullMsg);
+    }
+
+    function _printLog(mgs){
+      console.log(msg);
+    };
+
+    function startingLockedByKey(key) {
+      if(!self.key || self.key === key){
+        self.key = key;
+        start();
+      } else {
+        _printKeyMsg(key, NEW_KEY_NOT_ADDED);
+      }
+    }
+
+    function finishUnlockedByKey(key) {
+      if(self.key === key){
+        self.key = '';
+        finish();
+      } else {
+        _printKeyMsg(key, NOT_FINISHED_WITH_KEY);
+      }
+    }
 
     function start() {
-      if (!self.loading_screen)
+      if (!self.loading_screen){
         _constructor();
+      };
     }
 
     function finish() {
-      if (self.loading_screen) {
-        self.loading_screen.finish();
-        self.loading_screen = null;
-        changeMessage();
+      if(!self.key){
+        if (self.loading_screen) {
+          self.loading_screen.finish();
+          self.loading_screen = null;
+          changeMessage();
+        }
+      } else {
+        _printKeyMsg();
       }
     }
 

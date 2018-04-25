@@ -1,5 +1,5 @@
 <div ui-view layout="column" ng-if="$ctrl.fileStructure">
-  <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-not-identified="$ctrl.aliquotsNotIdentified" dynamic-data-table-change="$ctrl.updateDataTable()"
+  <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-not-identified="$ctrl.aliquotsNotIdentified" dynamic-data-table-change="$ctrl.updateDataTable"
     error-aliquots="$ctrl.errorAliquots" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
   <md-content layout="column">
     <div>
@@ -33,27 +33,27 @@
           </div>
         </md-card-content>
       </md-card>
-      <div layout="row" ng-if="$ctrl.aliquotsNotIdentified.length && ($ctrl.aliquotsNotIdentified.length != $ctrl.changedResults.length)"
-        flex>
-        <md-button ng-click="$ctrl.changeResults('resultsWithErrors')" class="md-warn md-accent" aria-label="Salvar">
+
+      <div layout="row" ng-if="$ctrl.aliquotsNotIdentified.length" ng-init="button={which: 'error'}" flex>
+        <md-button ng-if="button.which == 'error'" ng-click="$ctrl.changeResults('resultsWithErrors'); button.which = 'all'" class="md-warn md-accent"
+          aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir resultados com erro
         </md-button>
-      </div>
-      <div layout="row" ng-if="$ctrl.aliquotsNotIdentified.length && ($ctrl.aliquotsNotIdentified.length === $ctrl.changedResults.length)"
-        flex>
-        <md-button ng-click="$ctrl.changeResults('all')" class="md-accent" aria-label="Salvar">
+
+        <md-button ng-if="button.which == 'all'" ng-click="$ctrl.changeResults('all'); button.which = 'error'" class="md-accent" aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir todos resultados
         </md-button>
       </div>
-
-      <md-divider></md-divider>
-
-      <dynamic-data-table flex dynamic-table-settings="$ctrl.settings" table-update-function="$ctrl.updateDataTable">
-      </dynamic-data-table>
     </div>
-  </md-content>
+
+    <md-divider></md-divider>
+
+    <dynamic-data-table flex dynamic-table-settings="$ctrl.settings" table-update-function="$ctrl.updateDataTable">
+    </dynamic-data-table>
+</div>
+</md-content>
 </div>
 <div layout="column" layout-align="center center">
   <img src="app/static-resource/image/otus-crash.png" ng-if="!$ctrl.fileStructure" flex>
