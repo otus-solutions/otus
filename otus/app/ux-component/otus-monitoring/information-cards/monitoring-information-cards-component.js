@@ -72,13 +72,23 @@
 
             self.reachedTotal = 0;
             self.goal = 0;
+            self.goalPercentage = 0;
+
             for (var i = 0; i < qData.data.length; i++) {
+
                 self.goal += qData.data[i].goal;
+                var totalGoal = 0;
+
                 for (var j = 0; j < qData.data[i].data.length; j++) {
                     self.reachedTotal += qData.data[i].data[j];
+                    totalGoal += qData.data[i].data[j];
                 }
+
+                self.goalPercentage += totalGoal / qData.data[i].goal;
+                
             }
-            self.goalPercentage = ((self.reachedTotal / self.goal) * 100).toFixed(2);
+            //self.goalPercentage = ((self.reachedTotal / self.goal) * 100).toFixed(2);
+            self.goalPercentage = ((self.goalPercentage / qData.data.length)*100).toFixed(2);
 
             createProgressWheel(
                 self.progressWheelChart,
