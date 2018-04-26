@@ -54,7 +54,7 @@
                 }, 0));
 
                 var info = {
-                    label: [qData.data[i].label, ""],
+                    label: qData.data[i].label,
                     data: [(total / qData.data[i].goal) * 100, 100 - ((total / qData.data[i].goal) * 100)],
                     backgroundColor: [qData.data[i].backgroundColor, 'rgba(250, 250, 250, 0.5)'],
                     borderColor: [qData.data[i].borderColor, 'rgba(240, 240, 240, 1)'],
@@ -70,7 +70,8 @@
                 self.chart = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        datasets: cumulativeInfo
+                        datasets: cumulativeInfo//,
+                        //labels:qData.fieldCenters
                     },
                     options: {
                         //responsive: false,
@@ -83,16 +84,27 @@
                         },
                         //cutoutPercentage: 70,
                         legend: {
-                            //display: false
+                            display: false
                         },
                         tooltips: {
                             //enabled: false
+                            //mode:'index',
+                            //intersect:false,
+                            callbacks: {
+                                label: function(t,d) {
+                                    return d.datasets[t.datasetIndex].label +
+                                    ": " +
+                                    (d.datasets[t.datasetIndex].data[t.index].toFixed(2)) +
+                                    "%";
+                                }
+                            }
                         }
                     }
                 });
             }
             else {
                 //self.chart.config.data.labels = (qData.fieldCenters);
+                //self.chart.config.data.labels = qData.fieldCenters;
                 self.chart.data.datasets = (cumulativeInfo);
                 self.chart.update();
             }
