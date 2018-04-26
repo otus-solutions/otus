@@ -118,11 +118,14 @@
     }
 
     function createLot(lotStructure) {
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
       var deferred = $q.defer();
 
       ProjectRepositoryService.createLot(lotStructure)
         .then(function (response) {
           deferred.resolve(JSON.parse(response));
+          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
@@ -132,11 +135,14 @@
     }
 
     function updateLot(lotStructure) {
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
       var deferred = $q.defer();
 
       ProjectRepositoryService.updateLot(lotStructure)
         .then(function (response) {
           deferred.resolve(JSON.parse(response));
+          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
