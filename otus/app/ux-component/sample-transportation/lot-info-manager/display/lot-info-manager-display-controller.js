@@ -55,27 +55,27 @@
     function _buildDynamicTableSettings(){
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
       //header, flex, align, ordinationPriorityIndex
-      .addHeader('Código', '20', 'left', 4)
+      .addHeader('Código', '15', 'left', 4)
       //property, formatType
       .addColumnProperty('code')
 
       //header, flex, align, ordinationPriorityIndex
-      .addHeader('Tipo', '30', '', 1)
+      .addHeader('Tipo', '25', '', 1)
       //property, formatType
       .addColumnProperty('label')
 
       //header, flex, align, ordinationPriorityIndex
-      .addHeader('Recipiente', '20', '', 3)
+      .addHeader('Recipiente', '15', '', 3)
       //property, formatType
       .addColumnProperty('containerLabel')
 
       //header, flex, align, ordinationPriorityIndex
-      .addHeader('Processamento', '20', '', 2)
+      .addHeader('Processamento', '15', '', 2)
       //property, formatType
       .addColumnProperty('aliquotCollectionData.processing', 'DATE')
 
-        .addHeader('Função', '10', '', 5)
-        .addColumnProperty('roleLabel')
+      .addHeader('Função', '15', '', 5)
+      .addColumnProperty('roleLabel')
 
       //icon, tooltip, classButton, successMsg,
       //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
