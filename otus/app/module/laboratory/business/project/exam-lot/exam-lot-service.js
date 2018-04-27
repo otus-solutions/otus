@@ -59,6 +59,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -75,6 +76,7 @@
           LoadingScreenService.finish();
         })
         .catch(function (err) {
+          LoadingScreenService.finish();
           deferred.reject(err);
         });
 
@@ -129,6 +131,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -146,6 +149,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -175,6 +179,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -190,6 +195,7 @@
         })
         .catch(function(err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
