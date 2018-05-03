@@ -166,6 +166,7 @@
 <script src="app/deploy/bootstrap/session-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/project-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/user-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/report-module-bootstrap.js"></script>
 <!-- # Deploy > Data Source -->
 <script src="app/deploy/data-source/data-source-loader-service.js"></script>
 <script src="app/deploy/data-source/activity-data-source-service.js"></script>
@@ -200,6 +201,7 @@
 <script src="app/deploy/rest/otus-api/laboratory/sampleTransport/sample-transport-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/extraction/token-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/exam/exams-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/report/participant-report-rest-service.js"></script>
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
 <script src="app/deploy/state/access/access-state-provider.js"></script>
@@ -397,6 +399,32 @@
 <script src="app/module/user-access/service/signup-service.js"></script>
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
+<!-- build:js scripts/report-module.min.js -->
+<!-- # Module > Report -->
+<script src="app/module/report/module.js"></script>
+
+<!-- # report > Business -->
+<script src="app/module/report/business/module.js"></script>
+<script src="app/module/report/business/participant-report-service.js"></script>
+<script src="app/module/report/business/participant-report-widget-factory.js"></script>
+<script src="app/module/report/business/dynamic-report/module.js"></script>
+<script src="app/module/report/business/dynamic-report/dynamic-report-service.js"></script>
+<script src="app/module/report/business/dynamic-report/scope/module.js"></script>
+<script src="app/module/report/business/dynamic-report/scope/scope-helper-service.js"></script>
+<script src="app/module/report/business/dynamic-report/scope/scope-report-factory.js"></script>
+
+<!-- # report > core -->
+<script src="app/module/report/core/module.js"></script>
+<script src="app/module/report/core/module-service.js"></script>
+<script src="app/module/report/core/context-service.js"></script>
+<script src="app/module/report/core/event-service.js"></script>
+
+<!-- # report > repository -->
+<script src="app/module/report/repository/module.js"></script>
+<script src="app/module/report/repository/participant-report-repository-service.js"></script>
+<script src="app/module/report/repository/participant-report-collection-service.js"></script>
+<!-- endbuild -->
+<!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/ux-component-module.min.js -->
 <script src="app/ux-component/module.js"></script>
 <script src="app/ux-component/report-export/report-export-directive.js"></script>
@@ -414,6 +442,7 @@
 <script src="app/ux-component/activity-manager-toolbar/activity-manager-toolbar-component.js"></script>
 <script src="app/ux-component/activity-player/activity-player-component.js"></script>
 <script src="app/ux-component/participant-dashboard/participant-dashboard-component.js"></script>
+<script src="app/ux-component/participant-info/participant-info-component.js"></script>
 <script src="app/ux-component/participant-dashboard-toolbar/participant-dashboard-toolbar-component.js"></script>
 <script src="app/ux-component/dashboard/dashboard-component.js"></script>
 <script src="app/ux-component/dashboard-display/dashboard-display-component.js"></script>
@@ -434,6 +463,7 @@
 <script src="app/ux-component/sample-transportation/aliquots-chart/sample-transportation-lot-aliquots-chart-componet.js"></script>
 <script src="app/ux-component/sample-transportation/lot-info-manager/sample-transportation-lot-info-manager-component.js"></script>
 <script src="app/ux-component/sample-transportation/lot-info-manager/manager-toolbar/lot-info-manager-toolbar-component.js"></script>
+<script src="app/ux-component/sample-transportation/lot-info-manager/display/lot-info-manager-display-controller.js"></script>
 <script src="app/ux-component/sample-transportation/lot-info-manager/display/lot-info-manager-display-component.js"></script>
 <script src="app/ux-component/installer/initial-config-controller.js"></script>
 
@@ -454,6 +484,9 @@
 <script src="app/ux-component/exam/dashboard/exam-sending/results-visualizer/visualizer-component.js"></script>
 <script src="app/ux-component/exam/dashboard/exam-sending/results-visualizer/toolbar/results-visualizer-toolbar-component.js"></script>
 
+<!-- reports-ux -->
+<script src="app/ux-component/report/dashboard/report-dashboard-component.js"></script>
+
 <!--  dynamic-data-table  -->
 <script src="app/ux-component/dynamic-data-table/dynamic-data-table-component.js"></script>
 <script src="app/ux-component/dynamic-data-table/dynamic-table-settings-factory.js"></script>
@@ -470,12 +503,16 @@
 <script src="app/ux-component/laboratory/control-panel/refresh-button/laboratory-refresh-button-component.js"></script>
 <script src="app/ux-component/laboratory/main-panel/aliquots-view/aliquots-view-component.js"></script>
 
+<!--  otus-panel  -->
+<script src="app/ux-component/otus-panel/otus-panel-component.js"></script>
+
 <!--   ----    -->
 <script src="app/ux-component/paper-activity-initializer/checker-item-factory.js"></script>
 <script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>
 <script src="app/ux-component/participant-search/participant-search-component.js"></script>
 <script src="app/ux-component/user-login/login-controller.js"></script>
 <script src="app/ux-component/user-signup/signup-controller.js"></script>
+<script src="app/ux-component/translate-datetime/pt-br.js"></script>
 <!-- endbuild -->
 <!-- enduncache -->
 

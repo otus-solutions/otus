@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -15,6 +15,7 @@
     /* Public methods */
     self.fireParticipantSelected = fireParticipantSelected;
     self.onParticipantSelected = onParticipantSelected;
+    self.unsubscribeOnParticipantSelected = unsubscribeOnParticipantSelected;
     self.fireLogin = fireLogin;
     self.onLogin = onLogin;
     self.fireLogout = fireLogout;
@@ -42,6 +43,13 @@
 
     function onLogout(listener) {
       _onLogoutListeners.push(listener);
+    }
+
+    function unsubscribeOnParticipantSelected(listener) {
+      var index = _onParticipantSelectedListeners.indexOf(listener);
+      if (index > -1) {
+        _onParticipantSelectedListeners.splice(index, 1);
+      }
     }
 
     function _notifyEvent(listeners, data, endLoop) {

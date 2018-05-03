@@ -43,10 +43,11 @@
 
   Controller.$inject = [
     '$filter',
-    '$mdToast'
+    '$mdToast',
+    '$scope'
   ];
 
-  function Controller($filter, $mdToast) {
+  function Controller($filter, $mdToast, $scope) {
     var self = this;
 
     self.selectedItemCounter = 0;
@@ -100,12 +101,21 @@
     self.currentRowOnHover;
 
     function onInit() {
-      console.log('a', self.orderByInsertion);
+      if(!$scope.safeApply){ 
+        $scope.safeApply = function(fn) {
+          var phase = this.$root.$$phase;
+          if(phase == '$apply' || phase == '$digest') {
+            if(fn && (typeof(fn) === 'function')) {
+              fn();
+            }
+          } else {
+            this.$apply(fn);
+          }
+        };
+      }
       _initializeDefaultValues();
       self.orderByInsertion ? orderByIndex() : _setOrderQuery();
-
       self.tableUpdateFunction = _refreshGrid;
-
       creacteTable();
     }
 
@@ -221,6 +231,7 @@
       self.elementsArray = newElementsArray || self.elementsArray;
       self.selectedItemCounter = 0;
       self.creacteTable();
+      $scope.safeApply();
     }
 
     function _havePagination() {
@@ -369,11 +380,6 @@
     self.getOrderIcon = function () {
       return self.orderInverse ? 'dynamic-arrow-icon-inverse' : 'dynamic-arrow-icon';
     }
-
-    self.verifyOrderIcon = function (index) {
-      return self.orderQuery === 'column' + $index + '.value' ? true : false;
-    }
-
 
     function rowPerPageChange() {
       self.table.currentPage = 1;

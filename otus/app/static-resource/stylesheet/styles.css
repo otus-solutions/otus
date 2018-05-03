@@ -20,7 +20,6 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
   display: none;
 }
 
-
 /** finish style participant search **/
 
 .selectedState {
@@ -59,7 +58,6 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
   width: 18px;
 }
 
-
 /**  ACTIVITY MANAGER LIST **/
 
 .activity-item-icon {
@@ -72,7 +70,6 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
 .label-light-gray {
   color: #757575;
 }
-
 
 /** participant-search **/
 
@@ -97,19 +94,19 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
   white-space: normal;
 }
 
-otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
   color: rgb(255, 255, 255) !important;
 }
 
-otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
   color: rgb(255, 255, 255) !important;
 }
 
-otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {
   fill: rgb(255, 254, 254) !important;
 }
 
-otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>md-autocomplete {
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete {
   color: rgb(255, 255, 255) !important;
 }
 
@@ -125,9 +122,11 @@ otus-participant-dashboard-toolbbar>div>md-toolbar>div>otus-participant-search>m
 .autocomplete-custom-participant-template .participant-title md-icon {
   margin-right: 10px;
 }
+
 /** finish participant-search **/
 
 /** tube-item-view-component **/
+
 .tubeNotCollect {
   transition: all linear 0.5s;
   opacity: 0.4;
@@ -137,15 +136,18 @@ md-checkbox.md-checkbox-small {
   transform: scale(0.8);
   margin: 0;
 }
+
 /** finish tube-item-view-component**/
 
 /** lot-info-maneger-display-component **/
+
 .error {
   color: red;
 }
+
 /** finish lot-info-maneger-display-component **/
 
-.remove-padding{
+.remove-padding {
   padding: 0;
 }
 
@@ -153,32 +155,37 @@ md-input-container.remove-errors-spacer .md-errors-spacer {
   min-height: 0;
 }
 
-md-input-container.input-container-lot-margin{
+md-input-container.input-container-lot-margin {
   margin-top: 2px;
   margin-bottom: 2px;
 }
 
-.md-subheader.backgroud-color-default{
+.md-subheader.backgroud-color-default {
   background-color: unset;
 }
 
-.md-subheader.left-alignment{
+md-content.md-default-theme.backgroud-color-default{
+  background-color: unset;
+}
+
+.md-subheader.left-alignment {
   text-align: left;
 }
 
-.rotate-180-deg,
-.reverse-rotate-180-deg {
+.rotate-180-deg, .reverse-rotate-180-deg {
   -webkit-transition: 0.5s ease all;
   -moz-transition: 0.5s ease all;
   -o-transition: 0.5s ease all;
   transition: 0.5s ease all;
 }
+
 .rotate-180-deg {
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
 }
+
 .reverse-rotate-180-deg {
   -webkit-transform: rotate(0deg);
   -moz-transform: rotate(0deg);
@@ -186,7 +193,7 @@ md-input-container.input-container-lot-margin{
   transform: rotate(0deg);
 }
 
-md-content.no-background-color{
+md-content.no-background-color {
   background-color: transparent;
 }
 
@@ -197,7 +204,7 @@ md-content.no-background-color{
   background: none;
   color: #00008B;
   font-weight: bold;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .fieldDisable {
@@ -210,30 +217,78 @@ md-content.no-background-color{
   font-family: arial;
 }
 
-.dtp>.dtp-content>.dtp-date-view>header.dtp-header{
-  background: rgb(0,121,107) !important;
-}
-.dtp div.dtp-date, .dtp div.dtp-time{
-  background: rgb(0,150,136) !important;
+.dtp>.dtp-content>.dtp-date-view>header.dtp-header {
+  background: rgb(0, 121, 107) !important;
 }
 
-.dtp table.dtp-picker-days tr>td>a.selected{
-  background: rgb(0,121,107) !important;
-
-}
-.dtp table.dtp-picker-days tr>td>a.hilite:not(.selected){
-  color: rgb(0,150,136) !important;
+.dtp div.dtp-date, .dtp div.dtp-time {
+  background: rgb(0, 150, 136) !important;
 }
 
-.dtp .dtp-picker-time>a.dtp-select-hour.selected{
-  background: rgb(0,121,107) !important;
+.dtp table.dtp-picker-days tr>td>a.selected {
+  background: rgb(0, 121, 107) !important;
 }
 
-.dtp .dtp-hand.on{
-  background: rgb(0,150,136) !important;
+.dtp table.dtp-picker-days tr>td>a.hilite:not(.selected) {
+  color: rgb(0, 150, 136) !important;
 }
 
-.dtp .dtp-actual-meridien a.selected{
-  background: rgb(0,150,136) !important;
+.dtp .dtp-picker-time>a.dtp-select-hour.selected {
+  background: rgb(0, 121, 107) !important;
+}
 
+.dtp .dtp-hand.on {
+  background: rgb(0, 150, 136) !important;
+}
+
+.dtp .dtp-actual-meridien a.selected {
+  background: rgb(0, 150, 136) !important;
+}
+
+.iconInverted {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
+
+.checkboxdemoSelectAll .demo-legend {
+  color: #3F51B5;
+}
+
+.checkboxdemoSelectAll .demo-fieldset {
+  border-style: solid;
+  border-width: 1px;
+  height: 100%;
+}
+
+.checkboxdemoSelectAll .demo-select-all-checkboxes {
+  padding-left: 30px;
+}
+
+.truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.toolbarInfo {
+  background-color: rgb(0, 145, 234) !important;
+}
+
+.otus-panel{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background-color: #f5f7f9;
+  padding: 10px;
+}
+
+.otus-panel-subheader{
+  color:white;
+  font-size: 1.2em;
+  border-radius: 3px; 
+  position: relative; 
+  top: -50px;
+  margin-bottom: -60px;
+  padding: 20px;
 }
