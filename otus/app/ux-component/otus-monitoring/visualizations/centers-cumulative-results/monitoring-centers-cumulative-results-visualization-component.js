@@ -125,7 +125,7 @@
                         title: {
                             display: true,
                             fontSize:20,
-                            text: 'Número Total de Questionários Completos por Centro'
+                            text: 'Número Total de Atividades Finalizadas por Centro'
                         },
                         legend: {
                             display: false

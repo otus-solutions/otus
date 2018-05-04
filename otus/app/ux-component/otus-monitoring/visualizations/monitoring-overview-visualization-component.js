@@ -49,7 +49,7 @@
 
 
         function createLineChart(qData) {
-            console.log(qData);
+            //console.log(qData,"hello world");
             if (!self.lineChart) {
 
                 var ctx = document.getElementById("myLineChart");
@@ -66,7 +66,7 @@
                         title: {
                             display: true,
                             fontSize:20,
-                            text: 'Número de Questionários Completos de Cada Centro por Mês'
+                            text: 'Número de Atividades Finalizadas de Cada Centro por Mês'
                         },
                         scales: {
                             xAxes: [{

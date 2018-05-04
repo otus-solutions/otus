@@ -34,10 +34,10 @@
           </md-input-container>
 
           <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
-            <label class="md-subheader">Sigla do Questionário:</label>
+            <label class="md-subheader">Sigla da Atividade:</label>
             <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
               <md-tooltip>
-                Sigla do questionário a ser visualizado
+                Sigla da atividade a ser visualizada
               </md-tooltip>
               <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" value="{{questionnaire}}" ng-click="">
                 {{questionnaire}}
