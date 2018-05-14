@@ -41,12 +41,10 @@
     }
 
     function ExamsDashboard() {
-      ProjectContextService.setStateToGo(STATE.EXAM_LOT_MANAGER_LIST);
-      ApplicationStateService.activateExamsDashBoard();
+      ApplicationStateService.activateExamsLotsManagerList()
     }
 
     function sendingExam() {
-      ProjectContextService.setStateToGo(STATE.EXAM_SENDING);
       ApplicationStateService.activateExamSending();
     }
 

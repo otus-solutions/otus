@@ -1,6 +1,5 @@
 // Karma configuration
 // Generated on Wed Jan 27 2016 14:11:34 GMT-0200 (Horário brasileiro de verão)
-
 module.exports = function (config) {
   var APP_ROOT_PATH = 'app/';
   var DEPENDENCIES_ROOT_PATH = 'app/shared/';
@@ -18,18 +17,19 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       /* External dependencies */
-      NODE_MODULES_ROOT_PATH + 'jquery/dist/jquery.min.js',
       NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
+      NODE_MODULES_ROOT_PATH + 'babel-polyfill/dist/polyfill.js',
+      NODE_MODULES_ROOT_PATH + 'angular-resource/angular-resource.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
-      NODE_MODULES_ROOT_PATH + 'angular-bind-html-compile-ci-dev/angular-bind-html-compile.js',
-      NODE_MODULES_ROOT_PATH + 'angular-immutable/dist/immutable.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
-      NODE_MODULES_ROOT_PATH + 'angular-resource/angular-resource.min.js',
+      NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.js',
       NODE_MODULES_ROOT_PATH + 'angular-ui-mask/dist/mask.min.js',
-      NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.min.js',
+      NODE_MODULES_ROOT_PATH + 'ng-material-datetimepicker/dist/angular-material-datetimepicker.min.js',
+      NODE_MODULES_ROOT_PATH + 'jquery/dist/jquery.min.js',
+      NODE_MODULES_ROOT_PATH + 'angular-immutable/dist/immutable.min.js',
       NODE_MODULES_ROOT_PATH + 'js-base64/base64.min.js',
       NODE_MODULES_ROOT_PATH + 'lokijs/build/lokijs.min.js',
       NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-angular.js',
@@ -38,17 +38,17 @@ module.exports = function (config) {
       /* Otus platform*/
       NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
       NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
-      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model.min.js',
+      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model.js',
       /* Static resources files */
       APP_ROOT_PATH + 'static-resource/**/*.js',
       /* Application files */
       APP_ROOT_PATH + 'app.js',
       /* Applicatoin Module files */
       APP_ROOT_PATH + '**/**/module.js',
-      APP_ROOT_PATH + '**/**/*.js',
-      /* Test files */
-      'tests/unit/**/example.js',
-      'tests/unit/**/*-spec.js'
+      APP_ROOT_PATH + '**/**/*.js',{
+        pattern: 'tests/unit/**/*-spec.js',
+        included: true
+      }
     ],
 
     // list of files to exclude

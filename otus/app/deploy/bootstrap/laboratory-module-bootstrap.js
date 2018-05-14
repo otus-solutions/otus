@@ -39,6 +39,5 @@
     function configureStorage(storage) {
       ModuleService.configureStorage(storage);
     }
-
   }
 }());
