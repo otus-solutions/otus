@@ -72,6 +72,7 @@
     self.template = '';
     self.dataSources = {};
     self.missingDataSources = [];
+    self.missingOptionalDataSources = [];
     self.fieldsError = [];
     self.compiledTemplate = undefined;
     self.hasError = false;
@@ -164,11 +165,14 @@
 
     function _manageDatasources(dataSourceList) {
       self.missingDataSources = [];
+      self.missingOptionalDataSources = [];
 
       dataSourceList.forEach(function (ds) {
         var dsKey = ds.key;
         if (ds.result[0]) {
           self.dataSources[dsKey] = ds.result;
+        } else if(ds.optional) {
+          self.missingOptionalDataSources.push(ds.label);
         } else {
           self.missingDataSources.push(ds.label);
         }

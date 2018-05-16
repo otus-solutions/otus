@@ -17,9 +17,33 @@
         <md-progress-circular class="md-hue-2" md-diameter="20px"></md-progress-circular>
         <span class="md-caption">&nbsp;&nbsp;Carregando</span>
       </div>
-      <md-card-content ng-if="report.status.expanded && !report.loading" layout="column" layout-align="space-around start">
-        <span ng-repeat="datasource in report.missingDataSources" class="md-caption" ng-if="datasource">{{datasource + ": não encontrado"}}</span>
-        <span ng-repeat="field in report.fieldsError" class="md-caption" ng-if="report.fieldsError.length">{{'O Campo "' + field.fieldName + '" ' + (field.msg || 'é obrigatório')}}</span>
+      <md-card-content ng-if="report.status.expanded && !report.loading" layout="column" flex>
+        <div layout="row" flex class="dashboard-legend" 
+        ng-if="report.missingDataSources.length || report.fieldsError.length || report.missingOptionalDataSources.length">
+          <div layout="row" layout-align="center center" flex="50">
+            <span class="bull-legend required">&bull;</span>
+            <span class="md-caption">Obrigatório</span>
+          </div>
+          <div layout="row" layout-align="center center" flex="50" class="legend-separator">
+            <span class="bull-legend optional">&bull;</span>
+            <span class="md-caption">Opcional</span>
+          </div>
+        </div>
+        <div layout="row" ng-repeat="datasource in report.missingDataSources track by $index" ng-if="datasource" flex>
+          <span class="bull-legend required">&bull;</span>
+          <span flex class="md-caption truncate">{{datasource}}</span>
+          <md-tooltip>{{'Obrigatório - ' + datasource}}</md-tooltip>
+        </div>
+        <div layout="row" ng-repeat="field in report.fieldsError track by $index" ng-if="report.fieldsError.length" flex>
+          <span class="bull-legend required">&bull;</span>
+          <span class="md-caption">{{'Campo "' + field.fieldName + '" ' + (field.msg)}}</span>
+          <md-tooltip>{{'Obrigatório - ' + 'Campo "' + field.fieldName + '" ' + (field.msg)}}</md-tooltip>
+        </div>
+        <div layout="row" ng-repeat="datasource in report.missingOptionalDataSources track by $index" ng-if="report.missingOptionalDataSources.length" flex>
+          <span class="bull-legend optional">&bull;</span>
+          <span class="md-caption">{{datasource}}</span>
+          <md-tooltip>{{'Opcional - ' + datasource}}</md-tooltip>
+        </div>
       </md-card-content>
       <md-divider ng-if="report.status.expanded"></md-divider>
       <md-card-actions layout="row" layout-align="end center" ng-if="!report.loading && report.status.expanded">
