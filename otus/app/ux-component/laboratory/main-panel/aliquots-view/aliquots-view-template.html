@@ -80,22 +80,17 @@
                         </div>
                       </md-input-container>
                     </md-content>
-                      <div layout="row">
-                        <div layout="column" class="input-footer-message" layout-align="start start">
-                          <span>Aliquotado por:</span>
-                        </div>
-                        <span>&nbsp;</span>
-                        <div layout="column" class="input-footer-message" layout-align="start start">
-                          <span ng-class="{fieldDisable: exam.isSaved}" ng-show="exam.isSaved">{{exam.operator}}</span>
-
-                        </div>
+                    <div layout="row">
+                      <div layout="row" class="input-footer-message" ng-show="exam.isSaved">
+                        <span>Aliquotado por: {{exam.operator}}</span>
                       </div>
+                    </div>
                   </div>
                 </div>
                 <!-- Mount Tube Input - Exam - End -->
 
                 <div flex=10 layout="row" layout-align="center center" class="aliquot-arrow-icon">
-                  <div class="{{exam.isSaved ? 'aliquot-arrow-icon-up' : ''}}">
+                  <div class="aliquot-arrow-icon-up">
                     <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
                   </div>
                 </div>
@@ -114,18 +109,17 @@
                         </div>
                       </md-input-container>
                     </md-content>
-                    <div layout="row">
-                      <div layout="column" class="input-footer-message" layout-align="start start">
-                        <span ng-show="exam.isSaved && exam.aliquotMessage == ''">Registrado:</span>
-                        <span ng-show="exam.aliquotCode != ''">Processado:</span>
+                    <div layout="column">
+                        <div layout="row" class="input-footer-message" ng-show="!exam.aliquotMessage && exam.isSaved">
+                          <span>Registrado:&ensp;&nbsp;{{exam.date | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                        </div>
+                        <div layout="row" class="input-footer-message" ng-show="!exam.aliquotMessage && exam.aliquotCode">
+                          <span ng-show="exam.isSaved">Processado:&nbsp;{{exam.processing | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                          <span ng-show="!exam.isSaved">Processado:&nbsp;</span>
+                          <input ng-class="{fieldDisable: exam.isSaved, fieldActive: !exam.isSaved}" placeholder="Não Informado" tabindex="-1" mdc-datetime-picker="" ng-show="!exam.isSaved" date="true" time="true" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now"
+                            ng-model="exam.processing" readonly="readonly" format="DD/MM/YYYY hh:mm A" short-time="true" ng-disabled="{{exam.isSaved}}" />
+                        </div>
                       </div>
-                      <span>&nbsp;</span>
-                      <div layout="column" layout-align="start start" class="input-footer-message">
-                        <span ng-class="{fieldDisable: exam.isSaved}" ng-show="exam.isSaved && exam.aliquotMessage == ''">{{exam.date | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                        <input ng-class="{fieldDisable: exam.isSaved, fieldActive: !exam.isSaved}" placeholder="Não Informado" tabindex="-1" mdc-datetime-picker="" ng-show="exam.aliquotCode != ''" date="true" time="true" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now"
-                          ng-model="exam.processing" readonly="readonly" format="DD/MM/YYYY hh:mm A" short-time="true" ng-disabled="{{exam.isSaved}}" />
-                      </div>
-                    </div>
                   </div>
                 </div>
                 <!-- Mount Aliquot Input - Exam - End -->
@@ -154,22 +148,16 @@
                       </md-input-container>
                     </md-content>
                     <div layout="row">
-                      <div layout="column" class="input-footer-message" layout-align="start start">
-                        <span>Aliquotado por:</span>
-                      </div>
-                      <span>&nbsp;</span>
-                      <div layout="column" class="input-footer-message" layout-align="start start">
-                        <span ng-class="{fieldDisable: storage.isSaved}" ng-show="storage.isSaved">{{storage.operator}}</span>
-
+                      <div layout="row" class="input-footer-message" ng-show="storage.isSaved">
+                        <span>Aliquotado por: {{storage.operator}}</span>
                       </div>
                     </div>
-
                   </div>
                 </div>
                 <!-- Mount Tube Input - Storage - End -->
 
                 <div flex=10 layout="row" layout-align="center center" class="aliquot-arrow-icon">
-                  <div class="{{storage.isSaved ? 'aliquot-arrow-icon-up' : ''}}">
+                  <div class="aliquot-arrow-icon-up">
                     <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
                   </div>
                 </div>
@@ -187,15 +175,14 @@
                         </div>
                       </md-input-container>
                     </md-content>
-                    <div layout="row">
-                      <div layout="column" class="input-footer-message" layout-align="start start">
-                        <span ng-show="storage.isSaved && storage.aliquotMessage == ''">Registrado:</span>
-                        <span ng-show="storage.aliquotCode != ''">Processado:</span>
+                    <div layout="column">
+                      <div layout="row" class="input-footer-message" ng-show="!storage.aliquotMessage && storage.isSaved">
+                        <span>Registrado:&ensp;&nbsp;{{storage.date | date : 'dd/MM/yyyy hh:mm a'}}</span>
                       </div>
-                      <span>&nbsp;</span>
-                      <div layout="column" layout-align="start start" class="input-footer-message">
-                        <span ng-class="{fieldDisable: storage.isSaved}" ng-show="storage.isSaved && storage.aliquotMessage == ''">{{storage.date | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                        <input ng-class="{fieldDisable: storage.isSaved, fieldActive: !storage.isSaved}" placeholder="Não Informado" tabindex="-1" mdc-datetime-picker="" ng-show="storage.aliquotCode != ''" date="true" time="true" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now"
+                      <div layout="row" class="input-footer-message" ng-show="!storage.aliquotMessage && storage.aliquotCode">
+                        <span ng-show="storage.isSaved">Processado:&nbsp;{{storage.processing | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                        <span ng-show="!storage.isSaved">Processado:&nbsp;</span>
+                        <input ng-class="{fieldDisable: storage.isSaved, fieldActive: !storage.isSaved}" placeholder="Não Informado" tabindex="-1" mdc-datetime-picker="" ng-show="!storage.isSaved" date="true" time="true" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now"
                           ng-model="storage.processing" readonly="readonly" format="DD/MM/YYYY hh:mm A" short-time="true" ng-disabled="{{storage.isSaved}}" />
                       </div>
                     </div>
