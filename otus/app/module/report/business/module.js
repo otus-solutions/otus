@@ -4,7 +4,7 @@
   angular
     .module('otusjs.report.business', [
       'otusjs.report.business.dynamicReport',
-      'otusjs.report.business.datasourceManager'
+      'otusjs.report.business.datasource'
     ]);
 
 }());

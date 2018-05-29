@@ -10,7 +10,7 @@
     '$q',
     'otusjs.report.business.ParticipantReportService',
     'otusjs.report.business.dynamicReport.DynamicReportService',
-    'otusjs.report.business.datasourceManager.DatasourceManagerFactory'
+    'otusjs.report.business.datasource.DatasourceManagerFactory'
   ];
 
   function factory($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory) {
@@ -110,6 +110,7 @@
     }
 
     function generateReport(callback) {
+      console.log(self);
       DynamicReportService.openReportInNewTab(self, function () {
         callback();
       });
@@ -168,25 +169,16 @@
 
 
       dataSourceList.forEach(function (ds) {
-        //todo: remove
-        if (ds.dataSource === 'Activity') {
-          ds.result[0] = {
-            mode: "PAPER",
-            statusHistory: statusHistories
-          }
-        }
-
-        var dsKey = ds.key;
-
         DatasourceManagerFactory.manage(ds);
 
         if (ds.result[0]) {
-          self.dataSources[dsKey] = ds.result;
+          self.dataSources[ds.key] = ds.result;
         } else {
           self.missingDataSources.push(ds.label);
         }
       });
-      self.hasAllDatasources = self.missingDataSources.length ? false : true;
+
+      self.hasAllDatasources = !self.missingDataSources.length;
     }
 
     function _manageTemplate(template) {
@@ -230,63 +222,4 @@
       }
     }
   }
-
-  //todo: remove
-  var statusHistories = [
-    {
-      "objectType": "ActivityStatus",
-      "name": "CREATED",
-      "date": "2018-04-26T18:05:51.998Z",
-      "user": {
-        "name": "Fernando",
-        "surname": "Souza",
-        "phone": "51986402338",
-        "email": "nando.souza97@hotmail.com"
-      }
-    },
-    {
-      "objectType": "ActivityStatus",
-      "name": "INITIALIZED_OFFLINE",
-      "date": "2017-09-06T18:04:46.882Z",
-      "user": {
-        "name": "Diogo",
-        "surname": "Ferreira",
-        "phone": "5193034655",
-        "email": "diogo.rosas.ferreira@gmail.com"
-      }
-    },
-    {
-      "objectType": "ActivityStatus",
-      "name": "OPENED",
-      "date": "2018-04-26T18:05:56.370Z",
-      "user": {
-        "name": "Fernando",
-        "surname": "Souza",
-        "phone": "51986402338",
-        "email": "nando.souza97@hotmail.com"
-      }
-    },
-    {
-      "objectType": "ActivityStatus",
-      "name": "INITIALIZED_ONLINE",
-      "date": "2018-04-26T18:05:57.619Z",
-      "user": {
-        "name": "Fernando",
-        "surname": "Souza",
-        "phone": "51986402338",
-        "email": "nando.souza97@hotmail.com"
-      }
-    },
-    {
-      "objectType": "ActivityStatus",
-      "name": "FINALIZED",
-      "date": "2018-04-26T18:10:35.944Z",
-      "user": {
-        "name": "Fernando",
-        "surname": "Souza",
-        "phone": "51986402338",
-        "email": "nando.souza97@hotmail.com"
-      }
-    }
-  ];
 }());

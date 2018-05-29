@@ -2,12 +2,12 @@
   'use strict';
 
   angular
-    .module("otusjs.report.business.datasourceManager")
-    .factory("otusjs.report.business.datasourceManager.DatasourceManagerFactory", factory);
+    .module("otusjs.report.business.datasource")
+    .factory("otusjs.report.business.datasource.DatasourceManagerFactory", factory);
 
 
   function factory() {
-    var self = this;
+    let self = this;
 
     self.manage = manage;
 
@@ -24,43 +24,39 @@
           ds.result = managers;
           break;
       }
+
+      return ds;
     }
 
     return self;
   }
 
-  function ActivityDatasourceManager(item) {
+  function ActivityDatasourceManager(datasource) {
     let self = this;
 
-    self.mode = item.mode;
-    self.statusHistory = item.statusHistory;
 
+
+    let basicDatasourceSchema = Object.freeze({
+      mode: undefined,
+      statusHistory: undefined
+    });
+
+
+    onInit(datasource);
+
+    self.objectType = "ActivityDatasource";
 
     self.getInterviewDate = getInterviewDate;
     self.getStatusByName = getStatusByName;
     self.getLastStatusByName = getLastStatusByName;
+    self.getLastStatus = getLastStatus;
 
+    function onInit(datasource) {
+      Object.assign(self, basicDatasourceSchema, datasource);
+    }
 
     function getInterviewDate() {
-      let date;
-
-      if (self.mode === "ONLINE") {
-        let finalizeds = self.statusHistory.filter(function (status) {
-          return status.name === 'FINALIZED';
-        });
-        date = finalizeds[finalizeds.length - 1].date;
-
-      }
-
-      if (self.mode === "PAPER") {
-        let initializedOffline = self.statusHistory.find(function (status) {
-          return status.name === 'INITIALIZED_OFFLINE';
-        });
-
-        date = initializedOffline.date;
-      }
-
-      return date;
+      return self.mode === "ONLINE" ? self.getLastStatusByName("FINALIZED").date : self.getStatusByName("INITIALIZED_OFFLINE").date;
     }
 
     function getStatusByName(name) {
@@ -70,13 +66,16 @@
     }
 
     function getLastStatusByName(name) {
-      let statuses = self.statusHistory.filter(function (status) {
+      let statusList = self.statusHistory.filter(function (status) {
         return status.name === name;
       });
 
-      return statuses[statuses.length - 1];
+      return statusList[statusList.length - 1];
     }
 
+    function getLastStatus() {
+      return self.statusHistory[self.statusHistory.length - 1];
+    }
 
   }
 

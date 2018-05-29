@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusjs.report.business.datasourceManager', [
+    .module('otusjs.report.business.datasource', [
     ]);
 
 }());
