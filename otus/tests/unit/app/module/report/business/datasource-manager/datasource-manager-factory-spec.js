@@ -67,7 +67,49 @@ describe('ParticipantReportWidgetFactory', function () {
 
         expect(offlineActivityManager.getStatusByName).toHaveBeenCalledWith("INITIALIZED_OFFLINE");
       });
-    })
+    });
+
+    describe("getLastStatusByName method", function () {
+      it("should return the last name occurrence", function () {
+        onlineActivityManager.statusHistory = [
+          {name:'a', date:1},
+          {name:'b', date:2},
+          {name:'c', date:3},
+          {name:'a', date:4},
+          {name:'b', date:5}
+        ];
+
+        expect(onlineActivityManager.getLastStatusByName("b").date).toEqual(5);
+      });
+    });
+
+    describe("getStatusByName method", function () {
+      it("should return the first name occurrence", function () {
+        onlineActivityManager.statusHistory = [
+          {name:'a', date:1},
+          {name:'b', date:2},
+          {name:'c', date:3},
+          {name:'a', date:4},
+          {name:'b', date:5}
+        ];
+
+        expect(onlineActivityManager.getStatusByName("b").date).toEqual(2);
+      });
+    });
+
+    describe("getLastStatus method", function () {
+      it("should return the last status", function () {
+        onlineActivityManager.statusHistory = [
+          {name:'a', date:1},
+          {name:'b', date:2},
+          {name:'c', date:3},
+          {name:'a', date:4},
+          {name:'b', date:5}
+        ];
+
+        expect(onlineActivityManager.getLastStatus().date).toEqual(5);
+      });
+    });
 
 
   });
