@@ -110,7 +110,6 @@
     }
 
     function generateReport(callback) {
-      console.log(self);
       DynamicReportService.openReportInNewTab(self, function () {
         callback();
       });
