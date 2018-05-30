@@ -9,11 +9,10 @@
     '$q',
     '$window',
     '$compile',
-    '$rootScope',
     'otusjs.report.business.dynamicReport.scope.ScopeReportFactory'
   ];
 
-  function Service($q, $window, $compile, $rootScope, ScopeReportFactory) {
+  function Service($q, $window, $compile, ScopeReportFactory) {
     var self = this;
 
     self.precompile = precompile;
@@ -105,11 +104,11 @@
       `;
       var newWindow = $window.open('', '_blank');
       newWindow.document.write(initialHtmlStructure);
-      
+
       angular.element(newWindow.document.body)
       .append(report.compiledTemplate);
-      newWindow.setTimeout(function(){ 
-        newWindow.print(); 
+      newWindow.setTimeout(function(){
+        newWindow.print();
         newWindow.close();
         callback();
       }, 500);
@@ -120,7 +119,7 @@
             newWindow.close();
             if(callback) callback();
           } catch (error) {
-            
+
           }
         }
       }
