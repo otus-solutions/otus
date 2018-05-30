@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>otus</artifactId>
   <groupId>org.ccem.otus</groupId>
-  <version>1.14</version>
+  <version>1.14.1</version>
   <packaging>war</packaging>
   <name>otus</name>
 
