@@ -49,7 +49,7 @@
 
 
         function createLineChart(qData) {
-            
+
             if (!self.lineChart) {
 
                 var ctx = document.getElementById("myLineChart");
@@ -88,9 +88,6 @@
                 self.lineChart.data.datasets = (qData.data);
                 self.lineChart.update();
             }
-            
-
-
         }
 
     }

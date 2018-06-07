@@ -23,7 +23,7 @@
 
     self.questionnaireData;
 
-
+    self.jsonData;
     self.createInformationCards;
     self.createCentersGoalsChart;
     self.createCumulativeResultsChart;
@@ -39,15 +39,16 @@
     function onInit() {
       MonitoringService.list()
         .then(function (list) {
-          preProcessingData(list);
+          self.jsonData = list;
+          preProcessingData();
         })
         .catch(function (e) {
         });
     }
 
-    function preProcessingData(json) {
+    function preProcessingData() {
 
-      var rawData = json;
+      var rawData = self.jsonData;
       var allDates = rawData.map(function (e) {
         return e.month + "/" + e.year;
       });
@@ -114,93 +115,90 @@
           "BA": { "name": "Bahia", "goal": 1945, "backgroundColor": "rgba(255, 163, 102, 0.2)", "borderColor": "rgba(255, 163, 102, 1)" }
         };
 
-        MonitoringService.list()
-          .then(function (json) {
-            var datasets = [];
-            var rawData = json.filter(function (value) {
-              return value.acronym == this;
-            }, acronym);
 
-            var startNumbers = startDate.split('/').map(function (item) {
+        var datasets = [];
+        var rawData = self.jsonData.filter(function (value) {
+          return value.acronym == this;
+        }, acronym);
+
+        var startNumbers = startDate.split('/').map(function (item) {
+          return parseInt(item, 10);
+        });
+
+        // filtra as informacoes de datas fora do intervalo
+        rawData = rawData.filter(function (value) {
+          return (((this[1] - value.year == 0) &&
+            (this[0] - value.month <= 0)) ||
+            (this[1] - value.year < 0))
+
+        }, startNumbers);
+
+        var endNumbers = endDate.split('/').map(function (item) {
+          return parseInt(item, 10);
+        });
+
+        // filtra as informacoes de datas fora do intervalo
+        rawData = rawData.filter(function (value) {
+          return (((this[1] - value.year == 0) &&
+            (this[0] - value.month >= 0)) ||
+            (this[1] - value.year > 0))
+
+        }, endNumbers);
+
+        for (var j = 0; j < selectedFieldCentersList.length; j++) {
+
+          // separa dados por field center
+          var dataByFieldCenter = rawData.filter(function (value) {
+            return value.fieldCenter == this;
+          }, selectedFieldCentersList[j]);
+
+          var i = 0;
+          var fieldCenterDataset = [];
+
+          for (var k = 0; k < filteredDates.length; k++) {
+
+            // parser da data, para adquirir valor de mes e ano
+            var date = filteredDates[k].split('/').map(function (item) {
               return parseInt(item, 10);
             });
 
-            // filtra as informacoes de datas fora do intervalo
-            rawData = rawData.filter(function (value) {
-              return (((this[1] - value.year == 0) &&
-                (this[0] - value.month <= 0)) ||
-                (this[1] - value.year < 0))
 
-            }, startNumbers);
+            if (dataByFieldCenter[i] &&
+              dataByFieldCenter[i].month == date[0] &&
+              dataByFieldCenter[i].year == date[1]) {
 
-            var endNumbers = endDate.split('/').map(function (item) {
-              return parseInt(item, 10);
-            });
+              fieldCenterDataset[k] = parseInt(dataByFieldCenter[i].sum);
 
-            // filtra as informacoes de datas fora do intervalo
-            rawData = rawData.filter(function (value) {
-              return (((this[1] - value.year == 0) &&
-                (this[0] - value.month >= 0)) ||
-                (this[1] - value.year > 0))
-
-            }, endNumbers);
-
-            for (var j = 0; j < selectedFieldCentersList.length; j++) {
-
-              // separa dados por field center
-              var dataByFieldCenter = rawData.filter(function (value) {
-                return value.fieldCenter == this;
-              }, selectedFieldCentersList[j]);
-
-              var i = 0;
-              var fieldCenterDataset = [];
-
-              for (var k = 0; k < filteredDates.length; k++) {
-
-                // parser da data, para adquirir valor de mes e ano
-                var date = filteredDates[k].split('/').map(function (item) {
-                  return parseInt(item, 10);
-                });
-
-
-                if (dataByFieldCenter[i] &&
-                  dataByFieldCenter[i].month == date[0] &&
-                  dataByFieldCenter[i].year == date[1]) {
-
-                  fieldCenterDataset[k] = parseInt(dataByFieldCenter[i].sum);
-
-                  i++;
-                }
-                else {
-                  fieldCenterDataset[k] = 0;
-                }
-
-              }
-
-              datasets[j] = {
-                label: datasetInformation[selectedFieldCentersList[j]].name,
-                data: fieldCenterDataset,
-                goal: datasetInformation[selectedFieldCentersList[j]].goal,
-                backgroundColor: datasetInformation[selectedFieldCentersList[j]].backgroundColor,
-                borderColor: datasetInformation[selectedFieldCentersList[j]].borderColor,
-                borderWidth: 1
-              }
-
+              i++;
+            }
+            else {
+              fieldCenterDataset[k] = 0;
             }
 
-            self.questionnaireData = {
-              data: datasets,
-              fieldCenters: selectedFieldCentersList,
-              dates: filteredDates
-            };
-            self.createQuestionnaireLineChart(self.questionnaireData);
-            self.createQuestionnaireSpreadsheet(self.questionnaireData);
-            self.createInformationCards(self.questionnaireData);
-            self.createCumulativeResultsChart(self.questionnaireData);
-            self.createCentersGoalsChart(self.questionnaireData);
-          })
-          .catch(function (e) {
-          });
+          }
+
+          datasets[j] = {
+            label: datasetInformation[selectedFieldCentersList[j]].name,
+            data: fieldCenterDataset,
+            goal: datasetInformation[selectedFieldCentersList[j]].goal,
+            backgroundColor: datasetInformation[selectedFieldCentersList[j]].backgroundColor,
+            borderColor: datasetInformation[selectedFieldCentersList[j]].borderColor,
+            borderWidth: 1
+          }
+
+        }
+
+        self.questionnaireData = {
+          data: datasets,
+          fieldCenters: selectedFieldCentersList,
+          dates: filteredDates
+        };
+        self.createQuestionnaireLineChart(self.questionnaireData);
+        self.createQuestionnaireSpreadsheet(self.questionnaireData);
+        self.createInformationCards(self.questionnaireData);
+        self.createCumulativeResultsChart(self.questionnaireData);
+        self.createCentersGoalsChart(self.questionnaireData);
+
 
       }
     }

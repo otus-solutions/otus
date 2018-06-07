@@ -28,8 +28,6 @@
         self.centers = [];
         self.chart;
 
-
-
         function onInit() {
 
             ProjectFieldCenterService.loadCenters().then(function (result) {
