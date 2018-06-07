@@ -19,12 +19,20 @@
       self.create = create;
   
       function initialize() {
-        _rest = OtusRestResourceService.getMonitoringResource();
+        _rest = OtusRestResourceService.getOtusMonitoringResource();
       }
   
+      function list() {
+        if (!_rest) {
+          throw new Error('REST resource is not initialized.');
+        }
+        return _rest.list().$promise;
+      }
+
+      /*
       function create() {
         console.log(_rest);
-      }
+      }*/
   
 
     }
