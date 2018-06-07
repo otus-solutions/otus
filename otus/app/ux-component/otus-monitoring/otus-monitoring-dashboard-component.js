@@ -9,11 +9,12 @@
     });
 
   Controller.$inject = [
-    'otusjs.deploy.MonitoringRestService'
+    'otusjs.deploy.MonitoringRestService',
+    'otusjs.monitoring.business.MonitoringService'
     //'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(MonitoringRestService) {
+  function Controller(MonitoringRestService, MonitoringService) {
     var self = this;
 
     self.fieldCenter;
@@ -38,6 +39,7 @@
 
     /* Public methods */
     function onInit() {
+      MonitoringService.list();
       console.log(MonitoringRestService.create());
 
       preProcessingData();
@@ -129,7 +131,7 @@
           var startNumbers = startDate.split('/').map(function (item) {
             return parseInt(item, 10);
           });
-     
+
           // filtra as informacoes de datas fora do intervalo
           rawData = rawData.filter(function (value) {
             return (((this[1] - value.year == 0) &&
@@ -167,8 +169,8 @@
                   return parseInt(item, 10);
                 });
 
-                
-                if (dataByFieldCenter[i] && 
+
+                if (dataByFieldCenter[i] &&
                     dataByFieldCenter[i].month == date[0] &&
                     dataByFieldCenter[i].year == date[1]) {
 
@@ -183,11 +185,11 @@
                 else {
                   fieldCenterDataset[k] = 0;
                 }
-              
+
 
 
             }
-      
+
             datasets[j] = {
               label: datasetInformation[selectedFieldCentersList[j]].name,
               data: fieldCenterDataset,
