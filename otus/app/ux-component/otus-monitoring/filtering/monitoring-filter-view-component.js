@@ -57,14 +57,16 @@
         }
 
       });
-
-    }
-
-    function onFilter() {
       
       if(self.questionnairesList) {
         self.questionnaireInfo = self.questionnairesList[0];
       }
+
+    }
+
+    function onFilter() {
+
+      
       
       var selected = [];
       for (var center in self.selectedFieldCenters) {

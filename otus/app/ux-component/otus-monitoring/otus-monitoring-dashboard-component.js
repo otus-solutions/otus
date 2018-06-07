@@ -39,11 +39,9 @@
     function onInit() {
       MonitoringService.list()
         .then(function (list) {
-          console.log(list);
           preProcessingData(list);
         })
         .catch(function (e) {
-          console.log(e);
         });
     }
 
@@ -118,7 +116,6 @@
 
         MonitoringService.list()
           .then(function (json) {
-            console.log(json);
             var datasets = [];
             var rawData = json.filter(function (value) {
               return value.acronym == this;
@@ -196,7 +193,6 @@
               fieldCenters: selectedFieldCentersList,
               dates: filteredDates
             };
-            console.log(self.questionnaireData);
             self.createQuestionnaireLineChart(self.questionnaireData);
             self.createQuestionnaireSpreadsheet(self.questionnaireData);
             self.createInformationCards(self.questionnaireData);
@@ -204,7 +200,6 @@
             self.createCentersGoalsChart(self.questionnaireData);
           })
           .catch(function (e) {
-            console.log(e);
           });
 
       }

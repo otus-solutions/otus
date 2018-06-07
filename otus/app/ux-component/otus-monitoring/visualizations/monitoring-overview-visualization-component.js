@@ -49,7 +49,7 @@
 
 
         function createLineChart(qData) {
-            //console.log(qData,"hello world");
+            
             if (!self.lineChart) {
 
                 var ctx = document.getElementById("myLineChart");
@@ -84,8 +84,6 @@
             }
             else {
 
-                
-                //self.lineChart.scale.xLabels = (qData.dates);
                 self.lineChart.config.data.labels = (qData.dates);
                 self.lineChart.data.datasets = (qData.data);
                 self.lineChart.update();
