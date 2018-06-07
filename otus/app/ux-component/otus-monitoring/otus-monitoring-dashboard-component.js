@@ -37,6 +37,7 @@
 
     /* Public methods */
     function onInit() {
+      MonitoringService.list();
       preProcessingData();
 
     }

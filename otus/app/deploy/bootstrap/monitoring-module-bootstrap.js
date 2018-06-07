@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.ProjectModuleBootstrap', Service);
+    .service('otusjs.deploy.MonitoringModuleBootstrap', Service);
 
   Service.$inject = [
     'otusjs.monitoring.core.ModuleService',

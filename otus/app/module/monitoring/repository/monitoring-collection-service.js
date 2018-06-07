@@ -14,7 +14,6 @@
     var self = this;
     var _remoteStorage = ModuleService.getParticipantReportRemoteStorage();
 
-    //Participant Report Methods
     self.list = list;
 
     function list() {
