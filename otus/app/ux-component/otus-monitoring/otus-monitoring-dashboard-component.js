@@ -9,12 +9,10 @@
     });
 
   Controller.$inject = [
-    'otusjs.deploy.MonitoringRestService',
     'otusjs.monitoring.business.MonitoringService'
-    //'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(MonitoringRestService, MonitoringService) {
+  function Controller(MonitoringService) {
     var self = this;
 
     self.fieldCenter;
@@ -39,9 +37,6 @@
 
     /* Public methods */
     function onInit() {
-      MonitoringService.list();
-      console.log(MonitoringRestService.create());
-
       preProcessingData();
 
     }
