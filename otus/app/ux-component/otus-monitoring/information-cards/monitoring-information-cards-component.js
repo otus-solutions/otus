@@ -45,26 +45,7 @@
 
                 self.createInformationCards = createInformationCards;
 
-
-
-                /*
-                goal = self.generalInformation.deaths / self.generalInformation.goal;
-                data = [goal * 100, 100 - (goal * 100)];
-
-                createProgressWheel(
-                    "deathsPercentageChart",
-                    data, [
-                        'percentagem de falecimentos',
-                        'percentagem de participantes ainda vivos'
-                    ], [
-                        'rgba(255, 99, 132, 0.5)',
-                        'rgba(250, 250, 250, 0.5)'
-                    ], [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(240, 240, 240, 0.6)'
-                ]);*/
             });
-            // self.otusExamsLotsManager.listComponent = self;
 
         }
 
@@ -87,7 +68,7 @@
                 self.goalPercentage += totalGoal / qData.data[i].goal;
                 
             }
-            //self.goalPercentage = ((self.reachedTotal / self.goal) * 100).toFixed(2);
+            
             self.goalPercentage = ((self.goalPercentage / qData.data.length)*100).toFixed(2);
 
             createProgressWheel(

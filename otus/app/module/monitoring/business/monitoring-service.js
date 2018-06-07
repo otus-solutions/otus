@@ -16,14 +16,7 @@
 
 
     function list(){
-      MonitoringCollectionService.list()
-        .then(function(list){
-          console.log(list);
-        })
-        .catch(function(e){
-          console.log(e);
-
-        });
+      return MonitoringCollectionService.list();
     }
   }
 

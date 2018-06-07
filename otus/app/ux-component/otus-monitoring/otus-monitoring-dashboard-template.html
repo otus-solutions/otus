@@ -13,42 +13,26 @@
       <md-content layout="column" flex>
 
         <div flex>
-
           <monitoring-information-cards-component create-information-cards="$ctrl.createInformationCards">
           </monitoring-information-cards-component>
-
           <div flex layout="row" style="flex-wrap: wrap;">
             <monitoring-centers-goals-visualization-component create-centers-goals-chart="$ctrl.createCentersGoalsChart" flex="40">
             </monitoring-centers-goals-visualization-component>
-
             <monitoring-centers-cumulative-results-visualization-component create-cumulative-results-chart="$ctrl.createCumulativeResultsChart" flex="60">
             </monitoring-centers-cumulative-results-visualization-component>
-
-
           </div>
 
 
           <div flex layout="column">
-
             <monitoring-overview-visualization-component questionnaire-data="$ctrl.questionnaireData" create-questionnaire-line-chart="$ctrl.createQuestionnaireLineChart"
               style="display:inline-block;" flex>
             </monitoring-overview-visualization-component>
             <monitoring-spreadsheet-component create-questionnaire-spreadsheet="$ctrl.createQuestionnaireSpreadsheet" layout="column"
               style="display:inline-block;" flex>
             </monitoring-spreadsheet-component>
-
           </div>
         </div>
 
-        <!--
-        <div flex layout="row">
-          <monitoring-spreadsheet-component create-questionnaire-spreadsheet="$ctrl.createQuestionnaireSpreadsheet" layout="column" style="display:inline-block;width:70vw;"
-            flex="45"></monitoring-spreadsheet-component>
-          <monitoring-overview-visualization-component questionnaire-data="$ctrl.questionnaireData" create-questionnaire-line-chart="$ctrl.createQuestionnaireLineChart"
-            style="display:inline-block;width:70vw;" flex="55"></monitoring-overview-visualization-component>
-          
-        </div>
-        -->
       </md-content>
     </div>
 
