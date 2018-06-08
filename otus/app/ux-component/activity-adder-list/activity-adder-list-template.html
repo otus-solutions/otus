@@ -50,7 +50,7 @@
       <md-divider></md-divider>
     </md-list-item>
 
-    <md-list-item ng-repeat="activity in $ctrl.activities | orderBy:$ctrl.orderByField:$ctrl.reverseSort | filter:searchActivity track by activity.surveyTemplate.identity.name">
+    <md-list-item ng-repeat="activity in $ctrl.activities | orderBy:$ctrl.orderByField:$ctrl.reverseSort | filter:searchActivity track by activity.surveyTemplate.identity.acronym">
       <div class="md-list-item-text" layout="column" flex>
         <div layout="row" layout-align="start center">
           <span layout="column">{{ activity.surveyTemplate.identity.name }}</span>

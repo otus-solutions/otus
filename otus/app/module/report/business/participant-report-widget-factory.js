@@ -9,10 +9,11 @@
   factory.$inject = [
     '$q',
     'otusjs.report.business.ParticipantReportService',
-    'otusjs.report.business.dynamicReport.DynamicReportService'
+    'otusjs.report.business.dynamicReport.DynamicReportService',
+    'otusjs.report.business.datasource.DatasourceManagerFactory'
   ];
 
-  function factory($q, ParticipantReportService, DynamicReportService) {
+  function factory($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory) {
     var self = this;
 
     self.getParticipantReportList = getParticipantReportList;
@@ -22,19 +23,19 @@
       return ParticipantReportService.fetchReportList(participant)
         .then(function (reports) {
           return reports.map(function (report) {
-            return new ParticipantReport($q, ParticipantReportService, DynamicReportService, report, participant)
+            return new ParticipantReport($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory, report, participant)
           });
         });
     }
 
     function fromJson(jsonReport, participant) {
-      return new ParticipantReport($q, ParticipantReportService, DynamicReportService, jsonReport, participant)
+      return new ParticipantReport($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory, jsonReport, participant)
     }
 
     return self;
   }
 
-  function ParticipantReport($q, ParticipantReportService, DynamicReportService, report, participant) {
+  function ParticipantReport($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory, report, participant) {
     var self = this;
     var _participantInfo = participant;
     const _loadingMessage = `
@@ -104,22 +105,22 @@
       if (self.status.expanded) getReportTemplate();
     }
 
-    function getLoadingMessage(){
+    function getLoadingMessage() {
       return _loadingMessage;
     }
 
     function generateReport(callback) {
-      DynamicReportService.openReportInNewTab(self, function(){
+      DynamicReportService.openReportInNewTab(self, function () {
         callback();
       });
     }
 
-    function reloadReport(){
+    function reloadReport() {
       return getReportTemplate(true);
     }
 
     function getReportTemplate(forceReload) {
-      if(self.dirty && !forceReload){
+      if (self.dirty && !forceReload) {
         var defer = $q.defer();
         defer.resolve(true);
         return defer.promise;
@@ -130,7 +131,7 @@
       self.hasError = false;
 
       return ParticipantReportService.getFullReport(_participantInfo, self.id)
-      .then(function (data) {
+        .then(function (data) {
           _manageDatasources(data.dataSources);
           _manageTemplate(data.template);
           if (self.hasAllDatasources) {
@@ -164,16 +165,21 @@
 
     function _manageDatasources(dataSourceList) {
       self.missingDataSources = [];
+      self.missingOptionalDataSources = [];
 
       dataSourceList.forEach(function (ds) {
-        var dsKey = ds.key;
+        DatasourceManagerFactory.manage(ds);
+
         if (ds.result[0]) {
-          self.dataSources[dsKey] = ds.result;
+          self.dataSources[ds.key] = ds.result;
+        } else if(ds.optional) {
+          self.missingOptionalDataSources.push(ds.label);
         } else {
           self.missingDataSources.push(ds.label);
         }
       });
-      self.hasAllDatasources = self.missingDataSources.length ? false : true;
+
+      self.hasAllDatasources = !self.missingDataSources.length;
     }
 
     function _manageTemplate(template) {
