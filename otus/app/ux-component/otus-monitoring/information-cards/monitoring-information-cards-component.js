@@ -29,9 +29,9 @@
         self.centers = [];
 
         self.progressWheelChart;
-        self.goalPercentage = 49;
-        self.goal = 6000;
-        self.reachedTotal = 100;
+        self.goalPercentage;
+        self.goal;
+        self.reachedTotal;
 
 
         function onInit() {
@@ -66,9 +66,9 @@
                 }
 
                 self.goalPercentage += totalGoal / qData.data[i].goal;
-                
+
             }
-            
+
             self.goalPercentage = ((self.goalPercentage / qData.data.length)*100).toFixed(2);
 
             createProgressWheel(
