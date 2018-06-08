@@ -1,0 +1,40 @@
+<md-content layout="row" flex>
+    <md-card flex>
+        <md-card-content style="display:inline-block;">
+            <div flex layout="row">
+                <canvas style="font-size:60px;height:60px;width:80px;vertical-align: middle;" id="goalPercentageChart"></canvas>
+                <div layout="column" style="padding-top:20px;">
+                    
+                    <div ng-model="$ctrl.goalPercentage" style="vertical-align: middle;margin-top:0px;text-align:left;font-size:3vw;color:rgb(128, 128, 128);">{{$ctrl.goalPercentage}}%</div>
+                    <div style="text-align:left;margin-top:20px;font-size:1.2vw;color:rgb(150, 150, 150);">de média de atividades finalizadas</div>
+                </div>
+
+            </div>
+        </md-card-content>
+    </md-card>
+
+    <md-card flex >
+        <md-card-content >
+            <div flex layout="row">
+                <md-icon style="text-align:left;font-size:60px;height:60px;width:60px;" flex="1">event_available</md-icon>
+                <div layout="column" style="padding-top:20px;" flex="80">
+                    
+                    <div ng-model="$ctrl.reachedTotal" style="text-align:left;margin-top:0px;font-size:3vw;color:rgb(128, 128, 128);">{{$ctrl.reachedTotal}}</div>
+                    <div style="text-align:left;margin-top:20px;font-size:1.2vw;color:rgb(150, 150, 150);">atividades finalizadas</div>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+    <md-card flex>
+        <md-card-content>
+            <div flex layout="row">
+                <md-icon style="text-align:left;font-size:60px;height:60px;width:60px;" flex="1">event_note</md-icon>
+                <div layout="column" style="padding-top:20px;" flex="80">
+                    
+                    <div ng-model="$ctrl.goal" style="text-align:left;margin-top:0px;font-size:3vw;color:rgb(128, 128, 128);">{{$ctrl.goal}}</div>
+                    <div style="text-align:left;margin-top:20px;font-size:1.2vw;color:rgb(150, 150, 150);">participantes a serem contemplados</div>
+                </div>
+            </div>
+        </md-card-content>
+    </md-card>
+</md-content>

@@ -1,0 +1,63 @@
+<div flex>
+  <div layout="row" flex>
+    <div layout="column" flex>
+      <md-subheader class="md-no-sticky moment-type-title">
+        Filtros de Pesquisa
+      </md-subheader>
+
+      <div layout="row" layout-xs="column" layout-align="center">
+
+        <div style="vertical-align: middle;text-align:center;" >
+
+          <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+            <label class="md-subheader">Período Inicial:</label>
+            <md-select ng-model="$ctrl.startDateInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
+              <md-tooltip>
+                Mês a partir do qual dados serão mostrados
+              </md-tooltip>
+              <md-option ng-repeat="date in $ctrl.uniqueDatesList track by $index" value="{{date}}" ng-click="" ng-selected="$first">
+                {{date}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+            <label class="md-subheader">Período Final:</label>
+            <md-select ng-model="$ctrl.endDateInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
+              <md-tooltip>
+                Mês até o qual dados serão mostrados
+              </md-tooltip>
+              <md-option ng-repeat="date in $ctrl.uniqueDatesList track by $index" value="{{date}}" ng-click="" ng-selected="$last">
+                {{date}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+            <label class="md-subheader">Sigla da Atividade:</label>
+            <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
+              <md-tooltip>
+                Sigla da atividade a ser visualizada
+              </md-tooltip>
+              <md-option  ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{questionnaire}}" ng-click="">
+                {{questionnaire}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+
+        </div>
+
+        <div flex style="vertical-align: middle;text-align:center;">
+          <md-input-container ng-repeat="center in $ctrl.centers" class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+            <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.selectedFieldCenters[center]">
+              {{center}}
+            </md-checkbox>
+          </md-input-container>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+<md-divider></md-divider>

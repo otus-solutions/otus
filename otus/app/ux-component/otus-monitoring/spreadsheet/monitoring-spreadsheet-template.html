@@ -1,0 +1,52 @@
+<div layout="column" flex>
+
+    <md-card flex>
+        <md-card-content>
+            <div flex >
+                <md-checkbox ng-model="$ctrl.isShown">
+                    Mostrar/Esconder tabela de dados
+                </md-checkbox>
+            </div>
+            <div ng-if="$ctrl.isShown" layout="column" flex>
+                <div layout="column" flex>
+                    <md-list flex>
+                        <md-list-item class="md-1-line" style="margin-left:8px">
+                            <div class="md-list-item-text" layout="column" flex>
+                                <div layout="row" layout-align="start center" layout-padding>
+                                    <span layout="column">Data</span>
+                                </div>
+                            </div>
+
+                            <md-list-item ng-repeat="Center in $ctrl.fieldCenters">
+                                <div class="md-list-item-text" layout="column" flex>
+                                    <div layout="row" layout-padding>
+                                        <span layout="column" style="text-align:center;">{{Center}}</span>
+                                    </div>
+                                </div>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </md-list-item>
+                        <md-list-item ng-repeat="(dateIndex,date) in $ctrl.dates">
+                            <div class="md-list-item-text" layout="column" flex>
+                                <div layout="row" layout-align="start center" layout-padding>
+                                    <span layout="column" style="text-align:center;">{{ date }}</span>
+                                </div>
+                            </div>
+                            <md-list-item ng-repeat="(centerIndex,center) in $ctrl.fieldCenters">
+                                <div class="md-list-item-text" layout="column" flex>
+                                    <div layout="row" layout-align="start center" layout-padding>
+                                        <span layout="column">{{$ctrl.datasets[centerIndex].data[dateIndex]}}</span>
+                                    </div>
+                                </div>
+                            </md-list-item>
+                            <md-divider></md-divider>
+                        </md-list-item>
+                    </md-list>
+                </div>
+
+            </div>
+        </md-card-content>
+
+    </md-card>
+
+</div>

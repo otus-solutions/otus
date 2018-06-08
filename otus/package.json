@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "alasql": "^0.4.3",
-    "angular": "1.5.8",
+    "angular": "^1.5.8",
     "angular-animate": "1.5.8",
     "angular-aria": "1.5.8",
     "angular-bind-html-compile-ci-dev": "1.1.1",
@@ -39,6 +39,8 @@
     "angular-ui-mask": "^1.8.3",
     "angular-ui-router": "^0.3.1",
     "chart.js": "^2.7.0",
+    "chart.js-scatter": "^1.1.4",
+    "d3": "^5.0.0",
     "fuse.js": "^2.6.2",
     "jquery": "3.0.0",
     "jsbarcode": "^3.5.7",
