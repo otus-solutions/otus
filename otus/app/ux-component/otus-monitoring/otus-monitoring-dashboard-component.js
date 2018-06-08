@@ -107,12 +107,42 @@
       if (self.createQuestionnaireLineChart) {
 
         var datasetInformation = {
-          "MG": { "name": "Minas Gerais", "goal": 3025, "backgroundColor": "rgba(255, 99, 132, 0.2)", "borderColor": "rgba(255, 99, 132, 1)" },
-          "SP": { "name": "São Paulo", "goal": 4895, "backgroundColor": "rgba(54, 162, 235, 0.2)", "borderColor": "rgba(54, 162, 235, 1)" },
-          "RS": { "name": "Rio Grande do Sul", "goal": 1999, "backgroundColor": "rgba(75, 192, 192, 0.2)", "borderColor": "rgba(75, 192, 192, 1)" },
-          "RJ": { "name": "Rio de Janeiro", "goal": 1745, "backgroundColor": "rgba(127, 190, 102, 0.2)", "borderColor": "rgba(127, 190, 102, 1)" },
-          "ES": { "name": "Espírito Santo", "goal": 1024, "backgroundColor": "rgba(153, 102, 255, 0.2)", "borderColor": "rgba(153, 102, 255, 1)" },
-          "BA": { "name": "Bahia", "goal": 1945, "backgroundColor": "rgba(255, 163, 102, 0.2)", "borderColor": "rgba(255, 163, 102, 1)" }
+          "MG": {
+            "name": "Minas Gerais",
+            "goal": 3025,
+            "backgroundColor": "rgba(255, 99, 132, 0.2)",
+            "borderColor": "rgba(255, 99, 132, 1)"
+          },
+          "SP": {
+            "name": "São Paulo",
+            "goal": 4895,
+            "backgroundColor": "rgba(54, 162, 235, 0.2)",
+            "borderColor": "rgba(54, 162, 235, 1)"
+          },
+          "RS": {
+            "name": "Rio Grande do Sul",
+            "goal": 1999,
+            "backgroundColor": "rgba(75, 192, 192, 0.2)",
+            "borderColor": "rgba(75, 192, 192, 1)"
+          },
+          "RJ": {
+            "name": "Rio de Janeiro",
+            "goal": 1745,
+            "backgroundColor": "rgba(127, 190, 102, 0.2)",
+            "borderColor": "rgba(127, 190, 102, 1)"
+          },
+          "ES": {
+            "name": "Espírito Santo",
+            "goal": 1024,
+            "backgroundColor": "rgba(153, 102, 255, 0.2)",
+            "borderColor": "rgba(153, 102, 255, 1)"
+          },
+          "BA": {
+            "name": "Bahia",
+            "goal": 1945,
+            "backgroundColor": "rgba(255, 163, 102, 0.2)",
+            "borderColor": "rgba(255, 163, 102, 1)"
+          }
         };
 
 
@@ -193,13 +223,14 @@
           fieldCenters: selectedFieldCentersList,
           dates: filteredDates
         };
-        self.createQuestionnaireLineChart(self.questionnaireData);
-        self.createQuestionnaireSpreadsheet(self.questionnaireData);
-        self.createInformationCards(self.questionnaireData);
-        self.createCumulativeResultsChart(self.questionnaireData);
-        self.createCentersGoalsChart(self.questionnaireData);
 
+        self.createQuestionnaireLineChart ? self.createQuestionnaireLineChart(self.questionnaireData): null;
+        self.createQuestionnaireSpreadsheet ? self.createQuestionnaireSpreadsheet(self.questionnaireData): null;
+        self.createInformationCards ? self.createInformationCards(self.questionnaireData): null;
+        self.createCumulativeResultsChart ? self.createCumulativeResultsChart(self.questionnaireData): null;
+        self.createCentersGoalsChart ? self.createCentersGoalsChart(self.questionnaireData): null;
 
+        self.ready = true;
       }
     }
 

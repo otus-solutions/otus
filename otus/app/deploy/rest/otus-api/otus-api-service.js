@@ -17,6 +17,7 @@
     'otusjs.deploy.LaboratoryRestService',
     'otusjs.deploy.SampleTransportRestService',
     'otusjs.deploy.ExamsRestService',
+    'otusjs.deploy.ParticipantReportRestService',
     'otusjs.deploy.MonitoringRestService'
   ];
 
@@ -32,6 +33,7 @@
     LaboratoryRestService,
     SampleTransportRestService,
     ExamsRestService,
+    ParticipantReportRestService,
     MonitoringRestService
   ) {
     var self = this;
@@ -59,6 +61,7 @@
       LaboratoryRestService.initialize();
       SampleTransportRestService.initialize();
       ExamsRestService.initialize();
+      ParticipantReportRestService.initialize();
       MonitoringRestService.initialize();
     }
   }

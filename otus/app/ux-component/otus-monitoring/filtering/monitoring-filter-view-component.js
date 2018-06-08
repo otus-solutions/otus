@@ -46,7 +46,7 @@
 
     function onInit() {
       ProjectFieldCenterService.loadCenters().then(function (result) {
-        
+
         self.centers = $filter('orderBy')(self.centers);
         result.forEach(function (fieldCenter) {
           self.centers.push(fieldCenter.acronym)
@@ -86,7 +86,9 @@
           showInvalidDateMessage();
         }
         else {
-          self.parseData(selected, self.questionnaireInfo, self.startDateInfo,self.endDateInfo);
+          if (self.questionnaireInfo && selected.length) {
+            self.parseData(selected, self.questionnaireInfo, self.startDateInfo, self.endDateInfo);
+          }
         }
 
       }
