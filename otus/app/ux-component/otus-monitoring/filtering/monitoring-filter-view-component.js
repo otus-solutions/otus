@@ -32,7 +32,7 @@
 
     self.fieldCenter = "";
     self.selectedFieldCenters = [];
-    self.questionnaireInfo = "ACTA";
+    self.questionnaireInfo;
     self.startDateInfo;
     self.endDateInfo;
     self.examFilter = "";
@@ -57,10 +57,6 @@
         }
 
       });
-
-      if(self.questionnairesList) {
-        self.questionnaireInfo = self.questionnairesList[0];
-      }
 
     }
 
