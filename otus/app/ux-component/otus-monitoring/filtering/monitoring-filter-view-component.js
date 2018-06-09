@@ -55,6 +55,7 @@
         for (var i = 0; i < self.centers.length; i++) {
           self.selectedFieldCenters[self.centers[i]] = true;
         }
+        onFilter();
 
       });
 
