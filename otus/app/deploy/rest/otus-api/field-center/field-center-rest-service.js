@@ -7,10 +7,12 @@
 
   Service.$inject = [
     '$q',
-    'OtusRestResourceService'
+    'OtusRestResourceService',
+    'otusjs.model.fieldCenter.FieldCenterFactory'
+
   ];
 
-  function Service($q, OtusRestResourceService) {
+  function Service($q, OtusRestResourceService, FieldCenterFactory) {
     var self = this;
     var _rest = null;
 
@@ -26,7 +28,7 @@
       var request = $q.defer();
       _rest.getAll(function(response) {
         if (response.data && response.data.length) {
-          request.resolve(response.data);
+          request.resolve(FieldCenterFactory.fromJsonObject(response.data));
         } else {
           request.resolve([]);
         }

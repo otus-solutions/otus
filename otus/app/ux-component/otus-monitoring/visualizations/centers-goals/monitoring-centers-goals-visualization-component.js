@@ -24,50 +24,39 @@
         /* Lifecycle hooks */
         self.$onInit = onInit;
 
-        /* public functions */
-        self.centers = [];
-        self.chart;
-
         function onInit() {
-
+          self.centers = [];
             ProjectFieldCenterService.loadCenters().then(function (result) {
-
                 self.centers = $filter('orderBy')(self.centers);
                 result.forEach(function (fieldCenter) {
-                    self.centers.push(fieldCenter.acronym)
+                    self.centers.push(fieldCenter.acronym);
                 });
             });
-
             self.createCentersGoalsChart = createCentersGoalsChart;
-
         }
 
         function createCentersGoalsChart(qData) {
-            var cumulativeInfo = [];
-
-
-            for (var i = 0; i < qData.data.length; i++) {
+            var _cumulativeInfo = [];
+            var _lengthOfdata = qData.data.length;
+            for (var i = 0; i < _lengthOfdata; i++) {
                 var total = (qData.data[i].data.reduce(function (a, b) {
                     return a + b;
                 }, 0));
-
-                var info = {
+                _cumulativeInfo[i] = {
                     label: qData.data[i].label,
                     data: [(total / qData.data[i].goal) * 100, 100 - ((total / qData.data[i].goal) * 100)],
                     backgroundColor: [qData.data[i].backgroundColor, 'rgba(250, 250, 250, 0.5)'],
                     borderColor: [qData.data[i].borderColor, 'rgba(240, 240, 240, 1)'],
                     borderWidth: 1
-                }
-                cumulativeInfo[i] = info;
+                };
             }
 
             if (!self.chart) {
-
                 var ctx = document.getElementById("centersGoalsDoughnutChart");
                 self.chart = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
-                        datasets: cumulativeInfo
+                        datasets: _cumulativeInfo
                     },
                     options: {
                         maintainAspectRatio: true,
@@ -94,13 +83,9 @@
                 });
             }
             else {
-                self.chart.data.datasets = (cumulativeInfo);
+                self.chart.data.datasets = (_cumulativeInfo);
                 self.chart.update();
             }
-
         }
-
-
-
     }
 }());

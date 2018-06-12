@@ -32,9 +32,9 @@
 
     self.fieldCenter = "";
     self.selectedFieldCenters = [];
-    self.questionnaireInfo;
-    self.startDateInfo;
-    self.endDateInfo;
+    self.questionnaireInfo = undefined;
+    self.startDateInfo = undefined;
+    self.endDateInfo = undefined;
     self.examFilter = "";
     self.realizationBeginFilter = "";
     self.realizationEndFilter = "";
@@ -46,32 +46,23 @@
 
     function onInit() {
       ProjectFieldCenterService.loadCenters().then(function (result) {
-
         self.centers = $filter('orderBy')(self.centers);
         result.forEach(function (fieldCenter) {
-          self.centers.push(fieldCenter.acronym)
+          self.centers.push(fieldCenter.acronym);
+          self.selectedFieldCenters[fieldCenter.acronym] = true;
         });
-
-        for (var i = 0; i < self.centers.length; i++) {
-          self.selectedFieldCenters[self.centers[i]] = true;
-        }
         onFilter();
-
       });
-
     }
 
     function onFilter() {
-
       var selected = [];
       for (var center in self.selectedFieldCenters) {
         if (self.selectedFieldCenters[center])
           selected.push(center);
       }
-
       // checa se a data de inicio e fim fazem sentido
       if (self.startDateInfo && self.endDateInfo) {
-
         var startNumbers = self.startDateInfo.split('/').map(function (item) {
           return parseInt(item, 10);
         });
@@ -91,9 +82,7 @@
             self.parseData(selected, self.questionnaireInfo, self.startDateInfo, self.endDateInfo);
           }
         }
-
       }
-
     }
 
     function showInvalidDateMessage() {

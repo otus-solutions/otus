@@ -24,34 +24,23 @@
 
         /* Lifecycle hooks */
         self.$onInit = onInit;
-
-        self.lineChart;
         /* public functions */
         self.createLineChart = createLineChart;
 
-        self.centers = [];
-
-
         function onInit() {
-
+          self.centers = [];
+          self.lineChart = undefined;
             ProjectFieldCenterService.loadCenters().then(function (result) {
-
                 self.centers = $filter('orderBy')(self.centers);
                 result.forEach(function (fieldCenter) {
-                    self.centers.push(fieldCenter.acronym)
+                    self.centers.push(fieldCenter.acronym);
                 });
-
             });
-
             self.createQuestionnaireLineChart = createLineChart;
-
         }
 
-
         function createLineChart(qData) {
-
             if (!self.lineChart) {
-
                 var ctx = document.getElementById("myLineChart");
                 self.lineChart = new Chart(ctx, {
                     type: 'bar',
@@ -83,7 +72,6 @@
                 });
             }
             else {
-
                 self.lineChart.config.data.labels = (qData.dates);
                 self.lineChart.data.datasets = (qData.data);
                 self.lineChart.update();
