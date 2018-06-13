@@ -9,7 +9,8 @@
       bindings: {
         selectedLots: '=',
         csvData: '=',
-        createInformationCards: '='
+        createInformationCards: '=',
+        centers: '='
       }
     });
 
@@ -28,15 +29,8 @@
     self.createProgressWheel = createProgressWheel;
 
     function onInit() {
-      self.centers = [];
-      ProjectFieldCenterService.loadCenters().then(function(result) {
-        self.centers = $filter('orderBy')(self.centers);
-        result.forEach(function(fieldCenter) {
-          self.centers.push(fieldCenter.acronym);
-        });
-        self.createInformationCards = createInformationCards;
-      });
-
+      self.centers = $filter('orderBy')(self.centers);
+      self.createInformationCards = createInformationCards;
     }
 
     function createInformationCards(qData) {

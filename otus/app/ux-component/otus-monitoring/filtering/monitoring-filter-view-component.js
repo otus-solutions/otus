@@ -11,7 +11,9 @@
         csvData: '=',
         parseData: '=',
         questionnairesList: '=',
-        uniqueDatesList: '='
+        uniqueDatesList: '=',
+        centers: '=',
+        updateData: '='
       }
     });
 
@@ -38,21 +40,20 @@
     self.examFilter = "";
     self.realizationBeginFilter = "";
     self.realizationEndFilter = "";
-    self.centers = [];
+
 
 
     /* Public methods */
     self.onFilter = onFilter;
 
     function onInit() {
-      ProjectFieldCenterService.loadCenters().then(function (result) {
-        self.centers = $filter('orderBy')(self.centers);
-        result.forEach(function (fieldCenter) {
-          self.centers.push(fieldCenter.acronym);
+
+        // self.centers = $filter('orderBy')(self.centers);
+        self.centers.forEach(function (fieldCenter) {
           self.selectedFieldCenters[fieldCenter.acronym] = true;
+
         });
         onFilter();
-      });
     }
 
     function onFilter() {
@@ -79,7 +80,8 @@
         }
         else {
           if (self.questionnaireInfo && selected.length) {
-            self.parseData(selected, self.questionnaireInfo, self.startDateInfo, self.endDateInfo);
+            var questionnaireData =self.parseData(selected, self.questionnaireInfo, self.startDateInfo, self.endDateInfo);
+            self.updateData(questionnaireData);
           }
         }
       }

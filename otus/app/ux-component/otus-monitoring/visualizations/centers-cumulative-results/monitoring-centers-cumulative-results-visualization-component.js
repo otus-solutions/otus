@@ -9,7 +9,8 @@
             bindings: {
                 selectedLots: '=',
                 csvData: '=',
-                createCumulativeResultsChart: '='
+                createCumulativeResultsChart: '=',
+                centers: '='
             }
         });
 
@@ -25,13 +26,7 @@
         self.$onInit = onInit;
 
         function onInit() {
-          self.centers = [];
-            ProjectFieldCenterService.loadCenters().then(function (result) {
-                self.centers = $filter('orderBy')(self.centers);
-                result.forEach(function (fieldCenter) {
-                    self.centers.push(fieldCenter.acronym);
-                });
-            });
+            self.centers = $filter('orderBy')(self.centers);
             self.createCumulativeResultsChart = createCumulativeResultsChart;
         }
 
@@ -51,7 +46,6 @@
                 _cumulativeInfo[0].data[i] =(qData.data[i].data.reduce(function(a,b){
                     return a+b;
                 },0));
-
             }
 
             if (!self.barChart) {
