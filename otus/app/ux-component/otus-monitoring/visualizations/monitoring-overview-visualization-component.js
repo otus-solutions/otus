@@ -16,11 +16,10 @@
     });
 
   Controller.$inject = [
-    'otusjs.deploy.FieldCenterRestService',
     '$filter'
   ];
 
-  function Controller(ProjectFieldCenterService, $filter) {
+  function Controller($filter) {
     var self = this;
 
     /* Lifecycle hooks */

@@ -17,15 +17,14 @@
 
   function Controller(ProjectFieldCenterService, MonitoringService, LoadingScreenService, MonitorParseData) {
     var self = this;
-    self.fieldCenter;
     self.parseData = MonitorParseData.create;
     self.preProcessingData = preProcessingData;
     self.update = update;
 
     // lifecycle hooks
     self.$onInit = onInit;
-    var messageLoading =
-      'Por favor aguarde o carregamento dos dados.<br> Esse processo pode demorar um pouco...';
+    var messageLoading = 'Por favor aguarde o carregamento dos dados.<br> Esse processo pode demorar um pouco...';
+    var rawData;
 
     /* Public methods */
     function onInit() {
@@ -36,6 +35,9 @@
         .then(function(list) {
           self.jsonData = list;
           preProcessingData();
+          self.update();
+          self.ready = true;
+          LoadingScreenService.finish();
         })
         .catch(function(err) {
           LoadingScreenService.finish();
@@ -49,75 +51,58 @@
       });
     }
 
-    function preProcessingData() {
-      var rawData = self.jsonData;
-      var allDates = rawData.map(function(e) {
-        return e.month + "/" + e.year;
-      });
-
-      self.uniqueDatesList = allDates.filter(function(elem, index, self) {
-        return index == self.indexOf(elem);
-      });
-
-      self.uniqueDatesList = self.uniqueDatesList.sort(function(a, b) {
+    function _sortDateList() {
+      return self.uniqueDatesList.sort(function(a, b) {
         var numbersA = a.split('/').map(function(item) {
           return parseInt(item, 10);
         });
-
         var numbersB = b.split('/').map(function(item) {
           return parseInt(item, 10);
         });
+        return numbersA[1] - numbersB[1] == 0 ? numbersA[0] - numbersB[0] : numbersA[1] - numbersB[1];
+      });
+    }
 
-        if (numbersA[1] - numbersB[1] == 0) {
-          return numbersA[0] - numbersB[0];
-        } else {
-          return numbersA[1] - numbersB[1];
-        }
-
+    function preProcessingData() {
+      var rawData = self.jsonData;
+      self.uniqueDatesList = rawData.map(function(e) {
+        return e.month + "/" + e.year;
+      }).filter(function(elem, index, self) {
+        return index == self.indexOf(elem);
       });
 
-      var allAcronyms = rawData.map(function(e) {
+      self.uniqueDatesList = _sortDateList();
+
+      self.questionnairesList = rawData.map(function(e) {
         return e.acronym;
-      });
-
-      self.questionnairesList = allAcronyms.filter(function(elem, index, self) {
+      }).filter(function(elem, index, self) {
         return index == self.indexOf(elem);
       });
 
-      var allFieldCenters = rawData.map(function(e) {
+      self.fieldCentersList = rawData.map(function(e) {
         return e.fieldCenter;
-      });
-
-      self.fieldCentersList = allFieldCenters.filter(function(elem, index, self) {
+      }).filter(function(elem, index, self) {
         return index == self.indexOf(elem);
       });
-      self.update();
-      self.ready = true;
-      LoadingScreenService.finish();
     }
 
     function update(questionnaireData) {
-        MonitorParseData.init(
-          self.uniqueDatesList,
-          self.jsonData,
-          self.createQuestionnaireLineChart,
-          _loadDataSetInformation());
-
-          if (questionnaireData) {
-            self.questionnaireData = questionnaireData;
-          }else {
-            self.questionnaireData = MonitorParseData.create(self.fieldCentersList,
-              self.questionnairesList[0],
-              self.uniqueDatesList[0],
-              self.uniqueDatesList[self.uniqueDatesList.length - 1]);
-          }
-          self.createQuestionnaireLineChart ? self.createQuestionnaireLineChart(self.questionnaireData) : null;
-          self.createQuestionnaireSpreadsheet ? self.createQuestionnaireSpreadsheet(self.questionnaireData) : null;
-          self.createInformationCards ? self.createInformationCards(self.questionnaireData) : null;
-          self.createCumulativeResultsChart ? self.createCumulativeResultsChart(self.questionnaireData) : null;
-          self.createCentersGoalsChart ? self.createCentersGoalsChart(self.questionnaireData) : null;
-      }
-
+      MonitorParseData.init(
+        self.uniqueDatesList,
+        self.jsonData,
+        self.createQuestionnaireLineChart,
+        _loadDataSetInformation());
+      self.questionnaireData = questionnaireData || MonitorParseData.create(self.fieldCentersList,
+        self.questionnairesList[0],
+        self.uniqueDatesList[0],
+        self.uniqueDatesList[self.uniqueDatesList.length - 1]);
+      self.createQuestionnaireLineChart(self.questionnaireData);
+      self.createQuestionnaireSpreadsheet(self.questionnaireData);
+      self.createInformationCards(self.questionnaireData);
+      self.createCumulativeResultsChart(self.questionnaireData);
+      self.createCentersGoalsChart(self.questionnaireData);
+    }
+    // TODO: espera o novo endpoint
     function _loadDataSetInformation() {
       var _dataOfCenters = {};
       var i = 0; //  MG    SP    RS  RJ   ES   BA
@@ -129,6 +114,5 @@
       });
       return _dataOfCenters;
     }
-
   }
 }());

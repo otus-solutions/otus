@@ -15,12 +15,11 @@
     });
 
   Controller.$inject = [
-    'otusjs.deploy.FieldCenterRestService',
     '$filter',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory'
   ];
 
-  function Controller(ProjectFieldCenterService, $filter, DynamicTableSettingsFactory) {
+  function Controller($filter, DynamicTableSettingsFactory) {
     var self = this;
 
     /* Lifecycle hooks */
