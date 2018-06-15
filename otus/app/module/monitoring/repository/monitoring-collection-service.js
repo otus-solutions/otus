@@ -7,10 +7,11 @@
 
   Service.$inject = [
     '$q',
-    'otusjs.monitoring.core.ModuleService'
+    'otusjs.monitoring.core.ModuleService',
+    'otusjs.monitoring.storage.MonitoringLocalStorageService'
   ];
 
-  function Service($q, ModuleService) {
+  function Service($q, ModuleService, MonitoringLocalStorageService) {
     var self = this;
     var _remoteStorage = ModuleService.getParticipantReportRemoteStorage();
 
@@ -24,6 +25,7 @@
           return remoteStorage
             .list()
             .then(function (response) {
+              MonitoringLocalStorageService.insert(response.data);
               request.resolve(response.data);
             })
             .catch(function(e){

@@ -20,6 +20,7 @@
       'otusjs.laboratory.storage.LaboratoryLocalStorageService',
       'otusjs.activity.storage.SurveyStorageService',
       'otusjs.participant.storage.ParticipantStorageService',
+      'otusjs.monitoring.storage.MonitoringLocalStorageService',
       'otusjs.user.storage.UserStorageService'
     ])
     .run(Runner);
