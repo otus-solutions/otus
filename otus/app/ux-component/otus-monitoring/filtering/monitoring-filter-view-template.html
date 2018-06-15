@@ -49,8 +49,8 @@
 
         <div flex style="vertical-align: middle;text-align:center;">
           <md-input-container ng-repeat="center in $ctrl.centers" class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
-            <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.selectedFieldCenters[center]">
-              {{center}}
+            <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.selectedFieldCenters[center.acronym]">
+              {{center.acronym}}
             </md-checkbox>
           </md-input-container>
         </div>
