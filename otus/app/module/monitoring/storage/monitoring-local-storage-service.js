@@ -37,6 +37,7 @@
     self.insert = insert;
     self.clear = clear;
     self.get = get;
+    self.find = find;
 
     /**
      * Binds this service to collection "laboratories" from LokiJS database instance.
@@ -70,15 +71,16 @@
      */
     function insert(data) {
       var insertedData = _collection.insert(data);
-      console.log(insertedData);
-      console.log(_db);
-      console.log(_collection);
       _db.saveDatabase();
       return insertedData;
     }
 
     function get(ix) {
       return _collection.get(ix);
+    }
+
+    function find(query) {
+      return _collection.find(query);
     }
 
 
