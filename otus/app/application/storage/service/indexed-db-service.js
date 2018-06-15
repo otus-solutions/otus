@@ -77,6 +77,7 @@
     }
 
     function _existentDbLoadHandler(dbName) {
+      //fixme: recently added collection requires a idb wipe out.
       _dbManager[dbName].storages.forEach(function(storage) {
         storage.initialize(getDb(dbName).getCollection(storage.collectionName), getDb(dbName));
       });
