@@ -13,10 +13,15 @@
     var self = this;
 
     self.list = list;
+    self.getActivityMonitoring = getActivityMonitoring;
 
 
     function list(){
       return MonitoringCollectionService.list();
+    }
+
+    function getActivityMonitoring(acronym) {
+      return MonitoringCollectionService.find({acronym:acronym});
     }
   }
 
