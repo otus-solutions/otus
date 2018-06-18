@@ -17,7 +17,7 @@
 
 
     function find(acronym){
-      return MonitoringCollectionService.find(acronym);
+      return MonitoringCollectionService.find({acronym:acronym});
     }
 
     function listAcronyms(){

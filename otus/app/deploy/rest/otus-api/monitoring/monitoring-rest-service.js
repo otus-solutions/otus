@@ -35,7 +35,7 @@
         if (!_rest) {
           throw new Error('REST resource is not initialized.');
         }
-        return _rest.find({acronym:acronym}).$promise;
+        return _rest.find({'acronym':acronym}).$promise;
       }
 
       function listAcronyms() {
