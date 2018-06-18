@@ -13,7 +13,7 @@
 
   function Service($q, ModuleService, MonitoringLocalStorageService) {
     var self = this;
-    let _remoteStorage = ModuleService.getParticipantReportRemoteStorage();
+    let _remoteStorage = ModuleService.getMonitoringRemoteStorage();
 
     self.list = list;
     self.listAcronyms = listAcronyms;

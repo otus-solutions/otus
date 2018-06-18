@@ -9,7 +9,7 @@
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.monitoring.business.MonitoringService',
     'otusjs.deploy.LoadingScreenService',
-    'otusMonitorParseData'
+    'otusMonitorParseDataFactory'
   ];
 
   function Controller(ProjectFieldCenterService, MonitoringService, LoadingScreenService, MonitorParseData) {
@@ -28,18 +28,21 @@
       _loadAllCenters();
       LoadingScreenService.changeMessage(messageLoading);
       LoadingScreenService.start();
-      MonitoringService.list()
-        .then(function(list) {
-          self.jsonData = list;
-          preProcessingData();
-          self.update();
-          self.ready = true;
+
+      // TODO: TIAGO
+      MonitoringService.listAcronyms()
+        .then(function(activities) {
+          self.questionnairesList = activities.map(function(acronym) {
+            return acronym;
+          }).filter(function(elem, index, self) {
+            return index == self.indexOf(elem);
+          });
+          // TODO: avaliar se é necessário
+          self.update(self.questionnairesList[0], undefined);
+
           LoadingScreenService.finish();
-        })
-        .catch(function(err) {
-          LoadingScreenService.finish();
-          console.log(err);
         });
+
     }
 
     function _loadAllCenters() {
@@ -61,7 +64,7 @@
     }
 
     function preProcessingData() {
-      var rawData = self.jsonData;
+      var rawData = angular.copy(self.monitoringData);
       self.uniqueDatesList = rawData.map(function(e) {
         return e.month + "/" + e.year;
       }).filter(function(elem, index, self) {
@@ -70,25 +73,23 @@
 
       self.uniqueDatesList = _sortDateList();
 
-      self.questionnairesList = rawData.map(function(e) {
-        return e.acronym;
-      }).filter(function(elem, index, self) {
-        return index == self.indexOf(elem);
-      });
-
       self.fieldCentersList = rawData.map(function(e) {
         return e.fieldCenter;
       }).filter(function(elem, index, self) {
         return index == self.indexOf(elem);
       });
-    }
-
-    function update(questionnaireData) {
       MonitorParseData.init(
         self.uniqueDatesList,
-        self.jsonData,
         self.createQuestionnaireLineChart,
         _loadDataSetInformation());
+    }
+
+    function update(acronym, questionnaireData) {
+      MonitoringService.find(acronym)
+        .then(function(response) {
+          self.monitoringData = angular.copy(response);
+          self.preProcessingData();
+        });
       self.questionnaireData = questionnaireData || MonitorParseData.create(self.fieldCentersList,
         self.questionnairesList[0],
         self.uniqueDatesList[0],
@@ -98,6 +99,8 @@
       self.createInformationCards(self.questionnaireData);
       self.createCumulativeResultsChart(self.questionnaireData);
       self.createCentersGoalsChart(self.questionnaireData);
+
+      self.ready = true;
     }
     // TODO: espera o novo endpoint
     function _loadDataSetInformation() {

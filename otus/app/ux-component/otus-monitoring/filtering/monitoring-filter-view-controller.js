@@ -59,7 +59,8 @@
         } else {
           if (self.questionnaireInfo && self.selected.length) {
             var questionnaireData = self.parseData(self.selected, self.questionnaireInfo, self.startDateInfo, self.endDateInfo);
-            self.updateData(questionnaireData);
+            self.updateData(self.questionnaireInfo, questionnaireData);
+            // self.updateData(self.selected);
           }
         }
       }

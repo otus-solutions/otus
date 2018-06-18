@@ -17,6 +17,8 @@
       /* Public methods */
       self.initialize = initialize;
       self.list = list;
+      self.find = find;
+      self.listAcronyms = listAcronyms;
 
       function initialize() {
         _rest = OtusRestResourceService.getOtusMonitoringResource();
@@ -27,6 +29,20 @@
           throw new Error('REST resource is not initialized.');
         }
         return _rest.list().$promise;
+      }
+
+      function find(acronym) {
+        if (!_rest) {
+          throw new Error('REST resource is not initialized.');
+        }
+        return _rest.find({acronym:acronym}).$promise;
+      }
+
+      function listAcronyms() {
+        if (!_rest) {
+          throw new Error('REST resource is not initialized.');
+        }
+        return _rest.listAcronyms().$promise;
       }
 
       /*

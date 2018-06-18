@@ -12,11 +12,16 @@
   function service(MonitoringCollectionService) {
     var self = this;
 
-    self.list = list;
+    self.find = find;
+    self.listAcronyms = listAcronyms;
 
 
-    function list(){
-      return MonitoringCollectionService.list();
+    function find(acronym){
+      return MonitoringCollectionService.find(acronym);
+    }
+
+    function listAcronyms(){
+      return MonitoringCollectionService.listAcronyms();
     }
   }
 

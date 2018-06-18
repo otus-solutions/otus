@@ -3,11 +3,11 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .factory('otusMonitorParseData', Factory);
+    .factory('otusMonitorParseDataFactory', Factory);
 
-    Factory.$inject = [];
+    Factory.$inject = ['otusjs.monitoring.business.MonitoringService'];
 
-    function Factory() {
+    function Factory(MonitoringService) {
       var self = this;
 
       self.create = create;
@@ -15,10 +15,9 @@
 
 
 
-      function init(datesList, json, QuestionnaireLineChart, setInformation) {
+      function init(datesList, QuestionnaireLineChart, setInformation) {
         self.uniqueDatesList = datesList;
-        self.jsonData = json;
-        self.createQuestionnaireLineChart = QuestionnaireLineChart
+        self.createQuestionnaireLineChart = QuestionnaireLineChart;
         self.datasetInformation = setInformation;
       }
 
@@ -30,7 +29,7 @@
 
         if (self.createQuestionnaireLineChart) {
           var datasets = [];
-          var rawData = self.jsonData.filter(function(value) {
+          var rawData = self.monitoringData.filter(function(value) {
             return value.acronym == this;
           }, acronym);
 
