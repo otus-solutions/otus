@@ -14,6 +14,7 @@
 
     self.find = find;
     self.listAcronyms = listAcronyms;
+    self.listCenters = listCenters;
 
 
     function find(acronym){
@@ -22,6 +23,10 @@
 
     function listAcronyms(){
       return MonitoringCollectionService.listAcronyms();
+    }
+
+    function listCenters() {
+      return MonitoringCollectionService.listCenters();
     }
   }
 

@@ -17,6 +17,7 @@
 
     self.list = list;
     self.listAcronyms = listAcronyms;
+    self.listCenters = listCenters;
     self.find = find;
 
     function list() {
@@ -49,6 +50,24 @@
               request.resolve(response.data);
             })
             .catch(function(e){
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function listCenters() {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .listCenters()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
               request.reject(e);
             });
         });
