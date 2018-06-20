@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -34,12 +34,12 @@
 
     }
 
-    function _loadAllAcronyms(){
+    function _loadAllAcronyms() {
       MonitoringService.listAcronyms()
-        .then(function (activities) {
-          self.questionnairesList = activities.map(function (acronym) {
+        .then(function(activities) {
+          self.questionnairesList = activities.map(function(acronym) {
             return acronym;
-          }).filter(function (elem, index, self) {
+          }).filter(function(elem, index, self) {
             return index == self.indexOf(elem);
           });
           // TODO: avaliar se é necessário
@@ -49,18 +49,18 @@
     }
 
     function _loadAllCenters() {
-      ProjectFieldCenterService.loadCenters().then(function (result) {
+      ProjectFieldCenterService.loadCenters().then(function(result) {
         self.centers = angular.copy(result);
-        self.test = _loadDataSetInformation();
+        _loadDataSetInformation();
       });
     }
 
     function _sortDateList() {
-      return self.uniqueDatesList.sort(function (a, b) {
-        var numbersA = a.split('/').map(function (item) {
+      return self.uniqueDatesList.sort(function(a, b) {
+        var numbersA = a.split('/').map(function(item) {
           return parseInt(item, 10);
         });
-        var numbersB = b.split('/').map(function (item) {
+        var numbersB = b.split('/').map(function(item) {
           return parseInt(item, 10);
         });
         return numbersA[1] - numbersB[1] == 0 ? numbersA[0] - numbersB[0] : numbersA[1] - numbersB[1];
@@ -69,29 +69,29 @@
 
     function preProcessingData() {
       var rawData = angular.copy(self.monitoringData);
-      self.uniqueDatesList = rawData.map(function (e) {
+      self.uniqueDatesList = rawData.map(function(e) {
         return e.month + "/" + e.year;
-      }).filter(function (elem, index, self) {
+      }).filter(function(elem, index, self) {
         return index == self.indexOf(elem);
       });
 
       self.uniqueDatesList = _sortDateList();
 
-      self.fieldCentersList = rawData.map(function (e) {
+      self.fieldCentersList = rawData.map(function(e) {
         return e.fieldCenter;
-      }).filter(function (elem, index, self) {
+      }).filter(function(elem, index, self) {
         return index == self.indexOf(elem);
       });
       MonitorParseData.init(
         self.uniqueDatesList,
         self.createQuestionnaireLineChart,
-        _loadDataSetInformation());
+        self.monitoringCenters);
     }
 
     function update(acronym, questionnaireData) {
       MonitoringService.find(acronym)
-        .then(function (response) {
-          self.monitoringData = angular.copy(response);
+        .then(function(response) {
+          self.monitoringData = response;
           self.preProcessingData();
         });
       self.questionnaireData = questionnaireData || MonitorParseData.create(self.fieldCentersList,
@@ -110,19 +110,17 @@
     function _loadDataSetInformation() {
       var _dataOfCenters = {};
       MonitoringService.listCenters()
-        .then(function (list) {
+        .then(function(list) {
           var _list = list;
-          self.centers.forEach(function (fieldCenter) {
-            _dataOfCenters[fieldCenter.acronym] = MonitoringCenterFactory.create(_list.find(function (elem) {
-              return elem.center.acronym === fieldCenter.acronym;
-              }));
-
-            });
-
-            self.dataCenters = _dataOfCenters;
-            _loadAllAcronyms();
+          self.centers.forEach(function(fieldCenter) {
+            _dataOfCenters[fieldCenter.acronym] = MonitoringCenterFactory.create(_list.find(function(elem) {
+              return elem.name === fieldCenter.name;
+            }));
+          });
+          self.monitoringCenters = _dataOfCenters;
+          _loadAllAcronyms();
         });
 
-      }
+    }
   }
 }());
