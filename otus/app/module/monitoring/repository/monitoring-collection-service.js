@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -31,7 +31,7 @@
               MonitoringLocalStorageService.insert(response.data);
               request.resolve(response.data);
             })
-            .catch(function(e){
+            .catch(function (e) {
               request.reject(e);
             });
         });
@@ -39,7 +39,7 @@
       return request.promise;
     }
 
-    function listAcronyms(){
+    function listAcronyms() {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
@@ -49,7 +49,7 @@
             .then(function (response) {
               request.resolve(response.data);
             })
-            .catch(function(e){
+            .catch(function (e) {
               request.reject(e);
             });
         });
@@ -79,7 +79,7 @@
       var request = $q.defer();
 
       let localResponse = MonitoringLocalStorageService.find(query);
-      if (localResponse.length){
+      if (localResponse.length) {
         request.resolve(localResponse);
         return request.promise;
       }
@@ -90,10 +90,12 @@
           return remoteStorage
             .find(query.acronym)
             .then(function (response) {
-              MonitoringLocalStorageService.insert(response.data);
-              request.resolve(response.data);
+              if (response.data) {
+                let inserted = MonitoringLocalStorageService.insert(response.data);
+                request.resolve(inserted);
+              }
             })
-            .catch(function(e){
+            .catch(function (e) {
               request.reject(e);
             });
         });
