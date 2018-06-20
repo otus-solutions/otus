@@ -15,8 +15,9 @@
 
 
 
-      function init(datesList, QuestionnaireLineChart, setInformation) {
+      function init(datesList, activityData, QuestionnaireLineChart, setInformation) {
         self.uniqueDatesList = datesList;
+        self.monitoringData = activityData;
         self.createQuestionnaireLineChart = QuestionnaireLineChart;
         self.datasetInformation = setInformation;
       }

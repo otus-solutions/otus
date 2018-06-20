@@ -10,10 +10,18 @@
     'otusjs.monitoring.business.MonitoringService',
     'otusjs.deploy.LoadingScreenService',
     'otusMonitorParseDataFactory',
-    'otusjs.model.monitoring.MonitoringCenterFactory'
+    'otusjs.model.monitoring.MonitoringCenterFactory',
+    'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(ProjectFieldCenterService, MonitoringService, LoadingScreenService, MonitorParseData, MonitoringCenterFactory) {
+  function Controller(
+    ProjectFieldCenterService,
+    MonitoringService,
+    LoadingScreenService,
+    MonitorParseData,
+    MonitoringCenterFactory,
+    ApplicationStateService) {
+
     var self = this;
     self.parseData = MonitorParseData.create;
     self.preProcessingData = preProcessingData;
@@ -29,9 +37,6 @@
       LoadingScreenService.changeMessage(messageLoading);
       LoadingScreenService.start();
       _loadAllCenters();
-      LoadingScreenService.finish();
-
-
     }
 
     function _loadAllAcronyms() {
@@ -68,7 +73,7 @@
     }
 
     function preProcessingData() {
-      var rawData = angular.copy(self.monitoringData);
+      var rawData = self.monitoringData;
       self.uniqueDatesList = rawData.map(function(e) {
         return e.month + "/" + e.year;
       }).filter(function(elem, index, self) {
@@ -84,6 +89,7 @@
       });
       MonitorParseData.init(
         self.uniqueDatesList,
+        self.monitoringData,
         self.createQuestionnaireLineChart,
         self.monitoringCenters);
     }
@@ -91,20 +97,33 @@
     function update(acronym, questionnaireData) {
       MonitoringService.find(acronym)
         .then(function(response) {
-          self.monitoringData = response;
-          self.preProcessingData();
-        });
-      self.questionnaireData = questionnaireData || MonitorParseData.create(self.fieldCentersList,
-        self.questionnairesList[0],
-        self.uniqueDatesList[0],
-        self.uniqueDatesList[self.uniqueDatesList.length - 1]);
-      self.createQuestionnaireLineChart(self.questionnaireData);
-      self.createQuestionnaireSpreadsheet(self.questionnaireData);
-      self.createInformationCards(self.questionnaireData);
-      self.createCumulativeResultsChart(self.questionnaireData);
-      self.createCentersGoalsChart(self.questionnaireData);
+          if (response.length) {
+            self.monitoringData = response;
+            self.preProcessingData();
+            self.questionnaireData = questionnaireData || MonitorParseData.create(self.fieldCentersList,
+              self.questionnairesList[0],
+              self.uniqueDatesList[0],
+              self.uniqueDatesList[self.uniqueDatesList.length - 1]);
+            self.createQuestionnaireLineChart(self.questionnaireData);
+            self.createQuestionnaireSpreadsheet(self.questionnaireData);
+            self.createInformationCards(self.questionnaireData);
+            self.createCumulativeResultsChart(self.questionnaireData);
+            self.createCentersGoalsChart(self.questionnaireData);
 
-      self.ready = true;
+            self.ready = true;
+            LoadingScreenService.finish();
+          } else {
+            //TODO: temporário
+            LoadingScreenService.finish();
+              LoadingScreenService.changeMessage("Não foi possível carregar os dados!");
+              LoadingScreenService.start();
+              setTimeout(function() {
+              ApplicationStateService.activateDashboard();
+              LoadingScreenService.finish();
+            },3000);
+
+          }
+        });
     }
 
     function _loadDataSetInformation() {
