@@ -1,5 +1,5 @@
 <div ui-view layout="column" ng-if="$ctrl.fileStructure">
-  <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-not-identified="$ctrl.aliquotsNotIdentified" dynamic-data-table-change="$ctrl.updateDataTable"
+  <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-with-problems="$ctrl.aliquotsWithProblems" dynamic-data-table-change="$ctrl.updateDataTable"
     error-aliquots="$ctrl.errorAliquots" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
   <md-content layout="column">
     <div>
@@ -34,7 +34,7 @@
         </md-card-content>
       </md-card>
 
-      <div layout="row" ng-if="$ctrl.aliquotsNotIdentified.length" ng-init="button={which: 'error'}" flex>
+      <div layout="row" ng-if="$ctrl.aliquotsWithProblems.length" ng-init="button={which: 'error'}" flex>
         <md-button ng-if="button.which == 'error'" ng-click="$ctrl.changeResults('resultsWithErrors'); button.which = 'all'" class="md-warn md-accent"
           aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>

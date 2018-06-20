@@ -56,7 +56,7 @@
         self.changedResults = self.sendingExam.getExamList();
         self.updateDataTable(self.changedResults);
       } else if (resultsToShow == "resultsWithErrors") {
-        self.changedResults = self.aliquotsNotIdentified;
+        self.changedResults = self.aliquotsWithProblems;
         self.updateDataTable(self.changedResults);
       }
     }

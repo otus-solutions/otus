@@ -10,7 +10,7 @@
         action: '<',
         sendingExam: '=',
         errorAliquots: '=',
-        aliquotsNotIdentified: '=',
+        aliquotsWithProblems: '=',
         dynamicDataTableChange: '='
       }
     });
@@ -26,6 +26,7 @@
 
   function Controller($scope, $mdDialog, SendingExamService, ProjectContextService, ApplicationStateService, LoadingScreenService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
+    const ALIQUOT_NOT_MATCH_EXAM_BACKEND_MESSAGE = "Data Validation Fail: Aliquot not match exam"
     const ALIQUOT_NOT_FOUND_BACKEND_MESSAGE = "Data Validation Fail: Aliquots not found";
     const EMPTY_LOT_BACKEND_MESSAGE = "Data Validation Fail: Empty Lot";
 
@@ -51,14 +52,14 @@
     }
 
     function saveUpload() {
-      if (self.aliquotsNotIdentified) {
+      if (self.aliquotsWithProblems) {
         _saveForced();
       } else {
         _save();
       }
     }
 
-    function _save(){
+    function _save() {
       Promise.resolve()
         .then(_loadWait)
         .then(function () {
@@ -66,46 +67,63 @@
         });
     }
 
-    function _saveForced(){
+    function _saveForced() {
       _buildMessageForceSendOfAliquots();
       _forceSendOfAliquots();
     }
 
     function _sendExam() {
       SendingExamService.createSendExam(JSON.stringify(self.sendingExam))
-      .then(function () {
-        ProjectContextService.clearFileStructure();
-        ApplicationStateService.activateExamSending();
-        self.aliquotsNotIdentified = [];
-        LoadingScreenService.finish();
-      })
-      .catch(function (reason) {
-        _handleFailuresToSend(reason);
-        $scope.$$postDigest(function(){
-          self.dynamicDataTableChange(self.sendingExam.getExamList());
+        .then(function () {
+          ProjectContextService.clearFileStructure();
+          ApplicationStateService.activateExamSending();
+          self.aliquotsWithProblems = [];
           LoadingScreenService.finish();
-          $mdDialog.show(aliquotsNotFound).then(function () {            
+        }).catch(function (reason) {
+          _handleFailuresToSend(reason);
+          $scope.$$postDigest(function () {
+            self.dynamicDataTableChange(self.sendingExam.getExamList());
+            LoadingScreenService.finish();
+            $mdDialog.show(aliquotsNotFound).then(function () {
 
+            });
           });
         });
-      });
     }
 
     function _handleFailuresToSend(reason) {
-      if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE) {
-        self.sendingExam.examSendingLot.forcedSave = true;
-        self.aliquotsNotIdentified = [];
+      //TODO: Remover!
+      reason.data.MESSAGE = ALIQUOT_NOT_MATCH_EXAM_BACKEND_MESSAGE
+      if (reason.data.MESSAGE === ALIQUOT_NOT_MATCH_EXAM_BACKEND_MESSAGE) {
+        self.disabledSave = true;
+        self.aliquotsWithProblems = [];
         self.errorAliquots = _getUnique(reason.data.CONTENT);
         self.sendingExam.exams.forEach(function (exam) {
           exam.examResults.forEach(function (result) {
-            var invalidAliquotCode = self.errorAliquots.find(function(aliquotCode){ return aliquotCode == result.aliquotCode });
+            var invalidAliquotCode = self.errorAliquots.find(function (aliquotCode) { return aliquotCode == result.aliquotCode });
+            if (invalidAliquotCode) {
+              //TODO: Não deve ser modificado o objeto!
+              result.aliquotValid = false;
+              self.aliquotsWithProblems.push(result);
+            }
+          })
+        });
+        aliquotsNotFound
+          .title('Aliquota(s) não correspondem ao exame')
+          .textContent('Existem aliquota(s) que não correspondem ao exame, o envio será impossibilitando.');
+      } else if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE) {
+        self.sendingExam.examSendingLot.forcedSave = true;
+        self.aliquotsWithProblems = [];
+        self.errorAliquots = _getUnique(reason.data.CONTENT);
+        self.sendingExam.exams.forEach(function (exam) {
+          exam.examResults.forEach(function (result) {
+            var invalidAliquotCode = self.errorAliquots.find(function (aliquotCode) { return aliquotCode == result.aliquotCode });
             if (invalidAliquotCode) {
               result.aliquotValid = false;
-              self.aliquotsNotIdentified.push(result);
+              self.aliquotsWithProblems.push(result);
             }
           });
         });
-
         aliquotsNotFound
           .title('Aliquota(s) não encontrada(s)')
           .textContent('Se desejar você pode forçar o envio, clicando novamente em salvar.');
