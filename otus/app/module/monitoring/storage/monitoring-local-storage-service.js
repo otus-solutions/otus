@@ -15,9 +15,9 @@
 
   /**
    * MonitoringLocalStorageService creates a communication between the application and
-   * a LokiJS's collection, named "laboratories". So the operations allowed to a
+   * a LokiJS's collection, named "monitoring". So the operations allowed to a
    * LokiJS's collection are placed here and specialized to deal only with data of
-   * laboratories.
+   * monitoring.
    * @see {MonitoringLocalStorageService}
    * @namespace MonitoringLocalStorageService
    * @memberof Services
@@ -40,7 +40,7 @@
     self.find = find;
 
     /**
-     * Binds this service to collection "laboratories" from LokiJS database instance.
+     * Binds this service to collection "monitoring" from LokiJS database instance.
      * @param {object} collection - the reference to collection
      * @param {object} db - the reference to database instance
      * @memberof MonitoringLocalStorageService
@@ -48,6 +48,7 @@
     function initialize(collection, db) {
       _collection = collection;
       _db = db;
+      clear();
     }
 
     /**
@@ -62,15 +63,14 @@
       _db.saveDatabase();
     }
 
-    //todo: properly comment
     /**
-     * Adds laboratories to collection.
-     * @param {(object)} laboratories - the laboratory to be inserted
-     * @returns {(object)} laboratory inserted
+     * Adds monitoring data to collection.
+     * @param {(object)} monitoringData - the data to be inserted
+     * @returns {(object)} monitoringData inserted
      * @memberof MonitoringLocalStorageService
      */
-    function insert(data) {
-      var insertedData = _collection.insert(data);
+    function insert(monitoringData) {
+      var insertedData = _collection.insert(monitoringData);
       _db.saveDatabase();
       return insertedData;
     }

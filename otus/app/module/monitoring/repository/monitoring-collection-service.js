@@ -15,29 +15,9 @@
     var self = this;
     let _remoteStorage = ModuleService.getMonitoringRemoteStorage();
 
-    self.list = list;
     self.listAcronyms = listAcronyms;
     self.listCenters = listCenters;
     self.find = find;
-
-    function list() {
-      var request = $q.defer();
-      _remoteStorage
-        .whenReady()
-        .then(function (remoteStorage) {
-          return remoteStorage
-            .list()
-            .then(function (response) {
-              MonitoringLocalStorageService.insert(response.data);
-              request.resolve(response.data);
-            })
-            .catch(function (e) {
-              request.reject(e);
-            });
-        });
-
-      return request.promise;
-    }
 
     function listAcronyms() {
       var request = $q.defer();
