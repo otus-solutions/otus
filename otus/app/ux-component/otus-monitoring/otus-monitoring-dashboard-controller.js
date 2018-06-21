@@ -11,7 +11,8 @@
     'otusjs.deploy.LoadingScreenService',
     'otusMonitorParseDataFactory',
     'otusjs.model.monitoring.MonitoringCenterFactory',
-    'otusjs.application.state.ApplicationStateService'
+    '$mdDialog',
+    '$q'
   ];
 
   function Controller(
@@ -20,7 +21,8 @@
     LoadingScreenService,
     MonitorParseData,
     MonitoringCenterFactory,
-    ApplicationStateService) {
+    $mdDialog,
+    $q) {
 
     var self = this;
     self.parseData = MonitorParseData.create;
@@ -37,6 +39,7 @@
       LoadingScreenService.changeMessage(messageLoading);
       LoadingScreenService.start();
       _loadAllCenters();
+      LoadingScreenService.finish();
     }
 
     function _loadAllAcronyms() {
@@ -73,25 +76,36 @@
     }
 
     function preProcessingData() {
-      var rawData = self.monitoringData;
-      self.uniqueDatesList = rawData.map(function(e) {
-        return e.month + "/" + e.year;
-      }).filter(function(elem, index, self) {
-        return index == self.indexOf(elem);
-      });
+      return $q(function(resolve, reject) {
+        try {
+          var rawData = self.monitoringData;
+          self.uniqueDatesList = rawData.map(function(e) {
+            return e.month + "/" + e.year;
+          }).filter(function(elem, index, self) {
+            return index == self.indexOf(elem);
+          });
 
-      self.uniqueDatesList = _sortDateList();
+          self.uniqueDatesList = _sortDateList();
 
-      self.fieldCentersList = rawData.map(function(e) {
-        return e.fieldCenter;
-      }).filter(function(elem, index, self) {
-        return index == self.indexOf(elem);
+          self.fieldCentersList = rawData.map(function(e) {
+            return e.fieldCenter;
+          }).filter(function(elem, index, self) {
+            return index == self.indexOf(elem);
+          });
+          MonitorParseData.init(
+            self.uniqueDatesList,
+            self.monitoringData,
+            self.createQuestionnaireLineChart,
+            self.monitoringCenters);
+
+          if (self.uniqueDatesList && self.fieldCentersList) {
+            resolve();
+          }
+
+        } catch (err) {
+          reject();
+        }
       });
-      MonitorParseData.init(
-        self.uniqueDatesList,
-        self.monitoringData,
-        self.createQuestionnaireLineChart,
-        self.monitoringCenters);
     }
 
     function update(acronym, questionnaireData) {
@@ -99,31 +113,36 @@
         .then(function(response) {
           if (response.length) {
             self.monitoringData = response;
-            self.preProcessingData();
-            self.questionnaireData = questionnaireData || MonitorParseData.create(self.fieldCentersList,
-              self.questionnairesList[0],
-              self.uniqueDatesList[0],
-              self.uniqueDatesList[self.uniqueDatesList.length - 1]);
-            self.createQuestionnaireLineChart(self.questionnaireData);
-            self.createQuestionnaireSpreadsheet(self.questionnaireData);
-            self.createInformationCards(self.questionnaireData);
-            self.createCumulativeResultsChart(self.questionnaireData);
-            self.createCentersGoalsChart(self.questionnaireData);
+            self.preProcessingData().then(function() {
+              self.questionnaireData = questionnaireData || MonitorParseData.create(self.fieldCentersList,
+                self.questionnairesList[0],
+                self.uniqueDatesList[0],
+                self.uniqueDatesList[self.uniqueDatesList.length - 1]);
+              self.createQuestionnaireLineChart(self.questionnaireData);
+              self.createQuestionnaireSpreadsheet(self.questionnaireData);
+              self.createInformationCards(self.questionnaireData);
+              self.createCumulativeResultsChart(self.questionnaireData);
+              self.createCentersGoalsChart(self.questionnaireData);
 
-            self.ready = true;
-            LoadingScreenService.finish();
+              self.ready = true;
+            });
           } else {
-            //TODO: temporário
-            LoadingScreenService.finish();
-              LoadingScreenService.changeMessage("Não foi possível carregar os dados!");
-              LoadingScreenService.start();
-              setTimeout(function() {
-              ApplicationStateService.activateDashboard();
-              LoadingScreenService.finish();
-            },3000);
-
+            _showMessages('Os dados não foram encontrados!', () => {});
           }
+
         });
+    }
+
+    function _showMessages(msg, action) {
+      var _msg = $mdDialog.alert()
+        .title('ATENÇÃO')
+        .textContent('Os dados não foram encontrados!')
+        .ariaLabel('Confirmação de leitura')
+        .ok('Ok');
+      $mdDialog.show(_msg).then(function() {
+        action();
+      });
+
     }
 
     function _loadDataSetInformation() {
