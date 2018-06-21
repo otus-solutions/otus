@@ -37,6 +37,7 @@
         //   throw new Error('REST resource is not initialized.');
         // }
         // return _rest.find({'acronym':acronym}).$promise;
+//todo: remove comments
         var defer = $q.defer();
         defer.resolve({data: a.data.filter(function (f) {
           return f.acronym === acronym;
@@ -57,7 +58,7 @@
         }
         return _rest.listCenters().$promise;
       }
-
+//todo: remove
       var a = {
         "data": [{
           "fieldCenter": "ES",
@@ -137,13 +138,18 @@
           "year": 2017,
           "acronym": "AFID",
           "sum": "2"
-        }, {"fieldCenter": "RJ", "month": 12, "year": 2017, "acronym": "ANTC", "sum": "2"}, {
-          "fieldCenter": "RJ",
-          "month": 12,
-          "year": 2017,
-          "acronym": "BIOC",
-          "sum": "1"
-        }, {"fieldCenter": "RJ", "month": 1, "year": 2018, "acronym": "BIOC", "sum": "1"}, {
+        },
+          {"fieldCenter": "RJ", "month": 12, "year": 2017, "acronym": "ANTC", "sum": "2"},
+          {"fieldCenter": "SP", "month": 12, "year": 2016, "acronym": "ANTC", "sum": "5"},
+          {
+            "fieldCenter": "RJ",
+            "month": 12,
+            "year": 2017,
+            "acronym": "BIOC",
+            "sum": "1"
+          },
+
+          {"fieldCenter": "RJ", "month": 1, "year": 2018, "acronym": "BIOC", "sum": "1"}, {
           "fieldCenter": "RJ",
           "month": 12,
           "year": 2017,
