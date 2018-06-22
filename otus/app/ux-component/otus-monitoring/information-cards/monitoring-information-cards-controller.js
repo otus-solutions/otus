@@ -47,7 +47,7 @@
       }
       console.log((self.goalPercentage, 100 - (self.goalPercentage)));
       createProgressWheel(
-        "goalPercentageChart", [(self.goalPercentage, 100 - (self.goalPercentage))], [
+        "goalPercentageChart", [self.goalPercentage, 100 - (self.goalPercentage)], [
           'percentagem da meta cumprida',
           'percentagem da meta a ser cumprida'
         ], [
