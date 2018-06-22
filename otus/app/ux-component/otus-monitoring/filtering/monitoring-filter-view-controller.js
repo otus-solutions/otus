@@ -50,36 +50,39 @@
 
       if (self.startDateInfo) {
         let month = String(self.startDateInfo.getMonth() + 1);
-        _startDateInfo = self.startDateInfo.getFullYear().toString().concat("-",month,"-1");
-        startNumbers.push(self.startDateInfo.getMonth()+1);
+        _startDateInfo = self.startDateInfo.getFullYear().toString().concat("-", month, "-1");
+        startNumbers.push(self.startDateInfo.getMonth() + 1);
         startNumbers.push(self.startDateInfo.getFullYear());
       }
 
       if (self.endDateInfo) {
         let month = String(self.endDateInfo.getMonth() + 1);
-        _endDateInfo = self.endDateInfo.getFullYear().toString().concat("-",month,"-1");
-        endNumbers.push(self.endDateInfo.getMonth()+1);
+        _endDateInfo = self.endDateInfo.getFullYear().toString().concat("-", month, "-1");
+        endNumbers.push(self.endDateInfo.getMonth() + 1);
         endNumbers.push(self.endDateInfo.getFullYear());
       }
 
       self.selected = _getSelectedCenters();
 
       if (self.startDateInfo && self.endDateInfo) {
-        _onValidateDates(startNumbers, endNumbers)
-      }
-
-      if (self.questionnaireInfo && self.selected.length){
+        if (_onValidateDates(startNumbers, endNumbers)) {
+          self.updateData(self.questionnaireInfo, self.selected, _startDateInfo, _endDateInfo);
+        }
+      } else if (self.questionnaireInfo) {
         self.updateData(self.questionnaireInfo, self.selected, _startDateInfo, _endDateInfo);
       }
 
     }
 
-    function _onValidateDates(firstPeriod, finalPeriod){
-        if ((firstPeriod[1] - finalPeriod[1] == 0) && (firstPeriod[0] - finalPeriod[0] > 0)) {
-          showInvalidDateMessage();
-        } else if (firstPeriod[1] - finalPeriod[1] > 0) {
-          showInvalidDateMessage();
-        }
+    function _onValidateDates(firstPeriod, finalPeriod) {
+      if ((firstPeriod[1] - finalPeriod[1] == 0) && (firstPeriod[0] - finalPeriod[0] > 0)) {
+        showInvalidDateMessage();
+        return false;
+      } else if (firstPeriod[1] - finalPeriod[1] > 0) {
+        showInvalidDateMessage();
+        return false;
+      }
+      return true;
     }
 
     function onChangeAcronym() {
@@ -87,7 +90,7 @@
       self.updateData(self.questionnaireInfo, self.selected);
     }
 
-    function _getSelectedCenters(){
+    function _getSelectedCenters() {
       var _selected = [];
       for (var center in self.selectedFieldCenters) {
         if (self.selectedFieldCenters[center])

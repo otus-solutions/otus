@@ -24,9 +24,7 @@
     }
 
     function createInformationCards(qData) {
-      // if(qData)
-      console.log(qData);
-      self.dataa = angular.copy(qData);
+
       self.reachedTotal = 0;
       self.goal = 0;
       self.goalPercentage = 0;
@@ -41,9 +39,14 @@
         self.goalPercentage += _totalGoal / qData.data[i].goal;
       }
 
+
+
       self.goalPercentage = ((self.goalPercentage / qData.data.length) * 100).toFixed(2);
+      if(self.goalPercentage === "NaN"){
+        self.goalPercentage = "0.00";
+      }
       createProgressWheel(
-        "goalPercentageChart", [self.goalPercentage, 100 - (self.goalPercentage)], [
+        "goalPercentageChart", [(self.goalPercentage, 100 - (self.goalPercentage)) || 0], [
           'percentagem da meta cumprida',
           'percentagem da meta a ser cumprida'
         ], [
