@@ -1,3 +1,17 @@
+<style media="screen">
+  .md-virtual-repeat-container{
+    display: none;
+  }
+  .dtp>.dtp-content>.dtp-date-view>header.dtp-header{
+    display: none;
+  }
+  .dtp div.dtp-actual-num {
+    display: none;
+  }
+  dtp-btn-today md-button md-button md-ink-ripple{
+    display: none !important;
+  }
+</style>
 <div flex>
   <div layout="row" flex>
     <div layout="column" flex>
@@ -8,34 +22,29 @@
       <div layout="row" layout-xs="column" layout-align="center">
 
         <div style="vertical-align: middle;text-align:center;" >
-
-          <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+          <md-input-container class="remove-errors-spacer md-input-has-placeholder" style="margin-left:15px;min-width: 100px; max-width: 130px">
             <label class="md-subheader">Período Inicial:</label>
-            <md-select ng-model="$ctrl.startDateInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
-              <md-tooltip>
-                Mês a partir do qual dados serão mostrados
-              </md-tooltip>
-              <md-option ng-repeat="date in $ctrl.uniqueDatesList track by $index" value="{{date}}" ng-click="" ng-selected="$first">
-                {{date}}
-              </md-option>
-            </md-select>
+            <input mdc-datetime-picker="" ng-change="$ctrl.onFilter()"
+            show-icon="true" date="true" time="false" aria-label="Período Inicial"
+            type="text" id="datetime" show-todays-date=""
+            ng-model="$ctrl.startDateInfo"
+            class="md-input" readonly="readonly" format="MM/YYYY"
+              disable-parent-scroll="true">
           </md-input-container>
 
-          <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+          <md-input-container class="remove-errors-spacer md-input-has-placeholder" style="margin-left:15px;min-width: 100px; max-width: 130px">
             <label class="md-subheader">Período Final:</label>
-            <md-select ng-model="$ctrl.endDateInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
-              <md-tooltip>
-                Mês até o qual dados serão mostrados
-              </md-tooltip>
-              <md-option ng-repeat="date in $ctrl.uniqueDatesList track by $index" value="{{date}}" ng-click="" ng-selected="$last">
-                {{date}}
-              </md-option>
-            </md-select>
+            <input mdc-datetime-picker="" ng-change="$ctrl.onFilter()"
+            show-icon="true" date="true" time="false" aria-label="Período Final"
+            type="text" id="datetime" show-todays-date=""
+            ng-model="$ctrl.endDateInfo"
+            class="md-input" readonly="readonly" format="MM/YYYY"
+              disable-parent-scroll="true">
           </md-input-container>
 
           <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
             <label class="md-subheader">Sigla da Atividade:</label>
-            <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onFilter()" ng-disabled="">
+            <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
               <md-tooltip>
                 Sigla da atividade a ser visualizada
               </md-tooltip>

@@ -7,10 +7,11 @@
 
   Controller.$inject = [
     '$mdToast',
-    '$filter'
+    '$filter',
+    'mdcDefaultParams'
   ];
 
-  function Controller($mdToast, $filter) {
+  function Controller($mdToast, $filter, mdcDefaultParams) {
     var self = this;
 
     /* Lifecycle hooks */
@@ -22,6 +23,12 @@
     self.realizationEndFilter = "";
     self.selectedFieldCenters = {};
     self.selected = [];
+    mdcDefaultParams({
+      lang: 'pt-br',
+      cancelText: 'cancelar',
+      todayText: 'Mês Atual',
+      okText: 'ok'
+    });
 
 
     /* Public methods */
@@ -32,11 +39,28 @@
       self.centers.forEach(function(fieldCenter) {
         self.selectedFieldCenters[fieldCenter.acronym] = true;
       });
-
-      self.onFilter();
     }
 
     function onFilter() {
+      var startNumbers = [];
+      var endNumbers = [];
+      var _startDateInfo = null;
+      var _endDateInfo = null;
+
+      if (self.startDateInfo) {
+        let month = String(self.startDateInfo.getMonth() + 1);
+        _startDateInfo = self.startDateInfo.getFullYear().toString().concat("-",month,"-1");
+        startNumbers.push(self.startDateInfo.getMonth()+1);
+        startNumbers.push(self.startDateInfo.getFullYear());
+      }
+
+      if (self.endDateInfo) {
+        let month = String(self.endDateInfo.getMonth() + 1);
+        _endDateInfo = self.endDateInfo.getFullYear().toString().concat("-",month,"-1");
+        endNumbers.push(self.endDateInfo.getMonth()+1);
+        endNumbers.push(self.endDateInfo.getFullYear());
+      }
+
       self.selected = [];
       for (var center in self.selectedFieldCenters) {
         if (self.selectedFieldCenters[center])
@@ -44,26 +68,24 @@
       }
       // checa se a data de inicio e fim fazem sentido
       if (self.startDateInfo && self.endDateInfo) {
-        var startNumbers = self.startDateInfo.split('/').map(function(item) {
-          return parseInt(item, 10);
-        });
-
-        var endNumbers = self.endDateInfo.split('/').map(function(item) {
-          return parseInt(item, 10);
-        });
 
         if ((startNumbers[1] - endNumbers[1] == 0) && (startNumbers[0] - endNumbers[0] > 0)) {
           showInvalidDateMessage();
         } else if (startNumbers[1] - endNumbers[1] > 0) {
           showInvalidDateMessage();
-        } else {
-          if (self.questionnaireInfo && self.selected.length) {
-            var questionnaireData = self.parseData(self.selected, self.questionnaireInfo, self.startDateInfo, self.endDateInfo);
-            self.updateData(self.questionnaireInfo, questionnaireData);
-            // self.updateData(self.selected);
-          }
         }
+
       }
+
+      if (self.questionnaireInfo && self.selected.length) {
+
+        self.updateData(self.questionnaireInfo, self.selected, _startDateInfo, _endDateInfo);
+      }
+
+    }
+
+    self.onChangeAcronym = function() {
+      self.updateData(self.questionnaireInfo);
     }
 
     function showInvalidDateMessage() {

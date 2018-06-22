@@ -51,7 +51,8 @@
             return index == self.indexOf(elem);
           });
           // TODO: avaliar se é necessário
-          self.update(self.questionnairesList[0], undefined);
+          self.ready = true;
+          self.update(self.questionnairesList[0], undefined, undefined);
 
         });
     }
@@ -65,22 +66,22 @@
 
     function _sortDateList() {
       return self.uniqueDatesList.sort(function(a, b) {
-        var numbersA = a.split('/').map(function(item) {
+        var numbersA = a.split('-').map(function(item) {
           return parseInt(item, 10);
         });
-        var numbersB = b.split('/').map(function(item) {
+        var numbersB = b.split('-').map(function(item) {
           return parseInt(item, 10);
         });
-        return numbersA[1] - numbersB[1] == 0 ? numbersA[0] - numbersB[0] : numbersA[1] - numbersB[1];
+        return numbersA[0] - numbersB[0] == 0 ? numbersA[1] - numbersB[1] : numbersA[0] - numbersB[0];
       });
     }
 
     function preProcessingData() {
       return $q(function(resolve, reject) {
         try {
-          var rawData = self.monitoringData;
+          var rawData = self.monitoringData || [];
           self.uniqueDatesList = rawData.map(function(e) {
-            return e.month + "/" + e.year;
+            return   e.year + "-" + e.month + "-1";
           }).filter(function(elem, index, self) {
             return index == self.indexOf(elem);
           });
@@ -108,27 +109,39 @@
       });
     }
 
-    function update(acronym, questionnaireData) {
+    function update(acronym, selectedCenters, startDate, endDate) {
+      self.ready = false;
+      if (!selectedCenters) {
+        selectedCenters = [];
+        self.centers.forEach(function(center) {
+          selectedCenters.push(center.acronym);
+        });
+      }
       MonitoringService.find(acronym)
         .then(function(response) {
-          if (response.length) {
-            self.monitoringData = response;
-            self.preProcessingData().then(function() {
-              self.questionnaireData = questionnaireData || MonitorParseData.create(self.fieldCentersList,
-                self.questionnairesList[0],
-                self.uniqueDatesList[0],
-                self.uniqueDatesList[self.uniqueDatesList.length - 1]);
-              self.createQuestionnaireLineChart(self.questionnaireData);
-              self.createQuestionnaireSpreadsheet(self.questionnaireData);
-              self.createInformationCards(self.questionnaireData);
-              self.createCumulativeResultsChart(self.questionnaireData);
-              self.createCentersGoalsChart(self.questionnaireData);
-
-              self.ready = true;
-            });
-          } else {
+          if (!response) {
             _showMessages('Os dados não foram encontrados!', () => {});
           }
+
+          self.monitoringData = response;
+          self.preProcessingData().then(function() {
+
+            var _startDate = startDate || self.uniqueDatesList[0];
+            var _endDate = endDate || self.uniqueDatesList[self.uniqueDatesList.length - 1];
+            var _selectedCenters = selectedCenters || self.fieldCentersList;
+            self.questionnaireData = MonitorParseData.create(_selectedCenters, acronym, _startDate, _endDate);
+
+            self.createQuestionnaireLineChart(self.questionnaireData);
+            self.createQuestionnaireSpreadsheet(self.questionnaireData);
+            self.createInformationCards(self.questionnaireData);
+            self.createCumulativeResultsChart(self.questionnaireData);
+            self.createCentersGoalsChart(self.questionnaireData);
+
+            self.ready = true;
+          });
+
+
+
 
         });
     }

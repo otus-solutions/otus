@@ -61,7 +61,7 @@
       let localResponse = MonitoringLocalStorageService.find(query);
       if (localResponse.length) {
         request.resolve([].concat(localResponse));
-        console.log('local storage request', localResponse);
+        console.log('local storage request', [].concat(localResponse));
         return request.promise;
       }
 
@@ -73,8 +73,8 @@
             .then(function (response) {
               if (response.data) {
                 let inserted = MonitoringLocalStorageService.insert(response.data);
-                console.log('remote request', inserted);
-                request.resolve(inserted);
+                console.log('remote request', [].concat(inserted));
+                request.resolve([].concat(inserted));
               }
             })
             .catch(function (e) {

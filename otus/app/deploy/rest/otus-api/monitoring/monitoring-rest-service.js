@@ -141,6 +141,8 @@
         },
           {"fieldCenter": "RJ", "month": 12, "year": 2017, "acronym": "ANTC", "sum": "2"},
           {"fieldCenter": "SP", "month": 12, "year": 2016, "acronym": "ANTC", "sum": "5"},
+          {"fieldCenter": "SP", "month": 4, "year": 2016, "acronym": "ANTC", "sum": "5"},
+          {"fieldCenter": "SP", "month": 1, "year": 2015, "acronym": "ANTC", "sum": "5"},
           {
             "fieldCenter": "RJ",
             "month": 12,
