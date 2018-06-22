@@ -33,31 +33,39 @@
     }
 
 
-    function findDate(dateInfo) {
-      dateInfo = new Date(dateInfo);
+    function _findDate(date, type) {
+      var dateInfo = new Date(date);
       var dateListConverted = _convertDateList();
       var position = null;
 
+      if (type === "startDate") {
+        if (dateInfo > dateListConverted[dateListConverted.length - 1]) {
+          return date;
+        }
+      }
 
-        var closestDate = dateListConverted.reduce(function(last, current) {
-          return (Math.abs(current - dateInfo) < Math.abs(last - dateInfo) ? current : last);
-        });
+      if (type === "endDate") {
+        if (dateInfo < dateListConverted[0]) {
+          return date;
+        }
+      }
 
-        dateListConverted.find(function(elem, index) {
-          if(elem === closestDate){
-            position = angular.copy(index);
-            return index;
-          }
-        });
+      var closestDate = dateListConverted.reduce(function(last, current) {
+        return (Math.abs(current - dateInfo) < Math.abs(last - dateInfo) ? current : last);
+      });
 
+      dateListConverted.find(function(elem, index) {
+        if (elem === closestDate) {
+          position = angular.copy(index);
+        }
+      });
 
-        return angular.copy(self.uniqueDatesList[position]);
-
+      return angular.copy(self.uniqueDatesList[position]);
     }
 
     function create(selectedFieldCentersList, acronym, startDate, endDate) {
-      startDate = findDate(startDate);
-      endDate = findDate(endDate);
+      startDate = _findDate(startDate, "startDate");
+      endDate = _findDate(endDate, "endDate");
       var _filteredDates = self.uniqueDatesList.slice(self.uniqueDatesList.indexOf(startDate));
       _filteredDates = _filteredDates.slice(0, _filteredDates.indexOf(endDate) + 1);
 
@@ -71,7 +79,6 @@
           return parseInt(item, 10);
         });
 
-        // filtra as informacoes de datas fora do intervalo
         rawData = rawData.filter(function(value) {
           return (((this[0] - value.year == 0) &&
               (this[1] - value.month <= 0)) ||
@@ -83,7 +90,6 @@
           return parseInt(item, 10);
         });
 
-        // filtra as informacoes de datas fora do intervalo
         rawData = rawData.filter(function(value) {
           return (((this[0] - value.year == 0) &&
               (this[1] - value.month >= 0)) ||
@@ -92,8 +98,6 @@
         }, endNumbers);
 
         for (var j = 0; j < selectedFieldCentersList.length; j++) {
-
-          // separa dados por field center
           var dataByFieldCenter = rawData.filter(function(value) {
             return value.fieldCenter == this;
           }, selectedFieldCentersList[j]);
@@ -102,8 +106,6 @@
           var fieldCenterDataset = [];
           var _lengthOfDates = _filteredDates.length;
           for (var k = 0; k < _lengthOfDates; k++) {
-
-            // parser da data, para adquirir valor de mes e ano
             var date = _filteredDates[k].split('-').map(function(item) {
               return parseInt(item, 10);
             });
@@ -115,7 +117,6 @@
             } else {
               fieldCenterDataset[k] = 0;
             }
-
           }
 
           datasets[j] = {

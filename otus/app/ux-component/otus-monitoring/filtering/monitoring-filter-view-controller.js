@@ -33,6 +33,7 @@
 
     /* Public methods */
     self.onFilter = onFilter;
+    self.onChangeAcronym = onChangeAcronym;
 
     function onInit() {
       self.centers = $filter('orderBy')(self.centers);
@@ -61,31 +62,38 @@
         endNumbers.push(self.endDateInfo.getFullYear());
       }
 
-      self.selected = [];
-      for (var center in self.selectedFieldCenters) {
-        if (self.selectedFieldCenters[center])
-          self.selected.push(center);
-      }
-      // checa se a data de inicio e fim fazem sentido
+      self.selected = _getSelectedCenters();
+
       if (self.startDateInfo && self.endDateInfo) {
-
-        if ((startNumbers[1] - endNumbers[1] == 0) && (startNumbers[0] - endNumbers[0] > 0)) {
-          showInvalidDateMessage();
-        } else if (startNumbers[1] - endNumbers[1] > 0) {
-          showInvalidDateMessage();
-        }
-
+        _onValidateDates(startNumbers, endNumbers)
       }
 
-      if (self.questionnaireInfo && self.selected.length) {
-
+      if (self.questionnaireInfo && self.selected.length){
         self.updateData(self.questionnaireInfo, self.selected, _startDateInfo, _endDateInfo);
       }
 
     }
 
-    self.onChangeAcronym = function() {
-      self.updateData(self.questionnaireInfo);
+    function _onValidateDates(firstPeriod, finalPeriod){
+        if ((firstPeriod[1] - finalPeriod[1] == 0) && (firstPeriod[0] - finalPeriod[0] > 0)) {
+          showInvalidDateMessage();
+        } else if (firstPeriod[1] - finalPeriod[1] > 0) {
+          showInvalidDateMessage();
+        }
+    }
+
+    function onChangeAcronym() {
+      self.selected = _getSelectedCenters();
+      self.updateData(self.questionnaireInfo, self.selected);
+    }
+
+    function _getSelectedCenters(){
+      var _selected = [];
+      for (var center in self.selectedFieldCenters) {
+        if (self.selectedFieldCenters[center])
+          _selected.push(center);
+      }
+      return _selected;
     }
 
     function showInvalidDateMessage() {
