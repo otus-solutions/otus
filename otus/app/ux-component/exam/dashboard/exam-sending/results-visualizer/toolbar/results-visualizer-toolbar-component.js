@@ -11,6 +11,8 @@
         sendingExam: '=',
         errorAliquots: '=',
         aliquotsWithProblems: '=',
+        disabledSave: '=',
+        csvData: '=',
         dynamicDataTableChange: '='
       }
     });
@@ -19,16 +21,17 @@
     '$scope',
     '$mdDialog',
     'otusjs.laboratory.business.project.sending.SendingExamService',
+    'otusjs.laboratory.business.project.sending.AliquotErrorReportingService',
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($scope, $mdDialog, SendingExamService, ProjectContextService, ApplicationStateService, LoadingScreenService) {
+  function Controller($scope, $mdDialog, SendingExamService, AliquotErrorReportingService, ProjectContextService, ApplicationStateService, LoadingScreenService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
-    const ALIQUOT_NOT_MATCH_EXAM_BACKEND_MESSAGE = "Data Validation Fail: Aliquot not match exam"
-    const ALIQUOT_NOT_FOUND_BACKEND_MESSAGE = "Data Validation Fail: Aliquots not found";
-    const EMPTY_LOT_BACKEND_MESSAGE = "Data Validation Fail: Empty Lot";
+    const ALIQUOT_DOES_MATCH_EXAM = "Data Validation Fail: Aliquot does not match exam"
+    const ALIQUOT_NOT_FOUND = "Data Validation Fail: Aliquots not found";
+    const EMPTY_LOT = "Data Validation Fail: Empty Lot";
 
     var aliquotsNotFound;
     var _confirmForceSendOfAliquots;
@@ -93,56 +96,79 @@
 
     function _handleFailuresToSend(reason) {
       //TODO: Remover!
-      reason.data.MESSAGE = ALIQUOT_NOT_MATCH_EXAM_BACKEND_MESSAGE
-      if (reason.data.MESSAGE === ALIQUOT_NOT_MATCH_EXAM_BACKEND_MESSAGE) {
-        self.disabledSave = true;
-        self.aliquotsWithProblems = [];
-        self.errorAliquots = _getUnique(reason.data.CONTENT);
-        self.sendingExam.exams.forEach(function (exam) {
-          exam.examResults.forEach(function (result) {
-            var invalidAliquotCode = self.errorAliquots.find(function (aliquotCode) { return aliquotCode == result.aliquotCode });
-            if (invalidAliquotCode) {
-              //TODO: Não deve ser modificado o objeto!
-              result.aliquotValid = false;
-              self.aliquotsWithProblems.push(result);
-            }
-          })
-        });
-        aliquotsNotFound
-          .title('Aliquota(s) não correspondem ao exame')
-          .textContent('Existem aliquota(s) que não correspondem ao exame, o envio será impossibilitando.');
-      } else if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND_BACKEND_MESSAGE) {
-        self.sendingExam.examSendingLot.forcedSave = true;
-        self.aliquotsWithProblems = [];
-        self.errorAliquots = _getUnique(reason.data.CONTENT);
-        self.sendingExam.exams.forEach(function (exam) {
-          exam.examResults.forEach(function (result) {
-            var invalidAliquotCode = self.errorAliquots.find(function (aliquotCode) { return aliquotCode == result.aliquotCode });
-            if (invalidAliquotCode) {
-              result.aliquotValid = false;
-              self.aliquotsWithProblems.push(result);
-            }
-          });
-        });
-        aliquotsNotFound
-          .title('Aliquota(s) não encontrada(s)')
-          .textContent('Se desejar você pode forçar o envio, clicando novamente em salvar.');
-      } else if (reason.data.MESSAGE === EMPTY_LOT_BACKEND_MESSAGE) {
+      reason.data.MESSAGE = ALIQUOT_DOES_MATCH_EXAM;
+      var CONTENT = [
+        {
+          aliquot: "363000000",
+          possibleExams: "ELSA B12, CREATININA - SANGUE, ÁCIDO ÚRICO - SANGUE",
+          receivedExam: "URÉIA - SANGUE"
+        },
+        {
+          aliquot: "363000000",
+          possibleExams: "URÉIA - SANGUE, CREATININA - SANGUE, ÁCIDO ÚRICO - SANGUE",
+          receivedExam: "ELSA B12"
+        }
+      ];
+      reason.data.CONTENT = CONTENT;
+      //
+
+      if (reason.data.MESSAGE === ALIQUOT_DOES_MATCH_EXAM) {
+        _aliquotErrorDoesNotMatchExam(reason);
+      } else if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND) {
+        _aliquotErrorNotFound(reason);
+      } else if (reason.data.MESSAGE === EMPTY_LOT) {
         aliquotsNotFound
           .title('O lote não possue resultados')
           .textContent('Um lote vazio não pode ser enviado.');
       } else {
         aliquotsNotFound
           .title('Falha no envio do arquivo')
-          .textContent('Ocorreu algum problema ao enviar os resultados.');
+          .textContent('Ocorreu algum problema ao enviar os resultados. Por favor, tente novamente em alguns minutos.');
       }
+    }
+
+    function _aliquotErrorDoesNotMatchExam(reason) {
+      self.disabledSave = true;
+      _setAliquotsWithProblems(reason);
+      _createErrorReporting(reason);
+      aliquotsNotFound
+        .title('Aliquotas que não correspondem ao exame')
+        .textContent('O envio será impossibilitando, clique em exportar relatório de erros para obter mais detalhes');
+    }
+
+    function _aliquotErrorNotFound(reason) {
+      self.sendingExam.examSendingLot.forcedSave = true;
+      _setAliquotsWithProblems(reason);
+      _createErrorReporting(reason);
+      aliquotsNotFound
+        .title('Aliquota(s) não encontrada(s)')
+        .textContent('Se desejar você pode forçar o envio, clicando novamente em salvar.');
+    }
+
+    function _setAliquotsWithProblems(reason) {
+      self.aliquotsWithProblems = [];
+      self.errorAliquots = _getUnique(reason.data.CONTENT);
+      self.sendingExam.exams.forEach(function (exam) {
+        exam.examResults.forEach(function (result) {
+          var invalidAliquotCode = self.errorAliquots.find(function (aliquotCode) { return aliquotCode == result.aliquotCode });
+          if (invalidAliquotCode) {
+            result.aliquotValid = false;
+            self.aliquotsWithProblems.push(result);
+          }
+        });
+      });
+    }
+
+    function _createErrorReporting(reason) {
+      //TODO:
+      self.csvData = AliquotErrorReportingService.buildReport(reason.data.CONTENT, reason.data.MESSAGE);
     }
 
     function _getUnique(array) {
       var uniqueValues = [];
       array.forEach(function (value) {
-        if (!uniqueValues.includes(value))
-          uniqueValues.push(value)
+        if (!uniqueValues.includes(value.aliquot))
+          uniqueValues.push(value.aliquot)
       });
       return uniqueValues;
     }

@@ -1,5 +1,5 @@
 <div ui-view layout="column" ng-if="$ctrl.fileStructure">
-  <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-with-problems="$ctrl.aliquotsWithProblems" dynamic-data-table-change="$ctrl.updateDataTable"
+  <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-with-problems="$ctrl.aliquotsWithProblems" disabled-save="$ctrl.disabledSave" csv-data="$ctrl.csvData" dynamic-data-table-change="$ctrl.updateDataTable"
     error-aliquots="$ctrl.errorAliquots" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
   <md-content layout="column">
     <div>
@@ -40,10 +40,14 @@
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir resultados com erro
         </md-button>
-
         <md-button ng-if="button.which == 'all'" ng-click="$ctrl.changeResults('all'); button.which = 'error'" class="md-accent" aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir todos resultados
+        </md-button>
+        <md-button ng-click="$ctrl.exportRrrors()" aria-label="Exportar relatório de erros" report-export option="CSV" report="$ctrl.csvData">
+          <md-tooltip md-direction="down">exportar</md-tooltip>
+          Exportar relatório de erros
+          <md-icon aria-label="Exportar relatório" class="material-icons">file_download</md-icon>
         </md-button>
       </div>
     </div>

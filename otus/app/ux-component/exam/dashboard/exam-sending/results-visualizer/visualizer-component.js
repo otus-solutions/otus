@@ -87,10 +87,12 @@
           var structureIcon = { icon: "", class: "", tooltip: "" };
 
           if (self.action === 'view' || self.errorAliquots.length) {
-            if (element.aliquotValid) {
-              structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
-            } else {
+            if (!element.aliquotValid && self.disabledSave) {
+              structureIcon = { icon: "error", class: "md-warn", tooltip: "Alíquota não corresponde ao exame", orderValue: "error" };
+            } else if (!element.aliquotValid && !self.disabledSave) {
               structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não identificada no sistema", orderValue: "warning" };
+            } else {
+              structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
             }
           } else {
             structureIcon = { icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "query_builder" };
@@ -124,7 +126,7 @@
         .addHeader('Data de realização', '15', 'left', 5)
         //property, formatType
         .addColumnProperty('releaseDate', 'DATE')
-        
+
         .setFilter(true)
 
         .setShowAll(false)
