@@ -37,7 +37,7 @@
         //   throw new Error('REST resource is not initialized.');
         // }
         // return _rest.find({'acronym':acronym}).$promise;
-//todo: remove comments
+//TODO: remove comments
         var defer = $q.defer();
         defer.resolve({data: a.data.filter(function (f) {
           return f.acronym === acronym;

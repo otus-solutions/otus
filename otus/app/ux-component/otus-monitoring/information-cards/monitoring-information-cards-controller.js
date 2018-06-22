@@ -45,7 +45,6 @@
       if(self.goalPercentage == "NaN"){
         self.goalPercentage = "0.00";
       }
-      console.log((self.goalPercentage, 100 - (self.goalPercentage)));
       createProgressWheel(
         "goalPercentageChart", [self.goalPercentage, 100 - (self.goalPercentage)], [
           'percentagem da meta cumprida',

@@ -50,9 +50,12 @@
           }).filter(function(elem, index, self) {
             return index == self.indexOf(elem);
           });
-          // TODO: avaliar se é necessário
-          self.ready = true;
-          self.update(self.questionnairesList[0], undefined, undefined);
+
+          self.update(self.questionnairesList[0], null, null, null).then(function() {
+            self.ready = true;
+          });
+
+
 
         });
     }
@@ -110,7 +113,7 @@
     }
 
     function update(acronym, selectedCenters, startDate, endDate) {
-      self.ready = false;
+      return $q(function(resolve, reject) {
       if (!selectedCenters) {
         selectedCenters = [];
         self.centers.forEach(function(center) {
@@ -119,31 +122,29 @@
       }
       MonitoringService.find(acronym)
         .then(function(response) {
-          if (!response) {
+          if (!response.length) {
+            self.monitoringData = []
             _showMessages('Os dados não foram encontrados!', () => {});
           }
+            self.monitoringData = response;
+            self.preProcessingData().then(function() {
 
-          self.monitoringData = response;
-          self.preProcessingData().then(function() {
+              var _startDate = startDate || self.uniqueDatesList[0];
+              var _endDate = endDate || self.uniqueDatesList[self.uniqueDatesList.length - 1];
+              var _selectedCenters = selectedCenters || self.fieldCentersList;
+              self.questionnaireData = MonitorParseData.create(_selectedCenters, acronym, _startDate, _endDate);
 
-            var _startDate = startDate || self.uniqueDatesList[0];
-            var _endDate = endDate || self.uniqueDatesList[self.uniqueDatesList.length - 1];
-            var _selectedCenters = selectedCenters || self.fieldCentersList;
-            self.questionnaireData = MonitorParseData.create(_selectedCenters, acronym, _startDate, _endDate);
+              self.createQuestionnaireLineChart(self.questionnaireData);
+              self.createQuestionnaireSpreadsheet(self.questionnaireData);
+              self.createInformationCards(self.questionnaireData);
+              self.createCumulativeResultsChart(self.questionnaireData);
+              self.createCentersGoalsChart(self.questionnaireData);
 
-            self.createQuestionnaireLineChart(self.questionnaireData);
-            self.createQuestionnaireSpreadsheet(self.questionnaireData);
-            self.createInformationCards(self.questionnaireData);
-            self.createCumulativeResultsChart(self.questionnaireData);
-            self.createCentersGoalsChart(self.questionnaireData);
-
-            self.ready = true;
-          });
-
-
-
+              resolve({startDate: _startDate,endDate: _endDate});
+            });
 
         });
+      });
     }
 
     function _showMessages(msg, action) {
