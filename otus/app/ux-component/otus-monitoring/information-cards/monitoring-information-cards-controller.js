@@ -42,11 +42,12 @@
 
 
       self.goalPercentage = ((self.goalPercentage / qData.data.length) * 100).toFixed(2);
-      if(self.goalPercentage === "NaN"){
+      if(self.goalPercentage == "NaN"){
         self.goalPercentage = "0.00";
       }
+      console.log((self.goalPercentage, 100 - (self.goalPercentage)));
       createProgressWheel(
-        "goalPercentageChart", [(self.goalPercentage, 100 - (self.goalPercentage)) || 0], [
+        "goalPercentageChart", [(self.goalPercentage, 100 - (self.goalPercentage))], [
           'percentagem da meta cumprida',
           'percentagem da meta a ser cumprida'
         ], [

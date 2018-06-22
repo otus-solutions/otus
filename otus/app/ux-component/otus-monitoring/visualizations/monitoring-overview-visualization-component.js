@@ -32,7 +32,23 @@
       self.createQuestionnaireLineChart = createLineChart;
     }
 
+    function _convertDateList(qData) {
+      if (qData) {
+        var dates = angular.copy(qData.dates);
+        dates = dates.map(function(date) {
+          return new Date(date);
+        });
+        qData.dates = [];
+        dates.forEach(function(elem) {
+          let month = String(elem.getMonth() + 1);
+          qData.dates.push(String(month.concat('/', elem.getFullYear())));
+        });
+        return qData.dates;
+      }
+    }
+
     function createLineChart(qData) {
+      qData.dates = _convertDateList(qData);
       if (!self.lineChart) {
         var ctx = document.getElementById("myLineChart");
         self.lineChart = new Chart(ctx, {
