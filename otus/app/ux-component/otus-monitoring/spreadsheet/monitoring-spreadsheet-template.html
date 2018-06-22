@@ -26,10 +26,10 @@
                             </md-list-item>
                             <md-divider></md-divider>
                         </md-list-item>
-                        <md-list-item ng-repeat="(dateIndex,date) in $ctrl.dates">
+                        <md-list-item ng-repeat="(dateIndex,dateValue) in $ctrl.dates">
                             <div class="md-list-item-text" layout="column" flex>
                                 <div layout="row" layout-align="start center" layout-padding>
-                                    <span layout="column" style="text-align:center;">{{ date }}</span>
+                                    <span layout="column" style="text-align:center;">{{ dateValue | date: "MM/yyyy" }}</span>
                                 </div>
                             </div>
                             <md-list-item ng-repeat="(centerIndex,center) in $ctrl.fieldCenters">

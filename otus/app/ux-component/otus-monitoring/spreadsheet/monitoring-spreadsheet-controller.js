@@ -29,7 +29,9 @@
 
     function createSpreadsheet(qData) {
       self.datasets = qData.data;
-      self.dates = qData.dates;
+      self.dates = qData.dates.map(function(elem) {
+        return new Date(elem);
+      });
       self.fieldCenters = qData.fieldCenters;
     }
 

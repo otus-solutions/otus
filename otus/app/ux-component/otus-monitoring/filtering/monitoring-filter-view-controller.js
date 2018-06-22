@@ -40,6 +40,7 @@
       self.centers.forEach(function(fieldCenter) {
         self.selectedFieldCenters[fieldCenter.acronym] = true;
       });
+      // self.onFilter();
     }
 
     function onFilter() {
@@ -64,14 +65,13 @@
 
       self.selected = _getSelectedCenters();
 
-      if (self.startDateInfo && self.endDateInfo) {
+      if (startNumbers && endNumbers) {
         if (_onValidateDates(startNumbers, endNumbers)) {
           self.updateData(self.questionnaireInfo, self.selected, _startDateInfo, _endDateInfo);
         }
       } else if (self.questionnaireInfo) {
         self.updateData(self.questionnaireInfo, self.selected, _startDateInfo, _endDateInfo);
       }
-
     }
 
     function _onValidateDates(firstPeriod, finalPeriod) {
@@ -88,6 +88,8 @@
     function onChangeAcronym() {
       self.selected = _getSelectedCenters();
       self.updateData(self.questionnaireInfo, self.selected);
+      self.startDateInfo = new Date(self.uniqueDatesList[0]);
+      self.endDateInfo = new Date(self.uniqueDatesList[self.uniqueDatesList.length -1]);
     }
 
     function _getSelectedCenters() {
