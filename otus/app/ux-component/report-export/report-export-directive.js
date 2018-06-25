@@ -27,23 +27,23 @@
           }
           switch (attr.option) {
             case 'XLS':
-              alasql('SELECT * INTO XLS("report.xls",{headers:true}) FROM ?', [scope.report]);
+              alasql('SELECT * INTO XLS("relatório.xls",{headers:true}) FROM ?', [scope.report]);
               displayMsg('XLS exportado com sucesso!');
               break;
             case 'CSV':
-              alasql('SELECT * INTO CSV("report.csv",{headers:true}) FROM ?', [scope.report]);
+              alasql('SELECT * INTO CSV("relatório.csv",{headers:true}) FROM ?', [scope.report]);
               displayMsg('CSV exportado com sucesso!');
               break;
             case 'TAB':
-              alasql('SELECT * INTO TAB("report.tab",{headers:true}) FROM ?', [scope.report]);
+              alasql('SELECT * INTO TAB("relatório.tab",{headers:true}) FROM ?', [scope.report]);
               displayMsg('TAB exportado com sucesso!');
               break;
             case 'TXT':
-              alasql('SELECT * INTO TXT("report.txt",{headers:true}) FROM ?', [scope.report]);
+              alasql('SELECT * INTO TXT("relatório.txt",{headers:true}) FROM ?', [scope.report]);
               displayMsg('TXT exportado com sucesso!');
               break;
             case 'JSON':
-              alasql('SELECT * INTO JSON("report.json",{headers:true}) FROM ?', [scope.report]);
+              alasql('SELECT * INTO JSON("relatório.json",{headers:true}) FROM ?', [scope.report]);
               displayMsg('JSON exportado com sucesso!');
               break;
             default:
