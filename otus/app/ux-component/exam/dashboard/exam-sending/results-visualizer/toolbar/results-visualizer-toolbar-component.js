@@ -21,13 +21,12 @@
     '$scope',
     '$mdDialog',
     'otusjs.laboratory.business.project.sending.SendingExamService',
-    'otusjs.laboratory.business.project.sending.AliquotErrorReportingService',
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($scope, $mdDialog, SendingExamService, AliquotErrorReportingService, ProjectContextService, ApplicationStateService, LoadingScreenService) {
+  function Controller($scope, $mdDialog, SendingExamService, ProjectContextService, ApplicationStateService, LoadingScreenService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_DOES_MATCH_EXAM = "Data Validation Fail: Aliquot does not match exam"
     const ALIQUOT_NOT_FOUND = "Data Validation Fail: Aliquots not found";
@@ -130,7 +129,6 @@
     function _aliquotErrorDoesNotMatchExam(reason) {
       self.disabledSave = true;
       _setAliquotsWithProblems(reason);
-      _createErrorReporting(reason);
       aliquotsNotFound
         .title('Aliquotas que não correspondem ao exame')
         .textContent('O envio será impossibilitando, clique em exportar relatório de erros para obter mais detalhes');
@@ -139,15 +137,16 @@
     function _aliquotErrorNotFound(reason) {
       self.sendingExam.examSendingLot.forcedSave = true;
       _setAliquotsWithProblems(reason);
-      _createErrorReporting(reason);
       aliquotsNotFound
         .title('Aliquota(s) não encontrada(s)')
         .textContent('Se desejar você pode forçar o envio, clicando novamente em salvar.');
     }
 
     function _setAliquotsWithProblems(reason) {
+      var report = _createErrorReporting(reason.data.CONTENT);
+      self.errorAliquots = report.uniqueValues;
+      self.csvData = report.data;
       self.aliquotsWithProblems = [];
-      self.errorAliquots = _getUnique(reason.data.CONTENT);
       self.sendingExam.exams.forEach(function (exam) {
         exam.examResults.forEach(function (result) {
           var invalidAliquotCode = self.errorAliquots.find(function (aliquotCode) { return aliquotCode == result.aliquotCode });
@@ -159,18 +158,22 @@
       });
     }
 
-    function _createErrorReporting(reason) {
-      //TODO:
-      self.csvData = AliquotErrorReportingService.buildReport(reason.data.CONTENT, reason.data.MESSAGE);
-    }
-
-    function _getUnique(array) {
-      var uniqueValues = [];
+    function _createErrorReporting(array) {
+      var report = {
+        uniqueValues: [],
+        data: []
+      };
       array.forEach(function (value) {
-        if (!uniqueValues.includes(value.aliquot))
-          uniqueValues.push(value.aliquot)
+        var out = {
+          ALIQUOTA: value.aliquot,
+          EXAMES_POSSIVEIS: value.possibleExams,
+          EXAME_RECEBIDO: value.receivedExam
+        };
+        report.data.push(out);
+        if (!report.uniqueValues.includes(value.aliquot))
+          report.uniqueValues.push(value.aliquot)
       });
-      return uniqueValues;
+      return report;
     }
 
     function _buildMessageForceSendOfAliquots() {

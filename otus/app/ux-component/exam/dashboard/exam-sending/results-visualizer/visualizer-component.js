@@ -90,6 +90,7 @@
             if (!element.aliquotValid && self.disabledSave) {
               structureIcon = { icon: "error", class: "md-warn", tooltip: "Alíquota não corresponde ao exame", orderValue: "error" };
             } else if (!element.aliquotValid && !self.disabledSave) {
+              //TODO: Mudar a cor do icone!
               structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não identificada no sistema", orderValue: "warning" };
             } else {
               structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
