@@ -44,6 +44,7 @@
     }
 
     function onFilter() {
+      $(".dtp-btn-today").hide();
       var startNumbers = [];
       var endNumbers = [];
       var _startDateInfo = null;

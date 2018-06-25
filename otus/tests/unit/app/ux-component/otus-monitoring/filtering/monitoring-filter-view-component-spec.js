@@ -35,11 +35,10 @@ describe('monitoringFilterViewComponent test', function() {
       expect(ctrl.$onInit).toHaveBeenCalled();
       expect(ctrl.onFilter).toHaveBeenCalledTimes(1);
       expect(ctrl.updateData).toHaveBeenCalledTimes(1);
-      expect(ctrl.parseData).toHaveBeenCalledTimes(1);
       expect(ctrl.centers).toBeDefined();
       expect(ctrl.questionnaireInfo).toBeDefined();
       expect(ctrl.selected).toBeDefined();
-
+      expect(ctrl.ready).toEqual(true);
     });
 
   });
@@ -58,10 +57,10 @@ describe('monitoringFilterViewComponent test', function() {
 
   function mockController() {
     ctrl.centers = mockCenters();
-    ctrl.updateData = (data) => {};
+    ctrl.updateData = (data) => {ctrl.ready = true;};
     ctrl.parseData = (data) => {};
-    ctrl.startDateInfo = "1/2018";
-    ctrl.endDateInfo = "5/2018";
+    ctrl.startDateInfo = new Date();
+    ctrl.endDateInfo = new Date();
     ctrl.questionnaireInfo = "CISE";
   }
 

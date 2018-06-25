@@ -5,9 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .factory('otusMonitorParseDataFactory', Factory);
 
-  Factory.$inject = ['otusjs.monitoring.business.MonitoringService'];
-
-  function Factory(MonitoringService) {
+  function Factory() {
     var self = this;
 
     self.create = create;
@@ -34,20 +32,20 @@
 
 
     function _findDate(date, type) {
-      var dateInfo = new Date(date);
+      var dateInfo = new Date(date).getTime();
       var dateListConverted = _convertDateList();
       var position = null;
       var closestDate = null;
 
       if (type === "startDate") {
         if (dateInfo > dateListConverted[dateListConverted.length - 1]) {
-          return date;
+          return String(date);
         }
       }
 
       if (type === "endDate") {
         if (dateInfo < dateListConverted[0]) {
-          return date;
+          return String(date);
         }
       }
       if (dateListConverted.length) {
@@ -65,9 +63,8 @@
       return angular.copy(self.uniqueDatesList[position]);
     }
 
-    function create(selectedFieldCentersList, acronym, startDate, endDate) {
+    function create(acronym, selectedFieldCentersList, startDate, endDate) {
       if (selectedFieldCentersList && acronym && startDate && endDate) {
-
         startDate = _findDate(startDate, "startDate");
         endDate = _findDate(endDate, "endDate");
         var _filteredDates = self.uniqueDatesList.slice(self.uniqueDatesList.indexOf(startDate));

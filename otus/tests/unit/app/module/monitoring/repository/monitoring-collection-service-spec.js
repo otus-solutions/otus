@@ -1,4 +1,4 @@
-fdescribe('MonitoringCollectionService', function () {
+describe('MonitoringCollectionService', function () {
   var UNIT_NAME = 'otusjs.monitoring.repository.MonitoringCollectionService';
   var Mock = {};
   var Injections = {};

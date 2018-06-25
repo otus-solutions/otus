@@ -1,17 +1,4 @@
-<style media="screen">
-  .md-virtual-repeat-container{
-    display: none;
-  }
-  .dtp>.dtp-content>.dtp-date-view>header.dtp-header{
-    display: none;
-  }
-  .dtp div.dtp-actual-num {
-    display: none;
-  }
-  dtp-btn-today md-button md-button md-ink-ripple{
-    display: none !important;
-  }
-</style>
+<link rel="stylesheet" href="app/static-resource/stylesheet/override-datetime-picker.css">
 <div flex>
   <div layout="row" flex>
     <div layout="column" flex>
@@ -19,49 +6,68 @@
         Filtros de Pesquisa
       </md-subheader>
 
-      <div layout="row" layout-xs="column" layout-align="center">
+      <div layout="column" layout-gt-md="row" layout-align="center">
 
-        <div style="vertical-align: middle;text-align:center;" >
-          <md-input-container class="remove-errors-spacer md-input-has-placeholder" style="margin-left:15px;min-width: 100px; max-width: 130px">
-            <label class="md-subheader">Período Inicial:</label>
-            <input mdc-datetime-picker="" ng-change="$ctrl.onFilter()"
-            show-icon="true" date="true" time="false" aria-label="Período Inicial"
-            type="text" id="datetime" show-todays-date=""
-            ng-model="$ctrl.startDateInfo"
-            class="md-input" readonly="readonly" format="MM/YYYY"
-              disable-parent-scroll="true">
-          </md-input-container>
 
-          <md-input-container class="remove-errors-spacer md-input-has-placeholder" style="margin-left:15px;min-width: 100px; max-width: 130px">
-            <label class="md-subheader">Período Final:</label>
-            <input mdc-datetime-picker="" ng-change="$ctrl.onFilter()"
-            show-icon="true" date="true" time="false" aria-label="Período Final"
-            type="text" id="datetime" show-todays-date=""
-            ng-model="$ctrl.endDateInfo"
-            class="md-input" readonly="readonly" format="MM/YYYY"
-              disable-parent-scroll="true">
-          </md-input-container>
+          <md-card flex>
+            <md-card-content>
+              <span class="md-subheader">Atividades:</span>
+              <div flex  layout-align="center center" layout="row" layout-xs="column">
 
-          <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
-            <label class="md-subheader">Sigla da Atividade:</label>
-            <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
-              <md-tooltip>
-                Sigla da atividade a ser visualizada
-              </md-tooltip>
-              <md-option  ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{questionnaire}}" ng-click="">
-                {{questionnaire}}
-              </md-option>
-            </md-select>
-          </md-input-container>
+              <span flex="15"></span>
+              <!-- <span flex-gt-md="10"></span> -->
+              <md-input-container class="remove-errors-spacer md-input-has-placeholder">
+                <label class="md-subhead">Período Inicial:</label>
+                <input mdc-datetime-picker="" ng-change="$ctrl.onFilter()" show-icon="true"
+                date="true" time="false" aria-label="Período Inicial" type="text" id="datetime"
+                show-todays-date="" ng-model="$ctrl.startDateInfo" class="md-input"
+                  readonly="readonly" format="MM/YYYY" disable-parent-scroll="true">
+              </md-input-container>
+              <md-input-container class="remove-errors-spacer md-input-has-placeholder">
+                <label class="md-subhead">Período Final:</label>
+                <input mdc-datetime-picker="" ng-change="$ctrl.onFilter()" show-icon="true"
+                date="true" time="false" aria-label="Período Final" type="text" id="datetime"
+                show-todays-date="" ng-model="$ctrl.endDateInfo" class="md-input" readonly="readonly"
+                  format="MM/YYYY" disable-parent-scroll="true">
+              </md-input-container>
+              <span flex-gt-md="5"></span>
+              <span flex-sm="10"></span>
+              <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
+                <label class="md-subhead">Sigla:</label>
+                <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
+                  <md-tooltip>
+                    Sigla da atividade a ser visualizada
+                  </md-tooltip>
+                  <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{questionnaire}}" ng-click="">
+                    {{questionnaire}}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+              <span flex-gt-md="15"></span>
+              <span flex="5"></span>
+            </div>
+            </md-card-content>
+          </md-card>
 
-        </div>
+        <div flex layout-align="center center" layout="row">
 
-        <div flex style="vertical-align: middle;text-align:center;">
-          <md-input-container ng-repeat="center in $ctrl.centers" class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
-            <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.selectedFieldCenters[center.acronym]">
-              {{center.acronym}}
-            </md-checkbox>
-          </md-input-container>
+          <!-- <fieldset class="standard"> -->
+          <md-card flex>
+            <md-card-content>
+              <span class="md-subheader">Centros:</span>
+              <div layout="row">
+                <span flex="10"></span>
+
+                <md-input-container ng-repeat="center in $ctrl.centers" class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" flex>
+                  <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.selectedFieldCenters[center.acronym]">
+                    {{center.acronym}}
+                  </md-checkbox>
+                </md-input-container>
+                <span flex="10"></span>
+              </div>
+            </md-card-content>
+          </md-card>
+
         </div>
 
       </div>

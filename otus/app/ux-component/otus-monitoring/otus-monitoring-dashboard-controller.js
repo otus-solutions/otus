@@ -31,15 +31,11 @@
 
     // lifecycle hooks
     self.$onInit = onInit;
-    var messageLoading = 'Por favor aguarde o carregamento dos dados.<br> Esse processo pode demorar um pouco...';
-
 
     /* Public methods */
     function onInit() {
-      LoadingScreenService.changeMessage(messageLoading);
       LoadingScreenService.start();
       _loadAllCenters();
-      LoadingScreenService.finish();
     }
 
     function _loadAllAcronyms() {
@@ -54,9 +50,6 @@
           self.update(self.questionnairesList[0], null, null, null).then(function() {
             self.ready = true;
           });
-
-
-
         });
     }
 
@@ -120,6 +113,7 @@
           selectedCenters.push(center.acronym);
         });
       }
+      LoadingScreenService.start();
       MonitoringService.find(acronym)
         .then(function(response) {
           if (!response.length) {
@@ -132,7 +126,7 @@
               var _startDate = startDate || self.uniqueDatesList[0];
               var _endDate = endDate || self.uniqueDatesList[self.uniqueDatesList.length - 1];
               var _selectedCenters = selectedCenters || self.fieldCentersList;
-              self.questionnaireData = MonitorParseData.create(_selectedCenters, acronym, _startDate, _endDate);
+              self.questionnaireData = MonitorParseData.create(acronym, _selectedCenters, _startDate, _endDate);
 
               self.createQuestionnaireLineChart(self.questionnaireData);
               self.createQuestionnaireSpreadsheet(self.questionnaireData);
@@ -143,6 +137,7 @@
               resolve({startDate: _startDate,endDate: _endDate});
             });
 
+            LoadingScreenService.finish();
         });
       });
     }
