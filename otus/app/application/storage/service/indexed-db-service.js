@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -32,7 +32,7 @@
       _dbManager[dbName].storages = storages;
       _dbManager[dbName].lokiDb = new loki(dbName, {
         autoload: true,
-        autoloadCallback: function() {
+        autoloadCallback: function () {
           _newDbLoadHandler(dbName);
         },
         adapter: _idbAdapter
@@ -46,7 +46,7 @@
       _dbManager[dbName].storages = storages;
       _dbManager[dbName].lokiDb = new loki(dbName, {
         autoload: true,
-        autoloadCallback: function() {
+        autoloadCallback: function () {
           _existentDbLoadHandler(dbName);
         },
         adapter: _idbAdapter
@@ -57,8 +57,8 @@
     function dbExists(dbName) {
       var response = $q.defer();
 
-      _idbAdapter.getDatabaseList(function(dbList) {
-        var result = dbList.some(function(foundedDbName) {
+      _idbAdapter.getDatabaseList(function (dbList) {
+        var result = dbList.some(function (foundedDbName) {
           return (foundedDbName === dbName);
         });
         response.resolve(result);
@@ -68,27 +68,36 @@
     }
 
     function _newDbLoadHandler(dbName) {
-      _dbManager[dbName].storages.forEach(function(storage) {
-        if (!storage.options) storage.options = {};
-        storage.initialize(getDb(dbName).addCollection(storage.collectionName, storage.options), getDb(dbName));
+      _dbManager[dbName].storages.forEach(function (storage) {
+        storage.initialize(addCollection(dbName, storage), getDb(dbName));
       });
       getDb(dbName).saveDatabase();
       _dbManager[dbName].loading.resolve();
     }
 
     function _existentDbLoadHandler(dbName) {
-      //fixme: recently added collection requires a idb wipe out.
-      _dbManager[dbName].storages.forEach(function(storage) {
-        storage.initialize(getDb(dbName).getCollection(storage.collectionName), getDb(dbName));
+      _dbManager[dbName].storages.forEach(function (storage) {
+
+        storage.initialize(
+          getDb(dbName).getCollection(storage.collectionName) || addCollection(dbName, storage),
+          getDb(dbName)
+        );
       });
       _dbManager[dbName].loading.resolve();
     }
 
     function deleteDatabase() {
-      _dbManager.otus.lokiDb.collections.forEach(function(collection) {
+      _dbManager.otus.lokiDb.collections.forEach(function (collection) {
         collection.clear();
       });
       // _dbManager.otus.lokiDb.deleteDatabase();
+    }
+
+    function addCollection(dbName, storage) {
+      if (!storage.options) {
+        storage.options = {};
+      }
+      return getDb(dbName).addCollection(storage.collectionName, storage.options);
     }
   }
 }());
