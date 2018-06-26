@@ -10,12 +10,26 @@ describe('monitoringFilterViewComponent test', function() {
   });
 
   beforeEach(function() {
+    Mock.LoadingScreenService = {
+      start: () => {},
+      finish: () => {}
+    };
+
+    angular.mock.module(function($provide) {
+      $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
+    })
+  });
+
+
+  beforeEach(function() {
 
     inject(function(_$injector_, _$controller_) {
       $controller = _$controller_;
       Injections = {
         $mdToast: _$injector_.get('$mdToast'),
-        $filter: _$injector_.get('$filter')
+        $filter: _$injector_.get('$filter'),
+        mdcDefaultParams: _$injector_.get('mdcDefaultParams'),
+        LoadingScreenService: Mock.LoadingScreenService
       };
       ctrl = $controller('monitoringFilterViewCtrl', Injections);
       mockController();
@@ -35,11 +49,10 @@ describe('monitoringFilterViewComponent test', function() {
       expect(ctrl.$onInit).toHaveBeenCalled();
       expect(ctrl.onFilter).toHaveBeenCalledTimes(1);
       expect(ctrl.updateData).toHaveBeenCalledTimes(1);
-      expect(ctrl.parseData).toHaveBeenCalledTimes(1);
       expect(ctrl.centers).toBeDefined();
       expect(ctrl.questionnaireInfo).toBeDefined();
       expect(ctrl.selected).toBeDefined();
-
+      expect(ctrl.ready).toEqual(true);
     });
 
   });
@@ -58,10 +71,10 @@ describe('monitoringFilterViewComponent test', function() {
 
   function mockController() {
     ctrl.centers = mockCenters();
-    ctrl.updateData = (data) => {};
+    ctrl.updateData = (data) => {ctrl.ready = true;};
     ctrl.parseData = (data) => {};
-    ctrl.startDateInfo = "1/2018";
-    ctrl.endDateInfo = "5/2018";
+    ctrl.startDateInfo = new Date();
+    ctrl.endDateInfo = new Date();
     ctrl.questionnaireInfo = "CISE";
   }
 

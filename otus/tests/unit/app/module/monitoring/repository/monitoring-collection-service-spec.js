@@ -33,7 +33,6 @@ xdescribe('MonitoringCollectionService', function () {
       spyOn(Mock.MonitoringLocalStorageService, "find").and.returnValue([]);
 
       Mock.ModuleService.getMonitoringRemoteStorage().whenReady().then(function () {
-        console.log('mds')
       });
 
       service.find({acronym: 'acronym'});
