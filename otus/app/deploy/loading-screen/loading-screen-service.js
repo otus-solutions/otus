@@ -14,7 +14,7 @@
     const LOCKED_MESSAGE = "Loading bloqueado pela chave: ";
     const NEW_KEY_NOT_ADDED = "Não foi possível atribuir a nova chave: ";
     const NOT_FINISHED_WITH_KEY = "Não foi possível encerrar o loding com a chave: ";
-    
+
     var self = this;
     self.key = '';
     /* Lifecycle hooks */
@@ -33,16 +33,11 @@
       self.loading_screen = null;
       changeMessage();
     }
-    
+
     function _printKeyMsg(key, msg) {
       var fullMsg = LOCKED_MESSAGE + self.key;
       if(key || msg) fullMsg+= ' - ' + msg + key;
-      console.log(fullMsg);
     }
-
-    function _printLog(mgs){
-      console.log(msg);
-    };
 
     function startingLockedByKey(key) {
       if(!self.key || self.key === key){
