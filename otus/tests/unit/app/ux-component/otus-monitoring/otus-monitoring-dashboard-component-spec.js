@@ -28,6 +28,17 @@ describe('otusMonitoringDashboardComponent test', function() {
       }
     };
 
+    Mock.MonitorParseData = {
+      init: function(a,b,c,d) {},
+      create: function(a,b,c,d) {
+        return {
+          data: [],
+          fieldCenters: [],
+          dates: []
+        };
+      }
+    };
+
     Mock.LoadingScreenService = {
       start:function() {
         return Promise.resolve();
@@ -35,11 +46,6 @@ describe('otusMonitoringDashboardComponent test', function() {
       finish:function() {
         return Promise.resolve();
       }
-    };
-
-    Mock.MonitorParseData = {
-      init: function(a, b, c, d) {},
-      create: function(a, b, c, d) {}
     };
 
     Mock.MonitoringCenterFactory = {
@@ -79,6 +85,7 @@ describe('otusMonitoringDashboardComponent test', function() {
         $q: _$injector_.get('$q')
       };
       ctrl = $controller('otusMonitoringDashboardCtrl', Injections);
+      mockController();
     });
   });
 
@@ -98,6 +105,8 @@ describe('otusMonitoringDashboardComponent test', function() {
       spyOn(Mock.MonitoringService, 'listCenters').and.callThrough();
       spyOn(Mock.MonitoringService, 'listAcronyms').and.callThrough();
       spyOn(Mock.MonitoringService, 'find').and.callThrough();
+      spyOn(Injections.MonitorParseData, 'init').and.callThrough();
+      spyOn(Injections.MonitorParseData, 'create').and.callThrough();
       ctrl.$onInit();
     });
 
@@ -112,8 +121,14 @@ describe('otusMonitoringDashboardComponent test', function() {
         expect(Mock.MonitoringService.find).toHaveBeenCalledTimes(1);
         expect(ctrl.preProcessingData).toHaveBeenCalledTimes(1);
         expect(Mock.LoadingScreenService.finish).toHaveBeenCalledTimes(1);
+        expect(ctrl.questionnairesList).toEqual(mockListAcronyms());
+        expect(ctrl.centers).toEqual(mockCenters());
+        expect(ctrl.uniqueDatesList).toEqual(mockDateList());
+        expect(ctrl.monitoringData).toEqual(mockFind());
+        expect(ctrl.fieldCentersList).toEqual(mockFieldCentersList());
+        expect(ctrl.questionnaireData).toEqual(Mock.MonitorParseData.create());
         done();
-      }, 1000);
+      }, 500);
     });
 
     afterEach(function() {
@@ -122,6 +137,13 @@ describe('otusMonitoringDashboardComponent test', function() {
 
   });
 
+  function mockFieldCentersList() {
+    return ['SP', 'RJ'];
+  }
+
+  function mockDateList() {
+    return ['2015-1-1', '2016-4-1', '2016-12-1', '2017-12-1'];
+  }
 
   function mockCenters() {
     return JSON.parse('[' +
@@ -131,7 +153,6 @@ describe('otusMonitoringDashboardComponent test', function() {
       '{"name":"Rio de Janeiro","code":4,"acronym":"RJ","country":null,"state":null,"address":null,"complement":null,"zip":null,"phone":null,"backgroundColor":"rgba(127, 190, 102, 0.2)","borderColor":"rgba(127, 190, 102, 1)","goal":1745},' +
       '{"name":"Espirito Santo","code":2,"acronym":"ES","country":null,"state":null,"address":null,"complement":null,"zip":null,"phone":null,"backgroundColor":"rgba(153, 102, 255, 0.2)","borderColor":"rgba(153, 102, 255, 1)","goal":1024},' +
       '{"name":"Bahia","code":1,"acronym":"BA","country":null,"state":null,"address":null,"complement":null,"zip":null,"phone":null,"backgroundColor":"rgba(255, 163, 102, 0.2)","borderColor":"rgba(255, 163, 102, 1)","goal":1945}]');
-
   }
 
   function mockListCenters() {
@@ -149,6 +170,14 @@ describe('otusMonitoringDashboardComponent test', function() {
 
   function mockFind() {
     return JSON.parse('[{"fieldCenter":"SP","month":1,"year":2015,"acronym":"ANTC","sum":"5","meta":{"revision":0,"created":0,"version":0},"$loki":4},{"fieldCenter":"SP","month":4,"year":2016,"acronym":"ANTC","sum":"5","meta":{"revision":0,"created":0,"version":0},"$loki":3},{"fieldCenter":"SP","month":12,"year":2016,"acronym":"ANTC","sum":"5","meta":{"revision":0,"created":0,"version":0},"$loki":2},{"fieldCenter":"RJ","month":12,"year":2017,"acronym":"ANTC","sum":"2","meta":{"revision":0,"created":0,"version":0},"$loki":1}]');
+  }
+
+  function mockController() {
+    ctrl.createQuestionnaireLineChart = function(data){};
+    ctrl.createQuestionnaireSpreadsheet = function(data){};
+    ctrl.createInformationCards = function(data){};
+    ctrl.createCumulativeResultsChart = function(data){};
+    ctrl.createCentersGoalsChart = function(data){};
   }
 
 

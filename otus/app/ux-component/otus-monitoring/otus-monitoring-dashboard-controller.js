@@ -29,6 +29,8 @@
     self.preProcessingData = preProcessingData;
     self.update = update;
 
+    self.questionnaireData = {};
+
     // lifecycle hooks
     self.$onInit = onInit;
 
@@ -36,13 +38,12 @@
     function onInit() {
       LoadingScreenService.start();
       _loadAllCenters();
-      LoadingScreenService.finish();
     }
 
     function _loadAllAcronyms() {
       MonitoringService.listAcronyms()
         .then(function(activities) {
-            self.questionnairesList = activities.map(function(acronym) {
+          self.questionnairesList = activities.map(function(acronym) {
             return acronym;
           }).filter(function(elem, index, self) {
             return index == self.indexOf(elem);
@@ -74,37 +75,37 @@
     }
 
     function preProcessingData() {
-      var deferred = $q.defer();
-      if(self.monitoringData) {
-          var rawData = self.monitoringData || [];
-          self.uniqueDatesList = rawData.map(function(e) {
-            return   e.year + "-" + e.month + "-1";
-          }).filter(function(elem, index, self) {
-            return index == self.indexOf(elem);
-          });
+      // var deferred = $q.defer();
+      if (self.monitoringData) {
+        var rawData = self.monitoringData || [];
+        self.uniqueDatesList = rawData.map(function(e) {
+          return e.year + "-" + e.month + "-1";
+        }).filter(function(elem, index, self) {
+          return index == self.indexOf(elem);
+        });
 
-          self.uniqueDatesList = _sortDateList();
+        self.uniqueDatesList = _sortDateList();
 
-          self.fieldCentersList = rawData.map(function(e) {
-            return e.fieldCenter;
-          }).filter(function(elem, index, self) {
-            return index == self.indexOf(elem);
-          });
-          MonitorParseData.init(
-            self.uniqueDatesList,
-            self.monitoringData,
-            self.createQuestionnaireLineChart,
-            self.monitoringCenters);
+        self.fieldCentersList = rawData.map(function(e) {
+          return e.fieldCenter;
+        }).filter(function(elem, index, self) {
+          return index == self.indexOf(elem);
+        });
+        MonitorParseData.init(
+          self.uniqueDatesList,
+          self.monitoringData,
+          self.createQuestionnaireLineChart,
+          self.monitoringCenters);
 
-          if (self.uniqueDatesList && self.fieldCentersList) {
-            deferred.resolve();
-          }
-
+        if (self.uniqueDatesList && self.fieldCentersList) {
+          return true;
         } else {
-          deferred.reject();
+          return false;
         }
 
-      return deferred.promise;
+      } else {
+        return false;
+      }
     }
 
     function update(acronym, selectedCenters, startDate, endDate) {
@@ -122,31 +123,33 @@
             self.monitoringData = []
             _showMessages('Os dados não foram encontrados!', () => {});
           }
-            self.monitoringData = response;
-            self.preProcessingData().then(function(){
-
-
-              var _startDate = startDate || self.uniqueDatesList[0];
-              var _endDate = endDate || self.uniqueDatesList[self.uniqueDatesList.length - 1];
-              var _selectedCenters = selectedCenters || self.fieldCentersList;
-              self.questionnaireData = MonitorParseData.create(acronym, _selectedCenters, _startDate, _endDate);
-
-              self.createQuestionnaireLineChart(self.questionnaireData);
-              self.createQuestionnaireSpreadsheet(self.questionnaireData);
-              self.createInformationCards(self.questionnaireData);
-              self.createCumulativeResultsChart(self.questionnaireData);
-              self.createCentersGoalsChart(self.questionnaireData);
-
-              deferred.resolve({startDate: _startDate,endDate: _endDate});
-              LoadingScreenService.finish();
-            }).then(function() {
-              console.log(666);
+          self.monitoringData = response;
+          if (self.preProcessingData()) {
+            var _startDate = startDate || self.uniqueDatesList[0];
+            var _endDate = endDate || self.uniqueDatesList[self.uniqueDatesList.length - 1];
+            var _selectedCenters = selectedCenters || self.fieldCentersList;
+            self.questionnaireData = MonitorParseData.create(acronym, _selectedCenters, _startDate, _endDate);
+            _build();
+            deferred.resolve({
+              startDate: _startDate,
+              endDate: _endDate
             });
-
+          } else {
+            deferred.reject({});
+          }
+          LoadingScreenService.finish();
         });
 
-        return deferred.promise;
+      return deferred.promise;
 
+    }
+
+    function _build() {
+      self.createQuestionnaireLineChart(self.questionnaireData);
+      self.createQuestionnaireSpreadsheet(self.questionnaireData);
+      self.createInformationCards(self.questionnaireData);
+      self.createCumulativeResultsChart(self.questionnaireData);
+      self.createCentersGoalsChart(self.questionnaireData);
     }
 
     function _showMessages(msg, action) {
