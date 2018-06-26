@@ -1,17 +1,19 @@
-fdescribe('MonitoringCollectionService', function () {
+xdescribe('MonitoringCollectionService', function () {
   var UNIT_NAME = 'otusjs.monitoring.repository.MonitoringCollectionService';
   var Mock = {};
   var Injections = {};
   var service = {};
   var scope;
 
+  mockRemoteStorage();
+  mockModuleService();
+
   beforeEach(function () {
     angular.mock.module('otusjs.otus.monitoring', function ($provide) {
-      $provide.value('ReportRestService', function () {
-
-      }());
+      $provide.value('otusjs.monitoring.core.ModuleService', Mock.ModuleService);
     });
   });
+
   beforeEach(function () {
 
     inject(function (_$rootScope_, _$q_, _$injector_) {
@@ -27,31 +29,57 @@ fdescribe('MonitoringCollectionService', function () {
   //Factory Tests
   describe('the ', function () {
     it('a', function () {
-      console.log(service);
+      spyOn(Mock.RemoteStorage, "find").and.returnValue(Promise.resolve('a'));
+      spyOn(Mock.MonitoringLocalStorageService, "find").and.returnValue([]);
+
+      Mock.ModuleService.getMonitoringRemoteStorage().whenReady().then(function () {
+        console.log('mds')
+      });
+
+      service.find({acronym: 'acronym'});
+
+      expect(Mock.RemoteStorage.find).toHaveBeenCalledWith('acronym');
     });
+
   });
 
 
   //-----Mock Functions
-
   function mockInjections($injector, $q) {
-    Mock.ModuleService = $injector.get('otusjs.monitoring.core.ModuleService');
     Mock.MonitoringLocalStorageService = $injector.get('otusjs.monitoring.storage.MonitoringLocalStorageService');
     Mock.$q = $q;
 
     Injections.$q = Mock.$q;
     Injections.ModuleService = Mock.ModuleService;
     Injections.MonitoringLocalStorageService = Mock.MonitoringLocalStorageService;
-
-
   }
 
   function mockModuleService() {
-    return function(){
-      this.getMonitoringRemoteStorage = function(){
-        return {};
-      };
+    Mock.ModuleService = {
+      getMonitoringRemoteStorage: function () {
+        return {
+          whenReady: function () {
+            return Promise.resolve(Mock.RemoteStorage);
+          }
+        };
+      }
     };
+  }
+
+  function mockRemoteStorage() {
+    Mock.RemoteStorage = {
+      listAcronyms: function () {
+        return Promise.resolve('result');
+      },
+      listCenters: function () {
+        return Promise.resolve('result');
+      },
+      find: function (acronym) {
+        return Promise.resolve('result');
+      }
+    };
+
+    return Mock.RemoteStorage;
   }
 
   function mockUtils() {
