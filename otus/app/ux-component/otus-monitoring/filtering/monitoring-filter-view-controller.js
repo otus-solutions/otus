@@ -8,10 +8,11 @@
   Controller.$inject = [
     '$mdToast',
     '$filter',
-    'mdcDefaultParams'
+    'mdcDefaultParams',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdToast, $filter, mdcDefaultParams) {
+  function Controller($mdToast, $filter, mdcDefaultParams, LoadingScreenService) {
     var self = this;
 
     /* Lifecycle hooks */
@@ -87,12 +88,14 @@
     }
 
     function onChangeAcronym() {
+      LoadingScreenService.start();
       self.selected = _getSelectedCenters();
       self.startDateInfo = null;
       self.endDateInfo = null;
       self.updateData(self.questionnaireInfo, self.selected, null, null).then(function(response) {
         self.startDateInfo = new Date(response.startDate);
         self.endDateInfo = new Date(response.endDate);
+        LoadingScreenService.finish();
       });
     }
 

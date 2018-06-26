@@ -36,12 +36,13 @@
     function onInit() {
       LoadingScreenService.start();
       _loadAllCenters();
+      LoadingScreenService.finish();
     }
 
     function _loadAllAcronyms() {
       MonitoringService.listAcronyms()
         .then(function(activities) {
-          self.questionnairesList = activities.map(function(acronym) {
+            self.questionnairesList = activities.map(function(acronym) {
             return acronym;
           }).filter(function(elem, index, self) {
             return index == self.indexOf(elem);
@@ -73,8 +74,8 @@
     }
 
     function preProcessingData() {
-      return $q(function(resolve, reject) {
-        try {
+      var deferred = $q.defer();
+      if(self.monitoringData) {
           var rawData = self.monitoringData || [];
           self.uniqueDatesList = rawData.map(function(e) {
             return   e.year + "-" + e.month + "-1";
@@ -96,24 +97,25 @@
             self.monitoringCenters);
 
           if (self.uniqueDatesList && self.fieldCentersList) {
-            resolve();
+            deferred.resolve();
           }
 
-        } catch (err) {
-          reject();
+        } else {
+          deferred.reject();
         }
-      });
+
+      return deferred.promise;
     }
 
     function update(acronym, selectedCenters, startDate, endDate) {
-      return $q(function(resolve, reject) {
+      var deferred = $q.defer();
       if (!selectedCenters) {
         selectedCenters = [];
         self.centers.forEach(function(center) {
           selectedCenters.push(center.acronym);
         });
       }
-      LoadingScreenService.start();
+
       MonitoringService.find(acronym)
         .then(function(response) {
           if (!response.length) {
@@ -121,7 +123,8 @@
             _showMessages('Os dados não foram encontrados!', () => {});
           }
             self.monitoringData = response;
-            self.preProcessingData().then(function() {
+            self.preProcessingData().then(function(){
+
 
               var _startDate = startDate || self.uniqueDatesList[0];
               var _endDate = endDate || self.uniqueDatesList[self.uniqueDatesList.length - 1];
@@ -134,12 +137,16 @@
               self.createCumulativeResultsChart(self.questionnaireData);
               self.createCentersGoalsChart(self.questionnaireData);
 
-              resolve({startDate: _startDate,endDate: _endDate});
+              deferred.resolve({startDate: _startDate,endDate: _endDate});
+              LoadingScreenService.finish();
+            }).then(function() {
+              console.log(666);
             });
 
-            LoadingScreenService.finish();
         });
-      });
+
+        return deferred.promise;
+
     }
 
     function _showMessages(msg, action) {
