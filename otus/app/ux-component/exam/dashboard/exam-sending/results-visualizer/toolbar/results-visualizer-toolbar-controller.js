@@ -18,12 +18,14 @@
   function Controller($scope, $mdDialog, SendingExamService, AliquotErrorReportingService, ProjectContextService, ApplicationStateService, LoadingScreenService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_DOES_MATCH_EXAM = "Data Validation Fail: Aliquot does not match exam"
-    const ALIQUOT_NOT_FOUND = "Data Validation Fail: Aliquots not found";
+    const ALIQUOT_NOT_FOUND = "Data Validation Fail: Aliquot not found";
     const EMPTY_LOT = "Data Validation Fail: Empty Lot";
 
-    var aliquotsNotFound;
+    var aliquotError;
     var _confirmForceSendOfAliquots;
     var self = this;
+
+    /* Public methods */
     self.$onInit = onInit;
     self.cancelUpload = cancelUpload;
     self.saveUpload = saveUpload;
@@ -75,40 +77,22 @@
           $scope.$$postDigest(function () {
             self.dynamicDataTableChange(self.sendingExam.getExamList());
             LoadingScreenService.finish();
-            $mdDialog.show(aliquotsNotFound).then(function () {
-
-            });
+            var aux = $mdDialog.show(aliquotError).then(function () { });
           });
         });
     }
 
     function _handleFailuresToSend(reason) {
-      //TODO: Remover!
-      reason.data.MESSAGE = ALIQUOT_DOES_MATCH_EXAM;
-      var CONTENT = [
-        {
-          aliquot: "363000000",
-          possibleExams: "ELSA B12, CREATININA - SANGUE, ÁCIDO ÚRICO - SANGUE",
-          receivedExam: "URÉIA - SANGUE"
-        },
-        {
-          aliquot: "363000000",
-          possibleExams: "URÉIA - SANGUE, CREATININA - SANGUE, ÁCIDO ÚRICO - SANGUE",
-          receivedExam: "ELSA B12"
-        }
-      ];
-      reason.data.CONTENT = CONTENT;
-      //
       if (reason.data.MESSAGE === ALIQUOT_DOES_MATCH_EXAM) {
         _aliquotErrorDoesNotMatchExam(reason);
       } else if (reason.data.MESSAGE === ALIQUOT_NOT_FOUND) {
         _aliquotErrorNotFound(reason);
       } else if (reason.data.MESSAGE === EMPTY_LOT) {
-        aliquotsNotFound
+        aliquotError
           .title('O lote não possue resultados')
           .textContent('Um lote vazio não pode ser enviado.');
       } else {
-        aliquotsNotFound
+        aliquotError
           .title('Falha no envio do arquivo')
           .textContent('Ocorreu algum problema ao enviar os resultados. Por favor, tente novamente em alguns minutos.');
       }
@@ -117,21 +101,21 @@
     function _aliquotErrorDoesNotMatchExam(reason) {
       self.disabledSave = true;
       _reportAliquotsWithProblems(reason);
-      aliquotsNotFound
-        .title('Aliquotas que não correspondem ao exame')
-        .textContent('O envio será impossibilitando, clique em exportar relatório de erros para obter mais detalhes');
+      aliquotError
+        .title('Aliquota(s) não correspondente(s) ao(s) exame(s)')
+        .textContent('O envio será impossibilitado. Clique em <b>Exportar Relatório de Erros</b> para obter mais detalhes');
     }
 
     function _aliquotErrorNotFound(reason) {
       self.sendingExam.examSendingLot.forcedSave = true;
       _reportAliquotsWithProblems(reason);
-      aliquotsNotFound
+      aliquotError
         .title('Aliquota(s) não encontrada(s)')
         .textContent('Se desejar você pode forçar o envio, clicando novamente em salvar.');
     }
 
     function _reportAliquotsWithProblems(reason) {
-      var report = AliquotErrorReportingService.createErrorReporting(reason.data.CONTENT, reason.data.MESSAGE);
+      var report = AliquotErrorReportingService.createErrorReporting(reason.data.CONTENT);
       self.errorAliquots = report.uniqueValues;
       self.csvData = report.data;
       self.aliquotsWithProblems = [];
@@ -166,8 +150,8 @@
     }
 
     function _buildDialogs() {
-      aliquotsNotFound = $mdDialog.alert()
-        .ariaLabel('Confirmação de cancelamento')
+      aliquotError = $mdDialog.alert()
+        .ariaLabel('Diálogo de alerta')
         .ok('Ok');
     }
   }
