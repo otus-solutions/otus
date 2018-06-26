@@ -11,39 +11,39 @@ describe('otusMonitoringDashboardComponent test', function() {
 
   beforeEach(function() {
     Mock.ProjectFieldCenterService = {
-      loadCenters: () => {
+      loadCenters:function() {
         return Promise.resolve(mockCenters());
       }
-    }
+    };
 
     Mock.MonitoringService = {
-      listAcronyms: () => {
+      listAcronyms:function() {
         return Promise.resolve(mockListAcronyms());
       },
-      find: (query) => {
+      find: function(query){
         return Promise.resolve(mockFind());
       },
-      listCenters: () => {
+      listCenters: function(){
         return Promise.resolve(mockListCenters());
-      },
+      }
     };
 
     Mock.LoadingScreenService = {
-      start: () => {
+      start:function() {
         return Promise.resolve();
       },
-      finish: () => {
+      finish:function() {
         return Promise.resolve();
       }
     };
 
     Mock.MonitorParseData = {
-      init: (a, b, c, d) => {},
-      create: (a, b, c, d) => {},
+      init: function(a, b, c, d) {},
+      create: function(a, b, c, d) {}
     };
 
     Mock.MonitoringCenterFactory = {
-      create: (data) => {
+      create: function(data) {
         return new MonitoringCenter(data);
         function MonitoringCenter(data) {
           var self = this;
@@ -83,21 +83,37 @@ describe('otusMonitoringDashboardComponent test', function() {
   });
 
 
-  describe('onInit method', () => {
+  describe('onInit method', function() {
     var originalTimeout;
-    beforeEach(() => {
+    beforeEach(function() {
       originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
       jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
       spyOn(ctrl, '$onInit').and.callThrough();
+      spyOn(ctrl, 'update').and.callThrough();
+      spyOn(ctrl, 'preProcessingData').and.callThrough();
+      spyOn(Mock.LoadingScreenService, 'start').and.callThrough();
+      spyOn(Mock.LoadingScreenService, 'finish').and.callThrough();
+      spyOn(Mock.ProjectFieldCenterService, 'loadCenters').and.callThrough();
+      spyOn(Mock.MonitoringService, 'listCenters').and.callThrough();
+      spyOn(Mock.MonitoringService, 'listAcronyms').and.callThrough();
+      spyOn(Mock.MonitoringService, 'find').and.callThrough();
       ctrl.$onInit();
     });
 
-    it('should onInit be defined', (done) => {
+    it('should onInit be defined', function(done){
       expect(ctrl.$onInit).toHaveBeenCalled();
       setTimeout(function() {
+        expect(Mock.LoadingScreenService.start).toHaveBeenCalledTimes(1);
+        expect(Mock.ProjectFieldCenterService.loadCenters).toHaveBeenCalledTimes(1);
+        expect(Mock.MonitoringService.listCenters).toHaveBeenCalledTimes(1);
+        expect(Mock.MonitoringService.listAcronyms).toHaveBeenCalledTimes(1);
+        expect(ctrl.update).toHaveBeenCalledTimes(1);
+        expect(Mock.MonitoringService.find).toHaveBeenCalledTimes(1);
+        expect(ctrl.preProcessingData).toHaveBeenCalledTimes(1);
+        expect(Mock.LoadingScreenService.finish).toHaveBeenCalledTimes(1);
         done();
-      }, 1000)
+      }, 1000);
     });
 
     afterEach(function() {
