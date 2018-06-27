@@ -9,6 +9,7 @@
       'otusjs.application.session',
       'otusjs.application.context',
       'otusjs.application.core',
+      'otusjs.application.crash',
       'otusjs.application.state',
       'otusjs.application.http',
       'otusjs.application.locale',
