@@ -10,18 +10,19 @@ describe('Lot info manager display component', function () {
 
   beforeEach(function () {
     Mock.SendingExamService = {};
+    Mock.AliquotErrorReportingService = {};
     Mock.ContextService = {};
     Mock.ApplicationStateService = {};
     Mock.LoadingScreenService = {};
 
     angular.mock.module(function ($provide) {
       $provide.value('otusjs.laboratory.business.project.sending.SendingExamService', Mock.SendingExamService);
+      $provide.value('otusjs.laboratory.business.project.sending.AliquotErrorReportingService', Mock.AliquotErrorReportingService);
       $provide.value('otusjs.laboratory.core.project.ContextService', Mock.ContextService);
       $provide.value('otusjs.application.state.ApplicationStateService', Mock.ApplicationStateService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
     });
   });
-
 
   beforeEach(function () {
 

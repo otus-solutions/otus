@@ -77,7 +77,7 @@
           $scope.$$postDigest(function () {
             self.dynamicDataTableChange(self.sendingExam.getExamList());
             LoadingScreenService.finish();
-            var aux = $mdDialog.show(aliquotError).then(function () { });
+            $mdDialog.show(aliquotError).then(function () { });
           });
         });
     }
@@ -103,7 +103,7 @@
       _reportAliquotsWithProblems(reason);
       aliquotError
         .title('Aliquota(s) não correspondente(s) ao(s) exame(s)')
-        .textContent('O envio será impossibilitado. Clique em <b>Exportar Relatório de Erros</b> para obter mais detalhes');
+        .textContent('O envio será impossibilitado. Clique em exportar relatório de erros para obter mais detalhes');
     }
 
     function _aliquotErrorNotFound(reason) {
@@ -116,12 +116,12 @@
 
     function _reportAliquotsWithProblems(reason) {
       var report = AliquotErrorReportingService.createErrorReporting(reason.data.CONTENT);
-      self.errorAliquots = report.uniqueValues;
-      self.csvData = report.data;
+      self.errorAliquots = reason.data.CONTENT;
+      self.csvData = report;
       self.aliquotsWithProblems = [];
       self.sendingExam.exams.forEach(function (exam) {
         exam.examResults.forEach(function (result) {
-          var invalidAliquotCode = self.errorAliquots.find(function (aliquotCode) { return aliquotCode == result.aliquotCode });
+          var invalidAliquotCode = self.errorAliquots.find(function (errorAliquot) { return errorAliquot.aliquot == result.aliquotCode });
           if (invalidAliquotCode) {
             result.aliquotValid = false;
             self.aliquotsWithProblems.push(result);

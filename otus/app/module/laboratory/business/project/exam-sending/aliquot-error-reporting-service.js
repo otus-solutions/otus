@@ -13,15 +13,12 @@
     const ALIQUOT_DOES_MATCH_EXAM_PT_BR = "Alíquota não corresponde ao exame"
     const ALIQUOT_NOT_FOUND_PT_BR = "Alíquota não encontrada";
     var self = this;
-    self.report = {
-      uniqueValues: [],
-      data: []
-    };
 
     /* Public methods */
     self.createErrorReporting = createErrorReporting;
 
     function createErrorReporting(array) {
+      var report = [];
       array.forEach(function (value) {
         var out = {
           ALIQUOTA: value.aliquot,
@@ -29,11 +26,11 @@
           EXAME_RECEBIDO: value.receivedExam,
           EXAMES_POSSIVEIS: value.possibleExams
         };
-        self.report.data.push(out);
-        if (!self.report.uniqueValues.includes(value.aliquot))
-          self.report.uniqueValues.push(value.aliquot)
+        if (!report.includes(value.aliquot)) {
+          report.push(out);
+        }
       });
-      return self.report;
+      return report;
     }
   }
 }());
