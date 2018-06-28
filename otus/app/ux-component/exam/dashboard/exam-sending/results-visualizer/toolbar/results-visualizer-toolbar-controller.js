@@ -117,7 +117,6 @@
     function _reportAliquotsWithProblems(reason) {
       self.errorAliquots = reason.data.CONTENT;
       self.csvData = AliquotErrorReportingService.createErrorReporting(reason.data.CONTENT);
-      console.log(self.sendingExam);
       self.aliquotsWithProblems = AliquotErrorReportingService.setValidAliquot(self.sendingExam, self.errorAliquots);
     }
 
