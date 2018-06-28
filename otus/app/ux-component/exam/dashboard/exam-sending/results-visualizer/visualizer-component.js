@@ -89,18 +89,19 @@
           var structureIcon = { icon: "", class: "", tooltip: "" };
 
           if (self.action === 'view' || self.errorAliquots.length) {
-            self.errorAliquots.find(function (error) {
+            var error = self.errorAliquots.find(function (error) {
               if (error.aliquot === element.aliquotCode) {
                 if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM)) {
                   structureIcon = { icon: "error", class: "md-warn", tooltip: "Alíquota não corresponde ao exame", orderValue: "error" };
                 } else if (error.message.includes(ALIQUOT_NOT_FOUND)) {
                   structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não identificada no sistema", orderValue: "warning" };
-                } else {
-                  structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
                 }
+                return error;
               }
             });
-          } else {
+            if (!error)
+              structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
+          } else if (self.action === 'upload') {
             structureIcon = { icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "query_builder" };
           }
           return structureIcon;
