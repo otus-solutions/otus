@@ -21,14 +21,14 @@
     function createErrorReporting(array) {
       var report = [];
       array.forEach(function (value) {
-        var out = {
-          ALIQUOTA: value.aliquot,
-          PROBLEMA: value.message.includes(ALIQUOT_NOT_FOUND) ? ALIQUOT_NOT_FOUND_PT_BR : ALIQUOT_DOES_MATCH_EXAM_PT_BR,
-          EXAME_RECEBIDO: value.receivedExam,
-          EXAMES_POSSIVEIS: value.possibleExams
-        };
         if (!report.includes(value.aliquot)) {
-          report.push(out);
+          var output = {
+            ALIQUOTA: value.aliquot,
+            PROBLEMA: value.message.includes(ALIQUOT_NOT_FOUND) ? ALIQUOT_NOT_FOUND_PT_BR : ALIQUOT_DOES_MATCH_EXAM_PT_BR,
+            EXAME_RECEBIDO: value.receivedExam,
+            EXAMES_POSSIVEIS: value.possibleExams
+          };
+          report.push(output);
         }
       });
       return report;
