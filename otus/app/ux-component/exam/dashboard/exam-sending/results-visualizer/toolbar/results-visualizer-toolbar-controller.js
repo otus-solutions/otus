@@ -115,19 +115,10 @@
     }
 
     function _reportAliquotsWithProblems(reason) {
-      var report = AliquotErrorReportingService.createErrorReporting(reason.data.CONTENT);
       self.errorAliquots = reason.data.CONTENT;
-      self.csvData = report;
-      self.aliquotsWithProblems = [];
-      self.sendingExam.exams.forEach(function (exam) {
-        exam.examResults.forEach(function (result) {
-          var invalidAliquotCode = self.errorAliquots.find(function (errorAliquot) { return errorAliquot.aliquot == result.aliquotCode });
-          if (invalidAliquotCode) {
-            result.aliquotValid = false;
-            self.aliquotsWithProblems.push(result);
-          }
-        });
-      });
+      self.csvData = AliquotErrorReportingService.createErrorReporting(reason.data.CONTENT);
+      console.log(self.sendingExam);
+      self.aliquotsWithProblems = AliquotErrorReportingService.setValidAliquot(self.sendingExam, self.errorAliquots);
     }
 
     function _buildMessageForceSendOfAliquots() {

@@ -16,6 +16,7 @@
 
     /* Public methods */
     self.createErrorReporting = createErrorReporting;
+    self.setValidAliquot = setValidAliquot;
 
     function createErrorReporting(array) {
       var report = [];
@@ -31,6 +32,20 @@
         }
       });
       return report;
+    }
+
+    function setValidAliquot(sendingExam, errorAliquots) {
+      var aliquotsWithProblems = [];
+      sendingExam.exams.forEach(function (exam) {
+        exam.examResults.forEach(function (result) {
+          var invalidAliquotCode = errorAliquots.find(function (errorAliquot) { return errorAliquot.aliquot == result.aliquotCode });
+          if (invalidAliquotCode) {
+            result.aliquotValid = false;
+            aliquotsWithProblems.push(result);
+          }
+        });
+      });
+      return aliquotsWithProblems;
     }
   }
 }());
