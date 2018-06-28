@@ -43,7 +43,8 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
-    self.getAliquotsByCenter = getAliquotsByCenter;
+    self.getAliquotsByPeriod = getAliquotsByPeriod;
+    self.validateAliquot = validateAliquot;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -252,6 +253,22 @@
       return request.promise;
     }
 
+    //TODO: AQUI
+    function getAliquotsByPeriod(initialDate, finalDate, center, storage) {
+      var request = $q.defer();
+
+      _remoteStorage
+      .whenReady()
+      .then(function(remoteStorage) {
+         return remoteStorage
+         .getAliquotsByPeriod(initialDate, finalDate, center, storage)
+         .then(function(aliquots) {
+            request.resolve(aliquots);
+         });
+      });
+
+      return request.promise;
+    }
 
     function getAliquots() {
       var request = $q.defer();
@@ -269,16 +286,16 @@
       return request.promise;
     }
 
-    function getAliquotsByCenter(lotCode) {
+    function validateAliquot(code, center) {
       var request = $q.defer();
 
       _remoteStorage
       .whenReady()
       .then(function(remoteStorage) {
          return remoteStorage
-         .getAliquotsByCenter(lotCode)
-         .then(function(aliquots) {
-            request.resolve(aliquots);
+         .validateAliquot(code, center)
+         .then(function(aliquot) {
+            request.resolve(aliquot);
          });
       });
 

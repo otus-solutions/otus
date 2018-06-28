@@ -60,7 +60,8 @@
       _buildDialogs();
       _formatLotDates();
       _getAliquotsInOtherLots();
-      _fetchgCollectedAliquots();
+      //TODO: AQUI
+      // _fetchgCollectedAliquots();
       self.setChartData();
     }
 

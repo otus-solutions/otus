@@ -28,7 +28,8 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
-    self.getAliquotsByCenter = getAliquotsByCenter;
+    self.getAliquotsByPeriod = getAliquotsByPeriod;
+    self.validateAliquot = validateAliquot;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -69,13 +70,17 @@
       return LaboratoryCollectionService.getAliquotDescriptors();
     }
 
+    //TODO: AQUI
+    function getAliquotsByPeriod(initialDate, finalDate, center, storage) {
+      return LaboratoryCollectionService.getAliquotsByPeriod(initialDate, finalDate, center, storage);
+    }
 
     function getAliquots() {
       return LaboratoryCollectionService.getAliquots();
     }
 
-    function getAliquotsByCenter(center) {
-      return LaboratoryCollectionService.getAliquotsByCenter(center);
+    function validateAliquot(code, center) {
+      return LaboratoryCollectionService.validateAliquot(code, center);
     }
 
     function getLots() {
