@@ -14,9 +14,17 @@ describe('Lot info manager display component', function() {
       getContainerLabelToAliquot: (aliquot) => {}
     };
 
+
+    Mock.AliquotTransportationMesssagesService = {};
+    Mock.AliquotTransportationFactory = {};
+    Mock.LoadingScreenService = {};
+
     angular.mock.module(function($provide) {
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationService', Mock.AliquotTransportationService);
-    })
+      $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationMesssagesService', Mock.AliquotTransportationMesssagesService);
+      $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationFactory', Mock.AliquotTransportationFactory);
+      $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
+    });
 
   });
 
@@ -29,7 +37,8 @@ describe('Lot info manager display component', function() {
         $mdDialog: _$injector_.get('$mdDialog'),
         $mdToast: _$injector_.get('$mdToast'),
         $filter: _$injector_.get('$filter'),
-        DynamicTableSettingsFactory: _$injector_.get('otusjs.otus.uxComponent.DynamicTableSettingsFactory')
+        DynamicTableSettingsFactory: _$injector_.get('otusjs.otus.uxComponent.DynamicTableSettingsFactory'),
+        $q: _$injector_.get('$q')
       };
       ctrl = $controller('otusLotInfoManagerDisplayCtrl', Injections);
       mockLotAliquotList(ctrl);
@@ -42,8 +51,6 @@ describe('Lot info manager display component', function() {
       spyOn(ctrl, '$onInit').and.callThrough();
       spyOn(Injections.DynamicTableSettingsFactory, 'create').and.callThrough();
       spyOn(Injections.DynamicTableSettingsFactory.create(), 'addColumnProperty').and.callThrough();
-      spyOn < Function > (ctrl, '_buildDynamicTableSettings');
-      spyOn < Object > (ctrl, 'DynamicTableSettingsFactory');
       ctrl.$onInit();
 
     });
@@ -63,8 +70,6 @@ describe('Lot info manager display component', function() {
     });
 
   });
-
-
 
   function mockLotAliquotList(ctrl) {
     ctrl.lot = {
