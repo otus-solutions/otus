@@ -67,13 +67,13 @@
 
     function getAliquotsByPeriod(initialDate, finalDate, center, storage) {
       LoadingScreenService.changeMessage(messageLoading);
-      LoadingScreenService.start();
+      // LoadingScreenService.start();
       var deferred = $q.defer();
 
       LaboratoryRepositoryService.getAliquotsByPeriod(initialDate, finalDate, center, storage)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
-          LoadingScreenService.finish();
+          // LoadingScreenService.finish();
         })
         .catch(function(err) {
           deferred.reject(err);

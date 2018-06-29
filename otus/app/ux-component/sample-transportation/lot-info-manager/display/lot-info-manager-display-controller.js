@@ -52,14 +52,12 @@
     self.selectAliquot = selectAliquot;
 
     function onInit() {
-      self.fullAliquotsList = [];
       self.storage = false;
       _updateContainerLabel();
       self.aliquotCode = "";
       self.initialDate = new Date();
       self.finalDate = new Date();
       _buildDialogs();
-
       _buildDynamicTableSettings();
     }
 
@@ -69,25 +67,20 @@
         .addHeader('Código', '15', 'left', 4)
         //property, formatType
         .addColumnProperty('code')
-
         //header, flex, align, ordinationPriorityIndex
         .addHeader('Tipo', '25', '', 1)
         //property, formatType
         .addColumnProperty('label')
-
         //header, flex, align, ordinationPriorityIndex
         .addHeader('Recipiente', '15', '', 3)
         //property, formatType
         .addColumnProperty('containerLabel')
-
         //header, flex, align, ordinationPriorityIndex
         .addHeader('Processamento', '15', '', 2)
         //property, formatType
         .addColumnProperty('aliquotCollectionData.processing', 'DATE')
-
         .addHeader('Função', '15', '', 5)
         .addColumnProperty('roleLabel')
-
         //icon, tooltip, classButton, successMsg,
         //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
         .addColumnIconButton(
@@ -152,43 +145,51 @@
             ' entre ' + $filter('date')(self.initialDate, 'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate, 'dd/MM/yyyy') + '.');
 
           $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
-
             var successInsertion = false;
             _findAliquotByPeriod(self.initialDate, self.finalDate)
               .then(function(response) {
-                _buildDynamicTableSettings();
-                // self.lot.aliquotList = angular.copy(self.fullAliquotsList);
-                // window.location.reload(true);
                 successInsertion = response;
-
-
-                // self.fullAliquotsList.forEach(function(availableAliquot) {
-                //   var returned = fastInsertion(availableAliquot.code, true);
-                //   if (!successInsertion) successInsertion = returned;
-                // }, this);
+                self.onLotAlteration({
+                  newData: self.lot.toJSON()
+                });
+                self.setChartData();
+                _updateContainerLabel();
                 if (successInsertion) {
-                  LoadingScreenService.changeMessage(messageLoading);
-                  LoadingScreenService.start();
+                  _dynamicDataTableUpdate();
                   AliquotTransportationMessagesService.successInAliquotInsertion();
                   LoadingScreenService.finish();
-                  _dynamicDataTableUpdate();
-
-
-
 
                 } else {
                   AliquotTransportationMessagesService.notAliquotsInserted();
                 }
+
               });
-            // successInsertion = true;
           });
-          // });
         } else {
           AliquotTransportationMessagesService.invalidPeriodInterval();
         }
       } else {
         AliquotTransportationMessagesService.unselectedPeriod();
       }
+    }
+
+    function _findAliquotByPeriod(initialDate, finalDate) {
+      var deferred = $q.defer();
+      var _storage = self.storage ? 'Storage' : null;
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
+      AliquotTransportationService.getAliquotsByPeriod(initialDate.toISOString(), finalDate.toISOString(), self.lot.fieldCenter.acronym, _storage)
+        .then(function(response) {
+
+          self.fullAliquotsList = angular.copy(response);
+          self.lot.insertAliquotList(angular.copy(self.fullAliquotsList));
+          // self.lot.aliquotList = self.lot.aliquotList.concat(angular.copy(self.fullAliquotsList));
+          setTimeout(function() {
+            deferred.resolve(true);
+          }, 10000);
+
+        });
+      return deferred.promise;
     }
 
     function periodInputkeydown(event) {
@@ -258,62 +259,20 @@
         aliquot.isSelected = true;
       }
     }
-    $scope.$watch('fullAliquotsList', function() {
-      console.log($scope.fullAliquotsList);
-      self.onLotAlteration({
-        newData: self.lot.toJSON()
-      });
-      self.setChartData();
-      _updateContainerLabel();
-
-    });
-
-    function _findAliquotByPeriod(initialDate, finalDate) {
-      var deferred = $q.defer();
-      var _storage = self.storage ? 'Storage' : null ;
-      AliquotTransportationService.getAliquotsByPeriod(initialDate.toISOString(), finalDate.toISOString(), self.lot.fieldCenter.acronym, _storage)
-        .then(function(response) {
-          var _fullAliquotsList = response;
-          self.fullAliquotsList = _fullAliquotsList;
-          self.lot.aliquotList = self.fullAliquotsList;
-          $scope.fullAliquotsList = self.lot.aliquotList;
-
-          self.onLotAlteration({
-            newData: self.lot.toJSON()
-          });
-          self.setChartData();
-          _updateContainerLabel();
-
-          deferred.resolve(true);
-
-        });
-      return deferred.promise;
-    }
 
     function _findAliquotInLot(code) {
-      return self.lot.aliquotList.find(function(aliquotsInLot) {
+      return self.lot.getAliquotCodeList().find(function(aliquotsInLot) {
         return aliquotsInLot.code == code;
       });
     }
 
-    function _findAliquot(code) {
-      return self.fullAliquotsList.find(function(availableAliquot) {
-        return availableAliquot.code == code;
-      });
-    }
-
     function _getWorkAliquot() {
-      AliquotTransportationService.validateAliquot(code, self.lot.fieldCenter.acronym)
+      var _storage = self.storage ? 'Storage' : null;
+      AliquotTransportationService.validateAliquot(code, self.lot.fieldCenter.acronym, _storage)
         .then(function(availableAliquot) {
           return availableAliquot == code;
         });
-
     }
 
-    function _findAliquotsInOtherLots(code) {
-      return self.aliquotsInOtherLotsList.find(function(aliquotsInOtherLots) {
-        return aliquotsInOtherLots.code == code;
-      });
-    }
   }
 }());
