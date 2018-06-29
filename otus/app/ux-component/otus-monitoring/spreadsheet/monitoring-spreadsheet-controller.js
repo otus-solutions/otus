@@ -17,7 +17,6 @@
     self.createSpreadsheet = createSpreadsheet;
 
     /* public functions */
-
     function onInit() {
       self.datasets = [];
       self.dates = [];

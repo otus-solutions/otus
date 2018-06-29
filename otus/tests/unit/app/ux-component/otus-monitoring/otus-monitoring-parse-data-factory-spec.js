@@ -74,7 +74,7 @@ describe('monitoringParseDataFactory test', function() {
         year: 2018,
         sum: "5"
       }
-    ]
+    ];
   }
 
 
@@ -138,12 +138,6 @@ describe('monitoringParseDataFactory test', function() {
 
   function mockFactory() {
     factory.uniqueDatesList = getDates();
-    // factory.centers = mockCenters();
-    // factory.updateData = (data) => {factory.ready = true;};
-    // factory.parseData = (data) => {};
-    // factory.startDateInfo = "1/2018";
-    // factory.endDateInfo = "5/2018";
-    // factory.questionnaireInfo = "CISE";
   }
 
 

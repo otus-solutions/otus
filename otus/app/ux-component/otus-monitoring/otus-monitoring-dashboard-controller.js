@@ -75,7 +75,6 @@
     }
 
     function preProcessingData() {
-      // var deferred = $q.defer();
       if (self.monitoringData) {
         var rawData = self.monitoringData || [];
         self.uniqueDatesList = rawData.map(function(e) {
@@ -139,9 +138,7 @@
           }
           LoadingScreenService.finish();
         });
-
       return deferred.promise;
-
     }
 
     function _build() {

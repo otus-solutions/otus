@@ -39,8 +39,6 @@
         self.goalPercentage += _totalGoal / qData.data[i].goal;
       }
 
-
-
       self.goalPercentage = ((self.goalPercentage / qData.data.length) * 100).toFixed(2);
       if(self.goalPercentage == "NaN"){
         self.goalPercentage = "0.00";

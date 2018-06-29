@@ -31,7 +31,6 @@
       okText: 'ok'
     });
 
-
     /* Public methods */
     self.onFilter = onFilter;
     self.onChangeAcronym = onChangeAcronym;
