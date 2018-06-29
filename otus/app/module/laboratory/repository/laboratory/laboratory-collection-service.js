@@ -43,8 +43,6 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
-    self.getAliquotsByPeriod = getAliquotsByPeriod;
-    self.validateAliquot = validateAliquot;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -253,49 +251,21 @@
       return request.promise;
     }
 
-    //TODO: AQUI
-    function getAliquotsByPeriod(initialDate, finalDate, center, storage) {
+    /**
+     * Create the transport lot.
+     * @param {(object)} lotAliquot - structure of aliquot lot query
+     * @memberof LaboratoryCollectionService
+     */
+    function getAliquots(lotAliquot) {
       var request = $q.defer();
 
       _remoteStorage
       .whenReady()
       .then(function(remoteStorage) {
          return remoteStorage
-         .getAliquotsByPeriod(initialDate, finalDate, center, storage)
+         .getAliquots(lotAliquot)
          .then(function(aliquots) {
             request.resolve(aliquots);
-         });
-      });
-
-      return request.promise;
-    }
-
-    function getAliquots() {
-      var request = $q.defer();
-
-      _remoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .getAliquots()
-         .then(function(aliquots) {
-            request.resolve(aliquots);
-         });
-      });
-
-      return request.promise;
-    }
-
-    function validateAliquot(code, center) {
-      var request = $q.defer();
-
-      _remoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .validateAliquot(code, center)
-         .then(function(aliquot) {
-            request.resolve(aliquot);
          });
       });
 

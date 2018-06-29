@@ -60,8 +60,6 @@
       _buildDialogs();
       _formatLotDates();
       _getAliquotsInOtherLots();
-      //TODO: AQUI
-      // _fetchgCollectedAliquots();
       self.setChartData();
     }
 
@@ -181,7 +179,7 @@
       self.aliquotsInOtherLots = [];
       for (var i = 0; i < self.lots.length; i++) {
         for (var j = 0; j < self.lots[i].aliquotList.length; j++) {
-          self.aliquotsInOtherLots.push(self.lots[i].aliquotList[j]);
+          self.aliquotsInOtherLots.push(self.lots[i].aliquotList[j].code);
         }
       }
     }

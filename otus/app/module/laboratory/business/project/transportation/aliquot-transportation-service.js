@@ -24,8 +24,6 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
-    self.getAliquotsByPeriod = getAliquotsByPeriod;
-    self.validateAliquot = validateAliquot;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -47,45 +45,10 @@
     function loadAliquotLotFromJson(lotJSON) {
       return TransportationService.buildAliquotLotFromJson(lotJSON);
     }
-    //TODO: AQUI
-    function getAliquots() {
-      LoadingScreenService.changeMessage(messageLoading);
-      LoadingScreenService.start();
+
+    function getAliquots(lotAliquot) {
       var deferred = $q.defer();
-
-      LaboratoryRepositoryService.getAliquots()
-        .then(function(response) {
-          deferred.resolve(JSON.parse(response));
-          LoadingScreenService.finish();
-        })
-        .catch(function(err) {
-          deferred.reject(err);
-        });
-
-      return deferred.promise;
-    }
-
-    function getAliquotsByPeriod(initialDate, finalDate, center, storage) {
-      LoadingScreenService.changeMessage(messageLoading);
-      // LoadingScreenService.start();
-      var deferred = $q.defer();
-
-      LaboratoryRepositoryService.getAliquotsByPeriod(initialDate, finalDate, center, storage)
-        .then(function(response) {
-          deferred.resolve(JSON.parse(response));
-          // LoadingScreenService.finish();
-        })
-        .catch(function(err) {
-          deferred.reject(err);
-        });
-
-      return deferred.promise;
-    }
-
-    function validateAliquot(code, center) {
-      var deferred = $q.defer();
-
-      LaboratoryRepositoryService.validateAliquot(code, center)
+      LaboratoryRepositoryService.getAliquots(lotAliquot)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
         })

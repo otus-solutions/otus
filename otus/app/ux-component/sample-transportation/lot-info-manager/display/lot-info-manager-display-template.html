@@ -83,14 +83,6 @@
               <md-datepicker ng-model="$ctrl.finalDate" aria-label="Período Final" ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
             </md-input-container>
           </div>
-          <!-- <div>
-            <md-input-container class="remove-errors-spacer input-container-lot-margin" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
-              <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.storage">
-                Armazenamento
-              </md-checkbox>
-            </md-input-container>
-          </div> -->
-          <!-- <span flex></span> -->
           <div>
             <md-button ng-click="$ctrl.insertAliquotsByPeriod()" class="md-raised md-primary" aria-label="Adicionar Alíquotas por Período">
               <md-tooltip md-direction="down">Adicionar</md-tooltip>
@@ -100,9 +92,9 @@
         </div>
         <div ng-if="$ctrl.currentNavItem == 'individualInsertion'" layout="row" layout-align="center center" layout-padding>
           <span class="">Código:</span>
-          <input type="text" class="aliquot-lot-input" flex placeholder="Alíquota" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" />
+          <input type="text" numbers-only class="aliquot-lot-input" flex placeholder="Alíquota" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" />
           <div>
-            <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Alíquota">
+            <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Alíquota" ng-disabled="!$ctrl.aliquotCode.length">
               <md-tooltip md-direction="down">Adicionar</md-tooltip>
               <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
             </md-button>

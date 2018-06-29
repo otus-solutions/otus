@@ -17,8 +17,6 @@
     self.initialize = initialize;
     self.create = create;
     self.getAliquots = getAliquots;
-    self.getAliquotsByPeriod = getAliquotsByPeriod;
-    self.validateAliquot = validateAliquot;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -31,34 +29,12 @@
     function create() {
       _rest.create();
     }
-    //TODO: AQUI
-    function getAliquotsByPeriod(initialDate, finalDate, center, storage) {
-      if (!_rest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _rest.getAliquotsByPeriod({
-        initialDate: initialDate,
-        finalDate: finalDate,
-        center: center,
-        storage: storage
-      }).$promise;
-    }
 
-    function getAliquots() {
+    function getAliquots(lotAliquot) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getAliquots().$promise;
-    }
-
-    function validateAliquot(code, center) {
-      if (!_rest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _rest.validateAliquot({
-        center: center,
-        code: code
-      }).$promise;
+      return _rest.getAliquots({},lotAliquot).$promise;
     }
 
     function getLots() {

@@ -11,22 +11,28 @@
     '$filter',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationMesssagesService',
+    'otusjs.laboratory.business.project.transportation.AliquotTransportationFactory',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
     '$q',
-    'otusjs.deploy.LoadingScreenService',
-    '$scope'
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdDialog, $mdToast, $filter, AliquotTransportationService, AliquotTransportationMessagesService, DynamicTableSettingsFactory, $q, LoadingScreenService, $scope) {
+  function Controller(
+    $mdDialog,
+    $mdToast,
+    $filter,
+    AliquotTransportationService,
+    AliquotTransportationMessagesService,
+    AliquotTransportationFactory,
+    DynamicTableSettingsFactory,
+    $q,
+    LoadingScreenService) {
     var self = this;
-
 
     var messageLoading =
       'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
 
     self.$onInit = onInit;
-    $scope.render = false;
-
 
     self.dynamicTableSettings;
     self.currentNavItem = "insertionByPeriod";
@@ -107,10 +113,44 @@
         .getSettings();
     }
 
+    function dynamicDataTableChange(change) {
+      if (change.type === 'select' || change.type === 'deselect') {
+        self.selectAliquot(change.element);
+      }
+    }
+
+    function selectAliquot(aliquot) {
+      var aliquotIndex = self.selectedAliquots.indexOf(aliquot);
+      if (aliquotIndex > -1) {
+        self.selectedAliquots.splice(aliquotIndex, 1);
+        aliquot.isSelected = false;
+      } else {
+        self.selectedAliquots.push(aliquot);
+        aliquot.isSelected = true;
+      }
+    }
+
+    function _unselectedAllAliquot() {
+      self.selectedAliquots = [];
+      self.lot.aliquotList.forEach(function(aliquot) {
+        aliquot.isSelected = false;
+      });
+    }
+
+    function _updateDynamicTable() {
+      self.onLotAlteration({
+        newData: self.lot.toJSON()
+      });
+      self.setChartData();
+      _updateContainerLabel();
+      _dynamicDataTableUpdate();
+    }
+
     function removeElement(element) {
       _unselectedAllAliquot();
       var aliquotIndex = self.lot.aliquotList.indexOf(element);
       self.lot.removeAliquotByIndex(aliquotIndex);
+      _updateDynamicTable();
     }
 
     function _buildDialogs() {
@@ -133,65 +173,6 @@
       }, this);
     }
 
-    function insertAliquotsByPeriod() {
-      if (self.initialDate instanceof Date && self.finalDate instanceof Date) {
-        self.initialDate = new Date(self.initialDate.toISOString());
-        self.finalDate = new Date(self.finalDate.toISOString());
-
-
-
-        if (self.initialDate <= self.finalDate) {
-          _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no lote as Alíquotas realizadas no período' +
-            ' entre ' + $filter('date')(self.initialDate, 'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate, 'dd/MM/yyyy') + '.');
-
-          $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
-            var successInsertion = false;
-            _findAliquotByPeriod(self.initialDate, self.finalDate)
-              .then(function(response) {
-                successInsertion = response;
-                self.onLotAlteration({
-                  newData: self.lot.toJSON()
-                });
-                self.setChartData();
-                _updateContainerLabel();
-                if (successInsertion) {
-                  _dynamicDataTableUpdate();
-                  AliquotTransportationMessagesService.successInAliquotInsertion();
-                  LoadingScreenService.finish();
-
-                } else {
-                  AliquotTransportationMessagesService.notAliquotsInserted();
-                }
-
-              });
-          });
-        } else {
-          AliquotTransportationMessagesService.invalidPeriodInterval();
-        }
-      } else {
-        AliquotTransportationMessagesService.unselectedPeriod();
-      }
-    }
-
-    function _findAliquotByPeriod(initialDate, finalDate) {
-      var deferred = $q.defer();
-      var _storage = self.storage ? 'Storage' : null;
-      LoadingScreenService.changeMessage(messageLoading);
-      LoadingScreenService.start();
-      AliquotTransportationService.getAliquotsByPeriod(initialDate.toISOString(), finalDate.toISOString(), self.lot.fieldCenter.acronym, _storage)
-        .then(function(response) {
-
-          self.fullAliquotsList = angular.copy(response);
-          self.lot.insertAliquotList(angular.copy(self.fullAliquotsList));
-          // self.lot.aliquotList = self.lot.aliquotList.concat(angular.copy(self.fullAliquotsList));
-          setTimeout(function() {
-            deferred.resolve(true);
-          }, 10000);
-
-        });
-      return deferred.promise;
-    }
-
     function periodInputkeydown(event) {
       var charCode = event.which || event.keyCode;
       if (charCode == '13') {
@@ -206,73 +187,103 @@
       }
     }
 
+    function insertAliquotsByPeriod() {
+      if (self.initialDate instanceof Date && self.finalDate instanceof Date) {
+        self.initialDate = new Date(self.initialDate.toISOString());
+        self.finalDate = new Date(self.finalDate.toISOString());
 
-    function fastInsertion(newAliquotCode, hideMsgErrors) {
-      var foundAliquot = _findAliquot(newAliquotCode);
-      var successInsertion = false;
+        if (self.initialDate <= self.finalDate) {
+          _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no lote as Alíquotas realizadas no período' +
+            ' entre ' + $filter('date')(self.initialDate, 'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate, 'dd/MM/yyyy') + '.');
 
-      if (foundAliquot) {
-        if (foundAliquot.fieldCenter.acronym !== self.lot.fieldCenter.acronym) {
-          if (!hideMsgErrors) AliquotTransportationMessagesService.toastWrongFieldCenter(newAliquotCode);
-        } else if (_findAliquotInLot(newAliquotCode)) {
-          if (!hideMsgErrors) AliquotTransportationMessagesService.toastDuplicated(newAliquotCode);
-        } else if (_findAliquotsInOtherLots(newAliquotCode)) {
-          if (!hideMsgErrors) AliquotTransportationMessagesService.toastOtherLot(newAliquotCode);
-        } else {
-          self.lot.insertAliquot(foundAliquot);
-          self.onLotAlteration({
-            newData: self.lot.toJSON()
+          $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
+            LoadingScreenService.changeMessage(messageLoading);
+            LoadingScreenService.start();
+            _findAliquotByPeriod(self.initialDate.toISOString(), self.finalDate.toISOString())
+              .then(function(response) {
+                if (response) {
+                  _updateDynamicTable();
+                  AliquotTransportationMessagesService.successInAliquotInsertion();
+                } else {
+                  AliquotTransportationMessagesService.notAliquotsInserted();
+                }
+                LoadingScreenService.finish();
+              });
           });
-          self.setChartData();
-          _updateContainerLabel();
-          successInsertion = true;
-          if (!hideMsgErrors) _dynamicDataTableUpdate();
+        } else {
+          AliquotTransportationMessagesService.invalidPeriodInterval();
         }
       } else {
-        if (!hideMsgErrors) AliquotTransportationMessagesService.toastError(newAliquotCode);
-      }
-      self.aliquotCode = "";
-      return successInsertion;
-    }
-
-    function dynamicDataTableChange(change) {
-      if (change.type === 'select' || change.type === 'deselect') {
-        self.selectAliquot(change.element);
+        AliquotTransportationMessagesService.unselectedPeriod();
       }
     }
 
-    function _unselectedAllAliquot() {
-      self.selectedAliquots = [];
-
-      self.lot.aliquotList.forEach(function(aliquot) {
-        aliquot.isSelected = false;
-      });
-    }
-
-    function selectAliquot(aliquot) {
-      var aliquotIndex = self.selectedAliquots.indexOf(aliquot);
-      if (aliquotIndex > -1) {
-        self.selectedAliquots.splice(aliquotIndex, 1);
-        aliquot.isSelected = false;
-      } else {
-        self.selectedAliquots.push(aliquot);
-        aliquot.isSelected = true;
-      }
-    }
-
-    function _findAliquotInLot(code) {
-      return self.lot.getAliquotCodeList().find(function(aliquotsInLot) {
-        return aliquotsInLot.code == code;
-      });
-    }
-
-    function _getWorkAliquot() {
-      var _storage = self.storage ? 'Storage' : null;
-      AliquotTransportationService.validateAliquot(code, self.lot.fieldCenter.acronym, _storage)
-        .then(function(availableAliquot) {
-          return availableAliquot == code;
+    function _findAliquotByPeriod(initialDate, finalDate) {
+      var deferred = $q.defer();
+      var _query = AliquotTransportationFactory.create(null, initialDate, finalDate, self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
+      AliquotTransportationService.getAliquots(_query.toJSON())
+        .then(function(response) {
+          if(response.length){
+            self.fullAliquotsList = angular.copy(response);
+            self.lot.insertAliquotList(self.fullAliquotsList);
+            deferred.resolve(true);
+          } else {
+            deferred.resolve(false);
+          }
+        }).catch(function(err) {
+          deferred.resolve(false);
         });
+      return deferred.promise;
     }
 
+    function fastInsertion(newAliquotCode) {
+      if (newAliquotCode) {
+        if (_findAliquotsInOtherLots(newAliquotCode)) {
+          AliquotTransportationMessagesService.toastOtherLot(newAliquotCode);
+        } else {
+          _findAliquot(newAliquotCode).then(function(foundAliquot) {
+            var successInsertion = false;
+            if (foundAliquot) {
+              if (newAliquotCode == foundAliquot.code) {
+                self.lot.insertAliquot(availableAliquot);
+                _updateDynamicTable();
+                AliquotTransportationMessagesService.successInAliquotInsertion();
+                successInsertion = true;
+              }
+            } else {
+              AliquotTransportationMessagesService.toastError(newAliquotCode);
+            }
+          });
+        }
+        self.aliquotCode = "";
+        return successInsertion;
+      }
+    }
+
+    function _findAliquot(code) {
+      var deferred = $q.defer();
+      if (_isDuplicated(code)) {
+        AliquotTransportationMessagesService.toastDuplicated(code);
+        deferred.reject();
+      } else {
+        var _query = AliquotTransportationFactory.create(code, null, null, self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
+        AliquotTransportationService.getAliquots(_query.toJSON())
+          .then(function(availableAliquot) {
+            deferred.resolve(availableAliquot);
+          }).catch(function() {
+            AliquotTransportationMessagesService.toastError(code);
+            deferred.reject();
+          });
+      }
+      return deferred.promise;
+    }
+
+    function _isDuplicated(code) {
+      return self.lot.getAliquotCodeList().find(function(aliquotCode) { return aliquotCode == code; });
+    }
+
+    function _findAliquotsInOtherLots(code) {
+      return self.aliquotsInOtherLotsList.find(function(aliquotCode) { return aliquotCode == code;  });
+    }
   }
 }());

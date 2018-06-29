@@ -23,6 +23,7 @@
     self.invalidPeriodInterval = invalidPeriodInterval;
     self.successInAliquotInsertion = successInAliquotInsertion;
     self.notAliquotsInserted = notAliquotsInserted;
+    self.notCodeAliquotsFound = notCodeAliquotsFound;
 
 
     function toastError(aliquotCode) {
@@ -85,6 +86,14 @@
       $mdToast.show(
         $mdToast.simple()
         .textContent('Nenhuma alíquota foi inserida.')
+        .hideDelay(timeShowMsg)
+      );
+    }
+
+    function notCodeAliquotsFound() {
+      $mdToast.show(
+        $mdToast.simple()
+        .textContent('Nenhum código foi informado.')
         .hideDelay(timeShowMsg)
       );
     }
