@@ -1,39 +1,55 @@
 (function () {
-    'use strict';
+  'use strict';
 
-    angular
-      .module('otusjs.deploy')
-      .service('otusjs.deploy.MonitoringRestService', Service);
+  angular
+    .module('otusjs.deploy')
+    .service('otusjs.deploy.MonitoringRestService', Service);
 
-    Service.$inject = [
-      'OtusRestResourceService'
-    ];
+  Service.$inject = [
+    'OtusRestResourceService'
+  ];
 
-    function Service(OtusRestResourceService) {
-      var self = this;
-      var _rest = null;
-      var _uploadRest = null;
+  function Service(OtusRestResourceService) {
+    var self = this;
+    var _rest = null;
 
-      /* Public methods */
-      self.initialize = initialize;
-      self.list = list;
+    /* Public methods */
+    self.initialize = initialize;
+    self.list = list;
+    self.find = find;
+    self.listAcronyms = listAcronyms;
+    self.listCenters = listCenters;
 
-      function initialize() {
-        _rest = OtusRestResourceService.getOtusMonitoringResource();
-      }
-
-      function list() {
-        if (!_rest) {
-          throw new Error('REST resource is not initialized.');
-        }
-        return _rest.list().$promise;
-      }
-
-      /*
-      function create() {
-        console.log(_rest);
-      }*/
-
-
+    function initialize() {
+      _rest = OtusRestResourceService.getOtusMonitoringResource();
     }
-  }());
+
+    function list() {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.list().$promise;
+    }
+
+    function find(acronym) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.find({'acronym': acronym}).$promise;
+    }
+
+    function listAcronyms() {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.listAcronyms().$promise;
+    }
+
+    function listCenters() {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.listCenters().$promise;
+    }
+  }
+}());

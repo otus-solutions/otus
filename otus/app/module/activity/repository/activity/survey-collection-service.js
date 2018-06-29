@@ -14,8 +14,14 @@
 
     /* Public methods */
     self.listAll = listAll;
+    self.listAcronyms = listAcronyms;
 
     function listAll() {
+      return _executeWork(function(dataSource) {
+        return dataSource.getData().find();
+      });
+    }
+    function listAcronyms() {
       return _executeWork(function(dataSource) {
         return dataSource.getData().find();
       });

@@ -12,11 +12,21 @@
   function service(MonitoringCollectionService) {
     var self = this;
 
-    self.list = list;
+    self.find = find;
+    self.listAcronyms = listAcronyms;
+    self.listCenters = listCenters;
 
 
-    function list(){
-      return MonitoringCollectionService.list();
+    function find(acronym){
+      return MonitoringCollectionService.find({acronym:acronym});
+    }
+
+    function listAcronyms(){
+      return MonitoringCollectionService.listAcronyms();
+    }
+
+    function listCenters() {
+      return MonitoringCollectionService.listCenters();
     }
   }
 

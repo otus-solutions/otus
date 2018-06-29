@@ -9,67 +9,51 @@
             bindings: {
                 selectedLots: '=',
                 csvData: '=',
-                createCumulativeResultsChart: '='
+                createCumulativeResultsChart: '=',
+                centers: '='
             }
         });
 
     Controller.$inject = [
-        'otusjs.deploy.FieldCenterRestService',
         '$filter'
     ];
 
-    function Controller(ProjectFieldCenterService, $filter) {
+    function Controller($filter) {
         var self = this;
 
         /* Lifecycle hooks */
         self.$onInit = onInit;
 
-        /* public functions */
-        self.barChart;
-        self.centers = [];
-
         function onInit() {
-
-            ProjectFieldCenterService.loadCenters().then(function (result) {
-
-                self.centers = $filter('orderBy')(self.centers);
-                result.forEach(function (fieldCenter) {
-                    self.centers.push(fieldCenter.acronym)
-                });
-            });
-
+            self.centers = $filter('orderBy')(self.centers);
             self.createCumulativeResultsChart = createCumulativeResultsChart;
-
         }
 
         function createCumulativeResultsChart(qData)
         {
-            var cumulativeInfo = [{
+            var _cumulativeInfo = [{
                 backgroundColor: [],
                 borderColor: [],
                 borderWidth: 1,
                 data: []
             }];
-
-
-            for(var i=0; i< qData.data.length; i++)
+            var _lenghtOfdata = qData.data.length;
+            for(var i=0; i< _lenghtOfdata; i++)
             {
-                cumulativeInfo[0].backgroundColor[i] = (qData.data[i].backgroundColor);
-                cumulativeInfo[0].borderColor[i] = (qData.data[i].borderColor);
-                cumulativeInfo[0].data[i] =(qData.data[i].data.reduce(function(a,b){
+                _cumulativeInfo[0].backgroundColor[i] = (qData.data[i].backgroundColor);
+                _cumulativeInfo[0].borderColor[i] = (qData.data[i].borderColor);
+                _cumulativeInfo[0].data[i] =(qData.data[i].data.reduce(function(a,b){
                     return a+b;
                 },0));
-                
             }
 
             if (!self.barChart) {
-
                 var ctx = document.getElementById("centersCumulativeResultsChart");
                 self.barChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: qData.fieldCenters,
-                        datasets: cumulativeInfo
+                        datasets: _cumulativeInfo
                     },
                     options: {
                         showTooltips: false,
@@ -95,13 +79,10 @@
                 });
             }
             else {
-
                 self.barChart.config.data.labels = (qData.fieldCenters);
-                self.barChart.data.datasets = (cumulativeInfo);
+                self.barChart.data.datasets = (_cumulativeInfo);
                 self.barChart.update();
             }
-
         }
-
     }
 }());

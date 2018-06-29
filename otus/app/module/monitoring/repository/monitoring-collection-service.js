@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -7,26 +7,75 @@
 
   Service.$inject = [
     '$q',
-    'otusjs.monitoring.core.ModuleService'
+    'otusjs.monitoring.core.ModuleService',
+    'otusjs.monitoring.storage.MonitoringLocalStorageService'
   ];
 
-  function Service($q, ModuleService) {
+  function Service($q, ModuleService, MonitoringLocalStorageService) {
     var self = this;
-    var _remoteStorage = ModuleService.getParticipantReportRemoteStorage();
+    let _remoteStorage = ModuleService.getMonitoringRemoteStorage();
 
-    self.list = list;
+    self.listAcronyms = listAcronyms;
+    self.listCenters = listCenters;
+    self.find = find;
 
-    function list() {
+    function listAcronyms() {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .list()
+            .listAcronyms()
             .then(function (response) {
               request.resolve(response.data);
             })
-            .catch(function(e){
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function listCenters() {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .listCenters()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function find(query) {
+      var request = $q.defer();
+
+      let localResponse = MonitoringLocalStorageService.find(query);
+      if (localResponse.length) {
+        request.resolve([].concat(localResponse));
+        return request.promise;
+      }
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .find(query.acronym)
+            .then(function (response) {
+              if (response.data) {
+                let inserted = MonitoringLocalStorageService.insert(response.data);
+                request.resolve([].concat(inserted));
+              }
+            })
+            .catch(function (e) {
               request.reject(e);
             });
         });

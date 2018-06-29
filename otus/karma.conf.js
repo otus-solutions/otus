@@ -112,7 +112,14 @@ module.exports = function (config) {
 
     // Concurrency level
     // how many browser should be started simultaneous
-    concurrency: Infinity
+    concurrency: Infinity,
+
+    capabilities: {
+    'browserName': 'chrome',
+    'chromeOptions': {
+      args: ['--disable-browser-side-navigation']
+    }
+}
   });
 
 };

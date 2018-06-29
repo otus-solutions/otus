@@ -22,7 +22,7 @@
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;
     self.configureRemoteStorage = configureRemoteStorage;
-    self.getParticipantReportRemoteStorage = getParticipantReportRemoteStorage;
+    self.getMonitoringRemoteStorage = getMonitoringRemoteStorage;
 
     function configureContext(context) {
       ContextService.configureContext(context);
@@ -37,7 +37,7 @@
       _remoteStorageDefer.resolve(_remoteStorage);
     }
 
-    function getParticipantReportRemoteStorage(){
+    function getMonitoringRemoteStorage(){
         if (_remoteStorage) {
           _remoteStorageDefer = $q.defer();
           _remoteStorageDefer.resolve(_remoteStorage);
