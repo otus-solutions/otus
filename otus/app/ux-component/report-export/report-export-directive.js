@@ -14,7 +14,7 @@
     const FILENAME = "relatório";
     const SELECT = "SELECT * INTO";
     const PARAMETERS = "{headers:true}";
-    const SUCCESS_MESSAGE = "";
+    const SUCCESS_MESSAGE = "exportado com sucesso!";
     const FAIL_MESSAGE = "Formato não reconhecido!";
 
     return {

@@ -87,23 +87,43 @@
       self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
         .addIconWithFunction(function (element) {
           var structureIcon = { icon: "", class: "", tooltip: "" };
+          var errorStructure = {
+            icon: "error",
+            class: "md-warn",
+            tooltip: "Alíquota não corresponde ao exame",
+            orderValue: "error"
+          };
+          var warningStructure = {
+            icon: "warning",
+            class: "md-warn",
+            tooltip: "Alíquota não identificada no sistema",
+            orderValue: "warning"
+          };
 
-          if (self.action === 'view' || self.errorAliquots.length) {
-            var error = self.errorAliquots.find(function (error) {
-              if (error.aliquot === element.aliquotCode) {
-                if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM)) {
-                  structureIcon = { icon: "error", class: "md-warn", tooltip: "Alíquota não corresponde ao exame", orderValue: "error" };
-                } else if (error.message.includes(ALIQUOT_NOT_FOUND)) {
-                  structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não identificada no sistema", orderValue: "warning" };
-                }
-                return error;
-              }
-            });
-            if (!error)
+          if (self.action === 'view') {
+            if (element.aliquotValid){
               structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
+            } else {
+              structureIcon = warningStructure;
+            }
           } else if (self.action === 'upload') {
-            structureIcon = { icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "query_builder" };
-          }
+            if (self.errorAliquots.length) {
+             var error = self.errorAliquots.find(function (error) {
+                if (error.aliquot === element.aliquotCode) {
+                  if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM)) {
+                    structureIcon = errorStructure;
+                  } else {
+                    structureIcon = warningStructure;
+                  }
+                  return error;
+                }
+              });
+              if (!error){
+                structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
+              }
+            } else {
+              structureIcon = {icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "query_builder"};
+            }}
           return structureIcon;
         });
 
