@@ -87,22 +87,22 @@
       self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
         .addIconWithFunction(function (element) {
           var structureIcon = { icon: "", class: "", tooltip: "" };
-          var errorStructure = {
-            icon: "error",
-            class: "md-warn",
-            tooltip: "Alíquota não corresponde ao exame",
-            orderValue: "error"
-          };
           var warningStructure = {
             icon: "warning",
             class: "md-warn",
             tooltip: "Alíquota não identificada no sistema",
             orderValue: "warning"
           };
+          var doneStructure = {
+            icon: "done",
+            class: "md-primary",
+            tooltip: "Alíquota identificada no sistema",
+            orderValue: "done"
+          };
 
           if (self.action === 'view') {
             if (element.aliquotValid){
-              structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
+              structureIcon = doneStructure;
             } else {
               structureIcon = warningStructure;
             }
@@ -111,7 +111,7 @@
              var error = self.errorAliquots.find(function (error) {
                 if (error.aliquot === element.aliquotCode) {
                   if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM)) {
-                    structureIcon = errorStructure;
+                    structureIcon = {icon: "error", class: "md-warn", tooltip: "Alíquota não corresponde ao exame", orderValue: "error"};
                   } else {
                     structureIcon = warningStructure;
                   }
@@ -119,7 +119,7 @@
                 }
               });
               if (!error){
-                structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
+                structureIcon = doneStructure;
               }
             } else {
               structureIcon = {icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "query_builder"};
