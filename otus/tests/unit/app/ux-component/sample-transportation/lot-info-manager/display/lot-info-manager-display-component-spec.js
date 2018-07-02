@@ -48,15 +48,20 @@ describe('Lot info manager display component', function() {
   describe('onInit method', () => {
     var build;
     beforeEach(() => {
+      ctrl._findAliquotByPeriod = jasmine.createSpy('_findAliquotByPeriod').and.callFake(function(a,b) {
+        return Promise.resolve();
+      });
       spyOn(ctrl, '$onInit').and.callThrough();
       spyOn(Injections.DynamicTableSettingsFactory, 'create').and.callThrough();
       spyOn(Injections.DynamicTableSettingsFactory.create(), 'addColumnProperty').and.callThrough();
+      ctrl._findAliquotByPeriod();
       ctrl.$onInit();
 
     });
 
     it('should onInit be defined', () => {
       expect(ctrl.$onInit).toHaveBeenCalled();
+      expect(ctrl._findAliquotByPeriod).toHaveBeenCalled();
       expect(ctrl.$onInit).not.toBeNull();
     });
 

@@ -34,7 +34,11 @@
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getAliquots({},lotAliquot).$promise;
+      if(lotAliquot.code){
+        return _rest.getAliquot({},lotAliquot).$promise;
+      } else {
+        return _rest.getAliquotsByPeriod({},lotAliquot).$promise;
+      }
     }
 
     function getLots() {

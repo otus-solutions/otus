@@ -30,7 +30,7 @@
     self.initialDate = initialDate || '';
     self.finalDate = finalDate || '';
     self.fieldCenter = fieldCenter || '';
-    self.aliquotList = aliquotList || '';
+    self.aliquotList = aliquotList || [];
     self.role = role ? 'STORAGE' : 'EXAM';
 
     self.toJSON = toJSON;
