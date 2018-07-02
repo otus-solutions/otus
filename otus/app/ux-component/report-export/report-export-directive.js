@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -11,43 +11,49 @@
   ];
 
   function reportTemplateExport($mdToast, $timeout) {
+    const FILENAME = "relatório";
+    const SELECT = "SELECT * INTO";
+    const PARAMETERS = "{headers:true}";
+    const SUCCESS_MESSAGE = "exportado com sucesso!";
+    const FAIL_MESSAGE = "Formato não reconhecido!";
+
     return {
       scope: {
         report: '<'
       },
       restrict: 'A',
-      link: function(scope, element, attr) {
-        element.on('click', function() {
-          function displayMsg(msg){
+      link: function (scope, element, attr) {
+        element.on('click', function () {
+          function displayMsg(msg) {
             $mdToast.show(
               $mdToast.simple()
-              .position("bottom right")
-              .textContent(msg)
-              .hideDelay(3000));
+                .position("bottom right")
+                .textContent(msg)
+                .hideDelay(3000));
           }
           switch (attr.option) {
             case 'XLS':
-              alasql('SELECT * INTO XLS("report.xls",{headers:true}) FROM ?', [scope.report]);
-              displayMsg('XLS exportado com sucesso!');
+              alasql(SELECT + ' XLS("' + FILENAME + '.xls",' + PARAMETERS + ') FROM ?', [scope.report]);
+              displayMsg('XLS ' + SUCCESS_MESSAGE);
               break;
             case 'CSV':
-              alasql('SELECT * INTO CSV("report.csv",{headers:true}) FROM ?', [scope.report]);
-              displayMsg('CSV exportado com sucesso!');
+              alasql(SELECT + ' CSV("' + FILENAME + '.csv",' + PARAMETERS + ') FROM ?', [scope.report]);
+              displayMsg('CSV ' + SUCCESS_MESSAGE);
               break;
             case 'TAB':
-              alasql('SELECT * INTO TAB("report.tab",{headers:true}) FROM ?', [scope.report]);
-              displayMsg('TAB exportado com sucesso!');
+              alasql(SELECT + ' TAB("' + FILENAME + '.tab",' + PARAMETERS + ') FROM ?', [scope.report]);
+              displayMsg('TAB ' + SUCCESS_MESSAGE);
               break;
             case 'TXT':
-              alasql('SELECT * INTO TXT("report.txt",{headers:true}) FROM ?', [scope.report]);
-              displayMsg('TXT exportado com sucesso!');
+              alasql(SELECT + ' TXT("' + FILENAME + '.txt",' + PARAMETERS + ') FROM ?', [scope.report]);
+              displayMsg('TXT ' + SUCCESS_MESSAGE);
               break;
             case 'JSON':
-              alasql('SELECT * INTO JSON("report.json",{headers:true}) FROM ?', [scope.report]);
-              displayMsg('JSON exportado com sucesso!');
+              alasql(SELECT + ' JSON("' + FILENAME + '.json",' + PARAMETERS + ') FROM ?', [scope.report]);
+              displayMsg('JSON ' + SUCCESS_MESSAGE);
               break;
             default:
-            displayMsg('Formato não reconhecido!');
+              displayMsg(FAIL_MESSAGE);
           }
         });
       }
