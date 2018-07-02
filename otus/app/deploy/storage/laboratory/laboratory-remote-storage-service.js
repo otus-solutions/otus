@@ -202,25 +202,6 @@
 
     /**
      * Transport Lot
-     * @param {(object)} center - the code of center
-     * @param {(object)} code - the code of aliquot
-     * @returns {Promise} promise
-     * @memberof LaboratoryRemoteStorageService
-     */
-    function validateAliquot(code, center) {
-      var deferred = $q.defer();
-
-      SampleTransportRestService
-        .validateAliquot(code, center)
-        .then(function(response) {
-          deferred.resolve(response.data);
-        });
-
-      return deferred.promise;
-    }
-
-    /**
-     * Transport Lot
      * @returns {Promise} promise
      * @memberof LaboratoryRemoteStorageService
      */

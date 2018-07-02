@@ -237,15 +237,15 @@
     }
 
     function fastInsertion(newAliquotCode) {
+      var successInsertion = false;
       if (newAliquotCode) {
         if (_findAliquotsInOtherLots(newAliquotCode)) {
           AliquotTransportationMessagesService.toastOtherLot(newAliquotCode);
         } else {
           _findAliquot(newAliquotCode).then(function(foundAliquot) {
-            var successInsertion = false;
             if (foundAliquot) {
               if (newAliquotCode == foundAliquot.code) {
-                self.lot.insertAliquot(availableAliquot);
+                self.lot.insertAliquot(foundAliquot);
                 _updateDynamicTable();
                 AliquotTransportationMessagesService.successInAliquotInsertion();
                 successInsertion = true;

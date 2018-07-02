@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -34,10 +34,10 @@
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      if(lotAliquot.code){
-        return _rest.getAliquot({},lotAliquot).$promise;
+      if (lotAliquot.code) {
+        return _rest.getAliquot({}, lotAliquot).$promise;
       } else {
-        return _rest.getAliquotsByPeriod({},lotAliquot).$promise;
+        return _rest.getAliquotsByPeriod({}, lotAliquot).$promise;
       }
     }
 
@@ -66,7 +66,9 @@
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.deleteLot({id: lotCode}).$promise;
+      return _rest.deleteLot({
+        id: lotCode
+      }).$promise;
     }
   }
 }());
