@@ -20,6 +20,8 @@
 
   function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService, LoadingScreenService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
+    const ALIQUOT_DOES_MATCH_EXAM = "Aliquot does not match exam"
+    const ALIQUOT_NOT_FOUND = "Aliquot not found";
 
     var self = this;
     var therIsNoDataToShow;
@@ -56,7 +58,7 @@
         self.changedResults = self.sendingExam.getExamList();
         self.updateDataTable(self.changedResults);
       } else if (resultsToShow == "resultsWithErrors") {
-        self.changedResults = self.aliquotsNotIdentified;
+        self.changedResults = self.aliquotsWithProblems;
         self.updateDataTable(self.changedResults);
       }
     }
@@ -85,16 +87,43 @@
       self.dynamicTableSettings.addHeader('Status', '10', 'center', 0)
         .addIconWithFunction(function (element) {
           var structureIcon = { icon: "", class: "", tooltip: "" };
+          var warningStructure = {
+            icon: "warning",
+            class: "md-warn",
+            tooltip: "Alíquota não identificada no sistema",
+            orderValue: "warning"
+          };
+          var doneStructure = {
+            icon: "done",
+            class: "md-primary",
+            tooltip: "Alíquota identificada no sistema",
+            orderValue: "done"
+          };
 
-          if (self.action === 'view' || self.errorAliquots.length) {
-            if (element.aliquotValid) {
-              structureIcon = { icon: "done", class: "md-primary", tooltip: "Alíquota identificada no sistema", orderValue: "done" };
+          if (self.action === 'view') {
+            if (element.aliquotValid){
+              structureIcon = doneStructure;
             } else {
-              structureIcon = { icon: "warning", class: "md-warn", tooltip: "Alíquota não identificada no sistema", orderValue: "warning" };
+              structureIcon = warningStructure;
             }
-          } else {
-            structureIcon = { icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "query_builder" };
-          }
+          } else if (self.action === 'upload') {
+            if (self.errorAliquots.length) {
+             var error = self.errorAliquots.find(function (error) {
+                if (error.aliquot === element.aliquotCode) {
+                  if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM)) {
+                    structureIcon = {icon: "error", class: "md-warn", tooltip: "Alíquota não corresponde ao exame", orderValue: "error"};
+                  } else {
+                    structureIcon = warningStructure;
+                  }
+                  return error;
+                }
+              });
+              if (!error){
+                structureIcon = doneStructure;
+              }
+            } else {
+              structureIcon = {icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "query_builder"};
+            }}
           return structureIcon;
         });
 
@@ -124,7 +153,7 @@
         .addHeader('Data de realização', '15', 'left', 5)
         //property, formatType
         .addColumnProperty('releaseDate', 'DATE')
-        
+
         .setFilter(true)
 
         .setShowAll(false)
