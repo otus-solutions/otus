@@ -269,8 +269,8 @@
           .then(function (availableAliquot) {
             deferred.resolve(availableAliquot);
           }).catch(function (e) {
-          if (e.MESSAGE === "Data Validation Fail: There are aliquots in another lot.") {
-            AliquotTransportationMessagesService.toastOtherLot(e.CONTENT);
+          if (e.data && e.data.MESSAGE === "Data Validation Fail: There are aliquots in another lot.") {
+            AliquotTransportationMessagesService.toastOtherLot(e.data.CONTENT);
           } else {
             AliquotTransportationMessagesService.toastNotFoundError(code);
           }

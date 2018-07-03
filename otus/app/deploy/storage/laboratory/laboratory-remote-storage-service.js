@@ -194,7 +194,7 @@
           deferred.resolve(response.data);
         })
         .catch(function(e) {
-          console.log(e);
+          deferred.reject(e);
         });
 
       return deferred.promise;
