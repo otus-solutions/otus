@@ -47,14 +47,12 @@
     }
 
     function getAliquots(lotAliquot) {
-          console.log('e');
       var deferred = $q.defer();
       LaboratoryRepositoryService.getAliquots(lotAliquot)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
         })
         .catch(function(err) {
-          console.log(err);
           deferred.reject(err);
         });
 
