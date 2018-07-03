@@ -4,7 +4,7 @@
   angular
     .module('otusjs.laboratory.business.project.transportation')
     .service(
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationMesssagesService',
+      'otusjs.laboratory.business.project.transportation.AliquotTransportationMessagesService',
       service);
 
   service.$inject = [
@@ -15,7 +15,7 @@
     var self = this;
 
     var timeShowMsg = 3000;
-    self.toastError = toastError;
+    self.toastNotFoundError = toastNotFoundError;
     self.toastDuplicated = toastDuplicated;
     self.toastWrongFieldCenter = toastWrongFieldCenter;
     self.toastOtherLot = toastOtherLot;
@@ -26,7 +26,7 @@
     self.notCodeAliquotsFound = notCodeAliquotsFound;
 
 
-    function toastError(aliquotCode) {
+    function toastNotFoundError(aliquotCode) {
       $mdToast.show(
         $mdToast.simple()
         .textContent('A alíquota "' + aliquotCode + '" não foi encontrada.')
