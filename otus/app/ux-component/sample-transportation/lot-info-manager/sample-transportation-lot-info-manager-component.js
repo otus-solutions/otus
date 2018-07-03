@@ -59,7 +59,7 @@
       }
       _buildDialogs();
       _formatLotDates();
-      _getAliquotsInOtherLots();
+      // _getAliquotsInOtherLots();
       self.setChartData();
     }
 
@@ -175,14 +175,14 @@
       self.lot.processingDate.setMilliseconds(0);
     }
 
-    function _getAliquotsInOtherLots() {
-      self.aliquotsInOtherLots = [];
-      for (var i = 0; i < self.lots.length; i++) {
-        for (var j = 0; j < self.lots[i].aliquotList.length; j++) {
-          self.aliquotsInOtherLots.push(self.lots[i].aliquotList[j].code);
-        }
-      }
-    }
+    // function _getAliquotsInOtherLots() {
+    //   self.aliquotsInOtherLots = [];
+    //   for (var i = 0; i < self.lots.length; i++) {
+    //     for (var j = 0; j < self.lots[i].aliquotList.length; j++) {
+    //       self.aliquotsInOtherLots.push(self.lots[i].aliquotList[j].code);
+    //     }
+    //   }
+    // }
 
     function _fetchgCollectedAliquots() {
       AliquotTransportationService.getAliquots()
