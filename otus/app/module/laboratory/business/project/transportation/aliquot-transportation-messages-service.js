@@ -14,7 +14,7 @@
   function service($mdToast) {
     var self = this;
 
-    var timeShowMsg = 3000;
+    const timeShowMsg = 3000;
     self.toastNotFoundError = toastNotFoundError;
     self.toastDuplicated = toastDuplicated;
     self.toastWrongFieldCenter = toastWrongFieldCenter;
