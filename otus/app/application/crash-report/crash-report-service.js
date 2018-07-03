@@ -17,7 +17,7 @@
 
     function persistException(exception) {
       var userAgent = navigator.userAgent;
-      var exdays = 30;
+      var exdays = 1;
       var date = new Date();
       var name = 'otus-bugtracker-' + date.getTime();
 
