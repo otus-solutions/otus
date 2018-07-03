@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -17,18 +17,17 @@
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdDialog,
-                      $mdToast,
-                      $filter,
-                      AliquotTransportationService,
-                      AliquotTransportationMessagesService,
-                      AliquotTransportationFactory,
-                      DynamicTableSettingsFactory,
-                      $q,
-                      LoadingScreenService) {
+  function Controller(
+    $mdDialog,
+    $mdToast,
+    $filter,
+    AliquotTransportationService,
+    AliquotTransportationMessagesService,
+    AliquotTransportationFactory,
+    DynamicTableSettingsFactory,
+    $q,
+    LoadingScreenService) {
     var self = this;
-
-    const EnterKey = '13';
 
     var messageLoading =
       'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
@@ -70,7 +69,7 @@
 
     function _buildDynamicTableSettings() {
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
-      //header, flex, align, ordinationPriorityIndex
+        //header, flex, align, ordinationPriorityIndex
         .addHeader('Código', '15', 'left', 4)
         //property, formatType
         .addColumnProperty('code')
@@ -133,7 +132,7 @@
 
     function _unselectedAllAliquot() {
       self.selectedAliquots = [];
-      self.lot.aliquotList.forEach(function (aliquot) {
+      self.lot.aliquotList.forEach(function(aliquot) {
         aliquot.isSelected = false;
       });
     }
@@ -169,21 +168,22 @@
     }
 
     function _updateContainerLabel() {
-      self.lot.aliquotList.forEach(function (aliquot) {
+      self.lot.aliquotList.forEach(function(aliquot) {
         aliquot.containerLabel = AliquotTransportationService.getContainerLabelToAliquot(aliquot);
       }, this);
     }
 
     function periodInputkeydown(event) {
       var charCode = event.which || event.keyCode;
-      if (charCode === EnterKey) {
+      if (charCode == '13') {
         self.insertAliquotsByPeriod();
       }
     }
 
     function aliquotInputkeydown(event) {
       var charCode = event.which || event.keyCode;
-      if (charCode === EnterKey && self.aliquotCode.length > 0) {
+      if (charCode == '13' && self.aliquotCode.length > 0) {
+        event.preventDefault();
         self.fastInsertion(self.aliquotCode);
       }
     }
@@ -197,11 +197,11 @@
           _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no lote as Alíquotas realizadas no período' +
             ' entre ' + $filter('date')(self.initialDate, 'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate, 'dd/MM/yyyy') + '.');
 
-          $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function () {
+          $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
             LoadingScreenService.changeMessage(messageLoading);
             LoadingScreenService.start();
             _findAliquotByPeriod(self.initialDate.toISOString(), self.finalDate.toISOString())
-              .then(function (response) {
+              .then(function(response) {
                 if (response) {
                   _updateDynamicTable();
                   AliquotTransportationMessagesService.successInAliquotInsertion();
@@ -221,9 +221,10 @@
 
     function _findAliquotByPeriod(initialDate, finalDate) {
       var deferred = $q.defer();
-      var _query = AliquotTransportationFactory.create(null, initialDate, finalDate, self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
+      var _query = AliquotTransportationFactory.create(null, initialDate, finalDate,
+        self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
       AliquotTransportationService.getAliquots(_query.toJSON())
-        .then(function (response) {
+        .then(function(response) {
           if (response.length) {
             self.fullAliquotsList = angular.copy(response);
             self.lot.insertAliquotList(self.fullAliquotsList);
@@ -231,63 +232,53 @@
           } else {
             deferred.resolve(false);
           }
-        }).catch(function (err) {
-        deferred.resolve(false);
-      });
+        }).catch(function(err) {
+          deferred.resolve(false);
+        });
       return deferred.promise;
     }
 
     function fastInsertion(newAliquotCode) {
       var successInsertion = false;
       if (newAliquotCode) {
-        _fetchAliquot(newAliquotCode)
-          .then(function (foundAliquot) {
-            if (foundAliquot) {
-              if (newAliquotCode == foundAliquot.code) {
-                self.lot.insertAliquot(foundAliquot);
-                _updateDynamicTable();
-                AliquotTransportationMessagesService.successInAliquotInsertion();
-                successInsertion = true;
-              }
-            } else {
-              AliquotTransportationMessagesService.toastNotFoundError(newAliquotCode);
+        _findAliquot(newAliquotCode).then(function(foundAliquot) {
+          if (foundAliquot) {
+            if (newAliquotCode == foundAliquot.code) {
+              self.lot.insertAliquot(foundAliquot);
+              _updateDynamicTable();
+              AliquotTransportationMessagesService.successInAliquotInsertion();
+              successInsertion = true;
             }
-          });
+          } else {
+            AliquotTransportationMessagesService.toastNotFoundError(newAliquotCode);
+          }
+        }).catch(function(err) {
+          AliquotTransportationMessagesService.toastOtherLot(newAliquotCode);
+        });
         self.aliquotCode = "";
         return successInsertion;
       }
     }
 
-    function _fetchAliquot(code) {
+    function _findAliquot(code) {
       var deferred = $q.defer();
       if (_isDuplicated(code)) {
         AliquotTransportationMessagesService.toastDuplicated(code);
-        deferred.reject();
       } else {
-        var _query = AliquotTransportationFactory.create(code, null, null, self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
+        var _query = AliquotTransportationFactory.create(code, null, null,
+          self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
         AliquotTransportationService.getAliquots(_query.toJSON())
-          .then(function (availableAliquot) {
+          .then(function(availableAliquot) {
             deferred.resolve(availableAliquot);
-          }).catch(function (e) {
-          if (e.data && e.data.MESSAGE === "Data Validation Fail: There are aliquots in another lot.") {
-            AliquotTransportationMessagesService.toastOtherLot(e.data.CONTENT);
-          } else {
-            AliquotTransportationMessagesService.toastNotFoundError(code);
-          }
-          deferred.reject();
-        });
+          }).catch(function() {
+            deferred.reject();
+          });
       }
       return deferred.promise;
     }
 
     function _isDuplicated(code) {
-      return self.lot.getAliquotCodeList().find(function (aliquotCode) {
-        return aliquotCode == code;
-      });
-    }
-
-    function _findAliquotsInOtherLots(code) {
-      return self.aliquotsInOtherLotsList.find(function (aliquotCode) {
+      return self.lot.getAliquotCodeList().find(function(aliquotCode) {
         return aliquotCode == code;
       });
     }

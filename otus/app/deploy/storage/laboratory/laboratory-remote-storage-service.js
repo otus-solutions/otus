@@ -187,8 +187,7 @@
      */
     function getAliquots(lotAliquot) {
       var deferred = $q.defer();
-
-       SampleTransportRestService
+      SampleTransportRestService
         .getAliquots(lotAliquot)
         .then(function(response) {
           deferred.resolve(response.data);

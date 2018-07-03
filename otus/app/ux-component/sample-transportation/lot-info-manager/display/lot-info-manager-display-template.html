@@ -51,9 +51,11 @@
           Alíquotas
         </span>
             <span flex></span>
-            <md-input-container class="remove-errors-spacer input-container-lot-margin" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
-              <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.storage">
-                Armazenamento
+            <md-input-container ng-show="$ctrl.currentNavItem == 'insertionByPeriod'" class="remove-padding activity-item-icon remove-errors-spacer input-container-lot-margin" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+              <md-checkbox ng-model="$ctrl.storage" class="activity-item-icon remove-padding">
+                <span class="md-subheader">
+                  Armazenamento
+                </span>
               </md-checkbox>
             </md-input-container>
           </div>
