@@ -68,8 +68,8 @@
       return LaboratoryCollectionService.getAliquotDescriptors();
     }
 
-    function getAliquots(lotAliquot) {
-      return LaboratoryCollectionService.getAliquots(lotAliquot);
+    function getAliquots(lotAliquot, unique) {
+      return LaboratoryCollectionService.getAliquots(lotAliquot, unique);
     }
 
     function getLots() {

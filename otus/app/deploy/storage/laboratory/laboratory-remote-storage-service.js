@@ -185,10 +185,10 @@
      * @returns {Promise} promise
      * @memberof LaboratoryRemoteStorageService
      */
-    function getAliquots(lotAliquot) {
+    function getAliquots(lotAliquot, unique) {
       var deferred = $q.defer();
       SampleTransportRestService
-        .getAliquots(lotAliquot)
+        .getAliquots(lotAliquot, unique)
         .then(function(response) {
           deferred.resolve(response.data);
         })

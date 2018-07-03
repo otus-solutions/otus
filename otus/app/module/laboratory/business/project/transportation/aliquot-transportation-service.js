@@ -46,13 +46,14 @@
       return TransportationService.buildAliquotLotFromJson(lotJSON);
     }
 
-    function getAliquots(lotAliquot) {
+    function getAliquots(lotAliquot, unique) {
       var deferred = $q.defer();
-      LaboratoryRepositoryService.getAliquots(lotAliquot)
+      LaboratoryRepositoryService.getAliquots(lotAliquot, unique)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
         })
         .catch(function(err) {
+          console.log(err.data.MESSAGE);
           deferred.reject(err);
         });
 

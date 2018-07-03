@@ -163,13 +163,13 @@
     }
 
     function _dynamicDataTableUpdate() {
-      AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
+      self.AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
       self.selectedAliquots = [];
     }
 
     function _updateContainerLabel() {
       self.lot.aliquotList.forEach(function(aliquot) {
-        aliquot.containerLabel = AliquotTransportationService.getContainerLabelToAliquot(aliquot);
+        aliquot.containerLabel = self.AliquotTransportationService.getContainerLabelToAliquot(aliquot);
       }, this);
     }
 
@@ -200,17 +200,21 @@
           $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
             LoadingScreenService.changeMessage(messageLoading);
             LoadingScreenService.start();
-            _findAliquotByPeriod(self.initialDate.toISOString(), self.finalDate.toISOString())
+            _findAliquotByPeriod()
               .then(function(response) {
                 if (response) {
-                  _updateDynamicTable();
+                  self.lot.insertAliquotList(response);
                   AliquotTransportationMessagesService.successInAliquotInsertion();
-                } else {
+                  _updateDynamicTable();
+                }else{
                   AliquotTransportationMessagesService.notAliquotsInserted();
                 }
                 LoadingScreenService.finish();
+              }).catch(function() {
+                LoadingScreenService.finish();
+                AliquotTransportationMessagesService.notAliquotsInserted();
               });
-          });
+          }).catch(function() {});
         } else {
           AliquotTransportationMessagesService.invalidPeriodInterval();
         }
@@ -219,23 +223,20 @@
       }
     }
 
-    function _findAliquotByPeriod(initialDate, finalDate) {
-      var deferred = $q.defer();
-      var _query = AliquotTransportationFactory.create(null, initialDate, finalDate,
+    function _findAliquotByPeriod() {
+      var _query = AliquotTransportationFactory.create(null, self.initialDate.toISOString(), self.finalDate.toISOString(),
         self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
-      AliquotTransportationService.getAliquots(_query.toJSON())
+      return self.AliquotTransportationService.getAliquots(_query.toJSON(), false)
         .then(function(response) {
           if (response.length) {
-            self.fullAliquotsList = angular.copy(response);
-            self.lot.insertAliquotList(self.fullAliquotsList);
-            deferred.resolve(true);
+            return response;
           } else {
-            deferred.resolve(false);
+            return false;
           }
         }).catch(function(err) {
-          deferred.resolve(false);
+          return false;
         });
-      return deferred.promise;
+
     }
 
     function fastInsertion(newAliquotCode) {
@@ -249,11 +250,8 @@
               AliquotTransportationMessagesService.successInAliquotInsertion();
               successInsertion = true;
             }
-          } else {
-            AliquotTransportationMessagesService.toastNotFoundError(newAliquotCode);
           }
         }).catch(function(err) {
-          AliquotTransportationMessagesService.toastOtherLot(newAliquotCode);
         });
         self.aliquotCode = "";
         return successInsertion;
@@ -261,20 +259,23 @@
     }
 
     function _findAliquot(code) {
-      var deferred = $q.defer();
       if (_isDuplicated(code)) {
         AliquotTransportationMessagesService.toastDuplicated(code);
       } else {
         var _query = AliquotTransportationFactory.create(code, null, null,
           self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
-        AliquotTransportationService.getAliquots(_query.toJSON())
+      return  self.AliquotTransportationService.getAliquots(_query.toJSON(), true)
           .then(function(availableAliquot) {
-            deferred.resolve(availableAliquot);
+            if(availableAliquot){
+              return availableAliquot;
+            } else {
+              AliquotTransportationMessagesService.toastNotFoundError(code);
+            }
           }).catch(function() {
-            deferred.reject();
+            AliquotTransportationMessagesService.toastOtherLot(code);
           });
       }
-      return deferred.promise;
+
     }
 
     function _isDuplicated(code) {

@@ -1,7 +1,7 @@
-describe('Lot info manager display component', function() {
+fdescribe('Lot info manager display component', function() {
   var Mock = {};
   var $controller;
-  var ctrl;
+  var ctrl, $rootScope, $scope;
   var Injections = {};
 
 
@@ -11,19 +11,45 @@ describe('Lot info manager display component', function() {
 
   beforeEach(function() {
     Mock.AliquotTransportationService = {
-      getContainerLabelToAliquot: (aliquot) => {}
+      getContainerLabelToAliquot: (aliquot) => {},
+      getAliquots: (query) => {},
+      dynamicDataTableFunction: {
+        updateDataTable: function() {}
+      }
     };
 
 
-    Mock.AliquotTransportationMesssagesService = {};
-    Mock.AliquotTransportationFactory = {};
-    Mock.LoadingScreenService = {};
+    Mock.AliquotTransportationMesssagesService = {
+      unselectedPeriod: function() {},
+      invalidPeriodInterval: function() {},
+      notAliquotsInserted: function() {},
+      successInAliquotInsertion: function() {},
+      toastOtherLot: function() {},
+      toastNotFoundError: function() {}
+
+    };
+    Mock.AliquotTransportationFactory = {
+      create: function(a, b, c, d, e, f) {
+        return {
+          toJSON: function() {
+            return {};
+          }
+        };
+      }
+    };
+    Mock.LoadingScreenService = {
+      changeMessage: function(msg) {},
+      start: function() {},
+      finish: function() {}
+    };
+    Mock.lot = mockLotAliquotList();
 
     angular.mock.module(function($provide) {
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationService', Mock.AliquotTransportationService);
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationMessagesService', Mock.AliquotTransportationMesssagesService);
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationFactory', Mock.AliquotTransportationFactory);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
+      $provide.value('self.lot', Mock.lot);
     });
 
   });
@@ -31,7 +57,9 @@ describe('Lot info manager display component', function() {
 
   beforeEach(function() {
 
-    inject(function(_$injector_, _$controller_) {
+    inject(function(_$injector_, _$controller_, _$rootScope_) {
+      $rootScope = _$rootScope_;
+      $scope = $rootScope.$new();
       $controller = _$controller_;
       Injections = {
         $mdDialog: _$injector_.get('$mdDialog'),
@@ -40,28 +68,31 @@ describe('Lot info manager display component', function() {
         DynamicTableSettingsFactory: _$injector_.get('otusjs.otus.uxComponent.DynamicTableSettingsFactory'),
         $q: _$injector_.get('$q')
       };
-      ctrl = $controller('otusLotInfoManagerDisplayCtrl', Injections);
-      mockLotAliquotList(ctrl);
+      ctrl = $controller('otusLotInfoManagerDisplayCtrl', Injections, {
+        lot: Mock.lot
+      });
+      jasmine.clock().install();
+      jasmine.clock().tick(50);
+      mockController();
     });
+  });
+
+  afterEach(function() {
+    jasmine.clock().uninstall();
   });
 
   describe('onInit method', () => {
     var build;
     beforeEach(() => {
-      ctrl._findAliquotByPeriod = jasmine.createSpy('_findAliquotByPeriod').and.callFake(function(a,b) {
-        return Promise.resolve();
-      });
       spyOn(ctrl, '$onInit').and.callThrough();
       spyOn(Injections.DynamicTableSettingsFactory, 'create').and.callThrough();
       spyOn(Injections.DynamicTableSettingsFactory.create(), 'addColumnProperty').and.callThrough();
-      ctrl._findAliquotByPeriod();
       ctrl.$onInit();
 
     });
 
     it('should onInit be defined', () => {
       expect(ctrl.$onInit).toHaveBeenCalled();
-      expect(ctrl._findAliquotByPeriod).toHaveBeenCalled();
       expect(ctrl.$onInit).not.toBeNull();
     });
 
@@ -76,40 +107,128 @@ describe('Lot info manager display component', function() {
 
   });
 
-  function mockLotAliquotList(ctrl) {
-    ctrl.lot = {
+  describe('insertAliquotsByPeriod method', function() {
+    beforeEach(function() {
+      spyOn(ctrl, 'insertAliquotsByPeriod').and.callThrough();
+      spyOn(Mock.AliquotTransportationMesssagesService, 'unselectedPeriod').and.callThrough();
+      spyOn(Mock.AliquotTransportationMesssagesService, 'invalidPeriodInterval').and.callThrough();
+      spyOn(Mock.AliquotTransportationMesssagesService, 'successInAliquotInsertion').and.callThrough();
+      spyOn(ctrl.lot, 'insertAliquotList').and.callThrough();
+      spyOn(ctrl, 'onLotAlteration').and.callThrough();
+      spyOn(Injections.$mdDialog, 'show').and.callFake(function(confirm) {
+        if (confirm) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
+      });
+      spyOn(ctrl.AliquotTransportationService, 'getAliquots').and.callFake(function() {
+        return Promise.resolve([mockWorkAliquots()]);
+      });
+
+
+    });
+
+    it('should show message unselectedPeriod', function() {
+      ctrl.insertAliquotsByPeriod();
+      expect(Mock.AliquotTransportationMesssagesService.unselectedPeriod).toHaveBeenCalledTimes(1);
+    });
+
+    it('should show message invalidPeriodInterval', function() {
+      ctrl.initialDate = new Date(2018, 1, 1);
+      ctrl.finalDate = new Date(2017, 1, 1);
+      ctrl.insertAliquotsByPeriod();
+      expect(Mock.AliquotTransportationMesssagesService.invalidPeriodInterval).toHaveBeenCalledTimes(1);
+    });
+
+  });
+
+  describe('fastInsertion method', function() {
+    beforeEach(function() {
+      spyOn(ctrl, 'fastInsertion').and.callThrough();
+      spyOn(Mock.AliquotTransportationMesssagesService, 'toastOtherLot').and.callThrough();
+      spyOn(Mock.AliquotTransportationMesssagesService, 'toastNotFoundError').and.callThrough();
+      spyOn(Mock.AliquotTransportationMesssagesService, 'successInAliquotInsertion').and.callThrough();
+      spyOn(ctrl.lot, 'insertAliquot').and.callThrough();
+      spyOn(ctrl, 'onLotAlteration').and.callThrough();
+      spyOn(Injections.$mdDialog, 'show').and.callFake(function(confirm) {
+        if (confirm) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
+      });
+      spyOn(ctrl.AliquotTransportationService, 'getAliquots').and.callFake(function() {
+        return Promise.resolve(mockWorkAliquots());
+      });
+
+
+    });
+
+    it('should show message unselectedPeriod', function() {
+      ctrl.aliquotCode = "363123445";
+      ctrl.fastInsertion(ctrl.aliquotCode);
+      expect(ctrl.aliquotCode).toEqual('');
+    });
+
+
+  });
+
+  function mockController() {
+    ctrl.storage = false;
+    ctrl.onLotAlteration = function(newData) {};
+    ctrl.setChartData = function() {};
+
+  }
+
+  function mockWorkAliquots() {
+    return {
+      "recruitmentNumber": 1078650,
+      "birthdate": {
+        "objectType": "ImmutableDate",
+        "value": "1960-02-22 00:00:00.000"
+      },
+      "sex": "F",
+      "fieldCenter": {
+        "name": "Sao Paulo",
+        "code": 6,
+        "acronym": "SP",
+        "country": null,
+        "state": null,
+        "address": null,
+        "complement": null,
+        "zip": null,
+        "phone": null
+      },
+      "objectType": "WorkAliquot",
+      "code": "363123445",
+      "name": "BIOCHEMICAL_SERUM",
+      "container": "CRYOTUBE",
+      "role": "EXAM",
+      "aliquotCollectionData": {
+        "objectType": "AliquotCollectionData",
+        "metadata": "",
+        "operator": "diogo.rosas.ferreira@gmail.com",
+        "time": "2017-09-26T17:54:21.883Z",
+        "processing": "2018-02-23T11:00:00Z"
+      }
+    };
+  }
+
+  function mockLotAliquotList() {
+    return {
+      fieldCenter: {
+        acronym: 'RS'
+      },
+      insertAliquotList: (list) => {},
+      insertAliquot: (list) => {},
+      toJSON: function() {
+        return {};
+      },
+      getAliquotCodeList: function() {
+        return [];
+      },
       aliquotList: [{
-          "recruitmentNumber": 1078650,
-          "birthdate": {
-            "objectType": "ImmutableDate",
-            "value": "1960-02-22 00:00:00.000"
-          },
-          "sex": "F",
-          "fieldCenter": {
-            "name": "Sao Paulo",
-            "code": 6,
-            "acronym": "SP",
-            "country": null,
-            "state": null,
-            "address": null,
-            "complement": null,
-            "zip": null,
-            "phone": null
-          },
-          "objectType": "WorkAliquot",
-          "code": "363123445",
-          "name": "BIOCHEMICAL_SERUM",
-          "container": "CRYOTUBE",
-          "role": "EXAM",
-          "aliquotCollectionData": {
-            "objectType": "AliquotCollectionData",
-            "metadata": "",
-            "operator": "diogo.rosas.ferreira@gmail.com",
-            "time": "2017-09-26T17:54:21.883Z",
-            "processing": "2018-02-23T11:00:00Z"
-          }
-        },
-        {
           "recruitmentNumber": 1078650,
           "birthdate": {
             "objectType": "ImmutableDate",
@@ -606,6 +725,6 @@ describe('Lot info manager display component', function() {
           }
         }
       ]
-    }
+    };
   }
 });
