@@ -11,7 +11,7 @@
     self.create = create;
 
     function create(exception, url, browserName, browserVersion, operatingSystemName) {
-      return ErrorData(exception, url, browserName, browserVersion, operatingSystemName);
+      return new ErrorData(exception, url, browserName, browserVersion, operatingSystemName);
     }
 
     return self;
