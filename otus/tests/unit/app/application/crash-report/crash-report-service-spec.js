@@ -8,18 +8,17 @@ describe('CrashReportService', function () {
     inject(function ($injector, $window) {
       mockInjections($injector, $window);
       Injections = {
-        "$window" : Mock.$window,
+        "$window": Mock.$window,
         "CrashReportFactory": Mock.CrashReportFactory
       }
       service = $injector.get('otusjs.application.crash.CrashReportService', Injections);
       mockStruture();
-
     });
   });
 
   describe('persist exceptions test', function () {
     var _cookies;
-    beforeEach(function() {
+    beforeEach(function () {
       spyOn(service, 'persistException').and.callThrough();
       spyOn(service, 'getCookie').and.callThrough();
       service.persistException(Mock.exception);
@@ -37,8 +36,7 @@ describe('CrashReportService', function () {
       expect(service.getCookie).toHaveBeenCalledTimes(1);
 
       expect(_cookies.length).toBeGreaterThan(0);
-      // expect(_cookies.length).toEqual(2);
-      _cookies.forEach(function(cookie) {
+      _cookies.forEach(function (cookie) {
         expect(cookie.exception).not.toBeNull();
         expect(cookie.cause).not.toBeNull();
         expect(cookie.url).not.toBeNull();

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -7,7 +7,6 @@
 
   function Factory() {
     var self = this;
-
     self.create = create;
 
     function create(exception, url, browserName, browserVersion, operatingSystemName) {
@@ -18,7 +17,6 @@
   }
 
   function ErrorData(exception, url, browserName, browserVersion, operatingSystemName) {
-
     var errorData = {};
     errorData.exception = exception.message;
     errorData.cause = exception.stack;
@@ -32,5 +30,4 @@
 
     return errorData;
   }
-
 }());
