@@ -53,7 +53,6 @@
           deferred.resolve(JSON.parse(response));
         })
         .catch(function(err) {
-          console.log(err.data.MESSAGE);
           deferred.reject(err);
         });
 

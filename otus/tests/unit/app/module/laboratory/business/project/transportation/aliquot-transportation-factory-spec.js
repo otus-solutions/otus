@@ -7,7 +7,7 @@ describe('the aliquot transportation factory', function() {
     angular.mock.module('otusjs.laboratory.business.project.transportation');
 
     inject(function(_$injector_) {
-        factory = _$injector_.get('otusjs.laboratory.business.project.transportation.AliquotTransportationFactory');
+        factory = _$injector_.get('otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory');
     });
   });
 
@@ -22,7 +22,7 @@ describe('the aliquot transportation factory', function() {
     it('should create an object', function() {
       expect(factory.create).toHaveBeenCalled();
       expect(lotAliquot).toBeDefined();
-      expect(lotAliquot.objectType).toEqual('LotAliquot');
+      expect(lotAliquot.objectType).toEqual('AliquotQuery');
       expect(lotAliquot.role).toEqual('EXAM');
       expect(lotAliquot.aliquotList).toEqual([]);
     });
@@ -39,7 +39,7 @@ describe('the aliquot transportation factory', function() {
     it('should create an object', function() {
       expect(factory.create).toHaveBeenCalled();
       expect(lotAliquot).toBeDefined();
-      expect(lotAliquot.objectType).toEqual('LotAliquot');
+      expect(lotAliquot.objectType).toEqual('AliquotQuery');
       expect(lotAliquot.role).toEqual('STORAGE');
       expect(lotAliquot.aliquotList.length).toEqual(2);
     });

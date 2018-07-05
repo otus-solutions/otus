@@ -4,7 +4,7 @@
   angular
     .module('otusjs.laboratory.business.project.transportation')
     .factory(
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationFactory',
+      'otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory',
       Factory);
 
   Factory.$inject = [];
@@ -15,17 +15,17 @@
     self.create = create;
 
     function create(code,initialDate,finalDate,fieldCenter, aliquotList, role) {
-      return new LotAliquot(code,initialDate,finalDate,fieldCenter, aliquotList, role);
+      return new AliquotQuery(code,initialDate,finalDate,fieldCenter, aliquotList, role);
     }
 
 
     return self;
   }
 
-  function LotAliquot(code,initialDate,finalDate,fieldCenter, aliquotList, role) {
+  function AliquotQuery(code,initialDate,finalDate,fieldCenter, aliquotList, role) {
     var self = this;
 
-    self.objectType = 'LotAliquot';
+    self.objectType = 'AliquotQuery';
     self.code = code || '';
     self.initialDate = initialDate || '';
     self.finalDate = finalDate || '';

@@ -11,7 +11,7 @@
       '$filter',
       'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
       'otusjs.laboratory.business.project.transportation.AliquotTransportationMessagesService',
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationFactory',
+      'otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory',
       'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
       '$q',
       'otusjs.deploy.LoadingScreenService'

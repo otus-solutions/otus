@@ -45,7 +45,7 @@ describe('Lot info manager display component', function() {
     angular.mock.module(function($provide) {
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationService', Mock.AliquotTransportationService);
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationMessagesService', Mock.AliquotTransportationMesssagesService);
-      $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationFactory', Mock.AliquotTransportationFactory);
+      $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory', Mock.AliquotTransportationFactory);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
     });
   });
