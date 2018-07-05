@@ -20,9 +20,7 @@
       var exdays = 1;
       var date = new Date();
       var name = 'otus-bugtracker-' + date.getTime();
-
-      date.setTime(date.getTime() + (exdays*24*60*60*1000));
-
+      date.setTime(date.getTime() + (exdays * 24 * 60 * 60 * 1000));
       var expires = 'expires=' + date.toUTCString();
       var url = $window.location.href;
       var browserName = getBrowserName(userAgent);
@@ -30,40 +28,27 @@
       var operatingSystemName = getOSName();
       var errorData = JSON.stringify(CrashReportFactory.create(exception, url, browserName, browserVersion, operatingSystemName));
       var updatedCookie = name + '=' + errorData + ';' + expires + ';path=/';
-
       document.cookie = updatedCookie;
-
     }
 
     function getBrowserName(userAgent) {
-      var browserName  = 'Unknown Browser';
+      var browserName = 'Unknown Browser';
       var nameOffset;
       var verOffset;
 
       if ((verOffset = userAgent.indexOf('Opera')) != -1) {
         browserName = 'Opera';
-      }
-
-      else if ((verOffset = userAgent.indexOf('MSIE')) != -1) {
+      } else if ((verOffset = userAgent.indexOf('MSIE')) != -1) {
         browserName = 'Microsoft Internet Explorer';
-      }
-
-      else if ((verOffset = userAgent.indexOf('Chrome')) != -1) {
+      } else if ((verOffset = userAgent.indexOf('Chrome')) != -1) {
         browserName = 'Chrome';
-      }
-
-      else if ((verOffset = userAgent.indexOf('Safari')) != -1) {
+      } else if ((verOffset = userAgent.indexOf('Safari')) != -1) {
         browserName = 'Safari';
-      }
-
-      else if ((verOffset = userAgent.indexOf('Firefox')) != -1) {
+      } else if ((verOffset = userAgent.indexOf('Firefox')) != -1) {
         browserName = 'Firefox';
-      }
-
-      else if ( (nameOffset = userAgent.lastIndexOf(' ')+1) <
-        (verOffset = userAgent.lastIndexOf('/')) )
-      {
-        browserName = userAgent.substring(nameOffset,verOffset);
+      } else if ((nameOffset = userAgent.lastIndexOf(' ') + 1) <
+        (verOffset = userAgent.lastIndexOf('/'))) {
+        browserName = userAgent.substring(nameOffset, verOffset);
         if (browserName.toLowerCase() == browserName.toUpperCase()) {
           browserName = navigator.appName;
         }
@@ -74,33 +59,30 @@
 
     function getBrowserVersion(browserName, userAgent) {
       var stringVersion;
-      var fullVersion  =  userAgent.substring(userAgent.indexOf(browserName)+browserName.length + 1);
+      var fullVersion = userAgent.substring(userAgent.indexOf(browserName) + browserName.length + 1);
 
       stringVersion = fullVersion.indexOf(';');
-      if (stringVersion != -1){
-        fullVersion = fullVersion.substring(0,stringVersion);
+      if (stringVersion != -1) {
+        fullVersion = fullVersion.substring(0, stringVersion);
       }
 
       stringVersion = fullVersion.indexOf(' ');
-      if (stringVersion != -1){
-        fullVersion = fullVersion.substring(0,stringVersion);
+      if (stringVersion != -1) {
+        fullVersion = fullVersion.substring(0, stringVersion);
       }
+
       return fullVersion;
     }
 
-
     function getOSName() {
       var OSName = 'Unknown OS';
-      if (navigator.appVersion.indexOf('Win') != -1){
+      if (navigator.appVersion.indexOf('Win') != -1) {
         OSName = 'Windows';
-      }
-      if (navigator.appVersion.indexOf('Mac') != -1){
+      } else if (navigator.appVersion.indexOf('Mac') != -1) {
         OSName = 'MacOS';
-      }
-      if (navigator.appVersion.indexOf('X11') != -1){
+      } else if (navigator.appVersion.indexOf('X11') != -1) {
         OSName = 'UNIX';
-      }
-      if (navigator.appVersion.indexOf('Linux') != -1){
+      } else if (navigator.appVersion.indexOf('Linux') != -1) {
         OSName = 'Linux';
       }
 
@@ -113,7 +95,7 @@
       var cookies = decodedCookie.split(';');
       var crash = [];
 
-      for(var i = 0; i <cookies.length; i++) {
+      for (var i = 0; i < cookies.length; i++) {
         var cookieString = cookies[i];
         while (cookieString.charAt(0) == ' ') {
           cookieString = cookieString.substring(1);
@@ -123,10 +105,8 @@
           crash.push(cookieString);
         }
       }
+
       return crash;
-
     }
-
   }
-
 }());

@@ -12,32 +12,24 @@
     'otusjs.application.crash.CrashReportService'
   ]
 
-
   function Controller(Service) {
     var self = this;
-
     self.saveToCrashReport = saveToCrashReport;
 
-
     function saveToCrashReport() {
-
       var cookieReport = Service.getCookie();
-      var cookieJSON ='data:text/json;charset=utf-8,' + cookieReport;
+      var cookieJSON = 'data:text/json;charset=utf-8,' + cookieReport;
       var date = new Date();
       var day = date.getDate();
       var month = date.getMonth() + 1;
-      var year  = date.getFullYear();
-
-
+      var year = date.getFullYear();
       var downloadElement = document.createElement('a');
+
       downloadElement.setAttribute('href', cookieJSON);
-      downloadElement.setAttribute('download', 'bug-report-'+ day + '-'+ month + '-' + year +'.json');
+      downloadElement.setAttribute('download', 'bug-report-' + day + '-' + month + '-' + year + '.json');
       downloadElement.setAttribute('target', '_blank');
       document.body.appendChild(downloadElement);
       downloadElement.click();
-
     }
-
   }
-
 }());
