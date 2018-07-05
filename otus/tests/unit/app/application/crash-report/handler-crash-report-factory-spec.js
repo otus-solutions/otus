@@ -11,19 +11,13 @@ describe('exception handler factory', function() {
       getCookie: function() { return true;}
     };
 
-    Mock.exceptionHandler = function(){
-      return function (exception) {
-        console.error(exception);
-      };
-    };
-
     angular.mock.module(function($provide) {
       $provide.value('otusjs.application.crash.CrashReportService', Mock.CrashReportService);
-      $provide.value('$exceptionHandler', {});
     });
   });
 
   beforeEach(function () {
+    mockStruture();
     inject(function ($injector) {
       mockInjections($injector);
       Injections = {
@@ -31,21 +25,27 @@ describe('exception handler factory', function() {
         "Service": Mock.CrashReportService
       };
       factory = $injector.get('$exceptionHandler', Injections);
-      console.log(factory);
     });
+    spyOn(Mock.$log, 'error').and.callThrough();
     spyOn(Mock.CrashReportService, 'persistException').and.callThrough();
-    //TODO: AVALIAR
-    throw true;
+    factory(Mock.exception)
   });
 
   it('should capture exception', function() {
+    expect(factory instanceof Function).toBeTruthy();
     expect(Mock.CrashReportService.persistException).toHaveBeenCalledTimes(1);
+    expect(Mock.$log.error).toHaveBeenCalledTimes(1);
   });
-
-
 
   function mockInjections($injector) {
     Mock.$log = $injector.get('$log');
+  }
+
+  function mockStruture() {
+    Mock.exception = {
+      stack: 'Falha conexão',
+      message: 'Fail Connection'
+    };
   }
 
 
