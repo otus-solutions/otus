@@ -2,16 +2,13 @@ describe('CrashReportFactory', function () {
 
   var UNIT_NAME = 'otusjs.application.crash.CrashReportFactory';
   var Mock = {};
-  var Injections = {};
   var factory = {};
-  var scope;
 
   beforeEach(function() {
     angular.mock.module('otusjs.application.crash');
   });
   beforeEach(function () {
-    angular.mock.inject(function (_$rootScope_, _$q_, _$injector_) {
-      scope = _$rootScope_;
+    angular.mock.inject(function ( _$injector_) {
       mockUtils();
       factory = _$injector_.get(UNIT_NAME);
     });

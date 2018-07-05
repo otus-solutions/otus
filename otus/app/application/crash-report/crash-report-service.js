@@ -33,7 +33,7 @@
 
       document.cookie = updatedCookie;
 
-    };
+    }
 
     function getBrowserName(userAgent) {
       var browserName  = 'Unknown Browser';
