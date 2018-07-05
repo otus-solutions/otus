@@ -7,25 +7,21 @@
 
     Controller.$inject = [
       '$mdDialog',
-      '$mdToast',
       '$filter',
       'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
       'otusjs.laboratory.business.project.transportation.AliquotTransportationMessagesService',
       'otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory',
       'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
-      '$q',
       'otusjs.deploy.LoadingScreenService'
     ];
 
     function Controller(
       $mdDialog,
-      $mdToast,
       $filter,
       AliquotTransportationService,
       AliquotTransportationMessagesService,
-      AliquotTransportationFactory,
+      AliquotTransportationQueryFactory,
       DynamicTableSettingsFactory,
-      $q,
       LoadingScreenService) {
       var self = this;
 
@@ -223,7 +219,7 @@
       }
 
       function _findAliquotByPeriod() {
-        var _query = AliquotTransportationFactory.create(null, self.initialDate.toISOString(), self.finalDate.toISOString(),
+        var _query = AliquotTransportationQueryFactory.create(null, self.initialDate.toISOString(), self.finalDate.toISOString(),
           self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
         return self.AliquotTransportationService.getAliquots(_query.toJSON(), false)
           .then(function(response) {
@@ -260,7 +256,7 @@
       }
 
       function _findAliquot(code) {
-        var _query = AliquotTransportationFactory.create(code, null, null,
+        var _query = AliquotTransportationQueryFactory.create(code, null, null,
           self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
         return self.AliquotTransportationService.getAliquots(_query.toJSON(), true)
           .then(function(availableAliquot) {

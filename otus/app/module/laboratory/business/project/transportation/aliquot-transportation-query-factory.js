@@ -14,15 +14,15 @@
 
     self.create = create;
 
-    function create(code,initialDate,finalDate,fieldCenter, aliquotList, role) {
-      return new AliquotQuery(code,initialDate,finalDate,fieldCenter, aliquotList, role);
+    function create(code,initialDate,finalDate,fieldCenter, aliquotList, includeStorage) {
+      return new AliquotQuery(code,initialDate,finalDate,fieldCenter, aliquotList, includeStorage);
     }
 
 
     return self;
   }
 
-  function AliquotQuery(code,initialDate,finalDate,fieldCenter, aliquotList, role) {
+  function AliquotQuery(code,initialDate,finalDate,fieldCenter, aliquotList, includeStorage) {
     var self = this;
 
     self.objectType = 'AliquotQuery';
@@ -31,7 +31,7 @@
     self.finalDate = finalDate || '';
     self.fieldCenter = fieldCenter || '';
     self.aliquotList = aliquotList || [];
-    self.role = role ? 'STORAGE' : 'EXAM';
+    self.role = includeStorage ? 'STORAGE' : 'EXAM';
 
     self.toJSON = toJSON;
 
