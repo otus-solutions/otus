@@ -2,12 +2,12 @@
   <div class="md-toolbar-tools md-padding">
     <img src="app/static-resource/image/coruja_pesquisadora.png" class="toolbar-icon"></img>
     <otus-dashboard-sidenav-launcher></otus-dashboard-sidenav-launcher>
-    <otus-crash-report></otus-crash-report>
     <div ng-transclude flex>
       <!-- <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)" class="md-primary md"></otus-participant-search> -->
     </div>
 
     <otus-display-token></otus-display-token>
+    <otus-crash-report></otus-crash-report>
 
     <span>{{ $ctrl.loggedUser.name}}</span>
     <md-button class="md-fab md-mini md-accent" ng-click="$ctrl.getKey()" >
