@@ -28,7 +28,6 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
-    self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -69,13 +68,8 @@
       return LaboratoryCollectionService.getAliquotDescriptors();
     }
 
-
-    function getAliquots() {
-      return LaboratoryCollectionService.getAliquots();
-    }
-
-    function getAliquotsByCenter(center) {
-      return LaboratoryCollectionService.getAliquotsByCenter(center);
+    function getAliquots(lotAliquot, unique) {
+      return LaboratoryCollectionService.getAliquots(lotAliquot, unique);
     }
 
     function getLots() {
