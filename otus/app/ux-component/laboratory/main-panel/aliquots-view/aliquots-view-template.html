@@ -103,11 +103,20 @@
                         <label>{{exam.containerLabel}}</label>
                         <input ng-model="exam.aliquotCode" ng-change="$ctrl.aliquotInputOnChange(exam)" name="{{exam.aliquotId}}" id="{{exam.aliquotId}}" maxlength="{{$ctrl.aliquotMaxLength}}" ng-blur="$ctrl.aliquotInputOnBlur(exam)" ng-keydown="$ctrl.aliquotInputOnKeyDown($event, exam)"
                           ng-disabled="exam.isSaved" />
+
                         <div ng-messages="formAliquot[exam.aliquotId].$error">
                           <div ng-message="customValidation">{{exam.aliquotMessage}}</div>
                           <div ng-message="required">Campo obrigatório</div>
                         </div>
                       </md-input-container>
+                      <md-button class="md-icon-button md-button" style="top:-10px" ng-if="exam.isSaved" ng-click="$ctrl.removeAliquot(exam)" id="delete{{exam.aliquotCode}}">
+
+                        <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons" ng-if="exam.isSaved">delete_forever</md-icon>
+                        <md-tooltip >
+                          Excluir Alíquota
+                        </md-tooltip>
+
+                      </md-button>
                     </md-content>
                     <div layout="column">
                         <div layout="row" class="input-footer-message" ng-show="!exam.aliquotMessage && exam.isSaved">
@@ -132,7 +141,7 @@
                 Armazenamento:
               </div>
 
-              <div ng-repeat="storage in $ctrl.selectedMomentType.stores" layout="row">
+              <div ng-repeat="storage in $ctrl.selectedMomentType.storages" layout="row">
                 <!-- Mount Tube Input - Storage - Begin -->
                 <div class="input-tube" flex>
                   <div class="md-list-item-text" layout="column" flex>
@@ -174,6 +183,14 @@
                           <div ng-message="customValidation">{{storage.aliquotMessage}}</div>
                         </div>
                       </md-input-container>
+                      <md-button class="md-icon-button md-button" style="top:-10px" ng-if="storage.isSaved" ng-click="$ctrl.removeAliquot(storage)" id="delete{{storage.aliquotCode}}">
+
+                        <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons" ng-if="storage.isSaved">delete_forever</md-icon>
+                        <md-tooltip >
+                          Excluir Alíquota
+                        </md-tooltip>
+
+                      </md-button>
                     </md-content>
                     <div layout="column">
                       <div layout="row" class="input-footer-message" ng-show="!storage.aliquotMessage && storage.isSaved">

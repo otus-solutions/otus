@@ -13,7 +13,6 @@
 
   function Service(AliquotManagerService, ParticipantLaboratoryService, $q) {
     var self = this;
-    var _test;
 
     self.buildMomentTypeList = buildMomentTypeList;
     self.getMomentTypeAliquot = getMomentTypeAliquot;
@@ -22,17 +21,22 @@
     self.populateAliquotsArray = populateAliquotsArray;
     self.getNewAliquots = getNewAliquots;
     self.updateAliquots = updateAliquots;
+    self.removeAliquot = removeAliquot;
 
     function updateAliquots(updateStructure) {
       return ParticipantLaboratoryService.updateAliquots(updateStructure);
+    }
+
+    function removeAliquot(aliquotCode) {
+      return ParticipantLaboratoryService.removeAliquot(aliquotCode);
     }
 
     function areFieldsChanged(momentType){
       var changed = false;
 
       if(momentType){
-        var originalAliquots = momentType.originalExams.concat(momentType.originalStores);
-        var newAliquots = momentType.exams.concat(momentType.stores);
+        var originalAliquots = momentType.originalExams.concat(momentType.originalStorages);
+        var newAliquots = momentType.exams.concat(momentType.storages);
 
         for (var i = 0; i < newAliquots.length; i++) {
           if(originalAliquots[i].tubeCode != newAliquots[i].tubeCode
@@ -47,8 +51,8 @@
     }
 
     function getNewAliquots(momentType){
-      var originalAliquots = momentType.originalExams.concat(momentType.originalStores);
-      var aliquotArray = momentType.exams.concat(momentType.stores);
+      var originalAliquots = momentType.originalExams.concat(momentType.originalStorages);
+      var aliquotArray = momentType.exams.concat(momentType.storages);
       var newAliquotsArray = [];
 
       for (var i = 0; i < aliquotArray.length; i++) {
@@ -65,7 +69,7 @@
 
     function aliquotsWithErrors(momentType){
       var hasErrors = false;
-      var aliquotArray = momentType.exams.concat(momentType.stores);
+      var aliquotArray = momentType.exams.concat(momentType.storages);
 
       for (var i = 0; i < aliquotArray.length; i++) {
         if(aliquotArray[i].aliquotMessage || aliquotArray[i].tubeMessage){
@@ -87,7 +91,7 @@
     function populateAliquotsArray(momentType){
       var indexStorage = 0;
       var indexExam = 0;
-      var stores = [];
+      var storages = [];
       var exams = [];
       momentType.availableAliquots.forEach(function(aliquot){
         var aliquotStructure = {
@@ -123,7 +127,7 @@
         aliquotStructure.index = index;
 
         if(aliquot.role.toUpperCase() == "STORAGE"){
-          stores.push(aliquotStructure);
+          storages.push(aliquotStructure);
           indexStorage++;
         } else {
           exams.push(aliquotStructure);
@@ -131,12 +135,12 @@
         }
       });
 
-      momentType.stores = stores;
+      momentType.storages = storages;
       momentType.exams = exams;
 
       momentType = fillAliquotsWithCollectedAliquots(momentType);
 
-      momentType.originalStores = JSON.parse(JSON.stringify(momentType.stores));
+      momentType.originalStorages = JSON.parse(JSON.stringify(momentType.storages));
       momentType.originalExams = JSON.parse(JSON.stringify(momentType.exams));
 
       momentType.repeatedAliquots = [];
@@ -148,7 +152,7 @@
       momentType.collectedAliquots.forEach(function(collectedAliquot){
         var arrayAliquots = momentType.exams;
 
-        if(collectedAliquot.role.toUpperCase() == "STORAGE") arrayAliquots = momentType.stores;
+        if(collectedAliquot.role.toUpperCase() == "STORAGE") arrayAliquots = momentType.storages;
 
         for (var i = 0, endLoop = false; i < arrayAliquots.length && !endLoop; i++) {
           var aliquot = arrayAliquots[i];

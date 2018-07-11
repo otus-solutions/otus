@@ -43,7 +43,7 @@
     self.aliquotLengths;
     self.aliquotMaxLength;
     self.validations;
-
+    self.removeAliquot = removeAliquot;
     self.tubeList = self.participantLaboratory.tubes;
 
     self.$onInit = onInit;
@@ -96,6 +96,7 @@
 
       Publisher.unsubscribe('save-changed-aliquots');
       Publisher.subscribe('save-changed-aliquots', _saveAliquots);
+
     }
 
     function _buildMomentTypeList() {
@@ -141,7 +142,7 @@
     }
 
     function fillAliquotsErrors(aliquotConflicts, msgErro) {
-      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.storages);
 
       aliquotConflicts.forEach(function(conflict) {
         aliquotsArray.forEach(function(aliquot) {
@@ -153,7 +154,7 @@
     }
 
     function fillTubesErrors(tubeConflicts, msgErro) {
-      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.storages);
 
       tubeConflicts.forEach(function(tubeCode) {
         aliquotsArray.forEach(function(aliquot) {
@@ -190,11 +191,11 @@
       self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType);
 
       Validation.initialize(
-        self.validations, self.tubeLength, self.aliquotLengths, clearAliquotError, clearTubeError, setAliquotError, setTubeError, self.selectedMomentType.exams, self.selectedMomentType.stores
+        self.validations, self.tubeLength, self.aliquotLengths, clearAliquotError, clearTubeError, setAliquotError, setTubeError, self.selectedMomentType.exams, self.selectedMomentType.storages
       );
 
       completePlaceholder(self.selectedMomentType.exams);
-      completePlaceholder(self.selectedMomentType.stores);
+      completePlaceholder(self.selectedMomentType.storages);
 
       setTimeout(function() {
         _defaultCustomValidation();
@@ -206,7 +207,7 @@
     }
 
     function _defaultCustomValidation() {
-      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+      var aliquotsArray = self.selectedMomentType.exams.concat(self.selectedMomentType.storages);
 
       aliquotsArray.forEach(function(aliquot) {
         clearAliquotError(aliquot);
@@ -339,7 +340,7 @@
       if (self.aliquotLengths.length > 1) {
         if (charCode == '13') {
           //Enter pressed
-          var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
+          var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
           var runCompletePlaceholder = false;
 
           if (aliquot.aliquotCode.length == self.tubeLength && Validation.isTube(aliquot.aliquotCode)) {
@@ -366,7 +367,7 @@
       if (!aliquot.processing) _getDateTimeProcessing(aliquot);
 
       if (self.aliquotLengths.length === 1) {
-        var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
+        var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
         var runCompletePlaceholder = false;
 
         if (aliquot.aliquotCode && (aliquot.aliquotCode.length == self.aliquotMaxLength || aliquot.aliquotCode.length == self.tubeLength)) {
@@ -388,11 +389,11 @@
     }
 
 
-    function tubeInputOnChange(aliquot, tubeOrAliquot) {
-      var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;
-      var runCompletePlaceholder = false;
-
-      runCompletePlaceholder = true;
+    function tubeInputOnChange(aliquot) {
+      var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
+      // var runCompletePlaceholder = false;
+      //
+      // runCompletePlaceholder = true;
       $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
 
       completePlaceholder(aliquotsArray);
@@ -405,7 +406,7 @@
 
     function _nextFocusNotFilled(currentAliquot) {
       var newFocus = "";
-      var aliquotArray = self.selectedMomentType.stores.concat(self.selectedMomentType.exams);
+      var aliquotArray = self.selectedMomentType.storages.concat(self.selectedMomentType.exams);
       var current = {
         index: currentAliquot.index + 1,
         role: currentAliquot.role,
@@ -414,7 +415,7 @@
       var aliquot;
 
       if (Validation.fieldIsExam(currentAliquot.role))
-        aliquotArray = self.selectedMomentType.exams.concat(self.selectedMomentType.stores);
+        aliquotArray = self.selectedMomentType.exams.concat(self.selectedMomentType.storages);
 
       for (var i = 0; i < aliquotArray.length; i++) {
         aliquot = aliquotArray[i];
@@ -441,6 +442,41 @@
 
     function setFocus(id) {
       $element.find('#' + id).focus();
+    }
+
+    function removeAliquot(aliquot) {
+      $element.find('#delete' + aliquot.aliquotCode).blur();
+      AliquotMessagesService.showDeleteDialog().then(function() {
+
+        self.selectedMomentType.removeAliquot(aliquot.aliquotCode);
+        // var _momentType = angular.copy(self.selectedMomentType);
+        // delete self.selectedMomentType;
+        // selecMomentType(_momentType);
+        // self.selectedMomentType.updateTubes();
+        completePlaceholder(self.selectedMomentType.originalExams)
+
+        // var updatedAliquots = self.selectedMomentType.exams;
+        // // var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
+        // var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
+        // AliquotTubeService.updateAliquots(persistanceStructure)
+        //   .then(function(data) {
+        //     self.selectedMomentType.updateTubes();
+        //     self.participantLaboratory.updateTubeList();
+        //     AliquotMessagesService.showToast(Validation.validationMsg.savedSuccessfully, timeShowMsg);
+        //     _setMomentType(self.selectedMomentType);
+        //   })
+        //   .catch(function(e) {
+        //     AliquotMessagesService.showToast(Validation.validationMsg.couldNotSave, timeShowMsg);
+        //     var err = e.data;
+        //     fillAliquotsErrors(err.CONTENT.conflicts, err.MESSAGE);
+        //     fillTubesErrors(err.CONTENT.tubesNotFound, err.MESSAGE);
+        //   });
+        console.log(self.selectedMomentType)
+      });
+
+      // console.log(self.selectedMomentType.collectedAliquots.indexOf(aliquot));
+      // console.log();
+
     }
 
   }

@@ -37,6 +37,7 @@
     self.update = update;
     self.updateTubeCollectionData = updateTubeCollectionData;
     self.updateAliquots = updateAliquots;
+    self.removeAliquot = removeAliquot;
     self.getLaboratory = getLaboratory;
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
@@ -193,6 +194,24 @@
         .then(function(remoteStorage) {
           remoteStorage
             .updateAliquots(_participant.recruitmentNumber, updateStructure)
+            .then(function(data) {
+              request.resolve();
+            }, function(e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function removeAliquot(aliquotCode) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .removeAliquot(aliquotCode)
             .then(function(data) {
               request.resolve();
             }, function(e) {

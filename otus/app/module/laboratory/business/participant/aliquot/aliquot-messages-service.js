@@ -15,9 +15,11 @@
 
     var _exitDialog;
     var _saveDialog;
+    var _deleteDialog;
 
     self.showExitDialog = showExitDialog;
     self.showSaveDialog = showSaveDialog;
+    self.showDeleteDialog = showDeleteDialog;
     self.showToast = showToast;
 
 
@@ -37,6 +39,13 @@
                 .ariaLabel('Confirmação de finalização')
                 .ok('Ok')
                 .cancel('Voltar');
+
+      _deleteDialog = $mdDialog.confirm()
+        .title('Confirmar exclusão de alíquota')
+        .textContent('Deseja salvar as alterações?')
+        .ariaLabel('Confirmação de finalização')
+        .ok('Ok')
+        .cancel('Voltar');
     }
 
     function showExitDialog() {
@@ -45,6 +54,9 @@
 
     function showSaveDialog() {
       return $mdDialog.show(_saveDialog);
+    }
+    function showDeleteDialog() {
+      return $mdDialog.show(_deleteDialog);
     }
 
     function showToast(msg, delay) {
