@@ -8,16 +8,9 @@
       templateUrl: 'app/ux-component/error/error-template.html'
     });
 
-  Controller.$inject = [
-    'otusjs.application.state.ApplicationStateService'
-  ];
+  Controller.$inject = [];
 
-  function Controller(ApplicationStateService) {
+  function Controller() {
 
-    self.tryAgain = tryAgain;
-
-    function tryAgain() {
-      ApplicationStateService.activateLogin();
-    }
   }
 })();

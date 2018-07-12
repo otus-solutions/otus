@@ -20,21 +20,30 @@
 
     self.state = {
       name: STATE.ERROR,
+      url: '/' + STATE.ERROR,
       template: '<otus-error flex></otus-error>',
       onEnter: _onEnter
 
     };
 
-    function _onEnter() {
+    function _onEnter(Application) {
       Application
         .isDeployed()
         .then(function() {
-          throw {message:"System not available.", stack:"Browser incorrect."};
+          throw new Error();
         });
+    }
+
+    function Error() {
+      return {
+        message:"System not available.",
+        stack:"Browser incorrect."
+      };
     }
 
 
     _onEnter.$inject = [
+      'otusjs.application.core.ModuleService'
     ];
   }
 }());
