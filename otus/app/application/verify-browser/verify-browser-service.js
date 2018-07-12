@@ -10,34 +10,41 @@
   ];
 
   function Service(ApplicationStateService) {
+    const MSIE_FULL_NAME = 'Microsoft Internet Explorer';
+    const UNKNOWN_BROWSER = 'Unknown Browser';
+    const VERSION = '52';
+    const CHROME = 'Chrome';
+    const OPERA = 'Opera';
+    const MSIE = 'MSIE';
+    const SAFARI = 'Safari';
+    const FIREFOX = 'Firefox';
+
     var self = this;
     var userAgent = navigator.userAgent;
 
     self.verify = verify;
-    self.getBrowserName = getBrowserName;
-    self.getBrowserVersion = getBrowserVersion;
 
     function verify() {
-      if(getBrowserName() != "Chrome" || getBrowserVersion(getBrowserName()) < "52"){
+
+      if(_getBrowserName() != CHROME || _getBrowserVersion(_getBrowserName()) < VERSION){
         ApplicationStateService.activateError();
       }
     }
-    function getBrowserName() {
-
-      var browserName = 'Unknown Browser';
+    function _getBrowserName() {
+      var browserName = UNKNOWN_BROWSER;
       var nameOffset;
       var verOffset;
 
-      if ((verOffset = userAgent.indexOf('Opera')) != -1) {
-        browserName = 'Opera';
-      } else if ((verOffset = userAgent.indexOf('MSIE')) != -1) {
-        browserName = 'Microsoft Internet Explorer';
-      } else if ((verOffset = userAgent.indexOf('Chrome')) != -1) {
-        browserName = 'Chrome';
-      } else if ((verOffset = userAgent.indexOf('Safari')) != -1) {
-        browserName = 'Safari';
-      } else if ((verOffset = userAgent.indexOf('Firefox')) != -1) {
-        browserName = 'Firefox';
+      if ((verOffset = userAgent.indexOf(OPERA)) != -1) {
+        browserName = OPERA;
+      } else if ((verOffset = userAgent.indexOf(MSIE)) != -1) {
+        browserName = MSIE_FULL_NAME;
+      } else if ((verOffset = userAgent.indexOf(CHROME)) != -1) {
+        browserName = CHROME;
+      } else if ((verOffset = userAgent.indexOf(SAFARI)) != -1) {
+        browserName = SAFARI;
+      } else if ((verOffset = userAgent.indexOf(FIREFOX)) != -1) {
+        browserName = FIREFOX;
       } else if ((nameOffset = userAgent.lastIndexOf(' ') + 1) <
         (verOffset = userAgent.lastIndexOf('/'))) {
         browserName = userAgent.substring(nameOffset, verOffset);
@@ -49,7 +56,7 @@
       return browserName
     }
 
-    function getBrowserVersion(browserName) {
+    function _getBrowserVersion(browserName) {
       var stringVersion;
       var fullVersion = userAgent.substring(userAgent.indexOf(browserName) + browserName.length + 1);
 

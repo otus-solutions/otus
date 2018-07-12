@@ -13,9 +13,9 @@
   ];
 
   function Controller(LoginService, ApplicationStateService, verifyBrowserService, $mdToast) {
+    const LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
+    const SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
     var self = this;
-    var LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
-    var SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
     var _errorMessage = $mdToast.simple().textContent(LOGIN_ERROR_MESSAGE);
 
     /* Public methods */
