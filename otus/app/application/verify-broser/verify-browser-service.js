@@ -18,8 +18,8 @@
     self.getBrowserVersion = getBrowserVersion;
 
     function verify() {
-      if(getBrowserName() == "Chrome"){
-        ApplicationStateService.activateInstaller();
+      if(getBrowserName() != "Chrome" || getBrowserVersion(getBrowserName()) < "52"){
+        ApplicationStateService.activateError();
       }
     }
     function getBrowserName() {
@@ -49,7 +49,7 @@
       return browserName
     }
 
-    function getBrowserVersion(browserName, userAgent) {
+    function getBrowserVersion(browserName) {
       var stringVersion;
       var fullVersion = userAgent.substring(userAgent.indexOf(browserName) + browserName.length + 1);
 
