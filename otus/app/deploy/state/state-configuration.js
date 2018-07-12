@@ -5,6 +5,7 @@
     .module('otusjs.deploy')
     .constant('STATE', {
       'ACCESS': 'access',
+      'ERROR': 'error',
       'ACTIVITY_ADDER': 'activity-adder',
       'ACTIVITY_CATEGORY_ADDER': 'activity-category-adder',
       'ACTIVITY_PLAYER': 'activity-player',
@@ -35,6 +36,7 @@
     '$urlRouterProvider',
     '$stateProvider',
     'otusjs.deploy.AccessStateProvider',
+    'otusjs.deploy.ErrorStateProvider',
     'otusjs.deploy.ActivityStateProvider',
     'otusjs.deploy.ActivityAdderStateProvider',
     'otusjs.deploy.ActivityCategoryStateProvider',
@@ -61,6 +63,7 @@
 
   function Configuration($urlRouterProvider, $stateProvider,
     AccessStateProvider,
+    ErrorStateProvider,
     ActivityStateProvider,
     ActivityAdderStateProvider,
     ActivityCategoryStateProvider,
@@ -85,6 +88,7 @@
     ExamResultsVisualizer
   ) {
     $stateProvider.state(AccessStateProvider.state);
+    $stateProvider.state(ErrorStateProvider.state);
     $stateProvider.state(ActivityStateProvider.state);
     $stateProvider.state(ActivityAdderStateProvider.state);
     $stateProvider.state(ActivityCategoryStateProvider.state);
