@@ -30,8 +30,9 @@
       }
     };
 
-    function _redirect($q, AccessContextService, Application) {
+    function _redirect($q, AccessContextService, Application, verifyBrowserService) {
       var deferred = $q.defer();
+      verifyBrowserService.verify();
 
       Application
         .isDeployed()
@@ -60,7 +61,8 @@
     _redirect.$inject = [
       '$q',
       'otusjs.user.access.core.ContextService',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.verifyBrowser.verifyBrowserService'
     ];
     _applicationReady.$inject = [
       'otusjs.deploy.InstallerRestService'
