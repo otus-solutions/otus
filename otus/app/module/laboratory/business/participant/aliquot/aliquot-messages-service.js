@@ -41,8 +41,8 @@
                 .cancel('Voltar');
 
       _deleteDialog = $mdDialog.confirm()
-        .title('Confirmar exclusão de alíquota')
-        .textContent('Deseja salvar as alterações?')
+        .title('ATENÇÃO')
+        .textContent("A exclusão desta alíquota irá refletir nos lotes de transporte e exames, caso a contenham. Deseja realmente excluir?")
         .ariaLabel('Confirmação de finalização')
         .ok('Ok')
         .cancel('Voltar');

@@ -88,7 +88,7 @@
       if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _participantRest.removeAliquot(aliquotCode).$promise;
+      return _participantRest.removeAliquot({code: aliquotCode}).$promise;
     }
 
     //laboratory-configuration methods
