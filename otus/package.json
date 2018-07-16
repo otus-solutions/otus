@@ -36,6 +36,7 @@
     "angular-material-icons": "0.6.0",
     "angular-messages": "1.5.8",
     "angular-resource": "1.5.5",
+    "angular-sanitize": "1.5.8",
     "angular-ui-mask": "^1.8.3",
     "angular-ui-router": "^0.3.1",
     "chart.js": "2.7.0",

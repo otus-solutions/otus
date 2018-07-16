@@ -1,4 +1,4 @@
-describe('Lot info manager display component', function() {
+describe('Lot info aliquot-manager display component', function() {
   var Mock = {};
   var $controller;
   var ctrl;

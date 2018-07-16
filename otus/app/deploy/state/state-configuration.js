@@ -22,12 +22,12 @@
       'SIGNUP': 'signup',
       'SIGNUP_RESULT': 'signup-result',
       'LABORATORY': 'laboratory-participant',
-      'SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER': 'sample-transportation-lot-info-manager',
-      'SAMPLE_TRANSPORTATION_MANAGER_LIST': 'sample-transportation-manager-list',
+      'SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER': 'sample-transportation-lot-info-aliquot-manager',
+      'SAMPLE_TRANSPORTATION_MANAGER_LIST': 'sample-transportation-aliquot-manager-list',
       'SAMPLE_TRANSPORTATION_DASHBOARD': 'sample-transportation-dashboard',
       'EXAM_DASHBOARD': 'exam-dashboard',
-      'EXAM_LOT_MANAGER_LIST': 'exam-lot-manager-list',
-      'EXAM_LOT_INFO_MANAGER': 'exam-lot-info-manager',
+      'EXAM_LOT_MANAGER_LIST': 'exam-lot-aliquot-manager-list',
+      'EXAM_LOT_INFO_MANAGER': 'exam-lot-info-aliquot-manager',
       'EXAM_SENDING': 'exam-sending',
       'EXAM_RESULT_VISUALIZER' : 'exam-result-visualizer',
       'MONITORING': 'monitoring'
@@ -116,7 +116,7 @@
     $stateProvider.state(SendingExamState.state);
     $stateProvider.state(ExamResultsVisualizer.state);
     $stateProvider.state(MonitoringStateProvider.state);
-    
+
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
     // $locationProvider.html5Mode(false);

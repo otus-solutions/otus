@@ -8,10 +8,11 @@
   Service.$inject = [
     'otusjs.laboratory.business.participant.aliquot.AliquotManagerService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
-    '$q'
+    '$q',
+    'AliquotStructureFactory'
   ];
 
-  function Service(AliquotManagerService, ParticipantLaboratoryService, $q) {
+  function Service(AliquotManagerService, ParticipantLaboratoryService, $q, AliquotStructureFactory) {
     var self = this;
 
     self.buildMomentTypeList = buildMomentTypeList;
@@ -94,37 +95,13 @@
       var storages = [];
       var exams = [];
       momentType.availableAliquots.forEach(function(aliquot){
-        var aliquotStructure = {
-                                  aliquotCode: "",
-                                  tubeCode: "",
-                                  container: "",
-                                  containerLabel: "",
-                                  placeholder: "",
-                                  aliquotMessage: "",
-                                  tubeMessage: "",
-                                  operator: "",
-                                  date: "",
-                                  time:"",
-                                  processing:"",
-                                  isSaved: false
-                                };
-
-        var role = "EXAM";
-        var index = indexExam;
 
         if(aliquot.role.toUpperCase() == "STORAGE"){
-          role = "STORAGE";
-          index = indexStorage;
+          aliquot.index = indexStorage;
+        } else {
+          aliquot.index = indexExam;
         }
-
-        aliquotStructure.name = aliquot.name;
-        aliquotStructure.label = aliquot.label ? aliquot.label : aliquot.name;
-        aliquotStructure.containerLabel = aliquotStructure.label;
-
-        aliquotStructure.aliquotId = role + "Aliquot" + index;
-        aliquotStructure.tubeId = role + "Tube" + index;
-        aliquotStructure.role = role;
-        aliquotStructure.index = index;
+        var aliquotStructure = AliquotStructureFactory.create(aliquot).toJSON();
 
         if(aliquot.role.toUpperCase() == "STORAGE"){
           storages.push(aliquotStructure);

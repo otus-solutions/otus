@@ -1,4 +1,4 @@
-fdescribe('Aliquots View Component', function () {
+describe('Aliquots View Component', function () {
   var Mock = {};
   var ctrl, $injector, $controller;
   var Injections = {};
@@ -9,6 +9,9 @@ fdescribe('Aliquots View Component', function () {
   beforeEach(function () {
     Mock.AliquotMessagesService = {
       showDeleteDialog: function () {
+        return Promise.resolve();
+      },
+      showNotRemovedDialog: function () {
         return Promise.resolve();
       }
     };
@@ -64,6 +67,7 @@ fdescribe('Aliquots View Component', function () {
       spyOn(ctrl, 'removeAliquot').and.callThrough();
       spyOn(ctrl.selectedMomentType, 'removeAliquot').and.callThrough();
       spyOn(Mock.AliquotMessagesService, 'showDeleteDialog').and.callThrough();
+      spyOn(Mock.AliquotMessagesService, 'showNotRemovedDialog').and.callThrough();
       spyOn(Mock.AliquotTubeService, 'removeAliquot').and.callThrough();
       spyOn(Injections.$mdToast, 'show').and.callFake(function () {
         return true;
@@ -76,7 +80,7 @@ fdescribe('Aliquots View Component', function () {
 
       Mock.AliquotMessagesService.showDeleteDialog().then(function () {
         Mock.AliquotTubeService.removeAliquot(Mock.aliquot).then(function () {
-          expect(ctrl.selectedMomentType).toHaveBeenCalledTimes(1);
+          expect(ctrl.selectedMomentType.removeAliquot).toHaveBeenCalledTimes(1);
           done();
         }).catch(function () {
           done();
@@ -93,10 +97,9 @@ fdescribe('Aliquots View Component', function () {
 
       Mock.AliquotMessagesService.showDeleteDialog().then(function () {
         Mock.AliquotTubeService.removeAliquot(false).then(function () {
-
           done();
         }).catch(function () {
-          expect(Injections.$mdToast.show).toHaveBeenCalledTimes(1);
+          expect(Mock.AliquotMessagesService.showNotRemovedDialog).toHaveBeenCalledTimes(1);
           done();
         });
         done();
@@ -112,7 +115,7 @@ fdescribe('Aliquots View Component', function () {
   function mockController() {
     Mock.aliquot = {
       aliquotCode: "323004438"
-    }
+    };
 
     ctrl.selectedMomentType = {
       removeAliquot: function (code) {
@@ -121,9 +124,6 @@ fdescribe('Aliquots View Component', function () {
     }
   }
 
-  function Error() {
-
-  }
 
 
 });

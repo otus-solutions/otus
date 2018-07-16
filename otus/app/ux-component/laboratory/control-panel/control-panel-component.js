@@ -31,6 +31,7 @@
     var invalidDate;
     var _time;
     var hideDelayTime = 3000;
+    var changedTubes = false;
 
     self.$onInit = onInit;
     self.changeState = changeState;
@@ -96,9 +97,18 @@
         );
       }
     }
+    //TODO: tiago
+    self.fetchChanges = fetchChanges;
+    function fetchChanges() {
+      Publisher.publish('have-aliquots-changed', function(result) {
+        changedTubes = result;
+      });
+
+      return !changedTubes;
+    }
 
     function _updateChangedTubes() {
-      var changedTubes;
+      var changedTubes = null;
       var updateChangedTubesStructure = {
         tubes: []
       };

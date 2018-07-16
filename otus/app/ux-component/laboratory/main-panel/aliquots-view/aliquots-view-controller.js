@@ -442,30 +442,12 @@
 
     function removeAliquot(aliquot) {
       AliquotMessagesService.showDeleteDialog().then(function() {
-
         return AliquotTubeService.removeAliquot(aliquot.aliquotCode).then(function () {
           self.selectedMomentType.removeAliquot(aliquot.aliquotCode);
-          // completePlaceholder(self.selectedMomentType.originalExams);
         }).catch(function (err) {
-           _showNotRemoveAliquot();
-          // err.message = "Aliquot not removed";
-          // err.stack = "Back-End not resolving";
-          // err.name = "ErrorException";
-          // throw err;
+           AliquotMessagesService.showNotRemovedDialog(err.CONTENT);
         });
-
       }).catch(function () {});
-
-
-    }
-
-    function _showNotRemoveAliquot() {
-      var msg = "Não foi possível excluír a alíquota!";
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent(msg)
-          .hideDelay(timeShowMsg)
-      );
     }
 
   }

@@ -22,7 +22,7 @@
       parent: STATE.EXAM_DASHBOARD,
       name: STATE.EXAM_LOT_INFO_MANAGER,
       url: '/' + STATE.EXAM_LOT_INFO_MANAGER,
-      template: '<otus-exam-lot-info-manager lots="$resolve.lots" transport-lots="$resolve.transportLots" state-data="$resolve.stateData" layout="column" flex></otus-exam-lot-info-manager>',
+      template: '<otus-exam-lot-info-aliquot-manager lots="$resolve.lots" transport-lots="$resolve.transportLots" state-data="$resolve.stateData" layout="column" flex></otus-exam-lot-info-aliquot-manager>',
       resolve:{
         stateData: _loadStateData,
         lots: _resolveLots,
