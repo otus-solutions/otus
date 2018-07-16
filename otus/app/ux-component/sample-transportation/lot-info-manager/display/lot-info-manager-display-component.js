@@ -10,7 +10,6 @@
         lot: '=',
         selectedAliquots: '=',
         lotDataSet: '<',
-        aliquotsInOtherLotsList: '<',
         fullAliquotsList: '<',
         setChartData: '&',
         onLotAlteration: '&'

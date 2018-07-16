@@ -1,320 +1,289 @@
 (function() {
-  'use strict';
+    'use strict';
 
-  angular
-    .module('otusjs.otus.uxComponent')
-    .controller('otusLotInfoManagerDisplayCtrl', Controller);
+    angular
+      .module('otusjs.otus.uxComponent')
+      .controller('otusLotInfoManagerDisplayCtrl', Controller);
 
-  Controller.$inject = [
-    '$mdDialog',
-    '$mdToast',
-    '$filter',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
-    'otusjs.otus.uxComponent.DynamicTableSettingsFactory'
-  ];
+    Controller.$inject = [
+      '$mdDialog',
+      '$filter',
+      'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+      'otusjs.laboratory.business.project.transportation.AliquotTransportationMessagesService',
+      'otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory',
+      'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
+      'otusjs.deploy.LoadingScreenService'
+    ];
 
-  function Controller($mdDialog, $mdToast, $filter, AliquotTransportationService, DynamicTableSettingsFactory) {
-    var self = this;
+    function Controller(
+      $mdDialog,
+      $filter,
+      AliquotTransportationService,
+      AliquotTransportationMessagesService,
+      AliquotTransportationQueryFactory,
+      DynamicTableSettingsFactory,
+      LoadingScreenService) {
+      var self = this;
 
-    var timeShowMsg = 3000;
+      var messageLoading =
+        'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
 
-    self.$onInit = onInit;
+      self.$onInit = onInit;
 
-    self.dynamicTableSettings;
-    self.currentNavItem = "insertionByPeriod";
-    self.changeNavItem = changeNavItem;
+      self.dynamicTableSettings;
+      self.currentNavItem = "insertionByPeriod";
+      self.changeNavItem = changeNavItem;
 
-    self.AliquotTransportationService = AliquotTransportationService;
+      self.AliquotTransportationService = AliquotTransportationService;
 
-    self.aliquotInputkeydown = aliquotInputkeydown;
-    self.insertAliquotsByPeriod = insertAliquotsByPeriod;
-    self.periodInputkeydown = periodInputkeydown;
-    self.dynamicDataTableChange = dynamicDataTableChange;
-    self.removeElement = removeElement;
+      self.aliquotInputkeydown = aliquotInputkeydown;
+      self.insertAliquotsByPeriod = insertAliquotsByPeriod;
+      self.periodInputkeydown = periodInputkeydown;
+      self.dynamicDataTableChange = dynamicDataTableChange;
+      self.removeElement = removeElement;
 
-    var _confirmAliquotsInsertionByPeriod;
+      var _confirmAliquotsInsertionByPeriod;
 
-    function changeNavItem(newNavItem){
-      self.currentNavItem = newNavItem;
-    }
 
-    /* Public methods */
-    self.fastInsertion = fastInsertion;
-    self.selectAliquot = selectAliquot;
+      function changeNavItem(newNavItem) {
+        self.currentNavItem = newNavItem;
+      }
 
-    function onInit() {
-      _updateContainerLabel();
-      self.aliquotCode = "";
-      self.initialDate = new Date();
-      self.finalDate = new Date();
-      _buildDialogs();
+      /* Public methods */
+      self.fastInsertion = fastInsertion;
+      self.selectAliquot = selectAliquot;
 
-      _buildDynamicTableSettings();
-    }
+      function onInit() {
+        self.storage = false;
+        _updateContainerLabel();
+        self.aliquotCode = "";
+        self.initialDate = new Date();
+        self.finalDate = new Date();
+        _buildDialogs();
+        _buildDynamicTableSettings();
+      }
 
-    function _buildDynamicTableSettings(){
-      self.dynamicTableSettings = DynamicTableSettingsFactory.create()
-      //header, flex, align, ordinationPriorityIndex
-      .addHeader('Código', '15', 'left', 4)
-      //property, formatType
-      .addColumnProperty('code')
+      function _buildDynamicTableSettings() {
+        self.dynamicTableSettings = DynamicTableSettingsFactory.create()
+          //header, flex, align, ordinationPriorityIndex
+          .addHeader('Código', '15', 'left', 4)
+          //property, formatType
+          .addColumnProperty('code')
+          //header, flex, align, ordinationPriorityIndex
+          .addHeader('Tipo', '25', '', 1)
+          //property, formatType
+          .addColumnProperty('label')
+          //header, flex, align, ordinationPriorityIndex
+          .addHeader('Recipiente', '15', '', 3)
+          //property, formatType
+          .addColumnProperty('containerLabel')
+          //header, flex, align, ordinationPriorityIndex
+          .addHeader('Processamento', '15', '', 2)
+          //property, formatType
+          .addColumnProperty('aliquotCollectionData.processing', 'DATE')
+          .addHeader('Função', '15', '', 5)
+          .addColumnProperty('roleLabel')
+          //icon, tooltip, classButton, successMsg,
+          //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
+          .addColumnIconButton(
+            'delete_forever', 'Remover Alíquota', '', 'A Alíquota foi removida',
+            self.removeElement, false, false, true, false, false
+          )
 
-      //header, flex, align, ordinationPriorityIndex
-      .addHeader('Tipo', '25', '', 1)
-      //property, formatType
-      .addColumnProperty('label')
+          .setElementsArray(self.lot.aliquotList)
+          .setTitle('Lista de Arquivos')
+          .setCallbackAfterChange(self.dynamicDataTableChange)
+          //Don't use with Service, in this case pass Service as attribute in the template
+          // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
+          /*
+            //Optional Config's
+            .setFormatData("'Dia - 'dd/MM/yy")
+            .setCheckbox(false)
+            .setFilter(true)
+            .setReorder(true)
+            .setPagination(true)
+            .setSelectedColor()
+            .setHoverColor()
 
-      //header, flex, align, ordinationPriorityIndex
-      .addHeader('Recipiente', '15', '', 3)
-      //property, formatType
-      .addColumnProperty('containerLabel')
+          */
+          .getSettings();
+      }
 
-      //header, flex, align, ordinationPriorityIndex
-      .addHeader('Processamento', '15', '', 2)
-      //property, formatType
-      .addColumnProperty('aliquotCollectionData.processing', 'DATE')
+      function dynamicDataTableChange(change) {
+        if (change.type === 'select' || change.type === 'deselect') {
+          self.selectAliquot(change.element);
+        }
+      }
 
-      .addHeader('Função', '15', '', 5)
-      .addColumnProperty('roleLabel')
+      function selectAliquot(aliquot) {
+        var aliquotIndex = self.selectedAliquots.indexOf(aliquot);
+        if (aliquotIndex > -1) {
+          self.selectedAliquots.splice(aliquotIndex, 1);
+          aliquot.isSelected = false;
+        } else {
+          self.selectedAliquots.push(aliquot);
+          aliquot.isSelected = true;
+        }
+      }
 
-      //icon, tooltip, classButton, successMsg,
-      //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
-      .addColumnIconButton(
-        'delete_forever', 'Remover Alíquota', '', 'A Alíquota foi removida',
-        self.removeElement, false, false, true, false, false
-      )
+      function _unselectedAllAliquot() {
+        self.selectedAliquots = [];
+        self.lot.aliquotList.forEach(function(aliquot) {
+          aliquot.isSelected = false;
+        });
+      }
 
-      .setElementsArray(self.lot.aliquotList)
-      .setTitle('Lista de Arquivos')
-      .setCallbackAfterChange(self.dynamicDataTableChange)
-      //Don't use with Service, in this case pass Service as attribute in the template
-      // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
-      /*
-        //Optional Config's
-        .setFormatData("'Dia - 'dd/MM/yy")
-        .setCheckbox(false)
-        .setFilter(true)
-        .setReorder(true)
-        .setPagination(true)
-        .setSelectedColor()
-        .setHoverColor()
+      function _updateDynamicTable() {
+        self.onLotAlteration({
+          newData: self.lot.toJSON()
+        });
+        self.setChartData();
+        _updateContainerLabel();
+        _dynamicDataTableUpdate();
+      }
 
-      */
-      .getSettings();
-    }
+      function removeElement(element) {
+        _unselectedAllAliquot();
+        var aliquotIndex = self.lot.aliquotList.indexOf(element);
+        self.lot.removeAliquotByIndex(aliquotIndex);
+        _updateDynamicTable();
+      }
 
-    function removeElement(element){
-      _unselectedAllAliquot();
-      var aliquotIndex = self.lot.aliquotList.indexOf(element);
-      self.lot.removeAliquotByIndex(aliquotIndex);
-    }
+      function _buildDialogs() {
+        _confirmAliquotsInsertionByPeriod = $mdDialog.confirm()
+          .title('Confirmar inclusão de Alíquotas:')
+          .textContent('Serão incluídas no lote as Alíquotas realizadas no perído selecionado.')
+          .ariaLabel('Confirmar inclusão de Alíquotas por Período')
+          .ok('Confirmar')
+          .cancel('Cancelar');
+      }
 
-    function _buildDialogs() {
-      _confirmAliquotsInsertionByPeriod = $mdDialog.confirm()
-        .title('Confirmar inclusão de Alíquotas:')
-        .textContent('Serão incluídas no lote as Alíquotas realizadas no perído selecionado.')
-        .ariaLabel('Confirmar inclusão de Alíquotas por Período')
-        .ok('Confirmar')
-        .cancel('Cancelar');
-    }
+      function _dynamicDataTableUpdate() {
+        self.AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
+        self.selectedAliquots = [];
+      }
 
-    function _dynamicDataTableUpdate(){
-      AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
-      self.selectedAliquots = [];
-    }
+      function _updateContainerLabel() {
+        self.lot.aliquotList.forEach(function(aliquot) {
+          aliquot.containerLabel = self.AliquotTransportationService.getContainerLabelToAliquot(aliquot);
+        }, this);
+      }
 
-    function _updateContainerLabel(){
-      self.lot.aliquotList.forEach(function(aliquot) {
-        aliquot.containerLabel = AliquotTransportationService.getContainerLabelToAliquot(aliquot);
-      }, this);
-    }
+      function periodInputkeydown(event) {
+        var charCode = event.which || event.keyCode;
+        if (charCode == '13') {
+          self.insertAliquotsByPeriod();
+        }
+      }
 
-    function insertAliquotsByPeriod(){
-      if(self.initialDate instanceof Date && self.finalDate instanceof Date){
-        self.initialDate = new Date(self.initialDate.toISOString());
-        self.finalDate = new Date(self.finalDate.toISOString());
+      function aliquotInputkeydown(event) {
+        var charCode = event.which || event.keyCode;
+        if (charCode == '13' && self.aliquotCode.length > 0) {
+          event.preventDefault();
+          self.fastInsertion(self.aliquotCode);
+        }
+      }
 
-        if(self.initialDate <= self.finalDate){
-          _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no lote as Alíquotas realizadas no período'
-          + ' entre ' + $filter('date')(self.initialDate,'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate,'dd/MM/yyyy') + '.');
+      function insertAliquotsByPeriod() {
+        var successInsertion = false;
+        if (self.initialDate instanceof Date && self.finalDate instanceof Date) {
+          self.initialDate = new Date(self.initialDate.toISOString());
+          self.finalDate = new Date(self.finalDate.toISOString());
 
-          $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
-            var successInsertion = false;
-            _findAliquotByPeriod(self.initialDate, self.finalDate).forEach(function(availableAliquot) {
-              var returned = fastInsertion(availableAliquot.code, true);
-              if(!successInsertion) successInsertion = returned; }, this);
-            if(successInsertion){
-              _successInAliquotInsertion();
-              _dynamicDataTableUpdate();
+          if (self.initialDate <= self.finalDate) {
+            _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no lote as Alíquotas disponíveis realizadas no período' +
+              ' entre ' + $filter('date')(self.initialDate, 'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate, 'dd/MM/yyyy') + '.');
+
+            $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
+              LoadingScreenService.changeMessage(messageLoading);
+              LoadingScreenService.start();
+              _findAliquotByPeriod()
+                .then(function(response) {
+                  if (response) {
+                    _updateDynamicTable();
+                    successInsertion = true;
+                  }
+                  LoadingScreenService.finish();
+                }).catch(function() {
+                  LoadingScreenService.finish();
+                });
+            }).catch(function() {});
+          } else {
+            AliquotTransportationMessagesService.invalidPeriodInterval();
+          }
+        } else {
+          AliquotTransportationMessagesService.unselectedPeriod();
+        }
+
+        return successInsertion;
+      }
+
+      function _findAliquotByPeriod() {
+        var _query = AliquotTransportationQueryFactory.create(null, self.initialDate.toISOString(), self.finalDate.toISOString(),
+          self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
+        return self.AliquotTransportationService.getAliquots(_query.toJSON(), false)
+          .then(function(response) {
+            if (response.length) {
+              self.lot.insertAliquotList(response);
+              AliquotTransportationMessagesService.successInAliquotInsertion();
+              return response;
             } else {
-              _notAliquotsInserted();
+              AliquotTransportationMessagesService.notAliquotsInserted();
+              return false;
             }
+          }).catch(function(err) {
+            AliquotTransportationMessagesService.notAliquotsInserted();
+            return false;
           });
-        } else {
-          _invalidPeriodInterval();
+
+      }
+
+      function fastInsertion(newAliquotCode) {
+        var successInsertion = false;
+        if (newAliquotCode) {
+          _findAliquot(newAliquotCode).then(function(foundAliquot) {
+            if (foundAliquot) {
+              if (newAliquotCode == foundAliquot.code) {
+                _updateDynamicTable();
+                successInsertion = true;
+              }
+            }
+          }).catch(function(err) {});
+
+          self.aliquotCode = "";
+          return successInsertion;
         }
-      } else {
-        _unselectedPeriod();
       }
-    }
 
-    function periodInputkeydown(event) {
-      var charCode = event.which || event.keyCode;
-      if(charCode == '13') {
-        self.insertAliquotsByPeriod();
-      }
-    }
-
-    function aliquotInputkeydown(event) {
-      var charCode = event.which || event.keyCode;
-      if(charCode == '13' && self.aliquotCode.length > 0) {
-        self.fastInsertion(self.aliquotCode);
-      }
-    }
-
-
-    function fastInsertion(newAliquotCode, hideMsgErrors) {
-      var foundAliquot = _findAliquot(newAliquotCode);
-      var successInsertion = false;
-
-      if (foundAliquot) {
-        if(foundAliquot.fieldCenter.acronym !== self.lot.fieldCenter.acronym){
-          if(!hideMsgErrors) _toastWrongFieldCenter(newAliquotCode);
-        } else if (_findAliquotInLot(newAliquotCode)) {
-          if(!hideMsgErrors) _toastDuplicated(newAliquotCode);
-        } else if (_findAliquotsInOtherLots(newAliquotCode)) {
-          if(!hideMsgErrors) _toastOtherLot(newAliquotCode);
-        } else {
-          self.lot.insertAliquot(foundAliquot);
-          self.onLotAlteration({
-            newData: self.lot.toJSON()
+      function _findAliquot(code) {
+        var _query = AliquotTransportationQueryFactory.create(code, null, null,
+          self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
+        return self.AliquotTransportationService.getAliquots(_query.toJSON(), true)
+          .then(function(availableAliquot) {
+            if (availableAliquot) {
+              if (_isDuplicated(code)) {
+                AliquotTransportationMessagesService.toastDuplicated(code);
+                return;
+              } else {
+                self.lot.insertAliquot(availableAliquot);
+                AliquotTransportationMessagesService.successInAliquotInsertion();
+                return availableAliquot;
+              }
+            } else {
+              AliquotTransportationMessagesService.toastNotFoundError(code);
+              return availableAliquot;
+            }
+          }).catch(function() {
+            AliquotTransportationMessagesService.toastOtherLot(code);
+            return;
           });
-          self.setChartData();
-          _updateContainerLabel();
-          successInsertion = true;
-          if(!hideMsgErrors) _dynamicDataTableUpdate();
-        }
-      } else {
-        if(!hideMsgErrors) _toastError(newAliquotCode);
-      }
-      self.aliquotCode = "";
-      return successInsertion;
+
+
     }
 
-    function dynamicDataTableChange(change){
-      if(change.type === 'select' || change.type === 'deselect'){
-        self.selectAliquot(change.element);
-      }
-    }
-
-    function _unselectedAllAliquot(){
-      self.selectedAliquots = [];
-
-      self.lot.aliquotList.forEach(function(aliquot){
-        aliquot.isSelected = false;
-      });
-    }
-
-    function selectAliquot(aliquot) {
-      var aliquotIndex = self.selectedAliquots.indexOf(aliquot);
-      if (aliquotIndex > -1) {
-        self.selectedAliquots.splice(aliquotIndex, 1);
-        aliquot.isSelected = false;
-      } else {
-        self.selectedAliquots.push(aliquot);
-        aliquot.isSelected = true;
-      }
-    }
-
-    function _toastError(aliquotCode) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A alíquota "' + aliquotCode + '" não foi encontrada.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _toastDuplicated(aliquotCode) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A alíquota "' + aliquotCode + '" já esta no lote.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _toastWrongFieldCenter(aliquotCode) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A alíquota "' + aliquotCode + '" não pertence a este centro.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _toastOtherLot(aliquotCode) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A alíquota "' + aliquotCode + '" já esta em outro lote.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _unselectedPeriod() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('Por favor, selecione o Período Inicial e o Período Final antes de prosseguir.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _invalidPeriodInterval() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('O Início do Período, não pode ser superior ao Final do Período.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _successInAliquotInsertion() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A(s) alíquota(s) foi(ram) inserida(s) com sucesso.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _notAliquotsInserted() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('Nenhuma alíquota foi inserida.')
-        .hideDelay(timeShowMsg)
-      );
-    }
-
-    function _findAliquotByPeriod(initialDate, finalDate) {
-      return self.fullAliquotsList.filter(function(availableAliquot) {
-        var aliquotFormatedData = $filter('date')(availableAliquot.aliquotCollectionData.processing,'yyyyMMdd');
-        var initialDateFormated = $filter('date')(initialDate,'yyyyMMdd');
-        var finalDateFormated = $filter('date')(finalDate,'yyyyMMdd');
-
-        return (aliquotFormatedData >= initialDateFormated && aliquotFormatedData <= finalDateFormated);
-      });
-    }
-
-    function _findAliquotInLot(code) {
-      return self.lot.aliquotList.find(function(aliquotsInLot) {
-        return aliquotsInLot.code == code;
-      });
-    }
-
-    function _findAliquot(code) {
-      return self.fullAliquotsList.find(function(availableAliquot) {
-        return availableAliquot.code == code;
-      });
-    }
-
-    function _findAliquotsInOtherLots(code) {
-      return self.aliquotsInOtherLotsList.find(function(aliquotsInOtherLots) {
-        return aliquotsInOtherLots.code == code;
+    function _isDuplicated(code) {
+      return self.lot.getAliquotCodeList().find(function(aliquotCode) {
+        return aliquotCode == code;
       });
     }
   }

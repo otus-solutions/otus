@@ -276,10 +276,6 @@
 
       if (aliquot.aliquotCode) {
         if (Validation.isAliquot(aliquot.aliquotCode)) {
-          if (aliquot.date.length === 0) {
-              _getDateTimeProcessing(aliquot);
-          }
-
           _fillContainer(aliquot);
           clearAliquotError(aliquot);
 
@@ -367,6 +363,7 @@
     function aliquotInputOnChange(aliquot) {
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
+      if (!aliquot.processing) _getDateTimeProcessing(aliquot);
 
       if (self.aliquotLengths.length === 1) {
         var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.stores;

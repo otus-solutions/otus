@@ -43,7 +43,6 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
-    self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -150,8 +149,8 @@
             .update(_participant.recruitmentNumber, laboratory)
             .then(function(remoteLaboratory) {
               request.resolve();
-            }, function(e){
-               request.reject(e);
+            }, function(e) {
+              request.reject(e);
             });
         });
 
@@ -173,8 +172,8 @@
             .updateTubeCollectionData(_participant.recruitmentNumber, updateStructure)
             .then(function(remoteLaboratory) {
               request.resolve();
-            }, function(e){
-               request.reject(e);
+            }, function(e) {
+              request.reject(e);
             });
         });
 
@@ -196,8 +195,8 @@
             .updateAliquots(_participant.recruitmentNumber, updateStructure)
             .then(function(data) {
               request.resolve();
-            }, function(e){
-               request.reject(e);
+            }, function(e) {
+              request.reject(e);
             });
         });
 
@@ -224,14 +223,14 @@
       var request = $q.defer();
 
       _remoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .getDescriptors()
-         .then(function(descriptors) {
-            request.resolve(descriptors);
-         });
-      });
+        .whenReady()
+        .then(function(remoteStorage) {
+          return remoteStorage
+            .getDescriptors()
+            .then(function(descriptors) {
+              request.resolve(descriptors);
+            });
+        });
 
       return request.promise;
     }
@@ -240,47 +239,37 @@
       var request = $q.defer();
 
       _remoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .getAliquotDescriptors()
-         .then(function(descriptors) {
-            request.resolve(descriptors);
-         });
-      });
+        .whenReady()
+        .then(function(remoteStorage) {
+          return remoteStorage
+            .getAliquotDescriptors()
+            .then(function(descriptors) {
+              request.resolve(descriptors);
+            });
+        });
 
       return request.promise;
     }
 
-
-    function getAliquots() {
+    /**
+     * Create the transport lot.
+     * @param {(object)} lotAliquot - structure of aliquot lot query
+     * @memberof LaboratoryCollectionService
+     */
+    function getAliquots(lotAliquot, unique) {
       var request = $q.defer();
 
       _remoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .getAliquots()
-         .then(function(aliquots) {
-            request.resolve(aliquots);
-         });
-      });
-
-      return request.promise;
-    }
-
-    function getAliquotsByCenter(lotCode) {
-      var request = $q.defer();
-
-      _remoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .getAliquotsByCenter(lotCode)
-         .then(function(aliquots) {
-            request.resolve(aliquots);
-         });
-      });
+        .whenReady()
+        .then(function(remoteStorage) {
+          return remoteStorage
+            .getAliquots(lotAliquot, unique)
+            .then(function(aliquots) {
+              request.resolve(aliquots);
+            }).catch(function(err) {
+              request.reject(err);
+            });
+        });
 
       return request.promise;
     }
@@ -289,14 +278,14 @@
       var request = $q.defer();
 
       _remoteStorage
-      .whenReady()
-      .then(function(remoteStorage) {
-         return remoteStorage
-         .getLots()
-         .then(function(lots) {
-            request.resolve(lots);
-         });
-      });
+        .whenReady()
+        .then(function(remoteStorage) {
+          return remoteStorage
+            .getLots()
+            .then(function(lots) {
+              request.resolve(lots);
+            });
+        });
 
       return request.promise;
     }
@@ -317,8 +306,8 @@
             .then(function(data) {
               request.resolve(data);
             })
-            .catch(function(e){
-               request.reject(e);
+            .catch(function(e) {
+              request.reject(e);
             });
         });
 
@@ -341,8 +330,8 @@
             .then(function(data) {
               request.resolve(data);
             })
-            .catch(function(e){
-               request.reject(e);
+            .catch(function(e) {
+              request.reject(e);
             });
         });
 
@@ -365,8 +354,8 @@
             .then(function(data) {
               request.resolve(data);
             })
-            .catch(function(e){
-               request.reject(e);
+            .catch(function(e) {
+              request.reject(e);
             });
         });
 

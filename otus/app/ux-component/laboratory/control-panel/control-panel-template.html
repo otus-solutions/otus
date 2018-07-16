@@ -37,10 +37,10 @@
 
     <div layout="column" layout-align="center center" flex>
       <div layout="row" style="height:50px">
-        <label style="position:relative;top:1.8em">Processamento:</label>
-        <md-input-container class="md-input-has-placeholder md-input-has-value">
+        <label style="position:relative;top:13px">Processamento:</label>
+        <md-input-container class="md-input-has-placeholder md-input-has-value" style="position: relative; top: -10px;">
           <input mdc-datetime-picker="" ng-change="$ctrl.verifyDate()"
-          show-icon="true" date="true" time="true"
+          show-icon="true" date="true" time="true" aria-label="Data de Processamento"
           type="text" id="datetime" show-todays-date=""
           max-date="$ctrl.now" ng-model="$ctrl.processingDate"
           class="md-input" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A"

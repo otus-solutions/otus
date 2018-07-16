@@ -1,0 +1,39 @@
+<div layout="column" flex>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row">
+    <div flex layout-gt-md="row" layout="column" layout-align="center center" layout-margin>
+      <span layout-align="center center">Monitoramento</span>
+    </div>
+  </otus-dashboard-toolbar>
+  <div ui-view layout="column" flex>
+    <monitoring-filter-view-component ng-if="$ctrl.ready" centers="$ctrl.centers" parse-data="$ctrl.parseData" questionnaires-list="$ctrl.questionnairesList" unique-dates-list="$ctrl.uniqueDatesList" update-data = "$ctrl.update"></monitoring-filter-view-component>
+    <div layout="row" flex>
+      <md-content layout="column" flex>
+
+        <div flex>
+          <monitoring-information-cards-component create-information-cards="$ctrl.createInformationCards" centers="$ctrl.centers">
+          </monitoring-information-cards-component>
+          <div flex flex-sm layout="row" layout-sm="column" layout-wrap >
+            <monitoring-centers-goals-visualization-component create-centers-goals-chart="$ctrl.createCentersGoalsChart" flex="40" flex-sm="100" centers="$ctrl.centers">
+            </monitoring-centers-goals-visualization-component>
+            <monitoring-centers-cumulative-results-visualization-component centers="$ctrl.centers" create-cumulative-results-chart="$ctrl.createCumulativeResultsChart" flex="60" flex-sm="100">
+            </monitoring-centers-cumulative-results-visualization-component>
+          </div>
+
+          <div flex layout="column">
+            <monitoring-overview-visualization-component centers="$ctrl.centers" questionnaire-data="$ctrl.questionnaireData" create-questionnaire-line-chart="$ctrl.createQuestionnaireLineChart"
+              style="display:inline-block;" flex>
+            </monitoring-overview-visualization-component>
+            <monitoring-spreadsheet-component create-questionnaire-spreadsheet="$ctrl.createQuestionnaireSpreadsheet" layout="column" centers="$ctrl.centers"
+              style="display:inline-block;" flex>
+            </monitoring-spreadsheet-component>
+          </div>
+        </div>
+
+      </md-content>
+    </div>
+
+  </div>
+</div>

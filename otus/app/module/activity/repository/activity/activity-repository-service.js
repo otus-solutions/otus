@@ -46,6 +46,9 @@
     function listAvailables() {
       return SurveyCollectionService.listAll().then(_toEntity);
     }
+    function listAllSurveys() {
+      return SurveyCollectionService.listAcronyms().then(_toEntity);
+    }
 
     function createFromSurvey(surveys, loggedUser, participant, configuration) {
       return _createActivity(surveys, loggedUser, participant, null, configuration);

@@ -37,9 +37,9 @@
       return $filter('date')(new Date(value), format);
     }
 
-    function getObjectByArray(array, propertyOrJson, value) {
-      if (propertyOrJson === undefined) return undefined;
-      if (typeof propertyOrJson === "object") {
+    function getObjectByArray(array, propertyOrJson, value){
+      if(!array || !array.length || propertyOrJson === undefined) return undefined;
+      if(typeof propertyOrJson === "object"){
         let itemFound = undefined;
         for (let i = 0; i < array.length; i++) {
           const item = array[i];

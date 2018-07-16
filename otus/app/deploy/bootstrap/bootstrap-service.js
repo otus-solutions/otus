@@ -25,7 +25,8 @@
     'otusjs.user.core.ModuleService',
     'otusjs.deploy.StorageLoaderService',
     'otusjs.deploy.ProjectModuleBootstrap',
-    'otusjs.deploy.ReportModuleBootstrap'
+    'otusjs.deploy.ReportModuleBootstrap',
+    'otusjs.deploy.MonitoringModuleBootstrap'
   ];
 
   function Service(
@@ -48,7 +49,8 @@
     UserModule,
     StorageLoaderService,
     ProjectModuleBootstrap,
-    ReportModuleBootstrap) {
+    ReportModuleBootstrap,
+    MonitoringModuleBootstrap) {
 
     var self = this;
 
@@ -64,6 +66,7 @@
       LaboratoryModuleBootstrap.bootstrap();
       ProjectModuleBootstrap.bootstrap();
       ReportModuleBootstrap.bootstrap();
+      MonitoringModuleBootstrap.bootstrap();
 
       //--------------------------------------------------------------------------------------------
       // Here the application identifies if should recover a "logged state" or request a new

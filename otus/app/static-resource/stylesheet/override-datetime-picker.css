@@ -1,0 +1,9 @@
+.md-virtual-repeat-container{
+  display: none;
+}
+.dtp>.dtp-content>.dtp-date-view>header.dtp-header{
+  display: none;
+}
+.dtp div.dtp-actual-num {
+  display: none;
+}

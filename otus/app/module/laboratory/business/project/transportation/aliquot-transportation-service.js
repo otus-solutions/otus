@@ -24,7 +24,6 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
-    self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -47,27 +46,9 @@
       return TransportationService.buildAliquotLotFromJson(lotJSON);
     }
 
-    function getAliquots() {
-      LoadingScreenService.changeMessage(messageLoading);
-      LoadingScreenService.start();
+    function getAliquots(lotAliquot, unique) {
       var deferred = $q.defer();
-
-      LaboratoryRepositoryService.getAliquots()
-        .then(function(response) {
-          deferred.resolve(JSON.parse(response));
-          LoadingScreenService.finish();
-        })
-        .catch(function(err) {
-          deferred.reject(err);
-        });
-
-      return deferred.promise;
-    }
-
-    function getAliquotsByCenter(center) {
-      var deferred = $q.defer();
-
-      LaboratoryRepositoryService.getAliquotsByCenter(center)
+      LaboratoryRepositoryService.getAliquots(lotAliquot, unique)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
         })

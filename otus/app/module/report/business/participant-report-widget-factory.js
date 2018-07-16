@@ -165,13 +165,15 @@
 
     function _manageDatasources(dataSourceList) {
       self.missingDataSources = [];
-
+      self.missingOptionalDataSources = [];
 
       dataSourceList.forEach(function (ds) {
         DatasourceManagerFactory.manage(ds);
 
         if (ds.result[0]) {
           self.dataSources[ds.key] = ds.result;
+        } else if(ds.optional) {
+          self.missingOptionalDataSources.push(ds.label);
         } else {
           self.missingDataSources.push(ds.label);
         }

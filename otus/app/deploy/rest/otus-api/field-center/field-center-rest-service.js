@@ -8,6 +8,7 @@
   Service.$inject = [
     '$q',
     'OtusRestResourceService'
+
   ];
 
   function Service($q, OtusRestResourceService) {

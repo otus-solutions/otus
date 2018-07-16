@@ -45,7 +45,6 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
-    self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
@@ -111,12 +110,12 @@
     function update(recruitmentNumber, participantLaboratory) {
       var deferred = $q.defer();
       LaboratoryRestService
-         .updateLaboratoryParticipant(recruitmentNumber, participantLaboratory)
-         .then(function(response){
-            deferred.resolve(response);
-         }, function(e){
-            deferred.reject(e);
-         });
+        .updateLaboratoryParticipant(recruitmentNumber, participantLaboratory)
+        .then(function(response) {
+          deferred.resolve(response);
+        }, function(e) {
+          deferred.reject(e);
+        });
       return deferred.promise;
     }
     /**
@@ -129,12 +128,12 @@
     function updateTubeCollectionData(recruitmentNumber, updateStructure) {
       var deferred = $q.defer();
       LaboratoryRestService
-         .updateTubeCollectionData(recruitmentNumber, updateStructure)
-         .then(function(response){
-            deferred.resolve(response);
-         }, function(e){
-            deferred.reject(e);
-         });
+        .updateTubeCollectionData(recruitmentNumber, updateStructure)
+        .then(function(response) {
+          deferred.resolve(response);
+        }, function(e) {
+          deferred.reject(e);
+        });
       return deferred.promise;
     }
 
@@ -147,72 +146,54 @@
     function updateAliquots(recruitmentNumber, persistanceStructure) {
       var deferred = $q.defer();
       LaboratoryRestService
-         .updateAliquots(recruitmentNumber, persistanceStructure)
-         .then(function(response){
-            deferred.resolve(response);
-         }, function(e){
-            deferred.reject(e);
-         });
+        .updateAliquots(recruitmentNumber, persistanceStructure)
+        .then(function(response) {
+          deferred.resolve(response);
+        }, function(e) {
+          deferred.reject(e);
+        });
       return deferred.promise;
     }
 
     function getDescriptors() {
       var deferred = $q.defer();
       LaboratoryRestService
-         .getDescriptors()
-         .then(function(response){
-            deferred.resolve(response);
-         }, function(e){
-            deferred.reject(e);
-         });
+        .getDescriptors()
+        .then(function(response) {
+          deferred.resolve(response);
+        }, function(e) {
+          deferred.reject(e);
+        });
       return deferred.promise;
     }
 
     function getAliquotDescriptors() {
       var deferred = $q.defer();
       LaboratoryRestService
-         .getAliquotDescriptors()
-         .then(function(response){
-            deferred.resolve(response);
-         }, function(e){
-            deferred.reject(e);
-         });
+        .getAliquotDescriptors()
+        .then(function(response) {
+          deferred.resolve(response);
+        }, function(e) {
+          deferred.reject(e);
+        });
       return deferred.promise;
     }
 
     /**
      * Transport Lot
+     * @param {(object)} lotAliquot - the structure for query
      * @returns {Promise} promise
      * @memberof LaboratoryRemoteStorageService
      */
-    function getAliquots() {
+    function getAliquots(lotAliquot, unique) {
       var deferred = $q.defer();
-
       SampleTransportRestService
-        .getAliquots()
+        .getAliquots(lotAliquot, unique)
         .then(function(response) {
           deferred.resolve(response.data);
         })
-        .catch(function(e){
-          console.log(e);
-        });
-
-      return deferred.promise;
-    }
-
-    /**
-     * Transport Lot
-     * @param {(object)} center - the code of center
-     * @returns {Promise} promise
-     * @memberof LaboratoryRemoteStorageService
-     */
-    function getAliquotsByCenter(center) {
-      var deferred = $q.defer();
-
-      SampleTransportRestService
-        .getAliquotsByCenter(center)
-        .then(function(response) {
-          deferred.resolve(response.data);
+        .catch(function(e) {
+          deferred.reject(e);
         });
 
       return deferred.promise;
@@ -244,13 +225,13 @@
     function createLot(lotStructure) {
       var deferred = $q.defer();
       SampleTransportRestService
-         .createLot(lotStructure)
-         .then(function(response){
-            deferred.resolve(response.data);
-         })
-         .catch(function(e){
-            deferred.reject(e);
-         });
+        .createLot(lotStructure)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
       return deferred.promise;
     }
 
@@ -263,13 +244,13 @@
     function updateLot(lotStructure) {
       var deferred = $q.defer();
       SampleTransportRestService
-         .updateLot(lotStructure)
-         .then(function(response){
-            deferred.resolve(response.data);
-         })
-         .catch(function(e){
-            deferred.reject(e);
-         });
+        .updateLot(lotStructure)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
       return deferred.promise;
     }
 
@@ -282,13 +263,13 @@
     function deleteLot(lotCode) {
       var deferred = $q.defer();
       SampleTransportRestService
-         .deleteLot(lotCode)
-         .then(function(response){
-            deferred.resolve(response.data);
-         })
-         .catch(function(e){
-            deferred.reject(e);
-         });
+        .deleteLot(lotCode)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
       return deferred.promise;
     }
   }

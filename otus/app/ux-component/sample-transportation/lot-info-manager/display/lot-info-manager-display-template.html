@@ -13,15 +13,11 @@
                   <span>Envio:</span>
                 </div>
                 <md-input-container class="remove-errors-spacer input-container-lot-margin">
-                  <md-datepicker ng-model="$ctrl.lot.shipmentDate"
-                                 ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})"
-                                 aria-label="Data de Envio"></md-datepicker>
+                  <md-datepicker ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de Envio"></md-datepicker>
                 </md-input-container>
                 <md-input-container class="remove-errors-spacer input-container-lot-margin">
                   <md-icon class="material-icons">access_time</md-icon>
-                  <input type="time" ng-model="$ctrl.lot.shipmentDate"
-                         ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0"
-                         max="4999">
+                  <input type="time" ng-model="$ctrl.lot.shipmentDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
                 </md-input-container>
               </div>
             </div>
@@ -31,15 +27,11 @@
                   <span>Processamento:</span>
                 </div>
                 <md-input-container class="remove-errors-spacer input-container-lot-margin">
-                  <md-datepicker ng-model="$ctrl.lot.processingDate"
-                                 ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})"
-                                 aria-label="Data de processamento"></md-datepicker>
+                  <md-datepicker ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Data de processamento"></md-datepicker>
                 </md-input-container>
                 <md-input-container class="remove-errors-spacer input-container-lot-margin">
                   <md-icon class="material-icons">access_time</md-icon>
-                  <input type="time" ng-model="$ctrl.lot.processingDate"
-                         ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0"
-                         max="4999">
+                  <input type="time" ng-model="$ctrl.lot.processingDate" ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0" max="4999">
                 </md-input-container>
               </div>
               <md-divider></md-divider>
@@ -54,11 +46,21 @@
     <div flex layout="row" layout-align="center center">
       <md-card flex="80">
         <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
+          <div layout="row">
+            <span>
           Alíquotas
+        </span>
+            <span flex></span>
+            <md-input-container ng-show="$ctrl.currentNavItem == 'insertionByPeriod'" class="remove-padding activity-item-icon remove-errors-spacer input-container-lot-margin" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+              <md-checkbox ng-model="$ctrl.storage" class="activity-item-icon remove-padding">
+                <span class="md-subheader">
+                  Armazenamento
+                </span>
+              </md-checkbox>
+            </md-input-container>
+          </div>
         </md-subheader>
-        <md-nav-bar
-          md-selected-nav-item="$ctrl.currentNavItem"
-          nav-bar-aria-label="Navegação de tipo de inserção de alíquota">
+        <md-nav-bar md-selected-nav-item="$ctrl.currentNavItem" nav-bar-aria-label="Navegação de tipo de inserção de alíquota">
           <md-nav-item md-nav-click="$ctrl.changeNavItem('insertionByPeriod')" name="insertionByPeriod">
             Inserção por Período
           </md-nav-item>
@@ -68,40 +70,33 @@
           <div layout="row">
           </div>
         </md-nav-bar>
-        <div ng-if="$ctrl.currentNavItem == 'insertionByPeriod'" layout="row" layout-align="start center"
-             layout-padding>
+        <div ng-if="$ctrl.currentNavItem == 'insertionByPeriod'" layout="row" layout-align="start center" layout-padding>
           <div layout="row" layout-xs="column" layout-align="center center">
             <span>Período Inicial:</span>
 
             <md-input-container class="remove-errors-spacer input-container-lot-margin">
-              <md-datepicker ng-model="$ctrl.initialDate" aria-label="Período Inicial"
-                             ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
+              <md-datepicker ng-model="$ctrl.initialDate" aria-label="Período Inicial" ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
             </md-input-container>
           </div>
           <div layout="row" layout-xs="column" layout-align="center center">
             <span>Período Final:</span>
 
             <md-input-container class="remove-errors-spacer input-container-lot-margin">
-              <md-datepicker ng-model="$ctrl.finalDate" aria-label="Período Final"
-                             ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
+              <md-datepicker ng-model="$ctrl.finalDate" aria-label="Período Final" ng-keydown="$ctrl.periodInputkeydown($event)"></md-datepicker>
             </md-input-container>
           </div>
           <div>
-            <md-button ng-click="$ctrl.insertAliquotsByPeriod()" class="md-raised md-primary"
-                       aria-label="Adicionar Alíquotas por Período">
+            <md-button ng-click="$ctrl.insertAliquotsByPeriod()" class="md-raised md-primary" aria-label="Adicionar Alíquotas por Período">
               <md-tooltip md-direction="down">Adicionar</md-tooltip>
               <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
             </md-button>
           </div>
         </div>
-        <div ng-if="$ctrl.currentNavItem == 'individualInsertion'" layout="row" layout-align="center center"
-             layout-padding>
+        <div ng-if="$ctrl.currentNavItem == 'individualInsertion'" layout="row" layout-align="center center" layout-padding>
           <span class="">Código:</span>
-          <input type="text" class="aliquot-lot-input" flex placeholder="Alíquota" name="fast-trigger"
-                 value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)"/>
+          <input type="text" numbers-only class="aliquot-lot-input" flex placeholder="Alíquota" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" />
           <div>
-            <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary"
-                       aria-label="Adicionar Alíquota">
+            <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Alíquota" ng-disabled="!$ctrl.aliquotCode.length">
               <md-tooltip md-direction="down">Adicionar</md-tooltip>
               <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
             </md-button>
@@ -109,22 +104,18 @@
         </div>
         <div layout="row" layout-margin>
           <div layout="column" flex-gt-sm="40" flex-gt-md="25" flex="40">
-            <otus-sample-transportation-lot-aliquots-chart
-              lot-data-set="$ctrl.lot.chartDataSet"></otus-sample-transportation-lot-aliquots-chart>
+            <otus-sample-transportation-lot-aliquots-chart lot-data-set="$ctrl.lot.chartDataSet"></otus-sample-transportation-lot-aliquots-chart>
           </div>
           <div layout="column" style="height: 200px;" flex>
             <md-content class="no-background-color">
-              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lot.chartDataSet"
-                                                                   flex></otus-sample-transportation-lot-chart-subtitle-table>
+              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lot.chartDataSet" flex></otus-sample-transportation-lot-chart-subtitle-table>
             </md-content>
           </div>
         </div>
 
         <md-divider></md-divider>
 
-        <dynamic-data-table flex
-                            dynamic-table-settings="$ctrl.dynamicTableSettings"
-                            table-update-function="$ctrl.AliquotTransportationService.dynamicDataTableFunction.updateDataTable">
+        <dynamic-data-table flex dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.AliquotTransportationService.dynamicDataTableFunction.updateDataTable">
         </dynamic-data-table>
     </div>
   </div>

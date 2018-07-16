@@ -59,6 +59,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -75,6 +76,7 @@
           LoadingScreenService.finish();
         })
         .catch(function (err) {
+          LoadingScreenService.finish();
           deferred.reject(err);
         });
 
@@ -118,28 +120,36 @@
     }
 
     function createLot(lotStructure) {
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
       var deferred = $q.defer();
 
       ProjectRepositoryService.createLot(lotStructure)
         .then(function (response) {
           deferred.resolve(JSON.parse(response));
+          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
     }
 
     function updateLot(lotStructure) {
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
       var deferred = $q.defer();
 
       ProjectRepositoryService.updateLot(lotStructure)
         .then(function (response) {
           deferred.resolve(JSON.parse(response));
+          LoadingScreenService.finish();
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -169,6 +179,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;
@@ -184,6 +195,7 @@
         })
         .catch(function(err) {
           deferred.reject(err);
+          LoadingScreenService.finish();
         });
 
       return deferred.promise;

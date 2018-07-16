@@ -104,6 +104,11 @@
 <script src="app/application/core/context-service.js"></script>
 <script src="app/application/core/module-service.js"></script>
 <!------------------------------------------------------------------------------------------------>
+<!-- #Error handler -->
+<script src="app/application/crash-report/module.js"></script>
+<script src="app/application/crash-report/handler-crash-report-factory.js"></script>
+<script src="app/application/crash-report/crash-report-factory.js"></script>
+<script src="app/application/crash-report/crash-report-service.js"></script>
 <script src="app/application/verify-browser/module.js"></script>
 <script src="app/application/verify-browser/verify-browser-service.js"></script>
 <!------------------------------------------------------------------------------------------------>
@@ -126,7 +131,6 @@
 <!-- # Application > Locale -->
 <script src="app/application/locale/module.js"></script>
 <script src="app/application/locale/locale-configuration.js"></script>
-
 <!------------------------------------------------------------------------------------------------>
 <!-- # Application > Session -->
 <script src="app/application/session/module.js"></script>
@@ -170,6 +174,7 @@
 <script src="app/deploy/bootstrap/project-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/user-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/report-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/monitoring-module-bootstrap.js"></script>
 <!-- # Deploy > Data Source -->
 <script src="app/deploy/data-source/data-source-loader-service.js"></script>
 <script src="app/deploy/data-source/activity-data-source-service.js"></script>
@@ -204,6 +209,7 @@
 <script src="app/deploy/rest/otus-api/laboratory/sampleTransport/sample-transport-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/extraction/token-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/exam/exams-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/monitoring/monitoring-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/report/participant-report-rest-service.js"></script>
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
@@ -231,6 +237,7 @@
 <script src="app/deploy/state/exam/exam-lot/exam-lot-manager-list-state-provider.js"></script>
 <script src="app/deploy/state/exam/exam-sending/exam-sending-provider.js"></script>
 <script src="app/deploy/state/exam/exam-sending/exam-results-visualizer-provider.js"></script>
+<script src="app/deploy/state/monitoring/monitoring-state-provider.js"></script>
 <!-- # Deploy > Storage -->
 <script src="app/deploy/storage/storage-loader-service.js"></script>
 <script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
@@ -311,7 +318,9 @@
 <!-- # laboratory > Business > Project-->
 <script src="app/module/laboratory/business/project/module.js"></script>
 <script src="app/module/laboratory/business/project/transportation/module.js"></script>
+<script src="app/module/laboratory/business/project/transportation/aliquot-transportation-messages-service.js"></script>
 <script src="app/module/laboratory/business/project/transportation/aliquot-transportation-service.js"></script>
+<script src="app/module/laboratory/business/project/transportation/aliquot-transportation-query-factory.js"></script>
 <script src="app/module/laboratory/business/project/exam-lot/module.js"></script>
 <script src="app/module/laboratory/business/project/exam-lot/exam-lot-service.js"></script>
 <script src="app/module/laboratory/business/project/exam-sending/module.js"></script>
@@ -420,7 +429,6 @@
 <script src="app/module/report/business/datasource/module.js"></script>
 <script src="app/module/report/business/datasource/datasource-manager-factory.js"></script>
 
-
 <!-- # report > core -->
 <script src="app/module/report/core/module.js"></script>
 <script src="app/module/report/core/module-service.js"></script>
@@ -433,9 +441,35 @@
 <script src="app/module/report/repository/participant-report-collection-service.js"></script>
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
+<!-- build:js scripts/monitoring-module.min.js -->
+<!-- # Module > Monitoring -->
+<script src="app/module/monitoring/module.js"></script>
+
+<!-- # monitoring > Business -->
+<script src="app/module/monitoring/business/module.js"></script>
+<script src="app/module/monitoring/business/monitoring-service.js"></script>
+
+<!-- # monitoring > core -->
+<script src="app/module/monitoring/core/module.js"></script>
+<script src="app/module/monitoring/core/module-service.js"></script>
+<script src="app/module/monitoring/core/context-service.js"></script>
+<script src="app/module/monitoring/core/event-service.js"></script>
+
+<!-- # monitoring > repository -->
+<script src="app/module/monitoring/repository/module.js"></script>
+<script src="app/module/monitoring/repository/monitoring-collection-service.js"></script>
+
+<!-- # monitoring > storage -->
+<script src="app/module/monitoring/storage/module.js"></script>
+<script src="app/module/monitoring/storage/monitoring-local-storage-service.js"></script>
+
+
+<!-- endbuild -->
+<!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/ux-component-module.min.js -->
 <script src="app/ux-component/module.js"></script>
-<script src="app/ux-component/report-export/report-export-directive.js"></script>
+<script src="app/ux-component/commons/report-export/report-export-directive.js"></script>
+<script src="app/ux-component/commons/numbers-only/numbers-only-directive.js"></script>
 <script src="app/ux-component/activity-adder/activity-adder-component.js"></script>
 <script src="app/ux-component/error/error-component.js"></script>
 <script src="app/ux-component/activity-adder-list/activity-adder-list-component.js"></script>
@@ -513,6 +547,21 @@
 <script src="app/ux-component/laboratory/control-panel/refresh-button/laboratory-refresh-button-component.js"></script>
 <script src="app/ux-component/laboratory/main-panel/aliquots-view/aliquots-view-component.js"></script>
 
+<!-- monitoring-ux -->
+<script src="app/ux-component/otus-monitoring/otus-monitoring-parse-data-factory.js"></script>
+
+<script src="app/ux-component/otus-monitoring/otus-monitoring-dashboard-controller.js"></script>
+<script src="app/ux-component/otus-monitoring/otus-monitoring-dashboard-component.js"></script>
+<script src="app/ux-component/otus-monitoring/filtering/monitoring-filter-view-controller.js"></script>
+<script src="app/ux-component/otus-monitoring/filtering/monitoring-filter-view-component.js"></script>
+<script src="app/ux-component/otus-monitoring/visualizations/monitoring-overview-visualization-component.js"></script>
+<script src="app/ux-component/otus-monitoring/visualizations/centers-goals/monitoring-centers-goals-visualization-component.js"></script>
+<script src="app/ux-component/otus-monitoring/visualizations/centers-cumulative-results/monitoring-centers-cumulative-results-visualization-component.js"></script>
+<script src="app/ux-component/otus-monitoring/spreadsheet/monitoring-spreadsheet-controller.js"></script>
+<script src="app/ux-component/otus-monitoring/spreadsheet/monitoring-spreadsheet-component.js"></script>
+<script src="app/ux-component/otus-monitoring/information-cards/monitoring-information-cards-controller.js"></script>
+<script src="app/ux-component/otus-monitoring/information-cards/monitoring-information-cards-component.js"></script>
+
 <!--  otus-panel  -->
 <script src="app/ux-component/otus-panel/otus-panel-component.js"></script>
 
@@ -523,6 +572,10 @@
 <script src="app/ux-component/user-login/login-controller.js"></script>
 <script src="app/ux-component/user-signup/signup-controller.js"></script>
 <script src="app/ux-component/translate-datetime/pt-br.js"></script>
+
+<!--  crash report  -->
+<script src="app/ux-component/crash-report/crash-report-component.js"></script>
+
 <!-- endbuild -->
 <!-- enduncache -->
 
