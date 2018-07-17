@@ -32,7 +32,7 @@
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
-    self.removeAliquot = removeAliquot;
+    self.deleteAliquot = deleteAliquot;
 
 
     function initializeLaboratory(participant) {
@@ -85,8 +85,8 @@
       return LaboratoryCollectionService.updateLot(lotStructure);
     }
 
-    function removeAliquot(aliquotCode) {
-      return LaboratoryCollectionService.removeAliquot(aliquotCode);
+    function deleteAliquot(aliquotCode) {
+      return LaboratoryCollectionService.deleteAliquot(aliquotCode);
     }
 
     function deleteLot(lotCode) {

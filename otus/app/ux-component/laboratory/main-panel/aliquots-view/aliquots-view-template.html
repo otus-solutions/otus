@@ -109,7 +109,7 @@
                           <div ng-message="required">Campo obrigatório</div>
                         </div>
                       </md-input-container>
-                      <md-button class="md-icon-button md-button" style="top:-10px" ng-if="exam.isSaved" ng-click="$ctrl.removeAliquot(exam)" id="delete{{exam.aliquotCode}}">
+                      <md-button class="md-icon-button md-button" style="top:-10px" ng-if="exam.isSaved" ng-click="$ctrl.deleteAliquot(exam)" id="delete{{exam.aliquotCode}}">
 
                         <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons" ng-if="exam.isSaved">delete_forever</md-icon>
                         <md-tooltip >
@@ -183,7 +183,7 @@
                           <div ng-message="customValidation">{{storage.aliquotMessage}}</div>
                         </div>
                       </md-input-container>
-                      <md-button class="md-icon-button md-button" style="top:-10px" ng-if="storage.isSaved" ng-click="$ctrl.removeAliquot(storage)" id="delete{{storage.aliquotCode}}">
+                      <md-button class="md-icon-button md-button" style="top:-10px" ng-if="storage.isSaved" ng-click="$ctrl.deleteAliquot(storage)" id="delete{{storage.aliquotCode}}">
 
                         <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons" ng-if="storage.isSaved">delete_forever</md-icon>
                         <md-tooltip >

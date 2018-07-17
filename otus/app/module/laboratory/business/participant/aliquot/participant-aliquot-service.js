@@ -22,14 +22,14 @@
     self.populateAliquotsArray = populateAliquotsArray;
     self.getNewAliquots = getNewAliquots;
     self.updateAliquots = updateAliquots;
-    self.removeAliquot = removeAliquot;
+    self.deleteAliquot = deleteAliquot;
 
     function updateAliquots(updateStructure) {
       return ParticipantLaboratoryService.updateAliquots(updateStructure);
     }
 
-    function removeAliquot(aliquotCode) {
-      return ParticipantLaboratoryService.removeAliquot(aliquotCode);
+    function deleteAliquot(aliquotCode) {
+      return ParticipantLaboratoryService.deleteAliquot(aliquotCode);
     }
 
     function areFieldsChanged(momentType){

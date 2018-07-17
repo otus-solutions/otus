@@ -32,7 +32,7 @@
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
     self.updateTubeCollectionData = updateTubeCollectionData;
-    self.removeAliquot = removeAliquot;
+    self.deleteAliquot = deleteAliquot;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -117,8 +117,8 @@
       return LaboratoryRepositoryService.updateAliquots(updateStructure);
     }
 
-    function removeAliquot(aliquotCode) {
-      return LaboratoryRepositoryService.removeAliquot(aliquotCode);
+    function deleteAliquot(aliquotCode) {
+      return LaboratoryRepositoryService.deleteAliquot(aliquotCode);
     }
 
     function generateLabels() {

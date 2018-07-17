@@ -39,7 +39,7 @@
     self.aliquotLengths;
     self.aliquotMaxLength;
     self.validations;
-    self.removeAliquot = removeAliquot;
+    self.deleteAliquot = deleteAliquot;
     self.tubeList = self.participantLaboratory.tubes;
 
     self.$onInit = onInit;
@@ -440,9 +440,9 @@
       $element.find('#' + id).focus();
     }
 
-    function removeAliquot(aliquot) {
+    function deleteAliquot(aliquot) {
       AliquotMessagesService.showDeleteDialog().then(function() {
-        return AliquotTubeService.removeAliquot(aliquot.aliquotCode).then(function () {
+        return AliquotTubeService.deleteAliquot(aliquot.aliquotCode).then(function () {
           self.selectedMomentType.removeAliquot(aliquot.aliquotCode);
         }).catch(function (err) {
            AliquotMessagesService.showNotRemovedDialog(err.CONTENT);

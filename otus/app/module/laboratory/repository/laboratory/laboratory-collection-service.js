@@ -37,7 +37,7 @@
     self.update = update;
     self.updateTubeCollectionData = updateTubeCollectionData;
     self.updateAliquots = updateAliquots;
-    self.removeAliquot = removeAliquot;
+    self.deleteAliquot = deleteAliquot;
     self.getLaboratory = getLaboratory;
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
@@ -204,14 +204,14 @@
       return request.promise;
     }
 
-    function removeAliquot(aliquotCode) {
+    function deleteAliquot(aliquotCode) {
       var request = $q.defer();
 
       _remoteStorage
         .whenReady()
         .then(function(remoteStorage) {
           remoteStorage
-            .removeAliquot(aliquotCode)
+            .deleteAliquot(aliquotCode)
             .then(function(data) {
               request.resolve(data);
             }, function(e) {

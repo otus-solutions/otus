@@ -13,10 +13,6 @@
   function Service($mdDialog, $mdToast) {
     var self = this;
 
-    var _exitDialog;
-    var _saveDialog;
-    var _deleteDialog;
-
     self.showExitDialog = showExitDialog;
     self.showSaveDialog = showSaveDialog;
     self.showDeleteDialog = showDeleteDialog;
@@ -44,6 +40,7 @@
     }
 
     function showDeleteDialog(msg) {
+      console.log(1)
       var message = msg || "A exclusão desta alíquota será um procedimento irreversível! Deseja realmente excluir?";
       return $mdDialog.show($mdDialog.confirm()
         .title('ATENÇÃO')

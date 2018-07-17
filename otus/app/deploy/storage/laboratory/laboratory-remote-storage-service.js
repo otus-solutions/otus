@@ -36,7 +36,7 @@
     self.getLaboratory = getLaboratory;
     self.update = update;
     self.updateAliquots = updateAliquots;
-    self.removeAliquot = removeAliquot;
+    self.deleteAliquot = deleteAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
 
@@ -156,10 +156,10 @@
       return deferred.promise;
     }
 
-    function removeAliquot(aliquotCode) {
+    function deleteAliquot(aliquotCode) {
       var deferred = $q.defer();
       LaboratoryRestService
-        .removeAliquot(aliquotCode)
+        .deleteAliquot(aliquotCode)
         .then(function(response) {
           deferred.resolve(response.data);
         }, function(e) {
