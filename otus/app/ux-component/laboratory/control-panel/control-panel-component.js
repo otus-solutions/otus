@@ -97,7 +97,7 @@
         );
       }
     }
-    //TODO: tiago
+
     self.fetchChanges = fetchChanges;
     function fetchChanges() {
       Publisher.publish('have-aliquots-changed', function(result) {
@@ -108,7 +108,7 @@
     }
 
     function _updateChangedTubes() {
-      var changedTubes = null;
+      var changedTubes;
       var updateChangedTubesStructure = {
         tubes: []
       };

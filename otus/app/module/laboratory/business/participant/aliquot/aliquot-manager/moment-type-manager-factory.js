@@ -37,7 +37,6 @@
     self.availableAliquots = [];
     self.tubeList = [];
 
-    //
     self.addTube = addTube;
     self.removeAliquot = removeAliquot;
     self.setAvailableAliquots = setAvailableAliquots;
@@ -52,19 +51,18 @@
     function addTube(tube) {
       self.collectedAliquots = self.collectedAliquots.concat(tube.aliquots);
       self.tubeList.push(tube);
-
     }
+
     function setAvailableAliquots(availableAliquots) {
       self.availableAliquots = availableAliquots;
-
-
     }
+
     function getPersistanceStructure(newAliquotsArray) {
       var persistanceStructure = {tubes: _buildTubeArray(newAliquotsArray)};
       _tubesToUpdate = persistanceStructure.tubes;
       return JSON.stringify(persistanceStructure);
-
     }
+
     function updateTubes() {
       _tubesToUpdate.forEach(function (tubeSet) {
         var tube = _findTube(tubeSet.code);
@@ -74,10 +72,9 @@
         });
       });
       _tubesToUpdate = undefined;
-
     }
-    function _buildTubeArray(newAliquotsArray) {
 
+    function _buildTubeArray(newAliquotsArray) {
       var preStructure = _buildPreStructure(newAliquotsArray);
       preStructure.forEach(function (tubeSet) {
         var tube = _findTube(tubeSet.code);
@@ -85,19 +82,17 @@
           tubeSet.aliquots.push(tube.toAliquot(aliquot));
         });
         delete tubeSet.rawAliquotes;
-
       });
       return preStructure;
-
     }
+
     function _findTube(tubeCode) {
       return self.tubeList.find(function (tube) {
         return tube.code === tubeCode;
       });
-
     }
-    function _buildPreStructure(aliquotsArray) {
 
+    function _buildPreStructure(aliquotsArray) {
       var maps = [];
       aliquotsArray.forEach(function (aliquot) {
         var thisMap = maps.find(function (map) {
@@ -116,7 +111,6 @@
         }
       });
       return maps;
-
     }
 
     function removeAliquot(code) {
@@ -138,11 +132,9 @@
       var _aliquote = self.exams.find(function (exam) {
         return exam.aliquotCode == code;
       });
-
       var _originalExam = self.originalExams.find(function (examFound) {
         return examFound.aliquotCode == code;
       });
-
       index = self.originalExams.indexOf(_originalExam);
       self.originalExams.splice(index, 1, AliquotStructureFactory.create(_originalExam).toEmptyJSON());
 
@@ -155,7 +147,6 @@
       var _aliquote = self.storages.find(function (exam) {
         return exam.aliquotCode == code;
       });
-
       var _originalStorages = self.originalStorages.find(function (exam) {
         return exam.aliquotCode == code;
       });

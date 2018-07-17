@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusActivityList', {
       controller: Controller,
-      templateUrl: 'app/ux-component/activity-aliquot-manager-list/activity-aliquot-manager-list-template.html',
+      templateUrl: 'app/ux-component/activity-manager-list/activity-manager-list-template.html',
       require: {
         otusActivityManager: '^otusActivityManager'
       }

@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusActivityManagerCommander', {
       controller: Controller,
-      templateUrl: 'app/ux-component/activity-aliquot-manager-commander/activity-aliquot-manager-commander-template.html'
+      templateUrl: 'app/ux-component/activity-manager-commander/activity-manager-commander-template.html'
     });
 
   Controller.$inject = [

@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusExamsLotsManager', {
       controller: Controller,
-      templateUrl: 'app/ux-component/exam/dashboard/exam-lot/aliquot-manager-list/exams-lots-aliquot-manager-template.html',
+      templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/exams-lots-manager-template.html',
       bindings: {
         lots: "<"
       }

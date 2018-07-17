@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationLotInfoManager', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/lot-info-aliquot-manager/sample-transportation-lot-info-aliquot-manager-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/sample-transportation-lot-info-manager-template.html',
       bindings: {
         stateData: "<",
         lots: "<"

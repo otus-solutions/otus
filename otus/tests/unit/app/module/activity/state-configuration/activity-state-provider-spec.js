@@ -2,7 +2,7 @@ xdescribe('otusjs.otus.application.state.ActivityStateProvider', function() {
 
   var UNIT_NAME = 'otusjs.otus.application.state.ActivityState';
   var URL = '/activity';
-  var TEMPLATE = '<otus-activity-aliquot-manager layout="column" flex></otus-activity-aliquot-manager>';
+  var TEMPLATE = '<otus-activity-manager layout="column" flex></otus-activity-manager>';
   var provider = {};
   var Injections = {};
   var Mock = {};

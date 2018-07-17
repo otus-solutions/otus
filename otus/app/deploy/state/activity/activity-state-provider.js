@@ -22,7 +22,7 @@
       parent: STATE.PARTICIPANT_DASHBOARD,
       name: STATE.PARTICIPANT_ACTIVITY,
       url: '/' + STATE.PARTICIPANT_ACTIVITY,
-      template: '<otus-activity-aliquot-manager layout="column" flex></otus-activity-aliquot-manager>',
+      template: '<otus-activity-manager layout="column" flex></otus-activity-manager>',
       data: {
         redirect: _redirect
       },

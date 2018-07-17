@@ -213,7 +213,7 @@
           remoteStorage
             .removeAliquot(aliquotCode)
             .then(function(data) {
-              request.resolve();
+              request.resolve(data);
             }, function(e) {
               request.reject(e);
             });

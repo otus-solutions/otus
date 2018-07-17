@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusActivityManagerToolbar', {
       controller: Controller,
-      templateUrl: 'app/ux-component/activity-aliquot-manager-toolbar/activity-aliquot-manager-toolbar-template.html',
+      templateUrl: 'app/ux-component/activity-manager-toolbar/activity-manager-toolbar-template.html',
       require: {
         otusActivityManager: '^otusActivityManager'
       },

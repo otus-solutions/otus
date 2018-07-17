@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationLotAddButton', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/aliquot-manager-list/lot-add-button/lot-add-button-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/manager-list/lot-add-button/lot-add-button-template.html',
       bindings:{
         onNewLot: "&"
       }
