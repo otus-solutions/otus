@@ -23,6 +23,7 @@
     "karma": "karma",
     "build": "gulp compress",
     "modularize": "gulp modularize",
+    "test-unit": "gulp start-test --path",
     "replace-env": "gulp replace-env"
   },
   "dependencies": {
@@ -42,6 +43,7 @@
     "chart.js-scatter": "1.1.4",
     "d3": "5.0.0",
     "fuse.js": "^2.6.2",
+    "gulp-load-plugins": "^1.5.0",
     "jquery": "3.0.0",
     "jsbarcode": "^3.5.7",
     "json2csv": "^3.11.5",
@@ -55,6 +57,7 @@
     "otus-preview-js": "https://github.com/ccem-dev/otus-preview-js.git#v1.9",
     "otus-validation-js": "https://github.com/ccem-dev/otus-validation-js.git#v1.0",
     "please-wait": "0.0.5",
+    "require-dir": "^1.0.0",
     "xlsx-core": "^1.0.3"
   },
   "devDependencies": {
@@ -73,7 +76,7 @@
     "gulp-concat": "2.6.0",
     "gulp-minify": "0.0.11",
     "gulp-minify-css": "^1.2.4",
-    "gulp-rename": "^1.2.2",
+    "gulp-rename": "^1.3.0",
     "gulp-replace": "^0.6.1",
     "gulp-replace-task": "0.11.0",
     "gulp-sonar": "^2.1.0",
