@@ -17,11 +17,16 @@ describe('Aliquots View Component', function () {
     };
 
     Mock.AliquotTubeService = {
-      removeAliquot: function (code) {
+      deleteAliquot: function (code) {
         if (code) {
           return Promise.resolve();
         } else {
-          return Promise.reject('Error');
+          var err = {
+            data: {
+              CONTENT: {}
+            }
+          }
+          return Promise.reject(err);
         }
       }
     }
@@ -64,11 +69,11 @@ describe('Aliquots View Component', function () {
     beforeEach(function () {
       originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
       jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
-      spyOn(ctrl, 'removeAliquot').and.callThrough();
+      spyOn(ctrl, 'deleteAliquot').and.callThrough();
       spyOn(ctrl.selectedMomentType, 'removeAliquot').and.callThrough();
       spyOn(Mock.AliquotMessagesService, 'showDeleteDialog').and.callThrough();
       spyOn(Mock.AliquotMessagesService, 'showNotRemovedDialog').and.callThrough();
-      spyOn(Mock.AliquotTubeService, 'removeAliquot').and.callThrough();
+      spyOn(Mock.AliquotTubeService, 'deleteAliquot').and.callThrough();
       spyOn(Injections.$mdToast, 'show').and.callFake(function () {
         return true;
       });
@@ -76,10 +81,10 @@ describe('Aliquots View Component', function () {
 
     it('should remove aliquot', function (done) {
 
-      ctrl.removeAliquot(Mock.aliquot);
+      ctrl.deleteAliquot(Mock.aliquot);
 
       Mock.AliquotMessagesService.showDeleteDialog().then(function () {
-        Mock.AliquotTubeService.removeAliquot(Mock.aliquot).then(function () {
+        Mock.AliquotTubeService.deleteAliquot(Mock.aliquot).then(function () {
           expect(ctrl.selectedMomentType.removeAliquot).toHaveBeenCalledTimes(1);
           done();
         }).catch(function () {
@@ -93,10 +98,10 @@ describe('Aliquots View Component', function () {
     });
 
     it('should not remove aliquot', function (done) {
-      ctrl.removeAliquot(false);
+      ctrl.deleteAliquot(false);
 
       Mock.AliquotMessagesService.showDeleteDialog().then(function () {
-        Mock.AliquotTubeService.removeAliquot(false).then(function () {
+        Mock.AliquotTubeService.deleteAliquot(false).then(function () {
           done();
         }).catch(function () {
           expect(Mock.AliquotMessagesService.showNotRemovedDialog).toHaveBeenCalledTimes(1);

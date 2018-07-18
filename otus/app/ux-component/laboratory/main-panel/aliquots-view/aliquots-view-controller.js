@@ -445,7 +445,7 @@
         return AliquotTubeService.deleteAliquot(aliquot.aliquotCode).then(function () {
           self.selectedMomentType.removeAliquot(aliquot.aliquotCode);
         }).catch(function (err) {
-           AliquotMessagesService.showNotRemovedDialog(err.CONTENT);
+           AliquotMessagesService.showNotRemovedDialog(err.data.CONTENT);
         });
       }).catch(function () {});
     }

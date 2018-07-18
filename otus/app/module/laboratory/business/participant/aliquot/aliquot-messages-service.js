@@ -40,7 +40,6 @@
     }
 
     function showDeleteDialog(msg) {
-      console.log(1)
       var message = msg || "A exclusão desta alíquota será um procedimento irreversível! Deseja realmente excluir?";
       return $mdDialog.show($mdDialog.confirm()
         .title('ATENÇÃO')
