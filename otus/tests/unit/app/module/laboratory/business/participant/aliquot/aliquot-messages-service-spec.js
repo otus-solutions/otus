@@ -40,6 +40,37 @@ describe('Aliquot Messages Service', function () {
         };
         return self;
       },
+      alert: function () {
+        var self = this;
+
+        self.title = function(){
+          var vm = this;
+          return vm;
+        };
+        self.textContent = function(msg){
+          var vm = this;
+          vm.msg = msg;
+          return vm;
+        };
+        self.htmlContent = function(msg){
+          var vm = this;
+          vm.msg = msg;
+          return vm;
+        };
+        self.ariaLabel = function(){
+          var vm = this;
+          return vm;
+        };
+        self.ok = function(){
+          var vm = this;
+          return vm;
+        };
+        self.cancel = function(){
+          var vm = this;
+          return vm;
+        };
+        return self;
+      },
       show: function (confirm) {
         var self = this;
         self.test = confirm;

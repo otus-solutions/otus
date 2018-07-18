@@ -46,11 +46,11 @@
         .textContent(message)
         .ariaLabel('Confirmação de exclusão')
         .ok('Ok')
-        .cancel('Voltar'));
+        .cancel('Cancelar'));
     }
 
     function showNotRemovedDialog(msg) {
-      return $mdDialog.show($mdDialog.confirm()
+      return $mdDialog.show($mdDialog.alert()
         .title('ALÍQUOTA NÃO REMOVIDA')
         .htmlContent(_buildMessage(msg))
         .ariaLabel('Confirmação de leitura')
@@ -60,11 +60,11 @@
     function _buildMessage(msg) {
       var message = "<br>A alíquota se encontra em: <br><br><ul>";
       if(msg.transportationLot){
-        message = message + "<li>Lote de Transporte (" + msg.transportationLot + ")</li>";
+        message = message + "<li>Lote de Transporte (Código: " + msg.transportationLot + ")</li>";
       }
 
       if(msg.examLot){
-        message = message + "<li>Lote de Exames (" + msg.examLot + ")</li>";
+        message = message + "<li>Lote de Exames (Código: " + msg.examLot + ")</li>";
       }
 
       if(msg.examResult){
