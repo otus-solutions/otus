@@ -60,17 +60,17 @@
     function _buildMessage(msg) {
       var message = "<br>A alíquota se encontra em: <br><br><ul>";
       if(msg.transportationLot){
-        message = message + "<li>Lote de Transporte (Código: " + msg.transportationLot + ")</li>";
+        message = message + "<li>Lote de Transporte (Código do lote: " + msg.transportationLot + ")</li>";
       }
 
       if(msg.examLot){
-        message = message + "<li>Lote de Exames (Código: " + msg.examLot + ")</li>";
+        message = message + "<li>Lote de Exames (Código do lote: " + msg.examLot + ")</li>";
       }
 
       if(msg.examResult){
         message = message + "<li>Existem Resultados com essa alíquota!</li>";
       }
-      message = message + '</ul>';
+      message = message + '</ul><br><br><b>Para esse procedimento, é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
 
       return message;
     }

@@ -120,9 +120,9 @@
       });
       index = self.collectedAliquots.indexOf(_participantAliquote);
       self.collectedAliquots.splice(index, 1);
-      if (_participantAliquote.role == "EXAM") {
+      if (_participantAliquote.role === "EXAM") {
         _removeExam(code);
-        } else if (_participantAliquote.role == "STORAGE") {
+      } else if (_participantAliquote.role === "STORAGE") {
         _removeStorage(code);
       }
     }
@@ -130,10 +130,10 @@
     function _removeExam(code) {
       var index;
       var _aliquote = self.exams.find(function (exam) {
-        return exam.aliquotCode == code;
+        return exam.aliquotCode === code;
       });
       var _originalExam = self.originalExams.find(function (examFound) {
-        return examFound.aliquotCode == code;
+        return examFound.aliquotCode === code;
       });
       index = self.originalExams.indexOf(_originalExam);
       self.originalExams.splice(index, 1, AliquotStructureFactory.create(_originalExam).toEmptyJSON());
@@ -145,10 +145,10 @@
     function _removeStorage(code) {
       var index;
       var _aliquote = self.storages.find(function (exam) {
-        return exam.aliquotCode == code;
+        return exam.aliquotCode === code;
       });
       var _originalStorages = self.originalStorages.find(function (exam) {
-        return exam.aliquotCode == code;
+        return exam.aliquotCode === code;
       });
       index = self.originalStorages.indexOf(_originalStorages);
       self.originalStorages.splice(index, 1, AliquotStructureFactory.create(_originalStorages).toEmptyJSON());

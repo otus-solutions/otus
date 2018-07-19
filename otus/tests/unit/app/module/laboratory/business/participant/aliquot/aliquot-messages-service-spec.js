@@ -184,10 +184,10 @@ describe('Aliquot Messages Service', function () {
       "transportationLot": "300000001",
       "examResult": true
     };
-    Mock.messageOne = '<br>A alíquota se encontra em: <br><br><ul></ul>';
-    Mock.messageTwo = '<br>A alíquota se encontra em: <br><br><ul><li>Lote de Exames (300000015)</li></ul>';
-    Mock.messageThree = '<br>A alíquota se encontra em: <br><br><ul><li>Lote de Transporte (300000001)</li><li>Lote de Exames (300000015)</li></ul>';
-    Mock.messageFour = '<br>A alíquota se encontra em: <br><br><ul><li>Lote de Transporte (300000001)</li><li>Lote de Exames (300000015)</li><li>Existem Resultados com essa alíquota!</li></ul>';
+    Mock.messageOne = '<br>A alíquota se encontra em: <br><br><ul></ul><br><br><b>Para esse procedimento, é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
+    Mock.messageTwo = '<br>A alíquota se encontra em: <br><br><ul><li>Lote de Exames (Código do lote: 300000015)</li></ul><br><br><b>Para esse procedimento, é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
+    Mock.messageThree = '<br>A alíquota se encontra em: <br><br><ul><li>Lote de Transporte (Código do lote: 300000001)</li><li>Lote de Exames (Código do lote: 300000015)</li></ul><br><br><b>Para esse procedimento, é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
+    Mock.messageFour = '<br>A alíquota se encontra em: <br><br><ul><li>Lote de Transporte (Código do lote: 300000001)</li><li>Lote de Exames (Código do lote: 300000015)</li><li>Existem Resultados com essa alíquota!</li></ul><br><br><b>Para esse procedimento, é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
 
   }
 });

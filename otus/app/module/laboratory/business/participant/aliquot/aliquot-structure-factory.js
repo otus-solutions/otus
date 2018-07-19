@@ -24,7 +24,6 @@
 
     self.toJSON = toJSON;
     self.toEmptyJSON = toEmptyJSON;
-    // console.log(aliquot)
 
     self.aliquotCode = aliquot.aliquotCode || "";
     self.role = aliquot.role || "";
