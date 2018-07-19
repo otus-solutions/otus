@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var replaceTask = require('gulp-replace-task');
 
-gulp.task('url-api', function() {
+gulp.task('replace-env', function() {
     gulp.src('app/application/environment/env.js')
       .pipe(replaceTask({
         patterns: [{

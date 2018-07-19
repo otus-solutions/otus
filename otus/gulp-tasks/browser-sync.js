@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
 var browserSyncSpa = require('browser-sync-middleware-spa');
 
-gulp.task('browser-dev', function() {
+gulp.task('browser-sync', function() {
   browserSync.init({
     server: {
       open: 'external',

@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var sonar = require('gulp-sonar');
 
-gulp.task('coverage', function() {
+gulp.task('sonar', function() {
   var options = {
     sonar: {
       host: {

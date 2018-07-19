@@ -23,7 +23,7 @@
     "karma": "karma",
     "build": "gulp compress",
     "modularize": "gulp modularize",
-    "unit": "gulp start-test --path",
+    "unit": "gulp unit --path",
     "replace-env": "gulp replace-env"
   },
   "dependencies": {
