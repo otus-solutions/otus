@@ -30,6 +30,7 @@
     var self = this;
 
     self.getLots = getLots;
+    self.getAliquots = getAliquots;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -74,6 +75,25 @@
         });
       return deferred.promise;
     }
+
+     /**
+      * Exam Lot
+      * @param {(object)} lotAliquot - the structure for query
+      * @returns {Promise} promise
+      * @memberof LaboratoryRemoteStorageService
+      */
+     function getAliquots() {
+       var deferred = $q.defer();
+       ExamsRestService.getAliquots()
+         .then(function (response) {
+           deferred.resolve(response.data);
+         })
+         .catch(function (e) {
+           deferred.reject(e);
+         })
+
+       return deferred.promise;
+     }
 
     /**
      * Exam Lot
