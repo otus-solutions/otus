@@ -14,12 +14,18 @@
 
     /* Public methods */
     self.listIdexers = listIdexers;
+    self.create = create;
 
     function get() {}
 
     function list() {}
 
-    function add() {}
+    function create(participant) {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.create(participant);
+      }
+    }
 
     function remove() {}
 

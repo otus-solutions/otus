@@ -14,7 +14,7 @@
   Controller.$inject = [
     'STATE',
     '$q',
-    'otusjs.participant.business.ParticipantSearchService',
+    'otusjs.participant.business.ParticipantManagerService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.otus.dashboard.core.ContextService',
     '$mdDialog'

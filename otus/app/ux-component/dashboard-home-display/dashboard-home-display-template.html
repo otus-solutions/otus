@@ -7,8 +7,15 @@
           <span layout="row" class="md-headline">Utilize as opções a seguir para navegar no sistema.</span>
         </div>
       </div>
-      <div layout="row" layout-padding>
+      <div layout="row" layout-padding layout-align="center center">
         <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)"></otus-participant-search>
+        <md-button class="md-accent md-button md-icon-button md-raised" ng-click="$ctrl.createParticipantDashboard()">
+        <!--<md-button class="md-accent md-button md-icon-button md-raised" ng-click="$ctrl.showAdvanced($event)">-->
+          <md-icon md-svg-icon="plus"></md-icon>
+        </md-button>
+      </div>
+
+      <div layout="row" layout-padding>
       </div>
       <div layout="row" layout-padding></div>
       <md-content class="md-padding" layout-xs="column" layout="row">

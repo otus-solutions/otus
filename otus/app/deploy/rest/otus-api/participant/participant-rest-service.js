@@ -15,10 +15,19 @@
 
     /* Public methods */
     self.initialize = initialize;
-    self.listIdexers = listIdexers;
+    self.list = list;
+    self.create = create;
+    self.getByRecruitmentNumber = getByRecruitmentNumber;
 
     function initialize() {
       _rest = OtusRestResourceService.getParticipantResource();
+    }
+
+    function getByRecruitmentNumber() {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.getByRecruitmentNumber().$promise;
     }
 
     function list() {
@@ -27,12 +36,11 @@
       }
       return _rest.list().$promise;
     }
-
-    function listIdexers() {
+    function create(participant) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.list().$promise;
+      return _rest.create({}, participant).$promise;
     }
   }
 }());

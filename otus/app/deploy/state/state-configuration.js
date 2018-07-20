@@ -13,6 +13,7 @@
       'APPLICATION': 'application',
       'DASHBOARD': 'dashboard',
       'PARTICIPANT_DASHBOARD': 'participant-dashboard',
+      'PARTICIPANT_CREATE': 'participant-create',
       'INSTALLER': 'installer',
       'LOGIN': 'login',
       'PARTICIPANT': 'participant',
@@ -46,6 +47,7 @@
     'otusjs.deploy.PaperActivityInitializerStateProvider',
     'otusjs.deploy.DashboardStateProvider',
     'otusjs.deploy.ParticipantDashboardStateProvider',
+    'otusjs.deploy.ParticipantCreateStateProvider',
     'otusjs.deploy.InstallerStateProvider',
     'otusjs.deploy.LoginStateProvider',
     'otusjs.deploy.ParticipantStateProvider',
@@ -74,6 +76,7 @@
     PaperActivityInitializerStateProvider,
     DashboardProvider,
     ParticipantDashboardProvider,
+    ParticipantCreateStateProvider,
     InstallerProvider,
     LoginStateProvider,
     ParticipantStateProvider,
@@ -103,6 +106,7 @@
     $stateProvider.state(SignupResultStateProvider.state);
     $stateProvider.state(DashboardProvider.state);
     $stateProvider.state(ParticipantDashboardProvider.state);
+    $stateProvider.state(ParticipantCreateStateProvider.state);
     $stateProvider.state(InstallerProvider.state);
     $stateProvider.state(ParticipantStateProvider.state);
     $stateProvider.state(SessionStateProvider.state);
@@ -116,7 +120,7 @@
     $stateProvider.state(SendingExamState.state);
     $stateProvider.state(ExamResultsVisualizer.state);
     $stateProvider.state(MonitoringStateProvider.state);
-    
+
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
     // $locationProvider.html5Mode(false);
