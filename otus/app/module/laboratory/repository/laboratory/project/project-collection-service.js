@@ -43,7 +43,7 @@
     function getAliquots() {
       var request = $q.defer();
 
-      _remoteStorage
+      _projectRemoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage

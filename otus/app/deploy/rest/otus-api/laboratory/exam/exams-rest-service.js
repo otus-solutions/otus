@@ -18,6 +18,7 @@
     self.initialize = initialize;
     self.create = create;
     self.getLots = getLots;
+    self.getAliquots = getAliquots;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -42,6 +43,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _rest.getLots().$promise;
+    }
+
+    function getAliquots() {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getAliquots().$promise;
     }
 
     function createLot(persistanceStructure) {
