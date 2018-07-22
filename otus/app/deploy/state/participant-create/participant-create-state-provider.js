@@ -22,7 +22,7 @@
       parent: STATE.SESSION,
       name: STATE.PARTICIPANT_CREATE,
       url: '/' + STATE.PARTICIPANT_CREATE,
-      template: '<otus-participant-create-dashboard layout="column" loggedUser="$resolve.user" flex></otus-participant-create-dashboard>',
+      template: '<otus-participant-create-dashboard layout="column" flex loggedUser="$resolve.user"></otus-participant-create-dashboard>',
       data: {
         redirect: _redirect
       },

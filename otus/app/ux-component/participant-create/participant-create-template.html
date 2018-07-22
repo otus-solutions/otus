@@ -1,6 +1,8 @@
-<md-content flex layout-align="center center" layout="row" layout-padding="" ng-controller="otusParticipantCreateCtrl">
+<md-content flex layout-align="start center" layout="column" layout-padding layout-margin>
+  <div layout="row">
+
   <span flex="10"></span>
-  <otus-panel header-label="'Novo Participante'" flex="">
+  <otus-panel header-label="'Novo Participante'" flex style="width:800px">
     <md-card flex>
       <md-card-content flex>
         <form name="participantForm" layout="column">
@@ -24,7 +26,7 @@
             </md-input-container>
             <span flex="10"></span>
           </div>
-          <div layout-gt-sm="row">
+          <div layout-gt-xs="row">
             <span flex="10"></span>
             <md-input-container flex>
               <label>Sexo</label>
@@ -35,7 +37,7 @@
             </md-input-container>
             <span flex="10"></span>
           </div>
-          <div layout-gt-sm="row">
+          <div layout-gt-xs="row">
             <span flex="10"></span>
             <md-input-container flex style="margin-top: 35px">
               <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
@@ -47,7 +49,7 @@
             <span flex="10"></span>
           </div>
 
-          <div layout-gt-sm="row">
+          <div layout-gt-xs="row">
             <span flex="10"></span>
             <md-input-container flex>
               <label>Centro</label>
@@ -77,5 +79,5 @@
   </otus-panel>
 
   <span flex="10"></span>
+</div>
 </md-content>
-{{$ctrl.participant}}

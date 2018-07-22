@@ -34,6 +34,10 @@
 
 
     function onInit() {
+      // ParticipantManagerService.listIdexers()
+      //   .then(function(response) {
+      //     console.log(response);
+      //   })
       LoadingScreenService.changeMessage(MESSAGE);
       _loadAllCenters();
     }

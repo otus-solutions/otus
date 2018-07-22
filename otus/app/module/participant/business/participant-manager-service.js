@@ -21,6 +21,7 @@
     /* Public methods */
     self.setup = setup;
     self.create = create;
+    self.listIdexers = listIdexers;
     self.filter = filter;
     self.selectParticipant = selectParticipant;
 
@@ -67,6 +68,19 @@
     function create(participant) {
       var deferred = $q.defer();
       ParticipantRepositoryService.create(participant)
+        .then(function (response) {
+          deferred.resolve(response);
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+      });
+
+      return deferred.promise;
+    }
+
+    function listIdexers() {
+      var deferred = $q.defer();
+      ParticipantRepositoryService.listIdexers()
         .then(function (response) {
           deferred.resolve(response);
         })

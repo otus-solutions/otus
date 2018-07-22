@@ -1,3 +1,4 @@
+
 <otus-dashboard-sidenav layout="row">
   <hide-participant-box></hide-participant-box>
 </otus-dashboard-sidenav>
@@ -6,4 +7,11 @@
     <span layout-align="center center">Cadastro de Participantes</span>
   </div>
 </otus-dashboard-toolbar>
-<otus-participant-create></otus-participant-create>
+<div layout="column" flex>
+  <!-- <otus-participant-create flex layout="row"></otus-participant-create> -->
+  <md-divider></md-divider>
+
+  <dynamic-data-table flex dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.AliquotTransportationService.dynamicDataTableFunction.updateDataTable">
+  </dynamic-data-table>
+
+</div>
