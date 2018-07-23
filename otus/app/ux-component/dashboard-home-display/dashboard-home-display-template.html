@@ -9,10 +9,6 @@
       </div>
       <div layout="row" layout-padding layout-align="center center">
         <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)"></otus-participant-search>
-        <md-button class="md-accent md-button md-icon-button md-raised" ng-click="$ctrl.createParticipantDashboard()">
-        <!--<md-button class="md-accent md-button md-icon-button md-raised" ng-click="$ctrl.showAdvanced($event)">-->
-          <md-icon md-svg-icon="plus"></md-icon>
-        </md-button>
       </div>
 
       <div layout="row" layout-padding>
@@ -20,9 +16,9 @@
       <div layout="row" layout-padding></div>
       <md-content class="md-padding" layout-xs="column" layout="row">
         <div flex-xs flex-gt-xs="35" layout="column">
-          <md-card layout-align="center center" style="cursor:pointer;" ng-click="$ctrl.setFocus()">
+          <md-card layout-align="center center" style="cursor:pointer;" ng-click="$ctrl.managerParticipantsDashboard()">
             <md-card-content>
-              <md-icon style="font-size:50px;height:50px;width:50px;">search</md-icon>
+              <md-icon style="font-size:50px;height:50px;width:50px;">supervisor_account</md-icon>
             </md-card-content>
             <span class="md-body-1" layout-padding>Participantes</span>
           </md-card>

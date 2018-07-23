@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.ParticipantCreateState', Provider);
+    .provider('otusjs.deploy.ParticipantsManagerState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -19,15 +19,13 @@
     }
 
     self.state = {
+      abstract: true,
       parent: STATE.SESSION,
-      name: STATE.PARTICIPANT_CREATE,
-      url: '/' + STATE.PARTICIPANT_CREATE,
-      template: '<otus-participant-create-dashboard layout="column" flex loggedUser="$resolve.user"></otus-participant-create-dashboard>',
+      name: STATE.PARTICIPANTS_MANAGER,
+      url: '/' + STATE.PARTICIPANTS_MANAGER,
+      template: '<otus-participants-manager-dashboard layout="column" flex></otus-participants-manager-dashboard>',
       data: {
         redirect: _redirect
-      },
-      resolve: {
-        user: _loadUserContext
       }
     };
 
@@ -38,8 +36,8 @@
         .isDeployed()
         .then(function() {
           try {
+            // SessionContextService.restore();
             // ParticipantContextService.restore();
-            DashboardContextService.isValid();
             deferred.resolve();
           } catch (e) {
             deferred.resolve(STATE.LOGIN);
@@ -49,16 +47,15 @@
       return deferred.promise;
     }
 
-    function _loadUserContext(ParticipantContextService, SessionContextService, Application) {
+    function _loadParticipantsContext(ParticipantContextService, SessionContextService, Application) {
 
       return Application
         .isDeployed()
         .then(function() {
           try {
             // ParticipantContextService.restore();
-            SessionContextService.restore();
-            var loggedUser;
-            loggedUser = SessionContextService.getData('loggedUser');
+            // SessionContextService.restore();
+            var loggedUser = [];
             return loggedUser;
           } catch (e) {
             console.log(e);
@@ -66,16 +63,20 @@
         });
     }
 
+
     _redirect.$inject = [
       '$q',
       'otusjs.otus.dashboard.core.ContextService',
       'otusjs.participant.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
-    _loadUserContext.$inject = [
+
+    _loadParticipantsContext.$inject = [
       'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
+
+
   }
 }());

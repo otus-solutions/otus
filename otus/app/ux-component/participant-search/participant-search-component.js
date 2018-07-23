@@ -20,7 +20,7 @@
     '$mdDialog'
   ];
 
-  function Controller(STATE, $q, ParticipantSearchService, ApplicationStateService, dashboardContextService, $mdDialog) {
+  function Controller(STATE, $q, ParticipantManagerService, ApplicationStateService, dashboardContextService, $mdDialog) {
     var self = this;
 
 
@@ -39,12 +39,12 @@
       } else {
         self.autoCompleteClass = 'md-dashboard-autocomplete';
       }
-      ParticipantSearchService.setup();
+      ParticipantManagerService.setup();
     }
 
     function querySearch() {
       var request = $q.defer();
-      ParticipantSearchService.filter(self.inputedText)
+      ParticipantManagerService.filter(self.inputedText)
         .then(function(value) {
           request.resolve(value);
         });
@@ -69,7 +69,7 @@
     }
 
     function _setParticipant() {
-      ParticipantSearchService.selectParticipant(self.selectedParticipant);
+      ParticipantManagerService.selectParticipant(self.selectedParticipant);
       self.onSelect({
         participant: self.selectedParticipant
       });

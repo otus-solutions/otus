@@ -21,7 +21,7 @@
     var self = this;
     self.setFocus = setFocus;
     self.sampleTransportDashboard = sampleTransportDashboard;
-    self.createParticipantDashboard = createParticipantDashboard;
+    self.managerParticipantsDashboard = managerParticipantsDashboard;
     self.ExamsDashboard = ExamsDashboard;
     self.sendingExam = sendingExam;
     self.$onInit = onInit;
@@ -42,12 +42,12 @@
       ApplicationStateService.activateSampleTransportation();
     }
 
-    function createParticipantDashboard() {
-      ApplicationStateService.activateCreateParticipant();
+    function managerParticipantsDashboard() {
+      ApplicationStateService.activateParticipantsList();
     }
 
     function ExamsDashboard() {
-      ApplicationStateService.activateExamsLotsManagerList()
+      ApplicationStateService.activateExamsLotsManagerList();
     }
 
     function sendingExam() {
@@ -70,18 +70,6 @@
           });
       }
     }
-
-
-    self.showAdvanced = function(ev) {
-      $mdDialog.show({
-        controller: "otusParticipantCreateCtrl as $ctrl",
-        template: '<otus-participant-create></otus-participant-create>',
-        parent: angular.element(document.body),
-        targetEvent: ev,
-        clickOutsideToClose:true,
-        fullscreen: true // Only for -xs, -sm breakpoints.
-      });
-    };
 
   }
 }());

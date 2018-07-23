@@ -40,6 +40,8 @@
     self.activateExamSending = activateExamSending;
     self.activateExamResultsVisualizer = activateExamResultsVisualizer;
     self.activateMonitoring = activateMonitoring;
+    self.activateManagerParticipants = activateManagerParticipants;
+    self.activateParticipantsList = activateParticipantsList;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateMonitoring() {
@@ -84,6 +86,14 @@
 
     function activateCreateParticipant() {
       $state.go(STATE.PARTICIPANT_CREATE);
+    }
+
+    function activateManagerParticipants() {
+      $state.go(STATE.PARTICIPANTS_MANAGER);
+    }
+
+    function activateParticipantsList() {
+      $state.go(STATE.PARTICIPANTS_LIST);
     }
 
     // function activateReportDashboard() {

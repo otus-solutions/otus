@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -15,14 +15,10 @@
 
     var _exitDialog;
     var _saveDialog;
-
     self.showClearDialog = showClearDialog;
     self.showSaveDialog = showSaveDialog;
     self.showNotSave = showNotSave;
     self.showToast = showToast;
-
-
-
 
     function showClearDialog() {
       return $mdDialog.show($mdDialog.confirm()
@@ -45,8 +41,8 @@
     function showNotSave(errorMessage) {
       var rn = errorMessage.match(/\d+/g);
       var msg = 'Ocorreu um problema na inserção de participante.'
-      if(rn[0]){
-        msg = 'Número de recrutamento '+ rn[0] + ' já existente.'
+      if (rn[0]) {
+        msg = 'Número de recrutamento ' + rn[0] + ' já existente.'
       }
       return $mdDialog.show($mdDialog.confirm()
         .title('Não foi possível salvar')
@@ -59,12 +55,11 @@
     function showToast(msg, delay) {
       $mdToast.show(
         $mdToast.simple()
-          .textContent(msg)
-          .position("right bottom")
-          .hideDelay(delay)
+        .textContent(msg)
+        .position("right bottom")
+        .hideDelay(delay)
       );
     }
-
 
   }
 

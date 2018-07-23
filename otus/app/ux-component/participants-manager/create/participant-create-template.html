@@ -1,0 +1,87 @@
+
+<md-content flex layout-align="start center" layout="column" layout-padding layout-margin>
+  <div layout="row" flex>
+
+    <span flex="10"></span>
+    <otus-panel header-label="'Novo Participante'" flex style="width:800px">
+      <md-card flex>
+        <md-card-content flex>
+          <form name="participantForm" layout="column">
+            <div layout-gt-xs="row">
+              <span flex="10"></span>
+              <md-input-container flex>
+                <label>Número de Recrutamento (máx. 14 dígitos)</label>
+                <input ng-model="$ctrl.recruitmentNumber" numbers-only maxlength="14" id="rn"
+                       ng-blur="$ctrl.onFilter()">
+                <md-tooltip md-direction="down">Insira no máximo 14 dígitos.</md-tooltip>
+              </md-input-container>
+              <span flex="10"></span>
+            </div>
+            <div layout-gt-xs="row">
+              <span flex="10"></span>
+              <md-input-container flex>
+                <label>Nome Completo</label>
+                <input ng-model="$ctrl.participant.name" id="name">
+              </md-input-container>
+              <span flex="10"></span>
+            </div>
+              <div layout-gt-xs="row" layout-align="center center">
+                <span flex="10"></span>
+                <md-input-container flex="30" >
+                  <label>Sexo</label>
+                  <md-select ng-model="$ctrl.participant.sex" id="sex">
+                  <md-option value="M">Masculino</md-option>
+                  <md-option value="F">Feminino</md-option>
+                  </md-select>
+                </md-input-container>
+                <span flex="5"></span>
+                <md-input-container flex="45" style="margin-top: 40px" id="date">
+                  <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
+                  <input mdc-datetime-picker="" show-icon="true" date="true" time="false" aria-label="Data de Nascimento"
+                         type="text" id="datetime" placeholder="Data de Nascimento" max-date="$ctrl.maxDate"
+                         ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
+                         format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
+                </md-input-container>
+                <span flex="10"></span>
+              </div>
+
+
+            <div layout-gt-xs="row">
+              <span flex="10"></span>
+              <md-input-container flex>
+                <label>Centro</label>
+                <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" id="center"
+                           ng-disabled="$ctrl.centerFilterDisabled">
+                  <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center.acronym}}"
+                             ng-selected="$index == $ctrl.centerFilterselectedIndex">
+                    {{center.name}}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+              <span flex="10"></span>
+            </div>
+            <div layout-gt-sm="row" layout-align="end" layout-margin="">
+              <md-button class="md-primary md-raised" ng-click="$ctrl.listParticipants()">
+                <md-icon aria-label="Limpar">keyboard_return</md-icon>
+                <md-tooltip md-direction="down">Retornar a lista</md-tooltip>
+              </md-button>
+              <span flex></span>
+              <md-button class="md-warn md-raised" ng-click="$ctrl.clearParticipant()">
+                <md-icon aria-label="Limpar">clear</md-icon>
+                <md-tooltip md-direction="down">Limpar</md-tooltip>
+              </md-button>
+              <md-button class="md-accent md-raised md-button" ng-click="$ctrl.saveParticipant()">
+                <md-icon aria-label="Adicionar">save</md-icon>
+                <md-tooltip md-direction="down">Salvar</md-tooltip>
+              </md-button>
+            </div>
+
+
+          </form>
+        </md-card-content>
+      </md-card>
+    </otus-panel>
+
+    <span flex="10"></span>
+  </div>
+</md-content>
