@@ -22,13 +22,13 @@
     self.selectParticipant = selectParticipant;
     /* Lifecycle hooks */
     self.$onInit = onInit;
-    self.getCurrentState = getCurrentState;
+
     self.selectParticipant = selectParticipant;
+    self.addParticipant = addParticipant;
     const MESSAGE = "Carregando todos os participantes! Favor aguarde."
 
     /* Lifecycle methods */
     function onInit() {
-
       LoadingScreenService.changeMessage(MESSAGE);
       self.participants = angular.copy(self.participantsList);
       if(!self.participants){
@@ -54,6 +54,9 @@
       _buildDynamicTableSettings();
     }
 
+    function addParticipant() {
+      ApplicationStateService.activateCreateParticipant();
+    }
 
     function selectParticipant(participant) {
       delete participant["birthday"];
@@ -109,10 +112,6 @@
 
         */
         .getSettings();
-    }
-
-    function getCurrentState() {
-      return ApplicationStateService.getCurrentState();
     }
   }
 }());

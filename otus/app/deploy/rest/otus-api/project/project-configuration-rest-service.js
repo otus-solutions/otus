@@ -23,7 +23,11 @@
 
     function getProjectConfiguration() {
       if (!_rest) {
-        throw new Error('REST resource is not initialized.');
+        try{
+          self.initialize();
+        } catch(error){
+          throw new Error('REST resource is not initialized.');
+        }
       }
       return _rest.getProjectConfiguration().$promise;
     }

@@ -8,12 +8,6 @@
   </div>
 </otus-dashboard-toolbar>
 <div layout="column" flex>
-  <div layout="row" layout-align="end center" layout-margin="">
-    <md-button class="md-button md-icon-button md-primary md-raised" ng-click="$ctrl.addParticipant()" ng-show="$ctrl.showButtonAdd()">
-      <md-icon md-svg-icon="plus"></md-icon>
-      <md-tooltip md-direction="down">Adicionar Participante</md-tooltip>
-    </md-button>
-  </div>
-  <md-divider ng-show="$ctrl.showButtonAdd()"></md-divider>
+
   <div ui-view layout="row" flex></div>
 </div>

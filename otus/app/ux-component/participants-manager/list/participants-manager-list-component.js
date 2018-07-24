@@ -7,7 +7,8 @@
       controller: 'otusParticipantsListCtrl as $ctrl',
       templateUrl: 'app/ux-component/participants-manager/list/participants-manager-list-template.html',
       bindings:{
-        participantsList: "<"
+        participantsList: "<",
+        permission: "<"
       }
     });
 }());

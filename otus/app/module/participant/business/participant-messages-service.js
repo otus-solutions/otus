@@ -40,8 +40,8 @@
 
     function showNotSave(errorMessage) {
       var rn = errorMessage.match(/\d+/g);
-      var msg = 'Ocorreu um problema na inserção de participante.'
-      if (rn[0]) {
+      var msg = errorMessage || 'Ocorreu um problema na inserção de participante.';
+      if (rn) {
         msg = 'Número de recrutamento ' + rn[0] + ' já existente.'
       }
       return $mdDialog.show($mdDialog.confirm()

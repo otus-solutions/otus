@@ -41,6 +41,13 @@
       _loadAllCenters();
     }
 
+    self.$onChanges = function(obj) {
+      console.log(obj);
+      if(!self.permission){
+        ApplicationStateService.activateParticipantsList();
+      }
+    };
+
     function setUserFieldCenter() {
       dashboardContextService
         .getLoggedUser()
@@ -92,31 +99,40 @@
     }
 
     function _fieldsValidate() {
+      const MSG = "Favor, preencha todos os campos!";
       if (!self.participant.recruitmentNumber){
         $element.find('#rn').focus();
+        ParticipantMessagesService.showToast(MSG, 3000);
         return false;
       }
       if (!self.participant.name) {
         $element.find('#name').focus();
+        ParticipantMessagesService.showToast(MSG, 3000);
         return false;
       }
       if (!self.participant.sex){
         $element.find('#sex').focus();
+        ParticipantMessagesService.showToast(MSG, 3000);
         return false;
       }
       if (!self.participant.birthdate){
+        ParticipantMessagesService.showToast(MSG, 3000);
         _showDialogBirthdate();
         return false;
       }
       if (!self.participant.fieldCenter){
         $element.find('#center').focus();
+        ParticipantMessagesService.showToast(MSG, 3000);
         return false;
       }
       if (self.participant.late === undefined) {
         self.participant.late = false
       }
 
-      return true;
+      ParticipantManagerService.getAllowNewParticipants()
+        .then(function(response) {
+          return response.participantRegistration;
+        });
     }
 
     function clearParticipant() {
@@ -141,7 +157,6 @@
       ParticipantMessagesService.showSaveDialog()
         .then(function () {
           self.onFilter();
-          self.participant.late = false;
           if(_fieldsValidate()){
             var _participant = ParticipantFactory.create(self.participant);
             ParticipantManagerService.create(_participant)
@@ -157,7 +172,8 @@
                 }
               });
           } else {
-            ParticipantMessagesService.showToast("Favor, preencha todos os campos!", 3000);
+            ParticipantMessagesService.showNotSave("Sistema não habilitado para cadastros de participantes!");
+            self.listParticipants();
           }
         });
 

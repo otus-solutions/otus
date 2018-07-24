@@ -22,22 +22,25 @@
       parent: STATE.PARTICIPANTS_MANAGER,
       name: STATE.PARTICIPANTS_LIST,
       url: '/' + STATE.PARTICIPANTS_LIST,
-      template: '<otus-participants-list layout="column" participants-list="$resolve.participants" flex></otus-participants-list>',
+      template: '<otus-participants-list layout="column" participants-list="$resolve.participants" permission="$resolve.permission" flex></otus-participants-list>',
       data: {
         redirect: _redirect
       },
       resolve: {
-        participants: _loadParticipantsContext
+        participants: _loadParticipantsList,
+        permission: _loadParticipantRegistration
       }
     };
 
-    function _redirect($q, DashboardContextService, ParticipantContextService, Application) {
+    function _redirect($q, SessionContextService, DashboardContextService, ParticipantContextService, Application) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
         .then(function() {
           try {
+            SessionContextService.restore();
+            ParticipantContextService.restore();
             DashboardContextService.isValid();
             deferred.resolve();
           } catch (e) {
@@ -48,31 +51,43 @@
       return deferred.promise;
     }
 
-    function _loadParticipantsContext(ParticipantStorageService, SessionContextService, Application) {
+    function _loadParticipantsList(ParticipantStorageService) {
+      return ParticipantStorageService.getCollection().data;
+    }
 
+    function _loadParticipantRegistration(ProjectConfiguration, SessionContextService, Application) {
       return Application
         .isDeployed()
         .then(function() {
           try {
             SessionContextService.restore();
-            var _participants = ParticipantStorageService.getCollection().data;
-            return _participants;
+            return ProjectConfiguration.getProjectConfiguration()
+              .then(function(response) {
+                var _permission = response.data.participantRegistration;
+                localStorage.setItem("allowNewParticipants", _permission);
+                return _permission;
+              });
           } catch (e) {
-            console.log(e);
+            console.error(e);
           }
         });
     }
 
+    _loadParticipantRegistration.$inject = [
+      'otusjs.deploy.ProjectConfigurationRestService',
+      'otusjs.application.session.core.ContextService',
+      'otusjs.application.core.ModuleService'
+    ];
+
     _redirect.$inject = [
       '$q',
+      'otusjs.application.session.core.ContextService',
       'otusjs.otus.dashboard.core.ContextService',
       'otusjs.participant.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
-    _loadParticipantsContext.$inject = [
-      'otusjs.participant.storage.ParticipantStorageService',
-      'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService'
+    _loadParticipantsList.$inject = [
+      'otusjs.participant.storage.ParticipantStorageService'
     ];
   }
 }());

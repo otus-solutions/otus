@@ -29,15 +29,14 @@
       }
     };
 
-    function _redirect($q, DashboardContextService, ParticipantContextService, Application) {
+    function _redirect($q, DashboardContextService, SessionContextService, ParticipantContextService, Application) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
         .then(function() {
           try {
-            // SessionContextService.restore();
-            // ParticipantContextService.restore();
+            SessionContextService.restore();
             deferred.resolve();
           } catch (e) {
             deferred.resolve(STATE.LOGIN);
@@ -47,36 +46,14 @@
       return deferred.promise;
     }
 
-    function _loadParticipantsContext(ParticipantContextService, SessionContextService, Application) {
-
-      return Application
-        .isDeployed()
-        .then(function() {
-          try {
-            // ParticipantContextService.restore();
-            // SessionContextService.restore();
-            var loggedUser = [];
-            return loggedUser;
-          } catch (e) {
-            console.log(e);
-          }
-        });
-    }
-
 
     _redirect.$inject = [
       '$q',
       'otusjs.otus.dashboard.core.ContextService',
-      'otusjs.participant.core.ContextService',
-      'otusjs.application.core.ModuleService'
-    ];
-
-    _loadParticipantsContext.$inject = [
-      'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',
+      'otusjs.participant.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
-
 
   }
 }());
