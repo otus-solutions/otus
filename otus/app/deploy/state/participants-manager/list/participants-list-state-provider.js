@@ -40,7 +40,6 @@
         .then(function() {
           try {
             SessionContextService.restore();
-            ParticipantContextService.restore();
             DashboardContextService.isValid();
             deferred.resolve();
           } catch (e) {
@@ -64,7 +63,6 @@
             return ProjectConfiguration.getProjectConfiguration()
               .then(function(response) {
                 var _permission = response.data.participantRegistration;
-                localStorage.setItem("allowNewParticipants", _permission);
                 return _permission;
               });
           } catch (e) {

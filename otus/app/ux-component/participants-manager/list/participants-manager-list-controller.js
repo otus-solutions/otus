@@ -9,13 +9,10 @@
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.otus.dashboard.core.EventService',
-    'otusjs.otus.dashboard.service.DashboardService',
-    'otusjs.participant.storage.ParticipantStorageService',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory'
   ];
 
-  function Controller(ParticipantManagerService, LoadingScreenService, ApplicationStateService, EventService, DashboardService, ParticipantStorageService, DynamicTableSettingsFactory) {
+  function Controller(ParticipantManagerService, LoadingScreenService, ApplicationStateService, DynamicTableSettingsFactory) {
     var self = this;
 
     /* Public methods */
@@ -59,9 +56,10 @@
     }
 
     function selectParticipant(participant) {
-      delete participant["birthday"];
-      delete participant["obito"];
-      ParticipantManagerService.selectParticipant(participant);
+      var _participant = angular.copy(participant);
+      delete _participant["birthday"];
+      delete _participant["obito"];
+      ParticipantManagerService.selectParticipant(_participant);
       ApplicationStateService.activateParticipantDashboard();
     }
 
