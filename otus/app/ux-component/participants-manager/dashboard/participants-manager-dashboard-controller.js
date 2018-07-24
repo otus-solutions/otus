@@ -6,7 +6,6 @@
     .controller('otusParticipantsManagerDashboardCtrl', Controller);
 
   Controller.$inject = [
-    'STATE',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.otus.dashboard.core.EventService',
@@ -15,7 +14,7 @@
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory'
   ];
 
-  function Controller(STATE, ParticipantManagerService, ApplicationStateService, EventService, DashboardService, ParticipantStorageService, DynamicTableSettingsFactory) {
+  function Controller(ParticipantManagerService, ApplicationStateService, EventService, DashboardService, ParticipantStorageService, DynamicTableSettingsFactory) {
     var self = this;
 
     /* Public methods */
@@ -23,21 +22,22 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
     self.getCurrentState = getCurrentState;
-    self.STATE = STATE;
-
+    self.allowNewParticipants = false;
 
     /* Lifecycle methods */
     function onInit() {
       ParticipantManagerService.getAllowNewParticipants()
         .then(function(response) {
-          console.log(response);
+          if(response.objectType === "ProjectConfiguration"){
+            self.allowNewParticipants = angular.copy(response.participantRegistration);
+          }
         })
         .catch(function(error) {
-          console.error(error);
-        })
+          throw new Error(error);
+        });
     }
 
-    self.addParticipant = function () {
+    self.addParticipant = function() {
       ApplicationStateService.activateCreateParticipant();
 
     }
@@ -50,12 +50,13 @@
     }
 
 
-    self.showButtonAdd = function () {
-      if (getCurrentState() === "participants-list"){
-        return true;
-      } else {
-        return false;
+    self.showButtonAdd = function() {
+      if (getCurrentState() === "participants-list") {
+        if (self.allowNewParticipants) {
+          return true;
+        }
       }
+      return false;
 
     }
 

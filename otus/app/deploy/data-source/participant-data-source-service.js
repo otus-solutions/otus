@@ -60,8 +60,7 @@
       ProjectConfigurationRestService
         .getProjectConfiguration()
         .then(function(response) {
-          console.log(response);
-          deferred.resolve(response);
+          deferred.resolve(response.data);
         }).catch(function(error) {
           deferred.reject(error);
         });
