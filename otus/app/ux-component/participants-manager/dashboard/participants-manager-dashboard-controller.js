@@ -28,6 +28,13 @@
 
     /* Lifecycle methods */
     function onInit() {
+      ParticipantManagerService.getAllowNewParticipants()
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.error(error);
+        })
     }
 
     self.addParticipant = function () {

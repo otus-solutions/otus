@@ -22,6 +22,7 @@
     self.setup = setup;
     self.create = create;
     self.listIdexers = listIdexers;
+    self.getAllowNewParticipants = getAllowNewParticipants;
     self.filter = filter;
     self.selectParticipant = selectParticipant;
 
@@ -81,6 +82,19 @@
     function listIdexers() {
       var deferred = $q.defer();
       ParticipantRepositoryService.listIdexers()
+        .then(function (response) {
+          deferred.resolve(response);
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+      });
+
+      return deferred.promise;
+    }
+
+    function getAllowNewParticipants() {
+      var deferred = $q.defer();
+      ParticipantRepositoryService.getAllowNewParticipants()
         .then(function (response) {
           deferred.resolve(response);
         })

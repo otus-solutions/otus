@@ -15,6 +15,7 @@
     /* Public methods */
     self.listIdexers = listIdexers;
     self.create = create;
+    self.getAllowNewParticipants = getAllowNewParticipants;
 
     function get() {}
 
@@ -24,6 +25,13 @@
       var _dataSource = ModuleService.DataSource.Participant;
       if (_dataSource) {
         return _dataSource.create(participant);
+      }
+    }
+
+    function getAllowNewParticipants() {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.getAllowNewParticipants();
       }
     }
 

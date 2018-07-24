@@ -38,7 +38,7 @@
         .isDeployed()
         .then(function() {
           try {
-            // DashboardContextService.isValid();
+            DashboardContextService.isValid();
             deferred.resolve();
           } catch (e) {
             deferred.resolve(STATE.LOGIN);
@@ -48,13 +48,12 @@
       return deferred.promise;
     }
 
-    function _loadParticipantsContext(ParticipantStorageService, ParticipantContextService, SessionContextService, Application) {
+    function _loadParticipantsContext(ParticipantStorageService, SessionContextService, Application) {
 
       return Application
         .isDeployed()
         .then(function() {
           try {
-            ParticipantContextService.restore();
             SessionContextService.restore();
             var _participants = ParticipantStorageService.getCollection().data;
             return _participants;
@@ -72,7 +71,6 @@
     ];
     _loadParticipantsContext.$inject = [
       'otusjs.participant.storage.ParticipantStorageService',
-      'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
