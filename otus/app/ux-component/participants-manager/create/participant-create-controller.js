@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -7,6 +7,7 @@
 
   Controller.$inject = [
     '$element',
+    'otusjs.utils.ImmutableDate',
     'mdcDateTimeDialog',
     'otusjs.application.state.ApplicationStateService',
     'mdcDefaultParams',
@@ -17,11 +18,16 @@
     'otusjs.participant.business.ParticipantMessagesService'
   ];
 
-  function Controller($element, mdcDateTimeDialog, ApplicationStateService, mdcDefaultParams, ParticipantFactory, ProjectFieldCenterService, dashboardContextService, ParticipantManagerService, ParticipantMessagesService) {
+  function Controller($element, ImmutableDate, mdcDateTimeDialog, ApplicationStateService, mdcDefaultParams, ParticipantFactory, ProjectFieldCenterService, dashboardContextService, ParticipantManagerService, ParticipantMessagesService) {
     var self = this;
 
 
-    mdcDefaultParams({lang: 'pt-br', cancelText: 'cancelar', todayText: 'hoje', okText: 'ok'});
+    mdcDefaultParams({
+      lang: 'pt-br',
+      cancelText: 'cancelar',
+      todayText: 'hoje',
+      okText: 'ok'
+    });
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -36,20 +42,20 @@
 
     function onInit() {
       self.maxDate = new Date();
-      self.centers = {}
+      self.centers = {};
       _loadAllCenters();
     }
 
-    function _restoreFields(){
+    function _restoreFields() {
       var _restoreParticipant = JSON.parse(localStorage.getItem("newParticipant")) || {};
-      if (_restoreParticipant.recruitmentNumber){
+      if (_restoreParticipant.recruitmentNumber) {
         self.recruitmentNumber = _restoreParticipant.recruitmentNumber;
       }
-      if (_restoreParticipant.birthdate){
+      if (_restoreParticipant.birthdate) {
         self.birthdate = _restoreParticipant.birthdate;
       }
-      if (_restoreParticipant.fieldCenter){
-        self.centerFilter = self.centers.find(function (center) {
+      if (_restoreParticipant.fieldCenter) {
+        self.centerFilter = self.centers.find(function(center) {
           return center.acronym === _restoreParticipant.fieldCenter.acronym;
         });
         self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
@@ -57,22 +63,23 @@
       self.participant = _restoreParticipant;
     }
 
-    self.$onChanges = function () {
+    self.$onChanges = function() {
       if (!self.permission) {
         ApplicationStateService.activateParticipantsList();
       }
     };
 
-    self.$onDestroy = function () {
+    self.$onDestroy = function() {
       localStorage.removeItem("newParticipant");
     };
 
     function setUserFieldCenter() {
       dashboardContextService
         .getLoggedUser()
-        .then(function (userData) {
+        .then(function(userData) {
           if (userData.fieldCenter.acronym) {
-            self.centerFilter = self.centers.find(function (center) {
+            self.userCenter = userData.fieldCenter.acronym;
+            self.centerFilter = self.centers.find(function(center) {
               return center.acronym === userData.fieldCenter.acronym;
             });
             self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
@@ -87,15 +94,14 @@
       mdcDateTimeDialog.show({
         maxDate: self.maxDate,
         time: false
-      }).then(function (date) {
+      }).then(function(date) {
         self.birthdate = date;
         _setBirthdate(self.birthdate);
       });
     }
 
     function _setBirthdate(date) {
-      var _date = new ImmutableDate(date);
-      console.log(_date);
+      var _date = ImmutableDate(date);
       _date.resetTime();
       self.participant.birthdate = _date.toJSON();
     }
@@ -108,7 +114,9 @@
         self.participant.recruitmentNumber = parseInt(self.recruitmentNumber);
       }
       if (self.centerFilter) {
-        self.participant.fieldCenter = {"acronym": self.centerFilter};
+        self.participant.fieldCenter = {
+          "acronym": self.centerFilter
+        };
       }
       if (!self.participant.late) {
         self.participant.late = false;
@@ -117,7 +125,7 @@
     }
 
     function _loadAllCenters() {
-      ProjectFieldCenterService.loadCenters().then(function (result) {
+      ProjectFieldCenterService.loadCenters().then(function(result) {
         self.centers = angular.copy(result);
         setUserFieldCenter();
       });
@@ -125,6 +133,7 @@
 
     function _fieldsValidate() {
       var _valid = true;
+
       if (!self.participant.recruitmentNumber) {
         $element.find('#rn').focus();
         _valid = false;
@@ -147,7 +156,7 @@
 
     function clearParticipant() {
       ParticipantMessagesService.showClearDialog()
-        .then(function () {
+        .then(function() {
           _setClear();
         });
     }
@@ -157,7 +166,7 @@
       delete self.participant;
       delete self.birthdate;
       delete self.recruitmentNumber;
-      delete self.centerFilter;
+      self.userCenter ? self.userCenter : delete self.centerFilter;
       self.participant = {};
     }
 
@@ -168,19 +177,19 @@
     function saveParticipant() {
       if (_fieldsValidate()) {
         ParticipantMessagesService.showSaveDialog()
-          .then(function () {
+          .then(function() {
             self.onFilter();
             if (self.permission) {
               var _participant = ParticipantFactory.create(self.participant);
               ParticipantManagerService.create(_participant)
-                .then(function (response) {
+                .then(function(response) {
                   if (response.recruitmentNumber === self.participant.recruitmentNumber) {
                     _setClear();
                     ParticipantMessagesService.showToast("Participante salvo com sucesso!");
                   }
                 })
-                .catch(function (err) {
-                    ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
+                .catch(function(err) {
+                  ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
                 });
             } else {
               ParticipantMessagesService.showNotSave("Sistema não habilitado para cadastros de participantes!");

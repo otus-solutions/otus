@@ -1,43 +1,43 @@
-fdescribe('participant-create-controller Test', function() {
+describe('participant-create-controller Test', function() {
   var Mock = {};
   var controller;
   var Injections = {};
 
   beforeEach(function() {
-    angular.module('otusjs.otus.uxComponent');
+    angular.mock.module('otusjs.otus.uxComponent');
   });
 
   beforeEach(function() {
-    window.ImmutableDate = function(date) {
-        var self = this;
-        self.objectType = 'ImmutableDate';
-        self.date = date ? date : undefined;
-        self.toJSON = toJSON;
-        self.resetTime = resetTime;
-        function resetTime() {
-        if (!self.date) {
-          return;
-        }
-        self.date.setHours(0);
-        self.date.setMinutes(0);
-        self.date.setSeconds(0);
-        self.date.setMilliseconds(0);
-      }
-        function toJSON() {
+
+    Mock.ImmutableDate = function() {
+      return {
+        resetTime: function() {},
+        toJSON: function() {
           return {
             objectType: 'ImmutableDate',
             value: "2018-07-20 00:00:00.000"
           };
         }
-        return self;
       };
-
-
+    };
 
     angular.mock.module(function($provide) {
-      $provide.value("$element", {});
-      $provide.value("otusjs.application.state.ApplicationStateService", {});
-      $provide.value("otusjs.model.participant.ParticipantFactory", {});
+      $provide.value("$element", {
+        find: function() {
+          var self = this;
+          self.focus = function() {};
+          return self;
+        }
+      });
+      $provide.value('otusjs.utils.ImmutableDate', Mock.ImmutableDate);
+      $provide.value("otusjs.application.state.ApplicationStateService", {
+        activateParticipantsList: function() {}
+      });
+      $provide.value("otusjs.model.participant.ParticipantFactory", {
+        create: function(p) {
+          return p;
+        }
+      });
       $provide.value("otusjs.deploy.FieldCenterRestService", {
         loadCenters: function() {
           return Promise.resolve(mockCenters());
@@ -52,15 +52,37 @@ fdescribe('participant-create-controller Test', function() {
           });
         }
       });
-      $provide.value("otusjs.participant.business.ParticipantManagerService", {});
-      $provide.value("otusjs.participant.business.ParticipantMessagesService", {});
+      $provide.value("otusjs.participant.business.ParticipantManagerService", {
+        create: function(p) {
+          if (p) {
+            if (p.recruitmentNumber == 7654321) {
+              return Promise.reject({
+                data: {
+                  MESSAGE: "Número de recrutamento 1234567 já existe"
+                }
+              });
+            }
+          }
+          return Promise.resolve(p);
+
+        }
+      });
+      $provide.value("otusjs.participant.business.ParticipantMessagesService", {
+        showSaveDialog: function() {
+          return Promise.resolve();
+        },
+        showNotSave: function() {},
+        showToast: function() {},
+      });
     });
+
   });
 
   beforeEach(function() {
     inject(function(_$injector_, _$controller_) {
       Injections = {
         "$element": _$injector_.get('$element'),
+        "ImmutableDate": _$injector_.get('otusjs.utils.ImmutableDate'),
         "mdcDateTimeDialog": _$injector_.get('mdcDateTimeDialog'),
         "ApplicationStateService": _$injector_.get('otusjs.application.state.ApplicationStateService'),
         "mdcDefaultParams": _$injector_.get('mdcDefaultParams'),
@@ -77,20 +99,14 @@ fdescribe('participant-create-controller Test', function() {
       spyOn(window, "Date").and.callFake(function() {
         return oldDate;
       });
-       // = ImmutableDate();
-      // var _data = new ImmutableDate();
-      // spyOn(window, "ImmutableDate").and.callFake(function(date) {
-      //   return _data;
-      //
-      // });
-      spyOn(window, "parseInt").and.callFake(function(num) {
-        return parseInt(num);
-      });
+
+      spyOn(window, "parseInt").and.returnValue(123);
       spyOn(window.localStorage, "getItem").and.callFake(function(key) {
         return "{}";
       });
       spyOn(Injections.ProjectFieldCenterService, "loadCenters").and.callThrough();
       spyOn(Injections.dashboardContextService, "getLoggedUser").and.callThrough();
+      spyOn(Injections.ApplicationStateService, "activateParticipantsList").and.callThrough();
       controller.$onInit();
     });
   });
@@ -112,27 +128,119 @@ fdescribe('participant-create-controller Test', function() {
   });
 
   it('should called method onFilter', function(done) {
-    mockParticipant();
     Injections.ProjectFieldCenterService.loadCenters().then(function() {
-      done();
-
       Injections.dashboardContextService.getLoggedUser().then(function() {
-        // controller.onFilter();
-        // console.log(controller.participant);
+        mockParticipant();
+        controller.onFilter();
+        expect(controller.participant.recruitmentNumber).not.toBeNull();
+        expect(controller.participant.recruitmentNumber).toEqual(123);
+        expect(controller.participant.birthdate).not.toBeNull();
+        expect(controller.participant.birthdate.objectType).toEqual("ImmutableDate");
+        expect(controller.participant.birthdate.value).toEqual('2018-07-20 00:00:00.000');
+        expect(controller.participant.fieldCenter).not.toBeNull();
+        expect(controller.participant.fieldCenter.acronym).not.toBeNull();
+        expect(controller.participant.fieldCenter.acronym).toEqual("RS");
+        expect(controller.participant.late).toEqual(false);
         done();
       });
     });
     done();
-    controller.onFilter();
-    // console.log(controller.participant);
+  });
+
+  it("should called state of participants list", function() {
+    controller.listParticipants();
+    expect(Injections.ApplicationStateService.activateParticipantsList).toHaveBeenCalledTimes(1);
+  });
+
+
+  describe("try save participant", function() {
+    var originalTimeout;
+    beforeEach(function() {
+      originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+      spyOn(controller, "onFilter").and.callThrough();
+      spyOn(Injections.ParticipantMessagesService, "showSaveDialog").and.callThrough();
+      spyOn(Injections.ParticipantMessagesService, "showNotSave").and.callThrough();
+      spyOn(Injections.ParticipantMessagesService, "showToast").and.callThrough();
+      spyOn(Injections.ParticipantFactory, "create").and.callThrough();
+      spyOn(Injections.ParticipantManagerService, "create").and.callThrough();
+    });
+
+    afterEach(function() {
+      jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
+    });
+
+    it("should save a new participant", function(done) {
+      Injections.ProjectFieldCenterService.loadCenters().then(function() {
+        Injections.dashboardContextService.getLoggedUser().then(function() {
+          mockParticipant();
+          controller.onFilter();
+          controller.saveParticipant();
+          expect(Injections.ParticipantMessagesService.showSaveDialog).toHaveBeenCalledTimes(1);
+          Injections.ParticipantMessagesService.showSaveDialog().then(function() {
+            expect(Injections.ParticipantFactory.create).toHaveBeenCalledTimes(1);
+            expect(Injections.ParticipantManagerService.create).toHaveBeenCalledTimes(1);
+            Injections.ParticipantManagerService.create().then(function() {
+              expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
+              expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledWith("Participante salvo com sucesso!");
+              expect(controller.participant).toEqual({});
+              expect(controller.birthdate).not.toBeDefined();
+              expect(controller.recruitmentNumber).not.toBeDefined();
+              expect(controller.centerFilter).toEqual("RS");
+              done();
+            });
+          });
+        });
+      });
+    });
+
+    it("should not save a new participant because of recruitmentNumber", function(done) {
+      Injections.ProjectFieldCenterService.loadCenters().then(function() {
+        Injections.dashboardContextService.getLoggedUser().then(function() {
+          mockParticipant();
+          controller.onFilter();
+          controller.participant.recruitmentNumber = 7654321;
+          controller.saveParticipant();
+          expect(Injections.ParticipantMessagesService.showSaveDialog).toHaveBeenCalledTimes(1);
+          Injections.ParticipantMessagesService.showSaveDialog().then(function() {
+            expect(Injections.ParticipantFactory.create).toHaveBeenCalledTimes(1);
+            expect(Injections.ParticipantManagerService.create).toHaveBeenCalledTimes(1);
+            Injections.ParticipantManagerService.create().then(function() {
+              done();
+            }).catch(function(err) {
+              expect(Injections.ParticipantMessagesService.showNotSave).toHaveBeenCalledTimes(1);
+
+              done();
+            });
+          });
+        });
+      });
+    });
+
+    it("should not save a new participant with field empty", function(done) {
+      Injections.ProjectFieldCenterService.loadCenters().then(function() {
+        Injections.dashboardContextService.getLoggedUser().then(function() {
+          mockParticipant();
+          controller.participant.sex = null;
+          controller.onFilter();
+          controller.saveParticipant();
+          expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
+          expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledWith("Favor, preencha todos os campos!");
+
+          done();
+        });
+      });
+
+    });
+
   });
 
   function mockParticipant() {
-    // controller.ImmutableDate = Mock.ImmutableDate;
-    controller.recruitmentNumber = "1234567";
-    controller.name = "Fulano";
-    controller.sex = "M";
+    controller.recruitmentNumber = "7654321";
+    controller.participant.name = "Fulano";
+    controller.participant.sex = "M";
     controller.birthdate = new Date();
+    controller.permission = true;
   }
 
 
