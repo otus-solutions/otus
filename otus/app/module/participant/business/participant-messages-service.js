@@ -13,8 +13,7 @@
   function Service($mdDialog, $mdToast) {
     var self = this;
 
-    var _exitDialog;
-    var _saveDialog;
+    const DELAY = 3000;
     self.showClearDialog = showClearDialog;
     self.showSaveDialog = showSaveDialog;
     self.showNotSave = showNotSave;
@@ -52,12 +51,12 @@
         .cancel('Voltar'));
     }
 
-    function showToast(msg, delay) {
+    function showToast(msg) {
       $mdToast.show(
         $mdToast.simple()
         .textContent(msg)
         .position("right bottom")
-        .hideDelay(delay)
+        .hideDelay(DELAY)
       );
     }
 

@@ -58,7 +58,6 @@
             return ProjectConfiguration.getProjectConfiguration()
               .then(function(response) {
                 var _permission = response.data.participantRegistration;
-                localStorage.setItem("allowNewParticipants", _permission);
                 return _permission;
               });
           } catch (e) {

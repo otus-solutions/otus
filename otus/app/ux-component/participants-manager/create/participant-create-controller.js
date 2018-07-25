@@ -13,12 +13,11 @@
     'otusjs.model.participant.ParticipantFactory',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
-    'otusjs.deploy.ParticipantDataSourceService',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.participant.business.ParticipantMessagesService'
   ];
 
-  function Controller($element, mdcDateTimeDialog, ApplicationStateService, mdcDefaultParams, ParticipantFactory, ProjectFieldCenterService, dashboardContextService, ParticipantDataSourceService, ParticipantManagerService, ParticipantMessagesService) {
+  function Controller($element, mdcDateTimeDialog, ApplicationStateService, mdcDefaultParams, ParticipantFactory, ProjectFieldCenterService, dashboardContextService, ParticipantManagerService, ParticipantMessagesService) {
     var self = this;
 
 
@@ -31,21 +30,41 @@
     self.saveParticipant = saveParticipant;
     self.clearParticipant = clearParticipant;
     self.listParticipants = listParticipants;
-    self.centers = {}
-    self.participant = {};
+    self.onFilter = onFilter;
 
 
 
     function onInit() {
       self.maxDate = new Date();
+      self.centers = {}
       _loadAllCenters();
     }
 
-    self.$onChanges = function(obj) {
-      console.log(obj);
-      if(!self.permission){
+    function _restoreFields(){
+      var _restoreParticipant = JSON.parse(localStorage.getItem("newParticipant")) || {};
+      if (_restoreParticipant.recruitmentNumber){
+        self.recruitmentNumber = _restoreParticipant.recruitmentNumber;
+      }
+      if (_restoreParticipant.birthdate){
+        self.birthdate = _restoreParticipant.birthdate;
+      }
+      if (_restoreParticipant.fieldCenter){
+        self.centerFilter = self.centers.find(function (center) {
+          return center.acronym === _restoreParticipant.fieldCenter.acronym;
+        });
+        self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
+      }
+      self.participant = _restoreParticipant;
+    }
+
+    self.$onChanges = function () {
+      if (!self.permission) {
         ApplicationStateService.activateParticipantsList();
       }
+    };
+
+    self.$onDestroy = function () {
+      localStorage.removeItem("newParticipant");
     };
 
     function setUserFieldCenter() {
@@ -58,8 +77,9 @@
             });
             self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
             self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
-            self.centerFilter = angular.copy(self.centerFilter)
+            self.centerFilter = angular.copy(self.centerFilter.acronym);
           }
+          _restoreFields();
         });
     }
 
@@ -69,17 +89,18 @@
         time: false
       }).then(function (date) {
         self.birthdate = date;
+        _setBirthdate(self.birthdate);
       });
     }
 
     function _setBirthdate(date) {
       var _date = new ImmutableDate(date);
+      console.log(_date);
       _date.resetTime();
       self.participant.birthdate = _date.toJSON();
     }
 
-    self.onFilter = function () {
-
+    function onFilter() {
       if (self.birthdate) {
         _setBirthdate(self.birthdate);
       }
@@ -89,6 +110,10 @@
       if (self.centerFilter) {
         self.participant.fieldCenter = {"acronym": self.centerFilter};
       }
+      if (!self.participant.late) {
+        self.participant.late = false;
+      }
+      localStorage.setItem("newParticipant", JSON.stringify(self.participant));
     }
 
     function _loadAllCenters() {
@@ -99,40 +124,25 @@
     }
 
     function _fieldsValidate() {
-      const MSG = "Favor, preencha todos os campos!";
-      if (!self.participant.recruitmentNumber){
+      var _valid = true;
+      if (!self.participant.recruitmentNumber) {
         $element.find('#rn').focus();
-        ParticipantMessagesService.showToast(MSG, 3000);
-        return false;
-      }
-      if (!self.participant.name) {
+        _valid = false;
+      } else if (!self.participant.name) {
         $element.find('#name').focus();
-        ParticipantMessagesService.showToast(MSG, 3000);
-        return false;
-      }
-      if (!self.participant.sex){
+        _valid = false;
+      } else if (!self.participant.sex) {
         $element.find('#sex').focus();
-        ParticipantMessagesService.showToast(MSG, 3000);
-        return false;
-      }
-      if (!self.participant.birthdate){
-        ParticipantMessagesService.showToast(MSG, 3000);
+        _valid = false;
+      } else if (!self.participant.birthdate) {
         _showDialogBirthdate();
-        return false;
-      }
-      if (!self.participant.fieldCenter){
+        _valid = false;
+      } else if (!self.participant.fieldCenter) {
         $element.find('#center').focus();
-        ParticipantMessagesService.showToast(MSG, 3000);
-        return false;
-      }
-      if (self.participant.late === undefined) {
-        self.participant.late = false
+        _valid = false;
       }
 
-      ParticipantManagerService.getAllowNewParticipants()
-        .then(function(response) {
-          return response.participantRegistration;
-        });
+      return _valid;
     }
 
     function clearParticipant() {
@@ -143,10 +153,12 @@
     }
 
     function _setClear() {
+      localStorage.removeItem("newParticipant");
       delete self.participant;
       delete self.birthdate;
       delete self.recruitmentNumber;
       delete self.centerFilter;
+      self.participant = {};
     }
 
     function listParticipants() {
@@ -154,29 +166,30 @@
     }
 
     function saveParticipant() {
-      ParticipantMessagesService.showSaveDialog()
-        .then(function () {
-          self.onFilter();
-          if(_fieldsValidate()){
-            var _participant = ParticipantFactory.create(self.participant);
-            ParticipantManagerService.create(_participant)
-              .then(function (response) {
-                if(response.recruitmentNumber === self.participant.recruitmentNumber){
-                  _setClear();
-                  ParticipantMessagesService.showToast("Participante salvo com sucesso!", 3000);
-                }
-              })
-              .catch(function (err) {
-                if(err.data.MESSAGE){
-                  ParticipantMessagesService.showNotSave(err.data.MESSAGE);
-                }
-              });
-          } else {
-            ParticipantMessagesService.showNotSave("Sistema não habilitado para cadastros de participantes!");
-            self.listParticipants();
-          }
-        });
-
+      if (_fieldsValidate()) {
+        ParticipantMessagesService.showSaveDialog()
+          .then(function () {
+            self.onFilter();
+            if (self.permission) {
+              var _participant = ParticipantFactory.create(self.participant);
+              ParticipantManagerService.create(_participant)
+                .then(function (response) {
+                  if (response.recruitmentNumber === self.participant.recruitmentNumber) {
+                    _setClear();
+                    ParticipantMessagesService.showToast("Participante salvo com sucesso!");
+                  }
+                })
+                .catch(function (err) {
+                    ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
+                });
+            } else {
+              ParticipantMessagesService.showNotSave("Sistema não habilitado para cadastros de participantes!");
+              self.listParticipants();
+            }
+          });
+      } else {
+        ParticipantMessagesService.showToast("Favor, preencha todos os campos!");
+      }
     }
 
 

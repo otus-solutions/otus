@@ -1,4 +1,4 @@
-fdescribe('participants-manager-list-controller Test', function () {
+describe('participants-manager-list-controller Test', function () {
   var Mock = {};
   var controller;
   var Injections = {};
@@ -100,7 +100,6 @@ fdescribe('participants-manager-list-controller Test', function () {
       expect(controller.dynamicTableSettings.elementsProperties.indexOf('obito')).toBeGreaterThan(-1);
       done();
     });
-
 
   });
 
@@ -211,7 +210,6 @@ fdescribe('participants-manager-list-controller Test', function () {
       expect(Mock.ParticipantManagerService.selectParticipant).toHaveBeenCalledTimes(1);
       expect(Mock.ApplicationStateService.activateParticipantDashboard).toHaveBeenCalled();
       expect(Mock.ApplicationStateService.activateParticipantDashboard).toHaveBeenCalledTimes(1);
-      console.log(controller.participants)
     });
   });
 

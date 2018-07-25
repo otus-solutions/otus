@@ -4,6 +4,7 @@
     <md-tooltip md-direction="down">Voltar</md-tooltip>
   </md-button>
 </div>
+{{$ctrl.participant}}
 <md-divider></md-divider>
 <md-content flex layout-align="start center" layout="column" layout-padding layout-margin>
   <div layout="row" flex>
@@ -16,7 +17,7 @@
               <span flex="10"></span>
               <md-input-container flex>
                 <label>Número de Recrutamento (máx. 14 dígitos)</label>
-                <input ng-model="$ctrl.recruitmentNumber" numbers-only maxlength="14" id="rn" ng-blur="$ctrl.onFilter()">
+                <input ng-model="$ctrl.recruitmentNumber" numbers-only maxlength="14" id="rn" ng-change="$ctrl.onFilter()">
                 <md-tooltip md-direction="down">Insira no máximo 14 dígitos.</md-tooltip>
               </md-input-container>
               <span flex="10"></span>
@@ -25,7 +26,7 @@
               <span flex="10"></span>
               <md-input-container flex>
                 <label>Nome Completo</label>
-                <input ng-model="$ctrl.participant.name" id="name">
+                <input ng-model="$ctrl.participant.name" id="name" ng-change="$ctrl.onFilter()">
               </md-input-container>
               <span flex="10"></span>
             </div>
@@ -33,7 +34,7 @@
               <span flex="10"></span>
               <md-input-container flex="30">
                 <label>Sexo</label>
-                <md-select ng-model="$ctrl.participant.sex" id="sex">
+                <md-select ng-model="$ctrl.participant.sex" id="sex" ng-change="$ctrl.onFilter()">
                   <md-option value="M">Masculino</md-option>
                   <md-option value="F">Feminino</md-option>
                 </md-select>

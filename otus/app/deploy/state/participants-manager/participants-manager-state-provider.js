@@ -29,7 +29,7 @@
       }
     };
 
-    function _redirect($q, DashboardContextService, SessionContextService, ParticipantContextService, Application) {
+    function _redirect($q, SessionContextService, Application) {
       var deferred = $q.defer();
 
       Application
@@ -49,9 +49,7 @@
 
     _redirect.$inject = [
       '$q',
-      'otusjs.otus.dashboard.core.ContextService',
       'otusjs.application.session.core.ContextService',
-      'otusjs.participant.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
 

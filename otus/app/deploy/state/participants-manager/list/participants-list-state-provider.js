@@ -32,7 +32,7 @@
       }
     };
 
-    function _redirect($q, SessionContextService, DashboardContextService, ParticipantContextService, Application) {
+    function _redirect($q, SessionContextService, DashboardContextService, Application) {
       var deferred = $q.defer();
 
       Application
@@ -81,7 +81,6 @@
       '$q',
       'otusjs.application.session.core.ContextService',
       'otusjs.otus.dashboard.core.ContextService',
-      'otusjs.participant.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
     _loadParticipantsList.$inject = [
