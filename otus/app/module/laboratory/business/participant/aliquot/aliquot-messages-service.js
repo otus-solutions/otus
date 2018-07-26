@@ -13,38 +13,66 @@
   function Service($mdDialog, $mdToast) {
     var self = this;
 
-    var _exitDialog;
-    var _saveDialog;
-
     self.showExitDialog = showExitDialog;
     self.showSaveDialog = showSaveDialog;
+    self.showDeleteDialog = showDeleteDialog;
     self.showToast = showToast;
+    self.showNotRemovedDialog = showNotRemovedDialog;
 
-
-    _init();
-
-    function _init() {
-      _exitDialog = $mdDialog.confirm()
+    function showExitDialog(msg) {
+      var message = msg || 'Alíquotas alteradas serão descartadas.';
+      return $mdDialog.show($mdDialog.confirm()
         .title('Descartar Alterações?')
-        .textContent('Alíquotas alteradas serão descartadas.')
+        .textContent(message)
         .ariaLabel('Confirmação de cancelamento')
         .ok('Continuar')
-        .cancel('Cancelar');
-
-      _saveDialog = $mdDialog.confirm()
-                .title('Confirmar Aliquotagem')
-                .textContent('Deseja salvar as alterações?')
-                .ariaLabel('Confirmação de finalização')
-                .ok('Ok')
-                .cancel('Voltar');
+        .cancel('Cancelar'));
     }
 
-    function showExitDialog() {
-      return $mdDialog.show(_exitDialog);
+    function showSaveDialog(msg) {
+      var message = msg || 'Deseja salvar as alterações?';
+      return $mdDialog.show($mdDialog.confirm()
+        .title('Confirmar Aliquotagem')
+        .textContent(message)
+        .ariaLabel('Confirmação de finalização')
+        .ok('Ok')
+        .cancel('Voltar'));
     }
 
-    function showSaveDialog() {
-      return $mdDialog.show(_saveDialog);
+    function showDeleteDialog(msg) {
+      var message = msg || "A exclusão desta alíquota será um procedimento irreversível! Deseja realmente excluir?";
+      return $mdDialog.show($mdDialog.confirm()
+        .title('ATENÇÃO')
+        .textContent(message)
+        .ariaLabel('Confirmação de exclusão')
+        .ok('Ok')
+        .cancel('Cancelar'));
+    }
+
+    function showNotRemovedDialog(msg) {
+      return $mdDialog.show($mdDialog.alert()
+        .title('ALÍQUOTA NÃO REMOVIDA')
+        .htmlContent(_buildMessage(msg))
+        .ariaLabel('Confirmação de leitura')
+        .ok('Ok'));
+    }
+
+    function _buildMessage(msg) {
+      var message = "<br>A alíquota se encontra em: <br><br><ul>";
+      if(msg.transportationLot){
+        message = message + "<li>Lote de Transporte (Código do lote: " + msg.transportationLot + ")</li>";
+      }
+
+      if(msg.examLot){
+        message = message + "<li>Lote de Exames (Código do lote: " + msg.examLot + ")</li>";
+      }
+
+      if(msg.examResult){
+        message = message + "<li>Existem Resultados com essa alíquota!</li>";
+      }
+      message = message + '</ul><br><br><b>Para esse procedimento, é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
+
+      return message;
     }
 
     function showToast(msg, delay) {
