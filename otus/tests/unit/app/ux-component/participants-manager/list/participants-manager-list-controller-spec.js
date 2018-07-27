@@ -2,7 +2,7 @@ describe('participants-manager-list-controller Test', function () {
   var Mock = {};
   var controller;
   var Injections = {};
-  const HEADERS = ['Recrutamento', 'Nome', 'Sexo', 'Nascimento', 'Centro', 'Óbito', 'Relatórios'];
+  const HEADERS = ['Recrutamento', 'Nome', 'Sexo', 'Nascimento', 'Centro', 'Óbito', 'Home'];
   const TABLE_TITLE = 'Lista de Participantes';
 
   beforeEach(function () {

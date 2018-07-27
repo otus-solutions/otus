@@ -84,13 +84,13 @@
         .setFormatData("'dd/MM/yy")
         .addHeader('Centro', '10', '', 5)
         .addColumnProperty('fieldCenter.acronym')
-        .addHeader('Óbito', '10', '', 5)
+        .addHeader('Óbito', '10', '', 6)
         .addColumnProperty('obito')
-        .addHeader('Relatórios', '10', '', 6)
+        .addHeader('Home', '10', '',7)
         //icon, tooltip, classButton, successMsg,
         //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
         .addColumnIconButton(
-          'find_in_page', 'Ver participante', 'teste', 'Participante selecionado',
+          'person', 'Ver participante', '', 'Participante selecionado',
           self.selectParticipant, false, false, true, false, false
         )
         .setCheckbox(false)

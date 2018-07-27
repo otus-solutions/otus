@@ -28,16 +28,11 @@
     self.loadParticipantReports = loadParticipantReports;
     self.loadLaboratory = loadLaboratory;
     self.home = home;
-    self.listParticipants = listParticipants;
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function home() {
       ApplicationStateService.activateParticipantDashboard();
-      self.onClose();
-    }
-    function listParticipants() {
-      ApplicationStateService.activateParticipantsList();
       self.onClose();
     }
 
@@ -52,7 +47,7 @@
 
     function loadLaboratory() {
       ApplicationStateService.activateLaboratory();
-      
+
     }
 
     function onInit() {
