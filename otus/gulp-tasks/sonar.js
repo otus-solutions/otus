@@ -1,3 +1,4 @@
+var packageJson = require('../package.json');
 var gulp = require('gulp');
 var sonar = require('gulp-sonar');
 
