@@ -1,6 +1,6 @@
-xdescribe('otusjs.participant.business.ParticipantSearchService', function() {
+xdescribe('otusjs.participant.business.ParticipantManagerService', function() {
 
-  var UNIT_NAME = 'otusjs.participant.business.ParticipantSearchService';
+  var UNIT_NAME = 'otusjs.participant.business.ParticipantManagerService';
   var Mock = {};
   var Injections = {};
   var service = {};

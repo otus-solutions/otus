@@ -20,6 +20,9 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
   display: none;
 }
 
+.md-subheader.md-default-theme, .md-subheader{
+  background-color: transparent !important;
+}
 /** finish style participant search **/
 
 .selectedState {

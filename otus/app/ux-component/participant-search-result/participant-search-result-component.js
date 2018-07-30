@@ -15,7 +15,7 @@
     });
 
   Controller.$inject = [
-    'otusjs.participant.business.ParticipantSearchService'
+    'otusjs.participant.business.ParticipantManagerService'
   ];
 
   function Controller(ParticipantSearchService) {

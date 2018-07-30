@@ -7,14 +7,14 @@
 
   Service.$inject = [
     '$q',
-    'otusjs.deploy.ProjectConfigurationRestService',
+    'otusjs.deploy.ConfigurationRestService',
     'otusjs.deploy.ActivityRestService',
     'otusjs.deploy.SurveyRestService',
     'otusjs.activity.storage.ActivityLocalStorageService',
     'otusjs.activity.storage.SurveyStorageService'
   ];
 
-  function Service($q, ProjectConfigurationRestService, ActivityRestService, SurveyRestService, ActivityStorageService, SurveyStorageService) {
+  function Service($q, ConfigurationRestService, ActivityRestService, SurveyRestService, ActivityStorageService, SurveyStorageService) {
     var self = this;
     var _loadingDefer = null;
     var _isSurveyDataReady = false;
@@ -58,7 +58,7 @@
     }
 
     function _loadData() {
-      ProjectConfigurationRestService
+      ConfigurationRestService
         .getSurveys()
         .then(function(response) {
           if (response.data && response.data.length) {

@@ -47,11 +47,12 @@
 
     function loadLaboratory() {
       ApplicationStateService.activateLaboratory();
-      self.onClose();
+
     }
 
     function onInit() {
       // $element.hide();
+
       self.isEmpty = true;
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);

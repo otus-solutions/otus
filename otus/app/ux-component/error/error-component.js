@@ -11,6 +11,5 @@
   Controller.$inject = [];
 
   function Controller() {
-
   }
 })();

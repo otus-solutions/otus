@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.ProjectConfigurationRestService', Service);
+    .service('otusjs.deploy.ConfigurationRestService', Service);
 
   Service.$inject = [
     'OtusRestResourceService'
@@ -18,7 +18,7 @@
     self.getSurveys = getSurveys;
 
     function initialize() {
-      _rest = OtusRestResourceService.getProjectConfigurationResource();
+      _rest = OtusRestResourceService.getConfigurationResource();
     }
 
     function getSurveys() {
