@@ -21,6 +21,7 @@
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.deleteAliquot = deleteAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
     /* Laboratory Configuration Methods*/
@@ -81,6 +82,13 @@
       return _participantRest.updateAliquots({
         rn: recruitmentNumber
       }, persistanceStructure).$promise;
+    }
+
+    function deleteAliquot(aliquotCode) {
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.deleteAliquot({code: aliquotCode}).$promise;
     }
 
     //laboratory-configuration methods

@@ -14,7 +14,8 @@
       'otusjs.otus.dashboard',
       'otusjs.otus.uxComponent',
       'otusjs.application',
-      'otusjs.deploy'
+      'otusjs.deploy',
+      'ngSanitize'
     ]);
 
 }());

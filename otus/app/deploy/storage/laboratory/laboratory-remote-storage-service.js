@@ -36,6 +36,7 @@
     self.getLaboratory = getLaboratory;
     self.update = update;
     self.updateAliquots = updateAliquots;
+    self.deleteAliquot = deleteAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
 
@@ -149,6 +150,18 @@
         .updateAliquots(recruitmentNumber, persistanceStructure)
         .then(function(response) {
           deferred.resolve(response);
+        }, function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function deleteAliquot(aliquotCode) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .deleteAliquot(aliquotCode)
+        .then(function(response) {
+          deferred.resolve(response.data);
         }, function(e) {
           deferred.reject(e);
         });

@@ -27,19 +27,7 @@
           _loadRestrictResourses(toState.name);
       }
     });
-
-    // $rootScope.$on('$stateChangeError', function(evt, to, toParams, from, fromParams, error) {
-    //   evt.preventDefault();
-    //   console.error(error.message);
-    //   if (error.redirectTo) {
-    //     $state.go(error.redirectTo);
-    //   } else {
-    //     $state.go('error', {
-    //       status: error.status
-    //     });
-    //   }
-    // });
-
+    
     /**
      * Initialize the Rest Services that cannot be initialized before de login
      */
