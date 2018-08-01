@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -32,7 +32,7 @@
     function listIndexers() {
       var defer = $q.defer();
       _loadingDefer.promise
-        .then(function() {
+        .then(function () {
           defer.resolve(ParticipantStorageService.getCollection().find());
         });
       return defer.promise;
@@ -49,9 +49,10 @@
         .create(participant)
         .then(function (response) {
           deferred.resolve(response.data);
+          _loadData();
         }).catch(function (err) {
           deferred.reject(err);
-      });
+        });
       return deferred.promise;
     }
 
@@ -59,21 +60,19 @@
       var deferred = $q.defer();
       ProjectConfigurationRestService
         .getProjectConfiguration()
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
-        }).catch(function(error) {
+        }).catch(function (error) {
           deferred.reject(error);
         });
 
-        return deferred.promise;
+      return deferred.promise;
     }
-
-
 
     function _loadData() {
       ParticipantRestService
         .list()
-        .then(function(response) {
+        .then(function (response) {
           ParticipantStorageService.getCollection().clear();
           ParticipantStorageService.getCollection().insert(response.data);
           ParticipantStorageService.save();
