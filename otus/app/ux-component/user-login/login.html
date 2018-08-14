@@ -1,48 +1,32 @@
-<md-content id="login-page" layout="column" flex>
-  <div id="divtop">
-    <h2 class="name">
-      <span class="md-display-1">Otus</span>
-    </h2>
-    <div id="center">
-      <div>
-        <img src="app/static-resource/image/OtusImg.png" class="logo" media="screen and (max-width: 1280px) and (min-width: 800px)" />
-      </div>
-      <div layout="column">
-        <div>
-          <div id="content" flex>
-            <form name="loginForm" novalidate>
-              <br>
-              <md-input-container class="md-block">
-                <label>Email</label>
-                <input name="userEmail" ng-model="user.email" required />
-
-                <div ng-messages="loginForm.userEmail.$error">
-                  <div ng-message="required">Obrigatório</div>
-                </div>
-              </md-input-container>
-
-              <md-input-container class="md-block">
-                <label>Senha</label>
-                <input name="userPassword" ng-model="user.password" type="password" required />
-
-                <div ng-messages="loginForm.userPassword.$error">
-                  <div ng-message="required">Obrigatório</div>
-                </div>
-              </md-input-container>
-              <br />
-
-              <div layout="row" layout-sm="column">
-                <md-button type="submit" class="md-raised md-primary" ng-click="$ctrl.authenticate(user)" ng-disabled="loginForm.$invalid">
-                  Logar
-                </md-button>
-                <md-button type="button" class="md-raised md-accent" ng-click="$ctrl.goToSignupPage()">
-                  Cadastrar-se
-                </md-button>
-              </div>
-            </form>
+<md-content layout="column" layout-align="center center" flex>
+  <md-toolbar class="md-tall md-primary">
+  </md-toolbar>
+  <br>
+  <md-content layout="column" layout-align="center center" layout-padding flex>
+    <md-card>
+      <md-card-content flex>
+        <form name="loginForm">
+          <md-input-container class="md-block" flex>
+            <label>Email</label>
+            <input required name="userEmail" ng-model="user.email">
+            <div ng-messages="loginForm.userEmail.$error">
+              <div ng-message="required">Obrigatório</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block">
+            <label>Senha</label>
+            <input required name="userPassword" ng-model="user.password" type="password" />
+            <div ng-messages="loginForm.userPassword.$error">
+              <div ng-message="required">Obrigatório</div>
+            </div>
+          </md-input-container>
+          <a class="md-accent" href="">Esqueci minha senha</a>
+          <div flex class="bottom-sheet-demo inset" layout="column" layout-sm="column" layout-align="center">
+            <md-button class="md-raised md-primary" ng-disabled="loginForm.$invalid" ng-click="showListBottomSheet()">Entrar</md-button>
+            <md-button class="md-raised md-accent" ng-click="showGridBottomSheet()">Cadastrar-se</md-button>
           </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        </form>
+      </md-card-content>
+    </md-card>
+  </md-content>
 </md-content>
