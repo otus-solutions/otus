@@ -1,35 +1,40 @@
-<md-content layout="column" layout-align="center center" flex>
-  <md-toolbar class="md-tall md-primary">
+<md-content layout="column" flex>
+  <md-toolbar flex="15" class="md-tall md-primary">
   </md-toolbar>
-  <br>
-  <md-content layout="column" layout-align="center center" layout-padding flex>
-    <md-card>
-      <md-card-content flex>
-        <form name="loginForm">
-          <md-input-container class="md-block" flex>
+  <md-content flex layout="row" layout-align="center start">
+    <md-card layout-padding flex="60">
+      <h2 class="name">
+        <span class="md-display-1">Otus</span>
+      </h2>
+      <form name="loginForm" layout="row">
+        <div flex="66" flex-offset="15">
+          <div layout="row" layout-align="center start">
+            <div flex="20"></div>
+            <img src="app/static-resource/image/OtusImg.png" flex="40">
+            <div flex></div>
+          </div>
+          <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Email</label>
             <input required name="userEmail" ng-model="user.email">
             <div ng-messages="loginForm.userEmail.$error">
               <div ng-message="required">Obrigatório</div>
             </div>
           </md-input-container>
-          <md-input-container class="md-block">
+          <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Senha</label>
             <input required name="userPassword" ng-model="user.password" type="password" />
             <div ng-messages="loginForm.userPassword.$error">
               <div ng-message="required">Obrigatório</div>
             </div>
           </md-input-container>
-          <a class="md-accent" href ng-click="$ctrl.recover(user)">Esqueci minha senha</a>
-          <div flex class="bottom-sheet-demo inset" layout="column" layout-sm="column" layout-align="center">
-            <md-button class="md-raised md-primary" ng-disabled="loginForm.$invalid" ng-click="$ctrl.authenticate(user)">Entrar</md-button>
-            <md-button class="md-raised md-accent" ng-click="$ctrl.goToSignupPage()">Cadastrar-se</md-button>
-          </div>
-        </form>
-      </md-card-content>
-      <md-card-content flex ng-if="$ctrl.recovery">
-
-      </md-card-content>
+          <a class="md-accent" href="">Esqueci minha senha</a>
+        </div>
+        <div flex></div>
+      </form>
+      <div flex class="bottom-sheet-demo inset" layout="row" layout-align="end center">
+        <md-button class="md-raised md-primary" ng-disabled="loginForm.$invalid" ng-click="$ctrl.authenticate(user)">Entrar</md-button>
+        <md-button class="md-raised md-accent" ng-click="$ctrl.goToSignupPage()">Cadastrar-se</md-button>
+      </div>
     </md-card>
   </md-content>
 </md-content>

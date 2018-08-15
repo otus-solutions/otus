@@ -17,7 +17,7 @@
     self.initialize = initialize;
     self.getRecovery = getRecovery;
     self.getTokenValidation = getTokenValidation;
-    self.passwordUpdate = passwordUpdate;
+    self.updatePassword = updatePassword;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusAuthenticatorResource();

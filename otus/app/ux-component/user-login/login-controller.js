@@ -41,7 +41,6 @@
 
     function recover(userData) {
       self.recovery = true;
-      console.log('opa');
       UserAccessRecoveryService.getRecovery(email).then(function (result) {
         //TODO:
       });

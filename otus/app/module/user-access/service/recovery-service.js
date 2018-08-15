@@ -15,8 +15,7 @@
     /* Public methods */
     self.$onInit = onInit;
     self.getRecovery = getRecovery;
-    self.getTokenValidation = getTokenValidation;
-    self.passwordUpdate = passwordUpdate;
+    self.updatePassword = updatePassword;
 
     function onInit() {
       PasswordRecoveryRestService.initialize();
@@ -26,6 +25,10 @@
       return PasswordRecoveryRestService.getRecovery(email).then(function (token) {
         request.resolve(token);
       });
+    }
+
+    function updatePassword() {
+      //TODO:
     }
 
     function authenticate(userData) {
