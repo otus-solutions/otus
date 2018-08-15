@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.application.verifyBrowser')
-    .service('otusjs.application.verifyBrowser.verifyBrowserService', Service);
+    .service('otusjs.application.verifyBrowser.VerifyBrowserService', Service);
 
   Service.$inject = [
     'otusjs.application.state.ApplicationStateService'
