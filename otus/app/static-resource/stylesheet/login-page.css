@@ -3,15 +3,12 @@
 }
 #login-page #center {
     width: 55%;
-    top: 60%;
+    top: 30%;
     margin: 0 auto;
-    background-color: white;
     position: relative;
-    border: 2px solid #E6E6E6;
 }
 #login-page #divtop {
-    background-color: #00796B;
-    height: 35%;
+    height: 40%;
     z-index: 1;
     position: absolute;
     width: 100%;
@@ -19,9 +16,8 @@
 #login-page .name {
     text-align: left;
     color: white;
-    top: 58%;
+    top: 64%;
     position: relative;
-    margin: 0 auto;
 }
 #login-page .name span {
     margin-left: 23%;
@@ -34,6 +30,8 @@
 #login-page .logo {
     width: 24%;
     position: absolute;
+    z-index: 1000;
+    top: 0%;
     left: 36%;
     transform: translate(-30%, -30%);
 }
@@ -56,4 +54,14 @@
 }
 .project-name {
     color: white;
+}
+
+/*----------------------Novo login-----------------------------*/
+
+#card {
+  width: 60%;
+  top: 30%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 100;
 }
