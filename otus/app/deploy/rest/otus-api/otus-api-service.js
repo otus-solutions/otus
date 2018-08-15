@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -18,7 +18,8 @@
     'otusjs.deploy.SampleTransportRestService',
     'otusjs.deploy.ExamsRestService',
     'otusjs.deploy.ParticipantReportRestService',
-    'otusjs.deploy.MonitoringRestService'
+    'otusjs.deploy.MonitoringRestService',
+    'otusjs.deploy.PasswordRecoveryRestService'
   ];
 
   function Service(
@@ -34,7 +35,8 @@
     SampleTransportRestService,
     ExamsRestService,
     ParticipantReportRestService,
-    MonitoringRestService
+    MonitoringRestService,
+    PasswordRecoveryRestService
   ) {
     var self = this;
 
@@ -46,6 +48,7 @@
     function initializeOpenResources() {
       AuthenticationRestService.initialize();
       InstallerRestService.initialize();
+      PasswordRecoveryRestService.initialize();
     }
 
     function initializeConfigurationResources() {
