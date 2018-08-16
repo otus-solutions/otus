@@ -14,31 +14,21 @@
 
     /* Public methods */
     self.$onInit = onInit;
-    self.getRecovery = getRecovery;
+    self.recovery = recovery;
     self.updatePassword = updatePassword;
 
     function onInit() {
       PasswordRecoveryRestService.initialize();
     }
 
-    function getRecovery(email) {
-      return PasswordRecoveryRestService.getRecovery(email).then(function (token) {
+    function recovery(email, url) {
+      return PasswordRecoveryRestService.getRecovery(email, url).then(function (token) {
         request.resolve(token);
       });
     }
 
-    function updatePassword() {
+    function updatePassword(token, password) {
       //TODO:
-    }
-
-    function authenticate(userData) {
-      return ModuleService.Service.Authentication
-        .authenticateUserData(userData)
-        .then(function _handleAuthenticationResponse(response) {
-          if (!response.hasErrors) {
-            EventService.fireLogin(response.data);
-          }
-        });
     }
   }
 }());

@@ -16,32 +16,26 @@
     /* Public methods */
     self.initialize = initialize;
     self.getRecovery = getRecovery;
-    self.getTokenValidation = getTokenValidation;
     self.updatePassword = updatePassword;
 
     function initialize() {
-      _rest = OtusRestResourceService.getOtusAuthenticatorResource();
+      _rest = OtusRestResourceService.getOtusPasswordRecoveryResource();
     }
 
-    function getRecovery(userEmail) {
+    function getRecovery(userEmail, url) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getRecovery({ userEmail: userEmail }).$promise;
+      return _rest.getRecovery({
+        userEmail: userEmail
+      }, url).$promise;
     }
 
-    function getTokenValidation(token) {
+    function updatePassword(token, password) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getTokenValidation({ token: token }).$promise;
-    }
-
-    function updatePassword(recruitmentNumber, updateStructure) {
-      if (!_participantRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _participantRest.updatePassword({
+      return _rest.updatePassword({
         token: token
       }, password).$promise;
     }

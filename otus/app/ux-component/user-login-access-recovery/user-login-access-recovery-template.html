@@ -4,7 +4,7 @@
       <span class="md-display-1">Otus</span>
     </h2>
   </md-toolbar>
-  <md-content flex layout="row" layout-align="center start" ng-if="!$ctrl.recovery">
+  <md-content flex layout="row" layout-align="center start">
     <md-card id="card" layout-padding flex="55">
       <div layout="row" layout-align="center start">
         <div flex="20"></div>
@@ -22,8 +22,15 @@
             </div>
           </md-input-container>
           <md-input-container class="md-block" layout="column" layout-margin flex>
-            <label>Senha</label>
+            <label>Nova senha</label>
             <input required name="userPassword" ng-model="user.password" type="password" />
+            <div ng-messages="loginForm.userPassword.$error">
+              <div ng-message="required">Obrigatório</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block" layout="column" layout-margin flex>
+            <label>Confirme a nova senha</label>
+            <input required name="userPassword" ng-model="user.passwordConfirmation" type="password" />
             <div ng-messages="loginForm.userPassword.$error">
               <div ng-message="required">Obrigatório</div>
             </div>
@@ -32,36 +39,8 @@
         <div flex></div>
       </form>
       <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
-        <md-button class="md-raised md-primary" ng-disabled="loginForm.$invalid" ng-click="$ctrl.authenticate(user)">Entrar</md-button>
-        <md-button class="md-raised md-accent" ng-click="$ctrl.goToSignupPage()">Cadastrar-se</md-button>
-        <div flex></div>
-        <md-button target="_blank" class="md-accent" ng-click="$ctrl.goToRecovery()">Esqueci minha senha</md-button>
-      </div>
-    </md-card>
-  </md-content>
-  <md-content flex layout="row" layout-align="center start" ng-if="$ctrl.recovery">
-    <md-card id="card" layout-padding flex="55">
-      <div layout="row" layout-align="center start">
-        <div flex="20"></div>
-        <img class="logo" src="app/static-resource/image/OtusImg.png" flex="40">
-        <div flex></div>
-      </div>
-      <div layout="column" flex></div>
-      <form name="loginForm" id="content" layout="row">
-        <div flex="80" flex-offset="10">
-          <md-input-container class="md-block" layout="column" layout-margin flex>
-            <label>Email</label>
-            <input required name="userEmail" ng-model="user.email">
-            <div ng-messages="loginForm.userEmail.$error">
-              <div ng-message="required">Obrigatório</div>
-            </div>
-          </md-input-container>
-        </div>
-        <div flex></div>
-      </form>
-      <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
-        <md-button class="md-raised md-primary" ng-click="$ctrl.goBack()">Voltar</md-button>
-        <md-button class="md-raised md-accent" ng-click="$ctrl.sendRecovery(user)">Solicitar troca de senha</md-button>
+        <md-button class="md-raised md-primary" ng-click="$ctrl.goBack()">Cancelar</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="user.password != user.passwordConfirmation" ng-click="$ctrl.accessRecovery(user)">Confirmar</md-button>
       </div>
     </md-card>
   </md-content>

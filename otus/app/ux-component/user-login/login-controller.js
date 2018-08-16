@@ -6,6 +6,7 @@
     .controller('otusjs.otus.uxComponent.LoginController', Controller);
 
   Controller.$inject = [
+    '$mdDialog',
     'otusjs.user.access.service.LoginService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.user.access.service.UserAccessRecoveryService',
@@ -13,17 +14,20 @@
     '$mdToast'
   ];
 
-  function Controller(LoginService, ApplicationStateService, UserAccessRecoveryService, VerifyBrowserService, $mdToast) {
+  function Controller($mdDialog, LoginService, ApplicationStateService, UserAccessRecoveryService, VerifyBrowserService, $mdToast) {
     const LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
     const SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
+    const PATH = '/recovery'
     var _errorMessage = $mdToast.simple().textContent(LOGIN_ERROR_MESSAGE);
     var self = this;
 
     /* Public methods */
     self.$onInit = onInit;
     self.authenticate = authenticate;
+    self.sendRecovery = sendRecovery;
     self.goToSignupPage = goToSignupPage;
-    self.recover = recover;
+    self.goToRecovery = goToRecovery;
+    self.goBack = goBack;
 
     function onInit() {
       VerifyBrowserService.verify();
@@ -35,15 +39,37 @@
         .then(_onLoginSuccess, _onLoginError);
     }
 
+    function sendRecovery(userData) {
+      var url = _getUrl();
+      UserAccessRecoveryService.recovery(userData, url).then(function (result) {
+        _successMessage();
+      });
+    }
+
     function goToSignupPage() {
       ApplicationStateService.activateSignup();
     }
 
-    function recover(userData) {
+    function goToRecovery() {
       self.recovery = true;
-      UserAccessRecoveryService.getRecovery(email).then(function (result) {
-        //TODO:
-      });
+    }
+
+    function goBack() {
+      self.recovery = false;
+    }
+
+    function _successMessage() {
+      $mdDialog.show($mdDialog.alert()
+        .title('Recuperação de acesso')
+        .textContent('Enviamos um e-mail com um endereço de acesso para trocar a senha')
+        .ariaLabel('Enviamos um e-mail com um endereço de acesso para trocar a senha')
+        .ok('Ok')
+      );
+    }
+
+    function _getUrl() {
+      var newUrl = window.location.href.replace('login', '');
+      return newUrl + PATH;
     }
 
     function _onLoginSuccess() {
