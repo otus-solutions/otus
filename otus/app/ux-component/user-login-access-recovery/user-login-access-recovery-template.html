@@ -1,6 +1,6 @@
-<md-content id="login-page" layout="column" flex>
+<md-content id="user-login-page" layout="column" flex>
   <md-toolbar flex="40" id="divtop" class="md-tall md-primary">
-    <h2 class="name">
+    <h2 class="system-name">
       <span class="md-display-1">Otus</span>
     </h2>
   </md-toolbar>
@@ -8,29 +8,22 @@
     <md-card id="card" layout-padding flex="55">
       <div layout="row" layout-align="center start">
         <div flex="20"></div>
-        <img class="logo" src="app/static-resource/image/OtusImg.png" flex="40">
+        <img class="logotype" src="app/static-resource/image/OtusImg.png" flex="40">
         <div flex></div>
       </div>
       <div layout="column" flex></div>
       <form name="loginForm" id="content" layout="row">
         <div flex="80" flex-offset="10">
           <md-input-container class="md-block" layout="column" layout-margin flex>
-            <label>Email</label>
-            <input required name="userEmail" ng-model="user.email">
-            <div ng-messages="loginForm.userEmail.$error">
-              <div ng-message="required">Obrigatório</div>
-            </div>
-          </md-input-container>
-          <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Nova senha</label>
-            <input required name="userPassword" ng-model="user.password" type="password" />
+            <input required name="userPassword" ng-model="$ctrl.password" type="password" />
             <div ng-messages="loginForm.userPassword.$error">
               <div ng-message="required">Obrigatório</div>
             </div>
           </md-input-container>
           <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Confirme a nova senha</label>
-            <input required name="userPassword" ng-model="user.passwordConfirmation" type="password" />
+            <input required name="userPasswordConfirmation" ng-model="$ctrl.passwordConfirmation" type="password" />
             <div ng-messages="loginForm.userPassword.$error">
               <div ng-message="required">Obrigatório</div>
             </div>
@@ -40,7 +33,7 @@
       </form>
       <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
         <md-button class="md-raised md-primary" ng-click="$ctrl.goBack()">Cancelar</md-button>
-        <md-button class="md-raised md-primary" ng-disabled="user.password != user.passwordConfirmation" ng-click="$ctrl.accessRecovery(user)">Confirmar</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="$ctrl.enable()" ng-click="$ctrl.accessRecovery(user)">Confirmar</md-button>
       </div>
     </md-card>
   </md-content>

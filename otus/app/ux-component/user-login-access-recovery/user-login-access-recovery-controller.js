@@ -7,18 +7,23 @@
 
   Controller.$inject = [
     'otusjs.user.access.service.UserAccessRecoveryService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(UserAccessRecoveryService, LoadingScreenService) {
+  function Controller(UserAccessRecoveryService, LoadingScreenService, ApplicationStateService) {
     var self = this;
 
     /* Public methods */
     self.$onInit = onInit;
     self.accessRecovery = accessRecovery;
     self.goBack = goBack;
+    self.enable = enable;
 
-    function onInit() { }
+    function onInit() {
+      self.password = '';
+      self.passwordConfirmation = '';
+    }
 
     function accessRecovery(user) {
       UserAccessRecoveryService.updatePassword(token, password).then(function (result) {
@@ -27,7 +32,15 @@
     }
 
     function goBack() {
-      // TODO: retornar usuário para a tela de login
+      ApplicationStateService.activateLogin();
+    }
+
+    function enable() {
+      if(self.password && self.passwordConfirmation){
+        return !(self.password === self.passwordConfirmation);
+      } else {
+        return true;
+      }
     }
 
     function _successMessage() {
