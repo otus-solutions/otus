@@ -24,7 +24,7 @@
     }
 
     function validateToken(token) {
-      if (!_participantRest) {
+      if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
       return _rest.getValidationToken({

@@ -34,7 +34,7 @@
       'EXAM_SENDING': 'exam-sending',
       'EXAM_RESULT_VISUALIZER': 'exam-result-visualizer',
       'MONITORING': 'monitoring',
-      'RECOVERY': 'recovery'
+      'ACCESS_RECOVERY': 'access-recovery'
     })
     .config(Configuration);
 

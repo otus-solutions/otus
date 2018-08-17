@@ -23,7 +23,7 @@
     }
 
     function validateToken(token) {
-      return UserAccessRecoveryRestService.ValidateToken(token).then(function (response) {
+      return UserAccessRecoveryRestService.validateToken(token).then(function (response) {
         request.resolve(response);
       });
     }

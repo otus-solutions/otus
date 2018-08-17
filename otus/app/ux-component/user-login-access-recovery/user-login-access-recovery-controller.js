@@ -25,9 +25,10 @@
     function onInit() {
       self.password = '';
       self.passwordConfirmation = '';
-      if (UserAccessRecoveryService.validateToken($stateParams.token)) {
-        ApplicationStateService.activateError();
-      }
+      //TODO
+      // if (UserAccessRecoveryService.validateToken($stateParams.token)) {
+      //   ApplicationStateService.activateError();
+      // }
     }
 
     function accessRecovery(user) {
