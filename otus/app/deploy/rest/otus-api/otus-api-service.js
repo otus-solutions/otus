@@ -19,7 +19,7 @@
     'otusjs.deploy.ExamsRestService',
     'otusjs.deploy.ParticipantReportRestService',
     'otusjs.deploy.MonitoringRestService',
-    'otusjs.deploy.PasswordRecoveryRestService'
+    'otusjs.deploy.UserAccessRecoveryRestService'
   ];
 
   function Service(
@@ -36,7 +36,7 @@
     ExamsRestService,
     ParticipantReportRestService,
     MonitoringRestService,
-    PasswordRecoveryRestService
+    UserAccessRecoveryRestService
   ) {
     var self = this;
 
@@ -48,7 +48,7 @@
     function initializeOpenResources() {
       AuthenticationRestService.initialize();
       InstallerRestService.initialize();
-      PasswordRecoveryRestService.initialize();
+      UserAccessRecoveryRestService.initialize();
     }
 
     function initializeConfigurationResources() {

@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.PasswordRecoveryRestService', Service);
+    .service('otusjs.deploy.UserAccessRecoveryRestService', Service);
 
   Service.$inject = [
     'OtusRestResourceService'
@@ -15,22 +15,28 @@
 
     /* Public methods */
     self.initialize = initialize;
-    self.getRecovery = getRecovery;
+    self.validateToken = validateToken;
+    self.requestRecovery = requestRecovery;
     self.updatePassword = updatePassword;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusPasswordRecoveryResource();
     }
 
-    function ValidateToken(token) {
-      // TODO adicionar função client de validação do token
+    function validateToken(token) {
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getValidationToken({
+        token: token
+      }).$promise;
     }
 
-    function getRecovery(userEmail, url) {
+    function requestRecovery(userEmail, url) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getRecovery({
+      return _rest.requestRecovery({
         userEmail: userEmail
       }, url).$promise;
     }

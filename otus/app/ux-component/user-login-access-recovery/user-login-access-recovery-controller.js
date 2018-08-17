@@ -25,7 +25,7 @@
     function onInit() {
       self.password = '';
       self.passwordConfirmation = '';
-      if(UserAccessRecoveryService.validateToken($stateParams.token)){
+      if (UserAccessRecoveryService.validateToken($stateParams.token)) {
         ApplicationStateService.activateError();
       }
     }
@@ -41,8 +41,8 @@
     }
 
     function enable() {
-      if(self.password && self.passwordConfirmation){
-        if(self.password !== self.passwordConfirmation){
+      if (self.password && self.passwordConfirmation) {
+        if (self.password !== self.passwordConfirmation) {
           $scope.loginForm.userPasswordConfirmation.$setValidity('invalidPassword', false);
           return true;
         } else {

@@ -60,9 +60,9 @@
 
     function _successMessage() {
       $mdDialog.show($mdDialog.alert()
-        .title('Recuperação de acesso')
-        .textContent('Enviamos um e-mail com um endereço de acesso para trocar a senha')
-        .ariaLabel('Enviamos um e-mail com um endereço de acesso para trocar a senha')
+        .title('Solicitação de troca de senha')
+        .textContent('Sucesso. Enviamos um e-mail com as instruções para você trocar sua senha')
+        .ariaLabel('Sucesso. Enviamos um e-mail com as instruções para você trocar sua senha')
         .ok('Ok')
       );
     }
