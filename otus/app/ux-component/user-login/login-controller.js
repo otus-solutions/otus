@@ -17,7 +17,7 @@
   function Controller($mdDialog, LoginService, ApplicationStateService, UserAccessRecoveryService, VerifyBrowserService, $mdToast) {
     const LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
     const SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
-    const PATH = '/recovery'
+    const PATH = '/access-recovery'
     var _errorMessage = $mdToast.simple().textContent(LOGIN_ERROR_MESSAGE);
     var self = this;
 
@@ -68,7 +68,7 @@
     }
 
     function _getUrl() {
-      var newUrl = window.location.href.replace('login', '');
+      var newUrl = window.location.href.replace('/login', '');
       return newUrl + PATH;
     }
 
