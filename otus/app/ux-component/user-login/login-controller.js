@@ -41,7 +41,6 @@
 
     function sendRecovery(userData) {
       var url = _getUrl();
-      TODO
       UserAccessRecoveryService.recovery(userData, url)
       .then(function (result) {
         _successMessage();

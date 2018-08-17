@@ -10,6 +10,7 @@
   z-index: 50;
 }
 #user-login-page {
+  height: 100%;
   position: relative;
 }
 #user-login-page #center {
