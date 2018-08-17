@@ -22,6 +22,10 @@
       _rest = OtusRestResourceService.getOtusPasswordRecoveryResource();
     }
 
+    function ValidateToken(token) {
+      // TODO adicionar função client de validação do token
+    }
+
     function getRecovery(userEmail, url) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');

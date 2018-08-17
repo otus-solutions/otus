@@ -16,9 +16,19 @@
     self.$onInit = onInit;
     self.recovery = recovery;
     self.updatePassword = updatePassword;
+    self.validateToken =  validateToken;
 
     function onInit() {
       PasswordRecoveryRestService.initialize();
+    }
+
+    function validateToken(token) {
+      self.token = token;
+      return true;
+      // TODO
+      // return PasswordRecoveryRestService.ValidateToken(self.token).then(function (result) {
+      //   request.resolve(result);
+      // });
     }
 
     function recovery(email, url) {

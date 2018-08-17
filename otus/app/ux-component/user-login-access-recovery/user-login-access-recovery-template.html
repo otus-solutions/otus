@@ -24,8 +24,9 @@
           <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Confirme a nova senha</label>
             <input required name="userPasswordConfirmation" ng-model="$ctrl.passwordConfirmation" type="password" />
-            <div ng-messages="loginForm.userPassword.$error">
+            <div ng-messages="loginForm.userPasswordConfirmation.$error">
               <div ng-message="required">Obrigatório</div>
+              <div ng-message="invalidPassword">As senhas devem ser iguais</div>
             </div>
           </md-input-container>
         </div>

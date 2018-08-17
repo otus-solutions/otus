@@ -21,7 +21,7 @@
     self.state = {
       parent: STATE.ACCESS,
       name: STATE.RECOVERY,
-      url: '/' + STATE.RECOVERY,
+      url: '/' + STATE.RECOVERY + ':token',
       templateUrl: 'app/ux-component/user-login-access-recovery/user-login-access-recovery-template.html',
       controller: 'otusUserAccessRecoveryCtrl as $ctrl'
     };

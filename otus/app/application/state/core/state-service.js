@@ -19,7 +19,6 @@
     self.activatePaperActivityInitializer = activatePaperActivityInitializer;
     self.activateInstaller = activateInstaller;
     self.activateLogin = activateLogin;
-    self.activateLoginRecovery = activateLoginRecovery;
     self.activateError = activateError;
     self.activateLaboratory = activateLaboratory;
     self.activateDashboard = activateDashboard;
@@ -67,10 +66,6 @@
 
     function activateLogin() {
       $state.go(STATE.LOGIN);
-    }
-
-    function activateLoginRecovery() {
-      $state.go(STATE.RECOVERY);
     }
 
     function activateError() {

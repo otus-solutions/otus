@@ -6,12 +6,14 @@
     .controller('otusUserAccessRecoveryCtrl', Controller);
 
   Controller.$inject = [
+    '$stateParams',
+    '$scope',
     'otusjs.user.access.service.UserAccessRecoveryService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(UserAccessRecoveryService, LoadingScreenService, ApplicationStateService) {
+  function Controller($stateParams, $scope, UserAccessRecoveryService, LoadingScreenService, ApplicationStateService) {
     var self = this;
 
     /* Public methods */
@@ -23,6 +25,9 @@
     function onInit() {
       self.password = '';
       self.passwordConfirmation = '';
+      if(UserAccessRecoveryService.validateToken($stateParams.token)){
+        ApplicationStateService.activateError();
+      }
     }
 
     function accessRecovery(user) {
@@ -37,7 +42,13 @@
 
     function enable() {
       if(self.password && self.passwordConfirmation){
-        return !(self.password === self.passwordConfirmation);
+        if(self.password !== self.passwordConfirmation){
+          $scope.loginForm.userPasswordConfirmation.$setValidity('invalidPassword', false);
+          return true;
+        } else {
+          $scope.loginForm.userPasswordConfirmation.$setValidity('invalidPassword', true);
+          return false;
+        }
       } else {
         return true;
       }
