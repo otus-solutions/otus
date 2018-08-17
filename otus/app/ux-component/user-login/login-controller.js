@@ -41,9 +41,14 @@
 
     function sendRecovery(userData) {
       var url = _getUrl();
-      UserAccessRecoveryService.recovery(userData, url).then(function (result) {
+      TODO
+      UserAccessRecoveryService.recovery(userData, url)
+      .then(function (result) {
         _successMessage();
-      });
+      })
+        .catch(function (result) {
+          _recoveryErrorMessage();
+        });
     }
 
     function goToSignupPage() {
@@ -64,6 +69,21 @@
         .textContent('Sucesso. Enviamos um e-mail com as instruções para você trocar sua senha')
         .ariaLabel('Sucesso. Enviamos um e-mail com as instruções para você trocar sua senha')
         .ok('Ok')
+      ).then(function () {
+          self.recovery = false;
+        }
+      );
+    }
+
+    function _recoveryErrorMessage() {
+      $mdDialog.show($mdDialog.alert()
+        .title('Recuperação de acesso')
+        .textContent('Não foi possivel solicitar a troca a senha, tente novamente mais tarde')
+        .ariaLabel('Não foi possivel solicitar a troca a senha, tente novamente mais tarde')
+        .ok('Ok')
+      ).then(function () {
+          self.recovery = false;
+        }
       );
     }
 
