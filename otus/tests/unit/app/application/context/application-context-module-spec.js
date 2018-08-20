@@ -25,7 +25,7 @@ xdescribe('otusjs.application.context', function() {
       var ParticipantContextService = $injector.get('otusjs.participant.core.ContextService');
       var ActivityContextService = $injector.get('otusjs.activity.core.ContextService');
 
-      console.log(SessionContextService);
+      // console.log(SessionContextService);
 
       $provide.value('SessionContextService', SessionContextService);
       $provide.value('AccessContextService', AccessContextService);
