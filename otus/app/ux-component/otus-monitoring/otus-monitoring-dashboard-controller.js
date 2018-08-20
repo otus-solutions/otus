@@ -49,7 +49,8 @@
             return index == self.indexOf(elem);
           });
 
-          self.update(self.questionnairesList[0], null, null, null).then(function() {
+          self.update(self.questionnairesList[0], ["MG","RJ","SP","RS","BA","ES"], null, null).then(function() {
+            self.selectedAcronym = angular.copy(self.questionnairesList[0]);
             self.ready = true;
           });
         });
@@ -101,7 +102,6 @@
         } else {
           return false;
         }
-
       } else {
         return false;
       }
@@ -115,30 +115,38 @@
           selectedCenters.push(center.acronym);
         });
       }
-
-      MonitoringService.find(acronym)
-        .then(function(response) {
-          if (!response.length) {
-            self.monitoringData = []
-            _showMessages('Os dados não foram encontrados!', () => {});
-          }
-          self.monitoringData = response;
-          if (self.preProcessingData()) {
-            var _startDate = startDate || self.uniqueDatesList[0];
-            var _endDate = endDate || self.uniqueDatesList[self.uniqueDatesList.length - 1];
-            var _selectedCenters = selectedCenters || self.fieldCentersList;
-            self.questionnaireData = MonitorParseData.create(acronym, _selectedCenters, _startDate, _endDate);
-            _build();
-            deferred.resolve({
-              startDate: _startDate,
-              endDate: _endDate
-            });
-          } else {
-            deferred.reject({});
-          }
-          LoadingScreenService.finish();
-        });
+      if(self.selectedAcronym != acronym) {
+        MonitoringService.find(acronym)
+          .then(function (response) {
+            if (!response.length) {
+              self.monitoringData = []
+              _showMessages('Os dados não foram encontrados!', () => {
+              });
+            }
+            self.monitoringData = response;
+            _constructorData(deferred, startDate, endDate, selectedCenters, acronym);
+            LoadingScreenService.finish();
+          });
+      }else {
+        _constructorData(deferred, startDate, endDate, selectedCenters, acronym);
+      }
       return deferred.promise;
+    }
+
+    function _constructorData(deferred, startDate, endDate, selectedCenters, acronym) {
+      if (self.preProcessingData()) {
+        var _startDate = startDate || self.uniqueDatesList[0];
+        var _endDate = endDate || self.uniqueDatesList[self.uniqueDatesList.length - 1];
+        var _selectedCenters = selectedCenters || self.fieldCentersList;
+        self.questionnaireData = MonitorParseData.create(acronym, _selectedCenters, _startDate, _endDate);
+        _build();
+        deferred.resolve({
+          startDate: _startDate,
+          endDate: _endDate
+        });
+      } else {
+        deferred.reject({});
+      }
     }
 
     function _build() {
