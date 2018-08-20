@@ -49,7 +49,7 @@
             return index == self.indexOf(elem);
           });
 
-          self.update(self.questionnairesList[0], ["MG","RJ","SP","RS","BA","ES"], null, null).then(function() {
+          self.update(self.questionnairesList[0], self.fieldCentersList, null, null).then(function() {
             self.selectedAcronym = angular.copy(self.questionnairesList[0]);
             self.ready = true;
           });
@@ -116,6 +116,7 @@
         });
       }
       if(self.selectedAcronym != acronym) {
+        self.selectedAcronym = acronym;
         MonitoringService.find(acronym)
           .then(function (response) {
             if (!response.length) {
