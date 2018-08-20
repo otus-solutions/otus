@@ -72,7 +72,7 @@ describe('login-controller Test', function() {
     });
 
     it('should method recovery to have been called', function() {
-      expect(Injections.UserAccessRecoveryService.recovery).toHaveBeenCalled();
+      expect(Injections.UserAccessRecoveryService.recovery).toHaveBeenCalledWith('fail', window.location.href + '/access-recovery');
     });
   });
 
