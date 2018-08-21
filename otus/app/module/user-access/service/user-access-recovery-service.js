@@ -16,7 +16,7 @@
     /* Public methods */
     self.$onInit = onInit;
     self.validateToken = validateToken;
-    self.recovery = recovery;
+    self.sendPasswordReset = sendPasswordReset;
     self.updatePassword = updatePassword;
 
     function onInit() {
@@ -36,9 +36,9 @@
       return deferred.promise;
     }
 
-    function recovery(data) {
+    function sendPasswordReset(data) {
       var deferred = $q.defer();
-      UserAccessRecoveryRestService.requestRecovery(data)
+      UserAccessRecoveryRestService.sendPasswordReset(data)
         .then(function (response) {
           deferred.resolve(response.data);
         })

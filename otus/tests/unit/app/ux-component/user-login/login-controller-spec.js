@@ -14,7 +14,7 @@ describe('login-controller Test', function () {
     };
 
     Mock.UserAccessRecoveryService = {
-      recovery: function (userData, url) {
+      sendPasswordReset: function (userData, url) {
         if (userData === 'fail') {
           return Promise.reject();
         } else {
@@ -68,15 +68,15 @@ describe('login-controller Test', function () {
       input.email = 'email@email.com';
       spyOn(ctrl, 'sendRecovery').and.callThrough();
       spyOn(ctrl, '$onInit').and.callThrough();
-      spyOn(Injections.UserAccessRecoveryService, 'recovery').and.callThrough();
+      spyOn(Injections.UserAccessRecoveryService, 'sendPasswordReset').and.callThrough();
       ctrl.sendRecovery(input);
     });
 
-    it('should method recovery to have been called', function () {
+    it('should method sendPasswordReset to have been called', function () {
       var data = {};
       data.redirectUrl = window.location.href + '/access-recovery';
       data.userEmail = "email@email.com";
-      expect(Injections.UserAccessRecoveryService.recovery).toHaveBeenCalledWith(data);
+      expect(Injections.UserAccessRecoveryService.sendPasswordReset).toHaveBeenCalledWith(data);
     });
   });
 

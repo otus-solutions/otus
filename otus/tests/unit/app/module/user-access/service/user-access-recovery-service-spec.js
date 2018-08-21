@@ -12,7 +12,7 @@ describe('UserAccessRecoveryService', function () {
       validateToken: function () {
         return Promise.resolve();
       },
-      requestRecovery: function () {
+      sendPasswordReset: function () {
         return Promise.resolve();
       },
       updatePassword: function () {
@@ -69,37 +69,37 @@ describe('UserAccessRecoveryService', function () {
     });
   });
 
-  describe('recovery method', function() {
+  describe('sendPasswordReset method', function() {
     beforeEach(function() {
-      spyOn(service, 'recovery').and.callThrough();
-      spyOn(Injections.UserAccessRecoveryRestService, 'requestRecovery').and.callThrough();
-      service.recovery();
+      spyOn(service, 'sendPasswordReset').and.callThrough();
+      spyOn(Injections.UserAccessRecoveryRestService, 'sendPasswordReset').and.callThrough();
+      service.sendPasswordReset();
     });
 
     it('should validateToken be defined', function() {
-      expect(service.recovery).toHaveBeenCalled();
-      expect(service.recovery).not.toBeNull();
+      expect(service.sendPasswordReset).toHaveBeenCalled();
+      expect(service.sendPasswordReset).not.toBeNull();
     });
 
-    it('method UserAccessRecoveryRestService.requestRecovery should to have been called', function() {
-      expect(Injections.UserAccessRecoveryRestService.requestRecovery).toHaveBeenCalled();
+    it('method UserAccessRecoveryRestService.sendPasswordReset should to have been called', function() {
+      expect(Injections.UserAccessRecoveryRestService.sendPasswordReset).toHaveBeenCalled();
     });
   });
 
-  describe('recovery method', function() {
+  describe('sendPasswordReset method', function() {
     beforeEach(function() {
-      spyOn(service, 'recovery').and.callThrough();
-      spyOn(Injections.UserAccessRecoveryRestService, 'requestRecovery').and.callThrough();
-      service.recovery();
+      spyOn(service, 'sendPasswordReset').and.callThrough();
+      spyOn(Injections.UserAccessRecoveryRestService, 'sendPasswordReset').and.callThrough();
+      service.sendPasswordReset();
     });
 
     it('should validateToken be defined', function() {
-      expect(service.recovery).toHaveBeenCalled();
-      expect(service.recovery).not.toBeNull();
+      expect(service.sendPasswordReset).toHaveBeenCalled();
+      expect(service.sendPasswordReset).not.toBeNull();
     });
 
-    it('method UserAccessRecoveryRestService.requestRecovery should to have been called', function() {
-      expect(Injections.UserAccessRecoveryRestService.requestRecovery).toHaveBeenCalled();
+    it('method UserAccessRecoveryRestService.sendPasswordReset should to have been called', function() {
+      expect(Injections.UserAccessRecoveryRestService.sendPasswordReset).toHaveBeenCalled();
     });
   });
 
@@ -115,7 +115,7 @@ describe('UserAccessRecoveryService', function () {
       expect(service.updatePassword).not.toBeNull();
     });
 
-    it('method UserAccessRecoveryRestService.requestRecovery should to have been called', function() {
+    it('method UserAccessRecoveryRestService.sendPasswordReset should to have been called', function() {
       expect(Injections.UserAccessRecoveryRestService.updatePassword).toHaveBeenCalled();
     });
   });

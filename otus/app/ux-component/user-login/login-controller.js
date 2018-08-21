@@ -43,11 +43,11 @@
       var data = {};
       data.userEmail = input.email;
       data.redirectUrl = _getUrl();
-      UserAccessRecoveryService.recovery(data)
+      UserAccessRecoveryService.sendPasswordReset(data)
         .then(function (result) {
           _successMessage();
         }).catch(function (result) {
-          _recoveryErrorMessage();
+          _errorMessage();
         });
     }
 
@@ -74,7 +74,7 @@
       });
     }
 
-    function _recoveryErrorMessage() {
+    function _errorMessage() {
       $mdDialog.show($mdDialog.alert()
         .title('Recuperação de acesso')
         .textContent('Não foi possivel solicitar a troca a senha, tente novamente mais tarde')

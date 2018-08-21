@@ -20,7 +20,7 @@
 
     /* Public methods */
     self.$onInit = onInit;
-    self.accessRecovery = accessRecovery;
+    self.updatePassword = updatePassword;
     self.goBack = goBack;
     self.enable = enable;
 
@@ -35,7 +35,7 @@
         });
     }
 
-    function accessRecovery() {
+    function updatePassword() {
       var data = {};
       data.token = self.token;
       data.password = self.password;

@@ -16,7 +16,7 @@
     /* Public methods */
     self.initialize = initialize;
     self.validateToken = validateToken;
-    self.requestRecovery = requestRecovery;
+    self.sendPasswordReset = sendPasswordReset;
     self.updatePassword = updatePassword;
 
     function initialize() {
@@ -30,7 +30,7 @@
       return _rest.validationToken({ token: token }).$promise;
     }
 
-    function requestRecovery(data) {
+    function sendPasswordReset(data) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
