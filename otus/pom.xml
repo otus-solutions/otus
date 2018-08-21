@@ -189,6 +189,7 @@
             <versionTagPrefix>v</versionTagPrefix>
           </flowInitContext>
           <scmCommentPrefix>[RELEASE]</scmCommentPrefix>
+          <noDeploy>true</noDeploy>
         </configuration>
 	<dependencies>
 		<dependency>
