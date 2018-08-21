@@ -115,7 +115,7 @@
                 fieldCenterDataset[k] = 0;
                 dataByFieldCenter.forEach(function (fieldCenterData) {
                   if(fieldCenterData.month == date[1] && fieldCenterData.year == date[0]){
-                    fieldCenterDataset[k] = parseInt(dataByFieldCenter[i].sum);
+                    fieldCenterDataset[k] = parseInt(fieldCenterData.sum);
                   }
                 })
               }
