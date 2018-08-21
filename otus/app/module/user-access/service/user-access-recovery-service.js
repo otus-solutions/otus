@@ -6,10 +6,11 @@
     .service('otusjs.user.access.service.UserAccessRecoveryService', Service);
 
   Service.$inject = [
+    '$q',
     'otusjs.deploy.UserAccessRecoveryRestService'
   ];
 
-  function Service(UserAccessRecoveryRestService) {
+  function Service($q, UserAccessRecoveryRestService) {
     var self = this;
 
     /* Public methods */
@@ -23,21 +24,42 @@
     }
 
     function validateToken(token) {
-      return UserAccessRecoveryRestService.validateToken(token).then(function (response) {
-        request.resolve(response);
-      });
+      var deferred = $q.defer();
+      UserAccessRecoveryRestService.validateToken(token)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        })
+
+      return deferred.promise;
     }
 
-    function recovery(email, url) {
-      return UserAccessRecoveryRestService.getRecovery(email, url).then(function (response) {
-        request.resolve(response);
-      });
+    function recovery(data) {
+      var deferred = $q.defer();
+      UserAccessRecoveryRestService.requestRecovery(data)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        })
+
+      return deferred.promise;
     }
 
-    function updatePassword(token, password) {
-      return UserAccessRecoveryRestService.updatePassword(token, password).then(function (response) {
-        request.resolve(token);
-      });
+    function updatePassword(data) {
+      var deferred = $q.defer();
+      UserAccessRecoveryRestService.updatePassword(data)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        })
+
+      return deferred.promise;
     }
   }
 }());

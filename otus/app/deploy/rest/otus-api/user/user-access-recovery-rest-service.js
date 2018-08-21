@@ -20,34 +20,29 @@
     self.updatePassword = updatePassword;
 
     function initialize() {
-      _rest = OtusRestResourceService.getOtusPasswordRecoveryResource();
+      _rest = OtusRestResourceService.getPasswordResetResource();
     }
 
     function validateToken(token) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getValidationToken({
-        token: token
-      }).$promise;
+      return _rest.validationToken({ token: token }).$promise;
     }
 
-    function requestRecovery(userEmail, url) {
+    function requestRecovery(data) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.requestRecovery({
-        userEmail: userEmail
-      }, url).$promise;
+      return _rest.requestRecovery({}, data).$promise;
     }
 
-    function updatePassword(token, password) {
+    function updatePassword(data) {
+      console.log(data);
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.updatePassword({
-        token: token
-      }, password).$promise;
+      return _rest.updatePassword({}, data).$promise;
     }
   }
 }());

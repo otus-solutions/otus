@@ -8,13 +8,15 @@
   Controller.$inject = [
     '$stateParams',
     '$scope',
+    '$mdDialog',
     'otusjs.user.access.service.UserAccessRecoveryService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller($stateParams, $scope, UserAccessRecoveryService, LoadingScreenService, ApplicationStateService) {
+  function Controller($stateParams, $scope, $mdDialog, UserAccessRecoveryService, LoadingScreenService, ApplicationStateService) {
     var self = this;
+    self.token;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -25,16 +27,24 @@
     function onInit() {
       self.password = '';
       self.passwordConfirmation = '';
-      //TODO
-      // if (UserAccessRecoveryService.validateToken($stateParams.token)) {
-      //   ApplicationStateService.activateError();
-      // }
+      UserAccessRecoveryService.validateToken($stateParams.token)
+        .then(function (result) {
+          self.token = $stateParams.token;
+        }).catch(function (result) {
+          ApplicationStateService.activateError();
+        });
     }
 
-    function accessRecovery(user) {
-      UserAccessRecoveryService.updatePassword(token, password).then(function (result) {
-        _successMessage();
-      });
+    function accessRecovery() {
+      var data = {};
+      data.token = self.token;
+      data.password = self.password;
+      UserAccessRecoveryService.updatePassword(data)
+        .then(function (result) {
+          _successMessage();
+        }).catch(function (result) {
+          _errorMessage();
+        });
     }
 
     function goBack() {
@@ -58,10 +68,23 @@
     function _successMessage() {
       $mdDialog.show($mdDialog.alert()
         .title('Recuperação de acesso')
-        .textContent('A senha foi atualizada')
-        .ariaLabel('A senha foi atualizada')
+        .textContent('Sucesso! Sua senha foi atualizada')
+        .ariaLabel('Sucesso! Sua senha foi atualizada')
         .ok('Ok')
-      );
+      ).then(function () {
+        goBack();
+      });
+    }
+
+    function _errorMessage() {
+      $mdDialog.show($mdDialog.alert()
+        .title('Recuperação de acesso')
+        .textContent('Não foi possivel solicitar a troca a senha, tente novamente mais tarde')
+        .ariaLabel('Não foi possivel solicitar a troca a senha, tente novamente mais tarde')
+        .ok('Ok')
+      ).then(function () {
+        goBack();
+      });
     }
   }
 }());

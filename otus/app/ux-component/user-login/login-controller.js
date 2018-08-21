@@ -39,13 +39,14 @@
         .then(_onLoginSuccess, _onLoginError);
     }
 
-    function sendRecovery(userData) {
-      var url = _getUrl();
-      UserAccessRecoveryService.recovery(userData, url)
-      .then(function (result) {
-        _successMessage();
-      })
-        .catch(function (result) {
+    function sendRecovery(input) {
+      var data = {};
+      data.userEmail = input.email;
+      data.redirectUrl = _getUrl();
+      UserAccessRecoveryService.recovery(data)
+        .then(function (result) {
+          _successMessage();
+        }).catch(function (result) {
           _recoveryErrorMessage();
         });
     }
@@ -65,13 +66,12 @@
     function _successMessage() {
       $mdDialog.show($mdDialog.alert()
         .title('Solicitação de troca de senha')
-        .textContent('Sucesso. Enviamos um e-mail com as instruções para você trocar sua senha')
-        .ariaLabel('Sucesso. Enviamos um e-mail com as instruções para você trocar sua senha')
+        .textContent('Enviamos um e-mail com as instruções para você trocar sua senha')
+        .ariaLabel('Enviamos um e-mail com as instruções para você trocar sua senha')
         .ok('Ok')
       ).then(function () {
-          self.recovery = false;
-        }
-      );
+        self.recovery = false;
+      });
     }
 
     function _recoveryErrorMessage() {
@@ -81,9 +81,8 @@
         .ariaLabel('Não foi possivel solicitar a troca a senha, tente novamente mais tarde')
         .ok('Ok')
       ).then(function () {
-          self.recovery = false;
-        }
-      );
+        self.recovery = false;
+      });
     }
 
     function _getUrl() {
