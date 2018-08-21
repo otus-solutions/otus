@@ -29,7 +29,7 @@ describe('verifyBrowserService', function () {
     });
   });
 
-  function mockInjections($injector) {
+  function mockInjections($injector) { 
     Mock.ApplicationStateService = $injector.get('otusjs.application.state.ApplicationStateService');
   }
 });

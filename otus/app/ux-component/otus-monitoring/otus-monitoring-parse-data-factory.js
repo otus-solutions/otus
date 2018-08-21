@@ -103,20 +103,20 @@
               return value.fieldCenter == this;
             }, selectedFieldCentersList[j]);
 
-            var i = 0;
             var fieldCenterDataset = [];
             var _lengthOfDates = _filteredDates.length;
             for (var k = 0; k < _lengthOfDates; k++) {
               var date = _filteredDates[k].split('-').map(function(item) {
                 return parseInt(item, 10);
               });
-              if (dataByFieldCenter[i] &&
-                dataByFieldCenter[i].month == date[1] &&
-                dataByFieldCenter[i].year == date[0]) {
-                fieldCenterDataset[k] = parseInt(dataByFieldCenter[i].sum);
-                i++;
-              } else {
+
+              if(dataByFieldCenter){
                 fieldCenterDataset[k] = 0;
+                dataByFieldCenter.forEach(function (fieldCenterData) {
+                  if(fieldCenterData.month == date[1] && fieldCenterData.year == date[0]){
+                    fieldCenterDataset[k] = parseInt(fieldCenterData.sum);
+                  }
+                })
               }
             }
 
