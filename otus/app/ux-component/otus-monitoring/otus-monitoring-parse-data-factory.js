@@ -103,7 +103,6 @@
               return value.fieldCenter == this;
             }, selectedFieldCentersList[j]);
 
-            var i = 0;
             var fieldCenterDataset = [];
             var _lengthOfDates = _filteredDates.length;
             for (var k = 0; k < _lengthOfDates; k++) {
