@@ -28,16 +28,18 @@ describe('login-controller Test', function () {
       $provide.value('otusjs.application.state.ApplicationStateService', {});
       $provide.value('otusjs.user.access.service.UserAccessRecoveryService', Mock.UserAccessRecoveryService);
       $provide.value('otusjs.application.verifyBrowser.VerifyBrowserService', Mock.VerifyBrowserService);
+      $provide.value('$scope', {});
     });
 
-    inject(function (_$injector_, _$controller_) {
+    inject(function (_$injector_, _$controller_, _$scope_) {
       Injections = {
+        $scope: _$injector_.get('$scope'),
         $mdDialog: _$injector_.get('$mdDialog'),
+        $mdToast: _$injector_.get('$mdToast'),
         LoginService: _$injector_.get('otusjs.user.access.service.LoginService'),
         ApplicationStateService: _$injector_.get('otusjs.application.state.ApplicationStateService'),
         UserAccessRecoveryService: _$injector_.get('otusjs.user.access.service.UserAccessRecoveryService'),
-        VerifyBrowserService: _$injector_.get('otusjs.application.verifyBrowser.VerifyBrowserService'),
-        $mdToast: _$injector_.get('$mdToast')
+        VerifyBrowserService: _$injector_.get('otusjs.application.verifyBrowser.VerifyBrowserService')
       };
 
       ctrl = _$controller_('otusjs.otus.uxComponent.LoginController', Injections);
