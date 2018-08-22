@@ -31,7 +31,7 @@
         .then(function (result) {
           self.token = $stateParams.token;
         }).catch(function (result) {
-          ApplicationStateService.activateError();
+          self.error = true;
         });
     }
 

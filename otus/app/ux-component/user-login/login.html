@@ -4,7 +4,7 @@
       <span class="md-display-1">Otus</span>
     </h2>
   </md-toolbar>
-  <md-content flex layout="row" layout-align="center start" ng-if="!$ctrl.recovery">
+  <md-content flex layout="row" layout-align="center start" ng-show="!$ctrl.recovery">
     <md-card id="card" layout-padding flex="55">
       <div layout="row" layout-align="center start">
         <div flex="20"></div>
@@ -39,7 +39,8 @@
       </div>
     </md-card>
   </md-content>
-  <md-content flex layout="row" layout-align="center start" ng-if="$ctrl.recovery">
+  <!-- user access recovery -->
+  <md-content flex layout="row" layout-align="center start" ng-show="$ctrl.recovery">
     <md-card id="card" layout-padding flex="55">
       <div layout="row" layout-align="center start">
         <div flex="20"></div>
@@ -51,9 +52,10 @@
         <div flex="80" flex-offset="10">
           <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Email</label>
-            <input required name="userEmail" ng-model="user.email">
+            <input required name="userEmail" ng-model="user.email" ng-change="$ctrl.resetValidation()">
             <div ng-messages="loginForm.userEmail.$error">
               <div ng-message="required">Obrigatório</div>
+              <div ng-message="invalid">Este e-mail não está cadastrado</div>
             </div>
           </md-input-container>
         </div>
@@ -61,7 +63,7 @@
       </form>
       <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
         <md-button class="md-raised md-primary" ng-click="$ctrl.goBack()">Voltar</md-button>
-        <md-button class="md-raised md-accent" ng-click="$ctrl.sendRecovery(user)">Solicitar troca de senha</md-button>
+        <md-button class="md-raised md-accent" ng-disabled="loginForm.$invalid" ng-click="$ctrl.sendRecovery(user)">Solicitar troca de senha</md-button>
       </div>
     </md-card>
   </md-content>

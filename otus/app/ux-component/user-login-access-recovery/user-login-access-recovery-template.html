@@ -1,4 +1,4 @@
-<md-content id="user-login-page" layout="column" flex>
+<md-content id="user-login-page" layout="column" flex ng-if="!$ctrl.error">
   <md-toolbar flex="30" id="divtop" class="md-tall md-primary">
     <h2 class="system-name">
       <span class="md-display-1">Otus</span>
@@ -37,5 +37,30 @@
         <md-button class="md-raised md-primary" ng-disabled="$ctrl.enable()" ng-click="$ctrl.updatePassword()">Confirmar</md-button>
       </div>
     </md-card>
+  </md-content>
+</md-content>
+<!-- user access error -->
+<md-content id="user-login-page" layout="column" flex ng-if="$ctrl.error">
+  <md-toolbar class="md-primary md-whiteframe-1dp">
+    <div class="md-toolbar-tools">
+      <h2 flex md-truncate>OTUS</h2>
+    </div>
+  </md-toolbar>
+  <md-content flex layout="row" layout-align="center start">
+    <form name="loginForm" id="content" layout="row">
+      <div flex-gt-md="30" layout-align="center center" layout-padding flex>
+        <img src="app/static-resource/image/otus-crash.png" />
+      </div>
+      <div layout-padding flex>
+        <div>
+          <p class="md-display-2">Acesso negado!</p>
+          <p class="md-body-1">Desculpe, seu código de acesso para troca de senha não existe ou acabou expirado.</p>
+          <p class="md-body-1">Você pode realizar o processo de troca de senha novamente retornando para a tela de login.</p>
+        </div>
+        <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
+          <md-button class="md-raised md-primary" ng-click="$ctrl.goBack()">Voltar a tela de login</md-button>
+        </div>
+      </div>
+    </form>
   </md-content>
 </md-content>

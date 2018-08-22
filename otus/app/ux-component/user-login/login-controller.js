@@ -6,15 +6,16 @@
     .controller('otusjs.otus.uxComponent.LoginController', Controller);
 
   Controller.$inject = [
+    '$scope',
     '$mdDialog',
+    '$mdToast',
     'otusjs.user.access.service.LoginService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.user.access.service.UserAccessRecoveryService',
     'otusjs.application.verifyBrowser.VerifyBrowserService',
-    '$mdToast'
   ];
 
-  function Controller($mdDialog, LoginService, ApplicationStateService, UserAccessRecoveryService, VerifyBrowserService, $mdToast) {
+  function Controller($scope, $mdDialog, $mdToast, LoginService, ApplicationStateService, UserAccessRecoveryService, VerifyBrowserService) {
     const LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
     const SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
     const PATH = '/access-recovery'
@@ -27,6 +28,7 @@
     self.sendRecovery = sendRecovery;
     self.goToSignupPage = goToSignupPage;
     self.goToRecovery = goToRecovery;
+    self.resetValidation = resetValidation;
     self.goBack = goBack;
 
     function onInit() {
@@ -47,8 +49,12 @@
         .then(function (result) {
           _successMessage();
         }).catch(function (result) {
-          _errorMessage();
+          $scope.loginForm.userEmail.$setValidity('invalid', false);
         });
+    }
+
+    function resetValidation() {
+      $scope.loginForm.userEmail.$setValidity('invalid', true);
     }
 
     function goToSignupPage() {
@@ -68,17 +74,6 @@
         .title('Solicitação de troca de senha')
         .textContent('Enviamos um e-mail com as instruções para você trocar sua senha')
         .ariaLabel('Enviamos um e-mail com as instruções para você trocar sua senha')
-        .ok('Ok')
-      ).then(function () {
-        self.recovery = false;
-      });
-    }
-
-    function _errorMessage() {
-      $mdDialog.show($mdDialog.alert()
-        .title('Recuperação de acesso')
-        .textContent('Não foi possivel solicitar a troca a senha, tente novamente mais tarde')
-        .ariaLabel('Não foi possivel solicitar a troca a senha, tente novamente mais tarde')
         .ok('Ok')
       ).then(function () {
         self.recovery = false;
