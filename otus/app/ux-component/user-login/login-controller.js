@@ -49,12 +49,12 @@
         .then(function (result) {
           _successMessage();
         }).catch(function (result) {
-          $scope.loginForm.userEmail.$setValidity('invalid', false);
+          $scope.accessRecoveryForm.userEmail.$setValidity('invalid', false);
         });
     }
 
     function resetValidation() {
-      $scope.loginForm.userEmail.$setValidity('invalid', true);
+      $scope.accessRecoveryForm.userEmail.$setValidity('invalid', true);
     }
 
     function goToSignupPage() {

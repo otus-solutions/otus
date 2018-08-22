@@ -38,7 +38,6 @@
     }
 
     function updatePassword(data) {
-      console.log(data);
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }

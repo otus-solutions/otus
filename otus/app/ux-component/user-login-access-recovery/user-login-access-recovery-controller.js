@@ -54,10 +54,10 @@
     function enable() {
       if (self.password && self.passwordConfirmation) {
         if (self.password !== self.passwordConfirmation) {
-          $scope.loginForm.userPasswordConfirmation.$setValidity('invalidPassword', false);
+          $scope.passwordResetForm.passwordConfirmation.$setValidity('invalidPassword', false);
           return true;
         } else {
-          $scope.loginForm.userPasswordConfirmation.$setValidity('invalidPassword', true);
+          $scope.passwordResetForm.passwordConfirmation.$setValidity('invalidPassword', true);
           return false;
         }
       } else {

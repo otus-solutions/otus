@@ -1,4 +1,4 @@
-<md-content id="user-login-page" layout="column" flex ng-if="!$ctrl.error">
+<md-content id="user-login-page" layout="column" flex ng-show="!$ctrl.error">
   <md-toolbar flex="30" id="divtop" class="md-tall md-primary">
     <h2 class="system-name">
       <span class="md-display-1">Otus</span>
@@ -12,19 +12,19 @@
         <div flex></div>
       </div>
       <div layout="column" flex></div>
-      <form name="loginForm" id="content" layout="row">
+      <form name="passwordResetForm" id="content" layout="row">
         <div flex="80" flex-offset="10">
           <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Nova senha</label>
-            <input required name="userPassword" ng-model="$ctrl.password" type="password" />
-            <div ng-messages="loginForm.userPassword.$error">
+            <input required name="password" ng-model="$ctrl.password" type="password" />
+            <div ng-messages="passwordResetForm.password.$error">
               <div ng-message="required">Obrigatório</div>
             </div>
           </md-input-container>
           <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Confirme a nova senha</label>
-            <input required name="userPasswordConfirmation" ng-model="$ctrl.passwordConfirmation" type="password" />
-            <div ng-messages="loginForm.userPasswordConfirmation.$error">
+            <input required name="passwordConfirmation" ng-model="$ctrl.passwordConfirmation" type="password" ng-change="$ctrl.enable()">
+            <div ng-messages="passwordResetForm.passwordConfirmation.$error">
               <div ng-message="required">Obrigatório</div>
               <div ng-message="invalidPassword">As senhas devem ser iguais</div>
             </div>
@@ -40,21 +40,21 @@
   </md-content>
 </md-content>
 <!-- user access error -->
-<md-content id="user-login-page" layout="column" flex ng-if="$ctrl.error">
+<md-content id="user-login-page" layout="column" flex ng-show="$ctrl.error">
   <md-toolbar class="md-primary md-whiteframe-1dp">
     <div class="md-toolbar-tools">
       <h2 flex md-truncate>OTUS</h2>
     </div>
   </md-toolbar>
   <md-content flex layout="row" layout-align="center start">
-    <form name="loginForm" id="content" layout="row">
+    <form name="accessErrorForm" id="content" layout="row">
       <div flex-gt-md="30" layout-align="center center" layout-padding flex>
         <img src="app/static-resource/image/otus-crash.png" />
       </div>
       <div layout-padding flex>
         <div>
           <p class="md-display-2">Acesso negado!</p>
-          <p class="md-body-1">Desculpe, seu código de acesso para troca de senha não existe ou acabou expirado.</p>
+          <p class="md-body-1">Desculpe, seu código de acesso para troca de senha não existe ou acabou sendo expirado.</p>
           <p class="md-body-1">Você pode realizar o processo de troca de senha novamente retornando para a tela de login.</p>
         </div>
         <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">

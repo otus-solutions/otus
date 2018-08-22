@@ -48,12 +48,12 @@
         <div flex></div>
       </div>
       <div layout="column" flex></div>
-      <form name="loginForm" id="content" layout="row">
+      <form name="accessRecoveryForm" id="content" layout="row">
         <div flex="80" flex-offset="10">
           <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Email</label>
             <input required name="userEmail" ng-model="user.email" ng-change="$ctrl.resetValidation()">
-            <div ng-messages="loginForm.userEmail.$error">
+            <div ng-messages="accessRecoveryForm.userEmail.$error">
               <div ng-message="required">Obrigatório</div>
               <div ng-message="invalid">Este e-mail não está cadastrado</div>
             </div>
@@ -63,7 +63,7 @@
       </form>
       <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
         <md-button class="md-raised md-primary" ng-click="$ctrl.goBack()">Voltar</md-button>
-        <md-button class="md-raised md-accent" ng-disabled="loginForm.$invalid" ng-click="$ctrl.sendRecovery(user)">Solicitar troca de senha</md-button>
+        <md-button class="md-raised md-accent" ng-disabled="accessRecoveryForm.$invalid" ng-click="$ctrl.sendRecovery(user)">Solicitar troca de senha</md-button>
       </div>
     </md-card>
   </md-content>
