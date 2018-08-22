@@ -2,7 +2,7 @@
   color: white;
 }
 /*----------------------Novo login-----------------------------*/
-#card {
+.card {
   width: 60%;
   top: 20%;
   margin: 0 auto;
@@ -55,14 +55,11 @@
     transform: translate(-30%, -30%);
   }
 }
-#user-login-page #content {
+#user-login-page .content {
   margin-top: 11%;
   padding: 10px;
 }
-#user-login-page #contentTwo {
-  margin-top: 11%;
-  padding: 10px;
-}
+
 #user-login-page .md-block {
   width: 60%;
   left: 12%;

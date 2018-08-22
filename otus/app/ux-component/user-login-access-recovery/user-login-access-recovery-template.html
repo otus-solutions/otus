@@ -5,14 +5,14 @@
     </h2>
   </md-toolbar>
   <md-content flex layout="row" layout-align="center start">
-    <md-card id="card" layout-padding flex="55">
+    <md-card class="card" layout-padding flex="55">
       <div layout="row" layout-align="center start">
         <div flex="20"></div>
         <img class="logotype" src="app/static-resource/image/OtusImg.png" flex="40">
         <div flex></div>
       </div>
       <div layout="column" flex></div>
-      <form name="passwordResetForm" id="content" layout="row">
+      <form name="passwordResetForm" class="content" layout="row">
         <div flex="80" flex-offset="10">
           <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Nova senha</label>
@@ -33,7 +33,7 @@
         <div flex></div>
       </form>
       <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
-        <md-button class="md-raised md-primary" ng-click="$ctrl.goBack()">Cancelar</md-button>
+        <md-button class="md-raised md-no-focus" ng-click="$ctrl.goBack()">Cancelar</md-button>
         <md-button class="md-raised md-primary" ng-disabled="$ctrl.enable()" ng-click="$ctrl.updatePassword()">Confirmar</md-button>
       </div>
     </md-card>
@@ -47,7 +47,7 @@
     </div>
   </md-toolbar>
   <md-content flex layout="row" layout-align="center start">
-    <form name="accessErrorForm" id="content" layout="row">
+    <form name="accessErrorForm" class="content" layout="row">
       <div flex-gt-md="30" layout-align="center center" layout-padding flex>
         <img src="app/static-resource/image/otus-crash.png" />
       </div>

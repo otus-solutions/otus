@@ -5,14 +5,14 @@
     </h2>
   </md-toolbar>
   <md-content flex layout="row" layout-align="center start" ng-show="!$ctrl.recovery">
-    <md-card id="card" layout-padding flex="55">
+    <md-card class="card" layout-padding flex="55">
       <div layout="row" layout-align="center start">
         <div flex="20"></div>
         <img class="logotype" src="app/static-resource/image/OtusImg.png" flex="40">
         <div flex></div>
       </div>
       <div layout="column" flex></div>
-      <form name="loginForm" id="content" layout="row">
+      <form name="loginForm" class="content" layout="row">
         <div flex="80" flex-offset="10">
           <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Email</label>
@@ -41,14 +41,14 @@
   </md-content>
   <!-- user access recovery -->
   <md-content flex layout="row" layout-align="center start" ng-show="$ctrl.recovery">
-    <md-card id="card" layout-padding flex="55">
+    <md-card class="card" layout-padding flex="55">
       <div layout="row" layout-align="center start">
         <div flex="20"></div>
         <img class="logotype" src="app/static-resource/image/OtusImg.png" flex="40">
         <div flex></div>
       </div>
       <div layout="column" flex></div>
-      <form name="accessRecoveryForm" id="content" layout="row">
+      <form name="accessRecoveryForm" class="content" layout="row">
         <div flex="80" flex-offset="10">
           <md-input-container class="md-block" layout="column" layout-margin flex>
             <label>Email</label>
