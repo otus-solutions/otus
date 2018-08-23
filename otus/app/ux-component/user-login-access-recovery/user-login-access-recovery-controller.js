@@ -79,8 +79,8 @@
     function _errorMessage() {
       $mdDialog.show($mdDialog.alert()
         .title('Recuperação de acesso')
-        .textContent('Não foi possivel solicitar a troca a senha, tente novamente mais tarde')
-        .ariaLabel('Não foi possivel solicitar a troca a senha, tente novamente mais tarde')
+        .textContent('Não foi possível processar a sua solicitação. Tente novamente mais tarde')
+        .ariaLabel('Não foi possível processar a sua solicitação. Tente novamente mais tarde')
         .ok('Ok')
       ).then(function () {
         goBack();
