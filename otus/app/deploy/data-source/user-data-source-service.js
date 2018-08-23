@@ -7,7 +7,7 @@
 
   Service.$inject = [
     '$q',
-    'otusjs.deploy.UserRestService',
+    'otusjs.deploy.user.UserRestService',
     'otusjs.user.storage.UserStorageService'
   ];
 

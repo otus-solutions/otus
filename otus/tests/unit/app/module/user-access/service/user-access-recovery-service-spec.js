@@ -23,12 +23,12 @@ describe('UserAccessRecoveryService', function () {
     angular.mock.module('otusjs.user.access.service');
 
     angular.mock.module(function ($provide) {
-      $provide.value('otusjs.deploy.UserAccessRecoveryRestService', Mock.UserAccessRecoveryRestService);
+      $provide.value('otusjs.deploy.user.UserAccessRecoveryRestService', Mock.UserAccessRecoveryRestService);
     });
 
     inject(function(_$injector_) {
       Injections = {
-        UserAccessRecoveryRestService: _$injector_.get('otusjs.deploy.UserAccessRecoveryRestService'),
+        UserAccessRecoveryRestService: _$injector_.get('otusjs.deploy.user.UserAccessRecoveryRestService'),
       };
 
       service = _$injector_.get(UNIT_NAME, Injections);

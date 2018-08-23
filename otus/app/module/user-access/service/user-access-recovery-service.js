@@ -7,7 +7,7 @@
 
   Service.$inject = [
     '$q',
-    'otusjs.deploy.UserAccessRecoveryRestService'
+    'otusjs.deploy.user.UserAccessRecoveryRestService'
   ];
 
   function Service($q, UserAccessRecoveryRestService) {

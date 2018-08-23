@@ -1,6 +1,6 @@
-xdescribe('otusjs.deploy.AuthenticationRestService', function() {
+xdescribe('otusjs.deploy.user.AuthenticationRestService', function() {
 
-  var UNIT_NAME = 'otusjs.deploy.AuthenticationRestService';
+  var UNIT_NAME = 'otusjs.deploy.user.AuthenticationRestService';
   var Mock = {};
   var Injections = {};
   var service = {};
