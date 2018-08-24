@@ -22,8 +22,7 @@
       parent: STATE.ACCESS,
       name: STATE.LOGIN,
       url: '/' + STATE.LOGIN,
-      templateUrl: 'app/ux-component/user-login/login.html',
-      controller: 'otusjs.otus.uxComponent.LoginController as $ctrl'
+      template: '<user-login flex></user-login>'
     };
   }
 }());

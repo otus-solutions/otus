@@ -5,10 +5,10 @@ describe('verifyBrowserService', function () {
 
   beforeEach(angular.mock.module('otusjs.application.verifyBrowser'));
 
-  beforeEach(function() {
+  beforeEach(function () {
     Mock.ApplicationStateServiceProvider = {};
 
-    angular.mock.module(function($provide) {
+    angular.mock.module(function ($provide) {
       $provide.value('otusjs.application.state.ApplicationStateService', Mock.ApplicationStateServiceProvider);
     });
   });
@@ -19,12 +19,12 @@ describe('verifyBrowserService', function () {
       Injections = {
         "ApplicationStateService": Mock.ApplicationStateService
       }
-      service = $injector.get('otusjs.application.verifyBrowser.verifyBrowserService', Injections);
+      service = $injector.get('otusjs.application.verifyBrowser.VerifyBrowserService', Injections);
     });
   });
 
   describe('persist exceptions test', function () {
-    it('Sempre TRUE', function() {
+    it('Sempre TRUE', function () {
       expect(true).toBe(true);
     });
   });

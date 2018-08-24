@@ -205,7 +205,9 @@
 <script src="app/deploy/rest/otus-api/survey/survey-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/survey-item/survey-item-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/file-upload/file-upload-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/user/module.js"></script>
 <script src="app/deploy/rest/otus-api/user/authentication-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/user/user-access-recovery-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/user/user-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/laboratory-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/sampleTransport/sample-transport-rest-service.js"></script>
@@ -218,6 +220,7 @@
 <script src="app/deploy/state/error/error-state-provider.js"></script>
 <script src="app/deploy/state/access/access-state-provider.js"></script>
 <script src="app/deploy/state/access/login-state-provider.js"></script>
+<script src="app/deploy/state/access/user-access-recovery-state-provider.js"></script>
 <script src="app/deploy/state/access/signup-result-state-provider.js"></script>
 <script src="app/deploy/state/access/signup-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-adder-state-provider.js"></script>
@@ -418,6 +421,9 @@
 <script src="app/module/user-access/service/login-service.js"></script>
 <script src="app/module/user-access/service/logout-service.js"></script>
 <script src="app/module/user-access/service/signup-service.js"></script>
+<!-- # User Access Recovery > Service -->
+<script src="app/module/user-access/service/user-access-recovery-service.js"></script>
+
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/report-module.min.js -->
@@ -584,11 +590,16 @@
 <script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>
 <script src="app/ux-component/participant-search/participant-search-component.js"></script>
 <script src="app/ux-component/user-login/login-controller.js"></script>
+<script src="app/ux-component/user-login/login-component.js"></script>
 <script src="app/ux-component/user-signup/signup-controller.js"></script>
 <script src="app/ux-component/translate-datetime/pt-br.js"></script>
 
 <!--  crash report  -->
 <script src="app/ux-component/crash-report/crash-report-component.js"></script>
+
+<!-- user access recovery -->
+<script src="app/ux-component/user-login-access-recovery/user-login-access-recovery-controller.js"></script>
+<script src="app/ux-component/user-login-access-recovery/user-login-access-recovery-component.js"></script>
 
 <!-- endbuild -->
 <!-- enduncache -->

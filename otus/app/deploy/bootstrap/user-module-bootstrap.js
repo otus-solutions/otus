@@ -11,7 +11,7 @@
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
     'otusjs.deploy.UserDataSourceService',
-    'otusjs.deploy.AuthenticationRestService'
+    'otusjs.deploy.user.AuthenticationRestService'
   ];
 
   function Service($q, ModuleService, ContextFactory, StorageService, UserDataSourceService, LoginProxyService) {

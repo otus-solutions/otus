@@ -61,7 +61,7 @@
     .service('otusjs.user.access.service.LogoutServiceService', LogoutService);
 
   LogoutService.$inject = [
-    'otusjs.deploy.AuthenticationRestService',
+    'otusjs.deploy.user.AuthenticationRestService',
     'otusjs.user.access.core.EventService'
   ];
 

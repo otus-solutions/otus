@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,19 +6,20 @@
     .service('otusjs.deploy.OtusApiService', Service);
 
   Service.$inject = [
-    'otusjs.deploy.AuthenticationRestService',
+    'otusjs.deploy.user.AuthenticationRestService',
     'otusjs.deploy.InstallerRestService',
     'otusjs.deploy.ActivityRestService',
     'otusjs.deploy.ActivityConfigurationRestService',
     'otusjs.deploy.ConfigurationRestService',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.deploy.ParticipantRestService',
-    'otusjs.deploy.UserRestService',
+    'otusjs.deploy.user.UserRestService',
     'otusjs.deploy.LaboratoryRestService',
     'otusjs.deploy.SampleTransportRestService',
     'otusjs.deploy.ExamsRestService',
     'otusjs.deploy.ParticipantReportRestService',
-    'otusjs.deploy.MonitoringRestService'
+    'otusjs.deploy.MonitoringRestService',
+    'otusjs.deploy.user.UserAccessRecoveryRestService'
   ];
 
   function Service(
@@ -34,7 +35,8 @@
     SampleTransportRestService,
     ExamsRestService,
     ParticipantReportRestService,
-    MonitoringRestService
+    MonitoringRestService,
+    UserAccessRecoveryRestService
   ) {
     var self = this;
 
@@ -46,6 +48,7 @@
     function initializeOpenResources() {
       AuthenticationRestService.initialize();
       InstallerRestService.initialize();
+      UserAccessRecoveryRestService.initialize();
     }
 
     function initializeConfigurationResources() {
