@@ -29,9 +29,13 @@
         self.$onInit = onInit;
         self.getCurrentState = getCurrentState;
 
+        // svg onde o calendário é criado
         self.svg;
+        // funcao que cria o calendario
         self.createCalendar = createCalendar;
+        // cores (exames/azul, questionarios completos/verde, questionarios incompletos/amarelo)
         self.colors = ["#4286f4", "#1ece8b", "#f4ca41"]
+        // vetor que guarda eventos do dia atualmente selecionado
         self.selectedDateEvents = [];
 
         self.data = [{
@@ -51,7 +55,7 @@
         {
             "id": "SIGLA3",
             "full_name": "questionnaireName",
-            "status": "saved",
+            "status": "complete",
             "type": "exam",
             "date": "2018-04-01"
         },
@@ -93,7 +97,7 @@
         {
             "id": "SIGLA9",
             "full_name": "questionnaireName",
-            "status": "saved",
+            "status": "complete",
             "type": "exam",
             "date": "2017-08-08"
         },
@@ -129,7 +133,7 @@
             // data onde o calendario deve começar
             var firstYear = new Date(2000, 0);
             var month = firstYear.getMonth();
-            
+
             // criando um item para cada mes dos anos selecionados ( a partir do mes inicial ate o mes atual)
             var i = 0;
             var col = 0;
@@ -287,7 +291,10 @@
 
         // atualiza cards abaixo do grafico quando usuario seleciona um mes para ser visualizado
         function changeEventsShowed(dateInfo) {
-            self.selectedDateEvents = dateInfo.events; 
+            self.selectedDateEvents = dateInfo.events;
+            self.selectedDateEvents.sort(function (a, b) {
+                return new Date(a.date) - new Date(b.date);
+            });
             $scope.$apply();
             console.log(self.selectedDateEvents);
         }
@@ -317,6 +324,33 @@
 
         function selectParticipant(selectedParticipant) {
             self.selectedParticipant = selectedParticipant;
+        }
+
+        $scope.getStyle = function () {
+            if (this.event.type == self.EXAM) {
+                return self.colors[0];
+            }
+            else {
+                if (this.event.status == self.COMPLETE) {
+                    return self.colors[1];
+                }
+                else {
+
+                    return self.colors[2];
+                }
+            }
+        }
+
+        $scope.getStatusStyle = function () {
+
+            if (this.event.status == self.COMPLETE) {
+                return self.colors[1];
+            }
+            else {
+
+                return self.colors[2];
+            }
+
         }
 
         /* Lifecycle methods */

@@ -5,37 +5,17 @@
                 <div id="calendarByYear">
                 </div>
             </div>
-            <!--
-            <div layout="column" flex ng-repeat="event in $ctrl.selectedDateEvents">
-
-                <md-card flex layout="row" style="margin: 5px auto;display:inline-block;" flex>
-                    <md-card-content>
-                        <div layout="row" layout-align="space-between stretch">
-                            <div layout="column" layout-align="space-around stretch">
-                                <md-icon style="font-size: 2em;" flex>account_circle</md-icon>
-                            </div>
-                            <md-card-header-text class="truncate">
-                                <span class="md-body-1 truncate" layout-margin ng-style="{color:report.status.color}">{{event.date}} {{event.id}}</span>
-                                <md-tooltip>{{event.full_name}}</md-tooltip>
-                            </md-card-header-text>
-
-                        </div>
-
-                    </md-card-content>
-                </md-card>
-            </div>-->
 
             <div ng-repeat="event in $ctrl.selectedDateEvents">
                 <md-card class="md-whiteframe-3dp" style="background-color: #ffffff" flex>
                     <md-card-header class="md-toolbar-tools" flex>
-                        <md-icon ng-if="event.type == $ctrl.EXAM" style="color:#4286f4;"  md-font-set="material-icons"> assignment </md-icon>
-                        <md-icon ng-if="event.type == $ctrl.QUESTIONNAIRE && event.status == $ctrl.SAVED" style="color:#f4ca41;"  md-font-set="material-icons"> assignment </md-icon>
-                        <md-icon ng-if="event.type == $ctrl.QUESTIONNAIRE && event.status == $ctrl.COMPLETE" style="color:#1ece8b;"  md-font-set="material-icons"> assignment </md-icon>
+                        <md-icon ng-style="{color:getStyle()}"  md-font-set="material-icons"> assignment </md-icon>
                         <md-card-header-text class="truncate">
                             <div flex>
-                                <span class="md-body-1 truncate" layout-margin ng-style="{color:report.status.color}">{{event.date}}</span>
-                                <span class="md-body-1 truncate" layout-margin ng-style="{color:report.status.color}">{{event.id}}</span>
-                                <span class="md-body-1 truncate" layout-margin ng-style="{color:report.status.color}">{{event.full_name}}</span>
+                                <span class="md-body-1 truncate" layout-margin >{{event.date}}</span>
+                                <span class="md-body-1 truncate" layout-margin >{{event.id}}</span>
+                                <span class="md-body-1 truncate" layout-margin >{{event.full_name}}</span>
+                                <span class="md-body-1 truncate" layout-margin style="float: right;" ng-style="{color:getStatusStyle()}">{{event.status}}</span>
                             </div>
                             
                         </md-card-header-text>
@@ -47,8 +27,3 @@
         </md-card-content>
     </md-card>
 </div>
-
-
-
-
-<!---->
