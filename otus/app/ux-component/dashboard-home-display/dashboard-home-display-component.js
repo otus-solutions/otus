@@ -25,9 +25,14 @@
     self.$onInit = onInit;
     self.startMonitoring = startMonitoring;
 
+    //todo remove:
+    self.t = function () {
+      throw new Error('errrrou');
+    };
+
     /* Public methods */
     function startMonitoring() {
-        ApplicationStateService.activateMonitoring();
+      ApplicationStateService.activateMonitoring();
     }
 
     function setFocus() {
