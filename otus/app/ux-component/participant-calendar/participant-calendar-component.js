@@ -215,8 +215,8 @@
             var scale = d3.scaleBand().rangeRound([0, height - margin.top]).padding(0.15);
             scale.domain(calendar.map(function (d) { return d.col; }));
             // definindo escala horizontal
-            var scaleWeekday = d3.scaleBand().rangeRound([50, width - margin.left]).padding(0.15);
-            scaleWeekday.domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+            var scaleMonth = d3.scaleBand().rangeRound([50, width - margin.left]).padding(0.15);
+            scaleMonth.domain([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
 
             // criando retangulos em branco
             self.svg.selectAll('.cal')
@@ -225,9 +225,9 @@
                 .append('rect')
                 .filter(function (d) { return d.count == 0; })
                 .attr('class', 'cal')
-                .attr('width', scaleWeekday.bandwidth())
+                .attr('width', scaleMonth.bandwidth())
                 .attr('height', scale.bandwidth())
-                .attr('x', function (d, i) { return scaleWeekday(d.date.getMonth()); })
+                .attr('x', function (d, i) { return scaleMonth(d.date.getMonth()); })
                 .attr('y', function (d, i) { return scale(d.col); })
                 .attr('fill', '#eeeeee');
 
@@ -243,15 +243,15 @@
                     .append('rect')
                     .attr('class', 'cal')
                     .attr('width', function (d) {
-                        return (d.numberOfEachEvent[typeIterator] / (d.numberOfEachEvent[0] + d.numberOfEachEvent[1] + d.numberOfEachEvent[2])) * scaleWeekday.bandwidth();
+                        return (d.numberOfEachEvent[typeIterator] / (d.numberOfEachEvent[0] + d.numberOfEachEvent[1] + d.numberOfEachEvent[2])) * scaleMonth.bandwidth();
                     })
                     .attr('height', scale.bandwidth())
                     .attr('x', function (d, i) {
                         var offset = 0;
                         for (var j = 0; j < typeIterator; j++) {
-                            offset += (d.numberOfEachEvent[j] / (d.numberOfEachEvent[0] + d.numberOfEachEvent[1] + d.numberOfEachEvent[2])) * scaleWeekday.bandwidth();
+                            offset += (d.numberOfEachEvent[j] / (d.numberOfEachEvent[0] + d.numberOfEachEvent[1] + d.numberOfEachEvent[2])) * scaleMonth.bandwidth();
                         }
-                        return scaleWeekday(d.date.getMonth()) + offset;
+                        return scaleMonth(d.date.getMonth()) + offset;
                     })
                     .attr('y', function (d, i) { return scale(d.col); })
                     .attr('fill', function (d) {
@@ -262,6 +262,19 @@
             // evento de click para cada retangulo
             self.svg.selectAll('.cal')
                 .on("click", function (d) {
+                    // apaga retangulo anterior que indicava a selecao
+                    self.svg.selectAll(".selection").remove();
+                    // cria retangulo para indicar o mes selecionado
+                    self.svg.append('rect')
+                        .attr('class', 'selection')
+                        .attr('width', scaleMonth.bandwidth())
+                        .attr('height', scale.bandwidth())
+                        .attr('x', function () { return scaleMonth(d.date.getMonth()); })
+                        .attr('y', function () { return scale(d.col); })
+                        .attr('fill', 'none')
+                        .attr('stroke','black')
+                        .attr('stroke-width',1);
+
                     changeEventsShowed(d);
                 });
 
@@ -284,7 +297,7 @@
             // inserindo letra inicial de cada mes acima do calendario
             var monthLetters = ['J', 'F', 'M', 'A', 'M', 'J', 'J', 'A', 'S', 'O', 'N', 'D'];
             for (var i = 0; i < monthLetters.length; i++) {
-                createMonthLetter(monthLetters[i], scaleWeekday(i) + scaleWeekday.bandwidth() * 0.4, scaleWeekday.bandwidth() * 0.6)
+                createMonthLetter(monthLetters[i], scaleMonth(i) + scaleMonth.bandwidth() * 0.4, scaleMonth.bandwidth() * 0.6)
             }
 
         }
