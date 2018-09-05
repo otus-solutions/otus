@@ -12,23 +12,66 @@
 
   function Service($window, CrashReportFactory) {
     var self = this;
+    var NAME_PREFIX = 'otus-bugtracker-';
+    var MAX_COOKIES_LIST_SIZE = 50;
+
     self.persistException = persistException;
     self.getCookie = getCookie;
 
+    var _browserInfo = {};
+
+    _buildBrowserInfo();
+
+
+    function _buildBrowserInfo() {
+      _browserInfo.userAgent = navigator.userAgent;
+      _browserInfo.url = $window.location.href;
+      _browserInfo.browserName = getBrowserName(_browserInfo.userAgent);
+      _browserInfo.browserVersion = getBrowserVersion(_browserInfo.browserName, _browserInfo.userAgent);
+      _browserInfo.operatingSystemName = getOSName();
+    }
+
     function persistException(exception) {
-      var userAgent = navigator.userAgent;
+      var cookie = createCookie(exception);
+
+      document.cookie = cookie;
+    }
+
+    function createCookie(exception) {
       var exdays = 1;
       var date = new Date();
-      var name = 'otus-bugtracker-' + date.getTime();
+
+      var name = NAME_PREFIX + date.getTime();
+
       date.setTime(date.getTime() + (exdays * 24 * 60 * 60 * 1000));
       var expires = 'expires=' + date.toUTCString();
-      var url = $window.location.href;
-      var browserName = getBrowserName(userAgent);
-      var browserVersion = getBrowserVersion(browserName, userAgent);
-      var operatingSystemName = getOSName();
-      var errorData = JSON.stringify(CrashReportFactory.create(exception, url, browserName, browserVersion, operatingSystemName));
-      var updatedCookie = name + '=' + errorData + ';' + expires + ';path=/';
-      document.cookie = updatedCookie;
+
+      var errorData = JSON.stringify(CrashReportFactory.create(exception, _browserInfo.url, _browserInfo.browserName, _browserInfo.browserVersion, _browserInfo.operatingSystemName));
+      //todo: test if needs deletion
+      // errorData.length
+      //than delete
+      return name + '=' + errorData + ';' + expires + ';path=/';
+    }
+
+
+    function manageCookiePoolSize() {
+      var cookies = getCookieList();
+
+      if (cookies.length + 1 >= MAX_COOKIES_LIST_SIZE) {
+        var toRemove = cookies.splice(0, 5);
+        toRemove.forEach(function (cookie) {
+          deleteCookie(getCookieName(cookie))
+        })
+      }
+    }
+
+    function deleteCookie(name) {
+      var date = new Date(new Date().getTime() + parseInt(-1) * 1000 * 60 * 60 * 24);
+      var expires = 'expires=' + date.toUTCString();
+
+      var expiredCookie = name + '=' + "" + ';' + expires + ';path=/';
+
+      document.cookie = expiredCookie;
     }
 
     function getBrowserName(userAgent) {
@@ -90,9 +133,8 @@
     }
 
     function getCookie() {
-      var name = 'otus-bugtracker-';
-      var decodedCookie = decodeURIComponent(document.cookie);
-      var cookies = decodedCookie.split(';');
+      var name = NAME_PREFIX;
+      var cookies = getCookieList();
       var crash = [];
 
       for (var i = 0; i < cookies.length; i++) {
@@ -107,6 +149,15 @@
       }
 
       return crash;
+    }
+
+    function getCookieList() {
+      var decodedCookie = decodeURIComponent(document.cookie);
+      return decodedCookie.split(';');
+    }
+
+    function getCookieName(cookie) {
+      return cookie.split("=")[0];
     }
   }
 }());

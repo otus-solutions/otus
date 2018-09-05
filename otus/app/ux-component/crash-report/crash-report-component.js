@@ -11,7 +11,7 @@
   Controller.$inject = [
     'otusjs.application.crash.CrashReportService',
     '$mdToast'
-  ]
+  ];
 
   function Controller(Service, $mdToast) {
     var self = this;
