@@ -13,7 +13,7 @@
   function Service($window, CrashReportFactory) {
     var self = this;
     var NAME_PREFIX = 'otus-bugtracker-';
-    var MAX_COOKIES_LIST_SIZE = 50;
+    var MAX_COOKIES_LENGHT_SIZE = 80000; //todo: check for other browsers
 
     self.persistException = persistException;
     self.getCookie = getCookie;
@@ -32,9 +32,18 @@
     }
 
     function persistException(exception) {
+
       var cookie = createCookie(exception);
 
+      manageCookiePoolSize(cookie);
+
+      var cookiePoolSize = document.cookie.length;
       document.cookie = cookie;
+      if (cookiePoolSize === document.cookie.length) {
+        console.log('nao inseriu')
+        //todo: build large cookie model
+      }
+
     }
 
     function createCookie(exception) {
@@ -47,22 +56,26 @@
       var expires = 'expires=' + date.toUTCString();
 
       var errorData = JSON.stringify(CrashReportFactory.create(exception, _browserInfo.url, _browserInfo.browserName, _browserInfo.browserVersion, _browserInfo.operatingSystemName));
-      //todo: test if needs deletion
-      // errorData.length
-      //than delete
       return name + '=' + errorData + ';' + expires + ';path=/';
     }
 
 
-    function manageCookiePoolSize() {
+    function manageCookiePoolSize(cookie) {
       var cookies = getCookieList();
+      var cookiesLength = getCookiesLength();
+      var toRemove = [];
+      var acSize = 0;
 
-      if (cookies.length + 1 >= MAX_COOKIES_LIST_SIZE) {
-        var toRemove = cookies.splice(0, 5);
-        toRemove.forEach(function (cookie) {
-          deleteCookie(getCookieName(cookie))
-        })
+      if (cookiesLength + cookie.length > MAX_COOKIES_LENGHT_SIZE) {
+        for (var i = 0; acSize <= cookie.length; i++) {
+          toRemove.push(cookies[i]);
+          acSize += cookies[i].length;
+        }
       }
+
+      toRemove.forEach(function (cookie) {
+        deleteCookie(getCookieName(cookie))
+      })
     }
 
     function deleteCookie(name) {
@@ -158,6 +171,10 @@
 
     function getCookieName(cookie) {
       return cookie.split("=")[0];
+    }
+
+    function getCookiesLength() {
+      return document.cookie.length
     }
   }
 }());

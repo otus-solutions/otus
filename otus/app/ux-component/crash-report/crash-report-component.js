@@ -22,7 +22,7 @@
     function saveToCrashReport() {
       var cookieReport = Service.getCookie();
       if (cookieReport.length) {
-
+        //todo: fix for arrays - malformed json
         var cookieJSON = 'data:text/json;charset=utf-8,' + cookieReport;
         var date = new Date();
         var day = date.getDate();
