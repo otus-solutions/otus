@@ -18,6 +18,7 @@
 
     self.persistException = persistException;
     self.getErrorList = getErrorList;
+    self.clearCookiesPool = clearCookiesPool;
 
     var _browserInfo = {};
 
@@ -74,6 +75,10 @@
       })
     }
 
+    function getCookieName(cookie) {
+      return cookie.split("=")[0];
+    }
+
     function getErrorList() {
       var name = NAME_PREFIX;
       var cookies = getCookieList();
@@ -93,10 +98,6 @@
       return errorList;
     }
 
-    function getCookieName(cookie) {
-      return cookie.split("=")[0];
-    }
-
     function deleteCookie(name) {
       var pastDate = new Date(new Date().getTime() + parseInt(-1) * 1000 * 60 * 60 * 24);
       var expires = 'expires=' + pastDate.toUTCString();
@@ -104,6 +105,12 @@
       var expiredCookie = name + '=' + "" + ';' + expires + ';path=/';
 
       document.cookie = expiredCookie;
+    }
+
+    function clearCookiesPool() {
+      getCookieList().forEach(function(cookie){
+        deleteCookie(getCookieName(cookie));
+      })
     }
 
     function getBrowserName(userAgent) {
