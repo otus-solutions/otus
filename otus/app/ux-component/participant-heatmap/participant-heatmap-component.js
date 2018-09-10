@@ -20,7 +20,9 @@
         var self = this;
 
         self.COMPLETE = "complete";
+        self.INCOMPLETE = "incomplete";
         self.SAVED = "saved";
+        self.UNECESSARY = "not to be completed";
 
         /* Public methods */
         self.selectParticipant = selectParticipant;
@@ -28,7 +30,10 @@
         self.$onInit = onInit;
         self.getCurrentState = getCurrentState;
 
-        self.colors = ["#f4415c", "#f4ca41", "#1ece8b"];
+        // cores 
+        //(questionarios completos/verde, questionarios salvos/amarelo, questionarios nao realizados/vermelho,
+        // questionarios que nao precisam ser preenchidos/ cinza )
+        self.colors = ["#f4415c", "#f4ca41", "#1ece8b","#cecece"];
 
         self.data = [{
             "id": "SIGLA1",
@@ -41,7 +46,7 @@
         {
             "id": "SIGLA2",
             "full_name": "questionnaireName",
-            "status": "complete",
+            "status": "not to be completed",
             "type": "questionnaire",
             "date": "2017-10-21",
             "color": "#1ece8b"
@@ -73,7 +78,7 @@
         {
             "id": "SIGLA6",
             "full_name": "questionnaireName",
-            "status": "complete",
+            "status": "not to be completed",
             "type": "questionnaire",
             "date": "2017-08-22",
             "color": "#1ece8b"
@@ -105,7 +110,7 @@
         {
             "id": "SIGLA10",
             "full_name": "questionnaireName",
-            "status": "complete",
+            "status": "not to be completed",
             "type": "questionnaire",
             "date": "2014-12-22",
             "color": "#1ece8b"
@@ -136,7 +141,7 @@
         {
             "id": "SIGLA14",
             "full_name": "questionnaireName",
-            "status": "complete",
+            "status": "not to be completed",
             "type": "questionnaire",
             "date": "2014-12-22",
             "color": "#1ece8b"
@@ -348,18 +353,28 @@
 
         $scope.getStyle = function () {
 
+            if(this.dateValue.status == self.INCOMPLETE)
+            {
+                return self.colors[0];
+            }
+
             if (this.dateValue.status == self.COMPLETE) {
                 return self.colors[2];
             }
-            else {
-                if (this.dateValue.status == self.SAVED) {
-                    return self.colors[1];
-                }
-                else {
-                    
-                    return self.colors[0];
-                }
+
+            if (this.dateValue.status == self.SAVED) {
+                return self.colors[1];
             }
+
+            if (this.dateValue.status == self.UNECESSARY) {
+                return self.colors[3];
+            }
+
+            // retorna que o questionario esta completo se nao existe texto ou ele for diferente das opcoes
+            // feito para o caso de um questionario que nao precisa ser completado pelo participante, mas
+            // nao esta indicado no banco de dados ser considerado como completo (???)
+            // foi isso que eu entendi entao vou deixar assim por enquando (:
+            return self.colors[2];
         }
 
         function selectParticipant(selectedParticipant) {
