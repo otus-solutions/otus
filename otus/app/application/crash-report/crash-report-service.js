@@ -14,6 +14,7 @@
     var self = this;
     var NAME_PREFIX = 'otus-bugtracker-';
     var MAX_COOKIES_LENGHT_SIZE = 80000;
+    var MAX_COOKIES_LIST_LENGHT = 10;
     var COOKIES_EXPIRATION_TIME_IN_DAYS = 1;
 
     self.persistException = persistException;
@@ -68,6 +69,10 @@
           toRemove.push(cookies[i]);
           acSize += cookies[i].length;
         }
+      } else {
+        if (cookies.length === MAX_COOKIES_LIST_LENGHT - 1) {
+          toRemove.push(cookies[0])
+        }
       }
 
       toRemove.forEach(function (cookie) {
@@ -108,7 +113,7 @@
     }
 
     function clearCookiesPool() {
-      getCookieList().forEach(function(cookie){
+      getCookieList().forEach(function (cookie) {
         deleteCookie(getCookieName(cookie));
       })
     }
