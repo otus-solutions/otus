@@ -59,19 +59,19 @@
 
 
     function manageCookiePoolSize(cookie) {
-      var cookies = getCookieList();
-      var cookiesLength = getCookiesLength();
+      var cookieList = getCookieList();
+      var cookiesStringLength = getCookiesLength();
       var toRemove = [];
-      var acSize = 0;
+      var sizeToRemove = 0;
 
-      if (cookiesLength + cookie.length > MAX_COOKIES_LENGHT_SIZE) {
-        for (var i = 0; acSize <= cookie.length; i++) {
-          toRemove.push(cookies[i]);
-          acSize += cookies[i].length;
+      if (cookiesStringLength + cookie.length > MAX_COOKIES_LENGHT_SIZE) {
+        for (var i = 0; sizeToRemove <= cookie.length; i++) {
+          toRemove.push(cookieList[i]);
+          sizeToRemove += cookieList[i].length;
         }
       } else {
-        if (cookies.length === MAX_COOKIES_LIST_LENGHT - 1) {
-          toRemove.push(cookies[0])
+        if (cookieList.length === MAX_COOKIES_LIST_LENGHT - 1) {
+          toRemove.push(cookieList[0])
         }
       }
 

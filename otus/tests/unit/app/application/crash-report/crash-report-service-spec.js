@@ -1,4 +1,4 @@
-fdescribe('CrashReportService', function () {
+describe('CrashReportService', function () {
   var service = {};
   var Injections = {};
   var Mock = {};
@@ -52,34 +52,30 @@ fdescribe('CrashReportService', function () {
   });
 
   xdescribe('the cookies overflow control', function () {
+    var MAX_COOKIES_LIST_LENGHT = 10;  //set on service as well
 
-    it('should start removing old cookies when inserting new ones', function () {
-
+    beforeAll(function () {
       service.clearCookiesPool();
+    });
 
-      var overflow = false;
+    afterAll(function () {
+      service.clearCookiesPool();
+    });
 
-      for (var errorNumber = 1; !overflow; errorNumber++) {
+    it('should start removing oldest cookies when inserting new ones', function () {
+      for (var errorNumber = 0; errorNumber < MAX_COOKIES_LIST_LENGHT; errorNumber++) {
         Mock.exception.message = String(errorNumber);
-
-
-        console.log(errorNumber);
-
-        if (service.getErrorList().length < errorNumber) {
-          overflow = true;
-        } else {
-          service.persistException(Mock.exception);
-        }
+        service.persistException(Mock.exception);
       }
 
       var oldestError = angular.copy(JSON.parse(service.getErrorList()[0]));
-      expect(oldestError.exception).toEqual(String(1));
+      expect(oldestError.exception).toEqual(String(0));
 
-      // Mock.exception.message = String(errorNumber);
-      // service.persistException(Mock.exception);
-      //
-      // var newOldestError = JSON.parse(service.getErrorList()[0]);
-      // expect(newOldestError.exception).toEqual(String(2));
+
+      service.persistException(Mock.exception);
+
+      var oldestError = angular.copy(JSON.parse(service.getErrorList()[0]));
+      expect(oldestError.exception).toEqual(String(1));
     });
   });
 
@@ -99,3 +95,4 @@ fdescribe('CrashReportService', function () {
     Mock.CrashReportFactory = $injector.get('otusjs.application.crash.CrashReportFactory');
   }
 });
+;
