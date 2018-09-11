@@ -29,7 +29,7 @@
 
     /* Public methods */
     function startMonitoring() {
-        ApplicationStateService.activateMonitoring();
+      ApplicationStateService.activateMonitoring();
     }
 
     function setFocus() {

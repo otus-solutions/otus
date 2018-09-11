@@ -17,17 +17,18 @@
   }
 
   function ErrorData(exception, url, browserName, browserVersion, operatingSystemName) {
-    var errorData = {};
-    errorData.exception = exception.message;
-    errorData.cause = exception.stack;
-    errorData.url = url;
-    errorData.date = new Date();
-    errorData.browserOnline = navigator.onLine;
-    errorData.browserName = browserName;
-    errorData.browserVersion = browserVersion;
-    errorData.cookiesEnabled = navigator.cookieEnabled;
-    errorData.plataform = operatingSystemName;
+    var self = this;
 
-    return errorData;
+    self.exception = exception.message.substring(0,500);
+    self.cause = exception.stack.substring(0,2000);  //maybe start at exception.message.length
+    self.url = url;
+    self.date = new Date();
+    self.browserOnline = navigator.onLine;
+    self.browserName = browserName;
+    self.browserVersion = browserVersion;
+    self.cookiesEnabled = navigator.cookieEnabled;
+    self.plataform = operatingSystemName;
+
+    return self;
   }
 }());
