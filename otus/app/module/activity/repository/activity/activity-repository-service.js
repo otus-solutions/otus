@@ -98,7 +98,7 @@
       return surveys.map(function(survey) {
         var configActivity = configuration[survey.surveyTemplate.identity.acronym];
         var activity = activityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configActivity);
-        return JSON.parse(activity.toJson());
+        return activity.toJson();
       });
     }
 
