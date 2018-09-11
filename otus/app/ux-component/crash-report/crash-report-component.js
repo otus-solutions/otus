@@ -11,7 +11,7 @@
   Controller.$inject = [
     'otusjs.application.crash.CrashReportService',
     '$mdToast'
-  ]
+  ];
 
   function Controller(Service, $mdToast) {
     var self = this;
@@ -20,10 +20,9 @@
     const timeShowMsg = 3000;
 
     function saveToCrashReport() {
-      var cookieReport = Service.getCookie();
+      var cookieReport = Service.getErrorList();
       if (cookieReport.length) {
-
-        var cookieJSON = 'data:text/json;charset=utf-8,' + cookieReport;
+        var cookieJSON = 'data:text/json;charset=utf-8,' + JSON.stringify({errorList:cookieReport});
         var date = new Date();
         var day = date.getDate();
         var month = date.getMonth() + 1;
