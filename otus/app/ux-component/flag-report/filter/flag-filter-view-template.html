@@ -1,0 +1,59 @@
+<div flex>
+  <div layout="row" flex>
+      <div layout="column" flex layout-align="center">
+        <div layout="row" flex layout-align="center center">
+          <md-card flex="100" flex-gt-md="50">
+            <md-card-content>
+              <span class="md-subheader">Filtros de Pesquisa:</span>
+              <div flex  layout-align="center center" layout="row" layout-xs="column">
+
+                <span flex="15"></span>
+
+                <span flex-gt-md="5"></span>
+                <span flex-sm="10"></span>
+                <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
+                  <label class="md-subhead">Sigla:</label>
+                  <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
+                    <md-tooltip>
+                      Sigla da atividade a ser visualizada
+                    </md-tooltip>
+                    <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{questionnaire}}" ng-click="">
+                      {{questionnaire}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+                <span flex="5"></span>
+                <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
+                  <label class="md-subhead">Status:</label>
+                  <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
+                    <md-tooltip>
+                      Sigla da atividade a ser visualizada
+                    </md-tooltip>
+                    <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{questionnaire}}" ng-click="">
+                      {{questionnaire}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+                <span flex="5"></span>
+                <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
+                  <label class="md-subhead">Centro:</label>
+                  <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
+                    <md-tooltip>
+                      Sigla da atividade a ser visualizada
+                    </md-tooltip>
+                    <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{questionnaire}}" ng-click="">
+                      {{questionnaire}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+
+                <span flex-gt-md="15"></span>
+                <span flex="5"></span>
+              </div>
+            </md-card-content>
+          </md-card>
+        </div>
+      </div>
+  </div>
+</div>
+<md-divider></md-divider>
