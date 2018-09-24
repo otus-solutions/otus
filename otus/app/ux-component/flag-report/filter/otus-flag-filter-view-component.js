@@ -7,7 +7,7 @@
       controller: "flagFilterViewCtrl as $ctrl",
       templateUrl: 'app/ux-component/flag-report/filter/otus-flag-filter-view-template.html',
       bindings: {
-        selectedLots: '=',
+        status: '=',
         csvData: '=',
         parseData: '=',
         questionnairesList: '=',
@@ -29,10 +29,14 @@
     var self = this;
 
     self.$onInit = onInit;
+    self.statusHistory = [];
 
 
     function onInit() {
-      console.log(self.centers)
+
+      self.status.forEach((status) =>{
+        self.statusHistory.push(status.label);
+      });
     }
   }
 

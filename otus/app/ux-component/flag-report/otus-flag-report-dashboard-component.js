@@ -11,10 +11,11 @@
 
   Controller.$inject = [
     'otusjs.deploy.FieldCenterRestService',
-    'otusjs.monitoring.business.MonitoringService'
+    'otusjs.monitoring.business.MonitoringService',
+    'ACTIVITY'
   ];
 
-  function Controller(ProjectFieldCenterService, MonitoringService) {
+  function Controller(ProjectFieldCenterService, MonitoringService, ACTIVITY) {
 
     var self = this;
 
@@ -23,7 +24,13 @@
     self.ready = false;
 
     function onInit() {
+      _getStatus();
+    }
+
+    function _getStatus() {
+      self.status = ACTIVITY.STATUS;
       _loadAllCenters();
+
     }
 
     function _loadAllCenters() {
