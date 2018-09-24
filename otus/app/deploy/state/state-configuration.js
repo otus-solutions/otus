@@ -33,7 +33,8 @@
       'EXAM_LOT_INFO_MANAGER': 'exam-lot-info-manager',
       'EXAM_SENDING': 'exam-sending',
       'EXAM_RESULT_VISUALIZER' : 'exam-result-visualizer',
-      'MONITORING': 'monitoring'
+      'MONITORING': 'monitoring',
+      'FLAG': 'flag'
     })
     .config(Configuration);
 
@@ -67,7 +68,8 @@
     'otusjs.deploy.ExamLotInfoManagerStateProvider',
     'otusjs.deploy.SendingExamStateProvider',
     'otusjs.deploy.ExamResultsVisualizerProvider',
-    'otusjs.deploy.MonitoringStateProvider'
+    'otusjs.deploy.MonitoringStateProvider',
+    'otusjs.deploy.FlagStateProvider'
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
@@ -98,7 +100,8 @@
     ExamLotInfoManagerState,
     SendingExamState,
     ExamResultsVisualizer,
-    MonitoringStateProvider
+    MonitoringStateProvider,
+    FlagStateProvider
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ErrorStateProvider.state);
@@ -128,6 +131,7 @@
     $stateProvider.state(SendingExamState.state);
     $stateProvider.state(ExamResultsVisualizer.state);
     $stateProvider.state(MonitoringStateProvider.state);
+    $stateProvider.state(FlagStateProvider.state);
 
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);

@@ -23,6 +23,7 @@
     self.sampleTransportDashboard = sampleTransportDashboard;
     self.managerParticipantsDashboard = managerParticipantsDashboard;
     self.ExamsDashboard = ExamsDashboard;
+    self.FlagsDashboard = FlagsDashboard;
     self.sendingExam = sendingExam;
     self.$onInit = onInit;
     self.startMonitoring = startMonitoring;
@@ -48,6 +49,10 @@
 
     function ExamsDashboard() {
       ApplicationStateService.activateExamsLotsManagerList();
+    }
+
+    function FlagsDashboard() {
+      ApplicationStateService.activateFlagsReportDashboard();
     }
 
     function sendingExam() {

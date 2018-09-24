@@ -38,6 +38,7 @@
     self.activateExamsLotsManagerList = activateExamsLotsManagerList;
     self.activateExamsLotInfoManager = activateExamsLotInfoManager;
     self.activateExamSending = activateExamSending;
+    self.activateFlagsReportDashboard = activateFlagsReportDashboard;
     self.activateExamResultsVisualizer = activateExamResultsVisualizer;
     self.activateMonitoring = activateMonitoring;
     self.activateManagerParticipants = activateManagerParticipants;
@@ -133,6 +134,10 @@
 
     function activateExamsDashBoard() {
       $state.go(STATE.EXAM_DASHBOARD);
+    }
+
+    function activateFlagsReportDashboard() {
+      $state.go(STATE.FLAG);
     }
 
     function activateExamsLotsManagerList() {
