@@ -25,7 +25,7 @@
         self.$onInit = onInit;
 
         function onInit() {
-
+            console.log("hey");
             tooltip = d3.select("body")
                 .append("div")
                 .style("position", "absolute")
