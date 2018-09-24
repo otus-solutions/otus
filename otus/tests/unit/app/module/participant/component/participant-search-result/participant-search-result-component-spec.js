@@ -115,7 +115,7 @@ xdescribe('otusParticipantSearchResult', function() {
   }
 
   function mockParticipantSearchService($injector) {
-    Mock.ParticipantSearchService = $injector.get('otusjs.participant.business.ParticipantSearchService');
+    Mock.ParticipantSearchService = $injector.get('otusjs.participant.business.ParticipantManagerService');
 
     spyOn(Mock.ParticipantSearchService, 'getAll').and.returnValue(Mock.allParticipants)
     spyOn(Mock.ParticipantSearchService, 'getFilteredData').and.returnValue(Mock.filteredParticipants)

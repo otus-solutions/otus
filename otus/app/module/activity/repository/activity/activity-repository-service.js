@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -35,7 +35,7 @@
 
       if (_existsWorkingInProgress) {
         return _existsWorkingInProgress
-          .then(function() {
+          .then(function () {
             return _listAll();
           });
       } else {
@@ -70,7 +70,7 @@
       var work = _setupWorkProgress();
       ModuleService
         .whenActivityFacadeServiceReady()
-        .then(function(activityFacadeService) {
+        .then(function (activityFacadeService) {
           var activities = _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService, configuration);
           return ActivityCollectionService.insert(activities).then(work.finish);
         });
@@ -95,10 +95,10 @@
 
     function _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService, configuration) {
 
-      return surveys.map(function(survey) {
+      return surveys.map(function (survey) {
         var configActivity = configuration[survey.surveyTemplate.identity.acronym];
         var activity = activityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configActivity);
-        return JSON.parse(activity.toJson());
+        return activity.toJSON();
       });
     }
 
@@ -107,7 +107,7 @@
       _existsWorkingInProgress = defer.promise;
 
       return {
-        finish: function() {
+        finish: function () {
           defer.resolve();
         }
       };
@@ -120,7 +120,7 @@
      ************************************************************************************************/
     function _toEntity(dbObjects) {
       if (Array.isArray(dbObjects)) {
-        return dbObjects.map(function(dbObject) {
+        return dbObjects.map(function (dbObject) {
           return _restoreEntity(dbObject);
         });
       } else {
@@ -136,7 +136,7 @@
     }
 
     function _toDbObject(entity) {
-      var dbObject = JSON.parse(entity.toJson());
+      var dbObject = entity.toJSON();
       dbObject.$loki = entity.$loki;
       dbObject.meta = entity.meta;
       return dbObject;

@@ -1,0 +1,13 @@
+<div layout="row" layout-align="end center" layout-margin="" ng-if="$ctrl.permission">
+  <md-button class="md-button md-icon-button md-primary md-raised" ng-click="$ctrl.addParticipant()">
+    <md-icon md-svg-icon="plus"></md-icon>
+    <md-tooltip md-direction="down">Adicionar Participante</md-tooltip>
+  </md-button>
+</div>
+<md-divider ng-if="$ctrl.permission"></md-divider>
+<md-content layout="column" flex>
+  <dynamic-data-table flex dynamic-table-settings="$ctrl.dynamicTableSettings"
+                      table-update-function="$ctrl.AliquotTransportationService.dynamicDataTableFunction.updateDataTable">
+  </dynamic-data-table>
+
+</md-content>

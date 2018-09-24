@@ -39,6 +39,7 @@
 <script src="node_modules/jquery/dist/jquery.min.js"></script>
 <!-- ************************************* Angular ************************************* -->
 <script src="node_modules/angular/angular.min.js"></script>
+<script src="node_modules/angular-sanitize/angular-sanitize.js"></script>
 <script src="node_modules/angular-animate/angular-animate.min.js"></script>
 <script src="node_modules/angular-aria/angular-aria.min.js"></script>
 <script src="node_modules/angular-bind-html-compile-ci-dev/angular-bind-html-compile.js"></script>
@@ -197,13 +198,16 @@
 <script src="app/deploy/rest/otus-api/activity/activity-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/activity/configuration/activity-configuration-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/configuration/configuration-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/project/project-configuration-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/field-center/field-center-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/installer/installer-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/participant/participant-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/survey/survey-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/survey-item/survey-item-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/file-upload/file-upload-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/user/module.js"></script>
 <script src="app/deploy/rest/otus-api/user/authentication-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/user/user-access-recovery-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/user/user-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/laboratory-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/sampleTransport/sample-transport-rest-service.js"></script>
@@ -216,6 +220,7 @@
 <script src="app/deploy/state/error/error-state-provider.js"></script>
 <script src="app/deploy/state/access/access-state-provider.js"></script>
 <script src="app/deploy/state/access/login-state-provider.js"></script>
+<script src="app/deploy/state/access/user-access-recovery-state-provider.js"></script>
 <script src="app/deploy/state/access/signup-result-state-provider.js"></script>
 <script src="app/deploy/state/access/signup-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-adder-state-provider.js"></script>
@@ -225,6 +230,9 @@
 <script src="app/deploy/state/activity/paper-activity-initializer-state-provider.js"></script>
 <script src="app/deploy/state/dashboard/dashboard-state-provider.js"></script>
 <script src="app/deploy/state/participant-dashboard/participant-dashboard-state-provider.js"></script>
+<script src="app/deploy/state/participants-manager/participants-manager-state-provider.js"></script>
+<script src="app/deploy/state/participants-manager/list/participants-list-state-provider.js"></script>
+<script src="app/deploy/state/participants-manager/create/participant-create-state-provider.js"></script>
 <script src="app/deploy/state/installer/installer-state-provider.js"></script>
 <script src="app/deploy/state/participant/participant-state-provider.js"></script>
 <script src="app/deploy/state/session/session-state-provider.js"></script>
@@ -307,6 +315,7 @@
 <script src="app/module/laboratory/business/participant/laboratory-label-factory.js"></script>
 
 <script src="app/module/laboratory/business/participant/aliquot/module.js"></script>
+<script src="app/module/laboratory/business/participant/aliquot/aliquot-structure-factory.js"></script>
 <script src="app/module/laboratory/business/participant/aliquot/participant-aliquot-service.js"></script>
 <script src="app/module/laboratory/business/participant/aliquot/aliquot-messages-service.js"></script>
 <script src="app/module/laboratory/business/participant/aliquot/aliquot-validation-service.js"></script>
@@ -356,7 +365,8 @@
 <!-- # User > Business -->
 <script src="app/module/participant/business/module.js"></script>
 <script src="app/module/participant/business/participant-quick-filter.js"></script>
-<script src="app/module/participant/business/participant-search-service.js"></script>
+<script src="app/module/participant/business/participant-messages-service.js"></script>
+<script src="app/module/participant/business/participant-manager-service.js"></script>
 <!-- # Participant > Core -->
 <script src="app/module/participant/core/module.js"></script>
 <script src="app/module/participant/core/context-service.js"></script>
@@ -411,6 +421,9 @@
 <script src="app/module/user-access/service/login-service.js"></script>
 <script src="app/module/user-access/service/logout-service.js"></script>
 <script src="app/module/user-access/service/signup-service.js"></script>
+<!-- # User Access Recovery > Service -->
+<script src="app/module/user-access/service/user-access-recovery-service.js"></script>
+
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/report-module.min.js -->
@@ -485,6 +498,12 @@
 <script src="app/ux-component/activity-manager-toolbar/activity-manager-toolbar-component.js"></script>
 <script src="app/ux-component/activity-player/activity-player-component.js"></script>
 <script src="app/ux-component/participant-dashboard/participant-dashboard-component.js"></script>
+<script src="app/ux-component/participants-manager/create/participant-create-controller.js"></script>
+<script src="app/ux-component/participants-manager/create/participant-create-component.js"></script>
+<script src="app/ux-component/participants-manager/list/participants-manager-list-controller.js"></script>
+<script src="app/ux-component/participants-manager/list/participants-manager-list-component.js"></script>
+<script src="app/ux-component/participants-manager/dashboard/participants-manager-dashboard-controller.js"></script>
+<script src="app/ux-component/participants-manager/dashboard/participants-manager-dashboard-component.js"></script>
 <script src="app/ux-component/participant-info/participant-info-component.js"></script>
 <script src="app/ux-component/participant-dashboard-toolbar/participant-dashboard-toolbar-component.js"></script>
 <script src="app/ux-component/dashboard/dashboard-component.js"></script>
@@ -545,6 +564,7 @@
 <script src="app/ux-component/laboratory/main-panel/tube-list/tube-item-view/tube-item-view-component.js"></script>
 <script src="app/ux-component/laboratory/control-panel/fast-collection/fast-collection-component.js"></script>
 <script src="app/ux-component/laboratory/control-panel/refresh-button/laboratory-refresh-button-component.js"></script>
+<script src="app/ux-component/laboratory/main-panel/aliquots-view/aliquots-view-controller.js"></script>
 <script src="app/ux-component/laboratory/main-panel/aliquots-view/aliquots-view-component.js"></script>
 
 <!-- monitoring-ux -->
@@ -570,11 +590,16 @@
 <script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>
 <script src="app/ux-component/participant-search/participant-search-component.js"></script>
 <script src="app/ux-component/user-login/login-controller.js"></script>
+<script src="app/ux-component/user-login/login-component.js"></script>
 <script src="app/ux-component/user-signup/signup-controller.js"></script>
 <script src="app/ux-component/translate-datetime/pt-br.js"></script>
 
 <!--  crash report  -->
 <script src="app/ux-component/crash-report/crash-report-component.js"></script>
+
+<!-- user access recovery -->
+<script src="app/ux-component/user-login-access-recovery/user-login-access-recovery-controller.js"></script>
+<script src="app/ux-component/user-login-access-recovery/user-login-access-recovery-component.js"></script>
 
 <!-- endbuild -->
 <!-- enduncache -->

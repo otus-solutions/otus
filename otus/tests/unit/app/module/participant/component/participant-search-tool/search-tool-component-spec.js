@@ -70,7 +70,7 @@ xdescribe('otusParticipantSearchTool', function() {
   });
 
   function mockParticipantSearchResultService($injector) {
-    Mock.ParticipantSearchResultService = $injector.get('otusjs.participant.business.ParticipantSearchService');
+    Mock.ParticipantSearchResultService = $injector.get('otusjs.participant.business.ParticipantManagerService');
     spyOn(Mock.ParticipantSearchResultService, 'filter');
     spyOn(Mock.ParticipantSearchResultService, 'getFilteredData');
     Injections.ParticipantSearchResultService = Mock.ParticipantSearchResultService;

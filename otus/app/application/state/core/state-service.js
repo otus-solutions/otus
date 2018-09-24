@@ -23,6 +23,7 @@
     self.activateLaboratory = activateLaboratory;
     self.activateDashboard = activateDashboard;
     self.activateParticipantDashboard = activateParticipantDashboard;
+    self.activateCreateParticipant = activateCreateParticipant;
     // self.activateReportDashboard = activateReportDashboard;
     self.activateParticipantActivities = activateParticipantActivities;
     self.activateParticipantReports = activateParticipantReports;
@@ -39,6 +40,8 @@
     self.activateExamSending = activateExamSending;
     self.activateExamResultsVisualizer = activateExamResultsVisualizer;
     self.activateMonitoring = activateMonitoring;
+    self.activateManagerParticipants = activateManagerParticipants;
+    self.activateParticipantsList = activateParticipantsList;
     // self.activateErrorOffline = activateErrorOffline;
 
     function activateMonitoring() {
@@ -79,6 +82,18 @@
 
     function activateParticipantDashboard() {
       $state.go(STATE.PARTICIPANT_DASHBOARD);
+    }
+
+    function activateCreateParticipant() {
+      $state.go(STATE.PARTICIPANT_CREATE);
+    }
+
+    function activateManagerParticipants() {
+      $state.go(STATE.PARTICIPANTS_MANAGER);
+    }
+
+    function activateParticipantsList() {
+      $state.go(STATE.PARTICIPANTS_LIST);
     }
 
     // function activateReportDashboard() {

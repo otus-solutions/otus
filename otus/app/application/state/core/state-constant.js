@@ -21,7 +21,8 @@
       'SESSION': 'session',
       'SIGNUP': 'signup',
       'SIGNUP_RESULT': 'signup-result',
-      'LABELMAKER': 'labelMaker'
+      'LABELMAKER': 'labelMaker',
+      'RECOVERY': 'recovery',
     });
 
 }());

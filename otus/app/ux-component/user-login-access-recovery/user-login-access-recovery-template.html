@@ -1,0 +1,66 @@
+<md-content id="user-login-page" layout="column" flex ng-show="!$ctrl.error">
+  <md-toolbar flex="30" id="divtop" class="md-tall md-primary">
+    <h2 class="system-name">
+      <span class="md-display-1">Otus</span>
+    </h2>
+  </md-toolbar>
+  <md-content flex layout="row" layout-align="center start">
+    <md-card class="card" layout-padding flex="55">
+      <div layout="row" layout-align="center start">
+        <div flex="20"></div>
+        <img class="logotype" src="app/static-resource/image/OtusImg.png" flex="40">
+        <div flex></div>
+      </div>
+      <div layout="column" flex></div>
+      <form name="passwordResetForm" class="content" layout="row">
+        <div flex="80" flex-offset="10">
+          <md-input-container class="md-block" layout="column" layout-margin flex>
+            <label>Nova senha</label>
+            <input required name="password" ng-model="$ctrl.password" type="password" />
+            <div ng-messages="passwordResetForm.password.$error">
+              <div ng-message="required">Obrigatório</div>
+            </div>
+          </md-input-container>
+          <md-input-container class="md-block" layout="column" layout-margin flex>
+            <label>Confirme a nova senha</label>
+            <input required name="passwordConfirmation" ng-model="$ctrl.passwordConfirmation" type="password" ng-change="$ctrl.enable()">
+            <div ng-messages="passwordResetForm.passwordConfirmation.$error">
+              <div ng-message="required">Obrigatório</div>
+              <div ng-message="invalidPassword">As senhas devem ser iguais</div>
+            </div>
+          </md-input-container>
+        </div>
+        <div flex></div>
+      </form>
+      <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
+        <md-button class="md-raised md-no-focus" ng-click="$ctrl.goBack()">Cancelar</md-button>
+        <md-button class="md-raised md-primary" ng-disabled="$ctrl.enable()" ng-click="$ctrl.updatePassword()">Confirmar</md-button>
+      </div>
+    </md-card>
+  </md-content>
+</md-content>
+<!-- user access error -->
+<md-content id="user-login-page" layout="column" flex ng-show="$ctrl.error">
+  <md-toolbar class="md-primary md-whiteframe-1dp">
+    <div class="md-toolbar-tools">
+      <h2 flex md-truncate>OTUS</h2>
+    </div>
+  </md-toolbar>
+  <md-content flex layout="row" layout-align="center start">
+    <form name="accessErrorForm" class="content" layout="row">
+      <div flex-gt-md="30" layout-align="center center" layout-padding flex>
+        <img src="app/static-resource/image/otus-crash.png" />
+      </div>
+      <div layout-padding flex>
+        <div>
+          <p class="md-display-2">Acesso negado!</p>
+          <p class="md-body-1">Desculpe, seu código de acesso para troca de senha não existe ou acabou sendo expirado.</p>
+          <p class="md-body-1">Você pode realizar o processo de troca de senha novamente retornando para a tela de login.</p>
+        </div>
+        <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
+          <md-button class="md-raised md-primary" ng-click="$ctrl.goBack()">Voltar à tela de login</md-button>
+        </div>
+      </div>
+    </form>
+  </md-content>
+</md-content>

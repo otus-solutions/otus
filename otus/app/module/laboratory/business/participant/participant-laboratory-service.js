@@ -32,6 +32,7 @@
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.deleteAliquot = deleteAliquot;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -102,18 +103,22 @@
 
     function getLoggedUser() {
       return ContextService.getCurrentUser();
-    }
 
+    }
     function updateLaboratoryParticipant() {
       return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(_participantLaboratory));
-    }
 
+    }
     function updateTubeCollectionData(updateStructure) {
       return LaboratoryRepositoryService.updateTubeCollectionData(JSON.stringify(updateStructure));
-    }
 
+    }
     function updateAliquots(updateStructure) {
       return LaboratoryRepositoryService.updateAliquots(updateStructure);
+    }
+
+    function deleteAliquot(aliquotCode) {
+      return LaboratoryRepositoryService.deleteAliquot(aliquotCode);
     }
 
     function generateLabels() {

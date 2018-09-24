@@ -1,0 +1,131 @@
+describe('participant-manager-service Test', function() {
+    var Mock = {};
+    var service;
+    var Injections = {};
+
+    beforeEach(function() {
+      angular.mock.module('otusjs.participant.business');
+    });
+
+
+    beforeEach(function() {
+      Mock.participant = {
+        "recruitmentNumber": 9876542,
+        "objectType": "Participant",
+        "name": "Beltrano",
+        "sex": "M",
+        "birthdate": {
+          "objectType": "ImmutableDate",
+          "value": "1954-09-20 00:00:00.000"
+        },
+        "fieldCenter": {
+          "acronym": "RS"
+
+        },
+        "late": false
+      };
+      angular.mock.module(function($provide) {
+        $provide.value('otusjs.participant.core.ContextService',{});
+        $provide.value('otusjs.participant.core.EventService',{});
+        $provide.value('otusjs.participant.repository.ParticipantRepositoryService',{
+          create: function(participant) {
+            return Promise.resolve(participant);
+          },
+          listIdexers: function() {
+            return Promise.resolve(mockParticipantList());
+          },
+          getAllowNewParticipants: function() {
+            return Promise.resolve(mockProjectConfiguration());
+          }
+        });
+        $provide.value('otusjs.utils.SearchQueryFactory',{});
+
+      });
+    });
+
+
+
+    beforeEach(function() {
+      inject(function(_$injector_) {
+        Injections = {
+          "ContextService": _$injector_.get('otusjs.participant.core.ContextService'),
+          "EventService": _$injector_.get('otusjs.participant.core.EventService'),
+          "ParticipantRepositoryService": _$injector_.get('otusjs.participant.repository.ParticipantRepositoryService'),
+          "SearchQueryFactory": _$injector_.get('otusjs.utils.SearchQueryFactory'),
+          "$q": _$injector_.get('$q')
+        };
+
+        service = _$injector_.get('otusjs.participant.business.ParticipantManagerService', Injections);
+      });
+
+      spyOn(Injections.$q, "defer").and.callThrough();
+      spyOn(Injections.ParticipantRepositoryService, "create").and.callThrough();
+      spyOn(Injections.ParticipantRepositoryService, "listIdexers").and.callThrough();
+      spyOn(Injections.ParticipantRepositoryService, "getAllowNewParticipants").and.callThrough();
+    });
+
+    it('should called method create', function() {
+        service.create(Mock.participant);
+        expect(Injections.$q.defer).toHaveBeenCalledTimes(1);
+        expect(Injections.ParticipantRepositoryService.create).toHaveBeenCalledWith(Mock.participant);
+        expect(Injections.ParticipantRepositoryService.create).toHaveBeenCalledTimes(1);
+    });
+
+    it('should called method listIdexers', function() {
+        service.listIdexers();
+        expect(Injections.$q.defer).toHaveBeenCalledTimes(1);
+        expect(Injections.ParticipantRepositoryService.listIdexers).toHaveBeenCalled();
+        expect(Injections.ParticipantRepositoryService.listIdexers).toHaveBeenCalledTimes(1);
+    });
+
+    it('should called method getAllowNewParticipants', function() {
+        service.getAllowNewParticipants();
+        expect(Injections.$q.defer).toHaveBeenCalledTimes(1);
+        expect(Injections.ParticipantRepositoryService.getAllowNewParticipants).toHaveBeenCalled();
+        expect(Injections.ParticipantRepositoryService.getAllowNewParticipants).toHaveBeenCalledTimes(1);
+    });
+
+    function mockProjectConfiguration() {
+      return {
+        objectType: "ProjectConfiguration",
+        participantRegistration: true
+      };
+    }
+
+
+    function mockParticipantList() {
+      return [
+        {
+          "recruitmentNumber": 9892854,
+          "objectType": "Participant",
+          "name": "Siclano",
+          "sex": "M",
+          "birthdate": {
+            "objectType": "ImmutableDate",
+            "value": "1954-09-20 00:00:00.000"
+          },
+          "fieldCenter": {
+            "acronym": "RS"
+
+          },
+          "late": false
+        },
+        {
+          "recruitmentNumber": 1234567,
+          "objectType": "Participant",
+          "name": "Fulano",
+          "sex": "M",
+          "birthdate": {
+            "objectType": "ImmutableDate",
+            "value": "1954-09-20 00:00:00.000"
+          },
+          "fieldCenter": {
+            "acronym": "RS"
+
+          },
+          "late": false
+        }
+      ];
+    }
+
+});

@@ -13,13 +13,15 @@
     'otusjs.otus.dashboard.core.EventService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService',
-    'STATE'
+    'STATE',
+    '$mdDialog'
   ];
 
-  function Controller(ContextService, EventService, ApplicationStateService, ProjectContextService, STATE) {
+  function Controller(ContextService, EventService, ApplicationStateService, ProjectContextService, STATE, $mdDialog) {
     var self = this;
     self.setFocus = setFocus;
     self.sampleTransportDashboard = sampleTransportDashboard;
+    self.managerParticipantsDashboard = managerParticipantsDashboard;
     self.ExamsDashboard = ExamsDashboard;
     self.sendingExam = sendingExam;
     self.$onInit = onInit;
@@ -40,8 +42,12 @@
       ApplicationStateService.activateSampleTransportation();
     }
 
+    function managerParticipantsDashboard() {
+      ApplicationStateService.activateParticipantsList();
+    }
+
     function ExamsDashboard() {
-      ApplicationStateService.activateExamsLotsManagerList()
+      ApplicationStateService.activateExamsLotsManagerList();
     }
 
     function sendingExam() {
@@ -64,5 +70,6 @@
           });
       }
     }
+
   }
 }());
