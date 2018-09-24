@@ -25,7 +25,7 @@
                 <span flex="5"></span>
                 <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
                   <label class="md-subhead">Status:</label>
-                  <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
+                  <md-select ng-model="$ctrl.status" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
                     <md-tooltip>
                       Sigla da atividade a ser visualizada
                     </md-tooltip>
@@ -37,12 +37,12 @@
                 <span flex="5"></span>
                 <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
                   <label class="md-subhead">Centro:</label>
-                  <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
+                  <md-select ng-model="$ctrl.center">
                     <md-tooltip>
                       Sigla da atividade a ser visualizada
                     </md-tooltip>
-                    <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{questionnaire}}" ng-click="">
-                      {{questionnaire}}
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{center.acronym}}" ng-click="">
+                      {{center.name}}
                     </md-option>
                   </md-select>
                 </md-input-container>

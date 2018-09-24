@@ -5,14 +5,14 @@
     .module('otusjs.otus.uxComponent')
     .component('flagFilterViewComponent', {
       controller: "flagFilterViewCtrl as $ctrl",
-      templateUrl: 'app/ux-component/flag-report/filter/flag-filter-view-template.html',
+      templateUrl: 'app/ux-component/flag-report/filter/otus-flag-filter-view-template.html',
       bindings: {
         selectedLots: '=',
         csvData: '=',
         parseData: '=',
         questionnairesList: '=',
         uniqueDatesList: '=',
-        centers: '=',
+        centers: '<',
         updateData: '='
       }
     })
@@ -27,6 +27,13 @@
 
   function Controller($mdToast, $filter, mdcDefaultParams, LoadingScreenService) {
     var self = this;
+
+    self.$onInit = onInit;
+
+
+    function onInit() {
+      console.log(self.centers)
+    }
   }
 
 

@@ -1,10 +1,32 @@
-<div  flex>
-  <div id="overview_id" style="position: relative;">
+<!--<style>-->
+  <!--.wrapper {-->
+    <!--display: grid;-->
+    <!--/*grid-gap: 10px;*/-->
+    <!--/*grid-template-columns: 100px 100px 100px;*/-->
+  <!--}-->
+
+  <!--.box {-->
+    <!--position: relative;-->
+  <!--}-->
+
+  <!--.a {-->
+    <!--grid-column: 1 / 3;-->
+    <!--grid-row: 1;-->
+  <!--}-->
+  <!--.b {-->
+    <!--grid-column: 2 /3 ;-->
+    <!--grid-row: 1;-->
+  <!--}-->
+<!--</style>-->
+
+<div layout="row" flex>
+  <div id="overview_id" style="position: relative;" >
     <canvas id="canvas_id" style="position: absolute; left: 0px; top:0px; z-index: 2;"></canvas>
     <svg id="svg_id" style="position: absolute; left: 0px; top:0px; z-index: 2;"></svg>
   </div>
+
   <div id="zoom_id" style="position: relative;">
-    <canvas id="canvas_zoom_id" style="position: absolute; right: 0px; top:0px; z-index: 2;"></canvas>
+    <canvas id="canvas_zoom_id" style="position: absolute; left: 210px; top:0px; z-index: 2;"></canvas>
     <svg id="svg_zoom_id" style="position: absolute; right: 0px; top:0px; z-index: 2;"></svg>
   </div>
 </div>

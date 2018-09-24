@@ -8,9 +8,9 @@
             templateUrl: 'app/ux-component/flag-report/visualization/otus-flag-report-visualization-template.html'
         });
 
-    Controller.$inject = [];
+    Controller.$inject = ["$element"];
 
-    function Controller() {
+    function Controller($element) {
 
         var data = [];
         var drag = false;
