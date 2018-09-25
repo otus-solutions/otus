@@ -39,7 +39,101 @@
             generateRandomDataForTesting();
             sortParticipantsByCompletion();
             createOverviewFlagReport();
+        }
 
+
+        function getQuestionnaireFromXCoordinate(canvas, evt, x) {
+            var mousePos = getMousePos(canvas, evt);
+            var inverseModeScale = d3.scaleQuantize()
+                .domain(x.range())
+                .range(x.domain());
+
+            return inverseModeScale(mousePos.x);
+
+        }
+
+        function getMousePos(canvas, evt) {
+            var rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+
+        function getParticipantFromYCoordinate(canvas, evt, y) {
+            var mousePos = getMousePos(canvas, evt);
+            var inverseModeScale = d3.scaleQuantize()
+                .domain(y.range())
+                .range(y.domain());
+
+            return inverseModeScale(mousePos.y);
+        }
+
+        function sortParticipantsByCompletion() {
+
+            var currentParticipant = "";
+            var currentSummedValue = null;
+            var currentParticipantData = []
+            var dataToBeOrganized = [];
+
+            for (var i = 0; i < data.length; i++) {
+                currentSummedValue = 0;
+                for( var j = 0; j < data[i].activities.length; j++)
+                {
+                    currentSummedValue += data[i].activities[j].status;
+                }
+                dataToBeOrganized.push({data:data[i],value:currentSummedValue});
+            }
+
+            dataToBeOrganized.sort(function (a, b) {
+                return b.value - a.value;
+            })
+
+
+            var organizedData = [];
+            for (var i = 0; i < dataToBeOrganized.length; i++) {
+                organizedData.push(dataToBeOrganized[i].data);
+            }
+            data = organizedData;
+
+        }
+
+        function generateRandomDataForTesting() {
+            var nQuestionnaires = 39;
+            var nParticipants = 5000;
+
+            for (var j = 0; j < nParticipants; j++) {
+
+                var item = {
+                    rn: 'P' + j,
+                    activities: []
+                };
+
+                for (var i = 0; i < nQuestionnaires; i++) {
+                    var random = Math.random();
+                    var value;
+
+                    if (random < 0.25) {
+                        value = -1;
+                    } else if (random <= 0.50) {
+                        value = 0;
+                    } else if (random <= 0.75) {
+                        value = 1;
+                    }
+                    else {
+                        value = 2;
+                    }
+                    item.activities.push({
+                        acronym: "Q" + i,
+                        status: value
+                    });
+
+
+                }
+                data.push(item);
+            }
+
+            console.log(data);
         }
 
         function createOverviewFlagReport() {
@@ -68,8 +162,8 @@
             // cria escala no eixo x
             // separa a largura disponivel para o widget por cada questionario
             x = d3.scaleBand()
-                .domain(data.map(function (key, index) {
-                    return key.questionnaire;
+                .domain(data[0].activities.map(function (key, index) {
+                    return key.acronym;
                 }))
                 .range([0, width]);
 
@@ -77,7 +171,7 @@
             // separa a largura disponivel para o widget por cada participante
             y = d3.scaleBand()
                 .domain(data.map(function (key, index) {
-                    return key.participant;
+                    return key.rn;
                 }))
                 .range([0, height]);
 
@@ -88,11 +182,14 @@
 
             // criando retangulos para cada questionario de cada participante
             data.forEach(function (d, i) {
-                context.beginPath();
-                context.rect(x(d.questionnaire), y(d.participant), x.bandwidth(), y.bandwidth());
-                context.fillStyle = colorMap(d.value);
-                context.fill();
-                context.closePath();
+                d.activities.forEach(function (f, g) {
+                    context.beginPath();
+                    context.rect(x(f.acronym), y(d.rn), x.bandwidth(), y.bandwidth());
+                    context.fillStyle = colorMap(f.status);
+                    context.fill();
+                    context.closePath();
+                })
+
             });
 
             canvas = canvas_matrix_viz._groups[0][0];
@@ -126,16 +223,22 @@
                 var initialYIndex, finalYIndex;
                 var selectedData = JSON.parse(JSON.stringify(data));
                 for (var i = 0; i < data.length; i++) {
-                    if (data[i].participant === finalY) {
-                        finalYIndex = i;
+                    if (data[i].rn === finalY) {
+                        if (!finalYIndex)
+                            finalYIndex = i;
                     }
-                    if (data[i].participant === initialY) {
+                    if (data[i].rn === initialY) {
                         if (!initialYIndex)
                             initialYIndex = i;
                     }
                 }
+                if (initialYIndex > finalYIndex) {
+                    var dummy = initialYIndex;
+                    initialYIndex = finalYIndex;
+                    finalYIndex = dummy;
+                }
                 // remove todos os participantes antes e depois da selecao
-                selectedData.length = finalYIndex + 1;
+                selectedData.length = finalYIndex;
                 selectedData.splice(0, initialYIndex);
 
                 // gera nova visualizacao de sinaleira apenas com os participantes selecionados
@@ -153,13 +256,17 @@
                     // atualiza tamanho da selecao feita enquanto o drag acontece
                     if (y(participant) - y(initialY) > 0)
                         rect.attr("height", y(participant) - y(initialY));
+                    else {
+                        rect.attr("y", y(participant));
+                        rect.attr("height", y(initialY) - y(participant));
+                    }
                 }
                 else {
                     // atualiza tooltip com as informacoes do questionario e participante
                     var questionnaire = getQuestionnaireFromXCoordinate(canvas, evt, x);
                     if (questionnaire && participant) {
                         tooltip.style("visibility", "visible");
-                        tooltip.text("Participante: " + participant +"\n Questionario: " + questionnaire);
+                        tooltip.text("Participante: " + participant + "\n Questionario: " + questionnaire);
                         tooltip.style("top", (evt.pageY - 10) + "px").style("left", (evt.pageX + 10) + "px");
                     }
 
@@ -200,17 +307,16 @@
             var context = canvas_matrix_viz.node().getContext('2d');
 
             x = d3.scaleBand()
-                .domain(selectedData.map(function (key, index) {
-                    return key.questionnaire;
+                .domain(selectedData[0].activities.map(function (key, index) {
+                    return key.acronym;
                 }))
                 .range([0, width]);
 
             y = d3.scaleBand()
                 .domain(selectedData.map(function (key, index) {
-                    return key.participant;
+                    return key.rn;
                 }))
                 .range([0, height]);
-
 
             var colorMap = d3.scaleLinear()
                 .domain([-1, 0, 1, 2])
@@ -227,11 +333,14 @@
                 .style("opacity", 0.2);
 
             selectedData.forEach(function (d, i) {
-                context.beginPath();
-                context.rect(x(d.questionnaire), y(d.participant), x.bandwidth(), y.bandwidth());
-                context.fillStyle = colorMap(d.value);
-                context.fill();
-                context.closePath();
+                d.activities.forEach(function (f, g) {
+                    context.beginPath();
+                    context.rect(x(f.acronym), y(d.rn), x.bandwidth(), y.bandwidth());
+                    context.fillStyle = colorMap(f.status);
+                    context.fill();
+                    context.closePath();
+                })
+
             });
 
             canvas = canvas_matrix_viz._groups[0][0];
@@ -252,99 +361,6 @@
             document.getElementById('zoom_id').addEventListener("mouseout", function (evt) {
                 return tooltip.style("visibility", "hidden");
             });
-        }
-
-        function getQuestionnaireFromXCoordinate(canvas, evt, x) {
-            var mousePos = getMousePos(canvas, evt);
-            var inverseModeScale = d3.scaleQuantize()
-                .domain(x.range())
-                .range(x.domain());
-
-            return inverseModeScale(mousePos.x);
-
-        }
-
-        function getMousePos(canvas, evt) {
-            var rect = canvas.getBoundingClientRect();
-            return {
-                x: evt.clientX - rect.left,
-                y: evt.clientY - rect.top
-            };
-        }
-
-        function getParticipantFromYCoordinate(canvas, evt, y) {
-            var mousePos = getMousePos(canvas, evt);
-            var inverseModeScale = d3.scaleQuantize()
-                .domain(y.range())
-                .range(y.domain());
-
-            return inverseModeScale(mousePos.y);
-        }
-
-        function sortParticipantsByCompletion() {
-
-            var currentParticipant = "";
-            var currentSummedValue = null;
-            var currentParticipantData = []
-            var dataToBeOrganized = [];
-
-            for (var i = 0; i < data.length; i++) {
-                if (currentParticipant != data[i].participant) {
-                    currentParticipant = data[i].participant;
-
-                    if (currentSummedValue != null) {
-                        // checa soma total e decide lugar no vetor
-                        dataToBeOrganized.push({ data: currentParticipantData, value: currentSummedValue });
-                    }
-                    currentSummedValue = 0;
-                    currentParticipantData = [];
-                    currentParticipantData.push(data[i]);
-
-                }
-                else {
-                    currentSummedValue += data[i].value;
-                    currentParticipantData.push(data[i]);
-                }
-            }
-
-            dataToBeOrganized.sort(function (a, b) {
-                return b.value - a.value;
-            })
-
-
-            var organizedData = [];
-            for (var i = 0; i < dataToBeOrganized.length; i++) {
-                for (var j = 0; j < dataToBeOrganized[i].data.length; j++) {
-                    organizedData.push(dataToBeOrganized[i].data[j]);
-                }
-            }
-            data = organizedData;
-
-        }
-
-        function generateRandomDataForTesting() {
-            var nQuestionnaires = 39;
-            var nParticipants = 5000;
-
-            for (var j = 0; j < nParticipants; j++) {
-                for (var i = 0; i < nQuestionnaires; i++) {
-                    var random = Math.random();
-                    var value;
-
-                    if (random < 0.25) {
-                        value = -1;
-                    } else if (random <= 0.50) {
-                        value = 0;
-                    } else if (random <= 0.75) {
-                        value = 1;
-                    }
-                    else {
-                        value = 2;
-                    }
-                    data.push({ participant: 'P' + j, questionnaire: 'Q' + i, value: value });
-                }
-            }
-
         }
     }
 })()
