@@ -7,19 +7,16 @@
       controller: "flagFilterViewCtrl as $ctrl",
       templateUrl: 'app/ux-component/flag-report/filter/otus-flag-filter-view-template.html',
       bindings: {
-        status: '=',
-        csvData: '=',
-        parseData: '=',
-        questionnairesList: '=',
-        uniqueDatesList: '=',
-        centers: '<',
+        activitiesStatus: '=',
+        acronymsList: '=',
+        centers: '=',
         updateData: '='
       }
     })
     .controller('flagFilterViewCtrl', Controller);
 
   Controller.$inject = [
-    '$mdToast',
+    '$scope',
     '$filter',
     'mdcDefaultParams',
     'otusjs.deploy.LoadingScreenService'
@@ -31,13 +28,26 @@
     self.$onInit = onInit;
     self.statusHistory = [];
 
+    /* Public functions */
+    self.clear = clear;
 
     function onInit() {
-
-      self.status.forEach((status) =>{
-        self.statusHistory.push(status.label);
-      });
+      console.log(self.centers)
     }
+
+
+    function clear(field) {
+      switch (field) {
+        case "acronym":
+          self.selectedAcronym = null;
+          break;
+        case "status":
+          self.selectedStatus = null;
+          break;
+      }
+    }
+
+
   }
 
 

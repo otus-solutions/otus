@@ -4,58 +4,29 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusFlagReportDashboard', {
-      controller: "otusFlagReportCtrl as $ctrl",
+      controller: "otusFlagReportDashboardCtrl as $ctrl",
       templateUrl: 'app/ux-component/flag-report/otus-flag-report-dashboard-template.html'
     })
-    .controller("otusFlagReportCtrl", Controller);
+    .controller("otusFlagReportDashboardCtrl", Controller);
 
   Controller.$inject = [
-    'otusjs.deploy.FieldCenterRestService',
-    'otusjs.monitoring.business.MonitoringService',
-    'ACTIVITY'
+    'STATE',
+    'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(ProjectFieldCenterService, MonitoringService, ACTIVITY) {
 
+  function Controller(STATE, ApplicationStateService) {
     var self = this;
 
-    /* Lifecycle hooks */
+    // lifecycle hooks
     self.$onInit = onInit;
-    self.ready = false;
 
+    /* Public methods */
     function onInit() {
-      _getStatus();
+      if(ApplicationStateService.getCurrentState() == STATE.FLAG_DASHBOARD){
+        ApplicationStateService.activateFlagsReportManager();
+      }
     }
-
-    function _getStatus() {
-      self.status = ACTIVITY.STATUS;
-      _loadAllCenters();
-
-    }
-
-    function _loadAllCenters() {
-      ProjectFieldCenterService.loadCenters().then((result) => {
-        self.centers = angular.copy(result);
-        _loadAllAcronyms();
-      });
-
-    }
-
-    function _loadAllAcronyms() {
-      MonitoringService.listAcronyms()
-        .then(function(activities) {
-          self.questionnairesList = activities.map(function(acronym) {
-            return acronym;
-          }).filter(function(elem, index, self) {
-            return index == self.indexOf(elem);
-          });
-          self.ready = true;
-
-        });
-    }
-
-
-
   }
 
 }());

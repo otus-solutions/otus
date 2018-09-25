@@ -343,3 +343,11 @@ md-content.no-background-color {
 .md-subheader{
   display: inline-block !important;
 }
+
+.button-inline {
+  padding: 0 !important;
+  line-height: 0 !important;
+  height: auto !important;
+  min-height: 0 !important;
+
+}

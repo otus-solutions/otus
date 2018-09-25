@@ -10,13 +10,6 @@
           label: 'Criado',
           color: '#595959',
           icon: 'fiber_new'
-
-        },
-        {
-          name: 'OPENED',
-          label: 'Aberto',
-          color: '#0091ea',
-          icon: 'visibility'
         },
         {
           name: 'FINALIZED',
@@ -29,18 +22,6 @@
           label: 'Salvo',
           color: '#ae8323',
           icon: 'save'
-        },
-        {
-          name: 'INITIALIZED_OFFLINE',
-          label: 'Realizado em Papel',
-          color: '#886430',
-          icon: 'edit'
-        },
-        {
-          name: 'INITIALIZED_ONLINE',
-          label: 'Iniciado Online',
-          color: '#513c1c',
-          icon: 'edit'
         }
       ]
     });

@@ -324,7 +324,7 @@
 
         function generateRandomDataForTesting() {
             var nQuestionnaires = 39;
-            var nParticipants = 5000;
+            var nParticipants = 100;
 
             for (var j = 0; j < nParticipants; j++) {
                 for (var i = 0; i < nQuestionnaires; i++) {

@@ -7,43 +7,62 @@
               <span class="md-subheader">Filtros de Pesquisa:</span>
               <div flex  layout-align="center center" layout="row" layout-xs="column">
 
-                <span flex="15"></span>
+                <span flex="5"></span>
 
                 <span flex-gt-md="5"></span>
                 <span flex-sm="10"></span>
+
                 <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
                   <label class="md-subhead">Sigla:</label>
-                  <md-select ng-model="$ctrl.questionnaireInfo" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
-                    <md-tooltip>
-                      Sigla da atividade a ser visualizada
-                    </md-tooltip>
-                    <md-option value="" ng-selected="true">Todos</md-option>
-                    <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" value="{{questionnaire}}" ng-click="">
+                  <md-select ng-model="$ctrl.selectedAcronym" ng-change="$ctrl.onChangeAcronym()" ng-disabled="" md-on-open="$ctrl.openSelected()" md-on-close="$ctrl.openSelected()">
+                    <md-option ng-repeat="questionnaire in $ctrl.acronymsList track by $index" value="{{questionnaire}}" ng-click="">
                       {{questionnaire}}
                     </md-option>
                   </md-select>
+                  <md-tooltip>
+                    Sigla da atividade a ser visualizada
+                  </md-tooltip>
                 </md-input-container>
+
+                <md-button class="md-icon-button md-mini button-inline" ng-if="$ctrl.selectedAcronym" ng-click="$ctrl.clear('acronym')">
+                  <md-icon style="font-size:18px;height:18px;width:18px; margin: 0px">clear</md-icon>
+                  <md-tooltip >
+                    Limpar sigla
+                  </md-tooltip>
+                </md-button>
+
+                <span flex="5" ng-if="!$ctrl.selectedAcronym"></span>
                 <span flex="5"></span>
-                <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
+
+                <md-input-container class="remove-errors-spacer md-block" flex="20">
                   <label class="md-subhead">Status:</label>
-                  <md-select ng-model="$ctrl.teste" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
+                  <md-select ng-model="$ctrl.selectedStatus" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
                     <md-tooltip>
                       Status de atividade
                     </md-tooltip>
-                    <md-option ng-repeat="status in $ctrl.statusHistory track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{status}}" ng-click="">
-                      {{status}}
+                    <md-option ng-repeat="status in $ctrl.activitiesStatus track by $index" value="{{status.name}}" ng-click="">
+                      {{status.label}}
                     </md-option>
                   </md-select>
                 </md-input-container>
+
+                <md-button class="md-icon-button md-mini button-inline" ng-if="$ctrl.selectedStatus" ng-click="$ctrl.clear('status')">
+                  <md-icon style="font-size:18px;height:18px;width:18px; margin: 0px">clear</md-icon>
+                  <md-tooltip >
+                    Limpar sigla
+                  </md-tooltip>
+                </md-button>
+
+                <span flex="5" ng-if="!$ctrl.selectedStatus"></span>
                 <span flex="5"></span>
-                <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
+                <md-input-container class="remove-errors-spacer md-block" flex="20">
                   <label class="md-subhead">Centro:</label>
-                  <md-select ng-model="$ctrl.center">
+                  <md-select ng-model="$ctrl.selectedCenter" ng-disabled="$ctrl.centers.length == 1">
                     <md-tooltip>
                       Centros
                     </md-tooltip>
                     <md-option ng-repeat="center in $ctrl.centers track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{center.acronym}}" ng-click="">
-                      {{center.name}}
+                      {{center.acronym}}
                     </md-option>
                   </md-select>
                 </md-input-container>
