@@ -285,8 +285,8 @@
         }
 
         function createZoomedFlagReport(selectedData) {
-
-            if (!selectedData) {
+            
+            if (!selectedData || selectedData <= 0) {
                 var svg = d3.select("#svg_zoom_id");
                 svg.selectAll("*").remove();
                 return;
