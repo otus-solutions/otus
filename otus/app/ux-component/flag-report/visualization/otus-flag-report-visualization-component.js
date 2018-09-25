@@ -5,7 +5,10 @@
         .module('otusjs.otus.uxComponent')
         .component('otusFlagReportVisualization', {
             controller: Controller,
-            templateUrl: 'app/ux-component/flag-report/visualization/otus-flag-report-visualization-template.html'
+            templateUrl: 'app/ux-component/flag-report/visualization/otus-flag-report-visualization-template.html',
+          bindings: {
+              activitiesData: "="
+          }
         });
 
     Controller.$inject = ["$element"];
@@ -25,6 +28,7 @@
         self.$onInit = onInit;
 
         function onInit() {
+          data = self.activitiesData;
             tooltip = d3.select("body")
                 .append("md-tooltip")
                 .style("position", "absolute")
@@ -36,7 +40,7 @@
                 .style("visibility", "hidden")
                 .text("a simple tooltip");
 
-            generateRandomDataForTesting();
+            // generateRandomDataForTesting();
             sortParticipantsByCompletion();
             createOverviewFlagReport();
         }
@@ -98,43 +102,43 @@
 
         }
 
-        function generateRandomDataForTesting() {
-            var nQuestionnaires = 39;
-            var nParticipants = 5000;
-
-            for (var j = 0; j < nParticipants; j++) {
-
-                var item = {
-                    rn: 'P' + j,
-                    activities: []
-                };
-
-                for (var i = 0; i < nQuestionnaires; i++) {
-                    var random = Math.random();
-                    var value;
-
-                    if (random < 0.25) {
-                        value = -1;
-                    } else if (random <= 0.50) {
-                        value = 0;
-                    } else if (random <= 0.75) {
-                        value = 1;
-                    }
-                    else {
-                        value = 2;
-                    }
-                    item.activities.push({
-                        acronym: "Q" + i,
-                        status: value
-                    });
-
-
-                }
-                data.push(item);
-            }
-
-            console.log(data);
-        }
+        // function generateRandomDataForTesting() {
+        //     var nQuestionnaires = 39;
+        //     var nParticipants = 5000;
+        //
+        //     for (var j = 0; j < nParticipants; j++) {
+        //
+        //         var item = {
+        //             rn: 'P' + j,
+        //             activities: []
+        //         };
+        //
+        //         for (var i = 0; i < nQuestionnaires; i++) {
+        //             var random = Math.random();
+        //             var value;
+        //
+        //             if (random < 0.25) {
+        //                 value = -1;
+        //             } else if (random <= 0.50) {
+        //                 value = 0;
+        //             } else if (random <= 0.75) {
+        //                 value = 1;
+        //             }
+        //             else {
+        //                 value = 2;
+        //             }
+        //             item.activities.push({
+        //                 acronym: "Q" + i,
+        //                 status: value
+        //             });
+        //
+        //
+        //         }
+        //         data.push(item);
+        //     }
+        //
+        //     console.log(data);
+        // }
 
         function createOverviewFlagReport() {
 

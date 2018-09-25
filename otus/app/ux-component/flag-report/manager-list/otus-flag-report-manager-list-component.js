@@ -28,6 +28,7 @@
     self.$onInit = onInit;
 
     self.updateData = updateData;
+    self.data = [];
 
     function onInit() {
       LoadingScreenService.start();
@@ -39,6 +40,7 @@
     function _constructor() {
       _getStatus();
       _loadAllCenters();
+      generateRandomDataForTesting();
     }
 
     function _getStatus() {
@@ -92,6 +94,44 @@
     }
 
     function updateData() {
+
+    }
+
+
+    function generateRandomDataForTesting() {
+      var nQuestionnaires = 39;
+      var nParticipants = 5000;
+
+      for (var j = 0; j < nParticipants; j++) {
+
+        var item = {
+          rn: 'P' + j,
+          activities: []
+        };
+
+        for (var i = 0; i < nQuestionnaires; i++) {
+          var random = Math.random();
+          var value;
+
+          if (random < 0.25) {
+            value = -1;
+          } else if (random <= 0.50) {
+            value = 0;
+          } else if (random <= 0.75) {
+            value = 1;
+          }
+          else {
+            value = 2;
+          }
+          item.activities.push({
+            acronym: "Q" + i,
+            status: value
+          });
+
+
+        }
+        self.data.push(item);
+      }
 
     }
 
