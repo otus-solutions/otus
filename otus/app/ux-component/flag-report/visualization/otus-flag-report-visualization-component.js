@@ -25,10 +25,13 @@
         self.$onInit = onInit;
 
         function onInit() {
-            console.log("hey");
             tooltip = d3.select("body")
-                .append("div")
+                .append("md-tooltip")
                 .style("position", "absolute")
+                .style("background", "rgba(113, 113, 113, 1)")
+                .style("padding", "4px")
+                .style("border-radius", "3px")
+                .style("white-space", "pre-wrap")
                 .style("z-index", "10")
                 .style("visibility", "hidden")
                 .text("a simple tooltip");
@@ -156,7 +159,7 @@
                     var questionnaire = getQuestionnaireFromXCoordinate(canvas, evt, x);
                     if (questionnaire && participant) {
                         tooltip.style("visibility", "visible");
-                        tooltip.text("Participante: " + participant + "; Questionario: " + questionnaire);
+                        tooltip.text("Participante: " + participant +"\n Questionario: " + questionnaire);
                         tooltip.style("top", (evt.pageY - 10) + "px").style("left", (evt.pageX + 10) + "px");
                     }
 
@@ -241,7 +244,7 @@
                     zoomRect.attr("y", y(participant));
 
                     tooltip.style("visibility", "visible");
-                    tooltip.text("Participante: " + participant + "; Questionario: " + questionnaire);
+                    tooltip.text("Participante: " + participant + "\n Questionario: " + questionnaire);
                     tooltip.style("top", (evt.pageY - 10) + "px").style("left", (evt.pageX + 10) + "px");
                 }
             }, false);
