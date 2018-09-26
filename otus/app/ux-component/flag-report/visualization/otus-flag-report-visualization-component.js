@@ -6,16 +6,18 @@
         .component('otusFlagReportVisualization', {
             controller: Controller,
             templateUrl: 'app/ux-component/flag-report/visualization/otus-flag-report-visualization-template.html',
-          bindings: {
-              activitiesData: "="
-          }
+            bindings: {
+                activitiesData: "="
+            }
         });
 
     Controller.$inject = ["$element"];
 
     function Controller($element) {
 
-        var data = [];
+        var activitiesData = [];
+        var aggroupedData = [];
+        var currentAggroupedDataPagination = null;
         var drag = false;
         var initialY;
         var rect = {};
@@ -30,7 +32,7 @@
         self.$onInit = onInit;
 
         function onInit() {
-          data = self.activitiesData;
+            activitiesData = self.activitiesData;
             tooltip = d3.select("body")
                 .append("md-tooltip")
                 .style("position", "absolute")
@@ -42,9 +44,10 @@
                 .style("visibility", "hidden")
                 .text("a simple tooltip");
 
-            sortParticipantsByCompletion();
+            activitiesData = sortParticipantsByCompletion(activitiesData);
             selectedAcronym = "Q10";
-            createOverviewFlagReport(["red", "white", "yellow", "green"],["#ef5545", "white", "#fcff82", "#91ef45"]);
+            filterFlagReportByPagination(100);
+            //createOverviewFlagReport(activitiesData, ["red", "white", "yellow", "green"], ["#ef5545", "white", "#fcff82", "#91ef45"]);
         }
 
 
@@ -75,7 +78,7 @@
             return inverseModeScale(mousePos.y);
         }
 
-        function sortParticipantsByCompletion() {
+        function sortParticipantsByCompletion(data) {
 
             var currentParticipant = "";
             var currentSummedValue = null;
@@ -84,11 +87,10 @@
 
             for (var i = 0; i < data.length; i++) {
                 currentSummedValue = 0;
-                for( var j = 0; j < data[i].activities.length; j++)
-                {
+                for (var j = 0; j < data[i].activities.length; j++) {
                     currentSummedValue += data[i].activities[j].status;
                 }
-                dataToBeOrganized.push({data:data[i],value:currentSummedValue});
+                dataToBeOrganized.push({ data: data[i], value: currentSummedValue });
             }
 
             dataToBeOrganized.sort(function (a, b) {
@@ -100,11 +102,11 @@
             for (var i = 0; i < dataToBeOrganized.length; i++) {
                 organizedData.push(dataToBeOrganized[i].data);
             }
-            data = organizedData;
+            return organizedData;
 
         }
 
-        function createOverviewFlagReport(colors, zoomedColors) {
+        function createOverviewFlagReport(data, colors, zoomedColors) {
 
             var margin = { top: 30, right: 10, bottom: 10, left: 10 };
             var canvas;
@@ -153,10 +155,9 @@
                 d.activities.forEach(function (f, g) {
                     context.beginPath();
                     context.rect(x(f.acronym), y(d.rn), x.bandwidth(), y.bandwidth());
-                    if(!selectedAcronym || f.acronym == selectedAcronym)
+                    if (!selectedAcronym || f.acronym == selectedAcronym)
                         context.fillStyle = colorMap(f.status);
-                    else
-                    {
+                    else {
                         var colorString = colorMap(f.status).split(")");
                         colorString[1] = ",0.4)";
                         context.fillStyle = colorString[0] + colorString[1];
@@ -164,10 +165,10 @@
                     context.fill();
                     context.closePath();
                 })
-                
+
 
             });
-            
+
 
             canvas = canvas_matrix_viz._groups[0][0];
             var canvasWrapper = document.getElementById('overview_id');
@@ -219,7 +220,7 @@
                 selectedData.splice(0, initialYIndex);
 
                 // gera nova visualizacao de sinaleira apenas com os participantes selecionados
-                createZoomedFlagReport(selectedData,zoomedColors);
+                createZoomedFlagReport(selectedData, zoomedColors);
 
             }, false);
 
@@ -229,14 +230,18 @@
 
                 if (drag) {
                     tooltip.style("visibility", "hidden");
-
+                    
                     // atualiza tamanho da selecao feita enquanto o drag acontece
-                    if (y(participant) - y(initialY) > 0)
-                        rect.attr("height", y(participant) - y(initialY));
-                    else {
-                        rect.attr("y", y(participant));
-                        rect.attr("height", y(initialY) - y(participant));
+                    if (y(initialY) && y(participant)) {
+
+                        if (y(participant) - y(initialY) > 0)
+                            rect.attr("height", y(participant) - y(initialY));
+                        else {
+                            rect.attr("y", y(participant));
+                            rect.attr("height", y(initialY) - y(participant));
+                        }
                     }
+
                 }
                 else {
                     // atualiza tooltip com as informacoes do questionario e participante
@@ -313,10 +318,9 @@
                 d.activities.forEach(function (f, g) {
                     context.beginPath();
                     context.rect(x(f.acronym), y(d.rn), x.bandwidth(), y.bandwidth());
-                    if(!selectedAcronym || f.acronym == selectedAcronym)
+                    if (!selectedAcronym || f.acronym == selectedAcronym)
                         context.fillStyle = colorMap(f.status);
-                    else
-                    {
+                    else {
                         var colorString = colorMap(f.status).split(")");
                         colorString[1] = ",0.4)";
                         context.fillStyle = colorString[0] + colorString[1];
@@ -349,28 +353,57 @@
 
         function filterFlagReportByStatus(status) {
 
-            if(status == "Finalizado")
-            {
-                createOverviewFlagReport(["white", "white", "white", "green"],["white", "white", "white", "#91ef45"]);
+            if (status == "Finalizado") {
+                createOverviewFlagReport(activitiesData, ["white", "white", "white", "green"], ["white", "white", "white", "#91ef45"]);
                 return;
             }
-            if(status == "Salvo")
-            {
-                createOverviewFlagReport(["white", "white", "#c9d147", "white"],["white", "white", "#dde559", "white"]);
+            if (status == "Salvo") {
+                createOverviewFlagReport(activitiesData, ["white", "white", "#c9d147", "white"], ["white", "white", "#dde559", "white"]);
                 return;
             }
-            if(status == "Criado")
-            {
-                createOverviewFlagReport(["red", "white", "white", "white"],["#ef5545", "white", "white", "white"]);
+            if (status == "Criado") {
+                createOverviewFlagReport(activitiesData, ["red", "white", "white", "white"], ["#ef5545", "white", "white", "white"]);
                 return;
             }
 
-            createOverviewFlagReport(["red", "white", "yellow", "green"],["#ef5545", "white", "#fcff82", "#91ef45"]);
+            createOverviewFlagReport(activitiesData, ["red", "white", "yellow", "green"], ["#ef5545", "white", "#fcff82", "#91ef45"]);
         }
 
         function filterFlagReportByAcronym(acronym) {
             selectedAcronym = acronym;
-            createOverviewFlagReport(["red", "white", "yellow", "green"],["#ef5545", "white", "#fcff82", "#91ef45"]);
+            createOverviewFlagReport(activitiesData, ["red", "white", "yellow", "green"], ["#ef5545", "white", "#fcff82", "#91ef45"]);
+        }
+
+        function filterFlagReportByPagination(numberPerPage) {
+
+            var n = 0;
+            var index = 0;
+            var aggroupedDataIndex = 0;
+            aggroupedData[aggroupedDataIndex] = [];
+
+            while (activitiesData[index]) {
+                if (n == (numberPerPage)) {
+                    n = 0;
+                    aggroupedDataIndex++;
+                    aggroupedData[aggroupedDataIndex] = [];
+                }
+
+                aggroupedData[aggroupedDataIndex].push(activitiesData[index]);
+
+                n++;
+                index++;
+            }
+            currentAggroupedDataPagination = 0;
+            createOverviewFlagReport(aggroupedData[currentAggroupedDataPagination], ["red", "white", "yellow", "green"], ["#ef5545", "white", "#fcff82", "#91ef45"]);
+        }
+
+        function changeFlagReportPagination(paginationNumber) {
+            
+            currentAggroupedDataPagination += paginationNumber;
+            if(aggroupedData[currentAggroupedDataPagination])
+            {
+                createOverviewFlagReport(aggroupedData[currentAggroupedDataPagination], ["red", "white", "yellow", "green"], ["#ef5545", "white", "#fcff82", "#91ef45"]);
+            }
         }
     }
 })()
