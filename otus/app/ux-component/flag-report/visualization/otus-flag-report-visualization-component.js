@@ -24,6 +24,8 @@
         var tooltip;
         var self = this;
 
+        var selectedAcronym = null;
+
         /* Lifecycle hooks */
         self.$onInit = onInit;
 
@@ -40,9 +42,9 @@
                 .style("visibility", "hidden")
                 .text("a simple tooltip");
 
-            // generateRandomDataForTesting();
             sortParticipantsByCompletion();
-            createOverviewFlagReport();
+            selectedAcronym = "Q10";
+            createOverviewFlagReport(["red", "white", "yellow", "green"],["#ef5545", "white", "#fcff82", "#91ef45"]);
         }
 
 
@@ -102,45 +104,7 @@
 
         }
 
-        // function generateRandomDataForTesting() {
-        //     var nQuestionnaires = 39;
-        //     var nParticipants = 5000;
-        //
-        //     for (var j = 0; j < nParticipants; j++) {
-        //
-        //         var item = {
-        //             rn: 'P' + j,
-        //             activities: []
-        //         };
-        //
-        //         for (var i = 0; i < nQuestionnaires; i++) {
-        //             var random = Math.random();
-        //             var value;
-        //
-        //             if (random < 0.25) {
-        //                 value = -1;
-        //             } else if (random <= 0.50) {
-        //                 value = 0;
-        //             } else if (random <= 0.75) {
-        //                 value = 1;
-        //             }
-        //             else {
-        //                 value = 2;
-        //             }
-        //             item.activities.push({
-        //                 acronym: "Q" + i,
-        //                 status: value
-        //             });
-        //
-        //
-        //         }
-        //         data.push(item);
-        //     }
-        //
-        //     console.log(data);
-        // }
-
-        function createOverviewFlagReport() {
+        function createOverviewFlagReport(colors, zoomedColors) {
 
             var margin = { top: 30, right: 10, bottom: 10, left: 10 };
             var canvas;
@@ -182,19 +146,28 @@
             // cria escala de cores, correlacionando-a com os numeros que representam cada estado
             var colorMap = d3.scaleLinear()
                 .domain([-1, 0, 1, 2])
-                .range(["red", "white", "yellow", "green"]);
+                .range(colors);
 
             // criando retangulos para cada questionario de cada participante
             data.forEach(function (d, i) {
                 d.activities.forEach(function (f, g) {
                     context.beginPath();
                     context.rect(x(f.acronym), y(d.rn), x.bandwidth(), y.bandwidth());
-                    context.fillStyle = colorMap(f.status);
+                    if(!selectedAcronym || f.acronym == selectedAcronym)
+                        context.fillStyle = colorMap(f.status);
+                    else
+                    {
+                        var colorString = colorMap(f.status).split(")");
+                        colorString[1] = ",0.4)";
+                        context.fillStyle = colorString[0] + colorString[1];
+                    }
                     context.fill();
                     context.closePath();
                 })
+                
 
             });
+            
 
             canvas = canvas_matrix_viz._groups[0][0];
             var canvasWrapper = document.getElementById('overview_id');
@@ -246,7 +219,7 @@
                 selectedData.splice(0, initialYIndex);
 
                 // gera nova visualizacao de sinaleira apenas com os participantes selecionados
-                createZoomedFlagReport(selectedData);
+                createZoomedFlagReport(selectedData,zoomedColors);
 
             }, false);
 
@@ -284,8 +257,8 @@
             });
         }
 
-        function createZoomedFlagReport(selectedData) {
-            
+        function createZoomedFlagReport(selectedData, colors) {
+
             if (!selectedData || selectedData <= 0) {
                 var svg = d3.select("#svg_zoom_id");
                 svg.selectAll("*").remove();
@@ -324,7 +297,7 @@
 
             var colorMap = d3.scaleLinear()
                 .domain([-1, 0, 1, 2])
-                .range(["#ef5545", "white", "#fcff82", "#91ef45"]);
+                .range(colors);
 
             svg.selectAll("*").remove();
             zoomRect = svg
@@ -340,7 +313,14 @@
                 d.activities.forEach(function (f, g) {
                     context.beginPath();
                     context.rect(x(f.acronym), y(d.rn), x.bandwidth(), y.bandwidth());
-                    context.fillStyle = colorMap(f.status);
+                    if(!selectedAcronym || f.acronym == selectedAcronym)
+                        context.fillStyle = colorMap(f.status);
+                    else
+                    {
+                        var colorString = colorMap(f.status).split(")");
+                        colorString[1] = ",0.4)";
+                        context.fillStyle = colorString[0] + colorString[1];
+                    }
                     context.fill();
                     context.closePath();
                 })
@@ -365,6 +345,32 @@
             document.getElementById('zoom_id').addEventListener("mouseout", function (evt) {
                 return tooltip.style("visibility", "hidden");
             });
+        }
+
+        function filterFlagReportByStatus(status) {
+
+            if(status == "Finalizado")
+            {
+                createOverviewFlagReport(["white", "white", "white", "green"],["white", "white", "white", "#91ef45"]);
+                return;
+            }
+            if(status == "Salvo")
+            {
+                createOverviewFlagReport(["white", "white", "#c9d147", "white"],["white", "white", "#dde559", "white"]);
+                return;
+            }
+            if(status == "Criado")
+            {
+                createOverviewFlagReport(["red", "white", "white", "white"],["#ef5545", "white", "white", "white"]);
+                return;
+            }
+
+            createOverviewFlagReport(["red", "white", "yellow", "green"],["#ef5545", "white", "#fcff82", "#91ef45"]);
+        }
+
+        function filterFlagReportByAcronym(acronym) {
+            selectedAcronym = acronym;
+            createOverviewFlagReport(["red", "white", "yellow", "green"],["#ef5545", "white", "#fcff82", "#91ef45"]);
         }
     }
 })()
