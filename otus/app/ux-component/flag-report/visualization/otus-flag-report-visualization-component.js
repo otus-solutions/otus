@@ -7,7 +7,8 @@
             controller: Controller,
             templateUrl: 'app/ux-component/flag-report/visualization/otus-flag-report-visualization-template.html',
           bindings: {
-              activitiesData: "="
+              activitiesData: "=",
+              onUpdate: "="
           }
         });
 
@@ -27,22 +28,31 @@
         /* Lifecycle hooks */
         self.$onInit = onInit;
 
-        function onInit() {
-          data = self.activitiesData;
-            tooltip = d3.select("body")
-                .append("md-tooltip")
-                .style("position", "absolute")
-                .style("background", "rgba(113, 113, 113, 1)")
-                .style("padding", "4px")
-                .style("border-radius", "3px")
-                .style("white-space", "pre-wrap")
-                .style("z-index", "10")
-                .style("visibility", "hidden")
-                .text("a simple tooltip");
 
-            // generateRandomDataForTesting();
-            sortParticipantsByCompletion();
-            createOverviewFlagReport();
+        function onInit() {
+
+          render();
+          self.onUpdate = render;
+        }
+
+
+        function render(activities) {
+          console.log(123)
+          data = activities ? activities : self.activitiesData;
+          tooltip = d3.select("body")
+            .append("md-tooltip")
+            .style("position", "absolute")
+            .style("background", "rgba(113, 113, 113, 1)")
+            .style("padding", "4px")
+            .style("border-radius", "3px")
+            .style("white-space", "pre-wrap")
+            .style("z-index", "10")
+            .style("visibility", "hidden")
+            .text("a simple tooltip");
+
+          // generateRandomDataForTesting();
+          sortParticipantsByCompletion();
+          createOverviewFlagReport();
         }
 
 
@@ -285,7 +295,7 @@
         }
 
         function createZoomedFlagReport(selectedData) {
-            
+
             if (!selectedData || selectedData <= 0) {
                 var svg = d3.select("#svg_zoom_id");
                 svg.selectAll("*").remove();

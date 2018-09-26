@@ -10,7 +10,7 @@
         activitiesStatus: '=',
         acronymsList: '=',
         centers: '=',
-        updateData: '='
+        onUpdate: '&'
       }
     })
     .controller('flagFilterViewCtrl', Controller);
@@ -22,17 +22,19 @@
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdToast, $filter, mdcDefaultParams, LoadingScreenService) {
+  function Controller() {
     var self = this;
 
     self.$onInit = onInit;
+
+    self.onChangeFilter = onChangeFilter;
     self.statusHistory = [];
 
     /* Public functions */
     self.clear = clear;
 
     function onInit() {
-      console.log(self.centers)
+
     }
 
 
@@ -45,6 +47,10 @@
           self.selectedStatus = null;
           break;
       }
+    }
+
+    function onChangeFilter(activities) {
+      self.onUpdate(activities, self.selectedAcronym, self.selectedStatus, self.selectedCenter)
     }
 
 

@@ -14,7 +14,7 @@
 
                 <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
                   <label class="md-subhead">Sigla:</label>
-                  <md-select ng-model="$ctrl.selectedAcronym" ng-change="$ctrl.onChangeAcronym()" ng-disabled="" md-on-open="$ctrl.openSelected()" md-on-close="$ctrl.openSelected()">
+                  <md-select ng-model="$ctrl.selectedAcronym" ng-change="$ctrl.onChangeFilter(null)" ng-disabled="">
                     <md-option ng-repeat="questionnaire in $ctrl.acronymsList track by $index" value="{{questionnaire}}" ng-click="">
                       {{questionnaire}}
                     </md-option>
@@ -36,7 +36,7 @@
 
                 <md-input-container class="remove-errors-spacer md-block" flex="20">
                   <label class="md-subhead">Status:</label>
-                  <md-select ng-model="$ctrl.selectedStatus" ng-change="$ctrl.onChangeAcronym()" ng-disabled="">
+                  <md-select ng-model="$ctrl.selectedStatus" ng-change="$ctrl.onChangeFilter(null)" ng-disabled="">
                     <md-tooltip>
                       Status de atividade
                     </md-tooltip>
@@ -57,7 +57,7 @@
                 <span flex="5"></span>
                 <md-input-container class="remove-errors-spacer md-block" flex="20">
                   <label class="md-subhead">Centro:</label>
-                  <md-select ng-model="$ctrl.selectedCenter" ng-disabled="$ctrl.centers.length == 1">
+                  <md-select ng-model="$ctrl.selectedCenter" ng-disabled="$ctrl.centers.length == 1" ng-change="$ctrl.onChangeFilter(null)">
                     <md-tooltip>
                       Centros
                     </md-tooltip>
@@ -76,4 +76,4 @@
       </div>
   </div>
 </div>
-<md-divider></md-divider>
+

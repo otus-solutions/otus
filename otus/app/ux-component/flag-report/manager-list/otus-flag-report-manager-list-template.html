@@ -1,9 +1,10 @@
 
-  <flag-filter-view-component centers="$ctrl.centers" activities-status="$ctrl.status" acronyms-list="$ctrl.acronymsList" update-data = "$ctrl.update"></flag-filter-view-component>
-  <!--Insira os components aqui-->
+  <flag-filter-view-component centers="$ctrl.centers" activities-status="$ctrl.status" acronyms-list="$ctrl.acronymsList" on-update = "$ctrl.updateData"></flag-filter-view-component>
+  <otus-paginator elements="$ctrl.data" on-update="$ctrl.updateData"></otus-paginator>
+  <md-divider></md-divider>
 
   <md-content flex layout="row">
-  <otus-flag-report-visualization activities-data="$ctrl.data" flex></otus-flag-report-visualization>
+  <otus-flag-report-visualization activities-data="$ctrl.activities" on-update="$ctrl.setActivities" flex></otus-flag-report-visualization>
 
 
   </md-content>

@@ -30,7 +30,9 @@
     self.updateData = updateData;
     self.data = [];
 
+    self.setActivities = setActivities;
     function onInit() {
+
       LoadingScreenService.start();
       self.ready = false;
       _constructor();
@@ -38,9 +40,9 @@
     }
 
     function _constructor() {
+      generateRandomDataForTesting(self.setActivities);
       _getStatus();
       _loadAllCenters();
-      generateRandomDataForTesting();
     }
 
     function _getStatus() {
@@ -66,6 +68,7 @@
             }).filter(function(elem, index, self) {
               return index == self.indexOf(elem);
             });
+            self.setActivities(self.activities);
             self.selectedAcronym = null;
             self.ready = true;
             LoadingScreenService.finish();
@@ -93,14 +96,21 @@
 
     }
 
-    function updateData() {
+    function updateData(activities, acronym, status, center) {
+      console.log(activities)
+      if (activities){
+        self.setActivities(activities);
+      }
+    }
 
+    function setActivities(activities) {
+      self.activities = activities;
     }
 
 
-    function generateRandomDataForTesting() {
+    function generateRandomDataForTesting(activities) {
       var nQuestionnaires = 39;
-      var nParticipants = 5000;
+      var nParticipants = 3000;
 
       for (var j = 0; j < nParticipants; j++) {
 
@@ -132,6 +142,9 @@
         }
         self.data.push(item);
       }
+      self.activities = self.data;
+
+      // return self.setActivities;
 
     }
 
