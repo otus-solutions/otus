@@ -17,13 +17,13 @@
     'otusjs.monitoring.business.MonitoringService',
     'otusjs.application.activity.StatusHistoryService',
     'otusjs.otus.dashboard.core.ContextService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusFlagReportParseDataFactory'
   ];
 
-  function Controller(ProjectFieldCenterService, MonitoringService, StatusHistoryService, dashboardContextService, LoadingScreenService) {
+  function Controller(ProjectFieldCenterService, MonitoringService, StatusHistoryService, dashboardContextService, LoadingScreenService,FlagReportParseData) {
 
     var self = this;
-
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -43,6 +43,7 @@
 
     function _constructor() {
       generateRandomDataForTesting(self.setActivities);
+      self.data = FlagReportParseData.create(self.data);
       _loadAllAcronyms();
       _loadAllCenters();
     }
