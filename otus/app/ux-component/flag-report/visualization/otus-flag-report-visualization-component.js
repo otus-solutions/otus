@@ -16,6 +16,9 @@
 
   function Controller($element) {
 
+    var overviewColors = ["red", "white", "yellow", "green"];
+    var zoomColors = ["#ef5545", "white", "#fcff82", "#91ef45"];
+
     var activitiesData = [];
     var aggroupedData = [];
     var currentAggroupedDataPagination = null;
@@ -51,9 +54,19 @@
         .text("a simple tooltip");
 
       activitiesData = sortParticipantsByCompletion(activitiesData);
-      selectedAcronym = "Q10";
-      filterFlagReportByPagination(100);
-      //createOverviewFlagReport(activitiesData, ["red", "white", "yellow", "green"], ["#ef5545", "white", "#fcff82", "#91ef45"]);
+
+      if (acronym)
+        selectedAcronym = acronym;
+      else
+        selectedAcronym = null;
+
+      if (status) {
+        filterFlagReportByStatus(activitiesData, status);
+      }
+      else {
+        createOverviewFlagReport(activitiesData, overviewColors, zoomColors);
+      }
+
     }
 
 
@@ -357,59 +370,36 @@
       });
     }
 
-    function filterFlagReportByStatus(status) {
+    function filterFlagReportByStatus(data, status) {
 
-      if (status == "Finalizado") {
-        createOverviewFlagReport(activitiesData, ["white", "white", "white", "green"], ["white", "white", "white", "#91ef45"]);
-        return;
-      }
-      if (status == "Salvo") {
-        createOverviewFlagReport(activitiesData, ["white", "white", "#c9d147", "white"], ["white", "white", "#dde559", "white"]);
-        return;
-      }
-      if (status == "Criado") {
-        createOverviewFlagReport(activitiesData, ["red", "white", "white", "white"], ["#ef5545", "white", "white", "white"]);
-        return;
+      var oColors = ["white", "white", "white", "white"];
+      var zColors = ["white", "white", "white", "white"];
+
+      switch (status) {
+        case -1:
+          oColors[0] = overviewColors[0];
+          zColors[0] = zoomColors[0];
+          break;
+
+        case 0:
+          oColors[1] = "grey";
+          zColors[1] = "grey";
+          break;
+
+        case 1:
+          oColors[2] = "#c9d147";
+          zColors[2] = "#dde559";
+          break;
+
+        case 2:
+          oColors[3] = overviewColors[3];
+          zColors[3] = zoomColors[3];
+          break;
+
       }
 
-      createOverviewFlagReport(activitiesData, ["red", "white", "yellow", "green"], ["#ef5545", "white", "#fcff82", "#91ef45"]);
+      createOverviewFlagReport(data, oColors, zColors);
     }
 
-    function filterFlagReportByAcronym(acronym) {
-      selectedAcronym = acronym;
-      createOverviewFlagReport(activitiesData, ["red", "white", "yellow", "green"], ["#ef5545", "white", "#fcff82", "#91ef45"]);
-    }
-
-    function filterFlagReportByPagination(numberPerPage) {
-
-      var n = 0;
-      var index = 0;
-      var aggroupedDataIndex = 0;
-      aggroupedData[aggroupedDataIndex] = [];
-
-      while (activitiesData[index]) {
-        if (n == (numberPerPage)) {
-          n = 0;
-          aggroupedDataIndex++;
-          aggroupedData[aggroupedDataIndex] = [];
-        }
-
-        aggroupedData[aggroupedDataIndex].push(activitiesData[index]);
-
-        n++;
-        index++;
-      }
-      currentAggroupedDataPagination = 0;
-      createOverviewFlagReport(aggroupedData[currentAggroupedDataPagination], ["red", "white", "yellow", "green"], ["#ef5545", "white", "#fcff82", "#91ef45"]);
-    }
-
-    function changeFlagReportPagination(paginationNumber) {
-
-      currentAggroupedDataPagination += paginationNumber;
-      if(aggroupedData[currentAggroupedDataPagination])
-      {
-        createOverviewFlagReport(aggroupedData[currentAggroupedDataPagination], ["red", "white", "yellow", "green"], ["#ef5545", "white", "#fcff82", "#91ef45"]);
-      }
-    }
   }
 })()
