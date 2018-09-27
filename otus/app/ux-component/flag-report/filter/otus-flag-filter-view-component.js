@@ -50,7 +50,8 @@
           self.selectedStatus = null;
           break;
       }
-      self.onChangeFilter();
+      self.onChangeFilter(null, self.selectedAcronym, self.selectedStatus, self.selectedCenter);
+
     }
 
     function onChangeFilter(activities) {

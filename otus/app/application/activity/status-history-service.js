@@ -43,11 +43,16 @@
     }
 
     function getStatusValue(name) {
-      let search = STATUS.find(function (status) {
-        return status.name == name;
-      });
-      let {value} = search;
-      return value;
+      if(name){
+        let search = STATUS.find(function (status) {
+          return status.name == name;
+        });
+        let {value} = search;
+        return value;
+      } else {
+        return null;
+      }
+
     }
 
   }

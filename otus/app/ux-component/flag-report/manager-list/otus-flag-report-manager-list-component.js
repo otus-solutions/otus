@@ -42,7 +42,6 @@
     }
 
     function _constructor() {
-      generateRandomDataForTesting(self.setActivities);
       _loadAllAcronyms();
       _loadAllCenters();
     }
@@ -57,6 +56,7 @@
               return index == self.indexOf(elem);
             });
             self.setActivities(self.activities);
+            generateRandomDataForTesting(self.setActivities);
             _getStatus();
           });
       }
@@ -91,29 +91,33 @@
             // self.selectedCenter = angular.copy(self.centers);
             _setCenter(userData.fieldCenter.acronym);
           }
+          self.ready= true;
            LoadingScreenService.finish();
         });
     }
 
     function updateData(activities = null, acronym = null, status = null, center) {
-      // console.log(center == self.selectedCenter.acronym)
       if(center && center !== self.selectedCenter.acronym){
         _setCenter(center);
         _loadActivitiesProgress(center);
       }else {
-        if (acronym && acronym !== self.selectedAcronym) {
+        if (acronym !== self.selectedAcronym) {
           _setActivity(acronym);
           self.setActivities(activities, acronym, status);
-        } else if (status && status !== self.selectedStatus) {
+        } else if (status !== self.selectedStatus) {
           _setStatus(status);
           self.setActivities(activities, acronym, StatusHistoryService.getStatusValue(status));
         } else if(activities && activities !== self.activities){
-
           self.setActivities(activities, acronym, status);
         }
       }
 
+    }
 
+    self.updatePage = updatePage;
+
+    function updatePage(activities = null) {
+      self.setActivities(activities, self.selectedAcronym, StatusHistoryService.getStatusValue(self.selectedStatus));
     }
 
     function setActivities(activities, acronym, status) {
@@ -144,7 +148,7 @@
 
     function generateRandomDataForTesting(activities) {
       var nQuestionnaires = 39;
-      var nParticipants = 15000;
+      var nParticipants = 2000;
 
       for (var j = 0; j < nParticipants; j++) {
 
@@ -168,7 +172,7 @@
             value = 2;
           }
           item.activities.push({
-            acronym: "Q" + i,
+            acronym: self.acronymsList[i],
             status: value
           });
 
