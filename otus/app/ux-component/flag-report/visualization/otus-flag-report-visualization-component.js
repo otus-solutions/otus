@@ -27,6 +27,9 @@
     var rect = {};
     var zoomRect = {};
 
+    var y;
+    var x;
+
     var tooltip;
     var self = this;
 
@@ -94,13 +97,12 @@
 
       return inverseModeScale(mousePos.y);
     }
-    
+
+
     function createOverviewFlagReport(data, colors, zoomedColors) {
 
-      var margin = { top: 30, right: 10, bottom: 10, left: 10 };
+      var margin = { top: 0, right: 0, bottom: 0, left: 0 };
       var canvas;
-      var x;
-      var y;
 
       var height = 900,
         width = height / 4.5;
@@ -114,6 +116,15 @@
       var svg = d3.select("#svg_id")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
+      
+      svg.selectAll("*").remove();
+
+      var canvas_zoom_matrix_viz = d3.select("#canvas_zoom_id")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+      var svg_zoom = d3.select("#svg_zoom_id");
+      canvas_zoom_matrix_viz.node().getContext('2d').clearRect(0, 0, canvas_zoom_matrix_viz.width, canvas_zoom_matrix_viz.height);
+      svg_zoom.selectAll("*").remove();
 
       // cria contexto para o canvas
       var context = canvas_matrix_viz.node().getContext('2d');
@@ -148,7 +159,7 @@
             context.fillStyle = colorMap(f.status);
           else {
             var colorString = colorMap(f.status).split(")");
-            colorString[1] = ",0.4)";
+            colorString[1] = ",0.2)";
             context.fillStyle = colorString[0] + colorString[1];
           }
           context.fill();
@@ -179,6 +190,9 @@
           .attr("height", 1)
           .attr("opacity", 0.3);
 
+          rect.attr("y", y(initialY));
+          rect.attr("height", y.bandwidth());
+
       }, false);
 
       // fim da selecao dos participantes por drag
@@ -205,29 +219,51 @@
           finalYIndex = dummy;
         }
         // remove todos os participantes antes e depois da selecao
-        selectedData.length = finalYIndex;
-        selectedData.splice(0, initialYIndex);
-
+        if(finalYIndex == initialYIndex)
+        {
+          selectedData = [selectedData[initialYIndex]];
+        }
+        else
+        {
+          selectedData.length = finalYIndex +1;
+          selectedData.splice(0, initialYIndex);
+        }
+        
         // gera nova visualizacao de sinaleira apenas com os participantes selecionados
         createZoomedFlagReport(selectedData, zoomedColors);
 
       }, false);
 
+      
+
       // atualizacao do tamanho do retangulo de selecao e tooltip
       canvasWrapper.addEventListener('mousemove', function (evt) {
+        evt.preventDefault(); 
         var participant = getParticipantFromYCoordinate(canvas, evt, y);
 
         if (drag) {
           tooltip.style("visibility", "hidden");
-
+          
           // atualiza tamanho da selecao feita enquanto o drag acontece
           if (y(initialY) && y(participant)) {
 
             if (y(participant) - y(initialY) > 0)
-              rect.attr("height", y(participant) - y(initialY));
+              rect.attr("height", y(participant) - y(initialY) + y.bandwidth());
             else {
-              rect.attr("y", y(participant));
-              rect.attr("height", y(initialY) - y(participant));
+              /*
+              if(getMousePos(canvas,evt).y <= y.bandwidth())
+              {
+                rect.attr("y", 0);
+                rect.attr("height", y(initialY) - y(participant) + y.bandwidth());
+              }
+              else*/
+              {
+                rect.attr("y", y(participant));
+                rect.attr("height", y(initialY) - y(participant));
+              }
+                
+              
+              console.log(initialY, y(initialY), participant, y(participant),y.domain(), getMousePos(canvas,evt).y, y.bandwidth());
             }
           }
 
@@ -242,7 +278,7 @@
           }
 
         }
-
+        
       }, false);
 
       // retira a visibilidade da tooltip quando o mouse nao esta posicionado no canvas
@@ -311,7 +347,7 @@
             context.fillStyle = colorMap(f.status);
           else {
             var colorString = colorMap(f.status).split(")");
-            colorString[1] = ",0.4)";
+            colorString[1] = ",0.2)";
             context.fillStyle = colorString[0] + colorString[1];
           }
           context.fill();
