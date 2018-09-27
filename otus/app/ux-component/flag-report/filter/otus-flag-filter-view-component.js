@@ -10,7 +10,7 @@
         activitiesStatus: '=',
         acronymsList: '=',
         centers: '=',
-        onUpdate: '&'
+        onUpdate: '='
       }
     })
     .controller('flagFilterViewCtrl', Controller);

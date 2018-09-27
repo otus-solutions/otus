@@ -97,13 +97,10 @@
     }
 
     function updateData(activities, acronym, status, center) {
-      console.log(activities)
-      if (activities){
-        self.setActivities(activities);
-      }
+       self.setActivities(activities, acronym, status, center);
     }
 
-    function setActivities(activities) {
+    function setActivities(activities, acronym, status, center) {
       self.activities = activities;
     }
 
@@ -143,8 +140,6 @@
         self.data.push(item);
       }
       self.activities = self.data;
-
-      // return self.setActivities;
 
     }
 

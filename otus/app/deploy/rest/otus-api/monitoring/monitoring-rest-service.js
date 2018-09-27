@@ -19,6 +19,7 @@
     self.find = find;
     self.listAcronyms = listAcronyms;
     self.listCenters = listCenters;
+    self.getActivitiesProgress = getActivitiesProgress;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusMonitoringResource();
@@ -46,6 +47,12 @@
     }
 
     function listCenters() {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.listCenters().$promise;
+    }
+    function getActivitiesProgress() {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }

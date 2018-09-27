@@ -17,6 +17,7 @@
 
     self.listAcronyms = listAcronyms;
     self.listCenters = listCenters;
+    self.getActivitiesProgress = getActivitiesProgress;
     self.find = find;
 
     function listAcronyms() {
@@ -74,6 +75,24 @@
                 let inserted = MonitoringLocalStorageService.insert(response.data);
                 request.resolve([].concat(inserted));
               }
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getActivitiesProgress(center) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getActivitiesProgress(center)
+            .then(function (response) {
+              request.resolve(response.data);
             })
             .catch(function (e) {
               request.reject(e);

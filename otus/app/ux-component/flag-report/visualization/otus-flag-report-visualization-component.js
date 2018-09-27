@@ -37,7 +37,7 @@
       self.onUpdate = constructor;
     }
 
-    function constructor(activities) {
+    function constructor(activities, acronym, status, center) {
       activitiesData = activities ? activities : self.activitiesData;
       tooltip = d3.select("body")
         .append("md-tooltip")

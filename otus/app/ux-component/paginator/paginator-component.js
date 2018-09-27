@@ -10,8 +10,9 @@
         pageSize: '<',
         onUpdate: '='
       },
-      controller: Controller
-    });
+      controller: "otusPaginatorCtrl as $ctrl"
+    })
+    .controller('otusPaginatorCtrl', Controller);
 
   Controller.$inject = [
     '$scope'
@@ -25,8 +26,6 @@
     self.goToForward = goToForward;
     self.goToPrevious = goToPrevious;
 
-    $scope.limit = 5;
-    $scope.begin = 0;
     $scope.disabledForward = false;
     $scope.disabledPrevious = true;
 
@@ -34,10 +33,13 @@
     $scope.rowPerPage = [10, 25, 50, 100, 200, 250, 500];
 
     function onInit(){
-      $scope.pageSize = self.pageSize ? _closestPageSize(self.pageSize, $scope.rowPerPage) : 25;
-      $scope.totalRows = self.elements.length ? self.elements.length : 0;
-      _generatePages();
-
+      $scope.pageSize = self.pageSize ? _closestPageSize(self.pageSize, $scope.rowPerPage) : 50;
+      if(Array.isArray(self.elements)){
+        $scope.totalRows = self.elements.length ? self.elements.length : 0;
+        if (self.elements.length > 0) _generatePages();
+      } else {
+        $scope.totalRows = 0;
+      }
     }
 
     function _closestPageSize(goal, sizes) {

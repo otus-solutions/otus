@@ -15,6 +15,7 @@
     self.find = find;
     self.listAcronyms = listAcronyms;
     self.listCenters = listCenters;
+    self.getActivitiesProgress = getActivitiesProgress;
 
 
     function find(acronym){
@@ -27,6 +28,10 @@
 
     function listCenters() {
       return MonitoringCollectionService.listCenters();
+    }
+
+    function getActivitiesProgress(center) {
+      return MonitoringCollectionService.getActivitiesProgress({center:center});
     }
   }
 
