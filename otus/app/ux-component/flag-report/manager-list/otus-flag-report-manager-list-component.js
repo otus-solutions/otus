@@ -17,10 +17,11 @@
     'otusjs.monitoring.business.MonitoringService',
     'otusjs.application.activity.StatusHistoryService',
     'otusjs.otus.dashboard.core.ContextService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusFlagReportParseDataFactory'
   ];
 
-  function Controller(ProjectFieldCenterService, MonitoringService, StatusHistoryService, dashboardContextService, LoadingScreenService) {
+  function Controller(ProjectFieldCenterService, MonitoringService, StatusHistoryService, dashboardContextService, LoadingScreenService,FlagReportParseData) {
 
     var self = this;
 
@@ -42,6 +43,8 @@
     }
 
     function _constructor() {
+      //generateRandomDataForTesting(self.setActivities);
+
       _loadAllAcronyms();
       _loadAllCenters();
     }
@@ -57,6 +60,7 @@
             });
             self.setActivities(self.activities);
             generateRandomDataForTesting(self.setActivities);
+            self.data = FlagReportParseData.create(self.data);
             _getStatus();
           });
       }
@@ -92,11 +96,12 @@
             _setCenter(userData.fieldCenter.acronym);
           }
           self.ready= true;
-           LoadingScreenService.finish();
+          LoadingScreenService.finish();
         });
     }
 
     function updateData(activities = null, acronym = null, status = null, center) {
+      // console.log(center == self.selectedCenter.acronym)
       if(center && center !== self.selectedCenter.acronym){
         _setCenter(center);
         _loadActivitiesProgress(center);
@@ -108,6 +113,7 @@
           _setStatus(status);
           self.setActivities(activities, acronym, StatusHistoryService.getStatusValue(status));
         } else if(activities && activities !== self.activities){
+
           self.setActivities(activities, acronym, status);
         }
       }

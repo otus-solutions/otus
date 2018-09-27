@@ -53,8 +53,6 @@
         .style("visibility", "hidden")
         .text("a simple tooltip");
 
-      activitiesData = sortParticipantsByCompletion(activitiesData);
-
       if (acronym)
         selectedAcronym = acronym;
       else
@@ -96,35 +94,7 @@
 
       return inverseModeScale(mousePos.y);
     }
-
-    function sortParticipantsByCompletion(data) {
-
-      var currentParticipant = "";
-      var currentSummedValue = null;
-      var currentParticipantData = []
-      var dataToBeOrganized = [];
-
-      for (var i = 0; i < data.length; i++) {
-        currentSummedValue = 0;
-        for (var j = 0; j < data[i].activities.length; j++) {
-          currentSummedValue += data[i].activities[j].status;
-        }
-        dataToBeOrganized.push({ data: data[i], value: currentSummedValue });
-      }
-
-      dataToBeOrganized.sort(function (a, b) {
-        return b.value - a.value;
-      })
-
-
-      var organizedData = [];
-      for (var i = 0; i < dataToBeOrganized.length; i++) {
-        organizedData.push(dataToBeOrganized[i].data);
-      }
-      return organizedData;
-
-    }
-
+    
     function createOverviewFlagReport(data, colors, zoomedColors) {
 
       var margin = { top: 30, right: 10, bottom: 10, left: 10 };
