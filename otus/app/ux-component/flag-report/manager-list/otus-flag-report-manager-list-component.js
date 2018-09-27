@@ -94,13 +94,11 @@
             }));
             _setCenter(userData.fieldCenter.acronym);
           }
-          self.ready= true;
-          LoadingScreenService.finish();
+          _loadActivitiesProgress(self.selectedCenter.acronym);
         });
     }
 
     function updateData(activities = null, acronym = null, status = null, center) {
-      // console.log(center == self.selectedCenter.acronym)
       if(center && center !== self.selectedCenter.acronym){
         _setCenter(center);
         _loadActivitiesProgress(center);
@@ -142,10 +140,21 @@
     }
 
     function _loadActivitiesProgress(center) {
-      MonitoringService.getActivitiesProgress(center)
-        .then((response) => {
-          console.log(response)
+      if(!self.activities){
+
+        MonitoringService.getActivitiesProgress(center)
+          .then((response) => {
+            console.log(response)
+            self.ready= true;
+            LoadingScreenService.finish();
+          }).catch((e)=>{
+
         });
+      } else {
+        self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
+        self.ready= true;
+        LoadingScreenService.finish();
+      }
     }
 
 

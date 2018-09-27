@@ -83,7 +83,7 @@
 
       return request.promise;
     }
-
+    //TODO: TIAGO
     function getActivitiesProgress(center) {
       var request = $q.defer();
       _remoteStorage
@@ -93,6 +93,7 @@
             .getActivitiesProgress(center)
             .then(function (response) {
               request.resolve(response.data);
+              request.resolve(true);
             })
             .catch(function (e) {
               request.reject(e);
