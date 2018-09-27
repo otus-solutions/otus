@@ -29,9 +29,10 @@
     self.$onInit = onInit;
 
     self.updateData = updateData;
-    self.data = [];
-
     self.setActivities = setActivities;
+    self.updatePage = updatePage;
+
+    self.data = [];
 
     function onInit() {
       self.selectedAcronym = null;
@@ -43,8 +44,8 @@
     }
 
     function _constructor() {
-      //generateRandomDataForTesting(self.setActivities);
-
+      self.colors = StatusHistoryService.getColors();
+      self.labels = StatusHistoryService.getLabels();
       _loadAllAcronyms();
       _loadAllCenters();
     }
@@ -112,16 +113,13 @@
           self.setActivities(activities, acronym, status);
         }
       }
-
     }
-
-    self.updatePage = updatePage;
 
     function updatePage(activities = null) {
       self.setActivities(activities, self.selectedAcronym, StatusHistoryService.getStatusValue(self.selectedStatus));
     }
 
-    function setActivities(activities, acronym, status) {
+    function setActivities(activities) {
       self.activities = activities;
     }
 
@@ -141,14 +139,13 @@
 
     function _loadActivitiesProgress(center) {
       if(!self.activities){
-
-        MonitoringService.getActivitiesProgress(center)
+        MonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
             console.log(response)
+            self.activitiesData = response;
             self.ready= true;
             LoadingScreenService.finish();
           }).catch((e)=>{
-
         });
       } else {
         self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
@@ -156,7 +153,6 @@
         LoadingScreenService.finish();
       }
     }
-
 
     function generateRandomDataForTesting(activities) {
       var nQuestionnaires = 39;
@@ -194,13 +190,7 @@
       }
       self.activities = self.data;
 
-      // self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
-
-
     }
-
-
-
   }
 
 }());

@@ -17,7 +17,7 @@
 
     self.listAcronyms = listAcronyms;
     self.listCenters = listCenters;
-    self.getActivitiesProgress = getActivitiesProgress;
+    self.getActivitiesProgressReport = getActivitiesProgressReport;
     self.find = find;
 
     function listAcronyms() {
@@ -83,17 +83,16 @@
 
       return request.promise;
     }
-    //TODO: TIAGO
-    function getActivitiesProgress(center) {
+
+    function getActivitiesProgressReport(center) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getActivitiesProgress(center)
+            .getActivitiesProgressReport(center)
             .then(function (response) {
               request.resolve(response.data);
-              request.resolve(true);
             })
             .catch(function (e) {
               request.reject(e);

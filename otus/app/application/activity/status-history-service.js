@@ -14,21 +14,21 @@
       {
         name: 'CREATED',
         label: 'Criado',
-        color: '#595959',
+        color: '#ef5545',
         icon: 'fiber_new',
         value: -1
       },
       {
         name: 'SAVED',
         label: 'Salvo',
-        color: '#ae8323',
+        color: '#fcff82',
         icon: 'save',
         value: 1
       },
       {
         name: 'FINALIZED',
         label: 'Finalizado',
-        color: '#009688',
+        color: '#91ef45',
         icon: 'check_circle',
         value: 2
       }
@@ -36,6 +36,8 @@
 
     self.listStatus = listStatus;
     self.getStatusValue = getStatusValue;
+    self.getLabels = getLabels;
+    self.getColors = getColors;
 
 
     function listStatus() {
@@ -52,7 +54,21 @@
       } else {
         return null;
       }
+    }
 
+    function getLabels() {
+      var response = [];
+      STATUS.forEach(function (status) {
+        response.push(status.label);
+      });
+      return response;
+    }
+    function getColors() {
+      var response = [];
+      STATUS.forEach(function (status) {
+        response.push(status.color);
+      });
+      return response;
     }
 
   }
