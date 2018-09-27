@@ -27,13 +27,16 @@
 
     self.$onInit = onInit;
 
-    self.onChangeFilter = onChangeFilter;
+
     self.statusHistory = [];
 
     /* Public functions */
     self.clear = clear;
 
     function onInit() {
+
+      self.onChangeFilter = onChangeFilter;
+
 
     }
 
@@ -47,6 +50,7 @@
           self.selectedStatus = null;
           break;
       }
+      self.onChangeFilter();
     }
 
     function onChangeFilter(activities) {
