@@ -92,7 +92,6 @@
             self.centers = [].concat(self.centers.find((center) => {
               return center.acronym === userData.fieldCenter.acronym;
             }));
-            // self.selectedCenter = angular.copy(self.centers);
             _setCenter(userData.fieldCenter.acronym);
           }
           self.ready= true;
@@ -106,10 +105,8 @@
         _setCenter(center);
         _loadActivitiesProgress(center);
       }else {
-        if (acronym !== self.selectedAcronym) {
+        if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
           _setActivity(acronym);
-          self.setActivities(activities, acronym, status);
-        } else if (status !== self.selectedStatus) {
           _setStatus(status);
           self.setActivities(activities, acronym, StatusHistoryService.getStatusValue(status));
         } else if(activities && activities !== self.activities){
