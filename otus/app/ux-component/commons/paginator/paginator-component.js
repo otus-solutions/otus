@@ -105,11 +105,8 @@
         limit = parseInt(limit) + parseInt($scope.pageSize);
         index++;
       }
-
       self.onUpdate($scope.pages[_currentPage]);
-
     }
-
 
   }
 }());

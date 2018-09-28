@@ -21,7 +21,12 @@
     'otusFlagReportParseDataFactory'
   ];
 
-  function Controller(ProjectFieldCenterService, MonitoringService, StatusHistoryService, dashboardContextService, LoadingScreenService,FlagReportParseData) {
+  function Controller(ProjectFieldCenterService,
+                      MonitoringService,
+                      StatusHistoryService,
+                      dashboardContextService,
+                      LoadingScreenService,
+                      FlagReportParseData) {
 
     var self = this;
 
@@ -29,29 +34,60 @@
     self.$onInit = onInit;
 
     self.updateData = updateData;
-
     self.updatePage = updatePage;
-
-
     self.setActivities = setActivities;
+
     function onInit() {
       self.ready = false;
+      _resetData();
+      LoadingScreenService.start();
+      _constructor();
+    }
+
+    function _resetData() {
       self.activitiesData = [];
       self.selectedAcronym = null;
       self.selectedStatus = null;
       self.acronymsList = null;
-
-
-      LoadingScreenService.start();
-      _constructor();
-      LoadingScreenService.finish();
     }
 
     function _constructor() {
       self.colors = StatusHistoryService.getColors();
       self.labels = StatusHistoryService.getLabels();
-      _loadAllAcronyms();
       _loadAllCenters();
+    }
+
+    function _loadAllCenters() {
+      if(!self.centers){
+        ProjectFieldCenterService.loadCenters().then((result) => {
+          self.centers = angular.copy(result);
+          setUserFieldCenter();
+        }).catch(function (e) {
+          console.log(e)
+        });
+      } else {
+        _loadActivitiesProgress(self.selectedCenter.acronym);
+      }
+    }
+
+    function setUserFieldCenter() {
+      dashboardContextService
+        .getLoggedUser()
+        .then((userData) => {
+          var {acronym} = userData.fieldCenter;
+          if(!acronym) {
+            _setCenter(self.centers[0].acronym);
+          } else {
+            self.centers = [].concat(self.centers.find((center) => {
+              return center.acronym === userData.fieldCenter.acronym;
+            }));
+            _setCenter(userData.fieldCenter.acronym);
+          }
+          _loadAllAcronyms();
+        })
+        .catch(function (e) {
+          console.log(e);
+        });
     }
 
     function _loadAllAcronyms() {
@@ -63,10 +99,10 @@
             }).filter(function(elem, index, self) {
               return index == self.indexOf(elem);
             });
-            // self.setActivities(self.activities);
-            // generateRandomDataForTesting(self.setActivities);
-            self.activitiesData = FlagReportParseData.create(self.activitiesData);
             _getStatus();
+          })
+          .catch((e) => {
+            console.log(e);
           });
       }
     }
@@ -74,38 +110,30 @@
     function _getStatus() {
       self.status = StatusHistoryService.listStatus();
       self.selectedStatus = null;
-      _loadAllCenters();
+      _loadActivitiesProgress(self.selectedCenter.acronym);
     }
 
-    function _loadAllCenters() {
-      if(!self.centers){
-        ProjectFieldCenterService.loadCenters().then((result) => {
-          self.centers = angular.copy(result);
-          setUserFieldCenter();
+    function _loadActivitiesProgress(center) {
+      if(!self.activities || center !== self.selectedCenter.acronym){
+        if (center !== self.selectedCenter.acronym) self.$onInit();
+        MonitoringService.getActivitiesProgressReport(center)
+          .then((response) => {
+            self.activitiesData = FlagReportParseData.create(response);
+            self.updatePage(self.activitiesData);
+            self.ready= true;
+            LoadingScreenService.finish();
+          }).catch((e)=>{
+          console.log(e)
         });
       } else {
-        _loadActivitiesProgress(self.selectedCenter.acronym);
+        self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
+        self.ready= true;
+        LoadingScreenService.finish();
       }
     }
 
-    function setUserFieldCenter() {
-      dashboardContextService
-        .getLoggedUser()
-        .then((userData) => {
-          let {acronym} = userData.fieldCenter;
-          if(!acronym) {
-            _setCenter(self.centers[0].acronym);
-          } else {
-            self.centers = [].concat(self.centers.find((center) => {
-              return center.acronym === userData.fieldCenter.acronym;
-            }));
-            _setCenter(userData.fieldCenter.acronym);
-          }
-          _loadActivitiesProgress(self.selectedCenter.acronym);
-        });
-    }
-
     function updateData(activities = null, acronym = null, status = null, center) {
+      console.log(self.selectedCenter)
       if(center && center !== self.selectedCenter.acronym){
         _loadActivitiesProgress(center);
         _setCenter(center);
@@ -143,66 +171,7 @@
       self.selectedAcronym = acronym;
     }
 
-    function _loadActivitiesProgress(center) {
-      if(!self.activities || center !== self.selectedCenter.acronym){
-        if (center !== self.selectedCenter.acronym){
-          self.$onInit();
 
-        }
-        MonitoringService.getActivitiesProgressReport(center)
-          .then((response) => {
-            console.log(response)
-            self.activitiesData = FlagReportParseData.create(response);
-            self.updatePage(self.activitiesData);
-            self.ready= true;
-            LoadingScreenService.finish();
-          }).catch((e)=>{
-          console.log(e)
-        });
-      } else {
-        self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
-        self.ready= true;
-        LoadingScreenService.finish();
-      }
-    }
-
-    // function generateRandomDataForTesting(activities) {
-    //   var nQuestionnaires = 39;
-    //   var nParticipants = 2000;
-    //
-    //   for (var j = 0; j < nParticipants; j++) {
-    //
-    //     var item = {
-    //       rn: 'P' + j,
-    //       activities: []
-    //     };
-    //
-    //     for (var i = 0; i < nQuestionnaires; i++) {
-    //       var random = Math.random();
-    //       var value;
-    //
-    //       if (random < 0.25) {
-    //         value = -1;
-    //       } else if (random <= 0.50) {
-    //         value = 0;
-    //       } else if (random <= 0.75) {
-    //         value = 1;
-    //       }
-    //       else {
-    //         value = 2;
-    //       }
-    //       item.activities.push({
-    //         acronym: self.acronymsList[i],
-    //         status: value
-    //       });
-    //
-    //     }
-    //     self.activitiesData.push(item);
-    //   }
-    //   // self.activities = self.activitiesData;
-    //   console.log(self.activitiesData)
-    //
-    // }
   }
 
 }());
