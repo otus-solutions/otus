@@ -6,12 +6,9 @@
             <md-card-content>
               <span class="md-subheader">Filtros de Pesquisa:</span>
               <div flex  layout-align="center center" layout="row" layout-xs="column">
-
                 <span flex="5"></span>
-
                 <span flex-gt-md="5"></span>
                 <span flex-sm="10"></span>
-
                 <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
                   <label class="md-subhead">Sigla:</label>
                   <md-select ng-model="$ctrl.selectedAcronym" ng-change="$ctrl.onChangeFilter(null)" ng-disabled="">
@@ -23,17 +20,14 @@
                     Sigla da atividade a ser visualizada
                   </md-tooltip>
                 </md-input-container>
-
                 <md-button class="md-icon-button md-mini button-inline" ng-if="$ctrl.selectedAcronym" ng-click="$ctrl.clear('acronym')">
                   <md-icon style="font-size:18px;height:18px;width:18px; margin: 0px">clear</md-icon>
                   <md-tooltip >
                     Limpar sigla
                   </md-tooltip>
                 </md-button>
-
                 <span flex="5" ng-if="!$ctrl.selectedAcronym"></span>
                 <span flex="5"></span>
-
                 <md-input-container class="remove-errors-spacer md-block" flex="20">
                   <label class="md-subhead">Status:</label>
                   <md-select ng-model="$ctrl.selectedStatus" ng-change="$ctrl.onChangeFilter(null)" ng-disabled="">
@@ -41,18 +35,19 @@
                       Status de atividade
                     </md-tooltip>
                     <md-option ng-repeat="status in $ctrl.activitiesStatus track by $index" value="{{status.name}}" ng-click="">
-                      {{status.label}}
+                      <span layout-align="start center">
+                        <div class="icon-color" ng-style="{'background-color': '{{status.color}}'}" hide-gt-sm show-sm md-whiteframe="2dp" hide ></div>
+                        {{status.label}}
+                      </span>
                     </md-option>
                   </md-select>
                 </md-input-container>
-
                 <md-button class="md-icon-button md-mini button-inline" ng-if="$ctrl.selectedStatus" ng-click="$ctrl.clear('status')">
                   <md-icon style="font-size:18px;height:18px;width:18px; margin: 0px">clear</md-icon>
                   <md-tooltip >
                     Limpar sigla
                   </md-tooltip>
                 </md-button>
-
                 <span flex="5" ng-if="!$ctrl.selectedStatus"></span>
                 <span flex="5"></span>
                 <md-input-container class="remove-errors-spacer md-block" flex="20">
@@ -66,7 +61,6 @@
                     </md-option>
                   </md-select>
                 </md-input-container>
-
                 <span flex-gt-md="15"></span>
                 <span flex="5"></span>
               </div>

@@ -4,7 +4,7 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusPaginator', {
-      templateUrl: 'app/ux-component/paginator/paginator-template.html',
+      templateUrl: 'app/ux-component/commons/paginator/paginator-template.html',
       bindings: {
         elements: '<',
         pageSize: '<',

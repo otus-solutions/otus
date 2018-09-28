@@ -279,10 +279,10 @@
     }
 
     function _clearCanvasZoomed() {
-      var margin = { top: 30, right: 10, bottom: 10, left: 10 };
+      var margin = { top: 10, right: 10, bottom: 0, left: 10 };
 
 
-      var height = 700,
+      var height = 600,
         width = window.innerWidth - (window.innerWidth/3);
 
       var canvas_matrix_viz = d3.select("#canvas_zoom_id")

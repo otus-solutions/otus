@@ -16,14 +16,15 @@
 
   function Controller() {
     var self = this;
-    self.legend = self.title ? self.title : "Legenda";
-    self.legend = self.legend.concat(":");
-    self.params = [];
-    self.column = self.orientation === "column" ? true : false;
-    self.row = !self.column;
-    self.$onInit = function () {
 
+    self.$onInit = onInit;
 
+    function onInit() {
+      _setValues();
+      _build();
+    }
+
+    function _build() {
       for(var i = 0; i < self.labels.length; i++){
         self.params.push({
           color: {
@@ -33,6 +34,14 @@
           label: self.labels[i]
         });
       }
+    }
+
+    function _setValues() {
+      self.legend = self.title ? self.title : "";
+      self.legend = self.legend ? self.legend.concat(":") : "";
+      self.params = [];
+      self.column = self.orientation === "column" ? true : false;
+      self.row = !self.column;
     }
 
   }

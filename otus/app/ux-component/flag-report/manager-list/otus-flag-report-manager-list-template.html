@@ -2,18 +2,21 @@
 
   <flag-filter-view-component centers="$ctrl.centers" activities-status="$ctrl.status" acronyms-list="$ctrl.acronymsList" on-update = "$ctrl.updateData"></flag-filter-view-component>
 
-  <otus-legend-color orientation="'row'" title="'Legenda de Cores'" flex="9" colors='$ctrl.colors' labels="$ctrl.labels" flex="20"></otus-legend-color>
 
 
   <!--<span flex="10"></span>-->
-  <otus-paginator flex="9" elements="$ctrl.data" on-update="$ctrl.updatePage" ng-if="$ctrl.ready"></otus-paginator>
+  <div layout="row" layout-align="center center">
+    <otus-legend-color flex hide show-gt-sm orientation="'row'" flex="9" colors='$ctrl.colors' labels="$ctrl.labels" flex="20"></otus-legend-color>
+    <otus-paginator flex flex-gt-md="35" elements="$ctrl.data" on-update="$ctrl.updatePage" ng-if="$ctrl.ready"></otus-paginator>
+
+  </div>
 
 
 
   <md-divider></md-divider>
 
   <md-content flex layout="row">
-  <otus-flag-report-visualization activities-data="$ctrl.activities" on-update="$ctrl.setActivities" flex ng-if="$ctrl.ready"></otus-flag-report-visualization>
+  <otus-flag-report-visualization activities-data="$ctrl.activities" on-update="$ctrl.setActivities" flex ng-if="$ctrl.ready" layout-padding=""></otus-flag-report-visualization>
 
 
   </md-content>

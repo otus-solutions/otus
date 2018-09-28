@@ -351,3 +351,11 @@ md-content.no-background-color {
   min-height: 0 !important;
 
 }
+
+.icon-color {
+  height: 15px;
+  width: 15px;
+  display:inline-block;
+  border-radius: 50%;
+  margin: 5px 5px 0px 5px;
+}
