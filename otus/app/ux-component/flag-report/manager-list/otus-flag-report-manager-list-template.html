@@ -1,7 +1,15 @@
 
 
   <flag-filter-view-component centers="$ctrl.centers" activities-status="$ctrl.status" acronyms-list="$ctrl.acronymsList" on-update = "$ctrl.updateData"></flag-filter-view-component>
-  <otus-paginator elements="$ctrl.data" on-update="$ctrl.updatePage" ng-if="$ctrl.ready"></otus-paginator>
+
+  <otus-legend-color orientation="'row'" title="'Legenda de Cores'" flex="9" colors='$ctrl.colors' labels="$ctrl.labels" flex="20"></otus-legend-color>
+
+
+  <!--<span flex="10"></span>-->
+  <otus-paginator flex="9" elements="$ctrl.data" on-update="$ctrl.updatePage" ng-if="$ctrl.ready"></otus-paginator>
+
+
+
   <md-divider></md-divider>
 
   <md-content flex layout="row">

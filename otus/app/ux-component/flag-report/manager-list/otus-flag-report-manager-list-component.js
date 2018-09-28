@@ -29,9 +29,10 @@
     self.$onInit = onInit;
 
     self.updateData = updateData;
-    self.data = [];
-
     self.setActivities = setActivities;
+    self.updatePage = updatePage;
+
+    self.data = [];
 
     function onInit() {
       self.selectedAcronym = null;
@@ -43,8 +44,8 @@
     }
 
     function _constructor() {
-      //generateRandomDataForTesting(self.setActivities);
-
+      self.colors = StatusHistoryService.getColors();
+      self.labels = StatusHistoryService.getLabels();
       _loadAllAcronyms();
       _loadAllCenters();
     }
@@ -94,13 +95,11 @@
             }));
             _setCenter(userData.fieldCenter.acronym);
           }
-          self.ready= true;
-          LoadingScreenService.finish();
+          _loadActivitiesProgress(self.selectedCenter.acronym);
         });
     }
 
     function updateData(activities = null, acronym = null, status = null, center) {
-      // console.log(center == self.selectedCenter.acronym)
       if(center && center !== self.selectedCenter.acronym){
         _setCenter(center);
         _loadActivitiesProgress(center);
@@ -114,16 +113,13 @@
           self.setActivities(activities, acronym, status);
         }
       }
-
     }
-
-    self.updatePage = updatePage;
 
     function updatePage(activities = null) {
       self.setActivities(activities, self.selectedAcronym, StatusHistoryService.getStatusValue(self.selectedStatus));
     }
 
-    function setActivities(activities, acronym, status) {
+    function setActivities(activities) {
       self.activities = activities;
     }
 
@@ -142,12 +138,21 @@
     }
 
     function _loadActivitiesProgress(center) {
-      MonitoringService.getActivitiesProgress(center)
-        .then((response) => {
-          console.log(response)
+      if(!self.activities){
+        MonitoringService.getActivitiesProgressReport(center)
+          .then((response) => {
+            console.log(response)
+            self.activitiesData = response;
+            self.ready= true;
+            LoadingScreenService.finish();
+          }).catch((e)=>{
         });
+      } else {
+        self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
+        self.ready= true;
+        LoadingScreenService.finish();
+      }
     }
-
 
     function generateRandomDataForTesting(activities) {
       var nQuestionnaires = 39;
@@ -185,13 +190,7 @@
       }
       self.activities = self.data;
 
-      // self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
-
-
     }
-
-
-
   }
 
 }());

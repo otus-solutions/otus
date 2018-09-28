@@ -39,8 +39,12 @@
     self.$onInit = onInit;
 
     function onInit() {
+
       constructor();
       self.onUpdate = constructor;
+      $(window).resize(function () {
+        _clearCanvasZoomed();
+      })
     }
 
     function constructor(activities = null, acronym = null, status = null) {
@@ -98,13 +102,12 @@
       return inverseModeScale(mousePos.y);
     }
 
-
     function createOverviewFlagReport(data, colors, zoomedColors) {
 
       var margin = { top: 0, right: 0, bottom: 0, left: 0 };
       var canvas;
 
-      var height = 900,
+      var height = 700,
         width = height / 4.5;
 
       // cria canvas onde sera inserido a visao geral da sinaleira
@@ -275,6 +278,27 @@
       });
     }
 
+    function _clearCanvasZoomed() {
+      var margin = { top: 30, right: 10, bottom: 10, left: 10 };
+
+
+      var height = 700,
+        width = window.innerWidth - (window.innerWidth/3);
+
+      var canvas_matrix_viz = d3.select("#canvas_zoom_id")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+      var svg = d3.select("#svg_zoom_id")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+
+      var context = canvas_matrix_viz.node().getContext('2d');
+      var canvas = canvas_matrix_viz._groups[0][0];
+
+      svg.selectAll("*").remove();
+      context.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
     function createZoomedFlagReport(selectedData, colors) {
 
       if (!selectedData || selectedData <= 0) {
@@ -288,8 +312,8 @@
       var x;
       var y;
 
-      var height = 900,
-        width = height;
+      var height = 700,
+        width = window.innerWidth - (window.innerWidth/3);
 
       var canvas_matrix_viz = d3.select("#canvas_zoom_id")
         .attr("width", width + margin.left + margin.right)
@@ -345,6 +369,7 @@
       });
 
       canvas = canvas_matrix_viz._groups[0][0];
+
 
       document.getElementById('zoom_id').addEventListener('mousemove', function (evt) {
         var participant = getParticipantFromYCoordinate(canvas, evt, y);
