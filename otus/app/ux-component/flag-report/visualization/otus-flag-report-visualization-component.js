@@ -116,7 +116,7 @@
       var svg = d3.select("#svg_id")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom);
-      
+
       svg.selectAll("*").remove();
 
       var canvas_zoom_matrix_viz = d3.select("#canvas_zoom_id")
@@ -190,8 +190,8 @@
           .attr("height", 1)
           .attr("opacity", 0.3);
 
-          rect.attr("y", y(initialY));
-          rect.attr("height", y.bandwidth());
+        rect.attr("y", y(initialY));
+        rect.attr("height", y.bandwidth());
 
       }, false);
 
@@ -218,54 +218,42 @@
           initialYIndex = finalYIndex;
           finalYIndex = dummy;
         }
+
         // remove todos os participantes antes e depois da selecao
-        if(finalYIndex == initialYIndex)
-        {
+        if (finalYIndex == initialYIndex) {
           selectedData = [selectedData[initialYIndex]];
         }
-        else
-        {
-          selectedData.length = finalYIndex +1;
+        else {
+          selectedData.length = finalYIndex + 1;
           selectedData.splice(0, initialYIndex);
         }
-        
+
         // gera nova visualizacao de sinaleira apenas com os participantes selecionados
         createZoomedFlagReport(selectedData, zoomedColors);
 
       }, false);
 
-      
+
 
       // atualizacao do tamanho do retangulo de selecao e tooltip
       canvasWrapper.addEventListener('mousemove', function (evt) {
-        evt.preventDefault(); 
+        evt.preventDefault();
         var participant = getParticipantFromYCoordinate(canvas, evt, y);
 
         if (drag) {
           tooltip.style("visibility", "hidden");
-          
           // atualiza tamanho da selecao feita enquanto o drag acontece
-          if (y(initialY) && y(participant)) {
+          if (initialY && participant) {
 
-            if (y(participant) - y(initialY) > 0)
+            if ((y(participant) - y(initialY)) > 0) {
               rect.attr("height", y(participant) - y(initialY) + y.bandwidth());
+            }
             else {
-              /*
-              if(getMousePos(canvas,evt).y <= y.bandwidth())
-              {
-                rect.attr("y", 0);
-                rect.attr("height", y(initialY) - y(participant) + y.bandwidth());
-              }
-              else*/
-              {
-                rect.attr("y", y(participant));
-                rect.attr("height", y(initialY) - y(participant));
-              }
-                
-              
-              console.log(initialY, y(initialY), participant, y(participant),y.domain(), getMousePos(canvas,evt).y, y.bandwidth());
+              rect.attr("y", y(participant));
+              rect.attr("height", y(initialY) - y(participant) + y.bandwidth());
             }
           }
+
 
         }
         else {
@@ -278,7 +266,7 @@
           }
 
         }
-        
+
       }, false);
 
       // retira a visibilidade da tooltip quando o mouse nao esta posicionado no canvas
