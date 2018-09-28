@@ -16,12 +16,10 @@
 
   function Controller($element) {
 
-    var overviewColors = ["red", "white", "yellow", "green"];
     var zoomColors = ["#ef5545", "white", "#fcff82", "#91ef45"];
+    var overviewColors = ["red", "white", "yellow", "green"];
 
     var activitiesData = [];
-    var aggroupedData = [];
-    var currentAggroupedDataPagination = null;
     var drag = false;
     var initialY;
     var rect = {};
@@ -49,16 +47,7 @@
 
     function constructor(activities = null, acronym = null, status = null) {
       activitiesData = activities ? activities : self.activitiesData;
-      tooltip = d3.select("body")
-        .append("md-tooltip")
-        .style("position", "absolute")
-        .style("background", "rgba(113, 113, 113, 1)")
-        .style("padding", "4px")
-        .style("border-radius", "3px")
-        .style("white-space", "pre-wrap")
-        .style("z-index", "10")
-        .style("visibility", "hidden")
-        .text("a simple tooltip");
+      tooltip = createTooltip();
 
       if (acronym)
         selectedAcronym = acronym;
@@ -74,129 +63,44 @@
 
     }
 
-
-    function getQuestionnaireFromXCoordinate(canvas, evt, x) {
-      var mousePos = getMousePos(canvas, evt);
-      var inverseModeScale = d3.scaleQuantize()
-        .domain(x.range())
-        .range(x.domain());
-
-      return inverseModeScale(mousePos.x);
-
-    }
-
-    function getMousePos(canvas, evt) {
-      var rect = canvas.getBoundingClientRect();
-      return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-      };
-    }
-
-    function getParticipantFromYCoordinate(canvas, evt, y) {
-      var mousePos = getMousePos(canvas, evt);
-      var inverseModeScale = d3.scaleQuantize()
-        .domain(y.range())
-        .range(y.domain());
-
-      return inverseModeScale(mousePos.y);
-    }
-
     function createOverviewFlagReport(data, colors, zoomedColors) {
 
       var margin = { top: 0, right: 0, bottom: 0, left: 0 };
-      var canvas;
-
       var height = 700,
         width = height / 4.5;
 
       // cria canvas onde sera inserido a visao geral da sinaleira
-      var canvas_matrix_viz = d3.select("#canvas_id")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
-
+      var canvas_matrix_viz = selectDiv("#canvas_id", width, height, margin);
       // cria svg onde eh criado a selecao de linhas dda sinaleira
-      var svg = d3.select("#svg_id")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
-
+      var svg = selectDiv("#svg_id", width, height, margin);
       svg.selectAll("*").remove();
 
-      var canvas_zoom_matrix_viz = d3.select("#canvas_zoom_id")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
-      var svg_zoom = d3.select("#svg_zoom_id");
-      canvas_zoom_matrix_viz.node().getContext('2d').clearRect(0, 0, canvas_zoom_matrix_viz.width, canvas_zoom_matrix_viz.height);
-      svg_zoom.selectAll("*").remove();
+      _clearCanvasZoomed();
 
-      // cria contexto para o canvas
-      var context = canvas_matrix_viz.node().getContext('2d');
-
-      // cria escala no eixo x
-      // separa a largura disponivel para o widget por cada questionario
-      x = d3.scaleBand()
-        .domain(data[0].activities.map(function (key, index) {
-          return key.acronym;
-        }))
-        .range([0, width]);
-
-      // cria escala no eixo y
-      // separa a largura disponivel para o widget por cada participante
-      y = d3.scaleBand()
-        .domain(data.map(function (key, index) {
-          return key.rn;
-        }))
-        .range([0, height]);
+      x = createQuestionnaireScale(data, width);
+      y = createParticipantScale(data, height);
 
       // cria escala de cores, correlacionando-a com os numeros que representam cada estado
-      var colorMap = d3.scaleLinear()
-        .domain([-1, 0, 1, 2])
-        .range(colors);
+      var colorMap = createColorScale(colors);
 
       // criando retangulos para cada questionario de cada participante
-      data.forEach(function (d, i) {
-        d.activities.forEach(function (f, g) {
-          context.beginPath();
-          context.rect(x(f.acronym), y(d.rn), x.bandwidth(), y.bandwidth());
-          if (!selectedAcronym || f.acronym == selectedAcronym)
-            context.fillStyle = colorMap(f.status);
-          else {
-            var colorString = colorMap(f.status).split(")");
-            colorString[1] = ",0.2)";
-            context.fillStyle = colorString[0] + colorString[1];
-          }
-          context.fill();
-          context.closePath();
-        })
+      drawFlagReportMatrix(data, canvas_matrix_viz, x, y, colorMap);
 
-
-      });
-
-
-      canvas = canvas_matrix_viz._groups[0][0];
+      var canvas = canvas_matrix_viz._groups[0][0];
       var canvasWrapper = document.getElementById('overview_id');
 
       // inicio da selecao dos participantes por drag
-      canvasWrapper.addEventListener('mousedown', function (evt) {
+      canvasWrapper.addEventListener('mousedown', function overviewOnMouseDown(evt) {
         drag = true;
-
         initialY = getParticipantFromYCoordinate(canvas, evt, y);
 
         // cria retangulo que indica a selecao no SVG
         svg.selectAll("*").remove();
-        rect = svg
-          .append("rect")
-          .style("fill", "black")
-          .attr("x", 0)
-          .attr("y", y(initialY))
-          .attr("width", width)
-          .attr("height", 1)
-          .attr("opacity", 0.3);
-
+        rect = createSelectionRectangle(svg, x, y, 0.3);
         rect.attr("y", y(initialY));
-        rect.attr("height", y.bandwidth());
 
       }, false);
+
 
       // fim da selecao dos participantes por drag
       canvasWrapper.addEventListener('mouseup', function (evt) {
@@ -240,7 +144,6 @@
 
       // atualizacao do tamanho do retangulo de selecao e tooltip
       canvasWrapper.addEventListener('mousemove', function (evt) {
-        evt.preventDefault();
         var participant = getParticipantFromYCoordinate(canvas, evt, y);
 
         if (drag) {
@@ -283,14 +186,10 @@
 
 
       var height = 700,
-        width = window.innerWidth - (window.innerWidth/3);
+        width = window.innerWidth - (window.innerWidth / 3);
 
-      var canvas_matrix_viz = d3.select("#canvas_zoom_id")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
-      var svg = d3.select("#svg_zoom_id")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
+      var canvas_matrix_viz = selectDiv("#canvas_zoom_id", width, height, margin);
+      var svg = selectDiv("#svg_zoom_id", width, height, margin);
 
       var context = canvas_matrix_viz.node().getContext('2d');
       var canvas = canvas_matrix_viz._groups[0][0];
@@ -301,82 +200,36 @@
 
     function createZoomedFlagReport(selectedData, colors) {
 
-      if (!selectedData || selectedData <= 0) {
-        var svg = d3.select("#svg_zoom_id");
-        svg.selectAll("*").remove();
-        return;
-      }
-
       var margin = { top: 30, right: 10, bottom: 10, left: 10 };
       var canvas;
-      var x;
-      var y;
+      var zoomX;
+      var zoomY;
 
       var height = 700,
-        width = window.innerWidth - (window.innerWidth/3);
+        width = window.innerWidth - (window.innerWidth / 3);
 
-      var canvas_matrix_viz = d3.select("#canvas_zoom_id")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
-
-      var svg = d3.select("#svg_zoom_id")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
-
-      var context = canvas_matrix_viz.node().getContext('2d');
-
-      x = d3.scaleBand()
-        .domain(selectedData[0].activities.map(function (key, index) {
-          return key.acronym;
-        }))
-        .range([0, width]);
-
-      y = d3.scaleBand()
-        .domain(selectedData.map(function (key, index) {
-          return key.rn;
-        }))
-        .range([0, height]);
-
-      var colorMap = d3.scaleLinear()
-        .domain([-1, 0, 1, 2])
-        .range(colors);
-
+      var canvas_matrix_viz = selectDiv("#canvas_zoom_id", width, height, margin);
+      var svg = selectDiv("#svg_zoom_id", width, height, margin);
       svg.selectAll("*").remove();
-      zoomRect = svg
-        .append("rect")
-        .style("fill", "black")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", x.range()[1])
-        .attr("height", y.bandwidth())
-        .style("opacity", 0.2);
 
-      selectedData.forEach(function (d, i) {
-        d.activities.forEach(function (f, g) {
-          context.beginPath();
-          context.rect(x(f.acronym), y(d.rn), x.bandwidth(), y.bandwidth());
-          if (!selectedAcronym || f.acronym == selectedAcronym)
-            context.fillStyle = colorMap(f.status);
-          else {
-            var colorString = colorMap(f.status).split(")");
-            colorString[1] = ",0.2)";
-            context.fillStyle = colorString[0] + colorString[1];
-          }
-          context.fill();
-          context.closePath();
-        })
+      if (!selectedData || selectedData <= 0)
+        return;
 
-      });
+      zoomX = createQuestionnaireScale(selectedData, width);
+      zoomY = createParticipantScale(selectedData, height);
 
+      var colorMap = createColorScale(colors);
+
+      zoomRect = createSelectionRectangle(svg, zoomX, zoomY, 0.2);
+      drawFlagReportMatrix(selectedData, canvas_matrix_viz, zoomX, zoomY, colorMap);
       canvas = canvas_matrix_viz._groups[0][0];
 
-
       document.getElementById('zoom_id').addEventListener('mousemove', function (evt) {
-        var participant = getParticipantFromYCoordinate(canvas, evt, y);
-        var questionnaire = getQuestionnaireFromXCoordinate(canvas, evt, x);
+        var participant = getParticipantFromYCoordinate(canvas, evt, zoomY);
+        var questionnaire = getQuestionnaireFromXCoordinate(canvas, evt, zoomX);
 
         if (questionnaire && participant) {
-          zoomRect.attr("y", y(participant));
+          zoomRect.attr("y", zoomY(participant));
 
           tooltip.style("visibility", "visible");
           tooltip.text("Participante: " + participant + "\n Questionario: " + questionnaire);
@@ -418,6 +271,106 @@
       }
 
       createOverviewFlagReport(data, oColors, zColors);
+    }
+
+    function drawFlagReportMatrix(mData, canvas, xScale, yScale, colorMap) {
+      var context = canvas.node().getContext('2d');
+
+      mData.forEach(function (d, i) {
+        d.activities.forEach(function (f, g) {
+          context.beginPath();
+          context.rect(xScale(f.acronym), yScale(d.rn), xScale.bandwidth(), yScale.bandwidth());
+          if (!selectedAcronym || f.acronym == selectedAcronym)
+            context.fillStyle = colorMap(f.status);
+          else {
+            var colorString = colorMap(f.status).split(")");
+            colorString[1] = ",0.2)";
+            context.fillStyle = colorString[0] + colorString[1];
+          }
+          context.fill();
+          context.closePath();
+        })
+
+      });
+    }
+
+    function selectDiv(divName, width, height, margin) {
+      return d3.select(divName)
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom);
+    }
+
+    function createParticipantScale(selData, height) {
+      return d3.scaleBand()
+        .domain(selData.map(function (key, index) {
+          return key.rn;
+        }))
+        .range([0, height]);
+    }
+
+    function createQuestionnaireScale(selData, width) {
+      return d3.scaleBand()
+        .domain(selData[0].activities.map(function (key, index) {
+          return key.acronym;
+        }))
+        .range([0, width]);
+    }
+
+    function createColorScale(colors) {
+      return d3.scaleLinear()
+        .domain([-1, 0, 1, 2])
+        .range(colors);
+    }
+
+    function createSelectionRectangle(svg, xScale, yScale, opacity) {
+      return svg
+        .append("rect")
+        .style("fill", "black")
+        .attr("x", 0)
+        .attr("y", 0)
+        .attr("width", xScale.range()[1])
+        .attr("height", yScale.bandwidth())
+        .style("opacity", opacity);
+    }
+
+    function createTooltip() {
+      return d3.select("body")
+        .append("md-tooltip")
+        .style("position", "absolute")
+        .style("background", "rgba(113, 113, 113, 1)")
+        .style("padding", "4px")
+        .style("border-radius", "3px")
+        .style("white-space", "pre-wrap")
+        .style("z-index", "10")
+        .style("visibility", "hidden")
+        .text("a simple tooltip");
+    }
+
+    function getMousePos(canvas, evt) {
+      var rect = canvas.getBoundingClientRect();
+      return {
+        x: evt.clientX - rect.left,
+        y: evt.clientY - rect.top
+      };
+    }
+
+    function getQuestionnaireFromXCoordinate(canvas, evt, x) {
+      var mousePos = getMousePos(canvas, evt);
+      var inverseModeScale = d3.scaleQuantize()
+        .domain(x.range())
+        .range(x.domain());
+
+      return inverseModeScale(mousePos.x);
+
+    }
+
+    function getParticipantFromYCoordinate(canvas, evt, y) {
+      var mousePos = getMousePos(canvas, evt);
+      var inverseModeScale = d3.scaleQuantize()
+        .domain(y.range())
+        .range(y.domain());
+
+      return inverseModeScale(mousePos.y);
     }
 
   }
