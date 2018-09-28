@@ -52,13 +52,11 @@
       }
       return _rest.listCenters().$promise;
     }
-    function getActivitiesProgressReport() {
+    function getActivitiesProgressReport(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      // return _rest.getActivitiesProgressReport().$promise;
-      return _rest.listCenters().$promise;
-
+      return _rest.getActivitiesProgressReport(center).$promise;
     }
   }
 }());

@@ -15,50 +15,36 @@
     })
     .controller('flagFilterViewCtrl', Controller);
 
-  Controller.$inject = [
-    '$scope',
-    '$filter',
-    'mdcDefaultParams',
-    'otusjs.deploy.LoadingScreenService'
-  ];
-
   function Controller() {
     var self = this;
 
     self.$onInit = onInit;
-
-
     self.statusHistory = [];
 
     /* Public functions */
     self.clear = clear;
 
     function onInit() {
-
       self.onChangeFilter = onChangeFilter;
-
-
     }
-
 
     function clear(field) {
       switch (field) {
         case "acronym":
           self.selectedAcronym = null;
+          self.onChangeFilter(null, self.selectedAcronym, self.selectedStatus, self.selectedCenter);
           break;
         case "status":
           self.selectedStatus = null;
+          self.onChangeFilter(null, self.selectedAcronym, self.selectedStatus, self.selectedCenter);
           break;
       }
-      self.onChangeFilter(null, self.selectedAcronym, self.selectedStatus, self.selectedCenter);
-
     }
 
     function onChangeFilter(activities) {
-      self.onUpdate(activities, self.selectedAcronym, self.selectedStatus, self.selectedCenter)
+      let status = isNaN(parseInt(self.selectedStatus)) ? null : parseInt(self.selectedStatus);
+      self.onUpdate(activities, self.selectedAcronym, status, self.selectedCenter)
     }
-
-
   }
 
 

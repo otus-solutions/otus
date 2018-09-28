@@ -29,16 +29,20 @@
     self.$onInit = onInit;
 
     self.updateData = updateData;
-    self.setActivities = setActivities;
+
     self.updatePage = updatePage;
 
-    self.data = [];
 
+    self.setActivities = setActivities;
     function onInit() {
+      self.ready = false;
+      self.activitiesData = [];
       self.selectedAcronym = null;
       self.selectedStatus = null;
+      self.acronymsList = null;
+
+
       LoadingScreenService.start();
-      self.ready = false;
       _constructor();
       LoadingScreenService.finish();
     }
@@ -59,9 +63,9 @@
             }).filter(function(elem, index, self) {
               return index == self.indexOf(elem);
             });
-            self.setActivities(self.activities);
-            generateRandomDataForTesting(self.setActivities);
-            self.data = FlagReportParseData.create(self.data);
+            // self.setActivities(self.activities);
+            // generateRandomDataForTesting(self.setActivities);
+            self.activitiesData = FlagReportParseData.create(self.activitiesData);
             _getStatus();
           });
       }
@@ -79,6 +83,8 @@
           self.centers = angular.copy(result);
           setUserFieldCenter();
         });
+      } else {
+        _loadActivitiesProgress(self.selectedCenter.acronym);
       }
     }
 
@@ -101,13 +107,13 @@
 
     function updateData(activities = null, acronym = null, status = null, center) {
       if(center && center !== self.selectedCenter.acronym){
-        _setCenter(center);
         _loadActivitiesProgress(center);
+        _setCenter(center);
       }else {
         if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
           _setActivity(acronym);
           _setStatus(status);
-          self.setActivities(activities, acronym, StatusHistoryService.getStatusValue(status));
+          self.setActivities(activities, acronym, status);
         } else if(activities && activities !== self.activities){
 
           self.setActivities(activities, acronym, status);
@@ -116,7 +122,7 @@
     }
 
     function updatePage(activities = null) {
-      self.setActivities(activities, self.selectedAcronym, StatusHistoryService.getStatusValue(self.selectedStatus));
+      self.setActivities(activities, self.selectedAcronym, self.selectedStatus);
     }
 
     function setActivities(activities) {
@@ -138,14 +144,20 @@
     }
 
     function _loadActivitiesProgress(center) {
-      if(!self.activities){
+      if(!self.activities || center !== self.selectedCenter.acronym){
+        if (center !== self.selectedCenter.acronym){
+          self.$onInit();
+
+        }
         MonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
             console.log(response)
-            self.activitiesData = response;
+            self.activitiesData = FlagReportParseData.create(response);
+            self.updatePage(self.activitiesData);
             self.ready= true;
             LoadingScreenService.finish();
           }).catch((e)=>{
+          console.log(e)
         });
       } else {
         self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
@@ -154,43 +166,43 @@
       }
     }
 
-    function generateRandomDataForTesting(activities) {
-      var nQuestionnaires = 39;
-      var nParticipants = 2000;
-
-      for (var j = 0; j < nParticipants; j++) {
-
-        var item = {
-          rn: 'P' + j,
-          activities: []
-        };
-
-        for (var i = 0; i < nQuestionnaires; i++) {
-          var random = Math.random();
-          var value;
-
-          if (random < 0.25) {
-            value = -1;
-          } else if (random <= 0.50) {
-            value = 0;
-          } else if (random <= 0.75) {
-            value = 1;
-          }
-          else {
-            value = 2;
-          }
-          item.activities.push({
-            acronym: self.acronymsList[i],
-            status: value
-          });
-
-
-        }
-        self.data.push(item);
-      }
-      self.activities = self.data;
-
-    }
+    // function generateRandomDataForTesting(activities) {
+    //   var nQuestionnaires = 39;
+    //   var nParticipants = 2000;
+    //
+    //   for (var j = 0; j < nParticipants; j++) {
+    //
+    //     var item = {
+    //       rn: 'P' + j,
+    //       activities: []
+    //     };
+    //
+    //     for (var i = 0; i < nQuestionnaires; i++) {
+    //       var random = Math.random();
+    //       var value;
+    //
+    //       if (random < 0.25) {
+    //         value = -1;
+    //       } else if (random <= 0.50) {
+    //         value = 0;
+    //       } else if (random <= 0.75) {
+    //         value = 1;
+    //       }
+    //       else {
+    //         value = 2;
+    //       }
+    //       item.activities.push({
+    //         acronym: self.acronymsList[i],
+    //         status: value
+    //       });
+    //
+    //     }
+    //     self.activitiesData.push(item);
+    //   }
+    //   // self.activities = self.activitiesData;
+    //   console.log(self.activitiesData)
+    //
+    // }
   }
 
 }());

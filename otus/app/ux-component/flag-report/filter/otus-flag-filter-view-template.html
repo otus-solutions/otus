@@ -34,7 +34,7 @@
                     <md-tooltip>
                       Status de atividade
                     </md-tooltip>
-                    <md-option ng-repeat="status in $ctrl.activitiesStatus track by $index" value="{{status.name}}" ng-click="">
+                    <md-option ng-repeat="status in $ctrl.activitiesStatus track by $index" value="{{status.value}}" ng-click="">
                       <span layout-align="start center">
                         <div class="icon-color" ng-style="{'background-color': '{{status.color}}'}" hide-gt-sm show-sm md-whiteframe="2dp" hide ></div>
                         {{status.label}}

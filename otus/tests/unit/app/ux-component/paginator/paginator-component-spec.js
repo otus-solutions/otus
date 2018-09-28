@@ -1,7 +1,7 @@
 describe('Paginator Component', function() {
   var Mock = {};
   var controller;
-  Mock.scope = {}
+  Mock.scope = {$watch: ()=>{}};
   var UNIT_NAME = "otusPaginatorCtrl";
   var ROW_PER_PAGE = [10, 25, 50, 100, 200, 250, 500];
   var TOTAL_ROWS = 30;

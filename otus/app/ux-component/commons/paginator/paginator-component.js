@@ -6,8 +6,8 @@
     .component('otusPaginator', {
       templateUrl: 'app/ux-component/commons/paginator/paginator-template.html',
       bindings: {
-        elements: '<',
-        pageSize: '<',
+        elements: '=',
+        pageSize: '=',
         onUpdate: '='
       },
       controller: "otusPaginatorCtrl as $ctrl"
@@ -42,6 +42,10 @@
       }
     }
 
+    $scope.$watch('$ctrl.elements',function () {
+      self.$onInit();
+    });
+
     function _closestPageSize(goal, sizes) {
       var closest = sizes.reduce(function(prev, curr) {
         return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
@@ -59,8 +63,7 @@
         $scope.range = $scope.rangePages[_currentPage];
         $scope.disabledForward = _currentPage == $scope.rangePages.length - 1 ? true : false;
         $scope.disabledPrevious = false;
-        self.teste = $scope.pages[_currentPage];
-        self.onUpdate(self.teste);
+        self.onUpdate($scope.pages[_currentPage]);
       }
     }
 
