@@ -133,7 +133,6 @@
     }
 
     function updateData(activities = null, acronym = null, status = null, center) {
-      console.log(self.selectedCenter)
       if(center && center !== self.selectedCenter.acronym){
         _loadActivitiesProgress(center);
         _setCenter(center);
