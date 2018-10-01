@@ -30,7 +30,7 @@ describe('otus-flag-report-manager-list-component Test', function() {
       spyOn(Mock.LoadingScreenService, "finish").and.callThrough();
       spyOn(controller, "updatePage").and.callThrough();
     });
-    it('fail test', function(done) {
+    it('should initialize the component', function(done) {
       controller.$onInit();
       expect(controller.ready).toEqual(false);
       expect(Mock.LoadingScreenService.start).toHaveBeenCalledTimes(1);

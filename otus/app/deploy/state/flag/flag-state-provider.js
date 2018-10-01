@@ -28,7 +28,7 @@
       }
     };
 
-    function _resolveUser(SessionContextService, Application) {
+    function _resolveUser(SessionContextService) {
       var user = SessionContextService.getData('loggedUser');
       return user;
     }
@@ -51,9 +51,8 @@
     }
 
     _resolveUser.$inject = [
-      'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService'
-    ]
+      'otusjs.application.session.core.ContextService'
+    ];
 
     _redirect.$inject = [
       'otusjs.application.session.core.ContextService',
