@@ -32,12 +32,17 @@
       switch (field) {
         case "acronym":
           self.selectedAcronym = null;
-          self.onChangeFilter(null, self.selectedAcronym, self.selectedStatus, self.selectedCenter);
+          self.onChangeFilter();
           break;
         case "status":
           self.selectedStatus = null;
-          self.onChangeFilter(null, self.selectedAcronym, self.selectedStatus, self.selectedCenter);
+          self.onChangeFilter();
           break;
+        case "center":
+          self.selectedAcronym = null;
+          self.selectedStatus = null;
+          self.onChangeFilter();
+
       }
     }
 

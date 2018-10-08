@@ -48,7 +48,6 @@
       self.activitiesData = [];
       self.selectedAcronym = null;
       self.selectedStatus = null;
-      self.acronymsList = null;
     }
 
     function _constructor() {
@@ -67,6 +66,7 @@
         });
       } else {
         _loadActivitiesProgress(self.selectedCenter.acronym);
+        // setUserFieldCenter()
       }
     }
 

@@ -52,7 +52,7 @@
                 <span flex="5"></span>
                 <md-input-container class="remove-errors-spacer md-block" flex="20">
                   <label class="md-subhead">Centro:</label>
-                  <md-select ng-model="$ctrl.selectedCenter" ng-disabled="$ctrl.centers.length == 1" ng-change="$ctrl.onChangeFilter(null)">
+                  <md-select ng-model="$ctrl.selectedCenter" ng-disabled="$ctrl.centers.length == 1" ng-change="$ctrl.clear('center')">
                     <md-tooltip>
                       Centros
                     </md-tooltip>
