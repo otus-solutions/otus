@@ -1,0 +1,27 @@
+
+
+  <flag-filter-view-component centers="$ctrl.centers" activities-status="$ctrl.status" acronyms-list="$ctrl.acronymsList" on-update="$ctrl.updateData" ng-if="$ctrl.ready"></flag-filter-view-component>
+
+
+
+  <!--<span flex="10"></span>-->
+  <div layout="row" layout-align="center center">
+    <otus-legend-color flex hide show-gt-sm orientation="'row'" flex="9" colors='$ctrl.colors' labels="$ctrl.labels" flex="20" ng-if="$ctrl.ready"></otus-legend-color>
+    <otus-paginator flex flex-gt-md="35" elements="$ctrl.activitiesData" on-update="$ctrl.updatePage" ng-if="$ctrl.ready"></otus-paginator>
+
+  </div>
+
+
+
+  <md-divider></md-divider>
+
+  <md-content flex layout="row">
+  <otus-flag-report-visualization activities-data="$ctrl.activities" on-update="$ctrl.setActivities" flex ng-if="$ctrl.ready" layout-padding=""></otus-flag-report-visualization>
+
+
+  </md-content>
+
+
+
+
+

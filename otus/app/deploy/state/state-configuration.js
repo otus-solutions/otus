@@ -34,7 +34,9 @@
       'EXAM_SENDING': 'exam-sending',
       'EXAM_RESULT_VISUALIZER': 'exam-result-visualizer',
       'MONITORING': 'monitoring',
-      'ACCESS_RECOVERY': 'access-recovery'
+      'ACCESS_RECOVERY': 'access-recovery',
+      'FLAG_DASHBOARD': 'flag-report',
+      'FLAG_MANAGER_LIST': 'manager-list'
     })
     .config(Configuration);
 
@@ -69,7 +71,9 @@
     'otusjs.deploy.SendingExamStateProvider',
     'otusjs.deploy.ExamResultsVisualizerProvider',
     'otusjs.deploy.MonitoringStateProvider',
-    'otusjs.deploy.UserAccessRecoveryProvider'
+    'otusjs.deploy.UserAccessRecoveryProvider',
+    'otusjs.deploy.FlagStateProvider',
+    'otusjs.deploy.FlagManagerStateProvider'
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
@@ -101,7 +105,9 @@
     SendingExamState,
     ExamResultsVisualizer,
     MonitoringStateProvider,
-    UserAccessRecoveryProvider
+    UserAccessRecoveryProvider,
+    FlagStateProvider,
+    FlagManagerStateProvider
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ErrorStateProvider.state);
@@ -132,6 +138,8 @@
     $stateProvider.state(ExamResultsVisualizer.state);
     $stateProvider.state(MonitoringStateProvider.state);
     $stateProvider.state(UserAccessRecoveryProvider.state);
+    $stateProvider.state(FlagStateProvider.state);
+    $stateProvider.state(FlagManagerStateProvider.state);
 
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);

@@ -58,6 +58,8 @@
 <script src="node_modules/lokijs/build/lokijs.min.js"></script>
 <script src="node_modules/lokijs/build/loki-indexed-adapter.min.js"></script>
 <script src="node_modules/lokijs/src/loki-angular.js"></script>
+<!-- ************************************* D3 ************************************* -->
+<script src="node_modules/d3/dist/d3.min.js"></script>
 <!-- ************************************* Moment ************************************* -->
 <script src="node_modules/moment/min/moment.min.js"></script>
 <!-- ************************************* OTUS-MODEL ************************************* -->
@@ -113,6 +115,13 @@
 <script src="app/application/verify-browser/module.js"></script>
 <script src="app/application/verify-browser/verify-browser-service.js"></script>
 <!------------------------------------------------------------------------------------------------>
+
+<!-- # Application > Activity -->
+<script src="app/application/activity/module.js"></script>
+<script src="app/application/activity/status-history-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
+
+
 <!-- # Application > Dependency -->
 <script src="app/application/dependency/module.js"></script>
 <!------------------------------------------------------------------------------------------------>
@@ -246,6 +255,8 @@
 <script src="app/deploy/state/exam/exam-sending/exam-sending-provider.js"></script>
 <script src="app/deploy/state/exam/exam-sending/exam-results-visualizer-provider.js"></script>
 <script src="app/deploy/state/monitoring/monitoring-state-provider.js"></script>
+<script src="app/deploy/state/flag/flag-state-provider.js"></script>
+<script src="app/deploy/state/flag/manager/flag-manager-state-provider.js"></script>
 <!-- # Deploy > Storage -->
 <script src="app/deploy/storage/storage-loader-service.js"></script>
 <script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
@@ -505,6 +516,8 @@
 <script src="app/ux-component/participants-manager/dashboard/participants-manager-dashboard-controller.js"></script>
 <script src="app/ux-component/participants-manager/dashboard/participants-manager-dashboard-component.js"></script>
 <script src="app/ux-component/participant-info/participant-info-component.js"></script>
+<script src="app/ux-component/participant-calendar/participant-calendar-component.js"></script>
+<script src="app/ux-component/participant-heatmap/participant-heatmap-component.js"></script>
 <script src="app/ux-component/participant-dashboard-toolbar/participant-dashboard-toolbar-component.js"></script>
 <script src="app/ux-component/dashboard/dashboard-component.js"></script>
 <script src="app/ux-component/dashboard-display/dashboard-display-component.js"></script>
@@ -528,6 +541,9 @@
 <script src="app/ux-component/sample-transportation/lot-info-manager/display/lot-info-manager-display-controller.js"></script>
 <script src="app/ux-component/sample-transportation/lot-info-manager/display/lot-info-manager-display-component.js"></script>
 <script src="app/ux-component/installer/initial-config-controller.js"></script>
+
+<!--legend-color-->
+<script src="app/ux-component/commons/legend-color/legend-color-component.js"></script>
 
 <!-- exams-lots-ux -->
 <script src="app/ux-component/exam/dashboard/exam-dashboard-component.js"></script>
@@ -581,6 +597,16 @@
 <script src="app/ux-component/otus-monitoring/spreadsheet/monitoring-spreadsheet-component.js"></script>
 <script src="app/ux-component/otus-monitoring/information-cards/monitoring-information-cards-controller.js"></script>
 <script src="app/ux-component/otus-monitoring/information-cards/monitoring-information-cards-component.js"></script>
+
+<!--Flags Report-->
+<script src="app/ux-component/flag-report/otus-flag-report-dashboard-component.js"></script>
+<script src="app/ux-component/flag-report/otus-flag-report-parse-data-factory.js"></script>
+<script src="app/ux-component/flag-report/manager-list/otus-flag-report-manager-list-component.js"></script>
+<script src="app/ux-component/flag-report/visualization/otus-flag-report-visualization-component.js"></script>
+<script src="app/ux-component/flag-report/filter/otus-flag-filter-view-component.js"></script>
+
+<!--Paginator-->
+<script src="app/ux-component/commons/paginator/paginator-component.js"></script>
 
 <!--  otus-panel  -->
 <script src="app/ux-component/otus-panel/otus-panel-component.js"></script>

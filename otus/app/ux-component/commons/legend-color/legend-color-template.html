@@ -1,0 +1,23 @@
+<div layout-align="start" layout="row">
+<div layout="row" flex flex-gt-md="50" ng-if="$ctrl.row" layout-align="start start">
+  <span class="md-subheader" layout-margin="" layout-padding="">{{$ctrl.legend}}</span>
+  <div layout="row" layout-align="start center" layout-padding="" ng-repeat="param in $ctrl.params track by $index">
+    <div style="width: 7px; height: 7px" ng-style="param.color" ></div>
+    <span class="md-caption">
+      {{param.label}}
+    </span>
+  </div>
+</div>
+</div>
+<div layout-align="center" layout="column">
+<div layout="column" flex ng-if="$ctrl.column" layout-padding="">
+  <span class="md-subheader" layout-margin="" layout-padding="">Legenda:</span>
+  <div layout="row" flex layout-align="start center"  ng-repeat="param in $ctrl.params track by $index">
+    <div style="width: 12px; height: 12px; margin-right: 20px" ng-style="param.color" ></div>
+    <span class="md-caption">
+      {{param.label}}
+    </span>
+  </div>
+</div>
+</div>
+
