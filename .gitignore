@@ -11,6 +11,7 @@
 *.iml
 *.swp
 *.swo
+*.swn
 **/unit-result.report.html
 **/node_modules/
 /**/env.properties
