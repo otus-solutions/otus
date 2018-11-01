@@ -109,6 +109,14 @@
             "date": "2014-12-22"
         }];
 
+        /* Lifecycle methods */
+        function onInit() {
+            _loadSelectedParticipant();
+            EventService.onParticipantSelected(_loadSelectedParticipant);
+            self.selectedParticipant = null;
+            self.createCalendar();
+        }
+
         function createCalendar() {
             Date.prototype.toJSONLocal = function () {
                 function addZ(n) {
@@ -190,9 +198,8 @@
                     else
                         events[eventDate].numberSavedQuestionnaires++;
                 }
-
-
             }
+
             // guardando nos itens da estrutura 'calendario' que possuem eventos as informaçoes dos mesmos
             for (var i = 0; i < calendar.length; i++) {
                 if (events[calendar[i].date.toJSONLocal()]) {
@@ -230,7 +237,6 @@
                 .attr('x', function (d, i) { return scaleMonth(d.date.getMonth()); })
                 .attr('y', function (d, i) { return scale(d.col); })
                 .attr('fill', '#eeeeee');
-
 
             // criando retangulos para cada tipo de evento
             // tamanho de cada retangulo eh proporcional a porcentagem de evetos daquele tipo no mes
@@ -272,8 +278,8 @@
                         .attr('x', function () { return scaleMonth(d.date.getMonth()); })
                         .attr('y', function () { return scale(d.col); })
                         .attr('fill', 'none')
-                        .attr('stroke','black')
-                        .attr('stroke-width',1);
+                        .attr('stroke', 'black')
+                        .attr('stroke-width', 1);
 
                     changeEventsShowed(d);
                 });
@@ -309,7 +315,6 @@
                 return new Date(a.date) - new Date(b.date);
             });
             $scope.$apply();
-            console.log(self.selectedDateEvents);
         }
 
         // passa a data fornecida para o formado UTC
@@ -364,14 +369,6 @@
                 return self.colors[2];
             }
 
-        }
-
-        /* Lifecycle methods */
-        function onInit() {
-            _loadSelectedParticipant();
-            EventService.onParticipantSelected(_loadSelectedParticipant);
-            self.selectedParticipant = null;
-            self.createCalendar();
         }
 
         function getCurrentState() {
