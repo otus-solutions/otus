@@ -15,7 +15,7 @@
     "otusjs.deploy.LoadingScreenService"
   ];
 
-  function Controller(EventService, DashboardService, ParticipantReportWidgetFactory,LoadingScreenService) {
+  function Controller(EventService, DashboardService, ParticipantReportWidgetFactory, LoadingScreenService) {
     var self = this;
 
     self.ready;
@@ -27,10 +27,8 @@
     self.$onInit = onInit;
     self.$onDestroy = onDestroy;
 
-
     /* Public Methods*/
     self.generateReport = generateReport;
-
 
     function generateReport(report) {
       LoadingScreenService.changeMessage(report.getLoadingMessage());
@@ -65,7 +63,6 @@
           });
       }
     }
-
 
     function _fetchReports() {
       self.ready = false;

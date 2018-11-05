@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,11 +6,10 @@
     .service('otusjs.otus.dashboard.service.DashboardService', Service);
 
   Service.$inject = [
-    'otusjs.otus.dashboard.core.ContextService',
-    'otusjs.otus.dashboard.core.EventService'
+    'otusjs.otus.dashboard.core.ContextService'
   ];
 
-  function Service(ContextService, EventService) {
+  function Service(ContextService) {
     var self = this;
 
     /* Public methods */

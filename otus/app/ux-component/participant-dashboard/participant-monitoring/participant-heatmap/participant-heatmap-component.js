@@ -5,24 +5,22 @@
         .module('otusjs.otus.uxComponent')
         .component('otusParticipantHeatmap', {
             controller: Controller,
-            templateUrl: 'app/ux-component/participant-heatmap/participant-heatmap-template.html'
+            templateUrl: 'app/ux-component/participant-dashboard/participant-monitoring/participant-heatmap/participant-heatmap-template.html'
         });
 
     Controller.$inject = [
-        'otusjs.application.state.ApplicationStateService',
         'otusjs.otus.dashboard.core.EventService',
+        'otusjs.application.state.ApplicationStateService',
         'otusjs.otus.dashboard.service.DashboardService',
         '$scope'
     ];
 
-    function Controller(ApplicationStateService, EventService, DashboardService, $scope) {
-
+    function Controller(EventService, ApplicationStateService, DashboardService, $scope) {
         var self = this;
-
-        self.COMPLETE = "complete";
-        self.INCOMPLETE = "incomplete";
-        self.SAVED = "saved";
-        self.UNECESSARY = "not to be completed";
+        self.FINALIZED = "FINALIZED";
+        self.CREATED = "CREATED";
+        self.SAVED = "SAVED";
+        self.UNNECESSARY = "UNNECESSARY";
 
         /* Public methods */
         self.selectParticipant = selectParticipant;
@@ -33,316 +31,316 @@
         // cores 
         //(questionarios completos/verde, questionarios salvos/amarelo, questionarios nao realizados/vermelho,
         // questionarios que nao precisam ser preenchidos/ cinza )
-        self.colors = ["#f4415c", "#f4ca41", "#1ece8b","#cecece"];
+        self.colors = ["#f4415c", "#f4ca41", "#1ece8b", "#cecece"];
 
         self.data = [{
             "id": "SIGLA1",
-            "full_name": "questionnaireName",
+            "full_name": "ACTIVITY_NAME",
             "status": "complete",
             "type": "exam",
-            "date": "2017-10-06",
+            "date": "2017-10-06", // TODO: Qual padrão estamos utilizando?
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA2",
-            "full_name": "questionnaireName",
-            "status": "not to be completed",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "UNNECESSARY",
+            "type": "Activity",
             "date": "2017-10-21",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA3",
-            "full_name": "questionnaireName",
-            "status": "saved",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "SAVED",
+            "type": "Activity",
             "date": "2018-04-01",
             "color": "#f4ca41"
         },
         {
             "id": "SIGLA4",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2017-08-10",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA5",
-            "full_name": "questionnaireName",
-            "status": "saved",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "SAVED",
+            "type": "Activity",
             "date": "2017-08-07",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA6",
-            "full_name": "questionnaireName",
-            "status": "not to be completed",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "UNNECESSARY",
+            "type": "Activity",
             "date": "2017-08-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA7",
-            "full_name": "questionnaireName",
-            "status": "saved",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "SAVED",
+            "type": "Activity",
             "date": "2000-08-07",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA8",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2006-08-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA9",
-            "full_name": "questionnaireName",
-            "status": "saved",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "SAVED",
+            "type": "Activity",
             "date": "2017-08-08",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA10",
-            "full_name": "questionnaireName",
-            "status": "not to be completed",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "UNNECESSARY",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA11",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         }, {
             "id": "SIGLA12",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA13",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA14",
-            "full_name": "questionnaireName",
-            "status": "not to be completed",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "UNNECESSARY",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA15",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA16",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA17",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA18",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA19",
-            "full_name": "questionnaireName",
-            "status": "incomplete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "CREATED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#f4415c"
         },
         {
             "id": "SIGLA20",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA21",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA22",
-            "full_name": "questionnaireName",
-            "status": "incomplete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "CREATED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#f4415c"
         },
         {
             "id": "SIGLA23",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA24",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA25",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA26",
-            "full_name": "questionnaireName",
-            "status": "incomplete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "CREATED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#f4415c"
         },
         {
             "id": "SIGLA27",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA28",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA29",
-            "full_name": "questionnaireName",
-            "status": "incomplete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "CREATED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#f4415c"
         },
         {
             "id": "SIGLA30",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA31",
-            "full_name": "questionnaireName",
-            "status": "incomplete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "CREATED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#f4415c"
         },
         {
             "id": "SIGLA32",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#4286f4"
         },
         {
             "id": "SIGLA33",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA34",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA35",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA36",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         },
         {
             "id": "SIGLA37",
-            "full_name": "questionnaireName",
-            "status": "incomplete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "CREATED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#f4415c"
         },
         {
             "id": "SIGLA38",
-            "full_name": "questionnaireName",
-            "status": "incomplete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "CREATED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#f4415c"
         },
         {
             "id": "SIGLA39",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22",
             "color": "#1ece8b"
         }];
@@ -353,8 +351,7 @@
 
         $scope.getStyle = function () {
 
-            if(this.dateValue.status == self.INCOMPLETE)
-            {
+            if (this.dateValue.status == self.CREATED) {
                 return self.colors[0];
             }
 
@@ -366,7 +363,7 @@
                 return self.colors[1];
             }
 
-            if (this.dateValue.status == self.UNECESSARY) {
+            if (this.dateValue.status == self.UNNECESSARY) {
                 return self.colors[3];
             }
 

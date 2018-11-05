@@ -5,29 +5,22 @@
         .module('otusjs.otus.uxComponent')
         .component('otusParticipantCalendar', {
             controller: Controller,
-            templateUrl: 'app/ux-component/participant-calendar/participant-calendar-template.html'
+            templateUrl: 'app/ux-component/participant-dashboard/participant-monitoring/participant-calendar/participant-calendar-template.html'
         });
 
     Controller.$inject = [
-        'otusjs.application.state.ApplicationStateService',
         'otusjs.otus.dashboard.core.EventService',
+        'otusjs.application.state.ApplicationStateService',
         'otusjs.otus.dashboard.service.DashboardService',
         '$scope'
     ];
 
-    function Controller(ApplicationStateService, EventService, DashboardService, $scope) {
+    function Controller(EventService, ApplicationStateService, DashboardService, $scope) {
         var self = this;
-
-        self.EXAM = "exam";
-        self.COMPLETE = "complete";
-        self.SAVED = "saved";
-        self.QUESTIONNAIRE = "questionnaire"
-
-        /* Public methods */
-        self.selectParticipant = selectParticipant;
-        /* Lifecycle hooks */
-        self.$onInit = onInit;
-        self.getCurrentState = getCurrentState;
+        self.FINALIZED = "FINALIZED";
+        self.SAVED = "SAVED";
+        self.ACTIVITY = "Activity"
+        self.EXAM = "Exam";
 
         // svg onde o calendário é criado
         self.svg;
@@ -38,74 +31,79 @@
         // vetor que guarda eventos do dia atualmente selecionado
         self.selectedDateEvents = [];
 
+        /* Lifecycle hooks */
+        self.$onInit = onInit;
+        /* Public methods */
+        self.selectParticipant = selectParticipant;
+
         self.data = [{
             "id": "SIGLA1",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "exam",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Exam",
             "date": "2017-10-06"
         },
         {
             "id": "SIGLA2",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2017-10-21"
         },
         {
             "id": "SIGLA3",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "exam",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Exam",
             "date": "2018-04-01"
         },
         {
             "id": "SIGLA4",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "exam",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Exam",
             "date": "2017-08-10"
         },
         {
             "id": "SIGLA5",
-            "full_name": "questionnaireName",
-            "status": "saved",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "SAVED",
+            "type": "Activity",
             "date": "2017-08-07"
         },
         {
             "id": "SIGLA6",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2017-08-22"
         },
         {
             "id": "SIGLA7",
-            "full_name": "questionnaireName",
-            "status": "saved",
-            "type": "exam",
+            "full_name": "ACTIVITY_NAME",
+            "status": "SAVED",
+            "type": "Exam",
             "date": "2000-08-07"
         },
         {
             "id": "SIGLA8",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2006-08-22"
         },
         {
             "id": "SIGLA9",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "exam",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Exam",
             "date": "2017-08-08"
         },
         {
             "id": "SIGLA10",
-            "full_name": "questionnaireName",
-            "status": "complete",
-            "type": "questionnaire",
+            "full_name": "ACTIVITY_NAME",
+            "status": "FINALIZED",
+            "type": "Activity",
             "date": "2014-12-22"
         }];
 
@@ -193,7 +191,7 @@
                 if (data[l].type == self.EXAM)
                     events[eventDate].numberExams++;
                 if (data[l].type == self.QUESTIONNAIRE) {
-                    if (data[l].status == self.COMPLETE)
+                    if (data[l].status == self.FINALIZED)
                         events[eventDate].numberQuestionnaires++;
                     else
                         events[eventDate].numberSavedQuestionnaires++;
@@ -349,7 +347,7 @@
                 return self.colors[0];
             }
             else {
-                if (this.event.status == self.COMPLETE) {
+                if (this.event.status == self.FINALIZED) {
                     return self.colors[1];
                 }
                 else {
@@ -361,7 +359,7 @@
 
         $scope.getStatusStyle = function () {
 
-            if (this.event.status == self.COMPLETE) {
+            if (this.event.status == self.FINALIZED) {
                 return self.colors[1];
             }
             else {
@@ -369,10 +367,6 @@
                 return self.colors[2];
             }
 
-        }
-
-        function getCurrentState() {
-            return ApplicationStateService.getCurrentState();
         }
 
         function _loadSelectedParticipant(participantData) {
