@@ -1,10 +1,17 @@
-<otus-panel header-label="'Questionários - Sinaleira'">
-    <md-card layout="row" class="md-whiteframe-3dp" ng-repeat="(dateIndex,dateValue) in $ctrl.data" style="width: 120px;">
-        <md-card-content class="md-toolbar-tools" ng-style="{backgroundColor:getStyle()}" flex>
-            <md-card-header-text class="truncate" style="text-align: center;" flex>
-                <span class="md-body-1 truncate" layout-margin style="color:white;margin:0;">{{ dateValue.id }}</span>
-                <md-tooltip>{{ dateValue.full_name }}</md-tooltip>
+<otus-panel header-label="'Atividades - Sinaleira'">
+    <md-card layout="row" class="md-whiteframe-3dp" ng-repeat="(index, data) in $ctrl.data" style="width: 120px;">
+        <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.getStyle(data)}">
+            <md-icon ng-style="{color:report.status.color}">{{report.status.icon}}</md-icon>
+            <md-card-header-text>
+                <span class="md-body-1 truncate" layout-margin style="color:white;margin:0;">{{ data.id }}</span>
+                <md-tooltip>{{ data.full_name }}</md-tooltip>
             </md-card-header-text>
-        </md-card-content>
+            <md-card-title-media>
+                <md-button ng-click="$ctrl.addComment(data)" class="md-icon-button" aria-label="Favorite">
+                    <md-icon>comment</md-icon>
+                    <md-tooltip md-direction="bottom">Observações</md-tooltip>
+                </md-button>
+            </md-card-title-media>
+        </md-card-header>
     </md-card>
 </otus-panel>

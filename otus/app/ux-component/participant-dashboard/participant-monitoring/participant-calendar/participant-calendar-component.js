@@ -12,100 +12,39 @@
         'otusjs.otus.dashboard.core.EventService',
         'otusjs.application.state.ApplicationStateService',
         'otusjs.otus.dashboard.service.DashboardService',
+        'otusjs.participant.business.ParticipantMonitoringService',
         '$scope'
     ];
 
-    function Controller(EventService, ApplicationStateService, DashboardService, $scope) {
+    function Controller(EventService, ApplicationStateService, DashboardService, ParticipantMonitoringService, $scope) {
+        const CREATED_PT_BR = 'Criado';
+        const FINALIZED_PT_BR = 'Finalizado';
+        const SAVED_PT_BR = 'Salvo';
+        const UNNECESSARY_PT_BR = 'Desnecessário';
+        const CREATED = 'CREATED';
+        const SAVED = 'SAVED';
+        const FINALIZED = 'FINALIZED';
+        const UNNECESSARY = 'UNNECESSARY';
+        const ACTIVITY = 'Activity'
+        const EXAM = 'Exam';
+        const Color = {
+            EXAM: '#4286f4',
+            CREATED: '#f4415c',
+            FINALIZED: '#1ece8b',
+            SAVED: '#f4ca41',
+            UNNECESSARY: '#cecece'
+        }
+
         var self = this;
-        self.FINALIZED = "FINALIZED";
-        self.SAVED = "SAVED";
-        self.ACTIVITY = "Activity"
-        self.EXAM = "Exam";
-
-        // svg onde o calendário é criado
         self.svg;
-        // funcao que cria o calendario
-        self.createCalendar = createCalendar;
-        // cores (exames/azul, questionarios completos/verde, questionarios incompletos/amarelo)
-        self.colors = ["#4286f4", "#1ece8b", "#f4ca41"]
-        // vetor que guarda eventos do dia atualmente selecionado
         self.selectedDateEvents = [];
-
+        // cores (exames/azul, atividade finalizados/verde, atividade incompletos/amarelo)
+        self.colors = ['#4286f4', '#1ece8b', '#f4ca41']
         /* Lifecycle hooks */
         self.$onInit = onInit;
         /* Public methods */
         self.selectParticipant = selectParticipant;
-
-        self.data = [{
-            "id": "SIGLA1",
-            "full_name": "ACTIVITY_NAME",
-            "status": "FINALIZED",
-            "type": "Exam",
-            "date": "2017-10-06"
-        },
-        {
-            "id": "SIGLA2",
-            "full_name": "ACTIVITY_NAME",
-            "status": "FINALIZED",
-            "type": "Activity",
-            "date": "2017-10-21"
-        },
-        {
-            "id": "SIGLA3",
-            "full_name": "ACTIVITY_NAME",
-            "status": "FINALIZED",
-            "type": "Exam",
-            "date": "2018-04-01"
-        },
-        {
-            "id": "SIGLA4",
-            "full_name": "ACTIVITY_NAME",
-            "status": "FINALIZED",
-            "type": "Exam",
-            "date": "2017-08-10"
-        },
-        {
-            "id": "SIGLA5",
-            "full_name": "ACTIVITY_NAME",
-            "status": "SAVED",
-            "type": "Activity",
-            "date": "2017-08-07"
-        },
-        {
-            "id": "SIGLA6",
-            "full_name": "ACTIVITY_NAME",
-            "status": "FINALIZED",
-            "type": "Activity",
-            "date": "2017-08-22"
-        },
-        {
-            "id": "SIGLA7",
-            "full_name": "ACTIVITY_NAME",
-            "status": "SAVED",
-            "type": "Exam",
-            "date": "2000-08-07"
-        },
-        {
-            "id": "SIGLA8",
-            "full_name": "ACTIVITY_NAME",
-            "status": "FINALIZED",
-            "type": "Activity",
-            "date": "2006-08-22"
-        },
-        {
-            "id": "SIGLA9",
-            "full_name": "ACTIVITY_NAME",
-            "status": "FINALIZED",
-            "type": "Exam",
-            "date": "2017-08-08"
-        },
-        {
-            "id": "SIGLA10",
-            "full_name": "ACTIVITY_NAME",
-            "status": "FINALIZED",
-            "type": "Activity",
-            "date": "2014-12-22"
-        }];
+        self.createCalendar = createCalendar;
 
         /* Lifecycle methods */
         function onInit() {
@@ -129,7 +68,7 @@
             var margin = { top: 20, right: 0, bottom: 0, left: 25 };
             var width = 850;
             var height = 400;
-            var data = self.data;
+            var data = ParticipantMonitoringService.getCurrentStatusOfParticipantInStudy();
             // estrutura que contem as informaçoes para cada mes visualizado
             var calendar = [];
             // numero de cada ano a ser visualizado para depois desenhar a esquerda do calendario
@@ -144,10 +83,8 @@
             var i = 0;
             var col = 0;
             while (firstYear.getFullYear() != today.getFullYear() || firstYear.getMonth() != today.getMonth()) {
-
                 var dateString = firstYear.toJSONLocal();
                 var date = makeUTCDate(dateString);
-
                 if (firstYear.getMonth() == 0) {
                     yearLabels.push({
                         col: col,
@@ -165,7 +102,6 @@
 
                 if (firstYear.getMonth() === 11) { col++; }
                 firstYear = addMonths(firstYear, 1);
-
             }
 
             // iterando sobre eventos do array de entrada dos dados
@@ -173,7 +109,7 @@
             var events = {};
             var l = data.length;
             while (l--) {
-                var eventDate = new Date(data[l].date + "T00:00:00");
+                var eventDate = new Date(data[l].date + 'T00:00:00');
                 eventDate = new Date(eventDate.getFullYear(), eventDate.getMonth()).toJSONLocal();
 
                 if (!events[eventDate]) {
@@ -188,13 +124,22 @@
                 events[eventDate].totalCount++;
                 events[eventDate].eventsInfo.push(data[l]);
 
-                if (data[l].type == self.EXAM)
+                if (data[l].type == EXAM) {
                     events[eventDate].numberExams++;
-                if (data[l].type == self.QUESTIONNAIRE) {
-                    if (data[l].status == self.FINALIZED)
-                        events[eventDate].numberQuestionnaires++;
-                    else
+                    data[l].status = FINALIZED_PT_BR;
+                }
+                if (data[l].type == ACTIVITY) {
+                    if (data[l].status == CREATED) {
+                        data[l].status = CREATED_PT_BR;
+                    } else if (data[l].status == SAVED) {
                         events[eventDate].numberSavedQuestionnaires++;
+                        data[l].status = SAVED_PT_BR;
+                    } else if (data[l].status == FINALIZED) {
+                        events[eventDate].numberQuestionnaires++;
+                        data[l].status = FINALIZED_PT_BR;
+                    } else if (data[l].status == UNNECESSARY) {
+                        data[l].status = UNNECESSARY_PT_BR;
+                    }
                 }
             }
 
@@ -210,7 +155,7 @@
             }
 
             // criando SVG dentro da DIV
-            self.svg = d3.select("#calendarByYear").append('svg')
+            self.svg = d3.select('#calendarByYear').append('svg')
                 .attr('width', width + margin.left + margin.right)
                 .attr('height', height + margin.top + margin.bottom)
                 .append('g')
@@ -259,15 +204,16 @@
                     })
                     .attr('y', function (d, i) { return scale(d.col); })
                     .attr('fill', function (d) {
+                        // TODO:
                         return self.colors[typeIterator];
                     });
             }
 
             // evento de click para cada retangulo
             self.svg.selectAll('.cal')
-                .on("click", function (d) {
+                .on('click', function (d) {
                     // apaga retangulo anterior que indicava a selecao
-                    self.svg.selectAll(".selection").remove();
+                    self.svg.selectAll('.selection').remove();
                     // cria retangulo para indicar o mes selecionado
                     self.svg.append('rect')
                         .attr('class', 'selection')
@@ -292,9 +238,9 @@
                     return scale(d.col) + scale.bandwidth() * 0.8;
                 })
                 .attr('dx', -5)
-                .style("font-size", scale.bandwidth() + 'px')
+                .style('font-size', scale.bandwidth() + 'px')
                 .style('text-anchor', 'start')
-                .attr("transform", function (d) { "rotate(180," + (5) + "," + scale(d.col) + ")" })
+                .attr('transform', function (d) { 'rotate(180,' + (5) + ',' + scale(d.col) + ')' })
                 .attr('fill', '#ccc');
 
 
@@ -332,7 +278,7 @@
             self.svg.append('text')
                 .text(letter)
                 .attr('text-anchor', 'middle')
-                .style("font-size", size + 'px')
+                .style('font-size', size + 'px')
                 .style('fill', '#ccc')
                 .attr('dx', position)
                 .attr('dy', '5');
@@ -358,15 +304,10 @@
         }
 
         $scope.getStatusStyle = function () {
-
-            if (this.event.status == self.FINALIZED) {
+            if (this.event.status == self.FINALIZED)
                 return self.colors[1];
-            }
-            else {
-
+            else
                 return self.colors[2];
-            }
-
         }
 
         function _loadSelectedParticipant(participantData) {
