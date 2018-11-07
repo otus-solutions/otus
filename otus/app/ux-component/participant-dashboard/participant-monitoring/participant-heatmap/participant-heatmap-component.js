@@ -9,20 +9,21 @@
         });
 
     Controller.$inject = [
+        '$mdToast',
+        '$mdDialog',
+        '$scope',
         'otusjs.otus.dashboard.core.EventService',
         'otusjs.application.state.ApplicationStateService',
         'otusjs.otus.dashboard.service.DashboardService',
         'otusjs.participant.business.ParticipantMonitoringService',
-        '$scope'
     ];
 
-    function Controller(EventService, ApplicationStateService, DashboardService, ParticipantMonitoringService, $scope) {
+    function Controller($mdToast, $mdDialog, $scope, EventService, ApplicationStateService, DashboardService, ParticipantMonitoringService) {
         const CREATED = 'CREATED';
         const SAVED = 'SAVED';
         const FINALIZED = 'FINALIZED';
         const UNNECESSARY = 'UNNECESSARY';
         const Color = {
-            EXAM: '#4286f4',
             CREATED: '#f4415c',
             FINALIZED: '#1ece8b',
             SAVED: '#f4ca41',
@@ -33,20 +34,19 @@
         /* Lifecycle hooks */
         self.$onInit = onInit;
         /* Public methods */
-        self.getStyle = getStyle;
+        self.getColor = getColor;
         self.selectParticipant = selectParticipant;
         self.getCurrentState = getCurrentState;
-        self.addComment = addComment;
+        self.showObservation = showObservation;
 
         /* Lifecycle methods */
         function onInit() {
-            self.data = ParticipantMonitoringService.getCurrentStatusOfParticipantInStudy();
-            _loadSelectedParticipant();
-            EventService.onParticipantSelected(_loadSelectedParticipant);
+            _loadParticipantData();
+            EventService.onParticipantSelected(_loadParticipantData);
             self.selectedParticipant = null;
         }
 
-        function getStyle(data) {
+        function getColor(data) {
             switch (data.status) {
                 case CREATED:
                     return Color.CREATED;
@@ -63,28 +63,54 @@
             self.selectedParticipant = selectedParticipant;
         }
 
+        function showObservation(event) {
+            $mdDialog.show({
+                controller: DialogController,
+                templateUrl: 'app/ux-component/participant-dashboard/participant-monitoring/participant-heatmap/observation-dialog.html',
+                parent: angular.element(document.body),
+                targetEvent: event,
+                clickOutsideToClose: true,
+                fullscreen: $scope.customFullscreen
+            }).then(function (observation) {
+                _updateObservation(observation);
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('Observação atualizada com sucesso.')
+                        .hideDelay(3000)
+                );
+            }, function () { });
+        }
+
+        // TODO: 
+        function _updateObservation(data) {
+            ParticipantMonitoringService.updateObservation(data);
+        }
+
         function getCurrentState() {
             return ApplicationStateService.getCurrentState();
         }
 
-        function addComment(data) {
-            console.log(data);
-            // TODO: 
+        function _loadParticipantData() {
+            DashboardService
+                .getSelectedParticipant()
+                .then(function (participantData) {
+                    self.selectedParticipant = participantData;
+                    self.data = ParticipantMonitoringService.getStatusOfActivities(participantData.recruitmentNumber);
+                });
         }
 
-        function _loadSelectedParticipant(participantData) {
-            if (participantData) {
-                self.selectedParticipant = participantData;
-                self.isEmpty = false;
-            } else {
-                DashboardService
-                    .getSelectedParticipant()
-                    .then(function (participantData) {
-                        self.selectedParticipant = participantData;
-                        self.isEmpty = false;
-                    });
-            }
-        }
+        function DialogController($scope, $mdDialog) {
+            $scope.hide = function () {
+                $mdDialog.hide();
+            };
 
+            $scope.cancel = function () {
+                $mdDialog.cancel();
+            };
+
+            $scope.update = function (observation) {
+                $mdDialog.hide(observation);
+            };
+        }
     }
 }());

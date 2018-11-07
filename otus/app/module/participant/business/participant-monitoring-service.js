@@ -5,368 +5,378 @@
     .module('otusjs.participant.business')
     .service('otusjs.participant.business.ParticipantMonitoringService', Service);
 
-  Service.$inject = [];
+  Service.$inject = [
+    'otusjs.participant.repository.ParticipantMonitoringRepositoryService'
+  ];
 
-  function Service() {
+  function Service(ParticipantMonitoringRepositoryService) {
     var self = this;
 
     /* Public methods */
-    self.getCurrentStatusOfParticipantInStudy = getCurrentStatusOfParticipantInStudy;
+    self.getStatusOfActivities = getStatusOfActivities;
+    self.updateObservation = updateObservation;
 
-    function getCurrentStatusOfParticipantInStudy() {
+    function getStatusOfActivities(recruitmentNumber) {
+      // return ParticipantMonitoringRepositoryService.getParticipantReportList(recruitmentNumber);
+
       /**
         TODO: Estrutura deve ser retornada do banco
       **/
       return [{
-        'id': 'SIGLA1',
-        'full_name': 'Exam_NAME',
-        'status': 'FINALIZED', // TODO: É póssivel ser o mesmo estatus da atividade
-        'type': 'Exam',
-        'date': '2017-10-06', // TODO: Qual padrão estamos utilizando?
-        'color': '#4286f4', // TODO: Acabou sendo desnecessário, cor é ajustada na hora de montar a tela!
-        'comment': ''
-      },
-      {
-        'id': 'SIGLA2',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c63e2",
+        'acronym': 'SIGLA1',
+        'name': 'ACTIVITY_NAME',
         'status': 'UNNECESSARY',
         'type': 'Activity',
-        'date': '2017-10-21',
-        'color': '#cecece',
-        'comment': ''
+        'date': '21-10-2017', // TODO: Qual padrão estamos utilizando para data?
+        'observations': 'Atividade está descartada, participante está com febre amarela.' // TODO: Sugestão, a observação com as atividades, assim como é no exame
       },
       {
-        'id': 'SIGLA3',
-        'full_name': 'ACTIVITY_NAME',
-        'status': 'SAVED',
-        'type': 'Activity',
-        'date': '2018-04-01',
-        'color': '#f4ca41',
-        'comment': ''
-      },
-      {
-        'id': 'SIGLA4',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA2',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2017-08-10',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '21-10-2017',
+        'observations': ''
       },
       {
-        'id': 'SIGLA5',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA3',
+        'name': 'ACTIVITY_NAME',
         'status': 'SAVED',
         'type': 'Activity',
-        'date': '2017-08-07',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA6',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA4',
+        'name': 'ACTIVITY_NAME',
+        'status': 'FINALIZED',
+        'type': 'Activity',
+        'date': '10-082017',
+        'observations': ''
+      },
+      {
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA5',
+        'name': 'ACTIVITY_NAME',
+        'status': 'SAVED',
+        'type': 'Activity',
+        'date': '07-08-2017',
+        'observations': ''
+      },
+      {
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA6',
+        'name': 'ACTIVITY_NAME',
         'status': 'UNNECESSARY',
         'type': 'Activity',
-        'date': '2017-08-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '22-08-2017',
+        'observations': ''
       },
       {
-        'id': 'SIGLA7',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA7',
+        'name': 'ACTIVITY_NAME',
         'status': 'SAVED',
         'type': 'Activity',
-        'date': '2000-08-07',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '07-08-2000',
+        'observations': ''
       },
       {
-        'id': 'SIGLA8',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA8',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2006-08-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '22-08-2006',
+        'observations': ''
       },
       {
-        'id': 'SIGLA9',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA9',
+        'name': 'ACTIVITY_NAME',
         'status': 'SAVED',
         'type': 'Activity',
-        'date': '2017-08-08',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '08-082017',
+        'observations': ''
       },
       {
-        'id': 'SIGLA10',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA10',
+        'name': 'ACTIVITY_NAME',
         'status': 'UNNECESSARY',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#cecece',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA11',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA11',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
-      }, {
-        'id': 'SIGLA12',
-        'full_name': 'ACTIVITY_NAME',
-        'status': 'FINALIZED',
-        'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA13',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA12',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA14',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA13',
+        'name': 'ACTIVITY_NAME',
+        'status': 'FINALIZED',
+        'type': 'Activity',
+        'date': '01-04-2018',
+        'observations': ''
+      },
+      {
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA14',
+        'name': 'ACTIVITY_NAME',
         'status': 'UNNECESSARY',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#cecece',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA15',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA15',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA16',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA16',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA17',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA17',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA18',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA18',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA19',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA19',
+        'name': 'ACTIVITY_NAME',
         'status': 'CREATED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#f4415c',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA20',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA20',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA21',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA21',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA22',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA22',
+        'name': 'ACTIVITY_NAME',
         'status': 'CREATED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#f4415c',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA23',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA23',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA24',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA24',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA25',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA25',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA26',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA26',
+        'name': 'ACTIVITY_NAME',
         'status': 'CREATED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#f4415c',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA27',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA27',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA28',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA28',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA29',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA29',
+        'name': 'ACTIVITY_NAME',
         'status': 'CREATED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#f4415c',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA30',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA30',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA31',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA31',
+        'name': 'ACTIVITY_NAME',
         'status': 'CREATED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#f4415c',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA32',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA32',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#4286f4',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA33',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA33',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA34',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA34',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA35',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA35',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA36',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA36',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA37',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA37',
+        'name': 'ACTIVITY_NAME',
         'status': 'CREATED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#f4415c',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA38',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA38',
+        'name': 'ACTIVITY_NAME',
         'status': 'CREATED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#f4415c',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       },
       {
-        'id': 'SIGLA39',
-        'full_name': 'ACTIVITY_NAME',
+        "_id": "5ad0e01672019c02a80c45e2",
+        'acronym': 'SIGLA39',
+        'name': 'ACTIVITY_NAME',
         'status': 'FINALIZED',
         'type': 'Activity',
-        'date': '2014-12-22',
-        'color': '#1ece8b',
-        'comment': ''
+        'date': '01-04-2018',
+        'observations': ''
       }];
+    }
+
+    function updateObservation(data) {
+
     }
 
   }
