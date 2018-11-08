@@ -27,14 +27,16 @@
             CREATED: '#f4415c',
             FINALIZED: '#1ece8b',
             SAVED: '#f4ca41',
-            UNNECESSARY: '#cecece'
+            UNNECESSARY: '#cecece',
+            UNDEFINED: '#ffffff',
+            MULTIPLE: '#ffa500'
         }
 
         var self = this;
         /* Lifecycle hooks */
         self.$onInit = onInit;
         /* Public methods */
-        self.getColor = getColor;
+        self.getFlagColor = getFlagColor;
         self.selectParticipant = selectParticipant;
         self.getCurrentState = getCurrentState;
         self.showObservation = showObservation;
@@ -46,7 +48,7 @@
             self.selectedParticipant = null;
         }
 
-        function getColor(data) {
+        function getFlagColor(data) {
             switch (data.status) {
                 case CREATED:
                     return Color.CREATED;
@@ -56,6 +58,10 @@
                     return Color.FINALIZED;
                 case UNNECESSARY:
                     return Color.UNNECESSARY;
+                case UNDEFINED:
+                    return Color.UNDEFINED;
+                case MULTIPLE:
+                    return Color.MULTIPLE;
             }
         }
 
@@ -65,7 +71,7 @@
 
         function showObservation(event) {
             $mdDialog.show({
-                controller: DialogController,
+                controller: _dialogController,
                 templateUrl: 'app/ux-component/participant-dashboard/participant-monitoring/participant-heatmap/observation-dialog.html',
                 parent: angular.element(document.body),
                 targetEvent: event,
@@ -81,13 +87,13 @@
             }, function () { });
         }
 
+        function getCurrentState() {
+            return ApplicationStateService.getCurrentState();
+        }
+
         // TODO: 
         function _updateObservation(data) {
             ParticipantMonitoringService.updateObservation(data);
-        }
-
-        function getCurrentState() {
-            return ApplicationStateService.getCurrentState();
         }
 
         function _loadParticipantData() {
@@ -99,7 +105,7 @@
                 });
         }
 
-        function DialogController($scope, $mdDialog) {
+        function _dialogController($scope, $mdDialog) {
             $scope.hide = function () {
                 $mdDialog.hide();
             };
