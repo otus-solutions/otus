@@ -5,7 +5,7 @@ gulp.task('replace-env', function() {
     gulp.src('app/application/environment/env.js')
       .pipe(replaceTask({
         patterns: [{
-          match: /http:\/\/api\-otus\.localhost:8080/g,
+          match: /https:\/\/api\-otus\.localhost/g,
           replacement: process.env.npm_config_apiUrl,
         }]
       }))
