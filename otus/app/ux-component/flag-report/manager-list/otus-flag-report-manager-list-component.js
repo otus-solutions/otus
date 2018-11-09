@@ -112,12 +112,13 @@
       self.selectedStatus = null;
       _loadActivitiesProgress(self.selectedCenter.acronym);
     }
-
+    self.export = {};
     function _loadActivitiesProgress(center) {
       if(!self.activities || center !== self.selectedCenter.acronym){
         if (center !== self.selectedCenter.acronym) self.$onInit();
         MonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
+            self.export = angular.copy(response);
             self.activitiesData = FlagReportParseData.create(response);
             self.updatePage(self.activitiesData);
             self.ready= true;

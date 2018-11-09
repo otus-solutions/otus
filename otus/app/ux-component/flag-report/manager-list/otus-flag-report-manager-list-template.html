@@ -16,6 +16,7 @@
   <md-divider></md-divider>
 
   <md-content flex layout="row">
+    <md-button class="md-primary" report-export report="$ctrl.export" option="CSV">BAIXAR</md-button>
   <otus-flag-report-visualization activities-data="$ctrl.activities" on-update="$ctrl.setActivities" flex ng-if="$ctrl.ready" layout-padding=""></otus-flag-report-visualization>
 
 

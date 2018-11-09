@@ -25,6 +25,8 @@
     var rect = {};
     var zoomRect = {};
 
+
+
     var y;
     var x;
 
@@ -40,338 +42,448 @@
 
       constructor();
       self.onUpdate = constructor;
-      $(window).resize(function () {
-        _clearCanvasZoomed();
-      })
+      // $(window).resize(function () {
+      //   _clearCanvasZoomed();
+      // })
+    }
+
+    function getStatus(value) {
+      var status = "OPCIONAL";
+      switch (value) {
+        case -1:
+          status = "Criado";
+          break;
+        case 1:
+          status = "Salvo";
+          break;
+        case 2:
+          status = "Finalizado";
+          break;
+      }
+      return status;
     }
 
     function constructor(activities = null, acronym = null, status = null) {
-      activitiesData = activities ? activities : self.activitiesData;
-      tooltip = createTooltip();
+      self.activitiesData = activities ? activities : self.activitiesData;
+      // tooltip = createTooltip();
 
-      if (acronym)
-        selectedAcronym = acronym;
-      else
-        selectedAcronym = null;
+      heatmap_display(angular.copy(self.activitiesData), "#heatmap", "Spectral");
 
-      if (status) {
-        filterFlagReportByStatus(activitiesData, status);
-      }
-      else {
-        createOverviewFlagReport(activitiesData, overviewColors, zoomColors);
-      }
+      // if (acronym)
+      //   selectedAcronym = acronym;
+      // else
+      //   selectedAcronym = null;
+      //
+      // if (status) {
+      //   filterFlagReportByStatus(activitiesData, status);
+      // }
+      // else {
+      //   createOverviewFlagReport(activitiesData, overviewColors, zoomColors);
+      // }
 
     }
 
-    function createOverviewFlagReport(data, colors, zoomedColors) {
 
-      var margin = { top: 0, right: 0, bottom: 0, left: 0 };
-      var height = 700,
-        width = height / 4.5;
+    var classesNumber = 10,
+      cellSize = 24;
 
-      // cria canvas onde sera inserido a visao geral da sinaleira
-      var canvas_matrix_viz = selectDiv("#canvas_id", width, height, margin);
-      // cria svg onde eh criado a selecao de linhas dda sinaleira
-      var svg = selectDiv("#svg_id", width, height, margin);
-      svg.selectAll("*").remove();
+//#########################################################
+    function heatmap_display(url, heatmapId, paletteName) {
+      var svg = d3.select(heatmapId).selectAll("*").remove();
+        // svg.selectAll("*").remove();
+        // context.clearRect(0, 0, canvas.width, canvas.height);
 
-      _clearCanvasZoomed();
+      //##########################################################################
+      // Patrick.Brockmann@lsce.ipsl.fr
+      //##########################################################################
 
-      x = createQuestionnaireScale(data, width);
-      y = createParticipantScale(data, height);
+      //==================================================
+      // References
+      // http://bl.ocks.org/Soylent/bbff6cc507dca2f48792
+      // http://bost.ocks.org/mike/selection/
+      // http://bost.ocks.org/mike/join/
+      // http://stackoverflow.com/questions/9481497/understanding-how-d3-js-binds-data-to-nodes
+      // http://bost.ocks.org/mike/miserables/
+      // http://bl.ocks.org/ianyfchang/8119685
 
-      // cria escala de cores, correlacionando-a com os numeros que representam cada estado
-      var colorMap = createColorScale(colors);
-
-      // criando retangulos para cada questionario de cada participante
-      drawFlagReportMatrix(data, canvas_matrix_viz, x, y, colorMap);
-
-      var canvas = canvas_matrix_viz._groups[0][0];
-      var canvasWrapper = document.getElementById('overview_id');
-
-      // inicio da selecao dos participantes por drag
-      canvasWrapper.addEventListener('mousedown', function overviewOnMouseDown(evt) {
-        drag = true;
-        initialY = getParticipantFromYCoordinate(canvas, evt, y);
-
-        // cria retangulo que indica a selecao no SVG
-        svg.selectAll("*").remove();
-        rect = createSelectionRectangle(svg, x, y, 0.3);
-        rect.attr("y", y(initialY));
-
-      }, false);
-
-
-      // fim da selecao dos participantes por drag
-      canvasWrapper.addEventListener('mouseup', function (evt) {
-        drag = false;
-        var finalY = getParticipantFromYCoordinate(canvas, evt, y);
-
-        // pega posicao no vetor do primeiro e ultimo participante da selecao
-        var initialYIndex, finalYIndex;
-        var selectedData = JSON.parse(JSON.stringify(data));
-        for (var i = 0; i < data.length; i++) {
-          if (data[i].rn === finalY) {
-            if (!finalYIndex)
-              finalYIndex = i;
-          }
-          if (data[i].rn === initialY) {
-            if (!initialYIndex)
-              initialYIndex = i;
-          }
-        }
-        if (initialYIndex > finalYIndex) {
-          var dummy = initialYIndex;
-          initialYIndex = finalYIndex;
-          finalYIndex = dummy;
-        }
-
-        // remove todos os participantes antes e depois da selecao
-        if (finalYIndex == initialYIndex) {
-          selectedData = [selectedData[initialYIndex]];
-        }
-        else {
-          selectedData.length = finalYIndex + 1;
-          selectedData.splice(0, initialYIndex);
-        }
-
-        // gera nova visualizacao de sinaleira apenas com os participantes selecionados
-        createZoomedFlagReport(selectedData, zoomedColors);
-
-      }, false);
-
-
-
-      // atualizacao do tamanho do retangulo de selecao e tooltip
-      canvasWrapper.addEventListener('mousemove', function (evt) {
-        var participant = getParticipantFromYCoordinate(canvas, evt, y);
-
-        if (drag) {
-          tooltip.style("visibility", "hidden");
-          // atualiza tamanho da selecao feita enquanto o drag acontece
-          if (initialY && participant) {
-
-            if ((y(participant) - y(initialY)) > 0) {
-              rect.attr("height", y(participant) - y(initialY) + y.bandwidth());
-            }
-            else {
-              rect.attr("y", y(participant));
-              rect.attr("height", y(initialY) - y(participant) + y.bandwidth());
-            }
-          }
-
-
-        }
-        else {
-          // atualiza tooltip com as informacoes do questionario e participante
-          var questionnaire = getQuestionnaireFromXCoordinate(canvas, evt, x);
-          if (questionnaire && participant) {
-            tooltip.style("visibility", "visible");
-            tooltip.text("Participante: " + participant + "\n Questionario: " + questionnaire);
-            tooltip.style("top", (evt.pageY - 10) + "px").style("left", (evt.pageX + 10) + "px");
-          }
-
-        }
-
-      }, false);
-
-      // retira a visibilidade da tooltip quando o mouse nao esta posicionado no canvas
-      canvasWrapper.addEventListener("mouseout", function (evt) {
-        return tooltip.style("visibility", "hidden");
-      });
-    }
-
-    function _clearCanvasZoomed() {
-      var margin = { top: 30, right: 10, bottom: 10, left: 10 };
-
-
-      var height = 700,
-        width = window.innerWidth - (window.innerWidth / 3);
-
-      var canvas_matrix_viz = selectDiv("#canvas_zoom_id", width, height, margin);
-      var svg = selectDiv("#svg_zoom_id", width, height, margin);
-
-      var context = canvas_matrix_viz.node().getContext('2d');
-      var canvas = canvas_matrix_viz._groups[0][0];
-
-      svg.selectAll("*").remove();
-      context.clearRect(0, 0, canvas.width, canvas.height);
-    }
-
-    function createZoomedFlagReport(selectedData, colors) {
-
-      var margin = { top: 30, right: 10, bottom: 10, left: 10 };
-      var canvas;
-      var zoomX;
-      var zoomY;
-
-      var height = 700,
-        width = window.innerWidth - (window.innerWidth / 3);
-
-      var canvas_matrix_viz = selectDiv("#canvas_zoom_id", width, height, margin);
-      var svg = selectDiv("#svg_zoom_id", width, height, margin);
-      svg.selectAll("*").remove();
-
-      if (!selectedData || selectedData <= 0)
-        return;
-
-      zoomX = createQuestionnaireScale(selectedData, width);
-      zoomY = createParticipantScale(selectedData, height);
-
-      var colorMap = createColorScale(colors);
-
-      zoomRect = createSelectionRectangle(svg, zoomX, zoomY, 0.2);
-      drawFlagReportMatrix(selectedData, canvas_matrix_viz, zoomX, zoomY, colorMap);
-      canvas = canvas_matrix_viz._groups[0][0];
-
-      document.getElementById('zoom_id').addEventListener('mousemove', function (evt) {
-        var participant = getParticipantFromYCoordinate(canvas, evt, zoomY);
-        var questionnaire = getQuestionnaireFromXCoordinate(canvas, evt, zoomX);
-
-        if (questionnaire && participant) {
-          zoomRect.attr("y", zoomY(participant));
-
-          tooltip.style("visibility", "visible");
-          tooltip.text("Participante: " + participant + "\n Questionario: " + questionnaire);
-          tooltip.style("top", (evt.pageY - 10) + "px").style("left", (evt.pageX + 10) + "px");
-        }
-      }, false);
-
-      document.getElementById('zoom_id').addEventListener("mouseout", function (evt) {
-        return tooltip.style("visibility", "hidden");
-      });
-    }
-
-    function filterFlagReportByStatus(data, status) {
-
-      var oColors = ["white", "white", "white", "white"];
-      var zColors = ["white", "white", "white", "white"];
-
-      switch (status) {
-        case -1:
-          oColors[0] = overviewColors[0];
-          zColors[0] = zoomColors[0];
-          break;
-
-        case 0:
-          oColors[1] = "grey";
-          zColors[1] = "grey";
-          break;
-
-        case 1:
-          oColors[2] = "#c9d147";
-          zColors[2] = "#dde559";
-          break;
-
-        case 2:
-          oColors[3] = overviewColors[3];
-          zColors[3] = zoomColors[3];
-          break;
-
-      }
-
-      createOverviewFlagReport(data, oColors, zColors);
-    }
-
-    function drawFlagReportMatrix(mData, canvas, xScale, yScale, colorMap) {
-      var context = canvas.node().getContext('2d');
-
-      mData.forEach(function (d, i) {
-        d.activities.forEach(function (f, g) {
-          context.beginPath();
-          context.rect(xScale(f.acronym), yScale(d.rn), xScale.bandwidth(), yScale.bandwidth());
-          if (!selectedAcronym || f.acronym == selectedAcronym)
-            context.fillStyle = colorMap(f.status);
-          else {
-            var colorString = colorMap(f.status).split(")");
-            colorString[1] = ",0.2)";
-            context.fillStyle = colorString[0] + colorString[1];
-          }
-          context.fill();
-          context.closePath();
-        })
-
-      });
-    }
-
-    function selectDiv(divName, width, height, margin) {
-      return d3.select(divName)
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom);
-    }
-
-    function createParticipantScale(selData, height) {
-      return d3.scaleBand()
-        .domain(selData.map(function (key, index) {
-          return key.rn;
-        }))
-        .range([0, height]);
-    }
-
-    function createQuestionnaireScale(selData, width) {
-      return d3.scaleBand()
-        .domain(selData[0].activities.map(function (key, index) {
-          return key.acronym;
-        }))
-        .range([0, width]);
-    }
-
-    function createColorScale(colors) {
-      return d3.scaleLinear()
-        .domain([-1, 0, 1, 2])
-        .range(colors);
-    }
-
-    function createSelectionRectangle(svg, xScale, yScale, opacity) {
-      return svg
-        .append("rect")
-        .style("fill", "black")
-        .attr("x", 0)
-        .attr("y", 0)
-        .attr("width", xScale.range()[1])
-        .attr("height", yScale.bandwidth())
-        .style("opacity", opacity);
-    }
-
-    function createTooltip() {
-      return d3.select("body")
-        .append("md-tooltip")
+      //==================================================
+      var tooltip = d3.select(heatmapId)
+        .append("div")
         .style("position", "absolute")
-        .style("background", "rgba(113, 113, 113, 1)")
-        .style("padding", "4px")
-        .style("border-radius", "3px")
-        .style("white-space", "pre-wrap")
-        .style("z-index", "10")
-        .style("visibility", "hidden")
-        .text("a simple tooltip");
+        .style("visibility", "hidden");
+
+      //==================================================
+      // http://bl.ocks.org/mbostock/3680958
+      function zoom() {
+        svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+      }
+
+      // define the zoomListener which calls the zoom function on the "zoom" event constrained within the scaleExtents
+      var zoomListener = d3.behavior.zoom().scaleExtent([0.1, 4]).on("zoom", zoom);
+
+      //==================================================
+      var viewerWidth = $(document).width();
+      var viewerHeight = $(document).height();
+      var viewerPosTop = 200;
+      var viewerPosLeft = 200;
+
+      var legendElementWidth = cellSize * 2;
+
+      // http://bl.ocks.org/mbostock/5577023
+      var colors = ["#EF5545","grey", "#FCFF82", "#91EF45"];
+
+      // http://bl.ocks.org/mbostock/3680999
+      var svg;
+
+      //==================================================
+      var data = url;
+
+        // console.log(data);
+
+        // data = teste;
+        var arr = data.data;
+        var row_number = arr.length;
+        var col_number = arr[0].length;
+
+        console.log(col_number, row_number);
+
+        var colorScale = d3.scale.quantize()
+          .domain([-1,0,1,2])
+          .range(colors);
+
+        svg = d3.select(heatmapId)
+          .append("svg")
+
+          .attr("width", viewerWidth)
+          .attr("height", viewerHeight)
+          .call(zoomListener)
+          .append("g")
+          .attr("transform", "translate(" + viewerPosLeft + "," + viewerPosTop + ")");
+
+        svg.append('defs')
+          .append('pattern')
+          .attr('id', '') //diagonalHatch
+          .attr('patternUnits', 'userSpaceOnUse')
+          .attr('width', 4)
+          .attr('height', 4)
+          .append('path')
+          .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
+          .attr('stroke', '#000000')
+          .attr('stroke-width', 1);
+
+      // svg.attr("transform", "translate(" + [210, 220] + ")scale(" + 1.2 + ")");
+
+        var rowSortOrder = false;
+        var colSortOrder = false;
+
+        var rowLabels = svg.append("g")
+          .attr("class", "rowLabels")
+          .selectAll(".rowLabel")
+          .data(data.index)
+          .enter().append("text")
+          .text(function(d) {
+            return d.count > 1 ? d.join("/") : d;
+          })
+          .attr("x", 0)
+          .attr("y", function(d, i) {
+            return (i * cellSize);
+          })
+          .style("text-anchor", "end")
+          .attr("transform", function(d, i) {
+            return "translate(-3," + cellSize / 1.5 + ")";
+          })
+          .attr("class", "rowLabel mono")
+          .attr("id", function(d, i) {
+            return "rowLabel_" + i;
+          })
+          .on('mouseover', function(d, i) {
+            d3.select('#rowLabel_' + i).classed("hover", true);
+          })
+          .on('mouseout', function(d, i) {
+            d3.select('#rowLabel_' + i).classed("hover", false);
+          })
+          .on("click", function(d, i) {
+            rowSortOrder = !rowSortOrder;
+            sortByValues("r", i, rowSortOrder);
+            d3.select("#order").property("selectedIndex", 0);
+            //$("#order").jqxComboBox({selectedIndex: 0});
+          });
+
+        var colLabels = svg.append("g")
+          .attr("class", "colLabels")
+          .selectAll(".colLabel")
+          .data(data.columns)
+          .enter().append("text")
+          .text(function(d) {
+            d.shift();
+            return d.count > 1 ? d.reverse().join("/") : d.reverse();
+          })
+          .attr("x", 0)
+          .attr("y", function(d, i) {
+            return (i * cellSize);
+          })
+          .style("text-anchor", "left")
+          .attr("transform", function(d, i) {
+            return "translate(" + cellSize / 2 + ", -3) rotate(-90) rotate(45, 0, " + (i * cellSize) + ")";
+          })
+          .attr("class", "colLabel mono")
+          .attr("id", function(d, i) {
+            return "colLabel_" + i;
+          })
+          .on('mouseover', function(d, i) {
+            d3.select('#colLabel_' + i).classed("hover", true);
+          })
+          .on('mouseout', function(d, i) {
+            d3.select('#colLabel_' + i).classed("hover", false);
+          })
+          .on("click", function(d, i) {
+            colSortOrder = !colSortOrder;
+            sortByValues("c", i, colSortOrder);
+            d3.select("#order").property("selectedIndex", 0);
+          });
+
+        var row = svg.selectAll(".row")
+          .data(data.data)
+          .enter().append("g")
+          .attr("id", function(d) {
+            console.log(d)
+            return d.idx;
+          })
+          .attr("class", "row");
+
+        var j = 0;
+        var heatMap = row.selectAll(".cell")
+          .data(function(d) {
+            j++;
+            return d;
+          })
+          .enter().append("svg:rect")
+          .attr("x", function(d, i) {
+            return i * cellSize;
+          })
+          .attr("y", function(d, i, j) {
+            return j * cellSize;
+          })
+          .attr("rx", 4)
+          .attr("ry", 4)
+          .attr("class", function(d, i, j) {
+            return "cell bordered cr" + j + " cc" + i;
+          })
+          .attr("row", function(d, i, j) {
+            return j;
+          })
+          .attr("col", function(d, i, j) {
+            return i;
+          })
+          .attr("width", cellSize)
+          .attr("height", cellSize)
+          .style("fill", function(d) {
+            if (d != null) return colorScale(d);
+            else return "url(#diagonalHatch)";
+          })
+          .on('mouseover', function(d, i, j) {
+              d3.select('#colLabel_' + i).classed("hover", true);
+              d3.select('#rowLabel_' + j).classed("hover", true);
+              if (d != null) {
+                  tooltip.html('<div class="heatmap_tooltip">' + getStatus(d) + '</div>');
+                  tooltip.style("visibility", "visible");
+              } else
+                  tooltip.style("visibility", "hidden");
+          })
+          .on('mouseout', function(d, i, j) {
+            d3.select('#colLabel_' + i).classed("hover", false);
+            d3.select('#rowLabel_' + j).classed("hover", false);
+            tooltip.style("visibility", "hidden");
+          })
+          .on("mousemove", function(d, i) {
+            tooltip.style("top", (d3.event.pageY - 320) + "px").style("left", (d3.event.pageX - 75) + "px");
+          })
+          .on('click', function() {
+            //console.log(d3.select(this));
+          });
+
+        var legend = svg.append("g")
+          .attr("class", "legend")
+          .attr("transform", "translate(0,-300)")
+          .selectAll(".legendElement")
+          .data(["Criado","Opcional", "Salvo", "Finalizado"])
+          .enter().append("g")
+          .attr("class", "legendElement");
+
+        legend.append("svg:rect")
+          .attr("x", function(d, i) {
+            return legendElementWidth * i;
+          })
+          .attr("y", viewerPosTop)
+          .attr("class", "cellLegend bordered")
+          .attr("width", legendElementWidth)
+          .attr("height", cellSize / 2)
+          .style("fill", function(d, i) {
+            return colors[i];
+          });
+
+        legend.append("text")
+          .attr("class", "mono legendElement")
+          .text(function(d) {
+            return d;
+          })
+          .attr("x", function(d, i) {
+            return legendElementWidth * i;
+          })
+          .attr("y", viewerPosTop + cellSize);
+
+        //==================================================
+        // Change ordering of cells
+        function sortByValues(rORc, i, sortOrder) {
+            var t = svg.transition().duration(1000);
+            var values = [];
+            var sorted;
+            d3.selectAll(".c" + rORc + i)
+                .filter(function(d) {
+                    if (d != null) values.push(d);
+                    else values.push(-999); // to handle NaN
+                });
+            //console.log(values);
+            if (rORc == "r") { // sort on cols
+                sorted = d3.range(col_number).sort(function(a, b) {
+                    if (sortOrder) {
+                        return values[b] - values[a];
+                    } else {
+                        return values[a] - values[b];
+                    }
+                });
+                t.selectAll(".cell")
+                    .attr("x", function(d) {
+                        var col = parseInt(d3.select(this).attr("col"));
+                        return sorted.indexOf(col) * cellSize;
+                    });
+                t.selectAll(".colLabel")
+                    .attr("y", function(d, i) {
+                        return sorted.indexOf(i) * cellSize;
+                    })
+                    .attr("transform", function(d, i) {
+                        return "translate(" + cellSize / 2 + ", -3) rotate(-90) rotate(45, 0, " + (sorted.indexOf(i) * cellSize) + ")";
+                    });
+            } else { // sort on rows
+                sorted = d3.range(row_number).sort(function(a, b) {
+                    if (sortOrder) {
+                        return values[b] - values[a];
+                    } else {
+                        return values[a] - values[b];
+                    }
+                });
+                t.selectAll(".cell")
+                    .attr("y", function(d) {
+                        var row = parseInt(d3.select(this).attr("row"));
+                        return sorted.indexOf(row) * cellSize;
+                    });
+                t.selectAll(".rowLabel")
+                    .attr("y", function(d, i) {
+                        return sorted.indexOf(i) * cellSize;
+                    })
+                    .attr("transform", function(d, i) {
+                        return "translate(-3," + cellSize / 1.5 + ")";
+                    });
+            }
+        }
+
+        //==================================================
+        d3.select("#order").on("change", function() {
+          var newOrder = d3.select("#order").property("value");
+          changeOrder(newOrder, heatmapId);
+        });
+
+        //==================================================
+        d3.select("#palette")
+          .on("keyup", function() {
+            var newPalette = d3.select("#palette").property("value");
+            if (newPalette != null)						// when interfaced with jQwidget, the ComboBox handles keyup event but value is then not available ?
+              changePalette(newPalette, heatmapId);
+          })
+          .on("change", function() {
+            var newPalette = d3.select("#palette").property("value");
+            changePalette(newPalette, heatmapId);
+          });
+      // });
+
+      //==================================================
     }
 
-    function getMousePos(canvas, evt) {
-      var rect = canvas.getBoundingClientRect();
-      return {
-        x: evt.clientX - rect.left,
-        y: evt.clientY - rect.top
-      };
+//#########################################################
+function changeOrder(newOrder, heatmapId) {
+    var svg = d3.select(heatmapId);
+    var t = svg.transition().duration(1000);
+    if (newOrder == "sortinit_col") { // initial sort on cols (alphabetically if produced like this)
+        t.selectAll(".cell")
+            .attr("x", function(d) {
+                var col = parseInt(d3.select(this).attr("col"));
+                return col * cellSize;
+            });
+        t.selectAll(".colLabel")
+            .attr("y", function(d, i) {
+                return i * cellSize;
+            })
+            .attr("transform", function(d, i) {
+                return "translate(" + cellSize / 2 + ", -3) rotate(-90) rotate(45, 0, " + (i * cellSize) + ")";
+            });
+    } else if (newOrder == "sortinit_row") { // initial sort on rows (alphabetically if produced like this)
+        t.selectAll(".cell")
+            .attr("y", function(d) {
+                var row = parseInt(d3.select(this).attr("row"));
+                return row * cellSize;
+            });
+        t.selectAll(".rowLabel")
+            .attr("y", function(d, i) {
+                return i * cellSize;
+            })
+            .attr("transform", function(d, i) {
+                return "translate(-3," + cellSize / 1.5 + ")";
+            });
+    } else if (newOrder == "sortinit_col_row") { // initial sort on rows and cols (alphabetically if produced like this)
+        t.selectAll(".cell")
+            .attr("x", function(d) {
+                var col = parseInt(d3.select(this).attr("col"));
+                return col * cellSize;
+            })
+            .attr("y", function(d) {
+                var row = parseInt(d3.select(this).attr("row"));
+                return row * cellSize;
+            });
+        t.selectAll(".colLabel")
+            .attr("y", function(d, i) {
+                return i * cellSize;
+            })
+            .attr("transform", function(d, i) {
+                return "translate(" + cellSize / 2 + ", -3) rotate(-90) rotate(45, 0, " + (i * cellSize) + ")";
+            });
+        t.selectAll(".rowLabel")
+            .attr("y", function(d, i) {
+                return i * cellSize;
+            })
+            .attr("transform", function(d, i) {
+                return "translate(-3," + cellSize / 1.5 + ")";
+            });
     }
+}
 
-    function getQuestionnaireFromXCoordinate(canvas, evt, x) {
-      var mousePos = getMousePos(canvas, evt);
-      var inverseModeScale = d3.scaleQuantize()
-        .domain(x.range())
-        .range(x.domain());
-
-      return inverseModeScale(mousePos.x);
-
-    }
-
-    function getParticipantFromYCoordinate(canvas, evt, y) {
-      var mousePos = getMousePos(canvas, evt);
-      var inverseModeScale = d3.scaleQuantize()
-        .domain(y.range())
-        .range(y.domain());
-
-      return inverseModeScale(mousePos.y);
-    }
+//#########################################################
+function changePalette(paletteName, heatmapId) {
+    var colors = colorbrewer[paletteName][classesNumber];
+    var colorScale = d3.scale.quantize()
+        .domain([0.0, 1.0])
+        .range(colors);
+    var svg = d3.select(heatmapId);
+    var t = svg.transition().duration(500);
+    t.selectAll(".cell")
+        .style("fill", function(d) {
+                if (d != null) return colorScale(d);
+                else return "url(#diagonalHatch)";
+        })
+    t.selectAll(".cellLegend")
+        .style("fill", function(d, i) {
+            return colors[i];
+        });
+}
 
   }
 })()

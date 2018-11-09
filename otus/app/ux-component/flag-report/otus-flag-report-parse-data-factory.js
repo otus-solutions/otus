@@ -10,29 +10,39 @@
 
       self.create = create;
 
-      function create(data) {
+      function create(json) {
 
-        var currentSummedValue = null;
-        var dataToBeOrganized = [];
-
-        for (var i = 0; i < data.length; i++) {
-          currentSummedValue = 0;
-          for (var j = 0; j < data[i].activities.length; j++) {
-            currentSummedValue += data[i].activities[j].status;
-          }
-          dataToBeOrganized.push({ data: data[i], value: currentSummedValue });
-        }
-
-        dataToBeOrganized.sort(function (a, b) {
-          return b.value - a.value;
-        })
+        var obj = {};
+        obj.columns = [];
+        obj.index = [];
+        obj.data = [];
 
 
-        var organizedData = [];
-        for (var i = 0; i < dataToBeOrganized.length; i++) {
-          organizedData.push(dataToBeOrganized[i].data);
-        }
-        return organizedData;
+        json[0].activities.forEach(function(atividade){
+          obj.columns.push([atividade.rn, atividade.acronym]);
+
+        });
+
+        json.forEach(function(o){
+          obj.index.push(o.rn);
+          var data = [];
+          var i = 0;
+          o.activities.forEach(function(atividade){
+            if(atividade.acronym === "TST") {
+
+              data.push(0)
+            }else {
+
+              data.push(atividade.status)
+            }
+          });
+
+          obj.data.push(data);
+
+        });
+        // console.log(obj)
+
+        return obj;
 
       }
 
