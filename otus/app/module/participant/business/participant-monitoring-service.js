@@ -6,14 +6,17 @@
     .service('otusjs.participant.business.ParticipantMonitoringService', Service);
 
   Service.$inject = [
+    '$filter',
     'otusjs.participant.repository.ParticipantMonitoringRepositoryService'
   ];
 
-  function Service(ParticipantMonitoringRepositoryService) {
+  function Service($filter, ParticipantMonitoringRepositoryService) {
     const CREATED = 'CREATED';
     const SAVED = 'SAVED';
     const FINALIZED = 'FINALIZED';
     const UNNECESSARY = 'UNNECESSARY';
+    const UNDEFINED = 'UNDEFINED';
+    const MULTIPLE = 'MULTIPLE';
 
     var self = this;
     /* Public methods */
@@ -21,11 +24,12 @@
     self.updateObservation = updateObservation;
 
     function getStatusOfActivities(recruitmentNumber) {
-      // return _buildDataToView(ParticipantMonitoringRepositoryService.getParticipantReportList(recruitmentNumber));
+      // return _buildDataToView(ParticipantMonitoringRepositoryService.getStatusOfActivities(recruitmentNumber));
 
       /**
         TODO: Estrutura deve ser retornada do banco
       **/
+
       return _buildDataToView([{
         "_id": "5aff3edaaf11bb0d302be3c7",
         "activities": [
@@ -68,7 +72,7 @@
           "_id": "5be443ef4c43aa5319b3d1da",
           "rn": 7000312,
           "acronym": "CSJ",
-          "observations": "Atividade está descartada, participante está com febre amarela."
+          "observation": "Atividade está descartada, participante está com febre amarela."
         }
       },
       {
@@ -349,74 +353,165 @@
         "activities": [],
         "acronym": "TCLEC",
         "name": "TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO"
+      },
+      {
+        "_id": "5aff3ee1af11bb0d302be3ff",
+        "activities": [],
+        "acronym": "HMPD",
+        "name": "HISTÓRIA MÉDICA PREGRESSA"
+      },
+      {
+        "_id": "5aff3ee1af11bb0d302be400",
+        "activities": [],
+        "acronym": "PASC",
+        "name": "PRESSÃO ARTERIAL"
+      },
+      {
+        "_id": "5b0434a3086a5e4a9f5911fd",
+        "activities": [],
+        "acronym": "SPPC",
+        "name": "BATERIA CURTA DE PERFORMANCE FÍSICA"
+      },
+      {
+        "_id": "5b0434f3086a5e4a9f5911fe",
+        "activities": [],
+        "acronym": "CCA",
+        "name": "QUESTIONÁRIO PARA COLETA DE CABELO"
+      },
+      {
+        "_id": "5b0c2eec086a5e1c77cd86f2",
+        "activities": [],
+        "acronym": "MOND",
+        "name": "MONOFILAMENTO"
+      },
+      {
+        "_id": "5b4f8cce086a5e1c7715d5ca",
+        "activities": [],
+        "acronym": "FCOC",
+        "name": "FUNÇÃO COGNITIVA"
+      },
+      {
+        "_id": "5b858dda086a5e5ee91527e9",
+        "activities": [],
+        "acronym": "DQUOTE",
+        "name": "Testes"
+      }, {
+        "_id": "5b869bb3086a5e5ee91527f6",
+        "activities": [
+          {
+            "_id": "5be07e20e69a690064fb1e1a",
+            "statusHistory": [
+              {
+                "objectType": "ActivityStatus",
+                "name": "FINALIZED",
+                "date": "2018-11-05T17:30:17.887Z",
+                "user": {
+                  "name": "Emanoel",
+                  "surname": "Vianna",
+                  "phone": "51999999999",
+                  "email": "vianna.emanoel@gmail.com"
+                }
+              }
+            ]
+          }
+        ],
+        "acronym": "DQUOTETWO",
+        "name": "teste"
+      }, {
+        "_id": "5b9a98b0086a5e5ee9152806",
+        "activities": [
+          {
+            "_id": "5b9a98e0086a5e5ee9152807",
+            "statusHistory": [
+              {
+                "objectType": "ActivityStatus",
+                "name": "SAVED",
+                "date": "2018-09-13T17:07:33.244Z",
+                "user": {
+                  "name": "Emanoel",
+                  "surname": "Vianna",
+                  "phone": "51999999999",
+                  "email": "vianna.emanoel@gmail.com"
+                }
+              }
+            ]
+          }
+        ],
+        "acronym": "MARAVILHA",
+        "name": "funciona"
+      }, {
+        "_id": "5b9acc72086a5e5ee9152808",
+        "activities": [],
+        "acronym": "TS",
+        "name": "teste"
       }]);
     }
 
-    function updateObservation(data) {
-      // TODO:
+    function updateObservation(recruitmentNumber, observation, survey) {
+      var data = {
+        "recruitmentNumber": recruitmentNumber,
+        "acronym": survey.acronym,
+        "observation": observation
+      };
+
+      return ParticipantMonitoringRepositoryService.updateObservation(data);
     }
 
     function _buildDataToView(response) {
-      var result = [];
+      var data = [];
       response.filter(function (survey) {
         if (survey.unnecessary) {
-          result.push({
+          data.push({
             'acronym': survey.acronym,
             'name': survey.name,
             'status': UNNECESSARY,
-            'date': survey.name,
-            'observations': survey.unnecessary ? survey.unnecessary.observations : undefined
+            'observation': survey.unnecessary ? survey.unnecessary.observation : undefined
           });
         } else if (survey.activities.length == 0) {
-          console.log(survey);
-          var length = survey.activities.statusHistory.length;
-          if (survey.activities.statusHistory[length - 1].name === CREATED) {
-            result.push({
-              'acronym': survey.acronym,
-              'name': survey.name,
-              'status': CREATED,
-              'date': survey.name,
-              'observations': survey.unnecessary ? survey.unnecessary.observations : undefined
-            });
-          } else if (survey.activities.statusHistory[length - 1].name === SAVED) {
-            result.push({
-              'acronym': survey.acronym,
-              'name': survey.name,
-              'status': SAVED,
-              'date': survey.name,
-              'observations': survey.unnecessary ? survey.unnecessary.observations : undefined
-            });
-          } else if (survey.activities.statusHistory[length - 1].name === FINALIZED) {
-            result.push({
-              'acronym': survey.acronym,
-              'name': survey.name,
-              'status': FINALIZED,
-              'date': survey.name,
-              'observations': survey.unnecessary ? survey.unnecessary.observations : undefined
-            });
-          }
-        } else if (survey.activities.length > 0) {
-          result.push({
+          data.push({
+            'acronym': survey.acronym,
+            'name': survey.name,
+            'status': UNDEFINED
+          });
+        } else if (survey.activities.length > 1) {
+          data.push({
             'acronym': survey.acronym,
             'name': survey.name,
             'status': MULTIPLE,
-            'date': survey.name,
-            'observations': survey.unnecessary ? survey.unnecessary.observations : undefined
           });
-        } else {
-          result.push({
-            'acronym': survey.acronym,
-            'name': survey.name,
-            'status': UNDEFINED,
-            'date': survey.name,
-            'observations': survey.unnecessary ? survey.unnecessary.observations : undefined
-          });
+        } else if (survey.activities.length == 1) {
+          var length = survey.activities[0].statusHistory.length;
+          switch (survey.activities[0].statusHistory[length - 1].name) {
+            case CREATED:
+              data.push({
+                'acronym': survey.acronym,
+                'name': survey.name,
+                'status': CREATED,
+                'date': $filter('date')(survey.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
+              });
+              break;
+            case SAVED:
+              data.push({
+                'acronym': survey.acronym,
+                'name': survey.name,
+                'status': SAVED,
+                'date': $filter('date')(survey.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
+              });
+              break;
+            case FINALIZED:
+              data.push({
+                'acronym': survey.acronym,
+                'name': survey.name,
+                'status': FINALIZED,
+                'date': $filter('date')(survey.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
+              });
+              break;
+          }
         }
       });
 
-      return result;
+      return data;
     }
-
   }
 
 }());

@@ -1,19 +1,23 @@
 <otus-panel header-label="'Atividades - Sinaleira'">
-    <md-card layout="row" class="md-whiteframe-3dp" ng-repeat="(index, data) in $ctrl.data">
-        <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.getFlagColor(data)}">
-            <md-icon ng-style="{color:report.status.color}">{{report.status.icon}}</md-icon>
-            <div layout="row">
-                <md-card-header-text layout-align="end center">
-                    <span class="md-body-1 truncate" layout-margin style="color:black;margin:0;">{{ data.acronym }}</span>
-                    <span class="md-body-1 truncate" layout-margin style="color:black;margin:0;">{{ data.date }}</span>
-                    <md-tooltip>{{ data.name }}</md-tooltip>
+    <md-card layout="row" class="md-whiteframe-3dp" ng-repeat="(index, survey) in $ctrl.surveyList" style="width: 180px;">
+        <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.getFlagColor(survey)}" flex>
+            <div layout="row" flex>
+                <md-card-header-text flex>
+                    <div layout="row">
+                        <div layout="column" flex='75'>
+                            <span class="md-body-1 truncate" layout-margin style="color:black;margin:0;">{{survey.acronym}}</span>
+                            <span class="md-body-1 truncate" layout-margin style="color:black;margin:0;">{{survey.date}}</span>
+                            <md-tooltip>{{ survey.name }}</md-tooltip>
+                        </div>
+                        <div flex='25'>
+                            <md-button ng-click="$ctrl.showObservation($event, survey)" class="md-icon-button"
+                                aria-label="Observações">
+                                <md-icon>info</md-icon>
+                                <md-tooltip md-direction="bottom">Observações</md-tooltip>
+                            </md-button>
+                        </div>
+                    </div>
                 </md-card-header-text>
-                <md-card-title-media>
-                    <md-button ng-click="$ctrl.showObservation($event)" class="md-icon-button" aria-label="Favorite">
-                        <md-icon>info</md-icon>
-                        <md-tooltip md-direction="bottom">Observações</md-tooltip>
-                    </md-button>
-                </md-card-title-media>
             </div>
         </md-card-header>
     </md-card>

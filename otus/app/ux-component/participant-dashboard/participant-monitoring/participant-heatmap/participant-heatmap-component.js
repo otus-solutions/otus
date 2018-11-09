@@ -23,6 +23,8 @@
         const SAVED = 'SAVED';
         const FINALIZED = 'FINALIZED';
         const UNNECESSARY = 'UNNECESSARY';
+        const UNDEFINED = 'UNDEFINED';
+        const MULTIPLE = 'MULTIPLE';
         const Color = {
             CREATED: '#f4415c',
             FINALIZED: '#1ece8b',
@@ -48,8 +50,8 @@
             self.selectedParticipant = null;
         }
 
-        function getFlagColor(data) {
-            switch (data.status) {
+        function getFlagColor(survey) {
+            switch (survey.status) {
                 case CREATED:
                     return Color.CREATED;
                 case SAVED:
@@ -69,31 +71,38 @@
             self.selectedParticipant = selectedParticipant;
         }
 
-        function showObservation(event) {
+        function showObservation(event, survey) {
             $mdDialog.show({
-                controller: _dialogController,
-                templateUrl: 'app/ux-component/participant-dashboard/participant-monitoring/participant-heatmap/observation-dialog.html',
+                locals: { survey: survey },
+                controller: _DialogController,
+                templateUrl: 'app/ux-component/participant-dashboard/participant-monitoring/participant-heatmap/observation-dialog-template.html',
                 parent: angular.element(document.body),
                 targetEvent: event,
                 clickOutsideToClose: true,
                 fullscreen: $scope.customFullscreen
             }).then(function (observation) {
-                _updateObservation(observation);
-                $mdToast.show(
-                    $mdToast.simple()
-                        .textContent('Observação atualizada com sucesso.')
-                        .hideDelay(3000)
-                );
+                if (_updateObservation(observation, survey)) {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('Observação atualizada com sucesso.')
+                            .hideDelay(3000)
+                    );
+                } else {
+                    $mdToast.show(
+                        $mdToast.simple()
+                            .textContent('Ocorreu um erro. Tente novamente mais tarde.')
+                            .hideDelay(3000)
+                    );
+                }
             }, function () { });
         }
 
         function getCurrentState() {
-            return ApplicationStateService.getCurrentState();
+            ApplicationStateService.getCurrentState();
         }
 
-        // TODO: 
-        function _updateObservation(data) {
-            ParticipantMonitoringService.updateObservation(data);
+        function _updateObservation(observation, survey) {
+            return ParticipantMonitoringService.updateObservation(self.selectedParticipant.recruitmentNumber, observation, survey);
         }
 
         function _loadParticipantData() {
@@ -101,11 +110,25 @@
                 .getSelectedParticipant()
                 .then(function (participantData) {
                     self.selectedParticipant = participantData;
-                    self.data = ParticipantMonitoringService.getStatusOfActivities(participantData.recruitmentNumber);
+                    self.surveyList = ParticipantMonitoringService.getStatusOfActivities(participantData.recruitmentNumber);
                 });
         }
 
-        function _dialogController($scope, $mdDialog) {
+        function _DialogController($scope, $mdDialog, survey) {
+            $scope.isUnnecessary;
+            $scope.observation;
+
+            onInit();
+            function onInit() {
+                if (survey.status === UNNECESSARY) {
+                    $scope.isUnnecessary = true;
+                    $scope.observation = survey.observation ? survey.observation : '';
+                } else {
+                    $scope.isUnnecessary = false;
+                    $scope.observation = survey.observation ? survey.observation : '';
+                }
+            }
+
             $scope.hide = function () {
                 $mdDialog.hide();
             };
@@ -114,8 +137,8 @@
                 $mdDialog.cancel();
             };
 
-            $scope.update = function (observation) {
-                $mdDialog.hide(observation);
+            $scope.update = function () {
+                $mdDialog.hide($scope.observation);
             };
         }
     }
