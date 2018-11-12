@@ -1,5 +1,7 @@
 <flag-filter-view-component centers="$ctrl.centers" activities-status="$ctrl.status" acronyms-list="$ctrl.acronymsList" on-update="$ctrl.updateData" ng-if="$ctrl.ready"></flag-filter-view-component>
 <div layout="row" layout-align="center center">
+  <md-button class="md-accent md-raised" ng-click="$ctrl.download()">download</md-button>
+  <!-- <md-button report-export class="md-accent md-raised" report="$ctrl.CSVActivities" option="CSV">download</md-button> -->
   <span flex></span>
   <otus-paginator flex flex-gt-md="35" elements="$ctrl.rawActivities" on-update="$ctrl.updatePage" ng-if="$ctrl.ready"></otus-paginator>
 </div>
@@ -7,8 +9,3 @@
 <md-content flex layout="row">
   <otus-flag-report-visualization activities-data="$ctrl.activities" on-update="$ctrl.setActivities" flex ng-if="$ctrl.ready" layout-padding=""></otus-flag-report-visualization>
 </md-content>
-
-
-
-
-

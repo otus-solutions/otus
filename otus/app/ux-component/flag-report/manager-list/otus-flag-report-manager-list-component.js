@@ -33,6 +33,8 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
+    self.prepareForCSV = prepareForCSV;
+
     self.updateData = updateData;
     self.updatePage = updatePage;
     self.setActivities = setActivities;
@@ -42,6 +44,46 @@
       _resetData();
       LoadingScreenService.start();
       _constructor();
+    }
+
+    function prepareForCSV(){
+      self.CSVActivities = {};
+      self.activities.forEach(function(data) {
+        self.CSVActivities[data.rn] = [].concat(data.activities);
+      });
+    }
+
+    function _translateStatus(status){
+      var translate = "";
+      switch (status) {
+        case -1:
+          translate = "Criado";
+          break;
+        case 0:
+          translate = "Opcional";
+          break;
+        case 1:
+          translate = "Salvo";
+          break;
+        case 2:
+          translate = "Finalizado";
+          break;
+        default:
+
+      }
+
+      return translate;
+    }
+
+    self.download = function(){
+      alasql("CREATE TABLE flags(RN INT,SIGLA STRING, STATUS STRING)");
+      self.rawActivities.forEach(function(data) {
+        data.activities.forEach(function(a) {
+          alasql("INSERT INTO flags VALUES("+a.rn+",'"+a.acronym+"','"+_translateStatus(a.status)+"')")
+        });
+
+      });
+      alasql('SELECT * INTO CSV("report-flags.csv",{headers:true}) FROM flags');
     }
 
     function _resetData() {
@@ -150,11 +192,9 @@
     }
 
     function updatePage(activities = null) {
-      if(activities.columns != undefined){
-        self.setActivities(activities, self.selectedAcronym, self.selectedStatus);
-      } else {
+        self.activities = activities
+        prepareForCSV();
         self.setActivities(FlagReportParseData.create(activities), self.selectedAcronym, self.selectedStatus);
-      }
     }
 
     function setActivities(activities) {
