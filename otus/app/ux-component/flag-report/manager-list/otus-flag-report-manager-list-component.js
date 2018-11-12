@@ -66,7 +66,6 @@
         });
       } else {
         _loadActivitiesProgress(self.selectedCenter.acronym);
-        // setUserFieldCenter()
       }
     }
 
@@ -118,9 +117,9 @@
         if (center !== self.selectedCenter.acronym) self.$onInit();
         MonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
-            self.export = angular.copy(response);
+            self.rawActivities = angular.copy(response);
             self.activitiesData = FlagReportParseData.create(response);
-            self.updatePage(self.activitiesData);
+            self.updatePage(self.rawActivities);
             self.ready= true;
             LoadingScreenService.finish();
           }).catch((e)=>{
@@ -141,7 +140,8 @@
         if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
           _setActivity(acronym);
           _setStatus(status);
-          self.setActivities(activities, acronym, status);
+          self.activitiesData = FlagReportParseData.create(self.rawActivities, acronym, status)
+          self.setActivities(self.activitiesData, acronym, status);
         } else if(activities && activities !== self.activities){
 
           self.setActivities(activities, acronym, status);
@@ -150,7 +150,11 @@
     }
 
     function updatePage(activities = null) {
-      self.setActivities(activities, self.selectedAcronym, self.selectedStatus);
+      if(activities.columns != undefined){
+        self.setActivities(activities, self.selectedAcronym, self.selectedStatus);
+      } else {
+        self.setActivities(FlagReportParseData.create(activities), self.selectedAcronym, self.selectedStatus);
+      }
     }
 
     function setActivities(activities) {

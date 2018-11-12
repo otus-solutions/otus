@@ -10,40 +10,57 @@
 
       self.create = create;
 
-      function create(json) {
+      function create(json, sigla = null, status = null) {
 
         var obj = {};
         obj.columns = [];
         obj.index = [];
         obj.data = [];
 
-
-        json[0].activities.forEach(function(atividade){
-          obj.columns.push([atividade.rn, atividade.acronym]);
-
-        });
-
+        if(!sigla){
+            json[0].activities.forEach(function(atividade){
+              obj.columns.push([atividade.rn, atividade.acronym]);
+            });
+        } else {
+          json[0].activities.forEach(function(atividade){
+            if(atividade.acronym == sigla)
+              obj.columns.push([atividade.rn, atividade.acronym]);
+          });
+        }
         json.forEach(function(o){
           obj.index.push(o.rn);
           var data = [];
-          var i = 0;
+
           o.activities.forEach(function(atividade){
-            if(atividade.acronym === "TST") {
-
-              data.push(0)
-            }else {
-
-              data.push(atividade.status)
+            if(status){
+              if(sigla === atividade.acronym){
+                if (status === atividade.status){
+                  data.push(atividade.status);
+                } else {
+                  data.push(null);
+                }
+              } else if (sigla === null){
+                if (status === atividade.status){
+                  data.push(atividade.status);
+                } else {
+                  data.push(null);
+                }
+              }
+            } else {
+              if(sigla === atividade.acronym){
+                data.push(atividade.status);
+              } else if (sigla === null){
+                data.push(atividade.status);
+              }
             }
+
           });
 
           obj.data.push(data);
 
         });
-        // console.log(obj)
 
         return obj;
-
       }
 
       return self;
