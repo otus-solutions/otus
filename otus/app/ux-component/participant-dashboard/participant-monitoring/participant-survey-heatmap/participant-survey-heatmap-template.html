@@ -1,0 +1,31 @@
+<otus-panel header-label="'Atividades - Sinaleira'" ng-show="$ctrl.surveyList">
+    <div layout="row">
+        <div ng-repeat="legend in $ctrl.legends">
+            <span class="md-body-1" layout-margin ng-style="{'background-color': legend.color}">{{legend.label}}</span>
+        </div>
+    </div>
+    <div layout="row">
+        <md-card class="md-whiteframe-3dp" ng-repeat="(index, survey) in $ctrl.surveyList" style="width: 180px;">
+            <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.getFlagColor(survey)}" flex>
+                <div layout="row" flex>
+                    <md-card-header-text flex>
+                        <div layout="row">
+                            <div layout="column" flex='75'>
+                                <span layout-align="center center" class="md-body-1 truncate" layout-margin style="color:black;margin:0;">{{survey.acronym}}</span>
+                                <span class="md-body-1 truncate" layout-margin style="color:black;margin:0;">{{survey.date}}</span>
+                                <md-tooltip>{{ survey.name }}</md-tooltip>
+                            </div>
+                            <div flex='25'>
+                                <md-button ng-click="$ctrl.showObservation($event, survey)" class="md-icon-button"
+                                    aria-label="Observações">
+                                    <md-icon>info</md-icon>
+                                    <md-tooltip md-direction="bottom">Observações</md-tooltip>
+                                </md-button>
+                            </div>
+                        </div>
+                    </md-card-header-text>
+                </div>
+            </md-card-header>
+        </md-card>
+    </div>
+</otus-panel>

@@ -15,10 +15,10 @@
     var _remoteStorage = ModuleService.getParticipantMonitoringRemoteStorage();
 
     //Participant Report Methods
-    self.getStatusOfActivities = getStatusOfActivities;
-    self.updateObservation = updateObservation;
+    self.getStatusOfSurveys = getStatusOfSurveys;
+    self.defineSurveyWithUnnecessary = defineSurveyWithUnnecessary;
 
-    function getStatusOfActivities(rn) {
+    function getStatusOfSurveys(rn) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
@@ -36,17 +36,16 @@
       return request.promise;
     }
 
-    // TODO:
-    function updateObservation(data) {
+    function defineSurveyWithUnnecessary(data) {
       var request = $q.defer();
 
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getReport(rn, id)
-            .then(function (response) {
-              request.resolve(response.data);
+            .defineSurveyWithUnnecessary(data)
+            .then(function (data) {
+              request.resolve(data);
             })
             .catch(function (e) {
               request.reject(e);

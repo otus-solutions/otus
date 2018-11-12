@@ -20,11 +20,11 @@
 
     var self = this;
     /* Public methods */
-    self.getStatusOfActivities = getStatusOfActivities;
-    self.updateObservation = updateObservation;
+    self.getStatusOfSurveys = getStatusOfSurveys;
+    self.defineSurveyWithUnnecessary = defineSurveyWithUnnecessary;
 
-    function getStatusOfActivities(recruitmentNumber) {
-      // return _buildDataToView(ParticipantMonitoringRepositoryService.getStatusOfActivities(recruitmentNumber));
+    function getStatusOfSurveys(recruitmentNumber) {
+      // return _buildDataToView(ParticipantMonitoringRepositoryService.getStatusOfSurveys(recruitmentNumber));
 
       /**
         TODO: Estrutura deve ser retornada do banco
@@ -447,14 +447,14 @@
       }]);
     }
 
-    function updateObservation(recruitmentNumber, observation, survey) {
+    function defineSurveyWithUnnecessary(recruitmentNumber, observation, survey) {
       var data = {
         "recruitmentNumber": recruitmentNumber,
         "acronym": survey.acronym,
         "observation": observation
       };
 
-      return ParticipantMonitoringRepositoryService.updateObservation(data);
+      return ParticipantMonitoringRepositoryService.defineSurveyWithUnnecessary(data);
     }
 
     function _buildDataToView(response) {

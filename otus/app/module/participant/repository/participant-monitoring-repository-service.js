@@ -13,15 +13,15 @@
     var self = this;
 
     /* Public methods */
-    self.getStatusOfActivities = getStatusOfActivities;
-    self.updateObservation = updateObservation;
+    self.getStatusOfSurveys = getStatusOfSurveys;
+    self.defineSurveyWithUnnecessary = defineSurveyWithUnnecessary;
 
-    function getStatusOfActivities(recruitmentNumber) {
-      return ParticipantMonitoringCollectionService.getStatusOfActivities(recruitmentNumber);
+    function getStatusOfSurveys(recruitmentNumber) {
+      return ParticipantMonitoringCollectionService.getStatusOfSurveys(recruitmentNumber);
     }
 
-    function updateObservation(data) {
-      return ParticipantMonitoringCollectionService.updateObservation(data);
+    function defineSurveyWithUnnecessary(data) {
+      return ParticipantMonitoringCollectionService.defineSurveyWithUnnecessary(data);
     }
   }
 }());
