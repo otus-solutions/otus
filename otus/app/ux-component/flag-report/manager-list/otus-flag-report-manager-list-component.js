@@ -33,11 +33,10 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
-    self.prepareForCSV = prepareForCSV;
-
     self.updateData = updateData;
     self.updatePage = updatePage;
     self.setActivities = setActivities;
+    self.downloadCSV = downloadCSV;
 
     function onInit() {
       self.ready = false;
@@ -46,44 +45,24 @@
       _constructor();
     }
 
-    function prepareForCSV(){
-      self.CSVActivities = {};
-      self.activities.forEach(function(data) {
-        self.CSVActivities[data.rn] = [].concat(data.activities);
-      });
-    }
-
-    function _translateStatus(status){
-      var translate = "";
-      switch (status) {
-        case -1:
-          translate = "Criado";
-          break;
-        case 0:
-          translate = "Opcional";
-          break;
-        case 1:
-          translate = "Salvo";
-          break;
-        case 2:
-          translate = "Finalizado";
-          break;
-        default:
-
-      }
-
-      return translate;
-    }
-
-    self.download = function(){
+    function _prepareForCSV(){
+      alasql("DROP TABLE IF EXISTS flags");
       alasql("CREATE TABLE flags(RN INT,SIGLA STRING, STATUS STRING)");
-      self.rawActivities.forEach(function(data) {
-        data.activities.forEach(function(a) {
-          alasql("INSERT INTO flags VALUES("+a.rn+",'"+a.acronym+"','"+_translateStatus(a.status)+"')")
-        });
+      if(Array.isArray(self.rawActivities)){
+        if(self.rawActivities.length>0){
+          self.rawActivities.forEach(function(data) {
+            data.activities.forEach(function(a) {
+              alasql("INSERT INTO flags VALUES("+a.rn+",'"+a.acronym+"','"+StatusHistoryService.getStatusLabel(a.status)+"')")
+            });
+          });
+        }
+      }
+    }
 
-      });
-      alasql('SELECT * INTO CSV("report-flags.csv",{headers:true}) FROM flags');
+    function downloadCSV(){
+      var QUERY_ACRONYM = self.selectedAcronym != null ? "SIGLA='"+self.selectedAcronym+"'": "2=2";
+      var QUERY_STATUS = self.selectedStatus != null ? "STATUS='"+StatusHistoryService.getStatusLabel(self.selectedStatus)+"'": "3=3";
+      alasql('SELECT * INTO CSV("report-flags.csv",{headers:true}) FROM flags WHERE STATUS<>"" AND '+QUERY_ACRONYM+' AND '+QUERY_STATUS);
     }
 
     function _resetData() {
@@ -160,10 +139,12 @@
         MonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
             self.rawActivities = angular.copy(response);
+            _prepareForCSV();
             self.activitiesData = FlagReportParseData.create(response);
             self.updatePage(self.rawActivities);
             self.ready= true;
             LoadingScreenService.finish();
+
           }).catch((e)=>{
           console.log(e)
         });
@@ -185,15 +166,12 @@
           self.activitiesData = FlagReportParseData.create(self.rawActivities, acronym, status)
           self.setActivities(self.activitiesData, acronym, status);
         } else if(activities && activities !== self.activities){
-
           self.setActivities(activities, acronym, status);
         }
       }
     }
 
     function updatePage(activities = null) {
-        self.activities = activities
-        prepareForCSV();
         self.setActivities(FlagReportParseData.create(activities), self.selectedAcronym, self.selectedStatus);
     }
 

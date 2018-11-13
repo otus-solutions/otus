@@ -8,7 +8,8 @@
       templateUrl: 'app/ux-component/flag-report/visualization/otus-flag-report-visualization-template.html',
       bindings: {
         activitiesData: "=",
-        onUpdate: "="
+        onUpdate: "=",
+        colorsRange: "<"
       }
     });
 
@@ -53,7 +54,7 @@
 
       var legendElementWidth = cellSize * 2;
 
-      var colors = ["#EF5545","#808080", "#FCFF82", "#91EF45"];
+      var colors = self.colorsRange;
       var svg;
 
       //==================================================
@@ -61,8 +62,6 @@
       var arr = json.data;
       var row_number = arr.length;
       var col_number = arr[0].length;
-
-      console.log(col_number, row_number);
 
       var colorScale = d3.scale.quantize()
         .domain([-1,0,1,2])
@@ -72,7 +71,7 @@
         .append("svg")
 
         .attr("width", viewerWidth-100)
-        .attr("height", viewerHeight)
+        .attr("height", ((row_number*35)+viewerPosTop)+"px")
         .append("g")
         .attr("transform", "translate(" + window.innerWidth / 15 + "," + window.innerHeight / 7 + ")scale("+ window.innerWidth /1440+")");
 

@@ -4,6 +4,7 @@ describe('otus-flag-report-manager-list-component Test', function() {
     var Injections = {};
 
     beforeEach(function() {
+      // var alasql = jasmine.createSpy('alasql');
       mockInjections();
       angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
         $provide.value('otusjs.deploy.FieldCenterRestService', Mock.ProjectFieldCenterService);
@@ -28,6 +29,9 @@ describe('otus-flag-report-manager-list-component Test', function() {
       spyOn(Mock.FlagReportParseData, "create").and.callThrough();
       spyOn(Mock.LoadingScreenService, "start").and.callThrough();
       spyOn(Mock.LoadingScreenService, "finish").and.callThrough();
+
+      spyOn(window, "alasql");
+
       spyOn(controller, "updatePage").and.callThrough();
     });
     it('should initialize the component', function(done) {
@@ -113,7 +117,7 @@ describe('otus-flag-report-manager-list-component Test', function() {
           return Promise.resolve([]);
         },
         getActivitiesProgressReport: (center) => {
-          return Promise.resolve(center);
+          return Promise.resolve([]);
         }
       };
 

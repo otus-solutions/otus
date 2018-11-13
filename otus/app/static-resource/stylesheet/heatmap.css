@@ -4,6 +4,7 @@ rect.cellLegend bordered{
 .heatmap {
   font-size: 10px;
   font-family: Roboto,Helvetica Neue,sans-serif;
+  height: auto;
 }
 rect.bordered {
   stroke: #E6E6E6;

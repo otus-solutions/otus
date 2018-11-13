@@ -14,21 +14,28 @@
       {
         name: 'CREATED',
         label: 'Criado',
-        color: '#ef5545',
+        color: '#EF5545',
         icon: 'fiber_new',
         value: -1
       },
       {
+        name: 'OPTIONAL',
+        label: 'Opcional',
+        color: '#808080',
+        icon: '',
+        value: 0
+      },
+      {
         name: 'SAVED',
         label: 'Salvo',
-        color: '#fcff82',
+        color: '#FCFF82',
         icon: 'save',
         value: 1
       },
       {
         name: 'FINALIZED',
         label: 'Finalizado',
-        color: '#91ef45',
+        color: '#91EF45',
         icon: 'check_circle',
         value: 2
       }
@@ -36,6 +43,7 @@
 
     self.listStatus = listStatus;
     self.getStatusValue = getStatusValue;
+    self.getStatusLabel = getStatusLabel;
     self.getLabels = getLabels;
     self.getColors = getColors;
 
@@ -53,6 +61,18 @@
         return value;
       } else {
         return null;
+      }
+    }
+
+    function getStatusLabel(value = null) {
+      if(value!=null){
+        let search = STATUS.find(function (status) {
+          return status.value == value;
+        });
+        let {label} = search;
+        return label;
+      } else {
+        return "";
       }
     }
 
