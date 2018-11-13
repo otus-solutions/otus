@@ -115,12 +115,12 @@
     }
 
     function _buildLegend() {
-      self.legends.push({ label: 'Status criado.', color: Color.CREATED });
-      self.legends.push({ label: 'Status salvo.', color: Color.SAVED });
-      self.legends.push({ label: 'Status finalizado.', color: Color.FINALIZED });
-      self.legends.push({ label: 'Status desnecessário.', color: Color.UNNECESSARY });
-      self.legends.push({ label: 'Nenhuma atividade registrada.', color: Color.UNDEFINED });
-      self.legends.push({ label: 'Multiplas atividades registradas.', color: Color.MULTIPLE });
+      self.legends.push({ label: 'Criado.', color: Color.CREATED });
+      self.legends.push({ label: 'Salvo.', color: Color.SAVED });
+      self.legends.push({ label: 'Finalizado.', color: Color.FINALIZED });
+      self.legends.push({ label: 'Opcional.', color: Color.UNNECESSARY });
+      self.legends.push({ label: 'Nenhuma atividade.', color: Color.UNDEFINED });
+      self.legends.push({ label: 'Multiplas atividades.', color: Color.MULTIPLE });
     }
 
     function _DialogController($scope, $mdDialog, survey) {
