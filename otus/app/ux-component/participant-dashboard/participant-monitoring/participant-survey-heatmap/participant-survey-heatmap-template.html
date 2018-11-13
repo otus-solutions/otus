@@ -1,27 +1,35 @@
 <otus-panel header-label="'Atividades - Sinaleira'" ng-show="$ctrl.surveyList">
-    <div ng-repeat="legend in $ctrl.legends">
-        <span class="md-body-1" layout-margin ng-style="{'background-color': legend.color}">{{legend.label}}</span>
+    <div layout="column" ng-repeat="legend in $ctrl.legends" layout-align="center center">
+        <div layout="row" flex>
+            <div>
+                <md-grid-list class="md-whiteframe-3dp" style="width: 20px;" md-cols-gt-md="20" md-cols="3" md-cols-md="20"
+                    md-row-height-gt-md="2:2" md-row-height="2:2">
+                    <md-grid-tile ng-style="{'background': legend.color}" md-colspan-gt-sm="20" md-rowspan-gt-sm="20">
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+            <div>
+                <span class="md-body-1" layout-margin>{{legend.label}}</span>
+            </div>
+        </div>
     </div>
     <md-card class="md-whiteframe-3dp" ng-repeat="(index, survey) in $ctrl.surveyList" style="width: 180px;">
-        <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.getFlagColor(survey)}" flex>
-            <div layout="row" flex>
-                <md-card-header-text flex>
-                    <div layout="row">
-                        <div layout="column" flex='75'>
-                            <span layout-align="center center" class="md-body-1 truncate" layout-margin style="color:black;margin:0;">{{survey.acronym}}</span>
-                            <span class="md-body-1 truncate" layout-margin style="color:black;margin:0;">{{survey.date}}</span>
-                            <md-tooltip>{{ survey.name }}</md-tooltip>
-                        </div>
-                        <div flex='25'>
-                            <md-button ng-click="$ctrl.showObservation($event, survey)" class="md-icon-button"
-                                aria-label="Observações">
-                                <md-icon>info</md-icon>
-                                <md-tooltip md-direction="bottom">Observações</md-tooltip>
-                            </md-button>
-                        </div>
+        <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.getFlagColor(survey)}">
+            <md-card-header-text flex>
+                <div layout="row">
+                    <div layout="column" flex='75'>
+                        <span layout-align="center center" class="md-body-1 truncate" layout-margin style="color:black;margin:0;">{{survey.acronym}}</span>
+                        <span ng-show="survey.date" class="md-body-1 truncate" layout-margin style="color:black;margin:0;">{{survey.date}}</span>
+                        <md-tooltip>{{ survey.name }}</md-tooltip>
                     </div>
-                </md-card-header-text>
-            </div>
+                    <div flex='25'>
+                        <md-button ng-click="$ctrl.showObservation($event, survey)" class="md-icon-button" aria-label="Observações">
+                            <md-icon>info</md-icon>
+                            <md-tooltip md-direction="bottom">Observações</md-tooltip>
+                        </md-button>
+                    </div>
+                </div>
+            </md-card-header-text>
         </md-card-header>
     </md-card>
 </otus-panel>
