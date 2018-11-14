@@ -36,12 +36,34 @@
     self.updateData = updateData;
     self.updatePage = updatePage;
     self.setActivities = setActivities;
+    self.downloadCSV = downloadCSV;
 
     function onInit() {
       self.ready = false;
       _resetData();
       LoadingScreenService.start();
       _constructor();
+    }
+
+    function _prepareForCSV(){
+      alasql("DROP TABLE IF EXISTS flags");
+      alasql("CREATE TABLE flags(RN INT,SIGLA STRING, STATUS STRING)");
+      if(Array.isArray(self.rawActivities)){
+        if(self.rawActivities.length>0){
+          self.rawActivities.forEach(function(data) {
+            data.activities.forEach(function(a) {
+              alasql("INSERT INTO flags VALUES("+a.rn+",'"+a.acronym+"','"+StatusHistoryService.getStatusLabel(a.status)+"')")
+            });
+          });
+        }
+      }
+    }
+
+    function downloadCSV(){
+      var name = "relatorio-flags-".concat(new Date().toLocaleDateString());
+      var QUERY_ACRONYM = self.selectedAcronym != null ? "SIGLA='"+self.selectedAcronym+"'": "2=2";
+      var QUERY_STATUS = self.selectedStatus != null ? "STATUS='"+StatusHistoryService.getStatusLabel(self.selectedStatus)+"'": "3=3";
+      alasql('SELECT * INTO CSV("'+name+'.csv",{headers:true}) FROM flags WHERE 1=1 AND '+QUERY_ACRONYM+' AND '+QUERY_STATUS);
     }
 
     function _resetData() {
@@ -66,7 +88,6 @@
         });
       } else {
         _loadActivitiesProgress(self.selectedCenter.acronym);
-        // setUserFieldCenter()
       }
     }
 
@@ -112,16 +133,19 @@
       self.selectedStatus = null;
       _loadActivitiesProgress(self.selectedCenter.acronym);
     }
-
+    self.export = {};
     function _loadActivitiesProgress(center) {
       if(!self.activities || center !== self.selectedCenter.acronym){
         if (center !== self.selectedCenter.acronym) self.$onInit();
         MonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
+            self.rawActivities = angular.copy(response);
+            _prepareForCSV();
             self.activitiesData = FlagReportParseData.create(response);
-            self.updatePage(self.activitiesData);
+            self.updatePage(self.rawActivities);
             self.ready= true;
             LoadingScreenService.finish();
+
           }).catch((e)=>{
           console.log(e)
         });
@@ -140,16 +164,17 @@
         if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
           _setActivity(acronym);
           _setStatus(status);
-          self.setActivities(activities, acronym, status);
+          self.activitiesData = FlagReportParseData.create(self.rawActivities, acronym, status)
+          self.setActivities(FlagReportParseData.create(self.activitiesView, acronym, status), acronym, status);
         } else if(activities && activities !== self.activities){
-
           self.setActivities(activities, acronym, status);
         }
       }
     }
 
     function updatePage(activities = null) {
-      self.setActivities(activities, self.selectedAcronym, self.selectedStatus);
+        self.activitiesView = activities;
+        self.setActivities(FlagReportParseData.create(activities, self.selectedAcronym, self.selectedStatus), self.selectedAcronym, self.selectedStatus);
     }
 
     function setActivities(activities) {
@@ -169,7 +194,6 @@
     function _setActivity(acronym) {
       self.selectedAcronym = acronym;
     }
-
 
   }
 

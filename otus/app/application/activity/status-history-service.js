@@ -14,21 +14,28 @@
       {
         name: 'CREATED',
         label: 'Criado',
-        color: '#ef5545',
+        color: '#F4415C',
         icon: 'fiber_new',
         value: -1
       },
       {
+        name: 'UNREALIZED',
+        label: 'Não Realizado',
+        color: '#CECECE',
+        icon: '',
+        value: 0
+      },
+      {
         name: 'SAVED',
         label: 'Salvo',
-        color: '#fcff82',
+        color: '#F4CA41',
         icon: 'save',
         value: 1
       },
       {
         name: 'FINALIZED',
         label: 'Finalizado',
-        color: '#91ef45',
+        color: '#1ECE8B',
         icon: 'check_circle',
         value: 2
       }
@@ -36,6 +43,8 @@
 
     self.listStatus = listStatus;
     self.getStatusValue = getStatusValue;
+    self.getStatusLabel = getStatusLabel;
+    self.getStatusColor = getStatusColor;
     self.getLabels = getLabels;
     self.getColors = getColors;
 
@@ -56,6 +65,30 @@
       }
     }
 
+    function getStatusLabel(value = null) {
+      if(value!=null){
+        let search = STATUS.find(function (status) {
+          return status.value == value;
+        });
+        let {label} = search;
+        return label;
+      } else {
+        return "";
+      }
+    }
+
+    function getStatusColor(value = null) {
+      if(value!=null){
+        let search = STATUS.find(function (status) {
+          return status.value == value;
+        });
+        let {color} = search;
+        return color;
+      } else {
+        return "";
+      }
+    }
+
     function getLabels() {
       var response = [];
       STATUS.forEach(function (status) {
@@ -63,6 +96,7 @@
       });
       return response;
     }
+
     function getColors() {
       var response = [];
       STATUS.forEach(function (status) {
