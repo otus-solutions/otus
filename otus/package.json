@@ -42,7 +42,7 @@
     "angular-ui-router": "^0.3.1",
     "chart.js": "2.7.0",
     "chart.js-scatter": "1.1.4",
-    "d3": "3.0.0",
+    "d3": "5.0.0",
     "fuse.js": "^2.6.2",
     "gulp-load-plugins": "^1.5.0",
     "jquery": "3.0.0",

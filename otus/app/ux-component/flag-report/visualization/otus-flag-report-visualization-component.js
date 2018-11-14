@@ -14,9 +14,9 @@
       }
     });
 
-  Controller.$inject = [];
+  Controller.$inject = ['otusjs.application.activity.StatusHistoryService'];
 
-  function Controller() {
+  function Controller(StatusHistoryService) {
     var activitiesData = [];
     var self = this;
 
@@ -63,10 +63,6 @@
       var arr = json.data;
       var row_number = arr.length;
       var col_number = arr[0].length;
-
-      var colorScale = d3.scale.quantize()
-        .domain([-1,0,1,2])
-        .range(colors);
 
       svg = d3.select(heatmapId)
         .append("svg")
@@ -156,6 +152,13 @@
           d3.select("#order").property("selectedIndex", 0);
         });
 
+      //Index to lines to d3 
+      var lineIndexOne = -1;
+      var lineIndexTwo = -1;
+      var lineIndexThree = -1;
+      var lineIndexFour = -1;
+      var lineIndexFive = -1;
+
       var row = svg.selectAll(".row")
         .data(json.data)
         .enter().append("g")
@@ -175,33 +178,48 @@
           return i * cellSize;
         })
         .attr("y", function(d, i, j) {
-          return j * cellSize;
+          if(i == 0){
+            lineIndexOne++;
+          }
+          return lineIndexOne * cellSize;
         })
         .attr("rx", 4)
         .attr("ry", 4)
-        .attr("class", function(d, i, j) {
-          return "cell bordered cr" + j + " cc" + i;
+        .attr("class", function(d, i) {
+          if(i == 0){
+            lineIndexTwo++;
+          }
+          return "cell bordered cr" + lineIndexTwo + " cc" + i;
         })
-        .attr("row", function(d, i, j) {
-          return j;
+        .attr("row", function(d, i) {
+          if(i == 0){
+            lineIndexThree++;
+          }
+          return lineIndexThree;
         })
-        .attr("col", function(d, i, j) {
+        .attr("col", function(d, i) {
           return i;
         })
         .attr("width", cellSize)
         .attr("height", cellSize)
         .style("fill", function(d) {
-          if (d != null) return colorScale(d);
+          if (d != null) return StatusHistoryService.getStatusColor(d);
           else return "url(#diagonalHatch)";
         })
-        .on('mouseover', function(d, i, j) {
+        .on('mouseover', function(d, i) {
+          if(i == 0){
+            lineIndexFour++;
+          }
           d3.select('#colLabel_' + i).classed("hover", true);
-          d3.select('#rowLabel_' + j).classed("hover", true);
+          d3.select('#rowLabel_' + lineIndexFour).classed("hover", true);
           tooltip.style("visibility", "visible");
         })
-        .on('mouseout', function(d, i, j) {
+        .on('mouseout', function(d, i) {
+          if(i == 0){
+            lineIndexFive++;
+          }
           d3.select('#colLabel_' + i).classed("hover", false);
-          d3.select('#rowLabel_' + j).classed("hover", false);
+          d3.select('#rowLabel_' + lineIndexFive).classed("hover", false);
           tooltip.style("visibility", "hidden");
         })
         .on("mousemove", function(d, i) {

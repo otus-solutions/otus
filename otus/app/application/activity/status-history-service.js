@@ -44,6 +44,7 @@
     self.listStatus = listStatus;
     self.getStatusValue = getStatusValue;
     self.getStatusLabel = getStatusLabel;
+    self.getStatusColor = getStatusColor;
     self.getLabels = getLabels;
     self.getColors = getColors;
 
@@ -76,6 +77,18 @@
       }
     }
 
+    function getStatusColor(value = null) {
+      if(value!=null){
+        let search = STATUS.find(function (status) {
+          return status.value == value;
+        });
+        let {color} = search;
+        return color;
+      } else {
+        return "";
+      }
+    }
+
     function getLabels() {
       var response = [];
       STATUS.forEach(function (status) {
@@ -83,6 +96,7 @@
       });
       return response;
     }
+
     function getColors() {
       var response = [];
       STATUS.forEach(function (status) {
