@@ -14,28 +14,28 @@
       {
         name: 'CREATED',
         label: 'Criado',
-        color: '#EF5545',
+        color: '#F4415C',
         icon: 'fiber_new',
         value: -1
       },
       {
         name: 'UNREALIZED',
         label: 'Não Realizado',
-        color: '#808080',
+        color: '#CECECE',
         icon: '',
         value: 0
       },
       {
         name: 'SAVED',
         label: 'Salvo',
-        color: '#FCFF82',
+        color: '#F4CA41',
         icon: 'save',
         value: 1
       },
       {
         name: 'FINALIZED',
         label: 'Finalizado',
-        color: '#91EF45',
+        color: '#1ECE8B',
         icon: 'check_circle',
         value: 2
       }
