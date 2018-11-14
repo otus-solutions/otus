@@ -18,6 +18,7 @@ module.exports = function (config) {
     files: [
       /* External dependencies */
       NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
+      NODE_MODULES_ROOT_PATH + 'alasql/dist/alasql.min.js',
       NODE_MODULES_ROOT_PATH + 'babel-polyfill/dist/polyfill.js',
       NODE_MODULES_ROOT_PATH + 'angular-resource/angular-resource.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',

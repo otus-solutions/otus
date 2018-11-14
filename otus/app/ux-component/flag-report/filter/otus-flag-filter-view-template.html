@@ -12,7 +12,7 @@
                 <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
                   <label class="md-subhead">Sigla:</label>
                   <md-select ng-model="$ctrl.selectedAcronym" ng-change="$ctrl.onChangeFilter(null)" ng-disabled="">
-                    <md-option ng-repeat="questionnaire in $ctrl.acronymsList track by $index" value="{{questionnaire}}" ng-click="">
+                    <md-option ng-repeat="questionnaire in $ctrl.acronymsList | orderBy:propertyName track by $index" value="{{questionnaire}}" ng-click="">
                       {{questionnaire}}
                     </md-option>
                   </md-select>
