@@ -9,7 +9,8 @@
       bindings: {
         activitiesData: "=",
         onUpdate: "=",
-        colorsRange: "<"
+        colorsRange: "<",
+        legendRange: "<"
       }
     });
 
@@ -52,7 +53,7 @@
       var viewerHeight = $(document).height();
       var viewerPosTop = 200;
 
-      var legendElementWidth = cellSize * 2;
+      var legendElementWidth = cellSize * 3.2;
 
       var colors = self.colorsRange;
       var svg;
@@ -211,7 +212,7 @@
         .attr("class", "legend")
         .attr("transform", "translate(0,-300)")
         .selectAll(".legendElement")
-        .data(["Criado","Opcional", "Salvo", "Finalizado"])
+        .data(self.legendRange)
         .enter().append("g")
         .attr("class", "legendElement");
 

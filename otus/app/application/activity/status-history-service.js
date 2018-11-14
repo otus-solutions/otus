@@ -19,8 +19,8 @@
         value: -1
       },
       {
-        name: 'OPTIONAL',
-        label: 'Opcional',
+        name: 'UNREALIZED',
+        label: 'Não Realizado',
         color: '#808080',
         icon: '',
         value: 0

@@ -164,7 +164,7 @@
           _setActivity(acronym);
           _setStatus(status);
           self.activitiesData = FlagReportParseData.create(self.rawActivities, acronym, status)
-          self.setActivities(self.activitiesData, acronym, status);
+          self.setActivities(FlagReportParseData.create(self.activitiesView, acronym, status), acronym, status);
         } else if(activities && activities !== self.activities){
           self.setActivities(activities, acronym, status);
         }
@@ -172,7 +172,8 @@
     }
 
     function updatePage(activities = null) {
-        self.setActivities(FlagReportParseData.create(activities), self.selectedAcronym, self.selectedStatus);
+        self.activitiesView = activities;
+        self.setActivities(FlagReportParseData.create(activities, self.selectedAcronym, self.selectedStatus), self.selectedAcronym, self.selectedStatus);
     }
 
     function setActivities(activities) {
@@ -192,7 +193,6 @@
     function _setActivity(acronym) {
       self.selectedAcronym = acronym;
     }
-
 
   }
 

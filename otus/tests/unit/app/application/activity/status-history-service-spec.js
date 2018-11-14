@@ -3,7 +3,7 @@ describe('StatusHistoryService Test', function() {
   var service;
   var Injections = {};
   var UNIT_NAME = 'otusjs.application.activity.StatusHistoryService';
-  var LABELS = ['Criado', 'Opcional', 'Salvo', 'Finalizado'];
+  var LABELS = ['Criado', 'Não Realizado', 'Salvo', 'Finalizado'];
   var COLORS = ['#EF5545', '#808080', '#FCFF82', '#91EF45'];
 
   beforeEach(function() {
@@ -54,8 +54,8 @@ describe('StatusHistoryService Test', function() {
         value: -1
       },
       {
-        name: 'OPTIONAL',
-        label: 'Opcional',
+        name: 'UNREALIZED',
+        label: 'Não Realizado',
         color: '#808080',
         icon: '',
         value: 0
