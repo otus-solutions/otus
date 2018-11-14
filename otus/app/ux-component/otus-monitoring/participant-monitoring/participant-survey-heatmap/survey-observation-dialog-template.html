@@ -12,10 +12,10 @@
     </md-toolbar>
     <md-dialog-content>
       <div class="md-dialog-content">
-        <md-checkbox class="md-block" name="tos" ng-model="isUnnecessary" required>
+        <md-checkbox class="md-block" name="tos" ng-model="isNotApply" required>
           O formulário não será aplicado ao participante
         </md-checkbox>
-        <md-input-container ng-show="isUnnecessary" class="md-block">
+        <md-input-container ng-show="isNotApply" class="md-block">
           <label>Observações</label>
           <textarea ng-model="observation" md-maxlength="150" rows="5" md-select-on-focus></textarea>
         </md-input-container>

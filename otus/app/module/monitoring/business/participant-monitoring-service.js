@@ -2,15 +2,15 @@
   'use strict';
 
   angular
-    .module('otusjs.participant.business')
-    .service('otusjs.participant.business.ParticipantMonitoringService', Service);
+    .module('otusjs.monitoring.business')
+    .service('otusjs.monitoring.business.ParticipantMonitoringService', Service);
 
   Service.$inject = [
     '$filter',
-    'otusjs.participant.repository.ParticipantMonitoringRepositoryService'
+    'otusjs.monitoring.repository.MonitoringCollectionService'
   ];
 
-  function Service($filter, ParticipantMonitoringRepositoryService) {
+  function Service($filter, MonitoringCollectionService) {
     const CREATED = 'CREATED';
     const SAVED = 'SAVED';
     const FINALIZED = 'FINALIZED';
@@ -21,10 +21,10 @@
     var self = this;
     /* Public methods */
     self.getStatusOfSurveys = getStatusOfSurveys;
-    self.defineSurveyWithUnnecessary = defineSurveyWithUnnecessary;
+    self.defineSurveyWithDoesNotApply = defineSurveyWithDoesNotApply;
 
     function getStatusOfSurveys(recruitmentNumber) {
-      // return _buildDataToView(ParticipantMonitoringRepositoryService.getStatusOfSurveys(recruitmentNumber));
+      // return _buildDataToView(MonitoringCollectionService.getStatusOfSurveys(recruitmentNumber));
 
       /**
         TODO: Estrutura deve ser retornada do banco
@@ -447,14 +447,14 @@
       }]);
     }
 
-    function defineSurveyWithUnnecessary(recruitmentNumber, observation, survey) {
+    function defineSurveyWithDoesNotApply(recruitmentNumber, observation, survey) {
       var data = {
         "recruitmentNumber": recruitmentNumber,
         "acronym": survey.acronym,
         "observation": observation
       };
 
-      return ParticipantMonitoringRepositoryService.defineSurveyWithUnnecessary(data);
+      return MonitoringCollectionService.defineSurveyWithDoesNotApply(data);
     }
 
     function _buildDataToView(response) {

@@ -20,6 +20,8 @@
     self.listAcronyms = listAcronyms;
     self.listCenters = listCenters;
     self.getActivitiesProgressReport = getActivitiesProgressReport;
+    self.getStatusOfSurveys = getStatusOfSurveys;
+    self.defineSurveyWithDoesNotApply = defineSurveyWithDoesNotApply;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusMonitoringResource();
@@ -36,7 +38,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.find({'acronym': acronym}).$promise;
+      return _rest.find({ 'acronym': acronym }).$promise;
     }
 
     function listAcronyms() {
@@ -52,11 +54,28 @@
       }
       return _rest.listCenters().$promise;
     }
+
     function getActivitiesProgressReport(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
       return _rest.getActivitiesProgressReport(center).$promise;
+    }
+
+    function getStatusOfSurveys(recruitmentNumber) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.getStatusOfActivities({
+        rn: recruitmentNumber
+      }).$promise;
+    }
+
+    function defineSurveyWithDoesNotApply(data) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.defineSurveyWithDoesNotApply({}, data).$promise;
     }
   }
 }());

@@ -19,8 +19,7 @@
     'otusjs.deploy.ExamsRestService',
     'otusjs.deploy.ParticipantReportRestService',
     'otusjs.deploy.MonitoringRestService',
-    'otusjs.deploy.user.UserAccessRecoveryRestService',
-    'otusjs.deploy.ParticipantMonitoringRestService'
+    'otusjs.deploy.user.UserAccessRecoveryRestService'
   ];
 
   function Service(
@@ -37,8 +36,7 @@
     ExamsRestService,
     ParticipantReportRestService,
     MonitoringRestService,
-    UserAccessRecoveryRestService,
-    ParticipantMonitoringRestService
+    UserAccessRecoveryRestService
   ) {
     var self = this;
 
@@ -68,7 +66,6 @@
       ExamsRestService.initialize();
       ParticipantReportRestService.initialize();
       MonitoringRestService.initialize();
-      ParticipantMonitoringRestService.initialize();
     }
   }
 }());
