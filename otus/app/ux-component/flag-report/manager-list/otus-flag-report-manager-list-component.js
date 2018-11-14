@@ -60,9 +60,10 @@
     }
 
     function downloadCSV(){
+      var name = "relatorio-flags-".concat(new Date().toLocaleDateString());
       var QUERY_ACRONYM = self.selectedAcronym != null ? "SIGLA='"+self.selectedAcronym+"'": "2=2";
       var QUERY_STATUS = self.selectedStatus != null ? "STATUS='"+StatusHistoryService.getStatusLabel(self.selectedStatus)+"'": "3=3";
-      alasql('SELECT * INTO CSV("report-flags.csv",{headers:true}) FROM flags WHERE 1=1 AND '+QUERY_ACRONYM+' AND '+QUERY_STATUS);
+      alasql('SELECT * INTO CSV("'+name+'.csv",{headers:true}) FROM flags WHERE 1=1 AND '+QUERY_ACRONYM+' AND '+QUERY_STATUS);
     }
 
     function _resetData() {
