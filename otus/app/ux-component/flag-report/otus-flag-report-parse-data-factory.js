@@ -10,30 +10,57 @@
 
       self.create = create;
 
-      function create(data) {
+      function create(json, acronym = null, status = null) {
 
-        var currentSummedValue = null;
-        var dataToBeOrganized = [];
+        var obj = {};
+        obj.columns = [];
+        obj.index = [];
+        obj.data = [];
 
-        for (var i = 0; i < data.length; i++) {
-          currentSummedValue = 0;
-          for (var j = 0; j < data[i].activities.length; j++) {
-            currentSummedValue += data[i].activities[j].status;
-          }
-          dataToBeOrganized.push({ data: data[i], value: currentSummedValue });
+        if(!acronym){
+            json[0].activities.forEach(function(activity){
+              obj.columns.push([activity.rn, activity.acronym]);
+            });
+        } else {
+          json[0].activities.forEach(function(activity){
+            if(activity.acronym == acronym)
+              obj.columns.push([activity.rn, activity.acronym]);
+          });
         }
+        json.forEach(function(o){
+          obj.index.push(o.rn);
+          var data = [];
 
-        dataToBeOrganized.sort(function (a, b) {
-          return b.value - a.value;
-        })
+          o.activities.forEach(function(atividade){
+            if(status != null){
+              if(acronym === atividade.acronym){
+                if (status === atividade.status){
+                  data.push(atividade.status);
+                } else {
+                  data.push(null);
+                }
+              } else if (acronym === null){
+                if (status === atividade.status){
+                  data.push(atividade.status);
+                } else {
+                  data.push(null);
+                }
+              }
+            } else {
+              if(acronym === atividade.acronym){
+                data.push(atividade.status);
+              } else if (acronym === null){
+                data.push(atividade.status);
+              }
+            }
 
+          });
 
-        var organizedData = [];
-        for (var i = 0; i < dataToBeOrganized.length; i++) {
-          organizedData.push(dataToBeOrganized[i].data);
-        }
-        return organizedData;
+          obj.data.push(data);
 
+        });
+
+        return obj;
       }
 
       return self;
