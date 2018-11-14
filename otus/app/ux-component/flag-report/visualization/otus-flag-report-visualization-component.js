@@ -156,8 +156,6 @@
       var lineIndexOne = -1;
       var lineIndexTwo = -1;
       var lineIndexThree = -1;
-      var lineIndexFour = -1;
-      var lineIndexFive = -1;
 
       var row = svg.selectAll(".row")
         .data(json.data)
@@ -177,7 +175,7 @@
         .attr("x", function(d, i) {
           return i * cellSize;
         })
-        .attr("y", function(d, i, j) {
+        .attr("y", function(d, i) {
           if(i == 0){
             lineIndexOne++;
           }
@@ -207,19 +205,15 @@
           else return "url(#diagonalHatch)";
         })
         .on('mouseover', function(d, i) {
-          if(i == 0){
-            lineIndexFour++;
-          }
+          var j = d3.select(this).attr("row");
           d3.select('#colLabel_' + i).classed("hover", true);
-          d3.select('#rowLabel_' + lineIndexFour).classed("hover", true);
+          d3.select('#rowLabel_' + j).classed("hover", true);
           tooltip.style("visibility", "visible");
         })
         .on('mouseout', function(d, i) {
-          if(i == 0){
-            lineIndexFive++;
-          }
+          var j = d3.select(this).attr("row");
           d3.select('#colLabel_' + i).classed("hover", false);
-          d3.select('#rowLabel_' + lineIndexFive).classed("hover", false);
+          d3.select('#rowLabel_' + j).classed("hover", false);
           tooltip.style("visibility", "hidden");
         })
         .on("mousemove", function(d, i) {
