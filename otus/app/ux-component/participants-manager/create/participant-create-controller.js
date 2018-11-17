@@ -189,7 +189,7 @@
                       ParticipantMessagesService.showToast("Participante salvo com sucesso!");
                     }
                   } else {
-                    ParticipantMessagesService.showRecruitmentNumberGenerated(response.recruitmentNumber).
+                    ParticipantMessagesService.showRecruitmentNumberGenerated(response).
                       then(function () {
                       _setClear();
                     })

@@ -38,10 +38,10 @@
         .cancel('Voltar'));
     }
 
-    function showRecruitmentNumberGenerated(recruitmentNumber) {
+    function showRecruitmentNumberGenerated(participantData) {
       return $mdDialog.show($mdDialog.alert()
         .title('Novo participante criado')
-        .textContent('Participante criado com número de recutamento:'+recruitmentNumber)
+        .textContent('Participante '+participantData.name+' criado com número de recrutamento: '+participantData.recruitmentNumber)
         .ariaLabel('Confirmação de finalização')
         .ok('Ok'));
     }
