@@ -14,10 +14,12 @@
           <form name="participantForm" layout="column">
             <div layout-gt-xs="row">
               <span flex="10"></span>
-              <md-input-container flex>
-                <label>Número de Recrutamento (máx. 14 dígitos)</label>
-                <input ng-model="$ctrl.recruitmentNumber" numbers-only maxlength="14" id="rn" ng-change="$ctrl.onFilter()">
-                <md-tooltip md-direction="down">Insira no máximo 14 dígitos.</md-tooltip>
+              <md-input-container flex ">
+                <label ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (máx. 14 dígitos)</label>
+                <label ng-if="$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (Gerado automaticamente)</label>
+                <input ng-model="$ctrl.recruitmentNumber" ng-disabled="$ctrl.permissions.autoGenerateRecruitmentNumber" numbers-only maxlength="14" id="rn" ng-change="$ctrl.onFilter()">
+                <md-tooltip md-direction="down" ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber" >Insira no máximo 14 dígitos.</md-tooltip>
+                <md-tooltip md-direction="down" ng-if="$ctrl.permissions.autoGenerateRecruitmentNumber" >Gerado automaticamente pelo sistema.</md-tooltip>
               </md-input-container>
               <span flex="10"></span>
             </div>

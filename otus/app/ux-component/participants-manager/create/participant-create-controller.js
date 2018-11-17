@@ -64,7 +64,7 @@
     }
 
     self.$onChanges = function() {
-      if (!self.permission) {
+      if (!self.permissions.participantRegistration) {
         ApplicationStateService.activateParticipantsList();
       }
     };
@@ -134,7 +134,7 @@
     function _fieldsValidate() {
       var _valid = true;
 
-      if (!self.participant.recruitmentNumber) {
+      if (!self.participant.recruitmentNumber && !self.permissions.autoGenerateRecruitmentNumber) {
         $element.find('#rn').focus();
         _valid = false;
       } else if (!self.participant.name) {
@@ -179,13 +179,20 @@
         ParticipantMessagesService.showSaveDialog()
           .then(function() {
             self.onFilter();
-            if (self.permission) {
+            if (self.permissions.participantRegistration) {
               var _participant = ParticipantFactory.create(self.participant);
               ParticipantManagerService.create(_participant)
                 .then(function(response) {
-                  if (response.recruitmentNumber === self.participant.recruitmentNumber) {
-                    _setClear();
-                    ParticipantMessagesService.showToast("Participante salvo com sucesso!");
+                  if(!self.permissions.autoGenerateRecruitmentNumber){
+                    if (response.recruitmentNumber === self.participant.recruitmentNumber) {
+                      _setClear();
+                      ParticipantMessagesService.showToast("Participante salvo com sucesso!");
+                    }
+                  } else {
+                    ParticipantMessagesService.showRecruitmentNumberGenerated(response.recruitmentNumber).
+                      then(function () {
+                      _setClear();
+                    })
                   }
                 })
                 .catch(function(err) {

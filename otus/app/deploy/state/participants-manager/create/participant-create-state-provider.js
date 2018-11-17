@@ -22,12 +22,12 @@
       parent: STATE.PARTICIPANTS_MANAGER,
       name: STATE.PARTICIPANT_CREATE,
       url: '/' + STATE.PARTICIPANT_CREATE,
-      template: '<otus-participant-create layout="column" permission="$resolve.permission" flex></otus-participant-create>',
+      template: '<otus-participant-create layout="column" permissions="$resolve.permissions" flex></otus-participant-create>',
       data: {
         redirect: _redirect
       },
       resolve: {
-        permission: _loadParticipantRegistration
+        permissions: _loadParticipantRegistration
       }
     };
 
@@ -57,8 +57,10 @@
             SessionContextService.restore();
             return ProjectConfiguration.getProjectConfiguration()
               .then(function(response) {
-                var _permission = response.data.participantRegistration;
-                return _permission;
+                var _permissions = {}
+                _permissions.participantRegistration = response.data.participantRegistration;
+                _permissions.autoGenerateRecruitmentNumber = response.data.autoGenerateRecruitmentNumber;
+                return _permissions;
               });
           } catch (e) {
             console.error(e);

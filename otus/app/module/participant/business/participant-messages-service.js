@@ -15,6 +15,7 @@
 
     const DELAY = 3000;
     self.showClearDialog = showClearDialog;
+    self.showRecruitmentNumberGenerated = showRecruitmentNumberGenerated;
     self.showSaveDialog = showSaveDialog;
     self.showNotSave = showNotSave;
     self.showToast = showToast;
@@ -35,6 +36,14 @@
         .ariaLabel('Confirmação de finalização')
         .ok('Ok')
         .cancel('Voltar'));
+    }
+
+    function showRecruitmentNumberGenerated(recruitmentNumber) {
+      return $mdDialog.show($mdDialog.alert()
+        .title('Novo participante criado')
+        .textContent('Participante criado com número de recutamento:'+recruitmentNumber)
+        .ariaLabel('Confirmação de finalização')
+        .ok('Ok'));
     }
 
     function showNotSave(errorMessage) {
