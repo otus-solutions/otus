@@ -22,13 +22,15 @@
     const DOES_NOT_APPLY = 'DOES_NOT_APPLY';
     const UNDEFINED = 'UNDEFINED';
     const MULTIPLE = 'MULTIPLE';
+    const AMBIGUITY = 'AMBIGUITY';
     const Color = {
-      CREATED: '#f4415c',
-      FINALIZED: '#1ece8b',
-      SAVED: '#f4ca41',
+      CREATED: '#88d8b0',
+      FINALIZED: '#ff6f69',
+      SAVED: '#ffeead',
       DOES_NOT_APPLY: '#cecece',
       UNDEFINED: '#ffffff',
-      MULTIPLE: '#ffa500'
+      MULTIPLE: '#ffcc5c',
+      AMBIGUITY: '#bae1ff'
     };
 
     var self = this;
@@ -64,6 +66,8 @@
           return Color.UNDEFINED;
         case MULTIPLE:
           return Color.MULTIPLE;
+        case AMBIGUITY:
+          return Color.AMBIGUITY;
       }
     };
 
@@ -81,7 +85,7 @@
         clickOutsideToClose: true,
         fullscreen: $scope.customFullscreen
       }).then(function (observation) {
-        if (_defineSurveyWithDoesNotApply(observation, survey)) {
+        if (_defineActivityWithDoesNotApplies(observation, survey)) {
           $mdToast.show(
             $mdToast.simple()
               .textContent('Observação atualizada com sucesso.')
@@ -101,8 +105,9 @@
       ApplicationStateService.getCurrentState();
     };
 
-    function _defineSurveyWithDoesNotApply(observation, survey) {
-      return ParticipantMonitoringService.defineSurveyWithDoesNotApply(self.selectedParticipant.recruitmentNumber, observation, survey);
+    // TODO: Deve ocorrer atualização na self.surveyList
+    function _defineActivityWithDoesNotApplies(observation, survey) {
+      return ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, observation, survey);
     };
 
     function _loadParticipantData() {
@@ -110,7 +115,7 @@
         .getSelectedParticipant()
         .then(function (participantData) {
           self.selectedParticipant = participantData;
-          self.surveyList = ParticipantMonitoringService.getStatusOfSurveys(participantData.recruitmentNumber);
+          self.surveyList = ParticipantMonitoringService.getStatusOfActivities(participantData.recruitmentNumber);
         });
     };
 
@@ -121,17 +126,28 @@
       self.legends.push({ label: 'Não aplicado.', color: Color.DOES_NOT_APPLY });
       self.legends.push({ label: 'Nenhuma atividade.', color: Color.UNDEFINED });
       self.legends.push({ label: 'Multiplas atividades.', color: Color.MULTIPLE });
+      self.legends.push({ label: 'Ambiguidade.', color: Color.AMBIGUITY });
     };
 
     function _DialogController($scope, $mdDialog, survey) {
       $scope.doesNotApply;
       $scope.observation;
+      $scope.description;
+      $scope.information;
 
       onInit();
       function onInit() {
         if (survey.status === DOES_NOT_APPLY) {
           $scope.doesNotApply = true;
           $scope.observation = survey.observation ? survey.observation : '';
+        } else if (survey.status === AMBIGUITY) {
+          $scope.doesNotApply = true;
+          $scope.information = survey.information;
+          $scope.description = survey.description;
+          $scope.observation = survey.observation ? survey.observation : '';
+        } else if (survey.status === MULTIPLE) {
+          $scope.information = survey.information;
+          $scope.description = survey.description;
         } else {
           $scope.doesNotApply = false;
           $scope.observation = survey.observation ? survey.observation : '';
