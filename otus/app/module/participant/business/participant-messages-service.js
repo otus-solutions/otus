@@ -50,7 +50,11 @@
       var rn = errorMessage.match(/\d+/g);
       var msg = errorMessage || 'Ocorreu um problema na inserção de participante.';
       if (rn) {
-        msg = 'Número de recrutamento ' + rn[0] + ' já existente.'
+        if(errorMessage.match(/\RN inconsistency/g)){
+          msg = 'Número de recrutamento deve iniciar com o código do centro.'
+        } else {
+          msg = 'Número de recrutamento ' + rn[0] + ' já existente.'
+        }
       }
       return $mdDialog.show($mdDialog.confirm()
         .title('Não foi possível salvar')

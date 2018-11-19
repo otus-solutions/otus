@@ -73,6 +73,15 @@
       localStorage.removeItem("newParticipant");
     };
 
+    function _getCenterCode(acronym) {
+      var center =  self.centers.filter(function (center) {
+        if(center.acronym === acronym){
+          return center.code;
+        }
+      });
+      return center[0].code;
+    }
+
     function setUserFieldCenter() {
       dashboardContextService
         .getLoggedUser()
@@ -111,11 +120,13 @@
         _setBirthdate(self.birthdate);
       }
       if (self.recruitmentNumber) {
-        self.participant.recruitmentNumber = parseInt(self.recruitmentNumber);
+        self.participant.recruitmentNumber = parseInt(self.centerCode+self.recruitmentNumber);
       }
       if (self.centerFilter) {
+        self.centerCode = _getCenterCode(self.centerFilter);
         self.participant.fieldCenter = {
-          "acronym": self.centerFilter
+          "acronym": self.centerFilter,
+          "code": self.centerCode
         };
       }
       if (!self.participant.late) {
