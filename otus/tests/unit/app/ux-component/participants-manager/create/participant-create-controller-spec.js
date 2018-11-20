@@ -73,6 +73,9 @@ describe('participant-create-controller Test', function() {
         },
         showNotSave: function() {},
         showToast: function() {},
+        showRecruitmentNumberGenerated: function () {
+          return Promise.resolve();
+        }
       });
     });
 
@@ -162,6 +165,7 @@ describe('participant-create-controller Test', function() {
       spyOn(Injections.ParticipantMessagesService, "showSaveDialog").and.callThrough();
       spyOn(Injections.ParticipantMessagesService, "showNotSave").and.callThrough();
       spyOn(Injections.ParticipantMessagesService, "showToast").and.callThrough();
+      spyOn(Injections.ParticipantMessagesService, "showRecruitmentNumberGenerated").and.callThrough();
       spyOn(Injections.ParticipantFactory, "create").and.callThrough();
       spyOn(Injections.ParticipantManagerService, "create").and.callThrough();
     });
@@ -187,6 +191,35 @@ describe('participant-create-controller Test', function() {
               expect(controller.birthdate).not.toBeDefined();
               expect(controller.recruitmentNumber).not.toBeDefined();
               expect(controller.centerFilter).toEqual("RS");
+              done();
+            });
+          });
+        });
+      });
+    });
+
+    it("should save a new participant with auto generate recruitment number ", function(done) {
+      Injections.ProjectFieldCenterService.loadCenters().then(function() {
+        Injections.dashboardContextService.getLoggedUser().then(function() {
+          mockParticipant();
+          controller.onFilter();
+          controller.participant.recruitmentNumber = undefined;
+          controller.permissions.autoGenerateRecruitmentNumber = true;
+          controller.saveParticipant();
+          expect(Injections.ParticipantMessagesService.showSaveDialog).toHaveBeenCalledTimes(1);
+          Injections.ParticipantMessagesService.showSaveDialog().then(function() {
+            expect(Injections.ParticipantFactory.create).toHaveBeenCalledTimes(1);
+            expect(Injections.ParticipantManagerService.create).toHaveBeenCalledTimes(1);
+            Injections.ParticipantManagerService.create().then(function() {
+              expect(Injections.ParticipantMessagesService.showRecruitmentNumberGenerated).toHaveBeenCalledTimes(1);
+              Injections.ParticipantMessagesService.showRecruitmentNumberGenerated().then(function () {
+                expect(controller.participant).toEqual({});
+                expect(controller.birthdate).not.toBeDefined();
+                expect(controller.recruitmentNumber).not.toBeDefined();
+                expect(controller.centerFilter).toEqual("RS");
+                done();
+              });
+            }).catch(function(err) {
               done();
             });
           });
@@ -240,7 +273,8 @@ describe('participant-create-controller Test', function() {
     controller.participant.name = "Fulano";
     controller.participant.sex = "M";
     controller.birthdate = new Date();
-    controller.permission = true;
+    controller.permissions = {};
+    controller.permissions.participantRegistration = true;
   }
 
 

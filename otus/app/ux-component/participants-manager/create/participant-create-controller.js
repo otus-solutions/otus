@@ -64,7 +64,7 @@
     }
 
     self.$onChanges = function() {
-      if (!self.permission) {
+      if (!self.permissions.participantRegistration) {
         ApplicationStateService.activateParticipantsList();
       }
     };
@@ -72,6 +72,15 @@
     self.$onDestroy = function() {
       localStorage.removeItem("newParticipant");
     };
+
+    function _getCenterCode(acronym) {
+      var center =  self.centers.filter(function (center) {
+        if(center.acronym === acronym){
+          return center.code;
+        }
+      });
+      return center[0].code;
+    }
 
     function setUserFieldCenter() {
       dashboardContextService
@@ -111,11 +120,13 @@
         _setBirthdate(self.birthdate);
       }
       if (self.recruitmentNumber) {
-        self.participant.recruitmentNumber = parseInt(self.recruitmentNumber);
+        self.participant.recruitmentNumber = parseInt(self.centerCode+self.recruitmentNumber);
       }
       if (self.centerFilter) {
+        self.centerCode = _getCenterCode(self.centerFilter);
         self.participant.fieldCenter = {
-          "acronym": self.centerFilter
+          "acronym": self.centerFilter,
+          "code": self.centerCode
         };
       }
       if (!self.participant.late) {
@@ -134,7 +145,7 @@
     function _fieldsValidate() {
       var _valid = true;
 
-      if (!self.participant.recruitmentNumber) {
+      if (!self.participant.recruitmentNumber && !self.permissions.autoGenerateRecruitmentNumber) {
         $element.find('#rn').focus();
         _valid = false;
       } else if (!self.participant.name) {
@@ -179,13 +190,20 @@
         ParticipantMessagesService.showSaveDialog()
           .then(function() {
             self.onFilter();
-            if (self.permission) {
+            if (self.permissions.participantRegistration) {
               var _participant = ParticipantFactory.create(self.participant);
               ParticipantManagerService.create(_participant)
                 .then(function(response) {
-                  if (response.recruitmentNumber === self.participant.recruitmentNumber) {
-                    _setClear();
-                    ParticipantMessagesService.showToast("Participante salvo com sucesso!");
+                  if(!self.permissions.autoGenerateRecruitmentNumber){
+                    if (response.recruitmentNumber === self.participant.recruitmentNumber) {
+                      _setClear();
+                      ParticipantMessagesService.showToast("Participante salvo com sucesso!");
+                    }
+                  } else {
+                    ParticipantMessagesService.showRecruitmentNumberGenerated(response).
+                      then(function () {
+                      _setClear();
+                    })
                   }
                 })
                 .catch(function(err) {

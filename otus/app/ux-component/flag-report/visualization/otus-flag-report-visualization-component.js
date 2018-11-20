@@ -62,7 +62,7 @@
 
       var arr = json.data;
       var row_number = arr.length;
-      var col_number = arr[0].length;
+      var col_number = arr[0] ? arr[0].length : 0;
 
       svg = d3.select(heatmapId)
         .append("svg")

@@ -1,6 +1,6 @@
 <flag-filter-view-component centers="$ctrl.centers" activities-status="$ctrl.status" acronyms-list="$ctrl.acronymsList" on-update="$ctrl.updateData" ng-if="$ctrl.ready"></flag-filter-view-component>
 <div layout="row" layout-align="center center">
-   <md-button class="md-accent md-raised" ng-click="$ctrl.downloadCSV()">EXPORTAR <md-icon>get_app</md-icon>
+   <md-button ng-disabled="!$ctrl.activities.data.length" class="md-accent md-raised" ng-click="$ctrl.downloadCSV()">EXPORTAR <md-icon>get_app</md-icon>
     <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados.</md-tooltip>
   </md-button>
   <span flex></span>
@@ -8,5 +8,8 @@
 </div>
 <md-divider></md-divider>
 <md-content flex layout="row">
-  <otus-flag-report-visualization activities-data="$ctrl.activities" on-update="$ctrl.setActivities" colors-range="$ctrl.colors" legend-range="$ctrl.labels" flex ng-if="$ctrl.ready" layout-padding=""></otus-flag-report-visualization>
+  <otus-flag-report-visualization ng-show="$ctrl.activities.data.length" activities-data="$ctrl.activities" on-update="$ctrl.setActivities" colors-range="$ctrl.colors" legend-range="$ctrl.labels" flex ng-if="$ctrl.ready" layout-padding=""></otus-flag-report-visualization>
+  <div flex ng-if="!$ctrl.activities.data.length" layout="row" style="margin-top: 30px" layout-align="center top" >
+    <span class="md-display-1" >Não existem atividades disponíveis para visualização</span>
+  </div>
 </md-content>
