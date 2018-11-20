@@ -10,12 +10,26 @@
         </md-button>
       </div>
     </md-toolbar>
+    <!-- more observation -->
+    <div ng-if="description">
+      <md-dialog-content>
+        <div class="md-dialog-content">
+          <p>{{description}}</p>
+          <br>
+          <div ng-repeat="info in information">
+            <p> <b>Status:</b> {{info.status}}, <b>Data:</b> {{info.date}};</p>
+          </div>
+        </div>
+      </md-dialog-content>
+      <md-divider></md-divider>
+    </div>
+    <!-- default observation -->
     <md-dialog-content>
       <div class="md-dialog-content">
-        <md-checkbox class="md-block" name="tos" ng-model="isNotApply" required>
+        <md-checkbox class="md-block" name="tos" ng-model="doesNotApply" required>
           O formulário não será aplicado ao participante
         </md-checkbox>
-        <md-input-container ng-show="isNotApply" class="md-block">
+        <md-input-container ng-show="doesNotApply" class="md-block">
           <label>Observações</label>
           <textarea ng-model="observation" md-maxlength="150" rows="5" md-select-on-focus></textarea>
         </md-input-container>
