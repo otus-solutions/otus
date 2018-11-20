@@ -14,7 +14,10 @@
     <div ng-if="description">
       <md-dialog-content>
         <div class="md-dialog-content">
-          <p>{{description}}</p>
+          <div layout="row">
+            <md-icon class="md-warn" layout-margin>warning</md-icon>
+            <p layout-align="center center" layout-margin>{{description}}</p>
+          </div>
           <br>
           <div ng-repeat="info in information">
             <p> <b>Status:</b> {{info.status}}, <b>Data:</b> {{info.date}};</p>

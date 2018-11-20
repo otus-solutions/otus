@@ -323,77 +323,80 @@
       return MonitoringCollectionService.defineActivityWithDoesNotApplies(data);
     };
 
+
+    function buildActivityStatus(data) {
+      if (data.doesNotApply) {
+        if (data.activities.length == 0) {
+          return {
+            'acronym': data.acronym,
+            'name': data.name,
+            'status': DOES_NOT_APPLY,
+            'observation': data.doesNotApply ? data.doesNotApply.observation : undefined
+          };
+        } else {
+          return {
+            'acronym': data.acronym,
+            'name': data.name,
+            'status': AMBIGUITY,
+            'description': AMBIGUITY_STATE_DESCRIPTION,
+            'observation': data.doesNotApply ? data.doesNotApply.observation : undefined
+          };
+        }
+      } else if (data.activities.length == 0) {
+        return {
+          'acronym': data.acronym,
+          'name': data.name,
+          'status': UNDEFINED
+        };
+      } else if (data.activities.length > 1) {
+        var information = [];
+        data.activities.filter(function (activity) {
+          var length = activity.statusHistory.length;
+          information.push({
+            'status': _buildStatusToPTbr(activity.statusHistory[length - 1].name),
+            'date': $filter('date')(activity.statusHistory[length - 1].date, 'dd/MM/yyyy')
+          });
+        });
+        return {
+          'acronym': data.acronym,
+          'name': data.name,
+          'status': MULTIPLE,
+          'description': MULTIPLE_STATE_DESCRIPTION,
+          'information': information
+        };
+      } else if (data.activities.length == 1) {
+        var length = data.activities[0].statusHistory.length;
+        switch (data.activities[0].statusHistory[length - 1].name) {
+          case CREATED:
+            return {
+              'acronym': data.acronym,
+              'name': data.name,
+              'status': CREATED,
+              'date': $filter('date')(data.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
+            };
+          case SAVED:
+            return {
+              'acronym': data.acronym,
+              'name': data.name,
+              'status': SAVED,
+              'date': $filter('date')(data.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
+            };
+          case FINALIZED:
+            return {
+              'acronym': data.acronym,
+              'name': data.name,
+              'status': FINALIZED,
+              'date': $filter('date')(data.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
+            };
+        }
+      }
+      return data;
+    };
+
     function _buildDataToView(response) {
       var data = [];
       response.filter(function (survey) {
-        if (survey.doesNotApply) {
-          if (survey.activities.length == 0) {
-            data.push({
-              'acronym': survey.acronym,
-              'name': survey.name,
-              'status': DOES_NOT_APPLY,
-              'observation': survey.doesNotApply ? survey.doesNotApply.observation : undefined
-            });
-          } else {
-            data.push({
-              'acronym': survey.acronym,
-              'name': survey.name,
-              'status': AMBIGUITY,
-              'description': AMBIGUITY_STATE_DESCRIPTION,
-              'observation': survey.doesNotApply ? survey.doesNotApply.observation : undefined
-            });
-          }
-        } else if (survey.activities.length == 0) {
-          data.push({
-            'acronym': survey.acronym,
-            'name': survey.name,
-            'status': UNDEFINED
-          });
-        } else if (survey.activities.length > 1) {
-          var information = [];
-          survey.activities.filter(function (activity) {
-            var length = activity.statusHistory.length;
-            information.push({
-              'status': _buildStatusToPTbr(activity.statusHistory[length - 1].name),
-              'date': $filter('date')(activity.statusHistory[length - 1].date, 'dd/MM/yyyy')
-            });
-          });
-          data.push({
-            'acronym': survey.acronym,
-            'name': survey.name,
-            'status': MULTIPLE,
-            'description': MULTIPLE_STATE_DESCRIPTION,
-            'information': information
-          });
-        } else if (survey.activities.length == 1) {
-          var length = survey.activities[0].statusHistory.length;
-          switch (survey.activities[0].statusHistory[length - 1].name) {
-            case CREATED:
-              data.push({
-                'acronym': survey.acronym,
-                'name': survey.name,
-                'status': CREATED,
-                'date': $filter('date')(survey.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
-              });
-              break;
-            case SAVED:
-              data.push({
-                'acronym': survey.acronym,
-                'name': survey.name,
-                'status': SAVED,
-                'date': $filter('date')(survey.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
-              });
-              break;
-            case FINALIZED:
-              data.push({
-                'acronym': survey.acronym,
-                'name': survey.name,
-                'status': FINALIZED,
-                'date': $filter('date')(survey.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
-              });
-              break;
-          }
-        }
+        data.push(buildActivityStatus(survey));
       });
       return data;
     };
