@@ -68,10 +68,9 @@
       } else if (data.activities.length > 1) {
         var information = [];
         data.activities.filter(function (activity) {
-          var length = activity.statusHistory.length;
           information.push({
-            'status': _buildStatusToPTbr(activity.statusHistory[length - 1].name),
-            'date': $filter('date')(activity.statusHistory[length - 1].date, 'dd/MM/yyyy')
+            'status': _buildStatusToPTbr(activity.statusHistory.name),
+            'date': $filter('date')(activity.statusHistory.date, 'dd/MM/yyyy')
           });
         });
         return {
@@ -82,28 +81,27 @@
           'information': information
         };
       } else if (data.activities.length == 1) {
-        var length = data.activities[0].statusHistory.length;
-        switch (data.activities[0].statusHistory[length - 1].name) {
+        switch (data.activities[0].statusHistory.name) {
           case CREATED:
             return {
               'acronym': data.acronym,
               'name': data.name,
               'status': CREATED,
-              'date': $filter('date')(data.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
+              'date': $filter('date')(data.activities[0].statusHistory.date, 'dd/MM/yyyy')
             };
           case SAVED:
             return {
               'acronym': data.acronym,
               'name': data.name,
               'status': SAVED,
-              'date': $filter('date')(data.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
+              'date': $filter('date')(data.activities[0].statusHistory.date, 'dd/MM/yyyy')
             };
           case FINALIZED:
             return {
               'acronym': data.acronym,
               'name': data.name,
               'status': FINALIZED,
-              'date': $filter('date')(data.activities[0].statusHistory[length - 1].date, 'dd/MM/yyyy')
+              'date': $filter('date')(data.activities[0].statusHistory.date, 'dd/MM/yyyy')
             };
         }
       }
@@ -132,5 +130,4 @@
     };
 
   }
-
 }());
