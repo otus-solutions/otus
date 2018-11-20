@@ -9,13 +9,14 @@
     '$mdToast',
     '$mdDialog',
     '$scope',
+    'otusjs.deploy.LoadingScreenService',
     'otusjs.otus.dashboard.core.EventService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.monitoring.business.ParticipantMonitoringService',
   ];
 
-  function Controller($mdToast, $mdDialog, $scope, EventService, ApplicationStateService, DashboardService, ParticipantMonitoringService) {
+  function Controller($mdToast, $mdDialog, $scope, LoadingScreenService, EventService, ApplicationStateService, DashboardService, ParticipantMonitoringService) {
     const CREATED = 'CREATED';
     const SAVED = 'SAVED';
     const FINALIZED = 'FINALIZED';
@@ -75,7 +76,7 @@
       self.selectedParticipant = selectedParticipant;
     };
 
-    function showObservation(event, survey) {
+    function showObservation(event, index, survey) {
       $mdDialog.show({
         locals: { survey: survey },
         controller: _DialogController,
@@ -85,17 +86,20 @@
         clickOutsideToClose: true,
         fullscreen: $scope.customFullscreen
       }).then(function (observation) {
-        if (_defineActivityWithDoesNotApplies(observation, survey)) {
+        LoadingScreenService.start();
+        if (_defineActivityWithDoesNotApplies(observation, index, survey)) {
+          LoadingScreenService.finish();
           $mdToast.show(
             $mdToast.simple()
               .textContent('Observação atualizada com sucesso.')
-              .hideDelay(3000)
+              .hideDelay(5000)
           );
         } else {
+          LoadingScreenService.finish();
           $mdToast.show(
             $mdToast.simple()
               .textContent('Ocorreu um erro. Tente novamente mais tarde.')
-              .hideDelay(3000)
+              .hideDelay(5000)
           );
         }
       }, function () { });
@@ -105,9 +109,10 @@
       ApplicationStateService.getCurrentState();
     };
 
-    // TODO: Deve ocorrer atualização na self.surveyList
-    function _defineActivityWithDoesNotApplies(observation, survey) {
-      return ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, observation, survey);
+    function _defineActivityWithDoesNotApplies(observation, index, survey) {
+      var response = ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, observation, survey);
+      self.surveyList[index] = ParticipantMonitoringService.buildActivityStatus(response);
+      return response;
     };
 
     function _loadParticipantData() {

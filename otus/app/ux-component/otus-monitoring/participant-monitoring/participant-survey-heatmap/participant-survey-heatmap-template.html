@@ -49,7 +49,7 @@
                 <md-tooltip>{{ survey.name }}</md-tooltip>
               </div>
               <div flex='25' layout="column" layout-align="center stretch">
-                <md-button ng-click="$ctrl.showObservation($event, survey)" class="md-icon-button" aria-label="Observações">
+                <md-button ng-click="$ctrl.showObservation($event,  $index, survey)" class="md-icon-button" aria-label="Observações">
                   <md-icon>info</md-icon>
                   <md-tooltip md-direction="bottom">Observações</md-tooltip>
                 </md-button>
