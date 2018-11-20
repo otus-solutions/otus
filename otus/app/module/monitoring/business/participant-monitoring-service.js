@@ -31,10 +31,10 @@
       return _buildDataToView(MonitoringCollectionService.getStatusOfActivities(recruitmentNumber));
     };
 
-    function defineActivityWithDoesNotApplies(recruitmentNumber, observation, survey) {
+    function defineActivityWithDoesNotApplies(recruitmentNumber, observation, activity) {
       var data = {
         "recruitmentNumber": recruitmentNumber,
-        "acronym": survey.acronym,
+        "acronym": activity.acronym,
         "observation": observation
       };
 
@@ -111,9 +111,11 @@
     };
 
     function _buildDataToView(response) {
+      if (!response)
+        return;
       var data = [];
-      response.filter(function (survey) {
-        data.push(buildActivityStatus(survey));
+      response.filter(function (activity) {
+        data.push(buildActivityStatus(activity));
       });
       return data;
     };

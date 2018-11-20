@@ -120,7 +120,7 @@
             });
         });
 
-      return request.promise;
+      return;
     }
 
     function defineActivityWithDoesNotApplies(data) {
@@ -138,7 +138,7 @@
             });
         });
 
-      return request.promise;
+      return;
     }
   }
 }());

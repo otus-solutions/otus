@@ -35,7 +35,8 @@
     };
 
     var self = this;
-    self.surveyList = [];
+    self.ERROR_MESSAGE = 'Atualmente não existem nenhum formulário disponível no sistema';
+    self.activityList = [];
     self.legends = [];
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -53,8 +54,8 @@
       self.selectedParticipant = null;
     };
 
-    function getFlagColor(survey) {
-      switch (survey.status) {
+    function getFlagColor(activity) {
+      switch (activity.status) {
         case CREATED:
           return Color.CREATED;
         case SAVED:
@@ -76,18 +77,18 @@
       self.selectedParticipant = selectedParticipant;
     };
 
-    function showObservation(event, index, survey) {
+    function showObservation(event, index, activity) {
       $mdDialog.show({
-        locals: { survey: survey },
+        locals: { activity: activity },
         controller: _DialogController,
-        templateUrl: 'app/ux-component/otus-monitoring/participant-monitoring/participant-survey-heatmap/survey-observation-dialog-template.html',
+        templateUrl: 'app/ux-component/otus-monitoring/participant-monitoring/participant-activity-heatmap/activity-observation-dialog-template.html',
         parent: angular.element(document.body),
         targetEvent: event,
         clickOutsideToClose: true,
         fullscreen: $scope.customFullscreen
       }).then(function (observation) {
         LoadingScreenService.start();
-        if (_defineActivityWithDoesNotApplies(observation, index, survey)) {
+        if (_defineActivityWithDoesNotApplies(observation, index, activity)) {
           LoadingScreenService.finish();
           $mdToast.show(
             $mdToast.simple()
@@ -109,9 +110,9 @@
       ApplicationStateService.getCurrentState();
     };
 
-    function _defineActivityWithDoesNotApplies(observation, index, survey) {
-      var response = ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, observation, survey);
-      self.surveyList[index] = ParticipantMonitoringService.buildActivityStatus(response);
+    function _defineActivityWithDoesNotApplies(observation, index, activity) {
+      var response = ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, observation, activity);
+      self.activityList[index] = ParticipantMonitoringService.buildActivityStatus(response);
       return response;
     };
 
@@ -120,7 +121,7 @@
         .getSelectedParticipant()
         .then(function (participantData) {
           self.selectedParticipant = participantData;
-          self.surveyList = ParticipantMonitoringService.getStatusOfActivities(participantData.recruitmentNumber);
+          self.activityList = ParticipantMonitoringService.getStatusOfActivities(participantData.recruitmentNumber);
         });
     };
 
@@ -134,7 +135,7 @@
       self.legends.push({ label: 'Ambiguidade.', color: Color.AMBIGUITY });
     };
 
-    function _DialogController($scope, $mdDialog, survey) {
+    function _DialogController($scope, $mdDialog, activity) {
       $scope.doesNotApply;
       $scope.observation;
       $scope.description;
@@ -142,20 +143,20 @@
 
       onInit();
       function onInit() {
-        if (survey.status === DOES_NOT_APPLY) {
+        if (activity.status === DOES_NOT_APPLY) {
           $scope.doesNotApply = true;
-          $scope.observation = survey.observation ? survey.observation : '';
-        } else if (survey.status === AMBIGUITY) {
+          $scope.observation = activity.observation ? activity.observation : '';
+        } else if (activity.status === AMBIGUITY) {
           $scope.doesNotApply = true;
-          $scope.information = survey.information;
-          $scope.description = survey.description;
-          $scope.observation = survey.observation ? survey.observation : '';
-        } else if (survey.status === MULTIPLE) {
-          $scope.information = survey.information;
-          $scope.description = survey.description;
+          $scope.information = activity.information;
+          $scope.description = activity.description;
+          $scope.observation = activity.observation ? activity.observation : '';
+        } else if (activity.status === MULTIPLE) {
+          $scope.information = activity.information;
+          $scope.description = activity.description;
         } else {
           $scope.doesNotApply = false;
-          $scope.observation = survey.observation ? survey.observation : '';
+          $scope.observation = activity.observation ? activity.observation : '';
         }
       }
 
