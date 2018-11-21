@@ -24,7 +24,7 @@
     const UNDEFINED = 'UNDEFINED';
     const MULTIPLE = 'MULTIPLE';
     const AMBIGUITY = 'AMBIGUITY';
-    const Color = {
+    const COLOR = {
       CREATED: '#88d8b0',
       FINALIZED: '#ff6f69',
       SAVED: '#ffeead',
@@ -57,19 +57,19 @@
     function getFlagColor(activity) {
       switch (activity.status) {
         case CREATED:
-          return Color.CREATED;
+          return COLOR.CREATED;
         case SAVED:
-          return Color.SAVED;
+          return COLOR.SAVED;
         case FINALIZED:
-          return Color.FINALIZED;
+          return COLOR.FINALIZED;
         case DOES_NOT_APPLY:
-          return Color.DOES_NOT_APPLY;
+          return COLOR.DOES_NOT_APPLY;
         case UNDEFINED:
-          return Color.UNDEFINED;
+          return COLOR.UNDEFINED;
         case MULTIPLE:
-          return Color.MULTIPLE;
+          return COLOR.MULTIPLE;
         case AMBIGUITY:
-          return Color.AMBIGUITY;
+          return COLOR.AMBIGUITY;
       }
     };
 
@@ -122,17 +122,17 @@
         .then(function (participantData) {
           self.selectedParticipant = participantData;
           self.activityList = ParticipantMonitoringService.getStatusOfActivities(participantData.recruitmentNumber);
-        });
+        }).catch(function () {});
     };
 
     function _buildLegend() {
-      self.legends.push({ label: 'Criado.', color: Color.CREATED });
-      self.legends.push({ label: 'Salvo.', color: Color.SAVED });
-      self.legends.push({ label: 'Finalizado.', color: Color.FINALIZED });
-      self.legends.push({ label: 'Não aplicado.', color: Color.DOES_NOT_APPLY });
-      self.legends.push({ label: 'Nenhuma atividade.', color: Color.UNDEFINED });
-      self.legends.push({ label: 'Multiplas atividades.', color: Color.MULTIPLE });
-      self.legends.push({ label: 'Ambiguidade.', color: Color.AMBIGUITY });
+      self.legends.push({ label: 'Criado.', color: COLOR.CREATED });
+      self.legends.push({ label: 'Salvo.', color: COLOR.SAVED });
+      self.legends.push({ label: 'Finalizado.', color: COLOR.FINALIZED });
+      self.legends.push({ label: 'Não aplicado.', color: COLOR.DOES_NOT_APPLY });
+      self.legends.push({ label: 'Nenhuma atividade.', color: COLOR.UNDEFINED });
+      self.legends.push({ label: 'Multiplas atividades.', color: COLOR.MULTIPLE });
+      self.legends.push({ label: 'Ambiguidade.', color: COLOR.AMBIGUITY });
     };
 
     function _DialogController($scope, $mdDialog, activity) {
