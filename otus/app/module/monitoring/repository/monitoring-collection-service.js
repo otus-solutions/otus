@@ -13,7 +13,7 @@
 
   function Service($q, ModuleService, MonitoringLocalStorageService) {
     var self = this;
-    let _remoteStorage = ModuleService.getMonitoringRemoteStorage();
+    var _remoteStorage = ModuleService.getMonitoringRemoteStorage();
 
     self.find = find;
     self.listCenters = listCenters;
@@ -114,13 +114,13 @@
             .getStatusOfActivities(recruitmentNumber)
             .then(function (response) {
               request.resolve(response.data);
+              return request.promise;
             })
             .catch(function (e) {
               request.reject(e);
+              return;
             });
         });
-
-      return;
     }
 
     function defineActivityWithDoesNotApplies(data) {
@@ -132,13 +132,13 @@
             .defineActivityWithDoesNotApplies(data)
             .then(function (response) {
               request.resolve(response.data);
+              return request.promise;
             })
             .catch(function (e) {
               request.reject(e);
+              return;
             });
         });
-
-      return;
     }
   }
 }());
