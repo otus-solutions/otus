@@ -86,9 +86,9 @@
         targetEvent: event,
         clickOutsideToClose: true,
         fullscreen: $scope.customFullscreen
-      }).then(function (observation) {
+      }).then(function (result) {
         LoadingScreenService.start();
-        if (_defineActivityWithDoesNotApplies(observation, index, activity)) {
+        if (_defineActivityWithDoesNotApplies(result, index, activity)) {
           LoadingScreenService.finish();
           $mdToast.show(
             $mdToast.simple()
@@ -110,10 +110,28 @@
       ApplicationStateService.getCurrentState();
     };
 
-    function _defineActivityWithDoesNotApplies(observation, index, activity) {
-      var response = ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, observation, activity);
-      self.activityList[index] = ParticipantMonitoringService.buildActivityStatus(response);
-      return response;
+    function _defineActivityWithDoesNotApplies(result, index, activity) {
+      var ParticipantActivityReportLists = ParticipantMonitoringService.getParticipantActivityReportLists();
+
+      if(result.doesNotApply){
+        // var response = ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, observation, activity);
+      } else if(ParticipantActivityReportLists[index].doesNotApply) {
+        // var response = ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, null, activity);
+      }
+
+
+      if (result.doesNotApply) {
+        ParticipantActivityReportLists[index].doesNotApply = {
+          "recruitmentNumber": self.selectedParticipant.recruitmentNumber,
+          "acronym": ParticipantActivityReportLists[index].acronym,
+          "observation": result.observation
+        }
+      } else {
+        delete ParticipantActivityReportLists[index].doesNotApply;
+      }
+
+      self.activityList[index] = ParticipantMonitoringService.buildActivityStatus(ParticipantActivityReportLists[index]);
+      return true;
     };
 
     function _loadParticipantData() {
@@ -169,7 +187,11 @@
       };
 
       $scope.update = function () {
-        $mdDialog.hide($scope.observation);
+        var result = {
+          observation: $scope.observation,
+          doesNotApply: $scope.doesNotApply
+        }
+        $mdDialog.hide(result);
       };
     };
   }
