@@ -141,8 +141,9 @@
         .getSelectedParticipant()
         .then(function (participantData) {
           self.selectedParticipant = participantData;
-          ParticipantMonitoringService.buildActivityStatusList(participantData.recruitmentNumber);
-          self.activityList = ParticipantMonitoringService.getActivityStatusList();
+          ParticipantMonitoringService.buildActivityStatusList(participantData.recruitmentNumber).then(function (result) {
+              self.activityList = result
+          });
         }).catch(function () { });
     };
 

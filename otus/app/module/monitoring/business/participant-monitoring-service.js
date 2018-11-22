@@ -24,18 +24,20 @@
     self.participantActivityStatusList = [];
     /* Public methods */
     self.buildActivityStatusList = buildActivityStatusList;
-    self.getActivityStatusList = getActivityStatusList;
     self.buildActivityStatus = buildActivityStatus;
     self.defineActivityWithDoesNotApplies = defineActivityWithDoesNotApplies;
     self.deleteNotAppliesOfActivity = deleteNotAppliesOfActivity;
 
     function buildActivityStatusList(recruitmentNumber) {
-      self.participantActivityStatusList = MonitoringCollectionService.getStatusOfActivities(recruitmentNumber);
+      var defer = $q.defer();
+      MonitoringCollectionService.getStatusOfActivities(recruitmentNumber).then(function (result) {
+        self.participantActivityStatusList = result;
+        defer.resolve(_buildDataToView(result));
+      }).catch(function () {
+        defer.reject()
+      });
+      return defer.promise;
     };
-
-    function getActivityStatusList() {
-      return _buildDataToView(self.participantActivityStatusList);
-    }
 
     function buildActivityStatus(data) {
       if (data.doesNotApply) {
@@ -131,7 +133,7 @@
     function deleteNotAppliesOfActivity(recruitmentNumber, oldActivity) {
       var defer = $q.defer();
 
-      MonitoringCollectionService.deleteNotAppliesOfActivity(recruitmentNumber,oldActivity.acronym).then(function (response) {
+      MonitoringCollectionService.deleteNotAppliesOfActivity(recruitmentNumber, oldActivity.acronym).then(function (response) {
         self.participantActivityStatusList.filter(function (activity) {
           if (activity.acronym === oldActivity.acronym) {
             delete activity.doesNotApply;
