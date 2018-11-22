@@ -29,12 +29,12 @@
     <!-- default observation -->
     <md-dialog-content>
       <div class="md-dialog-content">
-        <md-checkbox class="md-block" name="tos" ng-model="doesNotApply" required>
+        <md-checkbox ng-change="change()" ng-model="doesNotApply" name="doesNotApply" class="md-block">
           O formulário não será aplicado ao participante
         </md-checkbox>
         <md-input-container ng-show="doesNotApply" class="md-block">
           <label>Observações</label>
-          <textarea ng-model="observation" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+          <textarea ng-change="change()" ng-model="observation" md-maxlength="150" rows="5" md-select-on-focus></textarea>
         </md-input-container>
       </div>
     </md-dialog-content>
@@ -42,7 +42,7 @@
       <md-button aria-label="cancelar" ng-click="cancel()">
         Cancelar
       </md-button>
-      <md-button class="md-raised md-primary" aria-label="atualizar" ng-click="update()">
+      <md-button ng-disabled="disable" class="md-raised md-primary" aria-label="atualizar" ng-click="update()">
         Salvar
       </md-button>
     </md-dialog-actions>

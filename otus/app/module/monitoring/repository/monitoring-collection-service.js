@@ -21,6 +21,7 @@
     self.getStatusOfActivities = getStatusOfActivities;
     self.getActivitiesProgressReport = getActivitiesProgressReport;
     self.defineActivityWithDoesNotApplies = defineActivityWithDoesNotApplies;
+    self.deleteNotAppliesOfActivity = deleteNotAppliesOfActivity;
 
     function listAcronyms() {
       var request = $q.defer();
@@ -130,6 +131,24 @@
         .then(function (remoteStorage) {
           return remoteStorage
             .defineActivityWithDoesNotApplies(data)
+            .then(function (response) {
+              request.resolve(response.data);
+              return request.promise;
+            })
+            .catch(function (e) {
+              request.reject(e);
+              return;
+            });
+        });
+    }
+
+    function deleteNotAppliesOfActivity(data) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .deleteNotAppliesOfActivity(data)
             .then(function (response) {
               request.resolve(response.data);
               return request.promise;

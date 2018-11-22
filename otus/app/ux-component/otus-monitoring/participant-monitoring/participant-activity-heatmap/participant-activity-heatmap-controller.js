@@ -48,9 +48,9 @@
 
     /* Lifecycle methods */
     function onInit() {
-      _loadParticipantData();
+      _loadData();
       _buildLegend();
-      EventService.onParticipantSelected(_loadParticipantData);
+      EventService.onParticipantSelected(_loadData);
       self.selectedParticipant = null;
     };
 
@@ -86,17 +86,15 @@
         targetEvent: event,
         clickOutsideToClose: true,
         fullscreen: $scope.customFullscreen
-      }).then(function (result) {
+      }).then(function (observation) {
         LoadingScreenService.start();
-        if (_defineActivityWithDoesNotApplies(result, index, activity)) {
-          LoadingScreenService.finish();
+        if (_defineActivityWithDoesNotApplies(observation, index, activity)) {
           $mdToast.show(
             $mdToast.simple()
-              .textContent('Observação atualizada com sucesso.')
+              .textContent('Atualização realizada com sucesso.')
               .hideDelay(5000)
           );
         } else {
-          LoadingScreenService.finish();
           $mdToast.show(
             $mdToast.simple()
               .textContent('Ocorreu um erro. Tente novamente mais tarde.')
@@ -110,37 +108,38 @@
       ApplicationStateService.getCurrentState();
     };
 
-    function _defineActivityWithDoesNotApplies(result, index, activity) {
-      var ParticipantActivityReportLists = ParticipantMonitoringService.getParticipantActivityReportLists();
-
-      if(result.doesNotApply){
-        // var response = ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, observation, activity);
-      } else if(ParticipantActivityReportLists[index].doesNotApply) {
-        // var response = ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, null, activity);
-      }
-
-
-      if (result.doesNotApply) {
-        ParticipantActivityReportLists[index].doesNotApply = {
-          "recruitmentNumber": self.selectedParticipant.recruitmentNumber,
-          "acronym": ParticipantActivityReportLists[index].acronym,
-          "observation": result.observation
-        }
+    function _defineActivityWithDoesNotApplies(observation, index, activity) {
+      if (observation) {
+        ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, observation, activity)
+          .then(function (response) {
+            self.activityList[index] = ParticipantMonitoringService.buildActivityStatus(response);
+            LoadingScreenService.finish();
+            return true;
+          }).catch(function (e) {
+            LoadingScreenService.finish();
+            return false;
+          });
       } else {
-        delete ParticipantActivityReportLists[index].doesNotApply;
+        ParticipantMonitoringService.deleteNotAppliesOfActivity(self.selectedParticipant.recruitmentNumber, activity)
+          .then(function (response) {
+            self.activityList[index] = ParticipantMonitoringService.buildActivityStatus(response);
+            LoadingScreenService.finish();
+            return true;
+          }).catch(function (e) {
+            LoadingScreenService.finish();
+            return false;
+          });
       }
-
-      self.activityList[index] = ParticipantMonitoringService.buildActivityStatus(ParticipantActivityReportLists[index]);
-      return true;
     };
 
-    function _loadParticipantData() {
+    function _loadData() {
       DashboardService
         .getSelectedParticipant()
         .then(function (participantData) {
           self.selectedParticipant = participantData;
-          self.activityList = ParticipantMonitoringService.getStatusOfActivities(participantData.recruitmentNumber);
-        }).catch(function () {});
+          ParticipantMonitoringService.buildActivityStatusList(participantData.recruitmentNumber);
+          self.activityList = ParticipantMonitoringService.getActivityStatusList();
+        }).catch(function () { });
     };
 
     function _buildLegend() {
@@ -154,6 +153,9 @@
     };
 
     function _DialogController($scope, $mdDialog, activity) {
+      const AMBIGUITY_STATE_DESCRIPTION = 'Atividade definida como não se aplica, porém, existe atividade(s) adicionada(s) ao participante!';
+      const MULTIPLE_STATE_DESCRIPTION = 'Existe mais de uma atividade adicionada ao participante! Status e datas descritas abaixo:';
+      $scope.disable;
       $scope.doesNotApply;
       $scope.observation;
       $scope.description;
@@ -161,22 +163,22 @@
 
       onInit();
       function onInit() {
+        $scope.disable = true;
+        $scope.doesNotApply = false;
+
         if (activity.status === DOES_NOT_APPLY) {
           $scope.doesNotApply = true;
           $scope.observation = activity.observation ? activity.observation : '';
         } else if (activity.status === AMBIGUITY) {
           $scope.doesNotApply = true;
           $scope.information = activity.information;
-          $scope.description = activity.description;
+          $scope.description = AMBIGUITY_STATE_DESCRIPTION;
           $scope.observation = activity.observation ? activity.observation : '';
         } else if (activity.status === MULTIPLE) {
           $scope.information = activity.information;
-          $scope.description = activity.description;
-        } else {
-          $scope.doesNotApply = false;
-          $scope.observation = activity.observation ? activity.observation : '';
+          $scope.description = MULTIPLE_STATE_DESCRIPTION;
         }
-      }
+      };
 
       $scope.hide = function () {
         $mdDialog.hide();
@@ -186,13 +188,23 @@
         $mdDialog.cancel();
       };
 
-      $scope.update = function () {
-        var result = {
-          observation: $scope.observation,
-          doesNotApply: $scope.doesNotApply
-        }
-        $mdDialog.hide(result);
+      $scope.change = function () {
+        if (!$scope.doesNotApply) {
+          if (activity.status === DOES_NOT_APPLY || activity.status === AMBIGUITY) {
+            $scope.disable = false;
+          }
+        } else {
+          $scope.disable = false;
+        };
       };
+
+      $scope.update = function () {
+        if ($scope.doesNotApply)
+          $mdDialog.hide($scope.observation);
+        else
+          $mdDialog.hide();
+      };
+
     };
   }
 }());

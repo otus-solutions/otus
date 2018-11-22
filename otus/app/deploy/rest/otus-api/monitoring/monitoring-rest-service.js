@@ -22,6 +22,7 @@
     self.getActivitiesProgressReport = getActivitiesProgressReport;
     self.getStatusOfActivities = getStatusOfActivities;
     self.defineActivityWithDoesNotApplies = defineActivityWithDoesNotApplies;
+    self.deleteNotAppliesOfActivity = deleteNotAppliesOfActivity;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusMonitoringResource();
@@ -76,6 +77,13 @@
         throw new Error('REST resource is not initialized.');
       }
       return _rest.defineActivityWithDoesNotApplies({}, data).$promise;
+    }
+
+    function deleteNotAppliesOfActivity(data) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.deleteNotAppliesOfActivity({}, data).$promise;
     }
   }
 }());
