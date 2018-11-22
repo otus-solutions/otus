@@ -140,13 +140,13 @@
       return request.promise;
     }
 
-    function deleteNotAppliesOfActivity(data) {
+    function deleteNotAppliesOfActivity(rn,acrony) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .deleteNotAppliesOfActivity(data)
+            .deleteNotAppliesOfActivity(rn,acrony)
             .then(function (response) {
               request.resolve(response.data);
             })

@@ -130,12 +130,8 @@
 
     function deleteNotAppliesOfActivity(recruitmentNumber, oldActivity) {
       var defer = $q.defer();
-      var data = {
-        "recruitmentNumber": recruitmentNumber,
-        "acronym": oldActivity.acronym
-      };
 
-      MonitoringCollectionService.deleteNotAppliesOfActivity(data).then(function (response) {
+      MonitoringCollectionService.deleteNotAppliesOfActivity(recruitmentNumber,oldActivity.acronym).then(function (response) {
         self.participantActivityStatusList.filter(function (activity) {
           if (activity.acronym === oldActivity.acronym) {
             delete activity.doesNotApply;

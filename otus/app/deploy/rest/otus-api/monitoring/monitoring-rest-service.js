@@ -79,11 +79,14 @@
       return _rest.defineActivityWithDoesNotApplies({}, data).$promise;
     }
 
-    function deleteNotAppliesOfActivity(data) {
+    function deleteNotAppliesOfActivity(rn,acronym) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.deleteNotAppliesOfActivity({}, data).$promise;
+        return _rest.deleteNotAppliesOfActivity({
+          rn:rn,
+          acronym:acronym
+        }).$promise;
     }
   }
 }());
