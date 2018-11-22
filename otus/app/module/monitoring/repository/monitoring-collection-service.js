@@ -115,13 +115,12 @@
             .getStatusOfActivities(recruitmentNumber)
             .then(function (response) {
               request.resolve(response.data);
-              return request.promise;
             })
             .catch(function (e) {
               request.reject(e);
-              return;
             });
         });
+      return request.promise;
     }
 
     function defineActivityWithDoesNotApplies(data) {
@@ -133,13 +132,12 @@
             .defineActivityWithDoesNotApplies(data)
             .then(function (response) {
               request.resolve(response.data);
-              return request.promise;
             })
             .catch(function (e) {
               request.reject(e);
-              return;
             });
         });
+      return request.promise;
     }
 
     function deleteNotAppliesOfActivity(data) {
@@ -151,13 +149,12 @@
             .deleteNotAppliesOfActivity(data)
             .then(function (response) {
               request.resolve(response.data);
-              return request.promise;
             })
             .catch(function (e) {
               request.reject(e);
-              return;
             });
         });
+      return request.promise;
     }
   }
 }());

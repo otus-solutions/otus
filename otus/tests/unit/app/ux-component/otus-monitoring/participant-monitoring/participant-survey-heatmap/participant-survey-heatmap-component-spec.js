@@ -23,24 +23,7 @@ describe('otusParticipantHeatmap test', function() {
 
     Mock.$mdDialog = {
       show: function () {
-        return Promise.resolve()
-      }
-    };
-
-    Mock.$mdToast = {
-      show: function () {
-        return Promise.resolve()
-      },
-      simple: function () {
-        return {
-          textContent : function () {
-            return {
-              hideDelay : function () {
-
-              }
-            }
-          }
-        }
+        return Promise.resolve({doesNotApply:true})
       }
     };
 
@@ -58,7 +41,18 @@ describe('otusParticipantHeatmap test', function() {
 
     Mock.ParticipantMonitoringService = {
       defineActivityWithDoesNotApplies: function () {
-        return ctrl.selectedParticipant.recruitmentNumber === 122346;
+        if(ctrl.selectedParticipant.recruitmentNumber === 122346){
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
+      },
+      deleteNotAppliesOfActivity: function () {
+        if(ctrl.selectedParticipant.recruitmentNumber === 122346){
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
       },
       buildActivityStatus: function () {
         return [];
@@ -73,7 +67,6 @@ describe('otusParticipantHeatmap test', function() {
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
       $provide.value('otusjs.otus.dashboard.core.EventService', Mock.EventService);
       $provide.value('$mdDialog', Mock.$mdDialog);
-      $provide.value('$mdToast', Mock.$mdToast);
       $provide.value('otusjs.application.state.ApplicationStateService', Mock.ApplicationStateService);
       $provide.value('otusjs.otus.dashboard.service.DashboardService', Mock.DashboardService);
       $provide.value('otusjs.monitoring.business.ParticipantMonitoringService', Mock.ParticipantMonitoringService);
@@ -130,7 +123,7 @@ describe('otusParticipantHeatmap test', function() {
       expect(ctrl.legends[1].color).toBe(COLOR.SAVED);
       expect(ctrl.legends[2].label).toBe("Finalizado.");
       expect(ctrl.legends[2].color).toBe(COLOR.FINALIZED);
-      expect(ctrl.legends[3].label).toBe("Não aplicado.");
+      expect(ctrl.legends[3].label).toBe("Não realizado.");
       expect(ctrl.legends[3].color).toBe(COLOR.DOES_NOT_APPLY);
       expect(ctrl.legends[4].label).toBe("Nenhuma atividade.");
       expect(ctrl.legends[4].color).toBe(COLOR.UNDEFINED);
@@ -205,7 +198,6 @@ describe('otusParticipantHeatmap test', function() {
       spyOn(Injections.ParticipantMonitoringService, 'defineActivityWithDoesNotApplies').and.callThrough();
       spyOn(Injections.LoadingScreenService, 'start').and.callThrough();
       spyOn(Injections.LoadingScreenService, 'finish').and.callThrough();
-      spyOn(Injections.$mdToast, 'show').and.callThrough();
       participant.recruitmentNumber = 122346;
       ctrl.selectParticipant(participant);
       ctrl.showObservation();
@@ -218,27 +210,9 @@ describe('otusParticipantHeatmap test', function() {
     it('should start and finish LoadingScreenService', () => {
       Injections.$mdDialog.show().then(function () {
        expect(Injections.LoadingScreenService.start).toHaveBeenCalled();
-       expect(Injections.LoadingScreenService.finish).toHaveBeenCalled();
-      });
-    });
-
-    it('should call $mdToast.show on ParticipantMonitoringService.defineActivityWithDoesNotApplies positive response', () => {
-      Injections.$mdDialog.show().then(function () {
-        expect(Injections.$mdToast.show).toHaveBeenCalled();
-      });
-    });
-
-    it('should call $mdToast.show on ParticipantMonitoringService.defineActivityWithDoesNotApplies negative response', () => {
-      participant.recruitmentNumber = 12236;
-      ctrl.selectParticipant(participant);
-      Injections.$mdDialog.show().then(function () {
-        expect(Injections.$mdToast.show).toHaveBeenCalled();
-      });
-    });
-
-    it('should call Injections.ParticipantMonitoringService.defineActivityWithDoesNotApplies', () => {
-      Injections.$mdDialog.show().then(function () {
-        expect(Injections.ParticipantMonitoringService.defineActivityWithDoesNotApplies).toHaveBeenCalled();
+       Injections.ParticipantMonitoringService.defineActivityWithDoesNotApplies().then(function () {
+         expect(Injections.LoadingScreenService.finish).toHaveBeenCalled();
+       });
       });
     });
 

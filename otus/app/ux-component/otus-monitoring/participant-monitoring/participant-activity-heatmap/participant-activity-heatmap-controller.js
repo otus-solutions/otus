@@ -6,6 +6,7 @@
     .controller('otusParticipantHeatmapCtrl', Controller);
 
   Controller.$inject = [
+    '$q',
     '$mdToast',
     '$mdDialog',
     '$scope',
@@ -16,7 +17,7 @@
     'otusjs.monitoring.business.ParticipantMonitoringService',
   ];
 
-  function Controller($mdToast, $mdDialog, $scope, LoadingScreenService, EventService, ApplicationStateService, DashboardService, ParticipantMonitoringService) {
+  function Controller($q,$mdToast, $mdDialog, $scope, LoadingScreenService, EventService, ApplicationStateService, DashboardService, ParticipantMonitoringService) {
     const CREATED = 'CREATED';
     const SAVED = 'SAVED';
     const FINALIZED = 'FINALIZED';
@@ -86,50 +87,53 @@
         targetEvent: event,
         clickOutsideToClose: true,
         fullscreen: $scope.customFullscreen
-      }).then(function (observation) {
+      }).then(function (result) {
         LoadingScreenService.start();
-        if (_defineActivityWithDoesNotApplies(observation, index, activity)) {
+        _defineActivityWithDoesNotApplies(result, index, activity).then(function () {
           $mdToast.show(
             $mdToast.simple()
               .textContent('Atualização realizada com sucesso.')
               .hideDelay(5000)
           );
-        } else {
-          $mdToast.show(
-            $mdToast.simple()
-              .textContent('Ocorreu um erro. Tente novamente mais tarde.')
-              .hideDelay(5000)
-          );
-        }
+        })
+          .catch(function () {
+            $mdToast.show(
+              $mdToast.simple()
+                .textContent('Ocorreu um erro. Tente novamente mais tarde.')
+                .hideDelay(5000)
+            );
+          });
       }, function () { });
-    };
+    }
 
     function getCurrentState() {
       ApplicationStateService.getCurrentState();
     };
 
-    function _defineActivityWithDoesNotApplies(observation, index, activity) {
-      if (observation) {
-        ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, observation, activity)
+    function _defineActivityWithDoesNotApplies(result, index, activity) {
+      var defer = $q.defer();
+      if (result.doesNotApply) {
+        ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, result.observation, activity)
           .then(function (response) {
             self.activityList[index] = ParticipantMonitoringService.buildActivityStatus(response);
             LoadingScreenService.finish();
-            return true;
+            defer.resolve();
           }).catch(function (e) {
             LoadingScreenService.finish();
-            return false;
+            defer.reject();
           });
       } else {
         ParticipantMonitoringService.deleteNotAppliesOfActivity(self.selectedParticipant.recruitmentNumber, activity)
           .then(function (response) {
             self.activityList[index] = ParticipantMonitoringService.buildActivityStatus(response);
             LoadingScreenService.finish();
-            return true;
+            defer.resolve();
           }).catch(function (e) {
             LoadingScreenService.finish();
-            return false;
+            defer.reject();
           });
       }
+      return defer.promise;
     };
 
     function _loadData() {
@@ -146,7 +150,7 @@
       self.legends.push({ label: 'Criado.', color: COLOR.CREATED });
       self.legends.push({ label: 'Salvo.', color: COLOR.SAVED });
       self.legends.push({ label: 'Finalizado.', color: COLOR.FINALIZED });
-      self.legends.push({ label: 'Não aplicado.', color: COLOR.DOES_NOT_APPLY });
+      self.legends.push({ label: 'Não realizado.', color: COLOR.DOES_NOT_APPLY });
       self.legends.push({ label: 'Nenhuma atividade.', color: COLOR.UNDEFINED });
       self.legends.push({ label: 'Multiplas atividades.', color: COLOR.MULTIPLE });
       self.legends.push({ label: 'Ambiguidade.', color: COLOR.AMBIGUITY });
@@ -195,14 +199,18 @@
           }
         } else {
           $scope.disable = false;
-        };
+          $scope.observation = "";
+        }
       };
 
       $scope.update = function () {
+        var result = {};
+        result.doesNotApply = $scope.doesNotApply;
+        result.observation = $scope.observation;
         if ($scope.doesNotApply)
-          $mdDialog.hide($scope.observation);
+          $mdDialog.hide(result);
         else
-          $mdDialog.hide();
+          $mdDialog.hide(result);
       };
 
     };

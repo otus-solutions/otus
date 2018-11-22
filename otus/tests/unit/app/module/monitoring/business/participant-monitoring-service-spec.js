@@ -12,7 +12,14 @@ describe('ParticipantMonitoringService Test Suite', function () {
   var Mock = {};
   var service, monitoringCollectionService;
 
-
+  Mock.DashboardService = {
+    defineActivityWithDoesNotApplies: function () {
+      return Promise.resolve();
+    },
+    getStatusOfActivities: function () {
+      return Promise.resolve();
+    }
+  };
 
 
 
@@ -22,13 +29,23 @@ describe('ParticipantMonitoringService Test Suite', function () {
     mockDataSource();
   });
 
-  beforeEach(angular.mock.inject(function (_$injector_) {
+  beforeEach(function() {
+
+    angular.mock.module(function ($provide) {
+      $provide.value('otusjs.monitoring.repository.MonitoringCollectionService', Mock.DashboardService);
+    });
+
+    angular.mock.inject(function (_$injector_) {
     service = _$injector_.get('otusjs.monitoring.business.ParticipantMonitoringService');
     monitoringCollectionService = _$injector_.get('otusjs.monitoring.repository.MonitoringCollectionService');
 
     spyOn(monitoringCollectionService, "getStatusOfActivities").and.callThrough();
     spyOn(monitoringCollectionService, "defineActivityWithDoesNotApplies").and.callThrough();
-  }));
+  })});
+
+  angular.mock.module(function ($provide) {
+    $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
+  });
 
   it('serviceExistence check', function () {
     expect(service).toBeDefined();
@@ -37,7 +54,7 @@ describe('ParticipantMonitoringService Test Suite', function () {
   describe('ServiceInstance', function () {
 
     it('methodServiceExistence ckeck', function () {
-      expect(service.getStatusOfActivities).toBeDefined();
+      expect(service.buildActivityStatusList).toBeDefined();
       expect(service.defineActivityWithDoesNotApplies).toBeDefined();
       expect(service.buildActivityStatus).toBeDefined();
     });
@@ -45,7 +62,7 @@ describe('ParticipantMonitoringService Test Suite', function () {
 
   describe('getStatusOfActivities method', function () {
     it('should call method', function () {
-      service.getStatusOfActivities(RECRUITMENT_NUMBER);
+      service.buildActivityStatusList(RECRUITMENT_NUMBER);
       expect(monitoringCollectionService.getStatusOfActivities).toHaveBeenCalledTimes(1);
     });
   });
