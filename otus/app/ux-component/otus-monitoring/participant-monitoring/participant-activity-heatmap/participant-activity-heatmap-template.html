@@ -1,0 +1,63 @@
+<style>
+  .signal-card {
+    width: 170px;
+    height: 65px !important;
+  }
+
+  .signal-card>md-card-header {
+    max-height: 65px !important;
+  }
+
+  .grid-color-legend {
+    width: 20px !important;
+    height: 20px !important;
+  }
+</style>
+
+<otus-panel header-label="'Painel de atividades'" flex>
+  <div layout="column" layout-margin flex ng-if="$ctrl.showActivitySignal && $ctrl.activityList.length">
+    <span class="md-body-2">Situação:</span>
+    <div layout="row" layout-wrap="" layout-align="start start" flex>
+      <div layout="row" ng-repeat="legend in $ctrl.legends" layout-align="start start">
+        <div>
+          <md-grid-list class="md-whiteframe-3dp grid-color-legend" md-cols-gt-sm="20" md-cols="1" md-row-height-gt-md="2:2"
+            md-row-height="2:2">
+            <md-grid-tile ng-style="{'background': legend.color}" md-colspan-gt-sm="20" md-cols="10" md-rowspan-gt-sm="20">
+            </md-grid-tile>
+          </md-grid-list>
+        </div>
+        <div>
+          <span class="md-body-1" layout-margin>{{legend.label}}</span>
+        </div>
+      </div>
+    </div>
+    <div layout="row" layout-wrap layout-align="center center" flex>
+      <md-card class="md-whiteframe-3dp signal-card" ng-repeat="(index, activity) in $ctrl.activityList">
+        <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.getFlagColor(activity)}" flex>
+          <md-card-header-text>
+            <div layout="row" layout-align="space-between center" flex>
+              <div flex="75" layout="column" layout-align="center stretch">
+                <span class="md-body-2 truncate">{{activity.acronym}}</span>
+                <span ng-show="activity.date" class="md-body-1 truncate">{{activity.date}}</span>
+                <md-tooltip>{{ activity.name }}</md-tooltip>
+              </div>
+              <div flex='25' layout="column" layout-align="center stretch">
+                <md-button ng-click="$ctrl.showObservation($event,  $index, activity)" class="md-icon-button" aria-label="Observações">
+                  <md-icon>info</md-icon>
+                  <md-tooltip md-direction="bottom">Observações</md-tooltip>
+                </md-button>
+              </div>
+            </div>
+          </md-card-header-text>
+        </md-card-header>
+      </md-card>
+    </div>
+  </div>
+  <div layout="column" layout-margin ng-if="$ctrl.showActivitySignal && !$ctrl.activityList.length" flex>
+    <span class="md-body-1">Não existem atividades disponíveis para o participante</span>
+  </div>
+  <div layout-align="center center" layout="row" ng-if="!$ctrl.showActivitySignal">
+    <md-progress-circular class="md-hue-2" md-diameter="20px"></md-progress-circular>
+    <span class="md-caption">&nbsp;&nbsp;Carregando Atividades</span>
+  </div>
+</otus-panel>

@@ -13,12 +13,15 @@
 
   function Service($q, ModuleService, MonitoringLocalStorageService) {
     var self = this;
-    let _remoteStorage = ModuleService.getMonitoringRemoteStorage();
+    var _remoteStorage = ModuleService.getMonitoringRemoteStorage();
 
-    self.listAcronyms = listAcronyms;
-    self.listCenters = listCenters;
-    self.getActivitiesProgressReport = getActivitiesProgressReport;
     self.find = find;
+    self.listCenters = listCenters;
+    self.listAcronyms = listAcronyms;
+    self.getStatusOfActivities = getStatusOfActivities;
+    self.getActivitiesProgressReport = getActivitiesProgressReport;
+    self.defineActivityWithDoesNotApplies = defineActivityWithDoesNotApplies;
+    self.deleteNotAppliesOfActivity = deleteNotAppliesOfActivity;
 
     function listAcronyms() {
       var request = $q.defer();
@@ -99,6 +102,58 @@
             });
         });
 
+      return request.promise;
+    }
+
+
+    function getStatusOfActivities(recruitmentNumber) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getStatusOfActivities(recruitmentNumber)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+      return request.promise;
+    }
+
+    function defineActivityWithDoesNotApplies(data) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .defineActivityWithDoesNotApplies(data)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+      return request.promise;
+    }
+
+    function deleteNotAppliesOfActivity(rn,acrony) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .deleteNotAppliesOfActivity(rn,acrony)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
       return request.promise;
     }
   }

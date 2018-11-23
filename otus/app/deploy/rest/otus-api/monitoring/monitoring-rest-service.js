@@ -20,6 +20,9 @@
     self.listAcronyms = listAcronyms;
     self.listCenters = listCenters;
     self.getActivitiesProgressReport = getActivitiesProgressReport;
+    self.getStatusOfActivities = getStatusOfActivities;
+    self.defineActivityWithDoesNotApplies = defineActivityWithDoesNotApplies;
+    self.deleteNotAppliesOfActivity = deleteNotAppliesOfActivity;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusMonitoringResource();
@@ -36,7 +39,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.find({'acronym': acronym}).$promise;
+      return _rest.find({ 'acronym': acronym }).$promise;
     }
 
     function listAcronyms() {
@@ -52,11 +55,38 @@
       }
       return _rest.listCenters().$promise;
     }
+
     function getActivitiesProgressReport(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
       return _rest.getActivitiesProgressReport(center).$promise;
+    }
+
+    function getStatusOfActivities(recruitmentNumber) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getStatusOfActivities({
+        rn: recruitmentNumber
+      }).$promise;
+    }
+
+    function defineActivityWithDoesNotApplies(data) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.defineActivityWithDoesNotApplies({}, data).$promise;
+    }
+
+    function deleteNotAppliesOfActivity(rn,acronym) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+        return _rest.deleteNotAppliesOfActivity({
+          rn:rn,
+          acronym:acronym
+        }).$promise;
     }
   }
 }());
