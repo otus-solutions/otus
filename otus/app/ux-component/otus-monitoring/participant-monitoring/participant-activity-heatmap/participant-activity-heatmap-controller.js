@@ -26,8 +26,8 @@
     const MULTIPLE = 'MULTIPLE';
     const AMBIGUITY = 'AMBIGUITY';
     const COLOR = {
-      CREATED: '#88d8b0',
-      FINALIZED: '#ff6f69',
+      CREATED: '#ff6f69',
+      FINALIZED: '#88d8b0',
       SAVED: '#ffeead',
       DOES_NOT_APPLY: '#cecece',
       UNDEFINED: '#ffffff',
