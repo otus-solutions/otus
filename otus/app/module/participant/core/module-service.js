@@ -6,15 +6,12 @@
     .service('otusjs.participant.core.ModuleService', Service);
 
   Service.$inject = [
-    '$q',
     'otusjs.participant.core.ContextService',
     'otusjs.participant.core.EventService'
   ];
 
-  function Service($q, ContextService, EventService) {
+  function Service(ContextService, EventService) {
     var self = this;
-    var _remoteStorage;
-    var _remoteStorageDefer = $q.defer();
 
     self.DataSource = {};
     self.Event = EventService;

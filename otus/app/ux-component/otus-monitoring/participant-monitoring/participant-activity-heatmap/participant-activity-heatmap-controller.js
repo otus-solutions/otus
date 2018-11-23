@@ -202,7 +202,9 @@
           }
         } else {
           $scope.disable = false;
-          $scope.observation = "";
+          if (!$scope.observation) {
+            $scope.observation = "";
+          }
         }
       };
 
