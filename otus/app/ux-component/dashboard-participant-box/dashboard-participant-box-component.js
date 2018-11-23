@@ -47,6 +47,7 @@
 
     function loadLaboratory() {
       ApplicationStateService.activateLaboratory();
+      self.onClose();
 
     }
 
