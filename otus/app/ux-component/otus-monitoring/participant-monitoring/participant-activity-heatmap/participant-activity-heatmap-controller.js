@@ -39,6 +39,7 @@
     self.ERROR_MESSAGE = 'Atualmente não existem nenhum formulário disponível no sistema';
     self.activityList = [];
     self.legends = [];
+    self.showActivitySignal = false;
     /* Lifecycle hooks */
     self.$onInit = onInit;
     /* Public methods */
@@ -142,7 +143,8 @@
         .then(function (participantData) {
           self.selectedParticipant = participantData;
           ParticipantMonitoringService.buildActivityStatusList(participantData.recruitmentNumber).then(function (result) {
-              self.activityList = result
+              self.activityList = result;
+              self.showActivitySignal = true;
           });
         }).catch(function () { });
     };
