@@ -9,7 +9,6 @@
     'otusjs.application.state.ApplicationStateService',
     'otusjs.user.access.service.SignupService',
     'otusjs.deploy.LoadingScreenService',
-    '$scope',
     '$mdToast'
   ];
 
