@@ -58,7 +58,10 @@
           } else {
             obj.columns = json.columns;
           }
-        } else obj.data = json.data;
+        } else{
+          obj.columns = json.columns;
+          obj.data = json.data;
+        }
       }
 
       return obj;
