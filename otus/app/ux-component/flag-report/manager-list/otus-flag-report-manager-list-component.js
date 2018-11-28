@@ -48,12 +48,16 @@
     function _prepareForCSV(){
       alasql("DROP TABLE IF EXISTS flags");
       alasql("CREATE TABLE flags(RN INT,SIGLA STRING, STATUS STRING)");
-      if(Array.isArray(self.rawActivities)){
-        if(self.rawActivities.length>0){
-          self.rawActivities.forEach(function(data) {
-            data.activities.forEach(function(a) {
-              alasql("INSERT INTO flags VALUES("+a.rn+",'"+a.acronym+"','"+StatusHistoryService.getStatusLabel(a.status)+"')")
-            });
+      var rn = 0;
+      if(Array.isArray(self.rawActivities.data)){
+        if(self.rawActivities.data.length>0){
+          self.rawActivities.data.forEach(function(line) {
+            for (let i = 0; i < self.rawActivities.columns.length; i++) {
+
+              alasql("INSERT INTO flags VALUES("+self.rawActivities.index[rn]+",'"+self.rawActivities.columns[i][1]+"','"+StatusHistoryService.getStatusLabel(line[i])+"')");
+            }
+            rn++;
+
           });
         }
       }
@@ -141,11 +145,10 @@
           .then((response) => {
             self.rawActivities = angular.copy(response);
             _prepareForCSV();
-            self.activitiesData = FlagReportParseData.create(response);
+            self.activitiesData = response;
             self.updatePage(self.rawActivities);
             self.ready= true;
             LoadingScreenService.finish();
-
           }).catch((e)=>{
           console.log(e)
         });
@@ -165,7 +168,7 @@
           _setActivity(acronym);
           _setStatus(status);
           self.activitiesData = FlagReportParseData.create(self.rawActivities, acronym, status)
-          self.setActivities(FlagReportParseData.create(self.activitiesView, acronym, status), acronym, status);
+          self.setActivities(self.activitiesData, acronym, status);
         } else if(activities && activities !== self.activities){
           self.setActivities(activities, acronym, status);
         }
@@ -173,8 +176,8 @@
     }
 
     function updatePage(activities = null) {
-        self.activitiesView = activities;
-        self.setActivities(FlagReportParseData.create(activities, self.selectedAcronym, self.selectedStatus), self.selectedAcronym, self.selectedStatus);
+      self.activitiesData.data = activities
+      self.setActivities(FlagReportParseData.create(self.activitiesData, self.selectedAcronym, self.selectedStatus), self.selectedAcronym, self.selectedStatus);
     }
 
     function setActivities(activities) {
