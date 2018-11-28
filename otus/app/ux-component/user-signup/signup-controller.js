@@ -9,11 +9,10 @@
     'otusjs.application.state.ApplicationStateService',
     'otusjs.user.access.service.SignupService',
     'otusjs.deploy.LoadingScreenService',
-    '$scope',
     '$mdToast'
   ];
 
-  function Controller(ApplicationStateService, SignupService, LoadingScreenService, $scope, $mdToast) {
+  function Controller(ApplicationStateService, SignupService, LoadingScreenService, $mdToast) {
     var INTERNAL_ERROR_MESSAGE = "Houve um erro ao realizar o cadastro. Informe a equipe de desenvolvimento";
     var self = this;
 
@@ -22,6 +21,7 @@
     self.back = back;
     self.agree = agree;
     self.resetEmailValidation = resetEmailValidation;
+
 
     function signup(user) {
       // self.isWaiting = true;
@@ -42,7 +42,6 @@
           LoadingScreenService.finish();
           _showErrorMessage(err);
        });
-
     }
 
     function _showErrorMessage(response) {
@@ -57,7 +56,7 @@
     }
 
     function _showAlreadyExistError() {
-      $scope.signupForm.email.$setValidity('emailInUse', false);
+      self.signupForm.email.$setValidity('emailInUse', false);
       self.isWaiting = false;
     }
 
@@ -69,8 +68,8 @@
     }
 
     function resetEmailValidation() {
-      $scope.signupForm.email.$setValidity('emailInUse', true);
-      $scope.signupForm.$setValidity('emailInUse', true);
+      self.signupForm.email.$setValidity('emailInUse', true);
+      self.signupForm.$setValidity('emailInUse', true);
     }
 
     function back() {
