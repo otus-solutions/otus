@@ -55,7 +55,7 @@ describe('otus-flag-report-manager-list-component Test', function() {
             expect(Mock.MonitoringService.getActivitiesProgressReport).toHaveBeenCalledTimes(1);
 
             Mock.MonitoringService.getActivitiesProgressReport().then(function () {
-              expect(Mock.FlagReportParseData.create).toHaveBeenCalledTimes(2);
+              expect(Mock.FlagReportParseData.create).toHaveBeenCalledTimes(1);
               expect(controller.updatePage).toHaveBeenCalledTimes(1);
               expect(Mock.LoadingScreenService.finish).toHaveBeenCalledTimes(1);
               expect(controller.ready).toEqual(true);
