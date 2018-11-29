@@ -142,6 +142,7 @@
         .getSelectedParticipant()
         .then(function (participantData) {
           self.selectedParticipant = participantData;
+          self.showActivitySignal = false;
           ParticipantMonitoringService.buildActivityStatusList(participantData.recruitmentNumber).then(function (result) {
               self.activityList = result;
               self.showActivitySignal = true;
