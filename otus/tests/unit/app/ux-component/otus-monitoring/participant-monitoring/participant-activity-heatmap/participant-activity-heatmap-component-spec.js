@@ -101,6 +101,7 @@ describe('otusParticipantHeatmap test', function() {
     it('should be defined', () => {
         expect(ctrl.$onInit).not.toBeNull();
         expect(ctrl.$onInit).toHaveBeenCalled();
+        expect(ctrl.showActivitySignal).toBeFalsy();
         expect(Injections.EventService.onParticipantSelected).toHaveBeenCalled();
     });
 
@@ -188,7 +189,6 @@ describe('otusParticipantHeatmap test', function() {
 
     it('should set Participant', () => {
       expect(ctrl.selectedParticipant).toBe(participant);
-      expect(ctrl.showActivitySignal).toBeFalsy();
     });
   });
 
