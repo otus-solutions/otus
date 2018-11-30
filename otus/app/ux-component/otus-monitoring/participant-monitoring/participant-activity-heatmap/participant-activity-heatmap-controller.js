@@ -39,7 +39,6 @@
     self.ERROR_MESSAGE = 'Atualmente não existem nenhum formulário disponível no sistema';
     self.activityList = [];
     self.legends = [];
-    self.showActivitySignal = false;
     /* Lifecycle hooks */
     self.$onInit = onInit;
     /* Public methods */
@@ -54,6 +53,7 @@
       _buildLegend();
       EventService.onParticipantSelected(_loadData);
       self.selectedParticipant = null;
+      self.showActivitySignal = false;
     };
 
     function getFlagColor(activity) {
@@ -142,6 +142,7 @@
         .getSelectedParticipant()
         .then(function (participantData) {
           self.selectedParticipant = participantData;
+          self.showActivitySignal = false;
           ParticipantMonitoringService.buildActivityStatusList(participantData.recruitmentNumber).then(function (result) {
               self.activityList = result;
               self.showActivitySignal = true;
