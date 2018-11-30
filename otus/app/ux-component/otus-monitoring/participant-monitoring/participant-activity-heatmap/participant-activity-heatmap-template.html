@@ -15,6 +15,7 @@
 </style>
 
 <otus-panel header-label="'Painel de atividades'" flex>
+  <md-button ng-click="$ctrl.loadData()" ng-disabled="!$ctrl.loadAvailable">vai</md-button>
   <div layout="column" layout-margin flex ng-if="$ctrl.showActivitySignal && $ctrl.activityList.length">
     <span class="md-body-2">Situação:</span>
     <div layout="row" layout-wrap="" layout-align="start start" flex>
@@ -56,8 +57,11 @@
   <div layout="column" layout-margin ng-if="$ctrl.showActivitySignal && !$ctrl.activityList.length" flex>
     <span class="md-body-1">Não existem atividades disponíveis para o participante</span>
   </div>
-  <div layout-align="center center" layout="row" ng-if="!$ctrl.showActivitySignal">
+  <div layout-align="center center" layout="row" ng-if="$ctrl.loading">
     <md-progress-circular class="md-hue-2" md-diameter="20px"></md-progress-circular>
     <span class="md-caption">&nbsp;&nbsp;Carregando Atividades</span>
+  </div>
+  <div layout-align="center center" layout="row" ng-if="$ctrl.error">
+    <span class="md-caption">{{$ctrl.LOAD_ERROR_MESSAGE}}</span>
   </div>
 </otus-panel>
