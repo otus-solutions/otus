@@ -1,0 +1,17 @@
+<div layout="column" flex>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row">
+    <div flex layout-gt-md="row" layout="column" layout-align="center center" layout-margin>
+      <span layout-align="center center">Monitoramento laboratorial</span>
+    </div>
+  </otus-dashboard-toolbar>
+  <div ui-view layout="column" flex>
+    <md-card flex>
+      <md-card-content style="align-self:stretch;height:100%;" flex>
+        <div id="pending-results-chart" flex></div>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>
