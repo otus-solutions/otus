@@ -26,6 +26,7 @@
     self.flagsDashboard = flagsDashboard;
     self.sendingExam = sendingExam;
     self.laboratoryMonitoring = laboratoryMonitoring;
+    self.participantsReady = false;
 
     function onInit() {
       _loadLoggedUser();

@@ -29,7 +29,7 @@
 #user-login-page .system-name {
   text-align: left;
   color: white;
-  top: 52%;
+  top: 45%;
   position: relative;
 }
 #user-login-page .system-name span {
@@ -44,15 +44,31 @@
   width: 24%;
   position: absolute;
   top: 0%;
-  left: 36%;
+  left: 40%;
   transform: translate(-30%, -30%);
 }
 @media screen and (max-width: 1280px) and (min-width: 800px) {
   #user-login-page .logotype {
-    width: 32%;
+    width: 30%;
     position: absolute;
     left: 38%;
     transform: translate(-30%, -30%);
+  }
+
+}
+@media screen and (max-width: 600px) and (min-width: 240px) {
+  #user-login-page .logotype {
+    width: 40%;
+    position: absolute;
+    left: 55%;
+    transform: translate(-30%, -30%);
+  }
+  #user-login-page .system-name {
+    text-align: left;
+    color: white;
+    top: 45%;
+    position: relative;
+    left: -15%;
   }
 }
 #user-login-page .content {

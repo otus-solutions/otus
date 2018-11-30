@@ -7,8 +7,8 @@
   md-min-length="1"
   placeholder="Busca por nome ou número de recrutamento"
   md-menu-class="autocomplete-custom-participant-template"
-  md-input-id="participantSearchAutoCompleteId">
-  <!-- ng-disabled="$ctrl.ready"> -->
+  md-input-id="participantSearchAutoCompleteId" show-all-participants action="$ctrl.showParticipants" label-button="EXIBIR TODOS" ng-if="$ctrl.onReady">
+
   <md-item-template>
     <span class="participant-title">
       <md-icon md-font-set="material-icons" class="material-icons">face</md-icon>
@@ -25,4 +25,6 @@
   <md-not-found>
     Nenhum participante correspondente "{{$ctrl.inputedText}}" foi encontrado.
   </md-not-found>
+  <md-button class="md-icon-button">EXIBIR</md-button>
 </md-autocomplete>
+<md-progress-linear md-mode="indeterminate" ng-if="!$ctrl.onReady"></md-progress-linear>

@@ -23,12 +23,17 @@
       <div layout="column" layout-padding layout-align="center center">
         <span layout="row" class="md-display-2">Olá {{ $ctrl.loggedUser.name}}!</span>
         <span layout="row" class="md-headline">Utilize as opções a seguir para navegar no sistema.</span>
-        <otus-participant-search on-select="$ctrl.selectParticipant(participant)" layout-fill></otus-participant-search>
-        <md-button class="md-raised" ng-click="$ctrl.managerParticipantsDashboard()">
-          <md-icon>supervisor_account</md-icon>
-          Participantes
-          <md-tooltip md-direction="down">Listar todos os participantes</md-tooltip>
-        </md-button>
+        <otus-participant-search on-select="$ctrl.selectParticipant(participant)"
+                                 show-all-participants="$ctrl.managerParticipantsDashboard()"
+                                 ng-disabled="!$ctrl.participantsReady" layout-fill
+                                  on-ready="$ctrl.participantsReady">
+
+        </otus-participant-search>
+        <!--<md-button class="md-raised" ng-click="$ctrl.managerParticipantsDashboard()">-->
+          <!--<md-icon>supervisor_account</md-icon>-->
+          <!--Participantes-->
+          <!--<md-tooltip md-direction="down">Listar todos os participantes</md-tooltip>-->
+        <!--</md-button>-->
       </div>
     </div>
     <md-content layout-xs="column" layout="row" layout-align="center start" layout-fill layout-padding flex layout-wrap>
