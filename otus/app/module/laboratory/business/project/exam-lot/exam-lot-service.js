@@ -30,6 +30,7 @@
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
     self.getDescriptors = getDescriptors;
     self.getAvailableExams = getAvailableExams;
+    self.getAliquot = getAliquot;
 
     var messageLoading =
       'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
@@ -185,15 +186,15 @@
       return deferred.promise;
     }
 
-    function getAvailableExams(center){
+    function getAvailableExams(center) {
       var deferred = $q.defer();
 
       ProjectRepositoryService.getAvailableExams(center)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
           LoadingScreenService.finish();
         })
-        .catch(function(err) {
+        .catch(function (err) {
           deferred.reject(err);
           LoadingScreenService.finish();
         });
@@ -201,6 +202,20 @@
       return deferred.promise;
     }
 
-    return self;
+    function getAliquot(aliquotFilter) {
+      var deferred = $q.defer();
+
+      ProjectRepositoryService.getAliquot(aliquotFilter)
+        .then(function (response) {
+          deferred.resolve(JSON.parse(response));
+          LoadingScreenService.finish();
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+          LoadingScreenService.finish();
+        });
+
+      return deferred.promise;
+    }
   }
 }());

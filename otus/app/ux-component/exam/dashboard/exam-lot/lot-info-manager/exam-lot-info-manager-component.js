@@ -53,7 +53,9 @@
       _buildDialogs();
       _formatLotDates();
       _getAliquotsInOtherLots();
-      _fetchCollectedAliquots();
+
+      //TODO: commented on to use OTUS-452 with OA-80 in interation 128
+      //_fetchCollectedAliquots();
       _getAliquotsInTransportLots();
     }
 

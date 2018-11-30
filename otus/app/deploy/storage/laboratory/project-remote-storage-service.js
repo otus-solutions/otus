@@ -31,6 +31,7 @@
 
     self.getLots = getLots;
     self.getAliquots = getAliquots;
+    self.getAliquot = getAliquot;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -94,6 +95,26 @@
 
        return deferred.promise;
      }
+
+
+    /**
+     * Exam Lot
+     * @param {(object)} aliquotFilter - the structure for query
+     * @returns {Promise} promise
+     * @memberof ProjectRemoteStorageService
+     */
+    function getAliquot(aliquotFilter) {
+      var deferred = $q.defer();
+      ExamsRestService.getAliquot(aliquotFilter)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        })
+
+      return deferred.promise;
+    }
 
     /**
      * Exam Lot
