@@ -7,7 +7,7 @@
       controller: Controller,
       templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/info-sidenav/exam-lot-info-sidenav-template.html',
       bindings: {
-        selectedLot: '<'
+        selectedLot: '='
       },
       require: {
         otusExamsLotsManager: '^otusExamsLotsManager'
@@ -16,10 +16,11 @@
 
   Controller.$inject = [
     '$mdSidenav',
-    'otusjs.laboratory.business.project.exams.ExamLotService'
+    'otusjs.laboratory.business.project.exams.ExamLotService',
+    '$q'
   ];
 
-  function Controller($mdSidenav, ExamLotService) {
+  function Controller($mdSidenav, ExamLotService, $q) {
     var self = this;
 
     /* Lifecycle hooks */
@@ -30,13 +31,26 @@
 
     function onInit() {
       self.otusExamsLotsManager.lotInfoComponent = self;
-      self.selectedLot.aliquotList.forEach(function(aliquot) {
-        aliquot.containerLabel = ExamLotService.getContainerLabelToAliquot(aliquot);
-      }, this);
     }
 
     function show() {
-      $mdSidenav('right').toggle();
+      _loadAliquots().then(() => {
+        $mdSidenav('right').toggle();
+      });
+    }
+
+    function _loadAliquots() {
+      var request = $q.defer();
+
+      ExamLotService.getLotAliquots(self.selectedLot._id).then(aliquotList => {
+        self.selectedLot.aliquotList = aliquotList;
+        self.selectedLot.aliquotList.forEach(function(aliquot) {
+          aliquot.containerLabel = ExamLotService.getContainerLabelToAliquot(aliquot);
+        }, this);
+        request.resolve();
+      });
+
+      return request.promise;
     }
   }
 }());

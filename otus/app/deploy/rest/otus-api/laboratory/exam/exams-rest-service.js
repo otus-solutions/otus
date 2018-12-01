@@ -18,6 +18,7 @@
     self.initialize = initialize;
     self.create = create;
     self.getLots = getLots;
+    self.getLotAliquots = getLotAliquots;
     self.getAliquots = getAliquots;
     self.getAliquot = getAliquot;
     self.createLot = createLot;
@@ -39,11 +40,18 @@
       _rest.create();
     }
 
-    function getLots() {
+    function getLots(centerAcronym) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getLots().$promise;
+      return _rest.getLots({acronym:centerAcronym}).$promise;
+    }
+
+    function getLotAliquots(id) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getLotAliquots({lotId:id}).$promise;
     }
 
     function getAliquots() {

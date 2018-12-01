@@ -46,12 +46,12 @@
 
     function onInit() {
       // self.aliquotCode = "";
-      self.aliquotFilter = {
-        //aliquotCode: '3530000719',
-        aliquotCode: '',
-        fieldCenter: {acronym: 'RS'},
-        lotType: 'BIOCHEMICAL_SERUM'
-      };
+      // self.aliquotFilter = {
+      //   //aliquotCode: '3530000719',
+      //   aliquotCode: '',
+      //   fieldCenter: {acronym: 'RS'},
+      //   lotType: 'BIOCHEMICAL_SERUM'
+      // };
       self.initialDate = new Date();
       self.finalDate = new Date();
     }

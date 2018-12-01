@@ -6,12 +6,13 @@
     .component('otusExamsLotsManager', {
       controller: Controller,
       templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/exams-lots-manager-template.html',
-      bindings: {
-        lots: "<"
-      }
     });
 
-  function Controller() {
+  Controller.$inject = [
+    'otusjs.laboratory.business.project.exams.ExamLotService'
+  ];
+
+  function Controller(ExamLotService) {
     var self = this;
 
     /* Lifecycle hooks */

@@ -20,6 +20,7 @@
     self.getAvailableExams = getAvailableExams;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
+    self.getLotAliquots = getLotAliquots;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -27,6 +28,10 @@
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
     self.deleteSendedExams = deleteSendedExams;
+
+    function getLotAliquots(id) {
+      return ProjectCollectionService.getLotAliquots(id);
+    }
 
     function getAliquots() {
       return ProjectCollectionService.getAliquots();
@@ -53,8 +58,8 @@
     }
 
     /* exam lot */
-    function getLots() {
-      return ProjectCollectionService.getLots();
+    function getLots(centerAcronym) {
+      return ProjectCollectionService.getLots(centerAcronym);
     }
 
     function createLot(lotStructure) {

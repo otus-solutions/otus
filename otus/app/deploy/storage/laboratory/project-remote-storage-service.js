@@ -30,6 +30,7 @@
     var self = this;
 
     self.getLots = getLots;
+    self.getLotAliquots = getLotAliquots;
     self.getAliquots = getAliquots;
     self.getAliquot = getAliquot;
     self.createLot = createLot;
@@ -46,17 +47,36 @@
      * @returns {Promise} promise
      * @memberof ProjectRemoteStorageService
      */
-    function getLots() {
+    function getLots(centerAcronym) {
       var deferred = $q.defer();
 
       ExamsRestService
-        .getLots()
+        .getLots(centerAcronym)
         .then(function (response) {
           deferred.resolve(response.data);
         });
 
       return deferred.promise;
     }
+
+    /**
+     * Exam Lot Aliquots
+     * @returns {Promise} promise
+     * @memberof ProjectRemoteStorageService
+     */
+    function getLotAliquots(id) {
+      var deferred = $q.defer();
+
+      ExamsRestService
+        .getLotAliquots(id)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        });
+
+      return deferred.promise;
+    }
+
+
 
     /**
      * Exam Lot
