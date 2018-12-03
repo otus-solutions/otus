@@ -29,24 +29,30 @@
     };
 
 
-    function _loadStateData(SessionContextService, LaboratoryContextService, Application) {
-      return Application
+    function _loadStateData($q, LaboratoryConfigurationService, SessionContextService, LaboratoryContextService, Application) {
+      var defer = $q.defer();
+      Application
         .isDeployed()
         .then(function() {
           try {
-            SessionContextService.restore();
-            LaboratoryContextService.restore();
-            var _stateData = [];
-            _stateData['selectedLot'] = LaboratoryContextService.getSelectedExamLot();
-            _stateData['user'] = SessionContextService.getData('loggedUser');
-            return _stateData;
+            LaboratoryConfigurationService.getLaboratoryDescriptors().then(() => {
+              SessionContextService.restore();
+              LaboratoryContextService.restore();
+              var _stateData = [];
+              _stateData['selectedLot'] = LaboratoryContextService.getSelectedExamLot();
+              _stateData['user'] = SessionContextService.getData('loggedUser');
+              defer.resolve(_stateData);
+            });
           } catch (e) {
             console.log(e);
           }
         });
+      return defer.promise;
     }
 
     _loadStateData.$inject = [
+      '$q',
+      'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
       'otusjs.application.session.core.ContextService',
       'otusjs.laboratory.core.ContextService',
       'otusjs.application.core.ModuleService'
