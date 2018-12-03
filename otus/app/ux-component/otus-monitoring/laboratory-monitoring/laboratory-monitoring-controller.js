@@ -47,7 +47,56 @@
           "unit": "meter",
           "India": 833,
           "China": 1614
-        }];
+        },
+        {
+          "chart_title": "Sex Ratio",
+          "unit": "",
+          "India": 1.08,
+          "China": 1.06
+        },
+        {
+          "chart_title": "Literacy All Gender",
+          "unit": "percentage",
+          "India": 0.74,
+          "China": 0.92
+        },
+        {
+          "chart_title": "Literacy All Male",
+          "unit": "percentage",
+          "India": 0.82,
+          "China": 0.96
+        },
+        {
+          "chart_title": "Literacy All Female",
+          "unit": "percentage",
+          "India": 0.65,
+          "China": 0.88
+        },
+        {
+          "chart_title": "Area",
+          "unit": "million square km",
+          "India": 3.31,
+          "China": 9.706
+        },
+        {
+          "chart_title": "Area Land",
+          "unit": "million square km",
+          "India": 2.97,
+          "China": 9.434
+        },
+        {
+          "chart_title": "Area Water",
+          "unit": "million square km",
+          "India": 0.34,
+          "China": 0.272
+        },
+        {
+          "chart_title": "Infant Mortality",
+          "unit": "per thousand",
+          "India": 46.07,
+          "China": 15.62
+        }
+      ];
 
 
       var width = WIDTH - margin.left - margin.right;
@@ -79,14 +128,14 @@
 
       var x = d3.scaleBand()
         .rangeRound([0, width])
-        .padding(0.1);
+        .padding(0.3);
 
       var y = d3.scaleLinear()
         .range([height, 0]);
 
       var xAxis = d3.axisBottom(x);
 
-      var yAxis = d3.axisRight(y);
+      var yAxis = d3.axisLeft(y);
 
       var value_data = groups.map(function (d) {
         return { x_axis: d, y_axis: bar_data[d] };
@@ -109,8 +158,8 @@
         .style("font-weight", "bold");
 
       var title = svg.append("text")
-        .attr("x", 0)
-        .attr("y", -50)
+        .attr("x", 5)
+        .attr("y", -25)
         .attr("class", "chart-title")
         .text(bar_data.chart_title);
 
@@ -123,9 +172,9 @@
         .attr("class", "y axis")
         .call(yAxis)
         .append("text")
-        .attr("transform", "rotate(0)")
+        .attr("transform", "rotate(180)")
         .attr("y", -25)
-        .attr("x", 0)
+        .attr("x", -50)
         .style("text-anchor", "left")
         .text(Y_AXIS_LABEL);
 
@@ -140,11 +189,11 @@
           }
         })
         .attr("x", function (d) { return x(d.x_axis); })
-        .attr("width", x.scaleBand())
+        .attr("width", x.bandwidth())
         .attr("y", function (d) { return y(d.y_axis); })
         .attr("height", function (d) { return height - y(d.y_axis); })
         .on("mouseover", function (d, i, j) {
-          detailBox.attr("x", x.range()[i] - Y_DATA_FORMAT(d.y_axis).length / 2)
+          detailBox.attr("x", x(d.x_axis) - 10)
             .attr("y", y(d.y_axis))
             .text(Y_DATA_FORMAT(d.y_axis))
             .style("visibility", "visible");

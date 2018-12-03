@@ -1,3 +1,5 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
+
 <div layout="column" flex>
   <otus-dashboard-sidenav layout="row">
     <hide-participant-box></hide-participant-box>
@@ -7,10 +9,13 @@
       <span layout-align="center center">Monitoramento laboratorial</span>
     </div>
   </otus-dashboard-toolbar>
-  <div ui-view layout="column" flex>
+  <div layout="column" flex>
     <md-card flex>
       <md-card-content style="align-self:stretch;height:100%;" flex>
+        <h1 class="md-header" layout-margin="" layout-padding>Pendências</h1>
+        <md-divider></md-divider>
         <div id="pending-results-chart" flex></div>
+        <md-divider></md-divider>
       </md-card-content>
     </md-card>
   </div>

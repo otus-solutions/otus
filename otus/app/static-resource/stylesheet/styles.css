@@ -100,6 +100,9 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
 otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
   color: rgb(255, 255, 255) !important;
 }
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button {
+  color: rgb(255, 255, 255) !important;
+}
 
 otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
   color: rgb(255, 255, 255) !important;

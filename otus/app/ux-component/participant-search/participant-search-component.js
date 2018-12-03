@@ -32,8 +32,7 @@
     self.querySearch = querySearch;
     self.selectParticipant = selectParticipant;
     self.showParticipants = self.showAllParticipants;
-    self.ready = false;
-    self.onReady = self.ready;
+    // self.onReady = self.ready;
 
     var confirmParticipantChange;
 
@@ -45,8 +44,7 @@
         self.autoCompleteClass = 'md-dashboard-autocomplete';
       }
       ParticipantManagerService.setup().then(function (response) {
-        self.onReady = angular.copy(response);
-        self.ready = angular.copy(response);
+        self.onReady = true;
       });
 
     }
