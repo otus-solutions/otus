@@ -49,13 +49,12 @@
         self.lot.operator = self.stateData['user'].email;
         self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedExamLotFieldCenter()};
         self.lot.realizationDate = new Date();
+        self.lot.aliquotList = [];
       }
       _buildDialogs();
       _formatLotDates();
 
     }
-
-
 
     function removeAliquots() {
       var aliquotsCount = self.selectedAliquots.length;

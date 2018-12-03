@@ -34,14 +34,13 @@
               <form layout="row" name="formAliquot" flex>
                 <md-input-container flex>
                   <label>Insira o código da aliquota:</label>
-                  <!--<input type="text" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" flex/>-->
-                  <input type="text" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotFilter.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" flex/>
-                  <div ng-messages="formAliquot['fast-trigger'].$error" role="alert">
+                  <input type="text" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" flex/>
+                  <div ng-messages="formAliquot['fast-trigger'] .$error" role="alert">
                     <div ng-message="customValidation">{{$ctrl.error}}</div>
                   </div>
                 </md-input-container>
                 <div>
-                  <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotFilter)" class="md-raised md-primary" aria-label="Adicionar Alíquota">
+                  <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Alíquota">
                     <md-tooltip md-direction="down">Adicionar</md-tooltip>
                     <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
                   </md-button>

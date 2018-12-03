@@ -9,8 +9,7 @@
       bindings: {
         onViewInfo: '&',
         updateLotListOnDelete: '&',
-        selectedLots: '<',
-        csvData: '<'
+        selectedLots: '<'
       }
     });
 
@@ -38,20 +37,29 @@
     }
 
     function getCsvData() {
-      ExamLotService.getLotAliquots(self.selectedLots[0]._id).then(aliquotList => {
-        self.selectedLots[0].aliquotList = aliquotList;
+      if(!self.selectedLots[0].aliquotList){
+        ExamLotService.getLotAliquots(self.selectedLots[0]._id).then(aliquotList => {
+          self.selectedLots[0].aliquotList = aliquotList;
+          self.csvData =  self.selectedLots[0].getAliquotsToCsv();
+        });
+      } else {
         self.csvData =  self.selectedLots[0].getAliquotsToCsv();
-        angular.element('#export').triggerHandler('click');
-      });
+      }
     }
 
     function ChangeLot() {
-      ExamLotService.getLotAliquots(self.selectedLots[0]._id).then(aliquotList => {
-        self.selectedLots[0].aliquotList = aliquotList;
+      if(!self.selectedLots[0].aliquotList) {
+        ExamLotService.getLotAliquots(self.selectedLots[0]._id).then(aliquotList => {
+          self.selectedLots[0].aliquotList = aliquotList;
+          self.action = laboratoryContextService.setLotInfoManagerAction('alter');
+          laboratoryContextService.setSelectedExamLot(self.selectedLots[0].toJSON());
+          ApplicationStateService.activateExamsLotInfoManager();
+        });
+      } else {
         self.action = laboratoryContextService.setLotInfoManagerAction('alter');
         laboratoryContextService.setSelectedExamLot(self.selectedLots[0].toJSON());
         ApplicationStateService.activateExamsLotInfoManager();
-      });
+      }
     }
 
     function DeleteLots() {

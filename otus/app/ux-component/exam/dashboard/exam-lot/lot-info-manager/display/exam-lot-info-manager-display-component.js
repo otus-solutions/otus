@@ -45,13 +45,6 @@
     self.selectAliquot = selectAliquot;
 
     function onInit() {
-      // self.aliquotCode = "";
-      // self.aliquotFilter = {
-      //   //aliquotCode: '3530000719',
-      //   aliquotCode: '',
-      //   fieldCenter: {acronym: 'RS'},
-      //   lotType: 'BIOCHEMICAL_SERUM'
-      // };
       self.initialDate = new Date();
       self.finalDate = new Date();
     }
@@ -71,16 +64,21 @@
 
     function aliquotInputkeydown(event) {
       var charCode = event.which || event.keyCode;
-      if (charCode == '13' && self.aliquotFilter.aliquotCode.length > 0) {
-        self.fastInsertion(self.aliquotFilter);
+      if(charCode == '13' && self.aliquotCode.length > 0) {
+        self.fastInsertion(self.aliquotCode);
       }
     }
 
 
-    function fastInsertion(aliquotFilter, hideMsgErrors) {
-      var foundAliquot;
+    function fastInsertion(newAliquotCode, hideMsgErrors) {
       var successInsertion = false;
       var foundInOtherLot;
+
+      let aliquotFilter = {
+        aliquotCode: newAliquotCode,
+        fieldCenter: self.lot.fieldCenter,
+        lotType: self.lot.aliquotName
+      };
 
       if (_findAliquotInLot(aliquotFilter.aliquotCode)) {
         _setDuplicatedAliquotError(aliquotFilter.aliquotCode);

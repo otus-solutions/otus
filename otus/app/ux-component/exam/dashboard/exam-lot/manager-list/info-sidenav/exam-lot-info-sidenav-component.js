@@ -35,6 +35,9 @@
 
     function show() {
       _loadAliquots().then(() => {
+        self.selectedLot.aliquotList.forEach(function(aliquot) {
+          aliquot.containerLabel = ExamLotService.getContainerLabelToAliquot(aliquot);
+        }, this);
         $mdSidenav('right').toggle();
       });
     }
@@ -42,13 +45,14 @@
     function _loadAliquots() {
       var request = $q.defer();
 
-      ExamLotService.getLotAliquots(self.selectedLot._id).then(aliquotList => {
-        self.selectedLot.aliquotList = aliquotList;
-        self.selectedLot.aliquotList.forEach(function(aliquot) {
-          aliquot.containerLabel = ExamLotService.getContainerLabelToAliquot(aliquot);
-        }, this);
+      if(!self.selectedLot.aliquotList){
+        ExamLotService.getLotAliquots(self.selectedLot._id).then(aliquotList => {
+          self.selectedLot.aliquotList = aliquotList;
+          request.resolve();
+        });
+      } else {
         request.resolve();
-      });
+      }
 
       return request.promise;
     }
