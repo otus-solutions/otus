@@ -26,14 +26,9 @@
         <otus-participant-search on-select="$ctrl.selectParticipant(participant)"
                                  show-all-participants="$ctrl.managerParticipantsDashboard()"
                                  ng-disabled="!$ctrl.participantsReady" layout-fill
-                                  on-ready="$ctrl.participantsReady">
+                                 on-ready="$ctrl.participantsReady">
 
         </otus-participant-search>
-        <!--<md-button class="md-raised" ng-click="$ctrl.managerParticipantsDashboard()">-->
-          <!--<md-icon>supervisor_account</md-icon>-->
-          <!--Participantes-->
-          <!--<md-tooltip md-direction="down">Listar todos os participantes</md-tooltip>-->
-        <!--</md-button>-->
       </div>
     </div>
     <md-content layout-xs="column" layout="row" layout-align="center start" layout-fill layout-padding flex layout-wrap>
@@ -50,7 +45,7 @@
             </md-button>
           </md-card-header>
           <md-card-content layout="column" layout-align="start start" flex layout-fill layout-padding layout-margin
-            class="content-card-home" ng-if="showLaboratory">
+                           class="content-card-home" ng-if="showLaboratory">
             <md-button ng-click="$ctrl.sampleTransportDashboard()" class="md-body-1 option " layout-align="center">
               <md-icon layout-margin>local_shipping</md-icon>
               Transporte de amostra
@@ -79,7 +74,7 @@
             </md-button>
           </md-card-header>
           <md-card-content layout="column" layout-align="center start" flex layout-fill class="content-card-home"
-            layout-padding layout-margin ng-if="showMonitory">
+                           layout-padding layout-margin ng-if="showMonitory">
             <md-button ng-click="$ctrl.startMonitoring()" class="md-body-1 option " layout-align="center">
               <md-icon layout-margin>description</md-icon>
               Atividades do centro
@@ -89,7 +84,7 @@
               Relatório de Flags
             </md-button>
             <md-button ng-click="$ctrl.laboratoryMonitoring()" class="md-body-1 option" layout-align="center">
-              <md-icon layout-margin>done</md-icon>
+              <md-icon layout-margin>assignment_turned_in</md-icon>
               Controle laboratorial
             </md-button>
           </md-card-content>

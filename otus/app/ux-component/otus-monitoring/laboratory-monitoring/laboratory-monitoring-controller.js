@@ -32,69 +32,69 @@
       self.data = [
         {
           "chart_title": "Population",
-          "unit": "billion",
-          "India": 1.22,
-          "China": 1.36
+          "unit": "",
+          "Repetidos": 22,
+          "Aguardando": 36
         },
         {
           "chart_title": "Popluation Grow Rate",
-          "unit": "percentage",
-          "India": 0.0131,
-          "China": 0.0048
+          "unit": "",
+          "Repetidos": 131,
+          "Aguardando": 48
         },
         {
           "chart_title": "Tallest Building",
-          "unit": "meter",
-          "India": 833,
-          "China": 1614
+          "unit": "",
+          "Repetidos": 833,
+          "Aguardando": 1614
         },
         {
           "chart_title": "Sex Ratio",
           "unit": "",
-          "India": 1.08,
-          "China": 1.06
+          "Repetidos": 108,
+          "Aguardando": 106
         },
         {
           "chart_title": "Literacy All Gender",
-          "unit": "percentage",
-          "India": 0.74,
-          "China": 0.92
+          "unit": "",
+          "Repetidos": 74,
+          "Aguardando": 92
         },
         {
           "chart_title": "Literacy All Male",
-          "unit": "percentage",
-          "India": 0.82,
-          "China": 0.96
+          "unit": "",
+          "Repetidos": 82,
+          "Aguardando": 96
         },
         {
           "chart_title": "Literacy All Female",
-          "unit": "percentage",
-          "India": 0.65,
-          "China": 0.88
+          "unit": "",
+          "Repetidos": 65,
+          "Aguardando": 88
         },
         {
           "chart_title": "Area",
-          "unit": "million square km",
-          "India": 3.31,
-          "China": 9.706
+          "unit": "",
+          "Repetidos": 331,
+          "Aguardando": 9706
         },
         {
           "chart_title": "Area Land",
-          "unit": "million square km",
-          "India": 2.97,
-          "China": 9.434
+          "unit": "",
+          "Repetidos": 297,
+          "Aguardando": 9434
         },
         {
           "chart_title": "Area Water",
-          "unit": "million square km",
-          "India": 0.34,
-          "China": 0.272
+          "unit": "",
+          "Repetidos": 34,
+          "Aguardando": 272
         },
         {
           "chart_title": "Infant Mortality",
-          "unit": "per thousand",
-          "India": 46.07,
-          "China": 15.62
+          "unit": "",
+          "Repetidos": 46,
+          "Aguardando": 15
         }
       ];
 
@@ -193,7 +193,7 @@
         .attr("y", function (d) { return y(d.y_axis); })
         .attr("height", function (d) { return height - y(d.y_axis); })
         .on("mouseover", function (d, i, j) {
-          detailBox.attr("x", x(d.x_axis) - 10)
+          detailBox.attr("x", x(d.x_axis) - 8)
             .attr("y", y(d.y_axis))
             .text(Y_DATA_FORMAT(d.y_axis))
             .style("visibility", "visible");
