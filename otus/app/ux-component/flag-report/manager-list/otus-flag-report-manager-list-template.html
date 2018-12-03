@@ -9,7 +9,7 @@
 <md-divider></md-divider>
 <md-content flex layout="row">
   <otus-flag-report-visualization ng-show="$ctrl.activities.data.length" activities-data="$ctrl.activities" on-update="$ctrl.setActivities" colors-range="$ctrl.colors" legend-range="$ctrl.labels" flex ng-if="$ctrl.ready" layout-padding=""></otus-flag-report-visualization>
-  <div flex ng-if="!$ctrl.activities.data.length" layout="row" style="margin-top: 30px" layout-align="center top" >
-    <span class="md-display-1" >Não existem atividades disponíveis para visualização</span>
+  <div flex ng-if="$ctrl.ERROR" layout="row" style="margin-top: 30px" layout-align="center top" >
+    <span class="md-display-1" >{{ $ctrl.MESSAGES[$ctrl.INDEX]}}</span>
   </div>
 </md-content>

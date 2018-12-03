@@ -37,6 +37,18 @@
     self.updatePage = updatePage;
     self.setActivities = setActivities;
     self.downloadCSV = downloadCSV;
+    self.INDEX = 0;
+    self.ERROR = true;
+    self.MESSAGES = [
+      "Não existem atividades disponíveis para visualização.",
+      "Não foi possível carregar os dados do centro.",
+      "Não foi possível carregar os dados de acrônimos no sistema.",
+      "Não foi possível carregar os dados de atividades no sistema."
+    ];
+
+    self.$onDestroy = function () {
+      alasql("DROP TABLE IF EXISTS flags");
+    };
 
     function onInit() {
       self.ready = false;
@@ -47,17 +59,15 @@
 
     function _prepareForCSV(){
       alasql("DROP TABLE IF EXISTS flags");
-      alasql("CREATE TABLE flags(RN INT,SIGLA STRING, STATUS STRING)");
+      alasql("CREATE TABLE flags(RN INT,ACRONIMO STRING, STATUS STRING)");
       var rn = 0;
       if(Array.isArray(self.rawActivities.data)){
         if(self.rawActivities.data.length>0){
           self.rawActivities.data.forEach(function(line) {
             for (let i = 0; i < self.rawActivities.columns.length; i++) {
-
               alasql("INSERT INTO flags VALUES("+self.rawActivities.index[rn]+",'"+self.rawActivities.columns[i][1]+"','"+StatusHistoryService.getStatusLabel(line[i])+"')");
             }
             rn++;
-
           });
         }
       }
@@ -65,7 +75,7 @@
 
     function downloadCSV(){
       var name = "relatorio-flags-".concat(new Date().toLocaleDateString());
-      var QUERY_ACRONYM = self.selectedAcronym != null ? "SIGLA='"+self.selectedAcronym+"'": "2=2";
+      var QUERY_ACRONYM = self.selectedAcronym != null ? "ACRONIMO='"+self.selectedAcronym+"'": "2=2";
       var QUERY_STATUS = self.selectedStatus != null ? "STATUS='"+StatusHistoryService.getStatusLabel(self.selectedStatus)+"'": "3=3";
       alasql('SELECT * INTO CSV("'+name+'.csv",{headers:true}) FROM flags WHERE 1=1 AND '+QUERY_ACRONYM+' AND '+QUERY_STATUS);
     }
@@ -83,12 +93,14 @@
     }
 
     function _loadAllCenters() {
+      self.INDEX++;
       if(!self.centers){
         ProjectFieldCenterService.loadCenters().then((result) => {
           self.centers = angular.copy(result);
           setUserFieldCenter();
         }).catch(function (e) {
-          console.log(e)
+          LoadingScreenService.finish();
+          throw e;
         });
       } else {
         _loadActivitiesProgress(self.selectedCenter.acronym);
@@ -111,23 +123,26 @@
           _loadAllAcronyms();
         })
         .catch(function (e) {
-          console.log(e);
+          LoadingScreenService.finish();
+          throw e;
         });
     }
 
     function _loadAllAcronyms() {
-      if(!self.acronymsList){
+      self.INDEX++;
+      if(!self.acronymsList) {
         MonitoringService.listAcronyms()
           .then((activities) => {
-            self.acronymsList = activities.map(function(acronym) {
+            self.acronymsList = activities.map(function (acronym) {
               return acronym;
-            }).filter(function(elem, index, self) {
+            }).filter(function (elem, index, self) {
               return index == self.indexOf(elem);
             });
             _getStatus();
           })
           .catch((e) => {
-            console.log(e);
+            LoadingScreenService.finish();
+            throw e;
           });
       }
     }
@@ -137,8 +152,9 @@
       self.selectedStatus = null;
       _loadActivitiesProgress(self.selectedCenter.acronym);
     }
-    self.export = {};
+
     function _loadActivitiesProgress(center) {
+      self.INDEX++;
       if(!self.activities || center !== self.selectedCenter.acronym){
         if (center !== self.selectedCenter.acronym) self.$onInit();
         MonitoringService.getActivitiesProgressReport(center)
@@ -146,17 +162,19 @@
             self.rawActivities = angular.copy(response);
             _prepareForCSV();
             self.activitiesData = response;
-            self.updatePage(self.rawActivities);
+            self.updatePage(self.rawActivities.data);
             self.ready= true;
-            LoadingScreenService.finish();
+            self.ERROR = false;
           }).catch((e)=>{
-          console.log(e)
-        });
+          LoadingScreenService.finish();
+          throw e;
+          });
       } else {
         self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
         self.ready= true;
-        LoadingScreenService.finish();
+        self.ERROR = false;
       }
+
     }
 
     function updateData(activities = null, acronym = null, status = null, center) {
@@ -175,9 +193,13 @@
       }
     }
 
-    function updatePage(activities = null) {
+    function updatePage(activities = null, startPage, endPage) {
+      if(startPage !== undefined && endPage !== undefined){
+        self.activitiesData.index = self.rawActivities.index.slice(startPage,endPage+1);
+      }
       self.activitiesData.data = activities
       self.setActivities(FlagReportParseData.create(self.activitiesData, self.selectedAcronym, self.selectedStatus), self.selectedAcronym, self.selectedStatus);
+      LoadingScreenService.finish();
     }
 
     function setActivities(activities) {
