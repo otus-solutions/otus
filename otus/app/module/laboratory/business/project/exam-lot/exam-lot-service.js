@@ -140,6 +140,7 @@
       LoadingScreenService.start();
       var deferred = $q.defer();
 
+      delete lotStructure._id;
       ProjectRepositoryService.createLot(lotStructure)
         .then(function (response) {
           deferred.resolve(JSON.parse(response));
