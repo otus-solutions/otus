@@ -220,7 +220,7 @@
       if(startPage !== undefined && endPage !== undefined){
         self.activitiesData.index = self.rawActivities.index.slice(startPage,endPage+1);
       }
-      self.activitiesData.data = activities
+      self.activitiesData.data = angular.copy(activities);
       self.setActivities(FlagReportParseData.create(self.activitiesData, self.selectedAcronym, self.selectedStatus), self.selectedAcronym, self.selectedStatus);
       LoadingScreenService.finish();
     }
