@@ -84,7 +84,10 @@
             .getAliquot(aliquotFilter)
             .then(function (aliquot) {
               request.resolve(aliquot);
-            });
+            })
+            .catch(error => {
+              request.reject(error);
+              });
         });
 
       return request.promise;

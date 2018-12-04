@@ -220,7 +220,7 @@
 
     function getAliquot(aliquotFilter) {
       var deferred = $q.defer();
-
+      LoadingScreenService.start();
       ProjectRepositoryService.getAliquot(aliquotFilter)
         .then(function (response) {
           deferred.resolve(JSON.parse(response));
