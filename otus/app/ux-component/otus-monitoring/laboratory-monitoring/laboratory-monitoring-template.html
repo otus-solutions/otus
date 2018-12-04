@@ -1,6 +1,4 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
-
-<div layout="column" flex>
+<md-content layout="column" flex>
   <otus-dashboard-sidenav layout="row">
     <hide-participant-box></hide-participant-box>
   </otus-dashboard-sidenav>
@@ -9,15 +7,56 @@
       <span layout-align="center center">Monitoramento laboratorial</span>
     </div>
   </otus-dashboard-toolbar>
-  <div layout="column" flex>
-    <md-card flex>
-      <md-card-content style="align-self:stretch;height:100%;" flex>
+  <!--<md-content layout="column" flex>-->
+
+  <!--<md-card>-->
+  <!--<h1 class="md-no-sticky" layout-margin="" layout-padding>Pendências de Resultados</h1>-->
+  <!--<md-card-content flex layout="row" layout-fill>-->
+  <!--<md-content  id="pending-results-chart" flex></md-content>-->
+  <!--</md-card-content>-->
+  <!--</md-card>-->
+  <!--<md-divider></md-divider>-->
+
+  <!--<md-card>-->
+  <!--<md-card-content style="align-self:stretch;height:100%;" flex>-->
+  <!--<h1 class="md-no-sticky" layout-margin="" layout-padding>Quantitativo por Tipo de Aliquota</h1>-->
+  <!--<div id="quantitative-by-aliquots" flex></div>-->
+  <!--</md-card-content>-->
+  <!--</md-card>-->
+  <!--</md-content>-->
+
+
+
+  <!--REMOVER-->
+
+  <md-content class="md-padding md-primary"  ng-init="currentNavItem='pending'">
+    <md-nav-bar class="md-accent"
+      md-no-ink-bar="disableInkBar"
+      md-selected-nav-item="currentNavItem"
+      nav-bar-aria-label="navigation links">
+      <md-nav-item md-nav-click="goto('pending')" class="md-primary" name="pending">
+        Pendências
+
+      </md-nav-item>
+      <md-nav-item md-nav-click="goto('quantitative')" name="quantitative">
+        Quantitativo
+      </md-nav-item>
+
+    </md-nav-bar>
+    <md-card id="pending" ng-show="currentNavItem == 'pending'">
+      <md-card-content flex layout="column" layout-fill>
         <h1 class="md-no-sticky" layout-margin="" layout-padding>Pendências de Resultados</h1>
-        <div id="pending-results-chart" flex></div>
-        <md-divider></md-divider>
+        <md-content  id="pending-results-chart" flex></md-content>
+      </md-card-content>
+    </md-card>
+
+    <md-card ng-show="currentNavItem == 'quantitative'">
+      <md-card-content style="align-self:stretch;height:100%;" flex>
         <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantitativo por Tipo de Aliquota</h1>
         <div id="quantitative-by-aliquots" flex></div>
       </md-card-content>
     </md-card>
-  </div>
-</div>
+
+
+  </md-content>
+</md-content>
