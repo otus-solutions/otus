@@ -1,7 +1,7 @@
 <flag-filter-view-component centers="$ctrl.centers" activities-status="$ctrl.status" acronyms-list="$ctrl.acronymsList" on-update="$ctrl.updateData" ng-if="$ctrl.ready"></flag-filter-view-component>
 <div layout="row" layout-align="center center">
    <md-button ng-disabled="!$ctrl.activities.data.length" class="md-accent md-raised" ng-click="$ctrl.downloadCSV()">EXPORTAR <md-icon>get_app</md-icon>
-    <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados.</md-tooltip>
+    <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados e os dados da tela.</md-tooltip>
   </md-button>
   <span flex></span>
   <otus-paginator flex flex-gt-md="35" elements="$ctrl.rawActivities.data" on-update="$ctrl.updatePage" ng-if="$ctrl.ready"></otus-paginator>

@@ -18,7 +18,9 @@
     'otusjs.application.activity.StatusHistoryService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
-    'otusFlagReportParseDataFactory'
+    'otusFlagReportParseDataFactory',
+    '$q',
+    '$timeout'
   ];
 
   function Controller(ProjectFieldCenterService,
@@ -26,7 +28,7 @@
                       StatusHistoryService,
                       dashboardContextService,
                       LoadingScreenService,
-                      FlagReportParseData) {
+                      FlagReportParseData, $q, $timeout) {
 
     var self = this;
 
@@ -58,29 +60,48 @@
     }
 
     function _prepareForCSV(){
-      alasql("DROP TABLE IF EXISTS flags");
-      alasql("CREATE TABLE flags(RN INT,ACRONIMO STRING, STATUS STRING)");
-      var rn = 0;
-      if(Array.isArray(self.rawActivities.data)){
-        if(self.rawActivities.data.length>0){
-          self.rawActivities.data.forEach(function(line) {
-            for (let i = 0; i < self.rawActivities.columns.length; i++) {
-              alasql("INSERT INTO flags VALUES("+self.rawActivities.index[rn]+",'"+self.rawActivities.columns[i][1]+"','"+StatusHistoryService.getStatusLabel(line[i])+"')");
+      return $q(function (resolve, reject) {
+        alasql("DROP TABLE IF EXISTS flags");
+        alasql("CREATE TABLE IF NOT EXISTS flags(RN INT,ACRONIMO STRING, STATUS STRING)");
+        var rn = 0;
+        if(Array.isArray(self.rawActivities.data)){
+          if(self.activitiesData.data.length>0){
+            try {
+              self.activitiesData.data.forEach(function(line) {
+                for (let i = 0; i < self.activitiesData.columns.length; i++) {
+                  alasql("INSERT INTO flags VALUES("+self.activitiesData.index[rn]+",'"+self.activitiesData.columns[i][1]+"','"+StatusHistoryService.getStatusLabel(line[i])+"')");
+                }
+                rn++;
+              });
+            } catch (e) {
+              reject(e);
             }
-            rn++;
-          });
+          }
+          resolve(true);
+        } else {
+          reject("Data not found.");
         }
-      }
+      });
     }
 
     function downloadCSV(){
+      LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
-      _prepareForCSV();
-      LoadingScreenService.finish();
-      var name = "relatorio-flags-".concat(new Date().toLocaleDateString());
-      var QUERY_ACRONYM = self.selectedAcronym != null ? "ACRONIMO='"+self.selectedAcronym+"'": "2=2";
-      var QUERY_STATUS = self.selectedStatus != null ? "STATUS='"+StatusHistoryService.getStatusLabel(self.selectedStatus)+"'": "3=3";
-      alasql('SELECT * INTO CSV("'+name+'.csv",{headers:true}) FROM flags WHERE 1=1 AND '+QUERY_ACRONYM+' AND '+QUERY_STATUS);
+      $timeout(function () {
+        _prepareForCSV().then(function (response) {
+          if (response) {
+            var name = "relatorio-flags-".concat(new Date().toLocaleDateString());
+            var QUERY_ACRONYM = self.selectedAcronym != null ? "ACRONIMO='"+self.selectedAcronym+"'": "2=2";
+            var QUERY_STATUS = self.selectedStatus != null ? "STATUS='"+StatusHistoryService.getStatusLabel(self.selectedStatus)+"'": "3=3";
+            alasql('SELECT * INTO CSV("'+name+'.csv",{headers:true}) FROM flags WHERE 1=1 AND '+QUERY_ACRONYM+' AND '+QUERY_STATUS);
+            LoadingScreenService.finish();
+          }
+        }).catch(function (e) {
+          throw new Error(e);
+        }).finally(function () {
+          LoadingScreenService.finish();
+        });
+      }, 2000);
     }
 
     function _resetData() {
@@ -162,16 +183,15 @@
         if (center !== self.selectedCenter.acronym) self.$onInit();
         MonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
+            alasql("DROP TABLE IF EXISTS flags");
             self.rawActivities = angular.copy(response);
-            // _prepareForCSV();
-            self.activitiesData = response;
-            // self.updatePage(self.rawActivities.data);
+            self.activitiesData = angular.copy(response);
             self.ready= true;
             self.ERROR = false;
           }).catch((e)=>{
           LoadingScreenService.finish();
           throw e;
-          });
+        });
       } else {
         self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
         self.ready= true;
