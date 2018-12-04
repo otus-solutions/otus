@@ -8,7 +8,7 @@
   function Factory() {
     const REPEATED = '#ff6f69';
     const WAITING = '#bae1ff';
-    const WIDTH = 100;
+    const WIDTH = 300;
     const MARGIN = {
       TOP: 70,
       RIGHT: 20,
@@ -112,7 +112,7 @@
           d3.select(this)
             .style('opacity', 1.0);
         });
-    }
+    };
 
     return self;
   }
