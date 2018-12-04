@@ -74,6 +74,9 @@
     }
 
     function downloadCSV(){
+      LoadingScreenService.start();
+      _prepareForCSV();
+      LoadingScreenService.finish();
       var name = "relatorio-flags-".concat(new Date().toLocaleDateString());
       var QUERY_ACRONYM = self.selectedAcronym != null ? "ACRONIMO='"+self.selectedAcronym+"'": "2=2";
       var QUERY_STATUS = self.selectedStatus != null ? "STATUS='"+StatusHistoryService.getStatusLabel(self.selectedStatus)+"'": "3=3";
@@ -160,9 +163,9 @@
         MonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
             self.rawActivities = angular.copy(response);
-            _prepareForCSV();
+            // _prepareForCSV();
             self.activitiesData = response;
-            self.updatePage(self.rawActivities.data);
+            // self.updatePage(self.rawActivities.data);
             self.ready= true;
             self.ERROR = false;
           }).catch((e)=>{
@@ -185,8 +188,8 @@
         if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
           _setActivity(acronym);
           _setStatus(status);
-          self.activitiesData = FlagReportParseData.create(self.rawActivities, acronym, status)
-          self.setActivities(self.activitiesData, acronym, status);
+          self.newActivitiesData = FlagReportParseData.create(self.activitiesData, acronym, status)
+          self.setActivities(self.newActivitiesData, acronym, status);
         } else if(activities && activities !== self.activities){
           self.setActivities(activities, acronym, status);
         }
