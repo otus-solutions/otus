@@ -52,14 +52,13 @@
 </md-content>
 <!-- user access error -->
 <md-content id="user-login-page" layout="column" flex ng-show="$ctrl.error">
-  <span flex-gt-sm="30" flex-sm="10"></span>
   <md-toolbar class="md-primary md-whiteframe-1dp">
     <div class="md-toolbar-tools">
       <h2 flex md-truncate>OTUS</h2>
     </div>
   </md-toolbar>
   <md-content flex layout="row" layout-align="center start">
-    <form name="accessErrorForm" class="content" flex="" layout-fill layout-align="start start" layout="row">
+    <form name="accessErrorForm" class="content" layout="row">
       <div flex-gt-md="30" layout-align="center center" layout-padding flex>
         <img src="app/static-resource/image/otus-crash.png" />
       </div>
@@ -69,7 +68,7 @@
           <p class="md-body-1">Desculpe, seu código de acesso para troca de senha não existe ou acabou sendo expirado.</p>
           <p class="md-body-1">Você pode realizar o processo de troca de senha novamente retornando para a tela de login.</p>
         </div>
-        <div flex="40" layout-fill layout-margin="" class="bottom-sheet-demo inset" layout="row" layout-sm="column">
+        <div flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
           <md-button class="md-raised md-primary" ng-click="$ctrl.goBack()">Voltar à tela de login</md-button>
         </div>
       </div>
