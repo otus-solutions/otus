@@ -86,7 +86,6 @@
         ExamLotService.getAliquot(aliquotFilter)
           .then(function (aliquot) {
             _clearAliquotError();
-            _fillAliquotLabels(aliquot);
             self.lot.insertAliquot(aliquot);
             self.onLotAlteration({
               newData: self.lot.toJSON()
@@ -106,18 +105,6 @@
       }
       self.aliquotCode = "";
       return successInsertion;
-    }
-
-    function _fillAliquotLabels(aliquot) {
-      aliquot.label = _getAliquotLabel(aliquot.name);
-      aliquot.containerLabel = aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
-      aliquot.roleLabel = aliquot.role.toUpperCase() === "EXAM" ? "Exame" : "Armazenamento";
-    }
-
-    function _getAliquotLabel(aliquotName){
-      let aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
-      if(aliquotDescriptor)
-        return aliquotDescriptor.label;
     }
 
     function dynamicDataTableChange(change) {
