@@ -8,7 +8,7 @@
   function Factory() {
     const REPEATED = '#ff6f69';
     const WAITING = '#bae1ff';
-    const WIDTH = 300;
+    const WIDTH = 100;
     const MARGIN = {
       TOP: 70,
       RIGHT: 20,
@@ -25,11 +25,11 @@
       var height = WIDTH - MARGIN.TOP - MARGIN.BOTTOM;
       var width = width / data.length - 10;
       width = width > 180 ? width : 180;
-      var Y_DATA_FORMAT = d3.format("");
+      var Y_DATA_FORMAT = d3.format('');
       var Y_AXIS_LABEL = data.unit;
 
       if (data.unit === 'percentage') {
-        Y_DATA_FORMAT = d3.format(".1%");
+        Y_DATA_FORMAT = d3.format('.1%');
       };
 
       var x = d3.scaleBand()
@@ -50,67 +50,67 @@
       x.domain(value_data.map(function (d) { return d.x_axis; }));
       y.domain([0, d3.max(value_data, function (d) { return d.y_axis; })]);
 
-      var svg = d3.select("#pending-results-chart").append("svg")
-        .attr("width", width + MARGIN.LEFT + MARGIN.RIGHT)
-        .attr("height", height + MARGIN.TOP + MARGIN.BOTTOM)
-        .append("g")
-        .attr("transform", "translate(" + MARGIN.LEFT + "," + MARGIN.TOP + ")");
+      var svg = d3.select('#pending-results-chart').append('svg')
+        .attr('width', width + MARGIN.LEFT + MARGIN.RIGHT)
+        .attr('height', height + MARGIN.TOP + MARGIN.BOTTOM)
+        .append('g')
+        .attr('transform', 'translate(' + MARGIN.LEFT + ',' + MARGIN.TOP + ')');
 
-      var detailBox = svg.append("svg:text")
-        .attr("dx", "20px")
-        .attr("dy", "-5px")
-        .attr("text-anchor", "RIGHT")
-        .style("fill", "#1D5096")
-        .style("font-weight", "bold");
+      var detailBox = svg.append('svg:text')
+        .attr('dx', '20px')
+        .attr('dy', '-5px')
+        .attr('text-anchor', 'RIGHT')
+        .style('fill', '#1D5096')
+        .style('font-weight', 'bold');
 
-      var title = svg.append("text")
-        .attr("x", 5)
-        .attr("y", -25)
-        .attr("class", "chart-title")
+      var title = svg.append('text')
+        .attr('x', 5)
+        .attr('y', -25)
+        .attr('class', 'chart-title')
         .text(data.chart_title);
 
-      svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+      svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis);
 
-      svg.append("g")
-        .attr("class", "y axis")
+      svg.append('g')
+        .attr('class', 'y axis')
         .call(yAxis)
-        .append("text")
-        .attr("transform", "rotate(180)")
-        .attr("y", -25)
-        .attr("x", -50)
-        .style("text-anchor", "LEFT")
+        .append('text')
+        .attr('transform', 'rotate(180)')
+        .attr('y', -25)
+        .attr('x', -50)
+        .style('text-anchor', 'LEFT')
         .text(Y_AXIS_LABEL);
 
-      svg.selectAll(".bar")
+      svg.selectAll('.bar')
         .data(value_data)
-        .enter().append("rect")
-        .style("fill", function (d) {
+        .enter().append('rect')
+        .style('fill', function (d) {
           if (d.x_axis === groups[0]) {
             return REPEATED;
           } else {
             return WAITING;
           }
         })
-        .attr("x", function (d) { return x(d.x_axis); })
-        .attr("width", x.bandwidth())
-        .attr("y", function (d) { return y(d.y_axis); })
-        .attr("height", function (d) { return height - y(d.y_axis); })
-        .on("mouseover", function (d, i, j) {
-          detailBox.attr("x", x(d.x_axis) - 8)
-            .attr("y", y(d.y_axis))
+        .attr('x', function (d) { return x(d.x_axis); })
+        .attr('width', x.bandwidth())
+        .attr('y', function (d) { return y(d.y_axis); })
+        .attr('height', function (d) { return height - y(d.y_axis); })
+        .on('mouseover', function (d, i, j) {
+          detailBox.attr('x', x(d.x_axis) - 8)
+            .attr('y', y(d.y_axis))
             .text(Y_DATA_FORMAT(d.y_axis))
-            .style("visibility", "visible");
+            .style('visibility', 'visible');
 
           d3.select(this)
-            .style("opacity", 0.7);
-        }).on("mouseout", function () {
-          detailBox.style("visibility", "hidden");
+            .style('opacity', 0.7);
+        }).on('mouseout', function () {
+          detailBox.style('visibility', 'hidden');
 
           d3.select(this)
-            .style("opacity", 1.0);
+            .style('opacity', 1.0);
         });
     }
 
