@@ -10,14 +10,14 @@
                 <span flex-gt-md="5"></span>
                 <span flex-sm="10"></span>
                 <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
-                  <label class="md-subhead">Sigla:</label>
+                  <label class="md-subhead">Acrônimo:</label>
                   <md-select ng-model="$ctrl.selectedAcronym" ng-change="$ctrl.onChangeFilter(null)" ng-disabled="">
                     <md-option ng-repeat="questionnaire in $ctrl.acronymsList | orderBy:propertyName track by $index" value="{{questionnaire}}" ng-click="">
                       {{questionnaire}}
                     </md-option>
                   </md-select>
                   <md-tooltip>
-                    Sigla da atividade a ser visualizada
+                    Acrônimo da atividade a ser visualizada
                   </md-tooltip>
                 </md-input-container>
                 <md-button class="md-icon-button md-mini button-inline" ng-if="$ctrl.selectedAcronym" ng-click="$ctrl.clear('acronym')">

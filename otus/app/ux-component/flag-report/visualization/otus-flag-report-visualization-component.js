@@ -34,7 +34,12 @@
 
     function constructor(activities = null) {
       self.activitiesData = activities ? activities : self.activitiesData;
-      heatmap_display(angular.copy(self.activitiesData), "#heatmap", "Spectral");
+      if(self.activitiesData.columns && self.activitiesData.index && self.activitiesData.data){
+        heatmap_display(angular.copy(self.activitiesData), "#heatmap", "Spectral");
+      } else {
+        $("#heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
+      }
+
     }
 
 
@@ -82,7 +87,7 @@
         .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
         .attr('stroke', '#FFF')
         .attr('stroke-width', 1);
-      
+
       var rowSortOrder = false;
       var colSortOrder = false;
 
@@ -318,6 +323,7 @@
           var newPalette = d3.select("#palette").property("value");
           changePalette(newPalette, heatmapId);
         });
+
 
     }
 
