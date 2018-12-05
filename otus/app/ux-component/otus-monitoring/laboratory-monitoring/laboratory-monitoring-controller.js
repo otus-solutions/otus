@@ -15,9 +15,20 @@
     self.$onInit = onInit;
     /* Lifecycle methods */
     function onInit() {
-      _loadDataPendingResults();
-      _loadDataQuantitativeByAliquots();
+
     };
+
+    self.OpenTabPending = function (){
+      if(!$("#pending-results-chart svg").length){
+        _loadDataPendingResults();
+      }
+    }
+    self.OpenTabQuatitative = function (){
+      if(!$("#quantitative-by-aliquots svg").length){
+        _loadDataQuantitativeByAliquots();
+      }
+    }
+
 
     function _loadDataPendingResults() {
       var data = [

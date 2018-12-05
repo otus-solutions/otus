@@ -362,3 +362,11 @@ md-content.no-background-color {
   border-radius: 50%;
   margin: 5px 5px 0px 5px;
 }
+
+md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
+  color: rgb(0,121,107);
+  background: rgb(0,121,107);
+}
+md-tab-content{
+  margin-top: 10px !important;
+}
