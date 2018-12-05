@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .factory('otusjs.otus.uxComponent.PendingResultsChartsFactory', Factory);
+    .factory('otusjs.otus.uxComponent.PendingResultsChartFactory', Factory);
 
   function Factory() {
     const REPEATED = '#ff6f69';
@@ -67,7 +67,7 @@
         .attr('x', 5)
         .attr('y', -25)
         .attr('class', 'chart-title')
-        .text(data.chart_title);
+        .text(data.title);
 
       svg.append('g')
         .attr('class', 'x axis')

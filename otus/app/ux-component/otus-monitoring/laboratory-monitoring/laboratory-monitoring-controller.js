@@ -6,16 +6,18 @@
     .controller('otusLaboratoryMonitoringDashboardCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.PendingResultsChartsFactory'
+    'otusjs.otus.uxComponent.PendingResultsChartFactory'
   ];
 
-  function Controller(PendingResultsChartsFactory) {
+  function Controller(PendingResultsChartFactory) {
     var self = this;
     /* Lifecycle hooks */
     self.$onInit = onInit;
     /* Public methods */
     self.openTabPending = openTabPending;
     self.openTabQuatitative = openTabQuatitative;
+    self.openTabOrphans = openTabOrphans;
+    self.openTabStorage = openTabStorage;
     /* Lifecycle methods */
     function onInit() { };
 
@@ -31,62 +33,69 @@
       }
     };
 
+    function openTabOrphans() {
+      if (!$("#orphans-by-exam svg").length) {
+        _loadDataOrphansByExam();
+      }
+    }
+
+    function openTabStorage() {
+      if (!$("#storage-by-exam svg").length) {
+        _loadStorageDataByExam();
+      }
+    }
+
     function _loadDataPendingResults() {
       var data = [
         {
-          'chart_title': 'Population',
-          'Repetidos': 22,
-          'Aguardando': 36
+          'title': "FASTING_HORMONE_LOCAL",
+          'repeated': 22,
+          'waiting': 36
         },
         {
-          'chart_title': 'Popluation Grow Rate',
-          'Repetidos': 131,
-          'Aguardando': 48
+          'title': "FASTING_GLYCEMIA_LOCAL",
+          'repeated': 131,
+          'waiting': 48
         },
         {
-          'chart_title': 'Tallest Building',
-          'Repetidos': 833,
-          'Aguardando': 1614
+          'title': "BUFFY_COAT_MG",
+          'repeated': 833,
+          'waiting': 1614
         },
         {
-          'chart_title': 'Sex Ratio',
-          'Repetidos': 108,
-          'Aguardando': 106
+          'title': "POST_INSULINE_CENTRAL",
+          'repeated': 108,
+          'waiting': 106
         },
         {
-          'chart_title': 'Literacy All Gender',
-          'Repetidos': 74,
-          'Aguardando': 92
+          'title': "POST_GLYCEMIA",
+          'repeated': 74,
+          'waiting': 92
         },
         {
-          'chart_title': 'Literacy All Male',
-          'Repetidos': 82,
-          'Aguardando': 96
+          'title': "BIOCHEMICAL_URINE",
+          'repeated': 82,
+          'waiting': 96
         },
         {
-          'chart_title': 'Literacy All Female',
-          'Repetidos': 65,
-          'Aguardando': 88
+          'title': "FASTING_HORMONE",
+          'repeated': 65,
+          'waiting': 88
         },
         {
-          'chart_title': 'Area',
-          'Repetidos': 331,
-          'Aguardando': 9706
+          'title': 'POST_SERUM',
+          'repeated': 331,
+          'waiting': 9706
         },
         {
-          'chart_title': 'Area Land',
-          'Repetidos': 297,
-          'Aguardando': 9434
+          'title': 'POST_GLYCEMIA_LOCAL',
+          'repeated': 297,
+          'waiting': 9434
         },
         {
-          'chart_title': 'Area Water',
-          'Repetidos': 34,
-          'Aguardando': 272
-        },
-        {
-          'chart_title': 'Infant Mortality',
-          'Repetidos': 46,
-          'Aguardando': 15
+          'title': 'URINARY_CALCIUM',
+          'repeated': 34,
+          'waiting': 272
         }
       ];
 
@@ -97,121 +106,217 @@
       var groups = [];
       var keys = Object.keys(data[0]);
       for (var i = 0; i < keys.length; i++) {
-        if (keys[i] !== 'chart_title' && keys[i] !== 'unit') {
+        if (keys[i] !== 'title' && keys[i] !== 'unit') {
           groups.push(keys[i]);
         }
       }
 
       for (i = 0; i < data.length; i++) {
-        PendingResultsChartsFactory.create(groups, data[i]);
+        PendingResultsChartFactory.create(groups, data[i]);
       }
     };
 
     function _loadDataQuantitativeByAliquots() {
       var data = [
-        { transportados: 5, preparados: 10, recebidos: 22 },
-        { transportados: 4, preparados: 12, recebidos: 28 },
-        { transportados: 2, preparados: 19, recebidos: 32 },
-        { transportados: 7, preparados: 23, recebidos: 35 },
-        { transportados: 23, preparados: 17, recebidos: 43 },
+        {
+          'title': "FASTING_HORMONE_LOCAL",
+          'transported': 10,
+          'prepared': 15,
+          'received': 9
+        },
+        {
+          'title': "FASTING_GLYCEMIA_LOCAL",
+          'transported': 12,
+          'prepared': 18,
+          'received': 9
+        },
+        {
+          'title': "BUFFY_COAT_MG",
+          'transported': 5,
+          'prepared': 20,
+          'received': 8
+        },
+        {
+          'title': "POST_INSULINE_CENTRAL",
+          'transported': 1,
+          'prepared': 15,
+          'received': 5
+        },
+        {
+          'title': "POST_INSULINE_LOCAL",
+          'transported': 2,
+          'prepared': 10,
+          'received': 4
+        },
+        {
+          'title': "POST_GLYCEMIA",
+          'transported': 3,
+          'prepared': 12,
+          'received': 6
+        },
+        {
+          'title': "POST_SERUM",
+          'transported': 4,
+          'prepared': 15,
+          'received': 8
+        },
+        {
+          'title': "POST_GLYCEMIA_LOCAL",
+          'transported': 6,
+          'prepared': 11,
+          'received': 9
+        },
+        {
+          'title': "BIOCHEMICAL_URINE",
+          'transported': 10,
+          'prepared': 13,
+          'received': 9
+        },
+        {
+          'title': "URINARY_CALCIUM",
+          'transported': 16,
+          'prepared': 19,
+          'received': 6
+        },
+        {
+          'title': "FASTING_HORMONE",
+          'transported': 19,
+          'prepared': 17,
+          'received': 5
+        }
       ];
-      
-      var w = 800,
-        h = 400,
-        padding = 40;
+    };
 
-      var fruits = Object.keys(data[0]);
+    function _loadDataOrphansByExam() {
+      var data = [
+        {
+          'title': "FASTING_HORMONE_LOCAL",
+          'value': 10
+        },
+        {
+          'title': "FASTING_GLYCEMIA_LOCAL",
+          'value': 12
+        },
+        {
+          'title': "BUFFY_COAT_MG",
+          'value': 5
+        },
+        {
+          'title': "POST_INSULINE_CENTRAL",
+          'value': 1
+        },
+        {
+          'title': "POST_INSULINE_LOCAL",
+          'value': 2
+        },
+        {
+          'title': "POST_GLYCEMIA",
+          'value': 3
+        },
+        {
+          'title': "POST_SERUM",
+          'value': 4
+        },
+        {
+          'title': "POST_GLYCEMIA_LOCAL",
+          'value': 6
+        },
+        {
+          'title': "BIOCHEMICAL_URINE",
+          'value': 10
+        },
+        {
+          'title': "URINARY_CALCIUM",
+          'value': 16
+        },
+        {
+          'title': "FASTING_HORMONE",
+          'value': 19
+        }
+      ];
+    };
 
-      var colors = d3.scaleOrdinal(d3.schemeCategory10);
+    function _loadStorageDataByExam() {
+      var data = [
+        {
+          'title': "FASTING_HORMONE_LOCAL",
+          'value': 10
+        },
+        {
+          'title': "FASTING_GLYCEMIA_LOCAL",
+          'value': 12
+        },
+        {
+          'title': "BUFFY_COAT_MG",
+          'value': 5
+        },
+        {
+          'title': "POST_INSULINE_CENTRAL",
+          'value': 1
+        },
+        {
+          'title': "POST_INSULINE_LOCAL",
+          'value': 2
+        },
+        {
+          'title': "POST_GLYCEMIA",
+          'value': 3
+        },
+        {
+          'title': "POST_SERUM",
+          'value': 4
+        },
+        {
+          'title': "POST_GLYCEMIA_LOCAL",
+          'value': 6
+        },
+        {
+          'title': "BIOCHEMICAL_URINE",
+          'value': 10
+        },
+        {
+          'title': "URINARY_CALCIUM",
+          'value': 16
+        },
+        {
+          'title': "FASTING_HORMONE",
+          'value': 19
+        }
+      ];
 
-      var xScale = d3.scaleBand()
-        .domain(d3.range(data.length))
-        .range([padding, w - padding])
-        .paddingInner(0.05);
+      var svg = d3.select('#storage-by-exam').append('svg'),
+        margin = 200,
+        width = svg.attr("width") - margin,
+        height = svg.attr("height") - margin
 
-      var yScale = d3.scaleLinear()
-        .domain([0, d3.max(data, function (d) {
-          var total = 0;
-          for (var i = 0; i < fruits.length; i++) {
-            total += d[fruits[i]];
-          }
-          return total;
-        })])
-        .range([h - padding, 0]);
+      var xScale = d3.scaleBand().range([0, width]).padding(0.4),
+        yScale = d3.scaleLinear().range([height, 0]);
 
-      var yAxis = d3.axisLeft()
-        .scale(yScale)
-        .ticks(6);
+      var g = svg.append("g")
+        .attr("transform", "translate(" + 100 + "," + 100 + ")");
 
-      var stack = d3.stack()
-        .keys(fruits)
-        .order(d3.stackOrderDescending);
+      xScale.domain(data.map(function (d) { return d.year; }));
+      yScale.domain([0, d3.max(data, function (d) { return d.value; })]);
 
-      var series = stack(data);
+      g.append("g")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale));
 
-      var svg = d3.select('#quantitative-by-aliquots').append('svg')
-        .attr('width', w)
-        .attr('height', h)
+      g.append("g")
+        .call(d3.axisLeft(yScale).tickFormat(function (d) {
+          return "$" + d;
+        }).ticks(10));
 
-      var groups = svg.selectAll('g')
-        .data(series)
-        .enter()
-        .append('g')
-        .style('fill', function (d, i) {
-          return colors(i);
-        });
 
-      var rects = groups.selectAll('rect')
-        .data(function (d) { return d; })
-        .enter()
-        .append('rect')
-        .attr('x', function (d, i) {
-          return xScale(i);
-        })
-        .attr('y', function (d) {
-          return yScale(d[1]);
-        })
-        .attr('height', function (d) {
-          return yScale(d[0]) - yScale(d[1]);
-        })
-        .attr('width', xScale.bandwidth());
+      g.selectAll(".bar")
+        .data(data)
+        .enter().append("rect")
+        .attr("class", "bar")
+        .attr("x", function (d) { return xScale(d.title); })
+        .attr("y", function (d) { return yScale(d.value); })
+        .attr("width", xScale.bandwidth())
+        .attr("height", function (d) { return height - yScale(d.value); });
 
-      svg.append('g')
-        .attr('class', 'y axis')
-        .attr('transform', 'translate(' + padding + ', 0)')
-        .call(yAxis);
-
-      var legend = svg.append('g')
-        .attr('class', 'legend')
-        .attr('transform', 'translate(' + (padding + 12) + ', 0)');
-
-      legend.selectAll('rect')
-        .data(fruits)
-        .enter()
-        .append('rect')
-        .attr('x', 0)
-        .attr('y', function (d, i) {
-          return i * 18;
-        })
-        .attr('width', 12)
-        .attr('height', 12)
-        .attr('fill', function (d, i) {
-          return colors(i);
-        });
-
-      legend.selectAll('text')
-        .data(fruits)
-        .enter()
-        .append('text')
-        .text(function (d) {
-          return d;
-        })
-        .attr('x', 18)
-        .attr('y', function (d, i) {
-          return i * 18;
-        })
-        .attr('text-anchor', 'start')
-        .attr('alignment-baseline', 'hanging');
     };
   };
 }());
