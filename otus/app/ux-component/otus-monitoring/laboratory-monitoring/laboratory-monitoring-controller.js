@@ -6,10 +6,11 @@
     .controller('otusLaboratoryMonitoringDashboardCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.PendingResultsChartFactory'
+    'otusjs.otus.uxComponent.PendingResultsChartFactory',
+    'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory'
   ];
 
-  function Controller(PendingResultsChartFactory) {
+  function Controller(PendingResultsChartFactory, QuantitativeAliquotsChartsFactory) {
     var self = this;
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -29,7 +30,8 @@
 
     function openTabQuatitative() {
       if (!$("#quantitative-by-aliquots svg").length) {
-        _loadDataQuantitativeByAliquots();
+        // _loadDataQuantitativeByAliquots();
+        QuantitativeAliquotsChartsFactory.create();
       }
     };
 
