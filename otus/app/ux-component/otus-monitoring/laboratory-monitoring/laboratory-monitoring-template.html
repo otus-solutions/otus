@@ -10,21 +10,21 @@
   <md-content layout flex>
     <md-content layout="column" layout-padding flex>
       <md-tabs md-border-bottom flex layout-fill>
-
-        <md-tab label="Pendências" id="pendingButton" ng-click="$ctrl.OpenTabPending()" layout-padding>
-          <div layout="column" layout-margin="" ng-init="$ctrl.OpenTabPending()">
+        <md-tab label="Pendências" id="pendingButton" ng-click="$ctrl.openTabPending()" layout-padding>
+          <div layout="column" layout-margin="" ng-init="$ctrl.openTabPending()">
             <h1 class="md-no-sticky" layout-margin="" layout-padding>Pendências de Resultados</h1>
-            <div  id="pending-results-chart" flex></div>
+            <div id="pending-results-chart" flex></div>
           </div>
         </md-tab>
-
-        <md-tab label="Quantitativo" ng-click="$ctrl.OpenTabQuatitative()">
+        <md-tab label="Quantitativo" ng-click="$ctrl.openTabQuatitative()">
           <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantitativo por Tipo de Aliquota</h1>
           <div id="quantitative-by-aliquots" flex></div>
         </md-tab>
-
+        <md-tab label="Orfãos" ng-click="$ctrl.openTabOrphans()">
+          <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames Orfãos</h1>
+          <div id="exams-orphans" flex></div>
+        </md-tab>
       </md-tabs>
     </md-content>
   </md-content>
 </md-content>
-
