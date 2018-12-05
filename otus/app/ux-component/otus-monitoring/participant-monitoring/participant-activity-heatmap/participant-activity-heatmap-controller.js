@@ -147,9 +147,8 @@
 
       ParticipantMonitoringService.buildActivityStatusList(self.selectedParticipant.recruitmentNumber)
         .then(function (result) {
-          self.activityList = result;
-          self.showActivitySignal = true;
           self.loading = false;
+          self.error = true;
         })
         .catch(function (err) {
           self.loading = false;
@@ -160,6 +159,7 @@
     function _participantAvailable(participantData) {
       self.activityList = [];
       self.loadAvailable = true;
+      self.showActivitySignal = false;
       selectParticipant(participantData);
     }
 

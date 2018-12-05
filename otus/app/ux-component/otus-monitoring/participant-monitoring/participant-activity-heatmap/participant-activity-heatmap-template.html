@@ -14,8 +14,8 @@
   }
 </style>
 
-<otus-panel header-label="'Painel de atividades'" flex>
-  <div layout="row" alayout-align="center center" style="width: 300px"  ng-if="!$ctrl.showActivitySignal">
+<otus-panel header-label="'Painel de atividades'" align="'center center'" flex>
+  <div layout="row" alayout-align="center center" style="width: 300px"  ng-if="!$ctrl.showActivitySignal && !$ctrl.loading">
     <md-button ng-click="$ctrl.loadData()" ng-disabled="!$ctrl.loadAvailable" >Carregar painel de atividades</md-button>
   </div>
   <div layout="column" layout-margin flex ng-if="$ctrl.showActivitySignal && $ctrl.activityList.length">
