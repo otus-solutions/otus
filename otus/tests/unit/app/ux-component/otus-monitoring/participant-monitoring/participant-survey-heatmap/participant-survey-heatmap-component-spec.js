@@ -54,6 +54,13 @@ describe('otusParticipantHeatmap test', function() {
           return Promise.reject();
         }
       },
+      buildActivityStatusList: function () {
+        if(ctrl.selectedParticipant.recruitmentNumber === 122346){
+          return Promise.resolve([]);
+        } else {
+          return Promise.reject();
+        }
+      },
       buildActivityStatus: function () {
         return [];
       }
@@ -135,51 +142,6 @@ describe('otusParticipantHeatmap test', function() {
 
   });
 
-  describe('getFlagColor method', () => {
-
-    it('should return CREATED status color', () => {
-      let CREATED_SURVEY = {};
-      CREATED_SURVEY.status = "CREATED";
-      expect(ctrl.getFlagColor(CREATED_SURVEY)).toBe(COLOR.CREATED);
-    });
-
-    it('should return FINALIZED status color', () => {
-      let FINALIZED_SURVEY = {};
-      FINALIZED_SURVEY.status = "FINALIZED";
-      expect(ctrl.getFlagColor(FINALIZED_SURVEY)).toBe(COLOR.FINALIZED);
-    });
-
-    it('should return SAVED status color', () => {
-      let SAVED_SURVEY = {};
-      SAVED_SURVEY.status = "SAVED";
-      expect(ctrl.getFlagColor(SAVED_SURVEY)).toBe(COLOR.SAVED);
-    });
-
-    it('should return DOES_NOT_APPLY status color', () => {
-      let DOES_NOT_APPLY_SURVEY = {};
-      DOES_NOT_APPLY_SURVEY.status = "DOES_NOT_APPLY";
-      expect(ctrl.getFlagColor(DOES_NOT_APPLY_SURVEY)).toBe(COLOR.DOES_NOT_APPLY);
-    });
-
-    it('should return UNDEFINED status color', () => {
-      let UNDEFINED_SURVEY = {};
-      UNDEFINED_SURVEY.status = "UNDEFINED";
-      expect(ctrl.getFlagColor(UNDEFINED_SURVEY)).toBe(COLOR.UNDEFINED);
-    });
-
-    it('should return MULTIPLE status color', () => {
-      let MULTIPLE_SURVEY = {};
-      MULTIPLE_SURVEY.status = "MULTIPLE";
-      expect(ctrl.getFlagColor(MULTIPLE_SURVEY)).toBe(COLOR.MULTIPLE);
-    });
-
-    it('should return AMBIGUITY status color', () => {
-      let AMBIGUITY_SURVEY = {};
-      AMBIGUITY_SURVEY.status = "AMBIGUITY";
-      expect(ctrl.getFlagColor(AMBIGUITY_SURVEY)).toBe(COLOR.AMBIGUITY);
-    });
-  });
-
   describe('selectParticipant method', () => {
     beforeEach(() => {
       participant.name = "teste";
@@ -219,6 +181,36 @@ describe('otusParticipantHeatmap test', function() {
     it('should call Injections.ParticipantMonitoringService.defineActivityWithDoesNotApplies', () => {
       Injections.$mdDialog.show().then(function () {
         expect(Injections.ParticipantMonitoringService.defineActivityWithDoesNotApplies).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('loadData method', () => {
+    beforeEach(() => {
+      spyOn(ctrl, 'showObservation').and.callThrough();
+      spyOn(Injections.ParticipantMonitoringService, 'buildActivityStatusList').and.callThrough();
+    });
+
+    it('should set activityList', () => {
+      participant.recruitmentNumber = 122346;
+      ctrl.selectParticipant(participant);
+      ctrl.loadData();
+      Injections.ParticipantMonitoringService.buildActivityStatusList().then(function () {
+        expect(ctrl.activityList).toBeDefined();
+        expect(ctrl.loading).toBeDefined();
+        expect(ctrl.error).toBeDefined();
+      });
+    });
+
+    it('should set error', () => {
+      participant.recruitmentNumber = 22346;
+      ctrl.selectParticipant(participant);
+      ctrl.loadData();
+      Injections.ParticipantMonitoringService.buildActivityStatusList().then(function () {}).catch(function () {
+        expect(ctrl.activityList).toBeDefined();
+        expect(ctrl.loading).toBeDefined();
+        expect(ctrl.error).toBeDefined();
+        expect(ctrl.error).toBe(true);
       });
     });
   });

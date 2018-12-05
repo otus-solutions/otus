@@ -18,22 +18,9 @@
   ];
 
   function Controller($q, $mdToast, $mdDialog, $scope, LoadingScreenService, EventService, ApplicationStateService, DashboardService, ParticipantMonitoringService) {
-    const CREATED = 'CREATED';
-    const SAVED = 'SAVED';
-    const FINALIZED = 'FINALIZED';
     const DOES_NOT_APPLY = 'DOES_NOT_APPLY';
-    const UNDEFINED = 'UNDEFINED';
     const MULTIPLE = 'MULTIPLE';
     const AMBIGUITY = 'AMBIGUITY';
-    const COLOR = {
-      CREATED: '#ff6f69',
-      FINALIZED: '#88d8b0',
-      SAVED: '#ffeead',
-      DOES_NOT_APPLY: '#cecece',
-      UNDEFINED: '#ffffff',
-      MULTIPLE: '#ffcc5c',
-      AMBIGUITY: '#bae1ff'
-    };
 
     var self = this;
 
@@ -43,12 +30,20 @@
     self.legends = [];
     /* Lifecycle hooks */
     self.$onInit = onInit;
-    /* Public methods */
-    self.getFlagColor = getFlagColor;
+    /* Public methods */;
     self.selectParticipant = selectParticipant;
     self.getCurrentState = getCurrentState;
     self.showObservation = showObservation;
     self.loadData = loadData;
+    self.COLOR = {
+      CREATED: '#ff6f69',
+      FINALIZED: '#88d8b0',
+      SAVED: '#ffeead',
+      DOES_NOT_APPLY: '#cecece',
+      UNDEFINED: '#ffffff',
+      MULTIPLE: '#ffcc5c',
+      AMBIGUITY: '#bae1ff'
+    };
 
     /* Lifecycle methods */
     function onInit() {
@@ -56,26 +51,6 @@
       _buildLegend();
       EventService.onParticipantSelected(_participantAvailable);
       self.selectedParticipant = null; //TODO review why
-    }
-
-    function getFlagColor(activity) {
-      console.log('cham'); //TODO REMOVE AND FIX THIS MULTIPLE CALLS
-      switch (activity.status) {
-        case CREATED:
-          return COLOR.CREATED;
-        case SAVED:
-          return COLOR.SAVED;
-        case FINALIZED:
-          return COLOR.FINALIZED;
-        case DOES_NOT_APPLY:
-          return COLOR.DOES_NOT_APPLY;
-        case UNDEFINED:
-          return COLOR.UNDEFINED;
-        case MULTIPLE:
-          return COLOR.MULTIPLE;
-        case AMBIGUITY:
-          return COLOR.AMBIGUITY;
-      }
     }
 
     function selectParticipant(selectedParticipant) {
@@ -147,8 +122,9 @@
 
       ParticipantMonitoringService.buildActivityStatusList(self.selectedParticipant.recruitmentNumber)
         .then(function (result) {
+          self.activityList = result;
+          self.showActivitySignal = true;
           self.loading = false;
-          self.error = true;
         })
         .catch(function (err) {
           self.loading = false;
@@ -160,6 +136,7 @@
       self.activityList = [];
       self.loadAvailable = true;
       self.showActivitySignal = false;
+      self.selectedParticipant = participantData;
       selectParticipant(participantData);
     }
 
@@ -167,20 +144,19 @@
       return DashboardService
         .getSelectedParticipant()
         .then(function (participantData) {
-          self.selectedParticipant = participantData;
-
+          _participantAvailable(participantData);
         }).catch(function () {
       });
     }
 
     function _buildLegend() {
-      self.legends.push({label: 'Criado.', color: COLOR.CREATED});
-      self.legends.push({label: 'Salvo.', color: COLOR.SAVED});
-      self.legends.push({label: 'Finalizado.', color: COLOR.FINALIZED});
-      self.legends.push({label: 'Não realizado.', color: COLOR.DOES_NOT_APPLY});
-      self.legends.push({label: 'Nenhuma atividade.', color: COLOR.UNDEFINED});
-      self.legends.push({label: 'Multiplas atividades.', color: COLOR.MULTIPLE});
-      self.legends.push({label: 'Ambiguidade.', color: COLOR.AMBIGUITY});
+      self.legends.push({label: 'Criado.', color: self.COLOR.CREATED});
+      self.legends.push({label: 'Salvo.', color: self.COLOR.SAVED});
+      self.legends.push({label: 'Finalizado.', color: self.COLOR.FINALIZED});
+      self.legends.push({label: 'Não realizado.', color: self.COLOR.DOES_NOT_APPLY});
+      self.legends.push({label: 'Nenhuma atividade.', color: self.COLOR.UNDEFINED});
+      self.legends.push({label: 'Multiplas atividades.', color: self.COLOR.MULTIPLE});
+      self.legends.push({label: 'Ambiguidade.', color: self.COLOR.AMBIGUITY});
     }
 
     function _DialogController($scope, $mdDialog, activity) {

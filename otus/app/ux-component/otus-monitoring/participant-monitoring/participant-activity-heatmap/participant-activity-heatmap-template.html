@@ -15,8 +15,13 @@
 </style>
 
 <otus-panel header-label="'Painel de atividades'" align="'center center'" flex>
-  <div layout="row" alayout-align="center center" style="width: 300px"  ng-if="!$ctrl.showActivitySignal && !$ctrl.loading">
-    <md-button ng-click="$ctrl.loadData()" ng-disabled="!$ctrl.loadAvailable" >Carregar painel de atividades</md-button>
+  <div layout="row" layout-align="center center" ng-if="!$ctrl.showActivitySignal && !$ctrl.loading">
+    <md-button ng-click="$ctrl.loadData()" ng-disabled="!$ctrl.loadAvailable"
+               class="md-icon-button">
+      <md-tooltip>Carregar dados</md-tooltip>
+      <md-icon md-font-set="material-icons">autorenew</md-icon>
+    </md-button>
+    <!--<md-button ng-click="$ctrl.loadData()" ng-disabled="!$ctrl.loadAvailable" >Carregar</md-button>-->
   </div>
   <div layout="column" layout-margin flex ng-if="$ctrl.showActivitySignal && $ctrl.activityList.length">
     <span class="md-body-2">Situação:</span>
@@ -36,7 +41,7 @@
     </div>
     <div layout="row" layout-wrap layout-align="center center" flex>
       <md-card class="md-whiteframe-3dp signal-card" ng-repeat="(index, activity) in $ctrl.activityList">
-        <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.getFlagColor(activity)}" flex>
+        <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.COLOR[activity.status]}" flex>
           <md-card-header-text>
             <div layout="row" layout-align="space-between center" flex>
               <div flex="75" layout="column" layout-align="center stretch">
