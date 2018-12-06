@@ -1,70 +1,72 @@
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-      .module('otusjs.otus.uxComponent')
-      .factory('otusFlagReportParseDataFactory', Factory);
+  angular
+    .module('otusjs.otus.uxComponent')
+    .factory('otusFlagReportParseDataFactory', Factory);
 
-    function Factory() {
-      var self = this;
+  function Factory() {
+    var self = this;
 
-      self.create = create;
+    self.create = create;
 
-      function create(json, acronym = null, status = null) {
+    function create(json, acronym = null, status = null) {
 
-        var obj = {};
-        obj.columns = [];
-        obj.index = [];
-        obj.data = [];
+      var obj = {};
+      obj.columns = [];
+      obj.index = json.index;
+      obj.data = [];
 
-        if (json.length){
-          if(!acronym){
-            json[0].activities.forEach(function(activity){
-              obj.columns.push([activity.rn, activity.acronym]);
-            });
-          } else {
-            json[0].activities.forEach(function(activity){
-              if(activity.acronym == acronym)
-                obj.columns.push([activity.rn, activity.acronym]);
-            });
-          }
-          json.forEach(function(o){
-            obj.index.push(o.rn);
+      if (json.data.length){
+        if (acronym != null || status!=null) {
+          json.data.forEach(function (line) {
             var data = [];
-
-            o.activities.forEach(function(atividade){
-              if(status != null){
-                if(acronym === atividade.acronym){
-                  if (status === atividade.status){
-                    data.push(atividade.status);
+            for (let i = 0; i < json.columns.length; i++) {
+              if(acronym){
+                if (json.columns[i][1] == acronym){
+                  if(status != null){
+                    if(status == line[i]){
+                      data.push(line[i]);
+                    }else {
+                      data.push(null)
+                    }
                   } else {
-                    data.push(null);
-                  }
-                } else if (acronym === null){
-                  if (status === atividade.status){
-                    data.push(atividade.status);
-                  } else {
-                    data.push(null);
+                    data.push(line[i]);
                   }
                 }
               } else {
-                if(acronym === atividade.acronym){
-                  data.push(atividade.status);
-                } else if (acronym === null){
-                  data.push(atividade.status);
+                if(status != null){
+                  if(status == line[i]){
+                    data.push(line[i]);
+                  }else {
+                    data.push(null)
+                  }
+                } else {
+                  data.push(line[i]);
                 }
               }
 
-            });
-
+            }
             obj.data.push(data);
-
           });
-        }
 
-        return obj;
+          if(acronym){
+            json.columns.forEach(function(column){
+              if(column[1] == acronym)
+                obj.columns.push([column[0], column[1]]);
+            });
+          } else {
+            obj.columns = json.columns;
+          }
+        } else{
+          obj.columns = json.columns;
+          obj.data = json.data;
+        }
       }
 
-      return self;
+      return obj;
     }
-  }());
+
+    return self;
+  }
+}());

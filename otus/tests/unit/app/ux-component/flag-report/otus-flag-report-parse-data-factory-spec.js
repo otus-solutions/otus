@@ -1,67 +1,86 @@
 describe('otus-flag-report-parse-data-factory Test', function() {
-    var Mock = {};
-    var factory;
+  var Mock = {};
+  var factory,ACRONYM, STATUS;
 
-    beforeEach(function() {
-      angular.mock.module('otusjs.otus.uxComponent');
+  beforeEach(function() {
+    angular.mock.module('otusjs.otus.uxComponent');
 
-      inject(function(_$injector_) {
-
-        factory = _$injector_.get('otusFlagReportParseDataFactory');
-        mockData();
-      });
+    inject(function(_$injector_) {
+      factory = _$injector_.get('otusFlagReportParseDataFactory');
+      mockData();
     });
-    it('should create a model for canvas', function() {
-        expect(factory).toBeDefined();
-      Mock.activitiesData = factory.create(Mock.data);
-        expect(Mock.activitiesData.index).toBeDefined();
-        expect(Mock.activitiesData.columns).toBeDefined();
-        expect(Mock.activitiesData.data).toBeDefined();
+  });
+  it('should return a same model flags', function() {
+    expect(factory).toBeDefined();
+    Mock.activitiesData = factory.create(Mock.json);
 
-    });
+    expect(Mock.activitiesData.index).toBeDefined();
+    expect(Mock.activitiesData.columns).toBeDefined();
+    expect(Mock.activitiesData.data).toBeDefined();
+
+    expect(Mock.activitiesData.index).toEqual(Mock.json.index);
+    expect(Mock.activitiesData.columns).toEqual(Mock.json.columns);
+    expect(Mock.activitiesData.data).toEqual(Mock.json.data);
+    expect(Mock.activitiesData).toEqual(Mock.json);
+  });
+
+  it('should return a different model flags with filter by acronym', function() {
+    expect(factory).toBeDefined();
+    Mock.activitiesData = factory.create(Mock.json, ACRONYM);
+
+    expect(Mock.activitiesData.index).toBeDefined();
+    expect(Mock.activitiesData.columns).toBeDefined();
+    expect(Mock.activitiesData.data).toBeDefined();
+
+    expect(Mock.activitiesData.index).toEqual(Mock.json.index);
+    expect(Mock.activitiesData.columns).not.toEqual(Mock.json.columns);
+    expect(Mock.activitiesData.columns).toEqual(Mock.columnsFilterAcronym);
+    expect(Mock.activitiesData.data).not.toEqual(Mock.json.data);
+    expect(Mock.activitiesData.data).toEqual(Mock.dataFilterAcronym);
+  });
+
+  it('should return a different model flags with filter by status', function() {
+    expect(factory).toBeDefined();
+    Mock.activitiesData = factory.create(Mock.json, null, STATUS);
+
+    expect(Mock.activitiesData.index).toBeDefined();
+    expect(Mock.activitiesData.columns).toBeDefined();
+    expect(Mock.activitiesData.data).toBeDefined();
+
+    expect(Mock.activitiesData.index).toEqual(Mock.json.index);
+    expect(Mock.activitiesData.columns).toEqual(Mock.json.columns);
+    expect(Mock.activitiesData.data).not.toEqual(Mock.json.data);
+    expect(Mock.activitiesData.data).toEqual(Mock.dataFilterStatus);
+  });
+
+  it('should return a different model flags with filter by acronym and status', function() {
+    expect(factory).toBeDefined();
+    Mock.activitiesData = factory.create(Mock.json, ACRONYM, STATUS);
+
+    expect(Mock.activitiesData.index).toBeDefined();
+    expect(Mock.activitiesData.columns).toBeDefined();
+    expect(Mock.activitiesData.data).toBeDefined();
+
+    expect(Mock.activitiesData.index).toEqual(Mock.json.index);
+    expect(Mock.activitiesData.columns).not.toEqual(Mock.json.columns);
+    expect(Mock.activitiesData.columns).toEqual(Mock.columnsFilterAcronym);
+    expect(Mock.activitiesData.data).not.toEqual(Mock.json.data);
+    expect(Mock.activitiesData.data).toEqual(Mock.dataFilterAcronymWithStatus);
+  });
 
 
-    function mockData() {
-      Mock.data = JSON.parse('[{"rn":3019660,"activities":' +
-        '[{"rn":3019660,"acronym":"ACTDC","status":2}]},' +
-        '{"rn":3004950,"activities":' +
-        '[{"rn":3004950,"acronym":"DIEC","status":2},' +
-        '{"rn":3004950,"acronym":"MEDC","status":-1},' +
-        '{"rn":3004950,"acronym":"USGC","status":-1},' +
-        '{"rn":3004950,"acronym":"VOPC","status":2}]},' +
-        '{"rn":3012464,"activities":' +
-        '[{"rn":3012464,"acronym":"DIEC","status":2},' +
-        '{"rn":3012464,"acronym":"MEDC","status":2}]},' +
-        '{"rn":3051442,"activities":' +
-        '[{"rn":3051442,"acronym":"CSJ","status":2},' +
-        '{"rn":3051442,"acronym":"DIEC","status":2},' +
-        '{"rn":3051442,"acronym":"MULC","status":-1},' +
-        '{"rn":3051442,"acronym":"PSEC","status":-1},' +
-        '{"rn":3051442,"acronym":"DISC","status":-1},' +
-        '{"rn":3051442,"acronym":"HVSD","status":-1},' +
-        '{"rn":3051442,"acronym":"AFID","status":2},' +
-        '{"rn":3051442,"acronym":"CISE","status":1},' +
-        '{"rn":3051442,"acronym":"RCPC","status":-1},' +
-        '{"rn":3051442,"acronym":"HMPD","status":-1},' +
-        '{"rn":3051442,"acronym":"EAIC","status":-1},' +
-        '{"rn":3051442,"acronym":"SONC","status":-1},' +
-        '{"rn":3051442,"acronym":"MEDC","status":2},' +
-        '{"rn":3051442,"acronym":"ISG","status":-1},' +
-        '{"rn":3051442,"acronym":"HOCC","status":-1},' +
-        '{"rn":3051442,"acronym":"MEDC","status":1},' +
-        '{"rn":3051442,"acronym":"CFUC","status":-1},' +
-        '{"rn":3051442,"acronym":"CSJ","status":1},' +
-        '{"rn":3051442,"acronym":"CSP","status":2}]},' +
-        '{"rn":3036402,"activities":' +
-        '[{"rn":3036402,"acronym":"DQUOTE","status":2},' +
-        '{"rn":3036402,"acronym":"DQUOTETWO","status":2},' +
-        '{"rn":3036402,"acronym":"SPPC","status":2},' +
-        '{"rn":3036402,"acronym":"ACTDC","status":2},' +
-        '{"rn":3036402,"acronym":"ANTC","status":2},' +
-        '{"rn":3036402,"acronym":"AMAC","status":2},' +
-        '{"rn":3036402,"acronym":"BIOC","status":2},' +
-        '{"rn":3036402,"acronym":"AFID","status":2}]}]');
-    }
+  function mockData() {
+    ACRONYM = "MEDC";
+    STATUS = 2;
+    Mock.json = {
+      "columns":[["C","CSJ"],["C","RCPC"],["C","ISG"],["C","CSP"],["C","MED2"],["C","MEDC"],["C","MED3"],["C","AMAC"],["C","CISE"],["C","DORC"],["C","BIOC"],["C","MSKC"],["C","RETCLQ"],["C","CCA"],["C","VOPC"],["C","USGC"],["C","ANTC"],["C","DIEC"],["C","CFUC"],["C","DISC"],["C","DSOC"],["C","HOCC"],["C","ACTA"],["C","MONC"],["C","B342"],["C","FORC"],["C","ACTDC"],["C","RETC"],["C","CSI"],["C","CURC"],["C","PSEC"],["C","EAIC"],["C","FRC"],["C","SPPC"],["C","FCOC"],["C","AFID"],["C","MULC"],["C","SONC"],["C","TVSC"],["C","HVSD"],["C","ECGC"],["C","TCLEC"],["C","HMPD"],["C","PASC"],["C","MOND"],["C","DQUOTE"],["C","DQUOTETWO"],["C","MARAVILHA"],["C","TS"]],
+      "index":[3019660,3051442,3004950,3012464,3036402],
+      "data":[[null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[1,-1,-1,2,null,1,null,null,1,null,null,null,null,null,null,null,null,2,-1,-1,null,-1,null,null,null,null,null,null,null,null,-1,-1,null,null,null,2,-1,-1,null,-1,null,null,-1,null,null,null,null,null,null],[null,null,null,null,null,-1,null,null,null,null,null,null,null,null,2,-1,null,2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,2,null,null,null,null,null,null,null,null,null,null,null,2,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],[null,null,null,null,null,null,null,2,null,null,2,null,null,null,null,null,2,null,null,null,null,null,null,null,null,null,2,null,null,null,null,null,null,2,null,2,null,null,null,null,null,null,null,null,null,2,2,null,null]]};
+    Mock.dataFilterStatus = [[null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, 2, null, null, null, null, null, null, null, null, null, null, null, null, null, 2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 2, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, null, null, null, null, null, null, null, 2, null, null, 2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, 2, null, null, null, null, null, null, null, null, null, null, null, 2, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null], [null, null, null, null, null, null, null, 2, null, null, 2, null, null, null, null, null, 2, null, null, null, null, null, null, null, null, null, 2, null, null, null, null, null, null, 2, null, 2, null, null, null, null, null, null, null, null, null, 2, 2, null, null]];
+    Mock.dataFilterAcronym = [[null], [1], [-1], [2], [null]];
+    Mock.columnsFilterAcronym = [["C", "MEDC"]];
+    Mock.dataFilterAcronymWithStatus = [[null], [null], [null], [2], [null]];
+  }
 
 
 });
