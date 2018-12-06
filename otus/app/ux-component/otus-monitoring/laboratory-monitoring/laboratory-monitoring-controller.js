@@ -6,11 +6,11 @@
     .controller('otusLaboratoryMonitoringDashboardCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.PendingResultsChartFactory',
+    'otusjs.otus.uxComponent.BarChartsFactory',
     'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory'
   ];
 
-  function Controller(PendingResultsChartFactory, QuantitativeAliquotsChartsFactory) {
+  function Controller(BarChartsFactory, QuantitativeAliquotsChartsFactory) {
     var self = this;
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -24,20 +24,78 @@
 
     function openTabPending() {
       if (!$("#pending-results-chart svg").length) {
-        _loadDataPendingResults();
+        var dataset = [
+          [
+            {"char_title": "Pendentes","column":"FASTING_HORMONE_LOCAL","value":10},
+            {"char_title": "Pendentes","column":"FASTING_GLYCEMIA_LOCAL","value":12},
+            {"char_title": "Pendentes","column":"BUFFY_COAT_MG","value":5},
+            {"char_title": "Pendentes","column":"POST_INSULINE_CENTRAL","value":1},
+            {"char_title": "Pendentes","column":"POST_INSULINE_LOCAL","value":2},
+            {"char_title": "Pendentes","column":"POST_GLYCEMIA","value":3},
+            {"char_title": "Pendentes","column":"POST_SERUM","value":4},
+            {"char_title": "Pendentes","column":"POST_GLYCEMIA_LOCAL","value":6},
+            {"char_title": "Pendentes","column":"BIOCHEMICAL_URINE","value":10},
+            {"char_title": "Pendentes","column":"URINARY_CALCIUM","value":16},
+            {"char_title": "Pendentes","column":"FASTING_HORMONE","value":19}
+          ]
+        ];
+        var colors = ["#c7453b"];
+        var element = '#pending-results-chart';
+        BarChartsFactory.create(dataset, element);
       }
     };
 
     function openTabQuatitative() {
       if (!$("#quantitative-by-aliquots svg").length) {
-        // _loadDataQuantitativeByAliquots();
-        QuantitativeAliquotsChartsFactory.create();
+        var dataset = [
+          [
+            {"char_title": "Transportados","column":"FASTING_HORMONE_LOCAL","value":10},
+            {"char_title": "Transportados","column":"FASTING_GLYCEMIA_LOCAL","value":12},
+            {"char_title": "Transportados","column":"BUFFY_COAT_MG","value":5},
+            {"char_title": "Transportados","column":"POST_INSULINE_CENTRAL","value":1},
+            {"char_title": "Transportados","column":"POST_INSULINE_LOCAL","value":2},
+            {"char_title": "Transportados","column":"POST_GLYCEMIA","value":3},
+            {"char_title": "Transportados","column":"POST_SERUM","value":4},
+            {"char_title": "Transportados","column":"POST_GLYCEMIA_LOCAL","value":6},
+            {"char_title": "Transportados","column":"BIOCHEMICAL_URINE","value":10},
+            {"char_title": "Transportados","column":"URINARY_CALCIUM","value":16},
+            {"char_title": "Transportados","column":"FASTING_HORMONE","value":19}
+          ],
+          [
+            {"char_title": "Preparados","column":"FASTING_HORMONE_LOCAL","value":15},
+            {"char_title": "Preparados","column":"FASTING_GLYCEMIA_LOCAL","value":18},
+            {"char_title": "Preparados","column":"BUFFY_COAT_MG","value":20},
+            {"char_title": "Preparados","column":"POST_INSULINE_CENTRAL","value":15},
+            {"char_title": "Preparados","column":"POST_INSULINE_LOCAL","value":10},
+            {"char_title": "Preparados","column":"POST_GLYCEMIA","value":12},
+            {"char_title": "Preparados","column":"POST_SERUM","value":15},
+            {"char_title": "Preparados","column":"POST_GLYCEMIA_LOCAL","value":11},
+            {"char_title": "Preparados","column":"BIOCHEMICAL_URINE","value":13},
+            {"char_title": "Preparados","column":"URINARY_CALCIUM","value":19},
+            {"char_title": "Preparados","column":"FASTING_HORMONE","value":17}
+          ],
+          [
+            {"char_title": "Recebidos","column":"FASTING_HORMONE_LOCAL","value":9},
+            {"char_title": "Recebidos","column":"FASTING_GLYCEMIA_LOCAL","value":9},
+            {"char_title": "Recebidos","column":"BUFFY_COAT_MG","value":8},
+            {"char_title": "Recebidos","column":"POST_INSULINE_CENTRAL","value":5},
+            {"char_title": "Recebidos","column":"POST_INSULINE_LOCAL","value":4},
+            {"char_title": "Recebidos","column":"POST_GLYCEMIA","value":6},
+            {"char_title": "Recebidos","column":"POST_SERUM","value":8},
+            {"char_title": "Recebidos","column":"POST_GLYCEMIA_LOCAL","value":9},
+            {"char_title": "Recebidos","column":"BIOCHEMICAL_URINE","value":9},
+            {"char_title": "Recebidos","column":"URINARY_CALCIUM","value":6},
+            {"char_title": "Recebidos","column":"FASTING_HORMONE","value":5}
+          ]
+        ];
+        var colors = ["#b33040","#d25c4d","#f2b447"]
+        BarChartsFactory.create(dataset, "#quantitative-by-aliquots", colors);
       }
     };
 
     function openTabOrphans() {
       if (!$("#orphans-by-exam svg").length) {
-        _loadDataOrphansByExam();
+        BarChartsFactory.create()
       }
     }
 
@@ -47,76 +105,7 @@
       }
     }
 
-    function _loadDataPendingResults() {
-      var data = [
-        {
-          'title': "FASTING_HORMONE_LOCAL",
-          'repeated': 22,
-          'waiting': 36
-        },
-        {
-          'title': "FASTING_GLYCEMIA_LOCAL",
-          'repeated': 131,
-          'waiting': 48
-        },
-        {
-          'title': "BUFFY_COAT_MG",
-          'repeated': 833,
-          'waiting': 1614
-        },
-        {
-          'title': "POST_INSULINE_CENTRAL",
-          'repeated': 108,
-          'waiting': 106
-        },
-        {
-          'title': "POST_GLYCEMIA",
-          'repeated': 74,
-          'waiting': 92
-        },
-        {
-          'title': "BIOCHEMICAL_URINE",
-          'repeated': 82,
-          'waiting': 96
-        },
-        {
-          'title': "FASTING_HORMONE",
-          'repeated': 65,
-          'waiting': 88
-        },
-        {
-          'title': 'POST_SERUM',
-          'repeated': 331,
-          'waiting': 9706
-        },
-        {
-          'title': 'POST_GLYCEMIA_LOCAL',
-          'repeated': 297,
-          'waiting': 9434
-        },
-        {
-          'title': 'URINARY_CALCIUM',
-          'repeated': 34,
-          'waiting': 272
-        }
-      ];
 
-      _drawChartsPendingResults(data);
-    };
-
-    function _drawChartsPendingResults(data) {
-      var groups = [];
-      var keys = Object.keys(data[0]);
-      for (var i = 0; i < keys.length; i++) {
-        if (keys[i] !== 'title' && keys[i] !== 'unit') {
-          groups.push(keys[i]);
-        }
-      }
-
-      for (i = 0; i < data.length; i++) {
-        PendingResultsChartFactory.create(groups, data[i]);
-      }
-    };
 
     function _loadDataQuantitativeByAliquots() {
       var data = [

@@ -26,6 +26,15 @@
       var width = window.innerWidth - 80,
         height = window.innerHeight - 300;
 
+      const TRANSPORTED = "Transportados";
+      const PREPARED = "Preparados";
+      const RECEIVED = "Transportados";
+      const COLORS = {
+        "TRANSPORTED": "#b33040",
+        "PREPARED": "#d25c4d",
+        "RECEIVED": "#f2b447",
+      };
+
       var svg = d3.select("#quantitative-by-aliquots")
         .append("svg")
         .attr("width", width)
@@ -34,23 +43,6 @@
         .attr("margin", 100)
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-      /* Data in strings like it would be if imported from a csv */
-
-      var data = [
-        { year: "2006", redDelicious: "10", mcintosh: "15", oranges: "9", pears: "6" },
-        { year: "2007", redDelicious: "12", mcintosh: "18", oranges: "9", pears: "4" },
-        { year: "2008", redDelicious: "05", mcintosh: "20", oranges: "8", pears: "2" },
-        { year: "2009", redDelicious: "01", mcintosh: "15", oranges: "5", pears: "4" },
-        { year: "2010", redDelicious: "02", mcintosh: "10", oranges: "4", pears: "2" },
-        { year: "2011", redDelicious: "03", mcintosh: "12", oranges: "6", pears: "3" },
-        { year: "2012", redDelicious: "04", mcintosh: "15", oranges: "8", pears: "1" },
-        { year: "2013", redDelicious: "06", mcintosh: "11", oranges: "9", pears: "4" },
-        { year: "2014", redDelicious: "10", mcintosh: "13", oranges: "9", pears: "5" },
-        { year: "2015", redDelicious: "16", mcintosh: "19", oranges: "6", pears: "9" },
-        { year: "2016", redDelicious: "19", mcintosh: "17", oranges: "5", pears: "7" },
-      ];
 
       var dataset = [
         [
@@ -94,8 +86,6 @@
           ]
       ];
 
-
-// Set x, y and colors
       var x = d3.scaleBand()
         .domain(dataset[0].map(function(d) { return d.column; }))
         .range([40, width - 40])
@@ -105,21 +95,15 @@
         .domain([0, d3.max(dataset, function(d) {  return d3.max(d, function(d) { return d.position + d.value; });  })])
         .range([height, 0]);
 
-      var colors = ["b33040", "#d25c4d", "#f2b447"];
-
-
-// Define and draw axes
       var yAxis = d3.axisLeft()
         .scale(y)
         .ticks(5)
         .tickSize(-width, 0, 0)
         .tickFormat( function(d) { return d } );
 
-
       svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
-
 
       var xAxis = d3.axisBottom()
         .scale(x)
@@ -130,13 +114,17 @@
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
-
-// Create groups for each series, rects for each segment
       var groups = svg.selectAll("g.cost")
         .data(dataset)
         .enter().append("g")
         .attr("class", "cost")
-        .style("fill", function(d, i) { return colors[i]; });
+        .style("fill", function(d, i) {
+          switch (i) {
+            case 0: return COLORS.TRANSPORTED;
+            case 1: return COLORS.PREPARED;
+            case 2: return COLORS.RECEIVED;
+          }
+        });
 
       var rect = groups.selectAll("rect")
         .data(function(d) { return d; })
@@ -155,9 +143,8 @@
           tooltip.select("text").text(d.value);
         });
 
-// Draw legend
       var legend = svg.selectAll(".legend")
-        .data(colors)
+        .data(dataset)
         .enter().append("g")
         .attr("class", "legend")
         .attr("transform", function(d, i) { return "translate(" + i * 150 + ", 0)"; });
@@ -167,7 +154,13 @@
         .attr("y",-25)
         .attr("width", 18)
         .attr("height", 18)
-        .style("fill", function(d, i) {return colors.slice().reverse()[i];});
+        .style("fill", function(d, i) {
+          switch (i) {
+            case 0: return COLORS.TRANSPORTED;
+            case 1: return COLORS.PREPARED;
+            case 2: return COLORS.RECEIVED;
+          }
+        });
 
       legend.append("text")
         .attr("x", 75)
@@ -176,14 +169,12 @@
         .style("text-anchor", "start")
         .text(function(d, i) {
           switch (i) {
-            case 0: return "Transportados";
-            case 1: return "Preparados";
-            case 2: return "Recebidos";
+            case 0: return TRANSPORTED;
+            case 1: return PREPARED;
+            case 2: return RECEIVED;
           }
         });
 
-
-// Prep the tooltip bits, initial display is hidden
       var tooltip = svg.append("g")
         .attr("class", "tooltip")
         .style("display", "none");
