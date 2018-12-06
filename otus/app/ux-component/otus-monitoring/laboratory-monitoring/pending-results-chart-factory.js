@@ -6,15 +6,17 @@
     .factory('otusjs.otus.uxComponent.PendingResultsChartFactory', Factory);
 
   function Factory() {
-    const REPEATED = '#ff6f69';
-    const WAITING = '#bae1ff';
-    const WIDTH = 300;
+    const COLOR = {
+      REPEATED: '#ff6f69',
+      WAITING: '#bae1ff'
+    };
     const MARGIN = {
       TOP: 70,
       RIGHT: 20,
       BOTTOM: 30,
       LEFT: 60
     };
+    const WIDTH = 300;
 
     var self = this;
     /* Public methods */
@@ -89,9 +91,9 @@
         .enter().append('rect')
         .style('fill', function (d) {
           if (d.x_axis === groups[0]) {
-            return REPEATED;
+            return COLOR.REPEATED;
           } else {
-            return WAITING;
+            return COLOR.WAITING;
           }
         })
         .attr('x', function (d) { return x(d.x_axis); })

@@ -51,52 +51,42 @@
       var data = [
         {
           'title': "FASTING_HORMONE_LOCAL",
-          'repeated': 22,
           'waiting': 36
         },
         {
           'title': "FASTING_GLYCEMIA_LOCAL",
-          'repeated': 131,
           'waiting': 48
         },
         {
           'title': "BUFFY_COAT_MG",
-          'repeated': 833,
           'waiting': 1614
         },
         {
           'title': "POST_INSULINE_CENTRAL",
-          'repeated': 108,
           'waiting': 106
         },
         {
           'title': "POST_GLYCEMIA",
-          'repeated': 74,
           'waiting': 92
         },
         {
           'title': "BIOCHEMICAL_URINE",
-          'repeated': 82,
           'waiting': 96
         },
         {
           'title': "FASTING_HORMONE",
-          'repeated': 65,
           'waiting': 88
         },
         {
           'title': 'POST_SERUM',
-          'repeated': 331,
           'waiting': 9706
         },
         {
           'title': 'POST_GLYCEMIA_LOCAL',
-          'repeated': 297,
           'waiting': 9434
         },
         {
           'title': 'URINARY_CALCIUM',
-          'repeated': 34,
           'waiting': 272
         }
       ];
@@ -320,5 +310,18 @@
         .attr("height", function (d) { return height - yScale(d.value); });
 
     };
+
+    function _loadDataexamResults(params) {
+      var data = [
+        {
+          'title': "SÓDIO...................................:",
+          'value': 10
+        },
+        {
+          'title': "CREATININA..............................:",
+          'value': 12
+        }
+      ]
+    }
   };
 }());
