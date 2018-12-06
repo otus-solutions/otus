@@ -95,7 +95,7 @@
 
     function openTabOrphans() {
       if (!$("#orphans-by-exam svg").length) {
-        BarChartsFactory.create()
+        _loadDataOrphansByExam();
       }
     }
 
@@ -309,5 +309,18 @@
         .attr("height", function (d) { return height - yScale(d.value); });
 
     };
+
+    function _loadDataexamResults(params) {
+      var data = [
+        {
+          'title': "SÓDIO...................................:",
+          'value': 10
+        },
+        {
+          'title': "CREATININA..............................:",
+          'value': 12
+        }
+      ]
+    }
   };
 }());
