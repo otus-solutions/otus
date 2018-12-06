@@ -54,14 +54,6 @@
       self.selectedAliquots = [];
     }
 
-    // function aliquotInputkeydown(event) {
-    //   var charCode = event.which || event.keyCode;
-    //   if (charCode == '13' && self.aliquotCode.length > 0) {
-    //     self.fastInsertion(self.aliquotCode);
-    //   }
-    // }
-
-
     function aliquotInputkeydown(event) {
       var charCode = event.which || event.keyCode;
       if(charCode == '13' && self.aliquotCode.length > 0) {
@@ -72,7 +64,6 @@
 
     function fastInsertion(newAliquotCode, hideMsgErrors) {
       var successInsertion = false;
-      var foundInOtherLot;
 
       let aliquotFilter = {
         aliquotCode: newAliquotCode,
@@ -99,8 +90,6 @@
             if(errorMessage.match(new RegExp("Data Validation Fail: Invalid center."))) _setInvalidAliquotError(aliquotFilter.aliquotCode);
             if(errorMessage.match(new RegExp("Data Validation Fail: Invalid aliquot type."))) _setWrongTypeAliquotError(aliquotFilter.aliquotCode,error.data.CONTENT);
             if(errorMessage.match(new RegExp("Data Validation Fail: Already in a lot."))) _setAliquotInOtherLotError(aliquotFilter.aliquotCode,error.data.CONTENT);
-            console.log(error);
-
           })
       }
       self.aliquotCode = "";
