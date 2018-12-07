@@ -14,6 +14,7 @@
   function Service($q, ModuleService, MonitoringLocalStorageService) {
     var self = this;
     var _remoteStorage = ModuleService.getMonitoringRemoteStorage();
+    var _laboratoryMonitoringStorage = ModuleService.getLaboratoryMonitoringRemoteStorage();
 
     self.find = find;
     self.listCenters = listCenters;
@@ -22,6 +23,11 @@
     self.getActivitiesProgressReport = getActivitiesProgressReport;
     self.defineActivityWithDoesNotApplies = defineActivityWithDoesNotApplies;
     self.deleteNotAppliesOfActivity = deleteNotAppliesOfActivity;
+    self.getDataOfPendingResultsByAliquots = getDataOfPendingResultsByAliquots;
+    self.getDataQuantitativeByTypeOfAliquots = getDataQuantitativeByTypeOfAliquots;
+    self.getDataOrphanByExams = getDataOrphanByExams;
+    self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
+    self.getDataOfResultsByExam = getDataOfResultsByExam;
 
     function listAcronyms() {
       var request = $q.defer();
@@ -39,7 +45,7 @@
         });
 
       return request.promise;
-    }
+    };
 
     function listCenters() {
       var request = $q.defer();
@@ -57,7 +63,7 @@
         });
 
       return request.promise;
-    }
+    };
 
     function find(query) {
       var request = $q.defer();
@@ -85,7 +91,7 @@
         });
 
       return request.promise;
-    }
+    };
 
     function getActivitiesProgressReport(center) {
       var request = $q.defer();
@@ -103,8 +109,7 @@
         });
 
       return request.promise;
-    }
-
+    };
 
     function getStatusOfActivities(recruitmentNumber) {
       var request = $q.defer();
@@ -121,7 +126,7 @@
             });
         });
       return request.promise;
-    }
+    };
 
     function defineActivityWithDoesNotApplies(data) {
       var request = $q.defer();
@@ -138,15 +143,15 @@
             });
         });
       return request.promise;
-    }
+    };
 
-    function deleteNotAppliesOfActivity(rn,acrony) {
+    function deleteNotAppliesOfActivity(rn, acrony) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .deleteNotAppliesOfActivity(rn,acrony)
+            .deleteNotAppliesOfActivity(rn, acrony)
             .then(function (response) {
               request.resolve(response.data);
             })
@@ -155,6 +160,97 @@
             });
         });
       return request.promise;
-    }
+    };
+
+
+    function getDataOfPendingResultsByAliquots() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataOfPendingResultsByAliquots()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataQuantitativeByTypeOfAliquots() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataQuantitativeByTypeOfAliquots()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataOrphanByExams() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataOrphanByExams()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataOfStorageByAliquots() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataOfStorageByAliquots()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataOfResultsByExam() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataOfResultsByExam()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
   }
 }());

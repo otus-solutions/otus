@@ -6,11 +6,12 @@
     .controller('otusLaboratoryMonitoringDashboardCtrl', Controller);
 
   Controller.$inject = [
+    'otusjs.monitoring.business.LaboratoryMonitoringService',
     'otusjs.otus.uxComponent.PendingResultsChartFactory',
     'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory'
   ];
 
-  function Controller(PendingResultsChartFactory, QuantitativeAliquotsChartsFactory) {
+  function Controller(LaboratoryMonitoringService, PendingResultsChartFactory, QuantitativeAliquotsChartsFactory) {
     var self = this;
     /* Lifecycle hooks */
     self.$onInit = onInit;

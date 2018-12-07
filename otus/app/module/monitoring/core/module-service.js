@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -12,9 +12,10 @@
   ];
 
   function Service($q, ContextService, EventService) {
+    var _genericMonitoringStorageDefer = $q.defer();
+    var _laboratoryMonitoringStorageDefer = $q.defer();
+    var _remoteStorage = {};
     var self = this;
-    var _remoteStorage;
-    var _remoteStorageDefer = $q.defer();
 
     self.Event = EventService;
 
@@ -23,30 +24,49 @@
     self.configureStorage = configureStorage;
     self.configureRemoteStorage = configureRemoteStorage;
     self.getMonitoringRemoteStorage = getMonitoringRemoteStorage;
+    self.configureLaboratoryMonitoringRemoteStorage = configureLaboratoryMonitoringRemoteStorage;
+    self.getLaboratoryMonitoringRemoteStorage = getLaboratoryMonitoringRemoteStorage;
 
     function configureContext(context) {
       ContextService.configureContext(context);
-    }
+    };
 
     function configureStorage(storage) {
       ContextService.configureStorage(storage);
-    }
+    };
 
     function configureRemoteStorage(restService) {
-      _remoteStorage = restService;
-      _remoteStorageDefer.resolve(_remoteStorage);
-    }
+      _remoteStorage.genericMonitoring = restService;
+      _genericMonitoringStorageDefer.resolve(_remoteStorage.genericMonitoring);
+    };
 
-    function getMonitoringRemoteStorage(){
-        if (_remoteStorage) {
-          _remoteStorageDefer = $q.defer();
-          _remoteStorageDefer.resolve(_remoteStorage);
+    function getMonitoringRemoteStorage() {
+      if (_remoteStorage.genericMonitoring) {
+        _genericMonitoringStorageDefer = $q.defer();
+        _genericMonitoringStorageDefer.resolve(_remoteStorage.genericMonitoring);
+      }
+      return {
+        whenReady: function () {
+          return _remoteStorageDefer.promise;
         }
-        return {
-          whenReady: function() {
-            return _remoteStorageDefer.promise;
-          }
-        };
-    }
+      };
+    };
+
+    function configureLaboratoryMonitoringRemoteStorage(restService) {
+      _remoteStorage.laboratoryMonitoring = restService;
+      _laboratoryMonitoringStorageDefer.resolve(_remoteStorage.laboratoryMonitoring);
+    };
+
+    function getLaboratoryMonitoringRemoteStorage() {
+      if (_remoteStorage.laboratoryMonitoring) {
+        _laboratoryMonitoringStorageDefer = $q.defer();
+        _laboratoryMonitoringStorageDefer.resolve(_remoteStorage.laboratoryMonitoring);
+      }
+      return {
+        whenReady: function () {
+          return _remoteStorageDefer.promise;
+        }
+      };
+    };
   }
 }());
