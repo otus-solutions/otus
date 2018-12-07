@@ -6,11 +6,12 @@
     .controller('otusLaboratoryMonitoringDashboardCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.BarChartsFactory',
+    'otusjs.otus.uxComponent.BarChartsVerticalFactory',
+    'otusjs.otus.uxComponent.BarChartsHorizontalFactory',
     'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory'
   ];
 
-  function Controller(BarChartsFactory, QuantitativeAliquotsChartsFactory) {
+  function Controller(BarChartsFactory, BarChartsHorizontalFactory, QuantitativeAliquotsChartsFactory) {
     var self = this;
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -95,7 +96,8 @@
 
     function openTabOrphans() {
       if (!$("#orphans-by-exam svg").length) {
-        _loadDataOrphansByExam();
+        // _loadDataOrphansByExam();
+        BarChartsHorizontalFactory.create();
       }
     }
 

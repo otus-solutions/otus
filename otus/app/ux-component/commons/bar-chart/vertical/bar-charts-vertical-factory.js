@@ -3,24 +3,18 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .factory('otusjs.otus.uxComponent.BarChartsFactory', Factory);
+    .factory('otusjs.otus.uxComponent.BarChartsVerticalFactory', Factory);
 
-  function Factory() {
+  Factory.$inject = [
+    "otusjs.application.color.PalleteColorService"
+  ];
+
+  function Factory(PalleteColorService) {
     var self = this;
     var labels = [];
-    const COLOR_PALLETE = ["#00796B","#604a2f","#7a5e38","#af9c6d","#9a8a63","#f9eb6a","#c9bd5b","#343434","#9bc6c2","#9a5419","#e88023","#26338c","#415ad0"];
-    var COLORS = angular.copy(COLOR_PALLETE);
-
 
     /* Public methods */
     self.create = create;
-
-    function _generate_colors() {
-      let index = Math.floor(Math.random() * COLORS.length);
-      let color = COLORS[index];
-      COLORS.splice(index, 1);
-      return color;
-    }
 
     function _constructor(data, keys){
       for (var j = 0; j < data.length; j++) {
@@ -36,7 +30,6 @@
     }
 
     function create(dataset, element, colors) {
-      console.log(colors)
       if ((Array.isArray(dataset) && dataset.length) && element) {
         var keys = Object.keys(dataset[0][0]);
         _constructor(dataset , keys);
@@ -44,29 +37,27 @@
           if (!colors.length) {
             colors = [];
             labels.forEach(function () {
-              colors.push(_generate_colors());
+              colors.push(PalleteColorService.getRandomColor());
             });
           }
         } else {
           colors = [];
           labels.forEach(function () {
-            colors.push(_generate_colors());
+            colors.push(PalleteColorService.getRandomColor());
           });
         }
 
-        COLORS = angular.copy(COLOR_PALLETE);
-
         var margin = {top: 20, right: 160, bottom: 100, left: 30};
-        var width = window.innerWidth - 80,
+        var width = window.innerWidth - 100,
           height = window.innerHeight - 400;
 
-        width = width < 960 ? 1500 : width;
+        // width = width < 1500 ? 1500 : width;
 
         var svg = d3.select(element)
           .append("svg")
           .attr("width", width)
           .attr("height", height + margin.top + margin.bottom)
-          .attr("padding", 100)
+          .attr("padding", 200)
           .attr("margin", 100)
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -81,7 +72,7 @@
         var y = d3.scaleLinear()
           .domain([0, d3.max(dataset, function (d) {
             return d3.max(d, function (d) {
-              return d.position + d[keys[2]];
+              return d.position + parseInt(d[keys[2]]);
             });
           })])
           .range([height, 0]);
@@ -106,7 +97,7 @@
           .attr("class", "x axis")
           .style("font-size", "0.6em")
           .attr("transform", "translate(0," + height + ")")
-          .call(xAxis);
+          .call(xAxis).selectAll("text").attr("transform", "translate(-40,35) rotate(-30)")
 
         var groups = svg.selectAll("g.cost")
           .data(dataset)
@@ -127,13 +118,13 @@
               return x(d[keys[1]]) + Math.round(width / 40);
             })
             .attr("y", function (d) {
-              return y(d[keys[2]]) - 10;
+              return y(parseInt(d[keys[2]])) - 10;
             })
             .attr("fill", "#000")
             .attr("dx", "0.5em")
             .attr("dy", "0.5em")
             .text(function (d) {
-              return d[keys[2]];
+              return parseInt(d[keys[2]]);
             });
         }
 
@@ -147,10 +138,10 @@
             return x(d[keys[1]]);
           })
           .attr("y", function (d) {
-            return y(d.position + d[keys[2]]);
+            return y(d.position + parseInt(d[keys[2]]));
           })
           .attr("height", function (d) {
-            return y(d.position) - y(d.position + d[keys[2]]);
+            return y(d.position) - y(d.position + parseInt(d[keys[2]]));
           })
           .attr("width", x.bandwidth())
           .on("mouseover", function () {
@@ -163,7 +154,7 @@
             var xPosition = d3.mouse(this)[0] - 15;
             var yPosition = d3.mouse(this)[1] - 25;
             tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-            tooltip.select("text").text(d[keys[0]]+": "+d[keys[2]]);
+            tooltip.select("text").text(d[keys[0]]+": "+parseInt(d[keys[2]]));
           });
 
         var legend = svg.selectAll(".legend")
