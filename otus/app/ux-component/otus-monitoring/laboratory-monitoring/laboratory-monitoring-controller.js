@@ -8,10 +8,11 @@
   Controller.$inject = [
     'otusjs.otus.uxComponent.BarChartsVerticalFactory',
     'otusjs.otus.uxComponent.BarChartsHorizontalFactory',
-    'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory'
+    'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory',
+    'otusjs.otus.uxComponent.BarChartsMultiFactory'
   ];
 
-  function Controller(BarChartsFactory, BarChartsHorizontalFactory, QuantitativeAliquotsChartsFactory) {
+  function Controller(BarChartsVerticalFactory, BarChartsHorizontalFactory, QuantitativeAliquotsChartsFactory, BarChartsMultiFactory) {
     var self = this;
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -27,22 +28,23 @@
       if (!$("#pending-results-chart svg").length) {
         var dataset = [
           [
-            {"char_title": "Pendentes","column":"FASTING_HORMONE_LOCAL","value":10},
-            {"char_title": "Pendentes","column":"FASTING_GLYCEMIA_LOCAL","value":12},
-            {"char_title": "Pendentes","column":"BUFFY_COAT_MG","value":5},
-            {"char_title": "Pendentes","column":"POST_INSULINE_CENTRAL","value":1},
-            {"char_title": "Pendentes","column":"POST_INSULINE_LOCAL","value":2},
-            {"char_title": "Pendentes","column":"POST_GLYCEMIA","value":3},
-            {"char_title": "Pendentes","column":"POST_SERUM","value":4},
-            {"char_title": "Pendentes","column":"POST_GLYCEMIA_LOCAL","value":6},
-            {"char_title": "Pendentes","column":"BIOCHEMICAL_URINE","value":10},
-            {"char_title": "Pendentes","column":"URINARY_CALCIUM","value":16},
-            {"char_title": "Pendentes","column":"FASTING_HORMONE","value":19}
+            {"char_title": "Realizados","column":"FASTING_HORMONE_LOCAL","value":15},
+            {"char_title": "Realizados","column":"FASTING_GLYCEMIA_LOCAL","value":12},
+            {"char_title": "Realizados","column":"BUFFY_COAT_MG","value":5},
+            {"char_title": "Realizados","column":"POST_INSULINE_CENTRAL","value":1},
+            {"char_title": "Realizados","column":"POST_INSULINE_LOCAL","value":2},
+            {"char_title": "Realizados","column":"POST_GLYCEMIA","value":3},
+            {"char_title": "Realizados","column":"POST_SERUM","value":4},
+            {"char_title": "Realizados","column":"POST_GLYCEMIA_LOCAL","value":6},
+            {"char_title": "Realizados","column":"BIOCHEMICAL_URINE","value":10},
+            {"char_title": "Realizados","column":"URINARY_CALCIUM","value":16},
+            {"char_title": "Realizados","column":"FASTING_HORMONE","value":19}
           ]
+
         ];
         var colors = ["#c7453b"];
         var element = '#pending-results-chart';
-        BarChartsFactory.create(dataset, element);
+        BarChartsVerticalFactory.create(dataset, element);
       }
     };
 
@@ -76,7 +78,7 @@
             {"char_title": "Preparados","column":"FASTING_HORMONE","value":17}
           ],
           [
-            {"char_title": "Recebidos","column":"FASTING_HORMONE_LOCAL","value":9},
+            {"char_title": "Recebidos","column":"FASTING_HORMONE_LOCAL","value":0},
             {"char_title": "Recebidos","column":"FASTING_GLYCEMIA_LOCAL","value":9},
             {"char_title": "Recebidos","column":"BUFFY_COAT_MG","value":8},
             {"char_title": "Recebidos","column":"POST_INSULINE_CENTRAL","value":5},
@@ -90,20 +92,70 @@
           ]
         ];
         var colors = ["#b33040","#d25c4d","#f2b447"]
-        BarChartsFactory.create(dataset, "#quantitative-by-aliquots", colors);
+        BarChartsVerticalFactory.create(dataset, "#quantitative-by-aliquots", colors);
       }
     };
 
     function openTabOrphans() {
       if (!$("#orphans-by-exam svg").length) {
         // _loadDataOrphansByExam();
-        BarChartsHorizontalFactory.create();
+        BarChartsHorizontalFactory.create(null, null, 3);
       }
     }
 
     function openTabStorage() {
       if (!$("#storage-by-exam svg").length) {
-        _loadStorageDataByExam();
+        // _loadStorageDataByExam();
+        var data = [{
+          'chart_title': 'Population',
+          'Repetidos': 22,
+          'Aguardando': 36
+        }, {
+          'chart_title': 'Popluation Grow Rate',
+          'Repetidos': 131,
+          'Aguardando': 48
+        }, {
+          'chart_title': 'Tallest Building',
+          'Repetidos': 833,
+          'Aguardando': 1614
+        }, {
+          'chart_title': 'Sex Ratio',
+          'Repetidos': 108,
+          'Aguardando': 106
+        }, {
+          'chart_title': 'Literacy All Gender',
+          'Repetidos': 74,
+          'Aguardando': 92
+        }, {
+          'chart_title': 'Literacy All Male',
+          'Repetidos': 82,
+          'Aguardando': 96
+        }, {
+          'chart_title': 'Literacy All Female',
+          'Repetidos': 65,
+          'Aguardando': 88
+        }, {
+          'chart_title': 'Area',
+          'Repetidos': 331,
+          'Aguardando': 9706
+        }, {
+          'chart_title': 'Area Land',
+          'Repetidos': 297,
+          'Aguardando': 9434
+        }, {
+          'chart_title': 'Area Water',
+          'Repetidos': 34,
+          'Aguardando': 272
+        }, {
+          'chart_title': 'Infant Mortality',
+          'Repetidos': 46,
+          'Aguardando': 15
+        }];
+
+
+            BarChartsMultiFactory.create(data, "#storage-by-exam");
+
+
       }
     }
 

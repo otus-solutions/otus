@@ -8,19 +8,19 @@
   function Service() {
     var self = this;
     const COLOR_PALLETE = [
+      "#415ad0",
+      "#7a5e38",
+      "#c9bd5b",
+      "#e88023",
+      "#343434",
       "#00796B",
       "#604a2f",
-      "#7a5e38",
       "#af9c6d",
-      "#9a8a63",
-      "#f9eb6a",
-      "#c9bd5b",
-      "#343434",
-      "#9bc6c2",
-      "#9a5419",
-      "#e88023",
       "#26338c",
-      "#415ad0"
+      "#f9eb6a",
+      "#9a8a63",
+      "#9bc6c2",
+      "#9a5419"
     ];
     self.COLORS = angular.copy(COLOR_PALLETE);
 

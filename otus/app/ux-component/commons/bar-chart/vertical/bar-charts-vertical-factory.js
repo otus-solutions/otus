@@ -36,22 +36,20 @@
         if (Array.isArray(colors)) {
           if (!colors.length) {
             colors = [];
-            labels.forEach(function () {
-              colors.push(PalleteColorService.getRandomColor());
+            labels.forEach(function (d, i) {
+              colors.push(PalleteColorService.getColor(i));
             });
           }
         } else {
           colors = [];
-          labels.forEach(function () {
-            colors.push(PalleteColorService.getRandomColor());
+          labels.forEach(function (d, i) {
+            colors.push(PalleteColorService.getColor(i));
           });
         }
 
         var margin = {top: 20, right: 160, bottom: 100, left: 30};
         var width = window.innerWidth - 100,
           height = window.innerHeight - 400;
-
-        // width = width < 1500 ? 1500 : width;
 
         var svg = d3.select(element)
           .append("svg")
@@ -91,13 +89,13 @@
 
         var xAxis = d3.axisBottom()
           .scale(x)
-          .ticks(6);
+          .ticks(2);
 
         svg.append("g")
           .attr("class", "x axis")
           .style("font-size", "0.6em")
           .attr("transform", "translate(0," + height + ")")
-          .call(xAxis).selectAll("text").attr("transform", "translate(-40,35) rotate(-30)")
+          .call(xAxis).selectAll("text").attr("transform", "translate(-40,35) rotate(-30)").attr("width", "50")
 
         var groups = svg.selectAll("g.cost")
           .data(dataset)
