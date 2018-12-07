@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -9,11 +9,11 @@
     'otusjs.monitoring.core.ModuleService',
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
-    'otusjs.deploy.MonitoringRestService'
-
+    'otusjs.deploy.MonitoringRestService',
+    'otusjs.deploy.LaboratoryMonitoringRestService'
   ];
 
-  function Service(ModuleService, ContextFactory, StorageService, RestService) {
+  function Service(ModuleService, ContextFactory, StorageService, MonitoringRestService, LaboratoryMonitoringRestService) {
 
     var self = this;
 
@@ -25,8 +25,8 @@
     function bootstrap() {
       configureContext(ContextFactory);
       configureStorage(StorageService.session);
-      configureRemoteStorage(RestService)
-
+      ModuleService.configureRemoteStorage(MonitoringRestService);
+      ModuleService.configureLaboratoryMonitoringRemoteStorage(LaboratoryMonitoringRestService);
     }
 
     function configureContext(context) {
@@ -35,10 +35,6 @@
 
     function configureStorage(storage) {
       ModuleService.configureStorage(storage);
-    }
-
-    function configureRemoteStorage(storage) {
-      ModuleService.configureRemoteStorage(storage);
     }
   }
 }());

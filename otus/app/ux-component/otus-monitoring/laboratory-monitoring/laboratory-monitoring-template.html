@@ -1,5 +1,7 @@
 <style>
-  .bar { fill: steelblue; }
+  .bar {
+    fill: steelblue;
+  }
 </style>
 <md-content layout="column" flex>
   <otus-dashboard-sidenav layout="row">
@@ -13,24 +15,29 @@
   <md-content layout flex>
     <md-content layout="column" layout-padding flex>
       <md-tabs md-border-bottom flex layout-fill>
-        <md-tab label="Pendências" id="pendingButton" ng-click="$ctrl.openTabPending()" layout-padding>
-          <div layout="column" layout-margin="" ng-init="$ctrl.openTabPending()">
+        <md-tab label="Pendências de Resultados" id="pendingButton" ng-click="$ctrl.openTabPendingResultsByAliquots()"
+          layout-padding>
+          <div layout="column" layout-margin="" ng-init="$ctrl.openTabPendingResultsByAliquots()">
             <h1 class="md-no-sticky" layout-margin="" layout-padding>Pendências de Resultados</h1>
             <div id="pending-results-chart" flex></div>
           </div>
         </md-tab>
-        <md-tab label="Quantitativo" ng-click="$ctrl.openTabQuatitative()" layout="column">
-          <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantitativo por Tipo de Aliquota</h1>
+        <md-tab label="Quantidade por tipo de alíquotas" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()" layout="column">
+          <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantidade por tipo de alíquotas</h1>
           <span flex="20"></span>
           <div id="quantitative-by-aliquots" layout-margin="" flex></div>
         </md-tab>
-        <md-tab label="Orfãos" ng-click="$ctrl.openTabOrphans()">
-          <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames Orfãos</h1>
+        <md-tab label="Exames órfãos" ng-click="$ctrl.openTabOrphanByExams()">
+          <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames órfãos</h1>
           <div id="orphans-by-exam" flex></div>
         </md-tab>
-        <md-tab label="Armazenamento" ng-click="$ctrl.openTabStorage()">
+        <md-tab label="Armazenamento" ng-click="$ctrl.openTabStorageByAliquots()">
           <h1 class="md-no-sticky" layout-margin="" layout-padding>Armazenamento</h1>
           <div id="storage-by-exam" flex></div>
+        </md-tab>
+        <md-tab label="Resultados de Exames" ng-click="$ctrl.openTabResultsByExam()">
+          <h1 class="md-no-sticky" layout-margin="" layout-padding>Resultados de Exames</h1>
+          <div id="results-by-exam" flex></div>
         </md-tab>
       </md-tabs>
     </md-content>
