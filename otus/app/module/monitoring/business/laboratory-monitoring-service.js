@@ -10,7 +10,7 @@
     'otusjs.monitoring.repository.MonitoringCollectionService'
   ];
 
-  function Service($q, $filter, MonitoringCollectionService) {
+  function Service($q, MonitoringCollectionService) {
     var self = this;
 
     self.getDataOfPendingResultsByAliquots = getDataOfPendingResultsByAliquots;

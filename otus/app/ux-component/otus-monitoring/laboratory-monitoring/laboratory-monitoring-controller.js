@@ -7,12 +7,13 @@
 
   Controller.$inject = [
     'otusjs.monitoring.business.LaboratoryMonitoringService',
+    'otusjs.deploy.LoadingScreenService',
     'otusjs.otus.uxComponent.BarChartsVerticalFactory',
     'otusjs.otus.uxComponent.BarChartsHorizontalFactory',
     'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory'
   ];
 
-  function Controller(LaboratoryMonitoringService, BarChartsFactory, BarChartsHorizontalFactory, QuantitativeAliquotsChartsFactory) {
+  function Controller(LaboratoryMonitoringService, LoadingScreenService, BarChartsFactory, BarChartsHorizontalFactory, QuantitativeAliquotsChartsFactory) {
     var self = this;
     /* Lifecycle hooks */
     self.$onInit = onInit;
