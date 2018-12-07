@@ -26,7 +26,6 @@
     self.browserOnline = navigator.onLine;
     self.browserName = browserName;
     self.browserVersion = browserVersion;
-    self.cookiesEnabled = navigator.cookieEnabled;
     self.plataform = operatingSystemName;
 
     return self;

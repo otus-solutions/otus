@@ -24,7 +24,8 @@
       'otusjs.activity.storage.SurveyStorageService',
       'otusjs.participant.storage.ParticipantStorageService',
       'otusjs.monitoring.storage.MonitoringLocalStorageService',
-      'otusjs.user.storage.UserStorageService'
+      'otusjs.user.storage.UserStorageService',
+      'otusjs.application.crash.CrashLocalStorageService'
     ])
     .run(Runner);
 

@@ -8,23 +8,37 @@
   Service.$inject = [
     '$window',
     'otusjs.application.crash.CrashReportFactory',
+    'otusjs.application.crash.CrashLocalStorageService'
   ];
 
-  function Service($window, CrashReportFactory) {
+  function Service($window, CrashReportFactory, CrashLocalStorageService) {
     var self = this;
-    var NAME_PREFIX = 'otus-bugtracker-';
-    var MAX_COOKIES_LENGHT_SIZE = 80000;
-    var MAX_COOKIES_LIST_LENGHT = 10;
-    var COOKIES_EXPIRATION_TIME_IN_DAYS = 1;
+    var _browserInfo = {};
 
     self.persistException = persistException;
     self.getErrorList = getErrorList;
-    self.clearCookiesPool = clearCookiesPool;
-
-    var _browserInfo = {};
 
     _buildBrowserInfo();
 
+    function _cleanUp(compareDate) {
+      var date = new Date();
+      var expirationTime = 1 * 1 * 2 * 60 * 1000;
+
+      date.setTime(date.getTime() - expirationTime);
+
+      var dateTime = date.getTime();
+
+      if (compareDate) {
+        compareDate.map(function (oneDate) {
+          if (oneDate.meta.updated < dateTime) {
+            CrashLocalStorageService.remove(oneDate);
+          }else if(oneDate.meta.created < dateTime){
+            CrashLocalStorageService.remove(oneDate);
+          }
+          return oneDate;
+        });
+      }
+    }
 
     function _buildBrowserInfo() {
       _browserInfo.userAgent = navigator.userAgent;
@@ -34,88 +48,42 @@
     }
 
     function persistException(exception) {
-      var errorCookie = createCookie(exception);
-      manageCookiePoolSize(errorCookie);
+      var selectData;
+      var errorIndexedDB = true;
+      var compareData = CrashLocalStorageService.find();
 
-      document.cookie = errorCookie;
-    }
-
-    function createCookie(exception) {
-      var date = new Date();
-      var expirationTime = COOKIES_EXPIRATION_TIME_IN_DAYS * 24 * 60 * 60 * 1000;
-
-      var name = NAME_PREFIX + date.getTime();
-      var url = $window.location.href;
-
-      date.setTime(date.getTime() + expirationTime);
-      var expires = 'expires=' + date.toUTCString();
-
-      var crash = CrashReportFactory.create(exception, url, _browserInfo.browserName, _browserInfo.browserVersion, _browserInfo.operatingSystemName);
-
-      var errorData = JSON.stringify(crash);
-
-      return name + '=' + errorData + ';' + expires + ';path=/';
-    }
-
-
-    function manageCookiePoolSize(cookie) {
-      var cookieList = getCookieList();
-      var cookiesStringLength = getCookiesLength();
-      var toRemove = [];
-      var sizeToRemove = 0;
-
-      if (cookiesStringLength + cookie.length > MAX_COOKIES_LENGHT_SIZE) {
-        for (var i = 0; sizeToRemove <= cookie.length; i++) {
-          toRemove.push(cookieList[i]);
-          sizeToRemove += cookieList[i].length;
-        }
-      } else {
-        if (cookieList.length === MAX_COOKIES_LIST_LENGHT - 1) {
-          toRemove.push(cookieList[0])
+      if (compareData) {
+        compareData.map(function (oneException) {
+          if (oneException.cause == exception.stack) {
+            selectData = createIndexedDB(exception);
+            selectData.$loki = oneException.$loki;
+            selectData.meta = oneException.meta;
+            CrashLocalStorageService.update(selectData);
+            errorIndexedDB = false;
+          }
+          return oneException;
+        });
+        if (errorIndexedDB) {
+          // _cleanUp(compareData);
+          CrashLocalStorageService.insert(createIndexedDB(exception));
         }
       }
-
-      toRemove.forEach(function (cookie) {
-        deleteCookie(getCookieName(cookie))
-      })
     }
 
-    function getCookieName(cookie) {
-      return cookie.split("=")[0];
+    function createIndexedDB(exception) {
+      var url = $window.location.href;
+      var errorData = CrashReportFactory.create(exception, url, _browserInfo.browserName, _browserInfo.browserVersion, _browserInfo.operatingSystemName);
+
+      return errorData;
     }
 
     function getErrorList() {
-      var name = NAME_PREFIX;
-      var cookies = getCookieList();
-      var errorList = [];
+      var dataError = CrashLocalStorageService.getCollectionError();
+      var errorList = JSON.stringify(dataError);
 
-      for (var i = 0; i < cookies.length; i++) {
-        var cookieString = cookies[i];
-        while (cookieString.charAt(0) == ' ') {
-          cookieString = cookieString.substring(1);
-        }
-        if (cookieString.indexOf(name) == 0) {
-          cookieString = cookieString.substring(name.length + 14, cookieString.length);
-          errorList.push(cookieString);
-        }
-      }
+      console.log(errorList);
 
       return errorList;
-    }
-
-    function deleteCookie(name) {
-      var pastDate = new Date(new Date().getTime() + parseInt(-1) * 1000 * 60 * 60 * 24);
-      var expires = 'expires=' + pastDate.toUTCString();
-
-      var expiredCookie = name + '=' + "" + ';' + expires + ';path=/';
-
-      document.cookie = expiredCookie;
-    }
-
-    function clearCookiesPool() {
-      getCookieList().forEach(function (cookie) {
-        deleteCookie(getCookieName(cookie));
-      })
     }
 
     function getBrowserName(userAgent) {
@@ -174,15 +142,6 @@
       }
 
       return OSName;
-    }
-
-    function getCookieList() {
-      var decodedCookie = decodeURIComponent(document.cookie);
-      return decodedCookie.split(';');
-    }
-
-    function getCookiesLength() {
-      return document.cookie.length
     }
   }
 }());
