@@ -22,7 +22,7 @@
     function getDataOfPendingResultsByAliquots() {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfPendingResultsByAliquots().then(function (result) {
-        defer.resolve(_buildDataToView(result));
+        defer.resolve(result);
       }).catch(function () {
         defer.reject()
       });
@@ -32,7 +32,7 @@
     function getDataQuantitativeByTypeOfAliquots() {
       var defer = $q.defer();
       MonitoringCollectionService.getDataQuantitativeByTypeOfAliquots().then(function (result) {
-        defer.resolve(_buildDataToView(result));
+        defer.resolve(result);
       }).catch(function () {
         defer.reject()
       });
@@ -42,7 +42,7 @@
     function getDataOrphanByExams() {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOrphanByExams().then(function (result) {
-        defer.resolve(_buildDataToView(result));
+        defer.resolve(result);
       }).catch(function () {
         defer.reject()
       });
@@ -52,7 +52,7 @@
     function getDataOfStorageByAliquots() {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfStorageByAliquots().then(function (result) {
-        defer.resolve(_buildDataToView(result));
+        defer.resolve(result);
       }).catch(function () {
         defer.reject()
       });
@@ -62,7 +62,7 @@
     function getDataOfResultsByExam(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfResultsByExam().then(function (result) {
-        defer.resolve(_buildDataToView(result));
+        defer.resolve(result);
       }).catch(function () {
         defer.reject()
       });
