@@ -6,12 +6,21 @@
     .controller('otusLaboratoryMonitoringDashboardCtrl', Controller);
 
   Controller.$inject = [
+<<<<<<< HEAD
+    'otusjs.monitoring.business.LaboratoryMonitoringService',
+    'otusjs.otus.uxComponent.PendingResultsChartFactory',
+    'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory'
+  ];
+
+  function Controller(LaboratoryMonitoringService, PendingResultsChartFactory, QuantitativeAliquotsChartsFactory) {
+=======
     'otusjs.otus.uxComponent.BarChartsVerticalFactory',
     'otusjs.otus.uxComponent.BarChartsHorizontalFactory',
     'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory'
   ];
 
   function Controller(BarChartsFactory, BarChartsHorizontalFactory, QuantitativeAliquotsChartsFactory) {
+>>>>>>> 483e78ac4c29a14439245d63b82ae1ae9c978127
     var self = this;
     /* Lifecycle hooks */
     self.$onInit = onInit;

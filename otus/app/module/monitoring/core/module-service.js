@@ -47,7 +47,7 @@
       }
       return {
         whenReady: function () {
-          return _remoteStorageDefer.promise;
+          return _genericMonitoringStorageDefer.promise;
         }
       };
     };
@@ -64,7 +64,7 @@
       }
       return {
         whenReady: function () {
-          return _remoteStorageDefer.promise;
+          return _laboratoryMonitoringStorageDefer.promise;
         }
       };
     };
