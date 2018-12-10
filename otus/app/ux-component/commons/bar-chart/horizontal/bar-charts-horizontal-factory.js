@@ -71,9 +71,9 @@
             return y(d[keys[0]]);
           })
           .attr("height", y.bandwidth())
-          .attr("transform", "translate(60,0)")
+          .attr("transform", "translate(200,0)")
           .on("mousemove", function (d) {
-            var xPosition = d3.mouse(this)[0] + 45;
+            var xPosition = d3.mouse(this)[0] + 185;
             var yPosition = d3.mouse(this)[1] - 25;
             tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
             tooltip.select("text").text(d[keys[1]]);
@@ -92,11 +92,11 @@
           });
 
         svg.append("g")
-          .attr("transform", "translate(60," + height + ")")
+          .attr("transform", "translate(200," + height + ")")
           .call(d3.axisBottom(x));
 
         svg.append("g")
-          .attr("transform", "translate(60,0)")
+          .attr("transform", "translate(200,0)")
           .call(d3.axisLeft(y));
 
         var tooltip = svg.append("g")
