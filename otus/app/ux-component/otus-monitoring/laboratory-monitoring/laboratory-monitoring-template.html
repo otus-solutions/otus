@@ -19,6 +19,11 @@
           layout-padding>
           <div layout="column" layout-margin="" ng-init="$ctrl.openTabPendingResultsByAliquots()">
             <h1 class="md-no-sticky" layout-margin="" layout-padding>Pendências de Resultados</h1>
+            <md-button ng-click="$ctrl.downloadCSVFileOfPendingResults()">
+              <md-icon>get_app</md-icon>
+              <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+              Gerar CSV
+            </md-button>
             <div id="pending-results-chart" flex></div>
           </div>
         </md-tab>
