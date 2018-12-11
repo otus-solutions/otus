@@ -8,11 +8,7 @@
       templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/exams-lots-manager-template.html',
     });
 
-  Controller.$inject = [
-    'otusjs.laboratory.business.project.exams.ExamLotService'
-  ];
-
-  function Controller(ExamLotService) {
+  function Controller() {
     var self = this;
 
     /* Lifecycle hooks */
