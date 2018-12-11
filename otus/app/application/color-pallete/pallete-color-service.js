@@ -9,13 +9,13 @@
     var self = this;
     const COLOR_PALLETE = [
       "#415ad0",
-      "#7a5e38",
-      "#c9bd5b",
       "#e88023",
-      "#343434",
       "#00796B",
-      "#604a2f",
       "#af9c6d",
+      "#c9bd5b",
+      "#7a5e38",
+      "#343434",
+      "#604a2f",
       "#26338c",
       "#f9eb6a",
       "#9a8a63",
@@ -37,11 +37,7 @@
     }
 
     function getRandomColor() {
-      if (!_verifyExitsColors()) _resetColors();
-      let index = Math.floor(Math.random() * self.COLORS.length);
-      let color = self.COLORS[index];
-      self.COLORS.splice(index, 1);
-      return color;
+      return '#'+Math.floor(Math.random()*16777215).toString(16);
     }
 
     function getColor(search) {
