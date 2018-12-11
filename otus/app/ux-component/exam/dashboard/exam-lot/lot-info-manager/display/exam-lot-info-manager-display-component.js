@@ -153,5 +153,11 @@
         return aliquotsInLot.code == code;
       });
     }
+
+    function _getAliquotLabel(aliquotName){
+      let aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
+      if(aliquotDescriptor)
+        return aliquotDescriptor.label;
+    }
   }
 }());
