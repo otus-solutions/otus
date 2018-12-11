@@ -237,41 +237,41 @@
       //         request.reject(e);
       //       });
       //   });
-      request.resolve(VerticalBarFactory.fromJsonObject(pending, {received: "Recebidos", waiting: "Aguardando"}));
+      request.resolve(VerticalBarFactory.fromJsonObject(pending, { received: "Recebidos", waiting: "Aguardando" }));
 
       return request.promise;
     };
 
 
     var quantitative = [
-    {
-      "title" : "POST_INSULINE",
-      "transported" : 1,
-      "prepared" : 0,
-      "received" : 0
-    },
+      {
+        "title": "POST_INSULINE",
+        "transported": 1,
+        "prepared": 0,
+        "received": 0
+      },
 
-    /* 3 */
-    {
-      "title" : "FASTING_GLYCEMIA",
-      "transported" : 1,
-      "prepared" : 1,
-      "received" : 0
-    },
-    {
-      "title": "BIOCHEMICAL_URINE",
-      "transported" : 1,
-      "prepared" : 0,
-      "received" : 0
-    },
+      /* 3 */
+      {
+        "title": "FASTING_GLYCEMIA",
+        "transported": 1,
+        "prepared": 1,
+        "received": 0
+      },
+      {
+        "title": "BIOCHEMICAL_URINE",
+        "transported": 1,
+        "prepared": 0,
+        "received": 0
+      },
 
-    /* 5 */
-    {
-      "title" : "BIOCHEMICAL_SERUM",
-      "transported" : 4,
-      "prepared" : 1,
-      "received" : 2
-    }];
+      /* 5 */
+      {
+        "title": "BIOCHEMICAL_SERUM",
+        "transported": 4,
+        "prepared": 1,
+        "received": 2
+      }];
 
     function getDataQuantitativeByTypeOfAliquots() {
       var request = $q.defer();
@@ -287,73 +287,25 @@
       //         request.reject(e);
       //       });
       //   });
-      request.resolve(VerticalBarFactory.fromJsonObject(quantitative, {received: "Recebidos", prepared: "Preparados", transported: "Transportados"}));
+      request.resolve(VerticalBarFactory.fromJsonObject(quantitative, { received: "Recebidos", prepared: "Preparados", transported: "Transportados" }));
 
       return request.promise;
     };
 
-    var orphans = [
-      {
-        'title': 'FASTING_HORMONE_LOCAL',
-        'orphans': 10
-      },
-      {
-        'title': 'FASTING_GLYCEMIA_LOCAL',
-        'orphans': 12
-      },
-      {
-        'title': 'BUFFY_COAT_MG',
-        'orphans': 5
-      },
-      {
-        'title': 'POST_INSULINE_CENTRAL',
-        'orphans': 1
-      },
-      {
-        'title': 'POST_INSULINE_LOCAL',
-        'orphans': 2
-      },
-      {
-        'title': 'POST_GLYCEMIA',
-        'orphans': 3
-      },
-      {
-        'title': 'POST_SERUM',
-        'orphans': 4
-      },
-      {
-        'title': 'POST_GLYCEMIA_LOCAL',
-        'orphans': 6
-      },
-      {
-        'title': 'BIOCHEMICAL_URINE',
-        'orphans': 10
-      },
-      {
-        'title': 'URINARY_CALCIUM',
-        'orphans': 16
-      },
-      {
-        'title': 'FASTING_HORMONE',
-        'orphans': 19
-      }
-    ];
-
     function getDataOrphanByExams() {
       var request = $q.defer();
-      // _laboratoryMonitoringStorage
-      //   .whenReady()
-      //   .then(function (remoteStorage) {
-      //     return remoteStorage
-      //       .getDataOrphanByExams()
-      //       .then(function (response) {
-      //         request.resolve(VerticalBarFactory.fromJsonObject(response.data, {orphans: "Orfãos"}));
-      //       })
-      //       .catch(function (e) {
-      //         request.reject(e);
-      //       });
-      //   });
-      request.resolve(VerticalBarFactory.fromJsonObject(orphans, {orphans: "Orfãos"}));
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataOrphanByExams()
+            .then(function (response) {
+              request.resolve(VerticalBarFactory.fromJsonObject(response.data.orphanExamsProgress, { orphans: "Orfãos" }));
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
 
       return request.promise;
     };
@@ -419,7 +371,7 @@
       //         request.reject(e);
       //       });
       //   });
-      request.resolve(VerticalBarFactory.fromJsonObject(storage, {storage: "Armazenamento"}));
+      request.resolve(VerticalBarFactory.fromJsonObject(storage, { storage: "Armazenamento" }));
 
       return request.promise;
     };
@@ -449,7 +401,7 @@
       //         request.reject(e);
       //       });
       //   });
-      request.resolve(VerticalBarFactory.fromJsonObject(results, {results: "Resultados de Exame"}));
+      request.resolve(VerticalBarFactory.fromJsonObject(results, { results: "Resultados de Exame" }));
 
       return request.promise;
     };

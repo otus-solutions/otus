@@ -19,7 +19,7 @@
           layout-padding>
           <div layout="column" layout-margin="" ng-init="$ctrl.openTabPendingResultsByAliquots()">
             <h1 class="md-no-sticky" layout-margin="" layout-padding>Pendências de Resultados</h1>
-            <md-button ng-click="$ctrl.downloadCSVFile(pending)">
+            <md-button ng-click="$ctrl.downloadCSVFile('pending')">
               <md-icon>get_app</md-icon>
               <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
               Gerar CSV
@@ -29,7 +29,7 @@
         </md-tab>
         <md-tab label="Quantidade por tipo de alíquotas" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()" layout="column">
           <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantidade por tipo de alíquotas</h1>
-          <md-button ng-click="$ctrl.downloadCSVFile(quantitative)">
+          <md-button ng-click="$ctrl.downloadCSVFile('quantitative')">
             <md-icon>get_app</md-icon>
             <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
             Gerar CSV
@@ -38,7 +38,7 @@
         </md-tab>
         <md-tab label="Exames órfãos" ng-click="$ctrl.openTabOrphanByExams()">
           <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames órfãos</h1>
-          <md-button ng-click="$ctrl.downloadCSVFile(orphan)">
+          <md-button ng-click="$ctrl.downloadCSVFile('orphan')">
             <md-icon>get_app</md-icon>
             <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
             Gerar CSV
@@ -47,7 +47,7 @@
         </md-tab>
         <md-tab label="Armazenamento" ng-click="$ctrl.openTabStorageByAliquots()">
           <h1 class="md-no-sticky" layout-margin="" layout-padding>Armazenamento</h1>
-          <md-button ng-click="$ctrl.downloadCSVFile(storage)">
+          <md-button ng-click="$ctrl.downloadCSVFile('storage')">
             <md-icon>get_app</md-icon>
             <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
             Gerar CSV
@@ -56,7 +56,7 @@
         </md-tab>
         <md-tab label="Resultados de Exames" ng-click="$ctrl.openTabResultsByExam()">
           <h1 class="md-no-sticky" layout-margin="" layout-padding>Resultados de Exames</h1>
-          <md-button ng-click="$ctrl.downloadCSVFile(results)">
+          <md-button ng-click="$ctrl.downloadCSVFile('results')">
             <md-icon>get_app</md-icon>
             <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
             Gerar CSV

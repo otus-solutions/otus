@@ -9,12 +9,10 @@
     '$q',
     'otusjs.monitoring.business.LaboratoryMonitoringService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.uxComponent.BarChartsVerticalFactory',
-    'otusjs.otus.uxComponent.BarChartsHorizontalFactory',
-    'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory'
+    'otusjs.otus.uxComponent.BarChartsVerticalFactory'
   ];
 
-  function Controller($q, LaboratoryMonitoringService, LoadingScreenService, BarChartsFactory, BarChartsHorizontalFactory, QuantitativeAliquotsChartsFactory) {
+  function Controller($q, LaboratoryMonitoringService, LoadingScreenService, BarChartsFactory) {
     const PENDING = 'pending';
     const QUANTITATIVE = 'quantitative';
     const ORPHAN = 'orphan';
@@ -58,7 +56,7 @@
     }
 
     function openTabResultsByExam() {
-      if (!$('#storage-by-exam svg').length) {
+      if (!$('#results-by-exam svg').length) {
         _loadResultsByExam();
       }
     }
@@ -70,10 +68,8 @@
         var element = '#pending-results-chart';
         BarChartsFactory.create(response, element, colors);
         LoadingScreenService.finish();
-        defer.resolve();
       }).catch(function (e) {
         LoadingScreenService.finish();
-        defer.reject();
       });
     }
 
@@ -85,10 +81,8 @@
           var element = '#quantitative-by-aliquots';
           BarChartsFactory.create(response, element, colors);
           LoadingScreenService.finish();
-          defer.resolve();
         }).catch(function (e) {
           LoadingScreenService.finish();
-          defer.reject();
         });
     };
 
@@ -100,10 +94,8 @@
           var element = '#orphans-by-exam';
           BarChartsFactory.create(response, element, colors);
           LoadingScreenService.finish();
-          defer.resolve();
         }).catch(function (e) {
           LoadingScreenService.finish();
-          defer.reject();
         });
     };
 
@@ -115,10 +107,8 @@
           var element = '#orphans-by-exam';
           BarChartsFactory.create(response, element, colors);
           LoadingScreenService.finish();
-          defer.resolve();
         }).catch(function (e) {
           LoadingScreenService.finish();
-          defer.reject();
         });
     };
 
@@ -130,10 +120,8 @@
           var element = '#orphans-by-exam';
           BarChartsFactory.create(response, element, colors);
           LoadingScreenService.finish();
-          defer.resolve();
         }).catch(function (e) {
           LoadingScreenService.finish();
-          defer.reject();
         });
     };
 

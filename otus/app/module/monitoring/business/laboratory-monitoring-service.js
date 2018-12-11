@@ -7,10 +7,11 @@
 
   Service.$inject = [
     '$q',
+    'otusjs.deploy.LoadingScreenService',
     'otusjs.monitoring.repository.MonitoringCollectionService'
   ];
 
-  function Service($q, MonitoringCollectionService) {
+  function Service($q, LoadingScreenService, MonitoringCollectionService) {
     var self = this;
     /* Public methods */
     self.getDataOfPendingResultsByAliquots = getDataOfPendingResultsByAliquots;
@@ -47,6 +48,7 @@
     function getDataOrphanByExams() {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOrphanByExams().then(function (response) {
+        console.log(response);
         defer.resolve(response);
       }).catch(function () {
         defer.reject()
@@ -75,6 +77,7 @@
     };
 
     function downloadCSVFileOfPendingResultsByAliquots() {
+      var defer = $q.defer();
       LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
       MonitoringCollectionService.getDataToCSVOfPendingResultsByAliquots().then(function (response) {
@@ -97,6 +100,7 @@
     };
 
     function downloadCSVFileOfQuantitativeByTypeOfAliquots() {
+      var defer = $q.defer();
       LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
       MonitoringCollectionService.getDataToCSVOfQuantitativeByTypeOfAliquots().then(function (response) {
@@ -119,6 +123,7 @@
     };
 
     function downloadCSVFileOfOrphansByExam() {
+      var defer = $q.defer();
       LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
       MonitoringCollectionService.getDataToCSVOfOrphansByExam().then(function (response) {
@@ -141,6 +146,7 @@
     };
 
     function downloadCSVFileOfStorageByAliquots() {
+      var defer = $q.defer();
       LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
       MonitoringCollectionService.getDataToCSVOfStorageByAliquots().then(function (response) {
@@ -163,6 +169,7 @@
     };
 
     function downloadCSVFileOfResultsByExam() {
+      var defer = $q.defer();
       LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
       MonitoringCollectionService.getDataToCSVOfResultsByExam().then(function (response) {
