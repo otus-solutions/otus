@@ -16,13 +16,8 @@
   function Controller(Service, $mdToast) {
     var self = this;
     self.saveToCrashReport = saveToCrashReport;
-    self.errorToCrashReport = errorToCrashReport;
 
     const timeShowMsg = 3000;
-
-    function errorToCrashReport() {
-      throw new Error("Opa sete vezes!!!");
-    }
 
     function saveToCrashReport() {
       var errorDataReport = Service.getErrorList();

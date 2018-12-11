@@ -14,6 +14,7 @@
   function Service($window, CrashReportFactory, CrashLocalStorageService) {
     var self = this;
     var LIMIT = 30;
+    var LIMIT_DATA = 500;
     var _browserInfo = {};
 
     self.persistException = persistException;
@@ -33,7 +34,6 @@
       var expirationTime = 1 * 24 * 60 * 60 * 1000;
       var compareDate = CrashLocalStorageService.find();
       var deleteData = CrashLocalStorageService.getCollectionError().maxId;
-      var limitData = 500;
 
       date.setTime(date.getTime() - expirationTime);
 
@@ -47,7 +47,7 @@
           return oneDate;
         });
 
-        if(deleteData == limitData){
+        if(deleteData == LIMIT_DATA){
           CrashLocalStorageService.clear();
         }
       }
