@@ -13,32 +13,13 @@
 
   function Service($window, CrashReportFactory, CrashLocalStorageService) {
     var self = this;
+    var LIMIT = 30;
     var _browserInfo = {};
 
     self.persistException = persistException;
     self.getErrorList = getErrorList;
 
     _buildBrowserInfo();
-
-    function _cleanUp(compareDate) {
-      var date = new Date();
-      var expirationTime = 1 * 1 * 2 * 60 * 1000;
-
-      date.setTime(date.getTime() - expirationTime);
-
-      var dateTime = date.getTime();
-
-      if (compareDate) {
-        compareDate.map(function (oneDate) {
-          if (oneDate.meta.updated < dateTime) {
-            CrashLocalStorageService.remove(oneDate);
-          }else if(oneDate.meta.created < dateTime){
-            CrashLocalStorageService.remove(oneDate);
-          }
-          return oneDate;
-        });
-      }
-    }
 
     function _buildBrowserInfo() {
       _browserInfo.userAgent = navigator.userAgent;
@@ -47,30 +28,46 @@
       _browserInfo.operatingSystemName = getOSName();
     }
 
-    function persistException(exception) {
-      var selectData;
-      var errorIndexedDB = true;
-      var compareData = CrashLocalStorageService.find();
+    function _clean() {
+      var date = new Date();
+      var expirationTime = 1 * 24 * 60 * 60 * 1000;
+      var compareDate = CrashLocalStorageService.find();
+      var deleteData = CrashLocalStorageService.getCollectionError().maxId;
+      var limitData = 500;
 
-      if (compareData) {
-        compareData.map(function (oneException) {
-          if (oneException.cause == exception.stack) {
-            selectData = createIndexedDB(exception);
-            selectData.$loki = oneException.$loki;
-            selectData.meta = oneException.meta;
-            CrashLocalStorageService.update(selectData);
-            errorIndexedDB = false;
+      date.setTime(date.getTime() - expirationTime);
+
+      var dateTime = date.getTime();
+
+      if (compareDate) {
+        compareDate.map(function (oneDate) {
+          if (oneDate.meta.created < dateTime) {
+            CrashLocalStorageService.remove(oneDate);
           }
-          return oneException;
+          return oneDate;
         });
-        if (errorIndexedDB) {
-          // _cleanUp(compareData);
-          CrashLocalStorageService.insert(createIndexedDB(exception));
+
+        if(deleteData == limitData){
+          CrashLocalStorageService.clear();
         }
       }
     }
 
-    function createIndexedDB(exception) {
+    function persistException(exception) {
+      var totalData = CrashLocalStorageService.count();
+
+      if(totalData < LIMIT){
+        CrashLocalStorageService.insert(_createIndexedDB(exception));
+      }else{
+        var deleteLoki = CrashLocalStorageService.getCollectionError().idIndex;
+        CrashLocalStorageService.remove({'$loki':deleteLoki[0]});
+      }
+
+      _clean();
+
+    }
+
+    function _createIndexedDB(exception) {
       var url = $window.location.href;
       var errorData = CrashReportFactory.create(exception, url, _browserInfo.browserName, _browserInfo.browserVersion, _browserInfo.operatingSystemName);
 
@@ -81,7 +78,7 @@
       var dataError = CrashLocalStorageService.getCollectionError();
       var errorList = JSON.stringify(dataError);
 
-      console.log(errorList);
+      _clean();
 
       return errorList;
     }

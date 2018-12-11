@@ -24,19 +24,14 @@
     var _db = null;
 
     self.collectionName = 'otus_bugtracker';
-    self.options = {
-      unique: ['_id'],
-      ttl: 60,
-      ttlInterval: 60
-    };
 
     /* Public methods */
     self.initialize = initialize;
     self.insert = insert;
-    self.update = update;
-    self.clear = clear;
     self.find = find;
+    self.count = count;
     self.remove = remove;
+    self.clear = clear;
     self.getCollectionError = getCollectionError;
 
     /**
@@ -57,33 +52,10 @@
      * @memberof CrashStorageService
      */
     function insert(dataError) {
-      console.log(dataError);
       var insertedData = _collection.insert(dataError);
-      _db.saveDatabase();
 
+      _db.saveDatabase();
       return insertedData;
-    }
-
-    /**
-     * Updates otus_bugtracker in collection.
-     * @param {(object|array)} otus_bugtracker - the error (or array of otus_bugtracker) to be updated
-     * @memberof CrashStorageService
-     */
-    function update(dataError) {
-      _collection.update(dataError);
-      _db.saveDatabase();
-    }
-
-    /**
-     * Clears the collection data.
-     */
-    function clear() {
-      _collection.clear();
-      self.options.unique.forEach(function(uniqueIndex) {
-        _collection.constraints.unique[uniqueIndex].keyMap = {};
-        _collection.constraints.unique[uniqueIndex].lokiMap = {};
-      });
-      _db.saveDatabase();
     }
 
     function find() {
@@ -95,7 +67,19 @@
     }
 
     function remove(filterObject) {
-      return _collection.findAndRemove(filterObject);
+      return _collection.remove(filterObject);
+    }
+
+    function count() {
+      return _collection.count();
+    }
+
+    /**
+     * Clears the collection data.
+     */
+    function clear() {
+      _collection.clear();
+      _db.saveDatabase();
     }
   }
 }());
