@@ -9,10 +9,11 @@
     '$q',
     'otusjs.monitoring.business.LaboratoryMonitoringService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.uxComponent.BarChartsVerticalFactory'
+    'otusjs.otus.uxComponent.BarChartsVerticalFactory',
+    'otusjs.otus.uxComponent.BarChartsHorizontalFactory'
   ];
 
-  function Controller($q, LaboratoryMonitoringService, LoadingScreenService, BarChartsFactory) {
+  function Controller($q, LaboratoryMonitoringService, LoadingScreenService, BarChartsFactory, BarChartsHorizontalFactory) {
     const PENDING = 'pending';
     const QUANTITATIVE = 'quantitative';
     const ORPHAN = 'orphan';
@@ -92,7 +93,7 @@
         .then(function (response) {
           var colors = ['#bae1ff'];
           var element = '#orphans-by-exam';
-          BarChartsFactory.create(response, element, colors);
+          BarChartsHorizontalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
           LoadingScreenService.finish();

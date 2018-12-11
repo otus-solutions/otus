@@ -31,20 +31,21 @@
 
         var keys = Object.keys(dataset[0]);
 
-        var margin = {top: 20, right: 20, bottom: 30, left: 40},
-          width = 960 - margin.left - margin.right,
-          height = (dataset.length * 40) - margin.top - margin.bottom;
+        var margin = {top: 20, right: 50, bottom: 30, left: 40},
+          width = window.innerWidth - 200,
+          height = (dataset.length * 50) - margin.top - margin.bottom;
 
         var y = d3.scaleBand()
           .range([height, 0])
           .padding(0.2);
 
         var x = d3.scaleLinear()
-          .range([0, width]);
+          .range([0, width /1.2]);
 
         var svg = d3.select(element).append("svg")
-          .attr("width", width + margin.left + margin.right)
+          .attr("width", width + margin.right + margin.left)
           .attr("height", height + margin.top + margin.bottom)
+          .style("margin-right", 80)
           .append("g")
           .attr("transform",
             "translate(" + margin.left + "," + margin.top + ")");
