@@ -35,7 +35,7 @@
                 <md-input-container flex>
                   <label>Insira o código da aliquota:</label>
                   <input type="text" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" flex/>
-                  <div ng-messages="formAliquot['fast-trigger'] .$error" role="alert">
+                  <div ng-messages="formAliquot['fast-trigger'].$error" role="alert">
                     <div ng-message="customValidation">{{$ctrl.error}}</div>
                   </div>
                 </md-input-container>

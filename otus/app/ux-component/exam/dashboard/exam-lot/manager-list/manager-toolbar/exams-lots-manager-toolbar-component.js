@@ -38,9 +38,20 @@
 
     function getCsvData() {
       if(!self.selectedLots[0].aliquotList){
+
+        var msgCsvLoading = "Gerando os dados para o csv.";
+
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(msgCsvLoading)
+            .hideDelay(4000)
+        );
+
+        self.loanding = true;
         ExamLotService.getLotAliquots(self.selectedLots[0]._id).then(aliquotList => {
           self.selectedLots[0].aliquotList = aliquotList;
           self.csvData =  self.selectedLots[0].getAliquotsToCsv();
+          self.loanding = false;
         });
       } else {
         self.csvData =  self.selectedLots[0].getAliquotsToCsv();

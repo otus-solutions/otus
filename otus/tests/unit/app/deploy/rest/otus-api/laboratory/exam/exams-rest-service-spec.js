@@ -6,7 +6,7 @@ describe('ExamRestService Suite Test', function () {
   const EXAM_LOTS = [{code: '300000051', objectType: 'ExameLot'}, {code: '300000052', objectType: 'ExameLot'}];
   const ALIQUOTS = [{code: '3530000719', objectType: "Aliquot"}, {code: '3530000720', objectType: "Aliquot"}];
   const ALIQUOT_FILTER = {aliquotCode: '3530000719', fieldCenter: {acronym: 'RS'}, lotType: 'BIOCHEMICAL_SERUM'};
-  const ERROR_MSG_REST = "REST resource is no initialized.";
+  const ERROR_MSG_REST = "REST resource is not initialized.";
   const CENTER_ACRONYM = ALIQUOT_FILTER.fieldCenter.acronym;
 
   var Mock = {};
