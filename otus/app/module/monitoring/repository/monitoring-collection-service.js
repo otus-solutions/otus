@@ -28,6 +28,11 @@
     self.getDataOrphanByExams = getDataOrphanByExams;
     self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
     self.getDataOfResultsByExam = getDataOfResultsByExam;
+    self.getDataToCSVOfPendingResultsByAliquots = getDataToCSVOfPendingResultsByAliquots;
+    self.getDataToCSVOfQuantitativeByTypeOfAliquots = getDataToCSVOfQuantitativeByTypeOfAliquots;
+    self.getDataToCSVOfOrphansByExam = getDataToCSVOfOrphansByExam;
+    self.getDataToCSVOfStorageByAliquots = getDataToCSVOfStorageByAliquots;
+    self.getDataToCSVOfResultsByExam = getDataToCSVOfResultsByExam;
 
     function listAcronyms() {
       var request = $q.defer();
@@ -242,6 +247,96 @@
         .then(function (remoteStorage) {
           return remoteStorage
             .getDataOfResultsByExam()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataToCSVOfPendingResultsByAliquots() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataToCSVOfPendingResultsByAliquots()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataToCSVOfQuantitativeByTypeOfAliquots() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataToCSVOfQuantitativeByTypeOfAliquots()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataToCSVOfOrphansByExam() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataToCSVOfOrphansByExam()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataToCSVOfStorageByAliquots() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataToCSVOfStorageByAliquots()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataToCSVOfResultsByExam() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataToCSVOfResultsByExam()
             .then(function (response) {
               request.resolve(response.data);
             })
