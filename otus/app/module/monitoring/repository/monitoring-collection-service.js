@@ -300,7 +300,7 @@
           return remoteStorage
             .getDataOrphanByExams()
             .then(function (response) {
-              request.resolve(VerticalBarFactory.fromJsonObject(response.data.orphanExamsProgress, { orphans: "Orfãos" }));
+              request.resolve(response.data.orphanExamsProgress);
             })
             .catch(function (e) {
               request.reject(e);
