@@ -54,13 +54,6 @@ describe('otusParticipantHeatmap test', function() {
           return Promise.reject();
         }
       },
-      buildActivityStatusList: function () {
-        if(ctrl.selectedParticipant.recruitmentNumber === 122346){
-          return Promise.resolve([]);
-        } else {
-          return Promise.reject();
-        }
-      },
       buildActivityStatus: function () {
         return [];
       }
@@ -108,6 +101,7 @@ describe('otusParticipantHeatmap test', function() {
     it('should be defined', () => {
         expect(ctrl.$onInit).not.toBeNull();
         expect(ctrl.$onInit).toHaveBeenCalled();
+        expect(ctrl.showActivitySignal).toBeFalsy();
         expect(Injections.EventService.onParticipantSelected).toHaveBeenCalled();
     });
 
@@ -149,7 +143,7 @@ describe('otusParticipantHeatmap test', function() {
     });
 
     it('should set Participant', () => {
-      expect(ctrl.selectedParticipant).toBe(participant)
+      expect(ctrl.selectedParticipant).toBe(participant);
     });
   });
 
@@ -181,36 +175,6 @@ describe('otusParticipantHeatmap test', function() {
     it('should call Injections.ParticipantMonitoringService.defineActivityWithDoesNotApplies', () => {
       Injections.$mdDialog.show().then(function () {
         expect(Injections.ParticipantMonitoringService.defineActivityWithDoesNotApplies).toHaveBeenCalled();
-      });
-    });
-  });
-
-  describe('loadData method', () => {
-    beforeEach(() => {
-      spyOn(ctrl, 'showObservation').and.callThrough();
-      spyOn(Injections.ParticipantMonitoringService, 'buildActivityStatusList').and.callThrough();
-    });
-
-    it('should set activityList', () => {
-      participant.recruitmentNumber = 122346;
-      ctrl.selectParticipant(participant);
-      ctrl.loadData();
-      Injections.ParticipantMonitoringService.buildActivityStatusList().then(function () {
-        expect(ctrl.activityList).toBeDefined();
-        expect(ctrl.loading).toBeDefined();
-        expect(ctrl.error).toBeDefined();
-      });
-    });
-
-    it('should set error', () => {
-      participant.recruitmentNumber = 22346;
-      ctrl.selectParticipant(participant);
-      ctrl.loadData();
-      Injections.ParticipantMonitoringService.buildActivityStatusList().then(function () {}).catch(function () {
-        expect(ctrl.activityList).toBeDefined();
-        expect(ctrl.loading).toBeDefined();
-        expect(ctrl.error).toBeDefined();
-        expect(ctrl.error).toBe(true);
       });
     });
   });

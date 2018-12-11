@@ -63,7 +63,7 @@
         $scope.range = $scope.rangePages[_currentPage];
         $scope.disabledForward = _currentPage == $scope.rangePages.length - 1 ? true : false;
         $scope.disabledPrevious = false;
-        self.onUpdate($scope.pages[_currentPage]);
+        self.onUpdate($scope.pages[_currentPage], _getStartPage() , _getFinalPage());
       }
     }
 
@@ -73,7 +73,7 @@
         $scope.range = $scope.rangePages[_currentPage];
         $scope.disabledForward = false;
         $scope.disabledPrevious = _currentPage == 0 ? true : false;
-        self.onUpdate($scope.pages[_currentPage]);
+        self.onUpdate($scope.pages[_currentPage], _getStartPage() , _getFinalPage());
       }
     }
 
@@ -105,7 +105,19 @@
         limit = parseInt(limit) + parseInt($scope.pageSize);
         index++;
       }
-      self.onUpdate($scope.pages[_currentPage]);
+      self.onUpdate($scope.pages[_currentPage], _getStartPage() , _getFinalPage());
+    }
+
+
+    function _getStartPage() {
+      let pages = $scope.range.split(" - ");
+      var startPage = Number(pages[0]);
+      return startPage - 1;
+    }
+    function _getFinalPage() {
+      let pages = $scope.range.split(" - ");
+      var endPage = Number(pages[1]);
+      return endPage - 1;
     }
 
   }

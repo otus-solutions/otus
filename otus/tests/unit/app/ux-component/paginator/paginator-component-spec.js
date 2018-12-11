@@ -39,7 +39,7 @@ describe('Paginator Component', function() {
       expect(Mock.scope.pages.length).toEqual(3);
       expect(Mock.scope.range).toEqual(RANGES[0]);
       expect(controller.onUpdate).toHaveBeenCalledTimes(1);
-      expect(controller.onUpdate).toHaveBeenCalledWith(Mock.scope.pages[0]);
+      expect(controller.onUpdate).toHaveBeenCalledWith(Mock.scope.pages[0], 0, 9);
     });
   });
 
@@ -58,7 +58,7 @@ describe('Paginator Component', function() {
       expect(Mock.scope.disabledPrevious).toEqual(false);
       expect(Mock.scope.range).toEqual(RANGES[1]);
       expect(controller.onUpdate).toHaveBeenCalledTimes(2);
-      expect(controller.onUpdate).toHaveBeenCalledWith(Mock.scope.pages[1]);
+      expect(controller.onUpdate).toHaveBeenCalledWith(Mock.scope.pages[1], 10, 19);
     });
 
     it('should go forward to page 3', function() {
@@ -68,7 +68,7 @@ describe('Paginator Component', function() {
       expect(Mock.scope.disabledPrevious).toEqual(false);
       expect(Mock.scope.range).toEqual(RANGES[2]);
       expect(controller.onUpdate).toHaveBeenCalledTimes(3);
-      expect(controller.onUpdate).toHaveBeenCalledWith(Mock.scope.pages[2]);
+      expect(controller.onUpdate).toHaveBeenCalledWith(Mock.scope.pages[2], 20, 29);
     });
   });
 
@@ -98,7 +98,7 @@ describe('Paginator Component', function() {
       expect(Mock.scope.disabledPrevious).toEqual(false);
       expect(Mock.scope.range).toEqual(RANGES[1]);
       expect(controller.onUpdate).toHaveBeenCalledTimes(4);
-      expect(controller.onUpdate).toHaveBeenCalledWith(Mock.scope.pages[1]);
+      expect(controller.onUpdate).toHaveBeenCalledWith(Mock.scope.pages[1], 10, 19);
     });
 
     it('should go previous to page 1', function() {
@@ -108,7 +108,7 @@ describe('Paginator Component', function() {
       expect(Mock.scope.disabledPrevious).toEqual(true);
       expect(Mock.scope.range).toEqual(RANGES[0]);
       expect(controller.onUpdate).toHaveBeenCalledTimes(3);
-      expect(controller.onUpdate).toHaveBeenCalledWith(Mock.scope.pages[0]);
+      expect(controller.onUpdate).toHaveBeenCalledWith(Mock.scope.pages[0], 0 , 9);
     });
   });
 
