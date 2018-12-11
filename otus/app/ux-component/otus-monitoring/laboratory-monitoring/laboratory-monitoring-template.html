@@ -54,14 +54,14 @@
           </md-button>
           <div id="storage-by-exam" flex></div>
         </md-tab>
-        <md-tab label="Resultados de Exames" ng-click="$ctrl.openTabResultsByExam()">
+        <md-tab label="Resultados de Exames" ng-click="$ctrl.openTabByExam()">
           <h1 class="md-no-sticky" layout-margin="" layout-padding>Resultados de Exames</h1>
           <md-button ng-click="$ctrl.downloadCSVFile('results')">
             <md-icon>get_app</md-icon>
             <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
             Gerar CSV
           </md-button>
-          <div id="results-by-exam" flex></div>
+          <div id="by-exam" flex></div>
         </md-tab>
       </md-tabs>
     </md-content>

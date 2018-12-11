@@ -19,12 +19,12 @@
     self.getDataQuantitativeByTypeOfAliquots = getDataQuantitativeByTypeOfAliquots;
     self.getDataOrphanByExams = getDataOrphanByExams;
     self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
-    self.getDataOfResultsByExam = getDataOfResultsByExam;
+    self.getDataByExam = getDataByExam;
     self.getDataToCSVOfPendingResultsByAliquots = getDataToCSVOfPendingResultsByAliquots;
     self.getDataToCSVOfQuantitativeByTypeOfAliquots = getDataToCSVOfQuantitativeByTypeOfAliquots;
     self.getDataToCSVOfOrphansByExam = getDataToCSVOfOrphansByExam;
     self.getDataToCSVOfStorageByAliquots = getDataToCSVOfStorageByAliquots;
-    self.getDataToCSVOfResultsByExam = getDataToCSVOfResultsByExam;
+    self.getDataToCSVByExam = getDataToCSVByExam;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusLaboratoryMonitoringResource();
@@ -58,11 +58,11 @@
       return _rest.getDataOfStorageByAliquots().$promise;
     }
 
-    function getDataOfResultsByExam() {
+    function getDataByExam() {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.getDataOfResultsByExam().$promise;
+      return _rest.getDataByExam().$promise;
     }
 
     function getDataToCSVOfPendingResultsByAliquots() {
@@ -93,11 +93,11 @@
       return _rest.getDataToCSVOfStorageByAliquots().$promise;
     }
 
-    function getDataToCSVOfResultsByExam() {
+    function getDataToCSVByExam() {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.getDataToCSVOfResultsByExam().$promise;
+      return _rest.getDataToCSVByExam().$promise;
     }
   }
 }());

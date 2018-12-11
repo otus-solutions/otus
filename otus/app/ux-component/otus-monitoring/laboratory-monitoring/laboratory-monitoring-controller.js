@@ -26,7 +26,7 @@
     self.openTabQuantitativeByTypeOfAliquots = openTabQuantitativeByTypeOfAliquots;
     self.openTabOrphanByExams = openTabOrphanByExams;
     self.openTabStorageByAliquots = openTabStorageByAliquots;
-    self.openTabResultsByExam = openTabResultsByExam;
+    self.openTabByExam = openTabByExam;
     self.downloadCSVFile = downloadCSVFile;
     /* Lifecycle methods */
     function onInit() { };
@@ -55,8 +55,8 @@
       }
     }
 
-    function openTabResultsByExam() {
-      if (!$('#results-by-exam svg').length) {
+    function openTabByExam() {
+      if (!$('#by-exam svg').length) {
         _loadResultsByExam();
       }
     }
@@ -114,7 +114,7 @@
 
     function _loadResultsByExam() {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataOfResultsByExam()
+      LaboratoryMonitoringService.getDataByExam()
         .then(function (response) {
           var colors = ['#bae1ff'];
           var element = '#orphans-by-exam';
@@ -136,7 +136,7 @@
         case STORAGE:
           LaboratoryMonitoringService.downloadCSVFileOfStorageByAliquots();
         case RESULTS:
-          LaboratoryMonitoringService.downloadCSVFileOfResultsByExam();
+          LaboratoryMonitoringService.downloadCSVFileByExam();
       }
     };
   };

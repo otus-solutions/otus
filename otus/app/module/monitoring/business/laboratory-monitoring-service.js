@@ -18,12 +18,12 @@
     self.getDataQuantitativeByTypeOfAliquots = getDataQuantitativeByTypeOfAliquots;
     self.getDataOrphanByExams = getDataOrphanByExams;
     self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
-    self.getDataOfResultsByExam = getDataOfResultsByExam;
+    self.getDataByExam = getDataByExam;
     self.downloadCSVFileOfPendingResultsByAliquots = downloadCSVFileOfPendingResultsByAliquots;
     self.downloadCSVFileOfQuantitativeByTypeOfAliquots = downloadCSVFileOfQuantitativeByTypeOfAliquots;
     self.downloadCSVFileOfOrphansByExam = downloadCSVFileOfOrphansByExam;
     self.downloadCSVFileOfStorageByAliquots = downloadCSVFileOfStorageByAliquots;
-    self.downloadCSVFileOfResultsByExam = downloadCSVFileOfResultsByExam;
+    self.downloadCSVFileByExam = downloadCSVFileByExam;
 
     function getDataOfPendingResultsByAliquots() {
       var defer = $q.defer();
@@ -66,9 +66,9 @@
       return defer.promise;
     };
 
-    function getDataOfResultsByExam() {
+    function getDataByExam() {
       var defer = $q.defer();
-      MonitoringCollectionService.getDataOfResultsByExam().then(function (response) {
+      MonitoringCollectionService.getDataByExam().then(function (response) {
         defer.resolve(response);
       }).catch(function () {
         defer.reject()
@@ -168,11 +168,11 @@
       return defer.promise;
     };
 
-    function downloadCSVFileOfResultsByExam() {
+    function downloadCSVFileByExam() {
       var defer = $q.defer();
       LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
-      MonitoringCollectionService.getDataToCSVOfResultsByExam().then(function (response) {
+      MonitoringCollectionService.getDataToCSVByExam().then(function (response) {
         _buildCSVFile(response).then(function (result) {
           if (result) {
             var name = "monitoramento-laboratorial-resultados-exame".concat(new Date().toLocaleDateString());
