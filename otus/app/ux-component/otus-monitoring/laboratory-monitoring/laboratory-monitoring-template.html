@@ -15,53 +15,60 @@
   <md-content layout flex>
     <md-content layout="column" layout-padding flex>
       <md-tabs md-border-bottom flex layout-fill>
-        <md-tab label="Pendências de Resultados" id="pendingButton" ng-click="$ctrl.openTabPendingResultsByAliquots()"
-          layout-padding>
-          <div layout="column" layout-margin="" ng-init="$ctrl.openTabPendingResultsByAliquots()">
+        <md-tab label="Pendências de Resultados" id="pendingButton" ng-click="$ctrl.openTabPendingResultsByAliquots()" layout-padding>
+          <div layout="row" layout-margin="" layout-align="center center" ng-init="$ctrl.openTabPendingResultsByAliquots()">
             <h1 class="md-no-sticky" layout-margin="" layout-padding>Pendências de Resultados</h1>
-            <md-button ng-click="$ctrl.downloadCSVFile('pending')">
+            <span flex></span>
+            <md-button ng-click="$ctrl.downloadCSVFile('pending')" class="md-icon-button md-raised">
               <md-icon>get_app</md-icon>
               <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-              Gerar CSV
             </md-button>
-            <div id="pending-results-chart" flex></div>
           </div>
+          <div id="pending-results-chart" flex></div>
         </md-tab>
         <md-tab label="Quantidade por tipo de alíquotas" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()" layout="column">
-          <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantidade por tipo de alíquotas</h1>
-          <md-button ng-click="$ctrl.downloadCSVFile('quantitative')">
-            <md-icon>get_app</md-icon>
-            <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-            Gerar CSV
-          </md-button>
+          <div layout="row" layout-margin="" layout-align="center center">
+            <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantidade por tipo de alíquotas</h1>
+            <span flex></span>
+            <md-button ng-click="$ctrl.downloadCSVFile('quantitative')" class="md-icon-button md-raised">
+              <md-icon>get_app</md-icon>
+              <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+            </md-button>
+          </div>
           <div id="quantitative-by-aliquots" layout-margin="" flex></div>
         </md-tab>
         <md-tab label="Exames órfãos" ng-click="$ctrl.openTabOrphanByExams()">
-          <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames órfãos</h1>
-          <md-button ng-click="$ctrl.downloadCSVFile('orphan')">
-            <md-icon>get_app</md-icon>
-            <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-            Gerar CSV
-          </md-button>
+          <div layout="row" layout-margin="" layout-align="center center">
+            <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames órfãos</h1>
+            <span flex></span>
+            <md-button ng-click="$ctrl.downloadCSVFile('orphan')" class="md-icon-button md-raised">
+              <md-icon>get_app</md-icon>
+              <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+            </md-button>
+          </div>
           <div id="orphans-by-exam" flex></div>
         </md-tab>
         <md-tab label="Armazenamento" ng-click="$ctrl.openTabStorageByAliquots()">
-          <h1 class="md-no-sticky" layout-margin="" layout-padding>Armazenamento</h1>
-          <md-button ng-click="$ctrl.downloadCSVFile('storage')">
-            <md-icon>get_app</md-icon>
-            <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-            Gerar CSV
-          </md-button>
+          <div layout="row" layout-margin="" layout-align="center center">
+            <h1 class="md-no-sticky" layout-margin="" layout-padding>Armazenamento</h1>
+            <span flex></span>
+            <md-button ng-click="$ctrl.downloadCSVFile('storage')" class="md-icon-button md-raised">
+              <md-icon>get_app</md-icon>
+              <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+            </md-button>
+          </div>
           <div id="storage-by-exam" flex></div>
         </md-tab>
-        <md-tab label="Resultados de Exames" ng-click="$ctrl.openTabByExam()">
-          <h1 class="md-no-sticky" layout-margin="" layout-padding>Resultados de Exames</h1>
-          <md-button ng-click="$ctrl.downloadCSVFile('results')">
-            <md-icon>get_app</md-icon>
-            <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-            Gerar CSV
-          </md-button>
-          <div id="by-exam" flex></div>
+        <md-tab label="Resultados de Exames" ng-click="$ctrl.openTabResultsByExam()">
+          <div layout="row" layout-margin="" layout-align="center center">
+            <h1 class="md-no-sticky" layout-margin="" layout-padding>Resultados de Exames</h1>
+            <span flex></span>
+            <md-button ng-click="$ctrl.downloadCSVFile('results')" class="md-icon-button md-raised">
+              <md-icon>get_app</md-icon>
+              <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+            </md-button>
+          </div>
+          <div id="results-by-exam" flex></div>
         </md-tab>
       </md-tabs>
     </md-content>

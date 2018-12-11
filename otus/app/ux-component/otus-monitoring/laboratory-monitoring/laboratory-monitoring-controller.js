@@ -30,7 +30,7 @@
     self.openTabByExam = openTabByExam;
     self.downloadCSVFile = downloadCSVFile;
     /* Lifecycle methods */
-    function onInit() { };
+    function onInit() {};
 
     function openTabPendingResultsByAliquots() {
       if (!$('#pending-results-chart svg').length) {
@@ -105,7 +105,7 @@
       LaboratoryMonitoringService.getDataOfStorageByAliquots()
         .then(function (response) {
           var colors = ['#bae1ff'];
-          var element = '#orphans-by-exam';
+          var element = '#storage-by-exam';
           BarChartsFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
@@ -118,7 +118,7 @@
       LaboratoryMonitoringService.getDataByExam()
         .then(function (response) {
           var colors = ['#bae1ff'];
-          var element = '#orphans-by-exam';
+          var element = '#result-by-exam';
           BarChartsFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {

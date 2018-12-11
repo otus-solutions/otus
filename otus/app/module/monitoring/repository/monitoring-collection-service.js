@@ -175,7 +175,7 @@
           return remoteStorage
             .getDataOfPendingResultsByAliquots()
             .then(function (response) {
-              request.resolve(VerticalBarFactory.fromJsonObject(response.data, { received: "Recebidos", waiting: "Aguardando" }));
+              request.resolve(VerticalBarFactory.fromJsonObject(response.data.pendingResultsByAliquot, { received: "Recebidos", waiting: "Aguardando" }));
             })
             .catch(function (e) {
               request.reject(e);
@@ -193,7 +193,7 @@
           return remoteStorage
             .getDataQuantitativeByTypeOfAliquots()
             .then(function (response) {
-              request.resolve(VerticalBarFactory.fromJsonObject(response.data, { received: "Recebidos", prepared: "Preparados", transported: "Transportados" }));
+              request.resolve(VerticalBarFactory.fromJsonObject(response.data.quantitativeByTypeOfAliquots, { received: "Recebidos", prepared: "Preparados", transported: "Transportados" }));
             })
             .catch(function (e) {
               request.reject(e);

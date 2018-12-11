@@ -18,7 +18,7 @@
       LEFT: 60
     };
     var groups = [];
-    var colors = [];
+    var COLORS = [];
     var keys;
 
 
@@ -27,24 +27,29 @@
     self.create = create;
     self.build = build;
 
-    function create(data, element) {
+    function create(data, element, labels, colors) {
       if(Array.isArray(data) && data.length){
         keys = Object.keys(data[0]);
         for (var i = 0; i < keys.length; i++) {
-          if (keys[i] !== 'chart_title' && keys[i] !== 'unit') {
+          if (keys[i] !== 'title' && keys[i] !== 'unit') {
             groups.push(keys[i]);
           }
         }
         groups.forEach(function (d, i) {
-          colors.push(PalleteColorService.getColor(i));
+          if (Array.isArray(colors)){
+            if (colors.length) COLORS.push(colors[i]);
+            else COLORS.push(PalleteColorService.getColor(i));
+          } else {
+            COLORS.push(PalleteColorService.getColor(i));
+          }
         })
         for (i = 0; i < data.length; i++) {
-          self.build(data[i], element);
+          self.build(data[i], element, labels);
         }
       }
     }
 
-    function build(data, element) {
+    function build(data, element, labels) {
 
       var width = WIDTH - MARGIN.LEFT - MARGIN.RIGHT;
       var height = WIDTH - MARGIN.TOP - MARGIN.BOTTOM;
@@ -69,9 +74,8 @@
       var yAxis = d3.axisLeft(y);
 
       var value_data = groups.map(function(d) {
-        console.log(d)
         return {
-          x_axis: d,
+          x_axis: labels[d],
           y_axis: data[d]
         };
       });
@@ -94,12 +98,12 @@
         .attr('dy', '-5px')
         .attr('text-anchor', 'RIGHT')
         .style('fill', "#000")
-        .style('font-weight', 'bold');
 
       var title = svg.append('text')
-        .attr('x', 5)
+        .attr('x', -5)
         .attr('y', -25)
         .attr('class', 'chart-title')
+        .style("font-size", "0.7em")
         .text(data[keys[0]]);
 
       svg.append('g')
@@ -121,7 +125,7 @@
         .data(value_data)
         .enter().append('rect')
         .style('fill', function(d, i) {
-          return colors[i];
+          return COLORS[i];
         })
         .attr('x', function(d) {
           return x(d.x_axis);
@@ -134,7 +138,7 @@
           return height - y(d.y_axis);
         })
         .on('mouseover', function(d, i, j) {
-          detailBox.attr('x', x(d.x_axis) - 8)
+          detailBox.attr('x', x(d.x_axis)*1.5)
             .attr('y', y(d.y_axis))
             .text(Y_DATA_FORMAT(d.y_axis))
             .style('visibility', 'visible');
