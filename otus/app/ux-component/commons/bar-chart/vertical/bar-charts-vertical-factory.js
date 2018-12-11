@@ -17,6 +17,7 @@
     self.create = create;
 
     function _constructor(data, keys){
+      labels = [];
       for (var j = 0; j < data.length; j++) {
         labels.push(data[j][0][keys[0]])
         for (let i = 0; i < data[j].length; i++) {
@@ -47,18 +48,17 @@
           });
         }
 
-        var margin = {top: 20, right: 160, bottom: 100, left: 30};
-        var width = window.innerWidth - 100,
+        var margin = {top: 20, right: 160, bottom: 80, left: 50};
+        var width = dataset[0].length * 100,
           height = window.innerHeight - 400;
 
         var svg = d3.select(element)
           .append("svg")
-          .attr("width", width)
-          .attr("height", height + margin.top + margin.bottom)
-          .attr("padding", 200)
-          .attr("margin", 100)
+          .attr("width", width+200)
+          .attr("height", height + 150)
+          .attr("margin", 300)
           .append("g")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+          .attr("transform", "translate(" + margin.left + "," + (margin.top+20) + ")");
 
         var x = d3.scaleBand()
           .domain(dataset[0].map(function (d) {
@@ -93,7 +93,7 @@
 
         svg.append("g")
           .attr("class", "x axis")
-          .style("font-size", "0.6em")
+          .style("font-size", "0.7em")
           .attr("transform", "translate(0," + height + ")")
           .call(xAxis).selectAll("text").attr("transform", "translate(-40,35) rotate(-30)").attr("width", "50")
 
@@ -113,7 +113,7 @@
             .enter()
             .append("text")
             .attr("x", function (d) {
-              return x(d[keys[1]]) + Math.round(width / 40);
+              return x(d[keys[1]]) + Math.round(width / dataset[0].length - 80);
             })
             .attr("y", function (d) {
               return y(parseInt(d[keys[2]])) - 10;
@@ -159,8 +159,11 @@
           .data(dataset)
           .enter().append("g")
           .attr("class", "legend")
+          .attr("height", 500)
+          .style("padding", "50")
+
           .attr("transform", function (d, i) {
-            return "translate(" + i * 150 + ", 0)";
+            return "translate(" + i * 150 + ", -20)";
           });
 
         legend.append("rect")

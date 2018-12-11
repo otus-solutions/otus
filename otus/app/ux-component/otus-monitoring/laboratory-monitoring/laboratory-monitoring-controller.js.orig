@@ -9,17 +9,19 @@
     '$q',
     'otusjs.monitoring.business.LaboratoryMonitoringService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.uxComponent.BarChartsVerticalFactory',
-    'otusjs.otus.uxComponent.BarChartsHorizontalFactory',
-    'otusjs.otus.uxComponent.QuantitativeAliquotsChartsFactory'
+    'otusjs.otus.uxComponent.BarChartsVerticalFactory'
   ];
 
+<<<<<<< HEAD
   function Controller($q, LaboratoryMonitoringService, LoadingScreenService, BarChartsFactory, BarChartsHorizontalFactory, QuantitativeAliquotsChartsFactory) {
     const PENDING = 'pending';
     const QUANTITATIVE = 'quantitative';
     const ORPHAN = 'orphan';
     const STORAGE = 'storage';
     const RESULTS = 'results';
+=======
+  function Controller($q, LaboratoryMonitoringService, LoadingScreenService, BarChartsFactory) {
+>>>>>>> e49a978d09f07111da508e3ab9183a3f5db56e05
     var self = this;
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -35,7 +37,15 @@
 
     function openTabPendingResultsByAliquots() {
       if (!$('#pending-results-chart svg').length) {
+        LoadingScreenService.start();
+<<<<<<< HEAD
+        var colors = ['#88d8b0', '#ff6f69'];
+        var element = '#pending-results-chart';
+        BarChartsFactory.create(_loadDataPendingResultsByAliquots(), element, colors);
+=======
         _loadDataPendingResultsByAliquots();
+
+>>>>>>> e49a978d09f07111da508e3ab9183a3f5db56e05
       }
     };
 
@@ -47,94 +57,138 @@
 
     function openTabOrphanByExams() {
       if (!$('#orphans-by-exam svg').length) {
+<<<<<<< HEAD
+        var colors = ['#bae1ff'];
+        var element = '#orphans-by-exam';
+        BarChartsFactory.create(_loadDataOrphansByExam(), element, colors);
+=======
         _loadDataOrphansByExam();
+>>>>>>> e49a978d09f07111da508e3ab9183a3f5db56e05
       }
     }
 
     function openTabStorageByAliquots() {
       if (!$('#storage-by-exam svg').length) {
-        _loadStorageByAliquots();
+        var colors = ['#bae1ff'];
+        var element = '#orphans-by-exam';
+        BarChartsFactory.create(_loadStorageByAliquots(), element, colors);
       }
     }
 
     function openTabResultsByExam() {
+<<<<<<< HEAD
       if (!$('#storage-by-exam svg').length) {
+        var colors = ['#bae1ff'];
+        var element = '#orphans-by-exam';
+        BarChartsFactory.create(_loadResultsByExam(), element, colors);
+=======
+      if (!$('#results-by-exam svg').length) {
         _loadResultsByExam();
+>>>>>>> e49a978d09f07111da508e3ab9183a3f5db56e05
       }
     }
 
     function _loadDataPendingResultsByAliquots() {
-      LoadingScreenService.start();
+<<<<<<< HEAD
       LaboratoryMonitoringService.getDataOfPendingResultsByAliquots().then(function (response) {
-        var colors = ['#88d8b0', '#ff6f69'];
-        var element = '#pending-results-chart';
-        BarChartsFactory.create(response, element, colors);
         LoadingScreenService.finish();
         defer.resolve();
+        return response;
       }).catch(function (e) {
         LoadingScreenService.finish();
         defer.reject();
+        return [];
       });
+=======
+      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots()
+        .then(function (response) {
+      LoadingScreenService.finish();
+          var colors = ['#c7453b', "#529c40"];
+          var element = '#pending-results-chart';
+          BarChartsFactory.create(response, element, colors);
+        }).catch(function (e) {
+          LoadingScreenService.finish();
+        });
+
+
+>>>>>>> e49a978d09f07111da508e3ab9183a3f5db56e05
     }
 
     function _loadDataQuantitativeByTypeOfAliquots() {
-      LoadingScreenService.start();
       LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots()
         .then(function (response) {
           var colors = ['#b33040', '#d25c4d', '#f2b447'];
           var element = '#quantitative-by-aliquots';
           BarChartsFactory.create(response, element, colors);
           LoadingScreenService.finish();
-          defer.resolve();
         }).catch(function (e) {
           LoadingScreenService.finish();
-          defer.reject();
         });
+<<<<<<< HEAD
+=======
+
+>>>>>>> e49a978d09f07111da508e3ab9183a3f5db56e05
     };
 
     function _loadDataOrphansByExam() {
-      LoadingScreenService.start();
       LaboratoryMonitoringService.getDataOrphanByExams()
         .then(function (response) {
-          var colors = ['#bae1ff'];
-          var element = '#orphans-by-exam';
-          BarChartsFactory.create(response, element, colors);
           LoadingScreenService.finish();
-          defer.resolve();
+          BarChartsFactory.create(response, "#orphans-by-exam");
         }).catch(function (e) {
           LoadingScreenService.finish();
-          defer.reject();
         });
+<<<<<<< HEAD
+=======
+
+>>>>>>> e49a978d09f07111da508e3ab9183a3f5db56e05
     };
 
     function _loadStorageByAliquots() {
-      LoadingScreenService.start();
       LaboratoryMonitoringService.getDataOfStorageByAliquots()
         .then(function (response) {
-          var colors = ['#bae1ff'];
-          var element = '#orphans-by-exam';
-          BarChartsFactory.create(response, element, colors);
           LoadingScreenService.finish();
-          defer.resolve();
+          BarChartsFactory.create(response,'#storage-by-exam');
         }).catch(function (e) {
-          LoadingScreenService.finish();
-          defer.reject();
+        LoadingScreenService.finish();
         });
+<<<<<<< HEAD
+=======
+
+>>>>>>> e49a978d09f07111da508e3ab9183a3f5db56e05
     };
 
     function _loadResultsByExam() {
-      LoadingScreenService.start();
       LaboratoryMonitoringService.getDataOfResultsByExam()
         .then(function (response) {
-          var colors = ['#bae1ff'];
-          var element = '#orphans-by-exam';
-          BarChartsFactory.create(response, element, colors);
           LoadingScreenService.finish();
-          defer.resolve();
+          BarChartsFactory.create(response,'#results-by-exam');
         }).catch(function (e) {
           LoadingScreenService.finish();
-          defer.reject();
         });
+<<<<<<< HEAD
+=======
+
+
+    }
+
+    function downloadCSVFileOfPendingResults() {
+      LaboratoryMonitoringService.donwloadCSVFileOfPendingResults();
+      LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
+      LoadingScreenService.start();
+      _build().then(function (response) {
+        if (response) {
+          var name = "monitoramento-laboratorial-resultados-pendentes-".concat(new Date().toLocaleDateString());
+          alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM LAB_MONITORING');
+          alasql("DROP TABLE IF EXISTS LAB_MONITORING");
+          LoadingScreenService.finish();
+        }
+      }).catch(function (e) {
+        throw new Error(e);
+      }).finally(function () {
+        LoadingScreenService.finish();
+      });
+>>>>>>> e49a978d09f07111da508e3ab9183a3f5db56e05
     };
 
     function downloadCSVFile(current) {
