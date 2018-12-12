@@ -28,14 +28,6 @@
     self.getColor = getColor;
     self.listColors = listColors;
 
-    function _verifyExitsColors() {
-      return self.COLORS.length ? true : false;
-    }
-
-    function _resetColors() {
-        self.COLORS = angular.copy(COLOR_PALLETE);
-    }
-
     function getRandomColor() {
       return '#'+Math.floor(Math.random()*16777215).toString(16);
     }
@@ -46,10 +38,10 @@
         if(search.length){
           index = COLOR_PALLETE.indexOf(search) > -1 ? COLOR_PALLETE.indexOf(search) : 0;
         }
-      } else if(typeof search === "number"){
+      } else if(typeof search === "number" && search < self.COLORS.length && search){
         index = search;
       }
-      if (!_verifyExitsColors()) _resetColors();
+
       let color = self.COLORS[index];
       return color;
     }

@@ -6,7 +6,7 @@ module.exports = function (config) {
   var DEPENDENCIES_ROOT_PATH = 'app/shared/';
   var NODE_MODULES_ROOT_PATH = 'node_modules/';
   var DIST = 'dist/';
-
+  'use strict';
   config.set({
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
@@ -20,7 +20,9 @@ module.exports = function (config) {
       /* External dependencies */
       NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
       NODE_MODULES_ROOT_PATH + 'alasql/dist/alasql.min.js',
+      NODE_MODULES_ROOT_PATH + 'd3/dist/d3.min.js',
       NODE_MODULES_ROOT_PATH + 'babel-polyfill/dist/polyfill.js',
+      NODE_MODULES_ROOT_PATH + 'karma-babel-preprocessor/node_modules/babel-core/browser-polyfill.js',
       NODE_MODULES_ROOT_PATH + 'angular-resource/angular-resource.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
@@ -63,8 +65,8 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './app/**/*.js': ['browserify', 'coverage'],
-      './tests/unit/**/*-spec.js': ['browserify', 'coverage']
+      './app/**/*.js': ['babel','coverage'],
+      './tests/unit/**/*-spec.js': 'babel'
     },
 
     browserify: {
