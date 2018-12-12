@@ -14,11 +14,13 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
+    self.getAliquot = getAliquot;
     self.getAliquotConfiguration = getAliquotConfiguration;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
     self.getAvailableExams = getAvailableExams;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
+    self.getLotAliquots = getLotAliquots;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -27,8 +29,16 @@
     self.createSendExam = createSendExam;
     self.deleteSendedExams = deleteSendedExams;
 
+    function getLotAliquots(id) {
+      return ProjectCollectionService.getLotAliquots(id);
+    }
+
     function getAliquots() {
       return ProjectCollectionService.getAliquots();
+    }
+
+    function getAliquot(aliquotFilter) {
+      return ProjectCollectionService.getAliquot(aliquotFilter);
     }
 
     function getAliquotConfiguration() {
@@ -48,8 +58,8 @@
     }
 
     /* exam lot */
-    function getLots() {
-      return ProjectCollectionService.getLots();
+    function getLots(centerAcronym) {
+      return ProjectCollectionService.getLots(centerAcronym);
     }
 
     function createLot(lotStructure) {

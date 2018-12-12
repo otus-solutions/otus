@@ -21,6 +21,7 @@
 
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
+    self.getLotAliquots = getLotAliquots;
     self.getAliquotConfiguration = getAliquotConfiguration;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getLots = getLots;
@@ -30,9 +31,24 @@
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
     self.getDescriptors = getDescriptors;
     self.getAvailableExams = getAvailableExams;
+    self.getAliquot = getAliquot;
 
     var messageLoading =
       'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
+
+    function getLotAliquots(id) {
+      var deferred = $q.defer();
+
+      ProjectRepositoryService.getLotAliquots(id)
+        .then(function (response) {
+          deferred.resolve(JSON.parse(response));
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
 
     function getContainerLabelToAliquot(aliquot) {
       return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" :
@@ -97,12 +113,12 @@
       return deferred.promise;
     }
 
-    function getLots() {
+    function getLots(centerAcronym) {
       var deferred = $q.defer();
 
       LaboratoryConfigurationService.fetchAliquotsDescriptors()
         .then(function () {
-          ProjectRepositoryService.getLots()
+          ProjectRepositoryService.getLots(centerAcronym)
             .then(function (response) {
               var lots = JSON.parse(response).map(function (lotJson) {
                 return ExamService.buildAliquotLotFromJson(
@@ -124,6 +140,7 @@
       LoadingScreenService.start();
       var deferred = $q.defer();
 
+      delete lotStructure._id;
       ProjectRepositoryService.createLot(lotStructure)
         .then(function (response) {
           deferred.resolve(JSON.parse(response));
@@ -185,15 +202,31 @@
       return deferred.promise;
     }
 
-    function getAvailableExams(center){
+    function getAvailableExams(center) {
       var deferred = $q.defer();
 
       ProjectRepositoryService.getAvailableExams(center)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
           LoadingScreenService.finish();
         })
-        .catch(function(err) {
+        .catch(function (err) {
+          deferred.reject(err);
+          LoadingScreenService.finish();
+        });
+
+      return deferred.promise;
+    }
+
+    function getAliquot(aliquotFilter) {
+      var deferred = $q.defer();
+      LoadingScreenService.start();
+      ProjectRepositoryService.getAliquot(aliquotFilter)
+        .then(function (response) {
+          deferred.resolve(JSON.parse(response));
+          LoadingScreenService.finish();
+        })
+        .catch(function (err) {
           deferred.reject(err);
           LoadingScreenService.finish();
         });
