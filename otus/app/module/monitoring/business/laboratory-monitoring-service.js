@@ -20,14 +20,10 @@
     self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
     self.getDataByExam = getDataByExam;
     self.downloadCSVFileOfPendingResultsByAliquots = downloadCSVFileOfPendingResultsByAliquots;
-    self.downloadCSVFileOfQuantitativeByTypeOfAliquots = downloadCSVFileOfQuantitativeByTypeOfAliquots;
-    self.downloadCSVFileOfOrphansByExam = downloadCSVFileOfOrphansByExam;
-    self.downloadCSVFileOfStorageByAliquots = downloadCSVFileOfStorageByAliquots;
-    self.downloadCSVFileByExam = downloadCSVFileByExam;
 
-    function getDataOfPendingResultsByAliquots() {
+    function getDataOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
-      MonitoringCollectionService.getDataOfPendingResultsByAliquots().then(function (response) {
+      MonitoringCollectionService.getDataOfPendingResultsByAliquots(center).then(function (response) {
         defer.resolve(response);
       }).catch(function () {
         defer.reject()
@@ -35,9 +31,9 @@
       return defer.promise;
     };
 
-    function getDataQuantitativeByTypeOfAliquots() {
+    function getDataQuantitativeByTypeOfAliquots(center) {
       var defer = $q.defer();
-      MonitoringCollectionService.getDataQuantitativeByTypeOfAliquots().then(function (response) {
+      MonitoringCollectionService.getDataQuantitativeByTypeOfAliquots(center).then(function (response) {
         defer.resolve(response);
       }).catch(function () {
         defer.reject()
@@ -48,7 +44,6 @@
     function getDataOrphanByExams() {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOrphanByExams().then(function (response) {
-        console.log(response);
         defer.resolve(response);
       }).catch(function () {
         defer.reject()
@@ -56,9 +51,9 @@
       return defer.promise;
     };
 
-    function getDataOfStorageByAliquots() {
+    function getDataOfStorageByAliquots(center) {
       var defer = $q.defer();
-      MonitoringCollectionService.getDataOfStorageByAliquots().then(function (response) {
+      MonitoringCollectionService.getDataOfStorageByAliquots(center).then(function (response) {
         defer.resolve(response);
       }).catch(function () {
         defer.reject()
@@ -66,9 +61,9 @@
       return defer.promise;
     };
 
-    function getDataByExam() {
+    function getDataByExam(center) {
       var defer = $q.defer();
-      MonitoringCollectionService.getDataByExam().then(function (response) {
+      MonitoringCollectionService.getDataByExam(center).then(function (response) {
         defer.resolve(response);
       }).catch(function () {
         defer.reject()
@@ -76,106 +71,14 @@
       return defer.promise;
     };
 
-    function downloadCSVFileOfPendingResultsByAliquots() {
+    function downloadCSVFileOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
       LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
-      MonitoringCollectionService.getDataToCSVOfPendingResultsByAliquots().then(function (response) {
+      MonitoringCollectionService.getDataToCSVOfPendingResultsByAliquots(center).then(function (response) {
         _buildCSVFile(response).then(function (result) {
           if (result) {
             var name = "monitoramento-laboratorial-resultados-pendentes-".concat(new Date().toLocaleDateString());
-            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM LAB_MONITORING');
-            alasql("DROP TABLE IF EXISTS LAB_MONITORING");
-            LoadingScreenService.finish();
-          }
-        }).catch(function (e) {
-          throw new Error(e);
-        }).finally(function () {
-          LoadingScreenService.finish();
-        });
-      }).catch(function () {
-        defer.reject()
-      });
-      return defer.promise;
-    };
-
-    function downloadCSVFileOfQuantitativeByTypeOfAliquots() {
-      var defer = $q.defer();
-      LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
-      LoadingScreenService.start();
-      MonitoringCollectionService.getDataToCSVOfQuantitativeByTypeOfAliquots().then(function (response) {
-        _buildCSVFile(response).then(function (result) {
-          if (result) {
-            var name = "monitoramento-laboratorial-quantitativo-".concat(new Date().toLocaleDateString());
-            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM LAB_MONITORING');
-            alasql("DROP TABLE IF EXISTS LAB_MONITORING");
-            LoadingScreenService.finish();
-          }
-        }).catch(function (e) {
-          throw new Error(e);
-        }).finally(function () {
-          LoadingScreenService.finish();
-        });
-      }).catch(function () {
-        defer.reject()
-      });
-      return defer.promise;
-    };
-
-    function downloadCSVFileOfOrphansByExam() {
-      var defer = $q.defer();
-      LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
-      LoadingScreenService.start();
-      MonitoringCollectionService.getDataToCSVOfOrphansByExam().then(function (response) {
-        _buildCSVFile(response).then(function (result) {
-          if (result) {
-            var name = "monitoramento-laboratorial-exames-orfaos-".concat(new Date().toLocaleDateString());
-            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM LAB_MONITORING');
-            alasql("DROP TABLE IF EXISTS LAB_MONITORING");
-            LoadingScreenService.finish();
-          }
-        }).catch(function (e) {
-          throw new Error(e);
-        }).finally(function () {
-          LoadingScreenService.finish();
-        });
-      }).catch(function () {
-        defer.reject()
-      });
-      return defer.promise;
-    };
-
-    function downloadCSVFileOfStorageByAliquots() {
-      var defer = $q.defer();
-      LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
-      LoadingScreenService.start();
-      MonitoringCollectionService.getDataToCSVOfStorageByAliquots().then(function (response) {
-        _buildCSVFile(response).then(function (result) {
-          if (result) {
-            var name = "monitoramento-laboratorial-armazenamento-".concat(new Date().toLocaleDateString());
-            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM LAB_MONITORING');
-            alasql("DROP TABLE IF EXISTS LAB_MONITORING");
-            LoadingScreenService.finish();
-          }
-        }).catch(function (e) {
-          throw new Error(e);
-        }).finally(function () {
-          LoadingScreenService.finish();
-        });
-      }).catch(function () {
-        defer.reject()
-      });
-      return defer.promise;
-    };
-
-    function downloadCSVFileByExam() {
-      var defer = $q.defer();
-      LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
-      LoadingScreenService.start();
-      MonitoringCollectionService.getDataToCSVByExam().then(function (response) {
-        _buildCSVFile(response).then(function (result) {
-          if (result) {
-            var name = "monitoramento-laboratorial-resultados-exame".concat(new Date().toLocaleDateString());
             alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM LAB_MONITORING');
             alasql("DROP TABLE IF EXISTS LAB_MONITORING");
             LoadingScreenService.finish();

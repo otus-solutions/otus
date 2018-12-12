@@ -21,83 +21,52 @@
     self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
     self.getDataByExam = getDataByExam;
     self.getDataToCSVOfPendingResultsByAliquots = getDataToCSVOfPendingResultsByAliquots;
-    self.getDataToCSVOfQuantitativeByTypeOfAliquots = getDataToCSVOfQuantitativeByTypeOfAliquots;
-    self.getDataToCSVOfOrphansByExam = getDataToCSVOfOrphansByExam;
-    self.getDataToCSVOfStorageByAliquots = getDataToCSVOfStorageByAliquots;
-    self.getDataToCSVByExam = getDataToCSVByExam;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusLaboratoryMonitoringResource();
-    }
+    };
 
-    function getDataOfPendingResultsByAliquots() {
+    function getDataOfPendingResultsByAliquots(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getDataOfPendingResultsByAliquots().$promise;
-    }
+      };
+      return _rest.getDataOfPendingResultsByAliquots(center).$promise;
+    };
 
-    function getDataQuantitativeByTypeOfAliquots() {
+    function getDataQuantitativeByTypeOfAliquots(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getDataQuantitativeByTypeOfAliquots().$promise;
-    }
+      };
+      return _rest.getDataQuantitativeByTypeOfAliquots(center).$promise;
+    };
 
     function getDataOrphanByExams() {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
-      }
+      };
       return _rest.getDataOrphanByExams().$promise;
-    }
+    };
 
-    function getDataOfStorageByAliquots() {
+    function getDataOfStorageByAliquots(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getDataOfStorageByAliquots().$promise;
-    }
+      };
+      return _rest.getDataOfStorageByAliquots(center).$promise;
+    };
 
-    function getDataByExam() {
+    function getDataByExam(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getDataByExam().$promise;
-    }
+      };
+      return _rest.getDataByExam(center).$promise;
+    };
 
-    function getDataToCSVOfPendingResultsByAliquots() {
+    function getDataToCSVOfPendingResultsByAliquots(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getDataToCSVOfPendingResultsByAliquots().$promise;
-    }
+      };
+      return _rest.getDataToCSVOfPendingResultsByAliquots(center).$promise;
+    };
 
-    function getDataToCSVOfQuantitativeByTypeOfAliquots() {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getDataToCSVOfQuantitativeByTypeOfAliquots().$promise;
-    }
-
-    function getDataToCSVOfOrphansByExam() {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getDataToCSVOfOrphansByExam().$promise;
-    }
-
-    function getDataToCSVOfStorageByAliquots() {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getDataToCSVOfStorageByAliquots().$promise;
-    }
-
-    function getDataToCSVByExam() {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-      return _rest.getDataToCSVByExam().$promise;
-    }
   }
 }());

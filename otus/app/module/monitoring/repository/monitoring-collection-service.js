@@ -30,10 +30,6 @@
     self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
     self.getDataByExam = getDataByExam;
     self.getDataToCSVOfPendingResultsByAliquots = getDataToCSVOfPendingResultsByAliquots;
-    self.getDataToCSVOfQuantitativeByTypeOfAliquots = getDataToCSVOfQuantitativeByTypeOfAliquots;
-    self.getDataToCSVOfOrphansByExam = getDataToCSVOfOrphansByExam;
-    self.getDataToCSVOfStorageByAliquots = getDataToCSVOfStorageByAliquots;
-    self.getDataToCSVByExam = getDataToCSVByExam;
 
     function listAcronyms() {
       var request = $q.defer();
@@ -167,13 +163,13 @@
       return request.promise;
     };
 
-    function getDataOfPendingResultsByAliquots() {
+    function getDataOfPendingResultsByAliquots(center) {
       var request = $q.defer();
       _laboratoryMonitoringStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getDataOfPendingResultsByAliquots()
+            .getDataOfPendingResultsByAliquots(center)
             .then(function (response) {
               request.resolve(VerticalBarFactory.fromJsonObject(response.data.pendingResultsByAliquot, { received: "Recebidos", waiting: "Aguardando" }));
             })
@@ -185,13 +181,13 @@
       return request.promise;
     };
 
-    function getDataQuantitativeByTypeOfAliquots() {
+    function getDataQuantitativeByTypeOfAliquots(center) {
       var request = $q.defer();
       _laboratoryMonitoringStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getDataQuantitativeByTypeOfAliquots()
+            .getDataQuantitativeByTypeOfAliquots(center)
             .then(function (response) {
               request.resolve(VerticalBarFactory.fromJsonObject(response.data.quantitativeByTypeOfAliquots, { received: "Recebidos", prepared: "Preparados", transported: "Transportados" }));
             })
@@ -221,13 +217,13 @@
       return request.promise;
     };
 
-    function getDataOfStorageByAliquots() {
+    function getDataOfStorageByAliquots(center) {
       var request = $q.defer();
       _laboratoryMonitoringStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getDataOfStorageByAliquots()
+            .getDataOfStorageByAliquots(center)
             .then(function (response) {
               request.resolve(VerticalBarFactory.fromJsonObject(response.data, { storage: "Armazenamento" }));
             })
@@ -239,13 +235,13 @@
       return request.promise;
     };
 
-    function getDataByExam() {
+    function getDataByExam(center) {
       var request = $q.defer();
       _laboratoryMonitoringStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getDataByExam()
+            .getDataByExam(center)
             .then(function (response) {
               request.resolve(VerticalBarFactory.fromJsonObject(response.data, { results: "Resultados de Exame" }));
             })
@@ -257,85 +253,13 @@
       return request.promise;
     };
 
-    function getDataToCSVOfPendingResultsByAliquots() {
+    function getDataToCSVOfPendingResultsByAliquots(center) {
       var request = $q.defer();
       _laboratoryMonitoringStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getDataToCSVOfPendingResultsByAliquots()
-            .then(function (response) {
-              request.resolve(response.data);
-            })
-            .catch(function (e) {
-              request.reject(e);
-            });
-        });
-
-      return request.promise;
-    };
-
-    function getDataToCSVOfQuantitativeByTypeOfAliquots() {
-      var request = $q.defer();
-      _laboratoryMonitoringStorage
-        .whenReady()
-        .then(function (remoteStorage) {
-          return remoteStorage
-            .getDataToCSVOfQuantitativeByTypeOfAliquots()
-            .then(function (response) {
-              request.resolve(response.data);
-            })
-            .catch(function (e) {
-              request.reject(e);
-            });
-        });
-
-      return request.promise;
-    };
-
-    function getDataToCSVOfOrphansByExam() {
-      var request = $q.defer();
-      _laboratoryMonitoringStorage
-        .whenReady()
-        .then(function (remoteStorage) {
-          return remoteStorage
-            .getDataToCSVOfOrphansByExam()
-            .then(function (response) {
-              request.resolve(response.data);
-            })
-            .catch(function (e) {
-              request.reject(e);
-            });
-        });
-
-      return request.promise;
-    };
-
-    function getDataToCSVOfStorageByAliquots() {
-      var request = $q.defer();
-      _laboratoryMonitoringStorage
-        .whenReady()
-        .then(function (remoteStorage) {
-          return remoteStorage
-            .getDataToCSVOfStorageByAliquots()
-            .then(function (response) {
-              request.resolve(response.data);
-            })
-            .catch(function (e) {
-              request.reject(e);
-            });
-        });
-
-      return request.promise;
-    };
-
-    function getDataToCSVByExam() {
-      var request = $q.defer();
-      _laboratoryMonitoringStorage
-        .whenReady()
-        .then(function (remoteStorage) {
-          return remoteStorage
-            .getDataToCSVByExam()
+            .getDataToCSVOfPendingResultsByAliquots(center)
             .then(function (response) {
               request.resolve(response.data);
             })
