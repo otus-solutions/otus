@@ -58,10 +58,6 @@
       var Y_DATA_FORMAT = d3.format('');
       var Y_AXIS_LABEL = data.unit;
 
-      if (data.unit === 'percentage') {
-        Y_DATA_FORMAT = d3.format('.1%');
-      };
-
       var x = d3.scaleBand()
         .rangeRound([0, width])
         .padding(0.3);
@@ -107,12 +103,12 @@
         .text(data[keys[0]]);
 
       svg.append('g')
-        .attr('class', 'x axis')
+        .attr('class', 'x_axis')
         .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis);
 
       svg.append('g')
-        .attr('class', 'y axis')
+        .attr('class', 'y_axis')
         .call(yAxis)
         .append('text')
         .attr('transform', 'rotate(180)')
