@@ -6,20 +6,24 @@
     .controller('otusLaboratoryMonitoringDashboardCtrl', Controller);
 
   Controller.$inject = [
-    '$q',
-    'otusjs.monitoring.business.LaboratoryMonitoringService',
+    '$filter',
     'otusjs.deploy.LoadingScreenService',
+    'otusjs.deploy.FieldCenterRestService',
+    'otusjs.monitoring.business.LaboratoryMonitoringService',
     'otusjs.otus.uxComponent.BarChartsVerticalFactory',
     'otusjs.otus.uxComponent.BarChartsHorizontalFactory'
   ];
 
-  function Controller($q, LaboratoryMonitoringService, LoadingScreenService, BarChartsFactory, BarChartsHorizontalFactory) {
+  function Controller($filter, LoadingScreenService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
     const PENDING = 'pending';
     const QUANTITATIVE = 'quantitative';
     const ORPHAN = 'orphan';
     const STORAGE = 'storage';
     const RESULTS = 'results';
+
     var self = this;
+    self.centers = [];
+
     /* Lifecycle hooks */
     self.$onInit = onInit;
     /* Public methods */
@@ -28,9 +32,17 @@
     self.openTabOrphanByExams = openTabOrphanByExams;
     self.openTabStorageByAliquots = openTabStorageByAliquots;
     self.openTabByExam = openTabByExam;
-    self.downloadCSVFile = downloadCSVFile;
+    self.downloadCSVFileOfPendingResultsByAliquots = downloadCSVFileOfPendingResultsByAliquots;
+    self.onFilter = onFilter;
     /* Lifecycle methods */
-    function onInit() {};
+    function onInit() {
+      FieldCenterRestService.loadCenters().then(function (result) {
+        self.centers = $filter('orderBy')(self.centers);
+        result.forEach(function (fieldCenter) {
+          self.centers.push(fieldCenter.acronym)
+        });
+      });
+    };
 
     function openTabPendingResultsByAliquots() {
       if (!$('#pending-results-chart svg').length) {
@@ -48,39 +60,64 @@
       if (!$('#orphans-by-exam svg').length) {
         _loadDataOrphansByExam();
       }
-    }
+    };
 
     function openTabStorageByAliquots() {
       if (!$('#storage-by-exam svg').length) {
         _loadStorageByAliquots();
       }
-    }
+    };
 
     function openTabByExam() {
       if (!$('#by-exam svg').length) {
         _loadResultsByExam();
       }
-    }
+    };
+
+    function downloadCSVFileOfPendingResultsByAliquots() {
+      LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots(center);
+    };
+
+    function onFilter() {
+      _loadDataByCenter();
+      if (self.lotsListImutable.length) {
+        self.lotsList = self.lotsListImutable
+          .filter(function (lot) {
+            return _filterByCenter(lot);
+          })
+          .filter(function (FilteredByCenter) {
+            return _filterByPeriod(FilteredByCenter);
+          })
+          .filter(function (filteredByPeriod) {
+            return _filterByExam(filteredByPeriod)
+          });
+      };
+    };
+
+    function _loadDataByCenter() {
+
+    };
 
     function _loadDataPendingResultsByAliquots() {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots().then(function (response) {
-        var colors = ['#88d8b0', '#ff6f69'];
-        var element = '#pending-results-chart';
-        BarChartsFactory.create(response, element, colors);
-        LoadingScreenService.finish();
-      }).catch(function (e) {
-        LoadingScreenService.finish();
-      });
-    }
+      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center)
+        .then(function (response) {
+          var colors = ['#88d8b0', '#ff6f69'];
+          var element = '#pending-results-chart';
+          BarChartsVerticalFactory.create(response, element, colors);
+          LoadingScreenService.finish();
+        }).catch(function (e) {
+          LoadingScreenService.finish();
+        });
+    };
 
     function _loadDataQuantitativeByTypeOfAliquots() {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots()
+      LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots(center)
         .then(function (response) {
           var colors = ['#b33040', '#d25c4d', '#f2b447'];
           var element = '#quantitative-by-aliquots';
-          BarChartsFactory.create(response, element, colors);
+          BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
           LoadingScreenService.finish();
@@ -102,11 +139,11 @@
 
     function _loadStorageByAliquots() {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataOfStorageByAliquots()
+      LaboratoryMonitoringService.getDataOfStorageByAliquots(center)
         .then(function (response) {
           var colors = ['#bae1ff'];
           var element = '#storage-by-exam';
-          BarChartsFactory.create(response, element, colors);
+          BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
           LoadingScreenService.finish();
@@ -115,30 +152,15 @@
 
     function _loadResultsByExam() {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataByExam()
+      LaboratoryMonitoringService.getDataByExam(center)
         .then(function (response) {
           var colors = ['#bae1ff'];
           var element = '#result-by-exam';
-          BarChartsFactory.create(response, element, colors);
+          BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
           LoadingScreenService.finish();
         });
-    };
-
-    function downloadCSVFile(current) {
-      switch (current) {
-        case PENDING:
-          LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots();
-        case QUANTITATIVE:
-          LaboratoryMonitoringService.downloadCSVFileOfQuantitativeByTypeOfAliquots();
-        case ORPHAN:
-          LaboratoryMonitoringService.downloadCSVFileOfOrphansByExam();
-        case STORAGE:
-          LaboratoryMonitoringService.downloadCSVFileOfStorageByAliquots();
-        case RESULTS:
-          LaboratoryMonitoringService.downloadCSVFileByExam();
-      }
     };
   };
 }());
