@@ -6,13 +6,16 @@
     .service('otusjs.user.access.service.LogoutService', Service);
 
   Service.$inject = [
-    '$mdDialog'
+    '$mdDialog',
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.user.access.service.LogoutServiceService'
   ];
 
-  function Service($mdDialog) {
+  function Service($mdDialog, DialogService, ApplicationStateService, LogoutService) {
     var self = this;
+    var _confirmLogout;
 
-    /* Public methods */
     self.logout = logout;
 
     function logout() {
@@ -20,38 +23,33 @@
     }
 
     function _showModal() {
-      $mdDialog.show({
-        controller: DialogController,
-        templateUrl: 'app/ux-component/user-logout/logout-dialog.html',
-        clickOutsideToClose: true
-      });
+      _confirmLogout = {
+        dialogToTitle:'Sair',
+        textDialog:'Você tem certeza que deseja sair do sistema?',
+        ariaLabel:'Sair',
+        buttons: [
+           {
+            message:'Ok',
+            action:function() {
+              LogoutService
+                .logout()
+                .then(function() {
+                  $mdDialog.hide();
+                  ApplicationStateService.activateLogin();
+                });
+            },
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Cancelar',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-no-focus'
+          },
+        ]
+      };
+
+      DialogService.showDialog(_confirmLogout);
     }
-  }
-
-  DialogController.$inject = [
-    '$scope',
-    '$mdDialog',
-    'otusjs.application.state.ApplicationStateService',
-    'otusjs.user.access.service.LogoutServiceService'
-  ]
-
-  function DialogController($scope, $mdDialog, ApplicationStateService, LogoutService) {
-    $scope.hide = function() {
-      $mdDialog.hide();
-    };
-
-    $scope.cancel = function() {
-      $mdDialog.cancel();
-    };
-
-    $scope.answer = function() {
-      LogoutService
-        .logout()
-        .then(function() {
-          $mdDialog.hide();
-          ApplicationStateService.activateLogin();
-        });
-    };
   }
 
   // --------------------------------------------------------------------------

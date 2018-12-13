@@ -7,6 +7,14 @@ describe('login-controller Test', function () {
   beforeEach(function () {
     angular.mock.module('otusjs.otus.uxComponent');
 
+    Mock.DialogShowService = {
+      showDialog: function (dialog) {
+        var self = this;
+        self.test = dialog;
+        return Promise.resolve(self);
+      }
+    };
+
     Mock.VerifyBrowserService = {
       verify: function () {
         return true;
@@ -28,6 +36,7 @@ describe('login-controller Test', function () {
       $provide.value('otusjs.application.state.ApplicationStateService', {});
       $provide.value('otusjs.user.access.service.UserAccessRecoveryService', Mock.UserAccessRecoveryService);
       $provide.value('otusjs.application.verifyBrowser.VerifyBrowserService', Mock.VerifyBrowserService);
+      $provide.value('otusjs.application.dialog.DialogShowService', Mock.DialogShowService);
       $provide.value('$scope', {});
     });
 
@@ -39,11 +48,17 @@ describe('login-controller Test', function () {
         LoginService: _$injector_.get('otusjs.user.access.service.LoginService'),
         ApplicationStateService: _$injector_.get('otusjs.application.state.ApplicationStateService'),
         UserAccessRecoveryService: _$injector_.get('otusjs.user.access.service.UserAccessRecoveryService'),
-        VerifyBrowserService: _$injector_.get('otusjs.application.verifyBrowser.VerifyBrowserService')
+        VerifyBrowserService: _$injector_.get('otusjs.application.verifyBrowser.VerifyBrowserService'),
+        DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService')
       };
 
       ctrl = _$controller_('otusjs.otus.uxComponent.LoginController', Injections);
     });
+  });
+
+
+  it('ctrlExistence check', function () {
+    expect(ctrl).toBeDefined();
   });
 
   describe('onInit method', function () {
@@ -55,6 +70,7 @@ describe('login-controller Test', function () {
     });
 
     it('should onInit be defined', function () {
+      expect(ctrl.$onInit).toBeDefined();
       expect(ctrl.$onInit).toHaveBeenCalled();
       expect(ctrl.$onInit).not.toBeNull();
     });
@@ -74,6 +90,10 @@ describe('login-controller Test', function () {
       ctrl.sendRecovery(input);
     });
 
+    it('sendRecoveryMethodExistence check', function () {
+      expect(ctrl.sendRecovery).toBeDefined();
+    });
+
     it('should method sendPasswordReset to have been called', function () {
       var data = {};
       data.redirectUrl = window.location.href + '/access-recovery';
@@ -82,13 +102,24 @@ describe('login-controller Test', function () {
     });
   });
 
+  describe('authenticate method', function () {
+
+    it('goToRecoveryMethodExistence check', function () {
+      expect(ctrl.authenticate).toBeDefined();
+    });
+  });
+
   describe('goToRecovery method', function () {
     beforeEach(function () {
       ctrl.goToRecovery();
     });
 
+    it('goToRecoveryMethodExistence check', function () {
+      expect(ctrl.goToRecovery).toBeDefined();
+    });
+
     it('should var recovery to be true', function () {
-      expect(ctrl.recovery).toBe(true);
+      expect(ctrl.recovery).toBeTruthy();
     });
   });
 
@@ -97,8 +128,19 @@ describe('login-controller Test', function () {
       ctrl.goBack();
     });
 
+    it('goToRecoveryMethodExistence check', function () {
+      expect(ctrl.goBack).toBeDefined();
+    });
+
     it('should var recovery to be false', function () {
-      expect(ctrl.recovery).toBe(false);
+      expect(ctrl.recovery).toBeFalsy();
+    });
+  });
+
+  describe('resetValidation method', function () {
+
+    it('should var recovery to be false', function () {
+      expect(ctrl.resetValidation).toBeDefined();
     });
   });
 });

@@ -11,11 +11,14 @@
     '$mdDialog',
     'otusjs.user.access.service.UserAccessRecoveryService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($stateParams, $scope, $mdDialog, UserAccessRecoveryService, LoadingScreenService, ApplicationStateService) {
+  function Controller($stateParams, $scope, $mdDialog, UserAccessRecoveryService, LoadingScreenService, ApplicationStateService, DialogService) {
     var self = this;
+    var successMessage;
+    var errorMessage;
     self.token;
 
     /* Public methods */
@@ -66,25 +69,47 @@
     }
 
     function _successMessage() {
-      $mdDialog.show($mdDialog.alert()
-        .title('Recuperação de acesso')
-        .textContent('Sucesso! Sua senha foi atualizada')
-        .ariaLabel('Sucesso! Sua senha foi atualizada')
-        .ok('Ok')
-      ).then(function () {
+
+      successMessage = {
+        dialogToTitle:'Nova senha',
+        titleToText:'Recuperação de acesso',
+        textDialog:'Sucesso! Sua senha foi atualizada.',
+        ariaLabel:'Sucesso! Sua senha foi atualizada.',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          }
+        ]
+      };
+
+      DialogService.showDialog(successMessage).then(function () {
         goBack();
       });
+
     }
 
     function _errorMessage() {
-      $mdDialog.show($mdDialog.alert()
-        .title('Recuperação de acesso')
-        .textContent('Não foi possível processar a sua solicitação. Tente novamente mais tarde')
-        .ariaLabel('Não foi possível processar a sua solicitação. Tente novamente mais tarde')
-        .ok('Ok')
-      ).then(function () {
+
+      errorMessage = {
+        dialogToTitle:'Nova senha',
+        titleToText:'Recuperação de acesso',
+        textDialog:'Não foi possível processar a sua solicitação. Tente novamente mais tarde.',
+        ariaLabel:'Não foi possível processar a sua solicitação. Tente novamente mais tarde.',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          }
+        ]
+      };
+
+      DialogService.showDialog(errorMessage).then(function () {
         goBack();
       });
+
     }
   }
 }());

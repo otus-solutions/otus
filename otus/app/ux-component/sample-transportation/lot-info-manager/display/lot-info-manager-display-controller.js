@@ -12,7 +12,8 @@
       'otusjs.laboratory.business.project.transportation.AliquotTransportationMessagesService',
       'otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory',
       'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
-      'otusjs.deploy.LoadingScreenService'
+      'otusjs.deploy.LoadingScreenService',
+      'otusjs.application.dialog.DialogShowService'
     ];
 
     function Controller(
@@ -22,7 +23,8 @@
       AliquotTransportationMessagesService,
       AliquotTransportationQueryFactory,
       DynamicTableSettingsFactory,
-      LoadingScreenService) {
+      LoadingScreenService,
+      DialogService) {
       var self = this;
 
       var messageLoading =
@@ -150,12 +152,24 @@
       }
 
       function _buildDialogs() {
-        _confirmAliquotsInsertionByPeriod = $mdDialog.confirm()
-          .title('Confirmar inclusão de Alíquotas:')
-          .textContent('Serão incluídas no lote as Alíquotas realizadas no perído selecionado.')
-          .ariaLabel('Confirmar inclusão de Alíquotas por Período')
-          .ok('Confirmar')
-          .cancel('Cancelar');
+        _confirmAliquotsInsertionByPeriod = {
+          dialogToTitle:'Inclusão',
+          titleToText:'Confirmar inclusão de Alíquotas:',
+          textDialog:'Serão incluídas no lote as Alíquotas realizadas no perído selecionado.',
+          ariaLabel:'Confirmar inclusão de Alíquotas por Período',
+          buttons: [
+            {
+              message:'Confirmar',
+              action:function(){$mdDialog.hide()},
+              class:'md-raised md-primary'
+            },
+            {
+              message:'Cancelar',
+              action:function(){$mdDialog.cancel()},
+              class:'md-raised md-no-focus'
+            }
+          ]
+        };
       }
 
       function _dynamicDataTableUpdate() {
@@ -191,10 +205,10 @@
           self.finalDate = new Date(self.finalDate.toISOString());
 
           if (self.initialDate <= self.finalDate) {
-            _confirmAliquotsInsertionByPeriod.textContent('Serão incluídas no lote as Alíquotas disponíveis realizadas no período' +
-              ' entre ' + $filter('date')(self.initialDate, 'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate, 'dd/MM/yyyy') + '.');
+            _confirmAliquotsInsertionByPeriod.textDialog ='Serão incluídas no lote as Alíquotas disponíveis realizadas no período' +
+              ' entre ' + $filter('date')(self.initialDate, 'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate, 'dd/MM/yyyy') + '.';
 
-            $mdDialog.show(_confirmAliquotsInsertionByPeriod).then(function() {
+            DialogService.showDialog(_confirmAliquotsInsertionByPeriod).then(function() {
               LoadingScreenService.changeMessage(messageLoading);
               LoadingScreenService.start();
               _findAliquotByPeriod()

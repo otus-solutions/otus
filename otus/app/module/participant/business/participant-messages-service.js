@@ -7,10 +7,11 @@
 
   Service.$inject = [
     '$mdDialog',
-    '$mdToast'
+    '$mdToast',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Service($mdDialog, $mdToast) {
+  function Service($mdDialog, $mdToast, DialogShowService) {
     var self = this;
 
     const DELAY = 3000;
@@ -21,21 +22,52 @@
     self.showToast = showToast;
 
     function showClearDialog() {
-      return $mdDialog.show($mdDialog.confirm()
-        .title('Descartar Alterações?')
-        .textContent('Todos os campos disponíveis serão apagados! Deseja realmente realizar este procedimento?')
-        .ariaLabel('Confirmação de cancelamento')
-        .ok('Continuar')
-        .cancel('Cancelar'));
+
+      var _clearDialog = {
+            dialogToTitle:'Exclusão',
+            titleToText:'Descartar Alterações?',
+            textDialog:'Todos os campos disponíveis serão apagados! Deseja realmente realizar este procedimento?',
+            ariaLabel:'Confirmação de cancelamento',
+            buttons: [
+          {
+            message:'Continuar',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Cancelar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogShowService.showDialog(_clearDialog);
     }
 
     function showSaveDialog() {
-      return $mdDialog.show($mdDialog.confirm()
-        .title('Confirmar novo Participante')
-        .textContent('Deseja salvar as alterações?')
-        .ariaLabel('Confirmação de finalização')
-        .ok('Ok')
-        .cancel('Voltar'));
+
+      var _saveDialog = {
+        dialogToTitle:'Salvar',
+        titleToText:'Confirmar novo Participante',
+        textDialog:'Deseja salvar as alterações?',
+        ariaLabel:'Confirmação de finalização',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Voltar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogShowService.showDialog(_saveDialog);
+
     }
 
     function showRecruitmentNumberGenerated(participantData) {
@@ -56,12 +88,28 @@
           msg = 'Número de recrutamento ' + rn[0] + ' já existente.'
         }
       }
-      return $mdDialog.show($mdDialog.confirm()
-        .title('Não foi possível salvar')
-        .textContent(msg)
-        .ariaLabel('Confirmação de finalização')
-        .ok('Ok')
-        .cancel('Voltar'));
+
+      var _notDialog = {
+        dialogToTitle:'Participante',
+        titleToText:'Não foi possível salvar',
+        textDialog:msg,
+        ariaLabel:'Confirmação de finalização',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Voltar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogShowService.showDialog(_notDialog);
+
     }
 
     function showToast(msg) {
