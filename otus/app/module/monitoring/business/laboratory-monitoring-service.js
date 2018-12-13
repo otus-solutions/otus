@@ -20,6 +20,7 @@
     self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
     self.getDataByExam = getDataByExam;
     self.downloadCSVFileOfPendingResultsByAliquots = downloadCSVFileOfPendingResultsByAliquots;
+    self.downloadCSVFileOfOrphansByExam = downloadCSVFileOfOrphansByExam;
 
     function getDataOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
@@ -28,6 +29,7 @@
       }).catch(function () {
         defer.reject()
       });
+
       return defer.promise;
     };
 
@@ -38,6 +40,7 @@
       }).catch(function () {
         defer.reject()
       });
+
       return defer.promise;
     };
 
@@ -48,6 +51,7 @@
       }).catch(function () {
         defer.reject()
       });
+
       return defer.promise;
     };
 
@@ -58,6 +62,7 @@
       }).catch(function () {
         defer.reject()
       });
+
       return defer.promise;
     };
 
@@ -68,6 +73,7 @@
       }).catch(function () {
         defer.reject()
       });
+
       return defer.promise;
     };
 
@@ -76,39 +82,34 @@
       LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
       MonitoringCollectionService.getDataToCSVOfPendingResultsByAliquots(center).then(function (response) {
-        _buildCSVFile(response).then(function (result) {
-          if (result) {
-            var name = "monitoramento-laboratorial-resultados-pendentes-".concat(new Date().toLocaleDateString());
-            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM LAB_MONITORING');
-            alasql("DROP TABLE IF EXISTS LAB_MONITORING");
-            LoadingScreenService.finish();
-          }
-        }).catch(function (e) {
-          throw new Error(e);
-        }).finally(function () {
-          LoadingScreenService.finish();
-        });
+        const style = {
+          headers: true,
+          column: { style: { Font: { Bold: "1" } } }
+        };
+        var name = "monitoramento-laboratorial-resultados-pendentes-".concat(new Date().toLocaleDateString());
+        alasql('SELECT [aliquot] AS [Alíquotas], [transported] AS [Transportados], [prepared] AS [Preparadas] INTO CSV("' + name + '.csv") FROM ?', [style, response]);
       }).catch(function () {
         defer.reject()
+      }).finally(function () {
+        LoadingScreenService.finish();
       });
-      return defer.promise;
     };
 
-    function _buildCSVFile(data) {
-      return $q(function (resolve, reject) {
-        alasql("CREATE TABLE IF NOT EXISTS LAB_MONITORING(CODIGO INT, CENTRO STRING, TIPO STRING, CONDICAO STRING)");
-        if (Array.isArray(data) && data.length > 0) {
-          try {
-            data.forEach(function (line) {
-              alasql("INSERT INTO LAB_MONITORING VALUES(" + line.code + ",'" + line.fieldCenter + "','" + line.type + "','" + line.condition + "')");
-            });
-          } catch (e) {
-            reject(e);
-          }
-          resolve(true);
-        } else {
-          reject(false);
-        }
+    function downloadCSVFileOfOrphansByExam() {
+      var defer = $q.defer();
+      LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
+      LoadingScreenService.start();
+      MonitoringCollectionService.getDataToCSVOfPendingResultsByAliquots().then(function (response) {
+        const style = {
+          headers: true,
+          column: { style: { Font: { Bold: "1" } } }
+        };
+        var name = "monitoramento-laboratorial-exame-orfaos-".concat(new Date().toLocaleDateString());
+        alasql('SELECT [aliquotCode] AS [Código da alíquota], [examName] AS [Nome do exame] INTO CSV("' + name + '.csv") FROM ?', [style, response]);
+      }).catch(function () {
+        defer.reject()
+      }).finally(function () {
+        LoadingScreenService.finish();
       });
     };
   }

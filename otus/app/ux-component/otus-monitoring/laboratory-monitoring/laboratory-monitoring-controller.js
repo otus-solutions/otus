@@ -16,10 +16,7 @@
 
   function Controller($filter, LoadingScreenService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
     const PENDING = 'pending';
-    const QUANTITATIVE = 'quantitative';
     const ORPHAN = 'orphan';
-    const STORAGE = 'storage';
-    const RESULTS = 'results';
 
     var self = this;
     self.centers = [];
@@ -32,7 +29,7 @@
     self.openTabOrphanByExams = openTabOrphanByExams;
     self.openTabStorageByAliquots = openTabStorageByAliquots;
     self.openTabByExam = openTabByExam;
-    self.downloadCSVFileOfPendingResultsByAliquots = downloadCSVFileOfPendingResultsByAliquots;
+    self.downloadCSVFile = downloadCSVFile;
     self.onFilter = onFilter;
     /* Lifecycle methods */
     function onInit() {
@@ -74,33 +71,26 @@
       }
     };
 
-    function downloadCSVFileOfPendingResultsByAliquots() {
-      LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots(center);
+    function downloadCSVFile(current) {
+      switch (current) {
+        case PENDING:
+          LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots('RS');
+        case ORPHAN:
+          LaboratoryMonitoringService.downloadCSVFileOfOrphansByExam();
+      }
     };
 
     function onFilter() {
-      _loadDataByCenter();
-      if (self.lotsListImutable.length) {
-        self.lotsList = self.lotsListImutable
-          .filter(function (lot) {
-            return _filterByCenter(lot);
-          })
-          .filter(function (FilteredByCenter) {
-            return _filterByPeriod(FilteredByCenter);
-          })
-          .filter(function (filteredByPeriod) {
-            return _filterByExam(filteredByPeriod)
-          });
-      };
+
     };
 
     function _loadDataByCenter() {
 
     };
 
-    function _loadDataPendingResultsByAliquots() {
+    function _loadDataPendingResultsByAliquots(center) {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center)
+      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots('RS')
         .then(function (response) {
           var colors = ['#88d8b0', '#ff6f69'];
           var element = '#pending-results-chart';
@@ -111,9 +101,9 @@
         });
     };
 
-    function _loadDataQuantitativeByTypeOfAliquots() {
+    function _loadDataQuantitativeByTypeOfAliquots(center) {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots(center)
+      LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots('RS')
         .then(function (response) {
           var colors = ['#b33040', '#d25c4d', '#f2b447'];
           var element = '#quantitative-by-aliquots';
@@ -137,9 +127,9 @@
         });
     };
 
-    function _loadStorageByAliquots() {
+    function _loadStorageByAliquots(center) {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataOfStorageByAliquots(center)
+      LaboratoryMonitoringService.getDataOfStorageByAliquots('RS')
         .then(function (response) {
           var colors = ['#bae1ff'];
           var element = '#storage-by-exam';
@@ -150,9 +140,9 @@
         });
     };
 
-    function _loadResultsByExam() {
+    function _loadResultsByExam(center) {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataByExam(center)
+      LaboratoryMonitoringService.getDataByExam('RS')
         .then(function (response) {
           var colors = ['#bae1ff'];
           var element = '#result-by-exam';

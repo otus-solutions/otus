@@ -30,6 +30,7 @@
     self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
     self.getDataByExam = getDataByExam;
     self.getDataToCSVOfPendingResultsByAliquots = getDataToCSVOfPendingResultsByAliquots;
+    self.getDataToCSVOfOrphansByExam = getDataToCSVOfOrphansByExam;
 
     function listAcronyms() {
       var request = $q.defer();
@@ -268,6 +269,23 @@
             });
         });
 
+      return request.promise;
+    };
+
+    function getDataToCSVOfOrphansByExam() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataToCSVOfOrphansByExam()
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
       return request.promise;
     };
   }

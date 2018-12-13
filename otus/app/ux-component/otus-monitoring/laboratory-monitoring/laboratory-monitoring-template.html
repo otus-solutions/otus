@@ -31,7 +31,7 @@
               </md-select>
             </md-input-container>
             <span flex></span>
-            <md-button ng-click="$ctrl.downloadCSVFileOfPendingResultsByAliquots()" class="md-icon-button md-raised">
+            <md-button ng-click="$ctrl.downloadCSVFile('pending')" class="md-icon-button md-raised">
               <md-icon>get_app</md-icon>
               <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
             </md-button>
@@ -48,7 +48,22 @@
         <md-tab label="Exames órfãos" ng-click="$ctrl.openTabOrphanByExams()">
           <div layout="row" layout-margin="" layout-align="center center">
             <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames órfãos</h1>
+            <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px">
+              <label class="md-subheader">Centro:</label>
+              <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                <md-tooltip>
+                  Centros
+                </md-tooltip>
+                <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadExamDescriptors(center)">
+                  {{center}}
+                </md-option>
+              </md-select>
+            </md-input-container>
             <span flex></span>
+            <md-button ng-click="$ctrl.downloadCSVFile('orphan')" class="md-icon-button md-raised">
+              <md-icon>get_app</md-icon>
+              <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+            </md-button>
           </div>
           <div id="orphans-by-exam" flex></div>
         </md-tab>

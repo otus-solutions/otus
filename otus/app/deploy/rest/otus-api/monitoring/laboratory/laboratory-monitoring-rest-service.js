@@ -21,6 +21,7 @@
     self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
     self.getDataByExam = getDataByExam;
     self.getDataToCSVOfPendingResultsByAliquots = getDataToCSVOfPendingResultsByAliquots;
+    self.getDataToCSVOfOrphansByExam = getDataToCSVOfOrphansByExam;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusLaboratoryMonitoringResource();
@@ -30,14 +31,18 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       };
-      return _rest.getDataOfPendingResultsByAliquots(center).$promise;
+      return _rest.getDataOfPendingResultsByAliquots({
+        center: center
+      }).$promise;
     };
 
     function getDataQuantitativeByTypeOfAliquots(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       };
-      return _rest.getDataQuantitativeByTypeOfAliquots(center).$promise;
+      return _rest.getDataQuantitativeByTypeOfAliquots({
+        center: center
+      }).$promise;
     };
 
     function getDataOrphanByExams() {
@@ -51,22 +56,35 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       };
-      return _rest.getDataOfStorageByAliquots(center).$promise;
+      return _rest.getDataOfStorageByAliquots({
+        center: center
+      }).$promise;
     };
 
     function getDataByExam(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       };
-      return _rest.getDataByExam(center).$promise;
+      return _rest.getDataByExam({
+        center: center
+      }).$promise;
     };
 
     function getDataToCSVOfPendingResultsByAliquots(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       };
-      return _rest.getDataToCSVOfPendingResultsByAliquots(center).$promise;
+      return _rest.getDataToCSVOfPendingResultsByAliquots({
+        center: center
+      }).$promise;
     };
+
+    function getDataToCSVOfOrphansByExam() {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.getDataToCSVOfOrphansByExam().$promise;
+    }
 
   }
 }());
