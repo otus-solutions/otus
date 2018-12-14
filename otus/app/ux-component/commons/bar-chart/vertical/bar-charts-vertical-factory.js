@@ -50,11 +50,8 @@
 
         var margin = {top: 20, right: 160, bottom: 80, left: 50};
         var width = dataset[0].length * 100,
-          height = window.innerHeight - 462;
-        console.log(window.innerHeight)
+          height = window.innerHeight - 470;
 
-        // width = width <= 200 ? 300 : width;
-        // d3.select(element).remove();
         var svg = d3.select(element)
           .append("svg")
           .attr("width", width+(width <= 200 ? 250 : 100))

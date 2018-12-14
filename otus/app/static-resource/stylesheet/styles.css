@@ -154,7 +154,11 @@ md-checkbox.md-checkbox-small {
 /** finish lot-info-maneger-display-component **/
 
 .remove-padding {
-  padding: 0;
+  padding: 0 !important;
+}
+
+.remove-margin {
+  margin: 0 !important;
 }
 
 md-input-container.remove-errors-spacer .md-errors-spacer {

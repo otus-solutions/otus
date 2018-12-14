@@ -7,6 +7,7 @@
 
   Controller.$inject = [
     '$filter',
+    'otusjs.application.session.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.FieldCenterRestService',
@@ -15,7 +16,7 @@
     'otusjs.otus.uxComponent.BarChartsHorizontalFactory'
   ];
 
-  function Controller($filter, LoadingScreenService, DashboardContextService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
+  function Controller($filter, SessionContextService, LoadingScreenService, DashboardContextService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
     const DATA_NOT_FOUND = 'Data Not Found';
     const PENDING = 'pending';
     const QUANTITATIVE = 'quantitative';
@@ -39,8 +40,18 @@
     self.openTabByExam = openTabByExam;
     self.downloadCSVFile = downloadCSVFile;
     self.loadData = loadData;
+    self.loadCenters = loadCenters;
     /* Lifecycle methods */
     function onInit() {
+      self.dataNotFound = false;
+      if (localStorage.getItem("centerUser")){
+        self.centerFilter = localStorage.getItem("centerUser");
+        self.openTabPendingResultsByAliquots();
+      }
+    };
+
+    function loadCenters() {
+      // var deferred = $q.defer();
       FieldCenterRestService.loadCenters().then(function (result) {
         self.centers = $filter('orderBy')(self.centers);
         result.forEach(function (fieldCenter) {
@@ -48,7 +59,7 @@
         });
         _setUserFieldCenter();
       });
-    };
+    }
 
     function openTabPendingResultsByAliquots() {
       if (!$('#pending-results-chart svg').length) {
@@ -119,6 +130,7 @@
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           if (self.userHaveCenter) {
             self.centerFilter = userData.fieldCenter.acronym;
+            localStorage.setItem("centerUser", self.centerFilter);
           } else {
             self.centerFilter = self.centers[0];
           };
@@ -127,7 +139,8 @@
 
     function _loadDataPendingResultsByAliquots(center) {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center)
+      self.dataNotFound = false;
+      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center ? center : self.centerFilter)
         .then(function (response) {
           if (_hasData(response)) {
             var colors = ['#88d8b0', '#ff6f69'];
@@ -136,6 +149,7 @@
           }
           LoadingScreenService.finish();
         }).catch(function (e) {
+        _hasData(e)
           LoadingScreenService.finish();
         });
     };
@@ -193,12 +207,14 @@
     };
 
     function _hasData(response) {
-      if (response.data.MESSAGE === DATA_NOT_FOUND) {
-        self.dataNotFound = true;
-        return false;
-      } else {
-        return true;
-      }
+      if (response.data) {
+        if (response.data.MESSAGE) {
+          self.dataNotFound = true;
+          return false;
+        } else {
+          return true;
+        }
+      } else return true;
     };
   };
 }());
