@@ -18,15 +18,11 @@
     function create(dataset, element, color) {
       var colors = [];
       if ((Array.isArray(dataset) && dataset.length) && element) {
-          if (colors === undefined || colors === null) {
-            colors = [];
-            dataset.forEach(function () {
-              colors.push(PalleteColorService.getRandomColor());
-            });
+          if (color === undefined || color === null) {
+              colors.push(PalleteColorService.getColor(0));
           } else {
-            for (let i = 0; i < dataset.length; i++) {
-              colors.push(PalleteColorService.getColor(color));
-            }
+              // colors.push(PalleteColorService.getColor(color));
+              colors.push(color);
           }
 
         var keys = Object.keys(dataset[0]);
@@ -88,8 +84,8 @@
             $(this).css("opacity", "1");
 
           })
-          .style("fill", function (d, i) {
-            return colors[i];
+          .style("fill", function () {
+            return colors[0];
           });
 
         svg.append("g")

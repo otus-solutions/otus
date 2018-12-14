@@ -112,6 +112,7 @@
             })
             .enter()
             .append("text")
+            .attr("class", "labelValue")
             .attr("x", function (d) {
               return x(d[keys[1]]) + Math.round(width / dataset[0].length - 80);
             })
