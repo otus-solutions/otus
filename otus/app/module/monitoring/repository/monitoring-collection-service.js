@@ -172,7 +172,6 @@
           return remoteStorage
             .getDataOfPendingResultsByAliquots(center)
             .then(function (response) {
-              console.log(response.data.pendingResultsByAliquot);
               request.resolve(response.data.pendingResultsByAliquot);
             })
             .catch(function (e) {

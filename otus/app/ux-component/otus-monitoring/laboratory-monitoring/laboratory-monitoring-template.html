@@ -15,36 +15,38 @@
   <div layout flex>
     <div layout="column" layout-padding flex>
       <md-tabs md-border-bottom flex layout-fill>
-        <md-tab label="Pendências de Resultados" id="pendingButton" class="md-content" ng-click="$ctrl.openTabPendingResultsByAliquots()" layout-padding flex layout="column">
-          <md-content layout="row" layout-margin="" layout-align="center center" ng-init="$ctrl.openTabPendingResultsByAliquots()" layout-fill flex>
+        <md-tab label="Pendências de Resultados" id="pendingButton" class="md-content" ng-click="$ctrl.openTabPendingResultsByAliquots()"
+          layout-padding flex layout="column">
+          <md-content layout="row" layout-margin="" layout-align="center center" ng-init="$ctrl.openTabPendingResultsByAliquots()"
+            layout-fill flex>
             <md-card flex layout-fill layout-padding="">
               <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Pendências de Resultados</h1>
                 <div layout="row" layout-align="center center" layout-fill flex>
-                <span flex></span>
-                <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
-                  <label class="md-subheader">Centro:</label>
-                  <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
-                    <md-tooltip>
-                      Centros
-                    </md-tooltip>
-                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData(center)">
-                      {{center}}
-                    </md-option>
-                  </md-select>
-                </md-input-container>
-                <span flex="5"></span>
-                <md-button ng-click="$ctrl.downloadCSVFile('pending')" class="md-raised md-primary md-icon-button">
-                  <md-icon>get_app</md-icon>
-                  <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-                </md-button>
+                  <span flex></span>
+                  <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
+                    <label class="md-subheader">Centro:</label>
+                    <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                      <md-tooltip>
+                        Centros
+                      </md-tooltip>
+                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData('pending', center)">
+                        {{center}}
+                      </md-option>
+                    </md-select>
+                  </md-input-container>
+                  <span flex="5"></span>
+                  <md-button ng-click="$ctrl.downloadCSVFile('pending')" class="md-raised md-primary md-icon-button">
+                    <md-icon>get_app</md-icon>
+                    <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+                  </md-button>
                 </div>
               </div>
             </md-card>
           </md-content>
           <md-content flex layout-padding>
             <div id="pending-results-chart" flex></div>
-
+            <span ng-if="$ctrl.dataNotFound">opa</span>
           </md-content>
         </md-tab>
         <md-tab label="Quantidade por tipo de alíquotas" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
@@ -60,16 +62,11 @@
                       <md-tooltip>
                         Centros
                       </md-tooltip>
-                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData(center)">
+                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData('quantitative', center)">
                         {{center}}
                       </md-option>
                     </md-select>
                   </md-input-container>
-                  <span flex="5"></span>
-                  <md-button ng-click="$ctrl.downloadCSVFile('quantitative')" class="md-raised md-primary md-icon-button">
-                    <md-icon>get_app</md-icon>
-                    <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-                  </md-button>
                 </div>
               </div>
             </md-card>
@@ -83,7 +80,7 @@
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames órfãos</h1>
                 <div layout="row" layout-align="center center" layout-fill flex>
                   <span flex></span>
-                    <md-button ng-click="$ctrl.downloadCSVFile('orphan')" class="md-raised md-primary md-icon-button">
+                  <md-button ng-click="$ctrl.downloadCSVFile('orphan')" class="md-raised md-primary md-icon-button">
                     <md-icon>get_app</md-icon>
                     <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
                   </md-button>
@@ -106,16 +103,11 @@
                       <md-tooltip>
                         Centros
                       </md-tooltip>
-                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData(center)">
+                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData('storage', center)">
                         {{center}}
                       </md-option>
                     </md-select>
                   </md-input-container>
-                  <span flex="5"></span>
-                  <md-button ng-click="$ctrl.downloadCSVFile('storage')" class="md-raised md-primary md-icon-button">
-                    <md-icon>get_app</md-icon>
-                    <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-                  </md-button>
                 </div>
               </div>
             </md-card>
@@ -135,16 +127,11 @@
                       <md-tooltip>
                         Centros
                       </md-tooltip>
-                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData(center)">
+                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData('exam', center)">
                         {{center}}
                       </md-option>
                     </md-select>
                   </md-input-container>
-                  <span flex="5"></span>
-                  <md-button ng-click="$ctrl.downloadCSVFile('results')" class="md-raised md-primary md-icon-button">
-                    <md-icon>get_app</md-icon>
-                    <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-                  </md-button>
                 </div>
               </div>
             </md-card>

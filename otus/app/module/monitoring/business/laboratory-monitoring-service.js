@@ -30,8 +30,8 @@
           defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: "Recebidos", waiting: "Aguardando" }));
         else
           defer.resolve([]);
-      }).catch(function () {
-        defer.reject();
+        }).catch(function (e) {
+          defer.reject(e);
       });
 
       return defer.promise;
@@ -44,8 +44,8 @@
           defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: "Recebidos", prepared: "Preparados", transported: "Transportados" }));
         else
           defer.resolve([]);
-      }).catch(function () {
-        defer.reject();
+      }).catch(function (e) {
+        defer.reject(e);
       });
 
       return defer.promise;
@@ -55,8 +55,8 @@
       var defer = $q.defer();
       MonitoringCollectionService.getDataOrphanByExams().then(function (response) {
         defer.resolve(response);
-      }).catch(function () {
-        defer.reject();
+      }).catch(function (e) {
+        defer.reject(e);
       });
 
       return defer.promise;
@@ -69,8 +69,8 @@
           defer.resolve(VerticalBarFactory.fromJsonObject(response, { storage: "Armazenamento" }));
         else
           defer.resolve([]);
-      }).catch(function () {
-        defer.reject();
+        }).catch(function (e) {
+          defer.reject(e);
       });
 
       return defer.promise;
@@ -83,8 +83,8 @@
           defer.resolve(VerticalBarFactory.fromJsonObject(response, { results: "Resultados de Exame" }));
         else
           defer.resolve([]);
-      }).catch(function () {
-        defer.reject();
+        }).catch(function (e) {
+          defer.reject(e);
       });
 
       return defer.promise;

@@ -16,12 +16,18 @@
   ];
 
   function Controller($filter, LoadingScreenService, DashboardContextService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
+    const DATA_NOT_FOUND = 'Data Not Found';
     const PENDING = 'pending';
+    const QUANTITATIVE = 'quantitative';
     const ORPHAN = 'orphan';
+    const STORAGE = 'storage';
+    const EXAM = 'exam';
 
     var self = this;
+    self.dataNotFound = false;
     self.centers = [];
     self.centerFilter = '';
+    self.ERROR_MESSAGE = 'Atualmente não há registros a serem exibidos!';
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -69,7 +75,7 @@
     };
 
     function openTabByExam() {
-      if (!$('#by-exam svg').length) {
+      if (!$('#results-by-exam svg').length) {
         _loadResultsByExam(self.centerFilter);
       }
     };
@@ -78,23 +84,32 @@
       switch (current) {
         case PENDING:
           LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots(self.centerFilter);
+          break;
         case ORPHAN:
           LaboratoryMonitoringService.downloadCSVFileOfOrphansByExam();
+          break;
       }
     };
 
-    function loadData(center) {
+    function loadData(currentTab, center) {
       self.centerFilter = center;
-      if (!$('#pending-results-chart svg').length) {
-        d3.selectAll('#pending-results-chart svg').remove();
-        _loadDataPendingResultsByAliquots(center);
-      } else if (!$('#quantitative-by-aliquots svg').length) {
-        _loadDataQuantitativeByTypeOfAliquots(center);
-      } else if (!$('#storage-by-exam svg').length) {
-        _loadStorageByAliquots(center);
-      } else if (!$('#by-exam svg').length) {
-        _loadResultsByExam(center);
-      }
+      switch (currentTab) {
+        case PENDING:
+          d3.selectAll('#pending-results-chart svg').remove();
+          _loadDataPendingResultsByAliquots(center);
+          break;
+        case QUANTITATIVE:
+          d3.selectAll('#quantitative-by-aliquots svg').remove();
+          _loadDataQuantitativeByTypeOfAliquots(center);
+          break;
+        case STORAGE:
+          d3.selectAll('#storage-by-exam svg').remove();
+          _loadStorageByAliquots(center);
+        case EXAM:
+          d3.selectAll('#results-by-exam svg').remove();
+          _loadResultsByExam(center);
+          break;
+      };
     };
 
     function _setUserFieldCenter() {
@@ -111,14 +126,14 @@
     };
 
     function _loadDataPendingResultsByAliquots(center) {
-      console.log(center);
       LoadingScreenService.start();
       LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center)
         .then(function (response) {
-          var colors = ['#88d8b0', '#ff6f69'];
-          var element = '#pending-results-chart';
-          console.log(response);
-          BarChartsVerticalFactory.create(response, element, colors);
+          if (_hasData(response)) {
+            var colors = ['#88d8b0', '#ff6f69'];
+            var element = '#pending-results-chart';
+            BarChartsVerticalFactory.create(response, element, colors);
+          }
           LoadingScreenService.finish();
         }).catch(function (e) {
           LoadingScreenService.finish();
@@ -175,6 +190,15 @@
         }).catch(function (e) {
           LoadingScreenService.finish();
         });
+    };
+
+    function _hasData(response) {
+      if (response.data.MESSAGE === DATA_NOT_FOUND) {
+        self.dataNotFound = true;
+        return false;
+      } else {
+        return true;
+      }
     };
   };
 }());
