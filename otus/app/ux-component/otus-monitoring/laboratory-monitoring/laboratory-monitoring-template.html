@@ -12,13 +12,13 @@
       <span layout-align="center center">Monitoramento laboratorial</span>
     </div>
   </otus-dashboard-toolbar>
-  <md-content layout flex>
-    <md-content layout="column" layout-padding flex>
+  <div layout flex>
+    <div layout="column" layout-padding flex>
       <md-tabs md-border-bottom flex layout-fill>
-        <md-tab label="Pendências de Resultados" id="pendingButton" ng-click="$ctrl.openTabPendingResultsByAliquots()" layout-padding>
-          <div layout="row" layout-margin="" layout-align="center center" ng-init="$ctrl.openTabPendingResultsByAliquots()" layout-fill flex>
+        <md-tab label="Pendências de Resultados" id="pendingButton" class="md-content" ng-click="$ctrl.openTabPendingResultsByAliquots()" layout-padding flex layout="column">
+          <md-content layout="row" layout-margin="" layout-align="center center" ng-init="$ctrl.openTabPendingResultsByAliquots()" layout-fill flex>
             <md-card flex layout-fill layout-padding="">
-              <div layout-gt-sm="row" layout="column" layout-align="center start" layout-align-gt-sm="center center" flex>
+              <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Pendências de Resultados</h1>
                 <div layout="row" layout-align="center center" layout-fill flex>
                 <span flex></span>
@@ -41,13 +41,16 @@
                 </div>
               </div>
             </md-card>
-          </div>
-          <md-content id="pending-results-chart" flex></md-content>
+          </md-content>
+          <md-content flex layout-padding>
+            <div id="pending-results-chart" flex></div>
+
+          </md-content>
         </md-tab>
         <md-tab label="Quantidade por tipo de alíquotas" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
           <div layout="row" layout-margin="" layout-align="center center" layout-fill flex>
             <md-card flex layout-fill layout-padding="">
-              <div layout-gt-sm="row" layout="column" layout-align="center start" layout-align-gt-sm="center center" flex>
+              <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantidade por tipo de alíquotas</h1>
                 <div layout="row" layout-align="center center" layout-fill flex>
                   <span flex></span>
@@ -71,12 +74,12 @@
               </div>
             </md-card>
           </div>
-          <div id="quantitative-by-aliquots" layout-margin="" flex></div>
+          <md-content id="quantitative-by-aliquots" layout-margin="" flex></md-content>
         </md-tab>
         <md-tab label="Exames órfãos" ng-click="$ctrl.openTabOrphanByExams()">
           <div layout="row" layout-margin="" layout-align="center center" layout-fill flex>
             <md-card flex layout-fill layout-padding="">
-              <div layout-gt-sm="row" layout="column" layout-align="center start" layout-align-gt-sm="center center" flex>
+              <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames órfãos</h1>
                 <div layout="row" layout-align="center center" layout-fill flex>
                   <span flex></span>
@@ -88,12 +91,12 @@
               </div>
             </md-card>
           </div>
-          <div id="orphans-by-exam" flex></div>
+          <md-content id="orphans-by-exam" flex></md-content>
         </md-tab>
         <md-tab label="Armazenamento" ng-click="$ctrl.openTabStorageByAliquots()">
           <div layout="row" layout-margin="" layout-align="center center" layout-fill flex>
             <md-card flex layout-fill layout-padding="">
-              <div layout-gt-sm="row" layout="column" layout-align="center start" layout-align-gt-sm="center center" flex>
+              <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Armazenamento</h1>
                 <div layout="row" layout-align="center center" layout-fill flex>
                   <span flex></span>
@@ -117,12 +120,12 @@
               </div>
             </md-card>
           </div>
-          <div id="storage-by-exam" flex></div>
+          <md-content id="storage-by-exam" flex></md-content>
         </md-tab>
         <md-tab label="Resultados de Exames" ng-click="$ctrl.openTabResultsByExam()">
           <div layout="row" layout-margin="" layout-align="center center" layout-fill flex>
             <md-card flex layout-fill layout-padding="">
-              <div layout-gt-sm="row" layout="column" layout-align="center start" layout-align-gt-sm="center center" flex>
+              <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Resultados de exames</h1>
                 <div layout="row" layout-align="center center" layout-fill flex>
                   <span flex></span>
@@ -146,9 +149,9 @@
               </div>
             </md-card>
           </div>
-          <div id="results-by-exam" flex></div>
+          <md-content id="results-by-exam" flex></md-content>
         </md-tab>
       </md-tabs>
-    </md-content>
-  </md-content>
+    </div>
+  </div>
 </md-content>
