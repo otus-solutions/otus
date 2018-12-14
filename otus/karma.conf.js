@@ -2,6 +2,7 @@
 // Generated on Wed Jan 27 2016 14:11:34 GMT-0200 (Horário brasileiro de verão)
 module.exports = function (config) {
   var APP_ROOT_PATH = 'app/';
+  var TEST_UTILS_ROOT_PATH = 'tests/utils/';
   var DEPENDENCIES_ROOT_PATH = 'app/shared/';
   var NODE_MODULES_ROOT_PATH = 'node_modules/';
   var DIST = 'dist/';
@@ -49,7 +50,9 @@ module.exports = function (config) {
       APP_ROOT_PATH + '**/**/*.js',{
         pattern: 'tests/unit/**/*-spec.js',
         included: true
-      }
+      },
+      TEST_UTILS_ROOT_PATH + 'data/json-importer.js'
+
     ],
 
     // list of files to exclude

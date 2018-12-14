@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -19,12 +19,12 @@
 
   Controller.$inject = [
     '$filter',
+    'otusjs.laboratory.configuration.LaboratoryConfigurationService',
     'otusjs.laboratory.business.project.exams.ExamLotService',
-    'otusjs.laboratory.WorkAliquotFactory',
     '$scope'
   ];
 
-  function Controller($filter, ExamLotService,WorkAliquotFactory,$scope) {
+  function Controller($filter, LaboratoryConfigurationService, ExamLotService, $scope) {
     var self = this;
 
     self.$onInit = onInit;
@@ -36,7 +36,7 @@
     self.dynamicDataTableChange = dynamicDataTableChange;
     self.hasError = false;
 
-    function changeNavItem(newNavItem){
+    function changeNavItem(newNavItem) {
       self.currentNavItem = newNavItem;
     }
 
@@ -45,12 +45,11 @@
     self.selectAliquot = selectAliquot;
 
     function onInit() {
-      self.aliquotCode = "";
       self.initialDate = new Date();
       self.finalDate = new Date();
     }
 
-    function _dynamicDataTableUpdate(){
+    function _dynamicDataTableUpdate() {
       ExamLotService.dynamicDataTableFunction.updateDataTable();
       self.selectedAliquots = [];
     }
@@ -64,37 +63,41 @@
 
 
     function fastInsertion(newAliquotCode, hideMsgErrors) {
-      var foundAliquot = _findAliquot(newAliquotCode);
       var successInsertion = false;
-      var foundInOtherLot;
 
-      if (foundAliquot) {
-        if(self.lot.aliquotName !== foundAliquot.name){
-          if(!hideMsgErrors) _setWrongTypeAliquotError(foundAliquot);
-        } else if((foundAliquot.fieldCenter.acronym !== self.lot.fieldCenter.acronym) && (!_findAliquotsInTransportLots(newAliquotCode))){
-          if(!hideMsgErrors) _setInvalidAliquotError(newAliquotCode);
-        } else if (_findAliquotInLot(newAliquotCode)) {
-          if(!hideMsgErrors) _setDuplicatedAliquotError(newAliquotCode);
-        } else if (foundInOtherLot = _findAliquotsInOtherLots(newAliquotCode)) {
-          if(!hideMsgErrors) _setAliquotInOtherLotError(foundInOtherLot);
-        } else {
-          _clearAliquotError();
-          self.lot.insertAliquot(foundAliquot);
-          self.onLotAlteration({
-            newData: self.lot.toJSON()
-          });
-          successInsertion = true;
-          if(!hideMsgErrors) _dynamicDataTableUpdate();
-        }
+      let aliquotFilter = {
+        aliquotCode: newAliquotCode,
+        fieldCenter: self.lot.fieldCenter,
+        lotType: self.lot.aliquotName
+      };
+
+      if (_findAliquotInLot(aliquotFilter.aliquotCode)) {
+        _setDuplicatedAliquotError(aliquotFilter.aliquotCode);
       } else {
-        if(!hideMsgErrors) _setAliquotNotFoundError(newAliquotCode);
+        ExamLotService.getAliquot(aliquotFilter)
+          .then(function (aliquot) {
+            _clearAliquotError();
+            self.lot.insertAliquot(aliquot);
+            self.onLotAlteration({
+              newData: self.lot.toJSON()
+            });
+            successInsertion = true;
+            if (!hideMsgErrors) _dynamicDataTableUpdate();
+          })
+          .catch( error => {
+            let errorMessage = error.data.MESSAGE;
+            if(errorMessage.match(new RegExp("Data Validation Fail: Aliquot not found"))) _setAliquotNotFoundError(aliquotFilter.aliquotCode);
+            if(errorMessage.match(new RegExp("Data Validation Fail: Invalid center."))) _setInvalidAliquotError(aliquotFilter.aliquotCode);
+            if(errorMessage.match(new RegExp("Data Validation Fail: Invalid aliquot type."))) _setWrongTypeAliquotError(aliquotFilter.aliquotCode,error.data.CONTENT);
+            if(errorMessage.match(new RegExp("Data Validation Fail: Already in a lot."))) _setAliquotInOtherLotError(aliquotFilter.aliquotCode,error.data.CONTENT);
+          })
       }
       self.aliquotCode = "";
       return successInsertion;
     }
 
-    function dynamicDataTableChange(change){
-      if(change.type === 'select' || change.type === 'deselect'){
+    function dynamicDataTableChange(change) {
+      if (change.type === 'select' || change.type === 'deselect') {
         self.selectAliquot(change.element);
       }
     }
@@ -120,9 +123,8 @@
       }
     }
 
-    function _setWrongTypeAliquotError(foundAliquot) {
-      var aliquot = WorkAliquotFactory.create(foundAliquot);
-      var msg = 'A alíquota "' + aliquot.code + '" do tipo "'+aliquot.label+'" nâo pode ser inserida em um lote de "'+self.lot.aliquotLabel+'"';
+    function _setWrongTypeAliquotError(aliquotCode, aliquotName) {
+      var msg = 'A alíquota "' + aliquotCode + '" do tipo "' + _getAliquotLabel(aliquotName) + '" nâo pode ser inserida em um lote de "' + self.lot.aliquotLabel + '"';
       _setAliquotError(msg);
     }
 
@@ -141,33 +143,21 @@
       _setAliquotError(msg);
     }
 
-    function _setAliquotInOtherLotError(aliquotData) {
-      var msg = 'A alíquota "' + aliquotData.aliquot.code + '" já esta no lote de codigo "' + aliquotData.lotCode + '"';
+    function _setAliquotInOtherLotError(aliquotCode, lotCode) {
+      var msg = 'A alíquota "' + aliquotCode + '" já esta no lote de codigo "' + lotCode + '"';
       _setAliquotError(msg);
     }
 
     function _findAliquotInLot(code) {
-      return self.lot.aliquotList.find(function(aliquotsInLot) {
+      return self.lot.aliquotList.find(function (aliquotsInLot) {
         return aliquotsInLot.code == code;
       });
     }
 
-    function _findAliquot(code) {
-      return self.fullAliquotsList.find(function(availableAliquot) {
-        return availableAliquot.code == code;
-      });
-    }
-
-    function _findAliquotsInTransportLots(code) {
-      return self.aliquotsInTransportLot.find(function(aliquotInTransportLot) {
-        return aliquotInTransportLot.code == code;
-      });
-    }
-
-    function _findAliquotsInOtherLots(code) {
-      return self.aliquotsInOtherLots.find(function(aliquotsInOtherLots) {
-        return aliquotsInOtherLots.aliquot.code == code;
-      });
+    function _getAliquotLabel(aliquotName){
+      let aliquotDescriptor = LaboratoryConfigurationService.getAliquotDescriptor(aliquotName);
+      if(aliquotDescriptor)
+        return aliquotDescriptor.label;
     }
   }
 }());

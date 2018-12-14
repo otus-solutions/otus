@@ -24,14 +24,9 @@
       url: '/' + STATE.EXAM_LOT_MANAGER_LIST,
       template: '<otus-exams-lots-manager lots="$resolve.lots" layout="column" flex></otus-exams-lots-manager>',
       resolve:{
-        stateData: _loadStateData,
-        lots: _resolveLots
+        stateData: _loadStateData
       }
     };
-
-    function _resolveLots(ExamLotService) {
-      return ExamLotService.getLots();
-    }
 
     function _loadStateData(SessionContextService, LaboratoryContextService, Application) {
       return Application
@@ -45,10 +40,6 @@
           }
         });
     }
-
-    _resolveLots.$inject = [
-      'otusjs.laboratory.business.project.exams.ExamLotService'
-    ];
 
     _loadStateData.$inject = [
       'otusjs.application.session.core.ContextService',

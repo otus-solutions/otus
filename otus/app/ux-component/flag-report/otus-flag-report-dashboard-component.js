@@ -23,7 +23,7 @@
 
     /* Public methods */
     function onInit() {
-      if(ApplicationStateService.getCurrentState() == STATE.FLAG_DASHBOARD){
+      if (ApplicationStateService.getCurrentState() == STATE.FLAG_DASHBOARD) {
         ApplicationStateService.activateFlagsReportManager();
       }
     }

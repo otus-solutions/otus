@@ -49,12 +49,11 @@
         self.lot.operator = self.stateData['user'].email;
         self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedExamLotFieldCenter()};
         self.lot.realizationDate = new Date();
+        self.lot.aliquotList = [];
       }
       _buildDialogs();
       _formatLotDates();
-      _getAliquotsInOtherLots();
-      _fetchCollectedAliquots();
-      _getAliquotsInTransportLots();
+
     }
 
     function removeAliquots() {
@@ -166,34 +165,6 @@
       self.lot.realizationDate.setMilliseconds(0);
     }
 
-    function _getAliquotsInOtherLots() {
-      self.aliquotsInOtherLots = [];
-      for (var i = 0; i < self.lots.length; i++) {
-        for (var j = 0; j < self.lots[i].aliquotList.length; j++) {
-          var aliquotData = {
-            "lotCode":self.lots[i].code,
-            "aliquot": self.lots[i].aliquotList[j]
-          };
-          self.aliquotsInOtherLots.push(aliquotData);
-        }
-      }
-    }
-
-    function _getAliquotsInTransportLots() {
-      self.aliquotsInTransportLots = [];
-      for (var i = 0; i < self.transportLots.length; i++) {
-        for (var j = 0; j < self.transportLots[i].aliquotList.length; j++) {
-          self.aliquotsInTransportLots.push(self.transportLots[i].aliquotList[j]);
-        }
-      }
-    }
-
-    function _fetchCollectedAliquots() {
-      ExamLotService.getAliquots()
-        .then(function(response) {
-          self.fullAliquotsList = response;
-        });
-    }
 
     function _buildDialogs() {
       _confirmCancel = $mdDialog.confirm()

@@ -22,48 +22,37 @@
       parent: STATE.EXAM_DASHBOARD,
       name: STATE.EXAM_LOT_INFO_MANAGER,
       url: '/' + STATE.EXAM_LOT_INFO_MANAGER,
-      template: '<otus-exam-lot-info-manager lots="$resolve.lots" transport-lots="$resolve.transportLots" state-data="$resolve.stateData" layout="column" flex></otus-exam-lot-info-manager>',
+      template: '<otus-exam-lot-info-manager state-data="$resolve.stateData" layout="column" flex></otus-exam-lot-info-manager>',
       resolve:{
-        stateData: _loadStateData,
-        lots: _resolveLots,
-        transportLots: _resolveTransportLots
+        stateData: _loadStateData
       }
     };
 
-    function _resolveLots(ExamLotService) {
-      return ExamLotService.getLots();
-    }
 
-    function _loadStateData(SessionContextService, LaboratoryContextService, Application) {
-      return Application
+    function _loadStateData($q, LaboratoryConfigurationService, SessionContextService, LaboratoryContextService, Application) {
+      var defer = $q.defer();
+      Application
         .isDeployed()
         .then(function() {
           try {
-            SessionContextService.restore();
-            LaboratoryContextService.restore();
-            var _stateData = [];
-            _stateData['selectedLot'] = LaboratoryContextService.getSelectedExamLot();
-            _stateData['user'] = SessionContextService.getData('loggedUser');
-            return _stateData;
+            LaboratoryConfigurationService.getLaboratoryDescriptors().then(() => {
+              SessionContextService.restore();
+              LaboratoryContextService.restore();
+              var _stateData = [];
+              _stateData['selectedLot'] = LaboratoryContextService.getSelectedExamLot();
+              _stateData['user'] = SessionContextService.getData('loggedUser');
+              defer.resolve(_stateData);
+            });
           } catch (e) {
             console.log(e);
           }
         });
+      return defer.promise;
     }
-
-    function _resolveTransportLots(AliquotTransportationService) {
-      return AliquotTransportationService.getLots();
-    }
-
-    _resolveTransportLots.$inject = [
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
-    ];
-
-    _resolveLots.$inject = [
-      'otusjs.laboratory.business.project.exams.ExamLotService'
-    ];
 
     _loadStateData.$inject = [
+      '$q',
+      'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
       'otusjs.application.session.core.ContextService',
       'otusjs.laboratory.core.ContextService',
       'otusjs.application.core.ModuleService'
