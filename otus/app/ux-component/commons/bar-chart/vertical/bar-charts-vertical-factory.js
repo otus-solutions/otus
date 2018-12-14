@@ -50,12 +50,15 @@
 
         var margin = {top: 20, right: 160, bottom: 80, left: 50};
         var width = dataset[0].length * 100,
-          height = window.innerHeight - 400;
+          height = window.innerHeight - 462;
+        console.log(window.innerHeight)
 
+        // width = width <= 200 ? 300 : width;
+        // d3.select(element).remove();
         var svg = d3.select(element)
           .append("svg")
-          .attr("width", width+200)
-          .attr("height", height + 150)
+          .attr("width", width+(width <= 200 ? 250 : 100))
+          .attr("height", height+150)
           .attr("margin", 300)
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + (margin.top+20) + ")");
@@ -77,7 +80,7 @@
 
         var yAxis = d3.axisLeft()
           .scale(y)
-          .ticks(3)
+          .ticks(5)
           .tickSize(-width, 0, 0)
           .tickFormat(function (d) {
             return d
