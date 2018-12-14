@@ -8,18 +8,21 @@
   Controller.$inject = [
     '$filter',
     'otusjs.deploy.LoadingScreenService',
+    'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.monitoring.business.LaboratoryMonitoringService',
     'otusjs.otus.uxComponent.BarChartsVerticalFactory',
     'otusjs.otus.uxComponent.BarChartsHorizontalFactory'
   ];
 
-  function Controller($filter, LoadingScreenService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
+  function Controller($filter, LoadingScreenService, DashboardContextService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
     const PENDING = 'pending';
     const ORPHAN = 'orphan';
 
+    var defaultCenter = '';
     var self = this;
     self.centers = [];
+    self.centerFilter = '';
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -31,6 +34,7 @@
     self.openTabByExam = openTabByExam;
     self.downloadCSVFile = downloadCSVFile;
     self.onFilter = onFilter;
+    self.loadData = loadData;
     /* Lifecycle methods */
     function onInit() {
       FieldCenterRestService.loadCenters().then(function (result) {
@@ -38,18 +42,19 @@
         result.forEach(function (fieldCenter) {
           self.centers.push(fieldCenter.acronym)
         });
+        _setUserFieldCenter();
       });
     };
 
     function openTabPendingResultsByAliquots() {
       if (!$('#pending-results-chart svg').length) {
-        _loadDataPendingResultsByAliquots();
+        _loadDataPendingResultsByAliquots(defaultCenter);
       }
     };
 
     function openTabQuantitativeByTypeOfAliquots() {
       if (!$('#quantitative-by-aliquots svg').length) {
-        _loadDataQuantitativeByTypeOfAliquots();
+        _loadDataQuantitativeByTypeOfAliquots(defaultCenter);
       }
     };
 
@@ -61,20 +66,20 @@
 
     function openTabStorageByAliquots() {
       if (!$('#storage-by-exam svg').length) {
-        _loadStorageByAliquots();
+        _loadStorageByAliquots(defaultCenter);
       }
     };
 
     function openTabByExam() {
       if (!$('#by-exam svg').length) {
-        _loadResultsByExam();
+        _loadResultsByExam(defaultCenter);
       }
     };
 
     function downloadCSVFile(current) {
       switch (current) {
         case PENDING:
-          LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots('RS');
+          LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots(self.centerFilter);
         case ORPHAN:
           LaboratoryMonitoringService.downloadCSVFileOfOrphansByExam();
       }
@@ -84,13 +89,37 @@
 
     };
 
-    function _loadDataByCenter() {
+    function loadData(center) {
+      console.log(center);
+      self.centerFilter = center;
+      if (!$('#pending-results-chart svg').length) {
+        _loadDataPendingResultsByAliquots(center);
+      } else if (!$('#quantitative-by-aliquots svg').length) {
+        _loadDataQuantitativeByTypeOfAliquots(center);
+      } else if (!$('#storage-by-exam svg').length) {
+        _loadStorageByAliquots(center);
+      } else if (!$('#by-exam svg').length) {
+        _loadResultsByExam(center);
+      }
+    };
 
+    function _setUserFieldCenter() {
+      DashboardContextService
+        .getLoggedUser()
+        .then(function (userData) {
+          self.userHaveCenter = !!userData.fieldCenter.acronym;
+          if (self.userHaveCenter) {
+            self.centerFilter = userData.fieldCenter.acronym;
+          } else {
+            self.centerFilter = self.centers[0];
+          };
+          defaultCenter = self.centerFilter;
+        });
     };
 
     function _loadDataPendingResultsByAliquots(center) {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots('RS')
+      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center)
         .then(function (response) {
           var colors = ['#88d8b0', '#ff6f69'];
           var element = '#pending-results-chart';
@@ -103,7 +132,7 @@
 
     function _loadDataQuantitativeByTypeOfAliquots(center) {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots('RS')
+      LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots(center)
         .then(function (response) {
           var colors = ['#b33040', '#d25c4d', '#f2b447'];
           var element = '#quantitative-by-aliquots';
@@ -129,7 +158,7 @@
 
     function _loadStorageByAliquots(center) {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataOfStorageByAliquots('RS')
+      LaboratoryMonitoringService.getDataOfStorageByAliquots(center)
         .then(function (response) {
           var colors = ['#bae1ff'];
           var element = '#storage-by-exam';
@@ -142,7 +171,7 @@
 
     function _loadResultsByExam(center) {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataByExam('RS')
+      LaboratoryMonitoringService.getDataByExam(center)
         .then(function (response) {
           var colors = ['#bae1ff'];
           var element = '#result-by-exam';

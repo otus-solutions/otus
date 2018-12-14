@@ -25,7 +25,7 @@
                 <md-tooltip>
                   Centros
                 </md-tooltip>
-                <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadExamDescriptors(center)">
+                <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData(center)">
                   {{center}}
                 </md-option>
               </md-select>
