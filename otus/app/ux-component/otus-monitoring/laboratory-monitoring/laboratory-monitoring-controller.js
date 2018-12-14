@@ -32,7 +32,6 @@
     self.openTabStorageByAliquots = openTabStorageByAliquots;
     self.openTabByExam = openTabByExam;
     self.downloadCSVFile = downloadCSVFile;
-    self.onFilter = onFilter;
     self.loadData = loadData;
     /* Lifecycle methods */
     function onInit() {
@@ -87,6 +86,7 @@
     function loadData(center) {
       self.centerFilter = center;
       if (!$('#pending-results-chart svg').length) {
+        d3.selectAll('#pending-results-chart svg').remove();
         _loadDataPendingResultsByAliquots(center);
       } else if (!$('#quantitative-by-aliquots svg').length) {
         _loadDataQuantitativeByTypeOfAliquots(center);
@@ -111,11 +111,13 @@
     };
 
     function _loadDataPendingResultsByAliquots(center) {
+      console.log(center);
       LoadingScreenService.start();
       LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center)
         .then(function (response) {
           var colors = ['#88d8b0', '#ff6f69'];
           var element = '#pending-results-chart';
+          console.log(response);
           BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {

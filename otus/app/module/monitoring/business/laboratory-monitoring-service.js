@@ -8,10 +8,11 @@
   Service.$inject = [
     '$q',
     'otusjs.deploy.LoadingScreenService',
+    'otusjs.model.chart.VerticalBarFactory',
     'otusjs.monitoring.repository.MonitoringCollectionService'
   ];
 
-  function Service($q, LoadingScreenService, MonitoringCollectionService) {
+  function Service($q, LoadingScreenService, VerticalBarFactory, MonitoringCollectionService) {
     var self = this;
     /* Public methods */
     self.getDataOfPendingResultsByAliquots = getDataOfPendingResultsByAliquots;
@@ -25,9 +26,12 @@
     function getDataOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfPendingResultsByAliquots(center).then(function (response) {
-        defer.resolve(response);
+        if (response)
+          defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: "Recebidos", waiting: "Aguardando" }));
+        else
+          defer.resolve([]);
       }).catch(function () {
-        defer.reject()
+        defer.reject();
       });
 
       return defer.promise;
@@ -36,9 +40,12 @@
     function getDataQuantitativeByTypeOfAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataQuantitativeByTypeOfAliquots(center).then(function (response) {
-        defer.resolve(response);
+        if (response)
+          defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: "Recebidos", prepared: "Preparados", transported: "Transportados" }));
+        else
+          defer.resolve([]);
       }).catch(function () {
-        defer.reject()
+        defer.reject();
       });
 
       return defer.promise;
@@ -49,7 +56,7 @@
       MonitoringCollectionService.getDataOrphanByExams().then(function (response) {
         defer.resolve(response);
       }).catch(function () {
-        defer.reject()
+        defer.reject();
       });
 
       return defer.promise;
@@ -58,9 +65,12 @@
     function getDataOfStorageByAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfStorageByAliquots(center).then(function (response) {
-        defer.resolve(response);
+        if (response)
+          defer.resolve(VerticalBarFactory.fromJsonObject(response, { storage: "Armazenamento" }));
+        else
+          defer.resolve([]);
       }).catch(function () {
-        defer.reject()
+        defer.reject();
       });
 
       return defer.promise;
@@ -69,9 +79,12 @@
     function getDataByExam(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataByExam(center).then(function (response) {
-        defer.resolve(response);
+        if (response)
+          defer.resolve(VerticalBarFactory.fromJsonObject(response, { results: "Resultados de Exame" }));
+        else
+          defer.resolve([]);
       }).catch(function () {
-        defer.reject()
+        defer.reject();
       });
 
       return defer.promise;

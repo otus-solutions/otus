@@ -172,7 +172,8 @@
           return remoteStorage
             .getDataOfPendingResultsByAliquots(center)
             .then(function (response) {
-              request.resolve(VerticalBarFactory.fromJsonObject(response.data.pendingResultsByAliquot, { received: "Recebidos", waiting: "Aguardando" }));
+              console.log(response.data.pendingResultsByAliquot);
+              request.resolve(response.data.pendingResultsByAliquot);
             })
             .catch(function (e) {
               request.reject(e);
@@ -190,7 +191,7 @@
           return remoteStorage
             .getDataQuantitativeByTypeOfAliquots(center)
             .then(function (response) {
-              request.resolve(VerticalBarFactory.fromJsonObject(response.data.quantitativeByTypeOfAliquots, { received: "Recebidos", prepared: "Preparados", transported: "Transportados" }));
+              request.resolve(response.data.quantitativeByTypeOfAliquots);
             })
             .catch(function (e) {
               request.reject(e);
@@ -226,7 +227,7 @@
           return remoteStorage
             .getDataOfStorageByAliquots(center)
             .then(function (response) {
-              request.resolve(VerticalBarFactory.fromJsonObject(response.data, { storage: "Armazenamento" }));
+              request.resolve(response.data);
             })
             .catch(function (e) {
               request.reject(e);
@@ -244,7 +245,7 @@
           return remoteStorage
             .getDataByExam(center)
             .then(function (response) {
-              request.resolve(VerticalBarFactory.fromJsonObject(response.data, { results: "Resultados de Exame" }));
+              request.resolve(response.data);
             })
             .catch(function (e) {
               request.reject(e);
