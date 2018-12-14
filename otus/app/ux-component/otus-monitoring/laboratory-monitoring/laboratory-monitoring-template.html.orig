@@ -15,6 +15,28 @@
   <md-content layout flex>
     <md-content layout="column" layout-padding flex>
       <md-tabs md-border-bottom flex layout-fill>
+<<<<<<< HEAD
+        <md-tab label="Pendências de Resultados" id="pendingButton" ng-click="$ctrl.openTabPendingResultsByAliquots()"
+          layout-padding>
+          <div layout="row" layout-margin="" layout-align="center center" ng-init="$ctrl.openTabPendingResultsByAliquots()">
+            <h1 class="md-no-sticky" layout-margin="" layout-padding>Pendências de Resultados</h1>
+            <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px">
+              <label class="md-subheader">Centro:</label>
+              <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                <md-tooltip>
+                  Centros
+                </md-tooltip>
+                <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData(center)">
+                  {{center}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <span flex></span>
+            <md-button ng-click="$ctrl.downloadCSVFile('pending')" class="md-icon-button md-raised">
+              <md-icon>get_app</md-icon>
+              <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+            </md-button>
+=======
         <md-tab label="Pendências de Resultados" id="pendingButton" ng-click="$ctrl.openTabPendingResultsByAliquots()" layout-padding>
           <div layout="row" layout-margin="" layout-align="center center" ng-init="$ctrl.openTabPendingResultsByAliquots()" layout-fill flex>
             <md-card flex layout-fill layout-padding="">
@@ -28,7 +50,7 @@
                     <md-tooltip>
                       Centros
                     </md-tooltip>
-                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData(center)">
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadExamDescriptors(center)">
                       {{center}}
                     </md-option>
                   </md-select>
@@ -41,8 +63,9 @@
                 </div>
               </div>
             </md-card>
+>>>>>>> f2af9efc3b5a3572f97bc5115f287bfd9b7fe2ef
           </div>
-          <md-content id="pending-results-chart" flex></md-content>
+          <div id="pending-results-chart" flex></div>
         </md-tab>
         <md-tab label="Quantidade por tipo de alíquotas" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
           <div layout="row" layout-margin="" layout-align="center center" layout-fill flex>
@@ -57,7 +80,7 @@
                       <md-tooltip>
                         Centros
                       </md-tooltip>
-                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData(center)">
+                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadExamDescriptors(center)">
                         {{center}}
                       </md-option>
                     </md-select>
@@ -103,7 +126,7 @@
                       <md-tooltip>
                         Centros
                       </md-tooltip>
-                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData(center)">
+                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadExamDescriptors(center)">
                         {{center}}
                       </md-option>
                     </md-select>
@@ -132,7 +155,7 @@
                       <md-tooltip>
                         Centros
                       </md-tooltip>
-                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData(center)">
+                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadExamDescriptors(center)">
                         {{center}}
                       </md-option>
                     </md-select>

@@ -19,7 +19,6 @@
     const PENDING = 'pending';
     const ORPHAN = 'orphan';
 
-    var defaultCenter = '';
     var self = this;
     self.centers = [];
     self.centerFilter = '';
@@ -48,13 +47,13 @@
 
     function openTabPendingResultsByAliquots() {
       if (!$('#pending-results-chart svg').length) {
-        _loadDataPendingResultsByAliquots(defaultCenter);
+        _loadDataPendingResultsByAliquots(self.centerFilter);
       }
     };
 
     function openTabQuantitativeByTypeOfAliquots() {
       if (!$('#quantitative-by-aliquots svg').length) {
-        _loadDataQuantitativeByTypeOfAliquots(defaultCenter);
+        _loadDataQuantitativeByTypeOfAliquots(self.centerFilter);
       }
     };
 
@@ -66,13 +65,13 @@
 
     function openTabStorageByAliquots() {
       if (!$('#storage-by-exam svg').length) {
-        _loadStorageByAliquots(defaultCenter);
+        _loadStorageByAliquots(self.centerFilter);
       }
     };
 
     function openTabByExam() {
       if (!$('#by-exam svg').length) {
-        _loadResultsByExam(defaultCenter);
+        _loadResultsByExam(self.centerFilter);
       }
     };
 
@@ -85,12 +84,7 @@
       }
     };
 
-    function onFilter() {
-
-    };
-
     function loadData(center) {
-      console.log(center);
       self.centerFilter = center;
       if (!$('#pending-results-chart svg').length) {
         _loadDataPendingResultsByAliquots(center);
@@ -113,7 +107,6 @@
           } else {
             self.centerFilter = self.centers[0];
           };
-          defaultCenter = self.centerFilter;
         });
     };
 
