@@ -18,10 +18,11 @@
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.exams.ExamLotService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast, $mdDialog, laboratoryContextService, ExamLotService, ApplicationStateService) {
+  function Controller($mdToast, $mdDialog, laboratoryContextService, ExamLotService, ApplicationStateService, DialogService) {
     var self = this;
     var _confirmCancel;
     var _deleteAlreadyUsedAliquotsDialog;
@@ -90,7 +91,7 @@
     }
 
     function cancel() {
-      $mdDialog.show(_confirmCancel).then(function() {
+      DialogService.showDialog(_confirmCancel).then(function() {
         self.updateLotStateData();
         ApplicationStateService.activateExamsLotsManagerList();
       });
@@ -117,13 +118,12 @@
     }
 
     function _backendErrorAliquotsAlreadyUsed(aliquotsArray){
-      _deleteAlreadyUsedAliquotsDialog.textContent(
-        'A(s) aliquota(s): '
+      _deleteAlreadyUsedAliquotsDialog.textDialog = 'A(s) aliquota(s): '
         + _convertArrayToStringIncludesLastPosition(aliquotsArray,' e ')
-        + ' estão em outro(s) lote(s), deseja remove-la(s) do lote atual?'
-      );
+        + ' estão em outro(s) lote(s), deseja remove-la(s) do lote atual?';
 
-      $mdDialog.show(_deleteAlreadyUsedAliquotsDialog).then(function() {
+
+      DialogService.showDialog(_deleteAlreadyUsedAliquotsDialog).then(function() {
         self.selectedAliquots = aliquotsArray;
         removeAliquots()
       })
@@ -167,19 +167,40 @@
 
 
     function _buildDialogs() {
-      _confirmCancel = $mdDialog.confirm()
-        .title('Confirmar cancelamento:')
-        .textContent('As alterações realizadas no lote serão descartadas')
-        .ariaLabel('Confirmação de cancelamento')
-        .ok('Ok')
-        .cancel('Voltar');
+       self.getButtons = getButtons;
 
-      _deleteAlreadyUsedAliquotsDialog = $mdDialog.confirm()
-        .title('Aliquota(s) utilizada(s) em outro(s) Lote(s), remover aliquotas?')
-        .textContent('A(s) aliquota(s): "asd5a4s5sa4a" estão em outro(s) lote(s), deseja remove-la(s) do lote atual?')
-        .ariaLabel('Confirmação de cancelamento')
-        .ok('Ok')
-        .cancel('Voltar');
+      self.buttons = [
+        {
+          message:'Ok',
+          action:function(){$mdDialog.hide()},
+          class:'md-raised md-primary'
+        },
+        {
+          message:'Voltar',
+          action:function(){$mdDialog.cancel()},
+          class:'md-raised md-no-focus'
+        }
+      ];
+
+      function getButtons(){
+        return self.buttons;
+      }
+
+      _confirmCancel = {
+        dialogToTitle:'Cancelamento',
+        titleToText:'Confirmar cancelamento:',
+        textDialog:'As alterações realizadas no lote serão descartadas',
+        ariaLabel:'Confirmação de cancelamento',
+        buttons: getButtons()
+      };
+
+      _deleteAlreadyUsedAliquotsDialog = {
+        dialogToTitle:'Cancelamento',
+        titleToText:'Aliquota(s) utilizada(s) em outro(s) Lote(s), remover aliquotas?',
+        textDialog:'A(s) aliquota(s): "asd5a4s5sa4a" estão em outro(s) lote(s), deseja remove-la(s) do lote atual?',
+        ariaLabel:'Confirmação de cancelamento',
+        buttons: getButtons()
+      };
     }
   }
 }());

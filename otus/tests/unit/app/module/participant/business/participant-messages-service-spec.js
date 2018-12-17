@@ -12,72 +12,10 @@ describe('participant-messages-service Test', function() {
   });
 
   beforeEach(function () {
-    Mock.mdDialog = {
-      confirm: function () {
+    Mock.DialogShowService = {
+      showDialog: function (dialog) {
         var self = this;
-
-        self.title = function(){
-          var vm = this;
-          return vm;
-        };
-        self.textContent = function(msg){
-          var vm = this;
-          vm.msg = msg;
-          return vm;
-        };
-        self.htmlContent = function(msg){
-          var vm = this;
-          vm.msg = msg;
-          return vm;
-        };
-        self.ariaLabel = function(){
-          var vm = this;
-          return vm;
-        };
-        self.ok = function(){
-          var vm = this;
-          return vm;
-        };
-        self.cancel = function(){
-          var vm = this;
-          return vm;
-        };
-        return self;
-      },
-      alert: function () {
-        var self = this;
-
-        self.title = function(){
-          var vm = this;
-          return vm;
-        };
-        self.textContent = function(msg){
-          var vm = this;
-          vm.msg = msg;
-          return vm;
-        };
-        self.htmlContent = function(msg){
-          var vm = this;
-          vm.msg = msg;
-          return vm;
-        };
-        self.ariaLabel = function(){
-          var vm = this;
-          return vm;
-        };
-        self.ok = function(){
-          var vm = this;
-          return vm;
-        };
-        self.cancel = function(){
-          var vm = this;
-          return vm;
-        };
-        return self;
-      },
-      show: function (confirm) {
-        var self = this;
-        self.test = confirm;
+        self.test = dialog;
         return Promise.resolve(self);
       }
     };
@@ -113,63 +51,63 @@ describe('participant-messages-service Test', function() {
       }
     };
     angular.mock.module(function ($provide) {
-      $provide.value("$mdDialog", Mock.mdDialog);
-      $provide.value("$mdToast", Mock.mdToast);
+      $provide.value('otusjs.application.dialog.DialogShowService', Mock.DialogShowService);
+      $provide.value('$mdDialog', {});
+      $provide.value('$mdToast', Mock.mdToast);
     });
   });
 
   beforeEach(function () {
     inject(function (_$injector_) {
 
-      service = _$injector_.get('otusjs.participant.business.ParticipantMessagesService');
+      Injections = {
+        $mdDialog: _$injector_.get('$mdDialog'),
+        DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService')
+      };
+
+      service = _$injector_.get('otusjs.participant.business.ParticipantMessagesService',Injections);
     });
     mockMessages();
-    spyOn(Mock.mdDialog, 'show').and.callThrough();
+    spyOn(Mock.DialogShowService, 'showDialog').and.callThrough();
     spyOn(Mock.mdToast, 'show').and.callThrough();
   });
 
   it('should show a clear dialog with message', function (done) {
-    service.showClearDialog();
-    expect(Mock.mdDialog.show).toHaveBeenCalledTimes(1);
-    Mock.mdDialog.show().then(function (result) {
-      expect(result.confirm().msg).toEqual(SHOW_CLEAR_DIALOG_MESSAGE);
+    service.showClearDialog(SHOW_CLEAR_DIALOG_MESSAGE).then(function (result) {
+      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(result.test.textDialog).toEqual(SHOW_CLEAR_DIALOG_MESSAGE);
       done();
     });
   });
 
-
   it('should show a save dialog with message', function (done) {
-    service.showSaveDialog();
-    expect(Mock.mdDialog.show).toHaveBeenCalledTimes(1);
-    Mock.mdDialog.show().then(function (result) {
-      expect(result.confirm().msg).toEqual(SHOW_SAVE_DIALOG_MESSAGE);
+    service.showSaveDialog(SHOW_SAVE_DIALOG_MESSAGE).then(function (result) {
+      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(result.test.textDialog).toEqual(SHOW_SAVE_DIALOG_MESSAGE);
       done();
     });
   });
 
   it('should show a not save dialog without message', function (done) {
-    service.showNotSave("");
-    expect(Mock.mdDialog.show).toHaveBeenCalledTimes(1);
-    Mock.mdDialog.show().then(function (result) {
-      expect(result.confirm().msg).toEqual(ERROR_MESSAGE_WHEN_EMPTY);
+    service.showNotSave(ERROR_MESSAGE_WHEN_EMPTY).then(function (result) {
+      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(result.test.textDialog).toEqual(ERROR_MESSAGE_WHEN_EMPTY);
       done();
     });
   });
 
   it('should show a not save dialog erro message without recruitment number', function (done) {
-    service.showNotSave(Mock.errorMessage);
-    expect(Mock.mdDialog.show).toHaveBeenCalledTimes(1);
-    Mock.mdDialog.show().then(function (result) {
-      expect(result.confirm().msg).toEqual(Mock.errorMessage);
+    service.showNotSave(Mock.errorMessage).then(function (result) {
+      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(result.test.textDialog).toEqual(Mock.errorMessage);
       done();
     });
   });
 
   it('should show a not save dialog erro message with recruitment number', function (done) {
-    service.showNotSave(Mock.errorMessageWithRN);
-    expect(Mock.mdDialog.show).toHaveBeenCalledTimes(1);
-    Mock.mdDialog.show().then(function (result) {
-      expect(result.confirm().msg).toEqual(ERROR_MESSAGE_WITH_NUMBER);
+    service.showNotSave(Mock.errorMessageWithRN).then(function (result) {
+      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(result.test.textDialog).toEqual(ERROR_MESSAGE_WITH_NUMBER);
       done();
     });
   });
@@ -184,8 +122,6 @@ describe('participant-messages-service Test', function() {
       done();
     });
   });
-
-
 
   function mockMessages() {
     Mock.message = "Message";

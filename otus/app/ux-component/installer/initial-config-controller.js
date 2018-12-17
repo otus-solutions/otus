@@ -7,6 +7,7 @@
 
   Controller.$inject = [
     'otusjs.application.state.ApplicationStateService',
+    'otusjs.application.dialog.DialogShowService',
     'OtusRestResourceService',
     'RestResourceService',
     '$scope',
@@ -15,7 +16,7 @@
     '$mdDialog'
   ];
 
-  function Controller(ApplicationStateService, OtusRestResourceService, RestResourceService, $scope, $mdToast, $q, $mdDialog) {
+  function Controller(ApplicationStateService, DialogService, OtusRestResourceService, RestResourceService, $scope, $mdToast, $q, $mdDialog) {
     var MESSAGE_CONFIGURATIONS_ERROR = 'Erro ao adicionar novas configurações. Contate a equipe de desenvolvimento';
     var MESSAGE_SUCCESS = 'Suas configurações foram realizadas com sucesso! Você vai ser redirecionado para a tela de login.';
     var installerResource;
@@ -30,6 +31,7 @@
 
     function init() {
       installerResource = OtusRestResourceService.getOtusInstallerResource();
+
     }
 
     function register(project) {
@@ -101,13 +103,20 @@
     }
 
     function showConfirmationDialog() {
-      var alert = $mdDialog.alert()
-        .title('Informação')
-        .content(MESSAGE_SUCCESS)
-        .ok('ok');
+      var alert = {
+        dialogToTitle:'Atenção',
+        titleToText:'Informação',
+        textDialog:MESSAGE_SUCCESS,
+        buttons: [
+          {
+            message:'ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          }
+        ]
+      };
 
-      $mdDialog
-        .show(alert)
+      DialogService.showDialog(alert)
         .finally(function() {
           // ApplicationStateService.activateLogin();
         });

@@ -11,10 +11,11 @@
   Controller.$inject = [
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.application.state.ApplicationStateService',
-    '$mdDialog'
+    '$mdDialog',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller(ActivityService, ApplicationStateService, $mdDialog) {
+  function Controller(ActivityService, ApplicationStateService, $mdDialog, DialogService) {
     var self = this;
     var _selectedActivities = [];
     var _exitDialog;
@@ -25,11 +26,19 @@
     self.$onInit = onInit;
 
     function onInit() {
-      _exitDialog = $mdDialog.alert()
-        .title('ATENÇÃO!')
-        .textContent('Você deve selecionar ao menos uma atividade.')
-        .ariaLabel('Alerta de Erro')
-        .ok('Fechar');
+      _exitDialog = {
+        dialogToTitle:'Alerta',
+        titleToText:'ATENÇÃO!',
+        textDialog:'Você deve selecionar ao menos uma atividade.',
+        ariaLabel:'Alerta de Erro',
+        buttons: [
+          {
+            message:'Fechar',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
     }
 
     function addActivities() {
@@ -37,10 +46,10 @@
         _selectedActivities = [];
         ApplicationStateService.activateActivityCategories();
       } else {
-        $mdDialog.show(_exitDialog);
+        DialogService.showDialog(_exitDialog);
       }
     }
-    
+
     function catchActivity(activity) {
       var activityIndex = _selectedActivities.indexOf(activity.surveyTemplate.identity.acronym);
       if (activityIndex !== -1) {

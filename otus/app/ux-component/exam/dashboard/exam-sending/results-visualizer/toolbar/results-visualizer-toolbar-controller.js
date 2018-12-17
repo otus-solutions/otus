@@ -12,10 +12,11 @@
     'otusjs.laboratory.business.project.sending.AliquotErrorReportingService',
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($scope, $mdDialog, SendingExamService, AliquotErrorReportingService, ProjectContextService, ApplicationStateService, LoadingScreenService) {
+  function Controller($scope, $mdDialog, SendingExamService, AliquotErrorReportingService, ProjectContextService, ApplicationStateService, LoadingScreenService, DialogService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_DOES_MATCH_EXAM = "Data Validation Fail: Aliquot does not match exam"
     const ALIQUOT_NOT_FOUND = "Data Validation Fail: Aliquot not found";
@@ -77,7 +78,7 @@
           $scope.$$postDigest(function () {
             self.dynamicDataTableChange(self.sendingExam.getExamList());
             LoadingScreenService.finish();
-            $mdDialog.show(aliquotError).then(function () { });
+            DialogService.showDialog(aliquotError).then(function () { });
           });
         });
     }
@@ -89,12 +90,14 @@
         _aliquotErrorNotFound(reason);
       } else if (reason.data.MESSAGE === EMPTY_LOT) {
         aliquotError
-          .title('O lote não possue resultados')
-          .textContent('Um lote vazio não pode ser enviado.');
+          .dialogToTitle = 'O lote não possui resultados';
+        aliquotError
+          .textDialog ='Um lote vazio não pode ser enviado.';
       } else {
         aliquotError
-          .title('Falha no envio do arquivo')
-          .textContent('Ocorreu algum problema ao enviar os resultados. Por favor, tente novamente em alguns minutos.');
+          .dialogToTitle ='Falha no envio do arquivo';
+        aliquotError
+          .textDialog ='Ocorreu algum problema ao enviar os resultados. Por favor, tente novamente em alguns minutos.';
       }
     }
 
@@ -102,16 +105,18 @@
       self.disabledSave = true;
       _reportAliquotsWithProblems(reason);
       aliquotError
-        .title('Aliquota(s) não correspondente(s) ao(s) exame(s)')
-        .textContent('O envio será impossibilitado. Clique em exportar relatório de erros para obter mais detalhes');
+        .dialogToTitle ='Aliquota(s) não correspondente(s) ao(s) exame(s)';
+      aliquotError
+        .textDialog ='O envio será impossibilitado. Clique em exportar relatório de erros para obter mais detalhes';
     }
 
     function _aliquotErrorNotFound(reason) {
       self.sendingExam.examSendingLot.forcedSave = true;
       _reportAliquotsWithProblems(reason);
       aliquotError
-        .title('Aliquota(s) não encontrada(s)')
-        .textContent('Se desejar você pode forçar o envio, clicando novamente em salvar.');
+        .dialogToTitle ='Aliquota(s) não encontrada(s)';
+      aliquotError
+        .textDialog ='Se desejar você pode forçar o envio, clicando novamente em salvar.';
     }
 
     function _reportAliquotsWithProblems(reason) {
@@ -121,16 +126,27 @@
     }
 
     function _buildMessageForceSendOfAliquots() {
-      _confirmForceSendOfAliquots = $mdDialog.confirm()
-        .title('Atenção! Aliquota(s) não encontrada(s)')
-        .textContent('Você deseja forçar o sistema a salvar?')
-        .ariaLabel('Confirmar o desejo de forçar o sistema a salvar aliquota(s) não encontrada(s)')
-        .ok('Sim')
-        .cancel('Não');
+       _confirmForceSendOfAliquots = {
+         dialogToTitle:'Atenção! Aliquota(s) não encontrada(s)',
+         textDialog:'Você deseja forçar o sistema a salvar?',
+         ariaLabel:'Confirmar o desejo de forçar o sistema a salvar aliquota(s) não encontrada(s)',
+         buttons: [
+           {
+             message:'Sim',
+             action:function(){$mdDialog.hide()},
+             class:'md-raised md-primary'
+           },
+           {
+             message:'Não',
+             action:function(){$mdDialog.cancel()},
+             class:'md-raised md-no-focus'
+           }
+         ]
+       };
     }
 
     function _forceSendOfAliquots() {
-      $mdDialog.show(_confirmForceSendOfAliquots).then(function () {
+     DialogService.showDialog(_confirmForceSendOfAliquots).then(function () {
         Promise.resolve()
           .then(_loadWait)
           .then(function () {
@@ -140,9 +156,18 @@
     }
 
     function _buildDialogs() {
-      aliquotError = $mdDialog.alert()
-        .ariaLabel('Diálogo de alerta')
-        .ok('Ok');
+      aliquotError = {
+         dialogToTitle:'Alerta',
+         textDialog:'',
+         ariaLabel:'Diálogo de alerta',
+         buttons: [
+           {
+             message:'Ok',
+             action:function(){$mdDialog.hide()},
+             class:'md-raised md-primary'
+           }
+         ]
+       };
     }
   }
 }());
