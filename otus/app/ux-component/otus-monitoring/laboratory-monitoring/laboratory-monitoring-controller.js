@@ -18,6 +18,8 @@
   ];
 
   function Controller($q, $filter, SessionContextService, LoadingScreenService, DashboardContextService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
+    const MESSAGE_OF_DATA_NOT_FOUND = 'Atualmente não há registros a serem exibidos.';
+    const MESSAGE_OF_GENERIC_ERROR = 'Não conseguimos apresentar os dados, tente novamente mais tarde.';
     const DATA_NOT_FOUND = 'Data Not Found';
     const PENDING = 'pending';
     const QUANTITATIVE = 'quantitative';
@@ -29,8 +31,7 @@
     self.error = false;
     self.centers = [];
     self.centerFilter = '';
-    self.MESSAGE_OF_DATA_NOT_FOUND = 'Atualmente não há registros a serem exibidos!';
-    self.MESSAGE_OF_GENERIC_ERROR = '';
+    self.message = '';
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -94,14 +95,10 @@
     };
 
     function downloadCSVFile(current) {
-      switch (current) {
-        case PENDING:
-          LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots(self.centerFilter);
-          break;
-        case ORPHAN:
-          LaboratoryMonitoringService.downloadCSVFileOfOrphansByExam();
-          break;
-      }
+      if (current === PENDING)
+        LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots(self.centerFilter);
+      else
+        LaboratoryMonitoringService.downloadCSVFileOfOrphansByExam();
     };
 
     function loadData(currentTab, center) {
@@ -220,10 +217,10 @@
 
     function _defineErrorMessage(response) {
       if (response.data.MESSAGE === DATA_NOT_FOUND) {
-        self.error = true;
+        self.message = MESSAGE_OF_DATA_NOT_FOUND;
         return true;
       } else if (response.data.MESSAGE) {
-        // TODO: Mensagem de erro genérica!
+        self.message = MESSAGE_OF_GENERIC_ERROR;
       }
       return false;
     };
