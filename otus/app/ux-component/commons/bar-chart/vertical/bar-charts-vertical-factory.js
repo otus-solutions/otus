@@ -201,6 +201,35 @@
           .style("text-anchor", "middle")
           .attr("font-size", "12px")
           .attr("font-weight", "bold");
+
+        var curYPos = 0;
+        var curXPos = 0;
+        var curDown = false;
+
+        d3.selectAll("svg").on("mousedown", function () {
+          curDown = true;
+          curYPos = d3.event.offsetY;
+          curXPos = d3.event.offsetX;
+          d3.selectAll("svg").style("cursor", "all-scroll");
+          d3.event.preventDefault();
+
+
+        })
+          .on("mouseup", function () {
+            curDown = false;
+            d3.selectAll("svg").style("cursor", "grab");
+          })
+          .on("mouseout", function () {
+            curDown = false;
+          }).on("mousemove", function () {
+          if (curDown === true) {
+            $("md-content").scrollTop(parseInt($("md-content").scrollTop() + (curYPos - d3.event.pageY)));
+            $("md-content").scrollLeft(parseInt($("md-content").scrollLeft() + (curXPos - d3.event.pageX)));
+          }
+        }).style("cursor", 'grab');
+
+
+
       }
     }
 
