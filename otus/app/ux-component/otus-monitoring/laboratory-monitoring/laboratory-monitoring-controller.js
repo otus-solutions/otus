@@ -108,17 +108,29 @@
       self.centerFilter = center;
       switch (currentTab) {
         case PENDING:
+          d3.selectAll('#storage-by-exam svg').remove();
+          d3.selectAll('#quantitative-by-aliquots svg').remove();
+          d3.selectAll('#results-by-exam svg').remove();
           d3.selectAll('#pending-results-chart svg').remove();
           _loadDataPendingResultsByAliquots(center);
           break;
         case QUANTITATIVE:
+          d3.selectAll('#pending-results-chart svg').remove();
+          d3.selectAll('#storage-by-exam svg').remove();
+          d3.selectAll('#results-by-exam svg').remove();
           d3.selectAll('#quantitative-by-aliquots svg').remove();
           _loadDataQuantitativeByTypeOfAliquots(center);
           break;
         case STORAGE:
+          d3.selectAll('#pending-results-chart svg').remove();
+          d3.selectAll('#results-by-exam svg').remove();
+          d3.selectAll('#quantitative-by-aliquots svg').remove();
           d3.selectAll('#storage-by-exam svg').remove();
           _loadStorageByAliquots(center);
         case EXAM:
+          d3.selectAll('#pending-results-chart svg').remove();
+          d3.selectAll('#quantitative-by-aliquots svg').remove();
+          d3.selectAll('#storage-by-exam svg').remove();
           d3.selectAll('#results-by-exam svg').remove();
           _loadResultsByExam(center);
           break;
@@ -199,7 +211,7 @@
         .then(function (response) {
           var colors = ['#88d8b0'];
           var element = '#results-by-exam';
-          BarChartsVerticalFactory.create(response, element, colors);
+          BarChartsHorizontalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
           LoadingScreenService.finish();

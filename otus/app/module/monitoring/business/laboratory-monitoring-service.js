@@ -70,7 +70,7 @@
     function getDataByExam(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataByExam(center).then(function (response) {
-        defer.resolve(VerticalBarFactory.fromJsonObject(response, { results: 'Resultados de Exame' }));
+        defer.resolve(response);
       }).catch(function (e) {
         defer.reject(e);
       });
