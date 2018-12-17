@@ -23,10 +23,30 @@
       name: STATE.LABORATORY_MONITORING_DASHBOARD,
       url: '/' + STATE.LABORATORY_MONITORING_DASHBOARD,
       template: '<otus-laboratory-monitoring-dashboard layout="column" flex></otus-laboratory-monitoring-dashboard>',
+      resolve: {
+        resolve: _resolve
+      },
       data: {
         redirect: _redirect
       }
     };
+
+    function _resolve($q, Application, SessionContextService, DashboardContextService) {
+      var deferred = $q.defer();
+
+      Application.isDeployed()
+        .then(function () {
+          try {
+            DashboardContextService.restore();
+            SessionContextService.restore();
+            deferred.resolve();
+          } catch (e) {
+            deferred.resolve(STATE.LOGIN);
+          }
+        });
+
+      return deferred.promise;
+    }
 
     function _redirect($q, Application) {
       var deferred = $q.defer();
@@ -43,6 +63,13 @@
 
       return deferred.promise;
     }
+
+    _resolve.$inject = [
+      '$q',
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.session.core.ContextService',
+      'otusjs.otus.dashboard.core.ContextService',
+    ]
 
     _redirect.$inject = [
       '$q',

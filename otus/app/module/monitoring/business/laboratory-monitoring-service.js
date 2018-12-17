@@ -26,12 +26,9 @@
     function getDataOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfPendingResultsByAliquots(center).then(function (response) {
-        if (response)
-          defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: "Recebidos", waiting: "Aguardando" }));
-        else
-          defer.resolve([]);
-        }).catch(function (e) {
-          defer.reject(e);
+        defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: 'Recebidos', waiting: 'Aguardando' }));
+      }).catch(function (e) {
+        defer.reject(e);
       });
 
       return defer.promise;
@@ -40,10 +37,7 @@
     function getDataQuantitativeByTypeOfAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataQuantitativeByTypeOfAliquots(center).then(function (response) {
-        if (response)
-          defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: "Recebidos", prepared: "Preparados", transported: "Transportados" }));
-        else
-          defer.resolve([]);
+        defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: 'Recebidos', prepared: 'Preparados', transported: 'Transportados' }));
       }).catch(function (e) {
         defer.reject(e);
       });
@@ -65,12 +59,9 @@
     function getDataOfStorageByAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfStorageByAliquots(center).then(function (response) {
-        if (response)
-          defer.resolve(VerticalBarFactory.fromJsonObject(response, { storage: "Armazenamento" }));
-        else
-          defer.resolve([]);
-        }).catch(function (e) {
-          defer.reject(e);
+        defer.resolve(VerticalBarFactory.fromJsonObject(response, { storage: 'Armazenamento' }));
+      }).catch(function (e) {
+        defer.reject(e);
       });
 
       return defer.promise;
@@ -79,12 +70,9 @@
     function getDataByExam(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataByExam(center).then(function (response) {
-        if (response)
-          defer.resolve(VerticalBarFactory.fromJsonObject(response, { results: "Resultados de Exame" }));
-        else
-          defer.resolve([]);
-        }).catch(function (e) {
-          defer.reject(e);
+        defer.resolve(VerticalBarFactory.fromJsonObject(response, { results: 'Resultados de Exame' }));
+      }).catch(function (e) {
+        defer.reject(e);
       });
 
       return defer.promise;
@@ -92,15 +80,12 @@
 
     function downloadCSVFileOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
-      LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
+      LoadingScreenService.changeMessage('Por favor, aguarde! Estamos gerando o arquivo para download.');
       LoadingScreenService.start();
       MonitoringCollectionService.getDataToCSVOfPendingResultsByAliquots(center).then(function (response) {
-        const style = {
-          headers: true,
-          column: { style: { Font: { Bold: "1" } } }
-        };
-        var name = "monitoramento-laboratorial-resultados-pendentes-".concat(new Date().toLocaleDateString());
-        alasql('SELECT [aliquot] AS [Alíquotas], [transported] AS [Transportados], [prepared] AS [Preparadas] INTO CSV("' + name + '.csv") FROM ?', [style, response]);
+        var headers = '[aliquot] AS [Alíquotas], [transported] AS [Transportados], [prepared] AS [Preparadas]';
+        var name = 'monitoramento-laboratorial-resultados-pendentes-'.concat(new Date().toLocaleDateString());
+        alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [response]);
       }).catch(function () {
         defer.reject()
       }).finally(function () {
@@ -110,15 +95,12 @@
 
     function downloadCSVFileOfOrphansByExam() {
       var defer = $q.defer();
-      LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
+      LoadingScreenService.changeMessage('Por favor, aguarde! Estamos gerando o arquivo para download.');
       LoadingScreenService.start();
-      MonitoringCollectionService.getDataToCSVOfPendingResultsByAliquots().then(function (response) {
-        const style = {
-          headers: true,
-          column: { style: { Font: { Bold: "1" } } }
-        };
-        var name = "monitoramento-laboratorial-exame-orfaos-".concat(new Date().toLocaleDateString());
-        alasql('SELECT [aliquotCode] AS [Código da alíquota], [examName] AS [Nome do exame] INTO CSV("' + name + '.csv") FROM ?', [style, response]);
+      MonitoringCollectionService.getDataToCSVOfOrphansByExam().then(function (response) {
+        var headers = '[aliquotCode] AS [Código da alíquota], [examName] AS [Nome do exame]';
+        var name = 'monitoramento-laboratorial-exame-orfaos-'.concat(new Date().toLocaleDateString());
+        alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [response]);
       }).catch(function () {
         defer.reject()
       }).finally(function () {

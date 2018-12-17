@@ -226,7 +226,7 @@
           return remoteStorage
             .getDataOfStorageByAliquots(center)
             .then(function (response) {
-              request.resolve(response.data);
+              request.resolve(response.data.storageByAliquot);
             })
             .catch(function (e) {
               request.reject(e);
@@ -244,7 +244,7 @@
           return remoteStorage
             .getDataByExam(center)
             .then(function (response) {
-              request.resolve(response.data);
+              request.resolve(response.data.examsQuantitative);
             })
             .catch(function (e) {
               request.reject(e);
@@ -262,7 +262,7 @@
           return remoteStorage
             .getDataToCSVOfPendingResultsByAliquots(center)
             .then(function (response) {
-              request.resolve(response.data);
+              request.resolve(response.data.pendingAliquotsCsvData);
             })
             .catch(function (e) {
               request.reject(e);
@@ -280,7 +280,7 @@
           return remoteStorage
             .getDataToCSVOfOrphansByExam()
             .then(function (response) {
-              request.resolve(response.data);
+              request.resolve(response.data.orphanExamsCsvData);
             })
             .catch(function (e) {
               request.reject(e);

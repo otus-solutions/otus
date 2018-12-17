@@ -13,149 +13,178 @@
     </div>
   </otus-dashboard-toolbar>
   <!--<div layout flex>-->
-    <md-content layout="column" layout-padding flex>
-      <md-tabs md-border-bottom layout-fill ng-init="$ctrl.loadCenters()">
-        <md-tab label="Pendências de Resultados" id="pendingButton" ng-click="$ctrl.openTabPendingResultsByAliquots()">
-          <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
-            <md-card flex layout-fill layout-padding="">
-              <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
-                <div layout="column" flex layout-fill>
-                  <h1 class=" remove-padding" layout-margin layout-padding>Pendências de Resultados</h1>
-                  <h6 layout-margin class="remove-padding " >
-
-                    <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame que não possuem pelo menos um resultado de exame relacionado.</span>
-                  </h6>
-                </div>
-
-                <div layout="row" layout-align="center center" layout-fill flex>
-                  <span flex></span>
-                  <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
-                    <label class="md-subheader">Centro:</label>
-                    <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
-                      <md-tooltip>
-                        Centros
-                      </md-tooltip>
-                      <md-option ng-repeat="center in $ctrl.centers track by $index" ng-selected="{{$index == $ctrl.centers.indexOf($ctrl.centerFilter) ? true : $index == 0 ? true : false}}" value="{{center}}" ng-click="$ctrl.loadData('pending', center)">
-                        {{center}}
-                      </md-option>
-                    </md-select>
-                  </md-input-container>
-                  <span flex="5"></span>
-                  <md-button ng-click="$ctrl.downloadCSVFile('pending')" ng-disabled="$ctrl.dataNotFound" class="md-raised md-primary md-icon-button">
-                    <md-icon>get_app</md-icon>
-                    <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-                  </md-button>
-                </div>
+  <md-content layout="column" layout-padding flex>
+    <md-tabs md-border-bottom layout-fill>
+      <md-tab label="Pendências de Resultados" id="pendingButton" ng-click="$ctrl.openTabPendingResultsByAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
+          <md-card flex layout-fill layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="column" flex layout-fill>
+                <h1 class=" remove-padding" layout-margin layout-padding>Pendências de Resultados</h1>
+                <h6 layout-margin class="remove-padding ">
+                  <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame
+                    que não possuem pelo menos um resultado de exame relacionado.</span>
+                </h6>
               </div>
-            </md-card>
-          </md-content>
-          <md-content layout-padding>
-            <div id="pending-results-chart" layout="column"></div>
-            <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi possível carregar os dados.</span>
-          </md-content>
-        </md-tab>
-        <md-tab label="Quantidade por tipo de alíquotas" class="md-content" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
-          <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
-            <md-card flex layout-fill layout-padding="">
-              <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="row" layout-align="center center" layout-fill flex>
+                <span flex></span>
+                <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
+                  <label class="md-subheader">Centro:</label>
+                  <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                    <md-tooltip>
+                      Centros
+                    </md-tooltip>
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" ng-selected="{{$index == $ctrl.centers.indexOf($ctrl.centerFilter) ? true : $index == 0 ? true : false}}"
+                      value="{{center}}" ng-click="$ctrl.loadData('pending', center)">
+                      {{center}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+                <span flex="5"></span>
+                <md-button ng-click="$ctrl.downloadCSVFile('pending')" ng-disabled="$ctrl.dataNotFound" class="md-raised md-primary md-icon-button">
+                  <md-icon>get_app</md-icon>
+                  <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+                </md-button>
+              </div>
+            </div>
+          </md-card>
+        </md-content>
+        <md-content layout-padding>
+          <div id="pending-results-chart" layout="column"></div>
+          <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi
+            possível carregar os dados.</span>
+        </md-content>
+      </md-tab>
+      <md-tab label="Quantidade por tipo de alíquotas" class="md-content" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
+          <md-card flex layout-fill layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="column" flex layout-fill>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantidade por tipo de alíquotas</h1>
-                <div layout="row" layout-align="center center" layout-fill flex>
-                  <span flex></span>
-                  <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
-                    <label class="md-subheader">Centro:</label>
-                    <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
-                      <md-tooltip>
-                        Centros
-                      </md-tooltip>
-                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData('quantitative', center)">
-                        {{center}}
-                      </md-option>
-                    </md-select>
-                  </md-input-container>
-                </div>
+                <h6 layout-margin class="remove-padding ">
+                  <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame
+                    que não possuem pelo menos um resultado de exame relacionado.</span>
+                </h6>
               </div>
-            </md-card>
-          </md-content>
-          <md-content flex layout-padding>
-            <div id="quantitative-by-aliquots" flex></div>
-            <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi possível carregar os dados.</span>
-          </md-content>
-        </md-tab>
-        <md-tab label="Exames órfãos" class="md-content" ng-click="$ctrl.openTabOrphanByExams()">
-          <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
-            <md-card flex layout-fill layout-padding="">
-              <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="row" layout-align="center center" layout-fill flex>
+                <span flex></span>
+                <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
+                  <label class="md-subheader">Centro:</label>
+                  <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                    <md-tooltip>
+                      Centros
+                    </md-tooltip>
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData('quantitative', center)">
+                      {{center}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+            </div>
+          </md-card>
+        </md-content>
+        <md-content flex layout-padding>
+          <div id="quantitative-by-aliquots" flex></div>
+          <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi
+            possível carregar os dados.</span>
+        </md-content>
+      </md-tab>
+      <md-tab label="Exames órfãos" class="md-content" ng-click="$ctrl.openTabOrphanByExams()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
+          <md-card flex layout-fill layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="column" flex layout-fill>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames órfãos</h1>
-                <div layout="row" layout-align="center center" layout-fill flex>
-                  <span flex></span>
-                  <md-button ng-click="$ctrl.downloadCSVFile('orphan')" ng-disabled="$ctrl.dataNotFound"  class="md-raised md-primary md-icon-button">
-                    <md-icon>get_app</md-icon>
-                    <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
-                  </md-button>
-                </div>
+                <h6 layout-margin class="remove-padding ">
+                  <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame
+                    que não possuem pelo menos um resultado de exame relacionado.</span>
+                </h6>
               </div>
-            </md-card>
-          </md-content>
-          <md-content flex>
-            <div id="orphans-by-exam" flex></div>
-            <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi possível carregar os dados.</span>
-          </md-content>
-        </md-tab>
-        <md-tab label="Armazenamento" class="md-content" ng-click="$ctrl.openTabStorageByAliquots()">
-          <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
-            <md-card flex layout-fill layout-padding="">
-              <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="row" layout-align="center center" layout-fill flex>
+                <span flex></span>
+                <md-button ng-click="$ctrl.downloadCSVFile('orphan')" ng-disabled="$ctrl.dataNotFound" class="md-raised md-primary md-icon-button">
+                  <md-icon>get_app</md-icon>
+                  <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+                </md-button>
+              </div>
+            </div>
+          </md-card>
+        </md-content>
+        <md-content flex>
+          <div id="orphans-by-exam" flex></div>
+          <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi
+            possível carregar os dados.</span>
+        </md-content>
+      </md-tab>
+      <md-tab label="Armazenamento" class="md-content" ng-click="$ctrl.openTabStorageByAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
+          <md-card flex layout-fill layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="column" flex layout-fill>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Armazenamento</h1>
-                <div layout="row" layout-align="center center" layout-fill flex>
-                  <span flex></span>
-                  <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
-                    <label class="md-subheader">Centro:</label>
-                    <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
-                      <md-tooltip>
-                        Centros
-                      </md-tooltip>
-                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData('storage', center)">
-                        {{center}}
-                      </md-option>
-                    </md-select>
-                  </md-input-container>
-                </div>
+                <h6 layout-margin class="remove-padding ">
+                  <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame
+                    que não possuem pelo menos um resultado de exame relacionado.</span>
+                </h6>
               </div>
-            </md-card>
-          </md-content>
-          <md-content flex layout-padding>
-            <div id="storage-by-exam" flex></div>
-            <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi possível carregar os dados.</span>
-          </md-content>
-        </md-tab>
-        <md-tab label="Resultados de Exames" class="md-content" ng-click="$ctrl.openTabResultsByExam()">
-          <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
-            <md-card flex layout-fill layout-padding="">
-              <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="row" layout-align="center center" layout-fill flex>
+                <span flex></span>
+                <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
+                  <label class="md-subheader">Centro:</label>
+                  <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                    <md-tooltip>
+                      Centros
+                    </md-tooltip>
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData('storage', center)">
+                      {{center}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+            </div>
+          </md-card>
+        </md-content>
+        <md-content flex layout-padding>
+          <div id="storage-by-exam" flex></div>
+          <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi
+            possível carregar os dados.</span>
+        </md-content>
+      </md-tab>
+      <md-tab label="Resultados de Exames" class="md-content" ng-click="$ctrl.openTabByExam()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
+          <md-card flex layout-fill layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="column" flex layout-fill>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Resultados de exames</h1>
-                <div layout="row" layout-align="center center" layout-fill flex>
-                  <span flex></span>
-                  <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
-                    <label class="md-subheader">Centro:</label>
-                    <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
-                      <md-tooltip>
-                        Centros
-                      </md-tooltip>
-                      <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData('exam', center)">
-                        {{center}}
-                      </md-option>
-                    </md-select>
-                  </md-input-container>
-                </div>
+                <h6 layout-margin class="remove-padding ">
+                  <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame
+                    que não possuem pelo menos um resultado de exame relacionado.</span>
+                </h6>
               </div>
-            </md-card>
-          </md-content>
-          <md-content flex layout-padding>
-            <div id="results-by-exam" flex></div>
-            <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi possível carregar os dados.</span>
-          </md-content>
-        </md-tab>
-      </md-tabs>
-    </md-content>
+              <div layout="row" layout-align="center center" layout-fill flex>
+                <span flex></span>
+                <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
+                  <label class="md-subheader">Centro:</label>
+                  <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                    <md-tooltip>
+                      Centros
+                    </md-tooltip>
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadData('exam', center)">
+                      {{center}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+            </div>
+          </md-card>
+        </md-content>
+        <md-content flex layout-padding>
+          <div id="results-by-exam" flex></div>
+          <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi
+            possível carregar os dados.</span>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
   <!--</div>-->
 </div>

@@ -6,6 +6,7 @@
     .controller('otusLaboratoryMonitoringDashboardCtrl', Controller);
 
   Controller.$inject = [
+    '$q',
     '$filter',
     'otusjs.application.session.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
@@ -16,7 +17,7 @@
     'otusjs.otus.uxComponent.BarChartsHorizontalFactory'
   ];
 
-  function Controller($filter, SessionContextService, LoadingScreenService, DashboardContextService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
+  function Controller($q, $filter, SessionContextService, LoadingScreenService, DashboardContextService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
     const DATA_NOT_FOUND = 'Data Not Found';
     const PENDING = 'pending';
     const QUANTITATIVE = 'quantitative';
@@ -25,10 +26,11 @@
     const EXAM = 'exam';
 
     var self = this;
-    self.dataNotFound = false;
+    self.error = false;
     self.centers = [];
     self.centerFilter = '';
-    self.ERROR_MESSAGE = 'Atualmente não há registros a serem exibidos!';
+    self.MESSAGE_OF_DATA_NOT_FOUND = 'Atualmente não há registros a serem exibidos!';
+    self.MESSAGE_OF_GENERIC_ERROR = '';
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -43,22 +45,22 @@
     self.loadCenters = loadCenters;
     /* Lifecycle methods */
     function onInit() {
-      self.dataNotFound = false;
-      if (localStorage.getItem("centerUser")){
-        self.centerFilter = localStorage.getItem("centerUser");
-        self.openTabPendingResultsByAliquots();
-      }
+      loadCenters().then(() => {
+        _setUserFieldCenter();
+        openTabPendingResultsByAliquots();
+      })
     };
 
     function loadCenters() {
-      // var deferred = $q.defer();
+      let defer = $q.defer();
       FieldCenterRestService.loadCenters().then(function (result) {
         self.centers = $filter('orderBy')(self.centers);
         result.forEach(function (fieldCenter) {
           self.centers.push(fieldCenter.acronym)
         });
-        _setUserFieldCenter();
+        defer.resolve();
       });
+      return defer.promise;
     }
 
     function openTabPendingResultsByAliquots() {
@@ -124,32 +126,30 @@
     };
 
     function _setUserFieldCenter() {
-      DashboardContextService
-        .getLoggedUser()
-        .then(function (userData) {
-          self.userHaveCenter = !!userData.fieldCenter.acronym;
-          if (self.userHaveCenter) {
-            self.centerFilter = userData.fieldCenter.acronym;
-            localStorage.setItem("centerUser", self.centerFilter);
-          } else {
-            self.centerFilter = self.centers[0];
-          };
-        });
+      let defer = $q.defer();
+
+      let user = SessionContextService.getData('loggedUser');
+      if (!user.fieldCenter.acronym) {
+        self.centerFilter = self.centers[0];
+        defer.resolve();
+      } else {
+        self.centerFilter = user.fieldCenter.acronym;
+        defer.resolve();
+      };
+      return defer.promise;
     };
 
     function _loadDataPendingResultsByAliquots(center) {
       LoadingScreenService.start();
-      self.dataNotFound = false;
       LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center ? center : self.centerFilter)
         .then(function (response) {
-          if (_hasData(response)) {
-            var colors = ['#88d8b0', '#ff6f69'];
+          if (response) {
+            var colors = ['#ff6f69', '#88d8b0'];
             var element = '#pending-results-chart';
             BarChartsVerticalFactory.create(response, element, colors);
           }
           LoadingScreenService.finish();
         }).catch(function (e) {
-        _hasData(e)
           LoadingScreenService.finish();
         });
     };
@@ -158,7 +158,7 @@
       LoadingScreenService.start();
       LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots(center)
         .then(function (response) {
-          var colors = ['#b33040', '#d25c4d', '#f2b447'];
+          var colors = ['#ff6f69', '#ffeead', '#88d8b0'];
           var element = '#quantitative-by-aliquots';
           BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
@@ -171,7 +171,7 @@
       LoadingScreenService.start();
       LaboratoryMonitoringService.getDataOrphanByExams()
         .then(function (response) {
-          var colors = ['#bae1ff'];
+          var colors = ['#ff6f69'];
           var element = '#orphans-by-exam';
           BarChartsHorizontalFactory.create(response, element, colors);
           LoadingScreenService.finish();
@@ -184,7 +184,7 @@
       LoadingScreenService.start();
       LaboratoryMonitoringService.getDataOfStorageByAliquots(center)
         .then(function (response) {
-          var colors = ['#bae1ff'];
+          var colors = ['#88d8b0'];
           var element = '#storage-by-exam';
           BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
@@ -197,8 +197,8 @@
       LoadingScreenService.start();
       LaboratoryMonitoringService.getDataByExam(center)
         .then(function (response) {
-          var colors = ['#bae1ff'];
-          var element = '#result-by-exam';
+          var colors = ['#88d8b0'];
+          var element = '#results-by-exam';
           BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
@@ -206,15 +206,14 @@
         });
     };
 
-    function _hasData(response) {
-      if (response.data) {
-        if (response.data.MESSAGE) {
-          self.dataNotFound = true;
-          return false;
-        } else {
-          return true;
-        }
-      } else return true;
+    function _defineErrorMessage(response) {
+      if (response.data.MESSAGE === DATA_NOT_FOUND) {
+        self.error = true;
+        return true;
+      } else if (response.data.MESSAGE) {
+        // TODO: Mensagem de erro genérica!
+      }
+      return false;
     };
   };
 }());
