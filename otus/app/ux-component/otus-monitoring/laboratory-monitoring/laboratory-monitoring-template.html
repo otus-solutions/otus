@@ -22,8 +22,9 @@
               <div layout="column" flex layout-fill>
                 <h1 class=" remove-padding" layout-margin layout-padding>Pendências de Resultados</h1>
                 <h6 layout-margin class="remove-padding ">
-                  <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame
-                    que não possuem pelo menos um resultado de exame relacionado.</span>
+                  <span class="md-subheader remove-margin">
+                    Considera a quantidade de alíquotas em relação aos resultados.
+                  </span>
                 </h6>
               </div>
               <div layout="row" layout-align="center center" layout-fill flex>
@@ -62,8 +63,9 @@
               <div layout="column" flex layout-fill>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantidade por tipo de alíquotas</h1>
                 <h6 layout-margin class="remove-padding ">
-                  <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame
-                    que não possuem pelo menos um resultado de exame relacionado.</span>
+                  <span class="md-subheader remove-margin">
+                    Considera a quantidade de alíquotas sobre cada etapa no sistema.
+                  </span>
                 </h6>
               </div>
               <div layout="row" layout-align="center center" layout-fill flex>
@@ -95,9 +97,10 @@
             <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
               <div layout="column" flex layout-fill>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames órfãos</h1>
-                <h6 layout-margin class="remove-padding ">
-                  <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame
-                    que não possuem pelo menos um resultado de exame relacionado.</span>
+                <h6 layout-margin class="remove-padding">
+                  <span class="md-subheader remove-margin">
+                    Considera a quantidade de exames não vinculados a uma alíquota.
+                  </span>
                 </h6>
               </div>
               <div layout="row" layout-align="center center" layout-fill flex>
@@ -110,10 +113,13 @@
             </div>
           </md-card>
         </md-content>
-        <md-content flex>
+        <md-content flex ng-if="!$ctrl.errorInOrphansByExam">
           <div id="orphans-by-exam" flex></div>
-          <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi
-            possível carregar os dados.</span>
+        </md-content>
+        <md-content ng-if="$ctrl.errorInOrphansByExam" layout="row" layout-padding layout-align="center center">
+          <div class="label-light-gray">
+            <h2 flex>{{$ctrl.message}}</h2>
+          </div>
         </md-content>
       </md-tab>
       <md-tab label="Armazenamento" class="md-content" ng-click="$ctrl.openTabStorageByAliquots()">
@@ -123,8 +129,9 @@
               <div layout="column" flex layout-fill>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Armazenamento</h1>
                 <h6 layout-margin class="remove-padding ">
-                  <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame
-                    que não possuem pelo menos um resultado de exame relacionado.</span>
+                  <span class="md-subheader remove-margin">
+                    Considera a quantidade de alíquotas armazenadas.
+                  </span>
                 </h6>
               </div>
               <div layout="row" layout-align="center center" layout-fill flex>
@@ -146,8 +153,7 @@
         </md-content>
         <md-content flex layout-padding>
           <div id="storage-by-exam" flex></div>
-          <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi
-            possível carregar os dados.</span>
+          <span ng-if="$ctrl.errorInStorageByExam" class="md-head" flex layout-aling="center center" layout="row">{{$ctrl.message}}</span>
         </md-content>
       </md-tab>
       <md-tab label="Resultados de Exames" class="md-content" ng-click="$ctrl.openTabByExam()">
@@ -157,8 +163,9 @@
               <div layout="column" flex layout-fill>
                 <h1 class="md-no-sticky" layout-margin="" layout-padding>Resultados de exames</h1>
                 <h6 layout-margin class="remove-padding ">
-                  <span class="md-subheader remove-margin">São consideradas pendências todas aliquotas do tipo exame
-                    que não possuem pelo menos um resultado de exame relacionado.</span>
+                  <span class="md-subheader remove-margin">
+                    Considera a quantidade de resultados de exame.
+                  </span>
                 </h6>
               </div>
               <div layout="row" layout-align="center center" layout-fill flex>
@@ -180,8 +187,7 @@
         </md-content>
         <md-content flex layout-padding>
           <div id="results-by-exam" flex></div>
-          <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi
-            possível carregar os dados.</span>
+          <span ng-if="$ctrl.errorInExamResults" class="md-head" flex layout-aling="center center" layout="row">{{$ctrl.message}}</span>
         </md-content>
       </md-tab>
     </md-tabs>

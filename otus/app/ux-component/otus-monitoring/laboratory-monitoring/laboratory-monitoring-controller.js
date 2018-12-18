@@ -18,7 +18,7 @@
   ];
 
   function Controller($q, $filter, SessionContextService, LoadingScreenService, DashboardContextService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
-    const MESSAGE_OF_DATA_NOT_FOUND = 'Atualmente não há registros a serem exibidos.';
+    const MESSAGE_OF_DATA_NOT_FOUND = 'Não há registros a serem exibidos.';
     const MESSAGE_OF_GENERIC_ERROR = 'Não conseguimos apresentar os dados, tente novamente mais tarde.';
     const DATA_NOT_FOUND = 'Data Not Found';
     const PENDING = 'pending';
@@ -28,10 +28,11 @@
     const EXAM = 'exam';
 
     var self = this;
-    self.error = false;
     self.centers = [];
     self.centerFilter = '';
     self.message = '';
+    self.errorInStorageByExam = false;
+    self.errorInExamResults = false;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -159,6 +160,7 @@
           }
           LoadingScreenService.finish();
         }).catch(function (e) {
+          _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
     };
@@ -172,6 +174,7 @@
           BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
+          _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
     };
@@ -185,6 +188,8 @@
           BarChartsHorizontalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
+          self.errorInOrphansByExam = true;
+          _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
     };
@@ -195,9 +200,12 @@
         .then(function (response) {
           var colors = ['#88d8b0'];
           var element = '#storage-by-exam';
-          BarChartsVerticalFactory.create(response, element, colors);
+          console.log(response);
+          BarChartsHorizontalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
+          self.errorInStorageByExam = true;
+          _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
     };
@@ -208,9 +216,12 @@
         .then(function (response) {
           var colors = ['#88d8b0'];
           var element = '#results-by-exam';
+          console.log(response);
           BarChartsHorizontalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
+          self.errorInExamResults = true;
+          _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
     };

@@ -59,7 +59,7 @@
     function getDataOfStorageByAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfStorageByAliquots(center).then(function (response) {
-        defer.resolve(VerticalBarFactory.fromJsonObject(response, { storage: 'Armazenamento' }));
+        defer.resolve(response);
       }).catch(function (e) {
         defer.reject(e);
       });
