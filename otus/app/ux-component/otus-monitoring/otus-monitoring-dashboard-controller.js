@@ -31,6 +31,7 @@
     self.preProcessingData = preProcessingData;
     self.update = update;
 
+
     self.questionnaireData = {};
 
     // lifecycle hooks
@@ -45,16 +46,22 @@
     function _loadAllAcronyms() {
       MonitoringService.listAcronyms()
         .then(function(activities) {
-          self.questionnairesList = activities.map(function(acronym) {
-            return acronym;
-          }).filter(function(elem, index, self) {
-            return index == self.indexOf(elem);
-          });
+          if(activities.length){
+            self.questionnairesList = activities.map(function(acronym) {
+              return acronym;
+            }).filter(function(elem, index, self) {
+              return index == self.indexOf(elem);
+            });
 
-          self.update(self.questionnairesList[0], self.fieldCentersList, null, null).then(function() {
-            self.selectedAcronym = angular.copy(self.questionnairesList[0]);
-            self.ready = true;
-          });
+            self.update(self.questionnairesList[0], self.fieldCentersList, null, null).then(function() {
+              self.selectedAcronym = angular.copy(self.questionnairesList[0]);
+              self.ready = true;
+            });
+          }
+          else{
+            self.activityListEmpty = true;
+            LoadingScreenService.finish();
+          }
         });
     }
 
