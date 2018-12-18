@@ -12,7 +12,6 @@
       <span layout-align="center center">Monitoramento laboratorial</span>
     </div>
   </otus-dashboard-toolbar>
-  <!--<div layout flex>-->
   <md-content layout="column" layout-padding flex>
     <md-tabs md-border-bottom layout-fill>
       <md-tab label="Pendências de Resultados" id="pendingButton" ng-click="$ctrl.openTabPendingResultsByAliquots()">
@@ -42,7 +41,8 @@
                   </md-select>
                 </md-input-container>
                 <span flex="5"></span>
-                <md-button ng-click="$ctrl.downloadCSVFile('pending')" ng-disabled="$ctrl.dataNotFound" class="md-raised md-primary md-icon-button">
+                <md-button ng-click="$ctrl.downloadCSVFile('pending')" ng-disabled="$ctrl.errorInPendingResultsChart"
+                  class="md-raised md-primary md-icon-button">
                   <md-icon>get_app</md-icon>
                   <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
                 </md-button>
@@ -50,10 +50,13 @@
             </div>
           </md-card>
         </md-content>
-        <md-content layout-padding>
+        <md-content ng-if="!$ctrl.errorInPendingResultsChart" layout-padding>
           <div id="pending-results-chart" layout="column"></div>
-          <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi
-            possível carregar os dados.</span>
+        </md-content>
+        <md-content ng-if="$ctrl.errorInPendingResultsChart" layout="row" layout-align="center center" style="margin-top: 250px">
+          <div class="label-light-gray">
+            <h2 flex>{{$ctrl.message}}</h2>
+          </div>
         </md-content>
       </md-tab>
       <md-tab label="Quantidade por tipo de alíquotas" class="md-content" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
@@ -85,10 +88,13 @@
             </div>
           </md-card>
         </md-content>
-        <md-content flex layout-padding>
+        <md-content ng-if="!$ctrl.errorInQuantitativeByAliquots" flex layout-padding>
           <div id="quantitative-by-aliquots" flex></div>
-          <span ng-if="$ctrl.dataNotFound" class="md-head" flex layout-aling="center center" layout="row">Não foi
-            possível carregar os dados.</span>
+        </md-content>
+        <md-content ng-if="$ctrl.errorInQuantitativeByAliquots" layout="row" layout-align="center center" style="margin-top: 250px">
+          <div class="label-light-gray">
+            <h2 flex>{{$ctrl.message}}</h2>
+          </div>
         </md-content>
       </md-tab>
       <md-tab label="Exames órfãos" class="md-content" ng-click="$ctrl.openTabOrphanByExams()">
@@ -105,7 +111,7 @@
               </div>
               <div layout="row" layout-align="center center" layout-fill flex>
                 <span flex></span>
-                <md-button ng-click="$ctrl.downloadCSVFile('orphan')" ng-disabled="$ctrl.dataNotFound" class="md-raised md-primary md-icon-button">
+                <md-button ng-click="$ctrl.downloadCSVFile('orphan')" ng-disabled="$ctrl.errorInOrphansByExam" class="md-raised md-primary md-icon-button">
                   <md-icon>get_app</md-icon>
                   <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
                 </md-button>
@@ -116,7 +122,7 @@
         <md-content flex ng-if="!$ctrl.errorInOrphansByExam">
           <div id="orphans-by-exam" flex></div>
         </md-content>
-        <md-content ng-if="$ctrl.errorInOrphansByExam" layout="row" layout-padding layout-align="center center">
+        <md-content ng-if="$ctrl.errorInOrphansByExam" layout="row" layout-align="center center" style="margin-top: 250px">
           <div class="label-light-gray">
             <h2 flex>{{$ctrl.message}}</h2>
           </div>
@@ -151,9 +157,13 @@
             </div>
           </md-card>
         </md-content>
-        <md-content flex layout-padding>
+        <md-content ng-if="!$ctrl.errorInStorageByExam" flex layout-padding>
           <div id="storage-by-exam" flex></div>
-          <span ng-if="$ctrl.errorInStorageByExam" class="md-head" flex layout-aling="center center" layout="row">{{$ctrl.message}}</span>
+        </md-content>
+        <md-content ng-if="$ctrl.errorInStorageByExam" layout="row" layout-align="center center" style="margin-top: 250px">
+          <div class="label-light-gray">
+            <h2 flex>{{$ctrl.message}}</h2>
+          </div>
         </md-content>
       </md-tab>
       <md-tab label="Resultados de Exames" class="md-content" ng-click="$ctrl.openTabByExam()">
@@ -185,12 +195,15 @@
             </div>
           </md-card>
         </md-content>
-        <md-content flex layout-padding>
+        <md-content ng-if="!$ctrl.errorInExamResults" flex layout-padding>
           <div id="results-by-exam" flex></div>
-          <span ng-if="$ctrl.errorInExamResults" class="md-head" flex layout-aling="center center" layout="row">{{$ctrl.message}}</span>
+        </md-content>
+        <md-content ng-if="$ctrl.errorInExamResults" layout="row" layout-align="center center" style="margin-top: 250px">
+          <div class="label-light-gray">
+            <h2 flex>{{$ctrl.message}}</h2>
+          </div>
         </md-content>
       </md-tab>
     </md-tabs>
   </md-content>
-  <!--</div>-->
 </div>

@@ -31,6 +31,8 @@
     self.centers = [];
     self.centerFilter = '';
     self.message = '';
+    self.errorInPendingResultsChart = false;
+    self.errorInQuantitativeByAliquots = false;
     self.errorInStorageByExam = false;
     self.errorInExamResults = false;
 
@@ -104,32 +106,20 @@
 
     function loadData(currentTab, center) {
       self.centerFilter = center;
+      d3.selectAll('#pending-results-chart svg').remove();
+      d3.selectAll('#quantitative-by-aliquots svg').remove();
+      d3.selectAll('#results-by-exam svg').remove();
+      d3.selectAll('#storage-by-exam svg').remove();
       switch (currentTab) {
         case PENDING:
-          d3.selectAll('#storage-by-exam svg').remove();
-          d3.selectAll('#quantitative-by-aliquots svg').remove();
-          d3.selectAll('#results-by-exam svg').remove();
-          d3.selectAll('#pending-results-chart svg').remove();
           _loadDataPendingResultsByAliquots(center);
           break;
         case QUANTITATIVE:
-          d3.selectAll('#pending-results-chart svg').remove();
-          d3.selectAll('#storage-by-exam svg').remove();
-          d3.selectAll('#results-by-exam svg').remove();
-          d3.selectAll('#quantitative-by-aliquots svg').remove();
           _loadDataQuantitativeByTypeOfAliquots(center);
           break;
         case STORAGE:
-          d3.selectAll('#pending-results-chart svg').remove();
-          d3.selectAll('#results-by-exam svg').remove();
-          d3.selectAll('#quantitative-by-aliquots svg').remove();
-          d3.selectAll('#storage-by-exam svg').remove();
           _loadStorageByAliquots(center);
         case EXAM:
-          d3.selectAll('#pending-results-chart svg').remove();
-          d3.selectAll('#quantitative-by-aliquots svg').remove();
-          d3.selectAll('#storage-by-exam svg').remove();
-          d3.selectAll('#results-by-exam svg').remove();
           _loadResultsByExam(center);
           break;
       };
@@ -157,9 +147,11 @@
             var colors = ['#88d8b0', '#ff6f69'];
             var element = '#pending-results-chart';
             BarChartsVerticalFactory.create(response, element, colors);
-          }
+          };
+          self.errorInPendingResultsChart = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
+          self.errorInPendingResultsChart = true;
           _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
@@ -169,11 +161,13 @@
       LoadingScreenService.start();
       LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots(center)
         .then(function (response) {
-          var colors = ['#88d8b0', '#ffeead', '#ff6f69' ];
+          var colors = ['#88d8b0', '#ffeead', '#ff6f69'];
           var element = '#quantitative-by-aliquots';
           BarChartsVerticalFactory.create(response, element, colors);
+          self.errorInQuantitativeByAliquots = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
+          self.errorInQuantitativeByAliquots = true;
           _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
@@ -186,6 +180,7 @@
           var colors = ['#ff6f69'];
           var element = '#orphans-by-exam';
           BarChartsHorizontalFactory.create(response, element, colors);
+          self.errorInOrphansByExam = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
           self.errorInOrphansByExam = true;
@@ -200,8 +195,8 @@
         .then(function (response) {
           var colors = ['#88d8b0'];
           var element = '#storage-by-exam';
-          console.log(response);
           BarChartsHorizontalFactory.create(response, element, colors);
+          self.errorInStorageByExam = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
           self.errorInStorageByExam = true;
@@ -216,8 +211,8 @@
         .then(function (response) {
           var colors = ['#88d8b0'];
           var element = '#results-by-exam';
-          console.log(response);
           BarChartsHorizontalFactory.create(response, element, colors);
+          self.errorInExamResults = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
           self.errorInExamResults = true;
