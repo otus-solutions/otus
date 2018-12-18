@@ -154,7 +154,7 @@
       LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center ? center : self.centerFilter)
         .then(function (response) {
           if (response) {
-            var colors = ['#ff6f69', '#88d8b0'];
+            var colors = ['#88d8b0', '#ff6f69'];
             var element = '#pending-results-chart';
             BarChartsVerticalFactory.create(response, element, colors);
           }
@@ -169,7 +169,7 @@
       LoadingScreenService.start();
       LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots(center)
         .then(function (response) {
-          var colors = ['#ff6f69', '#ffeead', '#88d8b0'];
+          var colors = ['#88d8b0', '#ffeead', '#ff6f69' ];
           var element = '#quantitative-by-aliquots';
           BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();

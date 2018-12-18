@@ -26,7 +26,7 @@
     function getDataOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfPendingResultsByAliquots(center).then(function (response) {
-        defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: 'Recebidos', waiting: 'Aguardando' }));
+        defer.resolve(VerticalBarFactory.fromJsonObject(response, {  waiting: 'Aguardando', received: 'Recebidos' }));
       }).catch(function (e) {
         defer.reject(e);
       });
