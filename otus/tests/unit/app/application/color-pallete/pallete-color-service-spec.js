@@ -7,7 +7,7 @@ describe('Pallete Color Service Test', function() {
     angular.mock.module('otusjs.application.color');
     inject(function(_$injector_) {
 
-      service = _$injector_.get('otusjs.application.color.PalleteColorService');
+      service = _$injector_.get('otusjs.application.color.PaletteColorService');
       mockData();
     });
   });

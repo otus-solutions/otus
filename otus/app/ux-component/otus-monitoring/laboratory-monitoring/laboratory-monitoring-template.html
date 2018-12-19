@@ -50,7 +50,7 @@
             </div>
           </md-card>
         </md-content>
-        <md-content ng-if="!$ctrl.errorInPendingResultsChart" layout-padding>
+        <md-content ng-show="!$ctrl.errorInPendingResultsChart" layout-padding>
           <div id="pending-results-chart" layout="column"></div>
         </md-content>
         <md-content ng-if="$ctrl.errorInPendingResultsChart" layout="row" layout-align="center center" style="margin-top: 250px">

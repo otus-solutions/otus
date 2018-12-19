@@ -8,7 +8,7 @@ describe('Bar Charts Vertical Factory Test', function() {
   beforeEach(function() {
     //TODO: update module name
     angular.mock.module('otusjs.otus.uxComponent', function($provide) {
-      $provide.value("otusjs.application.color.PalleteColorService", {
+      $provide.value("otusjs.application.color.PaletteColorService", {
         getColor: () => {
           return "#ffffff";
         }

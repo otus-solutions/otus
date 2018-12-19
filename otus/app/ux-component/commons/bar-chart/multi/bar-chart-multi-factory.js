@@ -6,10 +6,10 @@
     .factory('otusjs.otus.uxComponent.BarChartsMultiFactory', Factory);
 
   Factory.$inject = [
-    "otusjs.application.color.PalleteColorService"
+    "otusjs.application.color.PaletteColorService"
   ];
 
-  function Factory(PalleteColorService) {
+  function Factory(PaletteColorService) {
     const WIDTH = 300;
     const MARGIN = {
       TOP: 70,
@@ -38,9 +38,9 @@
         groups.forEach(function (d, i) {
           if (Array.isArray(colors)){
             if (colors.length) COLORS.push(colors[i]);
-            else COLORS.push(PalleteColorService.getColor(i));
+            else COLORS.push(PaletteColorService.getColor(i));
           } else {
-            COLORS.push(PalleteColorService.getColor(i));
+            COLORS.push(PaletteColorService.getColor(i));
           }
         })
         for (i = 0; i < data.length; i++) {
