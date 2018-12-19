@@ -22,7 +22,9 @@
                 <h1 class=" remove-padding" layout-margin layout-padding>Pendências de Resultados</h1>
                 <h6 layout-margin class="remove-padding ">
                   <span class="md-subheader remove-margin">
-                    Considera a quantidade de alíquotas em relação aos resultados.
+                    <p>São consideradas pendências alíquotas registradas e que não possuem pelo menos um resultado de
+                      exame relacionado.</p>
+                    <p>Utilize o botão de download para visualizar as alíquotas pendentes.</p>
                   </span>
                 </h6>
               </div>
@@ -59,15 +61,17 @@
           </div>
         </md-content>
       </md-tab>
-      <md-tab label="Quantidade por tipo de alíquotas" class="md-content" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
-        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
+      <md-tab label="Acompanhamento de alíquotas" id="pendingButton" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
           <md-card flex layout-fill layout-padding="">
             <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
               <div layout="column" flex layout-fill>
-                <h1 class="md-no-sticky" layout-margin="" layout-padding>Quantidade por tipo de alíquotas</h1>
+                <h1 class=" remove-padding" layout-margin layout-padding>Acompanhamento de alíquotas</h1>
                 <h6 layout-margin class="remove-padding ">
                   <span class="md-subheader remove-margin">
-                    Considera a quantidade de alíquotas sobre cada etapa no sistema.
+                    <p>Finalizadas: Aliquotas que já possuem pelo menos um resultado relacionado.</p>
+                    <p> Preparadas: Aliquotas que fazem parte de um lote de exames.</p>
+                    <p>Transportadas: Aliquotas que fazem parte de um lote de transporte.</p>
                   </span>
                 </h6>
               </div>
@@ -97,15 +101,17 @@
           </div>
         </md-content>
       </md-tab>
-      <md-tab label="Exames órfãos" class="md-content" ng-click="$ctrl.openTabOrphanByExams()">
-        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
+      <md-tab label="Exames órfãos" id="pendingButton" ng-click="$ctrl.openTabOrphanByExams()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
           <md-card flex layout-fill layout-padding="">
             <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
               <div layout="column" flex layout-fill>
-                <h1 class="md-no-sticky" layout-margin="" layout-padding>Exames órfãos</h1>
-                <h6 layout-margin class="remove-padding">
+                <h1 class=" remove-padding" layout-margin layout-padding>Exames órfãos</h1>
+                <h6 layout-margin class="remove-padding ">
                   <span class="md-subheader remove-margin">
-                    Considera a quantidade de exames não vinculados a uma alíquota.
+                    <p>Considera-se órfão resultados que não possuem vínculo com pelo menos uma alíquota.</p>
+                    <p>Utilize o botão de download para identificar quais as códigos de alíquotas relacionados aos
+                      exames órfãos.</p>
                   </span>
                 </h6>
               </div>
@@ -128,15 +134,15 @@
           </div>
         </md-content>
       </md-tab>
-      <md-tab label="Armazenamento" class="md-content" ng-click="$ctrl.openTabStorageByAliquots()">
-        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
+      <md-tab label="Armazenamento" id="pendingButton" ng-click="$ctrl.openTabStorageByAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
           <md-card flex layout-fill layout-padding="">
             <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
               <div layout="column" flex layout-fill>
-                <h1 class="md-no-sticky" layout-margin="" layout-padding>Armazenamento</h1>
+                <h1 class=" remove-padding" layout-margin layout-padding>Armazenamento</h1>
                 <h6 layout-margin class="remove-padding ">
                   <span class="md-subheader remove-margin">
-                    Considera a quantidade de alíquotas armazenadas.
+                    <p>Quantitativo de aliquotas armazenadas seguimentadas por tipo.</p>
                   </span>
                 </h6>
               </div>
@@ -166,15 +172,15 @@
           </div>
         </md-content>
       </md-tab>
-      <md-tab label="Resultados de Exames" class="md-content" ng-click="$ctrl.openTabByExam()">
-        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill flex>
+      <md-tab label="Resultados de Exames" id="pendingButton" ng-click="$ctrl.openTabByExam()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
           <md-card flex layout-fill layout-padding="">
             <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
               <div layout="column" flex layout-fill>
-                <h1 class="md-no-sticky" layout-margin="" layout-padding>Resultados de exames</h1>
+                <h1 class=" remove-padding" layout-margin layout-padding>Resultados de exames</h1>
                 <h6 layout-margin class="remove-padding ">
                   <span class="md-subheader remove-margin">
-                    Considera a quantidade de resultados de exame.
+                    <p>Número de exames recebidos seguimentados por tipo.</p>
                   </span>
                 </h6>
               </div>

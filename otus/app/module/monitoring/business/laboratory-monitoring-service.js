@@ -27,7 +27,7 @@
     function getDataOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfPendingResultsByAliquots(center).then(function (response) {
-        defer.resolve(VerticalBarFactory.fromJsonObject(response, { waiting: 'Aguardando', received: 'Recebidos' }));
+        defer.resolve(VerticalBarFactory.fromJsonObject(response, { waiting: 'Pendentes', received: 'Recebidos' }));
       }).catch(function (e) {
         defer.reject(e);
       });
@@ -38,7 +38,7 @@
     function getDataQuantitativeByTypeOfAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataQuantitativeByTypeOfAliquots(center).then(function (response) {
-        defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: 'Recebidos', prepared: 'Preparados', transported: 'Transportados' }));
+        defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: 'Finalizadas', prepared: 'Preparadas', transported: 'Transportadas' }));
       }).catch(function (e) {
         defer.reject(e);
       });
@@ -84,7 +84,7 @@
       LoadingScreenService.changeMessage('Por favor, aguarde! Estamos gerando o arquivo para download.');
       LoadingScreenService.start();
       MonitoringCollectionService.getDataToCSVOfPendingResultsByAliquots(center).then(function (response) {
-        var headers = '[aliquot] AS [Alíquotas], [transported] AS [Transportados], [prepared] AS [Preparadas]';
+        var headers = '[aliquot] AS [Alíquota], [transported] AS [Transportada], [prepared] AS [Preparada]';
         var name = 'monitoramento-laboratorial-resultados-pendentes-'.concat(new Date().toLocaleDateString());
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [response]);
       }).catch(function () {
@@ -99,7 +99,7 @@
       LoadingScreenService.changeMessage('Por favor, aguarde! Estamos gerando o arquivo para download.');
       LoadingScreenService.start();
       MonitoringCollectionService.getDataToCSVOfOrphansByExam().then(function (response) {
-        var headers = '[aliquotCode] AS [Código da alíquota], [examName] AS [Nome do exame]';
+        var headers = '[aliquotCode] AS [Alíquota], [examName] AS [Exame]';
         var name = 'monitoramento-laboratorial-exame-orfaos-'.concat(new Date().toLocaleDateString());
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [response]);
       }).catch(function () {
