@@ -44,6 +44,7 @@
     self.selectLot = selectLot;
     self.updateOnDelete = updateOnDelete;
     self.onFilter = onFilter;
+    self.changeCenter = changeCenter;
     self.loadExamDescriptors = loadExamDescriptors;
 
     function onInit() {
@@ -95,9 +96,6 @@
         lot.isSelected = true;
 
       }
-      if(self.selectedLots.length == 1){
-        self.csvData = self.selectedLots[0].getAliquotsToCsv();
-      }
     }
 
     function updateOnDelete() {
@@ -105,11 +103,15 @@
     }
 
     function _LoadLotsList() {
-      ExamLotService.getLots().then(function(response) {
+      ExamLotService.getLots(self.centerFilter).then(function(response) {
         self.lotsList = response;
         self.lotsListImutable = response;
         self.onFilter();
       });
+    }
+
+    function changeCenter() {
+      _LoadLotsList();
     }
 
     function onFilter(){
@@ -117,24 +119,12 @@
       _setSessionData();
       if(self.lotsListImutable.length) {
         self.lotsList = self.lotsListImutable
-          .filter(function (lot) {
-            return _filterByCenter(lot);
-          })
           .filter(function (FilteredByCenter) {
             return _filterByPeriod(FilteredByCenter);
           })
           .filter(function (filteredByPeriod) {
             return _filterByExam(filteredByPeriod)
         });
-      }
-    }
-
-    function _filterByCenter(lot) {
-      if (self.centerFilter.length) {
-
-        return lot.fieldCenter.acronym == self.centerFilter;
-      } else {
-        return lot;
       }
     }
 

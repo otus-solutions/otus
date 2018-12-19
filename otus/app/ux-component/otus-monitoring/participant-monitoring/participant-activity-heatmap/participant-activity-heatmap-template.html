@@ -14,7 +14,15 @@
   }
 </style>
 
-<otus-panel header-label="'Painel de atividades'" flex>
+<otus-panel header-label="'Painel de atividades'" align="'center center'" flex>
+  <div layout="row" layout-align="center center" style="width: 300px" ng-if="!$ctrl.showActivitySignal && !$ctrl.loading">
+
+    <md-button ng-click="$ctrl.loadData()" ng-disabled="!$ctrl.loadAvailable"
+               class="md-icon-button">
+      <md-icon md-font-set="material-icons">autorenew</md-icon>
+    </md-button>
+    <span>Carregar dados do participante</span>
+  </div>
   <div layout="column" layout-margin flex ng-if="$ctrl.showActivitySignal && $ctrl.activityList.length">
     <span class="md-body-2">Situação:</span>
     <div layout="row" layout-wrap="" layout-align="start start" flex>
@@ -33,7 +41,7 @@
     </div>
     <div layout="row" layout-wrap layout-align="center center" flex>
       <md-card class="md-whiteframe-3dp signal-card" ng-repeat="(index, activity) in $ctrl.activityList">
-        <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.getFlagColor(activity)}" flex>
+        <md-card-header class="md-toolbar-tools" ng-style="{backgroundColor:$ctrl.COLOR[activity.status]}" flex>
           <md-card-header-text>
             <div layout="row" layout-align="space-between center" flex>
               <div flex="75" layout="column" layout-align="center stretch">
@@ -56,8 +64,11 @@
   <div layout="column" layout-margin ng-if="$ctrl.showActivitySignal && !$ctrl.activityList.length" flex>
     <span class="md-body-1">Não existem atividades disponíveis para o participante</span>
   </div>
-  <div layout-align="center center" layout="row" ng-if="!$ctrl.showActivitySignal">
+  <div layout-align="center center" style="width: 300px" layout="row" ng-if="$ctrl.loading">
     <md-progress-circular class="md-hue-2" md-diameter="20px"></md-progress-circular>
     <span class="md-caption">&nbsp;&nbsp;Carregando Atividades</span>
+  </div>
+  <div layout-align="center center" layout="row" ng-if="$ctrl.error">
+    <span class="md-caption">{{$ctrl.LOAD_ERROR_MESSAGE}}</span>
   </div>
 </otus-panel>

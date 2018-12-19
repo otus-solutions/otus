@@ -13,14 +13,16 @@
     'otusjs.application.state.ApplicationStateService',
     'otusjs.user.access.service.UserAccessRecoveryService',
     'otusjs.application.verifyBrowser.VerifyBrowserService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($scope, $mdDialog, $mdToast, LoginService, ApplicationStateService, UserAccessRecoveryService, VerifyBrowserService) {
+  function Controller($scope, $mdDialog, $mdToast, LoginService, ApplicationStateService, UserAccessRecoveryService, VerifyBrowserService, DialogService) {
     const LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
     const SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
     const PATH = '/access-recovery'
     var _errorMessage = $mdToast.simple().textContent(LOGIN_ERROR_MESSAGE);
     var self = this;
+    var successMessage;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -70,14 +72,25 @@
     }
 
     function _successMessage() {
-      $mdDialog.show($mdDialog.alert()
-        .title('Solicitação de troca de senha')
-        .textContent('Enviamos um e-mail com as instruções para você trocar sua senha')
-        .ariaLabel('Enviamos um e-mail com as instruções para você trocar sua senha')
-        .ok('Ok')
-      ).then(function () {
+
+      successMessage = {
+        dialogToTitle:'Troca de senha',
+        titleToText:'Solicitação de troca de senha',
+        textDialog:'Enviamos um e-mail com as instruções para você trocar sua senha',
+        ariaLabel:'Enviamos um e-mail com as instruções para você trocar sua senha',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          }
+        ]
+      };
+
+      DialogService.showDialog(successMessage).then(function () {
         self.recovery = false;
       });
+
     }
 
     function _getUrl() {

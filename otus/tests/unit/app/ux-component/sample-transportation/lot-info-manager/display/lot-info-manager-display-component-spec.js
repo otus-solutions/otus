@@ -9,6 +9,14 @@ describe('Lot info manager display component', function() {
   });
 
   beforeEach(function() {
+    Mock.DialogShowService = {
+      showDialog: function (dialog) {
+        var self = this;
+        self.test = dialog;
+        return Promise.resolve(self);
+      }
+    };
+
     Mock.AliquotTransportationService = {
       getContainerLabelToAliquot: function(aliquot) {},
       getAliquots: function(query) {},
@@ -46,6 +54,7 @@ describe('Lot info manager display component', function() {
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationService', Mock.AliquotTransportationService);
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationMessagesService', Mock.AliquotTransportationMesssagesService);
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory', Mock.AliquotTransportationFactory);
+      $provide.value('otusjs.application.dialog.DialogShowService', Mock.DialogShowService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
     });
   });
@@ -59,6 +68,7 @@ describe('Lot info manager display component', function() {
         $mdToast: _$injector_.get('$mdToast'),
         $filter: _$injector_.get('$filter'),
         DynamicTableSettingsFactory: _$injector_.get('otusjs.otus.uxComponent.DynamicTableSettingsFactory'),
+        DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService'),
         $q: _$injector_.get('$q')
       };
       ctrl = $controller('otusLotInfoManagerDisplayCtrl', Injections);

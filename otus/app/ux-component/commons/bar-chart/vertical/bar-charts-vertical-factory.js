@@ -6,10 +6,10 @@
     .factory('otusjs.otus.uxComponent.BarChartsVerticalFactory', Factory);
 
   Factory.$inject = [
-    "otusjs.application.color.PalleteColorService"
+    "otusjs.application.color.PaletteColorService"
   ];
 
-  function Factory(PalleteColorService) {
+  function Factory(PaletteColorService) {
     var self = this;
     var labels = [];
 
@@ -38,13 +38,13 @@
           if (!colors.length) {
             colors = [];
             labels.forEach(function (d, i) {
-              colors.push(PalleteColorService.getColor(i));
+              colors.push(PaletteColorService.getColor(i));
             });
           }
         } else {
           colors = [];
           labels.forEach(function (d, i) {
-            colors.push(PalleteColorService.getColor(i));
+            colors.push(PaletteColorService.getColor(i));
           });
         }
 

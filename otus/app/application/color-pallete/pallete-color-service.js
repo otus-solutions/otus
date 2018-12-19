@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.application.color')
-    .service('otusjs.application.color.PalleteColorService', Service);
+    .service('otusjs.application.color.PaletteColorService', Service);
 
   function Service() {
     var self = this;

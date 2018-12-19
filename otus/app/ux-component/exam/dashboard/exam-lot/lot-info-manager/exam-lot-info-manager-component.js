@@ -18,10 +18,11 @@
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.exams.ExamLotService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast, $mdDialog, laboratoryContextService, ExamLotService, ApplicationStateService) {
+  function Controller($mdToast, $mdDialog, laboratoryContextService, ExamLotService, ApplicationStateService, DialogService) {
     var self = this;
     var _confirmCancel;
     var _deleteAlreadyUsedAliquotsDialog;
@@ -49,12 +50,11 @@
         self.lot.operator = self.stateData['user'].email;
         self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedExamLotFieldCenter()};
         self.lot.realizationDate = new Date();
+        self.lot.aliquotList = [];
       }
       _buildDialogs();
       _formatLotDates();
-      _getAliquotsInOtherLots();
-      _fetchCollectedAliquots();
-      _getAliquotsInTransportLots();
+
     }
 
     function removeAliquots() {
@@ -91,7 +91,7 @@
     }
 
     function cancel() {
-      $mdDialog.show(_confirmCancel).then(function() {
+      DialogService.showDialog(_confirmCancel).then(function() {
         self.updateLotStateData();
         ApplicationStateService.activateExamsLotsManagerList();
       });
@@ -118,13 +118,12 @@
     }
 
     function _backendErrorAliquotsAlreadyUsed(aliquotsArray){
-      _deleteAlreadyUsedAliquotsDialog.textContent(
-        'A(s) aliquota(s): '
+      _deleteAlreadyUsedAliquotsDialog.textDialog = 'A(s) aliquota(s): '
         + _convertArrayToStringIncludesLastPosition(aliquotsArray,' e ')
-        + ' estão em outro(s) lote(s), deseja remove-la(s) do lote atual?'
-      );
+        + ' estão em outro(s) lote(s), deseja remove-la(s) do lote atual?';
 
-      $mdDialog.show(_deleteAlreadyUsedAliquotsDialog).then(function() {
+
+      DialogService.showDialog(_deleteAlreadyUsedAliquotsDialog).then(function() {
         self.selectedAliquots = aliquotsArray;
         removeAliquots()
       })
@@ -166,49 +165,42 @@
       self.lot.realizationDate.setMilliseconds(0);
     }
 
-    function _getAliquotsInOtherLots() {
-      self.aliquotsInOtherLots = [];
-      for (var i = 0; i < self.lots.length; i++) {
-        for (var j = 0; j < self.lots[i].aliquotList.length; j++) {
-          var aliquotData = {
-            "lotCode":self.lots[i].code,
-            "aliquot": self.lots[i].aliquotList[j]
-          };
-          self.aliquotsInOtherLots.push(aliquotData);
-        }
-      }
-    }
-
-    function _getAliquotsInTransportLots() {
-      self.aliquotsInTransportLots = [];
-      for (var i = 0; i < self.transportLots.length; i++) {
-        for (var j = 0; j < self.transportLots[i].aliquotList.length; j++) {
-          self.aliquotsInTransportLots.push(self.transportLots[i].aliquotList[j]);
-        }
-      }
-    }
-
-    function _fetchCollectedAliquots() {
-      ExamLotService.getAliquots()
-        .then(function(response) {
-          self.fullAliquotsList = response;
-        });
-    }
 
     function _buildDialogs() {
-      _confirmCancel = $mdDialog.confirm()
-        .title('Confirmar cancelamento:')
-        .textContent('As alterações realizadas no lote serão descartadas')
-        .ariaLabel('Confirmação de cancelamento')
-        .ok('Ok')
-        .cancel('Voltar');
+       self.getButtons = getButtons;
 
-      _deleteAlreadyUsedAliquotsDialog = $mdDialog.confirm()
-        .title('Aliquota(s) utilizada(s) em outro(s) Lote(s), remover aliquotas?')
-        .textContent('A(s) aliquota(s): "asd5a4s5sa4a" estão em outro(s) lote(s), deseja remove-la(s) do lote atual?')
-        .ariaLabel('Confirmação de cancelamento')
-        .ok('Ok')
-        .cancel('Voltar');
+      self.buttons = [
+        {
+          message:'Ok',
+          action:function(){$mdDialog.hide()},
+          class:'md-raised md-primary'
+        },
+        {
+          message:'Voltar',
+          action:function(){$mdDialog.cancel()},
+          class:'md-raised md-no-focus'
+        }
+      ];
+
+      function getButtons(){
+        return self.buttons;
+      }
+
+      _confirmCancel = {
+        dialogToTitle:'Cancelamento',
+        titleToText:'Confirmar cancelamento:',
+        textDialog:'As alterações realizadas no lote serão descartadas',
+        ariaLabel:'Confirmação de cancelamento',
+        buttons: getButtons()
+      };
+
+      _deleteAlreadyUsedAliquotsDialog = {
+        dialogToTitle:'Cancelamento',
+        titleToText:'Aliquota(s) utilizada(s) em outro(s) Lote(s), remover aliquotas?',
+        textDialog:'A(s) aliquota(s): "asd5a4s5sa4a" estão em outro(s) lote(s), deseja remove-la(s) do lote atual?',
+        ariaLabel:'Confirmação de cancelamento',
+        buttons: getButtons()
+      };
     }
   }
 }());

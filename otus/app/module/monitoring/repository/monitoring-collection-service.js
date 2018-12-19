@@ -8,11 +8,10 @@
   Service.$inject = [
     '$q',
     'otusjs.monitoring.core.ModuleService',
-    'otusjs.monitoring.storage.MonitoringLocalStorageService',
-    'otusjs.model.chart.VerticalBarFactory'
+    'otusjs.monitoring.storage.MonitoringLocalStorageService'
   ];
 
-  function Service($q, ModuleService, MonitoringLocalStorageService, VerticalBarFactory) {
+  function Service($q, ModuleService, MonitoringLocalStorageService) {
     var self = this;
     var _remoteStorage = ModuleService.getMonitoringRemoteStorage();
     var _laboratoryMonitoringStorage = ModuleService.getLaboratoryMonitoringRemoteStorage();

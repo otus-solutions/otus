@@ -6,7 +6,7 @@
     .factory('$exceptionHandler', ['$log', 'otusjs.application.crash.CrashReportService', function ($log, Service) {
       return function (exception) {
         $log.error(exception);
-        Service.persistException(exception)
+        Service.persistException(exception);
       }
     }]);
 }());

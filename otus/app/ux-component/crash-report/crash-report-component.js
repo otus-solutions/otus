@@ -20,16 +20,16 @@
     const timeShowMsg = 3000;
 
     function saveToCrashReport() {
-      var cookieReport = Service.getErrorList();
-      if (cookieReport.length) {
-        var cookieJSON = 'data:text/json;charset=utf-8,' + JSON.stringify({errorList:cookieReport});
+      var errorDataReport = Service.getErrorList();
+      if (errorDataReport.length) {
+        var dataReportJSON = 'data:text/json;charset=utf-8,' + errorDataReport;
         var date = new Date();
         var day = date.getDate();
         var month = date.getMonth() + 1;
         var year = date.getFullYear();
         var downloadElement = document.createElement('a');
 
-        downloadElement.setAttribute('href', cookieJSON);
+        downloadElement.setAttribute('href', dataReportJSON);
         downloadElement.setAttribute('download', 'bug-report-' + day + '-' + month + '-' + year + '.json');
         downloadElement.setAttribute('target', '_blank');
         document.body.appendChild(downloadElement);

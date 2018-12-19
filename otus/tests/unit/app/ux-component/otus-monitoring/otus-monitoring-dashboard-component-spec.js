@@ -10,6 +10,14 @@ describe('otusMonitoringDashboardComponent test', function() {
   });
 
   beforeEach(function() {
+    Mock.DialogShowService = {
+      showDialog: function (dialog) {
+        var self = this;
+        self.test = dialog;
+        return Promise.resolve(self);
+      }
+    };
+
     Mock.ProjectFieldCenterService = {
       loadCenters:function() {
         return Promise.resolve(mockCenters());
@@ -67,6 +75,7 @@ describe('otusMonitoringDashboardComponent test', function() {
       $provide.value('otusjs.monitoring.business.MonitoringService', Mock.MonitoringService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
       $provide.value('otusMonitorParseDataFactory', Mock.MonitorParseData);
+      $provide.value('otusjs.application.dialog.DialogShowService', Mock.DialogShowService);
       $provide.value('otusjs.model.monitoring.MonitoringCenterFactory', Mock.MonitoringCenterFactory);
     });
   });
@@ -82,6 +91,7 @@ describe('otusMonitoringDashboardComponent test', function() {
         MonitorParseData: Mock.MonitorParseData,
         MonitoringCenterFactory: Mock.MonitoringCenterFactory,
         $mdDialog: _$injector_.get('$mdDialog'),
+        DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService'),
         $q: _$injector_.get('$q')
       };
       ctrl = $controller('otusMonitoringDashboardCtrl', Injections);
