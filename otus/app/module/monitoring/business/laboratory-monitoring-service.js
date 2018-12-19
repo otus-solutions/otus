@@ -33,7 +33,7 @@
       });
 
       return defer.promise;
-    };
+    }
 
     function getDataQuantitativeByTypeOfAliquots(center) {
       var defer = $q.defer();
@@ -44,7 +44,7 @@
       });
 
       return defer.promise;
-    };
+    }
 
     function getDataOrphanByExams() {
       var defer = $q.defer();
@@ -55,7 +55,7 @@
       });
 
       return defer.promise;
-    };
+    }
 
     function getDataOfStorageByAliquots(center) {
       var defer = $q.defer();
@@ -66,7 +66,7 @@
       });
 
       return defer.promise;
-    };
+    }
 
     function getDataByExam(center) {
       var defer = $q.defer();
@@ -77,7 +77,7 @@
       });
 
       return defer.promise;
-    };
+    }
 
     function downloadCSVFileOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
