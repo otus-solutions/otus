@@ -30,7 +30,7 @@
                 <span flex></span>
                 <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
                   <label class="md-subheader">Centro:</label>
-                  <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                  <md-select ng-model="$ctrl.centerFilter">
                     <md-tooltip>
                       Centros
                     </md-tooltip>
@@ -50,7 +50,7 @@
             </div>
           </md-card>
         </md-content>
-        <md-content ng-if="!$ctrl.errorInPendingResultsChart" layout-padding>
+        <md-content ng-show="!$ctrl.errorInPendingResultsChart" layout-padding>
           <div id="pending-results-chart" layout="column"></div>
         </md-content>
         <md-content ng-if="$ctrl.errorInPendingResultsChart" layout="row" layout-align="center center" style="margin-top: 250px">
@@ -75,7 +75,7 @@
                 <span flex></span>
                 <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
                   <label class="md-subheader">Centro:</label>
-                  <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                  <md-select ng-model="$ctrl.centerFilter">
                     <md-tooltip>
                       Centros
                     </md-tooltip>
@@ -88,7 +88,7 @@
             </div>
           </md-card>
         </md-content>
-        <md-content ng-if="!$ctrl.errorInQuantitativeByAliquots" flex layout-padding>
+        <md-content ng-show="!$ctrl.errorInQuantitativeByAliquots" flex layout-padding>
           <div id="quantitative-by-aliquots" flex></div>
         </md-content>
         <md-content ng-if="$ctrl.errorInQuantitativeByAliquots" layout="row" layout-align="center center" style="margin-top: 250px">
@@ -119,7 +119,7 @@
             </div>
           </md-card>
         </md-content>
-        <md-content flex ng-if="!$ctrl.errorInOrphansByExam">
+        <md-content ng-show="!$ctrl.errorInOrphansByExam" flex>
           <div id="orphans-by-exam" flex></div>
         </md-content>
         <md-content ng-if="$ctrl.errorInOrphansByExam" layout="row" layout-align="center center" style="margin-top: 250px">
@@ -144,7 +144,7 @@
                 <span flex></span>
                 <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
                   <label class="md-subheader">Centro:</label>
-                  <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                  <md-select ng-model="$ctrl.centerFilter">
                     <md-tooltip>
                       Centros
                     </md-tooltip>
@@ -157,7 +157,7 @@
             </div>
           </md-card>
         </md-content>
-        <md-content ng-if="!$ctrl.errorInStorageByExam" flex layout-padding>
+        <md-content ng-show="!$ctrl.errorInStorageByExam" flex layout-padding>
           <div id="storage-by-exam" flex></div>
         </md-content>
         <md-content ng-if="$ctrl.errorInStorageByExam" layout="row" layout-align="center center" style="margin-top: 250px">
@@ -182,7 +182,7 @@
                 <span flex></span>
                 <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
                   <label class="md-subheader">Centro:</label>
-                  <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()">
+                  <md-select ng-model="$ctrl.centerFilter">
                     <md-tooltip>
                       Centros
                     </md-tooltip>
@@ -195,7 +195,7 @@
             </div>
           </md-card>
         </md-content>
-        <md-content ng-if="!$ctrl.errorInExamResults" flex layout-padding>
+        <md-content ng-show="!$ctrl.errorInExamResults" flex layout-padding>
           <div id="results-by-exam" flex></div>
         </md-content>
         <md-content ng-if="$ctrl.errorInExamResults" layout="row" layout-align="center center" style="margin-top: 250px">

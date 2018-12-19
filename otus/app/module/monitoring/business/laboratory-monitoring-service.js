@@ -9,10 +9,11 @@
     '$q',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.model.chart.VerticalBarFactory',
+    'otusjs.laboratory.configuration.AliquotDescriptorsService',
     'otusjs.monitoring.repository.MonitoringCollectionService'
   ];
 
-  function Service($q, LoadingScreenService, VerticalBarFactory, MonitoringCollectionService) {
+  function Service($q, LoadingScreenService, VerticalBarFactory, AliquotDescriptorsService, MonitoringCollectionService) {
     var self = this;
     /* Public methods */
     self.getDataOfPendingResultsByAliquots = getDataOfPendingResultsByAliquots;
@@ -26,7 +27,7 @@
     function getDataOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfPendingResultsByAliquots(center).then(function (response) {
-        defer.resolve(VerticalBarFactory.fromJsonObject(response, {  waiting: 'Aguardando', received: 'Recebidos' }));
+        defer.resolve(VerticalBarFactory.fromJsonObject(response, { waiting: 'Aguardando', received: 'Recebidos' }));
       }).catch(function (e) {
         defer.reject(e);
       });
@@ -59,7 +60,7 @@
     function getDataOfStorageByAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfStorageByAliquots(center).then(function (response) {
-        defer.resolve(response);
+        defer.resolve(_translateLabel(response));
       }).catch(function (e) {
         defer.reject(e);
       });
@@ -107,5 +108,12 @@
         LoadingScreenService.finish();
       });
     };
+
+    function _translateLabel(data) {
+      return data.map(function (d) {
+        d.title = AliquotDescriptorsService.getLabel(d.title);
+        return d;
+      });
+    }
   }
 }());
