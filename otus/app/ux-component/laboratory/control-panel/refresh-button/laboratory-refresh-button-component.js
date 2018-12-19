@@ -16,10 +16,10 @@
     '$mdDialog',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.otus.uxComponent.Publisher',
-    'otusjs.otus.dashboard.core.ContextService'
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast, $mdDialog, ParticipantLaboratoryService, Publisher, dashboardContextService) {
+  function Controller($mdToast, $mdDialog, ParticipantLaboratoryService, Publisher, DialogService) {
     var self = this;
 
     var confirmRefresh;
@@ -53,7 +53,7 @@
       }
 
       if (showMsg) {
-        $mdDialog.show(confirmRefresh).then(function () {
+        DialogService.showDialog(confirmRefresh).then(function () {
           _refreshPage(currentState);
         });
       } else {
@@ -66,14 +66,25 @@
     }
 
     function _buildDialogs() {
-      confirmRefresh = $mdDialog.confirm()
-        .title('Confirmar a atualização do Laboratório:')
-        .textContent('Existem alterações não finalizadas que serão descartadas.')
-        .ariaLabel('Confirmar atualização do Laboratório')
-        .ok('Ok')
-        .cancel('Cancelar');
-    }
 
+      confirmRefresh = {
+        dialogToTitle:'Exclusão',
+        titleToText: 'Confirmar a atualização do Laboratório:',
+        textDialog: 'Existem alterações não finalizadas que serão descartadas.',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Cancelar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+    }
     return self;
   }
 }());

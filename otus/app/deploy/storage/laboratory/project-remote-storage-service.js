@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy')
+    .module('otusjs.deploy.exam')
     .service('otusjs.deploy.ProjectRemoteStorageService', Service);
 
   Service.$inject = [
@@ -30,7 +30,9 @@
     var self = this;
 
     self.getLots = getLots;
+    self.getLotAliquots = getLotAliquots;
     self.getAliquots = getAliquots;
+    self.getAliquot = getAliquot;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -45,17 +47,36 @@
      * @returns {Promise} promise
      * @memberof ProjectRemoteStorageService
      */
-    function getLots() {
+    function getLots(centerAcronym) {
       var deferred = $q.defer();
 
       ExamsRestService
-        .getLots()
+        .getLots(centerAcronym)
         .then(function (response) {
           deferred.resolve(response.data);
         });
 
       return deferred.promise;
     }
+
+    /**
+     * Exam Lot Aliquots
+     * @returns {Promise} promise
+     * @memberof ProjectRemoteStorageService
+     */
+    function getLotAliquots(id) {
+      var deferred = $q.defer();
+
+      ExamsRestService
+        .getLotAliquots(id)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        });
+
+      return deferred.promise;
+    }
+
+
 
     /**
      * Exam Lot
@@ -94,6 +115,26 @@
 
        return deferred.promise;
      }
+
+
+    /**
+     * Exam Lot
+     * @param {(object)} aliquotFilter - the structure for query
+     * @returns {Promise} promise
+     * @memberof ProjectRemoteStorageService
+     */
+    function getAliquot(aliquotFilter) {
+      var deferred = $q.defer();
+      ExamsRestService.getAliquot(aliquotFilter)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function (e) {
+          deferred.reject(e);
+        })
+
+      return deferred.promise;
+    }
 
     /**
      * Exam Lot

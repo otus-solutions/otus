@@ -20,10 +20,11 @@
     'otusjs.activity.business.ActivityPlayerService',
     'otusjs.activity.core.EventService',
     'otusjs.application.state.ApplicationStateService',
-    '$mdDialog'
+    '$mdDialog',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller(ParticipantActivityService, ActivityPlayerService, EventService, ApplicationStateService, $mdDialog) {
+  function Controller(ParticipantActivityService, ActivityPlayerService, EventService, ApplicationStateService, $mdDialog, DialogService) {
     var self = this;
     var confirmDeleteSelectedActivity;
     /* Public methods */
@@ -43,7 +44,7 @@
     }
 
     function deleteSelectedActivity() {
-      $mdDialog.show(confirmDeleteSelectedActivity).then(function() {
+      DialogService.showDialog(confirmDeleteSelectedActivity).then(function() {
         ParticipantActivityService.getSelectedActivities().discard();
         self.onDelete();
       });
@@ -92,12 +93,25 @@
     }
 
     function _buildDialogs() {
-      confirmDeleteSelectedActivity = $mdDialog.confirm()
-        .title('Confirmar exclusão de atividade:')
-        .textContent('A atividade será excluida')
-        .ariaLabel('Confirmação de exclusão')
-        .ok('Ok')
-        .cancel('Voltar');
+
+      confirmDeleteSelectedActivity = {
+        dialogToTitle:'Confirmação',
+        titleToText:'Confirmar exclusão de atividade:',
+        textDialog:'A atividade será excluida.',
+        ariaLabel:'Confirmação de exclusão',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Voltar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
     }
   }
 }());

@@ -27,11 +27,13 @@
 
     //Laboratory Project Public Methods
     self.getAliquots = getAliquots;
+    self.getAliquot = getAliquot;
     self.getAliquotConfiguration = getAliquotConfiguration;
     self.getAliquotsByCenter = getAliquotsByCenter;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getAvailableExams = getAvailableExams;
     self.getLots = getLots;
+    self.getLotAliquots = getLotAliquots;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -39,6 +41,22 @@
     self.getSendedExams = getSendedExams;
     self.createSendExam = createSendExam;
     self.deleteSendedExams = deleteSendedExams;
+
+    function getLotAliquots(id) {
+      var request = $q.defer();
+
+      _projectRemoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getLotAliquots(id)
+            .then(function (aliquots) {
+              request.resolve(aliquots);
+            });
+        });
+
+      return request.promise;
+    }
 
     function getAliquots() {
       var request = $q.defer();
@@ -51,6 +69,25 @@
             .then(function (aliquots) {
               request.resolve(aliquots);
             });
+        });
+
+      return request.promise;
+    }
+
+    function getAliquot(aliquotFilter) {
+      var request = $q.defer();
+
+      _projectRemoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getAliquot(aliquotFilter)
+            .then(function (aliquot) {
+              request.resolve(aliquot);
+            })
+            .catch(error => {
+              request.reject(error);
+              });
         });
 
       return request.promise;
@@ -110,14 +147,14 @@
      * get exam lot.
      * @memberof ProjectCollectionService
      */
-    function getLots() {
+    function getLots(centerAcronym) {
       var request = $q.defer();
 
       _projectRemoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getLots()
+            .getLots(centerAcronym)
             .then(function (lots) {
               request.resolve(lots);
             });

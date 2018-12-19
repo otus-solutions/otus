@@ -28,7 +28,7 @@
 </head>
 
 <body layout="row" md-theme="default">
-  <div flex layout="row" class="md-body-2" ui-view></div>
+<div flex layout="row" class="md-body-2" ui-view></div>
 </body>
 
 <!-- ************************************* Force Refresh Page ************************************* -->
@@ -109,19 +109,21 @@
 <!------------------------------------------------------------------------------------------------>
 <!-- #Error handler -->
 <script src="app/application/crash-report/module.js"></script>
+<script src="app/application/crash-report/crash-report-service.js"></script>
 <script src="app/application/crash-report/handler-crash-report-factory.js"></script>
 <script src="app/application/crash-report/crash-report-factory.js"></script>
-<script src="app/application/crash-report/crash-report-service.js"></script>
+<script src="app/application/crash-report/crash-local-storage-service.js"></script>
 <script src="app/application/verify-browser/module.js"></script>
 <script src="app/application/verify-browser/verify-browser-service.js"></script>
 <!------------------------------------------------------------------------------------------------>
-
 <!-- # Application > Activity -->
 <script src="app/application/activity/module.js"></script>
 <script src="app/application/activity/status-history-service.js"></script>
 <!------------------------------------------------------------------------------------------------>
-
-
+<!-- # Application > custom-dialog  -->
+<script src="app/application/dialog-show/module.js"></script>
+<script src="app/application/dialog-show/dialog-show-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
 <!-- # Application > Dependency -->
 <script src="app/application/dependency/module.js"></script>
 <!------------------------------------------------------------------------------------------------>
@@ -225,6 +227,7 @@
 <script src="app/deploy/rest/otus-api/laboratory/laboratory-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/sampleTransport/sample-transport-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/extraction/token-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/laboratory/exam/module.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/exam/exams-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/monitoring/monitoring-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/monitoring/laboratory/laboratory-monitoring-rest-service.js"></script>
@@ -625,6 +628,7 @@
 <script src="app/ux-component/otus-panel/otus-panel-component.js"></script>
 
 <!--   ----    -->
+<!--   ----    -->
 <script src="app/ux-component/paper-activity-initializer/checker-item-factory.js"></script>
 <script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>
 <script src="app/ux-component/participant-search/show-all-participants-directive.js"></script>
@@ -636,6 +640,9 @@
 
 <!--  crash report  -->
 <script src="app/ux-component/crash-report/crash-report-component.js"></script>
+
+<!--  dialog  -->
+<script src="app/ux-component/dialog-show/dialog-show-controller.js"></script>
 
 <!-- user access recovery -->
 <script src="app/ux-component/user-login-access-recovery/user-login-access-recovery-controller.js"></script>

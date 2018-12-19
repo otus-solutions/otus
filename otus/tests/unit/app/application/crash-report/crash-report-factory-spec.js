@@ -30,7 +30,6 @@ describe('CrashReportFactory', function () {
       expect(_object.browserOnline).toEqual(Mock.ErroData.browserOnline);
       expect(_object.browserName).toEqual(Mock.ErroData.browserName);
       expect(_object.browserVersion).toEqual(Mock.ErroData.browserVersion);
-      expect(_object.cookiesEnabled).toEqual(Mock.ErroData.cookiesEnabled);
       expect(_object.plataform).toEqual(Mock.ErroData.plataform);
     });
   });

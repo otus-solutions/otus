@@ -12,7 +12,8 @@
     'otusMonitorParseDataFactory',
     'otusjs.model.monitoring.MonitoringCenterFactory',
     '$mdDialog',
-    '$q'
+    '$q',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
   function Controller(
@@ -22,7 +23,8 @@
     MonitorParseData,
     MonitoringCenterFactory,
     $mdDialog,
-    $q) {
+    $q,
+    DialogService) {
 
     var self = this;
     self.parseData = MonitorParseData.create;
@@ -159,15 +161,23 @@
     }
 
     function _showMessages(msg, action) {
-      var _msg = $mdDialog.alert()
-        .title('ATENÇÃO')
-        .textContent('Os dados não foram encontrados!')
-        .ariaLabel('Confirmação de leitura')
-        .ok('Ok');
-      $mdDialog.show(_msg).then(function() {
-        action();
-      });
+      var _msg = {
+        dialogToTitle:'Alerta',
+        titleToText:'Atenção',
+        textDialog:'Os dados não foram encontrados!',
+        ariaLabel:'Confirmação de leitura',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          }
+        ]
+      };
 
+        DialogService.showDialog(_msg).then(function() {
+          action();
+        });
     }
 
     function _loadDataSetInformation() {

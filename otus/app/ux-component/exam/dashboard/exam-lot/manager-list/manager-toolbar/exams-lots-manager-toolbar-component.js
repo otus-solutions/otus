@@ -9,8 +9,7 @@
       bindings: {
         onViewInfo: '&',
         updateLotListOnDelete: '&',
-        selectedLots: '<',
-        csvData: '<'
+        selectedLots: '<'
       }
     });
 
@@ -20,30 +19,52 @@
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.exams.ExamLotService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
 
-  function Controller($mdToast, $mdDialog, laboratoryContextService, ExamLotService,ApplicationStateService) {
+  function Controller($mdToast, $mdDialog, laboratoryContextService, ExamLotService, ApplicationStateService, DialogService) {
     var self = this;
     var _confirmDeleteSelectedLots;
 
     self.$onInit = onInit;
     self.ChangeLot = ChangeLot;
     self.DeleteLots = DeleteLots;
+    self.getCsvData = getCsvData;
 
     function onInit() {
       _buildDialogs();
     }
 
+    function getCsvData() {
+      if(!self.selectedLots[0].aliquotList){
+        ExamLotService.getLotAliquots(self.selectedLots[0]._id).then(aliquotList => {
+          self.selectedLots[0].aliquotList = aliquotList;
+          self.csvData =  self.selectedLots[0].getAliquotsToCsv();
+        });
+      } else {
+        self.csvData =  self.selectedLots[0].getAliquotsToCsv();
+      }
+    }
+
     function ChangeLot() {
-      self.action = laboratoryContextService.setLotInfoManagerAction('alter');
-      laboratoryContextService.setSelectedExamLot(self.selectedLots[0].toJSON());
-      ApplicationStateService.activateExamsLotInfoManager();
+      if(!self.selectedLots[0].aliquotList) {
+        ExamLotService.getLotAliquots(self.selectedLots[0]._id).then(aliquotList => {
+          self.selectedLots[0].aliquotList = aliquotList;
+          self.action = laboratoryContextService.setLotInfoManagerAction('alter');
+          laboratoryContextService.setSelectedExamLot(self.selectedLots[0].toJSON());
+          ApplicationStateService.activateExamsLotInfoManager();
+        });
+      } else {
+        self.action = laboratoryContextService.setLotInfoManagerAction('alter');
+        laboratoryContextService.setSelectedExamLot(self.selectedLots[0].toJSON());
+        ApplicationStateService.activateExamsLotInfoManager();
+      }
     }
 
     function DeleteLots() {
-      $mdDialog.show(_confirmDeleteSelectedLots).then(function() {
+      DialogService.showDialog(_confirmDeleteSelectedLots).then(function() {
         _removeLotRecursive(self.selectedLots, function() {
           self.updateLotListOnDelete();
           self.selectedLots = [];
@@ -52,12 +73,24 @@
     }
 
     function _buildDialogs() {
-      _confirmDeleteSelectedLots = $mdDialog.confirm()
-        .title('Confirmar exclusão de Lote(s):')
-        .textContent('O(s) lote(s) será(ão) excluido(s)')
-        .ariaLabel('Confirmação de exclusão')
-        .ok('Ok')
-        .cancel('Voltar');
+      _confirmDeleteSelectedLots = {
+        dialogToTitle:'Exclusão',
+        titleToText:'Confirmar exclusão de Lote(s):',
+        textDialog:'O(s) lote(s) será(ão) excluido(s).',
+        ariaLabel:'Confirmação de exclusão',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Voltar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
     }
 
     function _removeLotRecursive(lotArray,callback){

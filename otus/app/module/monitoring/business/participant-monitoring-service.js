@@ -128,7 +128,7 @@
       });
 
       return defer.promise;
-    };
+    }
 
     function deleteNotAppliesOfActivity(recruitmentNumber, oldActivity) {
       var defer = $q.defer();
@@ -166,7 +166,7 @@
         case FINALIZED:
           return 'Finalizado';
       }
-    };
+    }
 
   }
 }());

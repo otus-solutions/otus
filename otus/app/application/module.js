@@ -12,6 +12,7 @@
       'otusjs.application.crash',
       'otusjs.application.activity',
       'otusjs.application.color',
+      'otusjs.application.dialog',
       'otusjs.application.state',
       'otusjs.application.http',
       'otusjs.application.locale',
