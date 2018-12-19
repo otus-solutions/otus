@@ -16,15 +16,15 @@
     /* Public methods */
     self.create = create;
 
-    function _constructor(data, keys){
+    function _constructor(data, keys) {
       labels = [];
       for (var j = 0; j < data.length; j++) {
         labels.push(data[j][0][keys[0]])
         for (let i = 0; i < data[j].length; i++) {
-          if(!j){
+          if (!j) {
             data[j][i].position = 0;
           } else {
-            data[j][i].position = data[j-1][i][keys[2]] + data[j-1][i].position;
+            data[j][i].position = data[j - 1][i][keys[2]] + data[j - 1][i].position;
           }
         }
       }
@@ -33,7 +33,7 @@
     function create(dataset, element, colors) {
       if ((Array.isArray(dataset) && dataset.length) && element) {
         var keys = Object.keys(dataset[0][0]);
-        _constructor(dataset , keys);
+        _constructor(dataset, keys);
         if (Array.isArray(colors)) {
           if (!colors.length) {
             colors = [];
@@ -48,17 +48,17 @@
           });
         }
 
-        var margin = {top: 20, right: 160, bottom: 80, left: 50};
-        var width = dataset[0].length * 100,
-          height = window.innerHeight - 470;
+        var margin = { top: 20, right: 160, bottom: 80, left: 50 };
+        var width = dataset[0].length * 120,
+          height = window.innerHeight - 500;
 
         var svg = d3.select(element)
           .append("svg")
-          .attr("width", width+(width <= 200 ? 250 : 100))
-          .attr("height", height+150)
-          .attr("margin", 300)
+          .attr("width", width + (width < 240 ? 850 : 100))
+          .attr("height", height + 150)
+          .attr("margin", 250)
           .append("g")
-          .attr("transform", "translate(" + margin.left + "," + (margin.top+20) + ")");
+          .attr("transform", "translate(" + margin.left + "," + (margin.top + 20) + ")");
 
         var x = d3.scaleBand()
           .domain(dataset[0].map(function (d) {
@@ -153,7 +153,7 @@
             var xPosition = d3.mouse(this)[0] - 15;
             var yPosition = d3.mouse(this)[1] - 25;
             tooltip.attr("transform", "translate(" + xPosition + "," + yPosition + ")");
-            tooltip.select("text").text(d[keys[0]]+": "+parseInt(d[keys[2]]));
+            tooltip.select("text").text(d[keys[0]] + ": " + parseInt(d[keys[2]]));
           });
 
         var legend = svg.selectAll(".legend")
@@ -212,8 +212,6 @@
           curXPos = d3.event.offsetX;
           d3.selectAll("svg").style("cursor", "all-scroll");
           d3.event.preventDefault();
-
-
         })
           .on("mouseup", function () {
             curDown = false;
@@ -222,14 +220,11 @@
           .on("mouseout", function () {
             curDown = false;
           }).on("mousemove", function () {
-          if (curDown === true) {
-            $("md-content").scrollTop(parseInt($("md-content").scrollTop() + (curYPos - d3.event.pageY)));
-            $("md-content").scrollLeft(parseInt($("md-content").scrollLeft() + (curXPos - d3.event.pageX)));
-          }
-        }).style("cursor", 'grab');
-
-
-
+            if (curDown === true) {
+              $("md-content").scrollTop(parseInt($("md-content").scrollTop() + (curYPos - d3.event.pageY)));
+              $("md-content").scrollLeft(parseInt($("md-content").scrollLeft() + (curXPos - d3.event.pageX)));
+            }
+          }).style("cursor", 'grab');
       }
     }
 

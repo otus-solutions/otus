@@ -119,6 +119,7 @@
           break;
         case STORAGE:
           _loadStorageByAliquots(center);
+          break;
         case EXAM:
           _loadResultsByExam(center);
           break;
@@ -141,14 +142,12 @@
 
     function _loadDataPendingResultsByAliquots(center) {
       LoadingScreenService.start();
-      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center ? center : self.centerFilter)
+      LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(center)
         .then(function (response) {
-          if (response) {
-            var colors = ['#88d8b0', '#ff6f69'];
-            var element = '#pending-results-chart';
-            BarChartsVerticalFactory.create(response, element, colors);
-          };
+          var colors = ['#88d8b0', '#ff6f69'];
+          var element = '#pending-results-chart';
           self.errorInPendingResultsChart = false;
+          BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
           self.errorInPendingResultsChart = true;
