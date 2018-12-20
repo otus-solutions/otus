@@ -10,14 +10,13 @@
     '$filter',
     'otusjs.application.session.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.monitoring.business.LaboratoryMonitoringService',
     'otusjs.otus.uxComponent.BarChartsVerticalFactory',
     'otusjs.otus.uxComponent.BarChartsHorizontalFactory'
   ];
 
-  function Controller($q, $filter, SessionContextService, LoadingScreenService, DashboardContextService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
+  function Controller($q, $filter, SessionContextService, LoadingScreenService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
     const MESSAGE_OF_DATA_NOT_FOUND = 'Não há registros a serem exibidos.';
     const MESSAGE_OF_GENERIC_ERROR = 'Não conseguimos apresentar os dados, tente novamente mais tarde.';
     const DATA_NOT_FOUND = 'Data Not Found';
@@ -128,7 +127,6 @@
 
     function _setUserFieldCenter() {
       let defer = $q.defer();
-
       let user = SessionContextService.getData('loggedUser');
       if (!user.fieldCenter.acronym) {
         self.centerFilter = self.centers[0];
@@ -223,11 +221,9 @@
     function _defineErrorMessage(response) {
       if (response.data.MESSAGE === DATA_NOT_FOUND) {
         self.message = MESSAGE_OF_DATA_NOT_FOUND;
-        return true;
       } else if (response.data.MESSAGE) {
         self.message = MESSAGE_OF_GENERIC_ERROR;
       }
-      return false;
     };
   };
 }());
