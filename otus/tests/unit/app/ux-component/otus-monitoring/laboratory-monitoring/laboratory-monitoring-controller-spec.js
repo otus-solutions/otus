@@ -1,5 +1,6 @@
-xdescribe('otusParticipantHeatmap test', function () {
+describe('otusParticipantHeatmap test', function () {
   const CENTER_RS = 'RS';
+  const CENTER_RJ = 'RJ';
   const PENDING = 'pending';
   const QUANTITATIVE = 'quantitative';
   const ORPHAN = 'orphan';
@@ -29,30 +30,42 @@ xdescribe('otusParticipantHeatmap test', function () {
     };
 
     Mock.LaboratoryMonitoringService = {
-      downloadCSVFileOfPendingResultsByAliquots: function () {
+      downloadCSVFileOfPendingResultsByAliquots: function (center) {
         return Promise.resolve();
       },
       downloadCSVFileOfOrphansByExam: function () {
         return Promise.resolve();
       },
-      getDataOfPendingResultsByAliquots: function (bol) {
-        if (bol) {
+      getDataOfPendingResultsByAliquots: function (center) {
+        if (center === CENTER_RS) {
           return Promise.resolve();
         } else {
           return Promise.reject();
         }
       },
-      getDataQuantitativeByTypeOfAliquots: function () {
-        return Promise.resolve();
+      getDataQuantitativeByTypeOfAliquots: function (center) {
+        if (center === CENTER_RS) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
       },
       getDataOrphanByExams: function () {
         return Promise.resolve();
       },
-      getDataOfStorageByAliquots: function () {
-        return Promise.resolve();
+      getDataOfStorageByAliquots: function (center) {
+        if (center === CENTER_RS) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
       },
-      getDataByExam: function () {
-        return Promise.resolve();
+      getDataByExam: function (center) {
+        if (center === CENTER_RS) {
+          return Promise.resolve();
+        } else {
+          return Promise.reject();
+        }
       }
     };
 
@@ -98,10 +111,11 @@ xdescribe('otusParticipantHeatmap test', function () {
       ctrl.$onInit();
     });
 
-    it('should be defined', () => {
+    it('should be defined', (done) => {
       expect(ctrl.$onInit).not.toBeNull();
       expect(ctrl.$onInit).toHaveBeenCalled();
       // expect(ctrl.openTabPendingResultsByAliquots).toHaveBeenCalled();
+      done();
     });
   });
 
@@ -133,7 +147,7 @@ xdescribe('otusParticipantHeatmap test', function () {
       spyOn(Injections.LaboratoryMonitoringService, 'getDataOfStorageByAliquots').and.callThrough();
       spyOn(Injections.LaboratoryMonitoringService, 'getDataByExam').and.callThrough();
       spyOn(Injections.BarChartsVerticalFactory, 'create').and.callThrough();
-      spyOn(Injections.BarChartsHorizontalFactory, 'create').and.scallThrough();
+      spyOn(Injections.BarChartsHorizontalFactory, 'create').and.callThrough();
     });
 
     it('when method loadData is called then variable centerFilter should receive value of parameter', () => {
@@ -145,26 +159,156 @@ xdescribe('otusParticipantHeatmap test', function () {
     it('when method loadData is called with currentTab equal to pending then method getDataOfPendingResultsByAliquots should be called', () => {
       ctrl.loadData(PENDING, CENTER_RS);
 
-      expect(Injections.LaboratoryMonitoringService.getDataOfPendingResultsByAliquots).toHaveBeenCalledTimes(1);
-      Injections.LaboratoryMonitoringService.getDataOfPendingResultsByAliquots(true).then(() => { }).catch(() => { fail() })
+      expect(Injections.LaboratoryMonitoringService.getDataOfPendingResultsByAliquots).toHaveBeenCalled();
     });
 
-    it('when method loadData is called with currentTab equal to quantitative then method getDataOfPendingResultsByAliquots should be called', () => {
+    it('when method loadData is called with currentTab equal to quantitative then method getDataQuantitativeByTypeOfAliquots should be called', () => {
       ctrl.loadData(QUANTITATIVE, CENTER_RS);
 
       expect(Injections.LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots).toHaveBeenCalled();
     });
 
-    it('when method loadData is called with currentTab equal to storage then method getDataOfPendingResultsByAliquots should be called', () => {
+    it('when method loadData is called with currentTab equal to storage then method getDataOfStorageByAliquots should be called', () => {
       ctrl.loadData(STORAGE, CENTER_RS);
 
       expect(Injections.LaboratoryMonitoringService.getDataOfStorageByAliquots).toHaveBeenCalled();
     });
 
-    it('when method loadData is called with currentTab equal to exam then method getDataOfPendingResultsByAliquots should be called', () => {
+    it('when method loadData is called with currentTab equal to exam then method getDataByExam should be called', () => {
       ctrl.loadData(EXAM, CENTER_RS);
 
       expect(Injections.LaboratoryMonitoringService.getDataByExam).toHaveBeenCalled();
+    });
+  });
+
+
+  describe('openTabPendingResultsByAliquots method', () => {
+    beforeEach(() => {
+      spyOn(ctrl, 'loadData').and.callThrough();
+      spyOn(Injections.LaboratoryMonitoringService, 'getDataOfPendingResultsByAliquots').and.callThrough();
+      spyOn(Injections.BarChartsVerticalFactory, 'create').and.callThrough();
+    });
+
+    it('should called method getDataOfPendingResultsByAliquots', () => {
+      ctrl.centerFilter = CENTER_RS;
+      ctrl.openTabPendingResultsByAliquots();
+
+      expect(Injections.LaboratoryMonitoringService.getDataOfPendingResultsByAliquots).toHaveBeenCalled();
+    });
+
+    xit('should called method create of BarChartsVerticalFactory', () => {
+      expect(Injections.BarChartsVerticalFactory.create).toHaveBeenCalled();
+    });
+
+    it('when the getDataOfPendingResultsByAliquots method returns success, then error variability must be false', () => {
+      ctrl.centerFilter = CENTER_RS;
+      ctrl.openTabPendingResultsByAliquots();
+
+      expect(ctrl.error).toBe(false);
+    });
+  });
+
+  describe('openTabQuantitativeByTypeOfAliquots method', () => {
+    beforeEach(() => {
+      spyOn(ctrl, 'loadData').and.callThrough();
+      spyOn(Injections.LaboratoryMonitoringService, 'getDataQuantitativeByTypeOfAliquots').and.callThrough();
+      spyOn(Injections.BarChartsVerticalFactory, 'create').and.callThrough();
+    });
+
+    it('should called method getDataOfPendingResultsByAliquots', () => {
+      ctrl.centerFilter = CENTER_RS;
+      ctrl.openTabQuantitativeByTypeOfAliquots();
+
+      expect(Injections.LaboratoryMonitoringService.getDataQuantitativeByTypeOfAliquots).toHaveBeenCalled();
+    });
+
+    xit('should called method create of BarChartsVerticalFactory', () => {
+      expect(Injections.BarChartsVerticalFactory.create).toHaveBeenCalled();
+    });
+
+    it('when the getDataQuantitativeByTypeOfAliquots method returns success, then error variability must be false', () => {
+      ctrl.centerFilter = CENTER_RS;
+      ctrl.openTabQuantitativeByTypeOfAliquots();
+
+      expect(ctrl.error).toBe(false);
+    });
+  });
+
+  describe('openTabOrphanByExams method', () => {
+    beforeEach(() => {
+      spyOn(ctrl, 'loadData').and.callThrough();
+      spyOn(Injections.LaboratoryMonitoringService, 'getDataOrphanByExams').and.callThrough();
+      spyOn(Injections.BarChartsHorizontalFactory, 'create').and.callThrough();
+    });
+
+    it('should called method getDataOfPendingResultsByAliquots', () => {
+      ctrl.centerFilter = CENTER_RS;
+      ctrl.openTabOrphanByExams();
+
+      expect(Injections.LaboratoryMonitoringService.getDataOrphanByExams).toHaveBeenCalled();
+    });
+
+    xit('should called method create of BarChartsHorizontalFactory', () => {
+      expect(Injections.BarChartsHorizontalFactory.create).toHaveBeenCalled();
+    });
+
+    it('when the getDataOrphanByExams method returns success, then error variability must be false', () => {
+      ctrl.centerFilter = CENTER_RS;
+      ctrl.openTabOrphanByExams();
+
+      expect(ctrl.error).toBe(false);
+    });
+  });
+
+  describe('openTabStorageByAliquots method', () => {
+    beforeEach(() => {
+      spyOn(ctrl, 'loadData').and.callThrough();
+      spyOn(Injections.LaboratoryMonitoringService, 'getDataOfStorageByAliquots').and.callThrough();
+      spyOn(Injections.BarChartsHorizontalFactory, 'create').and.callThrough();
+    });
+
+    it('should called method getDataOfPendingResultsByAliquots', () => {
+      ctrl.centerFilter = CENTER_RS;
+      ctrl.openTabStorageByAliquots();
+
+      expect(Injections.LaboratoryMonitoringService.getDataOfStorageByAliquots).toHaveBeenCalled();
+    });
+
+    xit('should called method create of BarChartsHorizontalFactory', () => {
+      expect(Injections.BarChartsHorizontalFactory.create).toHaveBeenCalled();
+    });
+
+    it('when the getDataOfStorageByAliquots method returns success, then error variability must be false', () => {
+      ctrl.centerFilter = CENTER_RS;
+      ctrl.openTabStorageByAliquots();
+
+      expect(ctrl.error).toBe(false);
+    });
+  });
+
+  describe('openTabByExam method', () => {
+    beforeEach(() => {
+      spyOn(ctrl, 'loadData').and.callThrough();
+      spyOn(Injections.LaboratoryMonitoringService, 'getDataByExam').and.callThrough();
+      spyOn(Injections.BarChartsHorizontalFactory, 'create').and.callThrough();
+    });
+
+    it('should called method getDataOfPendingResultsByAliquots', () => {
+      ctrl.centerFilter = CENTER_RS;
+      ctrl.openTabByExam();
+
+      expect(Injections.LaboratoryMonitoringService.getDataByExam).toHaveBeenCalled();
+    });
+
+    xit('should called method create of BarChartsHorizontalFactory', () => {
+      expect(Injections.BarChartsHorizontalFactory.create).toHaveBeenCalled();
+    });
+
+    it('when the getDataByExam method returns success, then error variability must be false', () => {
+      ctrl.centerFilter = CENTER_RS;
+      ctrl.openTabByExam();
+
+      expect(ctrl.error).toBe(false);
     });
   });
 });

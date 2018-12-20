@@ -43,8 +43,7 @@
                   </md-select>
                 </md-input-container>
                 <span flex="5"></span>
-                <md-button ng-click="$ctrl.downloadCSVFile('pending')" ng-disabled="$ctrl.errorInPendingResultsChart"
-                  class="md-raised md-primary md-icon-button">
+                <md-button ng-click="$ctrl.downloadCSVFile('pending')" ng-disabled="$ctrl.error" class="md-raised md-primary md-icon-button">
                   <md-icon>get_app</md-icon>
                   <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
                 </md-button>
@@ -52,10 +51,10 @@
             </div>
           </md-card>
         </md-content>
-        <md-content ng-show="!$ctrl.errorInPendingResultsChart" layout-padding>
+        <md-content ng-show="!$ctrl.error" layout-padding>
           <div id="pending-results-chart" layout="column"></div>
         </md-content>
-        <md-content ng-if="$ctrl.errorInPendingResultsChart" layout="row" layout-align="center center" style="margin-top: 250px">
+        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
           <div class="label-light-gray">
             <h2 flex>{{$ctrl.message}}</h2>
           </div>
@@ -92,10 +91,10 @@
             </div>
           </md-card>
         </md-content>
-        <md-content ng-show="!$ctrl.errorInQuantitativeByAliquots" flex layout-padding>
+        <md-content ng-show="!$ctrl.error" flex layout-padding>
           <div id="quantitative-by-aliquots" flex></div>
         </md-content>
-        <md-content ng-if="$ctrl.errorInQuantitativeByAliquots" layout="row" layout-align="center center" style="margin-top: 250px">
+        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
           <div class="label-light-gray">
             <h2 flex>{{$ctrl.message}}</h2>
           </div>
@@ -163,10 +162,10 @@
             </div>
           </md-card>
         </md-content>
-        <md-content ng-show="!$ctrl.errorInStorageByExam" flex layout-padding>
+        <md-content ng-show="!$ctrl.error" flex layout-padding>
           <div id="storage-by-exam" flex></div>
         </md-content>
-        <md-content ng-if="$ctrl.errorInStorageByExam" layout="row" layout-align="center center" style="margin-top: 250px">
+        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
           <div class="label-light-gray">
             <h2 flex>{{$ctrl.message}}</h2>
           </div>
@@ -201,10 +200,10 @@
             </div>
           </md-card>
         </md-content>
-        <md-content ng-show="!$ctrl.errorInExamResults" flex layout-padding>
+        <md-content ng-show="!$ctrl.error" flex layout-padding>
           <div id="results-by-exam" flex></div>
         </md-content>
-        <md-content ng-if="$ctrl.errorInExamResults" layout="row" layout-align="center center" style="margin-top: 250px">
+        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
           <div class="label-light-gray">
             <h2 flex>{{$ctrl.message}}</h2>
           </div>

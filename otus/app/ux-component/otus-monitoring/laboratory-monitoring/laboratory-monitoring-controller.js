@@ -30,10 +30,7 @@
     self.centers = [];
     self.centerFilter = '';
     self.message = '';
-    self.errorInPendingResultsChart = false;
-    self.errorInQuantitativeByAliquots = false;
-    self.errorInStorageByExam = false;
-    self.errorInExamResults = false;
+    self.error = false;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -51,7 +48,10 @@
       loadCenters().then(() => {
         _setUserFieldCenter();
         openTabPendingResultsByAliquots();
-      })
+      }).catch(function (e) {
+        self.error = true;
+        self.message = MESSAGE_OF_GENERIC_ERROR;
+      });
     };
 
     function loadCenters() {
@@ -62,6 +62,8 @@
           self.centers.push(fieldCenter.acronym)
         });
         defer.resolve();
+      }).catch(function (e) {
+        defer.reject();
       });
       return defer.promise;
     }
@@ -144,11 +146,11 @@
         .then(function (response) {
           var colors = ['#88d8b0', '#ff6f69'];
           var element = '#pending-results-chart';
-          self.errorInPendingResultsChart = false;
+          self.error = false;
           BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
-          self.errorInPendingResultsChart = true;
+          self.error = true;
           _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
@@ -161,10 +163,10 @@
           var colors = ['#88d8b0', '#ffeead', '#ff6f69'];
           var element = '#quantitative-by-aliquots';
           BarChartsVerticalFactory.create(response, element, colors);
-          self.errorInQuantitativeByAliquots = false;
+          self.error = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
-          self.errorInQuantitativeByAliquots = true;
+          self.error = true;
           _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
@@ -193,10 +195,10 @@
           var colors = ['#88d8b0'];
           var element = '#storage-by-exam';
           BarChartsHorizontalFactory.create(response, element, colors);
-          self.errorInStorageByExam = false;
+          self.error = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
-          self.errorInStorageByExam = true;
+          self.error = true;
           _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
@@ -209,10 +211,10 @@
           var colors = ['#88d8b0'];
           var element = '#results-by-exam';
           BarChartsHorizontalFactory.create(response, element, colors);
-          self.errorInExamResults = false;
+          self.error = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
-          self.errorInExamResults = true;
+          self.error = true;
           _defineErrorMessage(e);
           LoadingScreenService.finish();
         });
