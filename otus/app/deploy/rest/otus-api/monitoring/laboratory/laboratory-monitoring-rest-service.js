@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy')
-    .service('otusjs.deploy.LaboratoryMonitoringRestService', Service);
+    .module('otusjs.deploy.monitoring')
+    .service('otusjs.deploy.monitoring.LaboratoryMonitoringRestService', Service);
 
   Service.$inject = [
     'OtusRestResourceService'

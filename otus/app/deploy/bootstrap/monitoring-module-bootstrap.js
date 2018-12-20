@@ -10,7 +10,7 @@
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
     'otusjs.deploy.MonitoringRestService',
-    'otusjs.deploy.LaboratoryMonitoringRestService'
+    'otusjs.deploy.monitoring.LaboratoryMonitoringRestService'
   ];
 
   function Service(ModuleService, ContextFactory, StorageService, MonitoringRestService, LaboratoryMonitoringRestService) {

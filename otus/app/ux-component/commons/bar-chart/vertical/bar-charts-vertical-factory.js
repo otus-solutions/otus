@@ -54,7 +54,7 @@
 
         var svg = d3.select(element)
           .append("svg")
-          .attr("width", width + (width < 240 ? 850 : 100))
+          .attr("width", width + (width < 500 ? 850 : 100))
           .attr("height", height + 150)
           .attr("margin", 250)
           .append("g")

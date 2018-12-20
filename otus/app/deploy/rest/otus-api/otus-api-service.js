@@ -20,7 +20,7 @@
     'otusjs.deploy.ParticipantReportRestService',
     'otusjs.deploy.MonitoringRestService',
     'otusjs.deploy.user.UserAccessRecoveryRestService',
-    'otusjs.deploy.LaboratoryMonitoringRestService'
+    'otusjs.deploy.monitoring.LaboratoryMonitoringRestService'
   ];
 
   function Service(
