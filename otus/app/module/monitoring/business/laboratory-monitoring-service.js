@@ -27,7 +27,7 @@
     function getDataOfPendingResultsByAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataOfPendingResultsByAliquots(center).then(function (response) {
-        defer.resolve(VerticalBarFactory.fromJsonObject(response, { waiting: 'Pendentes', received: 'Recebidos' }));
+        defer.resolve(VerticalBarFactory.fromJsonObject(response, {waiting: 'Pendentes', received: 'Recebidos'}));
       }).catch(function (e) {
         defer.reject(e);
       });
@@ -38,7 +38,11 @@
     function getDataQuantitativeByTypeOfAliquots(center) {
       var defer = $q.defer();
       MonitoringCollectionService.getDataQuantitativeByTypeOfAliquots(center).then(function (response) {
-        defer.resolve(VerticalBarFactory.fromJsonObject(response, { received: 'Finalizadas', prepared: 'Preparadas', transported: 'Transportadas' }));
+        defer.resolve(VerticalBarFactory.fromJsonObject(response, {
+          received: 'Finalizadas',
+          prepared: 'Preparadas',
+          transported: 'Transportadas'
+        }));
       }).catch(function (e) {
         defer.reject(e);
       });
@@ -87,12 +91,13 @@
         var headers = '[aliquot] AS [Alíquota], [transported] AS [Transportada], [prepared] AS [Preparada]';
         var name = 'monitoramento-laboratorial-resultados-pendentes-'.concat(new Date().toLocaleDateString());
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [response]);
+        defer.resolve()
       }).catch(function () {
         defer.reject()
       }).finally(function () {
         LoadingScreenService.finish();
       });
-    };
+    }
 
     function downloadCSVFileOfOrphansByExam() {
       var defer = $q.defer();
@@ -102,12 +107,13 @@
         var headers = '[aliquotCode] AS [Alíquota], [examName] AS [Exame]';
         var name = 'monitoramento-laboratorial-exame-orfaos-'.concat(new Date().toLocaleDateString());
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [response]);
+        defer.resolve()
       }).catch(function () {
         defer.reject()
       }).finally(function () {
         LoadingScreenService.finish();
       });
-    };
+    }
 
     function _translateLabel(data) {
       return data.map(function (d) {
