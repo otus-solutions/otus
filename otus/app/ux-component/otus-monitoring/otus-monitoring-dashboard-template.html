@@ -22,7 +22,6 @@
 
     <div layout="row" flex ng-show="$ctrl.ready">
       <md-content layout="column" flex>
-
         <div flex>
           <monitoring-information-cards-component create-information-cards="$ctrl.createInformationCards" centers="$ctrl.centers">
           </monitoring-information-cards-component>
@@ -32,7 +31,6 @@
             <monitoring-centers-cumulative-results-visualization-component centers="$ctrl.centers" create-cumulative-results-chart="$ctrl.createCumulativeResultsChart" flex="60" flex-sm="100">
             </monitoring-centers-cumulative-results-visualization-component>
           </div>
-
           <div flex layout="column">
             <monitoring-overview-visualization-component centers="$ctrl.centers" questionnaire-data="$ctrl.questionnaireData" create-questionnaire-line-chart="$ctrl.createQuestionnaireLineChart"
               style="display:inline-block;" flex>
@@ -42,7 +40,6 @@
             </monitoring-spreadsheet-component>
           </div>
         </div>
-
       </md-content>
     </div>
 
