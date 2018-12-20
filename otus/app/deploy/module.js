@@ -16,7 +16,8 @@
       'otusjs.labelMaker.labelPage',
       /* Services dependencies */
       'otusjs.deploy.user',
-      'otusjs.deploy.exam'
+      'otusjs.deploy.exam',
+      'otusjs.deploy.monitoring'
     ])
     .value('OtusLocalStorage', [
       'otusjs.activity.storage.ActivityLocalStorageService',
