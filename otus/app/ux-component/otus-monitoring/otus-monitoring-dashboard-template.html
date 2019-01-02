@@ -8,10 +8,20 @@
     </div>
   </otus-dashboard-toolbar>
   <div ui-view layout="column" flex>
-    <monitoring-filter-view-component ng-if="$ctrl.ready" centers="$ctrl.centers" parse-data="$ctrl.parseData" questionnaires-list="$ctrl.questionnairesList" unique-dates-list="$ctrl.uniqueDatesList" update-data = "$ctrl.update"></monitoring-filter-view-component>
-    <div layout="row" flex>
-      <md-content layout="column" flex>
+    <md-content layout="row" ng-if="$ctrl.activityListEmpty" flex layout-align="center center">
+      <div class="label-light-gray">
+        <h3 class="md-display-3">Não há registros a serem exibidos.</h3>
+        <div>
+          <span class="md-body-1">Solicite ao Administrador</span>
+          <span class="md-body-1">a inclusão de atividades no Otus Domain</span>
+        </div>
+      </div>
+    </md-content>
 
+    <monitoring-filter-view-component ng-if="$ctrl.ready" centers="$ctrl.centers" parse-data="$ctrl.parseData" questionnaires-list="$ctrl.questionnairesList" unique-dates-list="$ctrl.uniqueDatesList" update-data = "$ctrl.update"></monitoring-filter-view-component>
+
+    <div layout="row" flex ng-show="$ctrl.ready">
+      <md-content layout="column" flex>
         <div flex>
           <monitoring-information-cards-component create-information-cards="$ctrl.createInformationCards" centers="$ctrl.centers">
           </monitoring-information-cards-component>
@@ -21,7 +31,6 @@
             <monitoring-centers-cumulative-results-visualization-component centers="$ctrl.centers" create-cumulative-results-chart="$ctrl.createCumulativeResultsChart" flex="60" flex-sm="100">
             </monitoring-centers-cumulative-results-visualization-component>
           </div>
-
           <div flex layout="column">
             <monitoring-overview-visualization-component centers="$ctrl.centers" questionnaire-data="$ctrl.questionnaireData" create-questionnaire-line-chart="$ctrl.createQuestionnaireLineChart"
               style="display:inline-block;" flex>
@@ -31,7 +40,6 @@
             </monitoring-spreadsheet-component>
           </div>
         </div>
-
       </md-content>
     </div>
 
