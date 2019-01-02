@@ -44,7 +44,7 @@
           self.csvData =  self.selectedLots[0].getAliquotsToCsv();
         });
       } else {
-        self.csvData =  self.selectedLots[0].getAliquotsToCsv();
+        self.csvData =  self.selectedLots[0].getAliquotsToCsv().reverse();
       }
     }
 
