@@ -5,6 +5,7 @@ describe('otusMonitoringDashboardComponent test', function() {
   var Injections = {};
 
 
+
   beforeEach(function() {
     angular.mock.module('otusjs.otus.uxComponent');
   });
@@ -27,6 +28,7 @@ describe('otusMonitoringDashboardComponent test', function() {
     Mock.MonitoringService = {
       listAcronyms:function() {
         return Promise.resolve(mockListAcronyms());
+        //return Promise.resolve([]);
       },
       find: function(query){
         return Promise.resolve(mockFind());
@@ -190,5 +192,22 @@ describe('otusMonitoringDashboardComponent test', function() {
     ctrl.createCentersGoalsChart = function(data){};
   }
 
+  describe('treatment for the lack of the survey collection', function () {
+    it('listAcronymsMethod should enable empty activity list signaling', function () {
+      spyOn(Mock.MonitoringService, 'listAcronyms').and.callFake(function () {
+         return Promise.resolve([]);
+      });
+      ctrl.$onInit();
+      Mock.ProjectFieldCenterService.loadCenters().then(function () {
+        expect(ctrl.activityListEmpty).toBeUndefined();
+        Mock.MonitoringService.listCenters().then(function () {
+          Mock.MonitoringService.listAcronyms().then(function () {
+            expect(ctrl.activityListEmpty).toBeDefined();
+            expect(ctrl.activityListEmpty).toBeTruthy();
+          })
+        })
+      })
+    });
+  });
 
 });
