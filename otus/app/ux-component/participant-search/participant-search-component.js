@@ -33,7 +33,6 @@
     self.querySearch = querySearch;
     self.selectParticipant = selectParticipant;
     self.showParticipants = self.showAllParticipants;
-    // self.onReady = self.ready;
 
     var confirmParticipantChange;
 
