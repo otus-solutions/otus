@@ -24,10 +24,11 @@
     'otusjs.application.dialog.DialogShowService',
     'otusjs.otus.uxComponent.CheckerItemFactory',
     '$q',
-    '$timeout'
+    '$timeout',
+    '$mdToast'
   ];
 
-  function Controller(ParticipantActivityService, ActivityPlayerService, EventService, ApplicationStateService, $mdDialog, DialogService, CheckerItemFactory, $q, $timeout) {
+  function Controller(ParticipantActivityService, ActivityPlayerService, EventService, ApplicationStateService, $mdDialog, DialogService, CheckerItemFactory, $q, $timeout, $mdToast) {
     var self = this;
     var confirmDeleteSelectedActivity;
     /* Public methods */
@@ -54,12 +55,9 @@
     }
 
     self.isOffline = () => {
-      // ParticipantActivityService.getSelectedActivities().
-      // ApplicationStateService.activatePaperActivityCheckerUpdate();
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
         locals: {selectedActivity: self.selectedPaperActivity},
-        // template: '<otus-paper-activity-checker-update selected-activity="$ctrl.selectedPaperActivity"></otus-paper-activity-checker-update>',
         templateUrl: 'app/ux-component/paper-activity-checker-update/paper-activity-checker-update-template.html',
         parent: angular.element(document.body),
         controller: DialogController,
@@ -151,11 +149,11 @@
     function DialogController(selectedActivity) {
       var self = this;
       self.selectedActivity = selectedActivity;
+      self.user = selectedActivity.statusHistory.getInitializedOfflineRegistry().user;
       /* Public methods */
       self.querySearch = querySearch;
-      self.goToActivityUpdate = goToActivityUpdate;
+      self.updateCheckerActivity = updateCheckerActivity;
       self.cancel = cancel;
-      self.$onInit = onInit;
 
       onInit();
 
@@ -170,13 +168,32 @@
         return deferred.promise;
       }
 
-      function goToActivityUpdate() {
-        self.paperActivityData.checker = self.selectedItem.checker;
-        self.selectedActivity.statusHistory.getInitializedOfflineRegistry().setUser(self.selectedItem.checker);
-        self.cancel();
-        //TODO: fazer TIAGO
-        // ParticipantActivityService.initializePaperActivityData(self.paperActivityData);
-        // ApplicationStateService.activateActivityAdder();
+      function updateCheckerActivity() {
+        var activityStatus = angular.copy(self.selectedActivity.statusHistory.getInitializedOfflineRegistry());
+        activityStatus.setUser(self.selectedItem.checker);
+        ParticipantActivityService.updateCheckerActivity(
+          self.selectedActivity.getID(),
+          activityStatus)
+          .then(function (response) {
+            self.cancel();
+            if(response){
+              self.selectedActivity.statusHistory.getInitializedOfflineRegistry().setUser(self.selectedItem.checker);
+              _showMessage("Salvo com sucesso.")
+            } else {
+              _showMessage("Aferidor não alterado.")
+            }
+          }).catch(function (e) {
+          self.cancel();
+          _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
+        });
+      }
+
+      function _showMessage(msg) {
+        $mdToast.show(
+          $mdToast.simple()
+            .position("bottom right")
+            .textContent(msg)
+            .hideDelay(3000));
       }
 
       function cancel(){
@@ -187,6 +204,7 @@
         self.paperActivityData = {};
         self.paperActivityData.realizationDate = new Date();
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
+        self.selectedItem = CheckerItemFactory.create(self.user);
       }
 
       function _createFilterFor(query) {
