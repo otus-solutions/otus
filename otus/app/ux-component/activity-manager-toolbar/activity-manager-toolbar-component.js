@@ -4,7 +4,7 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusActivityManagerToolbar', {
-      controller: Controller,
+      controller: "otusActivityManagerToolbarCtrl as $ctrl",
       templateUrl: 'app/ux-component/activity-manager-toolbar/activity-manager-toolbar-template.html',
       require: {
         otusActivityManager: '^otusActivityManager'
@@ -13,7 +13,7 @@
         'onDelete': '&',
         'onViewInfo': '&'
       }
-    });
+    }).controller("otusActivityManagerToolbarCtrl", Controller);
 
   Controller.$inject = [
     'otusjs.activity.business.ParticipantActivityService',
@@ -35,7 +35,8 @@
     self.fillSelectedActivity = fillSelectedActivity;
     self.deleteSelectedActivity = deleteSelectedActivity;
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
-
+    self.updateChecker = updateChecker;
+    self.DialogController = DialogController
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -54,24 +55,19 @@
       });
     }
 
-    self.isOffline = () => {
+    function updateChecker() {
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
         locals: {selectedActivity: self.selectedPaperActivity},
         templateUrl: 'app/ux-component/paper-activity-checker-update/paper-activity-checker-update-template.html',
         parent: angular.element(document.body),
-        controller: DialogController,
+        controller: self.DialogController,
         controllerAs: "vm",
         targetEvent: event,
         clickOutsideToClose: true,
         fullscreen: true,
-
-      }).then(function (data) {
-        console.log(data)
-      })
+      });
     }
-
-
 
     function visualizeSelectedActivityInfo() {
       self.onViewInfo();
@@ -201,8 +197,6 @@
       }
 
       function onInit() {
-        self.paperActivityData = {};
-        self.paperActivityData.realizationDate = new Date();
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
         self.selectedItem = CheckerItemFactory.create(self.user);
       }

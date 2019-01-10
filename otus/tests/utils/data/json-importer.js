@@ -7,6 +7,9 @@ Test.utils.data.activity = [
     "activities": [
       {
         "_id": "5be45306e69a690064fb1e1c",
+        "getID" : function () {
+          return "5be45306e69a690064fb1e1c";
+        },
         "statusHistory": {
           "objectType": "ActivityStatus",
           "name": "FINALIZED",
@@ -16,6 +19,22 @@ Test.utils.data.activity = [
             "surname": "Vianna",
             "phone": "51999999999",
             "email": "otus@otus.com"
+          },
+          "getInitializedOfflineRegistry": function () {
+            return {
+              "objectType": "ActivityStatus",
+              "name": "INITIALIZED_OFFLINE",
+              "date": "2018-11-08T15:16:41.177Z",
+              "user": {
+                "name": "Emanoel",
+                "surname": "Vianna",
+                "phone": "51999999999",
+                "email": "otus@otus.com"
+              },
+              "setUser": function (user) {
+                this.user = user;
+              }
+            }
           }
         }
       },

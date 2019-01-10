@@ -32,7 +32,6 @@
 
     function show() {
       var activity = ContextService.getSelectedActivities()[0];
-      delete self.activity;
       self.activity = {};
       self.activity.details = activity.surveyForm.surveyTemplate.identity;
       self.activity.history = activity.statusHistory.getHistory().map(ActivityStatusItemFactory.create);
