@@ -85,8 +85,8 @@
       return ActivityCollectionService.listAllCategories();
     }
 
-    function updateCheckerActivity(checkerUpdated) {
-      return ActivityCollectionService.updateCheckerActivity(checkerUpdated);
+    function updateCheckerActivity(recruitmentNumber, checkerUpdated) {
+      return ActivityCollectionService.updateCheckerActivity(recruitmentNumber, checkerUpdated);
     }
 
     function _update(toUpdate) {

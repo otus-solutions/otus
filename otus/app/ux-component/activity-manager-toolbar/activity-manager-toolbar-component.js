@@ -168,6 +168,7 @@
         var activityStatus = angular.copy(self.selectedActivity.statusHistory.getInitializedOfflineRegistry());
         activityStatus.setUser(self.selectedItem.checker);
         ParticipantActivityService.updateCheckerActivity(
+          self.selectedActivity.participantData.recruitmentNumber,
           self.selectedActivity.getID(),
           activityStatus)
           .then(function (response) {

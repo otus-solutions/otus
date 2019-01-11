@@ -33,11 +33,11 @@
       return _rest.update({ id: data._id, rn: data.participantData.recruitmentNumber }, data).$promise;
     }
 
-    function updateCheckerActivity(checkerUpdated) {
+    function updateCheckerActivity(rn, checkerUpdated) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.updateCheckerActivity({}, checkerUpdated).$promise;
+      return _rest.updateCheckerActivity({rn}, checkerUpdated).$promise;
     }
 
     function save(data) {

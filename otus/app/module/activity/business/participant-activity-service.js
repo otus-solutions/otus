@@ -129,8 +129,8 @@
       return ActivityRepositoryService.listAllCategories();
     }
 
-    function updateCheckerActivity(id, activityStatus) {
-      return ActivityRepositoryService.updateCheckerActivity(Object.freeze({id, activityStatus}));
+    function updateCheckerActivity(recruitmentNumber, id, activityStatus) {
+      return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({id, activityStatus}));
     }
 
   }

@@ -81,11 +81,11 @@
      * @returns {Promise} promise with activity or activities updated when resolved
      * @memberof ActivityRemoteStorageService
      */
-    function updateCheckerActivity(checkerUpdated) {
+    function updateCheckerActivity(recruitmentNumber, checkerUpdated) {
       var deferred = $q.defer();
 
       ActivityRestService
-        .updateCheckerActivity(checkerUpdated)
+        .updateCheckerActivity(recruitmentNumber, checkerUpdated)
         .then(function(response) {
           deferred.resolve(response);
         }).catch(function () {
