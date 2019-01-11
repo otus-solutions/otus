@@ -1,7 +1,6 @@
 describe('activity-repository-service Test', function() {
   var Mock = {};
   var service;
-  var Injections = {};
 
   beforeEach(function() {
     angular.mock.module('otusjs.activity.repository', function ($provide) {
@@ -20,9 +19,9 @@ describe('activity-repository-service Test', function() {
   });
   it('should call Mock.ActivityCollectionService.updateCheckerActivity method', function() {
     expect(Mock.ActivityCollectionService.updateCheckerActivity).toBeDefined();
-    service.updateCheckerActivity(Mock.object);
+    service.updateCheckerActivity(Mock.rn, Mock.object);
     expect(Mock.ActivityCollectionService.updateCheckerActivity).toHaveBeenCalledTimes(1);
-    expect(Mock.ActivityCollectionService.updateCheckerActivity).toHaveBeenCalledWith(Mock.object);
+    expect(Mock.ActivityCollectionService.updateCheckerActivity).toHaveBeenCalledWith(Mock.rn, Mock.object);
   });
 
   function mockInjection() {
@@ -31,7 +30,7 @@ describe('activity-repository-service Test', function() {
         return obj;
       }
     };
-
+    Mock.rn = 35621458;
     Mock.id = "5aff3edaaf11bb0d302be3c7";
     Mock.activityStatus = {
       "objectType": "ActivityStatus",

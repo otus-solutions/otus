@@ -1,7 +1,6 @@
 describe('participant-activity-service Test', function() {
     var Mock = {};
     var service;
-    var Injections = {};
 
     beforeEach(function() {
       angular.mock.module('otusjs.activity.business', function ($provide) {
@@ -20,9 +19,9 @@ describe('participant-activity-service Test', function() {
     });
     it('should call Mock.ActivityRepositoryService.updateCheckerActivity method', function() {
       expect(Mock.ActivityRepositoryService.updateCheckerActivity).toBeDefined();
-      service.updateCheckerActivity(Mock.id,Mock.activityStatus);
+      service.updateCheckerActivity(Mock.rn,Mock.id,Mock.activityStatus);
       expect(Mock.ActivityRepositoryService.updateCheckerActivity).toHaveBeenCalledTimes(1);
-      expect(Mock.ActivityRepositoryService.updateCheckerActivity).toHaveBeenCalledWith(Mock.object);
+      expect(Mock.ActivityRepositoryService.updateCheckerActivity).toHaveBeenCalledWith(Mock.rn,Mock.object);
     });
 
     function mockInjection() {
@@ -32,6 +31,7 @@ describe('participant-activity-service Test', function() {
         }
       };
 
+      Mock.rn = 35621458;
       Mock.id = "5aff3edaaf11bb0d302be3c7";
       Mock.activityStatus = {
         "objectType": "ActivityStatus",
@@ -43,7 +43,7 @@ describe('participant-activity-service Test', function() {
           "phone": "51999999999",
           "email": "otus@otus.com"
         }
-      }
+      };
 
       Mock.object = {id:Mock.id, activityStatus: Mock.activityStatus}
 

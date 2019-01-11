@@ -10,6 +10,9 @@ Test.utils.data.activity = [
         "getID" : function () {
           return "5be45306e69a690064fb1e1c";
         },
+        "participantData":{
+          "recruitmentNumber": 35621458
+        },
         "statusHistory": {
           "objectType": "ActivityStatus",
           "name": "FINALIZED",
