@@ -52,7 +52,7 @@ describe('otusActivityManagerToolbar', function() {
 
     it('should not update checker activity', function (done) {
       controller.DialogController(Test.utils.data.activity[0].activities[0]);
-      spyOn(controller.selectedActivity.statusHistory, "getInitializedOfflineRegistry").and.callThrough()
+      spyOn(controller.selectedActivity.statusHistory, "getInitializedOfflineRegistry").and.callThrough();
         expect(controller.selectedActivity).toBeDefined();
         expect(controller.user).toBeDefined();
         expect(controller.querySearch).toBeDefined();
@@ -84,7 +84,7 @@ describe('otusActivityManagerToolbar', function() {
 
     it('should update checker activity', function (done) {
       controller.DialogController(Test.utils.data.activity[0].activities[0]);
-      spyOn(controller.selectedActivity.statusHistory, "getInitializedOfflineRegistry").and.callThrough()
+      spyOn(controller.selectedActivity.statusHistory, "getInitializedOfflineRegistry").and.callThrough();
       expect(controller.selectedActivity).toBeDefined();
       expect(controller.user).toBeDefined();
       expect(controller.querySearch).toBeDefined();
@@ -175,10 +175,6 @@ describe('otusActivityManagerToolbar', function() {
       }
     };
   };
-
-
-
-
 
   function mockActivityContextService($injector) {
     Mock.ActivityContextService = $injector.get('otusjs.activity.core.ContextService');

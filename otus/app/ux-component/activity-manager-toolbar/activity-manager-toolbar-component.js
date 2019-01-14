@@ -36,7 +36,7 @@
     self.deleteSelectedActivity = deleteSelectedActivity;
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
     self.updateChecker = updateChecker;
-    self.DialogController = DialogController
+    self.DialogController = DialogController;
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -65,7 +65,7 @@
         controllerAs: "vm",
         targetEvent: event,
         clickOutsideToClose: true,
-        fullscreen: true,
+        fullscreen: true
       });
     }
 
@@ -211,10 +211,6 @@
       }
     }
 
-
-
   }
-
-
 
 }());
