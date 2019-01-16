@@ -5,6 +5,10 @@
       <md-tooltip md-direction="down">Preencher Atividade</md-tooltip>
       <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
     </md-button>
+    <md-button class="md-raised md-accent md-icon-button" aria-label="Registrar Revisão" ng-click="$ctrl.recordActivityReview()" ng-show="$ctrl.showFillingButton" >
+      <md-tooltip md-direction="down">Registrar Revisão de Atividade</md-tooltip>
+      <md-icon aria-label="PRegistrar Revisão de Atividade">check_circle_outline</md-icon>
+    </md-button>
     <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-click="$ctrl.deleteSelectedActivity()" ng-show="$ctrl.showDeleteButton">
       <md-tooltip md-direction="down">Excluir</md-tooltip>
       <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>

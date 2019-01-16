@@ -49,8 +49,8 @@
     }
 
     function update() {
-      //_loadActivities();
-     // _buildDynamicTableSettings();
+      _loadActivities();
+      _buildDynamicTableSettings();
     }
 
     function onInit() {
@@ -90,7 +90,7 @@
       self.reverseSort = order;
     }
 
-    function _buildDynamicTableSettings() {
+    function _buildDynamicTableSettings(activity) {
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
       //header, flex, align, ordinationPriorityIndex
         .addHeader('NOME', '40', '', 1)
@@ -101,6 +101,13 @@
         //property, formatType
         .addColumnProperty('acronym')
         //header, flex, align, ordinationPriorityIndex
+
+        .addColumnIconButton(
+          //TODO: OTUS-494 Encontrar forma dinâmica de passar o valor mode.icon no lugar estático do exemplo de icone description
+          "description",'', '', '',
+          //self.selectParticipant, false, false, true, false, false
+        )
+
         .addHeader('MODO', '20', '', 3)
         //property, formatType
         .addColumnProperty('mode.name')
@@ -116,10 +123,7 @@
         // .addHeader('Home', '10', '',7)
         //icon, tooltip, classButton, successMsg,
         //buttonFunction, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
-        // .addColumnIconButton(
-        //   'person', 'Ver participante', '', 'Participante selecionado',
-        //   //self.selectParticipant, false, false, true, false, false
-        //  )
+
 
         .addHeader('STATUS', '20', '', 5)
         //property, formatType
@@ -130,7 +134,8 @@
         .addColumnProperty('category')
 
         .setCheckbox(true)
-        .setElementsArray(self.activities)
+        // .setSelectUnselectFunction(selectActivity(activity))
+        // .setElementsArray(self.activities)
         // .setTitle('Lista de Participantes')
         // .setCallbackAfterChange(self.dynamicDataTableChange)
         //Don't use with Service, in this case pass Service as attribute in the template

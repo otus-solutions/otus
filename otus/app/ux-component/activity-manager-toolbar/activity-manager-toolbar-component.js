@@ -31,6 +31,7 @@
     self.fillSelectedActivity = fillSelectedActivity;
     self.deleteSelectedActivity = deleteSelectedActivity;
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
+    self.recordActivityReview = recordActivityReview;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -52,6 +53,11 @@
 
     function visualizeSelectedActivityInfo() {
       self.onViewInfo();
+    }
+
+    function recordActivityReview() {
+      console.log("button recordActivityReview");
+
     }
 
     function onInit() {
