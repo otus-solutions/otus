@@ -35,7 +35,8 @@
 
     function show() {
       _loadAliquots().then(() => {
-        self.selectedLot.aliquotList.forEach(function(aliquot) {
+        self.aliquotListCopy = angular.copy(self.selectedLot.aliquotList).reverse();
+        self.aliquotListCopy.forEach(function(aliquot) {
           aliquot.containerLabel = ExamLotService.getContainerLabelToAliquot(aliquot);
         }, this);
         $mdSidenav('right').toggle();
