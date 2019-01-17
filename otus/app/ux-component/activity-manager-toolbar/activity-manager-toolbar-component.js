@@ -21,7 +21,8 @@
     'otusjs.activity.core.EventService',
     'otusjs.application.state.ApplicationStateService',
     '$mdDialog',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+
   ];
 
   function Controller(ParticipantActivityService, ActivityPlayerService, EventService, ApplicationStateService, $mdDialog, DialogService) {
@@ -31,7 +32,6 @@
     self.fillSelectedActivity = fillSelectedActivity;
     self.deleteSelectedActivity = deleteSelectedActivity;
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
-    self.recordActivityReview = recordActivityReview;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -55,10 +55,6 @@
       self.onViewInfo();
     }
 
-    function recordActivityReview() {
-      console.log("button recordActivityReview");
-
-    }
 
     function onInit() {
       _buildDialogs();

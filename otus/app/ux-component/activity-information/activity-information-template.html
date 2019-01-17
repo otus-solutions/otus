@@ -40,5 +40,37 @@ flex>
         </md-list-item>
       </md-list>
     </md-tab>
+
+    <md-tab label="Revisões">
+      <md-button class="md-primary md-hue-1" aria-label="Adicionar Registro de Revisão" ng-click="$ctrl.activityReviewForm()" >
+        <md-tooltip md-direction="down">Adicionar Registro de Revisão</md-tooltip>ADICIONAR REGISTRO DE REVISÃO</md-button>
+      <md-list flex>
+        <!--<md-list-item class="md-2-line" style="margin-top: 15px" ng-repeat="item in $ctrl.activity.history track by $index" ng-click="null">-->
+          <!--<md-icon style="color:{{item.status.color}}" md-font-library="material-icons">{{item.status.icon}}</md-icon>-->
+          <!--<div class="md-list-item-text" layout="column">-->
+            <!--<h3>{{ item.status.label }}</h3>-->
+            <!--<p>-->
+              <!--Em {{ item.date }}-->
+              <!--<br />Por {{ item.user.name }}-->
+              <!--<br />{{ item.user.email }}-->
+            <!--</p>-->
+          <!--</div>-->
+        <!--</md-list-item>-->
+
+        <md-list-item class="md-2-line" style="margin-top: 15px" ng-repeat="item in $ctrl.activity.history track by $index" ng-click="null">
+        <md-icon style="color:{{item.status.color}}" md-font-library="material-icons">{{item.status.icon}}</md-icon>
+        <div class="md-list-item-text" layout="column">
+        <h3>{{ 'Revisão'}}</h3>
+        <p>
+        Em {{ '16/01/2019' }}
+        <br />Por {{ 'João da Silva' }}
+        <br />{{ "joao@gmail.com"}}
+        </p>
+        </div>
+        </md-list-item>
+
+
+      </md-list>
+    </md-tab>
   </md-tabs>
 </md-sidenav>
