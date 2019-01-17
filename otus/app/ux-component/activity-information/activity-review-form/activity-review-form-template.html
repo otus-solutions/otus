@@ -1,9 +1,15 @@
 <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
   <div class="md-toolbar-tools">
-    <md-button ng-click="vm.updateCheckerActivity()" class="md-icon-button" aria-label="Salvar" ng-disabled="!vm.selectedItem.checker">
-      <md-tooltip md-direction="down">Salvar</md-tooltip>
-      <md-icon aria-label="Salvar">save</md-icon>
-    </md-button>
+    <!--<md-button ng-click="vm.updateCheckerActivity()" class="md-icon-button" aria-label="Salvar" ng-disabled="!vm.selectedItem.checker">-->
+    <!--<md-tooltip md-direction="down">Salvar</md-tooltip>-->
+    <!--<md-icon aria-label="Salvar">save</md-icon>-->
+    <!--</md-button>-->
+
+    <!--<md-button ng-click="vm.recordActivityReview()" class="md-icon-button" aria-label="Salvar"-->
+    <!--ng-disabled="vm.selectedItem.checker">-->
+    <!--<md-tooltip md-direction="down">Salvar</md-tooltip>-->
+    <!--<md-icon aria-label="Salvar">save</md-icon>-->
+    <!--</md-button>-->
 
     <span flex></span>
     <h2><span>Revisão de Atividade </span></h2>
@@ -24,31 +30,21 @@
         <p>Confirme as informações, selecione data e salve para criar o registro</p>
       </span>
     </div>
-    <div flex>
-      <p>Atividade:</p>
-      <p>Revisor: </p>
-      <p>Email:</p>
-      <p>Data da Revisão:</p>
-
-      <!--<md-autocomplete flex  md-selected-item="vm.selectedItem"-->
-                       <!--md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"-->
-                       <!--md-selected-item-change="vm.selectedItemChange(item)" md-items="item in vm.querySearch(vm.searchText)"-->
-                       <!--md-item-text="item.text" md-min-length="0" placeholder="Aferidor (a)" md-menu-class="autocomplete-custom-template">-->
-        <!--<md-item-template>-->
-          <!--<span class="item-title">-->
-            <!--<md-icon md-svg-icon="account"></md-icon>-->
-            <!--<span md-highlight-text="vm.searchText" md-highlight-flags="i">{{ item.title }}</span>-->
-          <!--</span>-->
-          <!--<span class="item-metadata">-->
-            <!--<span class="item-metastat">-->
-              <!--E-mail: <strong>{{ item.metastat.email }}</strong>-->
-            <!--</span>-->
-          <!--</span>-->
-        <!--</md-item-template>-->
-        <!--<md-not-found>-->
-          <!--Nenhum resultado para "{{ vm.searchText }}" foi encontrado.-->
-        <!--</md-not-found>-->
-      <!--</md-autocomplete>-->
+    <div flex class="label-light-gray">
+      <!--<md-whiteframe class="md-whiteframe-1dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout="" layout-align="center center">-->
+      <md-whiteframe class="md-whiteframe-3dp" layout="" layout-align="left center" layout-padding="50">
+        <span>
+          <p>Atividade: {{vm.activity.getName()}}</p>
+          <p> Revisor: {{vm.userLogger.name}} {{vm.userLogger.surname}}</p>
+          <p> Email: {{vm.userLogger.email}}</p><br>
+          <p> Data da Revisão:<md-datepicker ng-model= "vm.reviewDate" md-placeholder="Informe a data"></md-datepicker></p>
+        </span>
+      </md-whiteframe>
+      <br>
+      <md-dialog-actions layout="row">
+        <md-button ng-click="vm.recordActivityReview()" class="md-primary md-raised" aria-label="Salvar"
+                   ng-disabled="!vm.reviewDate">SALVAR</md-button>
+      </md-dialog-actions>
     </div>
   </div>
 </div>

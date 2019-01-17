@@ -23,13 +23,15 @@
 
     /* Public methods */
     self.show = show;
-    self.activityReviewForm =activityReviewForm;
+    self.activityReviewForm = activityReviewForm;
+    self.DialogController = DialogController;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function onInit() {
       self.otusActivityManager.activityInfoComponent = self;
+
     }
 
     function show() {
@@ -44,7 +46,7 @@
     function activityReviewForm() {
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
-        locals: {selectedActivity: self.selectedPaperActivity},
+        // locals: {selectedActivity: self.selectedPaperActivity},
         templateUrl: 'app/ux-component/activity-information/activity-review-form/activity-review-form-template.html',
         parent: angular.element(document.body),
         controller: self.DialogController,
@@ -56,6 +58,14 @@
     }
 
     function DialogController($mdDialog) {
+      var self = this;
+      self.activityReview = {};
+      self.onInit = onInit;
+      self.recordActivityReview = recordActivityReview;
+      self.userLogger = ContextService.getLoggedUser();
+      self.activity = ContextService.getSelectedActivities()[0];
+
+
       self.hide = function () {
         $mdDialog.hide();
       };
@@ -63,26 +73,15 @@
       self.cancel = function () {
         $mdDialog.cancel();
       };
+
+       function recordActivityReview(){
+         self.activityReview.activityID = self.activity.getID();
+         self.activityReview.userLogged = self.userLogger;
+         self.activityReview.reviewDate = self.reviewDate;
+
+         console.log(self.activityReview);
+
+       }
     }
-
-    function recordActivityReview() {
-
-      // var activitySelected = ParticipantActivityService.getSelectedActivities().list();
-      //
-      // ContextService.getLoggedUser().then(function(userData) {
-      //   self.loggedUser = userData;
-      //   console.log(self.loggedUser)
-      // });
-      //
-      // var activityReviewLog = {
-      //   idActivity : activitySelected[0].getID(),
-      //   userLogin : self.loggedUser,
-      //   revisionRealizationDate: ""
-      // }
-
-      console.log("teste");
-
-    }
-
   }
 }());
