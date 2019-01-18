@@ -22,6 +22,7 @@
     self.openSurveyActivity = openSurveyActivity;
     self.initializeActivitySurvey = initializeActivitySurvey;
     self.getFillingByQuestionID = getFillingByQuestionID;
+    self.createActivityReview = createActivityReview;
 
     function getActivity() {
       return ActivityFacadeService.surveyActivity;
@@ -61,6 +62,18 @@
 
     function getFillingByQuestionID(questionID) {
       return ActivityFacadeService.getFillingByQuestionID(questionID);
+    }
+
+    function createActivityReview(activityId, userReviewer, reviewDate) {
+
+      //return ActivityFacadeService.createActivityReview(activityId, userReviewer, reviewDate);
+
+      //TODO: OTUS-494 remover factoryFake(simulação do model) na entrega da tarefa
+        var activityReview = {};
+        activityReview.activityID = activityId;
+        activityReview.userLogged = userReviewer;
+        activityReview.reviewDate = reviewDate;
+        return activityReview;
     }
   }
 }());

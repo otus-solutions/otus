@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -15,10 +15,12 @@
     '$mdSidenav',
     'otusjs.activity.core.ContextService',
     'otusjs.otus.uxComponent.ActivityStatusItemFactory',
-    '$mdDialog'
+    '$mdDialog',
+    'otusjs.activity.business.ParticipantActivityService',
+    'otusjs.deploy.model.ActivityFacadeService'
   ];
 
-  function Controller($mdSidenav, ContextService, ActivityStatusItemFactory, $mdDialog) {
+  function Controller($mdSidenav, ContextService, ActivityStatusItemFactory, $mdDialog, ParticipantActivityService, ActivityFacadeService) {
     var self = this;
 
     /* Public methods */
@@ -41,6 +43,7 @@
       self.activity.history = activity.statusHistory.getHistory().map(ActivityStatusItemFactory.create);
       self.activity.history.reverse();
       $mdSidenav('right').toggle();
+
     }
 
     function activityReviewForm() {
@@ -61,8 +64,8 @@
       var self = this;
       self.activityReview = {};
       self.onInit = onInit;
-      self.recordActivityReview = recordActivityReview;
-      self.userLogger = ContextService.getLoggedUser();
+      self.addActivityReview = addActivityReview;
+      self.userReviewer = ContextService.getLoggedUser();
       self.activity = ContextService.getSelectedActivities()[0];
 
 
@@ -74,14 +77,10 @@
         $mdDialog.cancel();
       };
 
-       function recordActivityReview(){
-         self.activityReview.activityID = self.activity.getID();
-         self.activityReview.userLogged = self.userLogger;
-         self.activityReview.reviewDate = self.reviewDate;
-
-         console.log(self.activityReview);
-
-       }
+      function addActivityReview() {
+        var activityReview = ActivityFacadeService.createActivityReview(self.activity.getID(), self.userReviewer, self.reviewDate);
+        ParticipantActivityService.addActivityReview (activityReview);
+      }
     }
   }
 }());

@@ -35,14 +35,14 @@
       <md-whiteframe class="md-whiteframe-3dp" layout="" layout-align="left center" layout-padding="50">
         <span>
           <p>Atividade: {{vm.activity.getName()}}</p>
-          <p> Revisor: {{vm.userLogger.name}} {{vm.userLogger.surname}}</p>
-          <p> Email: {{vm.userLogger.email}}</p><br>
+          <p> Revisor: {{vm.userReviewer.name}} {{vm.userReviewer.surname}}</p>
+          <p> Email: {{vm.userReviewer.email}}</p><br>
           <p> Data da Revisão:<md-datepicker ng-model= "vm.reviewDate" md-placeholder="Informe a data"></md-datepicker></p>
         </span>
       </md-whiteframe>
       <br>
       <md-dialog-actions layout="row">
-        <md-button ng-click="vm.recordActivityReview()" class="md-primary md-raised" aria-label="Salvar"
+        <md-button ng-click="vm.addActivityReview()" class="md-primary md-raised" aria-label="Salvar"
                    ng-disabled="!vm.reviewDate">SALVAR</md-button>
       </md-dialog-actions>
     </div>
