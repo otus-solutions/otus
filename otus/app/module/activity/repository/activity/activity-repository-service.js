@@ -25,6 +25,8 @@
     self.listAvailables = listAvailables;
     self.save = save;
     self.discard = discard;
+    self.addActivityRevision = addActivityRevision;
+
 
     function listAll(participant) {
       if (!participant) {
@@ -140,6 +142,10 @@
       dbObject.$loki = entity.$loki;
       dbObject.meta = entity.meta;
       return dbObject;
+    }
+
+    function addActivityRevision (activityRevision) {
+      ActivityCollectionService.addActivityRevision (activityRevision);
     }
   }
 }());

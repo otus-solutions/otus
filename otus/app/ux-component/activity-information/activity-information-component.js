@@ -50,7 +50,7 @@
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
         // locals: {selectedActivity: self.selectedPaperActivity},
-        templateUrl: 'app/ux-component/activity-information/activity-review-form/activity-review-form-template.html',
+        templateUrl: 'app/ux-component/activity-information/activity-revision/activity-revision-template.html',
         parent: angular.element(document.body),
         controller: self.DialogController,
         controllerAs: "vm",
@@ -62,10 +62,10 @@
 
     function DialogController($mdDialog) {
       var self = this;
-      self.activityReview = {};
+      self.activityRevision = {};
       self.onInit = onInit;
-      self.addActivityReview = addActivityReview;
-      self.userReviewer = ContextService.getLoggedUser();
+      self.addActivityRevision = addActivityRevision;
+      self.user = ContextService.getLoggedUser();
       self.activity = ContextService.getSelectedActivities()[0];
 
 
@@ -77,9 +77,9 @@
         $mdDialog.cancel();
       };
 
-      function addActivityReview() {
-        var activityReview = ActivityFacadeService.createActivityReview(self.activity.getID(), self.userReviewer, self.reviewDate);
-        ParticipantActivityService.addActivityReview (activityReview);
+      function addActivityRevision() {
+        var activityRevision = ActivityFacadeService.createActivityRevision(self.activity.getID(), self.user, self.revisionDate);
+        ParticipantActivityService.addActivityRevision(activityRevision);
       }
     }
   }

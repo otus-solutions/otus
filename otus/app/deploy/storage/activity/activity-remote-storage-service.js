@@ -35,6 +35,7 @@
     self.update = update;
     self.findActivities = findActivities;
     self.findCategories = findCategories;
+    self.addActivityRevision = addActivityRevision;
 
     /**
      * Adds activities to collection.
@@ -180,5 +181,26 @@
           });
       };
     }
+
+    /**
+     * Add activityRevision in collection.
+     * @param {(object)} activityRevision - the activityReview to be insered
+     * @returns {Promise} promise with activityRevision inserted when resolved
+     * @memberof ActivityRemoteStorageService
+     */
+    function addActivityRevision(activityRevision) {
+      var deferred = $q.defer();
+
+      ActivityRestService
+        .addActivityRevision(activityRevision)
+        .then(function(response) {
+          deferred.resolve(response);
+        }).catch(function () {
+        deferred.reject();
+      });
+
+      return deferred.promise;
+    }
+
   }
 }());

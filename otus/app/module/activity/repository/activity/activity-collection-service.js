@@ -35,6 +35,7 @@
     self.listAll = listAll;
     self.listAllCategories = listAllCategories;
     self.update = update;
+    self.addActivityRevision = addActivityRevision;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -143,5 +144,33 @@
 
       return request.promise;
     }
+
+    /**
+     * Add registry review activity in collection.
+     * @param {(object)} activityReview - the object to be inserted
+     * @memberof ActivityCollectionService
+     */
+    function addActivityRevision(activityRevision) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .addActivityRevision(activityRevision)
+            .then(function(response) {
+              request.resolve(response);
+            }).catch(function () {
+            request.reject();
+          });
+        });
+
+      return request.promise;
+    }
+
+
+
+
+
   }
 }());

@@ -20,6 +20,7 @@
     self.list = list;
     self.save = save;
     self.remove = remove;
+    self.addActivityRevision = addActivityRevision;
 
     function initialize() {
       _rest = OtusRestResourceService.getActivityResource();
@@ -66,5 +67,22 @@
       }
       return _rest.remove(data).$promise;
     }
+
+    function addActivityRevision(activityRevision) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+
+      //return _rest.addActivityRevision(activityRevision).$promise;
+
+      //TODO: OTUS-494 limpar implemenções de teste antes de entregar
+      console.log(activityRevision);
+      var deferred = $q.defer();
+      deferred.resolve(activityRevision);
+      return deferred.promise;
+    }
+
+
+
   }
 }());

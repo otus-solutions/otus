@@ -30,7 +30,7 @@
     self.listActivityCheckers = listActivityCheckers;
     self.setActivitiesSelection = setActivitiesSelection;
     self.getActivitiesSelection = getActivitiesSelection;
-    self.addActivityReview = addActivityReview;
+    self.addActivityRevision = addActivityRevision;
 
     self.configurationStructure = configurationStructure;
 
@@ -129,10 +129,8 @@
       return ActivityRepositoryService.listAllCategories();
     }
 
-    function addActivityReview(activityReview) {
-      //ActivityRepositoryService.addActivityReview(activityReview);
-      console.log(activityReview);
+    function addActivityRevision(activityRevision) {
+      ActivityRepositoryService.addActivityRevision(activityRevision);
     }
-
   }
 }());
