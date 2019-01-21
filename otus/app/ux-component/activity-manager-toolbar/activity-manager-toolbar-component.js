@@ -10,7 +10,7 @@
         otusActivityManager: '^otusActivityManager'
       },
       bindings: {
-        'onDelete': '&',
+        'updateList': '&',
         'onViewInfo': '&'
       }
     }).controller("otusActivityManagerToolbarCtrl", Controller);
@@ -51,14 +51,14 @@
     function deleteSelectedActivity() {
       DialogService.showDialog(confirmDeleteSelectedActivity).then(function() {
         ParticipantActivityService.getSelectedActivities().discard();
-        self.onDelete();
+        self.updateList();
       });
     }
 
     function updateChecker() {
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
-        locals: {selectedActivity: self.selectedPaperActivity},
+        locals: {selectedActivity: self.selectedPaperActivity, updateList: self.updateList},
         templateUrl: 'app/ux-component/paper-activity-checker-update/paper-activity-checker-update-template.html',
         parent: angular.element(document.body),
         controller: self.DialogController,
@@ -142,10 +142,11 @@
       };
     }
 
-    function DialogController(selectedActivity) {
+    function DialogController(selectedActivity,updateList) {
       var self = this;
       self.selectedActivity = selectedActivity;
       self.user = selectedActivity.statusHistory.getInitializedOfflineRegistry().user;
+      self.date = selectedActivity.statusHistory.getInitializedOfflineRegistry().date;
       /* Public methods */
       self.querySearch = querySearch;
       self.updateCheckerActivity = updateCheckerActivity;
@@ -167,6 +168,7 @@
       function updateCheckerActivity() {
         var activityStatus = angular.copy(self.selectedActivity.statusHistory.getInitializedOfflineRegistry());
         activityStatus.setUser(self.selectedItem.checker);
+        activityStatus.setDate(self.date);
         ParticipantActivityService.updateCheckerActivity(
           self.selectedActivity.participantData.recruitmentNumber,
           self.selectedActivity.getID(),
@@ -174,7 +176,7 @@
           .then(function (response) {
             self.cancel();
             if(response){
-              self.selectedActivity.statusHistory.getInitializedOfflineRegistry().setUser(self.selectedItem.checker);
+              updateList();
               _showMessage("Salvo com sucesso.")
             } else {
               _showMessage("Aferidor não alterado.")
