@@ -36,6 +36,9 @@ Test.utils.data.activity = [
               },
               "setUser": function (user) {
                 this.user = user;
+              },
+              "setDate": function (date) {
+                this.date = date;
               }
             }
           }

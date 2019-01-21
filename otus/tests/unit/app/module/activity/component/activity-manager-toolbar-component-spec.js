@@ -83,7 +83,7 @@ describe('otusActivityManagerToolbar', function() {
     });
 
     it('should update checker activity', function (done) {
-      controller.DialogController(Test.utils.data.activity[0].activities[0]);
+      controller.DialogController(Test.utils.data.activity[0].activities[0],Mock.updateList);
       spyOn(controller.selectedActivity.statusHistory, "getInitializedOfflineRegistry").and.callThrough();
       expect(controller.selectedActivity).toBeDefined();
       expect(controller.user).toBeDefined();
@@ -97,7 +97,7 @@ describe('otusActivityManagerToolbar', function() {
       expect(Mock.ParticipantActivityService.listActivityCheckers).toHaveBeenCalledTimes(1);
       expect(Mock.ParticipantActivityService.updateCheckerActivity).toHaveBeenCalledTimes(1);
       Mock.ParticipantActivityService.updateCheckerActivity().then(function () {
-        expect(controller.selectedActivity.statusHistory.getInitializedOfflineRegistry).toHaveBeenCalledTimes(2);
+        expect(controller.updateList).toHaveBeenCalledTimes(2);
         expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
         done();
       }).catch(function () {
@@ -148,6 +148,10 @@ describe('otusActivityManagerToolbar', function() {
         return item;
       }
     }
+
+    Mock.updateList = function () {
+
+    };
 
     Mock.ParticipantActivityService = {
       listActivityCheckers: function () {
