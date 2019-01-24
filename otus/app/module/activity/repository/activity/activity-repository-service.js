@@ -26,7 +26,7 @@
     self.save = save;
     self.discard = discard;
     self.addActivityRevision = addActivityRevision;
-
+    self.getActivityRevisions = getActivityRevisions;
 
     function listAll(participant) {
       if (!participant) {
@@ -146,6 +146,10 @@
 
     function addActivityRevision (activityRevision) {
       ActivityCollectionService.addActivityRevision (activityRevision);
+    }
+
+    function getActivityRevisions(activityID) {
+      return ActivityCollectionService.getActivityRevisions(activityID);
     }
   }
 }());

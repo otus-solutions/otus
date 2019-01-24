@@ -36,6 +36,7 @@
     self.findActivities = findActivities;
     self.findCategories = findCategories;
     self.addActivityRevision = addActivityRevision;
+    self.getActivityRevisions = getActivityRevisions;
 
     /**
      * Adds activities to collection.
@@ -193,6 +194,20 @@
 
       ActivityRestService
         .addActivityRevision(activityRevision)
+        .then(function(response) {
+          deferred.resolve(response);
+        }).catch(function () {
+        deferred.reject();
+      });
+
+      return deferred.promise;
+    }
+
+    function getActivityRevisions(activityID) {
+      var deferred = $q.defer();
+
+      ActivityRestService
+        .getActivityRevisions(activityID)
         .then(function(response) {
           deferred.resolve(response);
         }).catch(function () {

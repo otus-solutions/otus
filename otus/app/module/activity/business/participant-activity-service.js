@@ -31,6 +31,7 @@
     self.setActivitiesSelection = setActivitiesSelection;
     self.getActivitiesSelection = getActivitiesSelection;
     self.addActivityRevision = addActivityRevision;
+    self.getActivityRevisions = getActivityRevisions;
 
     self.configurationStructure = configurationStructure;
 
@@ -131,6 +132,10 @@
 
     function addActivityRevision(activityRevision) {
       ActivityRepositoryService.addActivityRevision(activityRevision);
+    }
+
+    function getActivityRevisions(activityID) {
+      return ActivityRepositoryService.getActivityRevisions(activityID);
     }
   }
 }());

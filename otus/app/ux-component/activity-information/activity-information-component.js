@@ -42,8 +42,12 @@
       self.activity.details = activity.surveyForm.surveyTemplate.identity;
       self.activity.history = activity.statusHistory.getHistory().map(ActivityStatusItemFactory.create);
       self.activity.history.reverse();
-      $mdSidenav('right').toggle();
+      ParticipantActivityService.getActivityRevisions(activity.getID())
+        .then(function (revisions) {
+          self.activity.revisions = revisions
+        });
 
+      $mdSidenav('right').toggle();
     }
 
     function activityReviewForm() {
@@ -78,7 +82,7 @@
       };
 
       function addActivityRevision() {
-        var activityRevision = ActivityFacadeService.createActivityRevision(self.activity.getID(), self.user, self.revisionDate);
+        var activityRevision = ActivityFacadeService.createActivityRevision(self.activity.getID(), self.revisionDate);
         ParticipantActivityService.addActivityRevision(activityRevision);
       }
     }

@@ -37,13 +37,15 @@
           <p>Atividade: {{vm.activity.getName()}}</p>
           <p> Revisor: {{vm.user.name}} {{vm.user.surname}}</p>
           <p> Email: {{vm.user.email}}</p><br>
-          <p> Data da Revisão:<md-datepicker ng-model= "vm.reviewDate" md-placeholder="Informe a data"></md-datepicker></p>
+          <p> Data da Revisão:
+          <input mdc-datetime-picker="true" ng-change="" show-icon="true" date="true" time="true" aria-label="Data de Processamento" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now" ng-model="vm.revisionDate" class="md-input ng-pristine ng-untouched ng-valid ng-isolate-scope dtp-no-msclear dtp-input ng-not-empty" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A" disable-parent-scroll="true" aria-invalid="false">
+          </p>
         </span>
       </md-whiteframe>
       <br>
       <md-dialog-actions layout="row">
         <md-button ng-click="vm.addActivityRevision()" class="md-primary md-raised" aria-label="Salvar"
-                   ng-disabled="!vm.reviewDate">SALVAR</md-button>
+                   ng-disabled="!vm.revisionDate">SALVAR</md-button>
       </md-dialog-actions>
     </div>
   </div>

@@ -56,15 +56,23 @@
           <!--</div>-->
         <!--</md-list-item>-->
 
-        <md-list-item class="md-2-line" style="margin-top: 15px" ng-repeat="item in $ctrl.activity.history track by $index" ng-click="null">
-        <md-icon style="color:{{item.status.color}}" md-font-library="material-icons">{{item.status.icon}}</md-icon>
+        <md-list-item class="md-2-line" style="margin-top: 15px" ng-repeat="item in $ctrl.activity.revisions track by $index" ng-click="null">
+          <md-icon style="color:{{item.status.color}}" md-font-library="material-icons">done_outline</md-icon>
+
+        <!--<md-list-item class="md-2-line" style="margin-top: 15px" ng-repeat="item in $ctrl.activity.history track by $index" ng-click="null">-->
+        <!--<md-icon style="color:{{item.status.color}}" md-font-library="material-icons">{{item.status.icon}}</md-icon>-->
         <div class="md-list-item-text" layout="column">
-        <h3>{{ 'Revisão'}}</h3>
-        <p>
-        Em {{ '16/01/2019' }}
-        <br />Por {{ 'João da Silva' }}
-        <br />{{ "joao@gmail.com"}}
-        </p>
+          <h3>Revisado por</h3>
+          <p>{{ item.user.name }}</p>
+          <p>{{ item.user.email }}</p>
+          <p>Em {{ item.revisionDate }}</p>
+
+        <!--<h3>{{ 'Revisão'}}</h3>-->
+        <!--<p>-->
+        <!--Em {{ '16/01/2019' }}-->
+        <!--<br />Por {{ 'João da Silva' }}-->
+        <!--<br />{{ "joao@gmail.com"}}-->
+        <!--</p>-->
         </div>
         </md-list-item>
 

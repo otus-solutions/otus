@@ -54,7 +54,7 @@
     }
 
     function onInit() {
-      //EventService.onParticipantSelected(_loadActivities);
+      EventService.onParticipantSelected(_loadActivities);
       self.isListEmpty = true;
       self.otusActivityManager.listComponent = self;
       _loadActivities();

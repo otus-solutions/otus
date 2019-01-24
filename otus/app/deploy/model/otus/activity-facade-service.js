@@ -64,16 +64,8 @@
       return ActivityFacadeService.getFillingByQuestionID(questionID);
     }
 
-    function createActivityRevision(activityId, user, revisionDate) {
-
-      //return ActivityFacadeService.createActivityRevision(activityId, user, revisionDate);
-
-      //TODO: OTUS-494 remover factoryFake(simulação do model) na entrega da tarefa
-        var activityRevision = {};
-        activityRevision.activityID = activityId;
-        activityRevision.user = user;
-        activityRevision.revisionDate = revisionDate;
-        return activityRevision;
+    function createActivityRevision(activityId, revisionDate) {
+      return ActivityFacadeService.createActivityRevision(activityId, revisionDate);
     }
   }
 }());
