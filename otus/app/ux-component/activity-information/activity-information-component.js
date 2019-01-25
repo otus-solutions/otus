@@ -42,7 +42,8 @@
       self.activity.history = activity.statusHistory.getHistory().map(ActivityStatusItemFactory.create);
       self.activity.history.reverse();
       ParticipantActivityService.getActivityRevisions(activity.getID()).then(function (revisions) {
-          self.activity.revisions = revisions
+        self.activity.revisions = ActivityFacadeService.getActivityRevisions(revisions);
+          //self.activity.revisions = revisions
         });
       $mdSidenav('right').toggle();
     }

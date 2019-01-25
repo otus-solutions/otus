@@ -61,7 +61,6 @@
       self.otusActivityManager.listComponent = self;
       _loadActivities();
       _buildDynamicTableSettings();
-      console.log(self)
     }
 
     function _loadActivities() {

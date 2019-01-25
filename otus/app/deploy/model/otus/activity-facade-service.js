@@ -23,6 +23,7 @@
     self.initializeActivitySurvey = initializeActivitySurvey;
     self.getFillingByQuestionID = getFillingByQuestionID;
     self.createActivityRevision = createActivityRevision;
+    self.getActivityRevisions = getActivityRevisions;
 
     function getActivity() {
       return ActivityFacadeService.surveyActivity;
@@ -67,5 +68,10 @@
     function createActivityRevision(activityId, revisionDate) {
       return ActivityFacadeService.createActivityRevision(activityId, revisionDate);
     }
+
+    function getActivityRevisions(revisions){
+      return ActivityFacadeService.createActivityRevisionFromJson(revisions);
+    }
+
   }
 }());
