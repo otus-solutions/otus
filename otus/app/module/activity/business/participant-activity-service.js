@@ -17,7 +17,6 @@
     var _paperActivityCheckerData = null;
     self.activityConfigurations = new Object();
 
-
     /* Public methods */
     self.initializePaperActivityData = initializePaperActivityData;
     self.add = add;
@@ -30,10 +29,9 @@
     self.listActivityCheckers = listActivityCheckers;
     self.setActivitiesSelection = setActivitiesSelection;
     self.getActivitiesSelection = getActivitiesSelection;
+    self.configurationStructure = configurationStructure;
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
-
-    self.configurationStructure = configurationStructure;
 
     function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -68,7 +66,6 @@
           return ActivityRepositoryService.listAll(selectedParticipant);
         });
     }
-
 
     function listAvailables() {
       return ActivityRepositoryService.listAvailables();

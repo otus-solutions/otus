@@ -23,7 +23,6 @@
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
 
-
     function initialize() {
       _rest = OtusRestResourceService.getActivityResource();
     }
@@ -70,6 +69,8 @@
       return _rest.remove(data).$promise;
     }
 
+
+    //TODO: OTUS-494 limpar implemenções de teste antes de entregar
     function addActivityRevision(activityRevision) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
@@ -77,7 +78,6 @@
 
       //return _rest.addActivityRevision(activityRevision).$promise;
 
-      //TODO: OTUS-494 limpar implemenções de teste antes de entregar
       console.log(activityRevision);
       var deferred = $q.defer();
       deferred.resolve(activityRevision);
@@ -115,8 +115,8 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-
       //return _rest.getActivityRevisions(activityID).$promise;
+
       var deferred = $q.defer();
       deferred.resolve(revisions);
       return deferred.promise;

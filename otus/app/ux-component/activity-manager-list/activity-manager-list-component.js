@@ -16,7 +16,8 @@
     'otusjs.activity.core.EventService',
     'otusjs.otus.uxComponent.ActivityItemFactory',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.uxComponent.DynamicTableSettingsFactory'
+    'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
+    '$q'
   ];
 
   function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory) {
@@ -24,9 +25,9 @@
     var _selectedActivities = [];
     self.activities = [];
     self.isListEmpty = true;
-
     self.orderByField = 'name';
     self.reverseSort = false;
+
     /* Public methods */
     self.selectActivity = selectActivity;
     self.update = update;
@@ -50,7 +51,7 @@
 
     function update() {
       _loadActivities();
-      _buildDynamicTableSettings();
+      _buildDynamicTableSettings(self.activities);
     }
 
     function onInit() {
@@ -70,7 +71,6 @@
             .filter(_onlyNotDiscarded)
             .map(ActivityItemFactory.create);
 
-
           self.updateDataTable(self.activities);
           self.isListEmpty = !self.activities.length;
           _selectedActivities = [];
@@ -78,8 +78,6 @@
           LoadingScreenService.finish();
         });
     }
-
-
 
     function _onlyNotDiscarded(activity) {
       return !activity.isDiscarded;
@@ -90,8 +88,10 @@
       self.reverseSort = order;
     }
 
-    function _buildDynamicTableSettings(activity) {
+
+    function _buildDynamicTableSettings() {
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
+        //.setActivities(activities)
       //header, flex, align, ordinationPriorityIndex
         .addHeader('NOME', '40', '', 1)
         //property, formatType
@@ -104,26 +104,67 @@
 
         .addColumnIconButton(
           //TODO: OTUS-494 Encontrar forma dinâmica de passar o valor mode.icon no lugar estático do exemplo de icone description
-          "description",'', '', '',
+          "description",'', "activity-item-icon md-avatar-icon", '',
           //self.selectParticipant, false, false, true, false, false
         )
 
         .addHeader('MODO', '20', '', 3)
-        //property, formatType
+
+        //cópia de uma configuração para os icones dinâmicos na  coluna de modo
+
+        // .addIconWithFunction(function (element) {
+        //   var structureIcon = { icon: "", class: "", tooltip: "" };
+        //   var warningStructure = {
+        //     icon: "{{ activity.mode.icon }}",
+        //     class: "activity-item-icon md-avatar-icon",
+        //     tooltip: "Alíquota não identificada no sistema",
+        //     orderValue: "warning"
+        //   };
+        //   var doneStructure = {
+        //     icon: "done",
+        //     class: "md-primary",
+        //     tooltip: "Alíquota identificada no sistema",
+        //     orderValue: "done"
+        //   };
+        //
+        //
+        //   if (self.action === 'view') {
+        //     if (element.aliquotValid){
+        //       structureIcon = doneStructure;
+        //     } else {
+        //       structureIcon = warningStructure;
+        //     }
+        //   } else if (self.action === 'upload') {
+        //     if (self.errorAliquots.length) {
+        //       var error = self.errorAliquots.find(function (error) {
+        //         if (error.aliquot === element.aliquotCode) {
+        //           if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM)) {
+        //             structureIcon = {icon: "error", class: "md-warn", tooltip: "Alíquota não corresponde ao exame", orderValue: "error"};
+        //           } else {
+        //             structureIcon = warningStructure;
+        //           }
+        //           return error;
+        //         }
+        //       });
+        //       if (!error){
+        //         structureIcon = doneStructure;
+        //       }
+        //     } else {
+        //       structureIcon = {icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "query_builder"};
+        //     }}
+        //   return structureIcon;
+        // })
+        // //property, formatType
+
+
         .addColumnProperty('mode.name')
         //header, flex, align, ordinationPriorityIndex
         .addHeader('DATA DE REALIZAÇÃO', '25', '', 4)
         //property, formatType
         .addColumnProperty('realizationDate', 'DATE')
         .setFormatData("'dd/MM/yy")
-        // .addHeader('Centro', '10', '', 5)
-        // .addColumnProperty('fieldCenter.acronym')
-        // .addHeader('Óbito', '10', '', 6)
-        // .addColumnProperty('obito')
-        // .addHeader('Home', '10', '',7)
         //icon, tooltip, classButton, successMsg,
         //buttonFunction, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
-
 
         .addHeader('STATUS', '20', '', 5)
         //property, formatType
@@ -134,21 +175,19 @@
         .addColumnProperty('category')
 
         .setCheckbox(true)
-        // .setSelectUnselectFunction(selectActivity(activity))
-        // .setElementsArray(self.activities)
-        // .setTitle('Lista de Participantes')
+        //.setSelectUnselectFunction()
+        //.setElementsArray(self.activities)
+         //.setTitle('Lista de Participantes')
         // .setCallbackAfterChange(self.dynamicDataTableChange)
         //Don't use with Service, in this case pass Service as attribute in the template
         // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
         /*
           //Optional Config's
-
           .setFilter(true)
           .setReorder(true)
           .setPagination(true)
           .setSelectedColor()
           .setHoverColor()
-
         */
         .getSettings();
     }

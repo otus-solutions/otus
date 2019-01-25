@@ -33,7 +33,6 @@
 
     function onInit() {
       self.otusActivityManager.activityInfoComponent = self;
-
     }
 
     function show() {
@@ -42,18 +41,15 @@
       self.activity.details = activity.surveyForm.surveyTemplate.identity;
       self.activity.history = activity.statusHistory.getHistory().map(ActivityStatusItemFactory.create);
       self.activity.history.reverse();
-      ParticipantActivityService.getActivityRevisions(activity.getID())
-        .then(function (revisions) {
+      ParticipantActivityService.getActivityRevisions(activity.getID()).then(function (revisions) {
           self.activity.revisions = revisions
         });
-
       $mdSidenav('right').toggle();
     }
 
     function activityReviewForm() {
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
-        // locals: {selectedActivity: self.selectedPaperActivity},
         templateUrl: 'app/ux-component/activity-information/activity-revision/activity-revision-template.html',
         parent: angular.element(document.body),
         controller: self.DialogController,
@@ -72,7 +68,6 @@
       self.user = ContextService.getLoggedUser();
       self.activity = ContextService.getSelectedActivities()[0];
 
-
       self.hide = function () {
         $mdDialog.hide();
       };
@@ -84,6 +79,7 @@
       function addActivityRevision() {
         var activityRevision = ActivityFacadeService.createActivityRevision(self.activity.getID(), self.revisionDate);
         ParticipantActivityService.addActivityRevision(activityRevision);
+        self.hide();
       }
     }
   }

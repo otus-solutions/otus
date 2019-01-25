@@ -216,6 +216,5 @@
 
       return deferred.promise;
     }
-
   }
 }());

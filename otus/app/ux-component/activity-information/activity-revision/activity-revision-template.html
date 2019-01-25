@@ -1,18 +1,8 @@
 <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
   <div class="md-toolbar-tools">
-    <!--<md-button ng-click="vm.updateCheckerActivity()" class="md-icon-button" aria-label="Salvar" ng-disabled="!vm.selectedItem.checker">-->
-    <!--<md-tooltip md-direction="down">Salvar</md-tooltip>-->
-    <!--<md-icon aria-label="Salvar">save</md-icon>-->
-    <!--</md-button>-->
-
-    <!--<md-button ng-click="vm.recordActivityReview()" class="md-icon-button" aria-label="Salvar"-->
-    <!--ng-disabled="vm.selectedItem.checker">-->
-    <!--<md-tooltip md-direction="down">Salvar</md-tooltip>-->
-    <!--<md-icon aria-label="Salvar">save</md-icon>-->
-    <!--</md-button>-->
 
     <span flex></span>
-    <h2><span>Revisão de Atividade </span></h2>
+    <span class="md-body-5">Revisão de Atividade </span>
     <span flex></span>
 
     <md-button ng-click="vm.cancel()" class="md-icon-button" aria-label="Cancelar">
@@ -25,13 +15,11 @@
 <div layout="row" flex layout-align="center center">
   <div layout-margin layout="column">
     <div layout="column" class="label-light-gray">
-      <h2 class="md-display-1">Registro de Revisão</h2>
-      <span class="md-body-1">
-        <p>Confirme as informações, selecione data e salve para criar o registro</p>
+      <span class="md-body-3">
+        <p class="md-body-3">Confirme as informações, selecione data e hora, e salve para criar o registro</p>
       </span>
     </div>
     <div flex class="label-light-gray">
-      <!--<md-whiteframe class="md-whiteframe-1dp" flex-sm="45" flex-gt-sm="35" flex-gt-md="25" layout="" layout-align="center center">-->
       <md-whiteframe class="md-whiteframe-3dp" layout="" layout-align="left center" layout-padding="50">
         <span>
           <p>Atividade: {{vm.activity.getName()}}</p>
