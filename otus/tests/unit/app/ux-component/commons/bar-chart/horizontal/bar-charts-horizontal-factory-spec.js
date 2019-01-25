@@ -40,8 +40,8 @@ describe('Bar Charts Horizontal Factory Test', function() {
     });
     it('should create a char bar vertical', function() {
       expect(d3.select).toHaveBeenCalledTimes(1);
-      expect(getSvg().attr("width")).toEqual("100");
-      expect(getSvg().attr("height")).toEqual('550');
+      expect(getSvg().attr("width")).toEqual("150");
+      expect(getSvg().attr("height")).toEqual('600');
       expect(d3.selectAll("svg rect.bar")._groups[0].length).toEqual(Mock.data.length);
       for (var i = 0; i < Mock.data.length; i++) {
         expect(d3.selectAll("rect.bar")._groups[0][i].style.fill).toEqual(WHITE)
@@ -58,8 +58,8 @@ describe('Bar Charts Horizontal Factory Test', function() {
     });
     it('should create a char bar vertical', function() {
       expect(d3.select).toHaveBeenCalledTimes(1);
-      expect(getSvg().attr("width")).toEqual("100");
-      expect(getSvg().attr("height")).toEqual('550');
+      expect(getSvg().attr("width")).toEqual("150");
+      expect(getSvg().attr("height")).toEqual('600');
       expect(d3.selectAll("svg rect.bar")._groups[0].length).toEqual(Mock.data.length);
       for (var i = 0; i < Mock.data.length; i++) {
         expect(d3.selectAll("rect.bar")._groups[0][i].style.fill).toEqual(Mock.color)

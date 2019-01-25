@@ -41,8 +41,9 @@
     self.openTabStorageByAliquots = openTabStorageByAliquots;
     self.openTabByExam = openTabByExam;
     self.downloadCSVFile = downloadCSVFile;
-    self.loadData = loadData;
+    self.loadDataByCenter = loadDataByCenter;
     self.loadCenters = loadCenters;
+
     /* Lifecycle methods */
     function onInit() {
       loadCenters().then(() => {
@@ -69,30 +70,35 @@
     }
 
     function openTabPendingResultsByAliquots() {
+      self.error = false;
       if (!$('#pending-results-chart svg').length) {
         _loadDataPendingResultsByAliquots(self.centerFilter);
       }
     };
 
     function openTabQuantitativeByTypeOfAliquots() {
+      self.error = false;
       if (!$('#quantitative-by-aliquots svg').length) {
         _loadDataQuantitativeByTypeOfAliquots(self.centerFilter);
       }
     };
 
     function openTabOrphanByExams() {
+      self.error = false;
       if (!$('#orphans-by-exam svg').length) {
         _loadDataOrphansByExam();
       }
     };
 
     function openTabStorageByAliquots() {
+      self.error = false;
       if (!$('#storage-by-exam svg').length) {
         _loadStorageByAliquots(self.centerFilter);
       }
     };
 
     function openTabByExam() {
+      self.error = false;
       if (!$('#results-by-exam svg').length) {
         _loadResultsByExam(self.centerFilter);
       }
@@ -105,12 +111,12 @@
         LaboratoryMonitoringService.downloadCSVFileOfOrphansByExam();
     };
 
-    function loadData(currentTab, center) {
+    function loadDataByCenter(currentTab, center) {
       self.centerFilter = center;
       d3.selectAll('#pending-results-chart svg').remove();
       d3.selectAll('#quantitative-by-aliquots svg').remove();
-      d3.selectAll('#results-by-exam svg').remove();
       d3.selectAll('#storage-by-exam svg').remove();
+      d3.selectAll('#results-by-exam svg').remove();
       switch (currentTab) {
         case PENDING:
           _loadDataPendingResultsByAliquots(center);
