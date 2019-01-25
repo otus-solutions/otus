@@ -32,6 +32,7 @@
     self.selectActivity = selectActivity;
     self.update = update;
     self.changeSort = changeSort;
+    self.dynamicDataTableChange = dynamicDataTableChange;
 
 
     /* Lifecycle hooks */
@@ -60,6 +61,7 @@
       self.otusActivityManager.listComponent = self;
       _loadActivities();
       _buildDynamicTableSettings();
+      console.log(self)
     }
 
     function _loadActivities() {
@@ -173,7 +175,7 @@
         .addHeader('CATEGORIA', '15', '', 6)
         //property, formatType
         .addColumnProperty('category')
-
+        .setCallbackAfterChange(self.dynamicDataTableChange)
         .setCheckbox(true)
         //.setSelectUnselectFunction()
         //.setElementsArray(self.activities)
@@ -190,6 +192,12 @@
           .setHoverColor()
         */
         .getSettings();
+    }
+
+    function dynamicDataTableChange(change) {
+      if (change.type === 'select' || change.type === 'deselect') {
+        self.selectActivity(change.element);
+      }
     }
   }
 }());
