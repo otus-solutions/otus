@@ -103,61 +103,30 @@
         .addColumnProperty('acronym')
         //header, flex, align, ordinationPriorityIndex
 
-        .addColumnIconButton(
-          //TODO: OTUS-494 Encontrar forma dinâmica de passar o valor mode.icon no lugar estático do exemplo de icone description
-          "description",'', "activity-item-icon md-avatar-icon", '',
-          //self.selectParticipant, false, false, true, false, false
-        )
+        .addIconWithFunction(function (element) {
+          var structureIcon = { icon: "md-svg-icon", class: "", tooltip: "" };
+          var OnLineStructure = {
+            icon: "equalizer",
+            class: "activity-item-icon md-avatar-icon",
+            tooltip: "On line",
+            //orderValue: "warning"
+          };
+          var paperStructure = {
+            icon: 'description',
+            class: "activity-item-icon md-avatar-icon",
+            tooltip: "Em papel",
+            //orderValue: "done"
+          };
 
+          if(element.mode.name === "Em papel"){
+            structureIcon = paperStructure;
+          } else {
+            structureIcon = OnLineStructure;
+          }
+          return structureIcon;
+        })
         .addHeader('MODO', '20', '', 3)
-
-        //cópia de uma configuração para os icones dinâmicos na  coluna de modo
-
-        // .addIconWithFunction(function (element) {
-        //   var structureIcon = { icon: "", class: "", tooltip: "" };
-        //   var warningStructure = {
-        //     icon: "{{ activity.mode.icon }}",
-        //     class: "activity-item-icon md-avatar-icon",
-        //     tooltip: "Alíquota não identificada no sistema",
-        //     orderValue: "warning"
-        //   };
-        //   var doneStructure = {
-        //     icon: "done",
-        //     class: "md-primary",
-        //     tooltip: "Alíquota identificada no sistema",
-        //     orderValue: "done"
-        //   };
-        //
-        //
-        //   if (self.action === 'view') {
-        //     if (element.aliquotValid){
-        //       structureIcon = doneStructure;
-        //     } else {
-        //       structureIcon = warningStructure;
-        //     }
-        //   } else if (self.action === 'upload') {
-        //     if (self.errorAliquots.length) {
-        //       var error = self.errorAliquots.find(function (error) {
-        //         if (error.aliquot === element.aliquotCode) {
-        //           if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM)) {
-        //             structureIcon = {icon: "error", class: "md-warn", tooltip: "Alíquota não corresponde ao exame", orderValue: "error"};
-        //           } else {
-        //             structureIcon = warningStructure;
-        //           }
-        //           return error;
-        //         }
-        //       });
-        //       if (!error){
-        //         structureIcon = doneStructure;
-        //       }
-        //     } else {
-        //       structureIcon = {icon: "query_builder", class: "", tooltip: "Aguardando", orderValue: "query_builder"};
-        //     }}
-        //   return structureIcon;
-        // })
-        // //property, formatType
-
-
+        //property, formatType
         .addColumnProperty('mode.name')
         //header, flex, align, ordinationPriorityIndex
         .addHeader('DATA DE REALIZAÇÃO', '25', '', 4)
