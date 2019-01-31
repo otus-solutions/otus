@@ -24,7 +24,7 @@
     </div>
     <div flex>
       <div>
-        <md-datepicker ng-model="vm.date" md-placeholder="Data de realização"></md-datepicker>
+        <md-datepicker ng-model="vm.date" md-placeholder="Data de realização" md-max-date="vm.maxDate"></md-datepicker>
       </div>
       <md-autocomplete flex  md-selected-item="vm.selectedItem"
       md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"

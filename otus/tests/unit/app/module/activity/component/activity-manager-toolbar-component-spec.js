@@ -60,6 +60,7 @@ describe('otusActivityManagerToolbar', function() {
         expect(controller.cancel).toBeDefined();
         expect(controller.checkers).toBeDefined();
         expect(controller.selectedItem).toBeDefined();
+        expect(controller.maxDate).toBeDefined();
 
         controller.updateCheckerActivity();
         expect(Mock.ParticipantActivityService.listActivityCheckers).toHaveBeenCalledTimes(1);

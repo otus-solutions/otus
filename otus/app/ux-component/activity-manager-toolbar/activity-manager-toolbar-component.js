@@ -202,6 +202,7 @@
       function onInit() {
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
         self.selectedItem = CheckerItemFactory.create(self.user);
+        self.maxDate = new Date();
       }
 
       function _createFilterFor(query) {
