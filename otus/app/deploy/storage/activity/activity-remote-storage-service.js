@@ -203,11 +203,11 @@
       return deferred.promise;
     }
 
-    function getActivityRevisions(activityID) {
+    function getActivityRevisions(activityID, data) {
       var deferred = $q.defer();
 
       ActivityRestService
-        .getActivityRevisions(activityID)
+        .getActivityRevisions(activityID, data)
         .then(function(response) {
           deferred.resolve(response);
         }).catch(function () {

@@ -131,8 +131,8 @@
       ActivityRepositoryService.addActivityRevision(activityRevision);
     }
 
-    function getActivityRevisions(activityID) {
-      return ActivityRepositoryService.getActivityRevisions(activityID);
+    function getActivityRevisions(activityID, data) {
+      return ActivityRepositoryService.getActivityRevisions(activityID, data);
     }
   }
 }());

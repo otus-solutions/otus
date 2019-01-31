@@ -69,55 +69,32 @@
       return _rest.remove(data).$promise;
     }
 
-
-    //TODO: OTUS-494 limpar implemenções de teste antes de entregar
-    function addActivityRevision(activityRevision) {
+    function addActivityRevision(activityRevision, data) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      //return _rest.addActivityRevision(activityRevision).$promise;
-
-      var deferred = $q.defer();
-      deferred.resolve(activityRevision);
-      return deferred.promise;
+      return _rest.addActivityRevision({ rn: data.participantData.recruitmentNumber}, activityRevision).$promise;
     }
 
-
-    //TODO: OTUS-494 limpar implemenções de teste antes de entregar
-    function getActivityRevisions(activityID) {
-
-        var revisions = [{
-          activityID: 987654321,
-          revisionDate: "2018-12-01T02:00:00.000Z",
-          user: {
-            name: "Joao Silva",
-            email: "joao@gmail.com"
-          }},
-          {
-            activityID: 123456789,
-            revisionDate: "2017-10-06T02:00:00.000Z",
-            user: {
-              name: "Pedro Azambuja",
-              email: "p.zamba@gmail.com"
-            }},
-          {
-            activityID: 456852951,
-            revisionDate: "2018-06-28T02:00:00.000Z",
-            user: {
-              name: "Maria da Luz",
-              email: "m.luz@gmail.com"
-            }
-        }];
-
-
+    function getActivityRevisions(activityID, data) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      //return _rest.getActivityRevisions(activityID).$promise;
 
-      var deferred = $q.defer();
-      deferred.resolve(revisions);
-      return deferred.promise;
-      }
+      var request = $q.defer();
+
+      _rest
+        .getActivityRevisions({ id: activityID, rn: data.participantData.recruitmentNumber })
+        .$promise
+        .then(function(response) {
+          if (response.data && response.data.length) {
+            request.resolve(response.data);
+          } else {
+            request.resolve([]);
+          }
+        });
+
+      return request.promise;
+    }
   }
 }());

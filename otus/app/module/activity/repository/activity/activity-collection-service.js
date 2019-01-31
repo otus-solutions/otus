@@ -169,13 +169,13 @@
       return request.promise;
     }
 
-    function getActivityRevisions(activityID){
+    function getActivityRevisions(activityID, data){
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function(remoteStorage) {
           remoteStorage
-            .getActivityRevisions(activityID)
+            .getActivityRevisions(activityID, data)
             .then(function(response) {
               request.resolve(response);
             }).catch(function () {

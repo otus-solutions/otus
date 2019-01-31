@@ -41,7 +41,7 @@
       self.activity.details = activity.surveyForm.surveyTemplate.identity;
       self.activity.history = activity.statusHistory.getHistory().map(ActivityStatusItemFactory.create);
       self.activity.history.reverse();
-      ParticipantActivityService.getActivityRevisions(activity.getID()).then(function (revisions) {
+      ParticipantActivityService.getActivityRevisions(activity.getID(), ContextService.getSelectedActivities()[0]).then(function (revisions) {
         self.activity.revisions = ActivityFacadeService.getActivityRevisions(revisions);
         });
       $mdSidenav('right').toggle();

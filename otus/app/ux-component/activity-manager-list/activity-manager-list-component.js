@@ -94,15 +94,15 @@
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
         //.setActivities(activities)
       //header, flex, align, ordinationPriorityIndex
-        .addHeader('NOME', '40', '', 1)
+        .addHeader('NOME', '25', '', 1)
         //property, formatType
         .addColumnProperty('name')
         //header, flex, align, ordinationPriorityIndex
-        .addHeader('ACRÔNIMO', '20', '', 2)
+        .addHeader('ACRÔNIMO', '15', 'center center', 2)
         //property, formatType
         .addColumnProperty('acronym')
         //header, flex, align, ordinationPriorityIndex
-
+        .addHeader('MODO', '10', '', 3)
         .addIconWithFunction(function (element) {
           var structureIcon = { icon: "md-svg-icon", class: "", tooltip: "" };
           var OnLineStructure = {
@@ -125,11 +125,7 @@
           }
           return structureIcon;
         })
-        .addHeader('MODO', '20', '', 3)
-        //property, formatType
-        .addColumnProperty('mode.name')
-        //header, flex, align, ordinationPriorityIndex
-        .addHeader('DATA DE REALIZAÇÃO', '25', '', 4)
+        .addHeader('REALIZAÇÃO', '15', 'center center', 4)
         //property, formatType
         .addColumnProperty('realizationDate', 'DATE')
         .setFormatData("'dd/MM/yy")

@@ -148,8 +148,8 @@
       ActivityCollectionService.addActivityRevision (activityRevision);
     }
 
-    function getActivityRevisions(activityID) {
-      return ActivityCollectionService.getActivityRevisions(activityID);
+    function getActivityRevisions(activityID, data) {
+      return ActivityCollectionService.getActivityRevisions(activityID, data);
     }
   }
 }());
