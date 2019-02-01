@@ -35,6 +35,7 @@
     self.listAll = listAll;
     self.listAllCategories = listAllCategories;
     self.update = update;
+    self.updateCheckerActivity = updateCheckerActivity;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -96,6 +97,30 @@
               ActivityStorageService.update(remoteActivities);
               request.resolve();
             });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Updates checker activity in collection.
+     * @param {(string)} id - the activity id to be updated
+     * @param {(object)} user - the user to be updated
+     * @memberof ActivityCollectionService
+     */
+    function updateCheckerActivity(recruitmentNumber, checkerUpdated) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .updateCheckerActivity(recruitmentNumber, checkerUpdated)
+            .then(function(response) {
+              request.resolve(response);
+            }).catch(function () {
+              request.reject();
+          });
         });
 
       return request.promise;

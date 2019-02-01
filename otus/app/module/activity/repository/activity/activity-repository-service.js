@@ -25,6 +25,7 @@
     self.listAvailables = listAvailables;
     self.save = save;
     self.discard = discard;
+    self.updateCheckerActivity = updateCheckerActivity;
 
     function listAll(participant) {
       if (!participant) {
@@ -82,6 +83,10 @@
 
     function listAllCategories() {
       return ActivityCollectionService.listAllCategories();
+    }
+
+    function updateCheckerActivity(recruitmentNumber, checkerUpdated) {
+      return ActivityCollectionService.updateCheckerActivity(recruitmentNumber, checkerUpdated);
     }
 
     function _update(toUpdate) {

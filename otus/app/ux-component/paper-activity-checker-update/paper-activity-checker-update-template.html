@@ -1,0 +1,50 @@
+<md-toolbar style="z-index: 1" class="md-primary md-hue-1">
+  <div class="md-toolbar-tools">
+    <md-button ng-click="vm.updateCheckerActivity()" class="md-icon-button" aria-label="Salvar" ng-disabled="!vm.selectedItem.checker">
+      <md-tooltip md-direction="down">Salvar</md-tooltip>
+      <md-icon aria-label="Salvar">save</md-icon>
+    </md-button>
+
+    <span flex></span>
+    <h2><span>Aferidor</span></h2>
+    <span flex></span>
+
+    <md-button ng-click="vm.cancel()" class="md-icon-button" aria-label="Cancelar">
+      <md-tooltip md-direction="down">Cancelar</md-tooltip>
+      <md-icon aria-label="Cancelar">close</md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
+
+<div layout="row" flex layout-align="center center">
+  <div layout-margin layout="column">
+    <div layout="column" class="label-light-gray">
+      <h3 class="md-display-1">Alteração de informação</h3>
+      <span class="md-body-1">Informe a <b>data de realização</b> e o responsável pelo preenchimento <b>realizado em papel.</b></span>
+    </div>
+    <div flex>
+      <div>
+        <md-datepicker ng-model="vm.date" md-placeholder="Data de realização" md-max-date="vm.maxDate"></md-datepicker>
+      </div>
+      <md-autocomplete flex  md-selected-item="vm.selectedItem"
+      md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
+      md-selected-item-change="vm.selectedItemChange(item)" md-items="item in vm.querySearch(vm.searchText)"
+      md-item-text="item.text" md-min-length="0" placeholder="Aferidor (a)" md-menu-class="autocomplete-custom-template">
+        <md-item-template>
+          <span class="item-title">
+            <md-icon md-svg-icon="account"></md-icon>
+            <span md-highlight-text="vm.searchText" md-highlight-flags="i">{{ item.title }}</span>
+          </span>
+          <span class="item-metadata">
+            <span class="item-metastat">
+              E-mail: <strong>{{ item.metastat.email }}</strong>
+            </span>
+          </span>
+        </md-item-template>
+        <md-not-found>
+          Nenhum resultado para "{{ vm.searchText }}" foi encontrado.
+        </md-not-found>
+      </md-autocomplete>
+    </div>
+  </div>
+</div>

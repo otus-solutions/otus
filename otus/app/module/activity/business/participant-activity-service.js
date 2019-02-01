@@ -30,6 +30,7 @@
     self.listActivityCheckers = listActivityCheckers;
     self.setActivitiesSelection = setActivitiesSelection;
     self.getActivitiesSelection = getActivitiesSelection;
+    self.updateCheckerActivity = updateCheckerActivity;
 
     self.configurationStructure = configurationStructure;
 
@@ -126,6 +127,10 @@
 
     function listAllCategories() {
       return ActivityRepositoryService.listAllCategories();
+    }
+
+    function updateCheckerActivity(recruitmentNumber, id, activityStatus) {
+      return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({id, activityStatus}));
     }
 
   }
