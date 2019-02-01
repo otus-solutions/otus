@@ -189,11 +189,11 @@
      * @returns {Promise} promise with activityRevision inserted when resolved
      * @memberof ActivityRemoteStorageService
      */
-    function addActivityRevision(activityRevision) {
+    function addActivityRevision(activityRevision, data) {
       var deferred = $q.defer();
 
       ActivityRestService
-        .addActivityRevision(activityRevision)
+        .addActivityRevision(activityRevision, data)
         .then(function(response) {
           deferred.resolve(response);
         }).catch(function () {

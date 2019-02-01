@@ -127,8 +127,8 @@
       return ActivityRepositoryService.listAllCategories();
     }
 
-    function addActivityRevision(activityRevision) {
-      ActivityRepositoryService.addActivityRevision(activityRevision);
+    function addActivityRevision(activityRevision, data) {
+      return ActivityRepositoryService.addActivityRevision(activityRevision, data);
     }
 
     function getActivityRevisions(activityID, data) {

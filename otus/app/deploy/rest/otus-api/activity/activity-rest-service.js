@@ -80,11 +80,8 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-
       var request = $q.defer();
-
-      _rest
-        .getActivityRevisions({ id: activityID, rn: data.participantData.recruitmentNumber })
+      _rest.getActivityRevisions({ id: activityID, rn: data.participantData.recruitmentNumber })
         .$promise
         .then(function(response) {
           if (response.data && response.data.length) {

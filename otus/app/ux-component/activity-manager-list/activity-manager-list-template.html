@@ -1,4 +1,4 @@
-<div layout="column" flex>
+<div layout="column" flex class="menuBardemoBasicUsage">
   <md-content layout="row" ng-if="$ctrl.isListEmpty" flex layout-align="center center">
     <div class="label-light-gray">
       <h3 class="md-display-3">Nenhuma Atividade Adicionada</h3>
@@ -11,8 +11,8 @@
   </md-content>
 
   <md-content layout="column" flex>
-
-    <span flex="10"></span>
-    <dynamic-data-table flex="80" dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.updateDataTable"></dynamic-data-table>
+    <dynamic-data-table flex="100" dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.updateDataTable"></dynamic-data-table>
   </md-content>
+  <md-content md-whiteframe="3dp" flex="10"></md-content>
 </div>
+

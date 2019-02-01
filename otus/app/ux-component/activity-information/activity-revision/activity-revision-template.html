@@ -19,18 +19,19 @@
         <p class="md-body-3">Confirme as informações, selecione data e hora, e salve para criar o registro</p>
       </span>
     </div>
-    <div flex class="label-light-gray">
+    <div flex class="label-light-gray" layout="column">
       <md-whiteframe class="md-whiteframe-3dp" layout="" layout-align="left center" layout-padding="50">
         <span>
-          <p>Atividade: {{vm.activity.getName()}}</p>
-          <p> Revisor: {{vm.user.name}} {{vm.user.surname}}</p>
-          <p> Email: {{vm.user.email}}</p><br>
-          <p> Data da Revisão:
-          <input mdc-datetime-picker="true" ng-change="" show-icon="true" date="true" time="true" aria-label="Data de Processamento" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now" ng-model="vm.revisionDate" class="md-input ng-pristine ng-untouched ng-valid ng-isolate-scope dtp-no-msclear dtp-input ng-not-empty" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A" disable-parent-scroll="true" aria-invalid="false">
-          </p>
+          <p class="md-body-2">Atividade: <span class="md-body-1" style="color: #000000 !important;">{{vm.activity.getName()}}</span></p>
+          <p class="md-body-2"> Revisor: <span class="md-body-1" style="color: #000000 !important;">{{vm.user.name}} {{vm.user.surname}}</span></p>
+          <p class="md-body-2"> Email: <span class="md-body-1" style="color: #000000 !important;">{{vm.user.email}}</span></p>
         </span>
       </md-whiteframe>
       <br>
+      <p class="md-body-2"> Data da Revisão:
+        <md-datepicker ng-model="vm.revisionDate" aria-label="Data da Revisão" md-max-date="vm.now" md-placeholder="Insira a data de revisão" md-open-on-focus></md-datepicker>
+      </p>
+
       <md-dialog-actions layout="row">
         <md-button ng-click="vm.addActivityRevision()" class="md-primary md-raised" aria-label="Salvar"
                    ng-disabled="!vm.revisionDate">SALVAR</md-button>

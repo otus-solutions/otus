@@ -22,11 +22,13 @@
 
   function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory) {
     var self = this;
+
     var _selectedActivities = [];
     self.activities = [];
     self.isListEmpty = true;
     self.orderByField = 'name';
     self.reverseSort = false;
+    self.finalPage = false;
 
     /* Public methods */
     self.selectActivity = selectActivity;
@@ -55,7 +57,9 @@
       _buildDynamicTableSettings(self.activities);
     }
 
+
     function onInit() {
+
       EventService.onParticipantSelected(_loadActivities);
       self.isListEmpty = true;
       self.otusActivityManager.listComponent = self;
@@ -125,6 +129,7 @@
           }
           return structureIcon;
         })
+        // .addColumnProperty('mode.name')
         .addHeader('REALIZAÇÃO', '15', 'center center', 4)
         //property, formatType
         .addColumnProperty('realizationDate', 'DATE')

@@ -144,8 +144,8 @@
       return dbObject;
     }
 
-    function addActivityRevision (activityRevision) {
-      ActivityCollectionService.addActivityRevision (activityRevision);
+    function addActivityRevision (activityRevision, data) {
+      return ActivityCollectionService.addActivityRevision(activityRevision, data);
     }
 
     function getActivityRevisions(activityID, data) {
