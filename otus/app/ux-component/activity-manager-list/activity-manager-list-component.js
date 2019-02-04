@@ -76,7 +76,6 @@
           self.activities = activities
             .filter(_onlyNotDiscarded)
             .map(ActivityItemFactory.create);
-
           self.updateDataTable(self.activities);
           self.isListEmpty = !self.activities.length;
           _selectedActivities = [];

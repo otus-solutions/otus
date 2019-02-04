@@ -62,9 +62,18 @@
     }
 
     function _loadRevisions(activity) {
-      ParticipantActivityService.getActivityRevisions(activity.getID(), ContextService.getSelectedActivities()[0]).then(function (revisions) {
-        self.activity.revisions = ActivityFacadeService.getActivityRevisions(revisions);
-      });
+      ParticipantActivityService.getActivityRevisions(activity.getID(), ContextService.getSelectedActivities()[0])
+        .then(function (revisions) {
+          self.activity.revisions = ActivityFacadeService.getActivityRevisions(revisions);
+        });
+    }
+
+    function _displayMsg(msg){
+      $mdToast.show(
+        $mdToast.simple()
+          .position("bottom right")
+          .textContent(msg)
+          .hideDelay(3000));
     }
 
     function DialogController($mdDialog, $mdToast) {
@@ -85,14 +94,6 @@
       self.cancel = function () {
         $mdDialog.cancel();
       };
-
-      function _displayMsg(msg){
-        $mdToast.show(
-          $mdToast.simple()
-            .position("bottom right")
-            .textContent(msg)
-            .hideDelay(3000));
-      }
 
       function addActivityRevision() {
         var activityRevision = ActivityFacadeService.createActivityRevision(self.activity.getID(), self.revisionDate);
