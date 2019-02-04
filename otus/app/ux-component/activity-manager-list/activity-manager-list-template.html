@@ -10,7 +10,7 @@
     </div>
   </md-content>
 
-  <md-content layout="column" flex>
+  <md-content layout="column" ng-show="!$ctrl.isListEmpty" flex>
     <dynamic-data-table flex="100" dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.updateDataTable"></dynamic-data-table>
   </md-content>
   <md-content md-whiteframe="3dp" flex="10"></md-content>

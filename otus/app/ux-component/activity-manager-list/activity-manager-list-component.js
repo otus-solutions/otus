@@ -4,12 +4,13 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusActivityList', {
-      controller: Controller,
+      controller: 'otusActivityListCtrl as $ctrl',
       templateUrl: 'app/ux-component/activity-manager-list/activity-manager-list-template.html',
       require: {
         otusActivityManager: '^otusActivityManager'
       }
-    });
+    })
+    .controller('otusActivityListCtrl', Controller);
 
   Controller.$inject = [
     'otusjs.activity.business.ParticipantActivityService',
