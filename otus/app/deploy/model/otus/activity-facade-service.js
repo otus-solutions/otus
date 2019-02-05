@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy')
+    .module('otusjs.deploy.model.otus')
     .service('otusjs.deploy.model.ActivityFacadeService', Service);
 
   Service.$inject = [

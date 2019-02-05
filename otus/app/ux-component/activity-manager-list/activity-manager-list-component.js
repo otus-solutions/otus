@@ -58,9 +58,7 @@
       _buildDynamicTableSettings(self.activities);
     }
 
-
     function onInit() {
-
       EventService.onParticipantSelected(_loadActivities);
       self.isListEmpty = true;
       self.otusActivityManager.listComponent = self;
@@ -92,7 +90,6 @@
       self.orderByField = field;
       self.reverseSort = order;
     }
-
 
     function _buildDynamicTableSettings() {
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()

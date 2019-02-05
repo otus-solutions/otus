@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy')
+    .module('otusjs.deploy.rest')
     .service('otusjs.deploy.ActivityRestService', Service);
 
   Service.$inject = [

@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy')
+    .module('otusjs.deploy.storage')
     .service('otusjs.deploy.ActivityRemoteStorageService', Service);
 
   Service.$inject = [
