@@ -1,17 +1,10 @@
 <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
   <div class="md-toolbar-tools">
-    <md-button ng-click="vm.updateCheckerActivity()" class="md-icon-button" aria-label="Salvar" ng-disabled="!vm.selectedItem.checker">
-      <md-tooltip md-direction="down">Salvar</md-tooltip>
-      <md-icon aria-label="Salvar">save</md-icon>
-    </md-button>
-
-    <span flex></span>
     <h2><span>Aferidor</span></h2>
     <span flex></span>
-
-    <md-button ng-click="vm.cancel()" class="md-icon-button" aria-label="Cancelar">
-      <md-tooltip md-direction="down">Cancelar</md-tooltip>
-      <md-icon aria-label="Cancelar">close</md-icon>
+    <md-button class="md-icon-button" ng-click="vm.cancel() "aria-label="Fechar">
+      <md-icon aria-label="Fechar">close</md-icon>
+      <md-tooltip md-direction="bottom">Fechar</md-tooltip>
     </md-button>
   </div>
 </md-toolbar>
@@ -27,9 +20,9 @@
         <md-datepicker ng-model="vm.date" md-placeholder="Data de realização" md-max-date="vm.maxDate"></md-datepicker>
       </div>
       <md-autocomplete flex  md-selected-item="vm.selectedItem"
-      md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
-      md-selected-item-change="vm.selectedItemChange(item)" md-items="item in vm.querySearch(vm.searchText)"
-      md-item-text="item.text" md-min-length="0" placeholder="Aferidor (a)" md-menu-class="autocomplete-custom-template">
+                       md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
+                       md-selected-item-change="vm.selectedItemChange(item)" md-items="item in vm.querySearch(vm.searchText)"
+                       md-item-text="item.text" md-min-length="0" placeholder="Aferidor (a)" md-menu-class="autocomplete-custom-template">
         <md-item-template>
           <span class="item-title">
             <md-icon md-svg-icon="account"></md-icon>
@@ -48,3 +41,12 @@
     </div>
   </div>
 </div>
+<md-dialog-actions layout="row">
+  <span flex></span>
+  <md-button ng-click="vm.updateCheckerActivity()" class="md-raised md-primary" aria-label="Salvar" ng-disabled="!vm.selectedItem.checker">
+    Salvar
+  </md-button>
+  <md-button ng-click="vm.cancel()" class="md-raised md-no-focus" aria-label="Cancelar">
+    Cancelar
+  </md-button>
+</md-dialog-actions>
