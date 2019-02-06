@@ -23,7 +23,7 @@
 
     self.date = _getFormattedDate(data);
     self.user = data.user;
-    self.user.name = data.user.name + ' ' + data.user.surname;
+    self.user.formattedName = data.user.name + ' ' + data.user.surname;
     self.status = _buildStatus(data);
 
     function _buildStatus(status) {

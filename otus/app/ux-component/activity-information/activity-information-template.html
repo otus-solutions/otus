@@ -28,9 +28,11 @@
           <md-icon style="color:{{item.status.color}}" md-font-library="material-icons">{{item.status.icon}}</md-icon>
           <div class="md-list-item-text" layout="column">
             <h3>{{ item.status.label }}</h3>
-            <p>Em {{ item.date }}</p>
-            <p>Por {{ item.user.name }}</p>
-            <p>{{ item.user.email }}</p>
+            <p>
+              Em {{ item.date }}
+              <br />Por {{ item.user.formattedName }}
+              <br />{{ item.user.email }}
+            </p>
           </div>
         </md-list-item>
       </md-list>

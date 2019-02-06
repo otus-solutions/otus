@@ -3,6 +3,7 @@
 **/dist/
 /*/.settings
 /*/package-lock.json
+package-lock.json
 /*/.project
 /*/.classpath
 *.jsfdia

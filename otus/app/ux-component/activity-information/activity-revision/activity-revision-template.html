@@ -29,12 +29,13 @@
       </md-whiteframe>
       <br>
       <p class="md-body-2"> Data da Revisão:
-        <md-datepicker ng-model="vm.revisionDate" aria-label="Data da Revisão" md-max-date="vm.now" md-placeholder="Insira a data de revisão" md-open-on-focus></md-datepicker>
+        <md-datepicker style="width:300px !important;" ng-model="vm.revisionDate" aria-label="Data da Revisão" md-max-date="vm.now" md-placeholder="Insira uma data" md-open-on-focus></md-datepicker>
       </p>
 
       <md-dialog-actions layout="row">
         <md-button ng-click="vm.addActivityRevision()" class="md-primary md-raised" aria-label="Salvar"
                    ng-disabled="!vm.revisionDate">SALVAR</md-button>
+        <md-button ng-click="vm.cancel()" class="md-raised" aria-label="Cancelar">CANCELAR</md-button>
       </md-dialog-actions>
     </div>
   </div>

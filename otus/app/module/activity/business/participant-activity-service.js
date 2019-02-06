@@ -17,6 +17,7 @@
     var _paperActivityCheckerData = null;
     self.activityConfigurations = new Object();
 
+
     /* Public methods */
     self.initializePaperActivityData = initializePaperActivityData;
     self.add = add;
@@ -29,6 +30,8 @@
     self.listActivityCheckers = listActivityCheckers;
     self.setActivitiesSelection = setActivitiesSelection;
     self.getActivitiesSelection = getActivitiesSelection;
+    self.updateCheckerActivity = updateCheckerActivity;
+
     self.configurationStructure = configurationStructure;
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
@@ -125,6 +128,10 @@
 
     function listAllCategories() {
       return ActivityRepositoryService.listAllCategories();
+    }
+
+    function updateCheckerActivity(recruitmentNumber, id, activityStatus) {
+      return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({id, activityStatus}));
     }
 
     function addActivityRevision(activityRevision, activity) {

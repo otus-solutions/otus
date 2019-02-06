@@ -20,6 +20,7 @@
     self.list = list;
     self.save = save;
     self.remove = remove;
+    self.updateCheckerActivity = updateCheckerActivity;
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
 
@@ -32,6 +33,13 @@
         throw new Error('REST resource is not initialized.');
       }
       return _rest.update({ id: data._id, rn: data.participantData.recruitmentNumber }, data).$promise;
+    }
+
+    function updateCheckerActivity(rn, checkerUpdated) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.updateCheckerActivity({rn}, checkerUpdated).$promise;
     }
 
     function save(data) {

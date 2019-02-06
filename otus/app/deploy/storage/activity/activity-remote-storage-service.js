@@ -33,6 +33,7 @@
     /* Public methods */
     self.insert = insert;
     self.update = update;
+    self.updateCheckerActivity = updateCheckerActivity;
     self.findActivities = findActivities;
     self.findCategories = findCategories;
     self.addActivityRevision = addActivityRevision;
@@ -69,6 +70,28 @@
 
       _updateArray(activityToUpdate, function(updatedActivities) {
         deferred.resolve(updatedActivities);
+      });
+
+      return deferred.promise;
+    }
+
+
+    /**
+     * Updates activities in collection.
+     * @param {(object|array)} activity - the activity (or array of activities) to be
+     * updated
+     * @returns {Promise} promise with activity or activities updated when resolved
+     * @memberof ActivityRemoteStorageService
+     */
+    function updateCheckerActivity(recruitmentNumber, checkerUpdated) {
+      var deferred = $q.defer();
+
+      ActivityRestService
+        .updateCheckerActivity(recruitmentNumber, checkerUpdated)
+        .then(function(response) {
+          deferred.resolve(response);
+        }).catch(function () {
+          deferred.reject();
       });
 
       return deferred.promise;

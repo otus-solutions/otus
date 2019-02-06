@@ -52,7 +52,6 @@ describe('otusActivityManagerList Test', function() {
       Mock.ParticipantActivityService.listAll().then(function (activities) {
         done();
       });
-      console.info(controller.dynamicTableSettings.elementsProperties[2].iconWithFunction.iconFunction)
       expect(controller.dynamicTableSettings.headers).toEqual(HEADERS_NAMES);
       expect(controller.dynamicTableSettings.flexArray).toEqual(FLEX_ARRAY);
       expect(controller.dynamicTableSettings.elementsProperties[0]).toEqual(ELEMENTS_ARRAY[0]);
