@@ -93,16 +93,10 @@
 
     function _buildDynamicTableSettings() {
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
-        //.setActivities(activities)
-      //header, flex, align, ordinationPriorityIndex
         .addHeader('NOME', '25', '', 1)
-        //property, formatType
         .addColumnProperty('name')
-        //header, flex, align, ordinationPriorityIndex
         .addHeader('ACRÔNIMO', '15', 'center center', 2)
-        //property, formatType
         .addColumnProperty('acronym')
-        //header, flex, align, ordinationPriorityIndex
         .addHeader('MODO', '10', '', 3)
         .addIconWithFunction(function (element) {
           var structureIcon = { icon: "md-svg-icon", class: "", tooltip: "" };
@@ -110,13 +104,11 @@
             icon: "equalizer",
             class: "activity-item-icon md-avatar-icon",
             tooltip: "On line",
-            //orderValue: "warning"
           };
           var paperStructure = {
             icon: 'description',
             class: "activity-item-icon md-avatar-icon",
             tooltip: "Em papel",
-            //orderValue: "done"
           };
 
           if(element.mode.name === "Em papel"){
@@ -126,37 +118,15 @@
           }
           return structureIcon;
         })
-        // .addColumnProperty('mode.name')
         .addHeader('REALIZAÇÃO', '15', 'center center', 4)
-        //property, formatType
         .addColumnProperty('realizationDate', 'DATE')
         .setFormatData("'dd/MM/yy")
-        //icon, tooltip, classButton, successMsg,
-        //buttonFunction, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
-
         .addHeader('STATUS', '20', '', 5)
-        //property, formatType
         .addColumnProperty('status')
-
         .addHeader('CATEGORIA', '15', '', 6)
-        //property, formatType
         .addColumnProperty('category')
         .setCallbackAfterChange(self.dynamicDataTableChange)
         .setCheckbox(true)
-        //.setSelectUnselectFunction()
-        //.setElementsArray(self.activities)
-         //.setTitle('Lista de Participantes')
-        // .setCallbackAfterChange(self.dynamicDataTableChange)
-        //Don't use with Service, in this case pass Service as attribute in the template
-        // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
-        /*
-          //Optional Config's
-          .setFilter(true)
-          .setReorder(true)
-          .setPagination(true)
-          .setSelectedColor()
-          .setHoverColor()
-        */
         .getSettings();
     }
 

@@ -69,19 +69,19 @@
       return _rest.remove(data).$promise;
     }
 
-    function addActivityRevision(activityRevision, data) {
+    function addActivityRevision(activityRevision, activity) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.addActivityRevision({ rn: data.participantData.recruitmentNumber}, activityRevision).$promise;
+      return _rest.addActivityRevision({ rn: activity.participantData.recruitmentNumber}, activityRevision).$promise;
     }
 
-    function getActivityRevisions(activityID, data) {
+    function getActivityRevisions(activityID, activity) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
       var request = $q.defer();
-      _rest.getActivityRevisions({ id: activityID, rn: data.participantData.recruitmentNumber })
+      _rest.getActivityRevisions({ id: activityID, rn: activity.participantData.recruitmentNumber })
         .$promise
         .then(function(response) {
           if (response.data && response.data.length) {

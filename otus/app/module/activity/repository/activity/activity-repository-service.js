@@ -144,12 +144,12 @@
       return dbObject;
     }
 
-    function addActivityRevision (activityRevision, data) {
-      return ActivityCollectionService.addActivityRevision(activityRevision, data);
+    function addActivityRevision (activityRevision, activity) {
+      return ActivityCollectionService.addActivityRevision(activityRevision, activity);
     }
 
-    function getActivityRevisions(activityID, data) {
-      return ActivityCollectionService.getActivityRevisions(activityID, data);
+    function getActivityRevisions(activityID, activity) {
+      return ActivityCollectionService.getActivityRevisions(activityID, activity);
     }
   }
 }());

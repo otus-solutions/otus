@@ -127,12 +127,12 @@
       return ActivityRepositoryService.listAllCategories();
     }
 
-    function addActivityRevision(activityRevision, data) {
-      return ActivityRepositoryService.addActivityRevision(activityRevision, data);
+    function addActivityRevision(activityRevision, activity) {
+      return ActivityRepositoryService.addActivityRevision(activityRevision, activity);
     }
 
-    function getActivityRevisions(activityID, data) {
-      return ActivityRepositoryService.getActivityRevisions(activityID, data);
+    function getActivityRevisions(activityID, activity) {
+      return ActivityRepositoryService.getActivityRevisions(activityID, activity);
     }
   }
 }());

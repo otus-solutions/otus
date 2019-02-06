@@ -152,13 +152,13 @@
      * @param {(object)} activityReview - the object to be inserted
      * @memberof ActivityCollectionService
      */
-    function addActivityRevision(activityRevision, data) {
+    function addActivityRevision(activityRevision, activity) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function(remoteStorage) {
           remoteStorage
-            .addActivityRevision(activityRevision, data)
+            .addActivityRevision(activityRevision, activity)
             .then(function(response) {
               request.resolve(response);
             }).catch(function () {
@@ -169,13 +169,13 @@
       return request.promise;
     }
 
-    function getActivityRevisions(activityID, data){
+    function getActivityRevisions(activityID, activity){
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function(remoteStorage) {
           remoteStorage
-            .getActivityRevisions(activityID, data)
+            .getActivityRevisions(activityID, activity)
             .then(function(response) {
               request.resolve(response);
             }).catch(function () {

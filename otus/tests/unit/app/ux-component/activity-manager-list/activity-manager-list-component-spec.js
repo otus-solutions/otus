@@ -76,13 +76,11 @@ describe('otusActivityManagerList Test', function() {
             icon: "equalizer",
             class: "activity-item-icon md-avatar-icon",
             tooltip: "On line",
-            //orderValue: "warning"
           };
           var paperStructure = {
             icon: 'description',
             class: "activity-item-icon md-avatar-icon",
             tooltip: "Em papel",
-            //orderValue: "done"
           };
 
           if(element.mode.name === "Em papel"){
