@@ -8,6 +8,7 @@
   Controller.$inject = [
     '$q',
     '$filter',
+    '$mdToast',
     'otusjs.application.session.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.deploy.FieldCenterRestService',
@@ -16,7 +17,7 @@
     'otusjs.otus.uxComponent.BarChartsHorizontalFactory'
   ];
 
-  function Controller($q, $filter, SessionContextService, LoadingScreenService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
+  function Controller($q, $filter, $mdToast, SessionContextService, LoadingScreenService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
     const MESSAGE_OF_DATA_NOT_FOUND = 'Não há registros a serem exibidos.';
     const MESSAGE_OF_GENERIC_ERROR = 'Não conseguimos apresentar os dados, tente novamente mais tarde.';
     const DATA_NOT_FOUND = 'Data Not Found';
@@ -31,6 +32,7 @@
     self.centerFilter = '';
     self.message = '';
     self.error = false;
+    self.disableDownloandCSVFile = false;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -53,7 +55,7 @@
         self.error = true;
         self.message = MESSAGE_OF_GENERIC_ERROR;
       });
-    };
+    }
 
     function loadCenters() {
       let defer = $q.defer();
@@ -74,57 +76,63 @@
       if (!$('#pending-results-chart svg').length) {
         _loadDataPendingResultsByAliquots(self.centerFilter);
       }
-    };
+    }
 
     function openTabQuantitativeByTypeOfAliquots() {
       self.error = false;
       if (!$('#quantitative-by-aliquots svg').length) {
         _loadDataQuantitativeByTypeOfAliquots(self.centerFilter);
       }
-    };
+    }
 
     function openTabOrphanByExams() {
       self.error = false;
       if (!$('#orphans-by-exam svg').length) {
         _loadDataOrphansByExam();
       }
-    };
+    }
 
     function openTabStorageByAliquots() {
       self.error = false;
       if (!$('#storage-by-exam svg').length) {
         _loadStorageByAliquots(self.centerFilter);
       }
-    };
+    }
 
     function openTabByExam() {
       self.error = false;
       if (!$('#results-by-exam svg').length) {
         _loadResultsByExam(self.centerFilter);
       }
-    };
+    }
 
     function downloadCSVFile(current) {
       if (current === PENDING)
         LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots(self.centerFilter)
           .then()
           .catch((err) => {
-            if(err.MESSAGE.includes("Data Not Found")){
+            if(err.data.MESSAGE.includes("Data Not Found")){
+              self.disableDownloandCSVFile = true;
               $mdToast.show(
                 $mdToast.simple()
-                  .textContent('Não existem pendencias para download')
+                  .textContent('Não existem pendências para download.')
                   .hideDelay(5000)
               );
             } else {
-
+              $mdToast.show(
+                $mdToast.simple()
+                  .textContent('Não existem pendências para download.')
+                  .hideDelay(5000)
+              );
             }
           });
       else
         LaboratoryMonitoringService.downloadCSVFileOfOrphansByExam();
-    };
+    }
 
     function loadDataByCenter(currentTab, center) {
       self.centerFilter = center;
+      self.disableDownloandCSVFile = false;
       d3.selectAll('#pending-results-chart svg').remove();
       d3.selectAll('#quantitative-by-aliquots svg').remove();
       d3.selectAll('#storage-by-exam svg').remove();
@@ -143,8 +151,7 @@
           _loadResultsByExam(center);
           break;
       }
-      ;
-    };
+    }
 
     function _setUserFieldCenter() {
       let defer = $q.defer();
@@ -156,9 +163,8 @@
         self.centerFilter = user.fieldCenter.acronym;
         defer.resolve();
       }
-      ;
       return defer.promise;
-    };
+    }
 
     function _loadDataPendingResultsByAliquots(center) {
       LoadingScreenService.start();
@@ -174,7 +180,7 @@
         _defineErrorMessage(e);
         LoadingScreenService.finish();
       });
-    };
+    }
 
     function _loadDataQuantitativeByTypeOfAliquots(center) {
       LoadingScreenService.start();
@@ -190,7 +196,7 @@
         _defineErrorMessage(e);
         LoadingScreenService.finish();
       });
-    };
+    }
 
     function _loadDataOrphansByExam() {
       LoadingScreenService.start();
@@ -206,7 +212,7 @@
         _defineErrorMessage(e);
         LoadingScreenService.finish();
       });
-    };
+    }
 
     function _loadStorageByAliquots(center) {
       LoadingScreenService.start();
@@ -222,7 +228,7 @@
         _defineErrorMessage(e);
         LoadingScreenService.finish();
       });
-    };
+    }
 
     function _loadResultsByExam(center) {
       LoadingScreenService.start();
@@ -238,7 +244,7 @@
         _defineErrorMessage(e);
         LoadingScreenService.finish();
       });
-    };
+    }
 
     function _defineErrorMessage(response) {
       if (response.data.MESSAGE === DATA_NOT_FOUND) {
@@ -246,6 +252,6 @@
       } else if (response.data.MESSAGE) {
         self.message = MESSAGE_OF_GENERIC_ERROR;
       }
-    };
-  };
+    }
+  }
 }());
