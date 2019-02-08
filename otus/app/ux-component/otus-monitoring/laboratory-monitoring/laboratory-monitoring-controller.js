@@ -32,7 +32,7 @@
     self.centerFilter = '';
     self.message = '';
     self.error = false;
-    self.disableDownloandCSVFile = false;
+    self.disableDownloadCSVFile = false;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -112,7 +112,7 @@
           .then()
           .catch((err) => {
             if(err.data.MESSAGE.includes("Data Not Found")){
-              self.disableDownloandCSVFile = true;
+              self.disableDownloadCSVFile = true;
               $mdToast.show(
                 $mdToast.simple()
                   .textContent('Não existem pendências para download.')
@@ -132,7 +132,7 @@
 
     function loadDataByCenter(currentTab, center) {
       self.centerFilter = center;
-      self.disableDownloandCSVFile = false;
+      self.disableDownloadCSVFile = false;
       d3.selectAll('#pending-results-chart svg').remove();
       d3.selectAll('#quantitative-by-aliquots svg').remove();
       d3.selectAll('#storage-by-exam svg').remove();
