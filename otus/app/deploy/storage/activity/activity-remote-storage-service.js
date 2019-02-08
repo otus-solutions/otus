@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy')
+    .module('otusjs.deploy.storage')
     .service('otusjs.deploy.ActivityRemoteStorageService', Service);
 
   Service.$inject = [
@@ -36,6 +36,8 @@
     self.updateCheckerActivity = updateCheckerActivity;
     self.findActivities = findActivities;
     self.findCategories = findCategories;
+    self.addActivityRevision = addActivityRevision;
+    self.getActivityRevisions = getActivityRevisions;
 
     /**
      * Adds activities to collection.
@@ -202,6 +204,40 @@
             }
           });
       };
+    }
+
+    /**
+     * Add activityRevision in collection.
+     * @param {(object)} activityRevision - the activityReview to be insered
+     * @returns {Promise} promise with activityRevision inserted when resolved
+     * @memberof ActivityRemoteStorageService
+     */
+    function addActivityRevision(activityRevision, activity) {
+      var deferred = $q.defer();
+
+      ActivityRestService
+        .addActivityRevision(activityRevision, activity)
+        .then(function(response) {
+          deferred.resolve(response);
+        }).catch(function () {
+        deferred.reject();
+      });
+
+      return deferred.promise;
+    }
+
+    function getActivityRevisions(activityID, activity) {
+      var deferred = $q.defer();
+
+      ActivityRestService
+        .getActivityRevisions(activityID, activity)
+        .then(function(response) {
+          deferred.resolve(response);
+        }).catch(function () {
+        deferred.reject();
+      });
+
+      return deferred.promise;
     }
   }
 }());

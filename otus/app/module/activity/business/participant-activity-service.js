@@ -33,6 +33,8 @@
     self.updateCheckerActivity = updateCheckerActivity;
 
     self.configurationStructure = configurationStructure;
+    self.addActivityRevision = addActivityRevision;
+    self.getActivityRevisions = getActivityRevisions;
 
     function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -67,7 +69,6 @@
           return ActivityRepositoryService.listAll(selectedParticipant);
         });
     }
-
 
     function listAvailables() {
       return ActivityRepositoryService.listAvailables();
@@ -133,5 +134,12 @@
       return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({id, activityStatus}));
     }
 
+    function addActivityRevision(activityRevision, activity) {
+      return ActivityRepositoryService.addActivityRevision(activityRevision, activity);
+    }
+
+    function getActivityRevisions(activityID, activity) {
+      return ActivityRepositoryService.getActivityRevisions(activityID, activity);
+    }
   }
 }());

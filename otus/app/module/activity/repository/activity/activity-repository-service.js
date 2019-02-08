@@ -26,6 +26,8 @@
     self.save = save;
     self.discard = discard;
     self.updateCheckerActivity = updateCheckerActivity;
+    self.addActivityRevision = addActivityRevision;
+    self.getActivityRevisions = getActivityRevisions;
 
     function listAll(participant) {
       if (!participant) {
@@ -145,6 +147,14 @@
       dbObject.$loki = entity.$loki;
       dbObject.meta = entity.meta;
       return dbObject;
+    }
+
+    function addActivityRevision (activityRevision, activity) {
+      return ActivityCollectionService.addActivityRevision(activityRevision, activity);
+    }
+
+    function getActivityRevisions(activityID, activity) {
+      return ActivityCollectionService.getActivityRevisions(activityID, activity);
     }
   }
 }());

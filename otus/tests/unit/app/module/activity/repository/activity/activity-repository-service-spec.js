@@ -1,51 +1,53 @@
-describe('activity-repository-service Test', function() {
+describe('participant-activity-service Test', function() {
   var Mock = {};
   var service;
+  var Injections = {};
+  var ID = "12345";
+  var DATA = {activityID: "54321"};
+  var ACTIVITY_REVISION = {revision: DATA};
 
   beforeEach(function() {
-    angular.mock.module('otusjs.activity.repository', function ($provide) {
-      mockInjection();
-      $provide.value('otusjs.activity.core.ModuleService',{});
-      $provide.value('otusjs.activity.core.ContextService',{});
-      $provide.value('otusjs.activity.repository.ActivityCollectionService', Mock.ActivityCollectionService);
-      $provide.value('otusjs.activity.repository.SurveyCollectionService',{});
-    });
+    angular.mock.module('otusjs.activity');
 
     inject(function(_$injector_) {
-      service = _$injector_.get('otusjs.activity.repository.ActivityRepositoryService');
+      Injections = {
+        "$q": _$injector_.get('$q'),
+        ModuleService: _$injector_.get('otusjs.activity.core.ModuleService'),
+        ContextService: _$injector_.get('otusjs.activity.core.ContextService'),
+        ActivityCollectionService: _$injector_.get('otusjs.activity.repository.ActivityCollectionService'),
+        UserRepositoryService: _$injector_.get('otusjs.activity.repository.SurveyCollectionService')
+      };
+
+      service = _$injector_.get('otusjs.activity.repository.ActivityRepositoryService', Injections);
+    });
+  });
+
+
+  it('should create service', function() {
+    expect(service).toBeDefined();
+    expect(service.addActivityRevision).toBeDefined();
+    expect(service.getActivityRevisions).toBeDefined();
+  });
+
+
+  describe("activity revisions test", function () {
+    beforeEach(function () {
+      spyOn(Injections.ActivityCollectionService, "addActivityRevision").and.callThrough();
+      spyOn(Injections.ActivityCollectionService, "getActivityRevisions").and.callThrough();
     });
 
-    spyOn(Mock.ActivityCollectionService, "updateCheckerActivity").and.callThrough();
-  });
-  it('should call Mock.ActivityCollectionService.updateCheckerActivity method', function() {
-    expect(Mock.ActivityCollectionService.updateCheckerActivity).toBeDefined();
-    service.updateCheckerActivity(Mock.rn, Mock.object);
-    expect(Mock.ActivityCollectionService.updateCheckerActivity).toHaveBeenCalledTimes(1);
-    expect(Mock.ActivityCollectionService.updateCheckerActivity).toHaveBeenCalledWith(Mock.rn, Mock.object);
-  });
+    it('should call addActivityRevision method', function () {
+      service.addActivityRevision(ID, DATA);
+      expect(Injections.ActivityCollectionService.addActivityRevision).toHaveBeenCalledTimes(1);
+      expect(Injections.ActivityCollectionService.addActivityRevision).toHaveBeenCalledWith(ID, DATA);
+    });
 
-  function mockInjection() {
-    Mock.ActivityCollectionService = {
-      updateCheckerActivity: function (obj) {
-        return obj;
-      }
-    };
-    Mock.rn = 35621458;
-    Mock.id = "5aff3edaaf11bb0d302be3c7";
-    Mock.activityStatus = {
-      "objectType": "ActivityStatus",
-      "name": "FINALIZED",
-      "date": "2018-11-08T15:15:45.810Z",
-      "user": {
-        "name": "Emanoel",
-        "surname": "Vianna",
-        "phone": "51999999999",
-        "email": "otus@otus.com"
-      }
-    }
-
-    Mock.object = {id:Mock.id, activityStatus: Mock.activityStatus}
-
-  }
+    it('should call getActivityRevisions method', function () {
+      service.getActivityRevisions(ACTIVITY_REVISION, DATA);
+      expect(Injections.ActivityCollectionService.getActivityRevisions).toHaveBeenCalledTimes(1);
+      expect(Injections.ActivityCollectionService.getActivityRevisions).toHaveBeenCalledWith(ACTIVITY_REVISION, DATA);
+    });
+  })
 
 });
+

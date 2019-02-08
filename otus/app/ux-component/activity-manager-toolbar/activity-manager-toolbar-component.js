@@ -28,7 +28,8 @@
     '$mdToast'
   ];
 
-  function Controller(ParticipantActivityService, ActivityPlayerService, EventService, ApplicationStateService, $mdDialog, DialogService, CheckerItemFactory, $q, $timeout, $mdToast) {
+  function Controller(ParticipantActivityService, ActivityPlayerService, EventService, ApplicationStateService, 
+    $mdDialog, DialogService, CheckerItemFactory, $q, $timeout, $mdToast) {
     var self = this;
     var confirmDeleteSelectedActivity;
     /* Public methods */
@@ -215,5 +216,4 @@
     }
 
   }
-
 }());

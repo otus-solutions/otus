@@ -7,11 +7,26 @@ Test.utils.data.activity = [
     "activities": [
       {
         "_id": "5be45306e69a690064fb1e1c",
-        "getID" : function () {
+        "isDiscarded": false,
+        "mode":{
+          "name": "Em papel"
+        },
+        "getID": function(){
           return "5be45306e69a690064fb1e1c";
         },
-        "participantData":{
-          "recruitmentNumber": 35621458
+        "surveyForm": {
+          "surveyTemplate": {
+            "identity":
+              {
+                "extents": "StudioObject",
+                "objectType": "SurveyIdentity",
+                "name": "ACTIMETRIA DEVOLUÇÃO",
+                "acronym": "ACTDC",
+                "recommendedTo": "",
+                "description": "",
+                "keywords": []
+              }
+          }
         },
         "statusHistory": {
           "objectType": "ActivityStatus",
@@ -23,29 +38,44 @@ Test.utils.data.activity = [
             "phone": "51999999999",
             "email": "otus@otus.com"
           },
-          "getInitializedOfflineRegistry": function () {
-            return {
+          "getHistory": function () {
+            return [{
               "objectType": "ActivityStatus",
-              "name": "INITIALIZED_OFFLINE",
-              "date": "2018-11-08T15:16:41.177Z",
+              "name": "FINALIZED",
+              "date": "2018-11-08T15:15:45.810Z",
               "user": {
                 "name": "Emanoel",
                 "surname": "Vianna",
                 "phone": "51999999999",
                 "email": "otus@otus.com"
-              },
-              "setUser": function (user) {
-                this.user = user;
-              },
-              "setDate": function (date) {
-                this.date = date;
               }
-            }
-          }
+            }]
+          },
         }
       },
       {
         "_id": "5be4533be69a690064fb1e1d",
+        "isDiscarded": false,
+        "getID": function(){
+          return "5be4533be69a690064fb1e1d";
+        },
+        "mode":{
+          "name": "Online"
+        },
+        "surveyForm": {
+          "surveyTemplate": {
+            "identity":
+              {
+                "extents": "StudioObject",
+                "objectType": "SurveyIdentity",
+                "name": "ACTIMETRIA DEVOLUÇÃO",
+                "acronym": "ACTDC",
+                "recommendedTo": "",
+                "description": "",
+                "keywords": []
+              }
+          }
+        },
         "statusHistory": {
           "objectType": "ActivityStatus",
           "name": "FINALIZED",
@@ -55,7 +85,20 @@ Test.utils.data.activity = [
             "surname": "Vianna",
             "phone": "51999999999",
             "email": "otus@otus.com"
-          }
+          },
+          "getHistory": function () {
+            return [{
+              "objectType": "ActivityStatus",
+              "name": "FINALIZED",
+              "date": "2018-11-08T15:16:41.177Z",
+              "user": {
+                "name": "Emanoel",
+                "surname": "Vianna",
+                "phone": "51999999999",
+                "email": "otus@otus.com"
+              }
+            }]
+          },
         }
       }
     ],
