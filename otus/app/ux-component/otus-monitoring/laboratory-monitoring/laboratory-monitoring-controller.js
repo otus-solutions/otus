@@ -106,7 +106,19 @@
 
     function downloadCSVFile(current) {
       if (current === PENDING)
-        LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots(self.centerFilter);
+        LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots(self.centerFilter)
+          .then()
+          .catch((err) => {
+            if(err.MESSAGE.includes("Data Not Found")){
+              $mdToast.show(
+                $mdToast.simple()
+                  .textContent('Não existem pendencias para download')
+                  .hideDelay(5000)
+              );
+            } else {
+
+            }
+          });
       else
         LaboratoryMonitoringService.downloadCSVFileOfOrphansByExam();
     };
@@ -130,7 +142,8 @@
         case EXAM:
           _loadResultsByExam(center);
           break;
-      };
+      }
+      ;
     };
 
     function _setUserFieldCenter() {
@@ -142,7 +155,8 @@
       } else {
         self.centerFilter = user.fieldCenter.acronym;
         defer.resolve();
-      };
+      }
+      ;
       return defer.promise;
     };
 
@@ -156,10 +170,10 @@
           BarChartsVerticalFactory.create(response, element, colors);
           LoadingScreenService.finish();
         }).catch(function (e) {
-          self.error = true;
-          _defineErrorMessage(e);
-          LoadingScreenService.finish();
-        });
+        self.error = true;
+        _defineErrorMessage(e);
+        LoadingScreenService.finish();
+      });
     };
 
     function _loadDataQuantitativeByTypeOfAliquots(center) {
@@ -172,10 +186,10 @@
           self.error = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
-          self.error = true;
-          _defineErrorMessage(e);
-          LoadingScreenService.finish();
-        });
+        self.error = true;
+        _defineErrorMessage(e);
+        LoadingScreenService.finish();
+      });
     };
 
     function _loadDataOrphansByExam() {
@@ -188,10 +202,10 @@
           self.errorInOrphansByExam = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
-          self.errorInOrphansByExam = true;
-          _defineErrorMessage(e);
-          LoadingScreenService.finish();
-        });
+        self.errorInOrphansByExam = true;
+        _defineErrorMessage(e);
+        LoadingScreenService.finish();
+      });
     };
 
     function _loadStorageByAliquots(center) {
@@ -204,10 +218,10 @@
           self.error = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
-          self.error = true;
-          _defineErrorMessage(e);
-          LoadingScreenService.finish();
-        });
+        self.error = true;
+        _defineErrorMessage(e);
+        LoadingScreenService.finish();
+      });
     };
 
     function _loadResultsByExam(center) {
@@ -220,10 +234,10 @@
           self.error = false;
           LoadingScreenService.finish();
         }).catch(function (e) {
-          self.error = true;
-          _defineErrorMessage(e);
-          LoadingScreenService.finish();
-        });
+        self.error = true;
+        _defineErrorMessage(e);
+        LoadingScreenService.finish();
+      });
     };
 
     function _defineErrorMessage(response) {

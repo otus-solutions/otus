@@ -92,11 +92,12 @@
         var name = 'monitoramento-laboratorial-resultados-pendentes-'.concat(new Date().toLocaleDateString());
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [response]);
         defer.resolve()
-      }).catch(function () {
-        defer.reject()
+      }).catch(function (err) {
+        defer.reject(err)
       }).finally(function () {
         LoadingScreenService.finish();
       });
+      return defer.promise;
     }
 
     function downloadCSVFileOfOrphansByExam() {
@@ -108,11 +109,12 @@
         var name = 'monitoramento-laboratorial-exame-orfaos-'.concat(new Date().toLocaleDateString());
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [response]);
         defer.resolve()
-      }).catch(function () {
-        defer.reject()
+      }).catch(function (err) {
+        defer.reject(err)
       }).finally(function () {
         LoadingScreenService.finish();
       });
+      return defer.promise;
     }
 
     function _translateLabel(data) {
