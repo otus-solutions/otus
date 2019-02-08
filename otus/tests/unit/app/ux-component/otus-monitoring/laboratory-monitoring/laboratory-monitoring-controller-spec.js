@@ -85,6 +85,7 @@ describe('otusParticipantHeatmap test', function () {
       $provide.value('otusjs.monitoring.business.LaboratoryMonitoringService', Mock.LaboratoryMonitoringService);
       $provide.value('otusjs.otus.uxComponent.BarChartsVerticalFactory', Mock.BarChartsVerticalFactory);
       $provide.value('otusjs.otus.uxComponent.BarChartsHorizontalFactory', Mock.BarChartsHorizontalFactory);
+      $provide.value('otusjs.application.dialog.DialogShowService', []);
     });
 
     inject(function (_$injector_, _$controller_) {
@@ -96,7 +97,8 @@ describe('otusParticipantHeatmap test', function () {
         FieldCenterRestService: _$injector_.get('otusjs.deploy.FieldCenterRestService'),
         LaboratoryMonitoringService: _$injector_.get('otusjs.monitoring.business.LaboratoryMonitoringService'),
         BarChartsVerticalFactory: _$injector_.get('otusjs.otus.uxComponent.BarChartsVerticalFactory'),
-        BarChartsHorizontalFactory: _$injector_.get('otusjs.otus.uxComponent.BarChartsHorizontalFactory')
+        BarChartsHorizontalFactory: _$injector_.get('otusjs.otus.uxComponent.BarChartsHorizontalFactory'),
+        DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService')
       };
 
       ctrl = _$controller_('otusLaboratoryMonitoringDashboardCtrl', Injections);

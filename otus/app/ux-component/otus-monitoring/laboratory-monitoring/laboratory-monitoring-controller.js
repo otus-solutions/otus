@@ -9,15 +9,17 @@
     '$q',
     '$filter',
     '$mdToast',
+    '$mdDialog',
     'otusjs.application.session.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.monitoring.business.LaboratoryMonitoringService',
     'otusjs.otus.uxComponent.BarChartsVerticalFactory',
-    'otusjs.otus.uxComponent.BarChartsHorizontalFactory'
+    'otusjs.otus.uxComponent.BarChartsHorizontalFactory',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($q, $filter, $mdToast, SessionContextService, LoadingScreenService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory) {
+  function Controller($q, $filter, $mdToast, $mdDialog, SessionContextService, LoadingScreenService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory, DialogShowService) {
     const MESSAGE_OF_DATA_NOT_FOUND = 'Não há registros a serem exibidos.';
     const MESSAGE_OF_GENERIC_ERROR = 'Não conseguimos apresentar os dados, tente novamente mais tarde.';
     const DATA_NOT_FOUND = 'Data Not Found';
@@ -28,6 +30,7 @@
     const EXAM = 'exam';
 
     var self = this;
+    var _alert;
     self.centers = [];
     self.centerFilter = '';
     self.message = '';
@@ -119,11 +122,19 @@
                   .hideDelay(5000)
               );
             } else {
-              $mdToast.show(
-                $mdToast.simple()
-                  .textContent('Não existem pendências para download.')
-                  .hideDelay(5000)
-              );
+              _alert = {
+                dialogToTitle:'Ocorreu um erro',
+                textDialog:'Não foi possível baixar o csv, entre em contato com o suporte.',
+                ariaLabel:'Entre em contato com o suporte',
+                buttons: [
+                  {
+                    message:'Ok',
+                    action:function(){$mdDialog.hide()},
+                    class:'md-raised md-primary'
+                  }
+                ]
+              };
+              DialogShowService.showDialog(_alert);
             }
           });
       else
