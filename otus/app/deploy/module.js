@@ -18,6 +18,9 @@
       'otusjs.deploy.user',
       'otusjs.deploy.exam',
       'otusjs.deploy.monitoring'
+      'otusjs.deploy.model.otus',
+      'otusjs.deploy.storage',
+      "otusjs.deploy.rest"
     ])
     .value('OtusLocalStorage', [
       'otusjs.activity.storage.ActivityLocalStorageService',

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy')
+    .module('otusjs.deploy.model.otus')
     .service('otusjs.deploy.model.ActivityFacadeService', Service);
 
   Service.$inject = [
@@ -22,6 +22,8 @@
     self.openSurveyActivity = openSurveyActivity;
     self.initializeActivitySurvey = initializeActivitySurvey;
     self.getFillingByQuestionID = getFillingByQuestionID;
+    self.createActivityRevision = createActivityRevision;
+    self.getActivityRevisions = getActivityRevisions;
 
     function getActivity() {
       return ActivityFacadeService.surveyActivity;
@@ -62,5 +64,14 @@
     function getFillingByQuestionID(questionID) {
       return ActivityFacadeService.getFillingByQuestionID(questionID);
     }
+
+    function createActivityRevision(activityId, revisionDate) {
+      return ActivityFacadeService.createActivityRevision(activityId, revisionDate);
+    }
+
+    function getActivityRevisions(revisions){
+      return ActivityFacadeService.createActivityRevisionFromJson(revisions);
+    }
+
   }
 }());

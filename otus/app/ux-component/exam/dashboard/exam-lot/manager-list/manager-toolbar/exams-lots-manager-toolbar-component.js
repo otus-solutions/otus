@@ -27,6 +27,7 @@
   function Controller($mdToast, $mdDialog, laboratoryContextService, ExamLotService, ApplicationStateService, DialogService) {
     var self = this;
     var _confirmDeleteSelectedLots;
+    var _csvExported;
 
     self.$onInit = onInit;
     self.ChangeLot = ChangeLot;
@@ -41,11 +42,18 @@
       if(!self.selectedLots[0].aliquotList){
         ExamLotService.getLotAliquots(self.selectedLots[0]._id).then(aliquotList => {
           self.selectedLots[0].aliquotList = aliquotList;
-          self.csvData =  self.selectedLots[0].getAliquotsToCsv();
+          _exportCsv()
         });
       } else {
-        self.csvData =  self.selectedLots[0].getAliquotsToCsv().reverse();
+        _exportCsv()
       }
+
+    }
+
+    function _exportCsv(){
+      self.csvData =  self.selectedLots[0].getAliquotsToCsv().reverse();
+      alasql('SELECT * INTO CSV("report.csv",{headers:true}) FROM ?', [self.csvData]);
+      _toastCsvExported();
     }
 
     function ChangeLot() {
@@ -91,6 +99,15 @@
           }
         ]
       };
+    }
+
+
+    function _toastCsvExported() {
+      $mdToast.show(
+        $mdToast.simple()
+          .position("bottom right")
+          .textContent('CSV exportado com sucesso!')
+          .hideDelay(3000))
     }
 
     function _removeLotRecursive(lotArray,callback){

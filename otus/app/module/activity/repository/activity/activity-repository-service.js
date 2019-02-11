@@ -25,6 +25,9 @@
     self.listAvailables = listAvailables;
     self.save = save;
     self.discard = discard;
+    self.updateCheckerActivity = updateCheckerActivity;
+    self.addActivityRevision = addActivityRevision;
+    self.getActivityRevisions = getActivityRevisions;
 
     function listAll(participant) {
       if (!participant) {
@@ -84,6 +87,10 @@
       return ActivityCollectionService.listAllCategories();
     }
 
+    function updateCheckerActivity(recruitmentNumber, checkerUpdated) {
+      return ActivityCollectionService.updateCheckerActivity(recruitmentNumber, checkerUpdated);
+    }
+
     function _update(toUpdate) {
       if (!toUpdate || !toUpdate.length) {
         throw new Error('No activity to update.', 'activity-repository-service.js', 50);
@@ -140,6 +147,14 @@
       dbObject.$loki = entity.$loki;
       dbObject.meta = entity.meta;
       return dbObject;
+    }
+
+    function addActivityRevision (activityRevision, activity) {
+      return ActivityCollectionService.addActivityRevision(activityRevision, activity);
+    }
+
+    function getActivityRevisions(activityID, activity) {
+      return ActivityCollectionService.getActivityRevisions(activityID, activity);
     }
   }
 }());

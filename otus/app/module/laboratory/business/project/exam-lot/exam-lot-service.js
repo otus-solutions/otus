@@ -38,12 +38,15 @@
 
     function getLotAliquots(id) {
       var deferred = $q.defer();
-
+      LoadingScreenService.changeMessage(messageLoading);
+      LoadingScreenService.start();
       ProjectRepositoryService.getLotAliquots(id)
         .then(function (response) {
+          LoadingScreenService.finish();
           deferred.resolve(JSON.parse(response));
         })
         .catch(function (err) {
+          LoadingScreenService.finish();
           deferred.reject(err);
         });
 
