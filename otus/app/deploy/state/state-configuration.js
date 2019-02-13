@@ -36,7 +36,8 @@
       'MONITORING': 'monitoring',
       'ACCESS_RECOVERY': 'access-recovery',
       'FLAG_DASHBOARD': 'flag-report',
-      'FLAG_MANAGER_LIST': 'manager-list'
+      'FLAG_MANAGER_LIST': 'manager-list',
+      'LABORATORY_MONITORING_DASHBOARD': 'laboratory-monitoring'
     })
     .config(Configuration);
 
@@ -73,7 +74,8 @@
     'otusjs.deploy.MonitoringStateProvider',
     'otusjs.deploy.UserAccessRecoveryProvider',
     'otusjs.deploy.FlagStateProvider',
-    'otusjs.deploy.FlagManagerStateProvider'
+    'otusjs.deploy.FlagManagerStateProvider',
+    'otusjs.deploy.LaboratoryMonitoringStateProvider'
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
@@ -107,7 +109,8 @@
     MonitoringStateProvider,
     UserAccessRecoveryProvider,
     FlagStateProvider,
-    FlagManagerStateProvider
+    FlagManagerStateProvider,
+    LaboratoryMonitoringStateProvider
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ErrorStateProvider.state);
@@ -140,6 +143,7 @@
     $stateProvider.state(UserAccessRecoveryProvider.state);
     $stateProvider.state(FlagStateProvider.state);
     $stateProvider.state(FlagManagerStateProvider.state);
+    $stateProvider.state(LaboratoryMonitoringStateProvider.state);
 
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);

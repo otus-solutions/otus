@@ -11,24 +11,28 @@
   Controller.$inject = [
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.otus.dashboard.core.EventService',
-    'otusjs.application.state.ApplicationStateService',
-    'otusjs.laboratory.core.project.ContextService',
-    'STATE',
-    '$mdDialog'
+    'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(ContextService, EventService, ApplicationStateService, ProjectContextService, STATE, $mdDialog) {
+  function Controller(ContextService, EventService, ApplicationStateService) {
     var self = this;
+    /* Public methods */
+    self.$onInit = onInit;
+    self.startMonitoring = startMonitoring;
     self.setFocus = setFocus;
     self.sampleTransportDashboard = sampleTransportDashboard;
     self.managerParticipantsDashboard = managerParticipantsDashboard;
-    self.ExamsDashboard = ExamsDashboard;
-    self.FlagsDashboard = FlagsDashboard;
+    self.examsDashboard = examsDashboard;
+    self.flagsDashboard = flagsDashboard;
     self.sendingExam = sendingExam;
-    self.$onInit = onInit;
-    self.startMonitoring = startMonitoring;
+    self.laboratoryMonitoring = laboratoryMonitoring;
+    self.participantsReady = false;
 
-    /* Public methods */
+    function onInit() {
+      _loadLoggedUser();
+      EventService.onLogin(_loadLoggedUser);
+    }
+
     function startMonitoring() {
       ApplicationStateService.activateMonitoring();
     }
@@ -47,11 +51,11 @@
       ApplicationStateService.activateParticipantsList();
     }
 
-    function ExamsDashboard() {
+    function examsDashboard() {
       ApplicationStateService.activateExamsLotsManagerList();
     }
 
-    function FlagsDashboard() {
+    function flagsDashboard() {
       ApplicationStateService.activateFlagsReportDashboard();
     }
 
@@ -59,9 +63,8 @@
       ApplicationStateService.activateExamSending();
     }
 
-    function onInit() {
-      _loadLoggedUser();
-      EventService.onLogin(_loadLoggedUser);
+    function laboratoryMonitoring() {
+      ApplicationStateService.activateLaboratoryMonitoring();
     }
 
     function _loadLoggedUser(userData) {

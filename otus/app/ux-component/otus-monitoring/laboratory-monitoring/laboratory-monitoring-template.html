@@ -1,0 +1,214 @@
+<style>
+  .bar {
+    fill: steelblue;
+  }
+</style>
+<div layout="column" flex>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row">
+    <div flex layout-gt-md="row" layout="column" layout-align="center center" layout-margin>
+      <span layout-align="center center">Monitoramento laboratorial</span>
+    </div>
+  </otus-dashboard-toolbar>
+  <md-content layout="column" layout-padding flex>
+    <md-tabs md-border-bottom layout-fill>
+      <md-tab label="Pendências de Resultados"  ng-click="$ctrl.openTabPendingResultsByAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
+          <md-card flex layout-fill layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="column" flex layout-fill>
+                <h1 class=" remove-padding" layout-margin layout-padding>Pendências de Resultados</h1>
+                <h6 layout-margin class="remove-padding ">
+                  <span class="md-subheader remove-margin">
+                    <p>São consideradas pendências alíquotas registradas e que não possuem pelo menos um resultado de
+                      exame relacionado.</p>
+                    <p>Utilize o botão de download para visualizar as alíquotas pendentes.</p>
+                  </span>
+                </h6>
+              </div>
+              <div layout="row" layout-align="center center" layout-fill flex>
+                <span flex></span>
+                <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
+                  <label class="md-subheader">Centro:</label>
+                  <md-select ng-model="$ctrl.centerFilter">
+                    <md-tooltip>
+                      Centros
+                    </md-tooltip>
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" ng-selected="{{$index == $ctrl.centers.indexOf($ctrl.centerFilter) ? true : $index == 0 ? true : false}}"
+                      value="{{center}}" ng-click="$ctrl.loadDataByCenter('pending', center)">
+                      {{center}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+                <span flex="5"></span>
+                <md-button ng-click="$ctrl.downloadCSVFile('pending')" ng-disabled="$ctrl.error || $ctrl.disableDownloadCSVFile" class="md-raised md-primary md-icon-button">
+                  <md-icon>get_app</md-icon>
+                  <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+                </md-button>
+              </div>
+            </div>
+          </md-card>
+        </md-content>
+        <md-content ng-show="!$ctrl.error" layout-padding>
+          <div id="pending-results-chart" layout="column"></div>
+        </md-content>
+        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
+          <div class="label-light-gray">
+            <h2 flex>{{$ctrl.message}}</h2>
+          </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="Acompanhamento de alíquotas"  ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
+          <md-card flex layout-fill layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="column" flex layout-fill>
+                <h1 class=" remove-padding" layout-margin layout-padding>Acompanhamento de alíquotas</h1>
+                <h6 layout-margin class="remove-padding ">
+                  <span class="md-subheader remove-margin">
+                    <p>Finalizadas: Aliquotas que já possuem pelo menos um resultado relacionado.</p>
+                    <p> Preparadas: Aliquotas que fazem parte de um lote de exames.</p>
+                    <p>Transportadas: Aliquotas que fazem parte de um lote de transporte.</p>
+                  </span>
+                </h6>
+              </div>
+              <div layout="row" layout-align="center center" layout-fill flex>
+                <span flex></span>
+                <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
+                  <label class="md-subheader">Centro:</label>
+                  <md-select ng-model="$ctrl.centerFilter">
+                    <md-tooltip>
+                      Centros
+                    </md-tooltip>
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadDataByCenter('quantitative', center)">
+                      {{center}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+            </div>
+          </md-card>
+        </md-content>
+        <md-content ng-show="!$ctrl.error" flex layout-padding>
+          <div id="quantitative-by-aliquots" flex></div>
+        </md-content>
+        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
+          <div class="label-light-gray">
+            <h2 flex>{{$ctrl.message}}</h2>
+          </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="Exames órfãos"  ng-click="$ctrl.openTabOrphanByExams()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
+          <md-card flex layout-fill layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="column" flex layout-fill>
+                <h1 class=" remove-padding" layout-margin layout-padding>Exames órfãos</h1>
+                <h6 layout-margin class="remove-padding ">
+                  <span class="md-subheader remove-margin">
+                    <p>Considera-se órfão resultados que não possuem vínculo com pelo menos uma alíquota.</p>
+                    <p>Utilize o botão de download para identificar quais as códigos de alíquotas relacionados aos
+                      exames órfãos.</p>
+                  </span>
+                </h6>
+              </div>
+              <div layout="row" layout-align="center center" layout-fill flex>
+                <span flex></span>
+                <md-button ng-click="$ctrl.downloadCSVFile('orphan')" ng-disabled="$ctrl.errorInOrphansByExam" class="md-raised md-primary md-icon-button">
+                  <md-icon>get_app</md-icon>
+                  <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
+                </md-button>
+              </div>
+            </div>
+          </md-card>
+        </md-content>
+        <md-content ng-show="!$ctrl.errorInOrphansByExam" flex>
+          <div id="orphans-by-exam" flex></div>
+        </md-content>
+        <md-content ng-if="$ctrl.errorInOrphansByExam" layout="row" layout-align="center center" style="margin-top: 250px">
+          <div class="label-light-gray">
+            <h2 flex>{{$ctrl.message}}</h2>
+          </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="Armazenamento"  ng-click="$ctrl.openTabStorageByAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
+          <md-card flex layout-fill layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="column" flex layout-fill>
+                <h1 class=" remove-padding" layout-margin layout-padding>Armazenamento</h1>
+                <h6 layout-margin class="remove-padding ">
+                  <span class="md-subheader remove-margin">
+                    <p>Quantitativo de aliquotas armazenadas seguimentadas por tipo.</p>
+                  </span>
+                </h6>
+              </div>
+              <div layout="row" layout-align="center center" layout-fill flex>
+                <span flex></span>
+                <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
+                  <label class="md-subheader">Centro:</label>
+                  <md-select ng-model="$ctrl.centerFilter">
+                    <md-tooltip>
+                      Centros
+                    </md-tooltip>
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadDataByCenter('storage', center)">
+                      {{center}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+            </div>
+          </md-card>
+        </md-content>
+        <md-content ng-show="!$ctrl.error" flex layout-padding>
+          <div id="storage-by-exam" flex></div>
+        </md-content>
+        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
+          <div class="label-light-gray">
+            <h2 flex>{{$ctrl.message}}</h2>
+          </div>
+        </md-content>
+      </md-tab>
+      <md-tab label="Resultados de Exames" ng-click="$ctrl.openTabByExam()">
+        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
+          <md-card flex layout-fill layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+              <div layout="column" flex layout-fill>
+                <h1 class=" remove-padding" layout-margin layout-padding>Resultados de exames</h1>
+                <h6 layout-margin class="remove-padding ">
+                  <span class="md-subheader remove-margin">
+                    <p>Número de exames recebidos seguimentados por tipo.</p>
+                  </span>
+                </h6>
+              </div>
+              <div layout="row" layout-align="center center" layout-fill flex>
+                <span flex></span>
+                <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px" flex="10">
+                  <label class="md-subheader">Centro:</label>
+                  <md-select ng-model="$ctrl.centerFilter">
+                    <md-tooltip>
+                      Centros
+                    </md-tooltip>
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadDataByCenter('exam', center)">
+                      {{center}}
+                    </md-option>
+                  </md-select>
+                </md-input-container>
+              </div>
+            </div>
+          </md-card>
+        </md-content>
+        <md-content ng-show="!$ctrl.error" flex layout-padding>
+          <div id="results-by-exam" flex></div>
+        </md-content>
+        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
+          <div class="label-light-gray">
+            <h2 flex>{{$ctrl.message}}</h2>
+          </div>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>

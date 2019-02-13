@@ -100,6 +100,9 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
 otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
   color: rgb(255, 255, 255) !important;
 }
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button {
+  color: rgb(255, 255, 255) !important;
+}
 
 otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
   color: rgb(255, 255, 255) !important;
@@ -151,7 +154,11 @@ md-checkbox.md-checkbox-small {
 /** finish lot-info-maneger-display-component **/
 
 .remove-padding {
-  padding: 0;
+  padding: 0 !important;
+}
+
+.remove-margin {
+  margin: 0 !important;
 }
 
 md-input-container.remove-errors-spacer .md-errors-spacer {
@@ -366,4 +373,12 @@ md-sidenav.md-closed.md-locked-open-add-active {
   min-width: 100px !important;
   width: 50vw !important;
   max-width: 360px !important;
+} 
+
+md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
+  color: rgb(0,121,107);
+  background: rgb(0,121,107);
+}
+md-tab-content{
+  margin-top: 10px !important;
 }

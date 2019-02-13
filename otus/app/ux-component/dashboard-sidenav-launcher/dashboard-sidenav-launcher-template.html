@@ -1,4 +1,8 @@
-<md-button ng-click="$ctrl.launchSidenav()">
+<md-button ng-click="$ctrl.launchSidenav()" hide-xs>
   <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
-  Otus | PROJETO
+  <span hide-xs>Otus | PROJETO</span>
+</md-button>
+<md-button ng-click="$ctrl.launchSidenav()" hide-gt-xs class="md-icon-button">
+  <md-icon md-svg-icon="menu" aria-label="Menu"></md-icon>
+  <!--<span >Otus | PROJETO</span>-->
 </md-button>

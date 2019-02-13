@@ -7,7 +7,9 @@
       controller: Controller,
       templateUrl: 'app/ux-component/participant-search/participant-search-template.html',
       bindings: {
-        onSelect: '&'
+        onSelect: '&',
+        showAllParticipants: '&',
+        onReady: '='
       }
     });
 
@@ -30,6 +32,7 @@
     /* Public methods */
     self.querySearch = querySearch;
     self.selectParticipant = selectParticipant;
+    self.showParticipants = self.showAllParticipants;
 
     var confirmParticipantChange;
 
@@ -40,7 +43,10 @@
       } else {
         self.autoCompleteClass = 'md-dashboard-autocomplete';
       }
-      ParticipantManagerService.setup();
+      ParticipantManagerService.setup().then(function (response) {
+        self.onReady = true;
+      });
+
     }
 
     function querySearch() {

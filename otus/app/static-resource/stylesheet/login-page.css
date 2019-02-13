@@ -13,6 +13,9 @@
   height: 100%;
   position: relative;
 }
+#user-login-page #system-text{
+  text-align:center;
+}
 #user-login-page #center {
   width: 55%;
   top: 30%;
@@ -29,14 +32,13 @@
 #user-login-page .system-name {
   text-align: left;
   color: white;
-  top: 52%;
+  top: 5%;
   position: relative;
 }
 #user-login-page .system-name span {
-  margin-left: 23%;
+  margin-left: -35%;
 }
-#user-login-page h1 {
-  margin: 0 auto;
+#user-login-page h2 {
   width: 110px;
   display: block;
 }
@@ -44,24 +46,56 @@
   width: 24%;
   position: absolute;
   top: 0%;
-  left: 36%;
+  left: 40%;
   transform: translate(-30%, -30%);
 }
 @media screen and (max-width: 1280px) and (min-width: 800px) {
   #user-login-page .logotype {
-    width: 32%;
+    width: 30%;
     position: absolute;
     left: 38%;
     transform: translate(-30%, -30%);
+  }
+  #user-login-page .system-name {
+    top: 5%;
+  }
+  #user-login-page .system-name span {
+    margin-left: -10%;
+  }
+}
+@media screen and (max-width: 799px) and (min-width: 601px) {
+  #user-login-page .logotype {
+    width: 30%;
+    position: absolute;
+    left: 38%;
+    transform: translate(-30%, -30%);
+  }
+  #user-login-page .system-name {
+    top: 5%;
+  }
+  #user-login-page .system-name span {
+    margin-left: -10%;
+  }
+}
+
+@media screen and (max-width: 600px) and (min-width: 240px) {
+  #user-login-page .logotype {
+    width: 40%;
+    position: absolute;
+    left: 38%;
+    transform: translate(-30%, -30%);
+  }
+  #user-login-page .system-name {
+    top: 5%;
+  }
+  #user-login-page .system-name span {
+    margin-left: 30%;
+  }
+  #user-login-page #system-text{
+    text-align:justify;
   }
 }
 #user-login-page .content {
   margin-top: 11%;
   padding: 10px;
-}
-
-#user-login-page .md-block {
-  width: 60%;
-  left: 12%;
-  right: 12%
 }

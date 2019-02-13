@@ -14,6 +14,7 @@
   function Service($q, ModuleService, MonitoringLocalStorageService) {
     var self = this;
     var _remoteStorage = ModuleService.getMonitoringRemoteStorage();
+    var _laboratoryMonitoringStorage = ModuleService.getLaboratoryMonitoringRemoteStorage();
 
     self.find = find;
     self.listCenters = listCenters;
@@ -22,6 +23,13 @@
     self.getActivitiesProgressReport = getActivitiesProgressReport;
     self.defineActivityWithDoesNotApplies = defineActivityWithDoesNotApplies;
     self.deleteNotAppliesOfActivity = deleteNotAppliesOfActivity;
+    self.getDataOfPendingResultsByAliquots = getDataOfPendingResultsByAliquots;
+    self.getDataQuantitativeByTypeOfAliquots = getDataQuantitativeByTypeOfAliquots;
+    self.getDataOrphanByExams = getDataOrphanByExams;
+    self.getDataOfStorageByAliquots = getDataOfStorageByAliquots;
+    self.getDataByExam = getDataByExam;
+    self.getDataToCSVOfPendingResultsByAliquots = getDataToCSVOfPendingResultsByAliquots;
+    self.getDataToCSVOfOrphansByExam = getDataToCSVOfOrphansByExam;
 
     function listAcronyms() {
       var request = $q.defer();
@@ -39,7 +47,7 @@
         });
 
       return request.promise;
-    }
+    };
 
     function listCenters() {
       var request = $q.defer();
@@ -57,11 +65,10 @@
         });
 
       return request.promise;
-    }
+    };
 
     function find(query) {
       var request = $q.defer();
-
       let localResponse = MonitoringLocalStorageService.find(query);
       if (localResponse.length) {
         request.resolve([].concat(localResponse));
@@ -85,7 +92,7 @@
         });
 
       return request.promise;
-    }
+    };
 
     function getActivitiesProgressReport(center) {
       var request = $q.defer();
@@ -103,8 +110,7 @@
         });
 
       return request.promise;
-    }
-
+    };
 
     function getStatusOfActivities(recruitmentNumber) {
       var request = $q.defer();
@@ -121,7 +127,7 @@
             });
         });
       return request.promise;
-    }
+    };
 
     function defineActivityWithDoesNotApplies(data) {
       var request = $q.defer();
@@ -138,15 +144,15 @@
             });
         });
       return request.promise;
-    }
+    };
 
-    function deleteNotAppliesOfActivity(rn,acrony) {
+    function deleteNotAppliesOfActivity(rn, acrony) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .deleteNotAppliesOfActivity(rn,acrony)
+            .deleteNotAppliesOfActivity(rn, acrony)
             .then(function (response) {
               request.resolve(response.data);
             })
@@ -155,6 +161,131 @@
             });
         });
       return request.promise;
-    }
+    };
+
+    function getDataOfPendingResultsByAliquots(center) {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataOfPendingResultsByAliquots(center)
+            .then(function (response) {
+              request.resolve(response.data.pendingResultsByAliquot);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataQuantitativeByTypeOfAliquots(center) {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataQuantitativeByTypeOfAliquots(center)
+            .then(function (response) {
+              request.resolve(response.data.quantitativeByTypeOfAliquots);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataOrphanByExams() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataOrphanByExams()
+            .then(function (response) {
+              request.resolve(response.data.orphanExamsProgress);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataOfStorageByAliquots(center) {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataOfStorageByAliquots(center)
+            .then(function (response) {
+              request.resolve(response.data.storageByAliquot);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataByExam(center) {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataByExam(center)
+            .then(function (response) {
+              request.resolve(response.data.examsQuantitative);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataToCSVOfPendingResultsByAliquots(center) {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataToCSVOfPendingResultsByAliquots(center)
+            .then(function (response) {
+              request.resolve(response.data.pendingAliquotsCsvData);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    };
+
+    function getDataToCSVOfOrphansByExam() {
+      var request = $q.defer();
+      _laboratoryMonitoringStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getDataToCSVOfOrphansByExam()
+            .then(function (response) {
+              request.resolve(response.data.orphanExamsCsvData);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+      return request.promise;
+    };
   }
 }());

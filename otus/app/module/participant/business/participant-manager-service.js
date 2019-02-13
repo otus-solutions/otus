@@ -37,7 +37,7 @@
             query = SearchQueryFactory.newParticipantFilter(_participants);
             _stringfyRNs(_participants);
             _setupSuccess = true;
-            defer.resolve();
+            defer.resolve(_setupSuccess);
           } else {
             defer.reject();
           }

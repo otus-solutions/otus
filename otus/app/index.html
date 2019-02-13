@@ -144,6 +144,10 @@
 <script src="app/application/locale/module.js"></script>
 <script src="app/application/locale/locale-configuration.js"></script>
 <!------------------------------------------------------------------------------------------------>
+<!-- # Application > Color -->
+<script src="app/application/color-pallete/module.js"></script>
+<script src="app/application/color-pallete/pallete-color-service.js"></script>
+<!------------------------------------------------------------------------------------------------>
 <!-- # Application > Session -->
 <script src="app/application/session/module.js"></script>
 <!-- # Session > Core -->
@@ -229,6 +233,8 @@
 <script src="app/deploy/rest/otus-api/laboratory/exam/module.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/exam/exams-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/monitoring/monitoring-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/monitoring/module.js"></script>
+<script src="app/deploy/rest/otus-api/monitoring/laboratory/laboratory-monitoring-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/report/participant-report-rest-service.js"></script>
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
@@ -263,6 +269,7 @@
 <script src="app/deploy/state/monitoring/monitoring-state-provider.js"></script>
 <script src="app/deploy/state/flag/flag-state-provider.js"></script>
 <script src="app/deploy/state/flag/manager/flag-manager-state-provider.js"></script>
+<script src="app/deploy/state/monitoring/laboratory-monitoring-state-provider.js"></script>
 <!-- # Deploy > Storage -->
 <script src="app/deploy/storage/module.js"></script>
 <script src="app/deploy/storage/storage-loader-service.js"></script>
@@ -480,6 +487,7 @@
 <script src="app/module/monitoring/business/module.js"></script>
 <script src="app/module/monitoring/business/monitoring-service.js"></script>
 <script src="app/module/monitoring/business/participant-monitoring-service.js"></script>
+<script src="app/module/monitoring/business/laboratory-monitoring-service.js"></script>
 
 <!-- # monitoring > core -->
 <script src="app/module/monitoring/core/module.js"></script>
@@ -502,6 +510,9 @@
 <script src="app/ux-component/module.js"></script>
 <script src="app/ux-component/commons/report-export/report-export-directive.js"></script>
 <script src="app/ux-component/commons/numbers-only/numbers-only-directive.js"></script>
+<script src="app/ux-component/commons/bar-chart/vertical/bar-charts-vertical-factory.js"></script>
+<script src="app/ux-component/commons/bar-chart/horizontal/bar-charts-horizontal-factory.js"></script>
+<script src="app/ux-component/commons/bar-chart/multi/bar-chart-multi-factory.js"></script>
 <script src="app/ux-component/activity-adder/activity-adder-component.js"></script>
 <script src="app/ux-component/error/error-component.js"></script>
 <script src="app/ux-component/activity-adder-list/activity-adder-list-component.js"></script>
@@ -605,6 +616,8 @@
 <script src="app/ux-component/otus-monitoring/information-cards/monitoring-information-cards-component.js"></script>
 <script src="app/ux-component/otus-monitoring/participant-monitoring/participant-activity-heatmap/participant-activity-heatmap-controller.js"></script>
 <script src="app/ux-component/otus-monitoring/participant-monitoring/participant-activity-heatmap/participant-activity-heatmap-component.js"></script>
+<script src="app/ux-component/otus-monitoring/laboratory-monitoring/laboratory-monitoring-controller.js"></script>
+<script src="app/ux-component/otus-monitoring/laboratory-monitoring/laboratory-monitoring-component.js"></script>
 
 <!--Flags Report-->
 <script src="app/ux-component/flag-report/otus-flag-report-dashboard-component.js"></script>
@@ -623,6 +636,7 @@
 <!--   ----    -->
 <script src="app/ux-component/paper-activity-initializer/checker-item-factory.js"></script>
 <script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>
+<script src="app/ux-component/participant-search/show-all-participants-directive.js"></script>
 <script src="app/ux-component/participant-search/participant-search-component.js"></script>
 <script src="app/ux-component/user-login/login-controller.js"></script>
 <script src="app/ux-component/user-login/login-component.js"></script>
