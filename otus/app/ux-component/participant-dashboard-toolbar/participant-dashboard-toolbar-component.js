@@ -8,18 +8,7 @@
       templateUrl: 'app/ux-component/participant-dashboard-toolbar/participant-dashboard-toolbar-template.html'
     });
 
-  Controller.$inject = [
-    'otusjs.application.state.ApplicationStateService'
-  ];
-
-  function Controller(ApplicationStateService) {
+  function Controller() {
     var self = this;
-
-    self.managerParticipantsDashboard = managerParticipantsDashboard;
-
-
-    function managerParticipantsDashboard() {
-      ApplicationStateService.activateParticipantsList();
-    }
   }
 }());
