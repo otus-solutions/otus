@@ -8,6 +8,7 @@
       templateUrl: 'app/ux-component/participant-search/participant-search-template.html',
       bindings: {
         onSelect: '&',
+        showAllParticipantsButton:"<",
         showAllParticipants: '&',
         onReady: '='
       }
@@ -33,6 +34,8 @@
     self.querySearch = querySearch;
     self.selectParticipant = selectParticipant;
     self.showParticipants = self.showAllParticipants;
+    self.showParticipantsButton = self.showAllParticipantsButton;
+
 
     var confirmParticipantChange;
 
