@@ -232,7 +232,13 @@
         return successInsertion;
       }
 
+      function _ajustHours() {
+        self.initialDate.setHours(0,0,0,0);
+        self.finalDate.setHours(23,59,59,999);
+      }
+
       function _findAliquotByPeriod() {
+        _ajustHours();
         var _query = AliquotTransportationQueryFactory.create(null, self.initialDate.toISOString(), self.finalDate.toISOString(),
           self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
         return self.AliquotTransportationService.getAliquots(_query.toJSON(), false)
