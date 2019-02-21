@@ -1,4 +1,22 @@
 <div layout="column" flex class="menuBardemoBasicUsage">
+  <md-content md-whiteframe="3dp" layout-wrap="" layout="row" layout-align="start center" layout-padding="">
+    <md-card layout="row" flex layout-padding="">
+
+    <div layout="row" flex="10" layout-margin="">
+      <md-checkbox aria-label="Select All"
+                   ng-checked="isChecked()"
+                   md-indeterminate="isIndeterminate()"
+                   ng-click="toggleAll()">
+        <span ng-if="isChecked()">Un-</span>Select All
+      </md-checkbox>
+    </div>
+    <div flex="10" layout-margin="" ng-repeat="item in items">
+      <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+        {{ item }}
+      </md-checkbox>
+    </div>
+    </md-card>
+  </md-content>
   <md-content layout="row" ng-if="$ctrl.isListEmpty" flex layout-align="center center">
     <div class="label-light-gray">
       <h3 class="md-display-3">Nenhuma Atividade Adicionada</h3>
@@ -13,6 +31,8 @@
   <md-content layout="column" ng-show="!$ctrl.isListEmpty" flex>
     <dynamic-data-table flex="100" dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.updateDataTable"></dynamic-data-table>
   </md-content>
-  <md-content md-whiteframe="3dp" flex="10"></md-content>
+  <md-content md-whiteframe="3dp" style="height: 6em !important;" layout="row" layout-align="start center">
+
+  </md-content>
 </div>
 

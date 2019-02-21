@@ -18,10 +18,10 @@
     'otusjs.otus.uxComponent.ActivityItemFactory',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
-    '$q'
+    '$scope'
   ];
-
-  function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory) {
+//TODO: Implementar métodos de filtragem por blocks (tiago)
+  function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope) {
     var self = this;
 
     var _selectedActivities = [];
@@ -74,6 +74,8 @@
           self.activities = activities
             .filter(_onlyNotDiscarded)
             .map(ActivityItemFactory.create);
+          self.AllActivities = angular.copy(self.activities);
+          self.filterBlocks();
           self.updateDataTable(self.activities);
           self.isListEmpty = !self.activities.length;
           _selectedActivities = [];
@@ -135,5 +137,47 @@
         self.selectActivity(change.element);
       }
     }
+    self.selectedBlocks = ["ACTA","AMAC"];
+
+    self.filterBlocks = function (block) {
+      self.activities = self.AllActivities.filter(function (activity) {
+        return self.selectedBlocks.includes(activity.acronym)
+      });
+    }
+
+    //TODO: REFATORAR (TIAGO)
+    $scope.items = ["CI","CD","CL","CP","CE"];
+    $scope.selected = [];
+    $scope.toggle = function (item, list) {
+      var idx = list.indexOf(item);
+      if (idx > -1) {
+        list.splice(idx, 1);
+      }
+      else {
+        list.push(item);
+      }
+      console.log($scope.selected)
+    };
+
+    $scope.exists = function (item, list) {
+      return list.indexOf(item) > -1;
+    };
+
+    $scope.isIndeterminate = function() {
+      return ($scope.selected.length !== 0 &&
+        $scope.selected.length !== $scope.items.length);
+    };
+
+    $scope.isChecked = function() {
+      return $scope.selected.length === $scope.items.length;
+    };
+
+    $scope.toggleAll = function() {
+      if ($scope.selected.length === $scope.items.length) {
+        $scope.selected = [];
+      } else if ($scope.selected.length === 0 || $scope.selected.length > 0) {
+        $scope.selected = $scope.items.slice(0);
+      }
+    };
   }
 }());

@@ -37,11 +37,13 @@
     function onInit() {
       self.otusActivityManager.activityInfoComponent = self;
     }
-
+//TODO: implementar conceito de blocos para informar na descrição da atividade selecionada
     function show() {
       var activity = ContextService.getSelectedActivities()[0];
       self.activity = {};
       self.activity.details = activity.surveyForm.surveyTemplate.identity;
+      self.activity.details["block"] = "CI";
+
       self.activity.history = activity.statusHistory.getHistory().map(ActivityStatusItemFactory.create);
       self.activity.history.reverse();
       _loadRevisions(activity);
