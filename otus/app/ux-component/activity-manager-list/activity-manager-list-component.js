@@ -24,6 +24,21 @@
   function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope) {
     var self = this;
 
+    var BLOCKS_LIST = {
+      "CI": ["ACTA"],
+      "A": ["ACTA"],
+      "B": ["ACTA"],
+      "C": ["ACTA"],
+      "D": ["ACTA"],
+      "E": ["ACTA"],
+      "F": ["ACTA"],
+      "G": ["ACTA"],
+      "H": ["ACTA"],
+      "J": ["ACTA"],
+      "K": ["ACTA"],
+      "CD": ["AMAC"]
+    };
+    self.selectedSurveys = [];
     var _selectedActivities = [];
     self.activities = [];
     self.isListEmpty = true;
@@ -75,7 +90,7 @@
             .filter(_onlyNotDiscarded)
             .map(ActivityItemFactory.create);
           self.AllActivities = angular.copy(self.activities);
-          self.filterBlocks();
+          _blocksFilter();
           self.updateDataTable(self.activities);
           self.isListEmpty = !self.activities.length;
           _selectedActivities = [];
@@ -137,47 +152,72 @@
         self.selectActivity(change.element);
       }
     }
-    self.selectedBlocks = ["ACTA","AMAC"];
 
-    self.filterBlocks = function (block) {
+
+    function _activitiesFilter() {
       self.activities = self.AllActivities.filter(function (activity) {
-        return self.selectedBlocks.includes(activity.acronym)
+        return self.selectedSurveys.includes(activity.acronym)
       });
+      if(!self.selectedBlocks.length) {
+        self.activities = angular.copy(self.AllActivities);
+
+      }
+    }
+
+    function _surveysFilter(){
+      self.selectedSurveys = [];
+      self.selectedBlocks.forEach(block => {
+        self.selectedSurveys = self.selectedSurveys.concat(BLOCKS_LIST[block])
+      });
+       self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
+        return self.selectedSurveys.indexOf(item) == position;
+      });
+
+    }
+
+    function _blocksFilter(){
+      _surveysFilter();
+      _activitiesFilter();
+      self.updateDataTable(self.activities);
     }
 
     //TODO: REFATORAR (TIAGO)
-    $scope.items = ["CI","CD","CL","CP","CE"];
-    $scope.selected = [];
-    $scope.toggle = function (item, list) {
-      var idx = list.indexOf(item);
+    self.blocksList = Object.keys(BLOCKS_LIST);
+
+    self.selectedBlocks = angular.copy(self.blocksList);
+    // _blocksFilter();
+
+    self.toggleBlock = function (item) {
+      var idx = self.selectedBlocks.indexOf(item);
       if (idx > -1) {
-        list.splice(idx, 1);
+        self.selectedBlocks.splice(idx, 1);
       }
       else {
-        list.push(item);
+        self.selectedBlocks.push(item);
       }
-      console.log($scope.selected)
+      _blocksFilter()
     };
 
-    $scope.exists = function (item, list) {
-      return list.indexOf(item) > -1;
+    self.existsBlock = function (item) {
+      return self.selectedBlocks.indexOf(item) > -1;
     };
 
-    $scope.isIndeterminate = function() {
-      return ($scope.selected.length !== 0 &&
-        $scope.selected.length !== $scope.items.length);
+    self.isIndeterminateBlocks = function() {
+      return (self.selectedBlocks.length !== 0 &&
+        self.selectedBlocks.length !== self.blocksList.length);
     };
 
-    $scope.isChecked = function() {
-      return $scope.selected.length === $scope.items.length;
+    self.isCheckedBlocks = function() {
+      return self.selectedBlocks.length === self.blocksList.length;
     };
 
-    $scope.toggleAll = function() {
-      if ($scope.selected.length === $scope.items.length) {
-        $scope.selected = [];
-      } else if ($scope.selected.length === 0 || $scope.selected.length > 0) {
-        $scope.selected = $scope.items.slice(0);
+    self.toggleAllBlocks = function() {
+      if (self.selectedBlocks.length === self.blocksList.length) {
+        self.selectedBlocks = [];
+      } else if (self.selectedBlocks.length === 0 || self.selectedBlocks.length > 0) {
+        self.selectedBlocks = self.blocksList.slice(0);
       }
+      _blocksFilter();
     };
   }
 }());

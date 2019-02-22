@@ -1,20 +1,30 @@
 <div layout="column" flex class="menuBardemoBasicUsage">
-  <md-content md-whiteframe="3dp" layout-wrap="" layout="row" layout-align="start center" layout-padding="">
-    <md-card layout="row" flex layout-padding="">
+  <md-content md-whiteframe="3dp" ng-if="!$ctrl.isListEmpty" layout-wrap="" layout="row" layout-align="start center" layout-padding="">
+    <md-card flex layout-padding="">
+      <md-card-actions layout="row" layout-align="space-between center" layout-fill>
+        <h4>
+          <md-icon>view_module</md-icon>
+          Blocos de Atividades
+          <md-tooltip md-direction="right">
+            Selecione o bloco de atividade a ser visualizado.
+          </md-tooltip>
+        </h4>
+        <md-checkbox aria-label="Select All"
+                     ng-checked="$ctrl.isCheckedBlocks()"
+                     md-indeterminate="$ctrl.isIndeterminateBlocks()"
+                     ng-click="$ctrl.toggleAllBlocks()">
+          Todos
+        </md-checkbox>
+      </md-card-actions>
+      <md-card-content layout="row" flex="90" layout-align="start center" layout-fill layout-wrap>
+        <div flex-gt-sm="5" flex="10" layout-margin="" ng-repeat="item in $ctrl.blocksList">
+          <md-checkbox ng-checked="$ctrl.existsBlock(item)" ng-click="$ctrl.toggleBlock(item)">
+            {{ item }}
+          </md-checkbox>
+        </div>
+        <span flex="5"></span>
+      </md-card-content>
 
-    <div layout="row" flex="10" layout-margin="">
-      <md-checkbox aria-label="Select All"
-                   ng-checked="isChecked()"
-                   md-indeterminate="isIndeterminate()"
-                   ng-click="toggleAll()">
-        <span ng-if="isChecked()">Un-</span>Select All
-      </md-checkbox>
-    </div>
-    <div flex="10" layout-margin="" ng-repeat="item in items">
-      <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
-        {{ item }}
-      </md-checkbox>
-    </div>
     </md-card>
   </md-content>
   <md-content layout="row" ng-if="$ctrl.isListEmpty" flex layout-align="center center">
