@@ -6,7 +6,13 @@
     </div>
   </div>
 </md-content>
+
+
 <md-content layout="column" flex>
+  <dynamic-data-table flex="100" dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.updateDataTable"></dynamic-data-table>
+</md-content>
+
+<md-content layout="column" flex ng-if="false">
   <input type="text" ng-model="searchActivity.surveyTemplate.identity.name" placeholder="Busca por nome de atividade." style="padding:15px 20px;font-size:16px;border:0.5px solid #ddd;outline:none;"/>
   <md-list flex ng-show="!$ctrl.isListEmpty">
 

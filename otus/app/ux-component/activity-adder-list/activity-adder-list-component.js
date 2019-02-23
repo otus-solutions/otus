@@ -12,10 +12,13 @@
     });
 
   Controller.$inject = [
-    'otusjs.activity.business.ParticipantActivityService'
+    'otusjs.activity.business.ParticipantActivityService',
+    'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
+    '$scope',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(ActivityService) {
+  function Controller(ActivityService, DynamicTableSettingsFactory, $scope, LoadingScreenService) {
     var self = this;
     self.activities = [];
     self.isListEmpty = true;
@@ -32,18 +35,57 @@
 
     function onInit() {
       self.isListEmpty = true;
+      LoadingScreenService.start();
       _loadActivities();
+      _buildDynamicTableSettings(self.activities);
     }
+
+    $scope.$watch('$ctrl.ready', function() {
+      if(typeof self.updateDataTable === "function") {
+        self.updateDataTable(self.activities);
+        LoadingScreenService.finish();
+      }
+    });
+
+    $scope.$watch('$ctrl.isListEmpty', function() {
+      if(!self.isListEmpty){
+        self.ready = true;
+      }
+    });
 
     function _loadActivities() {
       ActivityService
         .listAvailables()
         .then(function(activities) {
-          self.activities = activities;
+          activities.forEach(function (activity) {
+            activity.surveyFormType = self.getType(activity);
+          });
+          self.activities = angular.copy(activities)
           if (activities.length) {
             self.isListEmpty = false;
+
           }
         });
+    }
+
+    self.dynamicDataTableChange = dynamicDataTableChange;
+    function dynamicDataTableChange(change) {
+      if (change.type === 'select' || change.type === 'deselect') {
+        self.selectActivity(change.element);
+      }
+    }
+
+    function _buildDynamicTableSettings() {
+      self.dynamicTableSettings = DynamicTableSettingsFactory.create()
+        .addHeader('NOME', '50', '', 1)
+        .addColumnProperty('surveyTemplate.identity.name')
+        .addHeader('ACRÔNIMO', '15', 'center center', 2)
+        .addColumnProperty('surveyTemplate.identity.acronym')
+        .addHeader('Tipo', '35', '', 6)
+        .addColumnProperty('surveyFormType')
+        .setCallbackAfterChange(self.dynamicDataTableChange)
+        .setCheckbox(true)
+        .getSettings();
     }
 
     function getType(activity) {

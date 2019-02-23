@@ -18,26 +18,24 @@
     'otusjs.otus.uxComponent.ActivityItemFactory',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
-    '$scope'
+    '$scope',
+    '$element'
   ];
 //TODO: Implementar métodos de filtragem por blocks (tiago)
-  function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope) {
+  function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope, $element) {
     var self = this;
 
     var BLOCKS_LIST = {
       "CI": ["ACTA"],
-      "A": ["ACTA"],
-      "B": ["ACTA"],
-      "C": ["ACTA"],
-      "D": ["ACTA"],
-      "E": ["ACTA"],
-      "F": ["ACTA"],
-      "G": ["ACTA"],
-      "H": ["ACTA"],
-      "J": ["ACTA"],
-      "K": ["ACTA"],
       "CD": ["AMAC"]
     };
+
+    $scope.searchTerm;
+    $scope.clearSearchTerm = function() {
+      $scope.searchTerm = '';
+    };
+
+
     self.selectedSurveys = [];
     var _selectedActivities = [];
     self.activities = [];
@@ -70,7 +68,7 @@
 
     function update() {
       _loadActivities();
-      _buildDynamicTableSettings(self.activities);
+      _buildDynamicTableSettings();
     }
 
     function onInit() {
@@ -79,6 +77,9 @@
       self.otusActivityManager.listComponent = self;
       _loadActivities();
       _buildDynamicTableSettings();
+      $element.find('#searchBlock').on('keydown', function(ev) {
+        ev.stopPropagation();
+      });
     }
 
     function _loadActivities() {
@@ -158,10 +159,9 @@
       self.activities = self.AllActivities.filter(function (activity) {
         return self.selectedSurveys.includes(activity.acronym)
       });
-      if(!self.selectedBlocks.length) {
-        self.activities = angular.copy(self.AllActivities);
-
-      }
+      // if(!self.selectedBlocks.length) {
+      //   self.activities = angular.copy(self.AllActivities);
+      // }
     }
 
     function _surveysFilter(){

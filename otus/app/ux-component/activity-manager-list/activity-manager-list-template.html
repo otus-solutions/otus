@@ -1,5 +1,25 @@
+<style>
+
+  .selectdemoSelectHeader .demo-header-searchbox {
+    border: none;
+    outline: none;
+    height: 100%;
+    width: 100%;
+    padding: 0; }
+  .selectdemoSelectHeader .demo-select-header {
+    box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+    padding-left: 10.667px;
+    height: 48px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: auto; }
+  .selectdemoSelectHeader md-content._md {
+    max-height: 240px; }
+</style>
 <div layout="column" flex class="menuBardemoBasicUsage">
-  <md-content md-whiteframe="3dp" ng-if="!$ctrl.isListEmpty" layout-wrap="" layout="row" layout-align="start center" layout-padding="">
+  <md-content md-whiteframe="3dp" layout-wrap="" layout="row" layout-align="start center" layout-padding="">
     <md-card flex layout-padding="">
       <md-card-actions layout="row" layout-align="space-between center" layout-fill>
         <h4>
@@ -9,6 +29,24 @@
             Selecione o bloco de atividade a ser visualizado.
           </md-tooltip>
         </h4>
+        <md-input-container flex>
+          <label>Blocos</label>
+          <md-select ng-model="$ctrl.selectedBlocks"
+                     md-on-close="clearSearchTerm()"
+                     data-md-container-class="selectdemoSelectHeader"
+                     multiple flex>
+            <md-select-header class="demo-select-header">
+              <input id="searchBlock" ng-model="searchTerm"
+                     type="search"
+                     placeholder="Digite o bloco desejado.."
+                     class="demo-header-searchbox md-text">
+            </md-select-header>
+            <md-optgroup label="Blocos">
+              <md-option ng-value="item" ng-repeat="item in $ctrl.blocksList |
+              filter:searchTerm" ng-checked="$ctrl.existsBlock(item)">{{item}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
         <md-checkbox aria-label="Select All"
                      ng-checked="$ctrl.isCheckedBlocks()"
                      md-indeterminate="$ctrl.isIndeterminateBlocks()"
@@ -16,14 +54,14 @@
           Todos
         </md-checkbox>
       </md-card-actions>
-      <md-card-content layout="row" flex="90" layout-align="start center" layout-fill layout-wrap>
-        <div flex-gt-sm="5" flex="10" layout-margin="" ng-repeat="item in $ctrl.blocksList">
-          <md-checkbox ng-checked="$ctrl.existsBlock(item)" ng-click="$ctrl.toggleBlock(item)">
-            {{ item }}
-          </md-checkbox>
-        </div>
-        <span flex="5"></span>
-      </md-card-content>
+      <!--<md-card-content layout="row" flex="90" layout-align="start center" layout-fill layout-wrap>-->
+        <!--<div flex-gt-sm="5" flex="10" layout-margin="" ng-repeat="item in $ctrl.blocksList">-->
+          <!--<md-checkbox ng-checked="$ctrl.existsBlock(item)" ng-click="$ctrl.toggleBlock(item)">-->
+            <!--{{ item }}-->
+          <!--</md-checkbox>-->
+        <!--</div>-->
+        <!--<span flex="5"></span>-->
+      <!--</md-card-content>-->
 
     </md-card>
   </md-content>
