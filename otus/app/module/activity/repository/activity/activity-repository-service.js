@@ -146,6 +146,7 @@
       var dbObject = entity.toJSON();
       dbObject.$loki = entity.$loki;
       dbObject.meta = entity.meta;
+      dbObject.isDiscarded = entity.isDiscarded;
       return dbObject;
     }
 

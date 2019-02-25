@@ -19,36 +19,51 @@
     'otusjs.deploy.LoadingScreenService',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
     '$scope',
-    '$element'
+    '$element',
+    'otusjs.survey.GroupManagerFactory'
   ];
-//TODO: Implementar métodos de filtragem por blocks (tiago)
-  function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope, $element) {
+
+  function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope, $element, GroupManagerFactory) {
     var self = this;
 
-    var BLOCKS_LIST = {
+    var GROUP_LIST = {
       "CI": ["ACTA"],
       "CD": ["AMAC"]
     };
 
-    $scope.searchTerm;
-    $scope.clearSearchTerm = function() {
-      $scope.searchTerm = '';
-    };
-
-
     self.selectedSurveys = [];
     var _selectedActivities = [];
-    self.activities = [];
+    // self.activities = [];
     self.isListEmpty = true;
     self.orderByField = 'name';
     self.reverseSort = false;
     self.finalPage = false;
+
+
+    //TODO: REFATORAR
+    self.groupList = Object.keys(GROUP_LIST);
+    self.selectedGroups = angular.copy(self.groupList);
+
 
     /* Public methods */
     self.selectActivity = selectActivity;
     self.update = update;
     self.changeSort = changeSort;
     self.dynamicDataTableChange = dynamicDataTableChange;
+    self.toggleGroup = toggleGroup;
+    self.existsGroup = existsGroup;
+    self.isIndeterminateGroups = isIndeterminateGroups;
+    self.isCheckedGroup = isCheckedGroup;
+    self.toggleAllGroups = toggleAllGroups;
+    self.clearSearchTerm = clearSearchTerm;
+
+    $scope.$watch("$ctrl.selectedGroups", function () {
+      $scope.$$postDigest(function () {
+        if(self.AllActivities && self.activities){
+          if(self.AllActivities.length && Array.isArray(self.activities))  _groupsFilter();
+        }
+      });
+    });
 
 
     /* Lifecycle hooks */
@@ -72,6 +87,7 @@
     }
 
     function onInit() {
+
       EventService.onParticipantSelected(_loadActivities);
       self.isListEmpty = true;
       self.otusActivityManager.listComponent = self;
@@ -91,7 +107,7 @@
             .filter(_onlyNotDiscarded)
             .map(ActivityItemFactory.create);
           self.AllActivities = angular.copy(self.activities);
-          _blocksFilter();
+          _groupsFilter();
           self.updateDataTable(self.activities);
           self.isListEmpty = !self.activities.length;
           _selectedActivities = [];
@@ -154,70 +170,67 @@
       }
     }
 
-
     function _activitiesFilter() {
       self.activities = self.AllActivities.filter(function (activity) {
         return self.selectedSurveys.includes(activity.acronym)
       });
-      // if(!self.selectedBlocks.length) {
-      //   self.activities = angular.copy(self.AllActivities);
-      // }
+      //TODO: REMOVER
+      if(!self.selectedGroups.length) {
+        self.activities = angular.copy(self.AllActivities);
+      }
     }
 
     function _surveysFilter(){
       self.selectedSurveys = [];
-      self.selectedBlocks.forEach(block => {
-        self.selectedSurveys = self.selectedSurveys.concat(BLOCKS_LIST[block])
+      self.selectedGroups.forEach(block => {
+        self.selectedSurveys = self.selectedSurveys.concat(GROUP_LIST[block])
       });
        self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
         return self.selectedSurveys.indexOf(item) == position;
       });
-
     }
 
-    function _blocksFilter(){
+    function _groupsFilter(){
       _surveysFilter();
       _activitiesFilter();
       self.updateDataTable(self.activities);
     }
 
-    //TODO: REFATORAR (TIAGO)
-    self.blocksList = Object.keys(BLOCKS_LIST);
-
-    self.selectedBlocks = angular.copy(self.blocksList);
-    // _blocksFilter();
-
-    self.toggleBlock = function (item) {
-      var idx = self.selectedBlocks.indexOf(item);
+    function toggleGroup(item) {
+      var idx = self.selectedGroups.indexOf(item);
       if (idx > -1) {
-        self.selectedBlocks.splice(idx, 1);
+        self.selectedGroups.splice(idx, 1);
       }
       else {
-        self.selectedBlocks.push(item);
+        self.selectedGroups.push(angular.copy(item));
       }
-      _blocksFilter()
-    };
+      _groupsFilter()
+    }
 
-    self.existsBlock = function (item) {
-      return self.selectedBlocks.indexOf(item) > -1;
-    };
+    function existsGroup(item) {
+      return self.selectedGroups.indexOf(item) > -1;
+    }
 
-    self.isIndeterminateBlocks = function() {
-      return (self.selectedBlocks.length !== 0 &&
-        self.selectedBlocks.length !== self.blocksList.length);
-    };
+    function isIndeterminateGroups() {
+      return (self.selectedGroups.length !== 0 &&
+        self.selectedGroups.length !== self.groupList.length);
+    }
 
-    self.isCheckedBlocks = function() {
-      return self.selectedBlocks.length === self.blocksList.length;
-    };
+    function isCheckedGroup() {
+      return self.selectedGroups.length === self.groupList.length;
+    }
 
-    self.toggleAllBlocks = function() {
-      if (self.selectedBlocks.length === self.blocksList.length) {
-        self.selectedBlocks = [];
-      } else if (self.selectedBlocks.length === 0 || self.selectedBlocks.length > 0) {
-        self.selectedBlocks = self.blocksList.slice(0);
+    function toggleAllGroups() {
+      if (self.selectedGroups.length === self.groupList.length) {
+        self.selectedGroups = [];
+      } else if (self.selectedGroups.length === 0 || self.selectedGroups.length > 0) {
+        self.selectedGroups = self.groupList.slice(0);
       }
-      _blocksFilter();
-    };
+      _groupsFilter();
+    }
+
+    function clearSearchTerm() {
+      self.searchTerm = '';
+    }
   }
 }());
