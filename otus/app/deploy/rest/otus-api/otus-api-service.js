@@ -9,6 +9,7 @@
     'otusjs.deploy.user.AuthenticationRestService',
     'otusjs.deploy.InstallerRestService',
     'otusjs.deploy.ActivityRestService',
+    'otusjs.deploy.SurveyRestService',
     'otusjs.deploy.ActivityConfigurationRestService',
     'otusjs.deploy.ConfigurationRestService',
     'otusjs.deploy.FieldCenterRestService',
@@ -27,6 +28,7 @@
     AuthenticationRestService,
     InstallerRestService,
     ActivityRestService,
+    SurveyRestService,
     ActivityConfigurationRestService,
     ConfigurationRestService,
     FieldCenterRestService,
@@ -59,6 +61,7 @@
 
     function initializeRestrictResources() {
       ActivityRestService.initialize();
+      SurveyRestService.initialize();
       ActivityConfigurationRestService.initialize();
       ParticipantRestService.initialize();
       FieldCenterRestService.initialize();

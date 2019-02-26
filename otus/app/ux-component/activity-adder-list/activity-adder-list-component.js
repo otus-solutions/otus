@@ -31,7 +31,6 @@
     self.getType = getType;
     self.selectActivity = selectActivity;
     self.changeSort = changeSort;
-    self.toggleGroup = toggleGroup;
     self.existsGroup = existsGroup;
     self.isIndeterminateGroups = isIndeterminateGroups;
     self.isCheckedGroup = isCheckedGroup;
@@ -48,7 +47,7 @@
     };
 
     self.groupList = Object.keys(GROUP_LIST);
-    self.selectedGroups = angular.copy(self.groupList);
+    self.selectedGroups = [];
 
     $scope.$watch("$ctrl.selectedGroups", function () {
       $scope.$$postDigest(function () {
@@ -162,19 +161,6 @@
       _surveysFilter();
       _activitiesFilter();
       self.updateDataTable(self.activities);
-    }
-
-
-
-    function toggleGroup(item) {
-      var idx = self.selectedGroups.indexOf(item);
-      if (idx > -1) {
-        self.selectedGroups.splice(idx, 1);
-      }
-      else {
-        self.selectedGroups.push(angular.copy(item));
-      }
-      _groupsFilter()
     }
 
     function existsGroup(item) {

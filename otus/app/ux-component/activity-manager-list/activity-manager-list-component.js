@@ -13,36 +13,27 @@
     .controller('otusActivityListCtrl', Controller);
 
   Controller.$inject = [
+    'otusjs.survey.GroupManagerFactory',
     'otusjs.activity.business.ParticipantActivityService',
+    'otusjs.activity.business.GroupActivityService',
     'otusjs.activity.core.EventService',
     'otusjs.otus.uxComponent.ActivityItemFactory',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
     '$scope',
-    '$element',
-    'otusjs.survey.GroupManagerFactory'
+    '$element'
   ];
 
-  function Controller(ActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope, $element, GroupManagerFactory) {
+  function Controller(GroupManagerFactory, ActivityService, GroupActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope, $element) {
     var self = this;
-
-    var GROUP_LIST = {
-      "CI": ["ACTA"],
-      "CD": ["AMAC"]
-    };
 
     self.selectedSurveys = [];
     var _selectedActivities = [];
-    // self.activities = [];
     self.isListEmpty = true;
     self.orderByField = 'name';
     self.reverseSort = false;
     self.finalPage = false;
-
-
-    //TODO: REFATORAR
-    self.groupList = Object.keys(GROUP_LIST);
-    self.selectedGroups = angular.copy(self.groupList);
+    self.selectedGroups = [];
 
 
     /* Public methods */
@@ -50,7 +41,6 @@
     self.update = update;
     self.changeSort = changeSort;
     self.dynamicDataTableChange = dynamicDataTableChange;
-    self.toggleGroup = toggleGroup;
     self.existsGroup = existsGroup;
     self.isIndeterminateGroups = isIndeterminateGroups;
     self.isCheckedGroup = isCheckedGroup;
@@ -64,7 +54,6 @@
         }
       });
     });
-
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -87,6 +76,14 @@
     }
 
     function onInit() {
+      GroupActivityService.listSurveysGroups().then(function (response) {
+        //TODO: FALTA O MODEL
+        // self.surveysGroups = GroupManagerFactory.create(response.map(group => {return group.name}));
+        self.surveysGroups = angular.copy(response);
+        self.groupList = self.surveysGroups.map(function (group) {
+          return group.name;
+        });
+      });
 
       EventService.onParticipantSelected(_loadActivities);
       self.isListEmpty = true;
@@ -174,7 +171,6 @@
       self.activities = self.AllActivities.filter(function (activity) {
         return self.selectedSurveys.includes(activity.acronym)
       });
-      //TODO: REMOVER
       if(!self.selectedGroups.length) {
         self.activities = angular.copy(self.AllActivities);
       }
@@ -182,8 +178,10 @@
 
     function _surveysFilter(){
       self.selectedSurveys = [];
-      self.selectedGroups.forEach(block => {
-        self.selectedSurveys = self.selectedSurveys.concat(GROUP_LIST[block])
+      self.selectedGroups.forEach(groupName => {
+        self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.find(function (group) {
+          return group.name == groupName;
+        }).surveyAcronyms);
       });
        self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
         return self.selectedSurveys.indexOf(item) == position;
@@ -194,17 +192,6 @@
       _surveysFilter();
       _activitiesFilter();
       self.updateDataTable(self.activities);
-    }
-
-    function toggleGroup(item) {
-      var idx = self.selectedGroups.indexOf(item);
-      if (idx > -1) {
-        self.selectedGroups.splice(idx, 1);
-      }
-      else {
-        self.selectedGroups.push(angular.copy(item));
-      }
-      _groupsFilter()
     }
 
     function existsGroup(item) {

@@ -6,25 +6,32 @@
     .service('otusjs.activity.repository.SurveyCollectionService', Service);
 
   Service.$inject = [
-    'otusjs.activity.core.ModuleService'
+    'otusjs.activity.core.ModuleService',
+    'otusjs.deploy.SurveyRestService'
   ];
 
-  function Service(ModuleService) {
+  function Service(ModuleService, SurveyRestService) {
     var self = this;
 
     /* Public methods */
     self.listAll = listAll;
     self.listAcronyms = listAcronyms;
+    self.listSurveysGroups = listSurveysGroups;
 
     function listAll() {
       return _executeWork(function(dataSource) {
         return dataSource.getData().find();
       });
     }
+
     function listAcronyms() {
       return _executeWork(function(dataSource) {
         return dataSource.getData().find();
       });
+    }
+
+    function listSurveysGroups() {
+      return SurveyRestService.listSurveysGroups();
     }
 
     function _executeWork(work) {
