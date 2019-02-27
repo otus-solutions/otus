@@ -124,7 +124,8 @@ describe('otusActivityManagerList Test', function() {
       controller.groupList = ["CI","CD"];
       controller.AllActivities = Mock.AllActivities;
       controller.searchTerm = "CD";
-    })
+      spyOn(controller, "updateDataTable").and.callThrough();
+    });
     it('should filter by group', function () {
       controller.$onInit();
       expect(controller.existsGroup("CI")).toBeFalsy();
@@ -132,6 +133,7 @@ describe('otusActivityManagerList Test', function() {
       expect(controller.isIndeterminateGroups()).toBeFalsy();
 
       controller.toggleAllGroups();
+      expect(controller.updateDataTable).toHaveBeenCalledTimes(1);
       expect(controller.isIndeterminateGroups()).toBeFalsy();
 
       expect(controller.existsGroup("CI")).toBeTruthy();

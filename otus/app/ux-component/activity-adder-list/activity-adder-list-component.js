@@ -4,14 +4,17 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusActivityAdderList', {
-      controller: Controller,
+      controller: "otusActivityAdderListCtrl as $ctrl",
       templateUrl: 'app/ux-component/activity-adder-list/activity-adder-list-template.html',
       bindings: {
         onActivitySelection: '&'
       }
-    });
+    })
+    .controller('otusActivityAdderListCtrl', Controller);
 
   Controller.$inject = [
+    'otusjs.survey.GroupManagerFactory',
+    'otusjs.activity.business.GroupActivityService',
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
     '$scope',
@@ -19,14 +22,15 @@
     '$element'
   ];
 
-  function Controller(ActivityService, DynamicTableSettingsFactory, $scope, LoadingScreenService, $element) {
+  function Controller(GroupManagerFactory, GroupActivityService, ActivityService, DynamicTableSettingsFactory, $scope, LoadingScreenService, $element) {
     var self = this;
     self.activities = [];
     self.isListEmpty = true;
-
     self.orderByField = 'surveyTemplate.identity.name';
     self.reverseSort = false;
     self.searchTerm = '';
+    self.selectedGroups = [];
+
     /* Public methods */
     self.getType = getType;
     self.selectActivity = selectActivity;
@@ -40,15 +44,6 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
-
-    var GROUP_LIST = {
-      "CI": ["ACTA"],
-      "CD": ["AMAC"]
-    };
-
-    self.groupList = Object.keys(GROUP_LIST);
-    self.selectedGroups = [];
-
     $scope.$watch("$ctrl.selectedGroups", function () {
       $scope.$$postDigest(function () {
         if(self.AllActivities && self.activities){
@@ -60,6 +55,14 @@
     function onInit() {
       self.isListEmpty = true;
       LoadingScreenService.start();
+      GroupActivityService.listSurveysGroups().then(function (response) {
+        //TODO: FALTA O MODEL
+        // self.surveysGroups = GroupManagerFactory.create(response.map(group => {return group.name}));
+        self.surveysGroups = angular.copy(response);
+        self.groupList = self.surveysGroups.map(function (group) {
+          return group.name;
+        });
+      });
       _loadActivities();
       _buildDynamicTableSettings(self.activities);
       $element.find('#searchBlock').on('keydown', function(ev) {
@@ -149,8 +152,10 @@
 
     function _surveysFilter(){
       self.selectedSurveys = [];
-      self.selectedGroups.forEach(block => {
-        self.selectedSurveys = self.selectedSurveys.concat(GROUP_LIST[block])
+      self.selectedGroups.forEach(groupName => {
+        self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.find(function (group) {
+          return group.name == groupName;
+        }).surveyAcronyms);
       });
       self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
         return self.selectedSurveys.indexOf(item) == position;

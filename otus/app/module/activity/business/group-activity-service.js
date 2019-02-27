@@ -7,18 +7,18 @@
 
   Service.$inject = [
     'otusjs.activity.core.ContextService',
-    'otusjs.activity.repository.ActivityRepositoryService',
+    'otusjs.activity.repository.SurveyRepositoryService',
     'otusjs.survey.GroupManagerFactory'
   ];
 
-  function Service(ContextService, ActivityRepositoryService) {
+  function Service(ContextService, SurveyRepositoryService) {
     var self = this;
 
     /* Public methods */
      self.listSurveysGroups = listSurveysGroups;
 
     function listSurveysGroups() {
-      return ActivityRepositoryService.listSurveysGroups();
+      return SurveyRepositoryService.listSurveysGroups();
     }
 
 

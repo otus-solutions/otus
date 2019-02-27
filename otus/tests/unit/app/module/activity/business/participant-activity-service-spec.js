@@ -7,7 +7,9 @@ describe('participant-activity-service Test', function() {
     var ACTIVITY_REVISION = {revision: DATA};
 
     beforeEach(function() {
-      angular.mock.module('otusjs.activity');
+      angular.mock.module('otusjs.activity',function ($provide) {
+        $provide.value('otusjs.deploy.SurveyRestService', {});
+      });
 
       inject(function(_$injector_) {
         Injections = {

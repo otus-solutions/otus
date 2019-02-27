@@ -28,7 +28,6 @@
     self.updateCheckerActivity = updateCheckerActivity;
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
-    self.listSurveysGroups = listSurveysGroups;
 
     function listAll(participant) {
       if (!participant) {
@@ -53,10 +52,6 @@
 
     function listAllSurveys() {
       return SurveyCollectionService.listAcronyms().then(_toEntity);
-    }
-
-    function listSurveysGroups() {
-      return SurveyCollectionService.listSurveysGroups();
     }
 
     function createFromSurvey(surveys, loggedUser, participant, configuration) {

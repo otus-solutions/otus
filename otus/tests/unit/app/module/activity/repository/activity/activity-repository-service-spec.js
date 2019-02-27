@@ -1,4 +1,4 @@
-describe('participant-activity-service Test', function() {
+describe('activity-repository-service Test', function() {
   var Mock = {};
   var service;
   var Injections = {};
@@ -7,7 +7,9 @@ describe('participant-activity-service Test', function() {
   var ACTIVITY_REVISION = {revision: DATA};
 
   beforeEach(function() {
-    angular.mock.module('otusjs.activity');
+    angular.mock.module('otusjs.activity', function ($provide) {
+     $provide.value('otusjs.deploy.SurveyRestService', {});
+    });
 
     inject(function(_$injector_) {
       Injections = {
@@ -15,7 +17,7 @@ describe('participant-activity-service Test', function() {
         ModuleService: _$injector_.get('otusjs.activity.core.ModuleService'),
         ContextService: _$injector_.get('otusjs.activity.core.ContextService'),
         ActivityCollectionService: _$injector_.get('otusjs.activity.repository.ActivityCollectionService'),
-        UserRepositoryService: _$injector_.get('otusjs.activity.repository.SurveyCollectionService')
+        SurveyCollectionService: {}
       };
 
       service = _$injector_.get('otusjs.activity.repository.ActivityRepositoryService', Injections);
