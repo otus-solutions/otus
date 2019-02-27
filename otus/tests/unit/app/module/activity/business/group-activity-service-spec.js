@@ -1,24 +1,33 @@
-xdescribe('group-activity-service Test', function() {
+describe('group-activity-service Test', function() {
     var Mock = {};
     var service;
-    var Injections = {};
     var UNIT_NAME = "otusjs.activity.business.GroupActivityService";
 
     beforeEach(function() {
-      //TODO: update module name
-      angular.mock.module('otusjs.activity');
+      mockInjections();
+       angular.mock.module('otusjs.activity.business', function ($provide) {
+         $provide.value('otusjs.activity.repository.SurveyRepositoryService', Mock.SurveyRepositoryService)
+       });
 
       inject(function(_$injector_) {
-        Injections = {
-          injection1: _$injector_.get('serviço1'),
-          injection2: _$injector_.get('serviço2')
-        };
-
-        service = _$injector_.get('serviçoPrincipal', Injections);
+        service = _$injector_.get(UNIT_NAME);
       });
-    });
-    it('fail test', function() {
-        expect(true).toBe(false);
+
+      spyOn(Mock.SurveyRepositoryService, "listSurveysGroups").and.callThrough();
     });
 
+    it('should defined methods', function() {
+      expect(service.listSurveysGroups).toBeDefined();
+    });
+
+  it('should call listSurveysGroups method', function () {
+    service.listSurveysGroups();
+    expect(Mock.SurveyRepositoryService.listSurveysGroups).toHaveBeenCalledTimes(1)
+  });
+
+  function mockInjections() {
+      Mock.SurveyRepositoryService = {
+        listSurveysGroups: () => {}
+      };
+    }
 });

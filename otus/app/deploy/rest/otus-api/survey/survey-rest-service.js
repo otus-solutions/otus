@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy')
+    .module('otusjs.deploy.rest')
     .service('otusjs.deploy.SurveyRestService', Service);
 
   Service.$inject = [
@@ -29,17 +29,17 @@
 
       var request = $q.defer();
 
-      // _rest
-      //   .listSurveysGroups()
-      //   .$promise
-      //   .then(function(response) {
-      //     if (response.data && response.data.length) {
-      //       request.resolve(response.data);
-      //     } else {
-      //       request.resolve([]);
-      //     }
-      //   });
-      request.resolve(respostaFake.data);
+      _rest
+        .listSurveysGroups()
+        .$promise
+        .then(function(response) {
+          if (response.data && response.data.length) {
+            request.resolve(response.data);
+          } else {
+            request.resolve([]);
+          }
+        });
+      // request.resolve(respostaFake.data);
 
       return request.promise;
     }

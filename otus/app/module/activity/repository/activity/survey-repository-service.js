@@ -6,13 +6,10 @@
     .service('otusjs.activity.repository.SurveyRepositoryService', Service);
 
   Service.$inject = [
-    '$q',
-    'otusjs.activity.core.ModuleService',
-    'otusjs.activity.core.ContextService',
     'otusjs.activity.repository.SurveyCollectionService'
   ];
 
-  function Service($q, ModuleService, ContextService, SurveyCollectionService) {
+  function Service(SurveyCollectionService) {
     var self = this;
     var _existsWorkingInProgress = null;
 
