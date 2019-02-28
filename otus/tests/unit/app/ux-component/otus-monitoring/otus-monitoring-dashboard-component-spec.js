@@ -5,11 +5,20 @@ describe('otusMonitoringDashboardComponent test', function() {
   var Injections = {};
 
 
+
   beforeEach(function() {
     angular.mock.module('otusjs.otus.uxComponent');
   });
 
   beforeEach(function() {
+    Mock.DialogShowService = {
+      showDialog: function (dialog) {
+        var self = this;
+        self.test = dialog;
+        return Promise.resolve(self);
+      }
+    };
+
     Mock.ProjectFieldCenterService = {
       loadCenters:function() {
         return Promise.resolve(mockCenters());
@@ -19,6 +28,7 @@ describe('otusMonitoringDashboardComponent test', function() {
     Mock.MonitoringService = {
       listAcronyms:function() {
         return Promise.resolve(mockListAcronyms());
+        //return Promise.resolve([]);
       },
       find: function(query){
         return Promise.resolve(mockFind());
@@ -67,6 +77,7 @@ describe('otusMonitoringDashboardComponent test', function() {
       $provide.value('otusjs.monitoring.business.MonitoringService', Mock.MonitoringService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
       $provide.value('otusMonitorParseDataFactory', Mock.MonitorParseData);
+      $provide.value('otusjs.application.dialog.DialogShowService', Mock.DialogShowService);
       $provide.value('otusjs.model.monitoring.MonitoringCenterFactory', Mock.MonitoringCenterFactory);
     });
   });
@@ -82,6 +93,7 @@ describe('otusMonitoringDashboardComponent test', function() {
         MonitorParseData: Mock.MonitorParseData,
         MonitoringCenterFactory: Mock.MonitoringCenterFactory,
         $mdDialog: _$injector_.get('$mdDialog'),
+        DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService'),
         $q: _$injector_.get('$q')
       };
       ctrl = $controller('otusMonitoringDashboardCtrl', Injections);
@@ -180,5 +192,22 @@ describe('otusMonitoringDashboardComponent test', function() {
     ctrl.createCentersGoalsChart = function(data){};
   }
 
+  describe('treatment for the lack of the survey collection', function () {
+    it('listAcronymsMethod should enable empty activity list signaling', function () {
+      spyOn(Mock.MonitoringService, 'listAcronyms').and.callFake(function () {
+         return Promise.resolve([]);
+      });
+      ctrl.$onInit();
+      Mock.ProjectFieldCenterService.loadCenters().then(function () {
+        expect(ctrl.activityListEmpty).toBeUndefined();
+        Mock.MonitoringService.listCenters().then(function () {
+          Mock.MonitoringService.listAcronyms().then(function () {
+            expect(ctrl.activityListEmpty).toBeDefined();
+            expect(ctrl.activityListEmpty).toBeTruthy();
+          })
+        })
+      })
+    });
+  });
 
 });

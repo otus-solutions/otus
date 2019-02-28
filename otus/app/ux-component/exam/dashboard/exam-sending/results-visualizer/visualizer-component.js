@@ -15,10 +15,11 @@
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
     'otusjs.laboratory.business.project.sending.SendingExamService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService, LoadingScreenService) {
+  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService, LoadingScreenService, DialogService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_DOES_MATCH_EXAM = "Aliquot does not match exam"
     const ALIQUOT_NOT_FOUND = "Aliquot not found";
@@ -37,7 +38,7 @@
       self.errorAliquots = [];
       self.errorexam = [];
       if (!self.fileStructure) {
-        $mdDialog.show(therIsNoDataToShow).then(function () {
+        DialogService.showDialog(therIsNoDataToShow).then(function () {
           ApplicationStateService.activateExamSending();
         });
       } else {
@@ -189,11 +190,18 @@
     }
 
     function _buildDialogs() {
-      therIsNoDataToShow = $mdDialog.alert()
-        .title('Erro ao entrar na tela de visualização de resultados')
-        .textContent('Para acessar a tela de visualização de resultados você deve enviar um novo arquivo ou selecionar algum envio anterior.')
-        .ariaLabel('erro')
-        .ok('Ok');
+      therIsNoDataToShow = {
+         dialogToTitle:'Erro ao entrar na tela de visualização de resultados',
+         textDialog:'Para acessar a tela de visualização de resultados você deve enviar um novo arquivo ou selecionar algum envio anterior.',
+         ariaLabel:'erro',
+         buttons: [
+           {
+             message:'Ok',
+             action:function(){$mdDialog.hide()},
+             class:'md-raised md-primary'
+           }
+         ]
+       };
     }
   }
 }());

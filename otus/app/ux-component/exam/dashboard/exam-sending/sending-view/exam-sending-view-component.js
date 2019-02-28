@@ -17,10 +17,11 @@
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.laboratory.business.project.sending.SendingExamService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($filter, $mdToast, $mdDialog, ProjectFieldCenterService, DashboardContextService, ProjectContextService, SendingExamService, ApplicationStateService, LoadingScreenService) {
+  function Controller($filter, $mdToast, $mdDialog, ProjectFieldCenterService, DashboardContextService, ProjectContextService, SendingExamService, ApplicationStateService, LoadingScreenService, DialogService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
 
     var self = this;
@@ -76,16 +77,28 @@
     }
 
     function _buildDialogs() {
-      _confirmDeleteSelected = $mdDialog.confirm()
-        .title('Confirmação para exclusão de arquivos')
-        .textContent('Atenção: Os arquivos selecionados serão excluídos')
-        .ariaLabel('Confirmação de exclusão')
-        .ok('Ok')
-        .cancel('Voltar');
+      _confirmDeleteSelected = {
+        dialogToTitle:'Exclusão',
+        titleToText:'Confirmação para exclusão de arquivos',
+        textDialog:'Atenção: Os arquivos selecionados serão excluídos.',
+        ariaLabel:'Confirmação de exclusão',
+        buttons: [
+        {
+          message:'Ok',
+          action:function(){$mdDialog.hide()},
+          class:'md-raised md-primary'
+        },
+        {
+          message:'Voltar',
+          action:function(){$mdDialog.cancel()},
+          class:'md-raised md-no-focus'
+        }
+      ]
+      };
     }
 
     function deleteSending() {
-      $mdDialog.show(_confirmDeleteSelected).then(function () {
+      DialogService.showDialog(_confirmDeleteSelected).then(function () {
         LoadingScreenService.changeMessage(MESSAGE_LOADING);
         LoadingScreenService.start();
         _removeRecursive(self.selectedSendings, function () {

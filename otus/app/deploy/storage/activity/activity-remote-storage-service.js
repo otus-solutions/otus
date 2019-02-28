@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy')
+    .module('otusjs.deploy.storage')
     .service('otusjs.deploy.ActivityRemoteStorageService', Service);
 
   Service.$inject = [
@@ -33,8 +33,11 @@
     /* Public methods */
     self.insert = insert;
     self.update = update;
+    self.updateCheckerActivity = updateCheckerActivity;
     self.findActivities = findActivities;
     self.findCategories = findCategories;
+    self.addActivityRevision = addActivityRevision;
+    self.getActivityRevisions = getActivityRevisions;
 
     /**
      * Adds activities to collection.
@@ -67,6 +70,28 @@
 
       _updateArray(activityToUpdate, function(updatedActivities) {
         deferred.resolve(updatedActivities);
+      });
+
+      return deferred.promise;
+    }
+
+
+    /**
+     * Updates activities in collection.
+     * @param {(object|array)} activity - the activity (or array of activities) to be
+     * updated
+     * @returns {Promise} promise with activity or activities updated when resolved
+     * @memberof ActivityRemoteStorageService
+     */
+    function updateCheckerActivity(recruitmentNumber, checkerUpdated) {
+      var deferred = $q.defer();
+
+      ActivityRestService
+        .updateCheckerActivity(recruitmentNumber, checkerUpdated)
+        .then(function(response) {
+          deferred.resolve(response);
+        }).catch(function () {
+          deferred.reject();
       });
 
       return deferred.promise;
@@ -179,6 +204,40 @@
             }
           });
       };
+    }
+
+    /**
+     * Add activityRevision in collection.
+     * @param {(object)} activityRevision - the activityReview to be insered
+     * @returns {Promise} promise with activityRevision inserted when resolved
+     * @memberof ActivityRemoteStorageService
+     */
+    function addActivityRevision(activityRevision, activity) {
+      var deferred = $q.defer();
+
+      ActivityRestService
+        .addActivityRevision(activityRevision, activity)
+        .then(function(response) {
+          deferred.resolve(response);
+        }).catch(function () {
+        deferred.reject();
+      });
+
+      return deferred.promise;
+    }
+
+    function getActivityRevisions(activityID, activity) {
+      var deferred = $q.defer();
+
+      ActivityRestService
+        .getActivityRevisions(activityID, activity)
+        .then(function(response) {
+          deferred.resolve(response);
+        }).catch(function () {
+        deferred.reject();
+      });
+
+      return deferred.promise;
     }
   }
 }());

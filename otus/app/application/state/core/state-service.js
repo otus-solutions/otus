@@ -45,6 +45,7 @@
     self.activateManagerParticipants = activateManagerParticipants;
     self.activateParticipantsList = activateParticipantsList;
     // self.activateErrorOffline = activateErrorOffline;
+    self.activateLaboratoryMonitoring = activateLaboratoryMonitoring;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -158,6 +159,10 @@
 
     function activateExamResultsVisualizer() {
       $state.go(STATE.EXAM_RESULT_VISUALIZER);
+    }
+
+    function activateLaboratoryMonitoring() {
+      $state.go(STATE.LABORATORY_MONITORING_DASHBOARD);
     }
 
     function getCurrentState() {

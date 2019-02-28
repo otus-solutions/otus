@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -12,7 +12,8 @@
     'otusMonitorParseDataFactory',
     'otusjs.model.monitoring.MonitoringCenterFactory',
     '$mdDialog',
-    '$q'
+    '$q',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
   function Controller(
@@ -22,13 +23,13 @@
     MonitorParseData,
     MonitoringCenterFactory,
     $mdDialog,
-    $q) {
+    $q,
+    DialogService) {
 
     var self = this;
     self.parseData = MonitorParseData.create;
     self.preProcessingData = preProcessingData;
     self.update = update;
-
     self.questionnaireData = {};
 
     // lifecycle hooks
@@ -42,33 +43,38 @@
 
     function _loadAllAcronyms() {
       MonitoringService.listAcronyms()
-        .then(function(activities) {
-          self.questionnairesList = activities.map(function(acronym) {
-            return acronym;
-          }).filter(function(elem, index, self) {
-            return index == self.indexOf(elem);
-          });
+        .then(function (activities) {
+          if (activities.length) {
+            self.questionnairesList = activities.map(function (acronym) {
+              return acronym;
+            }).filter(function (elem, index, self) {
+              return index == self.indexOf(elem);
+            });
 
-          self.update(self.questionnairesList[0], self.fieldCentersList, null, null).then(function() {
-            self.selectedAcronym = angular.copy(self.questionnairesList[0]);
-            self.ready = true;
-          });
+            self.update(self.questionnairesList[0], self.fieldCentersList, null, null).then(function () {
+              self.selectedAcronym = angular.copy(self.questionnairesList[0]);
+              self.ready = true;
+            });
+          } else {
+            self.activityListEmpty = true;
+            LoadingScreenService.finish();
+          }
         });
     }
 
     function _loadAllCenters() {
-      ProjectFieldCenterService.loadCenters().then(function(result) {
+      ProjectFieldCenterService.loadCenters().then(function (result) {
         self.centers = angular.copy(result);
         _loadDataSetInformation();
       });
     }
 
     function _sortDateList() {
-      return self.uniqueDatesList.sort(function(a, b) {
-        var numbersA = a.split('-').map(function(item) {
+      return self.uniqueDatesList.sort(function (a, b) {
+        var numbersA = a.split('-').map(function (item) {
           return parseInt(item, 10);
         });
-        var numbersB = b.split('-').map(function(item) {
+        var numbersB = b.split('-').map(function (item) {
           return parseInt(item, 10);
         });
         return numbersA[0] - numbersB[0] == 0 ? numbersA[1] - numbersB[1] : numbersA[0] - numbersB[0];
@@ -78,17 +84,17 @@
     function preProcessingData() {
       if (self.monitoringData) {
         var rawData = self.monitoringData || [];
-        self.uniqueDatesList = rawData.map(function(e) {
+        self.uniqueDatesList = rawData.map(function (e) {
           return e.year + "-" + e.month + "-1";
-        }).filter(function(elem, index, self) {
+        }).filter(function (elem, index, self) {
           return index == self.indexOf(elem);
         });
 
         self.uniqueDatesList = _sortDateList();
 
-        self.fieldCentersList = rawData.map(function(e) {
+        self.fieldCentersList = rawData.map(function (e) {
           return e.fieldCenter;
-        }).filter(function(elem, index, self) {
+        }).filter(function (elem, index, self) {
           return index == self.indexOf(elem);
         });
         MonitorParseData.init(
@@ -111,11 +117,11 @@
       var deferred = $q.defer();
       if (!selectedCenters) {
         selectedCenters = [];
-        self.centers.forEach(function(center) {
+        self.centers.forEach(function (center) {
           selectedCenters.push(center.acronym);
         });
       }
-      if(self.selectedAcronym != acronym) {
+      if (self.selectedAcronym != acronym) {
         self.selectedAcronym = acronym;
         MonitoringService.find(acronym)
           .then(function (response) {
@@ -128,7 +134,7 @@
             _constructorData(deferred, startDate, endDate, selectedCenters, acronym);
             LoadingScreenService.finish();
           });
-      }else {
+      } else {
         _constructorData(deferred, startDate, endDate, selectedCenters, acronym);
       }
       return deferred.promise;
@@ -159,31 +165,40 @@
     }
 
     function _showMessages(msg, action) {
-      var _msg = $mdDialog.alert()
-        .title('ATENÇÃO')
-        .textContent('Os dados não foram encontrados!')
-        .ariaLabel('Confirmação de leitura')
-        .ok('Ok');
-      $mdDialog.show(_msg).then(function() {
+      var _msg = {
+        dialogToTitle: 'Alerta',
+        titleToText: 'Atenção',
+        textDialog: 'Os dados não foram encontrados!',
+        ariaLabel: 'Confirmação de leitura',
+        buttons: [
+          {
+            message: 'Ok',
+            action: function () {
+              $mdDialog.hide()
+            },
+            class: 'md-raised md-primary'
+          }
+        ]
+      };
+
+      DialogService.showDialog(_msg).then(function () {
         action();
       });
-
     }
 
     function _loadDataSetInformation() {
       var _dataOfCenters = {};
       MonitoringService.listCenters()
-        .then(function(list) {
+        .then(function (list) {
           var _list = list;
-          self.centers.forEach(function(fieldCenter) {
-            _dataOfCenters[fieldCenter.acronym] = MonitoringCenterFactory.create(_list.find(function(elem) {
+          self.centers.forEach(function (fieldCenter) {
+            _dataOfCenters[fieldCenter.acronym] = MonitoringCenterFactory.create(_list.find(function (elem) {
               return elem.name === fieldCenter.name;
             }));
           });
           self.monitoringCenters = _dataOfCenters;
           _loadAllAcronyms();
         });
-
     }
   }
 }());

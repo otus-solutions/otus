@@ -20,10 +20,11 @@
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.uxComponent.Publisher'
-    ];
+    'otusjs.otus.uxComponent.Publisher',
+    'otusjs.application.dialog.DialogShowService'
+  ];
 
-  function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService, Publisher) {
+  function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService, Publisher, DialogService) {
     var self = this;
     var confirmCancel;
     var confirmAliquotingExitDialog;
@@ -54,7 +55,7 @@
       });
 
       if (changedAliquots) {
-        $mdDialog.show(confirmAliquotingExitDialog).then(function() {
+        DialogService.showDialog(confirmAliquotingExitDialog).then(function() {
           _returnMain();
         });
       } else {
@@ -64,6 +65,7 @@
 
     function onInit() {
       _buildDialogs();
+
       self.processingDate = new Date();
       self.now = new Date();
       verifyDate();
@@ -92,8 +94,8 @@
       } else {
         $mdToast.show(
           $mdToast.simple()
-          .textContent('Não existem alterações a serem salvas.')
-          .hideDelay(hideDelayTime)
+            .textContent('Não existem alterações a serem salvas.')
+            .hideDelay(hideDelayTime)
         );
       }
     }
@@ -121,7 +123,7 @@
         updateChangedTubesStructure.tubes.push(tube);
       });
 
-      $mdDialog.show(confirmFinish).then(function() {
+      DialogService.showDialog(confirmFinish).then(function() {
         ParticipantLaboratoryService.updateTubeCollectionData(updateChangedTubesStructure).then(function() {
           self.labParticipant.updateTubeList();
           Publisher.publish('fill-original-tube-list', self.labParticipant.tubes);
@@ -141,7 +143,7 @@
       });
 
       if (changedTubes) {
-        $mdDialog.show(confirmCancel).then(function() {
+        DialogService.showDialog(confirmCancel).then(function() {
           _returnMain();
         });
       } else {
@@ -165,11 +167,12 @@
       });
 
       if (changedTubes) {
-        $mdDialog.show(confirmCancel).then(function() {
+        DialogService.showDialog(confirmCancel).then(function() {
           _reloadTubeList();
           Publisher.publish('refresh-laboratory-participant', 'coleta');
           _showToastMsg('As alterações foram desfeitas.');
         });
+
       } else {
         _showToastMsg('As alterações foram desfeitas.');
       }
@@ -183,43 +186,85 @@
     function _showToastMsg(msg) {
       $mdToast.show(
         $mdToast.simple()
-        .textContent(msg)
-        .hideDelay(hideDelayTime)
+          .textContent(msg)
+          .hideDelay(hideDelayTime)
       );
     }
 
+
     function _buildDialogs() {
-      confirmCancel = $mdDialog.confirm()
-        .title('Confirmar cancelamento:')
-        .textContent('Alterações não finalizadas serão descartadas')
-        .ariaLabel('Confirmação de cancelamento')
-        .ok('Ok')
-        .cancel('Voltar');
+      self.getButtons = getButtons;
 
-      confirmAliquotingExitDialog = $mdDialog.confirm()
-        .title('Descartar Alterações?')
-        .textContent('Alíquotas alteradas serão descartadas.')
-        .ariaLabel('Confirmação de cancelamento')
-        .ok('Continuar')
-        .cancel('Cancelar');
+      self.buttons = [
+        {
+          message:'Ok',
+          action:function(){$mdDialog.hide()},
+          class:'md-raised md-primary'
+        },
+        {
+          message:'Voltar',
+          action:function(){$mdDialog.cancel()},
+          class:'md-raised md-no-focus'
+        }
+      ];
 
-      confirmFinish = $mdDialog.confirm()
-        .title('Confirmar finalização')
-        .textContent('Deseja salvar as alterações?')
-        .ariaLabel('Confirmação de finalização')
-        .ok('Ok')
-        .cancel('Voltar');
+      function getButtons(){
+        return self.buttons;
+      }
 
-      invalidDate = $mdDialog.confirm()
-        .title('Atenção')
-        .textContent('Campo obrigatório!')
-        .ariaLabel('Confirmação de data')
-        .ok('Ok');
+      confirmCancel = {
+        dialogToTitle:'Cancelamento',
+        titleToText:'Confirmar cancelamento:',
+        textDialog:'Alterações não finalizadas serão descartadas.',
+        ariaLabel:'Confirmação de cancelamento',
+        buttons: getButtons()
+      };
+
+      confirmAliquotingExitDialog = {
+        dialogToTitle:'Cancelamento',
+        titleToText:'Descartar Alterações?',
+        textDialog:'Alíquotas alteradas serão descartadas.',
+        ariaLabel:'Confirmação de cancelamento',
+        buttons: [
+          {
+            message:'Continuar',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Cancelar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      confirmFinish = {
+        dialogToTitle:'Salvar',
+        titleToText:'Confirmar alteração:',
+        textDialog:'Deseja salvar as alterações?',
+        ariaLabel:'Confirmação de finalização',
+        buttons: getButtons()
+      };
+
+      invalidDate = {
+        dialogToTitle:'Obrigatório',
+        titleToText:'Atenção',
+        textDialog:'Campo obrigatório!',
+        ariaLabel:'Confirmação de data',
+        buttons: [
+          {
+            message:'ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          }
+        ]
+      };
     }
 
     function verifyDate() {
       if (!self.processingDate) {
-        $mdDialog.show(invalidDate);
+        DialogService.showDialog(invalidDate);
         self.processingDate = new Date();
       }
       Publisher.unsubscribe('datetime-processing');

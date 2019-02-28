@@ -1,22 +1,24 @@
 <md-content id="user-login-page" layout="column" flex>
-  <md-toolbar flex="30" id="divtop" class="md-tall md-primary">
+  <md-toolbar flex="30" id="divtop" class="md-tall md-primary" layout-padding layout="row" layout-align="start center">
+    <span flex-gt-sm="30" flex-sm="10"></span>
     <h2 class="system-name">
       <span class="md-display-1">Cadastro</span>
     </h2>
   </md-toolbar>
   <md-content flex layout="row" layout-align="center start">
-    <md-card class="card" layout-padding flex="55">
+    <md-card class="card" layout-padding flex-gt-sm="45" flex="80">
       <div layout="row" layout-align="center start">
         <div flex="20"></div>
-        <img class="logotype" src="app/static-resource/image/OtusImg.png" flex="40">
+        <img class="logotype" src="app/static-resource/image/OtusImg.png" flex="80" flex-gt-sm="40">
         <div flex></div>
       </div>
+      <div layout="column" flex></div>
       <div class="content" layout="column">
         <div layout-sm="column" layout-padding>
           <div layout="row" layout-align="center">
             <p class="md-display-1">Cadastro Realizado</p>
           </div>
-          <div flex="80" flex-offset="10" style="text-align:center">
+          <div flex="80" flex-offset="10" id="system-text">
             <div layout-align="left">
               <p class="md-body-1">
                 Seu usuário ainda <span class="md-body-2"> não está liberado </span> para acesso ao sistema.<br>
@@ -25,9 +27,10 @@
           </div>
           <div flex></div>
         </div>
-      </div>
-      <div layout-align="end" flex class="bottom-sheet-demo inset" layout="row" layout-sm="column">
-        <md-button type="button" class="md-raised md-accent" ng-click="$ctrl.agree()">OK</md-button>
+        <span show-gt-sm="30" hide style="margin-top:30px"></span>
+        <div flex="40" layout-fill layout="column" layout-align="end" layout-margin=""  layout-gt-sm="row" class="bottom-sheet-demo inset" >
+          <md-button type="button" class="md-raised md-accent" ng-click="$ctrl.agree()">OK</md-button>
+        </div>
       </div>
     </md-card>
   </md-content>

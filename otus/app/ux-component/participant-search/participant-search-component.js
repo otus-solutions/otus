@@ -7,7 +7,10 @@
       controller: Controller,
       templateUrl: 'app/ux-component/participant-search/participant-search-template.html',
       bindings: {
-        onSelect: '&'
+        onSelect: '&',
+        showAllParticipantsButton:"<",
+        showAllParticipants: '&',
+        onReady: '='
       }
     });
 
@@ -17,10 +20,11 @@
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.otus.dashboard.core.ContextService',
-    '$mdDialog'
+    '$mdDialog',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller(STATE, $q, ParticipantManagerService, ApplicationStateService, dashboardContextService, $mdDialog) {
+  function Controller(STATE, $q, ParticipantManagerService, ApplicationStateService, dashboardContextService, $mdDialog, DialogService) {
     var self = this;
 
 
@@ -29,6 +33,9 @@
     /* Public methods */
     self.querySearch = querySearch;
     self.selectParticipant = selectParticipant;
+    self.showParticipants = self.showAllParticipants;
+    self.showParticipantsButton = self.showAllParticipantsButton;
+
 
     var confirmParticipantChange;
 
@@ -39,7 +46,10 @@
       } else {
         self.autoCompleteClass = 'md-dashboard-autocomplete';
       }
-      ParticipantManagerService.setup();
+      ParticipantManagerService.setup().then(function (response) {
+        self.onReady = true;
+      });
+
     }
 
     function querySearch() {
@@ -59,7 +69,7 @@
         _setParticipant();
         ApplicationStateService.activateParticipantDashboard();
       } else if(ApplicationStateService.getCurrentState() == STATE.LABORATORY && dashboardContextService.getChangedState()) {
-        $mdDialog.show(confirmParticipantChange).then(function() {
+        DialogService.showDialog(confirmParticipantChange).then(function() {
         _setParticipant();
         dashboardContextService.setChangedState();
         });
@@ -77,12 +87,24 @@
     }
 
     function _buildDialogs() {
-      confirmParticipantChange = $mdDialog.confirm()
-        .title('Confirmar troca de participante:')
-        .textContent('Alterações não finalizadas serão descartadas')
-        .ariaLabel('Confirmação de troca')
-        .ok('Ok')
-        .cancel('Voltar');
+      confirmParticipantChange = {
+        dialogToTitle:'Descartar',
+        titleToText:'Confirmar troca de participante:',
+        textDialog:'Alterações não finalizadas serão descartadas.',
+        ariaLabel:'Confirmação de troca',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Voltar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
     }
 
   }

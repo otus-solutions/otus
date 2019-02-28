@@ -1,0 +1,34 @@
+<md-dialog  ng-style="$ctrl.dialogDimensions" aria-label="{{ $ctrl.labelAria }}">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2 ng-bind-html="$ctrl.titleToDialog"></h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="$ctrl.cancel()">
+          <md-icon>close</md-icon>
+          <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <div class="md-dialog-content md-padding"  layout="row">
+        <div layout-align="center center">
+          <img ng-style="$ctrl.style " ng-src="{{ $ctrl.img }}" ng-if="$ctrl.isAvailableImage()">
+        </div>
+        <div>
+          <h2 ng-bind-html="$ctrl.title"></h2>
+          <br><p ng-bind-html="$ctrl.text"></p>
+        </div>
+      </div>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+      <div ng-repeat="button in $ctrl.buttons">
+        <md-button  class="{{ button.class }}" ng-click="button.action()" ng-bind="button.message"></md-button>
+        <span flex></span>
+      </div>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
+
+
+

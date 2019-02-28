@@ -11,9 +11,9 @@ describe('UserAccessRecoveryRestService', function() {
 
   beforeEach(function() {
     Mock.OtusRestResourceService = {
-      getPasswordResetResource: () => {
+      getPasswordResetResource: function() {
         return {
-          validationToken: () => {
+          validationToken: function() {
             return Promise.resolve();
           },
           requestRecovery: () => {

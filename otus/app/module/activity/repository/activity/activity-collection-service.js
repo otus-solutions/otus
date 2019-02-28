@@ -35,6 +35,9 @@
     self.listAll = listAll;
     self.listAllCategories = listAllCategories;
     self.update = update;
+    self.updateCheckerActivity = updateCheckerActivity;
+    self.addActivityRevision = addActivityRevision;
+    self.getActivityRevisions = getActivityRevisions;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -102,6 +105,30 @@
     }
 
     /**
+     * Updates checker activity in collection.
+     * @param {(string)} id - the activity id to be updated
+     * @param {(object)} user - the user to be updated
+     * @memberof ActivityCollectionService
+     */
+    function updateCheckerActivity(recruitmentNumber, checkerUpdated) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .updateCheckerActivity(recruitmentNumber, checkerUpdated)
+            .then(function(response) {
+              request.resolve(response);
+            }).catch(function () {
+              request.reject();
+          });
+        });
+
+      return request.promise;
+    }
+
+    /**
      * Fetches activities from collection based on participant passed to {@link | useParticipant}
      * method.
      * @param {(object|array)} activities - the activity (or array of activities) to be updated
@@ -139,6 +166,45 @@
             .then(function (activityConfiguration) {
               request.resolve(activityConfiguration);
             });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Add registry review activity in collection.
+     * @param {(object)} activityReview - the object to be inserted
+     * @memberof ActivityCollectionService
+     */
+    function addActivityRevision(activityRevision, activity) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .addActivityRevision(activityRevision, activity)
+            .then(function(response) {
+              request.resolve(response);
+            }).catch(function () {
+            request.reject();
+          });
+        });
+
+      return request.promise;
+    }
+
+    function getActivityRevisions(activityID, activity){
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .getActivityRevisions(activityID, activity)
+            .then(function(response) {
+              request.resolve(response);
+            }).catch(function () {
+            request.reject();
+          });
         });
 
       return request.promise;
