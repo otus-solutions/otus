@@ -6,17 +6,26 @@
     .service('otusjs.activity.business.GroupActivityService', Service);
 
   Service.$inject = [
-    'otusjs.activity.repository.SurveyRepositoryService'
+    'otusjs.activity.repository.SurveyRepositoryService',
+    'otusjs.survey.GroupManagerFactory',
+    '$q'
   ];
 
-  function Service(SurveyRepositoryService) {
+  function Service(SurveyRepositoryService, GroupManagerFactory, $q) {
     var self = this;
 
     /* Public methods */
-     self.listSurveysGroups = listSurveysGroups;
+     self.getSurveyGroupsByUser = getSurveyGroupsByUser;
 
-    function listSurveysGroups() {
-      return SurveyRepositoryService.listSurveysGroups();
+    function getSurveyGroupsByUser() {
+      var deferred = $q.defer();
+      SurveyRepositoryService.getSurveyGroupsByUser().then(function (groupList) {
+        deferred.resolve(GroupManagerFactory.create(groupList));
+      }).catch(function (err) {
+        deferred.reject(err);
+      })
+
+      return deferred.promise;
     }
 
 

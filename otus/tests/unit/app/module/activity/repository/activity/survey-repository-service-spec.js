@@ -13,21 +13,21 @@ describe('survey-repository-service Test', function() {
       service = _$injector_.get(UNIT_NAME);
     });
 
-    spyOn(Mock.SurveyCollectionService, "listSurveysGroups").and.callThrough();
+    spyOn(Mock.SurveyCollectionService, "getSurveyGroupsByUser").and.callThrough();
   });
 
   it('should defined methods', function() {
-    expect(service.listSurveysGroups).toBeDefined();
+    expect(service.getSurveyGroupsByUser).toBeDefined();
   });
 
-  it('should call listSurveysGroups method', function () {
-    service.listSurveysGroups();
-    expect(Mock.SurveyCollectionService.listSurveysGroups).toHaveBeenCalledTimes(1)
+  it('should call getSurveyGroupsByUser method', function () {
+    service.getSurveyGroupsByUser();
+    expect(Mock.SurveyCollectionService.getSurveyGroupsByUser).toHaveBeenCalledTimes(1)
   });
 
   function mockInjections() {
     Mock.SurveyCollectionService = {
-      listSurveysGroups: () => {}
+      getSurveyGroupsByUser: () => {}
     };
   }
 });

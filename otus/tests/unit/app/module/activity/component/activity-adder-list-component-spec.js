@@ -1,4 +1,4 @@
-describe('otusActivityAdderList', function() {
+describe('otusActivityAdderList Test', function() {
 
   var UNIT_NAME = 'otusActivityAdderListCtrl';
   var Mock = {};
@@ -10,7 +10,6 @@ describe('otusActivityAdderList', function() {
     mockInjections();
     angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
       $provide.value('otusjs.activity.business.ParticipantActivityService', Mock.ParticipantActivityService);
-      $provide.value('otusjs.survey.GroupManagerFactory', {});
       $provide.value('otusjs.activity.business.GroupActivityService', Mock.GroupActivityService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
       $provide.value('$scope', {$watch:()=>{},$$postDigest:()=>{}});
@@ -32,59 +31,48 @@ describe('otusActivityAdderList', function() {
   describe('properties and methods', function () {
     it('should be defined', function () {
       expect(controller.searchTerm).toBeDefined();
-      expect(controller.selectedGroups).toBeDefined();
       expect(controller.existsGroup).toBeDefined();
       expect(controller.isIndeterminateGroups).toBeDefined();
       expect(controller.isCheckedGroup).toBeDefined();
       expect(controller.toggleAllGroups).toBeDefined();
       expect(controller.clearSearchTerm).toBeDefined();
+      controller.$onInit();
+      expect(controller.selectedGroups).toBeDefined();
+      expect(controller.groupList).toBeDefined();
+
     });
   });
 
   describe("groups(bloc) tests", function () {
     beforeEach(function () {
       controller.selectedGroups = [];
-      controller.surveysGroups = [
-        {
-          "_id": "5c7400d2d767afded0d84dcf",
-          "objectType": "SurveyGroup",
-          "name": "CI",
-          "surveyAcronyms": [
-            "ACTA",
-            "AMAC",
-            "CISE"
-          ]
-        },
-        {
-          "_id": "5c7400d2d767afded0d84dcf",
-          "objectType": "SurveyGroup",
-          "name": "CD",
-          "surveyAcronyms": [
-            "BIOC",
-            "AMAC",
-            "CFUC"
-          ]
-        }
-      ];
-      controller.groupList = ["CI","CD"];
+      controller.surveysGroups = Mock.groupManager;
+
       controller.AllActivities = Mock.AllActivities;
       controller.searchTerm = "CD";
       spyOn(controller, "updateDataTable").and.callThrough();
+      spyOn(Mock.groupManager, "getGroupNames").and.callThrough();
+      spyOn(Mock.groupManager, "getGroupSurveys").and.callThrough();
+      spyOn(Mock.GroupActivityService, "getSurveyGroupsByUser").and.returnValue(Promise.resolve(Mock.groupManager));
     });
+
     it('should filter by group', function () {
       controller.$onInit();
+      controller.groupList = Mock.groupManager.getGroupNames();
+      Mock.GroupActivityService.getSurveyGroupsByUser().then(function (response) {
+        expect(Mock.groupManager.getGroupNames).toHaveBeenCalled();
+      });
+
       expect(controller.existsGroup("CI")).toBeFalsy();
       expect(controller.isCheckedGroup()).toBeFalsy();
       expect(controller.isIndeterminateGroups()).toBeFalsy();
 
       controller.toggleAllGroups();
+      expect(Mock.groupManager.getGroupSurveys).toHaveBeenCalledTimes(Mock.groupManager.getGroupNames().length);
       expect(controller.updateDataTable).toHaveBeenCalledTimes(1);
-      expect(controller.isIndeterminateGroups()).toBeFalsy();
 
       expect(controller.existsGroup("CI")).toBeTruthy();
       expect(controller.isCheckedGroup()).toBeTruthy();
-      controller.toggleAllGroups();
-      controller.toggleAllGroups();
       controller.selectedGroups.pop();
       expect(controller.isIndeterminateGroups()).toBeTruthy();
     });
@@ -104,30 +92,18 @@ describe('otusActivityAdderList', function() {
       selectActivities: function(){}
     };
 
+    Mock.groupManager = {
+      getGroupNames: ()=>{
+        return ["CI", "CD"];
+      },
+      getGroupSurveys: (name) =>{
+        return ["ACTA", "AMAC", "CISE"];
+      }
+    };
+
     Mock.GroupActivityService = {
-      listSurveysGroups: function () {
-        return Promise.resolve([
-          {
-            "_id": "5c7400d2d767afded0d84dcf",
-            "objectType": "SurveyGroup",
-            "name": "CI",
-            "surveyAcronyms": [
-              "ACTA",
-              "AMAC",
-              "CISE"
-            ]
-          },
-          {
-            "_id": "5c7400d2d767afded0d84dcf",
-            "objectType": "SurveyGroup",
-            "name": "CD",
-            "surveyAcronyms": [
-              "BIOC",
-              "AMAC",
-              "CFUC"
-            ]
-          }
-        ]);
+      getSurveyGroupsByUser: () => {
+        return Promise.resolve(Mock.groupManager);
       }
     };
 
@@ -149,7 +125,7 @@ describe('otusActivityAdderList', function() {
           identity: {acronym: "MEDC"}
         }
       },
-    ]
+    ];
 
   }
 

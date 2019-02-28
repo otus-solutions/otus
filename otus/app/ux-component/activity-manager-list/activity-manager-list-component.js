@@ -13,7 +13,6 @@
     .controller('otusActivityListCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.survey.GroupManagerFactory',
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.activity.business.GroupActivityService',
     'otusjs.activity.core.EventService',
@@ -24,17 +23,16 @@
     '$element'
   ];
 
-  function Controller(GroupManagerFactory, ActivityService, GroupActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope, $element) {
+  function Controller(ActivityService, GroupActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope, $element) {
     var self = this;
 
-    self.selectedSurveys = [];
     var _selectedActivities = [];
+    self.selectedSurveys = [];
     self.isListEmpty = true;
     self.orderByField = 'name';
     self.reverseSort = false;
     self.finalPage = false;
     self.selectedGroups = [];
-
 
     /* Public methods */
     self.selectActivity = selectActivity;
@@ -76,13 +74,11 @@
     }
 
     function onInit() {
-      GroupActivityService.listSurveysGroups().then(function (response) {
-        //TODO: FALTA O MODEL
-        // self.surveysGroups = GroupManagerFactory.create(response.map(group => {return group.name}));
-        self.surveysGroups = angular.copy(response);
-        self.groupList = self.surveysGroups.map(function (group) {
-          return group.name;
-        });
+      self.selectedGroups = [];
+      self.groupList = [];
+      GroupActivityService.getSurveyGroupsByUser().then(function (data) {
+        self.surveysGroups = data;
+        self.groupList = self.surveysGroups.getGroupNames();
       });
 
       EventService.onParticipantSelected(_loadActivities);
@@ -179,11 +175,9 @@
     function _surveysFilter(){
       self.selectedSurveys = [];
       self.selectedGroups.forEach(groupName => {
-        self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.find(function (group) {
-          return group.name == groupName;
-        }).surveyAcronyms);
+        self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.getGroupSurveys(groupName));
       });
-       self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
+      self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
         return self.selectedSurveys.indexOf(item) == position;
       });
     }

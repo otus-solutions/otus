@@ -15,7 +15,6 @@ describe('otusActivityManagerList Test', function() {
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
     mockInjections();
     angular.mock.module('otusjs.otus.uxComponent', function($provide){
-      $provide.value('otusjs.survey.GroupManagerFactory', {});
       $provide.value('otusActivityManager', {});
       $provide.value('otusjs.activity.business.ParticipantActivityService', Mock.ParticipantActivityService);
       $provide.value('otusjs.activity.business.GroupActivityService', Mock.GroupActivityService);
@@ -48,7 +47,7 @@ describe('otusActivityManagerList Test', function() {
   describe("controller initialize tests", function () {
     beforeEach(function () {
       spyOn(Mock.ParticipantActivityService, "listAll").and.callThrough();
-      spyOn(Mock.GroupActivityService, "listSurveysGroups").and.callThrough();
+      spyOn(Mock.GroupActivityService, "getSurveyGroupsByUser").and.callThrough();
     });
     it('should verify properties definition', function () {
       expect(controller.existsGroup).toBeDefined();
@@ -60,16 +59,11 @@ describe('otusActivityManagerList Test', function() {
       expect(controller.selectedSurveys).toBeDefined();
       controller.$onInit();
       expect(Mock.ParticipantActivityService.listAll).toHaveBeenCalledTimes(1);
-      expect(Mock.GroupActivityService.listSurveysGroups).toHaveBeenCalledTimes(1);
-      Mock.GroupActivityService.listSurveysGroups().then(function () {
+      expect(Mock.GroupActivityService.getSurveyGroupsByUser).toHaveBeenCalledTimes(1);
+      Mock.GroupActivityService.getSurveyGroupsByUser().then(function () {
         expect(controller.surveysGroups).toBeDefined();
-        expect(controller.groupList).toBeDefined();
       })
 
-      Mock.ParticipantActivityService.listAll().then(function () {
-        expect(controller.AllActivities).toBeDefined();
-        expect(controller.activities).toBeDefined();
-      })
     });
   });
 
@@ -91,7 +85,6 @@ describe('otusActivityManagerList Test', function() {
       expect(controller.dynamicTableSettings.elementsProperties[3]).toEqual(ELEMENTS_ARRAY[3]);
       expect(controller.dynamicTableSettings.elementsProperties[4]).toEqual(ELEMENTS_ARRAY[4]);
       expect(controller.dynamicTableSettings.elementsProperties[5]).toEqual(ELEMENTS_ARRAY[5]);
-
     });
 
   });
@@ -99,47 +92,32 @@ describe('otusActivityManagerList Test', function() {
   describe("groups(bloc) tests", function () {
     beforeEach(function () {
       controller.selectedGroups = [];
-      controller.surveysGroups = [
-        {
-          "_id": "5c7400d2d767afded0d84dcf",
-          "objectType": "SurveyGroup",
-          "name": "CI",
-          "surveyAcronyms": [
-            "ACTA",
-            "AMAC",
-            "CISE"
-          ]
-        },
-        {
-          "_id": "5c7400d2d767afded0d84dcf",
-          "objectType": "SurveyGroup",
-          "name": "CD",
-          "surveyAcronyms": [
-            "BIOC",
-            "AMAC",
-            "CFUC"
-          ]
-        }
-      ];
-      controller.groupList = ["CI","CD"];
+      controller.surveysGroups = Mock.groupManager;
+      controller.groupList = Mock.groupManager.getGroupNames();
       controller.AllActivities = Mock.AllActivities;
       controller.searchTerm = "CD";
       spyOn(controller, "updateDataTable").and.callThrough();
+      spyOn(Mock.groupManager, "getGroupNames").and.callThrough();
+      spyOn(Mock.groupManager, "getGroupSurveys").and.callThrough();
     });
     it('should filter by group', function () {
       controller.$onInit();
+      controller.groupList = Mock.groupManager.getGroupNames();
+      Mock.GroupActivityService.getSurveyGroupsByUser().then(function (response) {
+        expect(Mock.groupManager.getGroupNames).toHaveBeenCalled();
+      });
+
       expect(controller.existsGroup("CI")).toBeFalsy();
       expect(controller.isCheckedGroup()).toBeFalsy();
       expect(controller.isIndeterminateGroups()).toBeFalsy();
 
       controller.toggleAllGroups();
+      expect(Mock.groupManager.getGroupSurveys).toHaveBeenCalledTimes(Mock.groupManager.getGroupNames().length);
       expect(controller.updateDataTable).toHaveBeenCalledTimes(1);
       expect(controller.isIndeterminateGroups()).toBeFalsy();
 
       expect(controller.existsGroup("CI")).toBeTruthy();
       expect(controller.isCheckedGroup()).toBeTruthy();
-      controller.toggleAllGroups();
-      controller.toggleAllGroups();
       controller.selectedGroups.pop();
       expect(controller.isIndeterminateGroups()).toBeTruthy();
     });
@@ -196,34 +174,24 @@ describe('otusActivityManagerList Test', function() {
       {acronym: "ACTA"},
       {acronym: "CISE"},
       {acronym: "MEDC"},
-    ]
+    ];
+
+    Mock.groupManager = {
+      getGroupNames: ()=>{
+        return ["CI", "CD"];
+      },
+      getGroupSurveys: (name) =>{
+        return ["ACTA", "AMAC", "CISE"];
+      }
+    };
 
     Mock.GroupActivityService = {
-      listSurveysGroups: function () {
-        return Promise.resolve([
-          {
-            "_id": "5c7400d2d767afded0d84dcf",
-            "objectType": "SurveyGroup",
-            "name": "CI",
-            "surveyAcronyms": [
-              "ACTA",
-              "AMAC",
-              "CISE"
-            ]
-          },
-          {
-            "_id": "5c7400d2d767afded0d84dcf",
-            "objectType": "SurveyGroup",
-            "name": "CD",
-            "surveyAcronyms": [
-              "BIOC",
-              "AMAC",
-              "CFUC"
-            ]
-          }
-        ]);
+      getSurveyGroupsByUser: function () {
+        return Promise.resolve(Mock.groupManager);
       }
     }
+
+
   }
 
 });

@@ -14,10 +14,10 @@
     var _existsWorkingInProgress = null;
 
     /* Public methods */
-    self.listSurveysGroups = listSurveysGroups;
+    self.getSurveyGroupsByUser = getSurveyGroupsByUser;
 
-    function listSurveysGroups() {
-      return SurveyCollectionService.listSurveysGroups();
+    function getSurveyGroupsByUser() {
+      return SurveyCollectionService.getSurveyGroupsByUser();
     }
 
   }

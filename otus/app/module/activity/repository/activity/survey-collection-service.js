@@ -16,7 +16,7 @@
     /* Public methods */
     self.listAll = listAll;
     self.listAcronyms = listAcronyms;
-    self.listSurveysGroups = listSurveysGroups;
+    self.getSurveyGroupsByUser = getSurveyGroupsByUser;
 
     function listAll() {
       return _executeWork(function(dataSource) {
@@ -30,8 +30,8 @@
       });
     }
 
-    function listSurveysGroups() {
-      return SurveyRestService.listSurveysGroups();
+    function getSurveyGroupsByUser() {
+      return SurveyRestService.getSurveyGroupsByUser();
     }
 
     function _executeWork(work) {

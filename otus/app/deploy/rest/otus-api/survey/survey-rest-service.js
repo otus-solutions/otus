@@ -16,13 +16,13 @@
 
     /* Public methods */
     self.initialize = initialize;
-    self.listSurveysGroups = listSurveysGroups;
+    self.getSurveyGroupsByUser = getSurveyGroupsByUser;
 
     function initialize() {
-      _rest = OtusRestResourceService.getSurveyResource();
+      _rest = OtusRestResourceService.getSurveyGroupResource();
     }
 
-    function listSurveysGroups() {
+    function getSurveyGroupsByUser() {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
@@ -30,7 +30,7 @@
       var request = $q.defer();
 
       _rest
-        .listSurveysGroups()
+        .getSurveyGroupsByUser()
         .$promise
         .then(function(response) {
           if (response.data && response.data.length) {
@@ -39,36 +39,9 @@
             request.resolve([]);
           }
         });
-      // request.resolve(respostaFake.data);
 
       return request.promise;
     }
-
-    var respostaFake =  {
-      "data": [
-        {
-          "_id": "5c7400d2d767afded0d84dcf",
-          "objectType": "SurveyGroup",
-          "name": "CI",
-          "surveyAcronyms": [
-            "ACTA",
-            "AMAC",
-            "CISE"
-          ]
-        },
-        {
-          "_id": "5c7400d2d767afded0d84dcf",
-          "objectType": "SurveyGroup",
-          "name": "CD",
-          "surveyAcronyms": [
-            "BIOC",
-            "AMAC",
-            "CFUC"
-          ]
-        }
-      ]
-    };
-
 
   }
 }());
