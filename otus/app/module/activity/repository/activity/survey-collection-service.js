@@ -7,10 +7,11 @@
 
   Service.$inject = [
     'otusjs.activity.core.ModuleService',
-    'otusjs.deploy.SurveyRestService'
+    'otusjs.deploy.SurveyRestService',
+    'otusjs.deploy.SurveyGroupRestService'
   ];
 
-  function Service(ModuleService, SurveyRestService) {
+  function Service(ModuleService, SurveyRestService, SurveyGroupRestService) {
     var self = this;
 
     /* Public methods */
@@ -31,7 +32,7 @@
     }
 
     function getSurveyGroupsByUser() {
-      return SurveyRestService.getSurveyGroupsByUser();
+      return SurveyGroupRestService.getSurveyGroupsByUser();
     }
 
     function _executeWork(work) {

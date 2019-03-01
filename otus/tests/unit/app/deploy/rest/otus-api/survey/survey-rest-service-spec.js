@@ -20,8 +20,9 @@ describe('survey-rest-service Test', function() {
       service.initialize();
     });
 
-    spyOn(Mock.rest, "getSurveyGroupsByUser").and.callThrough();
-    spyOn(Mock.OtusRestResourceService, "getSurveyGroupResource").and.returnValue(Mock.rest)
+    spyOn(Mock.rest, "list").and.callThrough();
+    spyOn(Mock.rest, "listAll").and.callThrough();
+    spyOn(Mock.OtusRestResourceService, "getSurveyResource").and.returnValue(Mock.rest)
   });
 
   afterEach(function() {
@@ -29,23 +30,33 @@ describe('survey-rest-service Test', function() {
   });
 
   it('should defined method', function() {
-    expect(service.getSurveyGroupsByUser).toBeDefined();
+    expect(service.list).toBeDefined();
+    expect(service.listAll).toBeDefined();
   });
 
-  it('should call getSurveyGroupsByUser method', function (done) {
-    service.getSurveyGroupsByUser();
-    expect(Mock.rest.getSurveyGroupsByUser).toHaveBeenCalledTimes(1);
+  it('should call list method', function (done) {
+    service.list();
+    expect(Mock.rest.list).toHaveBeenCalledTimes(1);
+    done()
+  });
+
+  it('should call listAll method', function (done) {
+    service.listAll();
+    expect(Mock.rest.listAll).toHaveBeenCalledTimes(1);
     done()
   });
 
   function mockInjections() {
     Mock.rest = {
-      getSurveyGroupsByUser: function () {
+      list: function () {
+        return {$promise: Promise.resolve({data:[]})};
+      },
+      listAll: function () {
         return {$promise: Promise.resolve({data:[]})};
       }
     };
     Mock.OtusRestResourceService = {
-      getSurveyGroupResource: function () {
+      getSurveyResource: function () {
         return Mock.rest;
       }
     };

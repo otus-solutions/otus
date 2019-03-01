@@ -7,14 +7,15 @@ describe('survey-collection-service Test', function() {
     mockInjections();
     angular.mock.module('otusjs.activity.repository', function ($provide) {
       $provide.value('otusjs.activity.core.ModuleService', Mock.ModuleService);
-      $provide.value('otusjs.deploy.SurveyRestService', Mock.SurveyRestService)
+      $provide.value('otusjs.deploy.SurveyRestService', Mock.SurveyRestService);
+      $provide.value('otusjs.deploy.SurveyGroupRestService', Mock.SurveyGroupRestService);
     });
 
     inject(function(_$injector_) {
       service = _$injector_.get(UNIT_NAME);
     });
 
-    spyOn(Mock.SurveyRestService, "getSurveyGroupsByUser").and.callThrough();
+    spyOn(Mock.SurveyGroupRestService, "getSurveyGroupsByUser").and.callThrough();
   });
 
   it('should defined methods', function() {
@@ -23,12 +24,13 @@ describe('survey-collection-service Test', function() {
 
   it('should call getSurveyGroupsByUser method', function () {
     service.getSurveyGroupsByUser();
-    expect(Mock.SurveyRestService.getSurveyGroupsByUser).toHaveBeenCalledTimes(1)
+    expect(Mock.SurveyGroupRestService.getSurveyGroupsByUser).toHaveBeenCalledTimes(1)
   });
 
   function mockInjections() {
     Mock.ModuleService = {};
-    Mock.SurveyRestService = {
+    Mock.SurveyRestService = {};
+    Mock.SurveyGroupRestService = {
       getSurveyGroupsByUser: () => {}
     };
   }

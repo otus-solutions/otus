@@ -9,6 +9,7 @@ describe('participant-activity-service Test', function() {
     beforeEach(function() {
       angular.mock.module('otusjs.activity',function ($provide) {
         $provide.value('otusjs.deploy.SurveyRestService', {});
+        $provide.value('otusjs.deploy.SurveyGroupRestService', {});
       });
 
       inject(function(_$injector_) {
