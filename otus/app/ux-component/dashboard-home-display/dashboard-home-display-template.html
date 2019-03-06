@@ -16,7 +16,7 @@
     min-width: 300px !important;
   }
 </style>
-<div layout="row" flex layout-fill>
+<md-content layout="row" flex layout-fill>
   <div layout="column" layout-align="start start" layout-padding layout-fill flex>
     <!--<div flex>-->
     <div layout="row" layout-padding layout-fill layout-align="center center" flex>
@@ -32,8 +32,8 @@
         </otus-participant-search>
       </div>
     </div>
-    <md-content layout-xs="column" layout="row" layout-align="center start" layout-fill layout-padding flex layout-wrap>
-      <div flex-xs flex-md="30" flex-sm="65" flex-lg="25" flex-gt-lg="20" layout-margin layout="column">
+    <div layout="row" layout-align="center start" layout-fill layout-padding flex layout-wrap>
+      <div flex-xs flex-md="30" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
         <md-card layout-fill ng-init="showLaboratory=true">
           <md-card-header flex layout-align="start center" layout-fill class="md-primary header-home-options">
             <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">colorize</md-icon>
@@ -62,7 +62,7 @@
           </md-card-content>
         </md-card>
       </div>
-      <div flex-xs flex-md="30" flex-sm="65" flex-lg="25" flex-gt-lg="20" layout-margin layout="column">
+      <div flex-xs flex-md="30" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
         <md-card layout-fill ng-init="showMonitory=true">
           <md-card-header flex layout-align="start center" layout-fill class="md-primary header-home-options">
             <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">assessment</md-icon>
@@ -91,6 +91,6 @@
           </md-card-content>
         </md-card>
       </div>
-    </md-content>
+    </div>
   </div>
-</div>
+</md-content>

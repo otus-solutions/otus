@@ -37,7 +37,7 @@
     function onInit() {
       self.otusActivityManager.activityInfoComponent = self;
     }
-//TODO: implementar conceito de blocos para informar na descrição da atividade selecionada
+
     function show() {
       var activity = ContextService.getSelectedActivities()[0];
       self.activity = {};
@@ -78,7 +78,7 @@
           .hideDelay(3000));
     }
 
-    function DialogController($mdDialog, $mdToast) {
+    function DialogController($mdDialog) {
       var self = this;
 
       self.activityRevision = {};
