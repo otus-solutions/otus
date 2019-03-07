@@ -48,7 +48,8 @@
       _getAll(dsDefsArray)
         .then(function(promiseArray) {
           promiseArray.forEach(function(promise) {
-            dsMap[promise.data.id] = promise.data;
+            let ds = promise.data;
+            dsMap[ds.data.id] = ds.data;
           });
           defer.resolve(dsMap);
         });
