@@ -28,7 +28,7 @@
         throw new Error('REST resource is not initialized.');
       }
 
-      return _rest.list().$promise;
+      return _rest.list();
     }
 
     function getByID(id) {
@@ -36,7 +36,7 @@
         throw new Error('REST resource is not initialized.');
       }
 
-      return _rest.getByID({idx: id}).$promise;
+      return _rest.getByID(id);
     }
   }
 }());
