@@ -49,6 +49,7 @@
     function listAvailables() {
       return SurveyCollectionService.listAll().then(_toEntity);
     }
+
     function listAllSurveys() {
       return SurveyCollectionService.listAcronyms().then(_toEntity);
     }
@@ -146,6 +147,7 @@
       var dbObject = entity.toJSON();
       dbObject.$loki = entity.$loki;
       dbObject.meta = entity.meta;
+      dbObject.isDiscarded = entity.isDiscarded;
       return dbObject;
     }
 
