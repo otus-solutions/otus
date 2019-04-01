@@ -382,3 +382,25 @@ md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
 md-tab-content{
   margin-top: 10px !important;
 }
+
+.selectdemoSelectHeader .demo-header-searchbox {
+  border: none;
+  outline: none;
+  height: 100%;
+  width: 100%;
+  padding: 0; }
+.selectdemoSelectHeader .demo-select-header {
+  box-shadow: 0 1px 0 0 rgba(0, 0, 0, 0.1), 0 0 0 0 rgba(0, 0, 0, 0.14), 0 0 0 0 rgba(0, 0, 0, 0.12);
+  padding-left: 10.667px;
+  height: 48px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: auto; }
+.selectdemoSelectHeader md-content._md {
+  max-height: 240px; }
+
+.selectdemoSelectHeader>md-select-menu {
+  margin-top: 45px !important;
+}

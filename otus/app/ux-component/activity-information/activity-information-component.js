@@ -42,6 +42,8 @@
       var activity = ContextService.getSelectedActivities()[0];
       self.activity = {};
       self.activity.details = activity.surveyForm.surveyTemplate.identity;
+      self.activity.details["block"] = "CI";
+
       self.activity.history = activity.statusHistory.getHistory().map(ActivityStatusItemFactory.create);
       self.activity.history.reverse();
       _loadRevisions(activity);
@@ -76,7 +78,7 @@
           .hideDelay(3000));
     }
 
-    function DialogController($mdDialog, $mdToast) {
+    function DialogController($mdDialog) {
       var self = this;
 
       self.activityRevision = {};

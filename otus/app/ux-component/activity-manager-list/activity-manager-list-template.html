@@ -1,4 +1,46 @@
 <div layout="column" flex class="menuBardemoBasicUsage">
+  <md-content md-whiteframe="3dp" layout-wrap="" layout="row" layout-align="start center" layout-padding="">
+    <md-card flex layout-padding="" layout-margin="" layout-align="start center" layout-fill="">
+      <md-card-actions layout="row" layout-gt-md="row" layout-align="start center" layout-wrap layout-fill>
+        <h4>
+          <md-icon>view_module</md-icon>
+          Visualização por Blocos
+          <md-tooltip md-direction="right">
+            Selecione o bloco de atividade a ser visualizado.
+          </md-tooltip>
+        </h4>
+        <span flex-gt-md="5" flex="100" ></span>
+        <md-input-container flex-gt-md="50" flex="70">
+          <label>Blocos</label>
+          <md-select ng-model="$ctrl.selectedGroups"
+                     md-on-close="$ctrl.clearSearchTerm()"
+                     data-md-container-class="selectdemoSelectHeader"
+                     multiple flex>
+            <md-select-header class="demo-select-header">
+              <input id="searchBlock" ng-model="$ctrl.searchTerm"
+                     type="search"
+                     placeholder="Digite o bloco desejado.."
+                     class="demo-header-searchbox md-text">
+            </md-select-header>
+            <md-optgroup label="Blocos">
+              <md-option ng-value="item" ng-repeat="item in $ctrl.groupList |
+              filter:$ctrl.searchTerm" ng-checked="$ctrl.existsGroup(item)">{{item}}</md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
+        <span flex-gt-md="5" flex="10"></span>
+        <md-input-container flex>
+          <md-checkbox style="margin-bottom: 0px !important;" aria-label="Select All"
+                       ng-checked="$ctrl.isCheckedGroup()"
+                       md-indeterminate="$ctrl.isIndeterminateGroups()"
+                       ng-click="$ctrl.toggleAllGroups()">
+            Todos
+          </md-checkbox>
+        </md-input-container>
+
+      </md-card-actions>
+    </md-card>
+  </md-content>
   <md-content layout="row" ng-if="$ctrl.isListEmpty" flex layout-align="center center">
     <div class="label-light-gray">
       <h3 class="md-display-3">Nenhuma Atividade Adicionada</h3>
@@ -13,6 +55,8 @@
   <md-content layout="column" ng-show="!$ctrl.isListEmpty" flex>
     <dynamic-data-table flex="100" dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.updateDataTable"></dynamic-data-table>
   </md-content>
-  <md-content md-whiteframe="3dp" flex="10"></md-content>
+  <md-content md-whiteframe="3dp" style="height: 6em !important;" layout="row" layout-align="start center">
+
+  </md-content>
 </div>
 

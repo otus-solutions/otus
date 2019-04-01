@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy.rest')
-    .service('otusjs.deploy.SurveyRestService', Service);
+    .service('otusjs.deploy.SurveyGroupRestService', Service);
 
   Service.$inject = [
     'OtusRestResourceService',
@@ -16,14 +16,13 @@
 
     /* Public methods */
     self.initialize = initialize;
-    self.list = list;
-    self.listAll = listAll;
+    self.getSurveyGroupsByUser = getSurveyGroupsByUser;
 
     function initialize() {
-      _rest = OtusRestResourceService.getSurveyResource();
+      _rest = OtusRestResourceService.getSurveyGroupResource();
     }
 
-    function list() {
+    function getSurveyGroupsByUser() {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
@@ -31,28 +30,7 @@
       var request = $q.defer();
 
       _rest
-        .list()
-        .$promise
-        .then(function(response) {
-          if (response.data && response.data.length) {
-            request.resolve(response.data);
-          } else {
-            request.resolve([]);
-          }
-        });
-
-      return request.promise;
-    }
-
-    function listAll() {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-
-      var request = $q.defer();
-
-      _rest
-        .listAll()
+        .getSurveyGroupsByUser()
         .$promise
         .then(function(response) {
           if (response.data && response.data.length) {
