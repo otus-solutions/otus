@@ -3,13 +3,6 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusFlagReportManager', {
-      controller: "otusFlagReportManagerCtrl as $ctrl",
-      templateUrl: 'app/ux-component/flag-report/manager-list/otus-flag-report-manager-list-template.html',
-      bindings:{
-        user: "="
-      }
-    })
     .controller("otusFlagReportManagerCtrl", Controller);
 
   Controller.$inject = [
@@ -24,11 +17,13 @@
   ];
 
   function Controller(ProjectFieldCenterService,
-                      MonitoringService,
-                      StatusHistoryService,
-                      dashboardContextService,
-                      LoadingScreenService,
-                      FlagReportParseData, $q, $timeout) {
+    MonitoringService,
+    StatusHistoryService,
+    DashboardContextService,
+    LoadingScreenService,
+    FlagReportParseData,
+    $q,
+    $timeout) {
 
     var self = this;
 
@@ -59,17 +54,17 @@
       _constructor();
     }
 
-    function _prepareForCSV(){
+    function _prepareForCSV() {
       return $q(function (resolve, reject) {
         alasql("DROP TABLE IF EXISTS flags");
         alasql("CREATE TABLE IF NOT EXISTS flags(RN INT,ACRONIMO STRING, STATUS STRING)");
         var rn = 0;
-        if(Array.isArray(self.rawActivities.data)){
-          if(self.activitiesData.data.length>0){
+        if (Array.isArray(self.rawActivities.data)) {
+          if (self.activitiesData.data.length > 0) {
             try {
-              self.activitiesData.data.forEach(function(line) {
+              self.activitiesData.data.forEach(function (line) {
                 for (let i = 0; i < self.activitiesData.columns.length; i++) {
-                  alasql("INSERT INTO flags VALUES("+self.activitiesData.index[rn]+",'"+self.activitiesData.columns[i][1]+"','"+StatusHistoryService.getStatusLabel(line[i])+"')");
+                  alasql("INSERT INTO flags VALUES(" + self.activitiesData.index[rn] + ",'" + self.activitiesData.columns[i][1] + "','" + StatusHistoryService.getStatusLabel(line[i]) + "')");
                 }
                 rn++;
               });
@@ -84,16 +79,16 @@
       });
     }
 
-    function downloadCSV(){
+    function downloadCSV() {
       LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
       $timeout(function () {
         _prepareForCSV().then(function (response) {
           if (response) {
             var name = "relatorio-flags-".concat(new Date().toLocaleDateString());
-            var QUERY_ACRONYM = self.selectedAcronym != null ? "ACRONIMO='"+self.selectedAcronym+"'": "2=2";
-            var QUERY_STATUS = self.selectedStatus != null ? "STATUS='"+StatusHistoryService.getStatusLabel(self.selectedStatus)+"'": "3=3";
-            alasql('SELECT * INTO CSV("'+name+'.csv",{headers:true}) FROM flags WHERE 1=1 AND '+QUERY_ACRONYM+' AND '+QUERY_STATUS);
+            var QUERY_ACRONYM = self.selectedAcronym != null ? "ACRONIMO='" + self.selectedAcronym + "'" : "2=2";
+            var QUERY_STATUS = self.selectedStatus != null ? "STATUS='" + StatusHistoryService.getStatusLabel(self.selectedStatus) + "'" : "3=3";
+            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM flags WHERE 1=1 AND ' + QUERY_ACRONYM + ' AND ' + QUERY_STATUS);
             LoadingScreenService.finish();
           }
         }).catch(function (e) {
@@ -118,10 +113,11 @@
 
     function _loadAllCenters() {
       self.INDEX++;
-      if(!self.centers){
+      if (!self.centers) {
         ProjectFieldCenterService.loadCenters().then((result) => {
           self.centers = angular.copy(result);
           setUserFieldCenter();
+          LoadingScreenService.finish();
         }).catch(function (e) {
           LoadingScreenService.finish();
           throw e;
@@ -132,11 +128,11 @@
     }
 
     function setUserFieldCenter() {
-      dashboardContextService
+      DashboardContextService
         .getLoggedUser()
         .then((userData) => {
-          var {acronym} = userData.fieldCenter;
-          if(!acronym) {
+          var { acronym } = userData.fieldCenter;
+          if (!acronym) {
             _setCenter(self.centers[0].acronym);
           } else {
             self.centers = [].concat(self.centers.find((center) => {
@@ -154,7 +150,7 @@
 
     function _loadAllAcronyms() {
       self.INDEX++;
-      if(!self.acronymsList) {
+      if (!self.acronymsList) {
         MonitoringService.listAcronyms()
           .then((activities) => {
             self.acronymsList = activities.map(function (acronym) {
@@ -179,46 +175,46 @@
 
     function _loadActivitiesProgress(center) {
       self.INDEX++;
-      if(!self.activities || center !== self.selectedCenter.acronym){
+      if (!self.activities || center !== self.selectedCenter.acronym) {
         if (center !== self.selectedCenter.acronym) self.$onInit();
         MonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
             alasql("DROP TABLE IF EXISTS flags");
             self.rawActivities = angular.copy(response);
             self.activitiesData = angular.copy(response);
-            self.ready= true;
+            self.ready = true;
             self.ERROR = false;
-          }).catch((e)=>{
-          LoadingScreenService.finish();
-          throw e;
-        });
+          }).catch((e) => {
+            LoadingScreenService.finish();
+            throw e;
+          });
       } else {
         self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
-        self.ready= true;
+        self.ready = true;
         self.ERROR = false;
       }
 
     }
 
     function updateData(activities = null, acronym = null, status = null, center) {
-      if(center && center !== self.selectedCenter.acronym){
+      if (center && center !== self.selectedCenter.acronym) {
         _loadActivitiesProgress(center);
         _setCenter(center);
-      }else {
+      } else {
         if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
           _setActivity(acronym);
           _setStatus(status);
           self.newActivitiesData = FlagReportParseData.create(self.activitiesData, acronym, status)
           self.setActivities(self.newActivitiesData, acronym, status);
-        } else if(activities && activities !== self.activities){
+        } else if (activities && activities !== self.activities) {
           self.setActivities(activities, acronym, status);
         }
       }
     }
 
     function updatePage(activities = null, startPage, endPage) {
-      if(startPage !== undefined && endPage !== undefined){
-        self.activitiesData.index = self.rawActivities.index.slice(startPage,endPage+1);
+      if (startPage !== undefined && endPage !== undefined) {
+        self.activitiesData.index = self.rawActivities.index.slice(startPage, endPage + 1);
       }
       self.activitiesData.data = angular.copy(activities);
       self.setActivities(FlagReportParseData.create(self.activitiesData, self.selectedAcronym, self.selectedStatus), self.selectedAcronym, self.selectedStatus);

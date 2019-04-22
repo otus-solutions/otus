@@ -3,16 +3,6 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('flagFilterViewComponent', {
-      controller: "flagFilterViewCtrl as $ctrl",
-      templateUrl: 'app/ux-component/flag-report/filter/otus-flag-filter-view-template.html',
-      bindings: {
-        activitiesStatus: '=',
-        acronymsList: '=',
-        centers: '=',
-        onUpdate: '='
-      }
-    })
     .controller('flagFilterViewCtrl', Controller);
 
   function Controller() {

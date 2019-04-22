@@ -7,5 +7,13 @@
       <span layout-align="center center">Relatório de Flags</span>
     </div>
   </otus-dashboard-toolbar>
-  <div ui-view flex layout="column"/>
+  <md-content layout="column" layout-padding flex>
+    <md-tabs md-border-bottom layout-fill>
+      <md-tab label="Relatório de Flags para atividades">
+        <otus-flag-report-manager layout="column" flex></otus-flag-report-manager>
+      </md-tab>
+      <md-tab label="Relatório de Flags para laboratório">
+      </md-tab>
+    </md-tabs>
+  </md-content>
 </div>

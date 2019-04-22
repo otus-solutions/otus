@@ -74,7 +74,6 @@
     'otusjs.deploy.MonitoringStateProvider',
     'otusjs.deploy.UserAccessRecoveryProvider',
     'otusjs.deploy.FlagStateProvider',
-    'otusjs.deploy.FlagManagerStateProvider',
     'otusjs.deploy.LaboratoryMonitoringStateProvider'
   ];
 
@@ -109,7 +108,6 @@
     MonitoringStateProvider,
     UserAccessRecoveryProvider,
     FlagStateProvider,
-    FlagManagerStateProvider,
     LaboratoryMonitoringStateProvider
   ) {
     $stateProvider.state(AccessStateProvider.state);
@@ -142,7 +140,6 @@
     $stateProvider.state(MonitoringStateProvider.state);
     $stateProvider.state(UserAccessRecoveryProvider.state);
     $stateProvider.state(FlagStateProvider.state);
-    $stateProvider.state(FlagManagerStateProvider.state);
     $stateProvider.state(LaboratoryMonitoringStateProvider.state);
 
     /* Default state (route) */
