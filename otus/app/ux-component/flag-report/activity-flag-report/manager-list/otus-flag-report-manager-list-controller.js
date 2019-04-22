@@ -217,7 +217,7 @@
         self.activitiesData.index = self.rawActivities.index.slice(startPage, endPage + 1);
       }
       self.activitiesData.data = angular.copy(activities);
-      self.setActivities(FlagReportParseData.create(self.activitiesData, self.selectedAcronym, self.selectedStatus), self.selectedAcronym, self.selectedStatus);
+      self.setActivities(self.activitiesData, self.selectedAcronym, self.selectedStatus);
       LoadingScreenService.finish();
     }
 
