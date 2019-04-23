@@ -10,33 +10,32 @@
               <span flex-gt-md="5"></span>
               <span flex-sm="10"></span>
               <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
-                <label class="md-subhead">Acrônimo:</label>
-                <md-select ng-model="$ctrl.selectedAcronym" ng-change="$ctrl.onChangeFilter(null)" ng-disabled="">
-                  <md-option ng-repeat="questionnaire in $ctrl.acronymsList | orderBy:propertyName track by $index"
-                    value="{{questionnaire}}" ng-click="">
-                    {{questionnaire}}
+                <label class="md-subhead">Exame:</label>
+                <md-select ng-model="$ctrl.selectedExamName" ng-change="$ctrl.onChangeFilter(null)" ng-disabled="">
+                  <md-option ng-repeat="name in $ctrl.nameList | orderBy:propertyName track by $index" value="{{name}}"
+                    ng-click="">
+                    {{name}}
                   </md-option>
                 </md-select>
                 <md-tooltip>
-                  Acrônimo da atividade a ser visualizada
+                  Nome do exane a ser visualizado
                 </md-tooltip>
               </md-input-container>
-              <md-button class="md-icon-button md-mini button-inline" ng-if="$ctrl.selectedAcronym" ng-click="$ctrl.clear('acronym')">
+              <md-button class="md-icon-button md-mini button-inline" ng-if="$ctrl.selectedExamName" ng-click="$ctrl.clear('name')">
                 <md-icon style="font-size:18px;height:18px;width:18px; margin: 0px">clear</md-icon>
                 <md-tooltip>
-                  Limpar sigla
+                  Limpar nome
                 </md-tooltip>
               </md-button>
-              <span flex="5" ng-if="!$ctrl.selectedAcronym"></span>
+              <span flex="5" ng-if="!$ctrl.selectedExamName"></span>
               <span flex="5"></span>
               <md-input-container class="remove-errors-spacer md-block" flex="20">
                 <label class="md-subhead">Status:</label>
                 <md-select ng-model="$ctrl.selectedStatus" ng-change="$ctrl.onChangeFilter(null)" ng-disabled="">
                   <md-tooltip>
-                    Status de atividade
+                    Status do exame
                   </md-tooltip>
-                  <md-option ng-repeat="status in $ctrl.activitiesStatus track by $index" value="{{status.value}}"
-                    ng-click="">
+                  <md-option ng-repeat="status in $ctrl.examsStatus track by $index" value="{{status.value}}" ng-click="">
                     <span layout-align="start center">
                       <div class="icon-color" ng-style="{'background-color': '{{status.color}}'}" hide-gt-sm show-sm
                         md-whiteframe="2dp" hide></div>

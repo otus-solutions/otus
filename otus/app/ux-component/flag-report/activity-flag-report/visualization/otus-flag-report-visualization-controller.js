@@ -8,6 +8,7 @@
   Controller.$inject = ['otusjs.application.activity.StatusHistoryService'];
 
   function Controller(StatusHistoryService) {
+    var classesNumber = 10, cellSize = 24;
     var activitiesData = [];
     var self = this;
 
@@ -30,11 +31,7 @@
       } else {
         $("#heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
       }
-
     }
-
-
-    var classesNumber = 10, cellSize = 24;
 
     function heatmap_display(json, heatmapId) {
       var svg = d3.select(heatmapId).selectAll("*").remove();

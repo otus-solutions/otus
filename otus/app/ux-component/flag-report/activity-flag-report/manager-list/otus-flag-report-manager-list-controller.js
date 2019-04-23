@@ -26,22 +26,23 @@
     $timeout) {
 
     var self = this;
-
-    /* Lifecycle hooks */
-    self.$onInit = onInit;
-
-    self.updateData = updateData;
-    self.updatePage = updatePage;
-    self.setActivities = setActivities;
-    self.downloadCSV = downloadCSV;
-    self.INDEX = 0;
-    self.ERROR = true;
-    self.MESSAGES = [
+    self.centers;
+    self.index = 0;
+    self.error = true;
+    self.messages = [
       "Não existem atividades disponíveis para visualização.",
       "Não foi possível carregar os dados do centro.",
       "Não foi possível carregar os dados de acrônimos no sistema.",
       "Não foi possível carregar os dados de atividades no sistema."
     ];
+
+    /* Lifecycle hooks */
+    self.$onInit = onInit;
+    /* Public functions */
+    self.updateData = updateData;
+    self.updatePage = updatePage;
+    self.setActivities = setActivities;
+    self.downloadCSV = downloadCSV;
 
     self.$onDestroy = function () {
       alasql("DROP TABLE IF EXISTS flags");
@@ -112,7 +113,7 @@
     }
 
     function _loadAllCenters() {
-      self.INDEX++;
+      self.index++;
       if (!self.centers) {
         ProjectFieldCenterService.loadCenters().then((result) => {
           self.centers = angular.copy(result);
@@ -149,7 +150,7 @@
     }
 
     function _loadAllAcronyms() {
-      self.INDEX++;
+      self.index++;
       if (!self.acronymsList) {
         MonitoringService.listAcronyms()
           .then((activities) => {
@@ -174,7 +175,7 @@
     }
 
     function _loadActivitiesProgress(center) {
-      self.INDEX++;
+      self.index++;
       if (!self.activities || center !== self.selectedCenter.acronym) {
         if (center !== self.selectedCenter.acronym) self.$onInit();
         MonitoringService.getActivitiesProgressReport(center)
@@ -183,7 +184,7 @@
             self.rawActivities = angular.copy(response);
             self.activitiesData = angular.copy(response);
             self.ready = true;
-            self.ERROR = false;
+            self.error = false;
           }).catch((e) => {
             LoadingScreenService.finish();
             throw e;
@@ -191,7 +192,7 @@
       } else {
         self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
         self.ready = true;
-        self.ERROR = false;
+        self.error = false;
       }
 
     }

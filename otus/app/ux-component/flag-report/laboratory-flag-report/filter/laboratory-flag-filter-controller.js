@@ -7,7 +7,6 @@
 
   function Controller() {
     var self = this;
-
     self.$onInit = onInit;
     self.statusHistory = [];
 
@@ -20,7 +19,7 @@
 
     function clear(field) {
       switch (field) {
-        case "acronym":
+        case "exam":
           self.selectedAcronym = null;
           self.onChangeFilter();
           break;
@@ -32,13 +31,12 @@
           self.selectedAcronym = null;
           self.selectedStatus = null;
           self.onChangeFilter();
-
       }
     }
 
-    function onChangeFilter(activities) {
+    function onChangeFilter(exams) {
       let status = isNaN(parseInt(self.selectedStatus)) ? null : parseInt(self.selectedStatus);
-      self.onUpdate(activities, self.selectedAcronym, status, self.selectedCenter)
+      self.onUpdate(exams, self.selectedExamName, status, self.selectedCenter)
     }
   }
 
