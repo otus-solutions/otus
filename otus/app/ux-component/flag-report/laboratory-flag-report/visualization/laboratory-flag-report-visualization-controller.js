@@ -44,9 +44,8 @@
       var viewerWidth = $(document).width();
       var viewerHeight = $(document).height();
       var viewerPosTop = 200;
-
-      var legendElementWidth = cellSize * 3.2;
-
+      var legendHeight = 70;
+      var legendElementWidth = cellSize * 4.5;
       var colors = self.colorsRange;
       var svg;
 
@@ -58,11 +57,10 @@
 
       svg = d3.select(heatmapId)
         .append("svg")
-
         .attr("width", viewerWidth - 100)
         .attr("height", ((row_number * 35) + viewerPosTop) + "px")
         .append("g")
-        .attr("transform", "translate(" + window.innerWidth / 15 + "," + window.innerHeight / 7 + ")scale(" + window.innerWidth / 1440 + ")");
+        .attr("transform", "translate(" + window.innerWidth / 3.5 + "," + window.innerHeight / 4 + ")scale(" + window.innerWidth / 1800 + ")");
 
       svg.append('defs')
         .append('pattern')
@@ -214,7 +212,7 @@
 
       var legend = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", "translate(0,-300)")
+        .attr("transform", "translate(-45,-300)")
         .selectAll(".legendElement")
         .data(self.legendRange)
         .enter().append("g")
@@ -224,7 +222,7 @@
         .attr("x", function (d, i) {
           return legendElementWidth * i;
         })
-        .attr("y", viewerPosTop)
+        .attr("y", legendHeight)
         .attr("class", "cellLegend bordered")
         .attr("width", legendElementWidth)
         .attr("height", cellSize / 2)
@@ -240,7 +238,7 @@
         .attr("x", function (d, i) {
           return legendElementWidth * i;
         })
-        .attr("y", viewerPosTop + cellSize);
+        .attr("y", legendHeight + cellSize);
 
       function sortByValues(rORc, i, sortOrder) {
         var t = svg.transition().duration(1000);

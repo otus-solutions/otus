@@ -12,12 +12,11 @@
     'otusjs.deploy.LoadingScreenService',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
-    'otusjs.monitoring.business.MonitoringService',
-    'otusjs.application.exam.ExamStatusHistoryService'
+    'otusjs.application.exam.ExamStatusHistoryService',
+    'otusjs.monitoring.business.FlagReportMonitoringService'
   ];
 
-  function Controller($q, $timeout, FlagReportParseData, LoadingScreenService, FieldCenterRestService, DashboardContextService, MonitoringService, ExamStatusHistoryService) {
-
+  function Controller($q, $timeout, FlagReportParseData, LoadingScreenService, FieldCenterRestService, DashboardContextService, ExamStatusHistoryService, FlagReportMonitoringService) {
     var self = this;
     self.centers;
     self.exams;
@@ -33,6 +32,469 @@
     self.updatePage = updatePage;
     self.setExams = setExams;
     self.downloadCSV = downloadCSV;
+
+    // TODO: falar com o Breno sobre os valores para os estados e nomes dos exames
+    var data = {
+      "columns": [
+        [
+          "C", // TODO: Existe alguma necessidade disso?
+          "URÉIA - SANGUE"
+        ],
+        [
+          "C",
+          "CREATININA - SANGUE"
+        ],
+        [
+          "C",
+          "ASPARTATO TRANSAMINASE(TGO/AST)-SANGUE"
+        ],
+        [
+          "C",
+          "ALANINA TRANSAMINASE (TGP/ALT) - SANGUE"
+        ],
+        [
+          "C",
+          "GAMA GLUTAMIL TRANSFERASE - SANGUE"
+        ],
+        [
+          "C",
+          "ÁCIDO ÚRICO - SANGUE"
+        ],
+        [
+          "C",
+          "TRIGLICÉRIDES - SANGUE"
+        ],
+        [
+          "C",
+          "COLESTEROL TOTAL E FRAÇÕES - SANGUE"
+        ],
+        [
+          "C",
+          "ELSA B12"
+        ],
+        [
+          "C",
+          "ELSA FOLATO"
+        ],
+        [
+          "C",
+          "FERRO - SANGUE"
+        ],
+        [
+          "C",
+          "CAPACIDADE DE LIGAÇÃO DO FERRO"
+        ],
+        [
+          "C",
+          "ELSA FERRITINA"
+        ],
+        [
+          "C",
+          "ELSA TURBISORO"
+        ],
+        [
+          "C",
+          "ELSA T4 - LIVRE (TIROXINA LIVRE)"
+        ],
+        [
+          "C",
+          "ELSA ATPO - ANTICORPOS ANTI-TIREOPEROXIDASE (ATPO)"
+        ],
+        [
+          "C",
+          "ELSA INS - INSULINA JEJUM"
+        ],
+        [
+          "C",
+          "GLICOSE - SANGUE"
+        ],
+        [
+          "C",
+          "HEMOGLOBINA GLICADA - SANGUE"
+        ],
+        [
+          "C",
+          "CURVA INSULINÊMICA - 120 MIN."
+        ],
+        [
+          "C",
+          "CURVA GLICÊMICA -120 MINUTOS"
+        ],
+        [
+          "C",
+          "ELSA TURBIURINA"
+        ],
+        [
+          "C",
+          "CREATININA - URINA AMOSTRA ISOLADA"
+        ],
+        [
+          "C",
+          "SÓDIO - URINA AMOSTRA ISOLADA"
+        ],
+        [
+          "C",
+          "POTÁSSIO - URINA AMOSTRA ISOLADA"
+        ],
+        [
+          "C",
+          "CÁLCIO - URINA AMOSTRA ISOLADA"
+        ],
+        [
+          "C",
+          "ELSA TSH (HORMÔNIO TIREOESTIMULANTE)"
+        ],
+        [
+          "C",
+          "ELSA 3FT"
+        ]
+      ],
+      "index": [
+        5002453,
+        5002186,
+        5003304,
+        5000144,
+        5003520,
+        5001007,
+        5005283,
+        5000156,
+        5002768,
+        5004863,
+        5000966
+      ],
+      "data": [
+        [
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null
+        ],
+        [
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null
+        ],
+        [
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null
+        ]
+      ]
+    };
 
     function onInit() {
       self.ready = false;
@@ -76,7 +538,7 @@
 
     function updateData(exams = null, acronym = null, status = null, center) {
       if (center && center !== self.selectedCenter.acronym) {
-        _loadActivitiesProgress(center);
+        _loadExamsProgress(center);
         _setCenter(center);
       } else {
         if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
@@ -114,6 +576,31 @@
       self.exams = exams;
     }
 
+    function _prepareForCSV() {
+      return $q(function (resolve, reject) {
+        alasql("DROP TABLE IF EXISTS flags");
+        alasql("CREATE TABLE IF NOT EXISTS flags(RN INT,ACRONIMO STRING, STATUS STRING)");
+        var rn = 0;
+        if (Array.isArray(self.rawActivities.data)) {
+          if (self.activitiesData.data.length > 0) {
+            try {
+              self.activitiesData.data.forEach(function (line) {
+                for (let i = 0; i < self.activitiesData.columns.length; i++) {
+                  alasql("INSERT INTO flags VALUES(" + self.activitiesData.index[rn] + ",'" + self.activitiesData.columns[i][1] + "','" + StatusHistoryService.getStatusLabel(line[i]) + "')");
+                }
+                rn++;
+              });
+            } catch (e) {
+              reject(e);
+            }
+          }
+          resolve(true);
+        } else {
+          reject("Data not found.");
+        }
+      });
+    }
+
     function _resetData() {
       self.examsData = [];
       self.selectedExam = null;
@@ -123,7 +610,7 @@
     function _loadAllNames() {
       self.index++;
       if (!self.nameList) {
-        MonitoringService.listAcronyms()
+        FlagReportMonitoringService.listAcronyms()
           .then((exams) => {
             self.nameList = exams.map(function (name) {
               return name;
@@ -166,13 +653,17 @@
       self.index++;
       if (!self.exams || center !== self.selectedCenter.acronym) {
         if (center !== self.selectedCenter.acronym) self.$onInit();
-        MonitoringService.getActivitiesProgressReport(center)
+        FlagReportMonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
             alasql("DROP TABLE IF EXISTS flags");
             self.rawActivities = angular.copy(response);
             self.examsData = angular.copy(response);
             self.ready = true;
             self.error = false;
+            // TODO: fake data
+            self.rawActivities = angular.copy(data);
+            self.examsData = angular.copy(data);
+
           }).catch((e) => {
             LoadingScreenService.finish();
             throw e;

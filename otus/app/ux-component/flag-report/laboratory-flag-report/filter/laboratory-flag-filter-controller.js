@@ -20,7 +20,7 @@
     function clear(field) {
       switch (field) {
         case "exam":
-          self.selectedAcronym = null;
+          self.selectedExamName = null;
           self.onChangeFilter();
           break;
         case "status":
@@ -28,7 +28,7 @@
           self.onChangeFilter();
           break;
         case "center":
-          self.selectedAcronym = null;
+          self.selectedExamName = null;
           self.selectedStatus = null;
           self.onChangeFilter();
       }

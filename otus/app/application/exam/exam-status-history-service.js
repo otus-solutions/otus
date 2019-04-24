@@ -12,13 +12,6 @@
 
     const STATUS = [
       {
-        name: 'UNREALIZED',
-        label: 'Não Realizado',
-        color: '#CECECE',
-        icon: '',
-        value: 0
-      },
-      {
         name: 'REALIZED',
         label: 'Realizado',
         color: '#1ECE8B',

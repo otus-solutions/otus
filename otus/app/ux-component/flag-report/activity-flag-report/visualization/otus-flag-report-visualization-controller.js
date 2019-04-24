@@ -9,14 +9,13 @@
 
   function Controller(StatusHistoryService) {
     var classesNumber = 10, cellSize = 24;
-    var activitiesData = [];
     var self = this;
+    self.activitiesData;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function onInit() {
-
       constructor();
       self.onUpdate = constructor;
       $(window).resize(function () {
