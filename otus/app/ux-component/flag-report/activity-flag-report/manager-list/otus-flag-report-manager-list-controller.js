@@ -3,18 +3,11 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusFlagReportManager', {
-      controller: "otusFlagReportManagerCtrl as $ctrl",
-      templateUrl: 'app/ux-component/flag-report/manager-list/otus-flag-report-manager-list-template.html',
-      bindings:{
-        user: "="
-      }
-    })
     .controller("otusFlagReportManagerCtrl", Controller);
 
   Controller.$inject = [
     'otusjs.deploy.FieldCenterRestService',
-    'otusjs.monitoring.business.MonitoringService',
+    'otusjs.monitoring.business.FlagReportMonitoringService',
     'otusjs.application.activity.StatusHistoryService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
@@ -24,32 +17,29 @@
   ];
 
   function Controller(ProjectFieldCenterService,
-                      MonitoringService,
-                      StatusHistoryService,
-                      dashboardContextService,
-                      LoadingScreenService,
-                      FlagReportParseData, $q, $timeout) {
+    FlagReportMonitoringService,
+    StatusHistoryService,
+    DashboardContextService,
+    LoadingScreenService,
+    FlagReportParseData,
+    $q,
+    $timeout) {
 
     var self = this;
+    self.centers;
+    self.error;
+    self.activitiesData;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
-
+    /* Public functions */
     self.updateData = updateData;
     self.updatePage = updatePage;
     self.setActivities = setActivities;
     self.downloadCSV = downloadCSV;
-    self.INDEX = 0;
-    self.ERROR = true;
-    self.MESSAGES = [
-      "Não existem atividades disponíveis para visualização.",
-      "Não foi possível carregar os dados do centro.",
-      "Não foi possível carregar os dados de acrônimos no sistema.",
-      "Não foi possível carregar os dados de atividades no sistema."
-    ];
 
     self.$onDestroy = function () {
-      alasql("DROP TABLE IF EXISTS flags");
+      alasql("DROP TABLE IF EXISTS exams");
     };
 
     function onInit() {
@@ -59,17 +49,17 @@
       _constructor();
     }
 
-    function _prepareForCSV(){
+    function _prepareForCSV() {
       return $q(function (resolve, reject) {
-        alasql("DROP TABLE IF EXISTS flags");
-        alasql("CREATE TABLE IF NOT EXISTS flags(RN INT,ACRONIMO STRING, STATUS STRING)");
+        alasql("DROP TABLE IF EXISTS exams");
+        alasql("CREATE TABLE IF NOT EXISTS exams(RN INT,ACRONIMO STRING, STATUS STRING)");
         var rn = 0;
-        if(Array.isArray(self.rawActivities.data)){
-          if(self.activitiesData.data.length>0){
+        if (Array.isArray(self.rawActivities.data)) {
+          if (self.activitiesData.data.length > 0) {
             try {
-              self.activitiesData.data.forEach(function(line) {
+              self.activitiesData.data.forEach(function (line) {
                 for (let i = 0; i < self.activitiesData.columns.length; i++) {
-                  alasql("INSERT INTO flags VALUES("+self.activitiesData.index[rn]+",'"+self.activitiesData.columns[i][1]+"','"+StatusHistoryService.getStatusLabel(line[i])+"')");
+                  alasql("INSERT INTO exams VALUES(" + self.activitiesData.index[rn] + ",'" + self.activitiesData.columns[i][1] + "','" + StatusHistoryService.getStatusLabel(line[i]) + "')");
                 }
                 rn++;
               });
@@ -84,16 +74,16 @@
       });
     }
 
-    function downloadCSV(){
+    function downloadCSV() {
       LoadingScreenService.changeMessage("Por favor, aguarde! Estamos gerando o arquivo para download.");
       LoadingScreenService.start();
       $timeout(function () {
         _prepareForCSV().then(function (response) {
           if (response) {
-            var name = "relatorio-flags-".concat(new Date().toLocaleDateString());
-            var QUERY_ACRONYM = self.selectedAcronym != null ? "ACRONIMO='"+self.selectedAcronym+"'": "2=2";
-            var QUERY_STATUS = self.selectedStatus != null ? "STATUS='"+StatusHistoryService.getStatusLabel(self.selectedStatus)+"'": "3=3";
-            alasql('SELECT * INTO CSV("'+name+'.csv",{headers:true}) FROM flags WHERE 1=1 AND '+QUERY_ACRONYM+' AND '+QUERY_STATUS);
+            var name = "relatorio-exams-".concat(new Date().toLocaleDateString());
+            var QUERY_ACRONYM = self.selectedAcronym != null ? "ACRONIMO='" + self.selectedAcronym + "'" : "2=2";
+            var QUERY_STATUS = self.selectedStatus != null ? "STATUS='" + StatusHistoryService.getStatusLabel(self.selectedStatus) + "'" : "3=3";
+            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM exams WHERE 1=1 AND ' + QUERY_ACRONYM + ' AND ' + QUERY_STATUS);
             LoadingScreenService.finish();
           }
         }).catch(function (e) {
@@ -117,12 +107,13 @@
     }
 
     function _loadAllCenters() {
-      self.INDEX++;
-      if(!self.centers){
+      if (!self.centers) {
         ProjectFieldCenterService.loadCenters().then((result) => {
           self.centers = angular.copy(result);
           setUserFieldCenter();
+          LoadingScreenService.finish();
         }).catch(function (e) {
+          self.error = "Não foi possível carregar os dados do centro.";
           LoadingScreenService.finish();
           throw e;
         });
@@ -132,30 +123,26 @@
     }
 
     function setUserFieldCenter() {
-      dashboardContextService
-        .getLoggedUser()
-        .then((userData) => {
-          var {acronym} = userData.fieldCenter;
-          if(!acronym) {
-            _setCenter(self.centers[0].acronym);
-          } else {
-            self.centers = [].concat(self.centers.find((center) => {
-              return center.acronym === userData.fieldCenter.acronym;
-            }));
-            _setCenter(userData.fieldCenter.acronym);
-          }
-          _loadAllAcronyms();
-        })
-        .catch(function (e) {
-          LoadingScreenService.finish();
-          throw e;
-        });
+      DashboardContextService.getLoggedUser().then((userData) => {
+        var { acronym } = userData.fieldCenter;
+        if (!acronym) {
+          _setCenter(self.centers[0].acronym);
+        } else {
+          self.centers = [].concat(self.centers.find((center) => {
+            return center.acronym === userData.fieldCenter.acronym;
+          }));
+          _setCenter(userData.fieldCenter.acronym);
+        }
+        _loadAllAcronyms();
+      }).catch(function (e) {
+        LoadingScreenService.finish();
+        throw e;
+      });
     }
 
     function _loadAllAcronyms() {
-      self.INDEX++;
-      if(!self.acronymsList) {
-        MonitoringService.listAcronyms()
+      if (!self.acronymsList) {
+        FlagReportMonitoringService.listAcronyms()
           .then((activities) => {
             self.acronymsList = activities.map(function (acronym) {
               return acronym;
@@ -163,8 +150,8 @@
               return index == self.indexOf(elem);
             });
             _getStatus();
-          })
-          .catch((e) => {
+          }).catch((e) => {
+            self.error = "Não foi possível carregar os dados de acrônimos no sistema.";
             LoadingScreenService.finish();
             throw e;
           });
@@ -178,50 +165,52 @@
     }
 
     function _loadActivitiesProgress(center) {
-      self.INDEX++;
-      if(!self.activities || center !== self.selectedCenter.acronym){
+      if (!self.activities || center !== self.selectedCenter.acronym) {
         if (center !== self.selectedCenter.acronym) self.$onInit();
-        MonitoringService.getActivitiesProgressReport(center)
+        FlagReportMonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
-            alasql("DROP TABLE IF EXISTS flags");
-            self.rawActivities = angular.copy(response);
-            self.activitiesData = angular.copy(response);
-            self.ready= true;
-            self.ERROR = false;
-          }).catch((e)=>{
-          LoadingScreenService.finish();
-          throw e;
-        });
+            if (response.data.length != 0) {
+              alasql("DROP TABLE IF EXISTS exams");
+              self.rawActivities = angular.copy(response);
+              self.activitiesData = angular.copy(response);
+              self.ready = true;
+            } else {
+              self.error = "Não existem atividades disponíveis para visualização.";
+              LoadingScreenService.finish();
+            }
+          }).catch((e) => {
+            self.error = "Não foi possível carregar os dados de atividades no sistema.";
+            LoadingScreenService.finish();
+            throw e;
+          });
       } else {
         self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
-        self.ready= true;
-        self.ERROR = false;
+        self.ready = true;
       }
-
     }
 
     function updateData(activities = null, acronym = null, status = null, center) {
-      if(center && center !== self.selectedCenter.acronym){
+      if (center && center !== self.selectedCenter.acronym) {
         _loadActivitiesProgress(center);
         _setCenter(center);
-      }else {
+      } else {
         if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
           _setActivity(acronym);
           _setStatus(status);
           self.newActivitiesData = FlagReportParseData.create(self.activitiesData, acronym, status)
           self.setActivities(self.newActivitiesData, acronym, status);
-        } else if(activities && activities !== self.activities){
+        } else if (activities && activities !== self.activities) {
           self.setActivities(activities, acronym, status);
         }
       }
     }
 
     function updatePage(activities = null, startPage, endPage) {
-      if(startPage !== undefined && endPage !== undefined){
-        self.activitiesData.index = self.rawActivities.index.slice(startPage,endPage+1);
+      if (startPage !== undefined && endPage !== undefined) {
+        self.activitiesData.index = self.rawActivities.index.slice(startPage, endPage + 1);
       }
       self.activitiesData.data = angular.copy(activities);
-      self.setActivities(FlagReportParseData.create(self.activitiesData, self.selectedAcronym, self.selectedStatus), self.selectedAcronym, self.selectedStatus);
+      self.setActivities(self.activitiesData, self.selectedAcronym, self.selectedStatus);
       LoadingScreenService.finish();
     }
 

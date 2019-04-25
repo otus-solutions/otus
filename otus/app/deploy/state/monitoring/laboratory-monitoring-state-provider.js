@@ -68,7 +68,7 @@
       '$q',
       'otusjs.application.core.ModuleService',
       'otusjs.application.session.core.ContextService',
-      'otusjs.otus.dashboard.core.ContextService',
+      'otusjs.otus.dashboard.core.ContextService'
     ]
 
     _redirect.$inject = [

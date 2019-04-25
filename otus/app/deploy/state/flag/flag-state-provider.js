@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -33,12 +33,12 @@
       return user;
     }
 
-    function _redirect(SessionContextService, $q, Application) {
+    function _redirect($q, Application, SessionContextService) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
-        .then(function() {
+        .then(function () {
           try {
             SessionContextService.restore();
             deferred.resolve();
@@ -55,9 +55,9 @@
     ];
 
     _redirect.$inject = [
-      'otusjs.application.session.core.ContextService',
       '$q',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.session.core.ContextService'
     ];
   }
 }());

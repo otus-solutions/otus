@@ -23,6 +23,8 @@
     self.getStatusOfActivities = getStatusOfActivities;
     self.defineActivityWithDoesNotApplies = defineActivityWithDoesNotApplies;
     self.deleteNotAppliesOfActivity = deleteNotAppliesOfActivity;
+    self.getExamsName = getExamsName;
+    self.getExamsProgressReport = getExamsProgressReport;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusMonitoringResource();
@@ -63,6 +65,20 @@
       return _rest.getActivitiesProgressReport(center).$promise;
     }
 
+    function getExamsName() {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.getExamsName().$promise;
+    }
+
+    function getExamsProgressReport(center) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.getExamsProgressReport(center).$promise;
+    }
+
     function getStatusOfActivities(recruitmentNumber) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
@@ -79,14 +95,14 @@
       return _rest.defineActivityWithDoesNotApplies({}, data).$promise;
     }
 
-    function deleteNotAppliesOfActivity(rn,acronym) {
+    function deleteNotAppliesOfActivity(rn, acronym) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-        return _rest.deleteNotAppliesOfActivity({
-          rn:rn,
-          acronym:acronym
-        }).$promise;
+      return _rest.deleteNotAppliesOfActivity({
+        rn: rn,
+        acronym: acronym
+      }).$promise;
     }
   }
 }());
