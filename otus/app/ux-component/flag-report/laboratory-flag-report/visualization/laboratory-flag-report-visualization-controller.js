@@ -23,8 +23,8 @@
       })
     }
 
-    function constructor(activities = null) {
-      self.examsData = activities ? activities : self.examsData;
+    function constructor(exams = null) {
+      self.examsData = exams ? exams : self.examsData;
       if (self.examsData.columns && self.examsData.index && self.examsData.data) {
         heatmap_display(angular.copy(self.examsData), "#exam-heatmap", "Spectral");
       } else {

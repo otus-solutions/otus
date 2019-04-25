@@ -19,12 +19,8 @@
 
     function clear(field) {
       switch (field) {
-        case "exam":
+        case "examName":
           self.selectedExamName = null;
-          self.onChangeFilter();
-          break;
-        case "status":
-          self.selectedStatus = null;
           self.onChangeFilter();
           break;
         case "center":
@@ -35,8 +31,7 @@
     }
 
     function onChangeFilter(exams) {
-      let status = isNaN(parseInt(self.selectedStatus)) ? null : parseInt(self.selectedStatus);
-      self.onUpdate(exams, self.selectedExamName, status, self.selectedCenter)
+      self.onUpdate(exams, self.selectedExamName, self.selectedCenter)
     }
   }
 

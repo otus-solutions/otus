@@ -23,14 +23,28 @@
       name: STATE.FLAG_DASHBOARD,
       url: '/' + STATE.FLAG_DASHBOARD,
       template: '<otus-flag-report-dashboard layout="column" flex></otus-flag-report-dashboard>',
+      resolve: {
+        resolve: _resolve
+      },
       data: {
         redirect: _redirect
       }
     };
 
-    function _resolveUser(SessionContextService) {
-      var user = SessionContextService.getData('loggedUser');
-      return user;
+    function _resolve($q, Application, SessionContextService, DashboardContextService) {
+      var deferred = $q.defer();
+      Application.isDeployed()
+        .then(function () {
+          try {
+            DashboardContextService.restore();
+            SessionContextService.restore();
+            deferred.resolve();
+          } catch (e) {
+            deferred.resolve(STATE.LOGIN);
+          }
+        });
+
+      return deferred.promise;
     }
 
     function _redirect($q, Application, SessionContextService) {
@@ -50,9 +64,12 @@
       return deferred.promise;
     }
 
-    _resolveUser.$inject = [
-      'otusjs.application.session.core.ContextService'
-    ];
+    _resolve.$inject = [
+      '$q',
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.session.core.ContextService',
+      'otusjs.otus.dashboard.core.ContextService'
+    ]
 
     _redirect.$inject = [
       '$q',

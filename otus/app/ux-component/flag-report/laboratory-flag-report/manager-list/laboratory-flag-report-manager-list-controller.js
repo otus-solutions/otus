@@ -22,7 +22,6 @@
     self.exams;
     self.nameList;
     self.selectedExam;
-    self.selectedStatus;
     self.examsData = [];
 
     /* Lifecycle hooks */
@@ -504,50 +503,26 @@
       _loadDefaultData();
     }
 
-    function setUserFieldCenter() {
-      LoadingScreenService.start();
-      DashboardContextService
-        .getLoggedUser()
-        .then((userData) => {
-          var { acronym } = userData.fieldCenter;
-          if (!acronym) {
-            _setCenter(self.centers[0].acronym);
-          } else {
-            self.centers = [].concat(self.centers.find((center) => {
-              return center.acronym === userData.fieldCenter.acronym;
-            }));
-            _setCenter(userData.fieldCenter.acronym);
-          }
-          _loadAllNames();
-          LoadingScreenService.finish();
-        })
-        .catch(function (e) {
-          LoadingScreenService.finish();
-          throw e;
-        });
-    }
-
     function updatePage(exams = null, startPage, endPage) {
       if (startPage !== undefined && endPage !== undefined) {
         self.examsData.index = self.rawActivities.index.slice(startPage, endPage + 1);
       }
       self.examsData.data = angular.copy(exams);
-      self.setExams(self.examsData, self.selectedAcronym, self.selectedStatus);
+      self.setExams(self.examsData, self.selectedExamName);
       LoadingScreenService.finish();
     }
 
-    function updateData(exams = null, acronym = null, status = null, center) {
+    function updateData(exams = null, examName = null, center) {
       if (center && center !== self.selectedCenter.acronym) {
         _loadExamsProgress(center);
         _setCenter(center);
       } else {
-        if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
-          _setActivity(acronym);
-          _setStatus(status);
-          self.newActivitiesData = FlagReportParseData.create(self.examsData, acronym, status)
-          self.setExams(self.newActivitiesData, acronym, status);
+        if (examName !== self.selectedExamName) {
+          _setExamName(examName);
+          self.newExamsData = FlagReportParseData.create(self.examsData, examName)
+          self.setExams(self.newExamsData, examName);
         } else if (exams && exams !== self.exams) {
-          self.setExams(exams, acronym, status);
+          self.setExams(exams, examName);
         }
       }
     }
@@ -559,8 +534,7 @@
         _prepareForCSV().then(function (response) {
           if (response) {
             var name = "relatorio-flags-".concat(new Date().toLocaleDateString());
-            var QUERY_ACRONYM = self.selectedAcronym != null ? "ACRONIMO='" + self.selectedAcronym + "'" : "2=2";
-            var QUERY_STATUS = self.selectedStatus != null ? "STATUS='" + ExamStatusHistoryService.getStatusLabel(self.selectedStatus) + "'" : "3=3";
+            var QUERY_ACRONYM = self.selectedExamName != null ? "ACRONIMO='" + self.selectedExamName + "'" : "2=2";
             alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM flags WHERE 1=1 AND ' + QUERY_ACRONYM + ' AND ' + QUERY_STATUS);
             LoadingScreenService.finish();
           }
@@ -579,7 +553,7 @@
     function _prepareForCSV() {
       return $q(function (resolve, reject) {
         alasql("DROP TABLE IF EXISTS flags");
-        alasql("CREATE TABLE IF NOT EXISTS flags(RN INT,ACRONIMO STRING, STATUS STRING)");
+        alasql("CREATE TABLE IF NOT EXISTS flags(RN INT,ACRONIMO STRING)");
         var rn = 0;
         if (Array.isArray(self.rawActivities.data)) {
           if (self.activitiesData.data.length > 0) {
@@ -604,7 +578,51 @@
     function _resetData() {
       self.examsData = [];
       self.selectedExam = null;
-      self.selectedStatus = null;
+    }
+
+    function _getStatus() {
+      self.status = ExamStatusHistoryService.listStatus();
+      _loadExamsProgress(self.selectedCenter.acronym);
+    }
+
+    function _loadDefaultData() {
+      LoadingScreenService.start();
+      self.index++;
+      if (!self.centers) {
+        FieldCenterRestService.loadCenters().then((result) => {
+          self.centers = angular.copy(result);
+          _setUserFieldCenter();
+          LoadingScreenService.finish();
+        }).catch(function (e) {
+          LoadingScreenService.finish();
+          throw e;
+        });
+      } else {
+        _loadExamsProgress(self.selectedCenter.acronym);
+      }
+    }
+
+    function _setUserFieldCenter() {
+      LoadingScreenService.start();
+      DashboardContextService
+        .getLoggedUser()
+        .then((userData) => {
+          var { acronym } = userData.fieldCenter;
+          if (!acronym) {
+            _setCenter(self.centers[0].acronym);
+          } else {
+            self.centers = [].concat(self.centers.find((center) => {
+              return center.acronym === userData.fieldCenter.acronym;
+            }));
+            _setCenter(userData.fieldCenter.acronym);
+          }
+          _loadAllNames();
+          LoadingScreenService.finish();
+        })
+        .catch(function (e) {
+          LoadingScreenService.finish();
+          throw e;
+        });
     }
 
     function _loadAllNames() {
@@ -626,29 +644,6 @@
       }
     }
 
-    function _getStatus() {
-      self.status = ExamStatusHistoryService.listStatus();
-      self.selectedStatus = null;
-      _loadExamsProgress(self.selectedCenter.acronym);
-    }
-
-    function _loadDefaultData() {
-      LoadingScreenService.start();
-      self.index++;
-      if (!self.centers) {
-        FieldCenterRestService.loadCenters().then((result) => {
-          self.centers = angular.copy(result);
-          setUserFieldCenter();
-          LoadingScreenService.finish();
-        }).catch(function (e) {
-          LoadingScreenService.finish();
-          throw e;
-        });
-      } else {
-        _loadExamsProgress(self.selectedCenter.acronym);
-      }
-    }
-
     function _loadExamsProgress(center) {
       self.index++;
       if (!self.exams || center !== self.selectedCenter.acronym) {
@@ -663,13 +658,12 @@
             // TODO: fake data
             self.rawActivities = angular.copy(data);
             self.examsData = angular.copy(data);
-
           }).catch((e) => {
             LoadingScreenService.finish();
             throw e;
           });
       } else {
-        self.setExams(self.exams, self.selectedAcronym, self.selectedStatus);
+        self.setExams(self.exams, self.selectedExamName);
         self.ready = true;
         self.error = false;
       }
@@ -681,12 +675,8 @@
       });
     }
 
-    function _setStatus(status) {
-      self.selectedStatus = status;
-    }
-
-    function _setActivity(acronym) {
-      self.selectedAcronym = acronym;
+    function _setExamName(examName) {
+      self.selectedExamName = examName;
     }
 
   }
