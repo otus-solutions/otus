@@ -33,7 +33,7 @@
     self.downloadCSV = downloadCSV;
 
     // TODO: falar com o Breno sobre os valores para os estados e nomes dos exames
-    var data = {
+    var fakeExamResults = {
       "columns": [
         [
           "C", // TODO: Existe alguma necessidade disso?
@@ -495,6 +495,39 @@
       ]
     };
 
+    var fakeExamNames =
+      [
+        "URÉIA - SANGUE",
+        "CREATININA - SANGUE",
+        "ASPARTATO TRANSAMINASE(TGO/AST)-SANGUE",
+        "ALANINA TRANSAMINASE (TGP/ALT) - SANGUE",
+        "GAMA GLUTAMIL TRANSFERASE - SANGUE",
+        "ÁCIDO ÚRICO - SANGUE",
+        "TRIGLICÉRIDES - SANGUE",
+        "COLESTEROL TOTAL E FRAÇÕES - SANGUE",
+        "ELSA B12",
+        "ELSA FOLATO",
+        "FERRO - SANGUE",
+        "CAPACIDADE DE LIGAÇÃO DO FERRO",
+        "ELSA FERRITINA",
+        "ELSA TURBISORO",
+        "ELSA T4 - LIVRE (TIROXINA LIVRE)",
+        "ELSA ATPO - ANTICORPOS ANTI-TIREOPEROXIDASE (ATPO)",
+        "ELSA INS - INSULINA JEJUM",
+        "GLICOSE - SANGUE",
+        "HEMOGLOBINA GLICADA - SANGUE",
+        "CURVA INSULINÊMICA - 120 MIN.",
+        "CURVA GLICÊMICA -120 MINUTOS",
+        "ELSA TURBIURINA",
+        "CREATININA - URINA AMOSTRA ISOLADA",
+        "SÓDIO - URINA AMOSTRA ISOLADA",
+        "POTÁSSIO - URINA AMOSTRA ISOLADA",
+        "CÁLCIO - URINA AMOSTRA ISOLADA",
+        "ELSA TSH (HORMÔNIO TIREOESTIMULANTE)",
+        "ELSA 3FT"
+      ];
+
+
     function onInit() {
       self.ready = false;
       self.colors = ExamStatusHistoryService.getColors();
@@ -580,11 +613,6 @@
       self.selectedExam = null;
     }
 
-    function _getStatus() {
-      self.status = ExamStatusHistoryService.listStatus();
-      _loadExamsProgress(self.selectedCenter.acronym);
-    }
-
     function _loadDefaultData() {
       LoadingScreenService.start();
       self.index++;
@@ -616,7 +644,7 @@
             }));
             _setCenter(userData.fieldCenter.acronym);
           }
-          _loadAllNames();
+          _loadAllExamNames();
           LoadingScreenService.finish();
         })
         .catch(function (e) {
@@ -625,19 +653,19 @@
         });
     }
 
-    function _loadAllNames() {
+    function _loadAllExamNames() {
       self.index++;
       if (!self.nameList) {
         FlagReportMonitoringService.listAcronyms()
-          .then((exams) => {
-            self.nameList = exams.map(function (name) {
-              return name;
+          .then((examNames) => {
+            self.nameList = examNames.map(function (examName) {
+              return examName;
             }).filter(function (elem, index, self) {
               return index == self.indexOf(elem);
             });
             _getStatus();
-          })
-          .catch((e) => {
+            self.nameList = fakeExamNames;
+          }).catch((e) => {
             LoadingScreenService.finish();
             throw e;
           });
@@ -656,8 +684,8 @@
             self.ready = true;
             self.error = false;
             // TODO: fake data
-            self.rawActivities = angular.copy(data);
-            self.examsData = angular.copy(data);
+            self.rawActivities = angular.copy(fakeExamResults);
+            self.examsData = angular.copy(fakeExamResults);
           }).catch((e) => {
             LoadingScreenService.finish();
             throw e;
@@ -677,6 +705,11 @@
 
     function _setExamName(examName) {
       self.selectedExamName = examName;
+    }
+
+    function _getStatus() {
+      self.status = ExamStatusHistoryService.listStatus();
+      _loadExamsProgress(self.selectedCenter.acronym);
     }
 
   }
