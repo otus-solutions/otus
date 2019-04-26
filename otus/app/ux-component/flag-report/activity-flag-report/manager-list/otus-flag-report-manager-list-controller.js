@@ -39,7 +39,7 @@
     self.downloadCSV = downloadCSV;
 
     self.$onDestroy = function () {
-      alasql("DROP TABLE IF EXISTS exams");
+      alasql("DROP TABLE IF EXISTS flagsActivities");
     };
 
     function onInit() {
@@ -51,15 +51,15 @@
 
     function _prepareForCSV() {
       return $q(function (resolve, reject) {
-        alasql("DROP TABLE IF EXISTS exams");
-        alasql("CREATE TABLE IF NOT EXISTS exams(RN INT,ACRONIMO STRING, STATUS STRING)");
+        alasql("DROP TABLE IF EXISTS flagsActivities");
+        alasql("CREATE TABLE IF NOT EXISTS flagsActivities(RN INT,ACRONIMO STRING, STATUS STRING)");
         var rn = 0;
         if (Array.isArray(self.rawActivities.data)) {
           if (self.activitiesData.data.length > 0) {
             try {
               self.activitiesData.data.forEach(function (line) {
                 for (let i = 0; i < self.activitiesData.columns.length; i++) {
-                  alasql("INSERT INTO exams VALUES(" + self.activitiesData.index[rn] + ",'" + self.activitiesData.columns[i][1] + "','" + StatusHistoryService.getStatusLabel(line[i]) + "')");
+                  alasql("INSERT INTO flagsActivities VALUES(" + self.activitiesData.index[rn] + ",'" + self.activitiesData.columns[i][1] + "','" + StatusHistoryService.getStatusLabel(line[i]) + "')");
                 }
                 rn++;
               });
@@ -80,10 +80,10 @@
       $timeout(function () {
         _prepareForCSV().then(function (response) {
           if (response) {
-            var name = "relatorio-exams-".concat(new Date().toLocaleDateString());
+            var name = "relatorio-flags-atividades".concat(new Date().toLocaleDateString());
             var QUERY_ACRONYM = self.selectedAcronym != null ? "ACRONIMO='" + self.selectedAcronym + "'" : "2=2";
             var QUERY_STATUS = self.selectedStatus != null ? "STATUS='" + StatusHistoryService.getStatusLabel(self.selectedStatus) + "'" : "3=3";
-            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM exams WHERE 1=1 AND ' + QUERY_ACRONYM + ' AND ' + QUERY_STATUS);
+            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM flagsActivities WHERE 1=1 AND ' + QUERY_ACRONYM + ' AND ' + QUERY_STATUS);
             LoadingScreenService.finish();
           }
         }).catch(function (e) {
@@ -170,7 +170,7 @@
         FlagReportMonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
             if (response.data.length != 0) {
-              alasql("DROP TABLE IF EXISTS exams");
+              alasql("DROP TABLE IF EXISTS flagsActivities");
               self.rawActivities = angular.copy(response);
               self.activitiesData = angular.copy(response);
               self.ready = true;

@@ -8,7 +8,7 @@
       templateUrl: 'app/ux-component/flag-report/laboratory-flag-report/filter/laboratory-flag-filter-component.html',
       bindings: {
         examsStatus: '=',
-        nameList: '=',
+        examsNameList: '=',
         centers: '=',
         onUpdate: '='
       }

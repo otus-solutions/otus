@@ -31,7 +31,6 @@
           self.selectedAcronym = null;
           self.selectedStatus = null;
           self.onChangeFilter();
-
       }
     }
 

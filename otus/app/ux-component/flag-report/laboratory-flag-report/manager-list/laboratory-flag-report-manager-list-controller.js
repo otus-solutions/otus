@@ -17,12 +17,18 @@
   ];
 
   function Controller($q, $timeout, FlagReportParseData, LoadingScreenService, FieldCenterRestService, DashboardContextService, ExamStatusHistoryService, FlagReportMonitoringService) {
+    const DATA_NOT_FOUND = "Não há registros a serem exibidos.";
+    const GENERIC_ERROR = "Ocorreu algum problema. Por favor, tente novamente em alguns minutos.";
     var self = this;
-    self.centers;
+    self.ready;
+    self.error;
     self.exams;
-    self.nameList;
+    self.labels;
+    self.colors;
+    self.centers;
+    self.examsData;
     self.selectedExam;
-    self.examsData = [];
+    self.examsNameList;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -530,6 +536,8 @@
 
     function onInit() {
       self.ready = false;
+      self.error = false;
+      self.examsData = [];
       self.colors = ExamStatusHistoryService.getColors();
       self.labels = ExamStatusHistoryService.getLabels();
       _resetData();
@@ -566,9 +574,10 @@
       $timeout(function () {
         _prepareForCSV().then(function (response) {
           if (response) {
-            var name = "relatorio-flags-".concat(new Date().toLocaleDateString());
-            var QUERY_ACRONYM = self.selectedExamName != null ? "ACRONIMO='" + self.selectedExamName + "'" : "2=2";
-            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM flags WHERE 1=1 AND ' + QUERY_ACRONYM + ' AND ' + QUERY_STATUS);
+            var name = "relatorio-flags-exames-".concat(new Date().toLocaleDateString());
+            var QUERY_EXAM_NAME = self.selectedExamName != null ? "NOME='" + self.selectedExamName + "'" : "2=2";
+            var QUERY_STATUS = self.selectedStatus != null ? "STATUS='" + ExamStatusHistoryService.getStatusLabel(self.selectedStatus) + "'" : "3=3";
+            alasql('SELECT * INTO CSV("' + name + '.csv",{headers:true}) FROM flagsExams WHERE 1=1 AND ' + QUERY_EXAM_NAME + ' AND ' + QUERY_STATUS);
             LoadingScreenService.finish();
           }
         }).catch(function (e) {
@@ -583,17 +592,21 @@
       self.exams = exams;
     }
 
+    self.$onDestroy = function () {
+      alasql("DROP TABLE IF EXISTS flagsExams");
+    };
+
     function _prepareForCSV() {
       return $q(function (resolve, reject) {
-        alasql("DROP TABLE IF EXISTS flags");
-        alasql("CREATE TABLE IF NOT EXISTS flags(RN INT,ACRONIMO STRING)");
+        alasql("DROP TABLE IF EXISTS flagsExams");
+        alasql("CREATE TABLE IF NOT EXISTS flagsExams(RN INT,NOME STRING, STATUS STRING)");
         var rn = 0;
         if (Array.isArray(self.rawActivities.data)) {
-          if (self.activitiesData.data.length > 0) {
+          if (self.examsData.data.length > 0) {
             try {
-              self.activitiesData.data.forEach(function (line) {
-                for (let i = 0; i < self.activitiesData.columns.length; i++) {
-                  alasql("INSERT INTO flags VALUES(" + self.activitiesData.index[rn] + ",'" + self.activitiesData.columns[i][1] + "','" + StatusHistoryService.getStatusLabel(line[i]) + "')");
+              self.examsData.data.forEach(function (line) {
+                for (let i = 0; i < self.examsData.columns.length; i++) {
+                  alasql("INSERT INTO flagsExams VALUES(" + self.examsData.index[rn] + ",'" + self.examsData.columns[i][1] + "','" + ExamStatusHistoryService.getStatusLabel(line[i]) + "')");
                 }
                 rn++;
               });
@@ -655,16 +668,16 @@
 
     function _loadAllExamNames() {
       self.index++;
-      if (!self.nameList) {
+      if (!self.examsNameList) {
         FlagReportMonitoringService.listAcronyms()
           .then((examNames) => {
-            self.nameList = examNames.map(function (examName) {
+            self.examsNameList = examNames.map(function (examName) {
               return examName;
             }).filter(function (elem, index, self) {
               return index == self.indexOf(elem);
             });
             _getStatus();
-            self.nameList = fakeExamNames;
+            self.examsNameList = fakeExamNames;
           }).catch((e) => {
             LoadingScreenService.finish();
             throw e;
@@ -678,11 +691,11 @@
         if (center !== self.selectedCenter.acronym) self.$onInit();
         FlagReportMonitoringService.getActivitiesProgressReport(center)
           .then((response) => {
-            alasql("DROP TABLE IF EXISTS flags");
+            alasql("DROP TABLE IF EXISTS flagsExams");
             self.rawActivities = angular.copy(response);
             self.examsData = angular.copy(response);
-            self.ready = true;
-            self.error = false;
+            self.ready = false;
+            self.error = true;
             // TODO: fake data
             self.rawActivities = angular.copy(fakeExamResults);
             self.examsData = angular.copy(fakeExamResults);

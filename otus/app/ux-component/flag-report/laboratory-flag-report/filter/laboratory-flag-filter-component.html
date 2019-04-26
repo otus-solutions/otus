@@ -12,7 +12,7 @@
               <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
                 <label class="md-subhead">Exame:</label>
                 <md-select ng-model="$ctrl.selectedExamName" ng-change="$ctrl.onChangeFilter(null)" ng-disabled="">
-                  <md-option ng-repeat="examName in $ctrl.nameList | orderBy:propertyName track by $index" value="{{examName}}"
+                  <md-option ng-repeat="examName in $ctrl.examsNameList | orderBy:propertyName track by $index" value="{{examName}}"
                     ng-click="">
                     {{examName}}
                   </md-option>

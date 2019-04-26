@@ -1,5 +1,5 @@
-<otus-laboratory-flag-filter-component centers="$ctrl.centers" name-list="$ctrl.nameList"
-  on-update="$ctrl.updateData" ng-if="$ctrl.ready"></otus-laboratory-flag-filter-component>
+<otus-laboratory-flag-filter-component centers="$ctrl.centers" exams-name-list="$ctrl.examsNameList" on-update="$ctrl.updateData"
+  ng-if="$ctrl.ready"></otus-laboratory-flag-filter-component>
 <div layout="row" layout-align="center center">
   <md-button ng-disabled="!$ctrl.exams.data.length" class="md-accent md-raised" ng-click="$ctrl.downloadCSV()">EXPORTAR
     <md-icon>get_app</md-icon>
@@ -12,10 +12,9 @@
 </div>
 <md-divider></md-divider>
 <md-content flex layout="row">
-  <otus-laboratory-flag-report-visualization-component ng-show="$ctrl.exams.data.length" exams-data="$ctrl.exams"
-    on-update="$ctrl.setExams" colors-range="$ctrl.colors" legend-range="$ctrl.labels" flex ng-if="$ctrl.ready"
-    layout-padding=""></otus-laboratory-flag-report-visualization-component>
-  <div flex ng-if="$ctrl.error" layout="row" style="margin-top: 30px" layout-align="center top">
-    <span class="md-display-1">{{$ctrl.messages[$ctrl.index]}}</span>
+  <otus-laboratory-flag-report-visualization-component ng-if="$ctrl.ready" ng-show="$ctrl.exams.data.length" exams-data="$ctrl.exams"
+    on-update="$ctrl.setExams" colors-range="$ctrl.colors" legend-range="$ctrl.labels" flex layout-padding=""></otus-laboratory-flag-report-visualization-component>
+  <div ng-if="$ctrl.error" layout="row" flex layout-align="center center">
+    <span class="md-headline">Não há registros a serem exibidos.</span>
   </div>
 </md-content>

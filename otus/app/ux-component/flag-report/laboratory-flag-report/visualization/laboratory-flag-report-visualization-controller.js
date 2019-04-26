@@ -8,7 +8,7 @@
   Controller.$inject = ['otusjs.application.exam.ExamStatusHistoryService'];
 
   function Controller(ExamStatusHistoryService) {
-    var classesNumber = 10, cellSize = 24;
+    var cellSize = 24;
     var self = this;
     self.examsData = [];
 
@@ -20,7 +20,7 @@
       self.onUpdate = constructor;
       $(window).resize(function () {
         constructor();
-      })
+      });
     }
 
     function constructor(exams = null) {
