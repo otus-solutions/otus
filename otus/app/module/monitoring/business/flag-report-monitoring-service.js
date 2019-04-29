@@ -19,7 +19,6 @@
     self.getExamsName = getExamsName;
     self.getExamsProgressReport = getExamsProgressReport;
 
-
     function find(acronym) {
       return MonitoringCollectionService.find({ acronym: acronym });
     }

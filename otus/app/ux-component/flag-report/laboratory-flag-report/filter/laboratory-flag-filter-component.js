@@ -7,7 +7,6 @@
       controller: 'otusLaboratoryFlagFilterComponentCtrl as $ctrl',
       templateUrl: 'app/ux-component/flag-report/laboratory-flag-report/filter/laboratory-flag-filter-component.html',
       bindings: {
-        examsStatus: '=',
         examsNameList: '=',
         centers: '=',
         onUpdate: '='

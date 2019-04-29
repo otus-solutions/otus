@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy')
-    .service('otusjs.deploy.MonitoringRestService', Service);
+    .module('otusjs.deploy.monitoring')
+    .service('otusjs.deploy.monitoring.MonitoringRestService', Service);
 
   Service.$inject = [
     'OtusRestResourceService'
@@ -69,7 +69,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.getExamsName().$promise;
+      return _rest.getExamFlagReportLabels().$promise;
     }
 
     function getExamsProgressReport(center) {

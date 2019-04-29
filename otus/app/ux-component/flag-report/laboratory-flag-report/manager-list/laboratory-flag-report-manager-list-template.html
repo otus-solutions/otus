@@ -1,6 +1,5 @@
-<otus-laboratory-flag-filter-component centers="$ctrl.centers" exams-name-list="$ctrl.examsNameList" on-update="$ctrl.updateData"
-  ng-if="$ctrl.ready"></otus-laboratory-flag-filter-component>
-<div layout="row" layout-align="center center">
+<otus-laboratory-flag-filter-component centers="$ctrl.centers" exams-name-list="$ctrl.examsNameList" on-update="$ctrl.updateData"></otus-laboratory-flag-filter-component>
+<div ng-if="$ctrl.ready" layout="row" layout-align="center center">
   <md-button ng-disabled="!$ctrl.exams.data.length" class="md-accent md-raised" ng-click="$ctrl.downloadCSV()">EXPORTAR
     <md-icon>get_app</md-icon>
     <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados e os dados da tela.</md-tooltip>
@@ -14,7 +13,9 @@
 <md-content flex layout="row">
   <otus-laboratory-flag-report-visualization-component ng-if="$ctrl.ready" ng-show="$ctrl.exams.data.length" exams-data="$ctrl.exams"
     on-update="$ctrl.setExams" colors-range="$ctrl.colors" legend-range="$ctrl.labels" flex layout-padding=""></otus-laboratory-flag-report-visualization-component>
-  <div ng-if="$ctrl.error" layout="row" flex layout-align="center center">
-    <span class="md-headline">Não há registros a serem exibidos.</span>
+  <div ng-if="$ctrl.error" layout="row" flex layout-align="center center" style="height: 400px; width: 400px; margin-left: auto; margin-right: auto;">
+    <div class="label-light-gray">
+      <h3 class="md-headline">{{$ctrl.message}}</h3>
+    </div>
   </div>
 </md-content>

@@ -16,14 +16,14 @@
     self.$onInit = onInit;
 
     function onInit() {
-      constructor();
-      self.onUpdate = constructor;
+      _constructor();
+      self.onUpdate = _constructor;
       $(window).resize(function () {
-        constructor();
+        _constructor();
       });
     }
 
-    function constructor(exams = null) {
+    function _constructor(exams = null) {
       self.examsData = exams ? exams : self.examsData;
       if (self.examsData.columns && self.examsData.index && self.examsData.data) {
         heatmap_display(angular.copy(self.examsData), "#exam-heatmap", "Spectral");
@@ -58,7 +58,7 @@
       svg = d3.select(heatmapId)
         .append("svg")
         .attr("width", viewerWidth - 100)
-        .attr("height", ((row_number * 35) + viewerPosTop) + "px")
+        .attr("height", ((row_number * 100) + viewerPosTop) + "px")
         .append("g")
         .attr("transform", "translate(" + window.innerWidth / 3.5 + "," + window.innerHeight / 4 + ")scale(" + window.innerWidth / 1800 + ")");
 

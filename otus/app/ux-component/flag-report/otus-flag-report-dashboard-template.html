@@ -12,7 +12,7 @@
       <md-tab label="Relatório de Flags para atividades">
         <otus-flag-report-manager layout="column" flex></otus-flag-report-manager>
       </md-tab>
-      <md-tab label="Relatório de Flags para laboratório">
+      <md-tab md-on-select="$ctrl.buildLaboratoryFlagReport()" id="target" label="Relatório de Flags para laboratório">
         <otus-laboratory-flag-report-manager-List layout="column" flex></otus-laboratory-flag-report-manager-List>
       </md-tab>
     </md-tabs>
