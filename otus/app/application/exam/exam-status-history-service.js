@@ -13,7 +13,7 @@
     const STATUS = [
       {
         name: 'UNREALIZED',
-        label: 'Não Realizado',
+        label: 'Não Recebido',
         color: '#FFFFFF',
         icon: '',
         value: 0

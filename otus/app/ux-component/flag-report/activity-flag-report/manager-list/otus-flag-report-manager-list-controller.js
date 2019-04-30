@@ -11,7 +11,7 @@
     'otusjs.application.activity.StatusHistoryService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
-    'otusFlagReportParseDataFactory',
+    'otusjs.otus.uxComponent.FlagReportParseDataFactory',
     '$q',
     '$timeout'
   ];

@@ -8,15 +8,15 @@
   Controller.$inject = [
     '$q',
     '$timeout',
-    'otusFlagReportParseDataFactory',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.application.exam.ExamStatusHistoryService',
+    'otusjs.otus.uxComponent.FlagReportParseDataFactory',
     'otusjs.monitoring.business.FlagReportMonitoringService'
   ];
 
-  function Controller($q, $timeout, FlagReportParseData, LoadingScreenService, FieldCenterRestService, DashboardContextService, ExamStatusHistoryService, FlagReportMonitoringService) {
+  function Controller($q, $timeout, LoadingScreenService, FieldCenterRestService, DashboardContextService, ExamStatusHistoryService, FlagReportParseDataFactory, FlagReportMonitoringService) {
     const DATA_NOT_FOUND = "Não há registros a serem exibidos.";
     const GENERIC_ERROR = "Ocorreu algum problema. Por favor, tente novamente em alguns minutos.";
     const CSV_ERROR = 'Não foi possível baixar o csv. Por favor, tente novamente em alguns minutos.';
@@ -31,6 +31,7 @@
     self.examsData;
     self.selectedExam;
     self.examsNameList;
+    self.rawExams;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -47,26 +48,26 @@
       self.selectedExam = null;
       self.colors = ExamStatusHistoryService.getColors();
       self.labels = ExamStatusHistoryService.getLabels();
-      _loadDefaultData();
+      _loadData();
     }
 
-    function updatePage(exams = null, startPage, endPage) {
+    function updatePage(exams, startPage, endPage) {
       if (startPage !== undefined && endPage !== undefined) {
-        self.examsData.index = self.rawActivities.index.slice(startPage, endPage + 1);
+        self.examsData.index = self.rawExams.index.slice(startPage, endPage + 1);
       }
       self.examsData.data = angular.copy(exams);
       self.setExams(self.examsData, self.selectedExamName);
       LoadingScreenService.finish();
     }
 
-    function updateData(exams = null, examName = null, center) {
+    function updateData(exams, examName, center) {
       if (center && center !== self.selectedCenter.acronym) {
-        _loadExamsProgress(center);
+        _setExamsProgress(center);
         _setCenter(center);
       } else {
         if (examName !== self.selectedExamName) {
           _setExamName(examName);
-          self.newExamsData = FlagReportParseData.create(self.examsData, examName)
+          self.newExamsData = FlagReportParseDataFactory.create(self.examsData, examName)
           self.setExams(self.newExamsData, examName);
         } else if (exams && exams !== self.exams) {
           self.setExams(exams, examName);
@@ -103,16 +104,12 @@
       self.exams = exams;
     }
 
-    self.$onDestroy = function () {
-      alasql("DROP TABLE IF EXISTS flagsExams");
-    };
-
     function _prepareForCSV() {
       return $q(function (resolve, reject) {
         alasql("DROP TABLE IF EXISTS flagsExams");
         alasql("CREATE TABLE IF NOT EXISTS flagsExams(RN INT,NOME STRING, STATUS STRING)");
         var rn = 0;
-        if (Array.isArray(self.rawActivities.data)) {
+        if (Array.isArray(self.rawExams.data)) {
           if (self.examsData.data.length > 0) {
             try {
               self.examsData.data.forEach(function (line) {
@@ -132,12 +129,12 @@
       });
     }
 
-    function _loadDefaultData() {
+    function _loadData() {
       if (!self.centers) {
         LoadingScreenService.start();
         FieldCenterRestService.loadCenters().then((result) => {
           self.centers = angular.copy(result);
-          _setUserFieldCenter();
+          _setDefaultData();
           LoadingScreenService.finish();
         }).catch(function (e) {
           self.ready = false;
@@ -147,11 +144,11 @@
           throw e;
         });
       } else {
-        _loadExamsProgress(self.selectedCenter.acronym);
+        _setExamsProgress(self.selectedCenter.acronym);
       }
     }
 
-    function _setUserFieldCenter() {
+    function _setDefaultData() {
       DashboardContextService.getLoggedUser().then((userData) => {
         var { acronym } = userData.fieldCenter;
         if (!acronym) {
@@ -162,7 +159,8 @@
           }));
           _setCenter(userData.fieldCenter.acronym);
         }
-        _loadAllExamNames();
+        _setAllExamNames();
+        _setExamsProgress(self.selectedCenter.acronym);
       }).catch(function (e) {
         self.ready = false;
         self.error = true;
@@ -171,31 +169,30 @@
       });
     }
 
-    function _loadAllExamNames() {
+    function _setAllExamNames() {
       if (!self.examsNameList) {
-        FlagReportMonitoringService.listAcronyms()
-          .then((examNames) => {
-            self.examsNameList = examNames.map(function (examName) {
-              return examName;
-            }).filter(function (elem, index, self) {
-              return index == self.indexOf(elem);
-            });
-            _getStatus();
-          }).catch((e) => {
-            LoadingScreenService.finish();
-            throw e;
+        FlagReportMonitoringService.getExamsName().then((examNames) => {
+          self.examsNameList = examNames.map(function (examName) {
+            return examName;
+          }).filter(function (elem, index, self) {
+            return index == self.indexOf(elem);
           });
+          _getStatus();
+        }).catch((e) => {
+          LoadingScreenService.finish();
+          throw e;
+        });
       }
     }
 
-    function _loadExamsProgress(center) {
+    function _setExamsProgress(center) {
       if (!self.exams || center !== self.selectedCenter.acronym) {
         LoadingScreenService.start();
         if (center !== self.selectedCenter.acronym)
           self.$onInit();
         FlagReportMonitoringService.getExamsProgressReport(center).then((response) => {
           alasql("DROP TABLE IF EXISTS flagsExams");
-          self.rawActivities = angular.copy(response);
+          self.rawExams = angular.copy(response);
           self.examsData = angular.copy(response);
           self.ready = true;
           self.error = false;
@@ -226,7 +223,6 @@
 
     function _getStatus() {
       self.status = ExamStatusHistoryService.listStatus();
-      _loadExamsProgress(self.selectedCenter.acronym);
     }
 
   }

@@ -11,19 +11,21 @@
     '$element'
   ];
 
-
   function Controller($scope, $compile, $element) {
     var self = this;
+    self.ready;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
     self.buildLaboratoryFlagReport = buildLaboratoryFlagReport;
 
     /* Public methods */
-    function onInit() { }
+    function onInit() {
+      self.ready = false;
+    }
 
     function buildLaboratoryFlagReport() {
-      // TODO:
+      self.ready = true;
     }
   }
 

@@ -104,7 +104,7 @@
         })
         .on("click", function (d, i) {
           rowSortOrder = !rowSortOrder;
-          sortByValues("r", i, rowSortOrder);
+          _sortByValues("r", i, rowSortOrder);
           d3.select("#order").property("selectedIndex", 0);
         });
 
@@ -138,7 +138,7 @@
         })
         .on("click", function (d, i) {
           colSortOrder = !colSortOrder;
-          sortByValues("c", i, colSortOrder);
+          _sortByValues("c", i, colSortOrder);
           d3.select("#order").property("selectedIndex", 0);
         });
 
@@ -240,7 +240,7 @@
         })
         .attr("y", legendHeight + cellSize);
 
-      function sortByValues(rORc, i, sortOrder) {
+      function _sortByValues(rORc, i, sortOrder) {
         var t = svg.transition().duration(1000);
         var values = [];
         var sorted;
@@ -295,7 +295,7 @@
 
       d3.select("#order").on("change", function () {
         var newOrder = d3.select("#order").property("value");
-        changeOrder(newOrder, heatmapId);
+        _changeOrder(newOrder, heatmapId);
       });
 
       d3.select("#palette")
@@ -310,7 +310,7 @@
         });
     }
 
-    function changeOrder(newOrder, heatmapId) {
+    function _changeOrder(newOrder, heatmapId) {
       var svg = d3.select(heatmapId);
       var t = svg.transition().duration(1000);
       if (newOrder == "sortinit_col") {

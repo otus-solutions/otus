@@ -12,6 +12,7 @@
 
     /* Public functions */
     self.clear = clear;
+    self.changeCenters = changeCenters;
 
     function onInit() {
       self.onChangeFilter = onChangeFilter;
@@ -20,13 +21,19 @@
     function clear(field) {
       switch (field) {
         case "examName":
-          self.selectedExamName = null;
+          self.selectedExamName = undefined;
           self.onChangeFilter();
           break;
         case "center":
-          self.selectedExamName = null;
-          self.selectedStatus = null;
+          self.selectedExamName = undefined;
+          self.selectedStatus = undefined;
           self.onChangeFilter();
+      }
+    }
+
+    function changeCenters() {
+      if (self.selectedCenter) {
+        onChangeFilter();
       }
     }
 

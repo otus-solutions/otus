@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .factory('otusFlagReportParseDataFactory', Factory);
+    .factory('otusjs.otus.uxComponent.FlagReportParseDataFactory', Factory);
 
   function Factory() {
     var self = this;
