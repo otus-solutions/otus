@@ -12,7 +12,6 @@
 
     /* Public functions */
     self.clear = clear;
-    self.changeCenters = changeCenters;
 
     function onInit() {
       self.onChangeFilter = onChangeFilter;
@@ -28,12 +27,7 @@
           self.selectedExamName = undefined;
           self.selectedStatus = undefined;
           self.onChangeFilter();
-      }
-    }
-
-    function changeCenters() {
-      if (self.selectedCenter) {
-        onChangeFilter();
+          break;
       }
     }
 

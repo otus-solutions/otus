@@ -205,7 +205,7 @@
           throw e;
         });
       } else {
-        self.setExams(self.exams, self.selectedExamName);
+        self.setExams(self.exams);
         self.ready = true;
         self.error = false;
       }

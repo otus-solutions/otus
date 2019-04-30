@@ -23,16 +23,16 @@
       });
     }
 
-    function _constructor(exams = null) {
+    function _constructor(exams) {
       self.examsData = exams ? exams : self.examsData;
       if (self.examsData.columns && self.examsData.index && self.examsData.data) {
-        heatmap_display(angular.copy(self.examsData), "#exam-heatmap", "Spectral");
+        _heatmap_display(angular.copy(self.examsData), "#exam-heatmap", "Spectral");
       } else {
         $("#exam-heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
       }
     }
 
-    function heatmap_display(json, heatmapId) {
+    function _heatmap_display(json, heatmapId) {
       var svg = d3.select(heatmapId).selectAll("*").remove();
 
       var tooltip = d3.select(heatmapId)
