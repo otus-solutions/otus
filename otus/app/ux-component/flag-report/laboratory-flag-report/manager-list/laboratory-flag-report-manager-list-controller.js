@@ -28,10 +28,10 @@
     self.colors;
     self.centers;
     self.message;
+    self.rawExams;
     self.examsData;
     self.selectedExam;
     self.examsNameList;
-    self.rawExams;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -159,7 +159,7 @@
           }));
           _setCenter(userData.fieldCenter.acronym);
         }
-        _setAllExamNames();
+        _setExamNames();
         _setExamsProgress(self.selectedCenter.acronym);
       }).catch(function (e) {
         self.ready = false;
@@ -169,7 +169,7 @@
       });
     }
 
-    function _setAllExamNames() {
+    function _setExamNames() {
       if (!self.examsNameList) {
         FlagReportMonitoringService.getExamsName().then((examNames) => {
           self.examsNameList = examNames.map(function (examName) {

@@ -1,20 +1,25 @@
 <br>
-<otus-laboratory-flag-filter-component centers="$ctrl.centers" exams-name-list="$ctrl.examsNameList" on-update="$ctrl.updateData"></otus-laboratory-flag-filter-component>
+<otus-laboratory-flag-filter-component centers="$ctrl.centers" exams-status="$ctrl.status" exams-name-list="$ctrl.examsNameList"
+  on-update="$ctrl.updateData"></otus-laboratory-flag-filter-component>
 <div ng-if="$ctrl.ready" layout="row" layout-align="center center">
   <md-button ng-disabled="!$ctrl.exams.data.length" class="md-accent md-raised" ng-click="$ctrl.downloadCSV()">EXPORTAR
     <md-icon>get_app</md-icon>
-    <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados e os dados da tela.</md-tooltip>
+    <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados e os dados da tela.
+    </md-tooltip>
   </md-button>
   <span flex></span>
   <div flex="70" layout-align="end center">
-    <otus-paginator flex flex-gt-md="35" elements="$ctrl.rawExams.data" on-update="$ctrl.updatePage" ng-if="$ctrl.ready"></otus-paginator>
+    <otus-paginator flex flex-gt-md="35" elements="$ctrl.rawExams.data" on-update="$ctrl.updatePage"
+      ng-if="$ctrl.ready"></otus-paginator>
   </div>
 </div>
 <md-divider></md-divider>
 <md-content flex layout="row">
-  <otus-laboratory-flag-report-visualization-component ng-if="$ctrl.ready" ng-show="$ctrl.exams.data.length" exams-data="$ctrl.exams"
-    on-update="$ctrl.setExams" colors-range="$ctrl.colors" legend-range="$ctrl.labels" flex layout-padding=""></otus-laboratory-flag-report-visualization-component>
-  <div ng-if="$ctrl.error" layout="row" flex layout-align="center center" style="height: 400px; width: 400px; margin-left: auto; margin-right: auto;">
+  <otus-laboratory-flag-report-visualization-component ng-show="$ctrl.exams.data.length" exams-data="$ctrl.exams"
+    on-update="$ctrl.setExams" colors-range="$ctrl.colors" legend-range="$ctrl.labels" flex ng-if="$ctrl.ready"
+    layout-padding=""></otus-laboratory-flag-report-visualization-component>
+  <div ng-if="$ctrl.error" layout="row" flex layout-align="center center"
+    style="height: 400px; width: 400px; margin-left: auto; margin-right: auto;">
     <div class="label-light-gray">
       <h3 class="md-headline">{{$ctrl.message}}</h3>
     </div>

@@ -23,6 +23,10 @@
           self.selectedExamName = undefined;
           self.onChangeFilter();
           break;
+        case "status":
+          self.selectedStatus = null;
+          self.onChangeFilter();
+          break;
         case "center":
           self.selectedExamName = undefined;
           self.selectedStatus = undefined;
@@ -32,7 +36,8 @@
     }
 
     function onChangeFilter(exams) {
-      self.onUpdate(exams, self.selectedExamName, self.selectedCenter)
+      let status = isNaN(parseInt(self.selectedStatus)) ? null : parseInt(self.selectedStatus);
+      self.onUpdate(exams, self.selectedExamName, status, self.selectedCenter)
     }
   }
 

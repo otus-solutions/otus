@@ -6,56 +6,48 @@ describe('otusFlagReportDashboardCtrl Test', function () {
 
   beforeEach(function () {
     mockInjections();
-    angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
-      $provide.value("STATE", Mock.STATE);
-      $provide.value("otusjs.application.state.ApplicationStateService", Mock.ApplicationStateService);
-    });
+    angular.mock.module('otusjs.otus.uxComponent', function ($provide) { });
 
     inject(function (_$controller_) {
-      Injections = {
-        STATE: Mock.STATE,
-        ApplicationStateService: Mock.ApplicationStateService
-      };
+      Injections = {};
 
       controller = _$controller_('otusFlagReportDashboardCtrl', Injections);
     });
   });
 
-  describe('Current State in flag dashboard', function () {
-    beforeEach(function () {
-      spyOn(Mock.ApplicationStateService, "getCurrentState").and.returnValue(FLAG_REPORT);
-      spyOn(Mock.ApplicationStateService, "activateFlagsReportManager").and.callThrough();
+  describe('onInit method', () => {
+    beforeEach(() => {
+      spyOn(controller, '$onInit').and.callThrough();
+
       controller.$onInit();
     });
 
-    it('should call method activateFlagsReportManager', function () {
-      expect(Mock.ApplicationStateService.activateFlagsReportManager).toHaveBeenCalled();
-      expect(Mock.ApplicationStateService.activateFlagsReportManager).toHaveBeenCalledTimes(1);
+    it('should onInit be defined', () => {
+      expect(controller.$onInit).toHaveBeenCalled();
+      expect(controller.ready).toBeDefined();
     });
+
+    it('should initialize variables', () => {
+      expect(controller.ready).toBe(false);
+    });
+
   });
 
-  describe('Current State not in flag dashboard', function () {
-    beforeEach(function () {
-      spyOn(Mock.ApplicationStateService, "getCurrentState").and.returnValue("");
-      spyOn(Mock.ApplicationStateService, "activateFlagsReportManager").and.callThrough();
+  describe('buildLaboratoryFlagReport method', () => {
+    beforeEach(() => {
+      spyOn(controller, '$onInit').and.callThrough();
+
       controller.$onInit();
     });
 
-    it('should call method activateFlagsReportManager', function () {
-      expect(Mock.ApplicationStateService.activateFlagsReportManager).not.toHaveBeenCalled();
-      expect(Mock.ApplicationStateService.activateFlagsReportManager).toHaveBeenCalledTimes(0);
+    it('should to assign true in variable ready', () => {
+      controller.buildLaboratoryFlagReport();
+
+      expect(controller.ready).toBe(true);
     });
+
   });
 
-
-  function mockInjections() {
-    Mock.STATE = {
-      FLAG_DASHBOARD: FLAG_REPORT
-    };
-    Mock.ApplicationStateService = {
-      getCurrentState: () => { },
-      activateFlagsReportManager: () => { }
-    }
-  }
+  function mockInjections() { }
 
 });

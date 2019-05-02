@@ -36,7 +36,6 @@ describe('otusLaboratoryFlagFilterComponentCtrl Test', function () {
   it('should clear examName', function () {
     controller.$onInit();
     controller.clear(Mock.examName);
-    expect(controller.selectedExamName).toEqual(null);
     expect(controller.onUpdate).toHaveBeenCalled();
     expect(controller.onUpdate).toHaveBeenCalledTimes(1);
   });

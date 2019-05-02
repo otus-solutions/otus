@@ -167,13 +167,13 @@
     function _loadActivitiesProgress(center) {
       if (!self.activities || center !== self.selectedCenter.acronym) {
         if (center !== self.selectedCenter.acronym) self.$onInit();
-        FlagReportMonitoringService.getActivitiesProgressReport(center)
-          .then((response) => {
+        FlagReportMonitoringService.getActivitiesProgressReport(center).then((response) => {
             if (response.data.length != 0) {
               alasql("DROP TABLE IF EXISTS flagsActivities");
               self.rawActivities = angular.copy(response);
               self.activitiesData = angular.copy(response);
               self.ready = true;
+              self.error = false;
             } else {
               self.error = "Não existem atividades disponíveis para visualização.";
               LoadingScreenService.finish();

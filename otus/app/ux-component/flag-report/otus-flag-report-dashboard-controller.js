@@ -5,13 +5,9 @@
     .module('otusjs.otus.uxComponent')
     .controller("otusFlagReportDashboardCtrl", Controller);
 
-  Controller.$inject = [
-    '$scope',
-    '$compile',
-    '$element'
-  ];
+  Controller.$inject = [];
 
-  function Controller($scope, $compile, $element) {
+  function Controller() {
     var self = this;
     self.ready;
 

@@ -35,7 +35,7 @@ describe('MonitoringRestService', function () {
       deleteNotAppliesOfActivity: () => {
         return Promise.resolve();
       },
-      getExamsName: () => {
+      getExamFlagReportLabels: () => {
         return Promise.resolve();
       },
       getExamsProgressReport: () => {
@@ -79,7 +79,7 @@ describe('MonitoringRestService', function () {
   describe('getExamsName method', function () {
     beforeEach(function () {
       spyOn(service, 'getExamsName').and.callThrough();
-      spyOn(_rest, 'getExamsName').and.callThrough();
+      spyOn(_rest, 'getExamFlagReportLabels').and.callThrough();
     });
 
     it('should getExamsName be defined', function () {
@@ -89,7 +89,7 @@ describe('MonitoringRestService', function () {
     it('should call _rest.getExamsName', function () {
       service.initialize();
       service.getExamsName();
-      expect(_rest.getExamsName).toHaveBeenCalledTimes(1);
+      expect(_rest.getExamFlagReportLabels).toHaveBeenCalledTimes(1);
     });
 
     it('should not call _rest.getExamsName', function () {

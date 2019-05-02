@@ -1,4 +1,4 @@
-describe('otus-flag-report-parse-data-factory Test', function() {
+describe('FlagReportParseDataFactory Test', function() {
   var Mock = {};
   var factory,ACRONYM, STATUS;
 
@@ -6,7 +6,7 @@ describe('otus-flag-report-parse-data-factory Test', function() {
     angular.mock.module('otusjs.otus.uxComponent');
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('otusFlagReportParseDataFactory');
+      factory = _$injector_.get('otusjs.otus.uxComponent.FlagReportParseDataFactory');
       mockData();
     });
   });
