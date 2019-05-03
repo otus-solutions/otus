@@ -38,6 +38,7 @@ module.exports = function (config) {
       NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-angular.js',
       NODE_MODULES_ROOT_PATH + 'moment/min/moment.min.js',
       NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
+      NODE_MODULES_ROOT_PATH +"jasmine-promise-matchers/dist/jasmine-promise-matchers.js",
       /* Otus platform*/
       NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
       NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',

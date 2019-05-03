@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .controller('otusParticipantHeatmapCtrl', Controller);
+    .controller('otusParticipantExamHeatmapCtrl', Controller);
 
   Controller.$inject = [
     '$q',
@@ -19,56 +19,54 @@
 
   function Controller($q, $mdToast, $mdDialog, $scope, LoadingScreenService, EventService, ApplicationStateService, DashboardService, ParticipantMonitoringService) {
     const DOES_NOT_APPLY = 'DOES_NOT_APPLY';
-    const MULTIPLE = 'MULTIPLE';
     const AMBIGUITY = 'AMBIGUITY';
 
     var self = this;
 
-    self.ERROR_MESSAGE = 'Atualmente não existem nenhum formulário disponível no sistema';
-    self.LOAD_ERROR_MESSAGE = "Ocorreu um erro ao buscar o relatório de atividades";
-    self.activityList = [];
+    self.ERROR_MESSAGE = 'Atualmente não existem nenhum exame disponível no sistema';
+    self.LOAD_ERROR_MESSAGE = "Ocorreu um erro ao buscar o relatório de exames";
+    self.examList = [];
     self.legends = [];
+
     /* Lifecycle hooks */
     self.$onInit = onInit;
-    /* Public methods */;
+
+    /* Public methods */
     self.selectParticipant = selectParticipant;
     self.getCurrentState = getCurrentState;
     self.showObservation = showObservation;
     self.loadData = loadData;
     self.COLOR = {
-      CREATED: '#ff6f69',
-      FINALIZED: '#88d8b0',
-      SAVED: '#ffeead',
+      HAVE: '#88d8b0',
+      DOES_NOT_HAVE: '#ff6f69',
       DOES_NOT_APPLY: '#cecece',
-      UNDEFINED: '#ffffff',
-      MULTIPLE: '#ffcc5c',
       AMBIGUITY: '#bae1ff'
     };
 
     /* Lifecycle methods */
     function onInit() {
+      LoadingScreenService.start();
       _loadParticipant();
       _buildLegend();
       EventService.onParticipantSelected(_participantAvailable);
-      self.selectedParticipant = null; //TODO review why
     }
 
     function selectParticipant(selectedParticipant) {
       self.selectedParticipant = selectedParticipant;
     }
 
-    function showObservation(event, index, activity) {
+    function showObservation(event, index, exam) {
       $mdDialog.show({
-        locals: {activity: activity},
+        locals: {exam: exam},
         controller: _DialogController,
-        templateUrl: 'app/ux-component/otus-monitoring/participant-monitoring/participant-activity-heatmap/activity-observation-dialog-template.html',
+        templateUrl: 'app/ux-component/otus-monitoring/participant-monitoring/participant-exam-heatmap/exam-observation-dialog-template.html',
         parent: angular.element(document.body),
         targetEvent: event,
         clickOutsideToClose: true,
         fullscreen: $scope.customFullscreen
       }).then(function (result) {
         LoadingScreenService.start();
-        _defineActivityWithDoesNotApplies(result, index, activity).then(function () {
+        _defineExamWithDoesNotApplies(result, index, exam).then(function () {
           $mdToast.show(
             $mdToast.simple()
               .textContent('Atualização realizada com sucesso.')
@@ -90,25 +88,26 @@
       ApplicationStateService.getCurrentState();
     }
 
-    function _defineActivityWithDoesNotApplies(result, index, activity) {
+    function _defineExamWithDoesNotApplies(result, index, exam) {
       var defer = $q.defer();
       if (result.doesNotApply) {
-        ParticipantMonitoringService.defineActivityWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, result.observation, activity)
+        ParticipantMonitoringService.defineExamWithDoesNotApplies(self.selectedParticipant.recruitmentNumber, result.observation, exam)
           .then(function (response) {
-            self.activityList[index] = ParticipantMonitoringService.buildActivityStatus(response);
+            self.examList[index] = ParticipantMonitoringService.buildExamStatus(response);
             LoadingScreenService.finish();
             defer.resolve();
-          }).catch(function (e) {
+          }).catch(function () {
           LoadingScreenService.finish();
           defer.reject();
+          LoadingScreenService.finish();
         });
       } else {
-        ParticipantMonitoringService.deleteNotAppliesOfActivity(self.selectedParticipant.recruitmentNumber, activity)
+        ParticipantMonitoringService.deleteNotAppliesOfExam(self.selectedParticipant.recruitmentNumber, exam)
           .then(function (response) {
-            self.activityList[index] = ParticipantMonitoringService.buildActivityStatus(response);
+            self.examList[index] = ParticipantMonitoringService.buildExamStatus(response);
             LoadingScreenService.finish();
             defer.resolve();
-          }).catch(function (e) {
+          }).catch(function () {
           LoadingScreenService.finish();
           defer.reject();
         });
@@ -117,27 +116,31 @@
     }
 
     function loadData() {
+      //LoadingScreenService.start();
       self.loading = true;
       self.error = false;
 
-      ParticipantMonitoringService.buildActivityStatusList(self.selectedParticipant.recruitmentNumber)
+      ParticipantMonitoringService.buildExamStatusList(self.selectedParticipant.recruitmentNumber)
         .then(function (result) {
-          self.activityList = result;
-          self.showActivitySignal = true;
+          self.examList = result;
+          self.showExamSignal = true;
           self.loading = false;
+          LoadingScreenService.finish();
         })
-        .catch(function (err) {
+        .catch(function () {
           self.loading = false;
           self.error = true;
+          LoadingScreenService.finish();
         });
     }
 
     function _participantAvailable(participantData) {
-      self.activityList = [];
+      self.examList = [];
       self.loadAvailable = true;
-      self.showActivitySignal = false;
+      self.showExamSignal = false;
       self.selectedParticipant = participantData;
       selectParticipant(participantData);
+      loadData();
     }
 
     function _loadParticipant() {
@@ -145,23 +148,18 @@
         .getSelectedParticipant()
         .then(function (participantData) {
           _participantAvailable(participantData);
-        }).catch(function () {
         });
     }
 
     function _buildLegend() {
-      self.legends.push({label: 'Criado.', color: self.COLOR.CREATED});
-      self.legends.push({label: 'Salvo.', color: self.COLOR.SAVED});
-      self.legends.push({label: 'Finalizado.', color: self.COLOR.FINALIZED});
-      self.legends.push({label: 'Não realizado.', color: self.COLOR.DOES_NOT_APPLY});
-      self.legends.push({label: 'Nenhuma atividade.', color: self.COLOR.UNDEFINED});
-      self.legends.push({label: 'Multiplas atividades.', color: self.COLOR.MULTIPLE});
+      self.legends.push({label: 'Com dados.', color: self.COLOR.HAVE});
+      self.legends.push({label: 'Sem dados.', color: self.COLOR.DOES_NOT_HAVE});
+      self.legends.push({label: 'Não será realizado.', color: self.COLOR.DOES_NOT_APPLY});
       self.legends.push({label: 'Ambiguidade.', color: self.COLOR.AMBIGUITY});
     }
 
-    function _DialogController($scope, $mdDialog, activity) {
-      const AMBIGUITY_STATE_DESCRIPTION = 'Atividade definida como não se aplica, porém, existe atividade(s) adicionada(s) ao participante!';
-      const MULTIPLE_STATE_DESCRIPTION = 'Existe mais de uma atividade adicionada ao participante! Status e datas descritas abaixo:';
+    function _DialogController($scope, $mdDialog, exam) {
+      const AMBIGUITY_STATE_DESCRIPTION = 'Exame definido como não será realizado, porém existe Exame(s) realizado(s) adicionado(s) ao participante!';
       $scope.disable;
       $scope.doesNotApply;
       $scope.observation;
@@ -174,17 +172,14 @@
         $scope.disable = true;
         $scope.doesNotApply = false;
 
-        if (activity.status === DOES_NOT_APPLY) {
+        if (exam.status === DOES_NOT_APPLY) {
           $scope.doesNotApply = true;
-          $scope.observation = activity.observation ? activity.observation : '';
-        } else if (activity.status === AMBIGUITY) {
+          $scope.observation = exam.observation ? exam.observation : '';
+        } else if (exam.status === AMBIGUITY) {
           $scope.doesNotApply = true;
-          $scope.information = activity.information;
+          $scope.information = exam.information;
           $scope.description = AMBIGUITY_STATE_DESCRIPTION;
-          $scope.observation = activity.observation ? activity.observation : '';
-        } else if (activity.status === MULTIPLE) {
-          $scope.information = activity.information;
-          $scope.description = MULTIPLE_STATE_DESCRIPTION;
+          $scope.observation = exam.observation ? exam.observation : '';
         }
       }
 
@@ -198,7 +193,7 @@
 
       $scope.change = function () {
         if (!$scope.doesNotApply) {
-          if (activity.status === DOES_NOT_APPLY || activity.status === AMBIGUITY) {
+          if (exam.status === DOES_NOT_APPLY || exam.status === AMBIGUITY) {
             $scope.disable = false;
           }
         } else {
@@ -218,7 +213,6 @@
         else
           $mdDialog.hide(result);
       };
-
     }
   }
 }());

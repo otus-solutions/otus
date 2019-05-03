@@ -16,7 +16,7 @@
   <div layout="column" layout-align="start start" layout-padding layout-fill flex="100">
     <div layout="row" layout-padding layout-fill layout-align="center center" flex>
       <div layout="column" layout-padding layout-align="center center">
-        <span layout="row" class="md-display-2">Olá {{ $ctrl.loggedUser.name }}!</span>
+        <span layout="row" class="md-display-2">Olá {{ $ctrl.loggedUser.name}}!</span>
         <span layout="row" class="md-headline">Utilize as opções a seguir para navegar no sistema.</span>
         <otus-participant-search on-select="$ctrl.selectParticipant(participant)"
                                  show-all-participants="$ctrl.managerParticipantsDashboard()"

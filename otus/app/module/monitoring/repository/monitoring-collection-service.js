@@ -30,6 +30,9 @@
     self.getDataByExam = getDataByExam;
     self.getDataToCSVOfPendingResultsByAliquots = getDataToCSVOfPendingResultsByAliquots;
     self.getDataToCSVOfOrphansByExam = getDataToCSVOfOrphansByExam;
+    self.getStatusOfExams = getStatusOfExams;
+    self.defineExamWithDoesNotApplies = defineExamWithDoesNotApplies;
+    self.deleteNotAppliesOfExam = deleteNotAppliesOfExam;
 
     function listAcronyms() {
       var request = $q.defer();
@@ -90,7 +93,6 @@
               request.reject(e);
             });
         });
-
       return request.promise;
     };
 
@@ -108,7 +110,6 @@
               request.reject(e);
             });
         });
-
       return request.promise;
     };
 
@@ -146,13 +147,13 @@
       return request.promise;
     };
 
-    function deleteNotAppliesOfActivity(rn, acrony) {
+    function deleteNotAppliesOfActivity(rn, acronym) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .deleteNotAppliesOfActivity(rn, acrony)
+            .deleteNotAppliesOfActivity(rn, acronym)
             .then(function (response) {
               request.resolve(response.data);
             })
@@ -177,7 +178,6 @@
               request.reject(e);
             });
         });
-
       return request.promise;
     };
 
@@ -195,7 +195,6 @@
               request.reject(e);
             });
         });
-
       return request.promise;
     };
 
@@ -213,7 +212,6 @@
               request.reject(e);
             });
         });
-
       return request.promise;
     };
 
@@ -231,7 +229,6 @@
               request.reject(e);
             });
         });
-
       return request.promise;
     };
 
@@ -249,7 +246,6 @@
               request.reject(e);
             });
         });
-
       return request.promise;
     };
 
@@ -267,7 +263,6 @@
               request.reject(e);
             });
         });
-
       return request.promise;
     };
 
@@ -280,6 +275,57 @@
             .getDataToCSVOfOrphansByExam()
             .then(function (response) {
               request.resolve(response.data.orphanExamsCsvData);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+      return request.promise;
+    };
+
+    function getStatusOfExams(recruitmentNumber) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getStatusOfExams(recruitmentNumber)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+      return request.promise;
+    };
+
+    function defineExamWithDoesNotApplies(data) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .defineExamWithDoesNotApplies(data)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+      return request.promise;
+    };
+
+    function deleteNotAppliesOfExam(data) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .deleteNotAppliesOfExam(data)
+            .then(function (response) {
+              request.resolve(response.data);
             })
             .catch(function (e) {
               request.reject(e);
