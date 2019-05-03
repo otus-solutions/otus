@@ -30,7 +30,7 @@
     </div>
     <div layout="row" layout-wrap layout-align="center center" flex>
       <md-card class="md-whiteframe-3dp" ng-style="{backgroundColor:$ctrl.COLOR[exam.status]}"
-               ng-repeat="exam in $ctrl.examList | orderBy: 'name' track by $index" flex="30" flex-xs="90" flex-sm="40">
+               ng-repeat="exam in $ctrl.examList" flex="30" flex-xs="90" flex-sm="40">
         <md-card-title flex>
           <md-card-title-text flex="90">
             <div layout="row" flex>
