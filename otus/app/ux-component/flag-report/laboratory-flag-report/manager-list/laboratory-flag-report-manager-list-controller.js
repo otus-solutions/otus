@@ -12,11 +12,11 @@
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.application.exam.ExamStatusHistoryService',
-    'otusjs.otus.uxComponent.FlagReportParseDataFactory',
+    'otusjs.monitoring.business.FlagReportFilterService',
     'otusjs.monitoring.repository.FlagReportMonitoringService'
   ];
 
-  function Controller($q, $timeout, LoadingScreenService, FieldCenterRestService, DashboardContextService, ExamStatusHistoryService, FlagReportParseDataFactory, FlagReportMonitoringService) {
+  function Controller($q, $timeout, LoadingScreenService, FieldCenterRestService, DashboardContextService, ExamStatusHistoryService, FlagReportFilterService, FlagReportMonitoringService) {
     const DATA_NOT_FOUND = "Não há registros a serem exibidos.";
     const GENERIC_ERROR = "Ocorreu algum problema. Por favor, tente novamente em alguns minutos.";
     const CSV_ERROR = 'Não foi possível baixar o csv. Por favor, tente novamente em alguns minutos.';
@@ -24,6 +24,7 @@
     self.ready;
     self.error;
     self.exams;
+    self.status;
     self.labels;
     self.colors;
     self.centers;
@@ -32,6 +33,7 @@
     self.examsData;
     self.selectedExam;
     self.examsNameList;
+    self.selectedStatus;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -44,8 +46,10 @@
     function onInit() {
       self.ready = false;
       self.error = false;
+      self.status = undefined;
       self.examsData = [];
       self.selectedExam = null;
+      self.selectedStatus = null;
       self.colors = ExamStatusHistoryService.getColors();
       self.labels = ExamStatusHistoryService.getLabels();
       _loadData();
@@ -68,7 +72,7 @@
         if (examName !== self.selectedExamName || status !== self.selectedStatus) {
           _setExamName(examName);
           _setStatus(status);
-          self.newExamsData = FlagReportParseDataFactory.create(self.examsData, examName, status);
+          self.newExamsData = FlagReportFilterService.create(self.examsData, examName, status);
           self.setExams(self.newExamsData, examName);
         } else if (exams && exams !== self.exams) {
           self.setExams(exams, examName);

@@ -11,7 +11,7 @@
     'otusjs.application.activity.StatusHistoryService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.uxComponent.FlagReportParseDataFactory',
+    'otusjs.monitoring.business.FlagReportFilterService',
     '$q',
     '$timeout'
   ];
@@ -21,7 +21,7 @@
     StatusHistoryService,
     DashboardContextService,
     LoadingScreenService,
-    FlagReportParseData,
+    FlagReportFilterService,
     $q,
     $timeout) {
 
@@ -197,7 +197,7 @@
         if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
           _setActivity(acronym);
           _setStatus(status);
-          self.newActivitiesData = FlagReportParseData.create(self.activitiesData, acronym, status)
+          self.newActivitiesData = FlagReportFilterService.create(self.activitiesData, acronym, status)
           self.setActivities(self.newActivitiesData, acronym, status);
         } else if (activities && activities !== self.activities) {
           self.setActivities(activities, acronym, status);

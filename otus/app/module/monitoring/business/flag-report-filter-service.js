@@ -2,22 +2,25 @@
   'use strict';
 
   angular
-    .module('otusjs.otus.uxComponent')
-    .factory('otusjs.otus.uxComponent.FlagReportParseDataFactory', Factory);
+    .module('otusjs.monitoring.business')
+    .factory('otusjs.monitoring.business.FlagReportFilterService', Service);
 
-  function Factory() {
+
+  Service.$inject = [];
+
+  function Service() {
     var self = this;
 
-    self.create = create;
+    /* Public methods */
+    self.filter = filter;
 
-    function create(json, acronym = null, status = null) {
-
-      var obj = {};
-      obj.columns = [];
-      obj.index = json.index;
-      obj.data = [];
-
+    function filter(json, acronym = null, status = null) {
       if (json.data.length) {
+        let result = {};
+        result.columns = [];
+        result.index = json.index;
+        result.data = [];
+
         if (acronym != null || status != null) {
           json.data.forEach(function (line) {
             var data = [];
@@ -34,39 +37,39 @@
                     data.push(line[i]);
                   }
                 }
-              } else {
-                if (status != null) {
-                  if (status == line[i]) {
-                    data.push(line[i]);
-                  } else {
-                    data.push(null)
-                  }
-                } else {
+              } else if (status != null) {
+                if (status == line[i]) {
                   data.push(line[i]);
+                } else {
+                  data.push(null)
                 }
+              } else {
+                data.push(line[i]);
               }
-
             }
-            obj.data.push(data);
+            result.data.push(data);
           });
 
           if (acronym) {
             json.columns.forEach(function (column) {
               if (column[1] == acronym)
-                obj.columns.push([column[0], column[1]]);
+                result.columns.push([column[0], column[1]]);
             });
           } else {
-            obj.columns = json.columns;
+            result.columns = json.columns;
           }
         } else {
-          obj.columns = json.columns;
-          obj.data = json.data;
+          _defaultValues();
         }
       }
 
-      return obj;
+      return result;
     }
 
-    return self;
+    function _defaultValues() {
+      obj.columns = json.columns;
+      obj.data = json.data;
+    }
+
   }
 }());
