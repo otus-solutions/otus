@@ -60,7 +60,7 @@ describe('participantExamHeatmapController_TestSuite', function () {
 
   it('test_should_verify_the_contents_of_the_internal_variables_of_the_controller', function () {
     expect(ctrl.ERROR_MESSAGE).toBe('Atualmente não existem nenhum exame disponível no sistema');
-    expect(ctrl.LOAD_ERROR_MESSAGE).toBe('Ocorreu um erro ao buscar o relatório de exames');
+    expect(ctrl.LOAD_ERROR_MESSAGE).toBe('O participante não possui laboratório inicializado.');
     expect(ctrl.COLOR.HAVE).toBe('#88d8b0');
     expect(ctrl.COLOR.DOES_NOT_HAVE).toBe('#ff6f69');
     expect(ctrl.COLOR.DOES_NOT_APPLY).toBe('#cecece');
