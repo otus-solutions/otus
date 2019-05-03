@@ -5,7 +5,7 @@ describe('FlagReportMonitoringService Test', function () {
 
   beforeEach(function () {
     mockInjections();
-    angular.mock.module('otusjs.monitoring.business', function ($provide) {
+    angular.mock.module('otusjs.monitoring.repository', function ($provide) {
       $provide.value('otusjs.monitoring.repository.FlagReportMonitoringService', Mock.FlagReportMonitoringService);
     });
 

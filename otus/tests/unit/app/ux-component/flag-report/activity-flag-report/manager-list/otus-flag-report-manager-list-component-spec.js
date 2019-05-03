@@ -11,7 +11,7 @@ describe('otus-flag-report-manager-list-component Test', function () {
       $provide.value('otusjs.application.activity.StatusHistoryService', Mock.StatusHistoryService);
       $provide.value('otusjs.otus.dashboard.core.ContextService', Mock.dashboardContextService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
-      $provide.value('otusjs.otus.uxComponent.FlagReportParseDataFactory', Mock.FlagReportParseData);
+      $provide.value('otusjs.monitoring.business.FlagReportFilterService', Mock.FlagReportParseData);
       $provide.value('$q', Mock.$q);
       $provide.value('$timeout', Mock.$timeout);
     });
@@ -27,7 +27,7 @@ describe('otus-flag-report-manager-list-component Test', function () {
     spyOn(Mock.StatusHistoryService, 'getColors').and.callThrough();
     spyOn(Mock.StatusHistoryService, 'getLabels').and.callThrough();
     spyOn(Mock.FlagReportMonitoringService, 'getActivitiesProgressReport').and.callThrough();
-    spyOn(Mock.FlagReportParseData, 'create').and.callThrough();
+    spyOn(Mock.FlagReportParseData, 'filter').and.callThrough();
     spyOn(Mock.LoadingScreenService, 'start').and.callThrough();
     spyOn(Mock.LoadingScreenService, 'finish').and.callThrough();
 
@@ -136,7 +136,7 @@ describe('otus-flag-report-manager-list-component Test', function () {
     };
 
     Mock.FlagReportParseData = {
-      create: () => { }
+      filter: () => { }
     }
 
   }

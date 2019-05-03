@@ -19,8 +19,8 @@
         value: 0
       },
       {
-        name: 'REALIZED',
-        label: 'Realizado',
+        name: 'RECEIVED',
+        label: 'Recebido',
         color: '#1ECE8B',
         icon: 'check_circle',
         value: 1

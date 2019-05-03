@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.monitoring.business')
-    .factory('otusjs.monitoring.business.FlagReportFilterService', Service);
+    .service('otusjs.monitoring.business.FlagReportFilterService', Service);
 
 
   Service.$inject = [];
@@ -15,12 +15,12 @@
     self.filter = filter;
 
     function filter(json, acronym = null, status = null) {
-      if (json.data.length) {
-        let result = {};
-        result.columns = [];
-        result.index = json.index;
-        result.data = [];
+      var result = {};
+      result.columns = [];
+      result.index = json.index;
+      result.data = [];
 
+      if (json.data.length) {
         if (acronym != null || status != null) {
           json.data.forEach(function (line) {
             var data = [];
@@ -59,17 +59,11 @@
             result.columns = json.columns;
           }
         } else {
-          _defaultValues();
+          result.columns = json.columns;
+          result.data = json.data;
         }
       }
-
       return result;
     }
-
-    function _defaultValues() {
-      obj.columns = json.columns;
-      obj.data = json.data;
-    }
-
   }
 }());

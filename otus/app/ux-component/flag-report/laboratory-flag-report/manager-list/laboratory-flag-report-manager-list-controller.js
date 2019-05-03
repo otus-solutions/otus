@@ -72,7 +72,7 @@
         if (examName !== self.selectedExamName || status !== self.selectedStatus) {
           _setExamName(examName);
           _setStatus(status);
-          self.newExamsData = FlagReportFilterService.create(self.examsData, examName, status);
+          self.newExamsData = FlagReportFilterService.filter(self.examsData, examName, status);
           self.setExams(self.newExamsData, examName);
         } else if (exams && exams !== self.exams) {
           self.setExams(exams, examName);

@@ -197,7 +197,7 @@
         if (acronym !== self.selectedAcronym || status !== self.selectedStatus) {
           _setActivity(acronym);
           _setStatus(status);
-          self.newActivitiesData = FlagReportFilterService.create(self.activitiesData, acronym, status)
+          self.newActivitiesData = FlagReportFilterService.filter(self.activitiesData, acronym, status)
           self.setActivities(self.newActivitiesData, acronym, status);
         } else if (activities && activities !== self.activities) {
           self.setActivities(activities, acronym, status);
