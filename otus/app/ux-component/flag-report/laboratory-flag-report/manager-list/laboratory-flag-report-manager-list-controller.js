@@ -13,7 +13,7 @@
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.application.exam.ExamStatusHistoryService',
     'otusjs.otus.uxComponent.FlagReportParseDataFactory',
-    'otusjs.monitoring.business.FlagReportMonitoringService'
+    'otusjs.monitoring.repository.FlagReportMonitoringService'
   ];
 
   function Controller($q, $timeout, LoadingScreenService, FieldCenterRestService, DashboardContextService, ExamStatusHistoryService, FlagReportParseDataFactory, FlagReportMonitoringService) {
@@ -56,18 +56,19 @@
         self.examsData.index = self.rawExams.index.slice(startPage, endPage + 1);
       }
       self.examsData.data = angular.copy(exams);
-      self.setExams(self.examsData, self.selectedExamName);
+      self.setExams(self.examsData, self.selectedExamName, self.selectedStatus);
       LoadingScreenService.finish();
     }
 
-    function updateData(exams, examName, center) {
+    function updateData(exams, examName, status, center) {
       if (center && center !== self.selectedCenter.acronym) {
         _setExamsProgress(center);
         _setCenter(center);
       } else {
-        if (examName !== self.selectedExamName) {
+        if (examName !== self.selectedExamName || status !== self.selectedStatus) {
           _setExamName(examName);
-          self.newExamsData = FlagReportParseDataFactory.create(self.examsData, examName)
+          _setStatus(status);
+          self.newExamsData = FlagReportParseDataFactory.create(self.examsData, examName, status);
           self.setExams(self.newExamsData, examName);
         } else if (exams && exams !== self.exams) {
           self.setExams(exams, examName);
@@ -221,8 +222,13 @@
       self.selectedExamName = examName;
     }
 
+    function _setStatus(status) {
+      self.selectedStatus = status;
+    }
+
     function _getStatus() {
       self.status = ExamStatusHistoryService.listStatus();
+      self.selectedStatus = null;
     }
 
   }

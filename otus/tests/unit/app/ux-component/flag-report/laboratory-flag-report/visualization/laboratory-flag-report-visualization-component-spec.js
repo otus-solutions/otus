@@ -23,6 +23,9 @@ describe('otusLaboratoryFlagReportVisualizationComponentCtrl Test', function () 
     beforeEach(function () {
       spyOn(controller, '$onInit').and.callThrough();
       spyOn(controller, 'constructor').and.callThrough();
+
+      controller.examsData = Mock.examsData;
+      controller.legendRange = Mock.legendRange;
       controller.$onInit();
     });
 
@@ -41,7 +44,15 @@ describe('otusLaboratoryFlagReportVisualizationComponentCtrl Test', function () 
   function mockInjections() {
     Mock.ExamStatusHistoryService = {
       getStatusColor: () => { }
-    }
+    };
+
+    Mock.examsData = {
+      columns: [["C", "A1"], ["C", "A2"]],
+      data: [[1, 1], [1, 0]],
+      index: [123456, 123457]
+    };
+
+    Mock.legendRange = {};
   };
 
 });

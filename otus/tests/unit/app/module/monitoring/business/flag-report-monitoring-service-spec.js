@@ -6,7 +6,7 @@ describe('FlagReportMonitoringService Test', function () {
   beforeEach(function () {
     mockInjections();
     angular.mock.module('otusjs.monitoring.business', function ($provide) {
-      $provide.value('otusjs.monitoring.business.FlagReportMonitoringService', Mock.FlagReportMonitoringService);
+      $provide.value('otusjs.monitoring.repository.FlagReportMonitoringService', Mock.FlagReportMonitoringService);
     });
 
     inject(function (_$injector_) {
@@ -14,7 +14,7 @@ describe('FlagReportMonitoringService Test', function () {
         FlagReportMonitoringService: Mock.FlagReportMonitoringService
       };
 
-      service = _$injector_.get('otusjs.monitoring.business.FlagReportMonitoringService', Injections);
+      service = _$injector_.get('otusjs.monitoring.repository.FlagReportMonitoringService', Injections);
     });
 
     spyOn(Mock.FlagReportMonitoringService, "find").and.callThrough();

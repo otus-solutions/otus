@@ -7,7 +7,7 @@ describe('otus-flag-report-manager-list-component Test', function () {
     mockInjections();
     angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
       $provide.value('otusjs.deploy.FieldCenterRestService', Mock.ProjectFieldCenterService);
-      $provide.value('otusjs.monitoring.business.FlagReportMonitoringService', Mock.FlagReportMonitoringService);
+      $provide.value('otusjs.monitoring.repository.FlagReportMonitoringService', Mock.FlagReportMonitoringService);
       $provide.value('otusjs.application.activity.StatusHistoryService', Mock.StatusHistoryService);
       $provide.value('otusjs.otus.dashboard.core.ContextService', Mock.dashboardContextService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);

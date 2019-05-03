@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.monitoring.business')
-    .service('otusjs.monitoring.business.FlagReportMonitoringService', service);
+    .module('otusjs.monitoring.repository')
+    .service('otusjs.monitoring.repository.FlagReportMonitoringService', service);
 
   service.$inject = [
     'otusjs.monitoring.repository.MonitoringCollectionService'

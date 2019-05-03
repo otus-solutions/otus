@@ -7,7 +7,7 @@
 
   Controller.$inject = [
     'otusjs.deploy.FieldCenterRestService',
-    'otusjs.monitoring.business.FlagReportMonitoringService',
+    'otusjs.monitoring.repository.FlagReportMonitoringService',
     'otusjs.application.activity.StatusHistoryService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',

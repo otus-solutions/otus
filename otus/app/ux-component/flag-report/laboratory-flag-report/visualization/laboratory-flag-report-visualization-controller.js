@@ -8,9 +8,9 @@
   Controller.$inject = ['otusjs.application.exam.ExamStatusHistoryService'];
 
   function Controller(ExamStatusHistoryService) {
-    var cellSize = 24;
+    var cellSize = 25;
     var self = this;
-    self.examsData = [];
+    self.examsData;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
