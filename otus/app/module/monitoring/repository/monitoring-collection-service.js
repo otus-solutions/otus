@@ -49,7 +49,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function listCenters() {
       var request = $q.defer();
@@ -67,7 +67,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function find(query) {
       var request = $q.defer();
@@ -94,7 +94,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function getActivitiesProgressReport(center) {
       var request = $q.defer();
@@ -112,7 +112,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function getExamsName() {
       var request = $q.defer();
@@ -130,7 +130,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function getExamsProgressReport(center) {
       var request = $q.defer();
@@ -148,7 +148,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function getStatusOfActivities(recruitmentNumber) {
       var request = $q.defer();
@@ -165,7 +165,7 @@
             });
         });
       return request.promise;
-    };
+    }
 
     function defineActivityWithDoesNotApplies(data) {
       var request = $q.defer();
@@ -182,7 +182,7 @@
             });
         });
       return request.promise;
-    };
+    }
 
     function deleteNotAppliesOfActivity(rn, acrony) {
       var request = $q.defer();
@@ -199,7 +199,7 @@
             });
         });
       return request.promise;
-    };
+    }
 
     function getDataOfPendingResultsByAliquots(center) {
       var request = $q.defer();
@@ -217,7 +217,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function getDataQuantitativeByTypeOfAliquots(center) {
       var request = $q.defer();
@@ -235,7 +235,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function getDataOrphanByExams() {
       var request = $q.defer();
@@ -253,7 +253,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function getDataOfStorageByAliquots(center) {
       var request = $q.defer();
@@ -271,7 +271,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function getDataByExam(center) {
       var request = $q.defer();
@@ -289,7 +289,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function getDataToCSVOfPendingResultsByAliquots(center) {
       var request = $q.defer();
@@ -307,7 +307,7 @@
         });
 
       return request.promise;
-    };
+    }
 
     function getDataToCSVOfOrphansByExam() {
       var request = $q.defer();
@@ -324,6 +324,6 @@
             });
         });
       return request.promise;
-    };
+    }
   }
 }());
