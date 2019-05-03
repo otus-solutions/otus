@@ -114,13 +114,13 @@
       return request.promise;
     }
 
-    function getExamsName() {
+    function getExamsName(center) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getExamsName()
+            .getExamsName(center)
             .then(function (response) {
               request.resolve(response.data);
             })

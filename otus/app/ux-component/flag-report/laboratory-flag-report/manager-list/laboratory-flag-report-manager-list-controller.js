@@ -164,7 +164,7 @@
           }));
           _setCenter(userData.fieldCenter.acronym);
         }
-        _setExamNames();
+        _setExamNames(self.selectedCenter.acronym);
         _setExamsProgress(self.selectedCenter.acronym);
       }).catch(function (e) {
         self.ready = false;
@@ -174,9 +174,9 @@
       });
     }
 
-    function _setExamNames() {
+    function _setExamNames(center) {
       if (!self.examsNameList) {
-        FlagReportMonitoringService.getExamsName().then((examNames) => {
+        FlagReportMonitoringService.getExamsName(center).then((examNames) => {
           self.examsNameList = examNames.map(function (examName) {
             return examName;
           }).filter(function (elem, index, self) {

@@ -35,8 +35,8 @@
       return MonitoringCollectionService.getActivitiesProgressReport({ center: center });
     }
 
-    function getExamsName() {
-      return MonitoringCollectionService.getExamsName();
+    function getExamsName(center) {
+      return MonitoringCollectionService.getExamsName({ center: center });
     }
 
     function getExamsProgressReport(center) {
