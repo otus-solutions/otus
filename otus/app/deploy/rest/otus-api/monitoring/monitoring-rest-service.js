@@ -69,14 +69,14 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.getExamFlagReportLabels().$promise;
+      return _rest.getExamFlagReportLabels(center).$promise;
     }
 
     function getExamsProgressReport(center) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.getExamsProgressReport(center).$promise;
+      return _rest.getExamFlagReport(center).$promise;
     }
 
     function getStatusOfActivities(recruitmentNumber) {
