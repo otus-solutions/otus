@@ -1,4 +1,4 @@
-describe('otusLaboratoryFlagFilterComponentCtrl Test', function () {
+describe('otusLaboratoryFlagReportFilterComponentCtrl Test', function () {
   var Mock = {};
   var controller;
 
@@ -13,7 +13,7 @@ describe('otusLaboratoryFlagFilterComponentCtrl Test', function () {
     angular.mock.module('otusjs.otus.uxComponent');
 
     inject(function (_$controller_) {
-      controller = _$controller_('otusLaboratoryFlagFilterComponentCtrl');
+      controller = _$controller_('otusLaboratoryFlagReportFilterComponentCtrl');
       mockBindings();
       spyOn(controller, "onUpdate").and.callThrough();
     });

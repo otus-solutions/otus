@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .controller('otusLaboratoryFlagFilterComponentCtrl', Controller);
+    .controller('otusLaboratoryFlagReportFilterComponentCtrl', Controller);
 
   function Controller() {
     var self = this;

@@ -1,4 +1,4 @@
-describe('otusLaboratoryFlagReportManagerListCtrl Test', function () {
+describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
   var Mock = {};
   var controller;
   var Injections = {};
@@ -17,7 +17,7 @@ describe('otusLaboratoryFlagReportManagerListCtrl Test', function () {
     });
 
     inject(function (_$controller_) {
-      controller = _$controller_('otusLaboratoryFlagReportManagerListCtrl');
+      controller = _$controller_('otusLaboratoryFlagReportListManagerCtrl');
     });
 
     spyOn(Mock.ProjectFieldCenterService, 'loadCenters').and.callThrough();

@@ -10,10 +10,10 @@
   <md-content layout="column" layout-padding flex>
     <md-tabs md-border-bottom layout-fill>
       <md-tab label="Relatório de Flags para atividades">
-        <otus-flag-report-manager layout="column" flex></otus-flag-report-manager>
+        <otus-flag-report-list-manager layout="column" flex></otus-flag-report-list-manager>
       </md-tab>
       <md-tab md-on-select="$ctrl.buildLaboratoryFlagReport()" id="laboratory-flag-report" label="Relatório de Flags para laboratório">
-        <otus-laboratory-flag-report-manager-List ng-if="$ctrl.ready" layout="column" flex></otus-laboratory-flag-report-manager-List>
+        <otus-laboratory-flag-report-List-manager ng-if="$ctrl.ready" layout="column" flex></otus-laboratory-flag-report-List-manager>
       </md-tab>
     </md-tabs>
   </md-content>

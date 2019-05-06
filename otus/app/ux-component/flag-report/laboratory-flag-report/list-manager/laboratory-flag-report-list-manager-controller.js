@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .controller('otusLaboratoryFlagReportManagerListCtrl', Controller);
+    .controller('otusLaboratoryFlagReportListManagerCtrl', Controller);
 
   Controller.$inject = [
     '$q',

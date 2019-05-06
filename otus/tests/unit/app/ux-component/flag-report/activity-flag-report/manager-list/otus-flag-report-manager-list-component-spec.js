@@ -1,4 +1,4 @@
-describe('otus-flag-report-manager-list-component Test', function () {
+describe('otusFlagReportListManagerCtrl Test', function () {
   var Mock = {};
   var controller;
   var Injections = {};
@@ -17,7 +17,7 @@ describe('otus-flag-report-manager-list-component Test', function () {
     });
 
     inject(function (_$controller_) {
-      controller = _$controller_('otusFlagReportManagerCtrl');
+      controller = _$controller_('otusFlagReportListManagerCtrl');
     });
 
     spyOn(Mock.ProjectFieldCenterService, 'loadCenters').and.callThrough();

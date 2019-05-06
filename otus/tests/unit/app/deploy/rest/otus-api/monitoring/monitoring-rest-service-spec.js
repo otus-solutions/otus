@@ -1,4 +1,4 @@
-fdescribe('MonitoringRestService', function () {
+describe('MonitoringRestService', function () {
   var Mock = {};
   var service;
   var _rest = {};

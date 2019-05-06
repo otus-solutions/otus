@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .controller("otusFlagReportManagerCtrl", Controller);
+    .controller("otusFlagReportListManagerCtrl", Controller);
 
   Controller.$inject = [
     'otusjs.deploy.FieldCenterRestService',
