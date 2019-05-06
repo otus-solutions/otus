@@ -11,12 +11,12 @@
     'otusjs.deploy.LoadingScreenService',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
+    'otusjs.monitoring.business.MonitoringService',
     'otusjs.application.exam.ExamStatusHistoryService',
-    'otusjs.monitoring.business.FlagReportFilterService',
-    'otusjs.monitoring.repository.FlagReportMonitoringService'
+    'otusjs.monitoring.business.FlagReportFilterService'
   ];
 
-  function Controller($q, $timeout, LoadingScreenService, FieldCenterRestService, DashboardContextService, ExamStatusHistoryService, FlagReportFilterService, FlagReportMonitoringService) {
+  function Controller($q, $timeout, LoadingScreenService, FieldCenterRestService, DashboardContextService, MonitoringService, ExamStatusHistoryService, FlagReportFilterService) {
     const DATA_NOT_FOUND = "Não há registros a serem exibidos.";
     const GENERIC_ERROR = "Ocorreu algum problema. Por favor, tente novamente em alguns minutos.";
     const CSV_ERROR = 'Não foi possível baixar o csv. Por favor, tente novamente em alguns minutos.';
@@ -176,7 +176,7 @@
 
     function _setExamNames(center) {
       if (!self.examsNameList) {
-        FlagReportMonitoringService.getExamsName(center).then((examNames) => {
+        MonitoringService.getExamsName(center).then((examNames) => {
           self.examsNameList = examNames.map(function (examName) {
             return examName;
           }).filter(function (elem, index, self) {
@@ -195,7 +195,7 @@
         LoadingScreenService.start();
         if (center !== self.selectedCenter.acronym)
           self.$onInit();
-        FlagReportMonitoringService.getExamsProgressReport(center).then((response) => {
+        MonitoringService.getExamsProgressReport(center).then((response) => {
           alasql("DROP TABLE IF EXISTS flagsExams");
           self.rawExams = angular.copy(response);
           self.examsData = angular.copy(response);

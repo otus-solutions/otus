@@ -2,8 +2,8 @@
   'use strict';
 
   angular
-    .module('otusjs.monitoring.repository')
-    .service('otusjs.monitoring.repository.FlagReportMonitoringService', service);
+    .module('otusjs.monitoring.business')
+    .service('otusjs.monitoring.business.MonitoringService', service);
 
   service.$inject = [
     'otusjs.monitoring.repository.MonitoringCollectionService'
@@ -42,7 +42,6 @@
     function getExamsProgressReport(center) {
       return MonitoringCollectionService.getExamsProgressReport({ center: center });
     }
-
   }
 
 }());

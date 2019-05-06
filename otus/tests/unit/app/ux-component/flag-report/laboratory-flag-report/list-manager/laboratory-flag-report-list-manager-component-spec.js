@@ -7,7 +7,7 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
     mockInjections();
     angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
       $provide.value('otusjs.deploy.FieldCenterRestService', Mock.ProjectFieldCenterService);
-      $provide.value('otusjs.monitoring.repository.FlagReportMonitoringService', Mock.FlagReportMonitoringService);
+      $provide.value('otusjs.monitoring.business.MonitoringService', Mock.MonitoringService);
       $provide.value('otusjs.application.exam.ExamStatusHistoryService', Mock.StatusHistoryService);
       $provide.value('otusjs.otus.dashboard.core.ContextService', Mock.dashboardContextService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
@@ -22,11 +22,11 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
 
     spyOn(Mock.ProjectFieldCenterService, 'loadCenters').and.callThrough();
     spyOn(Mock.dashboardContextService, 'getLoggedUser').and.callThrough();
-    spyOn(Mock.FlagReportMonitoringService, 'getExamsName').and.callThrough();
+    spyOn(Mock.MonitoringService, 'getExamsName').and.callThrough();
     spyOn(Mock.StatusHistoryService, 'listStatus').and.callThrough();
     spyOn(Mock.StatusHistoryService, 'getColors').and.callThrough();
     spyOn(Mock.StatusHistoryService, 'getLabels').and.callThrough();
-    spyOn(Mock.FlagReportMonitoringService, 'getExamsProgressReport').and.callThrough();
+    spyOn(Mock.MonitoringService, 'getExamsProgressReport').and.callThrough();
     spyOn(Mock.FlagReportFilterService, 'filter').and.callThrough();
     spyOn(Mock.LoadingScreenService, 'start').and.callThrough();
     spyOn(Mock.LoadingScreenService, 'finish').and.callThrough();
@@ -50,13 +50,13 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
 
       Mock.dashboardContextService.getLoggedUser().then(function () {
 
-        expect(Mock.FlagReportMonitoringService.getExamsName).toHaveBeenCalledTimes(1);
+        expect(Mock.MonitoringService.getExamsName).toHaveBeenCalledTimes(1);
 
-        Mock.FlagReportMonitoringService.getExamsName().then(function () {
+        Mock.MonitoringService.getExamsName().then(function () {
           expect(Mock.StatusHistoryService.listStatus).toHaveBeenCalledTimes(1);
-          expect(Mock.FlagReportMonitoringService.getExamsProgressReport).toHaveBeenCalledTimes(1);
+          expect(Mock.MonitoringService.getExamsProgressReport).toHaveBeenCalledTimes(1);
 
-          Mock.FlagReportMonitoringService.getExamsProgressReport().then(function () {
+          Mock.MonitoringService.getExamsProgressReport().then(function () {
             expect(controller.ready).toEqual(true);
             expect(controller.error).toEqual(false);
           });
@@ -75,7 +75,7 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
 
     it('should call getExamsProgressReport function', function () {
       controller.updateData(null, null, null, 'BA');
-      expect(Mock.FlagReportMonitoringService.getExamsProgressReport).toHaveBeenCalledTimes(2);
+      expect(Mock.MonitoringService.getExamsProgressReport).toHaveBeenCalledTimes(2);
     });
 
     it('should update exams with other exam', function () {
@@ -111,7 +111,7 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
       }
     };
 
-    Mock.FlagReportMonitoringService = {
+    Mock.MonitoringService = {
       getExamsName: () => {
         return Promise.resolve([]);
       },

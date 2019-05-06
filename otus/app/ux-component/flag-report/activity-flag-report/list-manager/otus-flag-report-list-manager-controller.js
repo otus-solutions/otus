@@ -7,7 +7,7 @@
 
   Controller.$inject = [
     'otusjs.deploy.FieldCenterRestService',
-    'otusjs.monitoring.repository.FlagReportMonitoringService',
+    'otusjs.monitoring.business.MonitoringService',
     'otusjs.application.activity.StatusHistoryService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
@@ -17,7 +17,7 @@
   ];
 
   function Controller(ProjectFieldCenterService,
-    FlagReportMonitoringService,
+    MonitoringService,
     StatusHistoryService,
     DashboardContextService,
     LoadingScreenService,
@@ -142,7 +142,7 @@
 
     function _loadAllAcronyms() {
       if (!self.acronymsList) {
-        FlagReportMonitoringService.listAcronyms()
+        MonitoringService.listAcronyms()
           .then((activities) => {
             self.acronymsList = activities.map(function (acronym) {
               return acronym;
@@ -167,7 +167,7 @@
     function _loadActivitiesProgress(center) {
       if (!self.activities || center !== self.selectedCenter.acronym) {
         if (center !== self.selectedCenter.acronym) self.$onInit();
-        FlagReportMonitoringService.getActivitiesProgressReport(center).then((response) => {
+        MonitoringService.getActivitiesProgressReport(center).then((response) => {
             if (response.data.length != 0) {
               alasql("DROP TABLE IF EXISTS flagsActivities");
               self.rawActivities = angular.copy(response);
