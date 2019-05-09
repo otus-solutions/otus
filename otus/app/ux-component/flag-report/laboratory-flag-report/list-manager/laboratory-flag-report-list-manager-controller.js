@@ -239,7 +239,7 @@
       console.log(data);
 
       // set the dimensions and margins of the graph
-      var margin = { top: 120, right: 25, bottom: 30, left: 100 };
+      var margin = { top: 150, right: 25, bottom: 30, left: 100 };
       var width = window.innerWidth / 1.5;
       var height = window.innerHeight / 1.5;
 
@@ -256,6 +256,7 @@
       var myGroups = fullData.x;
       var myVars = fullData.y;
 
+      var gridSize = 15;
       // Build X scales and axis:
       var x = d3.scaleBand()
         .range([0, width])
@@ -263,7 +264,7 @@
         .padding(0.05);
       svg.append("g")
         .style("font-size", 15)
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", function (d, i) { return "translate(" + i * myGroups.length + ", -6)rotate(-45)" })
         .call(d3.axisBottom(x).tickSize(0))
         .select(".domain").remove()
 
@@ -304,11 +305,13 @@
         .attr("ry", 10)
         .attr("width", x.bandwidth())
         .attr("height", y.bandwidth())
-        .style("fill", function (d) { return myColor(d.value) })
+        .style("fill", function (d) {
+          if (d != null) return ExamStatusHistoryService.getStatusColor(d.value);
+          else return "url(#diagonalHatch)";
+        })
         .style("stroke-width", 4)
         .style("stroke", "none")
         .style("opacity", 0.8)
-
     }
 
     function create(resp) {
@@ -318,7 +321,7 @@
 
       resp.index.forEach(participant => {
         values = values.concat(exams.map(exam => {
-          return new ob(exam, participant, getRandomInt(0, 1) * 90)
+          return new ob(exam, participant, getRandomInt(0, 1))
         }));
       });
 
