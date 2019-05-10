@@ -61,6 +61,9 @@
 
         .attr("width", viewerWidth - 100)
         .attr("height", ((row_number * 35) + viewerPosTop) + "px")
+        .call(d3.zoom().on("zoom", function () {
+          svg.attr("transform", d3.event.transform)
+        }))
         .append("g")
         .attr("transform", "translate(" + window.innerWidth / 15 + "," + window.innerHeight / 7 + ")scale(" + window.innerWidth / 1440 + ")");
 

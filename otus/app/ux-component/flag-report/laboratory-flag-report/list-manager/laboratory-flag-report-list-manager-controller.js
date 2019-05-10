@@ -230,96 +230,84 @@
     }
 
     function _heatmap_display(exams) {
-      var svg = d3.select("#exam-heatmap").selectAll("*").remove();
-      var fullData = create(exams);
-      var data = fullData.values;
+      var svg = d3.select("#exam-heatmap").selectAll("*").remove(); // TODO: Rever, mapa sendo chamado mais de uma vez!
+      var fakeData = _createFakeData(exams);
 
-      // var data = [{ "group": "A", "variable": "v1", "value": "30" }, { "group": "A", "variable": "v2", "value": "95" }, { "group": "A", "variable": "v3", "value": "22" }, { "group": "A", "variable": "v4", "value": "14" }, { "group": "A", "variable": "v5", "value": "59" }, { "group": "A", "variable": "v6", "value": "52" }, { "group": "A", "variable": "v7", "value": "88" }, { "group": "A", "variable": "v8", "value": "20" }, { "group": "A", "variable": "v9", "value": "99" }, { "group": "A", "variable": "v10", "value": "66" }, { "group": "B", "variable": "v1", "value": "37" }, { "group": "B", "variable": "v2", "value": "50" }, { "group": "B", "variable": "v3", "value": "81" }, { "group": "B", "variable": "v4", "value": "79" }, { "group": "B", "variable": "v5", "value": "84" }, { "group": "B", "variable": "v6", "value": "91" }, { "group": "B", "variable": "v7", "value": "82" }, { "group": "B", "variable": "v8", "value": "89" }, { "group": "B", "variable": "v9", "value": "6" }, { "group": "B", "variable": "v10", "value": "67" }, { "group": "C", "variable": "v1", "value": "96" }, { "group": "C", "variable": "v2", "value": "13" }, { "group": "C", "variable": "v3", "value": "98" }, { "group": "C", "variable": "v4", "value": "10" }, { "group": "C", "variable": "v5", "value": "86" }, { "group": "C", "variable": "v6", "value": "23" }, { "group": "C", "variable": "v7", "value": "74" }, { "group": "C", "variable": "v8", "value": "47" }, { "group": "C", "variable": "v9", "value": "73" }, { "group": "C", "variable": "v10", "value": "40" }, { "group": "D", "variable": "v1", "value": "75" }, { "group": "D", "variable": "v2", "value": "18" }, { "group": "D", "variable": "v3", "value": "92" }, { "group": "D", "variable": "v4", "value": "43" }, { "group": "D", "variable": "v5", "value": "16" }, { "group": "D", "variable": "v6", "value": "27" }, { "group": "D", "variable": "v7", "value": "76" }, { "group": "D", "variable": "v8", "value": "24" }, { "group": "D", "variable": "v9", "value": "1" }, { "group": "D", "variable": "v10", "value": "87" }, { "group": "E", "variable": "v1", "value": "44" }, { "group": "E", "variable": "v2", "value": "29" }, { "group": "E", "variable": "v3", "value": "58" }, { "group": "E", "variable": "v4", "value": "55" }, { "group": "E", "variable": "v5", "value": "65" }, { "group": "E", "variable": "v6", "value": "56" }, { "group": "E", "variable": "v7", "value": "9" }, { "group": "E", "variable": "v8", "value": "78" }, { "group": "E", "variable": "v9", "value": "49" }, { "group": "E", "variable": "v10", "value": "36" }, { "group": "F", "variable": "v1", "value": "35" }, { "group": "F", "variable": "v2", "value": "80" }, { "group": "F", "variable": "v3", "value": "8" }, { "group": "F", "variable": "v4", "value": "46" }, { "group": "F", "variable": "v5", "value": "48" }, { "group": "F", "variable": "v6", "value": "100" }, { "group": "F", "variable": "v7", "value": "17" }, { "group": "F", "variable": "v8", "value": "41" }, { "group": "F", "variable": "v9", "value": "33" }, { "group": "F", "variable": "v10", "value": "11" }, { "group": "G", "variable": "v1", "value": "77" }, { "group": "G", "variable": "v2", "value": "62" }, { "group": "G", "variable": "v3", "value": "94" }, { "group": "G", "variable": "v4", "value": "15" }, { "group": "G", "variable": "v5", "value": "69" }, { "group": "G", "variable": "v6", "value": "63" }, { "group": "G", "variable": "v7", "value": "61" }, { "group": "G", "variable": "v8", "value": "54" }, { "group": "G", "variable": "v9", "value": "38" }, { "group": "G", "variable": "v10", "value": "93" }, { "group": "H", "variable": "v1", "value": "39" }, { "group": "H", "variable": "v2", "value": "26" }, { "group": "H", "variable": "v3", "value": "90" }, { "group": "H", "variable": "v4", "value": "83" }, { "group": "H", "variable": "v5", "value": "31" }, { "group": "H", "variable": "v6", "value": "2" }, { "group": "H", "variable": "v7", "value": "51" }, { "group": "H", "variable": "v8", "value": "28" }, { "group": "H", "variable": "v9", "value": "42" }, { "group": "H", "variable": "v10", "value": "7" }, { "group": "I", "variable": "v1", "value": "5" }, { "group": "I", "variable": "v2", "value": "60" }, { "group": "I", "variable": "v3", "value": "21" }, { "group": "I", "variable": "v4", "value": "25" }, { "group": "I", "variable": "v5", "value": "3" }, { "group": "I", "variable": "v6", "value": "70" }, { "group": "I", "variable": "v7", "value": "34" }, { "group": "I", "variable": "v8", "value": "68" }, { "group": "I", "variable": "v9", "value": "57" }, { "group": "I", "variable": "v10", "value": "32" }, { "group": "J", "variable": "v1", "value": "19" }, { "group": "J", "variable": "v2", "value": "85" }, { "group": "J", "variable": "v3", "value": "53" }, { "group": "J", "variable": "v4", "value": "45" }, { "group": "J", "variable": "v5", "value": "71" }, { "group": "J", "variable": "v6", "value": "64" }, { "group": "J", "variable": "v7", "value": "4" }, { "group": "J", "variable": "v8", "value": "12" }, { "group": "J", "variable": "v9", "value": "97" }, { "group": "J", "variable": "v10", "value": "72" }];
+      var margin = { top: 170, right: 100, bottom: 100, left: 100 };
+      var xAxisData = fakeData.x;
+      var yAxisData = fakeData.y;
+      var gridSize = 15;
+      var width = xAxisData.length * gridSize;
+      var height = yAxisData.length * gridSize;
 
-      console.log(data);
-
-      // set the dimensions and margins of the graph
-      var margin = { top: 150, right: 25, bottom: 30, left: 100 };
-      var width = window.innerWidth / 1.5;
-      var height = window.innerHeight / 1.5;
-
-      // append the svg object to the body of the page
       var svg = d3.select("#exam-heatmap")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
         .attr("height", height + margin.top + margin.bottom)
+        .call(d3.zoom().on("zoom", function () {
+          svg.attr("transform", d3.event.transform)
+        }))
         .append("g")
-        .attr("transform",
-          "translate(" + margin.left + "," + margin.top + ")");
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
-      // Labels of row and columns -> unique identifier of the column called 'group' and 'variable'
-      var myGroups = fullData.x;
-      var myVars = fullData.y;
 
-      var gridSize = 15;
-      // Build X scales and axis:
-      var x = d3.scaleBand()
-        .range([0, width])
-        .domain(myGroups)
-        .padding(0.05);
-      svg.append("g")
-        .style("font-size", 15)
-        .attr("transform", function (d, i) { return "translate(" + i * myGroups.length + ", -6)rotate(-45)" })
-        .call(d3.axisBottom(x).tickSize(0))
-        .select(".domain").remove()
+      var yAxis = svg.selectAll(".yAxis")
+        .data(fakeData.y)
+        .enter().append("text")
+        .text(function (d) { return d; })
+        .attr("x", 0)
+        .attr("y", function (d, i) { return i * gridSize; })
+        .style("text-anchor", "end")
+        .attr("transform", "translate(-6," + gridSize / 1.5 + ")")
+        .attr("class", "yAxis");
 
-      // Build Y scales and axis:
-      var y = d3.scaleBand()
-        .range([height, 0])
-        .domain(myVars)
-        .padding(0.05);
-      svg.append("g")
-        .style("font-size", 15)
-        .call(d3.axisLeft(y).tickSize(0))
-        .select(".domain").remove()
 
-      // Build color scale
-      var myColor = d3.scaleSequential()
-        .interpolator(d3.interpolateInferno)
-        .domain([1, 100])
+      var xAxis = svg.selectAll(".xAxis")
+        .data(fakeData.x)
+        .enter().append("svg:g")
+      xAxis.append("text")
+        .text(function (d) { return d; })
+        .style("text-anchor", "start")
+        .attr("x", 6)
+        .attr("y", 7)
+        .attr("class", "xAxis")
+        .attr("transform", function (d, i) { return "translate(" + i * gridSize + ", -6) rotate(-45)" });
 
-      // create a tooltip
-      var tooltip = d3.select("#exam-heatmap")
-        .append("div")
-        .style("opacity", 0)
-        .attr("class", "tooltip")
-        .style("background-color", "white")
-        .style("border", "solid")
-        .style("border-width", "2px")
-        .style("border-radius", "5px")
-        .style("padding", "5px")
+      //vertical lines
+      svg.selectAll(".vline").data(d3.range(xAxisData.length + 1)).enter()
+        .append("line")
+        .attr("x1", function (d) {
+          return d * gridSize;
+        }).attr("x2", function (d) {
+          return d * gridSize;
+        }).attr("y1", function (d) {
+          return 0;
+        }).attr("y2", function (d) {
+          return height;
+        }).style("stroke", "#eee"); // TODO: deixar mais agradavél!
 
-      // add the squares
-      svg.selectAll()
-        .data(data, function (d) { return d.group + ':' + d.variable; })
-        .enter()
-        .append("rect")
-        .attr("x", function (d) { return x(d.group) })
-        .attr("y", function (d) { return y(d.variable) })
-        .attr("rx", 4)
-        .attr("ry", 10)
-        .attr("width", x.bandwidth())
-        .attr("height", y.bandwidth())
-        .style("fill", function (d) {
-          if (d != null) return ExamStatusHistoryService.getStatusColor(d.value);
-          else return "url(#diagonalHatch)";
-        })
-        .style("stroke-width", 4)
-        .style("stroke", "none")
-        .style("opacity", 0.8)
+      // horizontal lines
+      svg.selectAll(".hline")
+        .data(d3.range(yAxisData.length + 1)).enter()
+        .append("line")
+        .attr("y1", function (d) {
+          return d * gridSize;
+        }).attr("y2", function (d) {
+          return d * gridSize;
+        }).attr("x1", function (d) {
+          return 0;
+        }).attr("x2", function (d) {
+          return width;
+        }).style("stroke", "#eee"); // TODO: deixar mais agradavél!
+
     }
 
-    function create(resp) {
+    function _createFakeData(data) {
       let ob = function (column, row, value) { return { group: column, variable: row, value: value } };
-      let exams = resp.columns.map(column => column[1])
+      let exams = data.columns.map(column => column[1])
       let values = [];
 
-      resp.index.forEach(participant => {
+      data.index.forEach(participant => {
         values = values.concat(exams.map(exam => {
           return new ob(exam, participant, getRandomInt(0, 1))
         }));
@@ -331,7 +319,7 @@
         return Math.floor(Math.random() * (max - min + 1)) + min;
       }
 
-      return { x: exams, y: resp.index, values: values }
+      return { x: exams, y: data.index, values: values }
     }
 
 
