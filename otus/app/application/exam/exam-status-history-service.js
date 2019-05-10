@@ -8,13 +8,14 @@
   Service.$inject = [];
 
   function Service() {
+    const DEFAULT_COLOR = '#ffffff';
     var self = this;
 
     const STATUS = [
       {
         name: 'UNREALIZED',
         label: 'Não Recebido',
-        color: '#FFFFFF',
+        color: '#F4415C',
         icon: '',
         value: 0
       },
@@ -33,6 +34,7 @@
     self.getStatusColor = getStatusColor;
     self.getLabels = getLabels;
     self.getColors = getColors;
+    self.getDefaultColor = getDefaultColor;
 
     function listStatus() {
       return STATUS;
@@ -43,8 +45,7 @@
         let search = STATUS.find(function (status) {
           return status.name == name;
         });
-        let { value } = search;
-        return value;
+        return search.value;
       } else {
         return null;
       }
@@ -55,8 +56,7 @@
         let search = STATUS.find(function (status) {
           return status.value == value;
         });
-        let { label } = search;
-        return label;
+        return search.label;
       } else {
         return "";
       }
@@ -67,8 +67,7 @@
         let search = STATUS.find(function (status) {
           return status.value == value;
         });
-        let { color } = search;
-        return color;
+        return search.color;
       } else {
         return "";
       }
@@ -88,6 +87,10 @@
         response.push(status.color);
       });
       return response;
+    }
+
+    function getDefaultColor() {
+      return DEFAULT_COLOR;
     }
 
   }

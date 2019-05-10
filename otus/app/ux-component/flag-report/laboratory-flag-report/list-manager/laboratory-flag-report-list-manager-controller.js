@@ -17,7 +17,6 @@
   ];
 
   function Controller($q, $timeout, LoadingScreenService, FieldCenterRestService, DashboardContextService, MonitoringService, ExamStatusHistoryService, FlagReportFilterService) {
-    const CELL_SIZE = 25;
     const DATA_NOT_FOUND = "Não há registros a serem exibidos.";
     const GENERIC_ERROR = "Ocorreu algum problema. Por favor, tente novamente em alguns minutos.";
     const CSV_ERROR = 'Não foi possível baixar o csv. Por favor, tente novamente em alguns minutos.';
@@ -63,7 +62,6 @@
       self.examsData.data = angular.copy(exams);
       self.setExams(self.examsData, self.selectedExamName, self.selectedStatus);
       _buildGraph();
-      LoadingScreenService.finish();
     }
 
     function updateData(exams, examName, status, center) {
@@ -74,13 +72,14 @@
         if (examName !== self.selectedExamName || status !== self.selectedStatus) {
           _setExamName(examName);
           _setStatus(status);
-          self.newExamsData = FlagReportFilterService.filter(self.examsData, examName, status);
-          self.setExams(self.newExamsData, examName);
+          if (!status)
+            self.newExamsData = FlagReportFilterService.filter(self.examsData, examName, status);
+          self.setExams(self.newExamsData, examName, status);
+          _buildGraph(status);
         } else if (exams && exams !== self.exams) {
-          self.setExams(exams, examName);
+          self.setExams(exams, examName, status);
         }
       }
-      _buildGraph();
     }
 
     function downloadCSV() {
@@ -204,7 +203,6 @@
           self.examsData = angular.copy(response);
           self.ready = true;
           self.error = false;
-          self.setExams(undefined);
           LoadingScreenService.finish();
         }).catch((e) => {
           self.ready = false;
@@ -220,16 +218,19 @@
       }
     }
 
-    function _buildGraph() {
+    function _buildGraph(status) {
+      console.log('chamado!');
       self.examsData = self.exams ? self.exams : self.examsData;
       if (self.examsData.columns && self.examsData.index && self.examsData.data) {
-        _heatmap_display(angular.copy(self.examsData), "#exam-heatmap", "Spectral");
+        _heatmap_display(angular.copy(self.examsData), status);
       } else {
         $("#exam-heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
       }
     }
 
-    function _heatmap_display(exams, heatmapId) {
+    function _heatmap_display(exams, status) {
+      let heatmapId = "#exam-heatmap";
+      let CELL_SIZE = 25;
       var svg = d3.select(heatmapId).selectAll("*").remove();
 
       var tooltip = d3.select(heatmapId)
@@ -387,8 +388,13 @@
         .attr("width", CELL_SIZE)
         .attr("height", CELL_SIZE)
         .style("fill", function (d) {
-          if (d != null) return ExamStatusHistoryService.getStatusColor(d);
-          else return "url(#diagonalHatch)";
+          if (!ExamStatusHistoryService.getStatusColor(status)) {
+            return ExamStatusHistoryService.getStatusColor(d);
+          } else if (d == status) {
+            return ExamStatusHistoryService.getStatusColor(d);
+          } else {
+            return ExamStatusHistoryService.getDefaultColor();
+          }
         })
         .on('mouseover', function (d, i) {
           var j = d3.select(this).attr("row");
