@@ -8,7 +8,6 @@
   Controller.$inject = ['otusjs.application.activity.StatusHistoryService'];
 
   function Controller(StatusHistoryService) {
-    var classesNumber = 10, cellSize = 24;
     var self = this;
     self.activitiesData;
 
@@ -41,7 +40,26 @@
         .style("visibility", "hidden");
 
       //==================================================
-      var viewerWidth = $(document).width();
+      var classesNumber = 10, cellSize = 24;
+      var legendElementWidth = cellSize * 3.2;
+      // var viewerWidth = totalCellSize * 1.333;
+      var viewerWidth = window.innerWidth * 1.15;
+      window.onresize = function () {
+        var totalCellSize = cellSize * self.activitiesData.columns.length;
+        viewerWidth = window.innerWidth * 1.15;
+        console.log(window.innerWidth)
+        console.log(totalCellSize)
+
+        //n sei se esse cara é necessário
+        svg = d3.select(heatmapId)
+          .append("svg")
+
+          .attr("width", viewerWidth - 100)
+          .attr("height", ((row_number * 35) + viewerPosTop) + "px")
+          .append("g")
+          .attr("transform", "translate(" + window.innerWidth / 15 + "," + window.innerHeight / 7 + ")scale(" + window.innerWidth / 1440 + ")");
+
+      };
       var viewerHeight = $(document).height();
       var viewerPosTop = 200;
 
