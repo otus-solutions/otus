@@ -23,7 +23,6 @@
     var self = this;
     self.ready;
     self.error;
-    self.exams;
     self.status;
     self.labels;
     self.colors;
@@ -32,6 +31,7 @@
     self.rawExams;
     self.examsData;
     self.selectedExam;
+    self.filteredExams;
     self.examsNameList;
     self.selectedStatus;
 
@@ -40,13 +40,11 @@
     /* Public functions */
     self.updateData = updateData;
     self.updatePage = updatePage;
-    self.setExams = setExams;
     self.downloadCSV = downloadCSV;
 
     function onInit() {
       self.ready = false;
       self.error = false;
-      self.status = undefined;
       self.examsData = [];
       self.selectedExam = null;
       self.selectedStatus = null;
@@ -60,8 +58,8 @@
         self.examsData.index = self.rawExams.index.slice(startPage, endPage + 1);
       }
       self.examsData.data = angular.copy(exams);
-      self.setExams(self.examsData, self.selectedExamName, self.selectedStatus);
-      _buildGraph();
+      _setFilteredExams(self.examsData, self.selectedExamName, self.selectedStatus);
+      _buildGraph(self.selectedStatus);
     }
 
     function updateData(exams, examName, status, center) {
@@ -74,13 +72,13 @@
           _setStatus(status);
           if (self.selectedExamName) {
             self.newExamsData = FlagReportFilterService.filter(angular.copy(self.examsData), examName);
-            self.setExams(self.newExamsData, examName, status);
+            _setFilteredExams(self.newExamsData, examName, status);
           } else {
-            self.setExams(self.examsData, examName, status);
+            _setFilteredExams(self.examsData, examName, status);
           }
-          _buildGraph(status);
-        } else if (exams && exams !== self.exams) { // TODO: Quando deve entrar nesta condição?
-          self.setExams(exams, examName, status);
+          _buildGraph(self.selectedStatus);
+        } else if (exams && exams !== self.filteredExams) { // TODO: Quando deve entrar nesta condição?
+          _setFilteredExams(exams, examName, status);
         }
       }
     }
@@ -108,10 +106,6 @@
           LoadingScreenService.finish();
         });
       }, 2000);
-    }
-
-    function setExams(exams) {
-      self.exams = exams;
     }
 
     function _prepareForCSV() {
@@ -171,6 +165,7 @@
         }
         _setExamNames(self.selectedCenter.acronym);
         _setExamsProgress(self.selectedCenter.acronym);
+        _getStatus();
       }).catch(function (e) {
         self.ready = false;
         self.error = true;
@@ -187,7 +182,6 @@
           }).filter(function (elem, index, self) {
             return index == self.indexOf(elem);
           });
-          _getStatus();
         }).catch((e) => {
           LoadingScreenService.finish();
           throw e;
@@ -196,7 +190,7 @@
     }
 
     function _setExamsProgress(center) {
-      if (!self.exams || center !== self.selectedCenter.acronym) {
+      if (!self.filteredExams || center !== self.selectedCenter.acronym) {
         LoadingScreenService.start();
         if (center !== self.selectedCenter.acronym)
           self.$onInit();
@@ -215,15 +209,15 @@
           throw e;
         });
       } else {
-        self.setExams(self.exams);
+        _setFilteredExams(self.filteredExams);
         self.ready = true;
         self.error = false;
       }
     }
 
     function _buildGraph(status) {
-      if (self.exams) {
-        _heatmap_display(angular.copy(self.exams), status);
+      if (self.filteredExams) {
+        _heatmap_display(angular.copy(self.filteredExams), status);
       } else if (self.examsData) {
         _heatmap_display(angular.copy(self.examsData), status);
       } else {
@@ -587,7 +581,10 @@
 
     function _getStatus() {
       self.status = ExamStatusHistoryService.listStatus();
-      self.selectedStatus = null;
+    }
+
+    function _setFilteredExams(filteredExams) {
+      self.filteredExams = filteredExams;
     }
 
   }

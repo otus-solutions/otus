@@ -3,7 +3,7 @@
 <otus-laboratory-flag-report-filter-component centers="$ctrl.centers" exams-status="$ctrl.status" exams-name-list="$ctrl.examsNameList"
   on-update="$ctrl.updateData"></otus-laboratory-flag-report-filter-component>
 <div ng-if="$ctrl.ready" layout="row" layout-align="center center">
-  <md-button ng-disabled="!$ctrl.exams.data.length" class="md-accent md-raised" ng-click="$ctrl.downloadCSV()">EXPORTAR
+  <md-button ng-disabled="!$ctrl.examsData.data.length" class="md-accent md-raised" ng-click="$ctrl.downloadCSV()">EXPORTAR
     <md-icon>get_app</md-icon>
     <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados e os dados da tela.
     </md-tooltip>
@@ -15,7 +15,7 @@
 </div>
 <md-divider></md-divider>
 <md-content flex layout="row">
-  <md-content id="exam-heatmap" ng-show="$ctrl.exams.data.length" ng-if="$ctrl.ready" layout="column" flex></md-content>
+  <md-content id="exam-heatmap" ng-show="$ctrl.examsData.data.length" ng-if="$ctrl.ready" layout="column" flex></md-content>
   <div ng-if="$ctrl.error" layout="row" flex layout-align="center center" style="height: 400px; width: 400px; margin-left: auto; margin-right: auto;">
     <div class="label-light-gray">
       <h3 class="md-headline">{{$ctrl.message}}</h3>
