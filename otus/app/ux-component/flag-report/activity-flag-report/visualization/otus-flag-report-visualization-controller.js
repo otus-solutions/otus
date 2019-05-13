@@ -61,28 +61,6 @@
       console.log("totalCellSize - " + totalCellSize);
       console.log("$(document).width - " + $(document).width());
 
-
-      // window.onresize = function () {
-      //   console.clear();
-      //   legendElementWidth = cellSize * 3.2;
-      //   columnsCount = self.activitiesData.columns.length;
-      //   totalCellSize = cellSize * columnsCount;
-      //
-      //   //  viewerWidth = totalCellSize * 1.333;
-      //   scale = window.innerWidth / 1440;
-      //   translation = window.innerWidth / 15;
-      //   innerWidth = window.innerWidth;
-      //
-      //   viewerWidth = totalCellSize > innerWidth ? (totalCellSize + translation) * scale : innerWidth;
-      //   console.log("innerWidth - " + innerWidth);
-      //   console.log("current viewerWidth - " + viewerWidth);
-      //   console.log("columnsCount - " + columnsCount);
-      //   console.log("cellSize - " + cellSize);
-      //   console.log("totalCellSize - " + totalCellSize);
-      //   console.log("$(document).width - " + $(document).width());
-      //
-      //
-      // };
       var viewerHeight = $(document).height();
       var viewerPosTop = 200;
 
@@ -105,7 +83,7 @@
         //   svg.attr("transform", d3.event.transform)
         // }))
         .append("g")
-        .attr("transform", "translate(" + window.innerWidth / 15 + "," + window.innerHeight / 7 + ")scale(" + window.innerWidth / 1440 + ")");
+        .attr("transform", "translate(" + translation + "," + window.innerHeight / 7 + ")scale(" + window.innerWidth / 1440 + ")");
       // .attr("transform", "translate(" + window.innerWidth / 15 + "," + window.innerHeight / 7 + ")scale(" + window.innerWidth / 1440 + ")");
 
       svg.append('defs')

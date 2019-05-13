@@ -213,11 +213,18 @@
       }
     }
 
+
     function _buildGraph(status) {
       if (self.filteredExams) {
         _heatmap_display(angular.copy(self.filteredExams), status);
+        $(window).resize(function () {
+          _heatmap_display(angular.copy(self.filteredExams), status);
+        })
       } else if (self.examsData) {
         _heatmap_display(angular.copy(self.examsData), status);
+        $(window).resize(function () {
+          _heatmap_display(angular.copy(self.examsData), status);
+        })
       } else {
         $("#exam-heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
       }
@@ -234,12 +241,36 @@
         .style("visibility", "hidden");
 
       //==================================================
-      var viewerWidth = $(document).width();
+      var columnsCount = exams.columns.length;
+      var totalCellSize = CELL_SIZE * columnsCount;
+
+
+      // var horizontalTranslation = window.innerWidth / 3.5;
+      var horizontalTranslation = window.innerWidth / 15;
+      var verticalTranslation = window.innerHeight / 4 ;
+
+      var max = 1200;
+      var scale = max > innerWidth ?  1 : innerWidth/max;
+
+      var conta = ((totalCellSize + horizontalTranslation) * scale) + horizontalTranslation;
+      var viewerWidth = conta > innerWidth ? conta : innerWidth;
+
+
+      var outraConta = ((totalCellSize + verticalTranslation) * scale) + verticalTranslation;
       var viewerHeight = $(document).height();
       var viewerPosTop = 200;
       var legendHeight = 70;
       var legendElementWidth = CELL_SIZE * 4.5;
       var svg;
+
+      console.clear();
+      console.log("innerWidth - " + innerWidth);
+      console.log("scale - " + scale)
+      console.log("current viewerWidth - " + viewerWidth);
+      console.log("columnsCount - " + columnsCount);
+      console.log("cellSize - " + CELL_SIZE);
+      console.log("totalCellSize - " + totalCellSize);
+      console.log("$(document).width - " + $(document).width());
 
       //==================================================
 
@@ -249,10 +280,10 @@
 
       svg = d3.select(heatmapId)
         .append("svg")
-        .attr("width", viewerWidth - 100)
+        .attr("width", viewerWidth)
         .attr("height", ((row_number * 100) + viewerPosTop) + "px")
         .append("g")
-        .attr("transform", "translate(" + window.innerWidth / 3.5 + "," + window.innerHeight / 4 + ")scale(" + window.innerWidth / 1800 + ")");
+        .attr("transform", "translate(" + horizontalTranslation + "," + verticalTranslation * scale + ")scale(" + scale + ")");
 
       svg.append('defs')
         .append('pattern')
