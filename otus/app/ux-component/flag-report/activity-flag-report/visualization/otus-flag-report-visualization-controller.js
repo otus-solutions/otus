@@ -24,10 +24,11 @@
 
     function constructor(activities = null) {
       self.activitiesData = activities ? activities : self.activitiesData;
+      let heatMapId = "#heatmap";
       if (self.activitiesData.columns && self.activitiesData.index && self.activitiesData.data) {
-        heatmap_display(angular.copy(self.activitiesData), "#heatmap", "Spectral");
+        heatmap_display(angular.copy(self.activitiesData), heatMapId);
       } else {
-        $("#heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
+        $(heatMapId).html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
       }
     }
 
@@ -40,12 +41,11 @@
         .style("visibility", "hidden");
 
       //==================================================
-      var classesNumber = 10, cellSize = 24;
-      var legendElementWidth = cellSize * 3.2;
+      var CELL_SIZE = 24;
+      var legendElementWidth = CELL_SIZE * 3.2;
       var columnsCount = self.activitiesData.columns.length;
-      var totalCellSize = cellSize * columnsCount;
+      var totalCellSize = CELL_SIZE * columnsCount;
 
-      // var viewerWidth = totalCellSize * 1.333;
       var scale = window.innerWidth / 1440;
       var translation = window.innerWidth / 15;
       var innerWidth = window.innerWidth;
@@ -53,15 +53,6 @@
 
       var conta = ((totalCellSize + translation) * scale) + translation;
       var viewerWidth = conta > innerWidth ? conta : innerWidth;
-
-      console.log("innerWidth - " + innerWidth);
-      console.log("current viewerWidth - " + viewerWidth);
-      console.log("columnsCount - " + columnsCount);
-      console.log("cellSize - " + cellSize);
-      console.log("totalCellSize - " + totalCellSize);
-      console.log("$(document).width - " + $(document).width());
-
-      var viewerHeight = $(document).height();
       var viewerPosTop = 200;
 
 
@@ -76,15 +67,10 @@
 
       svg = d3.select(heatmapId)
         .append("svg")
-
         .attr("width", viewerWidth)
         .attr("height", ((row_number * 35) + viewerPosTop) + "px")
-        // .call(d3.zoom().on("zoom", function () {
-        //   svg.attr("transform", d3.event.transform)
-        // }))
         .append("g")
         .attr("transform", "translate(" + translation + "," + window.innerHeight / 7 + ")scale(" + window.innerWidth / 1440 + ")");
-      // .attr("transform", "translate(" + window.innerWidth / 15 + "," + window.innerHeight / 7 + ")scale(" + window.innerWidth / 1440 + ")");
 
       svg.append('defs')
         .append('pattern')
@@ -110,11 +96,11 @@
         })
         .attr("x", 0)
         .attr("y", function (d, i) {
-          return (i * cellSize);
+          return (i * CELL_SIZE);
         })
         .style("text-anchor", "end")
         .attr("transform", function (d, i) {
-          return "translate(-3," + cellSize / 1.5 + ")";
+          return "translate(-3," + CELL_SIZE / 1.5 + ")";
         })
         .attr("class", "rowLabel mono")
         .attr("id", function (d, i) {
@@ -143,11 +129,11 @@
         })
         .attr("x", 0)
         .attr("y", function (d, i) {
-          return (i * cellSize);
+          return (i * CELL_SIZE);
         })
         .style("text-anchor", "left")
         .attr("transform", function (d, i) {
-          return "translate(" + cellSize / 2 + ", -3) rotate(-90) rotate(45, 0, " + (i * cellSize) + ")";
+          return "translate(" + CELL_SIZE / 2 + ", -3) rotate(-90) rotate(45, 0, " + (i * CELL_SIZE) + ")";
         })
         .attr("class", "colLabel mono")
         .attr("style", "cursor:pointer")
@@ -187,13 +173,13 @@
         })
         .enter().append("svg:rect")
         .attr("x", function (d, i) {
-          return i * cellSize;
+          return i * CELL_SIZE;
         })
         .attr("y", function (d, i) {
           if (i == 0) {
             lineIndexOne++;
           }
-          return lineIndexOne * cellSize;
+          return lineIndexOne * CELL_SIZE;
         })
         .attr("rx", 4)
         .attr("ry", 4)
@@ -212,8 +198,8 @@
         .attr("col", function (d, i) {
           return i;
         })
-        .attr("width", cellSize)
-        .attr("height", cellSize)
+        .attr("width", CELL_SIZE)
+        .attr("height", CELL_SIZE)
         .style("fill", function (d) {
           if (d != null) return StatusHistoryService.getStatusColor(d);
           else return "url(#diagonalHatch)";
@@ -249,7 +235,7 @@
         .attr("y", viewerPosTop)
         .attr("class", "cellLegend bordered")
         .attr("width", legendElementWidth)
-        .attr("height", cellSize / 2)
+        .attr("height", CELL_SIZE / 2)
         .style("fill", function (d, i) {
           return colors[i];
         });
@@ -262,7 +248,7 @@
         .attr("x", function (d, i) {
           return legendElementWidth * i;
         })
-        .attr("y", viewerPosTop + cellSize);
+        .attr("y", viewerPosTop + CELL_SIZE);
 
       function sortByValues(rORc, i, sortOrder) {
         var t = svg.transition().duration(1000);
@@ -285,14 +271,14 @@
           t.selectAll(".cell")
             .attr("x", function (d) {
               var col = parseInt(d3.select(this).attr("col"));
-              return sorted.indexOf(col) * cellSize;
+              return sorted.indexOf(col) * CELL_SIZE;
             });
           t.selectAll(".colLabel")
             .attr("y", function (d, i) {
-              return sorted.indexOf(i) * cellSize;
+              return sorted.indexOf(i) * CELL_SIZE;
             })
             .attr("transform", function (d, i) {
-              return "translate(" + cellSize / 2 + ", -3) rotate(-90) rotate(45, 0, " + (sorted.indexOf(i) * cellSize) + ")";
+              return "translate(" + CELL_SIZE / 2 + ", -3) rotate(-90) rotate(45, 0, " + (sorted.indexOf(i) * CELL_SIZE) + ")";
             });
         } else { // sort on rows
           sorted = d3.range(row_number).sort(function (a, b) {
@@ -305,14 +291,14 @@
           t.selectAll(".cell")
             .attr("y", function (d) {
               var row = parseInt(d3.select(this).attr("row"));
-              return sorted.indexOf(row) * cellSize;
+              return sorted.indexOf(row) * CELL_SIZE;
             });
           t.selectAll(".rowLabel")
             .attr("y", function (d, i) {
-              return sorted.indexOf(i) * cellSize;
+              return sorted.indexOf(i) * CELL_SIZE;
             })
             .attr("transform", function (d, i) {
-              return "translate(-3," + cellSize / 1.5 + ")";
+              return "translate(-3," + CELL_SIZE / 1.5 + ")";
             });
         }
       }
