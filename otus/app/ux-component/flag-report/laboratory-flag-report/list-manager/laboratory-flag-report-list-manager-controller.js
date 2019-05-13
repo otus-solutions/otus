@@ -72,11 +72,14 @@
         if (examName !== self.selectedExamName || status !== self.selectedStatus) {
           _setExamName(examName);
           _setStatus(status);
-          if (!status)
-            self.newExamsData = FlagReportFilterService.filter(self.examsData, examName, status);
-          self.setExams(self.newExamsData, examName, status);
+          if (self.selectedExamName) {
+            self.newExamsData = FlagReportFilterService.filter(angular.copy(self.examsData), examName);
+            self.setExams(self.newExamsData, examName, status);
+          } else {
+            self.setExams(self.examsData, examName, status);
+          }
           _buildGraph(status);
-        } else if (exams && exams !== self.exams) {
+        } else if (exams && exams !== self.exams) { // TODO: Quando deve entrar nesta condição?
           self.setExams(exams, examName, status);
         }
       }
@@ -219,9 +222,9 @@
     }
 
     function _buildGraph(status) {
-      console.log('chamado!');
-      self.examsData = self.exams ? self.exams : self.examsData;
-      if (self.examsData.columns && self.examsData.index && self.examsData.data) {
+      if (self.exams) {
+        _heatmap_display(angular.copy(self.exams), status);
+      } else if (self.examsData) {
         _heatmap_display(angular.copy(self.examsData), status);
       } else {
         $("#exam-heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
