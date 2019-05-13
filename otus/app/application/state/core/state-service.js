@@ -38,13 +38,14 @@
     self.activateExamsLotsManagerList = activateExamsLotsManagerList;
     self.activateExamsLotInfoManager = activateExamsLotInfoManager;
     self.activateExamSending = activateExamSending;
-    self.activateFlagsReportDashboard = activateFlagsReportDashboard;
     self.activateExamResultsVisualizer = activateExamResultsVisualizer;
     self.activateMonitoring = activateMonitoring;
     self.activateManagerParticipants = activateManagerParticipants;
     self.activateParticipantsList = activateParticipantsList;
     // self.activateErrorOffline = activateErrorOffline;
     self.activateLaboratoryMonitoring = activateLaboratoryMonitoring;
+    self.activateActivityFlagsReport = activateActivityFlagsReport;
+    self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -137,8 +138,12 @@
       $state.go(STATE.EXAM_DASHBOARD);
     }
 
-    function activateFlagsReportDashboard() {
-      $state.go(STATE.FLAG_DASHBOARD);
+    function activateActivityFlagsReport() {
+      $state.go(STATE.ACTIVITY_FLAG_REPORT);
+    }
+
+    function laboratoryActivityFlagsReport() {
+      $state.go(STATE.LABORATORY_FLAG_REPORT);
     }
 
     function activateExamsLotsManagerList() {
