@@ -9,8 +9,6 @@
 
   function Service() {
     const DEFAULT_COLOR = '#ffffff';
-    var self = this;
-
     const STATUS = [
       {
         name: 'UNREALIZED',
@@ -28,12 +26,14 @@
       }
     ];
 
+    var self = this;
+    /* Public functions */
+    self.getColors = getColors;
+    self.getLabels = getLabels;
     self.listStatus = listStatus;
     self.getStatusValue = getStatusValue;
     self.getStatusLabel = getStatusLabel;
     self.getStatusColor = getStatusColor;
-    self.getLabels = getLabels;
-    self.getColors = getColors;
     self.getDefaultColor = getDefaultColor;
 
     function listStatus() {

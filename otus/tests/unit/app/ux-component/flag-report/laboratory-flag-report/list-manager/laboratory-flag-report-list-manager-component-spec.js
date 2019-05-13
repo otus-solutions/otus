@@ -70,7 +70,6 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
     beforeEach(function () {
       controller.selectedCenter = { acronym: 'RS' };
       controller.centers = [{ acronym: 'RS' }];
-      spyOn(controller, 'setExams').and.callThrough();
     });
 
     it('should call getExamsProgressReport function', function () {
@@ -79,20 +78,24 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
     });
 
     it('should update exams with other exam', function () {
-      controller.selectedExam = 'EXAM_2';
       controller.updateData(null, 'EXAM_1', null, 'RS');
-      expect(controller.setExams).toHaveBeenCalledTimes(1);
+
+      expect(controller.selectedExamName).toEqual('EXAM_1');
     });
 
     it('should update exams with other status', function () {
-      controller.selectedStatus = null;
-      controller.updateData(null, null, 1, 'RS');
-      expect(controller.setExams).toHaveBeenCalledTimes(1);
+      controller.updateData(null, null, Mock.RECEIVED, 'RS');
+
+      expect(controller.selectedStatus).toEqual(Mock.RECEIVED);
     });
   });
 
 
   function mockInjections() {
+
+    Mock.UNREALIZED = 0;
+    Mock.RECEIVED = 1;
+
     Mock.ProjectFieldCenterService = {
       loadCenters: () => {
         return Promise.resolve([{ name: 'São Paulo', acronym: 'SP' }]);

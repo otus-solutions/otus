@@ -30,7 +30,6 @@
     self.message;
     self.rawExams;
     self.examsData;
-    self.selectedExam;
     self.filteredExams;
     self.examsNameList;
     self.selectedStatus;
@@ -46,7 +45,6 @@
       self.ready = false;
       self.error = false;
       self.examsData = [];
-      self.selectedExam = null;
       self.selectedStatus = null;
       self.colors = ExamStatusHistoryService.getColors();
       self.labels = ExamStatusHistoryService.getLabels();
