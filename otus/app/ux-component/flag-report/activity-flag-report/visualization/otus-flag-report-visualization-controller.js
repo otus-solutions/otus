@@ -48,6 +48,7 @@
       var scale = window.innerWidth / 1440;
       var translation = window.innerWidth / 15;
       var innerWidth = window.innerWidth;
+      var verticalTranslation = window.innerHeight / 4;
 
       var contentWidth = ((totalCellSize + translation) * scale) + translation;
       var viewerWidth = contentWidth > innerWidth ? contentWidth : innerWidth;
@@ -55,6 +56,8 @@
 
       var legendElementWidth = CELL_SIZE * 3.2;
 
+      var contentHeight = ((CELL_SIZE + verticalTranslation) * scale);
+      var viewerHeight = window.innerHeight - contentHeight;
 
       var colors = self.colorsRange;
       var svg;
@@ -68,7 +71,7 @@
       svg = d3.select(heatmapId)
         .append("svg")
         .attr("width", viewerWidth)
-        .attr("height", ((row_number * 35) + viewerPosTop) + "px")
+        .attr("height", viewerHeight)
         .append("g")
         .attr("transform", "translate(" + translation + "," + window.innerHeight / 7 + ")scale(" + window.innerWidth / 1440 + ")");
 

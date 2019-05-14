@@ -255,7 +255,7 @@
       var viewerWidth = contentWidth > innerWidth ? contentWidth : innerWidth;
 
       var contentHeight = (((amountOfElementsInPage * columnsCount) + verticalTranslation) * scale);
-      var viewerHeight = contentHeight > window.innerHeight ? contentHeight : window.innerHeight;;
+      var viewerHeight = contentHeight > window.innerHeight ? contentHeight : window.innerHeight;
       var legendHeight = 70;
       var legendElementWidth = CELL_SIZE * 4.5;
       var svg;
