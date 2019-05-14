@@ -11,7 +11,6 @@
   }
 
   .content-card-home {
-    min-width: 320px !important;
     min-height: 420px !important;
   }
 </style>
@@ -22,12 +21,11 @@
       <span layout="row" class="md-headline">Utilize as opções a seguir para navegar no sistema.</span>
       <otus-participant-search on-select="$ctrl.selectParticipant(participant)" show-all-participants="$ctrl.managerParticipantsDashboard()"
         show-all-participants-button="true" ng-disabled="!$ctrl.participantsReady" layout-fill on-ready="$ctrl.participantsReady">
-
       </otus-participant-search>
     </div>
   </div>
   <div layout="row" layout-align="center start" layout-fill layout-padding flex layout-wrap>
-    <div flex-xs flex-md="40" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
+    <div layout="column">
       <md-card layout-fill ng-init="showLaboratory=true">
         <md-card-header flex layout-align="start center" class="md-primary header-home-options">
           <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">colorize</md-icon>
@@ -35,7 +33,7 @@
             <span class="md-header" layout-padding>LABORATÓRIO</span>
           </md-card-header-text>
         </md-card-header>
-        <md-card-content layout="column" layout-align="start start" flex layout-fill>
+        <md-card-content layout="column" layout-align="start start" flex>
           <md-button ng-click="$ctrl.sampleTransportDashboard()" class="md-body-1 option " layout-margin=""
             layout-align="center">
             <md-icon layout-margin>local_shipping</md-icon>
@@ -60,7 +58,7 @@
             <span class="md-header" layout-padding>MONITORAMENTO</span>
           </md-card-header-text>
         </md-card-header>
-        <md-card-content layout="column" layout-align="start start" flex layout-fill>
+        <md-card-content layout="column" layout-align="start start" flex>
           <md-button ng-click="$ctrl.startMonitoring()" layout-margin="" class="md-body-1 option ">
             <md-icon layout-margin>description</md-icon>
             Atividades do centro
@@ -68,12 +66,12 @@
           <md-button ng-click="$ctrl.activateActivityFlagsReport()" class="md-body-1 option" layout-margin=""
             layout-align="center">
             <md-icon layout-margin>flag</md-icon>
-            Relatório de Flags para Atividades
+            Flags para Atividades
           </md-button>
           <md-button ng-click="$ctrl.laboratoryActivityFlagsReport()" class="md-body-1 option" layout-margin=""
             layout-align="center">
             <md-icon layout-margin>flag</md-icon>
-            Relatório de Flags para Laboratório
+            Flags para Laboratório
           </md-button>
           <md-button ng-click="$ctrl.laboratoryMonitoring()" class="md-body-1 option" layout-margin="" layout-align="center">
             <md-icon layout-margin>assignment_turned_in</md-icon>
