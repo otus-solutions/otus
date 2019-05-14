@@ -9,12 +9,12 @@ describe('MonitoringRestService Suite', function () {
   const DATA = {};
 
   beforeEach(function () {
-    angular.mock.module('otusjs.deploy.rest');
+    angular.mock.module('otusjs.deploy.monitoring');
     angular.mock.module('otus.client');
 
     angular.mock.inject(function (_$injector_) {
       Injections.OtusRestResourceService = _$injector_.get('OtusRestResourceService');
-      service = _$injector_.get('otusjs.deploy.MonitoringRestService', Injections);
+      service = _$injector_.get('otusjs.deploy.monitoring.MonitoringRestService', Injections);
 
       spyOn(Injections.OtusRestResourceService, "getOtusMonitoringResource").and.callThrough();
     });
