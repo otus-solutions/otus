@@ -57,7 +57,7 @@
       }
       self.examsData.data = angular.copy(exams);
       _setFilteredExams(self.examsData, self.selectedExamName, self.selectedStatus);
-      _buildGraph(self.selectedStatus);
+      _buildGraph(self.selectedStatus, endPage);
     }
 
     function updateData(exams, examName, status, center) {
@@ -214,23 +214,23 @@
     }
 
 
-    function _buildGraph(status) {
+    function _buildGraph(status, amountOfElementsInPage) {
       if (self.filteredExams) {
-        _heatmap_display(angular.copy(self.filteredExams), status);
+        _heatmap_display(angular.copy(self.filteredExams), status, amountOfElementsInPage);
         $(window).resize(function () {
-          _heatmap_display(angular.copy(self.filteredExams), status);
+          _heatmap_display(angular.copy(self.filteredExams), status, amountOfElementsInPage);
         })
       } else if (self.examsData) {
-        _heatmap_display(angular.copy(self.examsData), status);
+        _heatmap_display(angular.copy(self.examsData), status, undefined);
         $(window).resize(function () {
-          _heatmap_display(angular.copy(self.examsData), status);
+          _heatmap_display(angular.copy(self.examsData), status, undefined);
         })
       } else {
         $("#exam-heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
       }
     }
 
-    function _heatmap_display(exams, status) {
+    function _heatmap_display(exams, status, amountOfElementsInPage) {
       let heatmapId = "#exam-heatmap";
       let CELL_SIZE = 25;
       var svg = d3.select(heatmapId).selectAll("*").remove();
@@ -244,33 +244,21 @@
       var columnsCount = exams.columns.length;
       var totalCellSize = CELL_SIZE * columnsCount;
 
-
       // var horizontalTranslation = window.innerWidth / 3.5;
       var horizontalTranslation = window.innerWidth / 15;
-      var verticalTranslation = window.innerHeight / 4 ;
+      var verticalTranslation = window.innerHeight / 4;
 
       var max = 1200;
-      var scale = max > innerWidth ?  1 : innerWidth/max;
+      var scale = max > innerWidth ? 1 : innerWidth / max;
 
       var contentWidth = ((totalCellSize + horizontalTranslation) * scale) + horizontalTranslation;
       var viewerWidth = contentWidth > innerWidth ? contentWidth : innerWidth;
 
-
-      var contentHeight = ((totalCellSize + verticalTranslation) * scale);
+      var contentHeight = (((amountOfElementsInPage * columnsCount) + verticalTranslation) * scale);
       var viewerHeight = contentHeight > window.innerHeight ? contentHeight : window.innerHeight;;
-      var viewerPosTop = 200;
       var legendHeight = 70;
       var legendElementWidth = CELL_SIZE * 4.5;
       var svg;
-
-      console.clear();
-      console.log("innerWidth - " + innerWidth);
-      console.log("scale - " + scale)
-      console.log("current viewerWidth - " + viewerWidth);
-      console.log("columnsCount - " + columnsCount);
-      console.log("cellSize - " + CELL_SIZE);
-      console.log("totalCellSize - " + totalCellSize);
-      console.log("$(document).width - " + $(document).width());
 
       //==================================================
 

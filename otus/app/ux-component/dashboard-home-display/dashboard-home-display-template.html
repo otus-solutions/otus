@@ -8,10 +8,12 @@
     background-color: #009588;
     font-weight: bold;
     color: #FFFFFF !important;
+    min-height: 70px !important;
+    max-height: 70px !important;
   }
 
   .content-card-home {
-    min-height: 420px !important;
+    min-height: 350px !important;
   }
 </style>
 <div layout="column" layout-align="start start" layout-padding layout-fill flex="100">
@@ -25,8 +27,8 @@
     </div>
   </div>
   <div layout="row" layout-align="center start" layout-fill layout-padding flex layout-wrap>
-    <div layout="column">
-      <md-card layout-fill ng-init="showLaboratory=true">
+    <div flex-xs flex-md="40" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
+      <md-card layout-fill ng-init="showLaboratory=true" class="content-card-home">
         <md-card-header flex layout-align="start center" class="md-primary header-home-options">
           <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">colorize</md-icon>
           <md-card-header-text>
@@ -51,7 +53,7 @@
       </md-card>
     </div>
     <div flex-xs flex-md="40" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
-      <md-card layout-fill>
+      <md-card layout-fill class="content-card-home">
         <md-card-header flex layout-align="start center" class="md-primary header-home-options">
           <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">assessment</md-icon>
           <md-card-header-text>
