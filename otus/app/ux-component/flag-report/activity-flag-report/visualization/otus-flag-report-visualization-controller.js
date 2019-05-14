@@ -42,7 +42,6 @@
 
       //==================================================
       var CELL_SIZE = 24;
-      var legendElementWidth = CELL_SIZE * 3.2;
       var columnsCount = self.activitiesData.columns.length;
       var totalCellSize = CELL_SIZE * columnsCount;
 
@@ -50,10 +49,11 @@
       var translation = window.innerWidth / 15;
       var innerWidth = window.innerWidth;
 
-
-      var conta = ((totalCellSize + translation) * scale) + translation;
-      var viewerWidth = conta > innerWidth ? conta : innerWidth;
+      var contentWidth = ((totalCellSize + translation) * scale) + translation;
+      var viewerWidth = contentWidth > innerWidth ? contentWidth : innerWidth;
       var viewerPosTop = 200;
+
+      var legendElementWidth = CELL_SIZE * 3.2;
 
 
       var colors = self.colorsRange;
