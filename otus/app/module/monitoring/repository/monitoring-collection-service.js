@@ -32,6 +32,9 @@
     self.getDataByExam = getDataByExam;
     self.getDataToCSVOfPendingResultsByAliquots = getDataToCSVOfPendingResultsByAliquots;
     self.getDataToCSVOfOrphansByExam = getDataToCSVOfOrphansByExam;
+    self.getStatusOfExams = getStatusOfExams;
+    self.defineExamWithDoesNotApplies = defineExamWithDoesNotApplies;
+    self.deleteNotAppliesOfExam = deleteNotAppliesOfExam;
 
     function listAcronyms() {
       var request = $q.defer();
@@ -49,7 +52,7 @@
         });
 
       return request.promise;
-    }
+    };
 
     function listCenters() {
       var request = $q.defer();
@@ -67,7 +70,7 @@
         });
 
       return request.promise;
-    }
+    };
 
     function find(query) {
       var request = $q.defer();
@@ -92,9 +95,8 @@
               request.reject(e);
             });
         });
-
       return request.promise;
-    }
+    };
 
     function getActivitiesProgressReport(center) {
       var request = $q.defer();
@@ -110,9 +112,8 @@
               request.reject(e);
             });
         });
-
       return request.promise;
-    }
+    };
 
     function getExamsName(center) {
       var request = $q.defer();
@@ -165,7 +166,7 @@
             });
         });
       return request.promise;
-    }
+    };
 
     function defineActivityWithDoesNotApplies(data) {
       var request = $q.defer();
@@ -182,15 +183,15 @@
             });
         });
       return request.promise;
-    }
+    };
 
-    function deleteNotAppliesOfActivity(rn, acrony) {
+    function deleteNotAppliesOfActivity(rn, acronym) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .deleteNotAppliesOfActivity(rn, acrony)
+            .deleteNotAppliesOfActivity(rn, acronym)
             .then(function (response) {
               request.resolve(response.data);
             })
@@ -199,7 +200,7 @@
             });
         });
       return request.promise;
-    }
+    };
 
     function getDataOfPendingResultsByAliquots(center) {
       var request = $q.defer();
@@ -215,9 +216,8 @@
               request.reject(e);
             });
         });
-
       return request.promise;
-    }
+    };
 
     function getDataQuantitativeByTypeOfAliquots(center) {
       var request = $q.defer();
@@ -233,9 +233,8 @@
               request.reject(e);
             });
         });
-
       return request.promise;
-    }
+    };
 
     function getDataOrphanByExams() {
       var request = $q.defer();
@@ -251,9 +250,8 @@
               request.reject(e);
             });
         });
-
       return request.promise;
-    }
+    };
 
     function getDataOfStorageByAliquots(center) {
       var request = $q.defer();
@@ -269,9 +267,8 @@
               request.reject(e);
             });
         });
-
       return request.promise;
-    }
+    };
 
     function getDataByExam(center) {
       var request = $q.defer();
@@ -287,9 +284,8 @@
               request.reject(e);
             });
         });
-
       return request.promise;
-    }
+    };
 
     function getDataToCSVOfPendingResultsByAliquots(center) {
       var request = $q.defer();
@@ -305,9 +301,8 @@
               request.reject(e);
             });
         });
-
       return request.promise;
-    }
+    };
 
     function getDataToCSVOfOrphansByExam() {
       var request = $q.defer();
@@ -324,6 +319,57 @@
             });
         });
       return request.promise;
-    }
+    };
+
+    function getStatusOfExams(recruitmentNumber) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getStatusOfExams(recruitmentNumber)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+      return request.promise;
+    };
+
+    function defineExamWithDoesNotApplies(data) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .defineExamWithDoesNotApplies(data)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+      return request.promise;
+    };
+
+    function deleteNotAppliesOfExam(data) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .deleteNotAppliesOfExam(data)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+      return request.promise;
+    };
   }
 }());

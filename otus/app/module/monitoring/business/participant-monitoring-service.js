@@ -7,102 +7,39 @@
 
   Service.$inject = [
     '$q',
-    '$filter',
-    'otusjs.monitoring.repository.MonitoringCollectionService'
+    'otusjs.monitoring.repository.MonitoringCollectionService',
+    'otusjs.model.monitoring.HeatMapActivityFactory',
+    'otusjs.model.monitoring.HeatMapExamFactory'
   ];
 
-  function Service($q, $filter, MonitoringCollectionService) {
-    const CREATED = 'CREATED';
-    const SAVED = 'SAVED';
-    const FINALIZED = 'FINALIZED';
-    const DOES_NOT_APPLY = 'DOES_NOT_APPLY';
-    const UNDEFINED = 'UNDEFINED';
-    const MULTIPLE = 'MULTIPLE';
-    const AMBIGUITY = 'AMBIGUITY';
-
+  function Service($q, MonitoringCollectionService, HeatMapActivityFactory, HeatMapExamFactory) {
     var self = this;
     self.participantActivityStatusList = [];
+    self.participantExamStatusList = [];
     /* Public methods */
     self.buildActivityStatusList = buildActivityStatusList;
     self.buildActivityStatus = buildActivityStatus;
     self.defineActivityWithDoesNotApplies = defineActivityWithDoesNotApplies;
     self.deleteNotAppliesOfActivity = deleteNotAppliesOfActivity;
+    self.defineExamWithDoesNotApplies = defineExamWithDoesNotApplies;
+    self.buildExamStatusList = buildExamStatusList;
+    self.buildExamStatus = buildExamStatus;
+    self.deleteNotAppliesOfExam = deleteNotAppliesOfExam;
 
     function buildActivityStatusList(recruitmentNumber) {
       var defer = $q.defer();
       MonitoringCollectionService.getStatusOfActivities(recruitmentNumber).then(function (result) {
         self.participantActivityStatusList = result;
-        defer.resolve(_buildDataToView(result));
+        defer.resolve(HeatMapActivityFactory.fromJsonObject(result));
       }).catch(function () {
-        defer.reject()
+        defer.reject();
       });
       return defer.promise;
     };
 
-    function buildActivityStatus(data) {
-      if (data.doesNotApply) {
-        if (data.activities.length == 0) {
-          return {
-            'acronym': data.acronym,
-            'name': data.name,
-            'status': DOES_NOT_APPLY,
-            'observation': data.doesNotApply ? data.doesNotApply.observation : undefined
-          };
-        } else {
-          return {
-            'acronym': data.acronym,
-            'name': data.name,
-            'status': AMBIGUITY,
-            'observation': data.doesNotApply ? data.doesNotApply.observation : undefined
-          };
-        }
-      } else if (data.activities.length == 0) {
-        return {
-          'acronym': data.acronym,
-          'name': data.name,
-          'status': UNDEFINED
-        };
-      } else if (data.activities.length > 1) {
-        var information = [];
-        data.activities.filter(function (activity) {
-          information.push({
-            'status': _buildStatusToPTbr(activity.statusHistory.name),
-            'date': $filter('date')(activity.statusHistory.date, 'dd/MM/yyyy')
-          });
-        });
-        return {
-          'acronym': data.acronym,
-          'name': data.name,
-          'status': MULTIPLE,
-          'information': information
-        };
-      } else if (data.activities.length == 1) {
-        switch (data.activities[0].statusHistory.name) {
-          case CREATED:
-            return {
-              'acronym': data.acronym,
-              'name': data.name,
-              'status': CREATED,
-              'date': $filter('date')(data.activities[0].statusHistory.date, 'dd/MM/yyyy')
-            };
-          case SAVED:
-            return {
-              'acronym': data.acronym,
-              'name': data.name,
-              'status': SAVED,
-              'date': $filter('date')(data.activities[0].statusHistory.date, 'dd/MM/yyyy')
-            };
-          case FINALIZED:
-            return {
-              'acronym': data.acronym,
-              'name': data.name,
-              'status': FINALIZED,
-              'date': $filter('date')(data.activities[0].statusHistory.date, 'dd/MM/yyyy')
-            };
-        }
-      }
-      return data;
-    };
+    function buildActivityStatus(activity) {
+      return HeatMapActivityFactory.create(activity).toJSON();
+    }
 
     function defineActivityWithDoesNotApplies(recruitmentNumber, observation, oldActivity) {
       var defer = $q.defer();
@@ -147,26 +84,65 @@
       return defer.promise;
     }
 
-    function _buildDataToView(response) {
-      if (!response)
-        return;
-      var data = [];
-      response.forEach(function (activity) {
-        data.push(buildActivityStatus(activity));
+    function buildExamStatusList(recruitmentNumber) {
+      var defer = $q.defer();
+      MonitoringCollectionService.getStatusOfExams(recruitmentNumber).then(function (result) {
+        self.participantExamStatusList = result.participantExams;
+        defer.resolve(HeatMapExamFactory.fromJsonObject(result.participantExams));
+      }).catch(function () {
+        defer.reject();
       });
-      return data;
+      return defer.promise;
     };
 
-    function _buildStatusToPTbr(status) {
-      switch (status) {
-        case CREATED:
-          return 'Criado';
-        case SAVED:
-          return 'Salvo';
-        case FINALIZED:
-          return 'Finalizado';
-      }
+    function buildExamStatus(exam) {
+      return HeatMapExamFactory.create(exam).toJSON();
     }
 
+    function defineExamWithDoesNotApplies(recruitmentNumber, observation, oldExam) {
+      var defer = $q.defer();
+      var data = {
+        "recruitmentNumber": recruitmentNumber,
+        "name": oldExam.name,
+        "observation": observation
+      };
+
+      MonitoringCollectionService.defineExamWithDoesNotApplies(data).then(function (response) {
+        self.participantExamStatusList.filter(function (exam) {
+          if (exam.name === oldExam.name) {
+            exam.doesNotApply = {
+              "recruitmentNumber": recruitmentNumber,
+              "name": exam.name,
+              "observation": observation
+            };
+            defer.resolve(exam);
+          }
+        });
+      }).catch(function (e) {
+        defer.reject(e);
+      });
+      return defer.promise;
+    }
+
+    function deleteNotAppliesOfExam(recruitmentNumber, oldExam) {
+      var defer = $q.defer();
+      var data = {
+        "recruitmentNumber": recruitmentNumber,
+        "name": oldExam.name
+      };
+
+      MonitoringCollectionService.deleteNotAppliesOfExam(data).then(function (response) {
+        self.participantExamStatusList.filter(function (exam) {
+          if (exam.name === oldExam.name) {
+            delete exam.doesNotApply;
+            defer.resolve(exam);
+          }
+        });
+      }).catch(function (e) {
+        defer.reject(e);
+      });
+      return defer.promise;
+    }
   }
+
 }());
