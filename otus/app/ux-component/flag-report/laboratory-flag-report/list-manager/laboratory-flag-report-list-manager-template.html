@@ -26,7 +26,7 @@
     </div>
     <md-divider></md-divider>
     <md-content flex layout="row">
-      <md-content id="exam-heatmap" ng-show="$ctrl.examsData.data.length" ng-if="$ctrl.ready" layout="column" flex></md-content>
+      <md-content id="exam-heatmap" ng-show="$ctrl.examsData.data.length" ng-if="$ctrl.ready" layout="row" flex></md-content>
       <div ng-if="$ctrl.error" layout="row" flex layout-align="center center" style="height: 400px; width: 400px; margin-left: auto; margin-right: auto;">
         <div class="label-light-gray">
           <h3 class="md-headline">{{$ctrl.message}}</h3>

@@ -256,8 +256,8 @@
       var viewerWidth = contentWidth > innerWidth ? contentWidth : innerWidth;
 
 
-      var contentHeight = ((totalCellSize + verticalTranslation) * scale) + verticalTranslation;
-      var viewerHeight = $(document).height();
+      var contentHeight = ((totalCellSize + verticalTranslation) * scale);
+      var viewerHeight = contentHeight > window.innerHeight ? contentHeight : window.innerHeight;;
       var viewerPosTop = 200;
       var legendHeight = 70;
       var legendElementWidth = CELL_SIZE * 4.5;
@@ -281,7 +281,7 @@
       svg = d3.select(heatmapId)
         .append("svg")
         .attr("width", viewerWidth)
-        .attr("height", ((row_number * 100) + viewerPosTop) + "px")
+        .attr("height", viewerHeight)
         .append("g")
         .attr("transform", "translate(" + horizontalTranslation + "," + verticalTranslation * scale + ")scale(" + scale + ")");
 
