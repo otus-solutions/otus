@@ -252,11 +252,11 @@
       var max = 1200;
       var scale = max > innerWidth ?  1 : innerWidth/max;
 
-      var conta = ((totalCellSize + horizontalTranslation) * scale) + horizontalTranslation;
-      var viewerWidth = conta > innerWidth ? conta : innerWidth;
+      var contentWidth = ((totalCellSize + horizontalTranslation) * scale) + horizontalTranslation;
+      var viewerWidth = contentWidth > innerWidth ? contentWidth : innerWidth;
 
 
-      var outraConta = ((totalCellSize + verticalTranslation) * scale) + verticalTranslation;
+      var contentHeight = ((totalCellSize + verticalTranslation) * scale) + verticalTranslation;
       var viewerHeight = $(document).height();
       var viewerPosTop = 200;
       var legendHeight = 70;
