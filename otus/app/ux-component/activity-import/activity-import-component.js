@@ -9,16 +9,32 @@
     });
 
   Controller.$inject = [
-    'otusjs.activity.business.ParticipantActivityService'
-  ]
+    'otusjs.activity.business.ParticipantActivityService',
+    '$element'
+  ];
 
-  function Controller(ActivityService) {
+  function Controller(ActivityService, $element) {
     var self = this;
 
     self.$onInit = onInit;
+    self.getType = getType;
+    self.upload = upload;
+    var fr = new FileReader();
 
     function onInit() {
       _loadActivities();
+
+      self.input = $($element[0].querySelector('#fileInput'));
+      self.nameFile = $($element[0].querySelector('#nameFile'));
+      self.input.on('change', function (e) {
+        self.nameFile.val(e.target.files[0].name);
+        if(e.target.files[0]){
+          // fr.readAsText(e.target.files[0]);
+        }
+      });
+    }
+    function upload() {
+      self.input.click();
     }
 
 
@@ -35,6 +51,18 @@
             self.isListEmpty = false;
           }
         });
+    }
+
+    function getType(activity) {
+      if ('FORM_INTERVIEW' === activity.surveyFormType || 'INTERVIEW' === activity.surveyFormType) {
+        return 'Entrevista';
+      }
+
+      if ('PROFILE' === activity.surveyFormType) {
+        return 'Perfil';
+      }
+
+      return '';
     }
 
   }

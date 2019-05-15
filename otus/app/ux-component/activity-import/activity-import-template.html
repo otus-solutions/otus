@@ -7,10 +7,41 @@
       <span>Importação de Atividades</span>
     </div>
   </otus-dashboard-toolbar>
-  <div layout="column" flex>
+  <div layout="column">
     <span flex="10"></span>
     <md-subheader class="md-no-sticky moment-type-title">
       Selecione o tipo de atividade e envie o arquivo convertido para importação.
     </md-subheader>
+    <div layout="row" flex>
+
+      <span flex></span>
+      <md-input-container flex="40">
+        <label>Atividade</label>
+        <md-select ng-model="ctrl.selectedActivity">
+          <md-option><em>None</em></md-option>
+          <md-option ng-repeat="activity in $ctrl.activities" ng-value="activity">
+            {{activity.surveyTemplate.identity.name}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <span flex></span>
+    </div>
+    <div layout="row" flex>
+
+      <span flex></span>
+      <input id="fileInput" type="file" ng-model="file" accept='.json' class="ng-hide" ng-change="$ctrl.validateFile()">
+      <md-input-container flex="40" layout="row" layout-align="end center" class="md-accent md-raised">
+        <md-button class="md-button md-accent md-raised" aria-label="Carregar Resultados" ng-click="$ctrl.upload()">
+          <md-tooltip md-direction="left">
+            Realizar envio de atividades
+          </md-tooltip>
+          <md-icon>file_upload</md-icon>
+        </md-button>
+        <input id="nameFile" type="text" ng-disabled="true">
+      </md-input-container>
+
+      <span flex></span>
+    </div>
+
   </div>
 </div>
