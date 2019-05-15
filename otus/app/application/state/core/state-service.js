@@ -44,6 +44,7 @@
     self.activateMonitoring = activateMonitoring;
     self.activateManagerParticipants = activateManagerParticipants;
     self.activateParticipantsList = activateParticipantsList;
+    self.activateActivityImport = activateActivityImport;
     // self.activateErrorOffline = activateErrorOffline;
     self.activateLaboratoryMonitoring = activateLaboratoryMonitoring;
 
@@ -163,6 +164,10 @@
 
     function activateLaboratoryMonitoring() {
       $state.go(STATE.LABORATORY_MONITORING_DASHBOARD);
+    }
+
+    function activateActivityImport() {
+      $state.go(STATE.ACTIVITY_IMPORT);
     }
 
     function getCurrentState() {
