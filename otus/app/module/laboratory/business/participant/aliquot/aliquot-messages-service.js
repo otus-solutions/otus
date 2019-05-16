@@ -17,8 +17,10 @@
     self.showExitDialog = showExitDialog;
     self.showSaveDialog = showSaveDialog;
     self.showDeleteDialog = showDeleteDialog;
+    self.showConvertDialog = showConvertDialog;
     self.showToast = showToast;
     self.showNotRemovedDialog = showNotRemovedDialog;
+    self.showNotConvertedDialog = showNotConvertedDialog;
 
     function showExitDialog(msg) {
       var message = msg || 'Alíquotas alteradas serão descartadas.';
@@ -72,6 +74,34 @@
 
     }
 
+    function showConvertDialog(msg) {
+      var message = msg || 'Deseja salvar as alterações?';
+
+      var _saveDialog = {
+        dialogToTitle:'Salvar',
+        titleToText:'Confirmar converção da aliquota:',
+        showInput: true,
+        inputLabel: "Observação",
+        textDialog: message,
+        ariaLabel:'Confirmação de finalização',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide({message:sinputMessage})},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Voltar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogService.showDialog(_saveDialog);
+
+    }
+
     function showDeleteDialog(msg) {
       var message = msg || "A exclusão desta alíquota será um procedimento irreversível! Deseja realmente excluir?";
 
@@ -103,6 +133,26 @@
       var _removedDialog = {
         dialogToTitle:'Alíquota',
         titleToText:'ALÍQUOTA NÃO REMOVIDA',
+        textDialog: _buildMessage(msg),
+        ariaLabel:'Confirmação de leitura',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          }
+        ]
+      };
+
+      return DialogService.showDialog( _removedDialog);
+
+    }
+
+    function showNotConvertedDialog(msg) {
+
+      var _removedDialog = {
+        dialogToTitle:'Alíquota',
+        titleToText:'ALÍQUOTA NÃO CONVERTIDA',
         textDialog: _buildMessage(msg),
         ariaLabel:'Confirmação de leitura',
         buttons: [

@@ -19,6 +19,7 @@
     self.getMomentTypeAliquot = getMomentTypeAliquot;
     self.areFieldsChanged = areFieldsChanged;
     self.aliquotsWithErrors = aliquotsWithErrors;
+    self.convertStorageAliquot = convertStorageAliquot;
     self.populateAliquotsArray = populateAliquotsArray;
     self.getNewAliquots = getNewAliquots;
     self.updateAliquots = updateAliquots;
@@ -26,6 +27,10 @@
 
     function updateAliquots(updateStructure) {
       return ParticipantLaboratoryService.updateAliquots(updateStructure);
+    }
+
+    function convertStorageAliquot(aliquot) {
+      return ParticipantLaboratoryService.convertStorageAliquot(aliquot);
     }
 
     function deleteAliquot(aliquotCode) {
@@ -114,6 +119,7 @@
 
       momentType.storages = storages;
       momentType.exams = exams;
+      momentType.additionalExams = [];
 
       momentType = fillAliquotsWithCollectedAliquots(momentType);
 
@@ -127,26 +133,38 @@
 
     function fillAliquotsWithCollectedAliquots(momentType){
       momentType.collectedAliquots.forEach(function(collectedAliquot){
-        var arrayAliquots = momentType.exams;
+        var dateTime = new Date(collectedAliquot.aliquotCollectionData.time);
+        var dateProcessing = new Date(collectedAliquot.aliquotCollectionData.processing);
+        collectedAliquot.aliquotCode = collectedAliquot.code;
+        collectedAliquot.isSaved = true;
+        collectedAliquot.operator = collectedAliquot.aliquotCollectionData.operator.toLowerCase();
+        if (isNaN(dateProcessing)) {
+          collectedAliquot.processing = "";
+        } else {
+          collectedAliquot.processing = dateProcessing;
+        }
+        collectedAliquot.date = dateTime;
 
-        if(collectedAliquot.role.toUpperCase() == "STORAGE") arrayAliquots = momentType.storages;
+        if (collectedAliquot.isConverted){
+          momentType.additionalExams.push(collectedAliquot);
+        } else {
+          var arrayAliquots = momentType.exams;
 
-        for (var i = 0, endLoop = false; i < arrayAliquots.length && !endLoop; i++) {
-          var aliquot = arrayAliquots[i];
-          if(aliquot.tubeCode === "" && aliquot.name.toUpperCase() == collectedAliquot.name.toUpperCase()){
-            aliquot.tubeCode = collectedAliquot.tubeCode;
-            aliquot.aliquotCode = collectedAliquot.code;
-            aliquot.isSaved = true;
-            aliquot.operator = collectedAliquot.aliquotCollectionData.operator.toLowerCase();
-            var dateTime = new Date(collectedAliquot.aliquotCollectionData.time);
-            var dateProcessing = new Date(collectedAliquot.aliquotCollectionData.processing);
-            if (isNaN(dateProcessing)) {
-              aliquot.processing = "";
-            } else {
-              aliquot.processing = dateProcessing;
+          if(collectedAliquot.role.toUpperCase() == "STORAGE") arrayAliquots = momentType.storages;
+
+          for (var i = 0, endLoop = false; i < arrayAliquots.length && !endLoop; i++) {
+            var aliquot = arrayAliquots[i];
+            if(aliquot.tubeCode === "" && aliquot.name.toUpperCase() == collectedAliquot.name.toUpperCase()){
+              if(collectedAliquot.role.toUpperCase() == "STORAGE") aliquot.convertStorage = collectedAliquot.convertStorage;
+              aliquot.tubeCode = collectedAliquot.tubeCode;
+              aliquot.aliquotHistory = collectedAliquot.aliquotHistory;
+              aliquot.aliquotCode = collectedAliquot.aliquotCode;
+              aliquot.isSaved = true;
+              aliquot.operator = collectedAliquot.operator;
+              aliquot.processing = collectedAliquot.processing;
+              aliquot.date = collectedAliquot.date;
+              endLoop = true;
             }
-            aliquot.date = dateTime;
-            endLoop = true;
           }
         }
       });

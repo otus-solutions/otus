@@ -18,6 +18,14 @@
         <div>
           <h2 ng-bind-html="$ctrl.title"></h2>
           <br><p ng-bind-html="$ctrl.text"></p>
+          <md-input-container ng-if="$ctrl.showInput">
+            <label>$ctrl.inputLabel</label>
+            <textarea name="bio" ng-model="$ctrl.inputMessage"></textarea>
+            <div ng-messages="userForm.bio.$error" ng-show="userForm.bio.$dirty">
+              <div ng-message="required">This is required!</div>
+              <div ng-message="md-maxlength">That's too long!</div>
+            </div>
+          </md-input-container>
         </div>
       </div>
     </md-dialog-content>

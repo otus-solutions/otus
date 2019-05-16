@@ -31,6 +31,7 @@
     self.getLoggedUser = getLoggedUser;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
     self.deleteAliquot = deleteAliquot;
 
@@ -113,8 +114,13 @@
       return LaboratoryRepositoryService.updateTubeCollectionData(JSON.stringify(updateStructure));
 
     }
+
     function updateAliquots(updateStructure) {
       return LaboratoryRepositoryService.updateAliquots(updateStructure);
+    }
+
+    function convertStorageAliquot(aliquot) {
+      return LaboratoryRepositoryService.convertStorageAliquot(aliquot);
     }
 
     function deleteAliquot(aliquotCode) {

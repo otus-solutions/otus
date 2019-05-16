@@ -20,6 +20,7 @@
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
     //Laboratory Configuration Methods
@@ -55,6 +56,10 @@
 
     function updateAliquots(updateStructure) {
       return LaboratoryCollectionService.updateAliquots(updateStructure);
+    }
+
+    function convertStorageAliquot(aliquot) {
+      return LaboratoryCollectionService.convertStorageAliquot(aliquot);
     }
 
     function updateTubeCollectionData(updateStructure){

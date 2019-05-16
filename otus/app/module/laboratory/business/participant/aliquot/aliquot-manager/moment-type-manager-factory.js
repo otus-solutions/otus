@@ -39,6 +39,7 @@
 
     self.addTube = addTube;
     self.removeAliquot = removeAliquot;
+    self.removeStorage = removeStorage;
     self.setAvailableAliquots = setAvailableAliquots;
     self.getPersistanceStructure = getPersistanceStructure;
 
@@ -123,7 +124,7 @@
       if (_participantAliquote.role === "EXAM") {
         _removeExam(code);
       } else if (_participantAliquote.role === "STORAGE") {
-        _removeStorage(code);
+        removeStorage(code);
       }
     }
 
@@ -142,7 +143,7 @@
       self.exams.splice(index, 1, AliquotStructureFactory.create(_aliquote).toEmptyJSON());
     }
 
-    function _removeStorage(code) {
+    function removeStorage(code) {
       var index;
       var _aliquote = self.storages.find(function (exam) {
         return exam.aliquotCode === code;

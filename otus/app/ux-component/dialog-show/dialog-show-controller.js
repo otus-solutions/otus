@@ -13,6 +13,8 @@
     vm.titleToDialog = data.dialogToTitle;
     vm.title =  data.titleToText;
     vm.text = data.textDialog;
+    vm.showInput = data.showInput;
+    vm.inputLabel = data.inputLabel;
     vm.labelAria = data.ariaLabel;
     vm.img = data.imgSrc;
     vm.style = data.imgStyle;

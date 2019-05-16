@@ -52,6 +52,7 @@
     self.tubeInputOnBlur = tubeInputOnBlur;
     self.aliquotInputOnBlur = aliquotInputOnBlur;
     self.setFocus = setFocus;
+    self.convertAliquot = convertAliquot;
 
     function onInit() {
       self.now = new Date();
@@ -446,6 +447,19 @@
           self.selectedMomentType.removeAliquot(aliquot.aliquotCode);
         }).catch(function (err) {
            AliquotMessagesService.showNotRemovedDialog(err.data.CONTENT);
+        });
+      }).catch(function () {});
+    }
+
+    function convertAliquot(aliquot,description) {
+      AliquotMessagesService.showConvertDialog().then(function(description) {
+        ParticipantLaboratoryService.convertStorageAliquot().then(function () {
+          self.selectedMomentType.removeStorage(aliquot.aliquotCode);
+          aliquot.convertStorage(ParticipantLaboratoryService.getLoggedUser().email, description);
+          self.selectedMomentType.additionalExams.push(aliquot);
+          _setMomentType(self.selectedMomentType);
+        }).catch(function (err) {
+          AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
         });
       }).catch(function () {});
     }
