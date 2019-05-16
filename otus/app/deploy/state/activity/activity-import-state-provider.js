@@ -22,7 +22,7 @@
       parent: STATE.SESSION,
       name: STATE.ACTIVITY_IMPORT,
       url: '/' + STATE.ACTIVITY_IMPORT,
-      template: '<otus-activity-import layout="column" flex></otus-activity-import>',
+      template: '<otus-activity-import layout="column" user="$resolve.user" flex></otus-activity-import>',
       resolve: {
         user: _resolveUserLogged
       },

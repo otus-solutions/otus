@@ -38,6 +38,7 @@
     self.updateCheckerActivity = updateCheckerActivity;
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
+    self.importActivities = importActivities;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -200,6 +201,23 @@
         .then(function(remoteStorage) {
           remoteStorage
             .getActivityRevisions(activityID, activity)
+            .then(function(response) {
+              request.resolve(response);
+            }).catch(function () {
+            request.reject();
+          });
+        });
+
+      return request.promise;
+    }
+
+    function importActivities(surveyActivities, version){
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function(remoteStorage) {
+          remoteStorage
+            .importActivities(surveyActivities, version)
             .then(function(response) {
               request.resolve(response);
             }).catch(function () {

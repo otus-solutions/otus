@@ -23,6 +23,7 @@
     self.updateCheckerActivity = updateCheckerActivity;
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
+    self.importActivities = importActivities;
 
     function initialize() {
       _rest = OtusRestResourceService.getActivityResource();
@@ -90,6 +91,24 @@
       }
       var request = $q.defer();
       _rest.getActivityRevisions({ id: activityID, rn: activity.participantData.recruitmentNumber })
+        .$promise
+        .then(function(response) {
+          if (response.data && response.data.length) {
+            request.resolve(response.data);
+          } else {
+            request.resolve([]);
+          }
+        });
+
+      return request.promise;
+    }
+
+    function importActivities(surveyActivities, version) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      var request = $q.defer();
+      _rest.importActivities({ surveyActivities: surveyActivities, version: version})
         .$promise
         .then(function(response) {
           if (response.data && response.data.length) {
