@@ -1,18 +1,18 @@
-describe('otus-flag-report-parse-data-factory Test', function() {
+describe('FlagReportFilterService Test', function() {
   var Mock = {};
   var factory,ACRONYM, STATUS;
 
   beforeEach(function() {
-    angular.mock.module('otusjs.otus.uxComponent');
+    angular.mock.module('otusjs.monitoring.business');
 
     inject(function(_$injector_) {
-      factory = _$injector_.get('otusFlagReportParseDataFactory');
+      factory = _$injector_.get('otusjs.monitoring.business.FlagReportFilterService');
       mockData();
     });
   });
   it('should return a same model flags', function() {
     expect(factory).toBeDefined();
-    Mock.activitiesData = factory.create(Mock.json);
+    Mock.activitiesData = factory.filter(Mock.json);
 
     expect(Mock.activitiesData.index).toBeDefined();
     expect(Mock.activitiesData.columns).toBeDefined();
@@ -26,7 +26,7 @@ describe('otus-flag-report-parse-data-factory Test', function() {
 
   it('should return a different model flags with filter by acronym', function() {
     expect(factory).toBeDefined();
-    Mock.activitiesData = factory.create(Mock.json, ACRONYM);
+    Mock.activitiesData = factory.filter(Mock.json, ACRONYM);
 
     expect(Mock.activitiesData.index).toBeDefined();
     expect(Mock.activitiesData.columns).toBeDefined();
@@ -41,7 +41,7 @@ describe('otus-flag-report-parse-data-factory Test', function() {
 
   it('should return a different model flags with filter by status', function() {
     expect(factory).toBeDefined();
-    Mock.activitiesData = factory.create(Mock.json, null, STATUS);
+    Mock.activitiesData = factory.filter(Mock.json, null, STATUS);
 
     expect(Mock.activitiesData.index).toBeDefined();
     expect(Mock.activitiesData.columns).toBeDefined();
@@ -55,7 +55,7 @@ describe('otus-flag-report-parse-data-factory Test', function() {
 
   it('should return a different model flags with filter by acronym and status', function() {
     expect(factory).toBeDefined();
-    Mock.activitiesData = factory.create(Mock.json, ACRONYM, STATUS);
+    Mock.activitiesData = factory.filter(Mock.json, ACRONYM, STATUS);
 
     expect(Mock.activitiesData.index).toBeDefined();
     expect(Mock.activitiesData.columns).toBeDefined();

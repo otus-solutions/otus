@@ -9,7 +9,7 @@
     'otusjs.monitoring.core.ModuleService',
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
-    'otusjs.deploy.MonitoringRestService',
+    'otusjs.deploy.monitoring.MonitoringRestService',
     'otusjs.deploy.monitoring.LaboratoryMonitoringRestService'
   ];
 

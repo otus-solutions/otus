@@ -3,79 +3,85 @@
     color: #000D11;
     cursor: pointer;
   }
+
   .header-home-options {
     background-color: #009588;
     font-weight: bold;
     color: #FFFFFF !important;
+    min-height: 70px !important;
+    max-height: 70px !important;
   }
+
   .content-card-home {
-    min-width: 320px !important;
-    min-height: 420px !important;
+    min-height: 350px !important;
   }
 </style>
-  <div layout="column" layout-align="start start" layout-padding layout-fill flex="100">
-    <div layout="row" layout-padding layout-fill layout-align="center center" flex>
-      <div layout="column" layout-padding layout-align="center center">
-        <span layout="row" class="md-display-2">Olá {{ $ctrl.loggedUser.name}}!</span>
-        <span layout="row" class="md-headline">Utilize as opções a seguir para navegar no sistema.</span>
-        <otus-participant-search on-select="$ctrl.selectParticipant(participant)"
-                                 show-all-participants="$ctrl.managerParticipantsDashboard()"
-                                 show-all-participants-button="true"
-                                 ng-disabled="!$ctrl.participantsReady" layout-fill
-                                 on-ready="$ctrl.participantsReady">
-
-        </otus-participant-search>
-      </div>
+<div layout="column" layout-align="start start" layout-padding layout-fill flex="100">
+  <div layout="row" layout-padding layout-fill layout-align="center center" flex>
+    <div layout="column" layout-padding layout-align="center center">
+      <span layout="row" class="md-display-2">Olá {{ $ctrl.loggedUser.name }}!</span>
+      <span layout="row" class="md-headline">Utilize as opções a seguir para navegar no sistema.</span>
+      <otus-participant-search on-select="$ctrl.selectParticipant(participant)" show-all-participants="$ctrl.managerParticipantsDashboard()"
+        show-all-participants-button="true" ng-disabled="!$ctrl.participantsReady" layout-fill on-ready="$ctrl.participantsReady">
+      </otus-participant-search>
     </div>
-    <div layout="row" layout-align="center start" layout-fill layout-padding flex layout-wrap>
-      <div flex-xs flex-md="40" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
-        <md-card layout-fill ng-init="showLaboratory=true">
-          <md-card-header flex layout-align="start center" class="md-primary header-home-options">
-            <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">colorize</md-icon>
-            <md-card-header-text>
-              <span class="md-header" layout-padding>LABORATÓRIO</span>
-            </md-card-header-text>
-          </md-card-header>
-          <md-card-content layout="column" layout-align="start start" flex  layout-fill>
-            <md-button ng-click="$ctrl.sampleTransportDashboard()" class="md-body-1 option " layout-margin="" layout-align="center">
-              <md-icon layout-margin>local_shipping</md-icon>
-              Transporte de amostra
-            </md-button>
-            <md-button ng-click="$ctrl.examsDashboard()" class="md-body-1 option" layout-margin="" layout-align="center">
-              <md-icon layout-margin>event_note</md-icon>
-              Lotes de exames
-            </md-button>
-            <md-button ng-click="$ctrl.sendingExam()" class="md-body-1 option" layout-margin="" layout-align="center">
-              <md-icon layout-margin>event_available</md-icon>
-              Envios de exames
-            </md-button>
-          </md-card-content>
-        </md-card>
-      </div>
-      <div flex-xs flex-md="40" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
-        <md-card layout-fill>
-          <md-card-header flex layout-align="start center" class="md-primary header-home-options">
-            <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">assessment</md-icon>
-            <md-card-header-text>
-              <span class="md-header" layout-padding>MONITORAMENTO</span>
-            </md-card-header-text>
-          </md-card-header>
-          <md-card-content layout="column" layout-align="start start" flex layout-fill>
-            <md-button ng-click="$ctrl.startMonitoring()" layout-margin="" class="md-body-1 option " >
-              <md-icon layout-margin>description</md-icon>
-              Atividades do centro
-            </md-button>
-            <md-button ng-click="$ctrl.flagsDashboard()" class="md-body-1 option" layout-margin="" layout-align="center">
-              <md-icon layout-margin>flag</md-icon>
-              Relatório de Flags
-            </md-button>
-            <md-button ng-click="$ctrl.laboratoryMonitoring()" class="md-body-1 option" layout-margin="" layout-align="center">
-              <md-icon layout-margin>assignment_turned_in</md-icon>
-              Controle laboratorial
-            </md-button>
-          </md-card-content>
-        </md-card>
-      </div>
-    </div>
-    <span flex flex-xs="0"></span>
   </div>
+  <div layout="row" layout-align="center start" layout-fill layout-padding flex layout-wrap>
+    <div flex-xs flex-md="40" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
+      <md-card layout-fill ng-init="showLaboratory=true" class="content-card-home">
+        <md-card-header flex layout-align="start center" class="md-primary header-home-options">
+          <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">colorize</md-icon>
+          <md-card-header-text>
+            <span class="md-header" layout-padding>LABORATÓRIO</span>
+          </md-card-header-text>
+        </md-card-header>
+        <md-card-content layout="column" layout-align="start start" flex>
+          <md-button ng-click="$ctrl.sampleTransportDashboard()" class="md-body-1 option " layout-margin=""
+            layout-align="center">
+            <md-icon layout-margin>local_shipping</md-icon>
+            Transporte de amostra
+          </md-button>
+          <md-button ng-click="$ctrl.examsDashboard()" class="md-body-1 option" layout-margin="" layout-align="center">
+            <md-icon layout-margin>event_note</md-icon>
+            Lotes de exames
+          </md-button>
+          <md-button ng-click="$ctrl.sendingExam()" class="md-body-1 option" layout-margin="" layout-align="center">
+            <md-icon layout-margin>event_available</md-icon>
+            Envios de exames
+          </md-button>
+        </md-card-content>
+      </md-card>
+    </div>
+    <div flex-xs flex-md="40" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
+      <md-card layout-fill class="content-card-home">
+        <md-card-header flex layout-align="start center" class="md-primary header-home-options">
+          <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">assessment</md-icon>
+          <md-card-header-text>
+            <span class="md-header" layout-padding>MONITORAMENTO</span>
+          </md-card-header-text>
+        </md-card-header>
+        <md-card-content layout="column" layout-align="start start" flex>
+          <md-button ng-click="$ctrl.startMonitoring()" layout-margin="" class="md-body-1 option ">
+            <md-icon layout-margin>description</md-icon>
+            Atividades do centro
+          </md-button>
+          <md-button ng-click="$ctrl.activateActivityFlagsReport()" class="md-body-1 option" layout-margin=""
+            layout-align="center">
+            <md-icon layout-margin>flag</md-icon>
+            Flags para Atividades
+          </md-button>
+          <md-button ng-click="$ctrl.laboratoryActivityFlagsReport()" class="md-body-1 option" layout-margin=""
+            layout-align="center">
+            <md-icon layout-margin>flag</md-icon>
+            Flags para Laboratório
+          </md-button>
+          <md-button ng-click="$ctrl.laboratoryMonitoring()" class="md-body-1 option" layout-margin="" layout-align="center">
+            <md-icon layout-margin>assignment_turned_in</md-icon>
+            Controle laboratorial
+          </md-button>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+  <span flex flex-xs="0"></span>
+</div>
