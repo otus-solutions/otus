@@ -8,6 +8,7 @@
   Controller.$inject = [
     '$q',
     '$timeout',
+    '$rootScope',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
@@ -16,11 +17,11 @@
     'otusjs.monitoring.business.FlagReportFilterService'
   ];
 
-  function Controller($q, $timeout, LoadingScreenService, FieldCenterRestService, DashboardContextService, MonitoringService, ExamStatusHistoryService, FlagReportFilterService) {
+  function Controller($q, $timeout, $rootScope, LoadingScreenService, FieldCenterRestService, DashboardContextService, MonitoringService, ExamStatusHistoryService, FlagReportFilterService) {
     const DATA_NOT_FOUND = "Não há registros a serem exibidos.";
     const GENERIC_ERROR = "Ocorreu algum problema. Por favor, tente novamente em alguns minutos.";
     const CSV_ERROR = 'Não foi possível baixar o csv. Por favor, tente novamente em alguns minutos.';
-    
+
     var _amountOfElementsInPage;
     var self = this;
     self.ready;
@@ -54,13 +55,16 @@
     }
 
     function updatePage(exams, startPage, endPage) {
+      LoadingScreenService.start();
       if (startPage !== undefined && endPage !== undefined) {
         self.examsData.index = self.rawExams.index.slice(startPage, endPage + 1);
+        _amountOfElementsInPage = endPage;
+        $rootScope.$broadcast('clear');
       }
       self.examsData.data = angular.copy(exams);
       _setFilteredExams(self.examsData, self.selectedExamName, self.selectedStatus);
-      _amountOfElementsInPage = endPage;
       _buildGraph(self.selectedStatus);
+      LoadingScreenService.finish();
     }
 
     function updateData(exams, examName, status, center) {
@@ -78,7 +82,7 @@
             _setFilteredExams(self.examsData, examName, status);
           }
           _buildGraph(self.selectedStatus);
-        } else if (exams && exams !== self.filteredExams) { // TODO: Quando deve entrar nesta condição?
+        } else if (exams && exams !== self.filteredExams) {
           _setFilteredExams(exams, examName, status);
         }
       }
