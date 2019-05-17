@@ -20,6 +20,8 @@
     const DATA_NOT_FOUND = "Não há registros a serem exibidos.";
     const GENERIC_ERROR = "Ocorreu algum problema. Por favor, tente novamente em alguns minutos.";
     const CSV_ERROR = 'Não foi possível baixar o csv. Por favor, tente novamente em alguns minutos.';
+    
+    var _amountOfElementsInPage;
     var self = this;
     self.ready;
     self.error;
@@ -57,7 +59,8 @@
       }
       self.examsData.data = angular.copy(exams);
       _setFilteredExams(self.examsData, self.selectedExamName, self.selectedStatus);
-      _buildGraph(self.selectedStatus, endPage);
+      _amountOfElementsInPage = endPage;
+      _buildGraph(self.selectedStatus);
     }
 
     function updateData(exams, examName, status, center) {
@@ -214,11 +217,11 @@
     }
 
 
-    function _buildGraph(status, amountOfElementsInPage) {
+    function _buildGraph(status) {
       if (self.filteredExams) {
-        _heatmap_display(angular.copy(self.filteredExams), status, amountOfElementsInPage);
+        _heatmap_display(angular.copy(self.filteredExams), status);
         $(window).resize(function () {
-          _heatmap_display(angular.copy(self.filteredExams), status, amountOfElementsInPage);
+          _heatmap_display(angular.copy(self.filteredExams), status);
         })
       } else if (self.examsData) {
         _heatmap_display(angular.copy(self.examsData), status, undefined);
@@ -230,7 +233,7 @@
       }
     }
 
-    function _heatmap_display(exams, status, amountOfElementsInPage) {
+    function _heatmap_display(exams, status) {
       let heatmapId = "#exam-heatmap";
       let CELL_SIZE = 25;
       var svg = d3.select(heatmapId).selectAll("*").remove();
@@ -241,7 +244,7 @@
         .style("visibility", "hidden");
 
       //==================================================
-      var columnsCount = exams.columns.length;
+      var columnsCount = self.examsData.columns.length;
       var totalCellSize = CELL_SIZE * columnsCount;
 
       // var horizontalTranslation = window.innerWidth / 3.5;
@@ -254,7 +257,7 @@
       var contentWidth = ((totalCellSize + horizontalTranslation) * scale) + horizontalTranslation;
       var viewerWidth = contentWidth > innerWidth ? contentWidth : innerWidth;
 
-      var contentHeight = (((amountOfElementsInPage * columnsCount) + verticalTranslation) * scale);
+      var contentHeight = (((_amountOfElementsInPage * columnsCount) + verticalTranslation) * scale);
       var viewerHeight = contentHeight > window.innerHeight ? contentHeight : window.innerHeight;
       var legendHeight = 70;
       var legendElementWidth = CELL_SIZE * 4.5;
