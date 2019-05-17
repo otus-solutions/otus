@@ -74,20 +74,36 @@
 
     }
 
-    function showConvertDialog(msg) {
-      var message = msg || 'Deseja salvar as alterações?';
+    function showConvertDialog(examNames, $scope) {
+      var message = 'Deseja salvar as alterações?';
+
+      var dropDownConfig = {};
+      dropDownConfig.isRequired = true;
+      dropDownConfig.label = "Selecione o tipo de aliquota";
+      dropDownConfig.values = examNames;
+
+      var textInputConfig = {};
+      textInputConfig.label = "Observação";
 
       var _saveDialog = {
         dialogToTitle:'Salvar',
         titleToText:'Confirmar converção da aliquota:',
-        showInput: true,
-        inputLabel: "Observação",
+        textInputConfig: textInputConfig,
+        dropDownConfig: dropDownConfig,
         textDialog: message,
         ariaLabel:'Confirmação de finalização',
         buttons: [
           {
             message:'Ok',
-            action:function(){$mdDialog.hide({message:sinputMessage})},
+            action:function(result){
+              if(result.dropDownSelected && result.dropDownSelected !== "None"){
+                $mdDialog.hide({
+                  observation: result.textInputFill, examName: result.dropDownSelected
+                })
+              } else {
+                $scope.dialogForm.$setValidity('dropDownName', true);
+              }
+            },
             class:'md-raised md-primary'
           },
           {

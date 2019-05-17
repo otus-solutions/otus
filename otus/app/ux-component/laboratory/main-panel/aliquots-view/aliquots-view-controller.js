@@ -14,8 +14,7 @@
     'otusjs.otus.uxComponent.Publisher',
     '$scope',
     '$element',
-    'mdcDefaultParams',
-    '$mdToast'
+    'mdcDefaultParams'
   ];
 
   function Controller(
@@ -27,8 +26,7 @@
     Publisher,
     $scope,
     $element,
-    mdcDefaultParams,
-    $mdToast) {
+    mdcDefaultParams) {
     var self = this;
 
     mdcDefaultParams({ lang: 'pt-br', cancelText: 'cancelar', todayText: 'hoje', okText: 'ok' });
@@ -186,6 +184,7 @@
 
     function _setMomentType(momentType) {
       self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType);
+      _buildAvailableExamTypesArray(momentType);
 
       Validation.initialize(
         self.validations, self.tubeLength, self.aliquotLengths, clearAliquotError, clearTubeError, setAliquotError, setTubeError, self.selectedMomentType.exams, self.selectedMomentType.storages
@@ -200,7 +199,15 @@
           index: -1,
           role: Validation.examIdentifier
         });
+        _fillAdditionalExamsContainerLabels();
       }, 200);
+    }
+
+    function _buildAvailableExamTypesArray(momentType) {
+      self.examTypeList = new Set();
+      momentType.exams.forEach(exam => {
+        self.examTypeList.add({label: exam.label, name: exam.name})
+      })
     }
 
     function _defaultCustomValidation() {
@@ -248,6 +255,7 @@
 
     function _fillContainer(aliquot) {
       aliquot.container = LaboratoryConfigurationService.getAliquotContainer(aliquot.aliquotCode);
+      aliquot.label = LaboratoryConfigurationService.getAliquotDescriptor(aliquot.name).label;
       var label = Validation.isValidPallet(aliquot.aliquotCode) ? Validation.palletLabel : Validation.cryotubeLabel;
 
       aliquot.containerLabel = label + " de " + aliquot.label;
@@ -444,25 +452,48 @@
     function deleteAliquot(aliquot) {
       AliquotMessagesService.showDeleteDialog().then(function() {
         return AliquotTubeService.deleteAliquot(aliquot.aliquotCode).then(function () {
-          self.selectedMomentType.removeAliquot(aliquot.aliquotCode);
+          self.selectedMomentType.removeAliquot(aliquot);
         }).catch(function (err) {
            AliquotMessagesService.showNotRemovedDialog(err.data.CONTENT);
         });
       }).catch(function () {});
     }
 
-    function convertAliquot(aliquot,description) {
-      AliquotMessagesService.showConvertDialog().then(function(description) {
-        ParticipantLaboratoryService.convertStorageAliquot().then(function () {
+    function convertAliquot(aliquot) {
+      var examLabels = [];
+      self.examTypeList.forEach(examType => {
+        examLabels.push(examType.label);
+      });
+
+      AliquotMessagesService.showConvertDialog(examLabels,$scope).then(function(result) {
+        var examNameFound = "";
+       self.examTypeList.forEach(exam => {
+          if(exam.label === result.examName){
+            examNameFound = exam.name;
+          }
+        });
+
+        aliquot.convertStorage(ParticipantLaboratoryService.getLoggedUser().email, result.observation, examNameFound);
+        aliquot.code = aliquot.aliquotCode;
+        aliquot.name = examNameFound;
+        aliquot.role = "EXAM";
+        ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
           self.selectedMomentType.removeStorage(aliquot.aliquotCode);
-          aliquot.convertStorage(ParticipantLaboratoryService.getLoggedUser().email, description);
-          self.selectedMomentType.additionalExams.push(aliquot);
           _setMomentType(self.selectedMomentType);
+          self.selectedMomentType.additionalExams.push(aliquot);
+          _fillAdditionalExamsContainerLabels()
         }).catch(function (err) {
           AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
         });
-      }).catch(function () {});
+      }).catch(function () {
+
+      });
     }
 
+    function _fillAdditionalExamsContainerLabels(){
+      self.selectedMomentType.additionalExams.forEach(aliquot => {
+        _fillContainer(aliquot);
+      })
+    }
   }
 }());

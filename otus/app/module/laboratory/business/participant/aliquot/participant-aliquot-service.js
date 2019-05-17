@@ -8,11 +8,12 @@
   Service.$inject = [
     'otusjs.laboratory.business.participant.aliquot.AliquotManagerService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.laboratory.participant.ParticipantAliquotFactory',
     '$q',
     'AliquotStructureFactory'
   ];
 
-  function Service(AliquotManagerService, ParticipantLaboratoryService, $q, AliquotStructureFactory) {
+  function Service(AliquotManagerService, ParticipantLaboratoryService, ParticipantAliquotFactory, $q, AliquotStructureFactory) {
     var self = this;
 
     self.buildMomentTypeList = buildMomentTypeList;

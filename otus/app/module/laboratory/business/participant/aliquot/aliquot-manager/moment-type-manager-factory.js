@@ -114,19 +114,22 @@
       return maps;
     }
 
-    function removeAliquot(code) {
+    function removeAliquot(aliquotRemoved) {
       var index;
       var _participantAliquote = self.collectedAliquots.find(function (aliquot) {
-        return aliquot.code == code;
+        return aliquot.code == aliquotRemoved.code;
       });
       index = self.collectedAliquots.indexOf(_participantAliquote);
       self.collectedAliquots.splice(index, 1);
-      if (_participantAliquote.role === "EXAM") {
-        _removeExam(code);
+      if (aliquotRemoved.isConverted){
+        _removeConverted(aliquotRemoved.code);
+      } else if (_participantAliquote.role === "EXAM") {
+        _removeExam(aliquotRemoved.code);
       } else if (_participantAliquote.role === "STORAGE") {
-        removeStorage(code);
+        removeStorage(aliquotRemoved.code);
       }
     }
+
 
     function _removeExam(code) {
       var index;
@@ -136,11 +139,22 @@
       var _originalExam = self.originalExams.find(function (examFound) {
         return examFound.aliquotCode === code;
       });
+
       index = self.originalExams.indexOf(_originalExam);
       self.originalExams.splice(index, 1, AliquotStructureFactory.create(_originalExam).toEmptyJSON());
 
       index = self.exams.indexOf(_aliquote);
       self.exams.splice(index, 1, AliquotStructureFactory.create(_aliquote).toEmptyJSON());
+    }
+
+    function _removeConverted(code) {
+      var index;
+      var _aliquote = self.additionalExams.find(function (exam) {
+        return exam.aliquotCode === code;
+      });
+
+      index = self.additionalExams.indexOf(_aliquote);
+      self.additionalExams.splice(index, 1);
     }
 
     function removeStorage(code) {

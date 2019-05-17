@@ -37,13 +37,15 @@
     self.update = update;
     self.updateAliquots = updateAliquots;
     self.deleteAliquot = deleteAliquot;
+    self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
+
 
 
     //Laboratory Configuration Methods
     self.getDescriptors = getDescriptors;
-    self.getAliquotDescriptors = getAliquotDescriptors;
 
+    self.getAliquotDescriptors = getAliquotDescriptors;
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
     self.getLots = getLots;
@@ -148,6 +150,18 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .updateAliquots(recruitmentNumber, persistanceStructure)
+        .then(function(response) {
+          deferred.resolve(response);
+        }, function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function convertStorageAliquot(aliquot) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .convertStorageAliquot(aliquot)
         .then(function(response) {
           deferred.resolve(response);
         }, function(e) {

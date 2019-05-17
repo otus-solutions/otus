@@ -14,7 +14,14 @@
     vm.title =  data.titleToText;
     vm.text = data.textDialog;
     vm.showInput = data.showInput;
-    vm.inputLabel = data.inputLabel;
+    vm.showTextInput = !!data.textInputConfig;
+    vm.textInputLabel = data.textInputConfig ? data.textInputConfig.label : "";
+    vm.showDropDown = !!data.dropDownConfig;
+    if(vm.showDropDown){
+      vm.dropDownValues = data.dropDownConfig.values ? data.dropDownConfig.values : [];
+      vm.dropDownIsRequired = data.dropDownConfig.isRequired ? data.dropDownConfig.isRequired : false;
+      vm.dropDownLabel = data.dropDownConfig.label ? data.dropDownConfig.label : "";
+    }
     vm.labelAria = data.ariaLabel;
     vm.img = data.imgSrc;
     vm.style = data.imgStyle;

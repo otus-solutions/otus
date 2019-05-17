@@ -177,13 +177,7 @@
                     <md-content layout="row" flex layout-align="start center">
                       <md-input-container flex class="md-block">
                         <label>{{additionalExam.containerLabel}}</label>
-                        <input ng-model="additionalExam.aliquotCode" ng-change="$ctrl.aliquotInputOnChange(additionalExam)" name="{{additionalExam.aliquotId}}" id="{{additionalExam.aliquotId}}" maxlength="{{$ctrl.aliquotMaxLength}}" ng-blur="$ctrl.aliquotInputOnBlur(additionalExam)" ng-keydown="$ctrl.aliquotInputOnKeyDown($event, additionalExam)"
-                               ng-disabled="additionalExam.isSaved" />
-
-                        <div ng-messages="formAliquot[additionalExam.aliquotId].$error">
-                          <div ng-message="customValidation">{{additionalExam.aliquotMessage}}</div>
-                          <div ng-message="required">Campo obrigatório</div>
-                        </div>
+                        <input ng-model="additionalExam.aliquotCode"  ng-focus="true" maxlength="{{$ctrl.aliquotMaxLength}}" ng-blur="$ctrl.aliquotInputOnBlur(additionalExam)" disabled />
                       </md-input-container>
                       <md-button class="md-icon-button md-button" style="top:-10px" ng-if="additionalExam.isSaved" ng-click="$ctrl.deleteAliquot(additionalExam)" id="delete{{additionalExam.aliquotCode}}">
 
