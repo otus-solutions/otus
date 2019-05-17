@@ -38,6 +38,7 @@ describe('activity-collection-service Test', function() {
       spyOn(Injections.$q, "defer").and.returnValue({resolve:()=>{},reject:()=>{}});
       spyOn(Mock.remoteStorage, "addActivityRevision").and.callThrough();
       spyOn(Mock.remoteStorage, "getActivityRevisions").and.callThrough();
+      spyOn(Mock.remoteStorage, "importActivities").and.callThrough();
     });
 
     it('should create activity revision', function (done) {
@@ -66,6 +67,19 @@ describe('activity-collection-service Test', function() {
       done();
     });
 
+    it('should import activities', function (done) {
+      service.importActivities([{}],1);
+      Injections.ModuleService.getActivityRemoteStorage().whenReady().then(function (remoteStorage) {
+        expect(Mock.remoteStorage.importActivities).toHaveBeenCalledTimes(1);
+        expect(Mock.remoteStorage.importActivities).toHaveBeenCalledWith([{}], 1);
+        remoteStorage.importActivities().then(function () {
+          done();
+        });
+        done();
+      });
+      done();
+    });
+
 
   });
 
@@ -77,6 +91,9 @@ describe('activity-collection-service Test', function() {
         return Promise.resolve();
       },
       getActivityRevisions: function () {
+        return Promise.resolve();
+      },
+      importActivities: function () {
         return Promise.resolve();
       }
     }

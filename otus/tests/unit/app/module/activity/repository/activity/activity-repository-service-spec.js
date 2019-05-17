@@ -3,6 +3,8 @@ describe('activity-repository-service Test', function() {
   var service;
   var Injections = {};
   var ID = "12345";
+  var VERSION = 1;
+  var SURVEY_ACTIVITIES = [{},{}]
   var DATA = {activityID: "54321"};
   var ACTIVITY_REVISION = {revision: DATA};
 
@@ -37,6 +39,7 @@ describe('activity-repository-service Test', function() {
     beforeEach(function () {
       spyOn(Injections.ActivityCollectionService, "addActivityRevision").and.callThrough();
       spyOn(Injections.ActivityCollectionService, "getActivityRevisions").and.callThrough();
+      spyOn(Injections.ActivityCollectionService, "importActivities").and.callThrough();
     });
 
     it('should call addActivityRevision method', function () {
@@ -50,6 +53,20 @@ describe('activity-repository-service Test', function() {
       expect(Injections.ActivityCollectionService.getActivityRevisions).toHaveBeenCalledTimes(1);
       expect(Injections.ActivityCollectionService.getActivityRevisions).toHaveBeenCalledWith(ACTIVITY_REVISION, DATA);
     });
+  })
+
+  describe("activity import test", function () {
+    beforeEach(function () {
+      spyOn(Injections.ActivityCollectionService, "importActivities").and.callThrough();
+    });
+
+    it('should call importActivities method', function () {
+      service.importActivities(SURVEY_ACTIVITIES, VERSION);
+      expect(Injections.ActivityCollectionService.importActivities).toHaveBeenCalledTimes(1);
+      expect(Injections.ActivityCollectionService.importActivities).toHaveBeenCalledWith(SURVEY_ACTIVITIES, VERSION);
+    });
+
+
   })
 
 });

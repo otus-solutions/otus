@@ -15,11 +15,9 @@
     /* Public methods */
     self.importActivities = importActivities;
 
-
     function importActivities(surveyActivities, version) {
       return ActivityRepositoryService.importActivities(surveyActivities, version)
     }
-
 
   }
 }());
