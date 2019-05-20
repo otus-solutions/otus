@@ -49,6 +49,7 @@
     self.aliquotInputOnKeyDown = aliquotInputOnKeyDown;
     self.tubeInputOnBlur = tubeInputOnBlur;
     self.aliquotInputOnBlur = aliquotInputOnBlur;
+    self.getConvertedHistory = getConvertedHistory;
     self.setFocus = setFocus;
     self.convertAliquot = convertAliquot;
 
@@ -480,7 +481,6 @@
         ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
           self.selectedMomentType.removeStorage(aliquot.aliquotCode);
           _setMomentType(self.selectedMomentType);
-          self.selectedMomentType.additionalExams.push(aliquot);
           _fillAdditionalExamsContainerLabels()
         }).catch(function (err) {
           AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
@@ -488,6 +488,11 @@
       }).catch(function () {
 
       });
+    }
+
+    function getConvertedHistory(aliquot) {
+      var history = aliquot.getHistoryByType("CONVERTED_STORAGE");
+      return history[0];
     }
 
     function _fillAdditionalExamsContainerLabels(){

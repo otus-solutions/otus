@@ -136,72 +136,80 @@
               <br>
             </md-whiteframe>
 
-            <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex layout-padding>
+            <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" ng-if="$ctrl.selectedMomentType.additionalExams.length" flex layout-padding>
               <div class="aliquot-whiteframe-title">
                 Armazenamento convertido para Exame:
               </div>
 
-              <div ng-repeat="additionalExam in $ctrl.selectedMomentType.additionalExams" layout="row">
-                <!-- Mount Tube Input - Exam - Begin -->
-                <div class="input-tube" flex>
-                  <div class="md-list-item-text" layout="column" flex>
-                    <md-content layout="row" flex layout-align="start center">
-                      <md-input-container flex class="md-block">
-                        <label>Tubo</label>
-                        <input class="campo" ng-model="additionalExam.tubeCode" placeholder="{{additionalExam.placeholder}}" ng-change="$ctrl.tubeInputOnChange(additionalExam)" name="{{additionalExam.tubeId}}" id="{{additionalExam.tubeId}}" maxlength="{{$ctrl.tubeLength}}" ng-blur="$ctrl.tubeInputOnBlur(additionalExam)" tabindex="-1"
-                               ng-disabled="additionalExam.isSaved" />
-                        <!-- tabindex="-1" -->
-                        <div ng-messages="formAliquot[additionalExam.tubeId].$error">
-                          <div ng-message="customValidation">{{additionalExam.tubeMessage}}</div>
+              <div ng-repeat="additionalExam in $ctrl.selectedMomentType.additionalExams" layout="column">
+                <div layout="row">
+                  <!-- Mount Tube Input - Exam - Begin -->
+                  <div class="input-tube" flex>
+                    <div class="md-list-item-text" layout="column" flex>
+                      <md-content layout="row" flex layout-align="start center">
+                        <md-input-container flex class="md-block">
+                          <label>Tubo</label>
+                          <input class="campo" ng-model="additionalExam.tubeCode" placeholder="{{additionalExam.placeholder}}" ng-change="$ctrl.tubeInputOnChange(additionalExam)" name="{{additionalExam.tubeId}}" id="{{additionalExam.tubeId}}" maxlength="{{$ctrl.tubeLength}}" ng-blur="$ctrl.tubeInputOnBlur(additionalExam)" tabindex="-1"
+                                 ng-disabled="additionalExam.isSaved" />
+                          <!-- tabindex="-1" -->
+                          <div ng-messages="formAliquot[additionalExam.tubeId].$error">
+                            <div ng-message="customValidation">{{additionalExam.tubeMessage}}</div>
+                          </div>
+                        </md-input-container>
+                      </md-content>
+                      <div layout="row">
+                        <div  class="input-footer-message" ng-show="additionalExam.isSaved">
+                          <span>Aliquotado por: {{additionalExam.operator}}</span>
+                          <span>Convertido por: {{$ctrl.getConvertedHistory(additionalExam).userEmail}}</span>
+
                         </div>
-                      </md-input-container>
-                    </md-content>
-                    <div layout="row">
-                      <div layout="row" class="input-footer-message" ng-show="additionalExam.isSaved">
-                        <span>Aliquotado por: {{additionalExam.operator}}</span>
                       </div>
                     </div>
                   </div>
-                </div>
-                <!-- Mount Tube Input - Exam - End -->
+                  <!-- Mount Tube Input - Exam - End -->
 
-                <div flex=10 layout="row" layout-align="center center" class="aliquot-arrow-icon">
-                  <div class="aliquot-arrow-icon-up">
-                    <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
+                  <div flex=10 layout="row" layout-align="center center" class="aliquot-arrow-icon">
+                    <div class="aliquot-arrow-icon-up">
+                      <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
+                    </div>
                   </div>
-                </div>
 
-                <!-- Mount Aliquot Input - Exam - Begin -->
-                <div class="input-aloquot" flex>
-                  <div class="md-list-item-text" layout="column" flex>
-                    <md-content layout="row" flex layout-align="start center">
-                      <md-input-container flex class="md-block">
-                        <label>{{additionalExam.containerLabel}}</label>
-                        <input ng-model="additionalExam.aliquotCode"  ng-focus="true" maxlength="{{$ctrl.aliquotMaxLength}}" ng-blur="$ctrl.aliquotInputOnBlur(additionalExam)" disabled />
-                      </md-input-container>
-                      <md-button class="md-icon-button md-button" style="top:-10px" ng-if="additionalExam.isSaved" ng-click="$ctrl.deleteAliquot(additionalExam)" id="delete{{additionalExam.aliquotCode}}">
+                  <!-- Mount Aliquot Input - Exam - Begin -->
+                  <div class="input-aloquot" flex>
+                    <div class="md-list-item-text" layout="column" flex>
+                      <md-content layout="row" flex layout-align="start center">
+                        <md-input-container flex class="md-block">
+                          <label>{{additionalExam.containerLabel}}</label>
+                          <input ng-model="additionalExam.aliquotCode"  ng-focus="true" maxlength="{{$ctrl.aliquotMaxLength}}" ng-blur="$ctrl.aliquotInputOnBlur(additionalExam)" disabled />
+                        </md-input-container>
+                        <md-button class="md-icon-button md-button" style="top:-10px" ng-if="additionalExam.isSaved" ng-click="$ctrl.deleteAliquot(additionalExam)" id="delete{{additionalExam.aliquotCode}}">
 
-                        <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons" ng-if="additionalExam.isSaved">delete_forever</md-icon>
-                        <md-tooltip >
-                          Excluir Alíquota
-                        </md-tooltip>
+                          <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons" ng-if="additionalExam.isSaved">delete_forever</md-icon>
+                          <md-tooltip >
+                            Excluir Alíquota
+                          </md-tooltip>
 
-                      </md-button>
-                    </md-content>
-                    <div layout="column">
-                      <div layout="row" class="input-footer-message" ng-show="!additionalExam.aliquotMessage && additionalExam.isSaved">
-                        <span>Registrado:&ensp;&nbsp;{{additionalExam.date | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                      </div>
-                      <div layout="row" class="input-footer-message" ng-show="!additionalExam.aliquotMessage && additionalExam.aliquotCode">
-                        <span ng-show="additionalExam.isSaved">Processado:&nbsp;{{additionalExam.processing | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                        <span ng-show="!additionalExam.isSaved">Processado:&nbsp;</span>
-                        <input ng-class="{fieldDisable: additionalExam.isSaved, fieldActive: !additionalExam.isSaved}" placeholder="Não Informado" tabindex="-1" mdc-datetime-picker="" ng-show="!additionalExam.isSaved" date="true" time="true" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now"
-                               ng-model="additionalExam.processing" readonly="readonly" format="DD/MM/YYYY hh:mm A" short-time="true" ng-disabled="{{additionalExam.isSaved}}" />
+                        </md-button>
+                      </md-content>
+                      <div layout="column">
+                        <div layout="row" class="input-footer-message" ng-show="!additionalExam.aliquotMessage && additionalExam.isSaved">
+                          <span>Registrado:&ensp;&nbsp;{{additionalExam.date | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                        </div>
+                        <div layout="row" class="input-footer-message" ng-show="!additionalExam.aliquotMessage && additionalExam.aliquotCode">
+                          <span ng-show="additionalExam.isSaved">Processado:&nbsp;{{additionalExam.processing | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                          <span ng-show="!additionalExam.isSaved">Processado:&nbsp;</span>
+                          <input ng-class="{fieldDisable: additionalExam.isSaved, fieldActive: !additionalExam.isSaved}" placeholder="Não Informado" tabindex="-1" mdc-datetime-picker="" ng-show="!additionalExam.isSaved" date="true" time="true" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now"
+                                 ng-model="additionalExam.processing" readonly="readonly" format="DD/MM/YYYY hh:mm A" short-time="true" ng-disabled="{{additionalExam.isSaved}}" />
+                        </div>
                       </div>
                     </div>
                   </div>
+                  <!-- Mount Aliquot Input - Exam - End -->
                 </div>
-                <!-- Mount Aliquot Input - Exam - End -->
+
+                <div layout="row" style="padding-top: 1%;" class="input-footer-message">
+                  <span>Observação: {{$ctrl.getConvertedHistory(additionalExam).description}}</span>
+                </div>
               </div>
               <br>
             </md-whiteframe>

@@ -157,6 +157,7 @@
             var aliquot = arrayAliquots[i];
             if(aliquot.tubeCode === "" && aliquot.name.toUpperCase() == collectedAliquot.name.toUpperCase()){
               if(collectedAliquot.role.toUpperCase() == "STORAGE") aliquot.convertStorage = collectedAliquot.convertStorage;
+              aliquot.getHistoryByType = collectedAliquot.getHistoryByType;
               aliquot.tubeCode = collectedAliquot.tubeCode;
               aliquot.aliquotHistory = collectedAliquot.aliquotHistory;
               aliquot.aliquotCode = collectedAliquot.aliquotCode;

@@ -15,10 +15,15 @@
     vm.text = data.textDialog;
     vm.showInput = data.showInput;
     vm.showTextInput = !!data.textInputConfig;
-    vm.textInputLabel = data.textInputConfig ? data.textInputConfig.label : "";
+    if (vm.showTextInput){
+      vm.textInputLabel = data.textInputConfig ? data.textInputConfig.label : "";
+      vm.textInputAriaLabel = data.textInputConfig ? data.textInputConfig.ariaLabel : "";
+    }
+
     vm.showDropDown = !!data.dropDownConfig;
     if(vm.showDropDown){
       vm.dropDownValues = data.dropDownConfig.values ? data.dropDownConfig.values : [];
+      vm.dropDownAriaLabel = data.dropDownConfig.ariaLabel ? data.dropDownConfig.ariaLabel : [];
       vm.dropDownIsRequired = data.dropDownConfig.isRequired ? data.dropDownConfig.isRequired : false;
       vm.dropDownLabel = data.dropDownConfig.label ? data.dropDownConfig.label : "";
     }

@@ -80,10 +80,12 @@
       var dropDownConfig = {};
       dropDownConfig.isRequired = true;
       dropDownConfig.label = "Selecione o tipo de aliquota";
+      dropDownConfig.ariaLabel = "Selecione o tipo de aliquota";
       dropDownConfig.values = examNames;
 
       var textInputConfig = {};
       textInputConfig.label = "Observação";
+      textInputConfig.ariaLabel = "Observação";
 
       var _saveDialog = {
         dialogToTitle:'Salvar',
