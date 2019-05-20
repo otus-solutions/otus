@@ -5,7 +5,11 @@
     .module('otusjs.otus.uxComponent')
     .controller('otusLaboratoryFlagReportFilterComponentCtrl', Controller);
 
-  function Controller() {
+  Controller.$inject = [
+    '$scope'
+  ]
+
+  function Controller($scope) {
     var self = this;
     self.$onInit = onInit;
     self.statusHistory = [];
@@ -15,19 +19,20 @@
 
     function onInit() {
       self.onChangeFilter = onChangeFilter;
+      _registerOfFunction();
     }
 
     function clear(field) {
       switch (field) {
-        case "examName":
+        case 'examName':
           self.selectedExamName = undefined;
           self.onChangeFilter();
           break;
-        case "status":
+        case 'status':
           self.selectedStatus = null;
           self.onChangeFilter();
           break;
-        case "center":
+        case 'center':
           self.selectedExamName = undefined;
           self.selectedStatus = undefined;
           self.onChangeFilter();
@@ -39,7 +44,15 @@
       let status = isNaN(parseInt(self.selectedStatus)) ? null : parseInt(self.selectedStatus);
       self.onUpdate(exams, self.selectedExamName, status, self.selectedCenter)
     }
-  }
 
+    function _clearBasicFilters() {
+      self.clear('examName');
+      self.clear('status');
+    }
+
+    function _registerOfFunction() {
+      $scope.$on('clear', _clearBasicFilters);
+    }
+  }
 
 }());

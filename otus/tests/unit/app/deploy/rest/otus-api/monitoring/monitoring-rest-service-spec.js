@@ -1,4 +1,4 @@
-describe('MonitoringRestService Suite', function () {
+fdescribe('MonitoringRestService', function () {
   var service;
   var Injections = [];
 
