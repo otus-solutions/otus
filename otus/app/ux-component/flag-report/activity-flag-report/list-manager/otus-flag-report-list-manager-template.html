@@ -1,0 +1,37 @@
+<div layout="column" flex>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row">
+    <div flex layout-gt-md="row" layout="column" layout-align="center center" layout-margin>
+      <span layout-align="center center">Monitoramento laboratorial</span>
+    </div>
+  </otus-dashboard-toolbar>
+  <md-content layout="column" layout-padding flex>
+    <br>
+    <flag-filter-view-component centers="$ctrl.centers" activities-status="$ctrl.status" acronyms-list="$ctrl.acronymsList"
+      on-update="$ctrl.updateData" ng-if="$ctrl.ready"></flag-filter-view-component>
+    <div layout="row" layout-align="center center">
+      <md-button ng-disabled="!$ctrl.activities.data.length" class="md-accent md-raised" ng-click="$ctrl.downloadCSV()">
+        EXPORTAR
+        <md-icon>get_app</md-icon>
+        <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados e os dados da
+          tela.
+        </md-tooltip>
+      </md-button>
+      <span flex></span>
+      <div flex="70" layout-align="end center">
+        <otus-paginator flex flex-gt-md="35" elements="$ctrl.rawActivities.data" on-update="$ctrl.updatePage" ng-if="$ctrl.ready"></otus-paginator>
+      </div>
+    </div>
+    <md-divider></md-divider>
+    <md-content flex layout="row">
+      <otus-flag-report-visualization ng-show="$ctrl.activities.data.length" activities-data="$ctrl.activities"
+        on-update="$ctrl.setActivities" colors-range="$ctrl.colors" legend-range="$ctrl.labels" flex ng-if="$ctrl.ready"
+        layout-padding=""></otus-flag-report-visualization>
+      <div flex ng-if="$ctrl.error" layout="row" style="margin-top: 30px" layout-align="center top">
+        <span class="md-display-1">{{ $ctrl.error}}</span>
+      </div>
+    </md-content>
+  </md-content>
+</div>

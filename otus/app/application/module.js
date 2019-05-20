@@ -17,7 +17,8 @@
       'otusjs.application.http',
       'otusjs.application.locale',
       'otusjs.application.theme',
-      'otusjs.application.verifyBrowser'
+      'otusjs.application.verifyBrowser',
+      'otusjs.application.exam'
     ])
     .run(function() {
       console.info('Application module ready.');

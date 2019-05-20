@@ -16,13 +16,14 @@
     self.listAcronyms = listAcronyms;
     self.listCenters = listCenters;
     self.getActivitiesProgressReport = getActivitiesProgressReport;
+    self.getExamsName = getExamsName;
+    self.getExamsProgressReport = getExamsProgressReport;
 
-
-    function find(acronym){
-      return MonitoringCollectionService.find({acronym:acronym});
+    function find(acronym) {
+      return MonitoringCollectionService.find({ acronym: acronym });
     }
 
-    function listAcronyms(){
+    function listAcronyms() {
       return MonitoringCollectionService.listAcronyms();
     }
 
@@ -31,7 +32,15 @@
     }
 
     function getActivitiesProgressReport(center) {
-      return MonitoringCollectionService.getActivitiesProgressReport({center:center});
+      return MonitoringCollectionService.getActivitiesProgressReport({ center: center });
+    }
+
+    function getExamsName(center) {
+      return MonitoringCollectionService.getExamsName({ center: center });
+    }
+
+    function getExamsProgressReport(center) {
+      return MonitoringCollectionService.getExamsProgressReport({ center: center });
     }
   }
 

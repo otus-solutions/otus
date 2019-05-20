@@ -16,17 +16,20 @@
 
   function Controller(ContextService, EventService, ApplicationStateService) {
     var self = this;
-    /* Public methods */
+    self.participantsReady = false;
+
+    /* Lifecycle hooks */
     self.$onInit = onInit;
-    self.startMonitoring = startMonitoring;
+    /* Public methods */
     self.setFocus = setFocus;
+    self.sendingExam = sendingExam;
+    self.examsDashboard = examsDashboard;
+    self.startMonitoring = startMonitoring;
+    self.laboratoryMonitoring = laboratoryMonitoring;
     self.sampleTransportDashboard = sampleTransportDashboard;
     self.managerParticipantsDashboard = managerParticipantsDashboard;
-    self.examsDashboard = examsDashboard;
-    self.flagsDashboard = flagsDashboard;
-    self.sendingExam = sendingExam;
-    self.laboratoryMonitoring = laboratoryMonitoring;
-    self.participantsReady = false;
+    self.activateActivityFlagsReport = activateActivityFlagsReport;
+    self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
 
     function onInit() {
       _loadLoggedUser();
@@ -55,8 +58,12 @@
       ApplicationStateService.activateExamsLotsManagerList();
     }
 
-    function flagsDashboard() {
-      ApplicationStateService.activateFlagsReportDashboard();
+    function activateActivityFlagsReport() {
+      ApplicationStateService.activateActivityFlagsReport();
+    }
+
+    function laboratoryActivityFlagsReport() {
+      ApplicationStateService.laboratoryActivityFlagsReport();
     }
 
     function sendingExam() {

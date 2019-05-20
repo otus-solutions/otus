@@ -28,7 +28,7 @@
 </head>
 
 <body layout="row" md-theme="default">
-<div flex layout="row" class="md-body-2" ui-view></div>
+  <div flex layout="row" class="md-body-2" ui-view></div>
 </body>
 
 <!-- ************************************* Force Refresh Page ************************************* -->
@@ -118,7 +118,10 @@
 <!------------------------------------------------------------------------------------------------>
 <!-- # Application > Activity -->
 <script src="app/application/activity/module.js"></script>
-<script src="app/application/activity/status-history-service.js"></script>
+<script src="app/application/activity/activity-status-history-service.js"></script>
+<!-- # Application > Exam -->
+<script src="app/application/exam/module.js"></script>
+<script src="app/application/exam/exam-status-history-service.js"></script>
 <!------------------------------------------------------------------------------------------------>
 <!-- # Application > custom-dialog  -->
 <script src="app/application/dialog-show/module.js"></script>
@@ -233,8 +236,8 @@
 <script src="app/deploy/rest/otus-api/extraction/token-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/exam/module.js"></script>
 <script src="app/deploy/rest/otus-api/laboratory/exam/exams-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/monitoring/monitoring-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/monitoring/module.js"></script>
+<script src="app/deploy/rest/otus-api/monitoring/monitoring-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/monitoring/laboratory/laboratory-monitoring-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/report/participant-report-rest-service.js"></script>
 <!-- # Deploy > State -->
@@ -268,8 +271,8 @@
 <script src="app/deploy/state/exam/exam-sending/exam-sending-provider.js"></script>
 <script src="app/deploy/state/exam/exam-sending/exam-results-visualizer-provider.js"></script>
 <script src="app/deploy/state/monitoring/monitoring-state-provider.js"></script>
-<script src="app/deploy/state/flag/flag-state-provider.js"></script>
-<script src="app/deploy/state/flag/manager/flag-manager-state-provider.js"></script>
+<script src="app/deploy/state/flag/laboratory-flag-report-state-provider.js"></script>
+<script src="app/deploy/state/flag/activity-flag-report-state-provider.js"></script>
 <script src="app/deploy/state/monitoring/laboratory-monitoring-state-provider.js"></script>
 <!-- # Deploy > Storage -->
 <script src="app/deploy/storage/module.js"></script>
@@ -491,6 +494,7 @@
 <script src="app/module/monitoring/business/monitoring-service.js"></script>
 <script src="app/module/monitoring/business/participant-monitoring-service.js"></script>
 <script src="app/module/monitoring/business/laboratory-monitoring-service.js"></script>
+<script src="app/module/monitoring/business/flag-report-filter-service.js"></script>
 
 <!-- # monitoring > core -->
 <script src="app/module/monitoring/core/module.js"></script>
@@ -619,15 +623,24 @@
 <script src="app/ux-component/otus-monitoring/information-cards/monitoring-information-cards-component.js"></script>
 <script src="app/ux-component/otus-monitoring/participant-monitoring/participant-activity-heatmap/participant-activity-heatmap-controller.js"></script>
 <script src="app/ux-component/otus-monitoring/participant-monitoring/participant-activity-heatmap/participant-activity-heatmap-component.js"></script>
+
 <script src="app/ux-component/otus-monitoring/laboratory-monitoring/laboratory-monitoring-controller.js"></script>
 <script src="app/ux-component/otus-monitoring/laboratory-monitoring/laboratory-monitoring-component.js"></script>
+<script src="app/ux-component/otus-monitoring/participant-monitoring/participant-exam-heatmap/participant-exam-heatmap-controller.js"></script>
+<script src="app/ux-component/otus-monitoring/participant-monitoring/participant-exam-heatmap/participant-exam-heatmap-component.js"></script>
 
-<!--Flags Report-->
-<script src="app/ux-component/flag-report/otus-flag-report-dashboard-component.js"></script>
-<script src="app/ux-component/flag-report/otus-flag-report-parse-data-factory.js"></script>
-<script src="app/ux-component/flag-report/manager-list/otus-flag-report-manager-list-component.js"></script>
-<script src="app/ux-component/flag-report/visualization/otus-flag-report-visualization-component.js"></script>
-<script src="app/ux-component/flag-report/filter/otus-flag-filter-view-component.js"></script>
+<!--Activity Flags Report-->
+<script src="app/ux-component/flag-report/activity-flag-report/list-manager/otus-flag-report-list-manager-controller.js"></script>
+<script src="app/ux-component/flag-report/activity-flag-report/list-manager/otus-flag-report-list-manager-component.js"></script>
+<script src="app/ux-component/flag-report/activity-flag-report/visualization/otus-flag-report-visualization-controller.js"></script>
+<script src="app/ux-component/flag-report/activity-flag-report/visualization/otus-flag-report-visualization-component.js"></script>
+<script src="app/ux-component/flag-report/activity-flag-report/filter/otus-flag-filter-view-controller.js"></script>
+<script src="app/ux-component/flag-report/activity-flag-report/filter/otus-flag-filter-view-component.js"></script>
+<!--Laboratory Flags Report-->
+<script src="app/ux-component/flag-report/laboratory-flag-report/list-manager/laboratory-flag-report-list-manager-controller.js"></script>
+<script src="app/ux-component/flag-report/laboratory-flag-report/list-manager/laboratory-flag-report-list-manager-component.js"></script>
+<script src="app/ux-component/flag-report/laboratory-flag-report/filter/laboratory-flag-report-filter-controller.js"></script>
+<script src="app/ux-component/flag-report/laboratory-flag-report/filter/laboratory-flag-report-filter-component.js"></script>
 
 <!--Paginator-->
 <script src="app/ux-component/commons/paginator/paginator-component.js"></script>
