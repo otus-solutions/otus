@@ -41,7 +41,7 @@
     self.tubeList = self.participantLaboratory.tubes;
 
     self.$onInit = onInit;
-    self.selecMomentType = selecMomentType;
+    self.selectMomentType = selectMomentType;
     self.selectedMomentType = undefined;
     self.completePlaceholder = completePlaceholder;
     self.aliquotInputOnChange = aliquotInputOnChange;
@@ -85,7 +85,7 @@
         }
       };
 
-      selecMomentType(self.momentTypeList[0]);
+      selectMomentType(self.momentTypeList[0]);
 
       Publisher.unsubscribe('have-aliquots-changed');
       Publisher.subscribe('have-aliquots-changed', _haveAliquotsChanged);
@@ -161,7 +161,7 @@
       });
     }
 
-    function selecMomentType(momentType) {
+    function selectMomentType(momentType) {
       var toChange = false;
 
       if (self.selectedMomentType) {
@@ -485,9 +485,7 @@
         }).catch(function (err) {
           AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
         });
-      }).catch(function () {
-
-      });
+      }).catch(function () {});
     }
 
     function getConvertedHistory(aliquot) {

@@ -40,12 +40,10 @@
     self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
-
-
     //Laboratory Configuration Methods
     self.getDescriptors = getDescriptors;
-
     self.getAliquotDescriptors = getAliquotDescriptors;
+
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
     self.getLots = getLots;

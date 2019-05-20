@@ -45,7 +45,6 @@
       };
 
       return DialogService.showDialog( _exitDialog);
-
     }
 
     function showSaveDialog(msg) {
@@ -167,7 +166,6 @@
     }
 
     function showNotConvertedDialog(msg) {
-
       var _removedDialog = {
         dialogToTitle:'Alíquota',
         titleToText:'ALÍQUOTA NÃO CONVERTIDA',
@@ -183,7 +181,6 @@
       };
 
       return DialogService.showDialog( _removedDialog);
-
     }
 
     function _buildMessage(msg) {
@@ -211,8 +208,6 @@
           .hideDelay(delay)
       );
     }
-
-
   }
 
 }());

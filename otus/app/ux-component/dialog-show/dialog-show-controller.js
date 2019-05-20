@@ -13,7 +13,7 @@
     vm.titleToDialog = data.dialogToTitle;
     vm.title =  data.titleToText;
     vm.text = data.textDialog;
-    vm.showInput = data.showInput;
+
     vm.showTextInput = !!data.textInputConfig;
     if (vm.showTextInput){
       vm.textInputLabel = data.textInputConfig ? data.textInputConfig.label : "";
@@ -23,9 +23,9 @@
     vm.showDropDown = !!data.dropDownConfig;
     if(vm.showDropDown){
       vm.dropDownValues = data.dropDownConfig.values ? data.dropDownConfig.values : [];
-      vm.dropDownAriaLabel = data.dropDownConfig.ariaLabel ? data.dropDownConfig.ariaLabel : [];
       vm.dropDownIsRequired = data.dropDownConfig.isRequired ? data.dropDownConfig.isRequired : false;
       vm.dropDownLabel = data.dropDownConfig.label ? data.dropDownConfig.label : "";
+      vm.dropDownAriaLabel = data.dropDownConfig.ariaLabel ? data.dropDownConfig.ariaLabel : "";
     }
     vm.labelAria = data.ariaLabel;
     vm.img = data.imgSrc;

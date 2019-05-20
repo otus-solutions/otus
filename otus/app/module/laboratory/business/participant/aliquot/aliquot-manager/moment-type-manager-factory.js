@@ -116,9 +116,11 @@
 
     function removeAliquot(aliquotRemoved) {
       var index;
+
       var _participantAliquote = self.collectedAliquots.find(function (aliquot) {
         return aliquot.code == aliquotRemoved.code;
       });
+
       index = self.collectedAliquots.indexOf(_participantAliquote);
       self.collectedAliquots.splice(index, 1);
       if (aliquotRemoved.isConverted){
@@ -130,12 +132,13 @@
       }
     }
 
-
     function _removeExam(code) {
       var index;
+
       var _aliquote = self.exams.find(function (exam) {
         return exam.aliquotCode === code;
       });
+
       var _originalExam = self.originalExams.find(function (examFound) {
         return examFound.aliquotCode === code;
       });
@@ -149,6 +152,7 @@
 
     function _removeConverted(code) {
       var index;
+
       var _aliquote = self.additionalExams.find(function (exam) {
         return exam.aliquotCode === code;
       });
@@ -159,6 +163,7 @@
 
     function removeStorage(code) {
       var index;
+
       var _aliquote = self.storages.find(function (exam) {
         return exam.aliquotCode === code;
       });

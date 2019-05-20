@@ -7,7 +7,7 @@
 
     <md-list ng-repeat="momentType in $ctrl.momentTypeList">
       <div class="tube-list-view">
-        <md-card ng-click="$ctrl.selecMomentType(momentType)" class="{{($ctrl.selectedMomentType == momentType ? 'moment-type-selected' : 'moment-type-not-selected') + ' aliquot-md-card card-tube ' }}">
+        <md-card ng-click="$ctrl.selectMomentType(momentType)" class="{{($ctrl.selectedMomentType == momentType ? 'moment-type-selected' : 'moment-type-not-selected') + ' aliquot-md-card card-tube ' }}">
           <div layout="row">
             <div layout="column" flex="10">
               <div class="tube-design" ng-style="{'background-color':momentType.boxColor}">
