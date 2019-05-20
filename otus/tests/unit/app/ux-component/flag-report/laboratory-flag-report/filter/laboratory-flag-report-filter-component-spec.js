@@ -10,12 +10,16 @@ describe('otusLaboratoryFlagReportFilterComponentCtrl Test', function () {
 
   beforeEach(function () {
 
-    angular.mock.module('otusjs.otus.uxComponent');
+    _mockInjections();
 
+    angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
+      $provide.value('$scope', Mock.$scope);
+    });
     inject(function (_$controller_) {
       controller = _$controller_('otusLaboratoryFlagReportFilterComponentCtrl');
       mockBindings();
       spyOn(controller, "onUpdate").and.callThrough();
+      spyOn(Mock.$scope, '$on').and.callThrough();
     });
   });
 
@@ -47,7 +51,6 @@ describe('otusLaboratoryFlagReportFilterComponentCtrl Test', function () {
     expect(controller.onUpdate).toHaveBeenCalledTimes(0);
   });
 
-
   function mockBindings() {
     controller.examsNameList = EXAMS_NAMES;
     controller.centers = CENTERS;
@@ -56,4 +59,9 @@ describe('otusLaboratoryFlagReportFilterComponentCtrl Test', function () {
     Mock.examName = "examName";
   }
 
+  function _mockInjections() {
+    Mock.$scope = {
+      $on: () => { }
+    }
+  }
 });
