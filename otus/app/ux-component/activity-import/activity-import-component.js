@@ -32,6 +32,7 @@
     self.receivedAnswer = [];
     self.countActivities = 0;
     self.ActivitiesAnswered = [];
+    self.isLoading = false;
     var fr = new FileReader();
 
     function onInit() {
@@ -56,11 +57,25 @@
       });
     }
 
-    self.getValids = function () {
-      return self.receivedAnswer.filter(function (answer) {
-        return answer.isValid == true;
-      }).length;
+    var stopUpload = false;
+
+    self.cancel = function(){
+      stopUpload = true;
+      delete self.total;
+      delete self.countActivities;
+      delete self.receivedJSON;
+      // delete self.selectedActivity;
+      self.isLoading = false;
+
     }
+
+    self.getValids = function () {
+      return self.ActivitiesAnswered.length;
+    };
+
+    self.getTotal = function () {
+      return self.ActivitiesAnswered.length + self.receivedAnswer.length
+    };
 
     function upload() {
       self.input.click();
@@ -109,62 +124,65 @@
     }
 
     function _getStructureList(activity) {
-      try {
-        return {
-          rn: activity.participantData,
-          acronym: activity.surveyForm.surveyTemplate.identity.acronym,
-          name: activity.surveyForm.surveyTemplate.identity.name,
-          error: activity.error,
-          isValid: activity.isValid
-        };
-      } catch (e) {
-        return {
-          rn: '',
-          acronym: '',
-          name: '',
-          error: '',
-          isValid: false
-        };
+      if(!activity.isValid){
+        try {
+          return {
+            rn: activity.participantData,
+            acronym: activity.surveyForm.surveyTemplate.identity.acronym,
+            name: activity.surveyForm.surveyTemplate.identity.name,
+            error: activity.error,
+            isValid: activity.isValid
+          };
+        } catch (e) {
+          return {
+            rn: '',
+            acronym: '',
+            name: '',
+            error: '',
+            isValid: false
+          };
+        }
+      } else {
+        return false;
       }
 
     }
 
     function validateAnswers() {
-      LoadingScreenService.start();
-      $timeout(function () {
-        var _dataActivity;
-        var _limit = 100;
-        var _pages = self.receivedJSON.length / _limit;
-        var _count = 0;
-        _pages = _pages.toFixed(0) * 1 + 1;
-        // for (let i = 0; i < _pages; i++) {
-          $interval(function () {
-            self.ActivitiesAnswered = ActivityImportService.execute(self.selectedActivity, self.receivedJSON.slice(_count,_count + 100), self.user);
-            self.ActivitiesAnswered.forEach(function (activity) {
-              activity.error = !activity.isValid ? "Respostas inválidas!" : "";
-              _dataActivity = _getStructureList(activity);
-              self.receivedAnswer.push(_dataActivity);
-            });
-            _count = _count + 100;
-            self.countActivities = (_count / self.receivedJSON.length) * 100;
-            // $scope.$apply();
-          },1000,_pages, true);
-        // }
-        // self.receivedAnswer = ActivityImportService.execute(self.selectedActivity, self.receivedJSON.slice(0,500), self.user);
-        // self.ActivitiesAnswered = ActivityImportService.execute(self.selectedActivity, self.receivedJSON.slice(0,300), self.user);
-        // self.ActivitiesAnswered.forEach(function (activity) {
-        //   activity.error = !activity.isValid ? "Respostas inválidas!" : "";
-        //   _dataActivity = _getStructureList(activity);
-        //   self.receivedAnswer.push(_dataActivity);
-        // });
-        // delete self.receivedJSON;
-        LoadingScreenService.finish();
+      self.isLoading = true;
 
-      }, 2000)
+      //TODO: Tiago avaliar necessidade
+      // LoadingScreenService.start();
+      self.ActivitiesAnswered = [];
+      self.receivedAnswer = [];
+        self.total = self.receivedJSON.length;
+        var _count = 0;
+        $interval(function () {
+          if(stopUpload) return
+          self.ActivityAnswered = ActivityImportService.create(self.selectedActivity, self.receivedJSON.pop(), self.user);
+          self.ActivityAnswered.error = !self.ActivityAnswered.isValid ? "Respostas inválidas!" : "";
+          var _dataActivity = _getStructureList(self.ActivityAnswered);
+          if(_dataActivity){
+            self.receivedAnswer.push(_dataActivity);
+          } else {
+            self.ActivitiesAnswered.push(self.ActivityAnswered);
+          }
+          _count += 1;
+          self.countActivities = (_count / self.total) * 100;
+          if (_count == self.total) {
+            //TODO: Tiago avaliar necessidade
+            // LoadingScreenService.finish();
+            self.isLoading = false;
+          }
+
+        },25,self.total);
 
     }
 
     function _receivedText(e) {
+      stopUpload = false;
+      delete self.selectedActivity;
+      self.receivedJSON = [];
       var _selectAcronym;
       var fileLines = e.target.result;
       var resultJSON;
@@ -182,18 +200,24 @@
           }
 
           if(!self.selectedActivity) _showMessage("Não foi possível identificar a atividade!");
-          self.receivedJSON = resultJSON;
+          Array.prototype.push.apply(self.receivedJSON, resultJSON);
           $scope.$apply();
         } else {
-          _showMessage("Arquivo inválido para importação!")
+          _showMessage("Arquivo inválido para importação!");
+          delete self.selectedActivity;
         }
       } else {
         _showMessage("Tipo de arquivo inválido!");
+        delete self.selectedActivity;
       }
     }
 
     function saveActivitiesAnswered() {
       ImportService.importActivities(ActivityImportService.getValidActivities(), self.selectedActivity.version).then(function (response) {
+        //TODO: Tiago aguardando o backend
+        response.forEach(result =>{
+
+        })
 
       });
     }
