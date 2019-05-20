@@ -51,7 +51,6 @@ fdescribe('MonitoringRestService', function () {
   });
 
   it('list_method_should_return_promise', function () {
-    console.log(service);
     service.initialize();
     expect(service.list()).toBePromise();
   });
