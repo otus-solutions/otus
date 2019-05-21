@@ -32,6 +32,20 @@ describe('Aliquot Messages Service', function () {
     spyOn(Mock.DialogShowService, 'showDialog').and.callThrough();
   });
 
+  it('serviceExistence_check', function () {
+    expect(service).toBeDefined();
+  });
+
+  it('serviceMethodsExistence_check', function () {
+    expect(service.showExitDialog).toBeDefined();
+    expect(service.showSaveDialog).toBeDefined();
+    expect(service.showDeleteDialog).toBeDefined();
+    expect(service.showConvertDialog).toBeDefined();
+    expect(service.showToast).toBeDefined();
+    expect(service.showNotRemovedDialog).toBeDefined();
+    expect(service.showNotConvertedDialog).toBeDefined();
+  });
+
   it('should show a delete dialog with message', function (done) {
     service.showDeleteDialog("Message").then(function (result) {
       expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
@@ -116,7 +130,7 @@ describe('Aliquot Messages Service', function () {
     })
   });
 
-  it('should show a not converted dialog without message', function (done) {
+  it('should show a not converted dialog in examResults content', function (done) {
     service.showNotConvertedDialog(Mock.msgFour).then(function (result) {
       expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
       expect(result.test.textDialog).toEqual(Mock.messageFour);
