@@ -1,13 +1,12 @@
 describe('Aliquot Messages Service', function () {
   var Mock = {};
   var service;
-  var Injections = {};
 
   beforeEach(function () {
-    angular.mock.module('otusjs.laboratory.business.participant.aliquot');
+    angular.mock.module('otusjs.laboratory.business');
   });
 
-  beforeEach(function () {
+  beforeEach(function ($rootScope) {
     Mock.DialogShowService = {
       showDialog: function (dialog) {
         var self = this;
@@ -15,6 +14,8 @@ describe('Aliquot Messages Service', function () {
         return Promise.resolve(self);
       }
     };
+    Mock.$scope = new $rootScope();
+
     angular.mock.module(function ($provide) {
       $provide.value('otusjs.application.dialog.DialogShowService', Mock.DialogShowService);
       $provide.value('$mdDialog', {});
@@ -24,17 +25,26 @@ describe('Aliquot Messages Service', function () {
 
   beforeEach(function () {
     inject(function (_$injector_) {
-
-      Injections = {
-        $mdDialog: _$injector_.get('$mdDialog'),
-        DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService')
-      };
-
-      service = _$injector_.get('otusjs.laboratory.business.participant.aliquot.AliquotMessagesService',Injections);
+      service = _$injector_.get('otusjs.laboratory.business.participant.aliquot.AliquotMessagesService');
     });
+
     mockMessages();
     spyOn(Mock.DialogShowService, 'showDialog').and.callThrough();
   });
+
+  it('serviceExistence_check', function () {
+    expect(service).toBeDefined();
+  });
+
+  it('serviceMethodsExistence_check', function () {
+    expect(service.showExitDialog).toBeDefined();
+    expect(service.showSaveDialog).toBeDefined();
+    expect(service.showDeleteDialog).toBeDefined();
+    expect(service.showConvertDialog).toBeDefined();
+    expect(service.showToast).toBeDefined();
+    expect(service.showNotRemovedDialog).toBeDefined();
+    expect(service.showNotConvertedDialog).toBeDefined();
+  });
 
   it('should show a delete dialog with message', function (done) {
     service.showDeleteDialog("Message").then(function (result) {
@@ -112,6 +122,22 @@ describe('Aliquot Messages Service', function () {
     })
   });
 
+  it('should show a convert dialog without message', function (done) {
+    service.showConvertDialog(Mock.msgOne,Mock.$scope.dialogForm).then(function (result) {
+      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(result.test.textDialog).toEqual("Deseja salvar as alterações?");
+      done();
+    })
+  });
+
+  it('should show a not converted dialog in examResults content', function (done) {
+    service.showNotConvertedDialog(Mock.msgFour).then(function (result) {
+      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(result.test.textDialog).toEqual(Mock.messageFour);
+      done();
+    })
+  });
+
   function mockMessages() {
     Mock.msgOne = {};
     Mock.msgTwo = {
@@ -130,6 +156,5 @@ describe('Aliquot Messages Service', function () {
     Mock.messageTwo = '<p>A alíquota se encontra em: </p><br><dl><li>Lote de Exames (Código do lote: 300000015)</li></dl><br><br><b>Para esse procedimento é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
     Mock.messageThree = '<p>A alíquota se encontra em: </p><br><dl><li>Lote de Transporte (Código do lote: 300000001)</li><li>Lote de Exames (Código do lote: 300000015)</li></dl><br><br><b>Para esse procedimento é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
     Mock.messageFour = '<p>A alíquota se encontra em: </p><br><dl><li>Lote de Transporte (Código do lote: 300000001)</li><li>Lote de Exames (Código do lote: 300000015)</li><li>Existem Resultados com essa alíquota!</li></dl><br><br><b>Para esse procedimento é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
-
   }
 });
