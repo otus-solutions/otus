@@ -30,6 +30,8 @@ describe('activity-import-component Test', function () {
       controller.user = {
         token: "asdasdf"
       }
+      spyOn(document, "querySelector").and.returnValue({click: function(){}});
+      spyOn($.fn, "querySelector").and.returnValue({click: function(){}});
     });
   });
 
@@ -39,7 +41,13 @@ describe('activity-import-component Test', function () {
     expect(controller.upload).toBeDefined();
     expect(controller.validateAnswers).toBeDefined();
     expect(controller.saveActivitiesAnswered).toBeDefined();
-    expect(controller.receivedAnswer).toBeDefined();
+    expect(controller.cancel).toBeDefined();
+    expect(controller.getTotal).toBeDefined();
+    expect(controller.ActivitiesInvalids).toBeDefined();
+    expect(controller.countActivities).toBeDefined();
+    expect(controller.countActivitiesValids).toBeDefined();
+    expect(controller.countActivitiesError).toBeDefined();
+    expect(controller.isLoading).toBeDefined();
     expect(controller.ActivitiesAnswered).toBeDefined();
     expect(controller.user).toBeDefined();
   });
@@ -48,6 +56,10 @@ describe('activity-import-component Test', function () {
     controller.$onInit();
     expect(controller.receivedJSON).toBeDefined();
     expect(controller.input).toBeDefined();
+    spyOn(controller.input, "click");
+    expect(controller.input.click).toHaveBeenCalled();
+    controller.upload()
+    console.log(controller.input)
   });
 
 

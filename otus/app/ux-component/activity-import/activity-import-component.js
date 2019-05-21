@@ -17,23 +17,32 @@
     '$scope',
     '$mdToast',
     'otusjs.activity.business.ActivityImportService',
-    'otusjs.deploy.LoadingScreenService',
+    'otusjs.application.dialog.DialogShowService',
     '$timeout',
     '$interval'
   ];
 
-  function Controller(ActivityService, ActivityImportService, $scope, $mdToast, ImportService, LoadingScreenService, $timeout, $interval) {
+  function Controller(ActivityService, ActivityImportService, $scope, $mdToast, ImportService, DialogShowService, $timeout, $interval) {
     var self = this;
 
     self.$onInit = onInit;
     self.upload = upload;
     self.validateAnswers = validateAnswers;
     self.saveActivitiesAnswered = saveActivitiesAnswered;
-    self.receivedAnswer = [];
+    self.cancel = cancel;
+    self.getTotal = getTotal;
+    self.ActivitiesInvalids = [];
     self.countActivities = 0;
+    self.countActivitiesValids = 0;
+    self.countActivitiesError = 0;
     self.ActivitiesAnswered = [];
     self.isLoading = false;
+
+    var _interval;
+
     var fr = new FileReader();
+    var stopUpload = false;
+
 
     function onInit() {
       fr.onload = _receivedText;
@@ -57,25 +66,16 @@
       });
     }
 
-    var stopUpload = false;
 
-    self.cancel = function(){
+    function cancel() {
       stopUpload = true;
-      delete self.total;
-      delete self.countActivities;
-      delete self.receivedJSON;
-      // delete self.selectedActivity;
+      $interval.cancel(_interval);
       self.isLoading = false;
-
     }
 
-    self.getValids = function () {
-      return self.ActivitiesAnswered.length;
-    };
-
-    self.getTotal = function () {
-      return self.ActivitiesAnswered.length + self.receivedAnswer.length
-    };
+    function getTotal() {
+      return self.countActivitiesValids + self.countActivitiesError;
+    }
 
     function upload() {
       self.input.click();
@@ -103,7 +103,7 @@
 
     function _JSONContainsPropertyOfActivity(answers) {
       var isValid = true;
-      if(Array.isArray(answers)){
+      if (Array.isArray(answers)) {
         answers.forEach(result => {
           if (isValid) {
             isValid = result.hasOwnProperty("id") &&
@@ -123,66 +123,45 @@
       return isValid;
     }
 
-    function _getStructureList(activity) {
-      if(!activity.isValid){
-        try {
-          return {
-            rn: activity.participantData,
-            acronym: activity.surveyForm.surveyTemplate.identity.acronym,
-            name: activity.surveyForm.surveyTemplate.identity.name,
-            error: activity.error,
-            isValid: activity.isValid
-          };
-        } catch (e) {
-          return {
-            rn: '',
-            acronym: '',
-            name: '',
-            error: '',
-            isValid: false
-          };
-        }
-      } else {
-        return false;
-      }
 
-    }
 
     function validateAnswers() {
+      stopUpload = false;
       self.isLoading = true;
+      if(!self.ActivitiesAnswered) self.ActivitiesAnswered = [];
+      if(!self.ActivitiesInvalids) self.ActivitiesInvalids = [];
+      self.total = self.receivedJSON.length;
+      var _count = 0;
+      _interval = $interval(function () {
+        if (stopUpload) return
+        var _ActivityAnswered = ActivityImportService.create(self.selectedActivity, self.receivedJSON.pop(), self.user);
+        _ActivityAnswered.error = !_ActivityAnswered.isValid ? "Respostas inválidas!" : "";
+        var _dataActivity = ImportService.getAnsweredActivityError(_ActivityAnswered, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.surveyTemplate.identity.name);
+        if (_dataActivity) {
+          self.ActivitiesInvalids.push(_dataActivity);
+          self.countActivitiesError += 1;
+        } else {
+          self.ActivitiesAnswered.push(_ActivityAnswered);
+          self.countActivitiesValids += 1;
+        }
+        _count += 1;
+        self.countActivities = (_count / self.total) * 100;
+        if (_count >= self.total) {
+          self.isLoading = false;
+          stopUpload = true;
+        }
 
-      //TODO: Tiago avaliar necessidade
-      // LoadingScreenService.start();
-      self.ActivitiesAnswered = [];
-      self.receivedAnswer = [];
-        self.total = self.receivedJSON.length;
-        var _count = 0;
-        $interval(function () {
-          if(stopUpload) return
-          self.ActivityAnswered = ActivityImportService.create(self.selectedActivity, self.receivedJSON.pop(), self.user);
-          self.ActivityAnswered.error = !self.ActivityAnswered.isValid ? "Respostas inválidas!" : "";
-          var _dataActivity = _getStructureList(self.ActivityAnswered);
-          if(_dataActivity){
-            self.receivedAnswer.push(_dataActivity);
-          } else {
-            self.ActivitiesAnswered.push(self.ActivityAnswered);
-          }
-          _count += 1;
-          self.countActivities = (_count / self.total) * 100;
-          if (_count == self.total) {
-            //TODO: Tiago avaliar necessidade
-            // LoadingScreenService.finish();
-            self.isLoading = false;
-          }
-
-        },25,self.total);
+      }, 30, self.total, true);
 
     }
+
+
+
 
     function _receivedText(e) {
       stopUpload = false;
       delete self.selectedActivity;
-      self.receivedJSON = [];
+      // if(!self.receivedJSON) self.receivedJSON = [];
       var _selectAcronym;
       var fileLines = e.target.result;
       var resultJSON;
@@ -199,7 +178,7 @@
             _showMessage("Não foi possível identificar a atividade!");
           }
 
-          if(!self.selectedActivity) _showMessage("Não foi possível identificar a atividade!");
+          if (!self.selectedActivity) _showMessage("Não foi possível identificar a atividade!");
           Array.prototype.push.apply(self.receivedJSON, resultJSON);
           $scope.$apply();
         } else {
@@ -213,14 +192,36 @@
     }
 
     function saveActivitiesAnswered() {
-      ImportService.importActivities(ActivityImportService.getValidActivities(), self.selectedActivity.version).then(function (response) {
-        //TODO: Tiago aguardando o backend
-        response.forEach(result =>{
+      if(self.ActivitiesAnswered.length > 0){
 
-        })
+        ImportService.importActivities(self.ActivitiesAnswered.splice(0, 100), self.selectedActivity.version)
+          .then(function (response) {
+            response.forEach(result => {
+              self.ActivitiesInvalids.push(ImportService.getActivityError(result, self.selectedActivity));
+              self.countActivitiesError += 1;
+              self.countActivitiesValids -= 1;
+            });
+            self.saveActivitiesAnswered();
 
-      });
+        });
+      }
     }
+
+    String.prototype.replaceAll = function(search, replacement) {
+      var target = this;
+      return target.split(search).join(replacement);
+    };
+
+    self.showDialog = function (item) {
+      var data = {
+        dialogToTitle: "("+item.acronym+") "+item.name,
+        textDialog: "<b>Participante:</b><br>"+item.rn+"<br><b>Categoria:</b><br> "+item.category+"<br><b>Problema:</b><br>"+item.error.replaceAll("! ", "!<br>"),
+        buttons: []
+      };
+
+      DialogShowService.showDialog(data);
+    }
+
 
     function _loadActivities() {
       ActivityService

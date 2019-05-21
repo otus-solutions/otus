@@ -29,15 +29,39 @@
         throw new Error('REST resource is not initialized.');
       }
       var request = $q.defer();
-      _rest.importActivities({surveyActivities: surveyActivities, version: version})
-        .$promise
-        .then(function (response) {
-          if (response.data && response.data.length) {
-            request.resolve(response.data);
-          } else {
-            request.resolve([]);
+      // _rest.importActivities({surveyActivities: surveyActivities, version: version})
+      //   .$promise
+      //   .then(function (response) {
+      //     if (response.data && response.data.length) {
+      //       request.resolve(response.data);
+      //     } else {
+      //       request.resolve([]);
+      //     }
+      //   });
+      request.resolve([
+        {
+          recruitmentNumberValidationResult:{
+            recruitmentNumber:123456,
+            isValid:false
+          },
+          categoryValidationResult:{
+            category:"C1",
+            isValid:false
+          },
+          interviewerValidationResult:{
+            email:"email",
+            isValid:false
+          },
+          paperInterviewerValidationResult:{
+            email:"email",
+            isValid:false
+          },
+          questionFillValidationResult:{
+            questionId:"PASC1",
+            shouldBeFilled:true
           }
-        });
+        }
+      ])
 
       return request.promise;
     }
