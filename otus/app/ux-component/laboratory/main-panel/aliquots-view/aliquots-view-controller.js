@@ -200,7 +200,7 @@
           index: -1,
           role: Validation.examIdentifier
         });
-        _fillAdditionalExamsContainerLabels();
+        _fillConvertedStoragesContainerLabels();
       }, 200);
     }
 
@@ -481,7 +481,7 @@
         ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
           self.selectedMomentType.removeStorage(aliquot.aliquotCode);
           _setMomentType(self.selectedMomentType);
-          _fillAdditionalExamsContainerLabels()
+          _fillConvertedStoragesContainerLabels()
         }).catch(function (err) {
           AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
         });
@@ -493,8 +493,8 @@
       return history[0];
     }
 
-    function _fillAdditionalExamsContainerLabels(){
-      self.selectedMomentType.additionalExams.forEach(aliquot => {
+    function _fillConvertedStoragesContainerLabels(){
+      self.selectedMomentType.convertedStorages.forEach(aliquot => {
         _fillContainer(aliquot);
       })
     }

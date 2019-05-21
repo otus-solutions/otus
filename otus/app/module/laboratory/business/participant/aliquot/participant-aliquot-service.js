@@ -8,12 +8,11 @@
   Service.$inject = [
     'otusjs.laboratory.business.participant.aliquot.AliquotManagerService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
-    'otusjs.laboratory.participant.ParticipantAliquotFactory',
     '$q',
     'AliquotStructureFactory'
   ];
 
-  function Service(AliquotManagerService, ParticipantLaboratoryService, ParticipantAliquotFactory, $q, AliquotStructureFactory) {
+  function Service(AliquotManagerService, ParticipantLaboratoryService, $q, AliquotStructureFactory) {
     var self = this;
 
     self.buildMomentTypeList = buildMomentTypeList;
@@ -120,7 +119,7 @@
 
       momentType.storages = storages;
       momentType.exams = exams;
-      momentType.additionalExams = [];
+      momentType.convertedStorages = [];
 
       momentType = fillAliquotsWithCollectedAliquots(momentType);
 
@@ -147,7 +146,7 @@
         collectedAliquot.date = dateTime;
 
         if (collectedAliquot.isConverted){
-          momentType.additionalExams.push(collectedAliquot);
+          momentType.convertedStorages.push(collectedAliquot);
         } else {
           var arrayAliquots = momentType.exams;
 

@@ -136,12 +136,12 @@
               <br>
             </md-whiteframe>
 
-            <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" ng-if="$ctrl.selectedMomentType.additionalExams.length" flex layout-padding>
+            <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" ng-if="$ctrl.selectedMomentType.convertedStorages.length" flex layout-padding>
               <div class="aliquot-whiteframe-title">
                 Armazenamento convertido para Exame:
               </div>
 
-              <div ng-repeat="additionalExam in $ctrl.selectedMomentType.additionalExams" layout="column">
+              <div ng-repeat="additionalExam in $ctrl.selectedMomentType.convertedStorages" layout="column">
                 <div layout="row">
                   <!-- Mount Tube Input - Exam - Begin -->
                   <div class="input-tube" flex>

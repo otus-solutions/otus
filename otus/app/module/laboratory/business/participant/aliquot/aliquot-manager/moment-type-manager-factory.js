@@ -153,12 +153,12 @@
     function _removeConverted(code) {
       var index;
 
-      var _aliquote = self.additionalExams.find(function (exam) {
+      var _aliquote = self.convertedStorages.find(function (exam) {
         return exam.aliquotCode === code;
       });
 
-      index = self.additionalExams.indexOf(_aliquote);
-      self.additionalExams.splice(index, 1);
+      index = self.convertedStorages.indexOf(_aliquote);
+      self.convertedStorages.splice(index, 1);
     }
 
     function removeStorage(code) {

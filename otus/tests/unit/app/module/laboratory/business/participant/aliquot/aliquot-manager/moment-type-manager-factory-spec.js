@@ -30,7 +30,7 @@ describe('Moment Type Manager Factory', function () {
       mockFactoryData(moment);
       spyOn(moment.exams, 'splice').and.callThrough();
       spyOn(moment.storages, 'splice').and.callThrough();
-      spyOn(moment.additionalExams, 'splice').and.callThrough();
+      spyOn(moment.convertedStorages, 'splice').and.callThrough();
     });
 
     it('should remove a exam', function () {
@@ -59,7 +59,7 @@ describe('Moment Type Manager Factory', function () {
       aliquot.isConverted = true;
       moment.removeAliquot(aliquot);
       expect(_length).toBeGreaterThan(moment.collectedAliquots.length);
-      expect(moment.additionalExams.splice).toHaveBeenCalledTimes(1);
+      expect(moment.convertedStorages.splice).toHaveBeenCalledTimes(1);
     });
 
 
@@ -485,7 +485,7 @@ describe('Moment Type Manager Factory', function () {
         "tubeMessage": ""
       }];
 
-      factory.additionalExams = [
+      factory.convertedStorages = [
         {
           "aliquotCode": "343007231",
           "aliquotId": "STORAGEAliquot",
