@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -7,20 +7,18 @@
       controller: Controller,
       templateUrl: 'app/ux-component/dashboard-participant-box/dashboard-participant-box-template.html',
       bindings: {
-        onClose:'&'
+        onClose: '&'
       }
     });
 
-
   Controller.$inject = [
-    '$element',
-    'otusjs.application.state.ApplicationStateService',
-    'otusjs.participant.core.ContextService',
     'otusjs.otus.dashboard.core.EventService',
-    'otusjs.otus.dashboard.service.DashboardService'
+    'otusjs.otus.dashboard.service.DashboardService',
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService'
   ];
 
-  function Controller($element, ApplicationStateService, ParticipantContextService, EventService, DashboardService) {
+  function Controller(EventService, DashboardService, ApplicationStateService, ParticipantLaboratoryService) {
     var self = this;
 
     /* Public methods */
@@ -30,6 +28,13 @@
     self.home = home;
     /* Lifecycle hooks */
     self.$onInit = onInit;
+
+    function onInit() {
+      self.isEmpty = true;
+      _loadSelectedParticipant();
+      EventService.onParticipantSelected(_loadSelectedParticipant);
+      _getCheckingExist();
+    }
 
     function home() {
       ApplicationStateService.activateParticipantDashboard();
@@ -50,28 +55,25 @@
       self.onClose();
     }
 
-    function onInit() {
-      // $element.hide();
-
-      self.isEmpty = true;
-      _loadSelectedParticipant();
-      EventService.onParticipantSelected(_loadSelectedParticipant);
-    }
-
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = participantData;
-        // $element.show();
         self.isEmpty = false;
       } else {
         DashboardService
           .getSelectedParticipant()
-          .then(function(participantData) {
+          .then(function (participantData) {
             self.selectedParticipant = participantData;
-            // $element.show();
             self.isEmpty = false;
           });
       }
+    }
+
+    function _getCheckingExist() {
+      ParticipantLaboratoryService.getCheckingExist()
+        .then(function (response) {
+          self.laboratoryChecking = response;
+        });
     }
   }
 }());

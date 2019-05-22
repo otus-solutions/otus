@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -33,6 +33,7 @@
     self.updateAliquots = updateAliquots;
     self.updateTubeCollectionData = updateTubeCollectionData;
     self.deleteAliquot = deleteAliquot;
+    self.getCheckingExist = getCheckingExist;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -46,13 +47,13 @@
     function initializeLaboratory() {
       var request = $q.defer();
       getSelectedParticipant()
-        .then(function(participant) {
+        .then(function (participant) {
           self.participant = participant;
-          getLaboratoryDescriptors()
-            .then(function() {
+          _getLaboratoryDescriptors()
+            .then(function () {
               return LaboratoryRepositoryService
                 .initializeLaboratory(participant)
-                .then(function(laboratory) {
+                .then(function (laboratory) {
                   _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(), self.participant);
                   request.resolve(laboratory);
                 });
@@ -65,12 +66,12 @@
       var request = $q.defer();
 
       getSelectedParticipant()
-        .then(function(participant) {
-          getLaboratoryDescriptors()
-            .then(function() {
+        .then(function (participant) {
+          _getLaboratoryDescriptors()
+            .then(function () {
               LaboratoryRepositoryService
                 .getLaboratory(participant)
-                .then(function(laboratory) {
+                .then(function (laboratory) {
                   self.participant = participant;
                   if (laboratory !== 'null') {
                     _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(), self.participant);
@@ -97,10 +98,6 @@
       return _participantLaboratory;
     }
 
-    function getLaboratoryDescriptors() {
-      return LaboratoryConfigurationService.getLaboratoryDescriptors();
-    }
-
     function getLoggedUser() {
       return ContextService.getCurrentUser();
 
@@ -123,6 +120,14 @@
 
     function generateLabels() {
       return LaboratoryLabelFactory.create(self.participant, angular.copy(_participantLaboratory));
+    }
+
+    function getCheckingExist() {
+      return LaboratoryConfigurationService.getCheckingExist();
+    }
+
+    function _getLaboratoryDescriptors() {
+      return LaboratoryConfigurationService.getLaboratoryDescriptors();
     }
   }
 }());

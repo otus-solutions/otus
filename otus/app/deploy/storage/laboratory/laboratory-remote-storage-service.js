@@ -2,7 +2,7 @@
  * LaboratoryRestService
  * @namespace Services
  */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -39,12 +39,12 @@
     self.deleteAliquot = deleteAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
-
-    //Laboratory Configuration Methods
+    /* Laboratory Configuration Methods */
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
+    self.getCheckingExist = getCheckingExist;
 
-    //Laboratory Project Methods
+    /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
     self.createLot = createLot;
@@ -77,7 +77,7 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .initializeLaboratory(recruitmentNumber)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
         });
 
@@ -95,7 +95,7 @@
 
       LaboratoryRestService
         .getLaboratory(recruitmentNumber)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
         });
 
@@ -112,9 +112,9 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .updateLaboratoryParticipant(recruitmentNumber, participantLaboratory)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
-        }, function(e) {
+        }, function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
@@ -130,9 +130,9 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .updateTubeCollectionData(recruitmentNumber, updateStructure)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
-        }, function(e) {
+        }, function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
@@ -148,9 +148,9 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .updateAliquots(recruitmentNumber, persistanceStructure)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
-        }, function(e) {
+        }, function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
@@ -160,9 +160,9 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .deleteAliquot(aliquotCode)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
-        }, function(e) {
+        }, function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
@@ -172,9 +172,9 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .getDescriptors()
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
-        }, function(e) {
+        }, function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
@@ -184,9 +184,27 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .getAliquotDescriptors()
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
-        }, function(e) {
+        }, function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+
+    /**
+     * Laboratory Configuration
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function getCheckingExist() {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .getCheckingExist()
+        .then(function (response) {
+          deferred.resolve(response);
+        }, function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
@@ -202,10 +220,10 @@
       var deferred = $q.defer();
       SampleTransportRestService
         .getAliquots(lotAliquot, unique)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
         })
-        .catch(function(e) {
+        .catch(function (e) {
           deferred.reject(e);
         });
 
@@ -222,7 +240,7 @@
 
       SampleTransportRestService
         .getLots()
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
         });
 
@@ -239,10 +257,10 @@
       var deferred = $q.defer();
       SampleTransportRestService
         .createLot(lotStructure)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
         })
-        .catch(function(e) {
+        .catch(function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
@@ -258,10 +276,10 @@
       var deferred = $q.defer();
       SampleTransportRestService
         .updateLot(lotStructure)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
         })
-        .catch(function(e) {
+        .catch(function (e) {
           deferred.reject(e);
         });
       return deferred.promise;
@@ -277,10 +295,10 @@
       var deferred = $q.defer();
       SampleTransportRestService
         .deleteLot(lotCode)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response.data);
         })
-        .catch(function(e) {
+        .catch(function (e) {
           deferred.reject(e);
         });
       return deferred.promise;

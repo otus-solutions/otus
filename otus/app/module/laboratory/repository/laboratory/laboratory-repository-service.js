@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -22,11 +22,12 @@
     self.updateAliquots = updateAliquots;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
-    //Laboratory Configuration Methods
+    /* Laboratory Configuration Methods */
+    self.getCheckingExist = getCheckingExist;
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
 
-    //Laboratory Project Methods
+    /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
     self.createLot = createLot;
@@ -34,14 +35,17 @@
     self.deleteLot = deleteLot;
     self.deleteAliquot = deleteAliquot;
 
-
     function initializeLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
       return LaboratoryCollectionService
         .initializeLaboratory()
-        .then(function(laboratory) {
+        .then(function (laboratory) {
           return laboratory;
         });
+    }
+
+    function getCheckingExist() {
+      return LaboratoryCollectionService.getCheckingExist();
     }
 
     function getLaboratory(participant) {
@@ -57,7 +61,7 @@
       return LaboratoryCollectionService.updateAliquots(updateStructure);
     }
 
-    function updateTubeCollectionData(updateStructure){
+    function updateTubeCollectionData(updateStructure) {
       return LaboratoryCollectionService.updateTubeCollectionData(updateStructure);
     }
 
