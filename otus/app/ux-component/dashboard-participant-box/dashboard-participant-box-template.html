@@ -31,10 +31,10 @@
           <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantActivities()">Atividades</md-button>
         </div>
       </md-list-item>
-      <md-list-item ng-if="$ctrl.laboratoryChecking" class="md-2-line">
+      <md-list-item class="md-2-line">
         <div layout-align="start center">
           <md-icon md-svg-icon="eyedropper-variant" aria-label="Laboratório" class="md-accent"></md-icon>
-          <md-button id="surveyforms-menu" ng-click="$ctrl.loadLaboratory()">Laboratório</md-button>
+          <md-button id="surveyforms-menu" ng-disabled="!$ctrl.laboratoryChecking" ng-click="$ctrl.loadLaboratory()">Laboratório</md-button>
         </div>
       </md-list-item>
       <!-- <md-list-item>

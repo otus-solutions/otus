@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -8,10 +8,11 @@
   Service.$inject = [
     '$q',
     'otusjs.deploy.user.UserRestService',
-    'otusjs.user.storage.UserStorageService'
+    'otusjs.user.storage.UserStorageService',
+    'otusjs.deploy.user.UserAccessPermissionService'
   ];
 
-  function Service($q, UserRestService, UserStorageService) {
+  function Service($q, UserRestService, UserStorageService, UserAccessPermissionService) {
     var self = this;
     var _loadingDefer = null;
 
@@ -35,12 +36,13 @@
 
     function _initializeSources() {
       UserRestService.initialize();
+      UserAccessPermissionService.initialize();
     }
 
     function _loadData() {
       UserRestService
         .listIdexers()
-        .then(function(response) {
+        .then(function (response) {
           UserStorageService.getCollection().clear();
           UserStorageService.getCollection().insert(response.data);
           UserStorageService.save();
