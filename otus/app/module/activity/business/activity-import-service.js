@@ -56,39 +56,41 @@
     }
 
     function getActivityError(response, activity) {
-      var _activity = structureActivity;
-      _activity.error = "";
-      _activity.rn = response["recruitmentNumberValidationResult"].recruitmentNumber;
-      _activity.acronym = activity.surveyTemplate.identity.acronym;
-      _activity.name = activity.surveyTemplate.identity.name;
-      _activity.category = response["categoryValidationResult"].category;
+
+      try {
+        var _activity = structureActivity;
+        _activity.error = "";
+        _activity.rn = response["recruitmentNumberValidationResult"].recruitmentNumber;
+        _activity.acronym = activity.surveyTemplate.identity.acronym;
+        _activity.name = activity.surveyTemplate.identity.name;
+        _activity.category = response["categoryValidationResult"].category;
 
 
-      if(!response["recruitmentNumberValidationResult"].isValid){
-        _activity.error = _activity.error.concat(RECRUITMENT_NUMBER_ERROR)
-      }
+        if(!response["recruitmentNumberValidationResult"].isValid){
+          _activity.error = _activity.error.concat(RECRUITMENT_NUMBER_ERROR)
+        }
 
-      if(!response["categoryValidationResult"].isValid){
-        let _error = CATEGORY_ERROR;
-        _error = _error.replace(ERROR, response["categoryValidationResult"].category);
-        _activity.error = _activity.error.concat(_error);
-      }
-
-      if(!response["interviewerValidationResult"].isValid){
-        let _error = INTERVIEWER_ERROR;
-        _error = _error.replace(ERROR, response["interviewerValidationResult"].email);
-        _activity.error = _activity.error.concat(_error);
-      }
-
-      if(response["paperInterviewerValidationResult"]){
-        if(!response["paperInterviewerValidationResult"].isValid){
-          let _error = PAPER_INTERVIEWER_ERROR;
-          _error = _error.replace(ERROR, response["paperInterviewerValidationResult"].email);
+        if(!response["categoryValidationResult"].isValid){
+          let _error = CATEGORY_ERROR;
+          _error = _error.replace(ERROR, response["categoryValidationResult"].category);
           _activity.error = _activity.error.concat(_error);
         }
-      }
 
-      if(response["questionFillValidationResult"]){
+        if(!response["interviewerValidationResult"].isValid){
+          let _error = INTERVIEWER_ERROR;
+          _error = _error.replace(ERROR, response["interviewerValidationResult"].email);
+          _activity.error = _activity.error.concat(_error);
+        }
+
+        if(response.hasOwnProperty("paperInterviewerValidationResult")){
+          if(!response["paperInterviewerValidationResult"].isValid){
+            let _error = PAPER_INTERVIEWER_ERROR;
+            _error = _error.replace(ERROR, response["paperInterviewerValidationResult"].email);
+            _activity.error = _activity.error.concat(_error);
+          }
+        }
+
+        if(response.hasOwnProperty("questionFillValidationResult")){
           let _error = QUESTION_FILL_ERROR;
           let customID = activity.surveyTemplate.getItemByTemplateID(response["questionFillValidationResult"].questionId).customID;
           if(response["questionFillValidationResult"].shouldBeFilled){
@@ -98,9 +100,12 @@
             _error = _error.replace("{"+customID+"}", "{"+customID+"} não")
           }
           _activity.error = _activity.error.concat(_error);
-      }
+        }
 
-      return _activity;
+        return _activity;
+      } catch (e) {
+        return structureActivity
+      }
     }
 
   }

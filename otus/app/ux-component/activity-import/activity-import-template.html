@@ -31,7 +31,7 @@
       <div layout="row" layout-margin="" layout-align="start center" flex>
         <input id="fileInput" type="file" ng-model="$ctrl.file" accept='.json' class="ng-hide">
         <md-input-container flex layout="row" layout-align="end center" class="md-accent md-raised" layout-fill
-                            style="min-width:350px;">
+                            style="min-width:280px;">
           <md-button class="md-button md-mini md-warn md-raised" layout-margin="0" aria-label="Cancelar upload" ng-click="$ctrl.cancel()" ng-if="$ctrl.isLoading">
             <md-icon>cancel</md-icon>
           </md-button>
@@ -45,8 +45,9 @@
           <input id="nameFile" type="text" ng-disabled="true">
         </md-input-container>
       </div>
+      <span flex-md="5"></span>
       <div layout="row" layout-margin="">
-        <md-input-container flex="100" layout-fill style="min-width:350px;">
+        <md-input-container flex="100" layout-fill style="min-width:280px;">
           <label>Tipo de Atividade</label>
           <md-select ng-model="$ctrl.selectedActivity" ng-disabled="true">
             <md-option ng-repeat="activity in $ctrl.activities track by $index"
@@ -67,7 +68,7 @@
         </md-button>
         <md-button class="md-button md-primary md-raised" aria-label="Validar respostas de atividades"
                    ng-click="$ctrl.saveActivitiesAnswered()"
-                   ng-disabled="$ctrl.ActivitiesInvalids.length === 0 || $ctrl.isLoading" flex>
+                   ng-disabled="$ctrl.ActivitiesAnswered.length === 0 || $ctrl.isLoading" flex>
           <md-tooltip md-direction="top">
             Salvar
           </md-tooltip>

@@ -31,6 +31,7 @@
     self.saveActivitiesAnswered = saveActivitiesAnswered;
     self.cancel = cancel;
     self.getTotal = getTotal;
+    self.showDialog = showDialog;
     self.ActivitiesInvalids = [];
     self.countActivities = 0;
     self.countActivitiesValids = 0;
@@ -65,7 +66,6 @@
         }
       });
     }
-
 
     function cancel() {
       stopUpload = true;
@@ -123,8 +123,6 @@
       return isValid;
     }
 
-
-
     function validateAnswers() {
       stopUpload = false;
       self.isLoading = true;
@@ -150,18 +148,12 @@
           self.isLoading = false;
           stopUpload = true;
         }
-
       }, 30, self.total, true);
-
     }
-
-
-
 
     function _receivedText(e) {
       stopUpload = false;
       delete self.selectedActivity;
-      // if(!self.receivedJSON) self.receivedJSON = [];
       var _selectAcronym;
       var fileLines = e.target.result;
       var resultJSON;
@@ -169,7 +161,6 @@
         resultJSON = JSON.parse(fileLines);
         if (!_fileIsEmpty(resultJSON) && _JSONContainsPropertyOfActivity(resultJSON)) {
           _selectAcronym = resultJSON[0].acronym;
-
           if (_selectAcronym) {
             self.selectedActivity = self.activities.find(activity => {
               return activity.surveyTemplate.identity.acronym === _selectAcronym;
@@ -177,7 +168,6 @@
           } else {
             _showMessage("Não foi possível identificar a atividade!");
           }
-
           if (!self.selectedActivity) _showMessage("Não foi possível identificar a atividade!");
           Array.prototype.push.apply(self.receivedJSON, resultJSON);
           $scope.$apply();
@@ -193,7 +183,6 @@
 
     function saveActivitiesAnswered() {
       if(self.ActivitiesAnswered.length > 0){
-
         ImportService.importActivities(self.ActivitiesAnswered.splice(0, 100), self.selectedActivity.version)
           .then(function (response) {
             response.forEach(result => {
@@ -202,7 +191,8 @@
               self.countActivitiesValids -= 1;
             });
             self.saveActivitiesAnswered();
-
+        }).catch(function (e) {
+          _showMessage("Não foi possível salvar as atividades! Tente novamente mais tarde.");
         });
       }
     }
@@ -212,7 +202,7 @@
       return target.split(search).join(replacement);
     };
 
-    self.showDialog = function (item) {
+    function showDialog(item) {
       var data = {
         dialogToTitle: "("+item.acronym+") "+item.name,
         textDialog: "<b>Participante:</b><br>"+item.rn+"<br><b>Categoria:</b><br> "+item.category+"<br><b>Problema:</b><br>"+item.error.replaceAll("! ", "!<br>"),
