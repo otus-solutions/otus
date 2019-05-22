@@ -61,21 +61,12 @@ describe('Aliquots View Component', function () {
       }
     };
 
-    Mock.Validation = {
-      initialize: function () {
-        return true;
-      },
-      fieldIsExam: function () {
-        
-      }
-    };
-
     angular.mock.module(function ($provide) {
       $provide.value('otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService', Mock.AliquotTubeService);
       $provide.value('otusjs.laboratory.configuration.LaboratoryConfigurationService', {});
       $provide.value('otusjs.laboratory.business.participant.ParticipantLaboratoryService', Mock.ParticipantLaboratoryService);
       $provide.value('otusjs.laboratory.business.participant.aliquot.AliquotMessagesService', Mock.AliquotMessagesService);
-      $provide.value('otusjs.laboratory.business.participant.aliquot.AliquotValidationService', Mock.Validation);
+      $provide.value('otusjs.laboratory.business.participant.aliquot.AliquotValidationService', {});
       $provide.value('otusjs.otus.uxComponent.Publisher', {});
       $provide.value('$scope', {});
       $provide.value('$element', {});
