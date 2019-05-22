@@ -4,7 +4,9 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
   var Injections = {};
 
   beforeEach(function () {
-    mockInjections();
+
+    _mockInjections();
+    
     angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
       $provide.value('otusjs.deploy.FieldCenterRestService', Mock.ProjectFieldCenterService);
       $provide.value('otusjs.monitoring.business.MonitoringService', Mock.MonitoringService);
@@ -91,7 +93,7 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
   });
 
 
-  function mockInjections() {
+  function _mockInjections() {
 
     Mock.UNREALIZED = 0;
     Mock.RECEIVED = 1;

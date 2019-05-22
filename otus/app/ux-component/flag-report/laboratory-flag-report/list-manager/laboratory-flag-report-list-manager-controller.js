@@ -8,6 +8,7 @@
   Controller.$inject = [
     '$q',
     '$timeout',
+    '$rootScope',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
@@ -16,10 +17,12 @@
     'otusjs.monitoring.business.FlagReportFilterService'
   ];
 
-  function Controller($q, $timeout, LoadingScreenService, FieldCenterRestService, DashboardContextService, MonitoringService, ExamStatusHistoryService, FlagReportFilterService) {
+  function Controller($q, $timeout, $rootScope, LoadingScreenService, FieldCenterRestService, DashboardContextService, MonitoringService, ExamStatusHistoryService, FlagReportFilterService) {
     const DATA_NOT_FOUND = "Não há registros a serem exibidos.";
     const GENERIC_ERROR = "Ocorreu algum problema. Por favor, tente novamente em alguns minutos.";
     const CSV_ERROR = 'Não foi possível baixar o csv. Por favor, tente novamente em alguns minutos.';
+    var _amountOfElementsInPage;
+
     var self = this;
     self.ready;
     self.error;
@@ -54,10 +57,16 @@
     function updatePage(exams, startPage, endPage) {
       if (startPage !== undefined && endPage !== undefined) {
         self.examsData.index = self.rawExams.index.slice(startPage, endPage + 1);
+        _amountOfElementsInPage = endPage;
       }
       self.examsData.data = angular.copy(exams);
-      _setFilteredExams(self.examsData, self.selectedExamName, self.selectedStatus);
-      _buildGraph(self.selectedStatus, endPage);
+      if (self.selectedExamName) {
+        self.newExamsData = FlagReportFilterService.filter(angular.copy(self.examsData), self.selectedExamName);
+        _setFilteredExams(self.newExamsData, self.selectedExamName, self.selectedStatus);
+      } else {
+        _setFilteredExams(self.examsData, self.selectedExamName, self.selectedStatus);
+      }
+      _buildGraph(self.selectedStatus);
     }
 
     function updateData(exams, examName, status, center) {
@@ -75,7 +84,7 @@
             _setFilteredExams(self.examsData, examName, status);
           }
           _buildGraph(self.selectedStatus);
-        } else if (exams && exams !== self.filteredExams) { // TODO: Quando deve entrar nesta condição?
+        } else if (exams && exams !== self.filteredExams) {
           _setFilteredExams(exams, examName, status);
         }
       }
@@ -198,6 +207,7 @@
           self.examsData = angular.copy(response);
           self.ready = true;
           self.error = false;
+          _clearBasicFilters();
           LoadingScreenService.finish();
         }).catch((e) => {
           self.ready = false;
@@ -213,24 +223,23 @@
       }
     }
 
-
-    function _buildGraph(status, amountOfElementsInPage) {
+    function _buildGraph(status) {
       if (self.filteredExams) {
-        _heatmap_display(angular.copy(self.filteredExams), status, amountOfElementsInPage);
+        _heatmap_display(angular.copy(self.filteredExams), status);
         $(window).resize(function () {
-          _heatmap_display(angular.copy(self.filteredExams), status, amountOfElementsInPage);
+          _heatmap_display(angular.copy(self.filteredExams), status);
         })
       } else if (self.examsData) {
-        _heatmap_display(angular.copy(self.examsData), status, undefined);
+        _heatmap_display(angular.copy(self.examsData), status);
         $(window).resize(function () {
-          _heatmap_display(angular.copy(self.examsData), status, undefined);
+          _heatmap_display(angular.copy(self.examsData), status);
         })
       } else {
         $("#exam-heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
       }
     }
 
-    function _heatmap_display(exams, status, amountOfElementsInPage) {
+    function _heatmap_display(exams, status) {
       let heatmapId = "#exam-heatmap";
       let CELL_SIZE = 25;
       var svg = d3.select(heatmapId).selectAll("*").remove();
@@ -241,7 +250,7 @@
         .style("visibility", "hidden");
 
       //==================================================
-      var columnsCount = exams.columns.length;
+      var columnsCount = self.examsData.columns.length;
       var totalCellSize = CELL_SIZE * columnsCount;
 
       // var horizontalTranslation = window.innerWidth / 3.5;
@@ -254,7 +263,7 @@
       var contentWidth = ((totalCellSize + horizontalTranslation) * scale) + horizontalTranslation;
       var viewerWidth = contentWidth > innerWidth ? contentWidth : innerWidth;
 
-      var contentHeight = (((amountOfElementsInPage * columnsCount) + verticalTranslation) * scale);
+      var contentHeight = (((_amountOfElementsInPage * columnsCount) + verticalTranslation) * scale);
       var viewerHeight = contentHeight > window.innerHeight ? contentHeight : window.innerHeight;
       var legendHeight = 70;
       var legendElementWidth = CELL_SIZE * 4.5;
@@ -602,6 +611,10 @@
 
     function _setFilteredExams(filteredExams) {
       self.filteredExams = filteredExams;
+    }
+
+    function _clearBasicFilters() {
+      $rootScope.$broadcast('clear');
     }
 
   }
