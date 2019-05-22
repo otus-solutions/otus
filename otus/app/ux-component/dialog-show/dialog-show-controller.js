@@ -5,7 +5,6 @@
     .module('otusjs.otus.uxComponent')
     .controller('dialogShowController',DialogController);
 
-
   function DialogController(data) {
     var vm = this;
     var DEFAULT_DIMENSIONS = {'min-height':'200px', 'min-width':'300px'};
@@ -36,13 +35,13 @@
     /* Public methods */
     vm.isAvailableImage = isAvailableImage;
 
-    useDefaultDimensions();
+    _useDefaultDimensions();
 
     function isAvailableImage() {
       return '' !== data.imgSrc;
     }
 
-    function useDefaultDimensions() {
+    function _useDefaultDimensions() {
       if(!data.dimensionsDialog){
         vm.dialogDimensions = DEFAULT_DIMENSIONS;
       } else {
