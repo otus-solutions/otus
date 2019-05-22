@@ -394,12 +394,9 @@
       }
     }
 
-
     function tubeInputOnChange(aliquot) {
       var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
-      // var runCompletePlaceholder = false;
-      //
-      // runCompletePlaceholder = true;
+
       $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
 
       completePlaceholder(aliquotsArray);
@@ -467,8 +464,9 @@
       });
 
       AliquotMessagesService.showConvertDialog(examLabels,$scope).then(function(result) {
+
         var examNameFound = "";
-       self.examTypeList.forEach(exam => {
+        self.examTypeList.forEach(exam => {
           if(exam.label === result.examName){
             examNameFound = exam.name;
           }
@@ -478,6 +476,7 @@
         aliquot.code = aliquot.aliquotCode;
         aliquot.name = examNameFound;
         aliquot.role = "EXAM";
+
         ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
           self.selectedMomentType.removeStorage(aliquot.aliquotCode);
           _setMomentType(self.selectedMomentType);
@@ -485,7 +484,8 @@
         }).catch(function (err) {
           AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
         });
-      }).catch(function () {});
+
+      })
     }
 
     function getConvertedHistory(aliquot) {
