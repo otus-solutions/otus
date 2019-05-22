@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.LaboratoryMonitoringState', Provider);
+    .provider('otusjs.deploy.ActivityFlagReportState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -20,9 +20,9 @@
 
     self.state = {
       parent: STATE.SESSION,
-      name: STATE.LABORATORY_MONITORING_DASHBOARD,
-      url: '/' + STATE.LABORATORY_MONITORING_DASHBOARD,
-      template: '<otus-laboratory-monitoring-dashboard layout="column" flex></otus-laboratory-monitoring-dashboard>',
+      name: STATE.ACTIVITY_FLAG_REPORT,
+      url: '/' + STATE.ACTIVITY_FLAG_REPORT,
+      template: '<otus-flag-report-list-manager layout="column" flex></otus-flag-report-list-manager>',
       resolve: {
         resolve: _resolve
       },
@@ -33,7 +33,6 @@
 
     function _resolve($q, Application, SessionContextService, DashboardContextService) {
       var deferred = $q.defer();
-
       Application.isDeployed()
         .then(function () {
           try {
@@ -48,13 +47,14 @@
       return deferred.promise;
     }
 
-    function _redirect($q, Application) {
+    function _redirect($q, Application, SessionContextService) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
         .then(function () {
           try {
+            SessionContextService.restore();
             deferred.resolve();
           } catch (e) {
             deferred.resolve(STATE.LOGIN);
@@ -73,7 +73,8 @@
 
     _redirect.$inject = [
       '$q',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.session.core.ContextService'
     ];
   }
 }());

@@ -2,17 +2,17 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy.rest')
-    .service('otusjs.deploy.MonitoringRestService', Service);
+    .module('otusjs.deploy.monitoring')
+    .service('otusjs.deploy.monitoring.MonitoringRestService', Service);
 
   Service.$inject = [
     'OtusRestResourceService'
   ];
 
   function Service(OtusRestResourceService) {
+    const UNINITIALIZED_REST_ERROR_MESSAGE = 'REST resource is not initialized.';
     var self = this;
     var _rest = null;
-    var UNINITIALIZED_REST_ERROR_MESSAGE = 'REST resource is not initialized.';
 
     /* Public methods */
     self.initialize = initialize;
@@ -27,6 +27,8 @@
     self.getStatusOfExams = getStatusOfExams;
     self.defineExamWithDoesNotApplies = defineExamWithDoesNotApplies;
     self.deleteNotAppliesOfExam = deleteNotAppliesOfExam;
+    self.getExamsName = getExamsName;
+    self.getExamsProgressReport = getExamsProgressReport;
 
     function initialize() {
       _rest = OtusRestResourceService.getOtusMonitoringResource();
@@ -43,7 +45,7 @@
       if (!_rest) {
         throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       }
-      return _rest.find({'acronym': acronym}).$promise;
+      return _rest.find({ 'acronym': acronym }).$promise;
     }
 
     function listAcronyms() {
@@ -115,5 +117,20 @@
       }
       return _rest.deleteNotAppliesOfExam({}, data).$promise;
     }
+
+    function getExamsName(center) {
+      if (!_rest) {
+        throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      }
+      return _rest.getExamsFlagReportLabels(center).$promise;
+    }
+
+    function getExamsProgressReport(center) {
+      if (!_rest) {
+        throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      }
+      return _rest.getExamsFlagReport(center).$promise;
+    }
+
   }
 }());

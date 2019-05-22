@@ -1,20 +1,20 @@
-describe('MonitoringRestService Suite', function () {
+describe('MonitoringRestService', function () {
   var service;
   var Injections = [];
 
   const ACRONYM = 'ACTA';
-  const CENTER =  'RS';
+  const CENTER = 'RS';
   const RECRUITMENT_NUMBER = '123456'
   const UNINITIALIZED_REST_ERROR_MESSAGE = 'REST resource is not initialized.';
   const DATA = {};
 
   beforeEach(function () {
-    angular.mock.module('otusjs.deploy.rest');
+    angular.mock.module('otusjs.deploy.monitoring');
     angular.mock.module('otus.client');
 
     angular.mock.inject(function (_$injector_) {
       Injections.OtusRestResourceService = _$injector_.get('OtusRestResourceService');
-      service = _$injector_.get('otusjs.deploy.MonitoringRestService', Injections);
+      service = _$injector_.get('otusjs.deploy.monitoring.MonitoringRestService', Injections);
 
       spyOn(Injections.OtusRestResourceService, "getOtusMonitoringResource").and.callThrough();
     });
@@ -37,6 +37,8 @@ describe('MonitoringRestService Suite', function () {
     expect(service.getStatusOfExams).toBeDefined();
     expect(service.defineExamWithDoesNotApplies).toBeDefined();
     expect(service.deleteNotAppliesOfExam).toBeDefined();
+    expect(service.getExamsName).toBeDefined();
+    expect(service.getExamsProgressReport).toBeDefined();
   });
 
   it('initialiaze_method_should_evoke_getOtusMonitoringResource_of_OtusRestResourceService ', function () {
@@ -141,5 +143,15 @@ describe('MonitoringRestService Suite', function () {
   it('deleteNotAppliesOfExam_method_should_return_promise', function () {
     service.initialize();
     expect(service.deleteNotAppliesOfExam(DATA)).toBePromise();
+  });
+
+  it('getExamsName_method_should_return_promise', function () {
+    service.initialize();
+    expect(service.getExamsName(CENTER)).toBePromise();
+  });
+
+  it('getExamsProgressReport_method_should_return_promise', function () {
+    service.initialize();
+    expect(service.getExamsProgressReport(CENTER)).toBePromise();
   });
 });

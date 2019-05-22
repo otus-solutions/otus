@@ -19,8 +19,10 @@
     self.find = find;
     self.listCenters = listCenters;
     self.listAcronyms = listAcronyms;
+    self.getExamsName = getExamsName;
     self.getStatusOfActivities = getStatusOfActivities;
     self.getActivitiesProgressReport = getActivitiesProgressReport;
+    self.getExamsProgressReport = getExamsProgressReport;
     self.defineActivityWithDoesNotApplies = defineActivityWithDoesNotApplies;
     self.deleteNotAppliesOfActivity = deleteNotAppliesOfActivity;
     self.getDataOfPendingResultsByAliquots = getDataOfPendingResultsByAliquots;
@@ -112,6 +114,42 @@
         });
       return request.promise;
     };
+
+    function getExamsName(center) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getExamsName(center)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getExamsProgressReport(center) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getExamsProgressReport(center)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
 
     function getStatusOfActivities(recruitmentNumber) {
       var request = $q.defer();
