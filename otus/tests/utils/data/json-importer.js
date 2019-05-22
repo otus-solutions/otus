@@ -242,18 +242,18 @@ Test.utils.data.HeatMapActivity = {
   "status": "UNDEFINED"
 };
 Test.utils.data.participantExamStatusList = {
-    participantExams: [
-      {
-        "doesNotApply": {
-          "name": null,
-          "observation": "",
-          "recruitmentNumber": "null"
-        },
-        "name": "CÁLCIO - URINA AMOSTRA ISOLADA",
-        "quantity": 0
-      }
-    ]
-  };
+  participantExams: [
+    {
+      "doesNotApply": {
+        "name": null,
+        "observation": "",
+        "recruitmentNumber": "null"
+      },
+      "name": "CÁLCIO - URINA AMOSTRA ISOLADA",
+      "quantity": 0
+    }
+  ]
+};
 Test.utils.data.selectedParticipant = {
   name: "OTUS",
   recruitmentNumber: 3051442,
@@ -308,5 +308,52 @@ Test.utils.data.ExamWithDoesNotAppliesData = {
   name: "CURVA GLICÊMICA -120 MINUTOS",
   observation: "",
   recruitmentNumber: 7000312
-}
+};
+Test.utils.data.aliquot = {
+  "_id" : "5ce2daad99e0c90065f4050a",
+  "tubeCode" : "351286198",
+  "transportationLotId" : null,
+  "examLotId" : null,
+  "examLotData" : null,
+  "recruitmentNumber" : 50000501,
+  "sex" : "M",
+  "fieldCenter" : {
+    "name" : "Rio Grande do Sul",
+    "code" : 5,
+    "acronym" : "RS",
+    "country" : null,
+    "state" : null,
+    "address" : null,
+    "complement" : null,
+    "zip" : null,
+    "phone" : null,
+    "backgroundColor" : "rgba(75, 192, 192, 0.2)",
+    "borderColor" : "rgba(75, 192, 192, 1)"
+  },
+  "birthdate" : {
+    "objectType" : "ImmutableDate",
+    "value" : "1990-01-05 00:00:00.000"
+  },
+  "objectType" : "Aliquot",
+  "code" : "353686297",
+  "name" : "FASTING_SERUM",
+  "container" : "CRYOTUBE",
+  "role" : "STORAGE",
+  "aliquotCollectionData" : {
+    "objectType" : "AliquotCollectionData",
+    "metadata" : "",
+    "operator" : "adonis.garcia.adg@gmail.com",
+    "time" : "2019-05-20T16:49:49.879Z",
+    "processing" : "2019-05-20T16:43:47.701Z"
+  },
+  "aliquotHistory" : [
+        {
+          "objectType": "AliquotEvent",
+          "type": "CONVERTED_STORAGE",
+          "userEmail": "otus@gmail.com",
+          "description": "Falta de material para completar os exames",
+          "date": "2019-05-14T12:36:23.631Z"
+        }
+      ]
+};
 
