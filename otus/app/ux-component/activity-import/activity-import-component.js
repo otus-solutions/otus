@@ -183,15 +183,24 @@
 
     function saveActivitiesAnswered() {
       if(self.ActivitiesAnswered.length > 0){
-        ImportService.importActivities(self.ActivitiesAnswered.splice(0, 100), self.selectedActivity.version)
+        ImportService.importActivities({activityList:self.ActivitiesAnswered.slice(0, 100)}, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.version)
           .then(function (response) {
-            response.forEach(result => {
-              self.ActivitiesInvalids.push(ImportService.getActivityError(result, self.selectedActivity));
-              self.countActivitiesError += 1;
-              self.countActivitiesValids -= 1;
-            });
-            self.saveActivitiesAnswered();
+            let regex = /SurveyJumpMap not found/;
+            if(regex.test(response.MESSAGE)){
+              _showMessage("Mapa de atividade não encontrado!");
+              return true;
+            } else {
+              self.ActivitiesAnswered.splice(0, 100);
+              response.forEach(result => {
+                self.ActivitiesInvalids.push(ImportService.getActivityError(result, self.selectedActivity));
+                self.countActivitiesError += 1;
+                self.countActivitiesValids -= 1;
+              });
+              self.saveActivitiesAnswered();
+
+            }
         }).catch(function (e) {
+
           _showMessage("Não foi possível salvar as atividades! Tente novamente mais tarde.");
         });
       }

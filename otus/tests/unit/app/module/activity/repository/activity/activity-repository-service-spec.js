@@ -3,6 +3,7 @@ describe('activity-repository-service Test', function() {
   var service;
   var Injections = {};
   var ID = "12345";
+  var ACRONYM = "PASC";
   var VERSION = 1;
   var SURVEY_ACTIVITIES = [{},{}]
   var DATA = {activityID: "54321"};
@@ -61,9 +62,9 @@ describe('activity-repository-service Test', function() {
     });
 
     it('should call importActivities method', function () {
-      service.importActivities(SURVEY_ACTIVITIES, VERSION);
+      service.importActivities(SURVEY_ACTIVITIES, ACRONYM,  VERSION);
       expect(Injections.ActivityCollectionService.importActivities).toHaveBeenCalledTimes(1);
-      expect(Injections.ActivityCollectionService.importActivities).toHaveBeenCalledWith(SURVEY_ACTIVITIES, VERSION);
+      expect(Injections.ActivityCollectionService.importActivities).toHaveBeenCalledWith(SURVEY_ACTIVITIES, ACRONYM, VERSION);
     });
 
 

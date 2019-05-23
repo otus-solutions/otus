@@ -32,8 +32,8 @@
     self.getAnsweredActivityError = getAnsweredActivityError;
     self.getActivityError = getActivityError;
 
-    function importActivities(surveyActivities, version) {
-      return ActivityRepositoryService.importActivities(surveyActivities, version);
+    function importActivities(surveyActivities, acronym, version) {
+      return ActivityRepositoryService.importActivities(surveyActivities, acronym, version);
     }
 
     function getAnsweredActivityError(activity, acronym, name) {
@@ -41,7 +41,7 @@
         try {
           if (!activity.isValid) {
             return {
-              rn: activity.participantData,
+              rn: activity.participantData.recruitmentNumber,
               acronym: acronym,
               name: name,
               error: activity.error,

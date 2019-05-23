@@ -68,10 +68,10 @@ describe('activity-collection-service Test', function() {
     });
 
     it('should import activities', function (done) {
-      service.importActivities([{}],1);
+      service.importActivities([{}],"PASC", 1);
       Injections.ModuleService.getActivityRemoteStorage().whenReady().then(function (remoteStorage) {
         expect(Mock.remoteStorage.importActivities).toHaveBeenCalledTimes(1);
-        expect(Mock.remoteStorage.importActivities).toHaveBeenCalledWith([{}], 1);
+        expect(Mock.remoteStorage.importActivities).toHaveBeenCalledWith([{}], "PASC", 1);
         remoteStorage.importActivities().then(function () {
           done();
         });

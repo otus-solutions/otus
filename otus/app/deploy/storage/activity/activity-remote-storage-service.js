@@ -249,11 +249,11 @@
      * @returns {Promise} promise with activityRevision inserted when resolved
      * @memberof ActivityRemoteStorageService
      */
-    function importActivities(surveyActivities, version) {
+    function importActivities(surveyActivities, acronym, version) {
       var deferred = $q.defer();
 
       ActivityImportRestService
-        .importActivities(surveyActivities, version)
+        .importActivities(surveyActivities, acronym, version)
         .then(function(response) {
           deferred.resolve(response);
         }).catch(function () {

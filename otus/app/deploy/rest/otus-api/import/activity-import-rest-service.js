@@ -22,12 +22,12 @@
       _rest = OtusRestResourceService.getActivityImportationResource();
     }
 
-    function importActivities(surveyActivities, version) {
+    function importActivities(surveyActivities, acronym, version) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
       var request = $q.defer();
-      _rest.importActivities({surveyActivities: surveyActivities, version: version})
+      _rest.importActivities({acronym: acronym,version: version}, surveyActivities)
         .$promise
         .then(function (response) {
           if (response.data && response.data.length) {
@@ -35,7 +35,9 @@
           } else {
             request.resolve([]);
           }
-        });
+        }).catch(function (e) {
+          request.resolve(e.data)
+      });
 
 
       return request.promise;

@@ -31,9 +31,9 @@ describe('activity-import-service Test', function () {
   });
 
   it('should call importActivities method', function () {
-    service.importActivities(Mock.surveyActivities, Mock.version);
+    service.importActivities(Mock.surveyActivities, Mock.acronym, Mock.version);
     expect(Injections.ActivityRepositoryService.importActivities).toHaveBeenCalledTimes(1);
-    expect(Injections.ActivityRepositoryService.importActivities).toHaveBeenCalledWith(Mock.surveyActivities, Mock.version)
+    expect(Injections.ActivityRepositoryService.importActivities).toHaveBeenCalledWith(Mock.surveyActivities, Mock.acronym, Mock.version)
   });
 
   it('should return answered activity error', function () {
@@ -77,7 +77,7 @@ describe('activity-import-service Test', function () {
 
   function mockData() {
     Mock.activity = {
-      participantData: 1234567,
+      participantData: {recruitmentNumber: 1234567},
       error: "",
       category: {
         label: "Normal"

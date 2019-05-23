@@ -160,8 +160,8 @@
       return ActivityCollectionService.getActivityRevisions(activityID, activity);
     }
 
-    function importActivities(surveyActivities, version) {
-      return ActivityCollectionService.importActivities(surveyActivities, version);
+    function importActivities(surveyActivities, acronym, version) {
+      return ActivityCollectionService.importActivities(surveyActivities, acronym, version);
     }
   }
 }());

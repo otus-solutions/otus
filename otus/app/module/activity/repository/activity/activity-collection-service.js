@@ -211,13 +211,13 @@
       return request.promise;
     }
 
-    function importActivities(surveyActivities, version){
+    function importActivities(surveyActivities, acronym, version){
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function(remoteStorage) {
           remoteStorage
-            .importActivities(surveyActivities, version)
+            .importActivities(surveyActivities, acronym, version)
             .then(function(response) {
               request.resolve(response);
             }).catch(function () {
