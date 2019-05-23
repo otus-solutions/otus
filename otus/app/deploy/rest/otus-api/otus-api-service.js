@@ -21,7 +21,7 @@
     'otusjs.deploy.SampleTransportRestService',
     'otusjs.deploy.ExamsRestService',
     'otusjs.deploy.ParticipantReportRestService',
-    'otusjs.deploy.MonitoringRestService',
+    'otusjs.deploy.monitoring.MonitoringRestService',
     'otusjs.deploy.user.UserAccessRecoveryRestService',
     'otusjs.deploy.monitoring.LaboratoryMonitoringRestService'
   ];

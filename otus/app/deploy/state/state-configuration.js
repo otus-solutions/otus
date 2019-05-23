@@ -35,7 +35,8 @@
       'EXAM_RESULT_VISUALIZER': 'exam-result-visualizer',
       'MONITORING': 'monitoring',
       'ACCESS_RECOVERY': 'access-recovery',
-      'FLAG_DASHBOARD': 'flag-report',
+      'ACTIVITY_FLAG_REPORT': 'activity-flag-report',
+      'LABORATORY_FLAG_REPORT': 'laboratory-flag-report',
       'FLAG_MANAGER_LIST': 'manager-list',
       'LABORATORY_MONITORING_DASHBOARD': 'laboratory-monitoring',
       'ACTIVITY_IMPORT': 'activity-import'
@@ -74,8 +75,8 @@
     'otusjs.deploy.ExamResultsVisualizerProvider',
     'otusjs.deploy.MonitoringStateProvider',
     'otusjs.deploy.UserAccessRecoveryProvider',
-    'otusjs.deploy.FlagStateProvider',
-    'otusjs.deploy.FlagManagerStateProvider',
+    'otusjs.deploy.LaboratoryFlagReportStateProvider',
+    'otusjs.deploy.ActivityFlagReportStateProvider',
     'otusjs.deploy.LaboratoryMonitoringStateProvider',
     'otusjs.deploy.ActivityImportStateProvider'
   ];
@@ -110,8 +111,8 @@
     ExamResultsVisualizer,
     MonitoringStateProvider,
     UserAccessRecoveryProvider,
-    FlagStateProvider,
-    FlagManagerStateProvider,
+    LaboratoryFlagReportStateProvider,
+    ActivityFlagReportStateProvider,
     LaboratoryMonitoringStateProvider,
     ActivityImportStateProvider
   ) {
@@ -144,8 +145,8 @@
     $stateProvider.state(ExamResultsVisualizer.state);
     $stateProvider.state(MonitoringStateProvider.state);
     $stateProvider.state(UserAccessRecoveryProvider.state);
-    $stateProvider.state(FlagStateProvider.state);
-    $stateProvider.state(FlagManagerStateProvider.state);
+    $stateProvider.state(LaboratoryFlagReportStateProvider.state);
+    $stateProvider.state(ActivityFlagReportStateProvider.state);
     $stateProvider.state(LaboratoryMonitoringStateProvider.state);
     $stateProvider.state(ActivityImportStateProvider.state);
 

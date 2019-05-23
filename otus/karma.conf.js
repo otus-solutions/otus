@@ -49,7 +49,7 @@ module.exports = function (config) {
       APP_ROOT_PATH + 'app.js',
       /* Applicatoin Module files */
       APP_ROOT_PATH + '**/**/module.js',
-      APP_ROOT_PATH + '**/**/*.js',{
+      APP_ROOT_PATH + '**/**/*.js', {
         pattern: 'tests/unit/**/*-spec.js',
         included: true
       },
@@ -65,7 +65,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      './app/**/*.js': ['babel','coverage'],
+      './app/**/*.js': ['babel', 'coverage'],
       './tests/unit/**/*-spec.js': 'babel'
     },
 
@@ -121,11 +121,11 @@ module.exports = function (config) {
     concurrency: Infinity,
 
     capabilities: {
-    'browserName': 'chrome',
-    'chromeOptions': {
-      args: ['--disable-browser-side-navigation']
+      'browserName': 'chrome',
+      'chromeOptions': {
+        args: ['--disable-browser-side-navigation']
+      }
     }
-}
   });
 
 };
