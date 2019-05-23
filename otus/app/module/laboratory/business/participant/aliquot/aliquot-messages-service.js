@@ -78,8 +78,8 @@
 
       var dropDownConfig = {};
       dropDownConfig.isRequired = true;
-      dropDownConfig.label = "Selecione o tipo de aliquota";
-      dropDownConfig.ariaLabel = "Selecione o tipo de aliquota";
+      dropDownConfig.label = "Selecione o tipo de alíquota";
+      dropDownConfig.ariaLabel = "Selecione o tipo de alíquota";
       dropDownConfig.values = examNames;
 
       var textInputConfig = {};
@@ -88,7 +88,7 @@
 
       var _saveDialog = {
         dialogToTitle:'Salvar',
-        titleToText:'Confirmar converção da aliquota:',
+        titleToText:'Confirmar conversão da alíquota:',
         textInputConfig: textInputConfig,
         dropDownConfig: dropDownConfig,
         textDialog: message,
@@ -196,7 +196,7 @@
       if(msg.examResult){
         message = message + '<li>Existem Resultados com essa alíquota!</li>';
       }
-      message = message + '</dl><br><br><b>Para esse procedimento é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
+      message = message + '</dl><br><br><b>Para esse procedimento é necessário a remoção da alíquota do(s) ambiente(s) acima.</b>';
 
       return message;
     }
