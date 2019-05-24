@@ -22,7 +22,7 @@
       parent: STATE.SESSION,
       name: STATE.DASHBOARD,
       url: '/' + STATE.DASHBOARD,
-      template: '<span="column" flex>state</span>',
+      template: '<otus-dashboard layout="column" flex></otus-dashboard>',
       data: {
         redirect: _redirect,
         userPermission: _userPermission
