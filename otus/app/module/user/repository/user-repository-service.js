@@ -8,9 +8,10 @@
   Service.$inject = [
     'otusjs.user.core.ModuleService',
     'otusjs.user.core.EventService',
+    'otusjs.user.repository.UserCollectionService'
   ];
 
-  function Service(ModuleService, EventService) {
+  function Service(ModuleService, EventService, UserCollectionService) {
     var self = this;
 
     /* Public methods */

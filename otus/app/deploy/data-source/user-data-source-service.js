@@ -9,10 +9,11 @@
     '$q',
     'otusjs.deploy.user.UserRestService',
     'otusjs.user.storage.UserStorageService',
-    'otusjs.deploy.user.UserAccessPermissionService'
+    'otusjs.deploy.user.UserAccessPermissionService',
+    'otusjs.deploy.user.UserAccessPermissionRestService'
   ];
 
-  function Service($q, UserRestService, UserStorageService, UserAccessPermissionService) {
+  function Service($q, UserRestService, UserStorageService, UserAccessPermissionService, UserAccessPermissionRestService) {
     var self = this;
     var _loadingDefer = null;
 
@@ -21,7 +22,7 @@
     self.getData = getData;
     self.listIndexers = listIndexers;
 
-    function up() {
+    function up() {      
       _loadingDefer = $q.defer();
       _initializeSources();
       _loadData();
@@ -36,6 +37,7 @@
 
     function _initializeSources() {
       UserRestService.initialize();
+      // UserAccessPermissionRestService.initialize();
       UserAccessPermissionService.initialize();
     }
 

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -11,10 +11,11 @@
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
     'otusjs.deploy.UserDataSourceService',
-    'otusjs.deploy.user.AuthenticationRestService'
+    'otusjs.deploy.user.AuthenticationRestService',
+    'otusjs.deploy.UserAccessPermissionRemosteStorageService'
   ];
 
-  function Service($q, ModuleService, ContextFactory, StorageService, UserDataSourceService, LoginProxyService) {
+  function Service($q, ModuleService, ContextFactory, StorageService, UserDataSourceService, LoginProxyService, UserAccessPermissionRemosteStorageService) {
     var self = this;
 
     /* Public methods */
@@ -24,12 +25,13 @@
     self.configureUserDataSource = configureUserDataSource;
     self.configureLoginProxy = configureLoginProxy;
 
-    function bootstrap() {
+    function bootstrap() {      
       var deferred = $q.defer();
       configureContext(ContextFactory);
       configureStorage(StorageService.session);
       configureLoginProxy(LoginProxyService);
       configureUserDataSource(UserDataSourceService);
+      configureUserPermissionRemoteStorage();
       return deferred.promise;
     }
 
@@ -47,6 +49,10 @@
 
     function configureLoginProxy(proxy) {
       ModuleService.configureLoginProxy(proxy);
+    }
+
+    function configureUserPermissionRemoteStorage() {
+      // ModuleService.configureUserPermissionRemoteStorage(UserAccessPermissionRemosteStorageService);
     }
   }
 }());

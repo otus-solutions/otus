@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -16,15 +16,22 @@
     self.DataSource = {};
     self.Proxy = {};
     self.Service = {};
+    var _remoteStorage = {};
 
     /* Public methods */
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;
     self.configureUserDataSource = configureUserDataSource;
     self.configureLoginProxy = configureLoginProxy;
+    self.configureUserPermissionRemoteStorage = configureUserPermissionRemoteStorage;
+    self.getUserPermissionRemoteStorage = getUserPermissionRemoteStorage;
 
     function configureContext(context) {
       ContextService.configureContext(context);
+    }
+
+    function configureStorage(storage) {
+      ContextService.configureStorage(storage);
     }
 
     function configureStorage(storage) {
@@ -38,6 +45,22 @@
     function configureLoginProxy(proxy) {
       self.Proxy.LoginProxy = proxy;
       self.Proxy.LoginProxy.initialize();
+    }
+
+    function configureUserPermissionRemoteStorage(userPermissionRemoteStorage) {
+      _remoteStorage.userPermission = userPermissionRemoteStorage;
+    }
+
+    function getUserPermissionRemoteStorage() {
+      if (_remoteStorage.UserPermission) {
+        _userPermissionStorageDefer = $q.defer();
+        _userPermissionStorageDefer.resolve(_remoteStorage.userPermission);
+      }
+      return {
+        whenReady: function () {
+          return _userPermissionStorageDefer.promise;
+        }
+      };
     }
   }
 }());

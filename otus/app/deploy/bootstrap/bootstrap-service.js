@@ -61,7 +61,7 @@
       AccessModuleBootstrap.bootstrap();
       ActivityModuleBootstrap.bootstrap();
       ParticipantModuleBootstrap.bootstrap();
-      SessionModuleBootstrap.bootstrap();
+      SessionModuleBootstrap.bootstrap();      
       UserModuleBootstrap.bootstrap();
       LaboratoryModuleBootstrap.bootstrap();
       ProjectModuleBootstrap.bootstrap();

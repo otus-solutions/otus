@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy.user')
-    .service('otusjs.deploy.user.UserAccessPermissionService', Service);
+    .service('otusjs.deploy.user.UserAccessPermissionRestService', Service);
 
   Service.$inject = [
     'OtusRestResourceService'
