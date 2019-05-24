@@ -9,7 +9,6 @@
     '$q',
     'otusjs.deploy.user.UserRestService',
     'otusjs.user.storage.UserStorageService',
-    'otusjs.deploy.user.UserAccessPermissionService',
     'otusjs.deploy.user.UserAccessPermissionRestService'
   ];
 
@@ -37,8 +36,7 @@
 
     function _initializeSources() {
       UserRestService.initialize();
-      // UserAccessPermissionRestService.initialize();
-      UserAccessPermissionService.initialize();
+      UserAccessPermissionRestService.initialize();
     }
 
     function _loadData() {

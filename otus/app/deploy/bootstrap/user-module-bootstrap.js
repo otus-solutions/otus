@@ -12,7 +12,7 @@
     'otusjs.application.storage.StorageService',
     'otusjs.deploy.UserDataSourceService',
     'otusjs.deploy.user.AuthenticationRestService',
-    'otusjs.deploy.UserAccessPermissionRemosteStorageService'
+    'otusjs.deploy.UserAccessPermissionRemoteStorageService'
   ];
 
   function Service($q, ModuleService, ContextFactory, StorageService, UserDataSourceService, LoginProxyService, UserAccessPermissionRemosteStorageService) {
@@ -52,7 +52,7 @@
     }
 
     function configureUserPermissionRemoteStorage() {
-      // ModuleService.configureUserPermissionRemoteStorage(UserAccessPermissionRemosteStorageService);
+      ModuleService.configureUserPermissionRemoteStorage(UserAccessPermissionRemosteStorageService);
     }
   }
 }());

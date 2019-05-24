@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.UserAccessPermissionRemosteStorageService', Service);
+    .service('otusjs.deploy.UserAccessPermissionRemoteStorageService', Service);
 
   Service.$inject = [
     '$q',
