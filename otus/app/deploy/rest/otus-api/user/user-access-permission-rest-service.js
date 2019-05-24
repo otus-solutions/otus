@@ -26,7 +26,7 @@
         throw new Error('REST resource is not initialized.');
       }
 
-      return _rest.getAll(userData.email).$promise;
+      return _rest.getAll({email:userData.email}).$promise;
     }
 
   }

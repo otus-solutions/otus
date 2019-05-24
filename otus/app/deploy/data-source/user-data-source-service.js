@@ -9,10 +9,11 @@
     '$q',
     'otusjs.deploy.user.UserRestService',
     'otusjs.user.storage.UserStorageService',
-    'otusjs.deploy.user.UserAccessPermissionRestService'
+    'otusjs.deploy.user.UserAccessPermissionRestService',
+    'otusjs.application.session.core.ContextService'
   ];
 
-  function Service($q, UserRestService, UserStorageService, UserAccessPermissionService, UserAccessPermissionRestService) {
+  function Service($q, UserRestService, UserStorageService, UserAccessPermissionRestService, ContextService) {
     var self = this;
     var _loadingDefer = null;
 
@@ -21,7 +22,7 @@
     self.getData = getData;
     self.listIndexers = listIndexers;
 
-    function up() {      
+    function up() {
       _loadingDefer = $q.defer();
       _initializeSources();
       _loadData();
@@ -32,7 +33,8 @@
       return UserStorageService.getCollection().find();
     }
 
-    function getData() { }
+    function getData() {
+    }
 
     function _initializeSources() {
       UserRestService.initialize();
@@ -48,6 +50,15 @@
           UserStorageService.save();
           _loadingDefer.resolve();
         });
+
+      ContextService.getLoggedUser()
+        .then(loggedUser => {
+          UserAccessPermissionRestService.getAllPermission({email: loggedUser.email})
+            .then(response => {
+
+            })
+        })
+
     }
   }
 }());

@@ -7,7 +7,7 @@
       controller: Controller,
       templateUrl: 'app/ux-component/dashboard/dashboard-template.html',
       bindings: {
-        redirect: "<",
+        redirect: "=",
         userPermission: "<"
       }
     });
@@ -23,7 +23,7 @@
     self.$onInit = onInit;
 
     function onInit() {
-      console.log(userPermission);
+      console.log(self.userPermission);
     }
   }
 }());

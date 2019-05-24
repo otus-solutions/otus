@@ -6,16 +6,18 @@
     .service('otusjs.application.session.core.ContextService', Service);
 
   Service.$inject = [
+    '$q',
     '$window',
     'otusjs.application.session.core.EventService'
   ];
 
-  function Service($window, EventService) {
+  function Service($q, $window, EventService) {
     var self = this;
 
     var _context = null;
     var _storage = null;
     var _shouldRestore = true;
+    var loggedUserPromise = $q.defer();
 
     var SESSION_CONTEXT = 'session_context';
     var LOGGED_USER = 'loggedUser';
@@ -34,6 +36,7 @@
 
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;
+    self.getLoggedUser = getLoggedUser;
 
     self.getData = getData;
     self.setData = setData;
@@ -43,6 +46,9 @@
 
     function begin(sessionData) {
       $window.sessionStorage.setItem('outk', sessionData.token);
+
+      loggedUserPromise = $q.defer();
+      loggedUserPromise.resolve(sessionData);
       setData(LOGGED_USER, sessionData);
     }
 
@@ -106,6 +112,11 @@
 
     function configureStorage(storage) {
       _storage = storage;
+    }
+
+    function getLoggedUser() {
+      return loggedUserPromise.promise;
+
     }
 
     //--------------------------------------------------------------------------------------------

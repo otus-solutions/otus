@@ -16,6 +16,7 @@
 
     var USER_CONTEXT = 'user_context';
     var SELECTED_USER = 'selectedUser';
+    var USER_PERMISSION = 'userPermission';
 
     //* Public methods */
     self.begin = begin;
@@ -34,6 +35,7 @@
 
     self.selectUser = selectUser;
     self.getSelectedUser = getSelectedUser;
+    self.getUserPermissions = getUserPermissions;
 
     function begin() {
       save();
@@ -121,6 +123,10 @@
 
     function getSelectedUser() {
       return _context.getData('selectedUser');
+    }
+
+    function getUserPermissions() {
+      return [{"permissions":[{"groups":[],"objectType":"SurveyGroupPermission"},{"access":false,"objectType":"LaboratoryPermission"}]}];
     }
   }
 }());

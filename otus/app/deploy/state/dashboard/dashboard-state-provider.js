@@ -26,12 +26,11 @@
       data: {
         redirect: _redirect,
         userPermission: _userPermission
-      }
+      },
     };
 
     function _redirect($q, DashboardContextService, Application) {
       var deferred = $q.defer();
-
       Application
         .isDeployed()
         .then(function () {
@@ -48,6 +47,7 @@
 
     function _userPermission($q, Application, UserAccessPermissionService, SessionContextService) {
       var defer = $q.defer();
+      console.log(1)
       Application
         .isDeployed()
         .then(function () {

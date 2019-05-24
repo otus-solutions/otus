@@ -15,7 +15,6 @@
 
     /* Public Interface */
     self.getAllPermission = getAllPermission;
-console.log('passou')
     function getAllPermission() {
       var deferred = $q.defer();
       UserAccessPermissionRestService.getAllPermission()
