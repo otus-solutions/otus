@@ -152,9 +152,9 @@ describe('Aliquot Messages Service', function () {
       "transportationLot": "300000001",
       "examResult": true
     };
-    Mock.messageOne = '<p>A alíquota se encontra em: </p><br><dl></dl><br><br><b>Para esse procedimento é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
-    Mock.messageTwo = '<p>A alíquota se encontra em: </p><br><dl><li>Lote de Exames (Código do lote: 300000015)</li></dl><br><br><b>Para esse procedimento é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
-    Mock.messageThree = '<p>A alíquota se encontra em: </p><br><dl><li>Lote de Transporte (Código do lote: 300000001)</li><li>Lote de Exames (Código do lote: 300000015)</li></dl><br><br><b>Para esse procedimento é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
-    Mock.messageFour = '<p>A alíquota se encontra em: </p><br><dl><li>Lote de Transporte (Código do lote: 300000001)</li><li>Lote de Exames (Código do lote: 300000015)</li><li>Existem Resultados com essa alíquota!</li></dl><br><br><b>Para esse procedimento é necessário a remoção da aliquota do(s) ambiente(s) acima.</b>';
+    Mock.messageOne = '<p>A alíquota se encontra em: </p><br><dl></dl><br><br><b>Para esse procedimento é necessário a remoção da alíquota do(s) ambiente(s) acima.</b>';
+    Mock.messageTwo = '<p>A alíquota se encontra em: </p><br><dl><li>Lote de Exames (Código do lote: 300000015)</li></dl><br><br><b>Para esse procedimento é necessário a remoção da alíquota do(s) ambiente(s) acima.</b>';
+    Mock.messageThree = '<p>A alíquota se encontra em: </p><br><dl><li>Lote de Transporte (Código do lote: 300000001)</li><li>Lote de Exames (Código do lote: 300000015)</li></dl><br><br><b>Para esse procedimento é necessário a remoção da alíquota do(s) ambiente(s) acima.</b>';
+    Mock.messageFour = '<p>A alíquota se encontra em: </p><br><dl><li>Lote de Transporte (Código do lote: 300000001)</li><li>Lote de Exames (Código do lote: 300000015)</li><li>Existem Resultados com essa alíquota!</li></dl><br><br><b>Para esse procedimento é necessário a remoção da alíquota do(s) ambiente(s) acima.</b>';
   }
 });
