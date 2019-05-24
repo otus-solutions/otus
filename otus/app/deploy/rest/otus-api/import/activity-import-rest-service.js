@@ -39,7 +39,6 @@
           request.resolve(e.data)
       });
 
-
       return request.promise;
     }
   }

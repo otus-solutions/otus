@@ -12,7 +12,6 @@
     <md-subheader class="md-no-sticky moment-type-title" layout="column">
       <span>Selecione o tipo de atividade e envie o arquivo convertido para importação.</span>
     </md-subheader>
-
     <div layout="row" class="md-caption" layout-padding layout-margin layout-align="center center">*Somente as
       atividades válidas serão salvas! Favor revisar toda e qualquer atividade que apresente um problema.
     </div>
@@ -94,7 +93,6 @@
     <md-content ng-show="$ctrl.ActivitiesInvalids.length == 0" flex></md-content>
     <md-content ng-show="$ctrl.ActivitiesInvalids.length > 0" flex style="overflow-x: hidden">
       <md-list flex>
-
         <md-list-item class="md-3-line" ng-repeat="item in $ctrl.ActivitiesInvalids track by $index"
                       layout-align="start center"
                       ng-click="$ctrl.showDialog(item)">

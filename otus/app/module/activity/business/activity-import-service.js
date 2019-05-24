@@ -37,7 +37,6 @@
     }
 
     function getAnsweredActivityError(activity, acronym, name) {
-
         try {
           if (!activity.isValid) {
             return {
@@ -52,11 +51,9 @@
         } catch (e) {
           return structureActivity;
         }
-
     }
 
     function getActivityError(response, activity) {
-
       try {
         var _activity = structureActivity;
         _activity.error = "";
@@ -64,7 +61,6 @@
         _activity.acronym = activity.surveyTemplate.identity.acronym;
         _activity.name = activity.surveyTemplate.identity.name;
         _activity.category = response["categoryValidationResult"].category;
-
 
         if(!response["recruitmentNumberValidationResult"].isValid){
           _activity.error = _activity.error.concat(RECRUITMENT_NUMBER_ERROR)

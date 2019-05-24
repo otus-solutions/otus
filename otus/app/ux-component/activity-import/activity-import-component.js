@@ -40,10 +40,8 @@
     self.isLoading = false;
 
     var _interval;
-
     var fr = new FileReader();
     var stopUpload = false;
-
 
     function onInit() {
       fr.onload = _receivedText;
@@ -221,7 +219,6 @@
       DialogShowService.showDialog(data);
     }
 
-
     function _loadActivities() {
       ActivityService
         .listAvailables()
@@ -241,7 +238,5 @@
           .hideDelay(3000)
       );
     }
-
-
   }
 }());
