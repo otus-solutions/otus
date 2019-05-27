@@ -10,10 +10,12 @@
     'otusjs.deploy.user.UserRestService',
     'otusjs.user.storage.UserStorageService',
     'otusjs.deploy.user.UserAccessPermissionRestService',
-    'otusjs.application.session.core.ContextService'
+    'otusjs.application.session.core.ContextService',
+    'otusjs.user.core.ContextService',
+    'otusjs.user.access.service.LogoutService'
   ];
 
-  function Service($q, UserRestService, UserStorageService, UserAccessPermissionRestService, ContextService) {
+  function Service($q, UserRestService, UserStorageService, UserAccessPermissionRestService, ContextService, UserContextService, LogoutService) {
     var self = this;
     var _loadingDefer = null;
 
@@ -51,14 +53,24 @@
           _loadingDefer.resolve();
         });
 
-      ContextService.getLoggedUser()
+      fetchUserPermissions();
+
+    }
+
+    function fetchUserPermissions() {
+      return ContextService.getLoggedUser()
         .then(loggedUser => {
           UserAccessPermissionRestService.getAllPermission({email: loggedUser.email})
             .then(response => {
-
+              if('data' in response) {  //todo better check permissions format (model?)
+                UserContextService.setUserPermissions(response.data.permissions)
+              }
             })
-        })
+            .catch(e => {
+              LogoutService.forceLogout("Erro ao carregar permissões de usuário", "Você será redirecionado à tela de login.");
+            })
 
+        })
     }
   }
 }());

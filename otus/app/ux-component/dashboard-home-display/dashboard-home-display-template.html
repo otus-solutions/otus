@@ -27,7 +27,7 @@
     </div>
   </div>
   <div layout="row" layout-align="center start" layout-fill layout-padding flex layout-wrap>
-    <div ng-if="self.userHaveLaboratoryAccessPermission" flex-xs flex-md="40" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
+    <div ng-if="$ctrl.userHaveLaboratoryAccessPermission" flex-xs flex-md="40" flex-sm="80" flex-lg="25" flex-gt-lg="20" layout="column">
       <md-card layout-fill ng-init="showLaboratory=true" class="content-card-home">
         <md-card-header flex layout-align="start center" class="md-primary header-home-options">
           <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">colorize</md-icon>
@@ -70,12 +70,12 @@
             <md-icon layout-margin>flag</md-icon>
             Flags para Atividades
           </md-button>
-          <md-button ng-if="self.userHaveLaboratoryAccessPermission" ng-click="$ctrl.laboratoryActivityFlagsReport()" class="md-body-1 option" layout-margin=""
+          <md-button ng-if="$ctrl.userHaveLaboratoryAccessPermission" ng-click="$ctrl.laboratoryActivityFlagsReport()" class="md-body-1 option" layout-margin=""
             layout-align="center">
             <md-icon layout-margin>flag</md-icon>
             Flags para Laboratório
           </md-button>
-          <md-button ng-if="self.userHaveLaboratoryAccessPermission" ng-click="$ctrl.laboratoryMonitoring()" class="md-body-1 option" layout-margin="" layout-align="center">
+          <md-button ng-if="$ctrl.userHaveLaboratoryAccessPermission" ng-click="$ctrl.laboratoryMonitoring()" class="md-body-1 option" layout-margin="" layout-align="center">
             <md-icon layout-margin>assignment_turned_in</md-icon>
             Controle laboratorial
           </md-button>

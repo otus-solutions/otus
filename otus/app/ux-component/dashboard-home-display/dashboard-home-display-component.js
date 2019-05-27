@@ -36,7 +36,9 @@
     function onInit() {
       _loadLoggedUser();
       EventService.onLogin(_loadLoggedUser);
-      self.userHaveLaboratoryAccessPermission = UserAccessPermissionService.getCheckingLaboratoryPermission();
+      UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
+        self.userHaveLaboratoryAccessPermission = response;
+      });
     }
 
     function startMonitoring() {

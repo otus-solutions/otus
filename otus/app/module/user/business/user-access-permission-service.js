@@ -17,14 +17,11 @@
     self.getCheckingLaboratoryPermission = getCheckingLaboratoryPermission;
 
     function getCheckingLaboratoryPermission() {
-      var result;
-      ContextService.getUserPermissions().permissions.find(function (permission) {
+      return ContextService.getUserPermissions().then(permissions => permissions.find(function (permission) {
         if (permission.objectType === LABORATORY_PERMISSION) {
-          result = permission.access;
-          return;
+          return permission.access;
         }
-      });
-      return result;
+      }));
     }
   }
 }());

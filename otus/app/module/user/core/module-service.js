@@ -17,7 +17,6 @@
     self.Proxy = {};
     self.Service = {};
     var _remoteStorage = {};
-    var _userPermissionStorageDefer = $q.defer();
 
     /* Public methods */
     self.configureContext = configureContext;

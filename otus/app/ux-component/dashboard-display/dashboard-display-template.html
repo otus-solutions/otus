@@ -3,8 +3,8 @@
     <div layout-align="center center" layout="column">
       <otus-participant-info></otus-participant-info>
       <otus-participant-heatmap></otus-participant-heatmap>
-      <otus-participant-exam-heatmap ng-if="self.userHaveLaboratoryAccessPermission"></otus-participant-exam-heatmap>
-      <otus-report-dashboard ng-if="self.userHaveLaboratoryAccessPermission"></otus-report-dashboard>
+      <otus-participant-exam-heatmap ng-if="$ctrl.userHaveLaboratoryAccessPermission"></otus-participant-exam-heatmap>
+      <otus-report-dashboard ng-if="$ctrl.userHaveLaboratoryAccessPermission"></otus-report-dashboard>
     </div>
   </md-content>
 </div>

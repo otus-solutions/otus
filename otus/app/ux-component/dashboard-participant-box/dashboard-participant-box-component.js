@@ -36,7 +36,9 @@
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       _getCheckingExist();
-      self.userHaveLaboratoryAccessPermission = UserAccessPermissionService.getCheckingLaboratoryPermission();
+      UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
+        self.userHaveLaboratoryAccessPermission = response;
+      });
     }
 
     function home() {

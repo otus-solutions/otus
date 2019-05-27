@@ -116,7 +116,6 @@
 
     function getLoggedUser() {
       return loggedUserPromise.promise;
-
     }
 
     //--------------------------------------------------------------------------------------------

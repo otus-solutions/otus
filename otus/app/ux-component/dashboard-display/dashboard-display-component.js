@@ -20,7 +20,10 @@
     self.$onInit = onInit;
 
     function onInit() {
-      self.userHaveLaboratoryAccessPermission = UserAccessPermissionService.getCheckingLaboratoryPermission();
+      UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
+        self.userHaveLaboratoryAccessPermission = response;
+        console.log(self.userHaveLaboratoryAccessPermission);
+      });
     }
   }
 }());
