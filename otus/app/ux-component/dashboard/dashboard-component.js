@@ -22,8 +22,6 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
-    function onInit() {
-      console.log(self.userPermission);
-    }
+    function onInit() { }
   }
 }());
