@@ -25,7 +25,6 @@
       template: '<otus-dashboard layout="column" flex></otus-dashboard>',
       data: {
         redirect: _redirect,
-        userPermission: _userPermission
       },
     };
 
@@ -44,32 +43,6 @@
 
       return deferred.promise;
     }
-
-    function _userPermission($q, Application, UserAccessPermissionService, SessionContextService) {
-      var defer = $q.defer();
-      console.log(1)
-      Application
-        .isDeployed()
-        .then(function () {
-          try {
-            SessionContextService.restore();
-            var _stateData = SessionContextService.getData('loggedUser');
-            UserAccessPermissionService.getAllPermission(_stateData.email).then((response) => {
-              console.log(response);
-            });
-          } catch (e) {
-            console.log(e);
-          }
-        });
-      return defer.promise;
-    }
-
-    _userPermission.$inject = [
-      '$q',
-      'otusjs.application.core.ModuleService',
-      'otusjs.deploy.user.UserAccessPermissionService',
-      'otusjs.application.session.core.ContextService'
-    ];
 
     _redirect.$inject = [
       '$q',

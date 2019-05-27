@@ -7,23 +7,17 @@
       controller: Controller,
       templateUrl: 'app/ux-component/dashboard/dashboard-template.html',
       bindings: {
-        redirect: "=",
-        userPermission: "<"
+        redirect: "="
       }
     });
 
-  Controller.$inject = [
-    'otusjs.application.state.ApplicationStateService'
-  ];
-
-  function Controller(ApplicationStateService) {
+  function Controller() {
     var self = this;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function onInit() {
-      console.log(self.userPermission);
     }
   }
 }());

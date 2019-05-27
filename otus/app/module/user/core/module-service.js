@@ -25,14 +25,9 @@
     self.configureUserDataSource = configureUserDataSource;
     self.configureLoginProxy = configureLoginProxy;
     self.configureUserPermissionRemoteStorage = configureUserPermissionRemoteStorage;
-    self.getUserPermissionRemoteStorage = getUserPermissionRemoteStorage;
 
     function configureContext(context) {
       ContextService.configureContext(context);
-    }
-
-    function configureStorage(storage) {
-      ContextService.configureStorage(storage);
     }
 
     function configureStorage(storage) {
@@ -50,18 +45,6 @@
 
     function configureUserPermissionRemoteStorage(userPermissionRemoteStorage) {
       _remoteStorage.userPermission = userPermissionRemoteStorage;
-    }
-
-    function getUserPermissionRemoteStorage() {
-      if (_remoteStorage.UserPermission) {
-        _userPermissionStorageDefer = $q.defer();
-        _userPermissionStorageDefer.resolve(_remoteStorage.userPermission);
-      }
-      return {
-        whenReady: function () {
-          return _userPermissionStorageDefer.promise;
-        }
-      };
     }
   }
 }());
