@@ -7,7 +7,7 @@
 
     <md-list ng-repeat="momentType in $ctrl.momentTypeList">
       <div class="tube-list-view">
-        <md-card ng-click="$ctrl.selecMomentType(momentType)" class="{{($ctrl.selectedMomentType == momentType ? 'moment-type-selected' : 'moment-type-not-selected') + ' aliquot-md-card card-tube ' }}">
+        <md-card ng-click="$ctrl.selectMomentType(momentType)" class="{{($ctrl.selectedMomentType == momentType ? 'moment-type-selected' : 'moment-type-not-selected') + ' aliquot-md-card card-tube ' }}">
           <div layout="row">
             <div layout="column" flex="10">
               <div class="tube-design" ng-style="{'background-color':momentType.boxColor}">
@@ -136,6 +136,84 @@
               <br>
             </md-whiteframe>
 
+            <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" ng-if="$ctrl.selectedMomentType.convertedStorages.length" flex layout-padding>
+              <div class="aliquot-whiteframe-title">
+                Exame: (Armazenamento convertido)
+              </div>
+
+              <div ng-repeat="additionalExam in $ctrl.selectedMomentType.convertedStorages" layout="column">
+                <div layout="row">
+                  <!-- Mount Tube Input - Exam - Begin -->
+                  <div class="input-tube" flex>
+                    <div class="md-list-item-text" layout="column" flex>
+                      <md-content layout="row" flex layout-align="start center">
+                        <md-input-container flex class="md-block">
+                          <label>Tubo</label>
+                          <input class="campo" ng-model="additionalExam.tubeCode" placeholder="{{additionalExam.placeholder}}" ng-change="$ctrl.tubeInputOnChange(additionalExam)" name="{{additionalExam.tubeId}}" id="{{additionalExam.tubeId}}" maxlength="{{$ctrl.tubeLength}}" ng-blur="$ctrl.tubeInputOnBlur(additionalExam)" tabindex="-1"
+                                 ng-disabled="additionalExam.isSaved" />
+                          <!-- tabindex="-1" -->
+                          <div ng-messages="formAliquot[additionalExam.tubeId].$error">
+                            <div ng-message="customValidation">{{additionalExam.tubeMessage}}</div>
+                          </div>
+                        </md-input-container>
+                      </md-content>
+                      <div layout="row">
+                        <div  class="input-footer-message" ng-show="additionalExam.isSaved">
+                          <span>Aliquotado por: {{additionalExam.operator}}</span>
+                          <span>Convertido por: {{$ctrl.getConvertedHistory(additionalExam).userEmail}}</span>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Mount Tube Input - Exam - End -->
+
+                  <div flex=10 layout="row" layout-align="center center" class="aliquot-arrow-icon">
+                    <div class="aliquot-arrow-icon-up">
+                      <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
+                    </div>
+                  </div>
+
+                  <!-- Mount Aliquot Input - Exam - Begin -->
+                  <div class="input-aloquot" flex>
+                    <div class="md-list-item-text" layout="column" flex>
+                      <md-content layout="row" flex layout-align="start center">
+                        <md-input-container flex class="md-block">
+                          <label>{{additionalExam.containerLabel}}</label>
+                          <input ng-model="additionalExam.aliquotCode"  ng-focus="true" maxlength="{{$ctrl.aliquotMaxLength}}" ng-blur="$ctrl.aliquotInputOnBlur(additionalExam)" disabled />
+                        </md-input-container>
+                        <md-button class="md-icon-button md-button" style="top:-10px" ng-if="additionalExam.isSaved" ng-click="$ctrl.deleteAliquot(additionalExam)" id="delete{{additionalExam.aliquotCode}}">
+
+                          <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons" ng-if="additionalExam.isSaved">delete_forever</md-icon>
+                          <md-tooltip >
+                            Excluir Alíquota
+                          </md-tooltip>
+
+                        </md-button>
+                      </md-content>
+                      <div layout="column">
+                        <div layout="row" class="input-footer-message" ng-show="!additionalExam.aliquotMessage && additionalExam.isSaved">
+                          <span>Registrado:&ensp;&nbsp;{{additionalExam.date | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                        </div>
+                        <div layout="row" class="input-footer-message" ng-show="!additionalExam.aliquotMessage && additionalExam.aliquotCode">
+                          <span ng-show="additionalExam.isSaved">Processado:&nbsp;{{additionalExam.processing | date : 'dd/MM/yyyy hh:mm a'}}</span>
+                          <span ng-show="!additionalExam.isSaved">Processado:&nbsp;</span>
+                          <input ng-class="{fieldDisable: additionalExam.isSaved, fieldActive: !additionalExam.isSaved}" placeholder="Não Informado" tabindex="-1" mdc-datetime-picker="" ng-show="!additionalExam.isSaved" date="true" time="true" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now"
+                                 ng-model="additionalExam.processing" readonly="readonly" format="DD/MM/YYYY hh:mm A" short-time="true" ng-disabled="{{additionalExam.isSaved}}" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Mount Aliquot Input - Exam - End -->
+                </div>
+
+                <div layout="row" style="padding-top: 1%;" class="input-footer-message">
+                  <span>Observação: {{$ctrl.getConvertedHistory(additionalExam).description}}</span>
+                </div>
+              </div>
+              <br>
+            </md-whiteframe>
+
             <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex layout-padding>
               <div class="aliquot-whiteframe-title">
                 Armazenamento:
@@ -176,21 +254,28 @@
                   <div class="md-list-item-text" layout="column" flex>
                     <md-content layout="row" flex layout-align="start center">
                       <md-input-container flex class="md-block">
-                        <label>{{storage.containerLabel}}</label>
+                          <label>{{storage.containerLabel}}</label>
                         <input ng-model="storage.aliquotCode" ng-change="$ctrl.aliquotInputOnChange(storage)" name="{{storage.aliquotId}}" id="{{storage.aliquotId}}" maxlength="{{$ctrl.aliquotMaxLength}}" ng-blur="$ctrl.aliquotInputOnBlur(storage)" ng-keydown="$ctrl.aliquotInputOnKeyDown($event, storage)"
                           ng-disabled="storage.isSaved" />
                         <div ng-messages="formAliquot[storage.aliquotId].$error">
                           <div ng-message="customValidation">{{storage.aliquotMessage}}</div>
                         </div>
                       </md-input-container>
-                      <md-button class="md-icon-button md-button" style="top:-10px" ng-if="storage.isSaved" ng-click="$ctrl.deleteAliquot(storage)" id="delete{{storage.aliquotCode}}">
 
-                        <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons" ng-if="storage.isSaved">delete_forever</md-icon>
-                        <md-tooltip >
-                          Excluir Alíquota
-                        </md-tooltip>
+                          <md-button class="md-icon-button md-button" style="top:-10px" ng-if="storage.isSaved" ng-click="$ctrl.convertAliquot(storage)" id="convert{{storage.aliquotCode}}">
+                            <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons" ng-if="storage.isSaved">transform</md-icon>
+                            <md-tooltip >
+                              Converter
+                            </md-tooltip>
+                          </md-button>
 
-                      </md-button>
+                          <md-button class="md-icon-button md-button" style="top:-10px" ng-if="storage.isSaved" ng-click="$ctrl.deleteAliquot(storage)" id="delete{{storage.aliquotCode}}">
+                            <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons" ng-if="storage.isSaved">delete_forever</md-icon>
+                            <md-tooltip >
+                              Excluir Alíquota
+                            </md-tooltip>
+                          </md-button>
+
                     </md-content>
                     <div layout="column">
                       <div layout="row" class="input-footer-message" ng-show="!storage.aliquotMessage && storage.isSaved">

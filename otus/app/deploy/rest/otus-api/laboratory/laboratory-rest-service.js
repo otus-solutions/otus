@@ -21,6 +21,7 @@
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.convertStorageAliquot = convertStorageAliquot;
     self.deleteAliquot = deleteAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
@@ -89,6 +90,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _participantRest.deleteAliquot({code: aliquotCode}).$promise;
+    }
+
+    function convertStorageAliquot(aliquot) {
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.convertStorageAliquot(aliquot).$promise;
     }
 
     //laboratory-configuration methods
