@@ -24,7 +24,7 @@
       name: '',
       error: '',
       category: '',
-      isValid: false
+      isValid: 'Inválido'
     };
 
     /* Public methods */
@@ -45,7 +45,7 @@
               name: name,
               error: activity.error,
               category: activity.category.label,
-              isValid: activity.isValid
+              isValid: "Inválido"
             };
           }
         } catch (e) {

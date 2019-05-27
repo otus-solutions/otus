@@ -32,6 +32,7 @@
     self.cancel = cancel;
     self.getTotal = getTotal;
     self.showDialog = showDialog;
+    self.downloadCSV = downloadCSV;
     self.ActivitiesInvalids = [];
     self.countActivities = 0;
     self.countActivitiesValids = 0;
@@ -131,7 +132,6 @@
       _interval = $interval(function () {
         if (stopUpload) return
         var _ActivityAnswered = ActivityImportService.create(self.selectedActivity, self.receivedJSON.pop(), self.user);
-        _ActivityAnswered.error = !_ActivityAnswered.isValid ? "Respostas inválidas!" : "";
         var _dataActivity = ImportService.getAnsweredActivityError(_ActivityAnswered, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.surveyTemplate.identity.name);
         if (_dataActivity) {
           self.ActivitiesInvalids.push(_dataActivity);
@@ -238,5 +238,16 @@
           .hideDelay(3000)
       );
     }
+
+
+    function downloadCSV() {
+      if(self.ActivitiesInvalids.length){
+        var headers = '[rn] AS [Participante], [acronym] AS [Acrônimo], [name] AS [Atividade], [category] AS [Categoria], [isValid] AS [Status], [error] AS [Problema]';
+        var name = 'importação de atividade-'.concat(new Date().toLocaleDateString());
+        alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [self.ActivitiesInvalids]);
+      }
+    }
   }
 }());
+
+

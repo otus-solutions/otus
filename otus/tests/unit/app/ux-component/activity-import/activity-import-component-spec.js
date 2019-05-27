@@ -179,6 +179,20 @@ describe('activity-import-component Test', function () {
     done();
   });
 
+  it('should download report errors', function () {
+    spyOn(window, "alasql");
+    controller.ActivitiesInvalids = [Mock.activityError];
+    controller.downloadCSV()
+    expect(window.alasql).toHaveBeenCalledTimes(1)
+  });
+
+
+  it('should\'nt  download report errors', function () {
+    spyOn(window, "alasql");
+    controller.downloadCSV()
+    expect(window.alasql).toHaveBeenCalledTimes(0)
+  });
+
   function mockInjections() {
     Mock.activityError = {
       rn: 123456,

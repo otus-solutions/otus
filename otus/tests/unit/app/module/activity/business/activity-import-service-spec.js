@@ -24,7 +24,7 @@ describe('activity-import-service Test', function () {
   });
 
   it('should define service', function () {
-    expect(service).toBeDefined()
+    expect(service).toBeDefined();
     expect(service.importActivities).toBeDefined();
     expect(service.getAnsweredActivityError).toBeDefined();
     expect(service.getActivityError).toBeDefined();
@@ -105,7 +105,7 @@ describe('activity-import-service Test', function () {
       name: '',
       error: '',
       category: '',
-      isValid: false
+      isValid: 'Inválido'
     };
 
     Mock.activityStructure = {
@@ -114,7 +114,7 @@ describe('activity-import-service Test', function () {
       name: 'Pressão Arterial',
       error: '',
       category: 'Normal',
-      isValid: false
+      isValid: 'Inválido'
     };
     Mock.activityError1 = {
       rn: 1234567,
@@ -122,7 +122,7 @@ describe('activity-import-service Test', function () {
       name: 'Pressão Arterial',
       error: 'Número de recrutamento inválido! Categoria {C1} inválida! Usuário {otus@solutions.com.br} inválido! Aferidor {otus@solutions.com.br} inválido! Questão {QUESTIONID} deveria estar preenchida! ',
       category: 'C1',
-      isValid: false
+      isValid: 'Inválido'
     };
     Mock.activityError2 = {
       rn: 1234567,
@@ -130,7 +130,7 @@ describe('activity-import-service Test', function () {
       name: 'Pressão Arterial',
       error: 'Número de recrutamento inválido! Categoria {C1} inválida! Usuário {otus@solutions.com.br} inválido! Aferidor {otus@solutions.com.br} inválido! Questão {QUESTIONID} não deveria estar preenchida! ',
       category: 'C1',
-      isValid: false
+      isValid: 'Inválido'
     };
     Mock.activityError3 = {
       rn: 1234567,
@@ -138,7 +138,7 @@ describe('activity-import-service Test', function () {
       name: 'Pressão Arterial',
       error: 'Número de recrutamento inválido! Usuário {otus@solutions.com.br} inválido! Aferidor {otus@solutions.com.br} inválido! Questão {QUESTIONID} deveria estar preenchida! ',
       category: 'C1',
-      isValid: false
+      isValid: 'Inválido'
     };
     Mock.activityError4 = {
       rn: 1234567,
@@ -146,7 +146,7 @@ describe('activity-import-service Test', function () {
       name: 'Pressão Arterial',
       error: 'Categoria {C1} inválida! Usuário {otus@solutions.com.br} inválido! Aferidor {otus@solutions.com.br} inválido! Questão {QUESTIONID} deveria estar preenchida! ',
       category: 'C1',
-      isValid: false
+      isValid: 'Inválido'
     };
     Mock.activityError5 = {
       rn: 1234567,
@@ -154,7 +154,7 @@ describe('activity-import-service Test', function () {
       name: 'Pressão Arterial',
       error: 'Número de recrutamento inválido! Categoria {C1} inválida! Aferidor {otus@solutions.com.br} inválido! Questão {QUESTIONID} deveria estar preenchida! ',
       category: 'C1',
-      isValid: false
+      isValid: 'Inválido'
     };
     Mock.activityError6 = {
       rn: 1234567,
@@ -162,7 +162,7 @@ describe('activity-import-service Test', function () {
       name: 'Pressão Arterial',
       error: 'Número de recrutamento inválido! Categoria {C1} inválida! Usuário {otus@solutions.com.br} inválido! Questão {QUESTIONID} deveria estar preenchida! ',
       category: 'C1',
-      isValid: false
+      isValid: 'Inválido'
     };
     Mock.activityError7 = {
       rn: 1234567,
@@ -170,7 +170,7 @@ describe('activity-import-service Test', function () {
       name: 'Pressão Arterial',
       error: 'Número de recrutamento inválido! Categoria {C1} inválida! Usuário {otus@solutions.com.br} inválido! Aferidor {otus@solutions.com.br} inválido! ',
       category: 'C1',
-      isValid: false
+      isValid: 'Inválido'
     };
 
     Mock.response = {

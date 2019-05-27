@@ -87,7 +87,12 @@
       </div>
       <span flex hide-xs hide-sm hide-md></span>
     </div>
-    <md-subheader ng-show="$ctrl.ActivitiesInvalids.length > 0" class="md-no-sticky">Atividades inválidas:</md-subheader>
+    <div layout="row">
+
+      <md-subheader ng-show="$ctrl.ActivitiesInvalids.length > 0" class="md-no-sticky">Atividades inválidas:</md-subheader>
+      <span flex></span>
+      <md-button ng-show="$ctrl.ActivitiesInvalids.length > 0" ng-click="$ctrl.downloadCSV()" class="md-primary md-raised">EXPORTAR .CSV</md-button>
+    </div>
     <md-progress-linear md-mode="indeterminate" ng-show="$ctrl.isLoading"></md-progress-linear>
     <md-divider ng-show="$ctrl.ActivitiesInvalids.length > 0"></md-divider>
     <md-content ng-show="$ctrl.ActivitiesInvalids.length == 0" flex></md-content>
@@ -99,12 +104,12 @@
           <div class="md-list-item-text" layout="column">
             <h3 flex layout="row" layout-align="start center">
               <md-icon ng-if="item.isValid" style="color:green">done</md-icon>
-              <md-icon ng-if="!item.isValid" style="color:red">cancel</md-icon>
+              <md-icon ng-if="item.isValid == 'Inválido'" style="color:red">cancel</md-icon>
               Participante: {{ item.rn }} - ({{ item.acronym }}) {{ item.name }}
               <span flex></span>
             </h3>
             <h4 layout-fill="">Categoria: {{item.category}}</h4>
-            <h4 ng-if="!item.isValid">Problema: <span class="md-body-2">{{ item.error }}</span> </h4>
+            <h4 ng-if="item.isValid == 'Inválido'">Problema: <span class="md-body-2">{{ item.error }}</span> </h4>
           </div>
         </md-list-item>
       </md-list>
