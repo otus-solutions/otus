@@ -9,7 +9,6 @@
     });
 
   Controller.$inject = [
-    'otusjs.deploy.LoadingScreenService',
     'otusjs.otus.dashboard.core.EventService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.application.state.ApplicationStateService',
@@ -17,7 +16,7 @@
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService'
   ];
 
-  function Controller(LoadingScreenService, EventService, ContextService, ApplicationStateService, UserAccessPermissionService, ParticipantLaboratoryService) {
+  function Controller(EventService, ContextService, ApplicationStateService, UserAccessPermissionService, ParticipantLaboratoryService) {
     var self = this;
     self.participantsReady = false;
     self.laboratoryChecking;

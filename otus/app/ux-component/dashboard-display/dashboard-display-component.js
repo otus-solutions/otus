@@ -9,10 +9,11 @@
     });
 
   Controller.$inject = [
+    'otusjs.deploy.LoadingScreenService',
     'otusjs.user.business.UserAccessPermissionService'
   ];
 
-  function Controller(UserAccessPermissionService) {
+  function Controller(LoadingScreenService, UserAccessPermissionService) {
     var self = this;
     self.laboratoryChecking;
     self.userAccessToLaboratory;
