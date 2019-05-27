@@ -22,16 +22,11 @@
     }
 
     function getAllPermission(userData) {
-      return callFake();
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
 
-      return _rest.getAll({email:userData.email}).$promise;
-    }
-
-    function callFake() {
-      return Promise.reject("")
+      return _rest.getAll({ email: userData.email }).$promise;
     }
 
   }

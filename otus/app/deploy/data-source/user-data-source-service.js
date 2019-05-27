@@ -60,13 +60,12 @@
     function fetchUserPermissions() {
       return ContextService.getLoggedUser()
         .then(loggedUser => {
-          UserAccessPermissionRestService.getAllPermission({email: loggedUser.email})
+          UserAccessPermissionRestService.getAllPermission({ email: loggedUser.email })
             .then(response => {
-              if('data' in response) {  //todo better check permissions format (model?)
-                UserContextService.setUserPermissions(response.data.permissions)
+              if ('data' in response) {  // TODO: better check permissions format (model?)
+                UserContextService.setUserPermissions(response.data.permissions);
               }
-            })
-            .catch(e => {
+            }).catch(e => {
               LogoutService.forceLogout("Erro ao carregar permissões de usuário", "Você será redirecionado à tela de login.");
             })
 

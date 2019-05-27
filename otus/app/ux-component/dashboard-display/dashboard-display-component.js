@@ -14,15 +14,28 @@
 
   function Controller(UserAccessPermissionService) {
     var self = this;
-    self.userHaveLaboratoryAccessPermission;
+    self.laboratoryChecking;
+    self.userAccessToLaboratory;
+
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function onInit() {
+      _getCheckingExist();
+      _checkingLaboratoryPermission();
+    }
+
+    function _getCheckingExist() {
+      ParticipantLaboratoryService.getCheckingExist()
+        .then(function (response) {
+          self.laboratoryChecking = response;
+        });
+    }
+
+    function _checkingLaboratoryPermission() {
       UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
-        self.userHaveLaboratoryAccessPermission = response;
-        console.log(self.userHaveLaboratoryAccessPermission);
+        self.userAccessToLaboratory = response;
       });
     }
   }

@@ -21,7 +21,8 @@
 
   function Controller(EventService, DashboardService, UserAccessPermissionService, ApplicationStateService, ParticipantLaboratoryService) {
     var self = this;
-    self.userHaveLaboratoryAccessPermissio;
+    self.laboratoryChecking;
+    self.userAccessToLaboratory;
 
     /* Public methods */
     self.loadParticipantActivities = loadParticipantActivities;
@@ -36,9 +37,7 @@
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       _getCheckingExist();
-      UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
-        self.userHaveLaboratoryAccessPermission = response;
-      });
+      _checkingLaboratoryPermission();
     }
 
     function home() {
@@ -79,6 +78,12 @@
         .then(function (response) {
           self.laboratoryChecking = response;
         });
+    }
+
+    function _checkingLaboratoryPermission() {
+      UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
+        self.userAccessToLaboratory = response;
+      });
     }
   }
 }());
