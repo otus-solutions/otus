@@ -6,7 +6,7 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy.exam')
+    .module('otusjs.deploy.storage')
     .service('otusjs.deploy.ProjectRemoteStorageService', Service);
 
   Service.$inject = [
