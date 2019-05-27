@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -126,7 +126,7 @@
     }
 
     function getUserPermissions() {
-      return [{"permissions":[{"groups":[],"objectType":"SurveyGroupPermission"},{"access":false,"objectType":"LaboratoryPermission"}]}];
+      return { "permissions": [{ "groups": [], "objectType": "SurveyGroupPermission" }, { "access": true, "objectType": "LaboratoryPermission" }] };
     }
   }
 }());

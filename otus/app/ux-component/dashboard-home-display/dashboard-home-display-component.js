@@ -11,12 +11,14 @@
   Controller.$inject = [
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.otus.dashboard.core.EventService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.user.business.UserAccessPermissionService'
   ];
 
-  function Controller(ContextService, EventService, ApplicationStateService) {
+  function Controller(ContextService, EventService, ApplicationStateService, UserAccessPermissionService) {
     var self = this;
     self.participantsReady = false;
+    self.userHaveLaboratoryAccessPermission;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -34,6 +36,7 @@
     function onInit() {
       _loadLoggedUser();
       EventService.onLogin(_loadLoggedUser);
+      self.userHaveLaboratoryAccessPermission = UserAccessPermissionService.getCheckingLaboratoryPermission();
     }
 
     function startMonitoring() {

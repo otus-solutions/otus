@@ -14,12 +14,14 @@
   Controller.$inject = [
     'otusjs.otus.dashboard.core.EventService',
     'otusjs.otus.dashboard.service.DashboardService',
+    'otusjs.user.business.UserAccessPermissionService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService'
   ];
 
-  function Controller(EventService, DashboardService, ApplicationStateService, ParticipantLaboratoryService) {
+  function Controller(EventService, DashboardService, UserAccessPermissionService, ApplicationStateService, ParticipantLaboratoryService) {
     var self = this;
+    self.userHaveLaboratoryAccessPermissio;
 
     /* Public methods */
     self.loadParticipantActivities = loadParticipantActivities;
@@ -34,6 +36,7 @@
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       _getCheckingExist();
+      self.userHaveLaboratoryAccessPermission = UserAccessPermissionService.getCheckingLaboratoryPermission();
     }
 
     function home() {
