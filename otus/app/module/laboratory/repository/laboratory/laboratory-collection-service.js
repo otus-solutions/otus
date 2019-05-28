@@ -284,7 +284,7 @@
           return remoteStorage
             .getCheckingExist()
             .then(function (response) {
-              request.resolve(response);;
+              request.resolve(response);
             });
         });
 
