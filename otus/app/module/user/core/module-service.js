@@ -6,17 +6,16 @@
     .service('otusjs.user.core.ModuleService', Service);
 
   Service.$inject = [
-    '$q',
     'otusjs.user.core.ContextService'
   ];
 
-  function Service($q, ContextService) {
+  function Service(ContextService) {
+    var _remoteStorage = {};
     var self = this;
 
     self.DataSource = {};
     self.Proxy = {};
     self.Service = {};
-    var _remoteStorage = {};
 
     /* Public methods */
     self.configureContext = configureContext;

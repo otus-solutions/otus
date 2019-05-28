@@ -1,4 +1,4 @@
-describe('LaboratoryRemoteStorageService Suite Test', function () {
+describe('LaboratoryRemoteStorageService Test', function () {
 
   var service;
   var Mock = {};

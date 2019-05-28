@@ -4,40 +4,8 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusDashboardDisplay', {
-      controller: Controller,
+      controller: "otusDashboardDisplayCtrl as $ctrl",
       templateUrl: 'app/ux-component/dashboard-display/dashboard-display-template.html'
     });
 
-  Controller.$inject = [
-    'otusjs.deploy.LoadingScreenService',
-    'otusjs.user.business.UserAccessPermissionService'
-  ];
-
-  function Controller(LoadingScreenService, UserAccessPermissionService) {
-    var self = this;
-    self.laboratoryChecking;
-    self.userAccessToLaboratory;
-
-
-    /* Lifecycle hooks */
-    self.$onInit = onInit;
-
-    function onInit() {
-      _getCheckingExist();
-      _checkingLaboratoryPermission();
-    }
-
-    function _getCheckingExist() {
-      ParticipantLaboratoryService.getCheckingExist()
-        .then(function (response) {
-          self.laboratoryChecking = response;
-        });
-    }
-
-    function _checkingLaboratoryPermission() {
-      UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
-        self.userAccessToLaboratory = response;
-      });
-    }
-  }
 }());
