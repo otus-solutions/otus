@@ -1,6 +1,7 @@
-xdescribe('LaboratoryConfigurationService', function () {
-  var Mock = {};
+describe('LaboratoryConfigurationService Test', function () {
+
   var service;
+  var Mock = {};
   var Injections = {};
 
   beforeEach(function () {
@@ -8,24 +9,8 @@ xdescribe('LaboratoryConfigurationService', function () {
   });
 
   beforeEach(function () {
-    Mock.$q = {
-      defer: function () {
-        promise = {};
-      }
-    };
-
     Mock.LaboratoryRepositoryService = {
       getCheckingExist: function () {
-        return Promise.resolve([
-          {
-            "groups": [],
-            "objectType": "SurveyGroupPermission"
-          },
-          {
-            "access": false,
-            "objectType": "LaboratoryPermission"
-          }
-        ]);
       },
       getLaboratoryDescriptors: function () {
       },
@@ -34,6 +19,8 @@ xdescribe('LaboratoryConfigurationService', function () {
     };
 
     Mock.LaboratoryConfigurationService = {
+      checkLaboratoryConfiguration: function () {
+      },
       checkAliquotsDescriptors: function () {
       },
       initializeLaboratoryConfiguration: function () {
@@ -41,22 +28,16 @@ xdescribe('LaboratoryConfigurationService', function () {
     };
 
     angular.mock.module(function ($provide) {
-      $provide.value('$q', Mock.$q);
       $provide.value('otusjs.laboratory.repository.LaboratoryRepositoryService', Mock.LaboratoryRepositoryService);
       $provide.value('otusjs.laboratory.configuration.LaboratoryConfigurationService', Mock.LaboratoryConfigurationService);
     });
   });
 
   beforeEach(function () {
-    inject(function (_$injector_) {
-
-      Injections = {
-        $q: _$injector_.get('$q'),
-        LaboratoryRepositoryService: _$injector_.get('otusjs.laboratory.repository.LaboratoryRepositoryService'),
-        LaboratoryConfigurationService: _$injector_.get('otusjs.laboratory.configuration.LaboratoryConfigurationService')
-      };
-
-      service = _$injector_.get('otusjs.laboratory.business.configuration.LaboratoryConfigurationService', Injections);
+    angular.mock.inject(function ($injector, $q) {
+      Injections = { "$q": $q };
+      service = $injector.get('otusjs.laboratory.business.configuration.LaboratoryConfigurationService', Injections);
+      spyOn(Mock.LaboratoryRepositoryService, 'getCheckingExist').and.returnValue(Promise.resolve({}));
     });
   });
 
