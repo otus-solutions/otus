@@ -103,7 +103,6 @@
                       ng-click="$ctrl.showDialog(item)">
           <div class="md-list-item-text" layout="column">
             <h3 flex layout="row" layout-align="start center">
-              <md-icon ng-if="item.isValid" style="color:green">done</md-icon>
               <md-icon ng-if="item.isValid == 'Inválido'" style="color:red">cancel</md-icon>
               Participante: {{ item.rn }} - ({{ item.acronym }}) {{ item.name }}
               <span flex></span>
