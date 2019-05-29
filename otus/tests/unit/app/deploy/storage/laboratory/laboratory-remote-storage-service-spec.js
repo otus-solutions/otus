@@ -1,11 +1,11 @@
-describe('LaboratoryRemoteStorageService Test', function () {
+xdescribe('LaboratoryRemoteStorageService Test', function () {
 
   var service;
   var Mock = {};
   var Injections = {};
 
   beforeEach(function () {
-    angular.mock.module('otusjs.deploy.storage');
+    angular.mock.module('otusjs.deploy');
   });
 
   beforeEach(function () {
