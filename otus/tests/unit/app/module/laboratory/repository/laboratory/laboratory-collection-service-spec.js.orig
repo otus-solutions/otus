@@ -3,6 +3,14 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
   var service;
   var Mock = {};
   var Injections = [];
+<<<<<<< HEAD
+
+  beforeEach(function () {
+
+    mockData();
+
+    angular.mock.module('otusjs.otus.laboratory');
+=======
   var EXPECTED_DATA;
 
   beforeEach(function () {
@@ -10,6 +18,7 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
     angular.mock.module('otusjs.laboratory.repository');
     angular.mock.module('otusjs.laboratory.core');
     angular.mock.module('otusjs.laboratory.storage');
+>>>>>>> 37360d755d443de6c28e088d9238c6202f3a3909
 
     angular.mock.inject(function (_$injector_) {
 
@@ -19,8 +28,11 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
 
       service = _$injector_.get('otusjs.laboratory.repository.LaboratoryCollectionService', Injections);
 
+<<<<<<< HEAD
+=======
       mockData();
 
+>>>>>>> 37360d755d443de6c28e088d9238c6202f3a3909
       spyOn(service, "useParticipant").and.callThrough();
       spyOn(service, "resetParticipantInUse").and.callThrough();
     });
@@ -39,12 +51,18 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
     expect(service.update).toBeDefined();
     expect(service.updateTubeCollectionData).toBeDefined();
     expect(service.updateAliquots).toBeDefined();
+<<<<<<< HEAD
+=======
     expect(service.convertStorageAliquot).toBeDefined();
+>>>>>>> 37360d755d443de6c28e088d9238c6202f3a3909
     expect(service.deleteAliquot).toBeDefined();
     expect(service.getLaboratory).toBeDefined();
     expect(service.getDescriptors).toBeDefined();
     expect(service.getAliquotDescriptors).toBeDefined();
+<<<<<<< HEAD
     expect(service.getCheckingExist).toBeDefined();
+=======
+>>>>>>> 37360d755d443de6c28e088d9238c6202f3a3909
     expect(service.getAliquots).toBeDefined();
     expect(service.getLots).toBeDefined();
     expect(service.createLot).toBeDefined();
@@ -122,12 +140,13 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
     expect(service.deleteLot("")).toBePromise();
   });
 
-  it('convertStorageAliquot_method_should_execute', function () {
-    expect(service.convertStorageAliquot(Mock.Aliquot)).toBePromise();
-  });
-
+<<<<<<< HEAD
   it('getCheckingExist_method_should_execute', function () {
     expect(service.getCheckingExist()).toBePromise();
+=======
+  it('convertStorageAliquot_method_should_execute', function () {
+    expect(service.convertStorageAliquot(Mock.Aliquot)).toBePromise();
+>>>>>>> 37360d755d443de6c28e088d9238c6202f3a3909
   });
 
   function mockData() {

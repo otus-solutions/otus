@@ -1,5 +1,5 @@
-<md-dialog  ng-style="$ctrl.dialogDimensions" aria-label="{{ $ctrl.labelAria }}">
-  <form ng-cloak>
+<md-dialog ng-style="$ctrl.dialogDimensions" aria-label="{{ $ctrl.labelAria }}">
+  <form name="dialogForm" ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2 ng-bind-html="$ctrl.titleToDialog"></h2>
@@ -11,19 +11,42 @@
       </div>
     </md-toolbar>
     <md-dialog-content>
-      <div class="md-dialog-content md-padding"  layout="row">
+      <div class="md-dialog-content md-padding" layout="row">
         <div layout-align="center center">
           <img ng-style="$ctrl.style " ng-src="{{ $ctrl.img }}" ng-if="$ctrl.isAvailableImage()">
         </div>
         <div>
           <h2 ng-bind-html="$ctrl.title"></h2>
-          <br><p ng-bind-html="$ctrl.text"></p>
+          <br>
+          <p ng-bind-html="$ctrl.text"></p>
+          <div layout="column">
+            <md-input-container  ng-if="$ctrl.showTextInput">
+              <label>{{$ctrl.textInputLabel}}</label>
+              <textarea aria-label="{{ $ctrl.textInputAriaLabel }}" ng-model="$ctrl.textInputFill"></textarea>
+            </md-input-container>
+
+            <md-input-container  required="true" ng-if="$ctrl.showDropDown">
+              <label>{{$ctrl.dropDownLabel}}</label>
+              <md-select aria-label="{{ $ctrl.dropDownAriaLabel }}" ng-model="$ctrl.dropDownSelected" name="dropDownValue" required>
+                <md-option ng-repeat="value in $ctrl.dropDownValues" ng-value="value">
+                  {{value}}
+                </md-option>
+              </md-select>
+              <div ng-messages="dialogForm.dropDownValue.$error" md-auto-hide="false"
+                   ng-show="$ctrl.dropDownIsRequired">
+                <div ng-message="required">Campo Obrigatório</div>
+              </div>
+            </md-input-container>
+          </div>
         </div>
       </div>
     </md-dialog-content>
     <md-dialog-actions layout="row">
       <div ng-repeat="button in $ctrl.buttons">
-        <md-button  class="{{ button.class }}" ng-click="button.action()" ng-bind="button.message"></md-button>
+        <md-button class="{{ button.class }}"
+                   ng-click="button.action({textInputFill:$ctrl.textInputFill, dropDownSelected:$ctrl.dropDownSelected})"
+                   ng-bind="button.message"
+                   aria-label="{{button.ariaLabel ? button.ariaLabel : ''}}"></md-button>
         <span flex></span>
       </div>
     </md-dialog-actions>

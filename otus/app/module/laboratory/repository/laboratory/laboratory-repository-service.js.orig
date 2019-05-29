@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -32,12 +32,11 @@
     self.deleteLot = deleteLot;
     self.deleteAliquot = deleteAliquot;
 
-
     function initializeLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
       return LaboratoryCollectionService
         .initializeLaboratory()
-        .then(function(laboratory) {
+        .then(function (laboratory) {
           return laboratory;
         });
     }
@@ -59,11 +58,15 @@
       return LaboratoryCollectionService.updateAliquots(updateStructure);
     }
 
+<<<<<<< HEAD
+    function updateTubeCollectionData(updateStructure) {
+=======
     function convertStorageAliquot(aliquot) {
       return LaboratoryCollectionService.convertStorageAliquot(aliquot);
     }
 
     function updateTubeCollectionData(updateStructure){
+>>>>>>> 37360d755d443de6c28e088d9238c6202f3a3909
       return LaboratoryCollectionService.updateTubeCollectionData(updateStructure);
     }
 

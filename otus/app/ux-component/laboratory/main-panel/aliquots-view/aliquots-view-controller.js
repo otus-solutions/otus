@@ -14,8 +14,7 @@
     'otusjs.otus.uxComponent.Publisher',
     '$scope',
     '$element',
-    'mdcDefaultParams',
-    '$mdToast'
+    'mdcDefaultParams'
   ];
 
   function Controller(
@@ -27,8 +26,7 @@
     Publisher,
     $scope,
     $element,
-    mdcDefaultParams,
-    $mdToast) {
+    mdcDefaultParams) {
     var self = this;
 
     mdcDefaultParams({ lang: 'pt-br', cancelText: 'cancelar', todayText: 'hoje', okText: 'ok' });
@@ -43,7 +41,7 @@
     self.tubeList = self.participantLaboratory.tubes;
 
     self.$onInit = onInit;
-    self.selecMomentType = selecMomentType;
+    self.selectMomentType = selectMomentType;
     self.selectedMomentType = undefined;
     self.completePlaceholder = completePlaceholder;
     self.aliquotInputOnChange = aliquotInputOnChange;
@@ -51,7 +49,9 @@
     self.aliquotInputOnKeyDown = aliquotInputOnKeyDown;
     self.tubeInputOnBlur = tubeInputOnBlur;
     self.aliquotInputOnBlur = aliquotInputOnBlur;
+    self.getConvertedHistory = getConvertedHistory;
     self.setFocus = setFocus;
+    self.convertAliquot = convertAliquot;
 
     function onInit() {
       self.now = new Date();
@@ -85,7 +85,7 @@
         }
       };
 
-      selecMomentType(self.momentTypeList[0]);
+      selectMomentType(self.momentTypeList[0]);
 
       Publisher.unsubscribe('have-aliquots-changed');
       Publisher.subscribe('have-aliquots-changed', _haveAliquotsChanged);
@@ -161,7 +161,7 @@
       });
     }
 
-    function selecMomentType(momentType) {
+    function selectMomentType(momentType) {
       var toChange = false;
 
       if (self.selectedMomentType) {
@@ -185,6 +185,7 @@
 
     function _setMomentType(momentType) {
       self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType);
+      _buildAvailableExamTypesArray(momentType);
 
       Validation.initialize(
         self.validations, self.tubeLength, self.aliquotLengths, clearAliquotError, clearTubeError, setAliquotError, setTubeError, self.selectedMomentType.exams, self.selectedMomentType.storages
@@ -199,7 +200,15 @@
           index: -1,
           role: Validation.examIdentifier
         });
+        _fillConvertedStoragesContainerLabels();
       }, 200);
+    }
+
+    function _buildAvailableExamTypesArray(momentType) {
+      self.examTypeList = new Set();
+      momentType.exams.forEach(exam => {
+        self.examTypeList.add({label: exam.label, name: exam.name})
+      })
     }
 
     function _defaultCustomValidation() {
@@ -247,6 +256,7 @@
 
     function _fillContainer(aliquot) {
       aliquot.container = LaboratoryConfigurationService.getAliquotContainer(aliquot.aliquotCode);
+      aliquot.label = LaboratoryConfigurationService.getAliquotDescriptor(aliquot.name).label;
       var label = Validation.isValidPallet(aliquot.aliquotCode) ? Validation.palletLabel : Validation.cryotubeLabel;
 
       aliquot.containerLabel = label + " de " + aliquot.label;
@@ -384,12 +394,9 @@
       }
     }
 
-
     function tubeInputOnChange(aliquot) {
       var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
-      // var runCompletePlaceholder = false;
-      //
-      // runCompletePlaceholder = true;
+
       $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
 
       completePlaceholder(aliquotsArray);
@@ -443,12 +450,53 @@
     function deleteAliquot(aliquot) {
       AliquotMessagesService.showDeleteDialog().then(function() {
         return AliquotTubeService.deleteAliquot(aliquot.aliquotCode).then(function () {
-          self.selectedMomentType.removeAliquot(aliquot.aliquotCode);
+          self.selectedMomentType.removeAliquot(aliquot);
         }).catch(function (err) {
            AliquotMessagesService.showNotRemovedDialog(err.data.CONTENT);
         });
       }).catch(function () {});
     }
 
+    function convertAliquot(aliquot) {
+      var examLabels = [];
+      self.examTypeList.forEach(examType => {
+        examLabels.push(examType.label);
+      });
+
+      AliquotMessagesService.showConvertDialog(examLabels,$scope).then(function(result) {
+
+        var examNameFound = "";
+        self.examTypeList.forEach(exam => {
+          if(exam.label === result.examName){
+            examNameFound = exam.name;
+          }
+        });
+
+        aliquot.convertStorage(ParticipantLaboratoryService.getLoggedUser().email, result.observation, examNameFound);
+        aliquot.code = aliquot.aliquotCode;
+        aliquot.name = examNameFound;
+        aliquot.role = "EXAM";
+
+        ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
+          self.selectedMomentType.removeStorage(aliquot.aliquotCode);
+          _setMomentType(self.selectedMomentType);
+          _fillConvertedStoragesContainerLabels()
+        }).catch(function (err) {
+          AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
+        });
+
+      })
+    }
+
+    function getConvertedHistory(aliquot) {
+      var history = aliquot.getHistoryByType("CONVERTED_STORAGE");
+      return history[0];
+    }
+
+    function _fillConvertedStoragesContainerLabels(){
+      self.selectedMomentType.convertedStorages.forEach(aliquot => {
+        _fillContainer(aliquot);
+      })
+    }
   }
 }());

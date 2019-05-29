@@ -34,6 +34,7 @@
     self.loadParticipantActivities = loadParticipantActivities;
     self.loadParticipantReports = loadParticipantReports;
     self.home = home;
+    self.importActivity = importActivity;
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -49,6 +50,11 @@
     function home() {
       ParticipantContextService.removeData('selectedParticipant');
       ApplicationStateService.activateDashboard();
+    }
+
+    function importActivity() {
+      ParticipantContextService.removeData('selectedParticipant');
+      ApplicationStateService.activateActivityImport();
     }
 
     function loadParticipantActivities() {

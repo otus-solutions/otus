@@ -12,6 +12,7 @@
   Service.$inject = [
     '$q',
     'otusjs.deploy.ActivityRestService',
+    'otusjs.deploy.ActivityImportRestService',
     'otusjs.deploy.ActivityConfigurationRestService'
   ];
 
@@ -27,7 +28,7 @@
    * @namespace ActivityRemoteStorage
    * @memberof Services
    */
-  function Service($q, ActivityRestService, ActivityConfigurationRestService) {
+  function Service($q, ActivityRestService, ActivityImportRestService, ActivityConfigurationRestService) {
     var self = this;
 
     /* Public methods */
@@ -38,6 +39,7 @@
     self.findCategories = findCategories;
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
+    self.importActivities = importActivities;
 
     /**
      * Adds activities to collection.
@@ -231,6 +233,27 @@
 
       ActivityRestService
         .getActivityRevisions(activityID, activity)
+        .then(function(response) {
+          deferred.resolve(response);
+        }).catch(function () {
+        deferred.reject();
+      });
+
+      return deferred.promise;
+    }
+
+     /**
+     * Import activities in collection.
+     * @param {(object)} surveyActivities - the Activities answered to be insered
+     * @param {(integer)} version - the version of survey to be insered
+     * @returns {Promise} promise with activityRevision inserted when resolved
+     * @memberof ActivityRemoteStorageService
+     */
+    function importActivities(surveyActivities, acronym, version) {
+      var deferred = $q.defer();
+
+      ActivityImportRestService
+        .importActivities(surveyActivities, acronym, version)
         .then(function(response) {
           deferred.resolve(response);
         }).catch(function () {

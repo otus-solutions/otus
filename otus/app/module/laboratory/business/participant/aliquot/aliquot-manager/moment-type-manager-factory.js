@@ -39,6 +39,7 @@
 
     self.addTube = addTube;
     self.removeAliquot = removeAliquot;
+    self.removeStorage = removeStorage;
     self.setAvailableAliquots = setAvailableAliquots;
     self.getPersistanceStructure = getPersistanceStructure;
 
@@ -78,10 +79,10 @@
       var preStructure = _buildPreStructure(newAliquotsArray);
       preStructure.forEach(function (tubeSet) {
         var tube = _findTube(tubeSet.code);
-        tubeSet.rawAliquotes.forEach(function (aliquot) {
+        tubeSet.rawAliquots.forEach(function (aliquot) {
           tubeSet.aliquots.push(tube.toAliquot(aliquot));
         });
-        delete tubeSet.rawAliquotes;
+        delete tubeSet.rawAliquots;
       });
       return preStructure;
     }
@@ -99,52 +100,71 @@
           return map.code === aliquot.tubeCode;
         });
         if (thisMap) {
-          thisMap.rawAliquotes.push(aliquot);
+          thisMap.rawAliquots.push(aliquot);
         } else {
           var newMap = {
             code: aliquot.tubeCode,
-            rawAliquotes: [],
+            rawAliquots: [],
             aliquots: []
           };
-          newMap.rawAliquotes.push(aliquot);
+          newMap.rawAliquots.push(aliquot);
           maps.push(newMap);
         }
       });
       return maps;
     }
 
-    function removeAliquot(code) {
+    function removeAliquot(aliquotRemoved) {
       var index;
-      var _participantAliquote = self.collectedAliquots.find(function (aliquot) {
-        return aliquot.code == code;
+
+      var _participantAliquot = self.collectedAliquots.find(function (aliquot) {
+        return aliquot.code == aliquotRemoved.code;
       });
-      index = self.collectedAliquots.indexOf(_participantAliquote);
+
+      index = self.collectedAliquots.indexOf(_participantAliquot);
       self.collectedAliquots.splice(index, 1);
-      if (_participantAliquote.role === "EXAM") {
-        _removeExam(code);
-      } else if (_participantAliquote.role === "STORAGE") {
-        _removeStorage(code);
+      if (aliquotRemoved.isConverted){
+        _removeConverted(aliquotRemoved.code);
+      } else if (_participantAliquot.role === "EXAM") {
+        _removeExam(aliquotRemoved.code);
+      } else if (_participantAliquot.role === "STORAGE") {
+        removeStorage(aliquotRemoved.code);
       }
     }
 
     function _removeExam(code) {
       var index;
-      var _aliquote = self.exams.find(function (exam) {
+
+      var _aliquot = self.exams.find(function (exam) {
         return exam.aliquotCode === code;
       });
+
       var _originalExam = self.originalExams.find(function (examFound) {
         return examFound.aliquotCode === code;
       });
+
       index = self.originalExams.indexOf(_originalExam);
       self.originalExams.splice(index, 1, AliquotStructureFactory.create(_originalExam).toEmptyJSON());
 
-      index = self.exams.indexOf(_aliquote);
-      self.exams.splice(index, 1, AliquotStructureFactory.create(_aliquote).toEmptyJSON());
+      index = self.exams.indexOf(_aliquot);
+      self.exams.splice(index, 1, AliquotStructureFactory.create(_aliquot).toEmptyJSON());
     }
 
-    function _removeStorage(code) {
+    function _removeConverted(code) {
       var index;
-      var _aliquote = self.storages.find(function (exam) {
+
+      var _aliquot = self.convertedStorages.find(function (exam) {
+        return exam.aliquotCode === code;
+      });
+
+      index = self.convertedStorages.indexOf(_aliquot);
+      self.convertedStorages.splice(index, 1);
+    }
+
+    function removeStorage(code) {
+      var index;
+
+      var _aliquot = self.storages.find(function (exam) {
         return exam.aliquotCode === code;
       });
       var _originalStorages = self.originalStorages.find(function (exam) {
@@ -153,8 +173,8 @@
       index = self.originalStorages.indexOf(_originalStorages);
       self.originalStorages.splice(index, 1, AliquotStructureFactory.create(_originalStorages).toEmptyJSON());
 
-      index = self.storages.indexOf(_aliquote);
-      self.storages.splice(index, 1, AliquotStructureFactory.create(_aliquote).toEmptyJSON());
+      index = self.storages.indexOf(_aliquot);
+      self.storages.splice(index, 1, AliquotStructureFactory.create(_aliquot).toEmptyJSON());
     }
 
   }

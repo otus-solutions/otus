@@ -30,11 +30,14 @@ describe('Moment Type Manager Factory', function () {
       mockFactoryData(moment);
       spyOn(moment.exams, 'splice').and.callThrough();
       spyOn(moment.storages, 'splice').and.callThrough();
+      spyOn(moment.convertedStorages, 'splice').and.callThrough();
     });
 
     it('should remove a exam', function () {
       var _length = moment.collectedAliquots.length;
-      moment.removeAliquot('343000648');
+      var aliquot = {};
+      aliquot.code = '343000648';
+      moment.removeAliquot(aliquot);
       expect(_length).toBeGreaterThan(moment.collectedAliquots.length);
       expect(moment.exams.splice).toHaveBeenCalledTimes(1);
     });
@@ -42,14 +45,27 @@ describe('Moment Type Manager Factory', function () {
 
     it('should remove a storage', function () {
       var _length = moment.collectedAliquots.length;
-      moment.removeAliquot('343006231');
+      var aliquot = {};
+      aliquot.code = '343006231';
+      moment.removeAliquot(aliquot);
       expect(_length).toBeGreaterThan(moment.collectedAliquots.length);
       expect(moment.storages.splice).toHaveBeenCalledTimes(1);
     });
 
+    it('should remove a additional', function () {
+      var _length = moment.collectedAliquots.length;
+      var aliquot = {};
+      aliquot.code = '343007231';
+      aliquot.isConverted = true;
+      moment.removeAliquot(aliquot);
+      expect(_length).toBeGreaterThan(moment.collectedAliquots.length);
+      expect(moment.convertedStorages.splice).toHaveBeenCalledTimes(1);
+    });
+
 
     function mockFactoryData(factory) {
-      factory.collectedAliquots = [{
+      factory.collectedAliquots = [
+        {
         "objectType": "Aliquot",
         "code": "343000648",
         "name": "BIOCHEMICAL_SERUM",
@@ -103,7 +119,8 @@ describe('Moment Type Manager Factory', function () {
         }
       }];
 
-      factory.exams = [{
+      factory.exams = [
+        {
         "aliquotCode": "343000648",
         "aliquotId": "EXAMAliquot",
         "tubeCode": "341005082",
@@ -177,7 +194,8 @@ describe('Moment Type Manager Factory', function () {
         "tubeMessage": ""
       }];
 
-      factory.storages = [{
+      factory.storages = [
+        {
         "aliquotCode": "343006231",
         "aliquotId": "STORAGEAliquot",
         "tubeCode": "341005082",
@@ -467,7 +485,31 @@ describe('Moment Type Manager Factory', function () {
         "tubeMessage": ""
       }];
 
-      factory.originalExams = [{
+      factory.convertedStorages = [
+        {
+          "aliquotCode": "343007231",
+          "aliquotId": "STORAGEAliquot",
+          "tubeCode": "341005082",
+          "container": "",
+          "isConverted": true,
+          "containerLabel": "Soro Jejum",
+          "date": "2018-07-11T21:48:06.595Z",
+          "index": "",
+          "isSaved": true,
+          "label": "Soro Jejum",
+          "name": "FASTING_SERUM",
+          "operator": "tiago.matana@gmail.com",
+          "placeholder": "",
+          "processing": "2018-07-11T21:47:48.361Z",
+          "role": "STORAGE",
+          "time": "",
+          "tubeId": "STORAGETube",
+          "tubeMessage": ""
+        }
+      ];
+
+      factory.originalExams = [
+        {
         "aliquotCode": "343000648",
         "aliquotId": "EXAMAliquot",
         "tubeCode": "341005082",
@@ -541,7 +583,8 @@ describe('Moment Type Manager Factory', function () {
         "tubeMessage": ""
       }];
 
-      factory.originalStorages = [{
+      factory.originalStorages = [
+        {
         "aliquotCode": "343006231",
         "aliquotId": "STORAGEAliquot",
         "tubeCode": "341005082",
