@@ -36,7 +36,6 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
       spyOn(Injections.ApplicationStateService, "laboratoryActivityFlagsReport");
       spyOn(Injections.ApplicationStateService, "activateExamSending");
       spyOn(Injections.ApplicationStateService, "activateLaboratoryMonitoring");
-      spyOn(ctrl,"setFocus");
     });
   });
 

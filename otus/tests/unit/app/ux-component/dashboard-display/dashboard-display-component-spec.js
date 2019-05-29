@@ -1,51 +1,39 @@
-xdescribe('otusDashboardDisplay test', function () {
-  var Mock = {};
-  var $controller;
+describe('otusDashboardDisplay test', function () {
   var ctrl;
-  var Injections = {};
+  var Injections = [];
 
   beforeEach(function () {
     angular.mock.module('otusjs.otus.uxComponent');
-  });
+    angular.mock.module('otusjs.laboratory');
+    angular.mock.module('otusjs.otus.laboratory');
+    angular.mock.module('otusjs.user');
 
-  beforeEach(function () {
-    Mock.UserAccessPermissionService = {
-      getCheckingLaboratoryPermission: () => { }
-    };
+    angular.mock.inject(function (_$injector_, _$controller_) {
 
-    Mock.ParticipantLaboratoryService = {
-      getCheckingExist: () => { }
-    };
+      Injections.UserAccessPermissionService = _$injector_.get('otusjs.user.business.UserAccessPermissionService');
+      Injections.ParticipantLaboratoryService = _$injector_.get('otusjs.laboratory.business.participant.ParticipantLaboratoryService');
 
-    angular.mock.module(function ($provide) {
-      $provide.value('otusjs.user.business.UserAccessPermissionService', Mock.UserAccessPermissionService);
-      $provide.value('otusjs.laboratory.business.participant.ParticipantLaboratoryService', Mock.ParticipantLaboratoryService);
-    })
-  });
+      ctrl =  _$controller_('otusDashboardDisplayCtrl', Injections);
 
-  beforeEach(function () {
-    inject(function (_$injector_, _$controller_) {
-      $controller = _$controller_;
-      Injections = {
-        UserAccessPermissionService: Mock.UserAccessPermissionService,
-        ParticipantLaboratoryService: Mock.ParticipantLaboratoryService
-      };
-      ctrl = $controller('otusDashboardDisplayCtrl', Injections);
+      spyOn(Injections.UserAccessPermissionService, 'getCheckingLaboratoryPermission').and.callThrough();
+      spyOn(Injections.ParticipantLaboratoryService, 'getCheckingExist').and.callThrough();
+
     });
   });
 
-  describe('onInit method', () => {
-    beforeEach(() => {
-      spyOn(ctrl, '$onInit').and.callThrough();
-      spyOn(Mock.UserAccessPermissionService, 'getCheckingLaboratoryPermission').and.callThrough();
-      spyOn(Mock.ParticipantLaboratoryService, 'getCheckingExist').and.callThrough();
+  it('ctrlExistence_check', function () {
+    expect(ctrl).toBeDefined();
+    console.log(ctrl)
+  });
 
-      ctrl.$onInit();
-    });
+  it('ctrlMethodsExistence_check', function () {
+    expect(ctrl.$onInit).toBeDefined();
+  });
 
-    it('should onInit be defined', () => {
-      expect(Mock.UserAccessPermissionService.getCheckingLaboratoryPermission).toHaveBeenCalledTimes(1);
-    });
+  it('onInit_method_should_evoke_internalMethods', function () {
+    ctrl.$onInit();
+    expect(Injections.ParticipantLaboratoryService.getCheckingExist).toHaveBeenCalledTimes(2);
+    expect(Injections.UserAccessPermissionService.getCheckingLaboratoryPermission).toHaveBeenCalledTimes(1);
   });
 
 });
