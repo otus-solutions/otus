@@ -22,7 +22,7 @@
       parent: STATE.SESSION,
       name: STATE.LABORATORY_FLAG_REPORT,
       url: '/' + STATE.LABORATORY_FLAG_REPORT,
-      template: '<otus-laboratory-flag-report-List-manager layout="column" flex></otus-laboratory-flag-report-List-manager>',
+      template: '<otus-laboratory-flag-report-list-manager layout="column" flex></otus-laboratory-flag-report-list-manager>',
       resolve: {
         resolve: _resolve
       },
