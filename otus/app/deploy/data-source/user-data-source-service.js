@@ -65,11 +65,10 @@
         .then(loggedUser => {
           UserAccessPermissionRestService.getAllPermission({ email: loggedUser.email })
             .then(response => {
-              if ('data' in response) {  // TODO: better check permissions format (model?)
+              // TODO: better check permissions format (model?)
+              if ('data' in response) {
                 UserContextService.setUserPermissions(response.data.permissions);
-                $timeout(function () {
                   LoadingScreenService.finish();
-                }, 5000 );
               }
             }).catch(e => {
               LoadingScreenService.finish();

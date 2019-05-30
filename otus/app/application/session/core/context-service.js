@@ -115,6 +115,7 @@
     }
 
     function getLoggedUser() {
+      return Promise.resolve({email:"brenoscheffer@gmail.com"})
       return loggedUserPromise.promise;
     }
 
