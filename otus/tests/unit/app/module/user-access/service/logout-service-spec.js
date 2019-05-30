@@ -1,6 +1,6 @@
-describe('otusDashboardDisplay test', function () {
+describe('LogoutService test', function () {
   var Mock = {};
-  var service;
+  var service,logoutService;
   var Injections = [];
 
   beforeEach(function () {
@@ -10,11 +10,15 @@ describe('otusDashboardDisplay test', function () {
     angular.mock.module('otusjs.user.access');
     angular.mock.module('otusjs.deploy.user', function ($provide) {
       $provide.service('OtusRestResourceService', function () {
+        this.getOtusAuthenticatorResource = function () {
+          return {};
+        }
       })
     });
+
     angular.mock.module(function ($provide) {
       $provide.value('$mdDialog', []);
-      $provide.value('otusjs.application.state.ApplicationStateService', Mock.ApplicationStateService);
+      $provide.value('otusjs.application.state.ApplicationStateService', {});
       $provide.value('otusjs.application.dialog.DialogShowService', Mock.DialogShowService);
     });
 
@@ -28,8 +32,6 @@ describe('otusDashboardDisplay test', function () {
       service =  _$injector_.get('otusjs.user.access.service.LogoutService', Injections);
 
       spyOn(Injections.DialogShowService, 'showDialog').and.callThrough();
-      spyOn(Injections.ApplicationStateService, 'activateLogin').and.callThrough();
-      spyOn(Injections.LogoutServiceService, 'logout').and.callThrough();
 
     });
   });
@@ -45,18 +47,51 @@ describe('otusDashboardDisplay test', function () {
 
   it('logout_method_should_evoke_internalMethods', function () {
     service.logout();
-    // expect(Injections.LogoutServiceService.logout).toHaveBeenCalledTimes(1);
-    // expect(Injections.ApplicationStateService.activateLogin).toHaveBeenCalledTimes(1);
     expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
   });
 
+  it('forceLogout_method_should_evoke_internalMethods', function () {
+    service.forceLogout("Teste","Realizado o teste.");
+    expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+  });
+
+  describe('LogoutServiceService test', function () {
+    beforeEach(function () {
+
+      angular.mock.inject(function (_$injector_) {
+
+        Injections.AuthenticationRestService = _$injector_.get('otusjs.deploy.user.AuthenticationRestService');
+        Injections.EventService = _$injector_.get('otusjs.user.access.core.EventService');
+
+        logoutService =  _$injector_.get('otusjs.user.access.service.LogoutServiceService', Injections);
+
+      });
+    });
+
+    it('logoutServiceExistence_check', function () {
+      expect(logoutService).toBeDefined();
+    });
+
+    it('serviceMethodsExistence_check', function () {
+      expect(logoutService.logout).toBeDefined();
+    });
+
+    it('logout_method_should_evoke_internalMethods', function () {
+      var promise = Promise.resolve();
+
+      spyOn(Injections.AuthenticationRestService, 'invalidate').and.returnValue(promise);
+      spyOn(Injections.EventService, 'fireLogout').and.callThrough();
+
+      logoutService.logout();
+      expect(Injections.AuthenticationRestService.invalidate).toHaveBeenCalledTimes(1);
+      promise.then(resp => {
+        expect(Injections.EventService.fireLogout).toHaveBeenCalledTimes(1);
+      });
+    });
+  });
+
   function mockInjections() {
-    Mock.ApplicationStateService = {
-      activateLogin: function () {
-        return Promise.resolve();
-      }
-    };
-     Mock.DialogShowService = {
+    Mock.DialogShowService = {
       showDialog: function (data) {
         var self = this;
         self.test = data;
