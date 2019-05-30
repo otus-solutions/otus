@@ -1,4 +1,4 @@
-describe('LogoutService test', function () {
+describe('UserAccessPermissionService test', function () {
   var Mock= {};
   var service;
   var Injections = [];
