@@ -103,9 +103,9 @@
     function _JSONContainsPropertyOfActivity(answers) {
       var isValid = true;
       if (Array.isArray(answers)) {
-        answers.forEach(result => {
-          if (isValid) {
-            isValid = result.hasOwnProperty("id") &&
+        isValid = answers.every(result => {
+          // if (isValid) {
+            return result.hasOwnProperty("id") &&
               result.hasOwnProperty("acronym") &&
               result.hasOwnProperty("participant") &&
               result.hasOwnProperty("user") &&
@@ -114,7 +114,7 @@
               result.hasOwnProperty("activityConfiguration") &&
               result.hasOwnProperty("answers") &&
               result.hasOwnProperty("offlineData");
-          }
+          // }
         });
       } else {
         isValid = false;
@@ -131,9 +131,12 @@
       var _count = 0;
       _interval = $interval(function () {
         if (stopUpload) return
-        var _ActivityAnswered = ActivityImportService.create(self.selectedActivity, self.receivedJSON.pop(), self.user);
+        var _ActivityAnswered = ActivityImportService.create(self.selectedActivity, self.receivedJSON.shift(), self.user);
         var _dataActivity = ImportService.getAnsweredActivityError(_ActivityAnswered, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.surveyTemplate.identity.name);
         if (_dataActivity) {
+          _dataActivity.error = _dataActivity.error.replaceAll("{","");
+          _dataActivity.error = _dataActivity.error.replaceAll("}","");
+          _dataActivity.error = _dataActivity.error.replaceAll("!",". ");
           self.ActivitiesInvalids.push(_dataActivity);
           self.countActivitiesError += 1;
         } else {
@@ -190,7 +193,11 @@
             } else {
               self.ActivitiesAnswered.splice(0, 100);
               response.forEach(result => {
-                self.ActivitiesInvalids.push(ImportService.getActivityError(result, self.selectedActivity));
+                var _dataActivity = ImportService.getActivityError(result, self.selectedActivity);
+                _dataActivity.error = _dataActivity.error.replaceAll("{","");
+                _dataActivity.error = _dataActivity.error.replaceAll("}","");
+                _dataActivity.error = _dataActivity.error.replaceAll("!",". ");
+                self.ActivitiesInvalids.push(_dataActivity);
                 self.countActivitiesError += 1;
                 self.countActivitiesValids -= 1;
               });
@@ -212,7 +219,7 @@
     function showDialog(item) {
       var data = {
         dialogToTitle: "("+item.acronym+") "+item.name,
-        textDialog: "<b>Participante:</b><br>"+item.rn+"<br><b>Categoria:</b><br> "+item.category+"<br><b>Problema:</b><br>"+item.error.replaceAll("! ", "!<br>"),
+        textDialog: "<p layout-padding><b>Participante:</b>"+item.rn+"</p><p layout-padding><b>Categoria:</b> "+item.category+"</p><br><p layout-padding><b>Erro(s):</b><br>"+item.error.replaceAll(". ", ".</br>")+"</p>",
         buttons: []
       };
 
