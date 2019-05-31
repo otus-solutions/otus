@@ -6,14 +6,16 @@
     .controller('otusDashboardHomeDisplayCtrl', Controller);
 
   Controller.$inject = [
+    '$q',
     'otusjs.otus.dashboard.core.EventService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.user.business.UserAccessPermissionService',
-    'otusjs.laboratory.business.participant.ParticipantLaboratoryService'
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(EventService, ContextService, ApplicationStateService, UserAccessPermissionService, ParticipantLaboratoryService) {
+  function Controller($q, EventService, ContextService, ApplicationStateService, UserAccessPermissionService, ParticipantLaboratoryService, LoadingScreenService) {
     var self = this;
     self.participantsReady = false;
     self.laboratoryChecking;
@@ -35,8 +37,17 @@
     function onInit() {
       _loadLoggedUser();
       EventService.onLogin(_loadLoggedUser);
-      _getCheckingExist();
-      _checkingLaboratoryPermission();
+      _fetchPermissiosn();
+    }
+
+    function _fetchPermissiosn() {
+      LoadingScreenService.start();
+      $q.all([
+          _getCheckingExist(),
+          _checkingLaboratoryPermission()
+        ])
+        .then(LoadingScreenService.finish)
+        .catch(LoadingScreenService.finish)
     }
 
     function startMonitoring() {
@@ -90,14 +101,14 @@
     }
 
     function _getCheckingExist() {
-      ParticipantLaboratoryService.getCheckingExist()
+      return ParticipantLaboratoryService.getCheckingExist()
         .then(function (response) {
           self.laboratoryChecking = response;
         });
     }
 
     function _checkingLaboratoryPermission() {
-      UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
+      return UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
         self.userAccessToLaboratory = response;
       });
     }

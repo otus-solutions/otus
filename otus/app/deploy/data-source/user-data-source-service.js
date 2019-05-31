@@ -7,17 +7,15 @@
 
   Service.$inject = [
     '$q',
-    '$timeout',
     'otusjs.deploy.user.UserRestService',
     'otusjs.user.storage.UserStorageService',
     'otusjs.deploy.user.UserAccessPermissionRestService',
     'otusjs.application.session.core.ContextService',
     'otusjs.user.core.ContextService',
-    'otusjs.user.access.service.LogoutService',
-    'otusjs.deploy.LoadingScreenService',
+    'otusjs.user.access.service.LogoutService'
   ];
 
-  function Service($q, $timeout, UserRestService, UserStorageService, UserAccessPermissionRestService, ContextService, UserContextService, LogoutService, LoadingScreenService) {
+  function Service($q, UserRestService, UserStorageService, UserAccessPermissionRestService, ContextService, UserContextService, LogoutService) {
     var self = this;
     var _loadingDefer = null;
 
@@ -60,7 +58,6 @@
     }
 
     function fetchUserPermissions() {
-      LoadingScreenService.start();
       return ContextService.getLoggedUser()
         .then(loggedUser => {
           UserAccessPermissionRestService.getAllPermission({ email: loggedUser.email })
@@ -68,12 +65,8 @@
               // TODO: better check permissions format (model?)
               if ('data' in response) {
                 UserContextService.setUserPermissions(response.data.permissions);
-                $timeout(function () {
-                  LoadingScreenService.finish();
-                }, 5000 );
               }
             }).catch(e => {
-              LoadingScreenService.finish();
               LogoutService.forceLogout("Erro ao carregar permissões de usuário", "Você será redirecionado à tela de login.");
             })
         })
