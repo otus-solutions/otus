@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -8,10 +8,14 @@
   Service.$inject = [
     '$q',
     'otusjs.deploy.user.UserRestService',
-    'otusjs.user.storage.UserStorageService'
+    'otusjs.user.storage.UserStorageService',
+    'otusjs.deploy.user.UserAccessPermissionRestService',
+    'otusjs.application.session.core.ContextService',
+    'otusjs.user.core.ContextService',
+    'otusjs.user.access.service.LogoutService'
   ];
 
-  function Service($q, UserRestService, UserStorageService) {
+  function Service($q, UserRestService, UserStorageService, UserAccessPermissionRestService, ContextService, UserContextService, LogoutService) {
     var self = this;
     var _loadingDefer = null;
 
@@ -31,21 +35,41 @@
       return UserStorageService.getCollection().find();
     }
 
-    function getData() { }
+    function getData() {
+    }
 
     function _initializeSources() {
       UserRestService.initialize();
+      UserAccessPermissionRestService.initialize();
     }
 
     function _loadData() {
       UserRestService
         .listIdexers()
-        .then(function(response) {
+        .then(function (response) {
           UserStorageService.getCollection().clear();
           UserStorageService.getCollection().insert(response.data);
           UserStorageService.save();
           _loadingDefer.resolve();
         });
+
+      fetchUserPermissions();
+
+    }
+
+    function fetchUserPermissions() {
+      return ContextService.getLoggedUser()
+        .then(loggedUser => {
+          UserAccessPermissionRestService.getAllPermission({ email: loggedUser.email })
+            .then(response => {
+              // TODO: better check permissions format (model?)
+              if ('data' in response) {
+                UserContextService.setUserPermissions(response.data.permissions);
+              }
+            }).catch(e => {
+              LogoutService.forceLogout("Erro ao carregar permissões de usuário", "Você será redirecionado à tela de login.");
+            })
+        })
     }
   }
 }());

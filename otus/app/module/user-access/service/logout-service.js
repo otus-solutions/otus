@@ -17,9 +17,35 @@
     var _confirmLogout;
 
     self.logout = logout;
+    self.forceLogout = forceLogout;
 
     function logout() {
       _showModal();
+    }
+
+    function forceLogout(title, message) {
+      _confirmLogout = {
+        dialogToTitle:title,
+        textDialog:message,
+        ariaLabel:'Sair',
+        buttons: [
+          {
+            message:'Ok',
+            action:function() {
+              LogoutService
+                .logout()
+                .then(function() {
+                  $mdDialog.hide();
+                  ApplicationStateService.activateLogin();
+                });
+            },
+            class:'md-raised md-primary'
+          }
+        ]
+      };
+
+      DialogService.showDialog(_confirmLogout);
+
     }
 
     function _showModal() {

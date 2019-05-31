@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -30,10 +30,9 @@
 
     function _redirect($q, DashboardContextService, Application) {
       var deferred = $q.defer();
-
       Application
         .isDeployed()
-        .then(function() {
+        .then(function () {
           try {
             DashboardContextService.isValid();
             deferred.resolve();

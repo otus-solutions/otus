@@ -36,7 +36,7 @@
 
     function _printKeyMsg(key, msg) {
       var fullMsg = LOCKED_MESSAGE + self.key;
-      if(key || msg) fullMsg+= ' - ' + msg + key;
+      if(key || msg) fullMsg += ' - ' + msg + key;
     }
 
     function startingLockedByKey(key) {
@@ -60,7 +60,7 @@
     function start() {
       if (!self.loading_screen){
         _constructor();
-      };
+      }
     }
 
     function finish() {

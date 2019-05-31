@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,26 +6,31 @@
     .service('otusjs.laboratory.business.configuration.LaboratoryConfigurationService', Service);
 
   Service.$inject = [
-    'otusjs.laboratory.configuration.LaboratoryConfigurationService',
+    '$q',
     'otusjs.laboratory.repository.LaboratoryRepositoryService',
-    '$q'
+    'otusjs.laboratory.configuration.LaboratoryConfigurationService'
   ];
 
-  function Service(LaboratoryConfigurationService, LaboratoryRepositoryService, $q) {
+  function Service($q, LaboratoryRepositoryService, LaboratoryConfigurationService) {
     var self = this;
-
+    /* Public methods */
+    self.getCheckingExist = getCheckingExist;
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.fetchAliquotsDescriptors = fetchAliquotsDescriptors;
 
-    onInit();
+    /* Laboratory Configuration */
 
-    function onInit() {
-      // LaboratoryConfigurationService.reset(); // TODO: CHECK IF NEEDED
+    function getCheckingExist() {
+      var defer = $q.defer();
+      LaboratoryRepositoryService.getCheckingExist().then(function (response) {
+        defer.resolve(response.data);
+      }, function (e) {
+        defer.resolve(false);
+      });
+
+      return defer.promise;
     }
 
-
-    /*Laboratory Descriptors*/
-    //takes nothing, returns promise
     function getLaboratoryDescriptors() {
       var defer = $q.defer();
       var labConfigInitialized = LaboratoryConfigurationService.checkLaboratoryConfiguration();
@@ -34,7 +39,7 @@
         defer.resolve(labConfigInitialized);
       } else {
         _fetchLaboratoryConfiguration()
-          .then(function(laboratoryConfiguration) {
+          .then(function (laboratoryConfiguration) {
             LaboratoryConfigurationService.initializeLaboratoryConfiguration(laboratoryConfiguration);
             defer.resolve(LaboratoryConfigurationService.checkLaboratoryConfiguration());
           });
@@ -45,16 +50,17 @@
     function _fetchLaboratoryConfiguration() {
       var defer = $q.defer();
       LaboratoryRepositoryService.getLaboratoryDescriptors()
-        .then(function(response) {
+        .then(function (response) {
           defer.resolve(response.data);
-        }, function(e) {
+        }, function (e) {
           defer.reject(e);
         });
 
       return defer.promise;
     }
 
-    /*Aliquots Descriptors*/
+    /* Aliquots Descriptors */
+
     function fetchAliquotsDescriptors() {
       var defer = $q.defer();
       var aliquotsInitialized = LaboratoryConfigurationService.checkAliquotsDescriptors();
@@ -63,7 +69,7 @@
         defer.resolve(aliquotsInitialized);
       } else {
         _fetchAliquotsDescriptors()
-          .then(function(aliquotsDescriptors) {
+          .then(function (aliquotsDescriptors) {
             LaboratoryConfigurationService.initializeAliquotsDescriptors(aliquotsDescriptors);
             defer.resolve(LaboratoryConfigurationService.checkAliquotsDescriptors());
           });
@@ -74,9 +80,9 @@
     function _fetchAliquotsDescriptors() {
       var defer = $q.defer();
       LaboratoryRepositoryService.getAliquotsDescriptors() // TODO: implement
-        .then(function(response) {
+        .then(function (response) {
           defer.resolve(response.data);
-        }, function(e) {
+        }, function (e) {
           defer.reject(e);
         });
 

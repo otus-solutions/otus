@@ -44,6 +44,7 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
     expect(service.getLaboratory).toBeDefined();
     expect(service.getDescriptors).toBeDefined();
     expect(service.getAliquotDescriptors).toBeDefined();
+    expect(service.getCheckingExist).toBeDefined();
     expect(service.getAliquots).toBeDefined();
     expect(service.getLots).toBeDefined();
     expect(service.createLot).toBeDefined();
@@ -123,6 +124,10 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
 
   it('convertStorageAliquot_method_should_execute', function () {
     expect(service.convertStorageAliquot(Mock.Aliquot)).toBePromise();
+  });
+
+  it('getCheckingExist_method_should_execute', function () {
+    expect(service.getCheckingExist()).toBePromise();
   });
 
   function mockData() {

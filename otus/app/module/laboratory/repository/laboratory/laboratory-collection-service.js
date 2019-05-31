@@ -2,7 +2,7 @@
  * LaboratoryCollectionService
  * @namespace Services
  */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -42,8 +42,9 @@
     self.getLaboratory = getLaboratory;
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
+    self.getCheckingExist = getCheckingExist;
 
-    //Laboratory Project Methods
+    /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
     self.createLot = createLot;
@@ -81,10 +82,10 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .insert(laboratory)
-            .then(function(remoteLaboratory) {
+            .then(function (remoteLaboratory) {
               var localLaboratory = LaboratoryLocalStorageService.insert(remoteLaboratory);
               request.resolve(localLaboratory);
             });
@@ -105,12 +106,12 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .find({
               recruitmentNumber: _participant.recruitmentNumber
             })
-            .then(function(laboratory) {
+            .then(function (laboratory) {
               LaboratoryLocalStorageService.clear();
               var localData = LaboratoryLocalStorageService.insert(laboratory);
               request.resolve(localData);
@@ -125,10 +126,10 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .initializeLaboratory(_participant.recruitmentNumber)
-            .then(function(laboratory) {
+            .then(function (laboratory) {
               request.resolve(laboratory);
             });
         });
@@ -146,12 +147,12 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .update(_participant.recruitmentNumber, laboratory)
-            .then(function(remoteLaboratory) {
+            .then(function (remoteLaboratory) {
               request.resolve();
-            }, function(e) {
+            }, function (e) {
               request.reject(e);
             });
         });
@@ -169,12 +170,12 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .updateTubeCollectionData(_participant.recruitmentNumber, updateStructure)
-            .then(function(remoteLaboratory) {
+            .then(function (remoteLaboratory) {
               request.resolve();
-            }, function(e) {
+            }, function (e) {
               request.reject(e);
             });
         });
@@ -192,12 +193,12 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .updateAliquots(_participant.recruitmentNumber, updateStructure)
-            .then(function(data) {
+            .then(function (data) {
               request.resolve();
-            }, function(e) {
+            }, function (e) {
               request.reject(e);
             });
         });
@@ -228,12 +229,12 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .deleteAliquot(aliquotCode)
-            .then(function(data) {
+            .then(function (data) {
               request.resolve(data);
-            }, function(e) {
+            }, function (e) {
               request.reject(e);
             });
         });
@@ -246,10 +247,10 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .getLaboratory(_participant.recruitmentNumber)
-            .then(function(laboratory) {
+            .then(function (laboratory) {
               request.resolve(laboratory);
             });
         });
@@ -262,10 +263,10 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .getDescriptors()
-            .then(function(descriptors) {
+            .then(function (descriptors) {
               request.resolve(descriptors);
             });
         });
@@ -278,11 +279,31 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .getAliquotDescriptors()
-            .then(function(descriptors) {
+            .then(function (descriptors) {
               request.resolve(descriptors);
+            });
+        });
+
+      return request.promise;
+    }
+
+    /**
+     * Laboratory Configuration Checking.
+     * @memberof LaboratoryCollectionService
+     */
+    function getCheckingExist() {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getCheckingExist()
+            .then(function (response) {
+              request.resolve(response);
             });
         });
 
@@ -299,12 +320,12 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .getAliquots(lotAliquot, unique)
-            .then(function(aliquots) {
+            .then(function (aliquots) {
               request.resolve(aliquots);
-            }).catch(function(err) {
+            }).catch(function (err) {
               request.reject(err);
             });
         });
@@ -317,10 +338,10 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .getLots()
-            .then(function(lots) {
+            .then(function (lots) {
               request.resolve(lots);
             });
         });
@@ -338,13 +359,13 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .createLot(lotStructure)
-            .then(function(data) {
+            .then(function (data) {
               request.resolve(data);
             })
-            .catch(function(e) {
+            .catch(function (e) {
               request.reject(e);
             });
         });
@@ -362,13 +383,13 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .updateLot(lotStructure)
-            .then(function(data) {
+            .then(function (data) {
               request.resolve(data);
             })
-            .catch(function(e) {
+            .catch(function (e) {
               request.reject(e);
             });
         });
@@ -386,13 +407,13 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .deleteLot(lotCode)
-            .then(function(data) {
+            .then(function (data) {
               request.resolve(data);
             })
-            .catch(function(e) {
+            .catch(function (e) {
               request.reject(e);
             });
         });

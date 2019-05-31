@@ -32,7 +32,6 @@
     self.$onInit = onInit;
 
     /* Public methods */
-    self.selectParticipant = selectParticipant;
     self.getCurrentState = getCurrentState;
     self.showObservation = showObservation;
     self.loadData = loadData;
@@ -46,13 +45,8 @@
     /* Lifecycle methods */
     function onInit() {
       LoadingScreenService.start();
-      _loadParticipant();
       _buildLegend();
-      EventService.onParticipantSelected(_participantAvailable);
-    }
-
-    function selectParticipant(selectedParticipant) {
-      self.selectedParticipant = selectedParticipant;
+      _buildDashboard();
     }
 
     function showObservation(event, index, exam) {
@@ -134,21 +128,11 @@
         });
     }
 
-    function _participantAvailable(participantData) {
+    function _buildDashboard() {
       self.examList = [];
       self.loadAvailable = true;
       self.showExamSignal = false;
-      self.selectedParticipant = participantData;
-      selectParticipant(participantData);
       loadData();
-    }
-
-    function _loadParticipant() {
-      return DashboardService
-        .getSelectedParticipant()
-        .then(function (participantData) {
-          _participantAvailable(participantData);
-        });
     }
 
     function _buildLegend() {
