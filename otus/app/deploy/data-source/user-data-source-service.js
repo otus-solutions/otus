@@ -69,7 +69,7 @@
                 UserContextService.setUserPermissions(response.data.permissions);
                 $timeout(function () {
                   LoadingScreenService.finish();
-                }, 5000 );
+                }, 3000 );
               }
             }).catch(e => {
               LoadingScreenService.finish();
