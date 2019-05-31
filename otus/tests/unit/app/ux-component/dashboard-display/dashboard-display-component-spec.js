@@ -23,7 +23,6 @@ describe('otusDashboardDisplay test', function () {
 
   it('ctrlExistence_check', function () {
     expect(ctrl).toBeDefined();
-    console.log(ctrl)
   });
 
   it('ctrlMethodsExistence_check', function () {
@@ -32,7 +31,7 @@ describe('otusDashboardDisplay test', function () {
 
   it('onInit_method_should_evoke_internalMethods', function () {
     ctrl.$onInit();
-    expect(Injections.ParticipantLaboratoryService.getCheckingExist).toHaveBeenCalledTimes(2);
+    expect(Injections.ParticipantLaboratoryService.getCheckingExist).toHaveBeenCalledTimes(1);
     expect(Injections.UserAccessPermissionService.getCheckingLaboratoryPermission).toHaveBeenCalledTimes(1);
   });
 

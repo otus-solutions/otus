@@ -3,12 +3,13 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
   var service;
   var Mock = {};
   var Injections = [];
+  var EXPECTED_DATA;
 
   beforeEach(function () {
 
-    mockData();
-
-    angular.mock.module('otusjs.otus.laboratory');
+    angular.mock.module('otusjs.laboratory.repository');
+    angular.mock.module('otusjs.laboratory.core');
+    angular.mock.module('otusjs.laboratory.storage');
 
     angular.mock.inject(function (_$injector_) {
 
@@ -17,6 +18,8 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
       Injections.LaboratoryLocalStorageService = _$injector_.get('otusjs.laboratory.storage.LaboratoryLocalStorageService');
 
       service = _$injector_.get('otusjs.laboratory.repository.LaboratoryCollectionService', Injections);
+
+      mockData();
 
       spyOn(service, "useParticipant").and.callThrough();
       spyOn(service, "resetParticipantInUse").and.callThrough();
@@ -36,6 +39,7 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
     expect(service.update).toBeDefined();
     expect(service.updateTubeCollectionData).toBeDefined();
     expect(service.updateAliquots).toBeDefined();
+    expect(service.convertStorageAliquot).toBeDefined();
     expect(service.deleteAliquot).toBeDefined();
     expect(service.getLaboratory).toBeDefined();
     expect(service.getDescriptors).toBeDefined();
@@ -116,6 +120,10 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
 
   it('deleteLot_method_should_execute', function () {
     expect(service.deleteLot("")).toBePromise();
+  });
+
+  it('convertStorageAliquot_method_should_execute', function () {
+    expect(service.convertStorageAliquot(Mock.Aliquot)).toBePromise();
   });
 
   it('getCheckingExist_method_should_execute', function () {

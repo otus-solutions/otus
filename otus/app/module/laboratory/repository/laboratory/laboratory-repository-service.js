@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -16,6 +16,7 @@
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
     /* Laboratory Configuration Methods */
@@ -31,11 +32,12 @@
     self.deleteLot = deleteLot;
     self.deleteAliquot = deleteAliquot;
 
+
     function initializeLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
       return LaboratoryCollectionService
         .initializeLaboratory()
-        .then(function (laboratory) {
+        .then(function(laboratory) {
           return laboratory;
         });
     }
@@ -57,7 +59,11 @@
       return LaboratoryCollectionService.updateAliquots(updateStructure);
     }
 
-    function updateTubeCollectionData(updateStructure) {
+    function convertStorageAliquot(aliquot) {
+      return LaboratoryCollectionService.convertStorageAliquot(aliquot);
+    }
+
+    function updateTubeCollectionData(updateStructure){
       return LaboratoryCollectionService.updateTubeCollectionData(updateStructure);
     }
 

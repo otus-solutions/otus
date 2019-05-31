@@ -1,4 +1,4 @@
-(function () {
+(function() {
   'use strict';
 
   angular
@@ -21,10 +21,11 @@
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.convertStorageAliquot = convertStorageAliquot;
     self.deleteAliquot = deleteAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
-    /* Laboratory Configuration Methods */
+    /* Laboratory Configuration Methods*/
     self.getDescriptors = getDescriptors;
     self.getCheckingExist = getCheckingExist;
     self.getAliquotDescriptors = getAliquotDescriptors;
@@ -36,7 +37,6 @@
     }
 
     /* laboratory-participant methods */
-
     function create() {
       _participantRest.create();
     }
@@ -90,11 +90,17 @@
       if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _participantRest.deleteAliquot({ code: aliquotCode }).$promise;
+      return _participantRest.deleteAliquot({code: aliquotCode}).$promise;
+    }
+
+    function convertStorageAliquot(aliquot) {
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.convertStorageAliquot(aliquot).$promise;
     }
 
     /* laboratory-configuration methods */
-
     function getDescriptors() {
       if (!_configurationRest) {
         throw new Error('REST resource is no initialized.');

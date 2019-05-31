@@ -23,6 +23,7 @@
       'SIGNUP_RESULT': 'signup-result',
       'LABELMAKER': 'labelMaker',
       'RECOVERY': 'recovery',
+      'ACTIVITY_IMPORT': 'activity-import'
     });
 
 }());

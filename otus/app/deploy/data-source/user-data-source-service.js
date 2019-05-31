@@ -68,7 +68,9 @@
               // TODO: better check permissions format (model?)
               if ('data' in response) {
                 UserContextService.setUserPermissions(response.data.permissions);
+                $timeout(function () {
                   LoadingScreenService.finish();
+                }, 5000 );
               }
             }).catch(e => {
               LoadingScreenService.finish();
