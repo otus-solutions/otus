@@ -39,7 +39,6 @@
 
     function _setParticipant(participantData) {
       self.selectedParticipant = participantData;
-      console.log(self.selectedParticipant)
     }
 
     function _getCheckingExist() {
