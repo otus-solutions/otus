@@ -24,8 +24,8 @@
       url: '/' + STATE.DASHBOARD,
       template: '<otus-dashboard layout="column" flex></otus-dashboard>',
       data: {
-        redirect: _redirect,
-      },
+        redirect: _redirect
+      }
     };
 
     function _redirect($q, DashboardContextService, Application) {

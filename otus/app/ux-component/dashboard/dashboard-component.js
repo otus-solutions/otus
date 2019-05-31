@@ -12,12 +12,6 @@
     });
 
   function Controller() {
-    var self = this;
 
-    /* Lifecycle hooks */
-    self.$onInit = onInit;
-
-    function onInit() {
-    }
   }
 }());
