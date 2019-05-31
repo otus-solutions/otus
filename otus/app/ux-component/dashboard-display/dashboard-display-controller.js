@@ -51,7 +51,7 @@
     function _checkingLaboratoryPermission() {
       UserAccessPermissionService.getCheckingLaboratoryPermission()
         .then(response => {
-          self.userAccessToLaboratory = response.access;
+          self.userAccessToLaboratory = response;
         });
     }
   }
