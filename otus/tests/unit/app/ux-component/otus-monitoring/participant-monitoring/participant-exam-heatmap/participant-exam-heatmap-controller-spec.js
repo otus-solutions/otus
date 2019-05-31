@@ -52,7 +52,6 @@ describe('participantExamHeatmapController_TestSuite', function () {
   });
 
   it('controllerMethodExistence check', function () {
-    expect(ctrl.selectParticipant).toBeDefined();
     expect(ctrl.getCurrentState).toBeDefined();
     expect(ctrl.showObservation).toBeDefined();
     expect(ctrl.loadData).toBeDefined();
@@ -65,12 +64,6 @@ describe('participantExamHeatmapController_TestSuite', function () {
     expect(ctrl.COLOR.DOES_NOT_HAVE).toBe('#ff6f69');
     expect(ctrl.COLOR.DOES_NOT_APPLY).toBe('#cecece');
     expect(ctrl.COLOR.AMBIGUITY).toBe('#bae1ff');
-  });
-
-  it('should_add_selectedParticipant_in_controlerContext', function () {
-    expect(ctrl.selectedParticipant).toBeUndefined();
-    ctrl.selectParticipant(Mock.selectedParticipant);
-    expect(ctrl.selectedParticipant.name).toBe('OTUS');
   });
 
   it('getCurrentState_should_evoke_getCurrentState_of_applicationStateService ', function () {

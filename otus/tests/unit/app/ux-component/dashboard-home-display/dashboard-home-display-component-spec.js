@@ -10,17 +10,20 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
     angular.mock.module('otusjs.otus.dashboard');
     angular.mock.module(function ($provide) {
       $provide.value('otusjs.application.state.ApplicationStateService', Mock.ApplicationStateService);
+      $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
     });
     angular.mock.module('otusjs.laboratory');
     angular.mock.module('otusjs.otus.laboratory');
     angular.mock.module('otusjs.user');
 
     angular.mock.inject(function (_$controller_, _$injector_) {
+      Injections.$q = _$injector_.get('$q');
       Injections.EventService = _$injector_.get('otusjs.otus.dashboard.core.EventService');
       Injections.ContextService = _$injector_.get('otusjs.otus.dashboard.core.ContextService');
       Injections.ApplicationStateService = _$injector_.get('otusjs.application.state.ApplicationStateService');
       Injections.UserAccessPermissionService = _$injector_.get('otusjs.user.business.UserAccessPermissionService');
       Injections.ParticipantLaboratoryService = _$injector_.get('otusjs.laboratory.business.participant.ParticipantLaboratoryService');
+      Injections.LoadingScreenService = _$injector_.get('otusjs.deploy.LoadingScreenService');
 
       ctrl = _$controller_('otusDashboardHomeDisplayCtrl', Injections);
 
@@ -36,6 +39,7 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
       spyOn(Injections.ApplicationStateService, "laboratoryActivityFlagsReport");
       spyOn(Injections.ApplicationStateService, "activateExamSending");
       spyOn(Injections.ApplicationStateService, "activateLaboratoryMonitoring");
+      spyOn(Injections.LoadingScreenService, "start");
     });
   });
 
@@ -62,6 +66,7 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
     expect(Injections.ContextService.getLoggedUser).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantLaboratoryService.getCheckingExist).toHaveBeenCalledTimes(1);
     expect(Injections.UserAccessPermissionService.getCheckingLaboratoryPermission).toHaveBeenCalledTimes(1);
+    expect(Injections.LoadingScreenService.start).toHaveBeenCalledTimes(1);
   });
 
   it('startMonitoring_method_should_evoke_internalMethods', function () {
@@ -104,6 +109,12 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
     expect(Injections.ApplicationStateService.activateLaboratoryMonitoring).toHaveBeenCalledTimes(1);
   });
 
+  it('setFocus_method_should_execute', function () {
+    spyOn(ctrl, "setFocus").and.callThrough();
+    ctrl.setFocus();
+    expect(ctrl.setFocus).toHaveBeenCalledTimes(1);
+  });
+
   function mockInjections() {
     Mock.ApplicationStateService = {
       activateMonitoring: function () {
@@ -130,7 +141,11 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
       activateLaboratoryMonitoring: function () {
         return Promise.resolve();
       }
-    }
+    };
+    Mock.LoadingScreenService = {
+      start:function () {
+        return Promise.resolve();
+      }
+    };
   }
-
 });
