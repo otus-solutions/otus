@@ -21,7 +21,6 @@
         .whenActivityFacadeServiceReady()
         .then(function (ActivityFacadeService) {
           _setActivityToViewer(ActivityFacadeService);
-          _setupToViewer();
         });
     }
 
