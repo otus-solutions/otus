@@ -9,7 +9,7 @@
       'ACTIVITY_ADDER': 'activity-adder',
       'ACTIVITY_CATEGORY_ADDER': 'activity-category-adder',
       'ACTIVITY_PLAYER': 'activity-player',
-      'ACTIVITY_VIEW': 'activity-view',
+      'ACTIVITY_VIEWER': 'activity-viewer',
       'PAPER_ACTIVITY_INITIALIZER': 'paper-activity-initializer',
       'APPLICATION': 'application',
       'DASHBOARD': 'dashboard',

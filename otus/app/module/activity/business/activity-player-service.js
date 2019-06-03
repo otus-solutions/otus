@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -19,7 +19,7 @@
     function load() {
       return ModuleService
         .whenActivityFacadeServiceReady()
-        .then(function(ActivityFacadeService) {
+        .then(function (ActivityFacadeService) {
           _setActivityToPlay(ActivityFacadeService);
           _setupPlayer();
         });
@@ -35,7 +35,7 @@
     function _setupPlayer() {
       ModuleService
         .whenActivityPlayerServiceReady()
-        .then(function(PlayerService) {
+        .then(function (PlayerService) {
           PlayerService.setup();
         });
     }

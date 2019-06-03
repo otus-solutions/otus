@@ -20,23 +20,23 @@
       return ModuleService
         .whenActivityFacadeServiceReady()
         .then(function (ActivityFacadeService) {
-          _setActivityToView(ActivityFacadeService);
-          _setupPlayer(); // TODO:
+          _setActivityToViewer(ActivityFacadeService);
+          _setupToViewer();
         });
     }
 
-    function _setActivityToView(ActivityFacadeService) {
+    function _setActivityToViewer(ActivityFacadeService) {
       var activityToView = ContextService.getSelectedActivities()[0];
       ActivityFacadeService.useActivity(activityToView);
       ActivityFacadeService.openSurveyActivity(ContextService.getLoggedUser());
       ContextService.setActivityToView(activityToView);
     }
 
-    function _setupPlayer() {
+    function _setupToViewer() {
       ModuleService
         .whenActivityPlayerServiceReady()
         .then(function (PlayerService) {
-          PlayerService.setup(); // TODO:
+          PlayerService.viewer(); // TODO:
         });
     }
   }

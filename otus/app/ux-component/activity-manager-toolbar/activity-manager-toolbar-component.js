@@ -58,7 +58,7 @@
 
     function viewSelectedActivity() {
       ActivityViewService.load().then(function () {
-        ApplicationStateService.activateActivityView()
+        ApplicationStateService.activateActivityViewer()
       });
     }
 

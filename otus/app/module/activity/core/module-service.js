@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -76,7 +76,7 @@
         _activityRemoteStorageDefer.resolve(self.RemoteStorage.Activity);
       }
       return {
-        whenReady: function() {
+        whenReady: function () {
           return _activityRemoteStorageDefer.promise;
         }
       };
