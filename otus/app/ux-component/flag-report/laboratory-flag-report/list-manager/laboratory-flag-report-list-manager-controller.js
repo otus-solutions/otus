@@ -121,11 +121,11 @@
         alasql("CREATE TABLE IF NOT EXISTS flagsExams(RN INT,NOME STRING, STATUS STRING)");
         var rn = 0;
         if (Array.isArray(self.rawExams.data)) {
-          if (self.examsData.data.length > 0) {
+          if (self.rawExams.data.length > 0) {
             try {
-              self.examsData.data.forEach(function (line) {
-                for (let i = 0; i < self.examsData.columns.length; i++) {
-                  alasql("INSERT INTO flagsExams VALUES(" + self.examsData.index[rn] + ",'" + self.examsData.columns[i][1] + "','" + ExamStatusHistoryService.getStatusLabel(line[i]) + "')");
+              self.rawExams.data.forEach(function (line) {
+                for (let i = 0; i < self.rawExams.columns.length; i++) {
+                  alasql("INSERT INTO flagsExams VALUES(" + self.rawExams.index[rn] + ",'" + self.rawExams.columns[i][1] + "','" + ExamStatusHistoryService.getStatusLabel(line[i]) + "')");
                 }
                 rn++;
               });
