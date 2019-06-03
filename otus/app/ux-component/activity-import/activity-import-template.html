@@ -8,90 +8,118 @@
     </div>
   </otus-dashboard-toolbar>
   <div layout="column" layout-align="center" layout-fill>
-    <span flex="5"></span>
     <md-subheader class="md-no-sticky moment-type-title" layout="column">
-      <span>Selecione o tipo de atividade e envie o arquivo convertido para importação.</span>
+      <span>Selecione sua base de dados para importação.</span>
     </md-subheader>
-    <div layout="row" class="md-caption" layout-padding layout-margin layout-align="center center">*Somente as
-      atividades válidas serão salvas! Favor revisar toda e qualquer atividade que apresente um problema.
+    <div layout="row" class="md-caption" layout-padding layout-margin layout-align="center center">
+      <span class="md-mini">Envie o arquivo clicando em <md-icon class="md-accent">attach_file</md-icon>, após o a seleção do arquivo clique em <md-icon class="md-accent">playlist_add_check</md-icon> para validar as respostas existentes. <br>
+      Você pode pausar a qualquer momento a validação clicando em <md-icon class="md-warn">pause</md-icon> e para salvar as atividades válidas clique em <md-icon class="md-primary">save</md-icon>. </span>
+
     </div>
+
     <div layout="column" layout-gt-md="row" layout-align="start center" layout-padding="">
-      <div class="md-body-1" ng-if="$ctrl.ActivitiesInvalids.length > 0" flex layout-padding hide-xs hide-sm hide-md>
-        <md-button class="md-raised" layout-margin>
-          <md-icon>insert_drive_file</md-icon>
-          {{$ctrl.getTotal()}}
-          <md-icon style="color:green">done</md-icon>
-          {{ $ctrl.countActivitiesValids }}
-          <md-icon style="color:red">cancel</md-icon>
-          {{ $ctrl.countActivitiesError }}
-        </md-button>
+      <span flex></span>
+      <div layout="column" layout-gt-xs="row">
+        <div layout="row" layout-align="start center" flex>
+          <input id="fileInput" type="file" ng-model="$ctrl.file" accept='.json' class="ng-hide">
+          <md-input-container flex layout="row" layout-align="end center"
+                              style="min-width:280px;">
+            <md-button class="md-icon-button md-accent" aria-label="Carregar respostas de atividades"
+                       ng-disabled="$ctrl.isLoading" ng-click="$ctrl.upload()">
+              <md-tooltip md-direction="top">
+                Selecione o arquivo
+              </md-tooltip>
+              <md-icon>attach_file</md-icon>
+            </md-button>
+            <input id="nameFile" type="text" ng-disabled="true" aria-label="Name File">
+          </md-input-container>
+        </div>
+
+        <span flex-md="5"></span>
+
+        <div layout="row" layout-margin="">
+          <md-input-container flex="100" layout-fill style="min-width:280px;" layout-padding="">
+            <label>Tipo de Atividade</label>
+            <md-select ng-model="$ctrl.selectedActivity" ng-disabled="true">
+              <md-option ng-repeat="activity in $ctrl.activities track by $index"
+                         ng-value="activity">
+                {{activity.surveyTemplate.identity.acronym}} - {{activity.surveyTemplate.identity.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+
       </div>
-      <span flex ng-if="$ctrl.ActivitiesInvalids.length == 0"></span>
-      <div layout="row" layout-margin="" layout-align="start center" flex>
-        <input id="fileInput" type="file" ng-model="$ctrl.file" accept='.json' class="ng-hide">
-        <md-input-container flex layout="row" layout-align="end center" class="md-accent md-raised" layout-fill
-                            style="min-width:280px;">
-          <md-button class="md-button md-mini md-warn md-raised" layout-margin="0" aria-label="Cancelar upload" ng-click="$ctrl.cancel()" ng-if="$ctrl.isLoading">
-            <md-icon>cancel</md-icon>
-          </md-button>
-          <md-button class="md-button md-mini md-accent md-raised" aria-label="Carregar respostas de atividades"
-                     layout-margin="0" ng-if="!$ctrl.isLoading" ng-click="$ctrl.upload()">
-            <md-tooltip md-direction="top">
-              Realizar envio de atividades
-            </md-tooltip>
-            <md-icon>file_upload</md-icon>
-          </md-button>
-          <input id="nameFile" type="text" ng-disabled="true" aria-label="Name File">
-        </md-input-container>
-      </div>
-      <span flex-md="5"></span>
-      <div layout="row" layout-margin="">
-        <md-input-container flex="100" layout-fill style="min-width:280px;">
-          <label>Tipo de Atividade</label>
-          <md-select ng-model="$ctrl.selectedActivity" ng-disabled="true">
-            <md-option ng-repeat="activity in $ctrl.activities track by $index"
-                       ng-value="activity">
-              {{activity.surveyTemplate.identity.acronym}} - {{activity.surveyTemplate.identity.name}}
-            </md-option>
-          </md-select>
-        </md-input-container>
-      </div>
-      <div layout="row" layout-align="start center" layout-margin="">
-        <md-button class="md-button md-accent md-raised" aria-label="Validar respostas de atividades"
-                   ng-click="$ctrl.validateAnswers()" ng-disabled="$ctrl.receivedJSON.length==0 || $ctrl.isLoading" flex>
+
+
+      <div layout="row" layout-align="start center">
+        <md-button class="md-icon-button md-accent" aria-label="Validar respostas de atividades"
+                   ng-click="$ctrl.validateAnswers()" ng-disabled="$ctrl.receivedJSON.length==0 || $ctrl.isLoading">
           <md-tooltip md-direction="top">
-            Upload
+            Validar respostas
           </md-tooltip>
-          <md-icon>backup</md-icon>
-          <span>UPLOAD</span>
+          <md-icon>playlist_add_check</md-icon>
         </md-button>
-        <md-button class="md-button md-primary md-raised" aria-label="Validar respostas de atividades"
+        <md-button class="md-icon-button md-primary" aria-label="Validar respostas de atividades"
                    ng-click="$ctrl.saveActivitiesAnswered()"
-                   ng-disabled="$ctrl.ActivitiesAnswered.length === 0 || $ctrl.isLoading" flex>
+                   ng-disabled="$ctrl.ActivitiesAnswered.length === 0 || $ctrl.isLoading">
           <md-tooltip md-direction="top">
             Salvar
           </md-tooltip>
           <md-icon>save</md-icon>
-          Salvar
+        </md-button>
+        <md-button class="md-icon-button md-mini md-warn" aria-label="Cancelar upload" ng-click="$ctrl.cancel()"
+                   ng-if="$ctrl.isLoading">
+          <md-icon>pause</md-icon>
+          <md-tooltip md-direction="top">
+            Pausar a validação
+          </md-tooltip>
         </md-button>
       </div>
-      <div class="md-body-1" ng-if="$ctrl.ActivitiesInvalids.length > 0" flex layout-padding hide-gt-md="">
-        <md-button class="md-raised" layout-margin>
-          <md-icon>insert_drive_file</md-icon>
-          {{$ctrl.getTotal()}}
-          <md-icon style="color:green">done</md-icon>
-          {{ $ctrl.countActivitiesValids }}
-          <md-icon style="color:red">cancel</md-icon>
-          {{$ctrl.countActivitiesError}}
-        </md-button>
-      </div>
-      <span flex hide-xs hide-sm hide-md></span>
-    </div>
-    <div layout="row">
 
-      <md-subheader ng-show="$ctrl.ActivitiesInvalids.length > 0" class="md-no-sticky">Atividades inválidas:</md-subheader>
       <span flex></span>
-      <md-button ng-show="$ctrl.ActivitiesInvalids.length > 0" ng-click="$ctrl.downloadCSV()" class="md-primary md-raised">EXPORTAR .CSV</md-button>
+    </div>
+
+
+    <div layout="row" layout-align="start center">
+
+      <md-subheader flex="33" ng-show="$ctrl.ActivitiesInvalids.length > 0" class="md-no-sticky">Resultados:
+      </md-subheader>
+
+
+
+      <div class="md-body-1" ng-if="$ctrl.ActivitiesInvalids.length > 0" flex="33" layout="row" layout-fill="" layout-align="center center">
+        <md-card layout="row" class="md-raised md-body-1" layout-padding>
+
+
+            <span><md-icon>insert_drive_file</md-icon>
+            {{$ctrl.getTotal()}}</span>
+            <span><md-icon style="color:green">done</md-icon>
+            {{ $ctrl.countActivitiesValids }}</span>
+            <span><md-icon style="color:red">cancel</md-icon>
+            {{$ctrl.countActivitiesError}}</span>
+          </md-card-content>
+        </md-card>
+      </div>
+<!--      <span flex="5"></span>-->
+      <div layout="row" layout-align="end end" flex="33">
+
+        <md-button show-gt-sm hide ng-show="$ctrl.ActivitiesInvalids.length > 0" layout-align="end end" ng-click="$ctrl.downloadCSV()"
+                   class="md-primary md-raised">
+          <span >EXPORTAR</span>
+          <md-icon>get_app</md-icon>
+          <md-tooltip md-direction="top">
+            Exportar erros
+          </md-tooltip>
+        </md-button>
+        <md-button hide-gt-sm ng-show="$ctrl.ActivitiesInvalids.length > 0" layout-align="end end" ng-click="$ctrl.downloadCSV()"
+                   class="md-icon-button md-primary md-raised">
+          <md-icon>get_app</md-icon>
+          <md-tooltip md-direction="top">
+            Exportar erros
+          </md-tooltip>
+        </md-button>
+      </div>
     </div>
     <md-progress-linear md-mode="indeterminate" ng-show="$ctrl.isLoading"></md-progress-linear>
     <md-divider ng-show="$ctrl.ActivitiesInvalids.length > 0"></md-divider>
@@ -101,14 +129,24 @@
         <md-list-item class="md-3-line" ng-repeat="item in $ctrl.ActivitiesInvalids track by $index"
                       layout-align="start center"
                       ng-click="$ctrl.showDialog(item)">
-          <div class="md-list-item-text" layout="column">
-            <h3 flex layout="row" layout-align="start center">
-              <md-icon ng-if="item.isValid == 'Inválido'" style="color:red">cancel</md-icon>
-              Participante: {{ item.rn }} - ({{ item.acronym }}) {{ item.name }}
+          <div class="md-list-item-text" layout="row">
+            <div layout="column" layout-padding="" layout-align="center center">
+              <span><md-icon ng-if="item.isValid == 'Inválido'" style="color:red" flex>cancel</md-icon></span>
+            </div>
+            <div layout="column">
               <span flex></span>
-            </h3>
-            <h4 layout-fill="">Categoria: {{item.category}}</h4>
-            <h4 ng-if="item.isValid == 'Inválido'">Problema: <span class="md-body-2">{{ item.error }}</span> </h4>
+              <span class="md-title">
+
+                Participante: {{ item.rn }}
+
+
+              </span>
+              <span class="md-subhead">{{ item.error }}</span>
+              <span flex></span>
+              <md-divider></md-divider>
+            </div>
+
+            <!--            <h4 ng-if="item.isValid == 'Inválido'"></span> </h4>-->
           </div>
         </md-list-item>
       </md-list>

@@ -27,6 +27,7 @@
 
     /* Laboratory Configuration Methods*/
     self.getDescriptors = getDescriptors;
+    self.getCheckingExist = getCheckingExist;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getAliquotConfiguration = getAliquotConfiguration;
 
@@ -35,7 +36,7 @@
       _configurationRest = OtusRestResourceService.getLaboratoryConfigurationResource();
     }
 
-    //laboratory-participant methods
+    /* laboratory-participant methods */
     function create() {
       _participantRest.create();
     }
@@ -99,7 +100,7 @@
       return _participantRest.convertStorageAliquot(aliquot).$promise;
     }
 
-    //laboratory-configuration methods
+    /* laboratory-configuration methods */
     function getDescriptors() {
       if (!_configurationRest) {
         throw new Error('REST resource is no initialized.');
@@ -119,6 +120,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _configurationRest.getAliquotDescriptors().$promise;
+    }
+
+    function getCheckingExist() {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _configurationRest.getCheckingExist().$promise;
     }
   }
 }());

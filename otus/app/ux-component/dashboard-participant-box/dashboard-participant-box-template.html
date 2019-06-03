@@ -10,7 +10,8 @@
         </md-button>
         <div layout="column">
           <span class="md-title">{{ $ctrl.selectedParticipant.recruitmentNumber }}</span>
-          <span class="md-body-1">{{ $ctrl.selectedParticipant.fieldCenter.name }} ({{ $ctrl.selectedParticipant.fieldCenter.acronym }})</span>
+          <span class="md-body-1">{{ $ctrl.selectedParticipant.fieldCenter.name }} ({{
+            $ctrl.selectedParticipant.fieldCenter.acronym }})</span>
         </div>
       </div>
       <span class="md-title">{{ $ctrl.selectedParticipant.name }}</span>
@@ -18,20 +19,19 @@
   </div>
   <div layout-margin>
     <md-list ng-show="!$ctrl.isEmpty">
-    <md-list-item class="md-2-line">
-      <div layout-align="start center">
-        <md-icon aria-label="Home" class="md-accent">person</md-icon>
-        <md-button id="home-menu" ng-click="$ctrl.home()">Home</md-button>
-      </div>
-    </md-list-item>
-
+      <md-list-item class="md-2-line">
+        <div layout-align="start center">
+          <md-icon aria-label="Home" class="md-accent">person</md-icon>
+          <md-button id="home-menu" ng-click="$ctrl.home()">Home</md-button>
+        </div>
+      </md-list-item>
       <md-list-item class="md-2-line">
         <div layout-align="start center">
           <md-icon md-svg-icon="file-document-box" aria-label="Atividades" class="md-accent"></md-icon>
           <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantActivities()">Atividades</md-button>
         </div>
       </md-list-item>
-      <md-list-item class="md-2-line">
+      <md-list-item ng-if="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" class="md-2-line">
         <div layout-align="start center">
           <md-icon md-svg-icon="eyedropper-variant" aria-label="Laboratório" class="md-accent"></md-icon>
           <md-button id="surveyforms-menu" ng-click="$ctrl.loadLaboratory()">Laboratório</md-button>
