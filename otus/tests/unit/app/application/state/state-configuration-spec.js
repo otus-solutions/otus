@@ -1,4 +1,4 @@
-xdescribe('State names configuration', function() {
+xdescribe('State names configuration', function () {
 
   var ACCESS = 'access';
   var INSTALLER = 'installer';
@@ -12,51 +12,59 @@ xdescribe('State names configuration', function() {
   var STATE = {};
   var Mock = {};
 
-  beforeEach(function() {
+  beforeEach(function () {
     defineMockModule();
     defineServiceInjections();
 
-    inject(function(_STATE_, LoginStateProvider) {
+    inject(function (_STATE_, LoginStateProvider) {
       STATE = _STATE_;
       Mock.LoginStateProvider = LoginStateProvider;
     });
   });
 
-  describe('State names should be defined with right values', function() {
+  describe('service step', function () {
 
-    it('ACCESS constant value should be equal to "access"', function() {
+    it('should to be defined', function () {
+      expect(service).toBeDefined();
+    });
+
+  });
+
+  xdescribe('State names should be defined with right values', function () {
+
+    it('ACCESS constant value should be equal to "access"', function () {
       expect(STATE.ACCESS).toEqual(ACCESS);
     });
 
-    it('INSTALLER constant value should be equal to "installer"', function() {
+    it('INSTALLER constant value should be equal to "installer"', function () {
       expect(STATE.INSTALLER).toEqual(INSTALLER);
     });
 
-    it('SESSION constant value should be equal to "session"', function() {
+    it('SESSION constant value should be equal to "session"', function () {
       expect(STATE.SESSION).toEqual(SESSION);
     });
 
-    it('DASHBOARD constant value should be equal to "dashboard"', function() {
+    it('DASHBOARD constant value should be equal to "dashboard"', function () {
       expect(STATE.PARTICIPANT_DASHBOARD).toEqual(DASHBOARD);
     });
 
-    it('LOGIN constant value should be equal to "login"', function() {
+    it('LOGIN constant value should be equal to "login"', function () {
       expect(STATE.LOGIN).toEqual(LOGIN);
     });
 
-    it('SIGNUP constant value should be equal to "signup"', function() {
+    it('SIGNUP constant value should be equal to "signup"', function () {
       expect(STATE.SIGNUP).toEqual(SIGNUP);
     });
 
-    it('SIGNUP_RESULT constant value should be equal to "signup-result"', function() {
+    it('SIGNUP_RESULT constant value should be equal to "signup-result"', function () {
       expect(STATE.SIGNUP_RESULT).toEqual(SIGNUP_RESULT);
     });
 
-    it('PARTICIPANT_ACTIVITY constant value should be equal to "participant-activity"', function() {
+    it('PARTICIPANT_ACTIVITY constant value should be equal to "participant-activity"', function () {
       expect(STATE.PARTICIPANT_ACTIVITY).toEqual(PARTICIPANT_ACTIVITY);
     });
 
-    it('$urlRouterProvider should register LoginStateProvider.state.url as default url', function() {
+    it('$urlRouterProvider should register LoginStateProvider.state.url as default url', function () {
       expect(Mock.urlRouterProvider.otherwise).toHaveBeenCalledWith(Mock.LoginStateProvider.state.url);
     });
 
@@ -76,7 +84,7 @@ xdescribe('State names configuration', function() {
   }
 
   function defineServiceInjections() {
-    module('otusjs..otus', function($provide, $injector) {
+    module('otusjs.otus', function ($provide, $injector) {
       var LoginStateProvider = $injector.get('otusjs.application.state.LoginStateProvider');
       var STATE = $injector.get('STATE');
 

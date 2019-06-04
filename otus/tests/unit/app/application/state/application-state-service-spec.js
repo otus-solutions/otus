@@ -16,6 +16,14 @@ xdescribe('ApplicationStateService', function () {
     spyOn(injections.$state, 'go');
   });
 
+  describe('service step', function () {
+
+    it('should to be defined', function () {
+      expect(service).toBeDefined();
+    });
+
+  });
+
   xdescribe('activateActivityAdder method', function () {
 
     it('should activate the INSTALLER state', function () {
@@ -94,18 +102,6 @@ xdescribe('ApplicationStateService', function () {
       expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.SIGNUP_RESULT);
     });
 
-  });
-
-  describe('activateActivityViewer method', function () {
-    it('should call go method', function () {
-      service.activateActivityViewer();
-
-      expect(injections.$state.go).toHaveBeenCalled();
-    });
-
-    it('should activate the ACTIVITY_VIEWER state', function () {
-
-    });
   });
 
 });

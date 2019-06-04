@@ -31,12 +31,5 @@
       ContextService.setActivityToView(activityToView);
     }
 
-    function _setupToViewer() {
-      ModuleService
-        .whenActivityPlayerServiceReady()
-        .then(function (PlayerService) {
-          PlayerService.viewer(); // TODO:
-        });
-    }
   }
 }());
