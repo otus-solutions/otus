@@ -54,12 +54,30 @@ describe('activity-rest-service Test', function() {
     });
   });
 
+  describe("activity", function () {
+    beforeEach(function () {
+      spyOn(Mock.rest, "getById").and.callThrough();
+    });
+
+    it('should return activity with surveyTemplate', function (done) {
+      service.getById(Mock.data);
+      expect(Mock.rest.getById).toHaveBeenCalledTimes(1);
+      Mock.rest.getById().$promise.then(function () {
+        done();
+      });
+      done();
+    });
+  });
+
   function mockInjections() {
     Mock.rest = {
       addActivityRevision: function () {
         return {$promise: true};
       },
       getActivityRevisions: function () {
+        return {$promise: Promise.resolve({data:[]})};
+      },
+      getById: function () {
         return {$promise: Promise.resolve({data:[]})};
       }
     };
@@ -75,6 +93,9 @@ describe('activity-rest-service Test', function() {
     Mock.data = {
       participantData: {
         recruitmentNumber: 123
+      },
+      getID: function(){
+        return "1234567890";
       }
     }
   }

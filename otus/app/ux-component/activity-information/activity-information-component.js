@@ -41,7 +41,9 @@
     function show() {
       var activity = ContextService.getSelectedActivities()[0];
       self.activity = {};
-      self.activity.details = activity.surveyForm.surveyTemplate.identity;
+      self.activity.details = {};
+      self.activity.details.name = activity.surveyForm.name;
+      self.activity.details.acronym = activity.surveyForm.acronym;
       self.activity.details["block"] = "CI";
 
       self.activity.history = activity.statusHistory.getHistory().map(ActivityStatusItemFactory.create);

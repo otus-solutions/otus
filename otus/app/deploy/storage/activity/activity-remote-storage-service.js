@@ -37,6 +37,7 @@
     self.updateCheckerActivity = updateCheckerActivity;
     self.findActivities = findActivities;
     self.findCategories = findCategories;
+    self.getById = getById;
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
     self.importActivities = importActivities;
@@ -108,6 +109,28 @@
      */
     function findActivities(query) {
       return ActivityRestService.list(query.recruitmentNumber);
+    }
+
+    /**
+     * Find activity in collection. An object-like query can be passed to filter
+     * the results.
+     * @param {object} activityInfo - the query object to be applied like filter
+     * @returns {Promise} promise with activity or activities updated when resolved
+     * @memberof ActivityRemoteStorageService
+     */
+
+    function getById(activityInfo) {
+      var deferred = $q.defer();
+
+      ActivityRestService
+        .getById(activityInfo)
+        .then(function(response) {
+          deferred.resolve(response);
+        }).catch(function () {
+        deferred.reject();
+      });
+
+      return deferred.promise;
     }
 
     /**
@@ -245,8 +268,9 @@
      /**
      * Import activities in collection.
      * @param {(object)} surveyActivities - the Activities answered to be insered
+     * @param {(string)} acronym - the acronym of survey to be insered
      * @param {(integer)} version - the version of survey to be insered
-     * @returns {Promise} promise with activityRevision inserted when resolved
+     * @returns {Promise} promise with activities not inserted inserted when resolved
      * @memberof ActivityRemoteStorageService
      */
     function importActivities(surveyActivities, acronym, version) {
