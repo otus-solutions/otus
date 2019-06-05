@@ -33,9 +33,6 @@ describe('StatusHistoryService Test', function() {
     expect(service.getStatusLabel()).toEqual("");
   });
 
-
-
-
   it('should test method getLabels', function() {
     expect(service.getLabels()).toEqual(LABELS);
   });

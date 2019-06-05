@@ -48,7 +48,6 @@
     self.getLabels = getLabels;
     self.getColors = getColors;
 
-
     function listStatus() {
       return STATUS;
     }
@@ -104,7 +103,5 @@
       });
       return response;
     }
-
   }
-
 }());
