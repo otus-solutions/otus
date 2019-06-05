@@ -34,7 +34,7 @@
       },
       {
         name: 'UNREALIZED',
-        label: 'Não Será Realizado',
+        label: 'Não será realizado',
         color: '#CECECE',
         icon: '',
         value: 0

@@ -1,10 +1,9 @@
 describe('StatusHistoryService Test', function() {
   var Mock = {};
   var service;
-  var Injections = {};
   var UNIT_NAME = 'otusjs.application.activity.StatusHistoryService';
-  var LABELS = ['Criado', 'Não Realizado', 'Salvo', 'Finalizado'];
-  var COLORS = ['#F4415C', '#CECECE', '#F4CA41', '#1ECE8B'];
+  var LABELS = ['Criado', 'Salvo', 'Finalizado', 'Não será realizado'];
+  var COLORS = ['#F4415C', '#F4CA41', '#1ECE8B', '#CECECE'];
 
   beforeEach(function() {
     angular.mock.module('otusjs.application.activity');
@@ -54,13 +53,6 @@ describe('StatusHistoryService Test', function() {
         value: -1
       },
       {
-        name: 'UNREALIZED',
-        label: 'Não Realizado',
-        color: '#CECECE',
-        icon: '',
-        value: 0
-      },
-      {
         name: 'SAVED',
         label: 'Salvo',
         color: '#F4CA41',
@@ -73,6 +65,13 @@ describe('StatusHistoryService Test', function() {
         color: '#1ECE8B',
         icon: 'check_circle',
         value: 2
+      },
+      {
+        name: 'UNREALIZED',
+        label: 'Não será realizado',
+        color: '#CECECE',
+        icon: '',
+        value: 0
       }
     ];
   }

@@ -150,13 +150,13 @@
     }
 
     function _buildLegend() {
-      self.legends.push({label: 'Criada.', color: self.COLOR.CREATED});
-      self.legends.push({label: 'Salva.', color: self.COLOR.SAVED});
-      self.legends.push({label: 'Finalizada.', color: self.COLOR.FINALIZED});
-      self.legends.push({label: 'Não será realizada.', color: self.COLOR.DOES_NOT_APPLY});
-      self.legends.push({label: 'Nenhuma atividade.', color: self.COLOR.UNDEFINED});
-      self.legends.push({label: 'Múltiplas atividades.', color: self.COLOR.MULTIPLE});
-      self.legends.push({label: 'Ambiguidade.', color: self.COLOR.AMBIGUITY});
+      self.legends.push({label: 'Criada', color: self.COLOR.CREATED});
+      self.legends.push({label: 'Salva', color: self.COLOR.SAVED});
+      self.legends.push({label: 'Finalizada', color: self.COLOR.FINALIZED});
+      self.legends.push({label: 'Não será realizada', color: self.COLOR.DOES_NOT_APPLY});
+      self.legends.push({label: 'Nenhuma atividade', color: self.COLOR.UNDEFINED});
+      self.legends.push({label: 'Múltiplas atividades', color: self.COLOR.MULTIPLE});
+      self.legends.push({label: 'Ambiguidade', color: self.COLOR.AMBIGUITY});
     }
 
     function _DialogController($scope, $mdDialog, activity) {
