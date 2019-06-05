@@ -110,7 +110,6 @@
     }
 
     function loadData() {
-      //LoadingScreenService.start();
       self.loading = true;
       self.error = false;
 
