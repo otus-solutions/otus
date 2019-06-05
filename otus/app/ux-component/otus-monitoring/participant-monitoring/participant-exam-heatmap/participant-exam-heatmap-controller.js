@@ -23,7 +23,7 @@
 
     var self = this;
 
-    self.ERROR_MESSAGE = 'Atualmente não existem nenhum exame disponível no sistema';
+    self.ERROR_MESSAGE = 'Atualmente, não existe nenhum exame disponível no sistema';
     self.LOAD_ERROR_MESSAGE = "O participante não possui laboratório inicializado.";
     self.examList = [];
     self.legends = [];

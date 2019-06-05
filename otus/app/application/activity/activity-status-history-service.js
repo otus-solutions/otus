@@ -19,13 +19,6 @@
         value: -1
       },
       {
-        name: 'UNREALIZED',
-        label: 'Não Realizado',
-        color: '#CECECE',
-        icon: '',
-        value: 0
-      },
-      {
         name: 'SAVED',
         label: 'Salvo',
         color: '#F4CA41',
@@ -38,6 +31,13 @@
         color: '#1ECE8B',
         icon: 'check_circle',
         value: 2
+      },
+      {
+        name: 'UNREALIZED',
+        label: 'Não Será Realizado',
+        color: '#CECECE',
+        icon: '',
+        value: 0
       }
     ];
 
@@ -107,5 +107,4 @@
 
   }
 
-
-}())
+}());
