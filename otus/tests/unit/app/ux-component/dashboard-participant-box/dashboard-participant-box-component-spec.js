@@ -79,16 +79,12 @@ describe('otusParticipantBoxCtrl_UnitTest_Suite', function () {
   function mockInjections() {
     Mock.ApplicationStateService = {
       activateParticipantDashboard: function () {
-        return Promise.resolve();
       },
       activateParticipantActivities: function () {
-        return Promise.resolve();
       },
       activateParticipantReports: function () {
-        return Promise.resolve();
       },
       activateLaboratory: function () {
-        return Promise.resolve();
       }
     };
     Mock.onClose = {
@@ -97,5 +93,4 @@ describe('otusParticipantBoxCtrl_UnitTest_Suite', function () {
       }
     }
   }
-
 });
