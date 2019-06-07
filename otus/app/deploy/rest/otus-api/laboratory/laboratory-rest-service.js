@@ -21,11 +21,13 @@
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.convertStorageAliquot = convertStorageAliquot;
     self.deleteAliquot = deleteAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
     /* Laboratory Configuration Methods*/
     self.getDescriptors = getDescriptors;
+    self.getCheckingExist = getCheckingExist;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getAliquotConfiguration = getAliquotConfiguration;
 
@@ -34,7 +36,7 @@
       _configurationRest = OtusRestResourceService.getLaboratoryConfigurationResource();
     }
 
-    //laboratory-participant methods
+    /* laboratory-participant methods */
     function create() {
       _participantRest.create();
     }
@@ -91,7 +93,14 @@
       return _participantRest.deleteAliquot({code: aliquotCode}).$promise;
     }
 
-    //laboratory-configuration methods
+    function convertStorageAliquot(aliquot) {
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.convertStorageAliquot(aliquot).$promise;
+    }
+
+    /* laboratory-configuration methods */
     function getDescriptors() {
       if (!_configurationRest) {
         throw new Error('REST resource is no initialized.');
@@ -111,6 +120,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _configurationRest.getAliquotDescriptors().$promise;
+    }
+
+    function getCheckingExist() {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _configurationRest.getCheckingExist().$promise;
     }
   }
 }());

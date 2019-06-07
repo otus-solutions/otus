@@ -37,14 +37,15 @@
     self.update = update;
     self.updateAliquots = updateAliquots;
     self.deleteAliquot = deleteAliquot;
+    self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
-
-    //Laboratory Configuration Methods
+    /* Laboratory Configuration Methods */
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
+    self.getCheckingExist = getCheckingExist;
 
-    //Laboratory Project Methods
+    /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
     self.createLot = createLot;
@@ -156,6 +157,18 @@
       return deferred.promise;
     }
 
+    function convertStorageAliquot(aliquot) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .convertStorageAliquot(aliquot)
+        .then(function(response) {
+          deferred.resolve(response);
+        }, function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
     function deleteAliquot(aliquotCode) {
       var deferred = $q.defer();
       LaboratoryRestService
@@ -187,6 +200,23 @@
         .then(function(response) {
           deferred.resolve(response);
         }, function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    /**
+     * Laboratory Configuration
+     * @returns {Promise} promise
+     * @memberof LaboratoryRemoteStorageService
+     */
+    function getCheckingExist() {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .getCheckingExist()
+        .then(function (response) {
+          deferred.resolve(response);
+        }, function (e) {
           deferred.reject(e);
         });
       return deferred.promise;

@@ -1,18 +1,17 @@
-(function() {
+(function () {
   'use strict';
 
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusDashboard', {
       controller: Controller,
-      templateUrl: 'app/ux-component/dashboard/dashboard-template.html'
+      templateUrl: 'app/ux-component/dashboard/dashboard-template.html',
+      bindings: {
+        redirect: "="
+      }
     });
 
-  Controller.$inject = [
-    'otusjs.application.state.ApplicationStateService'
-  ];
+  function Controller() {
 
-  function Controller(ApplicationStateService) {
-    var self = this;
   }
 }());

@@ -55,11 +55,11 @@
         alasql("CREATE TABLE IF NOT EXISTS flagsActivities(RN INT,ACRONIMO STRING, STATUS STRING)");
         var rn = 0;
         if (Array.isArray(self.rawActivities.data)) {
-          if (self.activitiesData.data.length > 0) {
+          if (self.rawActivities.data.length > 0) {
             try {
-              self.activitiesData.data.forEach(function (line) {
-                for (let i = 0; i < self.activitiesData.columns.length; i++) {
-                  alasql("INSERT INTO flagsActivities VALUES(" + self.activitiesData.index[rn] + ",'" + self.activitiesData.columns[i][1] + "','" + StatusHistoryService.getStatusLabel(line[i]) + "')");
+              self.rawActivities.data.forEach(function (line) {
+                for (let i = 0; i < self.rawActivities.columns.length; i++) {
+                  alasql("INSERT INTO flagsActivities VALUES(" + self.rawActivities.index[rn] + ",'" + self.rawActivities.columns[i][1] + "','" + StatusHistoryService.getStatusLabel(line[i]) + "')");
                 }
                 rn++;
               });

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,16 +6,18 @@
     .service('otusjs.user.core.ContextService', Service);
 
   Service.$inject = [
+    '$q',
     'otusjs.user.core.EventService'
   ];
 
-  function Service(EventService) {
+  function Service($q, EventService) {
     var self = this;
     var _context = null;
     var _storage = null;
 
     var USER_CONTEXT = 'user_context';
     var SELECTED_USER = 'selectedUser';
+    var USER_PERMISSION = 'userPermission';
 
     //* Public methods */
     self.begin = begin;
@@ -34,6 +36,8 @@
 
     self.selectUser = selectUser;
     self.getSelectedUser = getSelectedUser;
+    self.setUserPermissions = setUserPermissions;
+    self.getUserPermissions = getUserPermissions;
 
     function begin() {
       save();
@@ -121,6 +125,16 @@
 
     function getSelectedUser() {
       return _context.getData('selectedUser');
+    }
+
+    var defer = $q.defer();
+
+    function setUserPermissions(permissionsData) {
+      defer.resolve(permissionsData);
+    }
+
+    function getUserPermissions() {
+      return defer.promise;
     }
   }
 }());

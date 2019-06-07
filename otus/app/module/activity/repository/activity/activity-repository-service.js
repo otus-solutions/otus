@@ -28,6 +28,7 @@
     self.updateCheckerActivity = updateCheckerActivity;
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
+    self.importActivities = importActivities;
 
     function listAll(participant) {
       if (!participant) {
@@ -157,6 +158,10 @@
 
     function getActivityRevisions(activityID, activity) {
       return ActivityCollectionService.getActivityRevisions(activityID, activity);
+    }
+
+    function importActivities(surveyActivities, acronym, version) {
+      return ActivityCollectionService.importActivities(surveyActivities, acronym, version);
     }
   }
 }());

@@ -6,27 +6,25 @@
     .service('otusjs.laboratory.repository.LaboratoryRepositoryService', Service);
 
   Service.$inject = [
-    'otusjs.laboratory.core.ModuleService',
-    'otusjs.laboratory.repository.LaboratoryCollectionService',
-    '$q',
-    '$http'
+    'otusjs.laboratory.repository.LaboratoryCollectionService'
   ];
 
-  function Service(ModuleService, LaboratoryCollectionService, $q, $http) {
+  function Service(LaboratoryCollectionService) {
     var self = this;
-    var laboratory = {};
-
+    /* Public methods */
     self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
+    self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
 
-    //Laboratory Configuration Methods
+    /* Laboratory Configuration Methods */
+    self.getCheckingExist = getCheckingExist;
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
 
-    //Laboratory Project Methods
+    /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
     self.createLot = createLot;
@@ -44,6 +42,10 @@
         });
     }
 
+    function getCheckingExist() {
+      return LaboratoryCollectionService.getCheckingExist();
+    }
+
     function getLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
       return LaboratoryCollectionService.getLaboratory();
@@ -55,6 +57,10 @@
 
     function updateAliquots(updateStructure) {
       return LaboratoryCollectionService.updateAliquots(updateStructure);
+    }
+
+    function convertStorageAliquot(aliquot) {
+      return LaboratoryCollectionService.convertStorageAliquot(aliquot);
     }
 
     function updateTubeCollectionData(updateStructure){

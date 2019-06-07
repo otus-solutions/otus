@@ -23,11 +23,11 @@
       _rest = OtusRestResourceService.getParticipantResource();
     }
 
-    function getByRecruitmentNumber() {
+    function getByRecruitmentNumber(rn) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.getByRecruitmentNumber().$promise;
+      return _rest.getByRecruitmentNumber({rn}).$promise;
     }
 
     function list() {

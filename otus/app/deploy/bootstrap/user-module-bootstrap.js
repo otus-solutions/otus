@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -24,7 +24,7 @@
     self.configureUserDataSource = configureUserDataSource;
     self.configureLoginProxy = configureLoginProxy;
 
-    function bootstrap() {
+    function bootstrap() {      
       var deferred = $q.defer();
       configureContext(ContextFactory);
       configureStorage(StorageService.session);
@@ -48,5 +48,6 @@
     function configureLoginProxy(proxy) {
       ModuleService.configureLoginProxy(proxy);
     }
+
   }
 }());

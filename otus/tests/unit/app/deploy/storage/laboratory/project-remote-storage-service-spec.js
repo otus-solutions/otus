@@ -12,7 +12,7 @@ describe('ProjectRemoteStorageService Suite Test', function () {
   var Injections = {};
 
   beforeEach(function () {
-    angular.mock.module('otusjs.deploy.exam');
+    angular.mock.module('otusjs.deploy.storage');
   });
 
   beforeEach(function () {
