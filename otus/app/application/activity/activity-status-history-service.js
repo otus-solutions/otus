@@ -19,13 +19,6 @@
         value: -1
       },
       {
-        name: 'UNREALIZED',
-        label: 'Não Realizado',
-        color: '#CECECE',
-        icon: '',
-        value: 0
-      },
-      {
         name: 'SAVED',
         label: 'Salvo',
         color: '#F4CA41',
@@ -38,6 +31,13 @@
         color: '#1ECE8B',
         icon: 'check_circle',
         value: 2
+      },
+      {
+        name: 'UNREALIZED',
+        label: 'Não será realizado',
+        color: '#CECECE',
+        icon: '',
+        value: 0
       }
     ];
 
@@ -47,7 +47,6 @@
     self.getStatusColor = getStatusColor;
     self.getLabels = getLabels;
     self.getColors = getColors;
-
 
     function listStatus() {
       return STATUS;
@@ -104,8 +103,5 @@
       });
       return response;
     }
-
   }
-
-
-}())
+}());

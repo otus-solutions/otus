@@ -124,19 +124,19 @@ describe('otusParticipantHeatmap test', function() {
     });
 
     it('should fill legends', () => {
-      expect(ctrl.legends[0].label).toBe("Criado.");
+      expect(ctrl.legends[0].label).toBe("Criada");
       expect(ctrl.legends[0].color).toBe(COLOR.CREATED);
-      expect(ctrl.legends[1].label).toBe("Salvo.");
+      expect(ctrl.legends[1].label).toBe("Salva");
       expect(ctrl.legends[1].color).toBe(COLOR.SAVED);
-      expect(ctrl.legends[2].label).toBe("Finalizado.");
+      expect(ctrl.legends[2].label).toBe("Finalizada");
       expect(ctrl.legends[2].color).toBe(COLOR.FINALIZED);
-      expect(ctrl.legends[3].label).toBe("Não realizado.");
+      expect(ctrl.legends[3].label).toBe("Não será realizada");
       expect(ctrl.legends[3].color).toBe(COLOR.DOES_NOT_APPLY);
-      expect(ctrl.legends[4].label).toBe("Nenhuma atividade.");
+      expect(ctrl.legends[4].label).toBe("Nenhuma atividade");
       expect(ctrl.legends[4].color).toBe(COLOR.UNDEFINED);
-      expect(ctrl.legends[5].label).toBe("Multiplas atividades.");
+      expect(ctrl.legends[5].label).toBe("Múltiplas atividades");
       expect(ctrl.legends[5].color).toBe(COLOR.MULTIPLE);
-      expect(ctrl.legends[6].label).toBe("Ambiguidade.");
+      expect(ctrl.legends[6].label).toBe("Ambiguidade");
       expect(ctrl.legends[6].color).toBe(COLOR.AMBIGUITY);
     });
 
