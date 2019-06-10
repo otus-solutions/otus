@@ -2,7 +2,7 @@
  * ActivityCollectionService
  * @namespace Services
  */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -39,6 +39,7 @@
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
     self.importActivities = importActivities;
+    self.getById = getById;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -71,10 +72,10 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .insert(activities)
-            .then(function(remoteActivities) {
+            .then(function (remoteActivities) {
               var localActivities = ActivityStorageService.insert(remoteActivities);
               request.resolve(localActivities);
             });
@@ -93,11 +94,10 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .update(activities)
-            .then(function(remoteActivities) {
-              ActivityStorageService.update(remoteActivities);
+            .then(function () {
               request.resolve();
             });
         });
@@ -116,13 +116,13 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .updateCheckerActivity(recruitmentNumber, checkerUpdated)
-            .then(function(response) {
+            .then(function (response) {
               request.resolve(response);
             }).catch(function () {
-              request.reject();
+            request.reject();
           });
         });
 
@@ -141,12 +141,12 @@
 
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           return remoteStorage
             .findActivities({
               recruitmentNumber: _participant.recruitmentNumber
             })
-            .then(function(activities) {
+            .then(function (activities) {
               ActivityStorageService.clear();
               var localData = ActivityStorageService.insert(activities);
               request.resolve(localData);
@@ -181,10 +181,10 @@
       var request = $q.defer();
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .addActivityRevision(activityRevision, activity)
-            .then(function(response) {
+            .then(function (response) {
               request.resolve(response);
             }).catch(function () {
             request.reject();
@@ -194,14 +194,14 @@
       return request.promise;
     }
 
-    function getActivityRevisions(activityID, activity){
+    function getActivityRevisions(activityID, activity) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
           remoteStorage
             .getActivityRevisions(activityID, activity)
-            .then(function(response) {
+            .then(function (response) {
               request.resolve(response);
             }).catch(function () {
             request.reject();
@@ -211,14 +211,31 @@
       return request.promise;
     }
 
-    function importActivities(surveyActivities, acronym, version){
+    function getById(activityInfo) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
-        .then(function(remoteStorage) {
+        .then(function (remoteStorage) {
+          remoteStorage
+            .getById(activityInfo)
+            .then(function (response) {
+              request.resolve(response);
+            }).catch(function () {
+            request.reject();
+          });
+        });
+
+      return request.promise;
+    }
+
+    function importActivities(surveyActivities, acronym, version) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
           remoteStorage
             .importActivities(surveyActivities, acronym, version)
-            .then(function(response) {
+            .then(function (response) {
               request.resolve(response);
             }).catch(function () {
             request.reject();

@@ -71,6 +71,7 @@
      * @param {(object|array)} activities - the activity (or array of activities) to be updated
      * @memberof ActivityStorageService
      */
+    //TODO: check usage need because activities are re-entered
     function update(activities) {
       _collection.update(activities);
       _db.saveDatabase();

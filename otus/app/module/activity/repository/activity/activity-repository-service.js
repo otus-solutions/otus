@@ -29,6 +29,7 @@
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
     self.importActivities = importActivities;
+    self.getById = getById;
 
     function listAll(participant) {
       if (!participant) {
@@ -49,6 +50,10 @@
 
     function listAvailables() {
       return SurveyCollectionService.listAll().then(_toEntity);
+    }
+
+    function getById(activityInfo) {
+      return ActivityCollectionService.getById(activityInfo).then(_toEntity);
     }
 
     function listAllSurveys() {
