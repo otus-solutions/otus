@@ -31,7 +31,6 @@ describe('activity-remote-storage-service Test', function() {
         expect(service.getActivityRevisions).toBeDefined();
         expect(service.importActivities).toBeDefined();
         expect(service.getById).toBeDefined();
-      console.log(service)
     });
 
     describe("activity revision", function () {
