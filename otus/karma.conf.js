@@ -17,6 +17,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
+
       /* External dependencies */
       NODE_MODULES_ROOT_PATH + 'angular/angular.min.js',
       NODE_MODULES_ROOT_PATH + 'alasql/dist/alasql.min.js',
@@ -41,26 +42,32 @@ module.exports = function (config) {
       NODE_MODULES_ROOT_PATH + 'please-wait/build/please-wait.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-bind-html-compile-ci-dev/angular-bind-html-compile.js',
       NODE_MODULES_ROOT_PATH + 'angular-sanitize/angular-sanitize.min.js',
-      NODE_MODULES_ROOT_PATH +"jasmine-promise-matchers/dist/jasmine-promise-matchers.js",
-      NODE_MODULES_ROOT_PATH +"lokijs/src/loki-indexed-adapter.js",
+      NODE_MODULES_ROOT_PATH + 'jasmine-promise-matchers/dist/jasmine-promise-matchers.js',
+      NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-indexed-adapter.js',
+
       /* Otus platform*/
       NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
       NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
-      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model.min.js',
       NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/st-utils.min.js',
+      NODE_MODULES_ROOT_PATH + 'label-maker-js/dist/label-maker-js/scripts/otusjs-label-maker.min.js',
+      NODE_MODULES_ROOT_PATH + 'otus-validation-js/dist/otus-validation-min.js',
+      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model.min.js',
       NODE_MODULES_ROOT_PATH + 'otus-preview-js/dist/otus-preview-js/scripts/otusjs-player-min.js',
 
       /* Static resources files */
       APP_ROOT_PATH + 'static-resource/**/*.js',
+
       /* Application files */
       APP_ROOT_PATH + 'app.js',
+
       /* Application Module files */
-
       APP_ROOT_PATH + '**/module.js',
-      'app/deploy/bootstrap/bootstrap-service.js',
-
-
       APP_ROOT_PATH + '**/**/module.js',
+      APP_ROOT_PATH + '**/**/**/module.js',
+
+      //'node_modules/otus-preview-js/app/player-module.js',
+      //'dist/otus/scripts/deploy-module.min.js',
+
       APP_ROOT_PATH + '**/**/*.js', {
         pattern: 'tests/unit/**/*-spec.js',
         included: true
@@ -139,5 +146,4 @@ module.exports = function (config) {
       }
     }
   });
-
 };

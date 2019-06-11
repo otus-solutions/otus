@@ -5,18 +5,17 @@
     .module('otusjs.deploy', [
        'otus.client',
        'otus.domain.client',
-       //'otusjs',
+       'otusjs',
 
       /* Player dependencies */
-      //'otusjs.player.core',
+      'otusjs.player.core',
       'otusjs.player.component',
 
        /* LabelMaker dependencies */
-      // 'otusjs.labelMaker.setupView',
-      // 'otusjs.labelMaker.dataBuilder',
-      // 'otusjs.labelMaker.labelBuilder',
-      // 'otusjs.labelMaker.labelPage',
-
+       'otusjs.labelMaker.setupView',
+       'otusjs.labelMaker.dataBuilder',
+       'otusjs.labelMaker.labelBuilder',
+       'otusjs.labelMaker.labelPage',
 
       /* Services dependencies */
        'otusjs.deploy.user',

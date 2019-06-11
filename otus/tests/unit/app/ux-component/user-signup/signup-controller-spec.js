@@ -5,34 +5,9 @@ describe('signupController Test suite', function () {
   var Injections = [];
 
   beforeEach(function () {
-
-    angular.mock.module(
-     /* Modulo de referencia inicial para este teste, não apagar até o fim da tarefa*/
-      // 'otusjs.otus.uxComponent',
-      // 'otusjs.application.state',
-      // 'otusjs.application.core',
-      // 'otusjs.deploy.rest',
-      // 'otusjs.user.access.core',
-      // 'otusjs.user.access.service',
-      //
-
-  /* Teste que visa consertar a importação do modulo principal do otus */
-      'otusjs.otus',
-
-  /* imports necessários para o modulo principal não quebrar*/
-      'otus.client',
-      'ui.router',
-      'utils',
-
-    );
+    angular.mock.module('otusjs.otus');
   });
 
-  beforeEach(function () {
-    angular.mock.module(function ($provide) {
-      $provide.value('otusjs.model.activity.ActivityFacadeService');
-      $provide.value('otusjs.deploy.ActivityModuleBootstrap');
-    });
-  });
 
   beforeEach(function () {
     angular.mock.inject(function ($injector) {
