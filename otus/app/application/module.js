@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -20,7 +20,7 @@
       'otusjs.application.verifyBrowser',
       'otusjs.application.exam'
     ])
-    .run(function() {
+    .run(function () {
       console.info('Application module ready.');
     });
 

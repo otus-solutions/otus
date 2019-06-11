@@ -3,33 +3,37 @@
 
   angular
     .module('otusjs.deploy', [
-      'otus.client',
-      'otus.domain.client',
-      'otusjs',
+       'otus.client',
+       'otus.domain.client',
+       //'otusjs',
+
       /* Player dependencies */
-      'otusjs.player.core',
+      //'otusjs.player.core',
       'otusjs.player.component',
-      /* LabelMaker dependencies */
-      'otusjs.labelMaker.setupView',
-      'otusjs.labelMaker.dataBuilder',
-      'otusjs.labelMaker.labelBuilder',
-      'otusjs.labelMaker.labelPage',
+
+       /* LabelMaker dependencies */
+      // 'otusjs.labelMaker.setupView',
+      // 'otusjs.labelMaker.dataBuilder',
+      // 'otusjs.labelMaker.labelBuilder',
+      // 'otusjs.labelMaker.labelPage',
+
+
       /* Services dependencies */
-      'otusjs.deploy.user',
-      'otusjs.deploy.exam',
-      'otusjs.deploy.monitoring',
-      'otusjs.deploy.model.otus',
-      'otusjs.deploy.storage',
-      "otusjs.deploy.rest"
+       'otusjs.deploy.user',
+       'otusjs.deploy.exam',
+       'otusjs.deploy.monitoring',
+       'otusjs.deploy.model.otus',
+       'otusjs.deploy.storage',
+       'otusjs.deploy.rest'
     ])
     .value('OtusLocalStorage', [
-      'otusjs.activity.storage.ActivityLocalStorageService',
-      'otusjs.laboratory.storage.LaboratoryLocalStorageService',
-      'otusjs.activity.storage.SurveyStorageService',
-      'otusjs.participant.storage.ParticipantStorageService',
-      'otusjs.monitoring.storage.MonitoringLocalStorageService',
-      'otusjs.user.storage.UserStorageService',
-      'otusjs.application.crash.CrashLocalStorageService'
+       'otusjs.activity.storage.ActivityLocalStorageService',
+       'otusjs.laboratory.storage.LaboratoryLocalStorageService',
+       'otusjs.activity.storage.SurveyStorageService',
+       'otusjs.participant.storage.ParticipantStorageService',
+       'otusjs.monitoring.storage.MonitoringLocalStorageService',
+       'otusjs.user.storage.UserStorageService',
+       'otusjs.application.crash.CrashLocalStorageService'
     ])
     .run(Runner);
 

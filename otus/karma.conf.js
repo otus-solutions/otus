@@ -38,16 +38,28 @@ module.exports = function (config) {
       NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-angular.js',
       NODE_MODULES_ROOT_PATH + 'moment/min/moment.min.js',
       NODE_MODULES_ROOT_PATH + 'node-uuid/uuid.js',
+      NODE_MODULES_ROOT_PATH + 'please-wait/build/please-wait.min.js',
+      NODE_MODULES_ROOT_PATH + 'angular-bind-html-compile-ci-dev/angular-bind-html-compile.js',
+      NODE_MODULES_ROOT_PATH + 'angular-sanitize/angular-sanitize.min.js',
       NODE_MODULES_ROOT_PATH +"jasmine-promise-matchers/dist/jasmine-promise-matchers.js",
+      NODE_MODULES_ROOT_PATH +"lokijs/src/loki-indexed-adapter.js",
       /* Otus platform*/
       NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
       NODE_MODULES_ROOT_PATH + 'otus-domain-client/dist/otus-domain-client-min.js',
-      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model.js',
+      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model.min.js',
+      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/st-utils.min.js',
+      NODE_MODULES_ROOT_PATH + 'otus-preview-js/dist/otus-preview-js/scripts/otusjs-player-min.js',
+
       /* Static resources files */
       APP_ROOT_PATH + 'static-resource/**/*.js',
       /* Application files */
       APP_ROOT_PATH + 'app.js',
-      /* Applicatoin Module files */
+      /* Application Module files */
+
+      APP_ROOT_PATH + '**/module.js',
+      'app/deploy/bootstrap/bootstrap-service.js',
+
+
       APP_ROOT_PATH + '**/**/module.js',
       APP_ROOT_PATH + '**/**/*.js', {
         pattern: 'tests/unit/**/*-spec.js',

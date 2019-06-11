@@ -7,6 +7,7 @@
       'ngMaterial',
       'ngMessages',
       'ngAnimate',
+
       /* 3rd-party modules */
       'ui.router',
       'ui.mask',
