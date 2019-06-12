@@ -29,6 +29,7 @@ describe('participant-activity-service Test', function() {
       expect(service).toBeDefined();
       expect(service.addActivityRevision).toBeDefined();
       expect(service.getActivityRevisions).toBeDefined();
+      expect(service.getById).toBeDefined();
     });
 
 
@@ -36,6 +37,7 @@ describe('participant-activity-service Test', function() {
       beforeEach(function () {
         spyOn(Injections.ActivityRepositoryService, "addActivityRevision").and.callThrough();
         spyOn(Injections.ActivityRepositoryService, "getActivityRevisions").and.callThrough();
+        spyOn(Injections.ActivityRepositoryService, "getById").and.callThrough();
       });
 
       it('should call addActivityRevision method', function () {
@@ -48,6 +50,12 @@ describe('participant-activity-service Test', function() {
         service.getActivityRevisions(ACTIVITY_REVISION, DATA);
         expect(Injections.ActivityRepositoryService.getActivityRevisions).toHaveBeenCalledTimes(1);
         expect(Injections.ActivityRepositoryService.getActivityRevisions).toHaveBeenCalledWith(ACTIVITY_REVISION, DATA);
+      });
+
+      it('should call getById method', function () {
+        service.getById(DATA);
+        expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledTimes(1);
+        expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledWith(DATA);
       });
     })
 

@@ -21,8 +21,8 @@
   function ActivityItem(activity) {
     var self = this;
 
-    self.name = activity.surveyForm.surveyTemplate.identity.name;
-    self.acronym = activity.surveyForm.surveyTemplate.identity.acronym;
+    self.name = activity.surveyForm.name;
+    self.acronym = activity.surveyForm.acronym;
     self.category = activity.category && activity.category.label ? activity.category.label : ''; //TODO: remove ternary
     self.mode = _getMode();
     self.realizationDate = _getFormattedDate();

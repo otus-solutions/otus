@@ -3,6 +3,9 @@ describe('activity-remote-storage-service Test', function() {
     var service;
     var Injections = {};
     var DATA = {activity:{}};
+    var ACRONYM = "ABC";
+    var VERSION = 1;
+    var SURVEY_ACTIVITIES = [DATA,DATA,DATA];
     var ACTIVITY_REVISION = {};
     var ACTIVITY_ID = 123;
 
@@ -10,6 +13,7 @@ describe('activity-remote-storage-service Test', function() {
       mockInjections();
       angular.mock.module('otusjs.deploy.storage', function ($provide) {
         $provide.value('otusjs.deploy.ActivityRestService', Mock.ActivityRestService);
+        $provide.value('otusjs.deploy.ActivityImportRestService', Mock.ActivityImportRestService);
         $provide.value('otusjs.deploy.ActivityConfigurationRestService', {});
       });
 
@@ -25,6 +29,8 @@ describe('activity-remote-storage-service Test', function() {
         expect(service).toBeDefined();
         expect(service.addActivityRevision).toBeDefined();
         expect(service.getActivityRevisions).toBeDefined();
+        expect(service.importActivities).toBeDefined();
+        expect(service.getById).toBeDefined();
     });
 
     describe("activity revision", function () {
@@ -47,6 +53,32 @@ describe('activity-remote-storage-service Test', function() {
       });
     });
 
+  describe("activity", function () {
+    beforeEach(function () {
+      spyOn(Mock.ActivityRestService, "getById").and.callThrough();
+    });
+
+    it('should create a activity revision', function () {
+      service.getById(DATA);
+      expect(Mock.ActivityRestService.getById).toHaveBeenCalledTimes(1);
+      expect(Mock.ActivityRestService.getById).toHaveBeenCalledWith(DATA);
+
+    });
+  });
+
+  describe("activity import", function () {
+    beforeEach(function () {
+      spyOn(Mock.ActivityImportRestService, "importActivities").and.callThrough();
+    });
+
+    it('should create a activity revision', function () {
+      service.importActivities(SURVEY_ACTIVITIES, ACRONYM, VERSION);
+      expect(Mock.ActivityImportRestService.importActivities).toHaveBeenCalledTimes(1);
+      expect(Mock.ActivityImportRestService.importActivities).toHaveBeenCalledWith(SURVEY_ACTIVITIES, ACRONYM, VERSION);
+
+    });
+  });
+
     function mockInjections() {
       Mock.ActivityRestService = {
         addActivityRevision: function () {
@@ -54,8 +86,17 @@ describe('activity-remote-storage-service Test', function() {
         },
         getActivityRevisions: function () {
           return Promise.resolve();
+        },
+        getById: function () {
+          return Promise.resolve();
         }
-      }
+      };
+
+      Mock.ActivityImportRestService = {
+        importActivities: function () {
+          return Promise.resolve();
+        }
+      };
     }
 
 });

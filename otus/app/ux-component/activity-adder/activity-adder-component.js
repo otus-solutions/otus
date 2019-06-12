@@ -51,12 +51,12 @@
     }
 
     function catchActivity(activity) {
-      var activityIndex = _selectedActivities.indexOf(activity.surveyTemplate.identity.acronym);
+      var activityIndex = _selectedActivities.indexOf(activity.acronym);
       if (activityIndex !== -1) {
         _selectedActivities.splice(activityIndex, 1);
         window.sessionStorage.setItem('selectedActivities',JSON.stringify(_selectedActivities));
       } else {
-        _selectedActivities.push(activity.surveyTemplate.identity.acronym);
+        _selectedActivities.push(activity.acronym);
         window.sessionStorage.setItem('selectedActivities',JSON.stringify(_selectedActivities));
       }
     }
