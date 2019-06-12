@@ -98,5 +98,4 @@ describe('otusParticipantBoxCtrl_UnitTest_Suite', function () {
       }
     }
   }
-
 });

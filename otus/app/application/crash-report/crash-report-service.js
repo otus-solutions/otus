@@ -24,9 +24,9 @@
 
     function _buildBrowserInfo() {
       _browserInfo.userAgent = navigator.userAgent;
-      _browserInfo.browserName = getBrowserName(_browserInfo.userAgent);
-      _browserInfo.browserVersion = getBrowserVersion(_browserInfo.browserName, _browserInfo.userAgent);
-      _browserInfo.operatingSystemName = getOSName();
+      _browserInfo.browserName = _getBrowserName(_browserInfo.userAgent);
+      _browserInfo.browserVersion = _getBrowserVersion(_browserInfo.browserName, _browserInfo.userAgent);
+      _browserInfo.operatingSystemName = _getOSName();
     }
 
     function _clean() {
@@ -83,7 +83,7 @@
       return errorList;
     }
 
-    function getBrowserName(userAgent) {
+    function _getBrowserName(userAgent) {
       var browserName = 'Unknown Browser';
       var nameOffset;
       var verOffset;
@@ -109,7 +109,7 @@
       return browserName
     }
 
-    function getBrowserVersion(browserName, userAgent) {
+    function _getBrowserVersion(browserName, userAgent) {
       var stringVersion;
       var fullVersion = userAgent.substring(userAgent.indexOf(browserName) + browserName.length + 1);
 
@@ -126,7 +126,7 @@
       return fullVersion;
     }
 
-    function getOSName() {
+    function _getOSName() {
       var OSName = 'Unknown OS';
       if (navigator.appVersion.indexOf('Win') != -1) {
         OSName = 'Windows';

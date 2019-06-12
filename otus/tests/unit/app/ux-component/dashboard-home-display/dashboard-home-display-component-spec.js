@@ -109,37 +109,23 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
     expect(Injections.ApplicationStateService.activateLaboratoryMonitoring).toHaveBeenCalledTimes(1);
   });
 
-  it('setFocus_method_should_execute', function () {
-    spyOn(ctrl, "setFocus").and.callThrough();
-    ctrl.setFocus();
-    expect(ctrl.setFocus).toHaveBeenCalledTimes(1);
-  });
-
   function mockInjections() {
     Mock.ApplicationStateService = {
       activateMonitoring: function () {
-        return Promise.resolve();
       },
       activateSampleTransportation: function () {
-        return Promise.resolve();
       },
       activateParticipantsList: function () {
-        return Promise.resolve();
       },
       activateExamsLotsManagerList: function () {
-        return Promise.resolve();
       },
       activateActivityFlagsReport: function () {
-        return Promise.resolve();
       },
       laboratoryActivityFlagsReport: function () {
-        return Promise.resolve();
       },
       activateExamSending: function () {
-        return Promise.resolve();
       },
       activateLaboratoryMonitoring: function () {
-        return Promise.resolve();
       }
     };
     Mock.LoadingScreenService = {
