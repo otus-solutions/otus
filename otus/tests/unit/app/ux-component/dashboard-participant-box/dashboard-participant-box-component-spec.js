@@ -73,6 +73,7 @@ describe('otusParticipantBoxCtrl_UnitTest_Suite', function () {
 
   it('loadLaboratory_method_should_evoke_internalMethods', function () {
     ctrl.loadLaboratory();
+    spyOn(document, "querySelector").and.returnValue({focus:function(){}});
     expect(Injections.ApplicationStateService.activateLaboratory).toHaveBeenCalledTimes(1);
   });
 
@@ -97,5 +98,4 @@ describe('otusParticipantBoxCtrl_UnitTest_Suite', function () {
       }
     }
   }
-
 });

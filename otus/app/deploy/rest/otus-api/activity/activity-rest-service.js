@@ -23,6 +23,7 @@
     self.updateCheckerActivity = updateCheckerActivity;
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
+    self.getById = getById;
 
     function initialize() {
       _rest = OtusRestResourceService.getActivityResource();
@@ -94,6 +95,24 @@
         .then(function(response) {
           if (response.data && response.data.length) {
             request.resolve(response.data);
+          } else {
+            request.resolve([]);
+          }
+        });
+
+      return request.promise;
+    }
+
+    function getById(activityInfo) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      var request = $q.defer();
+      _rest.getById({rn : activityInfo.participantData.recruitmentNumber, id: activityInfo.getID()})
+        .$promise
+        .then(function(response) {
+          if (response.data) {
+            request.resolve([response.data]);
           } else {
             request.resolve([]);
           }

@@ -33,6 +33,8 @@ describe('activity-repository-service Test', function() {
     expect(service).toBeDefined();
     expect(service.addActivityRevision).toBeDefined();
     expect(service.getActivityRevisions).toBeDefined();
+    expect(service.importActivities).toBeDefined();
+    expect(service.getById).toBeDefined();
   });
 
 
@@ -41,6 +43,7 @@ describe('activity-repository-service Test', function() {
       spyOn(Injections.ActivityCollectionService, "addActivityRevision").and.callThrough();
       spyOn(Injections.ActivityCollectionService, "getActivityRevisions").and.callThrough();
       spyOn(Injections.ActivityCollectionService, "importActivities").and.callThrough();
+      spyOn(Injections.ActivityCollectionService, "getById").and.callThrough();
     });
 
     it('should call addActivityRevision method', function () {
@@ -62,13 +65,25 @@ describe('activity-repository-service Test', function() {
     });
 
     it('should call importActivities method', function () {
-      service.importActivities(SURVEY_ACTIVITIES, ACRONYM,  VERSION);
+      service.importActivities(SURVEY_ACTIVITIES, ACRONYM, VERSION);
       expect(Injections.ActivityCollectionService.importActivities).toHaveBeenCalledTimes(1);
       expect(Injections.ActivityCollectionService.importActivities).toHaveBeenCalledWith(SURVEY_ACTIVITIES, ACRONYM, VERSION);
     });
 
+  });
 
-  })
+  describe("activity test", function () {
+    beforeEach(function () {
+      spyOn(Injections.ActivityCollectionService, "getById").and.callThrough();
+    });
+
+    it('should call getById method', function () {
+      service.getById(DATA);
+      expect(Injections.ActivityCollectionService.getById).toHaveBeenCalledTimes(1);
+      expect(Injections.ActivityCollectionService.getById).toHaveBeenCalledWith(DATA);
+    });
+
+  });
 
 });
 
