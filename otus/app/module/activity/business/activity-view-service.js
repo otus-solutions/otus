@@ -7,28 +7,50 @@
 
   Service.$inject = [
     'otusjs.activity.core.ModuleService',
-    'otusjs.activity.core.ContextService'
+    'otusjs.activity.core.ContextService',
+    'otusjs.activity.business.ParticipantActivityService',
   ];
 
-  function Service(ModuleService, ContextService) {
+  function Service(ModuleService, ContextService, ParticipantActivityService) {
+    var activityToView = null;
     var self = this;
 
     /* Public methods */
     self.load = load;
 
     function load() {
-      return ModuleService
-        .whenActivityFacadeServiceReady()
-        .then(function (ActivityFacadeService) {
-          _setActivityToViewer(ActivityFacadeService);
-        });
+      activityToView = null;
+      var _activity = ContextService.getSelectedActivities()[0];
+      return ParticipantActivityService.getById(_activity).then(function (response) {
+        if (Array.isArray(response)) {
+          if (response.length > 0) {
+            activityToView = angular.copy(response[0]);
+          }
+        }
+
+        return ModuleService
+          .whenActivityFacadeServiceReady()
+          .then(function (ActivityFacadeService) {
+            _setActivityToViewer(ActivityFacadeService);
+          });
+
+      });
     }
 
     function _setActivityToViewer(ActivityFacadeService) {
-      var activityToView = ContextService.getSelectedActivities()[0];
+      ContextService.selectActivities([activityToView]);
       ActivityFacadeService.useActivity(activityToView);
       ActivityFacadeService.openSurveyActivity(ContextService.getLoggedUser());
-      ContextService.setActivityToView(activityToView);
+      ContextService.setActivityToPlay(activityToView);
+      _setupPlayer();
+    }
+
+    function _setupPlayer() {
+      ModuleService
+        .whenActivityPlayerServiceReady()
+        .then(function (PlayerService) {
+          PlayerService.setup();
+        });
     }
 
   }

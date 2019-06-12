@@ -8,6 +8,8 @@ describe('activity-view-service Test', function () {
 
   beforeEach(function () {
 
+    _mockData();
+
     angular.mock.module('otusjs.activity', function ($provide) {
       $provide.value('otusjs.deploy.SurveyRestService', {});
       $provide.value('otusjs.deploy.SurveyGroupRestService', {});
@@ -16,15 +18,21 @@ describe('activity-view-service Test', function () {
     inject(function (_$injector_) {
       Injections = {
         ModuleService: _$injector_.get('otusjs.activity.core.ModuleService'),
-        ContextService: _$injector_.get('otusjs.activity.core.ContextService')
+        ContextService: _$injector_.get('otusjs.activity.core.ContextService'),
+        ParticipantActivityService: _$injector_.get('otusjs.activity.business.ParticipantActivityService'),
       };
       service = _$injector_.get('otusjs.activity.business.ActivityViewService', Injections);
     });
 
-    spyOn(Injections.ModuleService, "whenActivityFacadeServiceReady").and.callThrough();
-    spyOn(Injections.ContextService, "getSelectedActivities");
-    spyOn(Injections.ContextService, "getLoggedUser");
-    spyOn(Injections.ContextService, "setActivityToView");
+    spyOn(Injections.ContextService, "getSelectedActivities").and.returnValue([{}]);
+    spyOn(Injections.ContextService, "selectActivities");
+    spyOn(Injections.ContextService, "setActivityToPlay");
+    spyOn(Injections.ParticipantActivityService, "getById").and.returnValue(Promise.resolve([{}]));
+    spyOn(Injections.ModuleService, "whenActivityFacadeServiceReady").and.returnValue(Promise.resolve(Mock.ActivityFacadeService));
+    spyOn(Injections.ModuleService, "whenActivityPlayerServiceReady").and.returnValue(Promise.resolve(Mock.PlayerService));
+    spyOn(Mock.ActivityFacadeService, "useActivity");
+    spyOn(Mock.ActivityFacadeService, "openSurveyActivity");
+    spyOn(Mock.PlayerService, "setup");
   });
 
   describe('service step', function () {
@@ -41,28 +49,42 @@ describe('activity-view-service Test', function () {
 
   describe('load method', function () {
 
-    it('should call whenActivityFacadeServiceReady method', function () {
+    it('should execute load method', function (done) {
       service.load();
-
-      expect(Injections.ModuleService.whenActivityFacadeServiceReady).toHaveBeenCalledTimes(1);
-    });
-
-    it('when called should call getSelectedActivities method', function () {
-      service.load();
-
-      Injections.ModuleService.whenActivityFacadeServiceReady().then(function () {
-        expect(Injections.ContextService.getSelectedActivities).toHaveBeenCalledTimes(1);
+      expect(Injections.ContextService.getSelectedActivities).toHaveBeenCalledTimes(1);
+      expect(Injections.ParticipantActivityService.getById).toHaveBeenCalledTimes(1);
+      Injections.ParticipantActivityService.getById().then(function () {
+        expect(Injections.ModuleService.whenActivityFacadeServiceReady).toHaveBeenCalledTimes(1);
+        Injections.ModuleService.whenActivityFacadeServiceReady().then(function () {
+          expect(Injections.ContextService.selectActivities).toHaveBeenCalledTimes(1);
+          expect(Mock.ActivityFacadeService.useActivity).toHaveBeenCalledTimes(1);
+          expect(Mock.ActivityFacadeService.openSurveyActivity).toHaveBeenCalledTimes(1);
+          expect(Injections.ContextService.setActivityToPlay).toHaveBeenCalledTimes(1);
+          expect(Injections.ModuleService.whenActivityPlayerServiceReady).toHaveBeenCalledTimes(1);
+          Injections.ModuleService.whenActivityPlayerServiceReady().then(function () {
+            expect(Mock.PlayerService.setup).toHaveBeenCalledTimes(1);
+            done();
+          });
+          done();
+        });
+        done();
       });
-    });
-
-    it('when called should call setActivityToView method', function () {
-      service.load();
-
-      Injections.ModuleService.whenActivityFacadeServiceReady().then(function () {
-        expect(Injections.ContextService.setActivityToView).toHaveBeenCalledTimes(1);
-      });
+      done();
     });
 
   });
+
+  function _mockData() {
+    Mock.ActivityFacadeService = {
+      useActivity: function () {
+      },
+      openSurveyActivity: function () {
+      }
+    };
+
+    Mock.PlayerService = {
+      setup: function () { }
+    };
+  }
 
 });
