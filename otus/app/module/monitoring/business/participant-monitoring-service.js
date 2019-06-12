@@ -35,7 +35,7 @@
         defer.reject();
       });
       return defer.promise;
-    };
+    }
 
     function buildActivityStatus(activity) {
       return HeatMapActivityFactory.create(activity).toJSON();
@@ -144,5 +144,4 @@
       return defer.promise;
     }
   }
-
 }());

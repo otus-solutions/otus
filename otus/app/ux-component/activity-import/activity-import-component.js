@@ -39,6 +39,7 @@
     self.countActivitiesError = 0;
     self.ActivitiesAnswered = [];
     self.isLoading = false;
+    self.isSaved = false;
 
     var _interval;
     var fr = new FileReader();
@@ -53,7 +54,6 @@
       self.input = $(document.querySelector('#fileInput'));
 
       self.input.on('change', function (e) {
-        self.receivedJSON = [];
         self.nameFile = $(document.querySelector('#nameFile'));
         if (_typeIsValid(e.target.files[0].type)) {
           self.nameFile.val(e.target.files[0].name);
@@ -64,6 +64,19 @@
           }
         }
       });
+    }
+
+    function _clearContent(){
+      delete self.file;
+      $(document.querySelector('#nameFile')).val('');
+      self.input.val("");
+      self.receivedJSON = [];
+      delete self.selectedActivity;
+      self.ActivitiesInvalids = [];
+      self.countActivitiesError = 0;
+      self.ActivitiesAnswered = [];
+      self.countActivitiesValids = 0;
+      self.countActivities = 0;
     }
 
     function cancel() {
@@ -104,7 +117,6 @@
       var isValid = true;
       if (Array.isArray(answers)) {
         isValid = answers.every(result => {
-          // if (isValid) {
             return result.hasOwnProperty("id") &&
               result.hasOwnProperty("acronym") &&
               result.hasOwnProperty("participant") &&
@@ -114,7 +126,6 @@
               result.hasOwnProperty("activityConfiguration") &&
               result.hasOwnProperty("answers") &&
               result.hasOwnProperty("offlineData");
-          // }
         });
       } else {
         isValid = false;
@@ -130,7 +141,7 @@
       self.total = self.receivedJSON.length;
       var _count = 0;
       _interval = $interval(function () {
-        if (stopUpload) return
+        if (stopUpload) return;
         var _ActivityAnswered = ActivityImportService.create(self.selectedActivity, self.receivedJSON.shift(), self.user);
         var _dataActivity = ImportService.getAnsweredActivityError(_ActivityAnswered, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.surveyTemplate.identity.name);
         if (_dataActivity) {
@@ -183,31 +194,45 @@
     }
 
     function saveActivitiesAnswered() {
+
       if(self.ActivitiesAnswered.length > 0){
         ImportService.importActivities({activityList:self.ActivitiesAnswered.slice(0, 100)}, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.version)
           .then(function (response) {
             let regex = /SurveyJumpMap not found/;
-            if(regex.test(response.MESSAGE)){
-              _showMessage("Mapa de atividade não encontrado!");
-              return true;
+            if(Array.isArray(response)){
+              if(response.length == 0){
+                self.isSaved = true;
+              } else {
+                response.forEach(result => {
+                  var _dataActivity = ImportService.getActivityError(result, self.selectedActivity);
+                  _dataActivity.error = _dataActivity.error.replaceAll("{","");
+                  _dataActivity.error = _dataActivity.error.replaceAll("}","");
+                  _dataActivity.error = _dataActivity.error.replaceAll("!",". ");
+                  self.ActivitiesInvalids.push(_dataActivity);
+                  self.countActivitiesError += 1;
+                  self.countActivitiesValids -= 1;
+                });
+              }
+            } else if (response){
+              if(regex.test(response.MESSAGE)){
+                _showMessage("Mapa de atividade não encontrado!");
+                return true;
+              }
             } else {
-              self.ActivitiesAnswered.splice(0, 100);
-              response.forEach(result => {
-                var _dataActivity = ImportService.getActivityError(result, self.selectedActivity);
-                _dataActivity.error = _dataActivity.error.replaceAll("{","");
-                _dataActivity.error = _dataActivity.error.replaceAll("}","");
-                _dataActivity.error = _dataActivity.error.replaceAll("!",". ");
-                self.ActivitiesInvalids.push(_dataActivity);
-                self.countActivitiesError += 1;
-                self.countActivitiesValids -= 1;
-              });
-              self.saveActivitiesAnswered();
-
+              _showMessage("Atividades inconsistentes!");
             }
-        }).catch(function (e) {
 
+            self.ActivitiesAnswered.splice(0, 100);
+            self.saveActivitiesAnswered();
+
+        }).catch(function (e) {
           _showMessage("Não foi possível salvar as atividades! Tente novamente mais tarde.");
+
         });
+      } else {
+        _clearContent();
+        if(self.isSaved) _showMessage("Atividades salvas com sucesso!");
+        self.isSaved = false;
       }
     }
 
@@ -242,7 +267,7 @@
         $mdToast.simple()
           .textContent(msg)
           .position("bottom right")
-          .hideDelay(3000)
+          .hideDelay(4000)
       );
     }
 
@@ -256,5 +281,3 @@
     }
   }
 }());
-
-

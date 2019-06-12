@@ -77,6 +77,7 @@
         </md-button>
       </div>
 
+
       <span flex></span>
     </div>
 
@@ -87,10 +88,9 @@
       </md-subheader>
 
 
-
-      <div class="md-body-1" ng-if="$ctrl.ActivitiesInvalids.length > 0" flex="33" layout="row" layout-fill="" layout-align="center center">
+      <span flex="33" ng-if="$ctrl.ActivitiesInvalids.length == 0"></span>
+      <div class="md-body-1" ng-if="$ctrl.ActivitiesInvalids.length > 0 || $ctrl.ActivitiesAnswered.length > 0" flex="33" layout="row" layout-fill="" layout-align="center center">
         <md-card layout="row" class="md-raised md-body-1" layout-padding>
-
 
             <span><md-icon>insert_drive_file</md-icon>
             {{$ctrl.getTotal()}}</span>
@@ -101,7 +101,6 @@
           </md-card-content>
         </md-card>
       </div>
-<!--      <span flex="5"></span>-->
       <div layout="row" layout-align="end end" flex="33">
 
         <md-button show-gt-sm hide ng-show="$ctrl.ActivitiesInvalids.length > 0" layout-align="end end" ng-click="$ctrl.downloadCSV()"
@@ -145,8 +144,6 @@
               <span flex></span>
               <md-divider></md-divider>
             </div>
-
-            <!--            <h4 ng-if="item.isValid == 'Inválido'"></span> </h4>-->
           </div>
         </md-list-item>
       </md-list>
