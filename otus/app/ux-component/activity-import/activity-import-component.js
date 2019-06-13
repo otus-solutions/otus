@@ -107,7 +107,7 @@
 
     function _isJSONValid(file) {
       try {
-        return JSON.parse(file) instanceof Object
+        return JSON.parse(file) instanceof Object;
       } catch (e) {
         return false;
       }
@@ -142,18 +142,20 @@
       var _count = 0;
       _interval = $interval(function () {
         if (stopUpload) return;
-        var _ActivityAnswered = ActivityImportService.create(self.selectedActivity, self.receivedJSON.shift(), self.user);
+
+        var _ActivityAnswered = new ActivityImportService.create(self.selectedActivity, self.receivedJSON.shift(), self.user);
         var _dataActivity = ImportService.getAnsweredActivityError(_ActivityAnswered, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.surveyTemplate.identity.name);
         if (_dataActivity) {
           _dataActivity.error = _dataActivity.error.replaceAll("{","");
           _dataActivity.error = _dataActivity.error.replaceAll("}","");
           _dataActivity.error = _dataActivity.error.replaceAll("!",". ");
-          self.ActivitiesInvalids.push(_dataActivity);
+          self.ActivitiesInvalids.push(angular.copy(_dataActivity));
           self.countActivitiesError += 1;
         } else {
-          self.ActivitiesAnswered.push(_ActivityAnswered);
+          self.ActivitiesAnswered.push(angular.copy(_ActivityAnswered));
           self.countActivitiesValids += 1;
         }
+
         _count += 1;
         self.countActivities = (_count / self.total) * 100;
         if (_count >= self.total) {
@@ -175,7 +177,7 @@
           _selectAcronym = resultJSON[0].acronym;
           if (_selectAcronym) {
             self.selectedActivity = self.activities.find(activity => {
-              return activity.surveyTemplate.identity.acronym === _selectAcronym;
+              return activity.surveyTemplate.identity.acronym == _selectAcronym;
             })
           } else {
             _showMessage("Não foi possível identificar a atividade!");
@@ -194,14 +196,14 @@
     }
 
     function saveActivitiesAnswered() {
-
       if(self.ActivitiesAnswered.length > 0){
         ImportService.importActivities({activityList:self.ActivitiesAnswered.slice(0, 100)}, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.version)
           .then(function (response) {
             let regex = /SurveyJumpMap not found/;
             if(Array.isArray(response)){
-              if(response.length == 0){
+              if(response.length == 0 && response.length < self.ActivitiesAnswered.slice(0, 100).length){
                 self.isSaved = true;
+                self.countActivitiesValids = self.countActivitiesValids - (self.ActivitiesAnswered.slice(0, 100).length - response.length)
               } else {
                 response.forEach(result => {
                   var _dataActivity = ImportService.getActivityError(result, self.selectedActivity);
@@ -230,7 +232,10 @@
 
         });
       } else {
-        _clearContent();
+        if(self.ActivitiesInvalids.length === 0){
+
+          _clearContent();
+        }
         if(self.isSaved) _showMessage("Atividades salvas com sucesso!");
         self.isSaved = false;
       }
