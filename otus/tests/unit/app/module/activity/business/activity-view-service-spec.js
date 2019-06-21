@@ -31,7 +31,6 @@ describe('activity-view-service Test', function () {
     spyOn(Injections.ModuleService, "whenActivityFacadeServiceReady").and.returnValue(Promise.resolve(Mock.ActivityFacadeService));
     spyOn(Injections.ModuleService, "whenActivityPlayerServiceReady").and.returnValue(Promise.resolve(Mock.PlayerService));
     spyOn(Mock.ActivityFacadeService, "useActivity");
-    spyOn(Mock.ActivityFacadeService, "openSurveyActivity");
     spyOn(Mock.PlayerService, "setup");
   });
 
@@ -58,13 +57,7 @@ describe('activity-view-service Test', function () {
         Injections.ModuleService.whenActivityFacadeServiceReady().then(function () {
           expect(Injections.ContextService.selectActivities).toHaveBeenCalledTimes(1);
           expect(Mock.ActivityFacadeService.useActivity).toHaveBeenCalledTimes(1);
-          expect(Mock.ActivityFacadeService.openSurveyActivity).toHaveBeenCalledTimes(1);
           expect(Injections.ContextService.setActivityToPlay).toHaveBeenCalledTimes(1);
-          expect(Injections.ModuleService.whenActivityPlayerServiceReady).toHaveBeenCalledTimes(1);
-          Injections.ModuleService.whenActivityPlayerServiceReady().then(function () {
-            expect(Mock.PlayerService.setup).toHaveBeenCalledTimes(1);
-            done();
-          });
           done();
         });
         done();

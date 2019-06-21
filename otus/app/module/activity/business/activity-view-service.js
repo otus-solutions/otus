@@ -29,6 +29,7 @@
         }
 
         return ModuleService
+
           .whenActivityFacadeServiceReady()
           .then(function (ActivityFacadeService) {
             _setActivityToViewer(ActivityFacadeService);
@@ -40,17 +41,7 @@
     function _setActivityToViewer(ActivityFacadeService) {
       ContextService.selectActivities([activityToView]);
       ActivityFacadeService.useActivity(activityToView);
-      ActivityFacadeService.openSurveyActivity(ContextService.getLoggedUser());
       ContextService.setActivityToPlay(activityToView);
-      _setupPlayer();
-    }
-
-    function _setupPlayer() {
-      ModuleService
-        .whenActivityPlayerServiceReady()
-        .then(function (PlayerService) {
-          PlayerService.setup();
-        });
     }
 
   }
