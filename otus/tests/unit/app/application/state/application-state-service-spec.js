@@ -1,24 +1,32 @@
-xdescribe('ApplicationStateService', function() {
+xdescribe('ApplicationStateService', function () {
 
   var UNIT_NAME = 'otusjs.application.state.ApplicationStateService';
   var service = {};
   var injections = {};
 
-  beforeEach(function() {
-    module('otusjs..otus');
+  beforeEach(function () {
+    module('otusjs.application.state');
 
-    inject(function(_$injector_, _$state_, _STATE_) {
-      injections.STATE = _STATE_;
-      injections.$state = _$state_;
+    inject(function (_$injector_, _$state_, _STATE_) {
+      injections.STATE = _$injector_.get('STATE');
+      injections.$state = _$injector_.get('$state');
       service = _$injector_.get(UNIT_NAME, injections);
     });
 
     spyOn(injections.$state, 'go');
   });
 
-  describe('activateActivityAdder method', function() {
+  describe('service step', function () {
 
-    it('should activate the INSTALLER state', function() {
+    it('should to be defined', function () {
+      expect(service).toBeDefined();
+    });
+
+  });
+
+  xdescribe('activateActivityAdder method', function () {
+
+    it('should activate the INSTALLER state', function () {
       service.activateActivityAdder();
 
       expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.ACTIVITY_ADDER);
@@ -26,9 +34,9 @@ xdescribe('ApplicationStateService', function() {
 
   });
 
-  describe('activateInstaller method', function() {
+  xdescribe('activateInstaller method', function () {
 
-    it('should activate the INSTALLER state', function() {
+    it('should activate the INSTALLER state', function () {
       service.activateInstaller();
 
       expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.INSTALLER);
@@ -36,9 +44,9 @@ xdescribe('ApplicationStateService', function() {
 
   });
 
-  describe('activateLogin method', function() {
+  xdescribe('activateLogin method', function () {
 
-    it('should activate the LOGIN state', function() {
+    it('should activate the LOGIN state', function () {
       service.activateLogin();
 
       expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.LOGIN);
@@ -46,9 +54,9 @@ xdescribe('ApplicationStateService', function() {
 
   });
 
-  describe('activateDashboard method', function() {
+  xdescribe('activateDashboard method', function () {
 
-    it('should activate the DASHBOARD state', function() {
+    it('should activate the DASHBOARD state', function () {
       service.activateDashboard();
 
       expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.PARTICIPANT_DASHBOARD);
@@ -56,9 +64,9 @@ xdescribe('ApplicationStateService', function() {
 
   });
 
-  describe('activateParticipantActivities method', function() {
+  xdescribe('activateParticipantActivities method', function () {
 
-    it('should activate the PARTICIPANT_ACTIVITY state', function() {
+    it('should activate the PARTICIPANT_ACTIVITY state', function () {
       service.activateParticipantActivities();
 
       expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.PARTICIPANT_ACTIVITY);
@@ -66,9 +74,9 @@ xdescribe('ApplicationStateService', function() {
 
   });
 
-  describe('activateParticipantReports method', function() {
+  xdescribe('activateParticipantReports method', function () {
 
-    it('should activate the PARTICIPANT_REPORT state', function() {
+    it('should activate the PARTICIPANT_REPORT state', function () {
       service.activateParticipantReports();
 
       expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.PARTICIPANT_REPORT);
@@ -76,9 +84,9 @@ xdescribe('ApplicationStateService', function() {
 
   });
 
-  describe('activateSignup method', function() {
+  xdescribe('activateSignup method', function () {
 
-    it('should activate the SIGNUP state', function() {
+    it('should activate the SIGNUP state', function () {
       service.activateSignup();
 
       expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.SIGNUP);
@@ -86,9 +94,9 @@ xdescribe('ApplicationStateService', function() {
 
   });
 
-  describe('activateSignupResult method', function() {
+  xdescribe('activateSignupResult method', function () {
 
-    it('should activate the SIGNUP_RESULT state', function() {
+    it('should activate the SIGNUP_RESULT state', function () {
       service.activateSignupResult();
 
       expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.SIGNUP_RESULT);

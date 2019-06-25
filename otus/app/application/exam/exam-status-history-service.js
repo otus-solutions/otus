@@ -11,11 +11,11 @@
     const DEFAULT_COLOR = '#ffffff';
     const STATUS = [
       {
-        name: 'UNREALIZED',
+        name: 'NOT_RECEIVED',
         label: 'Não Recebido',
         color: '#F4415C',
         icon: '',
-        value: 0
+        value: -1
       },
       {
         name: 'RECEIVED',
@@ -23,6 +23,13 @@
         color: '#1ECE8B',
         icon: 'check_circle',
         value: 1
+      },
+      {
+        name: 'UNREALIZED',
+        label: 'Não será realizado',
+        color: '#CECECE',
+        icon: '',
+        value: 0
       }
     ];
 
@@ -95,5 +102,4 @@
 
   }
 
-
-}())
+}());

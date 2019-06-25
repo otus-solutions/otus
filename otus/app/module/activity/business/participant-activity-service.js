@@ -28,6 +28,7 @@
     self.getSelectedActivities = getSelectedActivities;
     self.getSelectedParticipant = getSelectedParticipant;
     self.listActivityCheckers = listActivityCheckers;
+    self.getById = getById;
     self.setActivitiesSelection = setActivitiesSelection;
     self.getActivitiesSelection = getActivitiesSelection;
     self.updateCheckerActivity = updateCheckerActivity;
@@ -72,6 +73,10 @@
 
     function listAvailables() {
       return ActivityRepositoryService.listAvailables();
+    }
+
+    function getById(activityInfo) {
+      return ActivityRepositoryService.getById(activityInfo);
     }
 
     function initializePaperActivityData(paperActivityCheckerData) {

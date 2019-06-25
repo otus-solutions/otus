@@ -62,7 +62,7 @@
         _selectedActivities.splice(activityIndex, 1);
         activityItem.isSelected = false;
       } else {
-        _selectedActivities.push(activityItem.activity);
+        Array.prototype.push.apply(_selectedActivities,[activityItem.activity]);
         activityItem.isSelected = true;
       }
       ActivityService.selectActivities(_selectedActivities);
@@ -97,7 +97,6 @@
         .listAll()
         .then(function(activities) {
           self.activities = activities
-            .filter(_onlyNotDiscarded)
             .map(ActivityItemFactory.create);
           self.AllActivities = angular.copy(self.activities);
           _groupsFilter();
@@ -107,10 +106,6 @@
           ActivityService.selectActivities(_selectedActivities);
           LoadingScreenService.finish();
         });
-    }
-
-    function _onlyNotDiscarded(activity) {
-      return !activity.isDiscarded;
     }
 
     function changeSort(field,order) {

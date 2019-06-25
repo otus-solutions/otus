@@ -25,7 +25,7 @@
     var self = this;
     self.activities = [];
     self.isListEmpty = true;
-    self.orderByField = 'surveyTemplate.identity.name';
+    self.orderByField = 'name';
     self.reverseSort = false;
     self.searchTerm = '';
 
@@ -105,9 +105,9 @@
     function _buildDynamicTableSettings() {
       self.dynamicTableSettings = DynamicTableSettingsFactory.create()
         .addHeader('NOME', '50', '', 1)
-        .addColumnProperty('surveyTemplate.identity.name')
+        .addColumnProperty('name')
         .addHeader('ACRÔNIMO', '15', 'center center', 2)
-        .addColumnProperty('surveyTemplate.identity.acronym')
+        .addColumnProperty('acronym')
         .addHeader('Tipo', '35', '', 6)
         .addColumnProperty('surveyFormType')
         .setCallbackAfterChange(self.dynamicDataTableChange)
@@ -140,7 +140,7 @@
 
     function _activitiesFilter() {
       self.activities = self.AllActivities.filter(function (activity) {
-        return self.selectedSurveys.includes(activity.surveyTemplate.identity.acronym)
+        return self.selectedSurveys.includes(activity.acronym)
       });
       if(!self.selectedGroups.length) {
         self.activities = angular.copy(self.AllActivities);

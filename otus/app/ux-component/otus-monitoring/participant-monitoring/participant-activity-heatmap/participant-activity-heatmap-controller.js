@@ -24,7 +24,7 @@
 
     var self = this;
 
-    self.ERROR_MESSAGE = 'Atualmente não existem nenhum formulário disponível no sistema';
+    self.ERROR_MESSAGE = 'Atualmente, não existe nenhum formulário disponível no sistema';
     self.LOAD_ERROR_MESSAGE = "Ocorreu um erro ao buscar o relatório de atividades";
     self.activityList = [];
     self.legends = [];
@@ -150,13 +150,13 @@
     }
 
     function _buildLegend() {
-      self.legends.push({label: 'Criado.', color: self.COLOR.CREATED});
-      self.legends.push({label: 'Salvo.', color: self.COLOR.SAVED});
-      self.legends.push({label: 'Finalizado.', color: self.COLOR.FINALIZED});
-      self.legends.push({label: 'Não realizado.', color: self.COLOR.DOES_NOT_APPLY});
-      self.legends.push({label: 'Nenhuma atividade.', color: self.COLOR.UNDEFINED});
-      self.legends.push({label: 'Multiplas atividades.', color: self.COLOR.MULTIPLE});
-      self.legends.push({label: 'Ambiguidade.', color: self.COLOR.AMBIGUITY});
+      self.legends.push({label: 'Criada', color: self.COLOR.CREATED});
+      self.legends.push({label: 'Salva', color: self.COLOR.SAVED});
+      self.legends.push({label: 'Finalizada', color: self.COLOR.FINALIZED});
+      self.legends.push({label: 'Não será realizada', color: self.COLOR.DOES_NOT_APPLY});
+      self.legends.push({label: 'Nenhuma atividade', color: self.COLOR.UNDEFINED});
+      self.legends.push({label: 'Múltiplas atividades', color: self.COLOR.MULTIPLE});
+      self.legends.push({label: 'Ambiguidade', color: self.COLOR.AMBIGUITY});
     }
 
     function _DialogController($scope, $mdDialog, activity) {
@@ -220,5 +220,7 @@
       };
 
     }
+
   }
+
 }());

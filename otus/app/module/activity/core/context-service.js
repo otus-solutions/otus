@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -48,7 +48,10 @@
     self.selectActivities = selectActivities;
     self.getActivityToPlay = getActivityToPlay;
     self.setActivityToPlay = setActivityToPlay;
+    self.getActivityToView = getActivityToView;
+    self.setActivityToView = setActivityToView;
     self.existsActivityToPlay = existsActivityToPlay;
+    self.existsActivityToView = existsActivityToView;
 
     function begin() {
       _context.clear();
@@ -170,8 +173,24 @@
       setData('activityToPlay', activity);
     }
 
+    function getActivityToView() {
+      return getData('activityToView');
+    }
+
+    function setActivityToView(activity) {
+      setData('activityToView', activity);
+    }
+
     function existsActivityToPlay() {
       if (getData('activityToPlay')) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    function existsActivityToView() {
+      if (getData('activityToView')) {
         return true;
       } else {
         return false;

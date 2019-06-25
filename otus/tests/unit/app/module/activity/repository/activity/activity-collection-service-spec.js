@@ -39,6 +39,7 @@ describe('activity-collection-service Test', function() {
       spyOn(Mock.remoteStorage, "addActivityRevision").and.callThrough();
       spyOn(Mock.remoteStorage, "getActivityRevisions").and.callThrough();
       spyOn(Mock.remoteStorage, "importActivities").and.callThrough();
+      spyOn(Mock.remoteStorage, "getById").and.callThrough();
     });
 
     it('should create activity revision', function (done) {
@@ -80,6 +81,18 @@ describe('activity-collection-service Test', function() {
       done();
     });
 
+    it('should get activity by ID', function (done) {
+      service.getById([{}]);
+      Injections.ModuleService.getActivityRemoteStorage().whenReady().then(function (remoteStorage) {
+        expect(Mock.remoteStorage.getById).toHaveBeenCalledTimes(1);
+        expect(Mock.remoteStorage.getById).toHaveBeenCalledWith([{}]);
+        remoteStorage.getById().then(function () {
+          done();
+        });
+        done();
+      });
+      done();
+    });
 
   });
 
@@ -95,8 +108,11 @@ describe('activity-collection-service Test', function() {
       },
       importActivities: function () {
         return Promise.resolve();
+      },
+      getById: function () {
+        return Promise.resolve();
       }
-    }
+    };
 
     Mock.ModuleService = {
       getActivityRemoteStorage: function (){

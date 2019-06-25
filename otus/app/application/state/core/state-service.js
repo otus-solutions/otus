@@ -16,6 +16,7 @@
     /* Public Interface */
     self.activateActivityAdder = activateActivityAdder;
     self.activateActivityPlayer = activateActivityPlayer;
+    self.activateActivityViewer = activateActivityViewer;
     self.activatePaperActivityInitializer = activatePaperActivityInitializer;
     self.activateInstaller = activateInstaller;
     self.activateLogin = activateLogin;
@@ -58,6 +59,10 @@
 
     function activateActivityPlayer() {
       $state.go(STATE.ACTIVITY_PLAYER);
+    }
+
+    function activateActivityViewer() {
+      $state.go(STATE.ACTIVITY_VIEWER);
     }
 
     function activatePaperActivityInitializer() {
