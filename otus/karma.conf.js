@@ -85,6 +85,7 @@ module.exports = function (config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       './app/**/*.js': ['babel', 'coverage'],
+	'node_modules/otus*/**/*.js': 'babel',
       './tests/unit/**/*-spec.js': 'babel'
     },
 
