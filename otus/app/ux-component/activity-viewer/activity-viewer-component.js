@@ -3,9 +3,9 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusActivityPlayer', {
+    .component('otusActivityViewer', {
       controller: Controller,
-      templateUrl: 'app/ux-component/activity-player/activity-player-template.html'
+      templateUrl: 'app/ux-component/activity-viewer/activity-viewer-template.html'
     });
 
   Controller.$inject = [];

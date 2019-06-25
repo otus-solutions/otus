@@ -1,4 +1,4 @@
-xdescribe('otusActivityManagerToolbar', function () {
+describe('otusActivityManagerToolbar', function () {
 
   var UNIT_NAME = 'otusActivityManagerToolbarCtrl';
   var Mock = {};
@@ -9,17 +9,33 @@ xdescribe('otusActivityManagerToolbar', function () {
 
   beforeEach(function () {
     angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
+
+      Mock.ActivityViewService = {
+        load: function () {
+          return Promise.resolve();
+        }
+      };
+
+      Mock.ApplicationStateService = {
+        activateActivityViewer: function () {
+          return Promise.resolve();
+        }
+      };
+
       mockInjections();
-      $provide.value('otusjs.activity.business.ParticipantActivityService', Mock.ParticipantActivityService);
-      $provide.value('otusjs.activity.business.ActivityPlayerService', {});
-      $provide.value('otusjs.activity.core.EventService', {});
-      $provide.value('otusjs.application.state.ApplicationStateService', {});
-      $provide.value('$mdDialog', Mock.mdDialog);
-      $provide.value('otusjs.application.dialog.DialogShowService', {});
-      $provide.value('otusjs.otus.uxComponent.CheckerItemFactory', Mock.CheckerItemFactory);
+
       $provide.value('$q', {});
-      $provide.value('$timeout', {});
       $provide.value('$mdToast', Mock.mdToast);
+      $provide.value('$timeout', {});
+      $provide.value('$mdDialog', Mock.mdDialog);
+      $provide.value('otusjs.activity.core.EventService', {});
+      $provide.value('otusjs.otus.uxComponent.CheckerItemFactory', Mock.CheckerItemFactory);
+      $provide.value('otusjs.application.dialog.DialogShowService', {});
+      $provide.value('otusjs.activity.business.ActivityPlayerService', {});
+      $provide.value('otusjs.activity.business.ActivityViewService', Mock.ActivityViewService);
+      $provide.value('otusjs.activity.business.ActivityPlayerService', {});
+      $provide.value('otusjs.application.state.ApplicationStateService', Mock.ApplicationStateService);
+      $provide.value('otusjs.activity.business.ParticipantActivityService', Mock.ParticipantActivityService);
     });
 
     inject(function (_$injector_, _$controller_) {
@@ -42,7 +58,7 @@ xdescribe('otusActivityManagerToolbar', function () {
     });
   });
 
-  describe('DialogController not update checker ', function () {
+  xdescribe('DialogController not update checker ', function () {
     beforeEach(function () {
       spyOn(Mock.ParticipantActivityService, "listActivityCheckers").and.callThrough();
       spyOn(Mock.ParticipantActivityService, "updateCheckerActivity").and.callThrough();
@@ -75,7 +91,7 @@ xdescribe('otusActivityManagerToolbar', function () {
     });
   });
 
-  describe('DialogController update checker ', function () {
+  xdescribe('DialogController update checker ', function () {
     beforeEach(function () {
       spyOn(Mock.ParticipantActivityService, "listActivityCheckers").and.callThrough();
       spyOn(Mock.ParticipantActivityService, "updateCheckerActivity").and.returnValue(Promise.resolve(true));
@@ -107,9 +123,26 @@ xdescribe('otusActivityManagerToolbar', function () {
     });
   });
 
+  describe('viewSelectedActivity method', function () {
+    beforeEach(function () {
+      spyOn(Mock.ActivityViewService, "load").and.callThrough();
+      spyOn(Mock.ApplicationStateService, "activateActivityViewer").and.callThrough();
+    });
+
+    it('should method to be defined', function () {
+      expect(controller.viewSelectedActivity).toBeDefined();
+    });
+
+    it('should call methods expected', function () {
+      controller.viewSelectedActivity();
+
+      expect(Mock.ActivityViewService.load).toHaveBeenCalled();
+    });
+  });
+
   function mockInjections() {
     Mock.mdDialog = {
-      cancel: function () {},
+      cancel: function () { },
       show: function () {
         return Promise.resolve();
       },
@@ -159,21 +192,21 @@ xdescribe('otusActivityManagerToolbar', function () {
     Mock.ParticipantActivityService = {
       listActivityCheckers: function () {
         return [{
-            checker: {
-              "name": "Emanoel",
-              "surname": "Vianna",
-              "phone": "51999999999",
-              "email": "otus@otus.com"
-            }
-          },
-          {
-            checker: {
-              "name": "Emanoel",
-              "surname": "Vianna",
-              "phone": "51999999999",
-              "email": "otus@otus.com"
-            }
+          checker: {
+            "name": "Emanoel",
+            "surname": "Vianna",
+            "phone": "51999999999",
+            "email": "otus@otus.com"
           }
+        },
+        {
+          checker: {
+            "name": "Emanoel",
+            "surname": "Vianna",
+            "phone": "51999999999",
+            "email": "otus@otus.com"
+          }
+        }
         ];
       },
       updateCheckerActivity: function () {
@@ -181,20 +214,5 @@ xdescribe('otusActivityManagerToolbar', function () {
       }
     };
   };
-
-  function mockActivityContextService($injector) {
-    Mock.ActivityContextService = $injector.get('otusjs.activity.core.ContextService');
-    Injections.ActivityContextService = Mock.ActivityContextService;
-  }
-
-  function mockActivityService($injector) {
-    Mock.ActivityService = $injector.get('otusjs.activity.business.ParticipantActivityService');
-    Injections.ActivityService = Mock.ActivityService;
-  }
-
-  function mockOtusActivityManager() {
-    Mock.otusActivityManager = {};
-    Bindings.otusActivityManager = Mock.otusActivityManager;
-  }
 
 });

@@ -43,7 +43,6 @@ describe('signupController Test suite', function () {
   // });
 
   it('controllerExistence check ', function () {
-    console.log(ctrl)
     expect(ctrl).toBeDefined();
   });
 

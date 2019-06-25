@@ -14,7 +14,7 @@ describe('ParticipantMonitoringService Test Suite', function () {
     mockDataSource();
 
     angular.mock.inject(function (_$injector_, $rootScope) {
-      Injections.$q = _$injector_.get('$q')
+      Injections.$q = _$injector_.get('$q');
       Injections.MonitoringCollectionService = _$injector_.get('otusjs.monitoring.repository.MonitoringCollectionService');
       Injections.HeatMapActivityFactory = _$injector_.get('otusjs.model.monitoring.HeatMapActivityFactory');
       Injections.HeatMapExamFactory = _$injector_.get('otusjs.model.monitoring.HeatMapExamFactory');
