@@ -111,7 +111,6 @@
         ProjectFieldCenterService.loadCenters().then((result) => {
           self.centers = angular.copy(result);
           setUserFieldCenter();
-          LoadingScreenService.finish();
         }).catch(function (e) {
           self.error = "Não foi possível carregar os dados do centro.";
           LoadingScreenService.finish();
