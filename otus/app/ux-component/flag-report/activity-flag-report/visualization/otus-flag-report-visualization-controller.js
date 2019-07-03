@@ -9,6 +9,7 @@
 
   function Controller(StatusHistoryService) {
     var self = this;
+    var _amountOfElementsInPage;
     self.activitiesData;
 
     /* Lifecycle hooks */
@@ -24,6 +25,7 @@
 
     function constructor(activities = null) {
       self.activitiesData = activities ? activities : self.activitiesData;
+      _amountOfElementsInPage = self.activitiesData.data.length;
       let heatMapId = "#heatmap";
       if (self.activitiesData.columns && self.activitiesData.index && self.activitiesData.data) {
         heatmap_display(angular.copy(self.activitiesData), heatMapId);
@@ -55,9 +57,10 @@
       var viewerPosTop = 200;
 
       var legendElementWidth = CELL_SIZE * 3.2;
+      var legendElementHeight = CELL_SIZE / 2;
 
-      var contentHeight = ((CELL_SIZE + verticalTranslation) * scale);
-      var viewerHeight = window.innerHeight - contentHeight;
+      var contentHeight = ((CELL_SIZE*_amountOfElementsInPage + verticalTranslation) * scale);
+      var viewerHeight = contentHeight > window.innerHeight ? contentHeight : window.innerHeight;
 
       var colors = self.colorsRange;
       var svg;
@@ -238,7 +241,7 @@
         .attr("y", viewerPosTop)
         .attr("class", "cellLegend bordered")
         .attr("width", legendElementWidth)
-        .attr("height", CELL_SIZE / 2)
+        .attr("height", legendElementHeight)
         .style("fill", function (d, i) {
           return colors[i];
         });
