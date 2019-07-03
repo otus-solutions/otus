@@ -113,7 +113,6 @@
           setUserFieldCenter();
         }).catch(function (e) {
           self.error = "Não foi possível carregar os dados do centro.";
-          console.log('finish');
           LoadingScreenService.finish();
           throw e;
         });
