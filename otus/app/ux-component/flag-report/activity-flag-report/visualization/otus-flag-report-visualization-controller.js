@@ -10,6 +10,7 @@
   function Controller(StatusHistoryService) {
     var self = this;
     var _amountOfElementsInPage;
+    self.activitiesData;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
