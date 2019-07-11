@@ -142,7 +142,6 @@
       var _count = 0;
       _interval = $interval(function () {
         if (stopUpload) return;
-
         var _ActivityAnswered = new ActivityImportService.create(self.selectedActivity, self.receivedJSON.shift(), self.user);
         var _dataActivity = ImportService.getAnsweredActivityError(_ActivityAnswered, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.surveyTemplate.identity.name);
         if (_dataActivity) {
@@ -195,6 +194,7 @@
     }
 
     function saveActivitiesAnswered() {
+      LoadingScreenService.start();
       if (self.ActivitiesAnswered.length > 0) {
         ImportService.importActivities({ activityList: self.ActivitiesAnswered.slice(0, 100) }, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.version)
           .then(function (response) {
@@ -225,14 +225,13 @@
 
             self.ActivitiesAnswered.splice(0, 100);
             self.saveActivitiesAnswered();
-
+            LoadingScreenService.finish();
           }).catch(function (e) {
+            LoadingScreenService.finish();
             _showMessage("Não foi possível salvar as atividades! Tente novamente mais tarde.");
-
           });
       } else {
         if (self.ActivitiesInvalids.length === 0) {
-
           _clearContent();
         }
         if (self.isSaved) _showMessage("Atividades salvas com sucesso!");
