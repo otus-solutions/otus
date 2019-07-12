@@ -10,15 +10,13 @@
   ];
 
   function Service(ActivityRepositoryService) {
-    var self = this;
-
     const ERROR = "error";
     const RECRUITMENT_NUMBER_ERROR = "Número de recrutamento inválido! ";
     const CATEGORY_ERROR = "Categoria {error} inválida! ";
     const INTERVIEWER_ERROR = "Usuário {error} inválido! ";
     const PAPER_INTERVIEWER_ERROR = "Aferidor {error} inválido! ";
     const QUESTION_FILL_ERROR = "Questão {error} deveria estar preenchida! ";
-    const structureActivity = {
+    var structureActivity = {
       rn: '',
       acronym: '',
       name: '',
@@ -26,6 +24,7 @@
       category: '',
       isValid: 'Inválido'
     };
+    var self = this;
 
     /* Public methods */
     self.importActivities = importActivities;
@@ -55,7 +54,7 @@
 
     function getActivityError(response, activity) {
       try {
-        var _activity = structureActivity;
+        var _activity = angular.copy(structureActivity);
         _activity.error = "";
         _activity.rn = response["recruitmentNumberValidationResult"].recruitmentNumber;
         _activity.acronym = activity.surveyTemplate.identity.acronym;

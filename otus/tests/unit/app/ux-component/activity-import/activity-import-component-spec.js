@@ -19,6 +19,7 @@ describe('activity-import-component Test', function () {
     angular.mock.module('otusjs.activity', function ($provide) {
       $provide.value('otusjs.deploy.SurveyRestService', {});
       $provide.value('otusjs.deploy.SurveyGroupRestService', {});
+      $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
     });
 
     spyOn(window, "FileReader").and.returnValue({
@@ -40,7 +41,7 @@ describe('activity-import-component Test', function () {
         $mdToast: _$injector_.get('$mdToast')
       };
       controller = _$controller_('otusActivityImportCtrl', Injections);
-      controller.user = {token: "asdasdf"};
+      controller.user = { token: "asdasdf" };
 
 
       spyOn($.fn, "init").and.returnValue({
@@ -206,7 +207,15 @@ describe('activity-import-component Test', function () {
       create: function () {
         return {}
       }
-    }
+    };
+    Mock.LoadingScreenService = {
+      start: function () {
+        return Promise.resolve();
+      },
+      finish: function () {
+        return Promise.resolve();
+      }
+    };
   }
 
   function mockData() {
@@ -218,7 +227,7 @@ describe('activity-import-component Test', function () {
       category: '',
       isValid: false
     };
-    Mock.dataActivity = {participantData: '', acronym: '', name: '', error: '', category: {label: ''}, isValid: false};
+    Mock.dataActivity = { participantData: '', acronym: '', name: '', error: '', category: { label: '' }, isValid: false };
 
     Mock.valid = {
       isValid: true,
@@ -236,25 +245,25 @@ describe('activity-import-component Test', function () {
 
     Mock.response = [
       {
-        recruitmentNumberValidationResult:{
-          recruitmentNumber:123456,
-          isValid:false
+        recruitmentNumberValidationResult: {
+          recruitmentNumber: 123456,
+          isValid: false
         },
-        categoryValidationResult:{
-          category:"C1",
-          isValid:false
+        categoryValidationResult: {
+          category: "C1",
+          isValid: false
         },
-        interviewerValidationResult:{
-          email:"email",
-          isValid:false
+        interviewerValidationResult: {
+          email: "email",
+          isValid: false
         },
-        paperInterviewerValidationResult:{
-          email:"email",
-          isValid:false
+        paperInterviewerValidationResult: {
+          email: "email",
+          isValid: false
         },
-        questionFillValidationResult:{
-          questionId:"PASC1",
-          shouldBeFilled:true
+        questionFillValidationResult: {
+          questionId: "PASC1",
+          shouldBeFilled: true
         }
       }
     ];
