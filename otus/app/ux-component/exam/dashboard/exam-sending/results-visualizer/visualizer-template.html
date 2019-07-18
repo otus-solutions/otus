@@ -1,7 +1,7 @@
 <div ui-view layout="column" ng-if="$ctrl.fileStructure">
   <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-with-problems="$ctrl.aliquotsWithProblems" disabled-save="$ctrl.disabledSave" csv-data="$ctrl.csvData" dynamic-data-table-change="$ctrl.updateDataTable"
     error-aliquots="$ctrl.errorAliquots" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
-  <md-content layout="column">
+  <md-content layout="column" flex>
     <div>
       <md-card flex style="min-height: 150px">
         <md-card-title flex>

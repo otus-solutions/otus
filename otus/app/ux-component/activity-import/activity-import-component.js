@@ -18,11 +18,11 @@
     '$mdToast',
     'otusjs.activity.business.ActivityImportService',
     'otusjs.application.dialog.DialogShowService',
-    '$timeout',
+    'otusjs.deploy.LoadingScreenService',
     '$interval'
   ];
 
-  function Controller(ActivityService, ActivityImportService, $scope, $mdToast, ImportService, DialogShowService, $timeout, $interval) {
+  function Controller(ActivityService, ActivityImportService, $scope, $mdToast, ImportService, DialogShowService, LoadingScreenService, $interval) {
     var self = this;
 
     self.$onInit = onInit;
@@ -66,7 +66,7 @@
       });
     }
 
-    function _clearContent(){
+    function _clearContent() {
       delete self.file;
       $(document.querySelector('#nameFile')).val('');
       self.input.val("");
@@ -117,15 +117,15 @@
       var isValid = true;
       if (Array.isArray(answers)) {
         isValid = answers.every(result => {
-            return result.hasOwnProperty("id") &&
-              result.hasOwnProperty("acronym") &&
-              result.hasOwnProperty("participant") &&
-              result.hasOwnProperty("user") &&
-              result.hasOwnProperty("status") &&
-              result.hasOwnProperty("mode") &&
-              result.hasOwnProperty("activityConfiguration") &&
-              result.hasOwnProperty("answers") &&
-              result.hasOwnProperty("offlineData");
+          return result.hasOwnProperty("id") &&
+            result.hasOwnProperty("acronym") &&
+            result.hasOwnProperty("participant") &&
+            result.hasOwnProperty("user") &&
+            result.hasOwnProperty("status") &&
+            result.hasOwnProperty("mode") &&
+            result.hasOwnProperty("activityConfiguration") &&
+            result.hasOwnProperty("answers") &&
+            result.hasOwnProperty("offlineData");
         });
       } else {
         isValid = false;
@@ -136,26 +136,24 @@
     function validateAnswers() {
       stopUpload = false;
       self.isLoading = true;
-      if(!self.ActivitiesAnswered) self.ActivitiesAnswered = [];
-      if(!self.ActivitiesInvalids) self.ActivitiesInvalids = [];
+      if (!self.ActivitiesAnswered) self.ActivitiesAnswered = [];
+      if (!self.ActivitiesInvalids) self.ActivitiesInvalids = [];
       self.total = self.receivedJSON.length;
       var _count = 0;
       _interval = $interval(function () {
         if (stopUpload) return;
-
         var _ActivityAnswered = new ActivityImportService.create(self.selectedActivity, self.receivedJSON.shift(), self.user);
         var _dataActivity = ImportService.getAnsweredActivityError(_ActivityAnswered, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.surveyTemplate.identity.name);
         if (_dataActivity) {
-          _dataActivity.error = _dataActivity.error.replaceAll("{","");
-          _dataActivity.error = _dataActivity.error.replaceAll("}","");
-          _dataActivity.error = _dataActivity.error.replaceAll("!",". ");
+          _dataActivity.error = _dataActivity.error.replaceAll("{", "");
+          _dataActivity.error = _dataActivity.error.replaceAll("}", "");
+          _dataActivity.error = _dataActivity.error.replaceAll("!", ". ");
           self.ActivitiesInvalids.push(angular.copy(_dataActivity));
           self.countActivitiesError += 1;
         } else {
           self.ActivitiesAnswered.push(angular.copy(_ActivityAnswered));
           self.countActivitiesValids += 1;
         }
-
         _count += 1;
         self.countActivities = (_count / self.total) * 100;
         if (_count >= self.total) {
@@ -196,27 +194,28 @@
     }
 
     function saveActivitiesAnswered() {
-      if(self.ActivitiesAnswered.length > 0){
-        ImportService.importActivities({activityList:self.ActivitiesAnswered.slice(0, 100)}, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.version)
+      LoadingScreenService.start();
+      if (self.ActivitiesAnswered.length > 0) {
+        ImportService.importActivities({ activityList: self.ActivitiesAnswered.slice(0, 100) }, self.selectedActivity.surveyTemplate.identity.acronym, self.selectedActivity.version)
           .then(function (response) {
             let regex = /SurveyJumpMap not found/;
-            if(Array.isArray(response)){
-              if(response.length == 0 && response.length < self.ActivitiesAnswered.slice(0, 100).length){
+            if (Array.isArray(response)) {
+              if (response.length == 0 && response.length < self.ActivitiesAnswered.slice(0, 100).length) {
                 self.isSaved = true;
                 self.countActivitiesValids = self.countActivitiesValids - (self.ActivitiesAnswered.slice(0, 100).length - response.length)
               } else {
                 response.forEach(result => {
                   var _dataActivity = ImportService.getActivityError(result, self.selectedActivity);
-                  _dataActivity.error = _dataActivity.error.replaceAll("{","");
-                  _dataActivity.error = _dataActivity.error.replaceAll("}","");
-                  _dataActivity.error = _dataActivity.error.replaceAll("!",". ");
+                  _dataActivity.error = _dataActivity.error.replaceAll("{", "");
+                  _dataActivity.error = _dataActivity.error.replaceAll("}", "");
+                  _dataActivity.error = _dataActivity.error.replaceAll("!", ". ");
                   self.ActivitiesInvalids.push(_dataActivity);
                   self.countActivitiesError += 1;
                   self.countActivitiesValids -= 1;
                 });
               }
-            } else if (response){
-              if(regex.test(response.MESSAGE)){
+            } else if (response) {
+              if (regex.test(response.MESSAGE)) {
                 _showMessage("Mapa de atividade não encontrado!");
                 return true;
               }
@@ -226,30 +225,29 @@
 
             self.ActivitiesAnswered.splice(0, 100);
             self.saveActivitiesAnswered();
-
-        }).catch(function (e) {
-          _showMessage("Não foi possível salvar as atividades! Tente novamente mais tarde.");
-
-        });
+            LoadingScreenService.finish();
+          }).catch(function (e) {
+            LoadingScreenService.finish();
+            _showMessage("Não foi possível salvar as atividades! Tente novamente mais tarde.");
+          });
       } else {
-        if(self.ActivitiesInvalids.length === 0){
-
+        if (self.ActivitiesInvalids.length === 0) {
           _clearContent();
         }
-        if(self.isSaved) _showMessage("Atividades salvas com sucesso!");
+        if (self.isSaved) _showMessage("Atividades salvas com sucesso!");
         self.isSaved = false;
       }
     }
 
-    String.prototype.replaceAll = function(search, replacement) {
+    String.prototype.replaceAll = function (search, replacement) {
       var target = this;
       return target.split(search).join(replacement);
     };
 
     function showDialog(item) {
       var data = {
-        dialogToTitle: "("+item.acronym+") "+item.name,
-        textDialog: "<p layout-padding><b>Participante:</b>"+item.rn+"</p><p layout-padding><b>Categoria:</b> "+item.category+"</p><br><p layout-padding><b>Erro(s):</b><br>"+item.error.replaceAll(". ", ".</br>")+"</p>",
+        dialogToTitle: "(" + item.acronym + ") " + item.name,
+        textDialog: "<p layout-padding><b>Participante:</b>" + item.rn + "</p><p layout-padding><b>Categoria:</b> " + item.category + "</p><br><p layout-padding><b>Erro(s):</b><br>" + item.error.replaceAll(". ", ".</br>") + "</p>",
         buttons: []
       };
 
@@ -278,7 +276,7 @@
 
 
     function downloadCSV() {
-      if(self.ActivitiesInvalids.length){
+      if (self.ActivitiesInvalids.length) {
         var headers = '[rn] AS [Participante], [acronym] AS [Acrônimo], [name] AS [Atividade], [category] AS [Categoria], [isValid] AS [Status], [error] AS [Problema]';
         var name = 'importação de atividade-'.concat(new Date().toLocaleDateString());
         alasql('SELECT ' + headers + ' INTO CSV("' + name + '.csv") FROM ? ', [self.ActivitiesInvalids]);

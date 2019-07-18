@@ -21,6 +21,7 @@ describe('activity-import-service Test', function () {
     });
 
     spyOn(Injections.ActivityRepositoryService, "importActivities");
+    spyOn(angular, 'copy').and.callThrough();
   });
 
   it('should define service', function () {
@@ -28,6 +29,12 @@ describe('activity-import-service Test', function () {
     expect(service.importActivities).toBeDefined();
     expect(service.getAnsweredActivityError).toBeDefined();
     expect(service.getActivityError).toBeDefined();
+  });
+
+  it('should call importActivities method', function () {
+    service.getActivityError(Mock.response, Mock.activity);
+
+    expect(angular.copy).toHaveBeenCalledTimes(1);
   });
 
   it('should call importActivities method', function () {
@@ -77,7 +84,7 @@ describe('activity-import-service Test', function () {
 
   function mockData() {
     Mock.activity = {
-      participantData: {recruitmentNumber: 1234567},
+      participantData: { recruitmentNumber: 1234567 },
       error: "",
       category: {
         label: "Normal"
