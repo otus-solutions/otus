@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -25,14 +25,15 @@
     self.getAllowNewParticipants = getAllowNewParticipants;
     self.filter = filter;
     self.selectParticipant = selectParticipant;
+    self.getSelectedParticipante = getSelectedParticipante;
 
     var _setupSuccess;
 
     function setup() {
       var defer = $q.defer();
-      setTimeout(function() {
-      var promise = ParticipantRepositoryService.listIdexers();
-      promise.then(function(_participants) {
+      setTimeout(function () {
+        var promise = ParticipantRepositoryService.listIdexers();
+        promise.then(function (_participants) {
           if (_participants) {
             query = SearchQueryFactory.newParticipantFilter(_participants);
             _stringfyRNs(_participants);
@@ -66,6 +67,10 @@
       EventService.fireParticipantSelected(participant);
     }
 
+    function getSelectedParticipante() {
+      return ContextService.getSelectedParticipant();
+    }
+
     function create(participant) {
       var deferred = $q.defer();
       ParticipantRepositoryService.create(participant)
@@ -74,7 +79,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
-      });
+        });
 
       return deferred.promise;
     }
@@ -87,7 +92,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
-      });
+        });
 
       return deferred.promise;
     }
@@ -100,7 +105,7 @@
         })
         .catch(function (err) {
           deferred.reject(err);
-      });
+        });
 
       return deferred.promise;
     }

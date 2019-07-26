@@ -29,7 +29,7 @@
 
     function setupDatasources(dsDefsArray) {
       var defer = $q.defer();
-      getDatasources(dsDefsArray)
+      _getDatasources(dsDefsArray)
         .then(function(dsMap) {
           dsDefsArray.forEach(function(dsDef){
              dsMap[dsDef.getID()].bindedItems = dsDef.getBindedItems();
@@ -42,7 +42,7 @@
     }
 
 
-    function getDatasources(dsDefsArray) {
+    function _getDatasources(dsDefsArray) {
       var defer = $q.defer();
       var dsMap = {};
       _getAll(dsDefsArray)
@@ -59,12 +59,12 @@
     function _getAll(dsDefsArray) {
       var dsArr = [];
       dsDefsArray.forEach(function(ds) {
-        dsArr.push(getDatasourcesByID(ds.getID()));
+        dsArr.push(_getDatasourcesByID(ds.getID()));
       });
       return $q.all(dsArr);
     }
 
-    function getDatasourcesByID(id) {
+    function _getDatasourcesByID(id) {
       return SurveyItemRestService.getByID(id);
     }
   }
