@@ -27,16 +27,18 @@
     function beforeEffect(pipe, flowData) { }
 
     function effect(pipe, flowData) {
-      // TODO: variaveis devem ser atribuitadas ao participante e então preenchidas com informações vindas do otus-api
-      var dsDefsArray = ActivityFacadeService.getCurrentSurvey().getSurveyDatasources();
-      var unlockingPromises = [
-        SurveyItemDatasourceService.setupDatasources(dsDefsArray),
-        FileUploadDatasourceService.setupUploader(),        
+      var hardBlockingPromises = [
+        SurveyItemDatasourceService.setupDatasources(ActivityFacadeService.getCurrentSurvey().getSurveyDatasources()),
+        FileUploadDatasourceService.setupUploader(),
         //another promise to solve before unblock phase
       ];
-      // TODO: chamado para o player sem bloqueio
-      PlayerService.registerPhaseBlocker($q.all(unlockingPromises));
-      StaticVariableDataSourceService.setup(ActivityFacadeService);
+
+      var softBlockingPromises = [
+        StaticVariableDataSourceService.setup(ActivityFacadeService)
+      ];
+
+      PlayerService.registerPhaseBlocker($q.all(hardBlockingPromises));
+      PlayerService.registerSoftBlocker($q.all(softBlockingPromises));
     }
 
     function afterEffect(pipe, flowData) { }
