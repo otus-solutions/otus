@@ -3,14 +3,14 @@
 
   angular
     .module('otusjs.deploy.staticVariable')
-    .service('otusjs.deploy.staticVariable.SurveyItemStaticVariableService', service);
+    .service('otusjs.deploy.staticVariable.StaticVariableDataSourceService', service);
 
   service.$inject = [
-    'otusjs.deploy.staticVariable.StaticVariableRequestFactory',
+    'otusjs.deploy.staticVariable.StaticVariableDataSourceRequestFactory',
     'otusjs.participant.business.ParticipantManagerService'
   ];
 
-  function service(StaticVariableRequestFactory, ParticipantManagerService) {
+  function service(StaticVariableDataSourceRequestFactory, ParticipantManagerService) {
     var self = this;
 
     /* Public Interface */
@@ -26,7 +26,7 @@
     function setup(ActivityFacadeService) {
       var variables = ActivityFacadeService.getCurrentSurvey().getStaticVariableList();
       var participant = ParticipantManagerService.getSelectedParticipante();
-      var request = StaticVariableRequestFactory.create(participant.recruitmentNumber, variables);
+      var request = StaticVariableDataSourceRequestFactory.create(participant.recruitmentNumber, variables);
       console.log(request);
       // return StaticVariableRestService.get(request);
     }

@@ -11,10 +11,10 @@
     'otusjs.deploy.SurveyItemDatasourceService',
     'otusjs.player.data.activity.ActivityFacadeService',
     'otusjs.deploy.FileUploadDatasourceService',
-    'otusjs.deploy.staticVariable.SurveyItemStaticVariableService'
+    'otusjs.deploy.staticVariable.StaticVariableDataSourceService'
   ];
 
-  function Service($q, PlayerService, SurveyItemDatasourceService, ActivityFacadeService, FileUploadDatasourceService, SurveyItemStaticVariableService) {
+  function Service($q, PlayerService, SurveyItemDatasourceService, ActivityFacadeService, FileUploadDatasourceService, StaticVariableDataSourceService) {
     var self = this;
     var defer = $q.defer();
 
@@ -36,7 +36,7 @@
       ];
       // TODO: chamado para o player sem bloqueio
       PlayerService.registerPhaseBlocker($q.all(unlockingPromises));
-      SurveyItemStaticVariableService.setup(ActivityFacadeService);
+      StaticVariableDataSourceService.setup(ActivityFacadeService);
     }
 
     function afterEffect(pipe, flowData) { }

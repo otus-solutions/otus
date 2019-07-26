@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy.staticVariable')
-    .factory('otusjs.deploy.staticVariable.StaticVariableRequestFactory', Factory);
+    .factory('otusjs.deploy.staticVariable.StaticVariableDataSourceRequestFactory', Factory);
 
   Factory.$inject = [];
 
