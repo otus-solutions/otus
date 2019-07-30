@@ -28,7 +28,10 @@
       var participant = ParticipantManagerService.getSelectedParticipante();
       var request = StaticVariableDataSourceRequestFactory.create(participant.recruitmentNumber, variables);
       console.log(request);
-      // return StaticVariableRestService.get(request);
+      return StaticVariableRestService.getParticipantStaticVariable(request)
+        .then(response => {
+          console.log(ActivityFacadeService.getCurrentSurvey());
+        });
     }
 
   }
