@@ -37,7 +37,7 @@
         StaticVariableDataSourceService.setup(ActivityFacadeService)
       ];
 
-      PlayerService.registerPhaseBlocker($q.all(hardBlockingPromises));
+      PlayerService.registerHardBlocker($q.all(hardBlockingPromises));
       PlayerService.registerSoftBlocker($q.all(softBlockingPromises));
     }
 

@@ -6,11 +6,13 @@
     .service('otusjs.deploy.staticVariable.StaticVariableDataSourceService', service);
 
   service.$inject = [
+    '$q',
+    'otusjs.deploy.StaticVariableRestService',
     'otusjs.deploy.staticVariable.StaticVariableDataSourceRequestFactory',
     'otusjs.participant.business.ParticipantManagerService'
   ];
 
-  function service(StaticVariableDataSourceRequestFactory, ParticipantManagerService) {
+  function service($q, StaticVariableRestService, StaticVariableDataSourceRequestFactory, ParticipantManagerService) {
     var self = this;
 
     /* Public Interface */
@@ -18,19 +20,23 @@
     self.setup = setup;
 
     function up() {
-
-      // StaticVariableRestService.initialize();
-
+      var defer = $q.defer();
+      StaticVariableRestService.initialize();
+      defer.resolve(true);
+      return defer.promise;
     }
 
     function setup(ActivityFacadeService) {
-      var variables = ActivityFacadeService.getCurrentSurvey().getStaticVariableList();
+      var currentSurvey = ActivityFacadeService.getCurrentSurvey().getSurvey();
+      var variables = currentSurvey.getStaticVariableList();
       var participant = ParticipantManagerService.getSelectedParticipante();
       var request = StaticVariableDataSourceRequestFactory.create(participant.recruitmentNumber, variables);
-      console.log(request);
       return StaticVariableRestService.getParticipantStaticVariable(request)
         .then(response => {
-          console.log(ActivityFacadeService.getCurrentSurvey());
+          if (response.variables) {
+            currentSurvey.fillStaticVariablesValues(response.variables);
+          }
+          return response.variables;
         });
     }
 

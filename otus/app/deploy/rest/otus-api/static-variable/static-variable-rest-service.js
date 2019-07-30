@@ -6,11 +6,10 @@
     .service('otusjs.deploy.StaticVariableRestService', Service);
 
   Service.$inject = [
-    'OtusRestResourceService',
-    '$q'
+    'OtusRestResourceService'
   ];
 
-  function Service(OtusRestResourceService, $q) {
+  function Service(OtusRestResourceService) {
     var self = this;
     var _rest = null;
 
@@ -20,6 +19,29 @@
 
     function initialize() {
       // _rest = OtusRestResourceService.getStaticVariableResource();
+
+      fakeInitialize();
+    }
+
+    function fakeInitialize() {
+      _rest = {
+        getStaticVariableList: function () {
+          return Promise.resolve({
+            data: {
+              "identification": "4107",
+              // "variables": [
+              //   {"name":"var1","sending":"onda 1","value":"40 kg"},
+              //   {"name":"var2","sending":"onda 2","value":1}
+              // ]
+              "variables": [
+                {"name":"var1","sending":"onda 1","value":"40 kg"},
+                // {"name":"var2","sending":"onda 2","value":"1"}
+              ]
+            }
+          });
+        }
+      };
+
     }
 
     function getParticipantStaticVariable(variableRequest) {
@@ -27,16 +49,13 @@
         throw new Error('REST resource is not initialized.');
       }
 
-      var defer = $q.defer();
-      return defer.promise;
-
-      // return _rest
-      //   .getVariableList(variableRequest)
-      //   .then(function (response) {
-      //     if (response.data && response.data.length) {
-      //       return response.data;
-      //     }
-      //   });
+      return _rest
+        .getStaticVariableList(variableRequest)
+        .then(function (response) {
+          if (response.data) {
+            return response.data;
+          }
+        });
 
     }
   }
