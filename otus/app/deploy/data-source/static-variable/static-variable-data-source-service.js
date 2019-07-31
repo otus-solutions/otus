@@ -27,17 +27,25 @@
     }
 
     function setup(ActivityFacadeService) {
-      var currentSurvey = ActivityFacadeService.getCurrentSurvey().getSurvey();
-      var variables = currentSurvey.getStaticVariableList();
-      var participant = ParticipantManagerService.getSelectedParticipante();
-      var request = StaticVariableDataSourceRequestFactory.create(participant.recruitmentNumber, variables);
-      return StaticVariableRestService.getParticipantStaticVariable(request)
-        .then(response => {
-          if (response.variables) {
-            currentSurvey.fillStaticVariablesValues(response.variables);
-          }
-          return response.variables;
-        });
+      return $q(function (resolve, reject) {
+        try {
+          var currentSurvey = ActivityFacadeService.getCurrentSurvey().getSurvey();
+          var variables = currentSurvey.getStaticVariableList();
+          var participant = ParticipantManagerService.getSelectedParticipante();
+          var request = StaticVariableDataSourceRequestFactory.create(participant.recruitmentNumber, variables);
+          StaticVariableRestService.getParticipantStaticVariable(request)
+            .then(response => {
+              if (response.variables) {
+                resolve(currentSurvey.fillStaticVariablesValues(response.variables));
+              }
+            })
+            .catch(function (e) {
+              reject(e);
+            });
+        } catch (e) {
+          reject(e);
+        }
+      });
     }
 
   }

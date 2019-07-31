@@ -18,32 +18,33 @@
     self.getParticipantStaticVariable = getParticipantStaticVariable;
 
     function initialize() {
-      // _rest = OtusRestResourceService.getStaticVariableResource();
+      _rest = OtusRestResourceService.getStaticVariableResource();
 
-      fakeInitialize();
+      // fakeInitialize();
     }
 
     function fakeInitialize() {
       _rest = {
-        getStaticVariableList: function () {
-          throw new Error("error");
-          return Promise.resolve({
-            data: {
-              "identification": "4107",
-              // "variables": [
-              //   {"name":"var1","sending":"onda 1","value":"40 kg"},
-              //   {"name":"var2","sending":"onda 2","value":1}
-              // ]
-              "variables": [
-                {"name":"var1","sending":"onda 1","value":"40 kg"},
-                // {"name":"var2","sending":"onda 2","value":"1"}
-              ]
-            }
-          });
+        getStaticVariableList: {
+          $promise: function () {
+            // throw new Error("error");
+            return Promise.resolve({
+              data: {
+                "identification": "4107",
+                // "variables": [
+                //   {"name":"var1","sending":"onda 1","value":"40 kg"},
+                //   {"name":"var2","sending":"onda 2","value":1}
+                // ]
+                "variables": [
+                  {"name": "var1", "sending": "onda 1", "value": "40 kg"},
+                  // {"name":"var2","sending":"onda 2","value":"1"}
+                ]
+              }
+            });
+          }
         }
-      };
-
-    }
+      }
+    };
 
     function getParticipantStaticVariable(variableRequest) {
       if (!_rest) {
@@ -52,7 +53,7 @@
 
       return _rest
         .getStaticVariableList(variableRequest)
-        // .$promise
+        .$promise
         .then(function (response) {
           if (response.data) {
             return response.data;
