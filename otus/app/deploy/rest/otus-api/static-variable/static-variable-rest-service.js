@@ -26,6 +26,7 @@
     function fakeInitialize() {
       _rest = {
         getStaticVariableList: function () {
+          throw new Error("error");
           return Promise.resolve({
             data: {
               "identification": "4107",
@@ -51,6 +52,7 @@
 
       return _rest
         .getStaticVariableList(variableRequest)
+        // .$promise
         .then(function (response) {
           if (response.data) {
             return response.data;

@@ -13,28 +13,30 @@
     /* Public Interface */
     self.create = create;
 
-    function create(recruitmentNumber, variableList){
+    function create(recruitmentNumber, variableList) {
       return new VariableRequest(recruitmentNumber, variableList);
     }
-  
+
     return self;
   }
 
   function VariableRequest(recruitmentNumber, variableList) {
-      var self = this;
+    var self = this;
 
-      self.identification = recruitmentNumber;
-      self.variables = buildVariables();
+    self.identification = recruitmentNumber;
+    self.variables = buildVariables();
 
-      function buildVariables() {
-        return variableList.map(variable => {
-          return {
+    function buildVariables() {
+      return variableList.map(variable => {
+        return {
+          request: {
             name: variable.name,
             sending: variable.sending
           }
-        });
-      }
-      
-      return self;
+        }
+      });
+    }
+
+    return self;
   }
 }());
