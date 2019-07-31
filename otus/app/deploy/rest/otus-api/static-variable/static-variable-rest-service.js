@@ -19,32 +19,7 @@
 
     function initialize() {
       _rest = OtusRestResourceService.getStaticVariableResource();
-
-      // fakeInitialize();
     }
-
-    function fakeInitialize() {
-      _rest = {
-        getStaticVariableList: {
-          $promise: function () {
-            // throw new Error("error");
-            return Promise.resolve({
-              data: {
-                "identification": "4107",
-                // "variables": [
-                //   {"name":"var1","sending":"onda 1","value":"40 kg"},
-                //   {"name":"var2","sending":"onda 2","value":1}
-                // ]
-                "variables": [
-                  {"name": "var1", "sending": "onda 1", "value": "40 kg"},
-                  // {"name":"var2","sending":"onda 2","value":"1"}
-                ]
-              }
-            });
-          }
-        }
-      }
-    };
 
     function getParticipantStaticVariable(variableRequest) {
       if (!_rest) {
