@@ -29,10 +29,9 @@
     function buildVariables() {
       return variableList.map(variable => {
         return {
-          request: {
             name: variable.name,
             sending: variable.sending
-          }
+
         }
       });
     }
