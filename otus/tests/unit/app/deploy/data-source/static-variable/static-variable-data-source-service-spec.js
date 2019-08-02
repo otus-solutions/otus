@@ -1,52 +1,50 @@
-fdescribe('StaticVariableDataSourceRequestFactory', function () {
+describe('StaticVariableDataSourceRequestService', function () {
   var Mock = {};
   var Injections = {};
   var service;
   var UNIT_NAME = 'otusjs.deploy.staticVariable.StaticVariableDataSourceService';
 
   beforeEach(function () {
-    angular.mock.module('otusjs.deploy.staticVariable');
+    angular.mock.module('otusjs.otus');
 
+    inject(function ($injector) {
+      mock();
+      Injections.$q = $injector.get('$q');
+      Injections.StaticVariableRestService = $injector.get('otusjs.deploy.StaticVariableRestService');
+      Injections.StaticVariableDataSourceRequestFactory = $injector.get('otusjs.deploy.staticVariable.StaticVariableDataSourceRequestFactory');
+      Injections.ParticipantManagerService =  $injector.get('otusjs.participant.business.ParticipantManagerService');
 
-    inject(function (_$injector_) {
-      mock(_$injector_);
-      service = _$injector_.get(UNIT_NAME, Injections);
+      service = $injector.get(UNIT_NAME, Injections);
     });
-  });
-  describe('the up method', function () {
-    beforeEach(function () {
-      spyOn(Injections.StaticVariableRestService, 'initialize');
-    });
-    it('should initialize the rest service', function () {
-      service.up();
-      expect(Injections.StaticVariableRestService.initialize).toHaveBeenCalled();
-    })
+
+    spyOn(Injections.StaticVariableRestService, 'initialize');
+    spyOn(Injections.ParticipantManagerService, 'getSelectedParticipante').and.returnValue(Mock.selectedParticipant);
+    spyOn(Injections.StaticVariableRestService, 'getParticipantStaticVariable').and.callThrough();
   });
 
+  it('controllerExistence check ', function () {
+    expect(service).toBeDefined();
+  });
 
-  function mock($injector) {
-    Injections.$q = {
-      defer:function(){}
-    };
+  it('controllerMethodsExistence check', function () {
+    expect(service.up).toBeDefined();
+    expect(service.setup).toBeDefined();
+  });
 
-    Injections.StaticVariableRestService = {
-      initialize: function () {
-      },
-      getParticipantStaticVariable: function (request) {
-      }
-    };
+  it('upMethod should initialize the rest service', function () {
+    expect(service.up()).toBePromise();
+    expect(Injections.StaticVariableRestService.initialize).toHaveBeenCalled();
+  });
 
+  it('setupMethod should execute activityFacadeService', function () {
+    expect(service.setup()).toBePromise();
+    // expect(Injections.StaticVariableRestService.getParticipantStaticVariable).toHaveBeenCalledTimes(1)
+  });
+
+  function mock() {
     Mock.selectedParticipant = {
-      recruitmentNumber: 32056510
+      recruitmentNumber: 32056510,
     };
-
-    Injections.ParticipantManagerService = {
-      getSelectedParticipante: function () {
-        return Mock.selectedParticipant;
-      }
-    };
-
-    Injections.StaticVariableDataSourceRequestFactory = $injector.get('otusjs.deploy.staticVariable.StaticVariableDataSourceRequestFactory');
   }
 
 });

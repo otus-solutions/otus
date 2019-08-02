@@ -4,7 +4,7 @@ describe('StaticVariableDataSourceRequestFactory', function () {
   var UNIT_NAME = 'otusjs.deploy.staticVariable.StaticVariableDataSourceRequestFactory';
 
   beforeEach(function () {
-    angular.mock.module('otusjs.deploy.staticVariable');
+    angular.mock.module('otusjs.otus');
 
     mock();
 
@@ -13,7 +13,7 @@ describe('StaticVariableDataSourceRequestFactory', function () {
     });
   });
   describe('the object created', function () {
-    fit('should be defined with defined fields', function () {
+    it('should be defined with defined fields', function () {
       var variableRequest = factory.create(Mock.recruitmentNumber, Mock.variableList);
       expect(variableRequest).toBeDefined();
       expect(variableRequest.identification).toBeDefined();
