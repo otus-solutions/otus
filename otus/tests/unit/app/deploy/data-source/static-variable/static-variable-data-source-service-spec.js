@@ -12,21 +12,18 @@ describe('StaticVariableDataSourceRequestService', function () {
       Injections.$q = $injector.get('$q');
       Injections.StaticVariableRestService = $injector.get('otusjs.deploy.StaticVariableRestService');
       Injections.StaticVariableDataSourceRequestFactory = $injector.get('otusjs.deploy.staticVariable.StaticVariableDataSourceRequestFactory');
-      Injections.ParticipantManagerService =  $injector.get('otusjs.participant.business.ParticipantManagerService');
 
       service = $injector.get(UNIT_NAME, Injections);
     });
 
     spyOn(Injections.StaticVariableRestService, 'initialize');
-    spyOn(Injections.ParticipantManagerService, 'getSelectedParticipante').and.returnValue(Mock.selectedParticipant);
-    spyOn(Injections.StaticVariableRestService, 'getParticipantStaticVariable').and.callThrough();
   });
 
-  it('controllerExistence check ', function () {
+  it('serviceExistence check ', function () {
     expect(service).toBeDefined();
   });
 
-  it('controllerMethodsExistence check', function () {
+  it('serviceMethodsExistence check', function () {
     expect(service.up).toBeDefined();
     expect(service.setup).toBeDefined();
   });
@@ -37,14 +34,21 @@ describe('StaticVariableDataSourceRequestService', function () {
   });
 
   it('setupMethod should execute activityFacadeService', function () {
-    expect(service.setup()).toBePromise();
-    // expect(Injections.StaticVariableRestService.getParticipantStaticVariable).toHaveBeenCalledTimes(1)
+    expect(service.setup(Mock.ActivityFacadeService)).toBePromise();
   });
 
   function mock() {
     Mock.selectedParticipant = {
       recruitmentNumber: 32056510,
     };
+    Mock.ActivityFacadeService  = {
+      getCurrentSurvey: function () {
+        return Promise.resolve();
+      },
+      getSurvey: function () {
+        return function getStaticVariableList(){Promise.resolve([])};
+      }
+    }
   }
 
 });
