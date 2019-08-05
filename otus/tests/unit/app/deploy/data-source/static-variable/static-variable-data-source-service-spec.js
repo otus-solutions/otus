@@ -16,7 +16,7 @@ describe('StaticVariableDataSourceRequestService', function () {
       service = $injector.get(UNIT_NAME, Injections);
     });
 
-    spyOn(Injections.StaticVariableRestService, 'initialize');
+    spyOn(Injections.StaticVariableRestService, 'initialize').and.callThrough();
   });
 
   it('serviceExistence check ', function () {
@@ -34,21 +34,33 @@ describe('StaticVariableDataSourceRequestService', function () {
   });
 
   it('setupMethod should execute activityFacadeService', function () {
+    spyOn(Mock.SurveyForm, 'getStaticVariableList').and.callThrough();
     expect(service.setup(Mock.ActivityFacadeService)).toBePromise();
+    expect(Mock.SurveyForm.getStaticVariableList).toHaveBeenCalledTimes(1)
   });
 
   function mock() {
     Mock.selectedParticipant = {
       recruitmentNumber: 32056510,
     };
-    Mock.ActivityFacadeService  = {
-      getCurrentSurvey: function () {
-        return Promise.resolve();
-      },
-      getSurvey: function () {
-        return function getStaticVariableList(){Promise.resolve([])};
+
+    Mock.SurveyForm = {
+      getStaticVariableList: function () {
+        return [];
       }
-    }
+    };
+
+    Mock.Activity = {
+      getSurvey: function () {
+        return Mock.SurveyForm;
+      }
+    };
+
+    Mock.ActivityFacadeService = {
+      getCurrentSurvey: function () {
+        return Mock.Activity
+      }
+    };
   }
 
 });

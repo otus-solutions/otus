@@ -59,7 +59,7 @@ describe('LaboratoryMonitoringRestService', function () {
     };
     Mock._rest = {
       getStaticVariableList: function (data) {
-        return  Promise.resolve(data);
+        return {$promise: Promise.resolve(data)};
       }
     };
   }
