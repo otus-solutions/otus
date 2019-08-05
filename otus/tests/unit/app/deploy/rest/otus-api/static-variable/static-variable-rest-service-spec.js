@@ -1,21 +1,18 @@
 describe('LaboratoryMonitoringRestService', function () {
   var Mock = {};
   var service;
-  var _rest = {};
   var Injections = {};
   var UNIT_NAME = 'otusjs.deploy.StaticVariableRestService';
 
   beforeEach(function () {
     mockInjections();
-    angular.mock.module('otusjs.deploy.rest', function ($provide) {
-      $provide.value('OtusRestResourceService', Mock.OtusRestResourceService);
-    });
+    angular.mock.module('otusjs.otus');
 
     inject(function ($injector) {
       Injections.OtusRestResourceService = $injector.get('OtusRestResourceService');
       service = $injector.get(UNIT_NAME, Injections);
+
     });
-    spyOn(Injections.OtusRestResourceService, 'getStaticVariableResource');
   });
 
   it('serviceExistence check ', function () {
@@ -28,43 +25,42 @@ describe('LaboratoryMonitoringRestService', function () {
   });
 
   it('initializeMethod should initialize the service', function () {
+    spyOn(Injections.OtusRestResourceService, 'getStaticVariableResource');
     service.initialize();
     expect(Injections.OtusRestResourceService.getStaticVariableResource).toHaveBeenCalled();
   });
 
-  xit('getParticipantStaticVariableMethod should the service', function () {
+  it('getParticipantStaticVariableMethod should execute the service list StaticVariable', function () {
+    spyOn(Injections.OtusRestResourceService, 'getStaticVariableResource').and.returnValue(Mock._rest);
     service.initialize();
-    spyOn(Mock._rest, "getStaticVariableList");
-    service.getParticipantStaticVariable(jasmine.anything());
-    expect(Mock._rest.getStaticVariableList).toHaveBeenCalledTimes(1);
+    expect(service.getParticipantStaticVariable(Mock.data)).toBePromise();
+  });
+
+  it('getParticipantStaticVariableMethod should execute the throw error', function () {
+    spyOn(Injections.OtusRestResourceService, 'getStaticVariableResource').and.returnValue(false);
+    service.initialize();
+    expect(service.getParticipantStaticVariable).toThrowError("REST resource is not initialized.");
   });
 
   function mockInjections() {
+    Mock.data = {
+        variables:[
+          {
+            name: "var1",
+            sending: "onda 1",
+            value: 0
+          },
+          {
+            name: "var2",
+            sending: "onda 2",
+            value: "30Kg"
+          }
+        ]
+    };
     Mock._rest = {
-      getStaticVariableList: function () {
-        return {$promise: Promise.resolve({
-            data: {
-              variables:[
-                {
-                  name: "var1",
-                  sending: "onda 1",
-                  value: 0
-                },
-                {
-                  name: "var2",
-                  sending: "onda 2",
-                  value: "30Kg"
-                }
-              ]
-            }
-          })
-        }
+      getStaticVariableList: function (data) {
+        return  Promise.resolve(data);
       }
     };
-    Mock.OtusRestResourceService = {
-      getStaticVariableResource: function () {
-        return Mock._rest;
-      }
-    }
   }
 });
