@@ -12,10 +12,10 @@ describe('StaticVariableDataSourceRequestService', function () {
       Injections.$q = $injector.get('$q');
       Injections.StaticVariableRestService = $injector.get('otusjs.deploy.StaticVariableRestService');
       Injections.StaticVariableDataSourceRequestFactory = $injector.get('otusjs.deploy.staticVariable.StaticVariableDataSourceRequestFactory');
+      Injections.ParticipantManagerService = $injector.get('otusjs.participant.business.ParticipantManagerService');
 
       service = $injector.get(UNIT_NAME, Injections);
     });
-
     spyOn(Injections.StaticVariableRestService, 'initialize').and.callThrough();
   });
 
@@ -34,9 +34,16 @@ describe('StaticVariableDataSourceRequestService', function () {
   });
 
   it('setupMethod should execute activityFacadeService', function () {
-    spyOn(Mock.SurveyForm, 'getStaticVariableList').and.callThrough();
+    spyOn(Mock.SurveyForm, 'getStaticVariableList').and.returnValue(Mock.variables);
+    spyOn(Injections.ParticipantManagerService, 'getSelectedParticipante').and.returnValue(Mock.selectedParticipant);
     expect(service.setup(Mock.ActivityFacadeService)).toBePromise();
-    expect(Mock.SurveyForm.getStaticVariableList).toHaveBeenCalledTimes(1)
+    expect(Mock.SurveyForm.getStaticVariableList).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantManagerService.getSelectedParticipante).toHaveBeenCalledTimes(1);
+  });
+
+  it('setupMethod should return variable null', function () {
+    spyOn(Mock.SurveyForm, 'getStaticVariableList').and.returnValue([]);
+    expect(service.setup(Mock.ActivityFacadeService)).toBePromise();
   });
 
   function mock() {
@@ -46,7 +53,6 @@ describe('StaticVariableDataSourceRequestService', function () {
 
     Mock.SurveyForm = {
       getStaticVariableList: function () {
-        return [];
       }
     };
 
@@ -61,6 +67,18 @@ describe('StaticVariableDataSourceRequestService', function () {
         return Mock.Activity
       }
     };
-  }
 
+    Mock.variables =[
+      {
+        name: "var1",
+        sending: "onda 1",
+        value: 0
+      },
+      {
+        name: "var2",
+        sending: "onda 2",
+        value: "30Kg"
+      }
+    ];
+  }
 });

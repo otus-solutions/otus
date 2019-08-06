@@ -30,7 +30,6 @@
       return $q(function (resolve, reject) {
         try {
           var currentSurvey = ActivityFacadeService.getCurrentSurvey().getSurvey();
-          console.log(currentSurvey);
           var variables = currentSurvey.getStaticVariableList();
           if (!variables || !variables.length) {
             resolve([]);
