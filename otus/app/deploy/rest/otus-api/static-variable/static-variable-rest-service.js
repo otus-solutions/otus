@@ -27,7 +27,7 @@
       }
 
       return _rest
-        .getStaticVariableList({request:variableRequest})
+        .getStaticVariableList(variableRequest)
         .$promise
         .then(function (response) {
           if (response.data) {
