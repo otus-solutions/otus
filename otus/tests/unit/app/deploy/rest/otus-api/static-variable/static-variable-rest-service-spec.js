@@ -1,4 +1,4 @@
-describe('LaboratoryMonitoringRestService', function () {
+describe('StaticVariableRestService', function () {
   var Mock = {};
   var service;
   var Injections = {};
