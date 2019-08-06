@@ -8,21 +8,6 @@ describe('participant-manager-service Test', function() {
   });
 
   beforeEach(function() {
-    Mock.participant = {
-      "recruitmentNumber": 9876542,
-      "objectType": "Participant",
-      "name": "Beltrano",
-      "sex": "M",
-      "birthdate": {
-        "objectType": "ImmutableDate",
-        "value": "1954-09-20 00:00:00.000"
-      },
-      "fieldCenter": {
-        "acronym": "RS"
-
-      },
-      "late": false
-    };
     angular.mock.module(function($provide) {
       $provide.value('otusjs.participant.repository.ParticipantRepositoryService',{
         create: function(participant) {
@@ -36,7 +21,6 @@ describe('participant-manager-service Test', function() {
         }
       });
       $provide.value('otusjs.utils.SearchQueryFactory',{});
-
     });
   });
 
@@ -110,6 +94,22 @@ describe('participant-manager-service Test', function() {
     Mock.selectedParticipant = {
       recruitmentNumber: 32056510,
     };
+
+    Mock.participant = {
+      "recruitmentNumber": 9876542,
+      "objectType": "Participant",
+      "name": "Beltrano",
+      "sex": "M",
+      "birthdate": {
+        "objectType": "ImmutableDate",
+        "value": "1954-09-20 00:00:00.000"
+      },
+      "fieldCenter": {
+        "acronym": "RS"
+
+      },
+      "late": false
+    };
   }
 
   function mockProjectConfiguration() {
@@ -153,5 +153,4 @@ describe('participant-manager-service Test', function() {
       }
     ];
   }
-
 });
