@@ -25,7 +25,7 @@
     self.getAllowNewParticipants = getAllowNewParticipants;
     self.filter = filter;
     self.selectParticipant = selectParticipant;
-    self.getSelectedParticipante = getSelectedParticipante;
+    self.getSelectedParticipant = getSelectedParticipant;
 
     var _setupSuccess;
 
@@ -67,7 +67,7 @@
       EventService.fireParticipantSelected(participant);
     }
 
-    function getSelectedParticipante() {
+    function getSelectedParticipant() {
       return ContextService.getSelectedParticipant();
     }
 

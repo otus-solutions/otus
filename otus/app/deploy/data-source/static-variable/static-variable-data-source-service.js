@@ -35,7 +35,7 @@
             resolve([]);
           }
           else{
-            var participant = ParticipantManagerService.getSelectedParticipante();
+            var participant = ParticipantManagerService.getSelectedParticipant();
             var request = StaticVariableDataSourceRequestFactory.create(participant.recruitmentNumber, variables);
             StaticVariableRestService.getParticipantStaticVariable(request)
               .then(response => {

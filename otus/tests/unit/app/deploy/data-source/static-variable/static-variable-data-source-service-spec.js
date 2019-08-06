@@ -35,10 +35,10 @@ describe('StaticVariableDataSourceRequestService', function () {
 
   it('setupMethod should execute activityFacadeService', function () {
     spyOn(Mock.SurveyForm, 'getStaticVariableList').and.returnValue(Mock.variables);
-    spyOn(Injections.ParticipantManagerService, 'getSelectedParticipante').and.returnValue(Mock.selectedParticipant);
+    spyOn(Injections.ParticipantManagerService, 'getSelectedParticipant').and.returnValue(Mock.selectedParticipant);
     expect(service.setup(Mock.ActivityFacadeService)).toBePromise();
     expect(Mock.SurveyForm.getStaticVariableList).toHaveBeenCalledTimes(1);
-    expect(Injections.ParticipantManagerService.getSelectedParticipante).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantManagerService.getSelectedParticipant).toHaveBeenCalledTimes(1);
   });
 
   it('setupMethod should return variable null', function () {
