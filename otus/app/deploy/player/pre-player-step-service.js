@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -10,10 +10,11 @@
     'otusjs.player.core.player.PlayerService',
     'otusjs.deploy.SurveyItemDatasourceService',
     'otusjs.player.data.activity.ActivityFacadeService',
-    'otusjs.deploy.FileUploadDatasourceService'
+    'otusjs.deploy.FileUploadDatasourceService',
+    'otusjs.deploy.staticVariable.StaticVariableDataSourceService'
   ];
 
-  function Service($q, PlayerService, SurveyItemDatasourceService, ActivityFacadeService, FileUploadDatasourceService) {
+  function Service($q, PlayerService, SurveyItemDatasourceService, ActivityFacadeService, FileUploadDatasourceService, StaticVariableDataSourceService) {
     var self = this;
     var defer = $q.defer();
 
@@ -23,20 +24,24 @@
     self.afterEffect = afterEffect;
     self.getEffectResult = getEffectResult;
 
-    function beforeEffect(pipe, flowData) {}
+    function beforeEffect(pipe, flowData) { }
 
     function effect(pipe, flowData) {
-      var dsDefsArray = ActivityFacadeService.getCurrentSurvey().getSurveyDatasources();
-      var unlockingPromises = [
-         SurveyItemDatasourceService.setupDatasources(dsDefsArray),
-         FileUploadDatasourceService.setupUploader(),
-         //another promise to solve before unblock phase
+      var hardBlockingPromises = [
+        SurveyItemDatasourceService.setupDatasources(ActivityFacadeService.getCurrentSurvey().getSurveyDatasources()),
+        FileUploadDatasourceService.setupUploader(),
+        //another promise to solve before unblock phase
       ];
-      PlayerService.registerPhaseBlocker($q.all(unlockingPromises));
 
+      var softBlockingPromises = [
+        StaticVariableDataSourceService.setup(ActivityFacadeService)
+      ];
+
+      PlayerService.registerHardBlocker($q.all(hardBlockingPromises));
+      PlayerService.registerSoftBlocker($q.all(softBlockingPromises));
     }
 
-    function afterEffect(pipe, flowData) {}
+    function afterEffect(pipe, flowData) { }
 
     function getEffectResult(pipe, flowData) {
       return flowData;

@@ -23,7 +23,8 @@
        'otusjs.deploy.monitoring',
        'otusjs.deploy.model.otus',
        'otusjs.deploy.storage',
-       'otusjs.deploy.rest'
+       'otusjs.deploy.rest',
+       'otusjs.deploy.staticVariable'
     ])
     .value('OtusLocalStorage', [
        'otusjs.activity.storage.ActivityLocalStorageService',

@@ -11,10 +11,11 @@
     'otusjs.deploy.ParticipantDataSourceService',
     'otusjs.deploy.UserDataSourceService',
     'otusjs.deploy.SurveyItemDatasourceService',
-    'otusjs.deploy.FileUploadDatasourceService'
+    'otusjs.deploy.FileUploadDatasourceService',
+    'otusjs.deploy.staticVariable.StaticVariableDataSourceService'
   ];
 
-  function Service($q, ActivityDataSourceService, ParticipantDataSourceService, UserDataSourceService, SurveyItemDatasourceService, FileUploadDatasourceService) {
+  function Service($q, ActivityDataSourceService, ParticipantDataSourceService, UserDataSourceService, SurveyItemDatasourceService, FileUploadDatasourceService, StaticVariableDataSourceService) {
     var self = this;
     var _deferred = $q.defer();
     var _dsLoaded = 0;
@@ -29,6 +30,7 @@
       UserDataSourceService.up().then(_checkDataSourceInitialization);
       SurveyItemDatasourceService.up().then(_checkDataSourceInitialization);
       FileUploadDatasourceService.up().then(_checkDataSourceInitialization);
+      StaticVariableDataSourceService.up().then(_checkDataSourceInitialization);
 
       return _deferred.promise;
     }

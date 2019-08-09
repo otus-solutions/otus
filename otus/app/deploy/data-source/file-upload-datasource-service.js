@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,10 +6,10 @@
     .service('otusjs.deploy.FileUploadDatasourceService', service);
 
   service.$inject = [
-         '$q',
-         'otusjs.utils.FileUploadFactory',
-         'otusjs.deploy.FileUploadRestService'
-      ];
+    '$q',
+    'otusjs.utils.FileUploadFactory',
+    'otusjs.deploy.FileUploadRestService'
+  ];
 
   function service($q, FileUploadService, FileUploadRestService) {
     var self = this;
@@ -27,14 +27,19 @@
     }
 
     function setupUploader() {
-      var defer = $q.defer();
-      FileUploadService.setUploadInterface(FileUploadRestService)
-        .then(function() {
-          defer.resolve(true);
-       }, function(){
-          defer.reject(true);
-       });
-      return defer.promise;
+      return $q(function (resolve, reject) {
+        try {
+          FileUploadService.setUploadInterface(FileUploadRestService)
+            .then(function (response) {
+              resolve(response);
+            })
+            .catch(function (e) {
+              reject(e)
+            })
+        } catch (e) {
+          reject(e)
+        }
+      });
     }
   }
 }());
