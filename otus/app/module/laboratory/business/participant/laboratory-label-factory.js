@@ -13,14 +13,14 @@
     /* Public interface */
     self.create = create;
 
-    function create(participant, laboratory, tubeLabels) {
-      return new LaboratoryLabel(participant, laboratory, tubeLabels);
+    function create(participant, laboratory) {
+      return new LaboratoryLabel(participant, laboratory);
     }
 
     return self;
   }
 
-  function LaboratoryLabel(participant, laboratory, tubeLabels) {
+  function LaboratoryLabel(participant, laboratory) {
     var NONE = 'Nenhum';
     var DEFAULT = 'DEFAULT';
     var self = this;
