@@ -2,7 +2,7 @@
   <otus-dashboard-sidenav layout="row" participant="$ctrl.selectedParticipant"></otus-dashboard-sidenav>
   <otus-dashboard-toolbar layout="row" on-participant-select="$ctrl.selectParticipant(participant)">
     <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.PARTICIPANT_DASHBOARD">
-      <span>{{ $ctrl.selectedParticipant.name }}</span>
+      <span>{{ $ctrl.selectedParticipant.recruitmentNumber }} - {{ $ctrl.selectedParticipant.name }}</span>
     </div>
     <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.LABORATORY">
       <md-icon md-svg-icon="eyedropper-variant" aria-label="Atividades">
