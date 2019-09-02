@@ -41,21 +41,8 @@
     }
 
     function _buildTubeLabel(tubes) {
-      var labels = {};
-      labels.GEL = 'Gel';
-      labels.FLUORIDE = 'Fluoreto';
-      labels.EDTA = 'EDTA';
-      labels.URINE = 'Urina';
-      labels.CITRATE = 'Citrato';
-      labels.EDTA_DNA = 'EDTA DNA';
-
-      labels.FASTING = 'Jejum';
-      labels.MIDDLE = 'Meio';
-      labels.POST_OVERLOAD = 'Pós';
-      labels.NONE = '';
-
       tubes.forEach(function(tube) {
-        tube.label = labels[tube.type] + ' ' + labels[tube.moment];
+        tube.label = tube.label + ' ' + tube.momentLabel;
       });
     }
 
