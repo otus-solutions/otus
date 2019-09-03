@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,11 +6,11 @@
     .service('otusjs.deploy.SurveyItemDatasourceService', service);
 
   service.$inject = [
-         '$q',
-         'otusjs.utils.DatasourceService',
-         'otusjs.deploy.SurveyItemRestService',
-         'otusjs.activity.storage.ActivityLocalStorageService'
-      ];
+    '$q',
+    'otusjs.utils.DatasourceService',
+    'otusjs.deploy.SurveyItemRestService',
+    'otusjs.activity.storage.ActivityLocalStorageService'
+  ];
 
   function service($q, DatasourceService, SurveyItemRestService, ActivityLocalStorageService) {
     var self = this;
@@ -28,26 +28,34 @@
     }
 
     function setupDatasources(dsDefsArray) {
-      var defer = $q.defer();
-      getDatasources(dsDefsArray)
-        .then(function(dsMap) {
-          dsDefsArray.forEach(function(dsDef){
-             dsMap[dsDef.getID()].bindedItems = dsDef.getBindedItems();
-          });
-          var getAddress = ActivityLocalStorageService.registerDatasource(dsMap);
-          DatasourceService.provideDatasourcesAddress(getAddress);
-          defer.resolve(true);
-        });
-      return defer.promise;
+      return $q(function (resolve, reject) {
+        try {
+          _getDatasources(dsDefsArray)
+            .then(function (dsMap) {
+              dsDefsArray.forEach(function (dsDef) {
+                dsMap[dsDef.getID()].bindedItems = dsDef.getBindedItems();
+              });
+              var getAddress = ActivityLocalStorageService.registerDatasource(dsMap);
+              DatasourceService.provideDatasourcesAddress(getAddress);
+              resolve(true);
+            })
+            .catch(function (e) {
+              reject(e);
+            });
+        } catch (e) {
+          reject(e);
+        }
+      });
+
     }
 
 
-    function getDatasources(dsDefsArray) {
+    function _getDatasources(dsDefsArray) {
       var defer = $q.defer();
       var dsMap = {};
       _getAll(dsDefsArray)
-        .then(function(promiseArray) {
-          promiseArray.forEach(function(promise) {
+        .then(function (promiseArray) {
+          promiseArray.forEach(function (promise) {
             let ds = promise.data;
             dsMap[ds.data.id] = ds.data;
           });
@@ -58,13 +66,13 @@
 
     function _getAll(dsDefsArray) {
       var dsArr = [];
-      dsDefsArray.forEach(function(ds) {
-        dsArr.push(getDatasourcesByID(ds.getID()));
+      dsDefsArray.forEach(function (ds) {
+        dsArr.push(_getDatasourcesByID(ds.getID()));
       });
       return $q.all(dsArr);
     }
 
-    function getDatasourcesByID(id) {
+    function _getDatasourcesByID(id) {
       return SurveyItemRestService.getByID(id);
     }
   }
