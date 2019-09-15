@@ -1,0 +1,25 @@
+.dashboard-sidenav-template {
+  md-sidenav{
+    position: fixed !important;
+    width: 320px;
+    min-width: 320px !important;
+  }
+
+  md-backdrop {
+    position: fixed !important;
+  }
+
+  md-backdrop ~ md-content {
+    position: fixed;
+    overflow: hidden;
+  }
+
+  @media (max-width: 456px) {
+    md-sidenav,
+    md-sidenav.md-locked-open,
+    md-sidenav.md-closed.md-locked-open-add-active {
+      position: fixed !important;
+      min-width: 320px !important;
+    }
+  }
+}

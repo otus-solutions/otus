@@ -1,0 +1,22 @@
+.dashboard-sidenav-template md-sidenav {
+  position: fixed !important;
+  width: 320px;
+  min-width: 320px !important;
+}
+.dashboard-sidenav-template md-backdrop {
+  position: fixed !important;
+}
+.dashboard-sidenav-template md-backdrop ~ md-content {
+  position: fixed;
+  overflow: hidden;
+}
+@media (max-width: 456px) {
+  .dashboard-sidenav-template md-sidenav,
+.dashboard-sidenav-template md-sidenav.md-locked-open,
+.dashboard-sidenav-template md-sidenav.md-closed.md-locked-open-add-active {
+    position: fixed !important;
+    min-width: 320px !important;
+  }
+}
+
+/*# sourceMappingURL=components-style.css.map */
