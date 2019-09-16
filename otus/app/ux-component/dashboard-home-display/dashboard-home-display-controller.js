@@ -37,10 +37,16 @@
     function onInit() {
       _loadLoggedUser();
       EventService.onLogin(_loadLoggedUser);
-      _fetchPermissiosn();
+      _fetchPermissions();
+      _onResize();
+      window.addEventListener("resize",_onResize);
     }
 
-    function _fetchPermissiosn() {
+    function _onResize() {
+      self.showAllParticipantsButtoninsideSearch = window.innerWidth >= 501;
+    }
+
+    function _fetchPermissions() {
       LoadingScreenService.start();
       $q.all([
           _getCheckingExist(),
