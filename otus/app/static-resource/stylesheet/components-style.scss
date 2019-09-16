@@ -1,5 +1,5 @@
 .dashboard-sidenav-component {
-  md-sidenav{
+  md-sidenav {
     position: fixed !important;
     width: 320px;
     min-width: 320px !important;
@@ -46,18 +46,18 @@
 }
 
 .participants-manager-list-component {
-  .dynamic-structure{
+  .dynamic-structure {
     min-width: 800px !important;
   }
 }
 
 .dashboard-toolbar-component {
-  @media only screen and (max-width: 550px) {
+  @media only screen and (max-width: 800px) {
     .not-mobile {
       display: none;
     }
   }
-  @media only screen and (min-width: 550px) {
+  @media only screen and (min-width: 800px) {
     .mobile {
       display: none;
     }
@@ -65,15 +65,25 @@
 }
 
 .dashboard-component {
-    .dashboard-toolbar-component {
-      @media only screen and (max-width: 550px) {
-        width: 50px;
-        .mobile {
-          display: none !important;
-        }
-        .not-mobile {
-          display: block !important;
-        }
+  .dashboard-toolbar-component {
+    @media only screen and (max-width: 800px) {
+      width: 50px;
+      .mobile {
+        display: none !important;
       }
+      .not-mobile {
+        display: block !important;
+      }
+    }
+  }
+}
+
+.report-dashboard-component {
+  .report-list {
+    min-width: 250px;
+  }
+  .report-item {
+    min-width: 250px;
+    background-color: #ffffff
   }
 }

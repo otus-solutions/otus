@@ -40,18 +40,18 @@
   min-width: 800px !important;
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 800px) {
   .dashboard-toolbar-component .not-mobile {
     display: none;
   }
 }
-@media only screen and (min-width: 550px) {
+@media only screen and (min-width: 800px) {
   .dashboard-toolbar-component .mobile {
     display: none;
   }
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 800px) {
   .dashboard-component .dashboard-toolbar-component {
     width: 50px;
   }
@@ -61,6 +61,14 @@
   .dashboard-component .dashboard-toolbar-component .not-mobile {
     display: block !important;
   }
+}
+
+.report-dashboard-component .report-list {
+  min-width: 250px;
+}
+.report-dashboard-component .report-item {
+  min-width: 250px;
+  background-color: #ffffff;
 }
 
 /*# sourceMappingURL=components-style.css.map */
