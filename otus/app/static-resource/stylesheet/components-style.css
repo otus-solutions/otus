@@ -1,19 +1,19 @@
-.dashboard-sidenav-template md-sidenav {
+.dashboard-sidenav-component md-sidenav {
   position: fixed !important;
   width: 320px;
   min-width: 320px !important;
 }
-.dashboard-sidenav-template md-backdrop {
+.dashboard-sidenav-component md-backdrop {
   position: fixed !important;
 }
-.dashboard-sidenav-template md-backdrop ~ md-content {
+.dashboard-sidenav-component md-backdrop ~ md-content {
   position: fixed;
   overflow: hidden;
 }
 @media (max-width: 456px) {
-  .dashboard-sidenav-template md-sidenav,
-.dashboard-sidenav-template md-sidenav.md-locked-open,
-.dashboard-sidenav-template md-sidenav.md-closed.md-locked-open-add-active {
+  .dashboard-sidenav-component md-sidenav,
+.dashboard-sidenav-component md-sidenav.md-locked-open,
+.dashboard-sidenav-component md-sidenav.md-closed.md-locked-open-add-active {
     position: fixed !important;
     min-width: 320px !important;
   }
@@ -33,6 +33,33 @@
   }
   .md-dashboard-autocomplete .md-show-clear-button button {
     display: none;
+  }
+}
+
+.participants-manager-list-component .dynamic-structure {
+  min-width: 800px !important;
+}
+
+@media only screen and (max-width: 550px) {
+  .dashboard-toolbar-component .not-mobile {
+    display: none;
+  }
+}
+@media only screen and (min-width: 550px) {
+  .dashboard-toolbar-component .mobile {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .dashboard-component .dashboard-toolbar-component {
+    width: 50px;
+  }
+  .dashboard-component .dashboard-toolbar-component .mobile {
+    display: none !important;
+  }
+  .dashboard-component .dashboard-toolbar-component .not-mobile {
+    display: block !important;
   }
 }
 

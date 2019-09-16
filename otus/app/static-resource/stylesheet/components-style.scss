@@ -1,4 +1,4 @@
-.dashboard-sidenav-template {
+.dashboard-sidenav-component {
   md-sidenav{
     position: fixed !important;
     width: 320px;
@@ -42,5 +42,38 @@
         display: none;
       }
     }
+  }
+}
+
+.participants-manager-list-component {
+  .dynamic-structure{
+    min-width: 800px !important;
+  }
+}
+
+.dashboard-toolbar-component {
+  @media only screen and (max-width: 550px) {
+    .not-mobile {
+      display: none;
+    }
+  }
+  @media only screen and (min-width: 550px) {
+    .mobile {
+      display: none;
+    }
+  }
+}
+
+.dashboard-component {
+    .dashboard-toolbar-component {
+      @media only screen and (max-width: 550px) {
+        width: 50px;
+        .mobile {
+          display: none !important;
+        }
+        .not-mobile {
+          display: block !important;
+        }
+      }
   }
 }
