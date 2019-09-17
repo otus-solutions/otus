@@ -40,14 +40,27 @@
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
     self.updateChecker = updateChecker;
     self.DialogController = DialogController;
+    self.goToActivityAdder = goToActivityAdder;
+    self.goToPaperActivityInitializer = goToPaperActivityInitializer;
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function onInit() {
+      self.isOpen = false;
       _buildDialogs();
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       EventService.onActivitySelected(_updateComponent);
+    }
+
+    function goToActivityAdder() {
+      window.sessionStorage.setItem('activityType', "Online");
+      ApplicationStateService.activateActivityAdder();
+    }
+
+    function goToPaperActivityInitializer() {
+      window.sessionStorage.setItem('activityType', "em Papel");
+      ApplicationStateService.activatePaperActivityInitializer();
     }
 
     function fillSelectedActivity() {

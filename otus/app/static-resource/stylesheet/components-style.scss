@@ -45,9 +45,13 @@
   }
 }
 
+
 .participants-manager-list-component {
-  .dynamic-structure {
-    min-width: 800px !important;
+  .dynamic-table-container {
+    width: 850px;
+    .dynamic-structure {
+      min-width: 800px !important;
+    }
   }
 }
 
@@ -85,5 +89,61 @@
   .report-item {
     min-width: 250px;
     background-color: #ffffff
+  }
+}
+
+.activity-manager-component {
+  .activity-manager-list-component {
+    @media only screen and (max-width: 450px) {
+      .not-mobile {
+        display: none;
+      }
+    }
+    .dynamic-table-container {
+      width: 800px;
+      .dynamic-structure {
+        min-width: 750px !important;
+      }
+    }
+  }
+
+  .activity-manager-toolbar-component {
+    md-fab-speed-dial {
+      max-height: 50px;
+    }
+    @media only screen and (max-width: 450px) {
+      md-toolbar {
+        display: none !important;
+      }
+      md-fab-speed-dial {
+        position: relative;
+        display: flex;
+        align-items: center;
+        z-index: 20;
+        md-fab-trigger {
+          width: 80%;
+          button {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+          }
+        }
+      }
+    }
+    @media only screen and (min-width: 451px) {
+      md-fab-speed-dial {
+        display: none;
+      }
+    }
+  }
+
+  .activity-manager-commander-component {
+    @media only screen and (max-width: 451px) {
+      md-fab-speed-dial {
+        display: none;
+      }
+    }
   }
 }

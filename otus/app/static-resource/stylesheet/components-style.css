@@ -36,7 +36,10 @@
   }
 }
 
-.participants-manager-list-component .dynamic-structure {
+.participants-manager-list-component .dynamic-table-container {
+  width: 850px;
+}
+.participants-manager-list-component .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
 
@@ -69,6 +72,52 @@
 .report-dashboard-component .report-item {
   min-width: 250px;
   background-color: #ffffff;
+}
+
+@media only screen and (max-width: 450px) {
+  .activity-manager-component .activity-manager-list-component .not-mobile {
+    display: none;
+  }
+}
+.activity-manager-component .activity-manager-list-component .dynamic-table-container {
+  width: 800px;
+}
+.activity-manager-component .activity-manager-list-component .dynamic-table-container .dynamic-structure {
+  min-width: 750px !important;
+}
+.activity-manager-component .activity-manager-toolbar-component md-fab-speed-dial {
+  max-height: 50px;
+}
+@media only screen and (max-width: 450px) {
+  .activity-manager-component .activity-manager-toolbar-component md-toolbar {
+    display: none !important;
+  }
+  .activity-manager-component .activity-manager-toolbar-component md-fab-speed-dial {
+    position: relative;
+    display: flex;
+    align-items: center;
+    z-index: 20;
+  }
+  .activity-manager-component .activity-manager-toolbar-component md-fab-speed-dial md-fab-trigger {
+    width: 80%;
+  }
+  .activity-manager-component .activity-manager-toolbar-component md-fab-speed-dial md-fab-trigger button {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+@media only screen and (min-width: 451px) {
+  .activity-manager-component .activity-manager-toolbar-component md-fab-speed-dial {
+    display: none;
+  }
+}
+@media only screen and (max-width: 451px) {
+  .activity-manager-component .activity-manager-commander-component md-fab-speed-dial {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=components-style.css.map */

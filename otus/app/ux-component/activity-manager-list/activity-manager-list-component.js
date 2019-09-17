@@ -74,6 +74,7 @@
     }
 
     function onInit() {
+      self.ready = false;
       self.selectedGroups = [];
       self.groupList = [];
       GroupActivityService.getSurveyGroupsByUser().then(function (data) {
@@ -105,6 +106,7 @@
           _selectedActivities = [];
           ActivityService.selectActivities(_selectedActivities);
           LoadingScreenService.finish();
+          self.ready = true;
         });
     }
 
@@ -114,7 +116,7 @@
     }
 
     function _buildDynamicTableSettings() {
-      self.dynamicTableSettings = DynamicTableSettingsFactory.create()
+      let dynamicTableSettingsFactory =  DynamicTableSettingsFactory.create()
         .addHeader('NOME', '25', '', 1)
         .addColumnProperty('name')
         .addHeader('ACRÔNIMO', '15', 'center center', 2)
@@ -148,8 +150,12 @@
         .addHeader('CATEGORIA', '15', '', 6)
         .addColumnProperty('category')
         .setCallbackAfterChange(self.dynamicDataTableChange)
-        .setCheckbox(true)
-        .getSettings();
+        .setCheckbox(true);
+
+      if (window.innerHeight <= 650){
+        dynamicTableSettingsFactory.setTitle("Lista de Atividades")
+      }
+      self.dynamicTableSettings = dynamicTableSettingsFactory.getSettings();
     }
 
     function dynamicDataTableChange(change) {
