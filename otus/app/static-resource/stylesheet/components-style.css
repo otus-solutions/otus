@@ -121,33 +121,109 @@
 }
 
 @media only screen and (max-width: 550px) {
-  .control-panel-component .control-panel {
+  .control-panel-component .control-toolbar {
     display: none;
   }
-  .control-panel-component .control-panel-mobile md-fab-speed-dial {
+  .control-panel-component .mobile-control-toolbar {
+    max-height: 65px;
+  }
+  .control-panel-component .mobile-control-toolbar md-fab-speed-dial {
     max-height: 50px;
     display: flex;
     align-items: center;
     z-index: 20;
   }
-  .control-panel-component .control-panel-mobile md-fab-speed-dial md-fab-trigger {
+  .control-panel-component .mobile-control-toolbar md-fab-speed-dial md-fab-trigger {
     width: 80%;
   }
-  .control-panel-component .control-panel-mobile md-fab-speed-dial md-fab-trigger button {
+  .control-panel-component .mobile-control-toolbar md-fab-speed-dial md-fab-trigger button {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
     padding-left: 0;
     padding-right: 0;
   }
-  .control-panel-component .control-panel-mobile md-fab-speed-dial md-fab-actions button {
+  .control-panel-component .mobile-control-toolbar md-fab-speed-dial md-fab-actions button {
     min-width: 150px;
   }
 }
 @media only screen and (min-width: 551px) {
-  .control-panel-component .control-panel-mobile {
+  .control-panel-component .mobile-control-toolbar {
     display: none;
   }
+  .control-panel-component .control-toolbar div .mobile-input {
+    display: none;
+  }
+}
+@media only screen and (max-width: 650px) {
+  .control-panel-component .collect-control-toolbar {
+    display: none;
+  }
+  .control-panel-component .mobile-collect-control-toolbar {
+    max-height: 65px;
+  }
+  .control-panel-component .mobile-collect-control-toolbar md-fab-speed-dial {
+    position: relative;
+    top: -18px;
+    max-height: 30px;
+    display: flex;
+    align-items: center;
+    z-index: 20;
+  }
+  .control-panel-component .mobile-collect-control-toolbar fast-collection {
+    position: relative;
+    top: -15px;
+  }
+  .control-panel-component .mobile-collect-control-toolbar fast-collection div {
+    min-width: 80px;
+  }
+  .control-panel-component .mobile-collect-control-toolbar fast-collection div .desktop-input {
+    display: none;
+  }
+  .control-panel-component .aliquots-control-toolbar {
+    display: none;
+  }
+  .control-panel-component .mobile-aliquots-control-toolbar {
+    max-height: 65px;
+  }
+  .control-panel-component .mobile-aliquots-control-toolbar div label {
+    position: relative;
+    top: 10px;
+  }
+  .control-panel-component .mobile-aliquots-control-toolbar div md-input-container {
+    position: relative;
+    top: -15px;
+  }
+  .control-panel-component .mobile-aliquots-control-toolbar md-fab-speed-dial {
+    position: relative;
+    top: -18px;
+    max-height: 30px;
+    display: flex;
+    align-items: center;
+    z-index: 20;
+  }
+}
+@media only screen and (max-width: 360px) {
+  .control-panel-component .mobile-aliquots-control-toolbar div label {
+    font-size: 13px;
+  }
+}
+@media only screen and (max-width: 359px) {
+  .control-panel-component .mobile-aliquots-control-toolbar div label {
+    display: none;
+  }
+}
+@media only screen and (min-width: 651px) {
+  .control-panel-component .mobile-collect-control-toolbar {
+    display: none;
+  }
+  .control-panel-component .mobile-aliquots-control-toolbar {
+    display: none;
+  }
+}
+
+.aliquots-view-component .aliquots-container {
+  min-width: 900px;
 }
 
 /*# sourceMappingURL=components-style.css.map */

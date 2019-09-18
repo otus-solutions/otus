@@ -149,11 +149,13 @@
 }
 
 .control-panel-component {
+
   @media only screen and (max-width: 550px) {
-    .control-panel {
+    .control-toolbar {
         display: none;
     }
-    .control-panel-mobile {
+    .mobile-control-toolbar {
+      max-height: 65px;
       md-fab-speed-dial {
         max-height: 50px;
         display: flex;
@@ -179,8 +181,106 @@
   }
 
   @media only screen and (min-width: 551px){
-    .control-panel-mobile {
+    .mobile-control-toolbar {
       display: none;
     }
+    .control-toolbar {
+      div {
+        .mobile-input {
+          display: none;
+        }
+      }
+    }
+
+  }
+
+  @media only screen and (max-width: 650px) {
+    .collect-control-toolbar {
+      display: none;
+    }
+    .mobile-collect-control-toolbar {
+      max-height: 65px;
+      md-fab-speed-dial {
+        position: relative;
+        top: -18px;
+        max-height: 30px;
+        display: flex;
+        align-items: center;
+        z-index: 20;
+      }
+      fast-collection {
+        position: relative;
+        top: -15px;
+
+        div {
+          min-width: 80px;
+          .desktop-input {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .aliquots-control-toolbar {
+      display: none;
+    }
+    .mobile-aliquots-control-toolbar {
+      max-height: 65px;
+      div {
+        label {
+          position:relative;
+          top: 10px;
+        }
+        md-input-container {
+          position: relative;
+          top: -15px;
+        }
+      }
+      md-fab-speed-dial {
+        position: relative;
+        top: -18px;
+        max-height: 30px;
+        display: flex;
+        align-items: center;
+        z-index: 20;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 360px) {
+    .mobile-aliquots-control-toolbar {
+      div {
+        label {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  @media only screen and (max-width: 359px) {
+    .mobile-aliquots-control-toolbar {
+      div {
+        label {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 651px) {
+    .mobile-collect-control-toolbar {
+      display: none;
+    }
+
+    .mobile-aliquots-control-toolbar {
+      display: none;
+    }
+  }
+
+}
+
+.aliquots-view-component {
+  .aliquots-container {
+    min-width: 900px;
   }
 }

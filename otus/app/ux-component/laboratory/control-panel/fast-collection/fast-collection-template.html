@@ -1,4 +1,7 @@
-<div layout-align="center end">
-  <!-- <md-icon md-font-set="material-icons" ng-click="tube_code = ''">clear</md-icon> -->
-  <input type="text" style="font-size: 20px;" name="fast-trigger" value="Preenchimento rápido" ng-model="tube_code" ng-change="$ctrl.fastCollection(this, tube_code)" />
+<div layout-align="center end" class="fast-collection-component">
+  <md-input-container flex class="mobile-input">
+    <label>Tubo</label>
+    <input class="campo" type="text" style="font-size: 20px;" name="fast-trigger" value="Preenchimento rápido" ng-model="tube_code" ng-change="$ctrl.fastCollection(this, tube_code)"/>
+  </md-input-container>
+  <input class="desktop-input" type="text" style="font-size: 20px;" name="fast-trigger" value="Preenchimento rápido" ng-model="tube_code" ng-change="$ctrl.fastCollection(this, tube_code)" />
 </div>
