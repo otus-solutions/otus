@@ -1,4 +1,4 @@
-<div layout="column" md-whiteframe="1" flex>
+<div class="control-panel-component" layout="column" md-whiteframe="1" flex>
   <div class="control-panel" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'main'">
     <label-maker label-data="$ctrl.labels"></label-maker>
     <div layout="row" layout-align="center center">
@@ -9,6 +9,29 @@
     <div layout="row" layout-align="end center" flex style="padding-top: 12px">
       <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" />
     </div>
+  </div>
+
+  <div class="control-panel-mobile" layout="row" layout-padding layout-wrap layout-align="start start" ng-if="$ctrl.state === 'main'">
+    <md-fab-speed-dial md-direction="down" class="md-scale" flex>
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-accent">
+          Açoes
+          <md-icon md-svg-icon="menu"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <label-maker class="label-maker" label-data="$ctrl.labels"></label-maker>
+        <md-button class="md-primary md-raised md-mini" aria-label="Coleta de Tubos"
+                   ng-click="$ctrl.changeState('coleta')"
+          <md-tooltip md-direction="left">Coleta de Tubos</md-tooltip>
+        </md-button>
+        <md-button class="md-primary md-raised md-mini" aria-label="Aliquotagem"
+                   ng-click="$ctrl.changeState('aliquots')"
+          <md-tooltip md-direction="left">Aliquotagem</md-tooltip>
+        </md-button>
+      </md-fab-actions>
+    </md-fab-speed-dial>
+    <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" />
   </div>
 
   <div class="" layout="row" layout-xs="column" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'" flex>

@@ -37,7 +37,7 @@
 }
 
 .participants-manager-list-component .dynamic-table-container {
-  width: 850px;
+  min-width: 850px;
 }
 .participants-manager-list-component .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
@@ -80,7 +80,7 @@
   }
 }
 .activity-manager-component .activity-manager-list-component .dynamic-table-container {
-  width: 800px;
+  min-width: 800px;
 }
 .activity-manager-component .activity-manager-list-component .dynamic-table-container .dynamic-structure {
   min-width: 750px !important;
@@ -116,6 +116,36 @@
 }
 @media only screen and (max-width: 451px) {
   .activity-manager-component .activity-manager-commander-component md-fab-speed-dial {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .control-panel-component .control-panel {
+    display: none;
+  }
+  .control-panel-component .control-panel-mobile md-fab-speed-dial {
+    max-height: 50px;
+    display: flex;
+    align-items: center;
+    z-index: 20;
+  }
+  .control-panel-component .control-panel-mobile md-fab-speed-dial md-fab-trigger {
+    width: 80%;
+  }
+  .control-panel-component .control-panel-mobile md-fab-speed-dial md-fab-trigger button {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .control-panel-component .control-panel-mobile md-fab-speed-dial md-fab-actions button {
+    min-width: 150px;
+  }
+}
+@media only screen and (min-width: 551px) {
+  .control-panel-component .control-panel-mobile {
     display: none;
   }
 }

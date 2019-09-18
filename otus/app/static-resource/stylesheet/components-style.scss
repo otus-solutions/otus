@@ -48,7 +48,7 @@
 
 .participants-manager-list-component {
   .dynamic-table-container {
-    width: 850px;
+    min-width: 850px;
     .dynamic-structure {
       min-width: 800px !important;
     }
@@ -100,7 +100,7 @@
       }
     }
     .dynamic-table-container {
-      width: 800px;
+      min-width: 800px;
       .dynamic-structure {
         min-width: 750px !important;
       }
@@ -144,6 +144,43 @@
       md-fab-speed-dial {
         display: none;
       }
+    }
+  }
+}
+
+.control-panel-component {
+  @media only screen and (max-width: 550px) {
+    .control-panel {
+        display: none;
+    }
+    .control-panel-mobile {
+      md-fab-speed-dial {
+        max-height: 50px;
+        display: flex;
+        align-items: center;
+        z-index: 20;
+        md-fab-trigger {
+          width: 80%;
+          button {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+          }
+        }
+        md-fab-actions {
+          button {
+            min-width: 150px;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 551px){
+    .control-panel-mobile {
+      display: none;
     }
   }
 }
