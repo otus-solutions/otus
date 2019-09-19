@@ -43,7 +43,7 @@
   min-width: 800px !important;
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 799px) {
   .dashboard-toolbar-component .not-mobile {
     display: none;
   }
@@ -54,7 +54,7 @@
   }
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 799px) {
   .dashboard-component .dashboard-toolbar-component {
     width: 50px;
   }
@@ -224,6 +224,63 @@
 
 .aliquots-view-component .aliquots-container {
   min-width: 900px;
+}
+
+@media screen and (max-width: 726px) {
+  .sample-transportation-lot-manager-list-component .desktop-filter div .md-subheader {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .sample-transportation-lot-manager-list-component .desktop-filter {
+    display: none;
+  }
+  .sample-transportation-lot-manager-list-component .table-container {
+    min-width: 850px;
+  }
+  .sample-transportation-lot-manager-list-component .table-container md-list {
+    min-width: 800px;
+  }
+  .sample-transportation-lot-manager-list-component md-card {
+    width: 300px;
+  }
+  .sample-transportation-lot-manager-list-component md-card md-card-title md-card-title-text .md-subhead {
+    font-size: 10px;
+  }
+  .sample-transportation-lot-manager-list-component md-card md-card-title md-card-title-text .md-headline {
+    font-size: 14px;
+  }
+  .sample-transportation-lot-manager-list-component md-card md-card-title div div otus-sample-transportation-lot-aliquots-chart {
+    display: block;
+    height: 87px;
+    width: 128px;
+    position: relative;
+    right: 44px;
+    top: -24px;
+  }
+}
+@media screen and (min-width: 601px) {
+  .sample-transportation-lot-manager-list-component .mobile-filter {
+    display: none;
+  }
+  .sample-transportation-lot-manager-list-component md-card {
+    width: 500px;
+  }
+}
+
+.lot-info-manager-display-component .subtitle-table-container {
+  max-height: 200px;
+}
+.lot-info-manager-display-component .dynamic-table-container {
+  min-width: 850px;
+  max-height: 420px;
+}
+.lot-info-manager-display-component .dynamic-table-container .dynamic-structure {
+  min-width: 800px !important;
+}
+.lot-info-manager-display-component md-input-container md-datepicker {
+  position: relative;
+  left: -15px;
 }
 
 /*# sourceMappingURL=components-style.css.map */
