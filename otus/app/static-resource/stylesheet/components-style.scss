@@ -317,12 +317,14 @@
     }
     .table-container {
       min-width: 850px;
+
       md-list {
         min-width: 800px;
       }
     }
     md-card {
       width: 300px;
+
       md-card-title {
         md-card-title-text {
           .md-subhead {
@@ -363,17 +365,50 @@
   .subtitle-table-container {
     max-height: 200px;
   }
+
   .dynamic-table-container {
     min-width: 850px;
     max-height: 420px;
+
     .dynamic-structure {
       min-width: 800px !important;
     }
   }
-  md-input-container{
+
+  md-input-container {
     md-datepicker {
       position: relative;
       left: -15px;
+    }
+  }
+}
+
+.exam-sending-view-component {
+  .dynamic-table-container {
+    min-width: 850px;
+    max-height: 420px;
+
+    .dynamic-structure {
+      min-width: 800px !important;
+    }
+  }
+
+  @media screen and (max-width: 726px) {
+    .desktop-filter {
+      .md-subheader {
+        display: none !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .desktop-filter {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 601px) {
+    .mobile-filter {
+      display: none;
     }
   }
 }

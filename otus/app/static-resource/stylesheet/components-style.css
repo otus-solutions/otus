@@ -283,4 +283,27 @@
   left: -15px;
 }
 
+.exam-sending-view-component .dynamic-table-container {
+  min-width: 850px;
+  max-height: 420px;
+}
+.exam-sending-view-component .dynamic-table-container .dynamic-structure {
+  min-width: 800px !important;
+}
+@media screen and (max-width: 726px) {
+  .exam-sending-view-component .desktop-filter .md-subheader {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 600px) {
+  .exam-sending-view-component .desktop-filter {
+    display: none;
+  }
+}
+@media screen and (min-width: 601px) {
+  .exam-sending-view-component .mobile-filter {
+    display: none;
+  }
+}
+
 /*# sourceMappingURL=components-style.css.map */

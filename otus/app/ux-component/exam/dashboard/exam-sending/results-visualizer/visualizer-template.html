@@ -1,4 +1,4 @@
-<div ui-view layout="column" ng-if="$ctrl.fileStructure">
+<div ui-view layout="column" class="visualizer-component" ng-if="$ctrl.fileStructure" flex>
   <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-with-problems="$ctrl.aliquotsWithProblems" disabled-save="$ctrl.disabledSave" csv-data="$ctrl.csvData" dynamic-data-table-change="$ctrl.updateDataTable"
     error-aliquots="$ctrl.errorAliquots" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
   <md-content layout="column" flex>
@@ -10,7 +10,6 @@
           </md-card-title-text>
         </md-card-title>
         <md-card-content flex>
-          <div layout="row" flex>
             <div layout="column" flex>
               <div layout="row">
                 <li>Data e hora de envio: {{$ctrl.formattedDate}}</li>
@@ -21,8 +20,6 @@
               <div layout="row">
                 <li>Centro de realização: {{$ctrl.sendingExam.examSendingLot.fieldCenter.acronym}}</li>
               </div>
-            </div>
-            <div layout="column" flex>
               <div layout="row">
                 <li>Quantidade de resultados: {{$ctrl.sendingExam.examSendingLot.resultsQuantity}}</li>
               </div>
@@ -30,11 +27,9 @@
                 <li>Operador: {{$ctrl.sendingExam.examSendingLot.operator}}</li>
               </div>
             </div>
-          </div>
         </md-card-content>
       </md-card>
-
-      <div layout="row" ng-if="$ctrl.aliquotsWithProblems.length" ng-init="button={which: 'error'}" flex>
+      <div layout="row" layout-xs="column" ng-if="$ctrl.aliquotsWithProblems.length" ng-init="button={which: 'error'}" flex>
         <md-button ng-if="button.which == 'error'" ng-click="$ctrl.changeResults('resultsWithErrors'); button.which = 'all'" class="md-warn md-accent"
           aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
@@ -51,13 +46,12 @@
         </md-button>
       </div>
     </div>
-
     <md-divider></md-divider>
-
-    <dynamic-data-table flex dynamic-table-settings="$ctrl.settings" table-update-function="$ctrl.updateDataTable">
-    </dynamic-data-table>
-</div>
-</md-content>
+    <div class="dynamic-table-container">
+      <dynamic-data-table flex dynamic-table-settings="$ctrl.settings" table-update-function="$ctrl.updateDataTable">
+      </dynamic-data-table>
+    </div>
+  </md-content>
 </div>
 <div layout="column" layout-align="center center">
   <img src="app/static-resource/image/otus-crash.png" ng-if="!$ctrl.fileStructure" flex>
