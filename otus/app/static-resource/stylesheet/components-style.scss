@@ -300,63 +300,71 @@
   }
 }
 
-.sample-transportation-lot-manager-list-component {
-  @media screen and (max-width: 726px) {
-    .desktop-filter {
-      div {
-        .md-subheader {
-          display: none !important;
-        }
-      }
-    }
-  }
+otus-sample-transportation-manager-list {
+  //otus-sample-transportation-lot-info-sidenav {
+  //  md-sidenav {
+  //    min-width: 320px !important;
+  //  }
+  //}
 
-  @media screen and (max-width: 600px) {
-    .desktop-filter {
-      display: none;
-    }
-    .table-container {
-      min-width: 850px;
-
-      md-list {
-        min-width: 800px;
-      }
-    }
-    md-card {
-      width: 300px;
-
-      md-card-title {
-        md-card-title-text {
-          .md-subhead {
-            font-size: 10px;
-          }
-
-          .md-headline {
-            font-size: 14px;
-          }
-        }
-
+  .sample-transportation-lot-manager-list-component {
+    @media screen and (max-width: 726px) {
+      .desktop-filter {
         div {
+          .md-subheader {
+            display: none !important;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .desktop-filter {
+        display: none;
+      }
+      .table-container {
+        min-width: 850px;
+
+        md-list {
+          min-width: 800px;
+        }
+      }
+      md-card {
+        width: 300px;
+
+        md-card-title {
+          md-card-title-text {
+            .md-subhead {
+              font-size: 10px;
+            }
+
+            .md-headline {
+              font-size: 14px;
+            }
+          }
+
           div {
-            otus-sample-transportation-lot-aliquots-chart {
-              display: block;
-              height: 87px;
-              width: 128px;
-              position: relative;
-              right: 44px;
-              top: -24px;
+            div {
+              otus-sample-transportation-lot-aliquots-chart {
+                display: block;
+                height: 87px;
+                width: 128px;
+                position: relative;
+                right: 44px;
+                top: -24px;
+              }
             }
           }
         }
       }
     }
-  }
-  @media screen and (min-width: 601px) {
-    .mobile-filter {
-      display: none;
-    }
-    md-card {
-      width: 500px;
+    @media screen and (min-width: 601px) {
+      .mobile-filter {
+        display: none;
+      }
+      md-card {
+        width: 500px;
+      }
     }
   }
 }
@@ -410,5 +418,63 @@
     .mobile-filter {
       display: none;
     }
+  }
+}
+
+otus-exams-lots-manager {
+  .table-container {
+    min-width: 850px;
+    md-list {
+      min-width: 800px;
+    }
+  }
+
+  @media screen and (max-width: 726px) {
+    .desktop-filter {
+      .md-subheader {
+        display: none !important;
+      }
+    }
+  }
+  @media screen and (max-width: 650px) {
+    .desktop-filter {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 651px) {
+    .mobile-filter {
+      display: none;
+    }
+  }
+}
+
+otus-exam-lot-info-manager-display {
+  .dynamic-table-container {
+    min-width: 850px;
+    .dynamic-structure {
+      min-width: 800px !important;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .dynamic-table-container {
+      max-height: 395px;
+    }
+    .moment-type-title {
+      display: none !important;
+    }
+  }
+
+  .aliquot-form {
+    max-height: 70px;
+    md-input-container {
+      margin-bottom: 0px;
+    }
+  }
+}
+
+otus-exam-lot-info-sidenav {
+  md-sidenav {
+    min-width: 320px !important;
   }
 }

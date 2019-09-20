@@ -227,30 +227,30 @@
 }
 
 @media screen and (max-width: 726px) {
-  .sample-transportation-lot-manager-list-component .desktop-filter div .md-subheader {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .desktop-filter div .md-subheader {
     display: none !important;
   }
 }
 @media screen and (max-width: 600px) {
-  .sample-transportation-lot-manager-list-component .desktop-filter {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .desktop-filter {
     display: none;
   }
-  .sample-transportation-lot-manager-list-component .table-container {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .table-container {
     min-width: 850px;
   }
-  .sample-transportation-lot-manager-list-component .table-container md-list {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .table-container md-list {
     min-width: 800px;
   }
-  .sample-transportation-lot-manager-list-component md-card {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card {
     width: 300px;
   }
-  .sample-transportation-lot-manager-list-component md-card md-card-title md-card-title-text .md-subhead {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card md-card-title md-card-title-text .md-subhead {
     font-size: 10px;
   }
-  .sample-transportation-lot-manager-list-component md-card md-card-title md-card-title-text .md-headline {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card md-card-title md-card-title-text .md-headline {
     font-size: 14px;
   }
-  .sample-transportation-lot-manager-list-component md-card md-card-title div div otus-sample-transportation-lot-aliquots-chart {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card md-card-title div div otus-sample-transportation-lot-aliquots-chart {
     display: block;
     height: 87px;
     width: 128px;
@@ -260,10 +260,10 @@
   }
 }
 @media screen and (min-width: 601px) {
-  .sample-transportation-lot-manager-list-component .mobile-filter {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .mobile-filter {
     display: none;
   }
-  .sample-transportation-lot-manager-list-component md-card {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card {
     width: 500px;
   }
 }
@@ -304,6 +304,53 @@
   .exam-sending-view-component .mobile-filter {
     display: none;
   }
+}
+
+otus-exams-lots-manager .table-container {
+  min-width: 850px;
+}
+otus-exams-lots-manager .table-container md-list {
+  min-width: 800px;
+}
+@media screen and (max-width: 726px) {
+  otus-exams-lots-manager .desktop-filter .md-subheader {
+    display: none !important;
+  }
+}
+@media screen and (max-width: 650px) {
+  otus-exams-lots-manager .desktop-filter {
+    display: none;
+  }
+}
+@media screen and (min-width: 651px) {
+  otus-exams-lots-manager .mobile-filter {
+    display: none;
+  }
+}
+
+otus-exam-lot-info-manager-display .dynamic-table-container {
+  min-width: 850px;
+}
+otus-exam-lot-info-manager-display .dynamic-table-container .dynamic-structure {
+  min-width: 800px !important;
+}
+@media screen and (max-width: 600px) {
+  otus-exam-lot-info-manager-display .dynamic-table-container {
+    max-height: 395px;
+  }
+  otus-exam-lot-info-manager-display .moment-type-title {
+    display: none !important;
+  }
+}
+otus-exam-lot-info-manager-display .aliquot-form {
+  max-height: 70px;
+}
+otus-exam-lot-info-manager-display .aliquot-form md-input-container {
+  margin-bottom: 0px;
+}
+
+otus-exam-lot-info-sidenav md-sidenav {
+  min-width: 320px !important;
 }
 
 /*# sourceMappingURL=components-style.css.map */
