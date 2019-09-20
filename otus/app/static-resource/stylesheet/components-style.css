@@ -226,6 +226,9 @@
   min-width: 900px;
 }
 
+otus-sample-transportation-manager-list otus-sample-transportation-lot-info-sidenav md-sidenav {
+  min-width: 320px !important;
+}
 @media screen and (max-width: 726px) {
   otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .desktop-filter div .md-subheader {
     display: none !important;
@@ -351,6 +354,17 @@ otus-exam-lot-info-manager-display .aliquot-form md-input-container {
 
 otus-exam-lot-info-sidenav md-sidenav {
   min-width: 320px !important;
+}
+
+@media screen and (max-width: 600px) {
+  otus-monitoring-dashboard .desktop-filter {
+    display: none;
+  }
+}
+@media screen and (min-width: 601px) {
+  otus-monitoring-dashboard .mobile-filter {
+    display: none;
+  }
 }
 
 /*# sourceMappingURL=components-style.css.map */
