@@ -47,6 +47,7 @@
     self.generateActivityReport = generateActivityReport;
     /* Lifecycle hooks */
     self.$onInit = onInit;
+    self.report = {};
 
     function onInit() {
       _buildDialogs();
@@ -234,13 +235,12 @@
 
     function reloadActivityReport() {
       let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
-      console.log(selectedActivityID);
 
       self.ready = false;
       ParticipantReportWidgetFactory.getParticipantReportList(self.selectedParticipant)
         .then(function (reports) {
-          console.log(reports[0]);
           self.report = reports[0];
+          self.report.getReportTemplate();
           self.ready = true;
         })
         .catch(function () {
@@ -249,10 +249,11 @@
     }
 
     function generateActivityReport(report) {
-      console.log("report")
+      console.log(report)
+      console.log(report.compiledTemplate);
       LoadingScreenService.changeMessage(report.getLoadingMessage());
       LoadingScreenService.start();
-      report.generateReport(LoadingScreenService.finish());
+      report.generateReport(LoadingScreenService.finish);
     }
   }
 }());
