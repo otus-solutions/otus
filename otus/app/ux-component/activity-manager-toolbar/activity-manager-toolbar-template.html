@@ -1,6 +1,14 @@
 <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
   <div class="md-toolbar-tools">
     <span flex>Lista de atividades</span>
+    <md-button class="md-raised md-accent md-icon-button" aria-label="Carregar Relatório" ng-click="$ctrl.reloadActivityReport()" ng-show="$ctrl.showFillingButton">
+      <md-tooltip md-direction="down">Carregar Relatório</md-tooltip>
+      <md-icon aria-label="Relatório de Atividade" ng-class="rotateClass">autorenew</md-icon>
+    </md-button>
+    <md-button class="md-raised md-accent md-icon-button" aria-label="Gerar Relatório" ng-click="$ctrl.generateActivityReport($ctrl.report)" ng-show="$ctrl.showFillingButton">
+      <md-tooltip md-direction="down">Gerar Relatório</md-tooltip>
+      <md-icon aria-label="Relatório de Atividade" ng-class="rotateClass">reply</md-icon>
+    </md-button>
     <md-button class="md-raised md-accent md-icon-button" aria-label="Preencher Atividade" ng-click="$ctrl.fillSelectedActivity()"
       ng-show="$ctrl.showFillingButton">
       <md-tooltip md-direction="down">Preencher Atividade</md-tooltip>

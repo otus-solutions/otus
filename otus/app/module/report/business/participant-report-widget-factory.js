@@ -97,6 +97,7 @@
     self.expandAndCollapse = expandAndCollapse;
     self.generateReport = generateReport;
     self.reloadReport = reloadReport;
+    self.reloadActivityReport = reloadActivityReport;
     self.getLoadingMessage = getLoadingMessage;
 
     function expandAndCollapse() {
@@ -118,6 +119,11 @@
     function reloadReport() {
       return getReportTemplate(true);
     }
+
+    function reloadActivityReport() {
+      return getReportTemplate(true);
+    }
+
 
     function getReportTemplate(forceReload) {
       if (self.dirty && !forceReload) {

@@ -26,12 +26,15 @@
     'otusjs.activity.business.ActivityViewService',
     'otusjs.activity.business.ActivityPlayerService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.activity.business.ParticipantActivityService'
+    'otusjs.activity.business.ParticipantActivityService',
+    'otusjs.report.business.ParticipantReportWidgetFactory',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($q, $mdToast, $timeout, $mdDialog, EventService, CheckerItemFactory, DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService, ParticipantActivityService) {
-    var confirmDeleteSelectedActivity;
+  function Controller($q, $mdToast, $timeout, $mdDialog, EventService, CheckerItemFactory, DialogService, ActivityViewService, ActivityPlayerService,
+                      ApplicationStateService, ParticipantActivityService, ParticipantReportWidgetFactory, LoadingScreenService) {
 
+    var confirmDeleteSelectedActivity;
     var self = this;
     /* Public methods */
     self.fillSelectedActivity = fillSelectedActivity;
@@ -40,6 +43,8 @@
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
     self.updateChecker = updateChecker;
     self.DialogController = DialogController;
+    self.reloadActivityReport = reloadActivityReport;
+    self.generateActivityReport = generateActivityReport;
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -72,7 +77,7 @@
     function updateChecker() {
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
-        locals: { selectedActivity: self.selectedPaperActivity, updateList: self.updateList },
+        locals: {selectedActivity: self.selectedPaperActivity, updateList: self.updateList},
         templateUrl: 'app/ux-component/paper-activity-checker-update/paper-activity-checker-update-template.html',
         parent: angular.element(document.body),
         controller: self.DialogController,
@@ -139,12 +144,16 @@
         buttons: [
           {
             message: 'Ok',
-            action: function () { $mdDialog.hide() },
+            action: function () {
+              $mdDialog.hide()
+            },
             class: 'md-raised md-primary'
           },
           {
             message: 'Voltar',
-            action: function () { $mdDialog.cancel() },
+            action: function () {
+              $mdDialog.cancel()
+            },
             class: 'md-raised md-no-focus'
           }
         ]
@@ -197,9 +206,9 @@
               _showMessage("Aferidor não alterado.")
             }
           }).catch(function (e) {
-            self.cancel();
-            _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
-          });
+          self.cancel();
+          _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
+        });
       }
 
       function cancel() {
@@ -223,5 +232,27 @@
       }
     }
 
+    function reloadActivityReport() {
+      let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
+      console.log(selectedActivityID);
+
+      self.ready = false;
+      ParticipantReportWidgetFactory.getParticipantReportList(self.selectedParticipant)
+        .then(function (reports) {
+          console.log(reports[0]);
+          self.report = reports[0];
+          self.ready = true;
+        })
+        .catch(function () {
+          self.ready = true;
+        });
+    }
+
+    function generateActivityReport(report) {
+      console.log("report")
+      LoadingScreenService.changeMessage(report.getLoadingMessage());
+      LoadingScreenService.start();
+      report.generateReport(LoadingScreenService.finish());
+    }
   }
 }());
