@@ -452,7 +452,6 @@ otus-exams-lots-manager {
 otus-exam-lot-info-manager-display {
   .dynamic-table-container {
     min-width: 850px;
-
     .dynamic-structure {
       min-width: 800px !important;
     }
@@ -492,6 +491,23 @@ otus-monitoring-dashboard {
   @media screen and (min-width: 601px) {
     .mobile-filter {
       display: none;
+    }
+  }
+}
+
+otus-flag-report-list-manager {
+  @media screen and (max-width: 650px) {
+    otus-flag-report-visualization {
+      md-content {
+        max-height: 400px;
+      }
+    }
+  }
+  @media screen and (min-width: 651px) {
+    otus-flag-report-visualization {
+      md-content {
+        max-height: 100%;
+      }
     }
   }
 }

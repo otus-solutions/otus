@@ -18,9 +18,6 @@
     function onInit() {
       constructor();
       self.onUpdate = constructor;
-      $(window).resize(function () {
-        constructor();
-      })
     }
 
     function constructor(activities = null) {
@@ -35,6 +32,7 @@
     }
 
     function heatmap_display(json, heatmapId) {
+
       var svg = d3.select(heatmapId).selectAll("*").remove();
 
       var tooltip = d3.select(heatmapId)
@@ -44,26 +42,19 @@
 
       //==================================================
       var CELL_SIZE = 24;
-      var columnsCount = self.activitiesData.columns.length;
-      var totalCellSize = CELL_SIZE * columnsCount;
 
-      var scale = window.innerWidth / 1440;
-      var translation = window.innerWidth / 15;
-      var innerWidth = window.innerWidth;
+      var translation = 1920 / 15;
       var verticalTranslation = window.innerHeight / 4;
 
-      var contentWidth = ((totalCellSize + translation) * scale) + translation;
-      var viewerWidth = contentWidth > innerWidth ? contentWidth : innerWidth;
+      var viewerWidth = 1920;
       var viewerPosTop = 200;
 
       var legendElementWidth = CELL_SIZE * 3.2;
       var legendElementHeight = CELL_SIZE / 2;
 
-      var contentHeight = ((CELL_SIZE*_amountOfElementsInPage + verticalTranslation) * scale);
-      var viewerHeight = contentHeight > window.innerHeight ? contentHeight : window.innerHeight;
+      self.viewerHeight = CELL_SIZE * _amountOfElementsInPage + verticalTranslation;
 
       var colors = self.colorsRange;
-      var svg;
 
       //==================================================
 
@@ -74,9 +65,9 @@
       svg = d3.select(heatmapId)
         .append("svg")
         .attr("width", viewerWidth)
-        .attr("height", viewerHeight)
+        .attr("height", self.viewerHeight)
         .append("g")
-        .attr("transform", "translate(" + translation + "," + window.innerHeight / 7 + ")scale(" + window.innerWidth / 1440 + ")");
+        .attr("transform", "translate(" + translation + "," + window.innerHeight / 7 + ")");
 
       svg.append('defs')
         .append('pattern')
@@ -158,7 +149,7 @@
           d3.select("#order").property("selectedIndex", 0);
         });
 
-      //Index to lines to d3 
+      //Index to lines to d3
       var lineIndexOne = -1;
       var lineIndexTwo = -1;
       var lineIndexThree = -1;

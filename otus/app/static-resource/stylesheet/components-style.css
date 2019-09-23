@@ -367,4 +367,15 @@ otus-exam-lot-info-sidenav md-sidenav {
   }
 }
 
+@media screen and (max-width: 650px) {
+  otus-flag-report-list-manager otus-flag-report-visualization md-content {
+    max-height: 400px;
+  }
+}
+@media screen and (min-width: 651px) {
+  otus-flag-report-list-manager otus-flag-report-visualization md-content {
+    max-height: 100%;
+  }
+}
+
 /*# sourceMappingURL=components-style.css.map */
