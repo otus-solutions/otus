@@ -26,16 +26,15 @@
     'otusjs.activity.business.ActivityViewService',
     'otusjs.activity.business.ActivityPlayerService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.activity.business.ParticipantActivityService',
-    'otusjs.report.business.ParticipantReportWidgetFactory',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.activity.business.ParticipantActivityService'
   ];
 
   function Controller($q, $mdToast, $timeout, $mdDialog, EventService, CheckerItemFactory, DialogService, ActivityViewService, ActivityPlayerService,
-                      ApplicationStateService, ParticipantActivityService, ParticipantReportWidgetFactory, LoadingScreenService) {
+                      ApplicationStateService, ParticipantActivityService) {
 
-    var confirmDeleteSelectedActivity;
     var self = this;
+    var confirmDeleteSelectedActivity;
+
     /* Public methods */
     self.fillSelectedActivity = fillSelectedActivity;
     self.viewSelectedActivity = viewSelectedActivity;
@@ -43,11 +42,10 @@
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
     self.updateChecker = updateChecker;
     self.DialogController = DialogController;
-    self.reloadActivityReport = reloadActivityReport;
-    self.generateActivityReport = generateActivityReport;
+
     /* Lifecycle hooks */
     self.$onInit = onInit;
-    self.report = {};
+    //self.report = {};
 
     function onInit() {
       _buildDialogs();
@@ -233,27 +231,5 @@
       }
     }
 
-    function reloadActivityReport() {
-      let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
-
-      self.ready = false;
-      ParticipantReportWidgetFactory.getParticipantReportList(self.selectedParticipant)
-        .then(function (reports) {
-          self.report = reports[0];
-          self.report.getReportTemplate();
-          self.ready = true;
-        })
-        .catch(function () {
-          self.ready = true;
-        });
-    }
-
-    function generateActivityReport(report) {
-      console.log(report)
-      console.log(report.compiledTemplate);
-      LoadingScreenService.changeMessage(report.getLoadingMessage());
-      LoadingScreenService.start();
-      report.generateReport(LoadingScreenService.finish);
-    }
   }
 }());
