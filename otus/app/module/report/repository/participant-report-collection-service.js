@@ -56,7 +56,7 @@
       return request.promise;
     }
 
-//TODO: simulando o retorno de um unico report , pendente trocar o metodo list
+//TODO: OTUS-606 simulando o retorno de um unico reportFake => trocar o metodo list e o rn
     function getActivityReport(rn, activityID){
       var request = $q.defer();
       _remoteStorage

@@ -16,17 +16,19 @@
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.report.business.ParticipantReportWidgetFactory',
     'otusjs.deploy.LoadingScreenService',
-    '$mdDialog'
+    'otusjs.otus.uxComponent.ActivityReportService'
+
+
   ];
 
-  function Controller(ParticipantActivityService, ParticipantReportWidgetFactory, LoadingScreenService, $mdDialog){
+  function Controller(ParticipantActivityService, ParticipantReportWidgetFactory, LoadingScreenService, ActivityReportService){
     var self = this;
 
     self.reloadActivityReport = reloadActivityReport;
     self.generateActivityReport = generateActivityReport;
     self.pendingActivityReport = pendingActivityReport;
 
-    self.activityReportInfo = false;
+    self.activityReportInfo = true;
     self.activityReportReady = false;
 
     function reloadActivityReport() {
@@ -56,15 +58,9 @@
     }
 
     function pendingActivityReport() {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .parent(angular.element(document.querySelector('#popupContainer')))
-          .clickOutsideToClose(true)
-          .title('Relatório Incompleto: Pendências Detectadas')
-          .textContent('Para visualizar/imprimir o relatório será necessário validar os itens abaixo.')
-          .ariaLabel('Alert: Relatório incompleto')
-          .ok('Voltar')
-      );
+      ActivityReportService.infoPendingReportAlert();
+
+
     }
   }
 
