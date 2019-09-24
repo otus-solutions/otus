@@ -1,9 +1,16 @@
-<md-button class="md-raised md-accent md-icon-button" aria-label="Carregar Relatório" ng-click="$ctrl.reloadActivityReport()" ng-show="!$ctrl.activityReportReady && $ctrl.showVisualizationButton">
+<md-button class="md-raised md-accent md-icon-button" aria-label="Carregar Relatório"
+           ng-click="$ctrl.reloadActivityReport()" ng-show="!$ctrl.activityReportReady && $ctrl.showVisualizationButton && !$ctrl.activityReportInfo">
   <md-tooltip md-direction="down">Carregar Relatório</md-tooltip>
   <md-icon aria-label="Relatório de Atividade" ng-class="rotateClass">autorenew</md-icon>
 
 </md-button>
-<md-button class="md-raised md-accent md-icon-button" aria-label="Gerar Relatório" ng-click="$ctrl.generateActivityReport($ctrl.report)" ng-show="$ctrl.activityReportReady && $ctrl.showVisualizationButton">
+<md-button class="md-raised md-accent md-icon-button" aria-label="Gerar Relatório" ng-click="$ctrl.generateActivityReport($ctrl.report)"
+           ng-show="$ctrl.activityReportReady && $ctrl.showVisualizationButton && !$ctrl.activityReportInfo">
   <md-tooltip md-direction="down">Gerar Relatório</md-tooltip>
-  <md-icon aria-label="Relatório de Atividade" ng-class="rotateClass">reply</md-icon>
+  <md-icon aria-label="Relatório de Atividade">reply</md-icon>
+</md-button>
+
+<md-button class="md-raised md-accent md-icon-button" aria-label="Informações Pendentes" ng-click="$ctrl.pendingActivityReport()" ng-show="$ctrl.activityReportInfo">
+  <md-tooltip md-direction="down">Relatório: Informações Pendentes</md-tooltip>
+  <md-icon aria-label="Relatório de Atividade">announcement</md-icon>
 </md-button>
