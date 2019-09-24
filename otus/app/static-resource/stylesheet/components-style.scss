@@ -483,9 +483,9 @@ otus-exam-lot-info-sidenav {
 
 otus-monitoring-dashboard {
   @media screen and (max-width: 600px) {
-      .desktop-filter {
-        display: none;
-      }
+    .desktop-filter {
+      display: none;
+    }
   }
 
   @media screen and (min-width: 601px) {
@@ -508,6 +508,17 @@ otus-flag-report-list-manager {
       md-content {
         max-height: 100%;
       }
+    }
+  }
+}
+
+otus-laboratory-flag-report-list-manager {
+  .exam-heatmap-container {
+    @media screen and (max-width: 650px) {
+      min-height: 400px;
+    }
+    @media screen and (min-width: 651px) {
+      min-height: 100%;
     }
   }
 }
