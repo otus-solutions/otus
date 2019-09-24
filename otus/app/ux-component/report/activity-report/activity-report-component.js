@@ -25,15 +25,30 @@
     self.generateActivityReport = generateActivityReport;
 
 
+    // function reloadActivityReport() {
+    //   let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
+    //
+    //   self.activityReportReady = false;
+    //   //TODO: estamos buscando um relatório de exame para simular a replicação do mecanismo, modificar metodo para buscar relatório pelo ID da atividade
+    //   ParticipantReportWidgetFactory.getParticipantReportList(self.selectedParticipant)
+    //     .then(function (reports) {
+    //       self.report = reports[0];
+    //       self.report.getReportTemplate();
+    //       self.activityReportReady = true;
+    //     })
+    //     .catch(function () {
+    //       self.activityReportReady = true;
+    //     });
+    // }
+
     function reloadActivityReport() {
       let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
 
       self.activityReportReady = false;
       //TODO: estamos buscando um relatório de exame para simular a replicação do mecanismo, modificar metodo para buscar relatório pelo ID da atividade
-      ParticipantReportWidgetFactory.getParticipantReportList(self.selectedParticipant)
-
-        .then(function (reports) {
-          self.report = reports[0];
+      ParticipantReportWidgetFactory.getActivityReport(self.selectedParticipant, selectedActivityID)
+        .then(function (report) {
+          self.report = report;
           self.report.getReportTemplate();
           self.activityReportReady = true;
         })
@@ -42,13 +57,17 @@
         });
     }
 
+
+
+
+
     function generateActivityReport(report) {
       console.log(report)
       console.log(report.compiledTemplate);
       LoadingScreenService.changeMessage(report.getLoadingMessage());
       LoadingScreenService.start();
       report.generateReport(LoadingScreenService.finish);
-      self.activityReportReady = false;
+      // self.activityReportReady = false;
     }
   }
 

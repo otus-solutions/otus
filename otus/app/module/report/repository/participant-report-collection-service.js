@@ -17,6 +17,7 @@
     //Participant Report Methods
     self.getParticipantReportList = getParticipantReportList;
     self.getFullReport = getFullReport;
+    self.getActivityReport = getActivityReport;
 
     function getParticipantReportList(rn) {
       var request = $q.defer();
@@ -54,5 +55,26 @@
 
       return request.promise;
     }
+
+//TODO: simulando o retorno de um unico report , pendente trocar o metodo list
+    function getActivityReport(rn, activityID){
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .list(rn)
+            .then(function (response) {
+              console.log(response.data[0])
+              request.resolve(response.data[0]);
+            })
+            .catch(function(e){
+              request.reject(e);
+            });
+        });
+      return request.promise;
+    }
+
+
   }
 }());

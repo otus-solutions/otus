@@ -17,6 +17,7 @@
     var self = this;
 
     self.getParticipantReportList = getParticipantReportList;
+    self.getActivityReport = getActivityReport;
     self.fromJson = fromJson;
 
     function getParticipantReportList(participant) {
@@ -25,6 +26,13 @@
           return reports.map(function (report) {
             return new ParticipantReport($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory, report, participant)
           });
+        });
+    }
+
+    function getActivityReport(participant, activityID){
+      return ParticipantReportService.fetchActivityReport(participant, activityID)
+        .then(function (report) {
+          return new ParticipantReport($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory, report, participant);
         });
     }
 
