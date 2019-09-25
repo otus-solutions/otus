@@ -18,11 +18,9 @@
 
   function Controller(ActivityReportService){
     var self = this;
-
     self.reloadActivityReport = reloadActivityReport;
     self.generateActivityReport = generateActivityReport;
     self.pendingActivityReport = pendingActivityReport;
-
 
     function reloadActivityReport() {
       let reportResult = ActivityReportService.reloadActivityReport(self.selectedParticipant);
@@ -35,10 +33,12 @@
 
     function generateActivityReport(report) {
       ActivityReportService.generateActivityReport(report);
+      self.activityReportReady = false;
     }
 
     function pendingActivityReport() {
       ActivityReportService.infoPendingReportAlert();
+      self.activityReportInfo = false
     }
   }
 
