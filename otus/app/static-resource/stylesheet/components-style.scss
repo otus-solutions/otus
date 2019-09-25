@@ -1,4 +1,4 @@
-.dashboard-sidenav-component {
+otus-dashboard-sidenav {
   md-sidenav {
     position: fixed !important;
     width: 320px;
@@ -24,28 +24,10 @@
   }
 }
 
-.md-dashboard-autocomplete {
-  @media only screen and (max-width: 361px) {
-    input:not(.md-input) {
-      font-size: 11px;
-    }
-    .md-show-clear-button button {
-      display: none;
-    }
+otus-participants-list {
+  .dynamic-table-container-md-content {
+    max-height: 90%;
   }
-  @media only screen and (min-width: 361px) {
-    @media only screen and (max-width: 500px) {
-      input:not(.md-input) {
-        font-size: 12px;
-      }
-      .md-show-clear-button button {
-        display: none;
-      }
-    }
-  }
-}
-
-.participants-manager-list-component {
   .dynamic-table-container {
     min-width: 850px;
 
@@ -55,7 +37,7 @@
   }
 }
 
-.dashboard-toolbar-component {
+otus-dashboard-toolbar {
   @media only screen and (max-width: 799px) {
     .not-mobile {
       display: none;
@@ -68,10 +50,9 @@
   }
 }
 
-.dashboard-component {
-  .dashboard-toolbar-component {
+otus-dashboard {
+  otus-dashboard-toolbar {
     @media only screen and (max-width: 799px) {
-      width: 50px;
       .mobile {
         display: none !important;
       }
@@ -82,19 +63,20 @@
   }
 }
 
-.report-dashboard-component {
-  .report-list {
-    min-width: 250px;
-  }
-
-  .report-item {
-    min-width: 250px;
-    background-color: #ffffff
+otus-report-dashboard {
+  otus-panel{
+    .report-list {
+      min-width: 250px;
+      .report-item {
+        min-width: 250px;
+        background-color: #ffffff
+      }
+    }
   }
 }
 
-.activity-manager-component {
-  .activity-manager-list-component {
+otus-activity-manager {
+  otus-activity-list {
     @media only screen and (max-width: 450px) {
       .not-mobile {
         display: none;
@@ -110,7 +92,7 @@
     }
   }
 
-  .activity-manager-toolbar-component {
+  otus-activity-manager-toolbar {
     md-fab-speed-dial {
       max-height: 50px;
     }
@@ -145,7 +127,7 @@
     }
   }
 
-  .activity-manager-commander-component {
+  otus-activity-manager-commander {
     @media only screen and (max-width: 451px) {
       md-fab-speed-dial {
         display: none;
@@ -154,7 +136,7 @@
   }
 }
 
-.control-panel-component {
+lab-control-panel {
 
   @media only screen and (max-width: 550px) {
     .control-toolbar {
@@ -263,16 +245,6 @@
     }
   }
 
-  @media only screen and (max-width: 360px) {
-    .mobile-aliquots-control-toolbar {
-      div {
-        label {
-          font-size: 13px;
-        }
-      }
-    }
-  }
-
   @media only screen and (max-width: 359px) {
     .mobile-aliquots-control-toolbar {
       div {
@@ -294,7 +266,7 @@
   }
 }
 
-.aliquots-view-component {
+aliquots-view {
   .aliquots-container {
     min-width: 900px;
   }
@@ -369,7 +341,7 @@ otus-sample-transportation-manager-list {
   }
 }
 
-.lot-info-manager-display-component {
+otus-lot-info-manager-display {
   .subtitle-table-container {
     max-height: 200px;
   }
@@ -391,13 +363,16 @@ otus-sample-transportation-manager-list {
   }
 }
 
-.exam-sending-view-component {
-  .dynamic-table-container {
-    min-width: 850px;
-    max-height: 420px;
+otus-view-sending-exam {
+  .dynamic-table-container-md-content{
+    min-height: 400px;
+    .dynamic-table-container {
+      min-width: 850px;
+      max-height: 420px;
 
-    .dynamic-structure {
-      min-width: 800px !important;
+      .dynamic-structure {
+        min-width: 800px !important;
+      }
     }
   }
 
@@ -452,6 +427,7 @@ otus-exams-lots-manager {
 otus-exam-lot-info-manager-display {
   .dynamic-table-container {
     min-width: 850px;
+
     .dynamic-structure {
       min-width: 800px !important;
     }
@@ -470,7 +446,7 @@ otus-exam-lot-info-manager-display {
     max-height: 70px;
 
     md-input-container {
-      margin-bottom: 0px;
+      margin-bottom: 0;
     }
   }
 }
@@ -523,7 +499,7 @@ otus-laboratory-flag-report-list-manager {
   }
 }
 
-otus-laboratory-monitoring-dashboard{
+otus-laboratory-monitoring-dashboard {
   #orphans-by-exam {
     svg {
       min-width: 600px;

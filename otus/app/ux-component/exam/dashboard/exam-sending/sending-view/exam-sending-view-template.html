@@ -1,4 +1,4 @@
-<div ui-view layout="row" class="exam-sending-view-component" flex>
+<div ui-view layout="row" flex>
   <md-content layout="column" flex>
     <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
       <div class="md-toolbar-tools md-hue-2">
@@ -75,21 +75,23 @@
           </div>
           <md-divider></md-divider>
         </div>
-        <div class="dynamic-table-container">
-          <dynamic-data-table flex
-                              headers="['Data e hora de envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
-                              elements-array="$ctrl.sendingList || []"
-                              elements-properties="['examSendingLot.realizationDate', 'examSendingLot.fileName', 'examSendingLot.fieldCenter.acronym', 'examSendingLot.resultsQuantity', 'examSendingLot.operator']"
-                              callback-after-change="$ctrl.dynamicDataTableChange"
-                              table-update-function="$ctrl.updateDataTable"
-                              order-indices="[0, 1, 2, 3, 4]"
-                              number-fields-aligned-left="10"
-                              flex-array="[10, 30, 15, 15, 20]"
-                              format-data="'dd/MM/yyyy HH:mm'"
-                              format-data-properties-array="['examSendingLot.realizationDate']"
-                              disable-filter="true">
-          </dynamic-data-table>
-        </div>
+        <md-content class="dynamic-table-container-md-content">
+          <div class="dynamic-table-container">
+            <dynamic-data-table flex
+                                headers="['Data e hora de envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
+                                elements-array="$ctrl.sendingList || []"
+                                elements-properties="['examSendingLot.realizationDate', 'examSendingLot.fileName', 'examSendingLot.fieldCenter.acronym', 'examSendingLot.resultsQuantity', 'examSendingLot.operator']"
+                                callback-after-change="$ctrl.dynamicDataTableChange"
+                                table-update-function="$ctrl.updateDataTable"
+                                order-indices="[0, 1, 2, 3, 4]"
+                                number-fields-aligned-left="10"
+                                flex-array="[10, 30, 15, 15, 20]"
+                                format-data="'dd/MM/yyyy HH:mm'"
+                                format-data-properties-array="['examSendingLot.realizationDate']"
+                                disable-filter="true">
+            </dynamic-data-table>
+          </div>
+        </md-content>
       </md-content>
     </div>
   </md-content>

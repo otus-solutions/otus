@@ -89,6 +89,25 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
   box-shadow: none !important;
 }
 
+@media only screen and (max-width: 361px) {
+  .md-dashboard-autocomplete input:not(.md-input) {
+    font-size: 11px;
+  }
+  .md-dashboard-autocomplete .md-show-clear-button button {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 500px) {
+  .md-dashboard-autocomplete input:not(.md-input) {
+    font-size: 12px;
+  }
+  .md-dashboard-autocomplete .md-show-clear-button button {
+    display: none;
+  }
+}
+
+
 .autocomplete-custom-participant-template li {
   border-bottom: 1px solid #ccc;
   height: auto;

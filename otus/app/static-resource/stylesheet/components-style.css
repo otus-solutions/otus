@@ -1,107 +1,90 @@
-.dashboard-sidenav-component md-sidenav {
+otus-dashboard-sidenav md-sidenav {
   position: fixed !important;
   width: 320px;
   min-width: 320px !important;
 }
-.dashboard-sidenav-component md-backdrop {
+otus-dashboard-sidenav md-backdrop {
   position: fixed !important;
 }
-.dashboard-sidenav-component md-backdrop ~ md-content {
+otus-dashboard-sidenav md-backdrop ~ md-content {
   position: fixed;
   overflow: hidden;
 }
 @media (max-width: 456px) {
-  .dashboard-sidenav-component md-sidenav,
-.dashboard-sidenav-component md-sidenav.md-locked-open,
-.dashboard-sidenav-component md-sidenav.md-closed.md-locked-open-add-active {
+  otus-dashboard-sidenav md-sidenav,
+otus-dashboard-sidenav md-sidenav.md-locked-open,
+otus-dashboard-sidenav md-sidenav.md-closed.md-locked-open-add-active {
     position: fixed !important;
     min-width: 320px !important;
   }
 }
 
-@media only screen and (max-width: 361px) {
-  .md-dashboard-autocomplete input:not(.md-input) {
-    font-size: 11px;
-  }
-  .md-dashboard-autocomplete .md-show-clear-button button {
-    display: none;
-  }
+otus-participants-list .dynamic-table-container-md-content {
+  max-height: 90%;
 }
-@media only screen and (min-width: 361px) and (max-width: 500px) {
-  .md-dashboard-autocomplete input:not(.md-input) {
-    font-size: 12px;
-  }
-  .md-dashboard-autocomplete .md-show-clear-button button {
-    display: none;
-  }
-}
-
-.participants-manager-list-component .dynamic-table-container {
+otus-participants-list .dynamic-table-container {
   min-width: 850px;
 }
-.participants-manager-list-component .dynamic-table-container .dynamic-structure {
+otus-participants-list .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
 
 @media only screen and (max-width: 799px) {
-  .dashboard-toolbar-component .not-mobile {
+  otus-dashboard-toolbar .not-mobile {
     display: none;
   }
 }
 @media only screen and (min-width: 800px) {
-  .dashboard-toolbar-component .mobile {
+  otus-dashboard-toolbar .mobile {
     display: none;
   }
 }
 
 @media only screen and (max-width: 799px) {
-  .dashboard-component .dashboard-toolbar-component {
-    width: 50px;
-  }
-  .dashboard-component .dashboard-toolbar-component .mobile {
+  otus-dashboard otus-dashboard-toolbar .mobile {
     display: none !important;
   }
-  .dashboard-component .dashboard-toolbar-component .not-mobile {
+  otus-dashboard otus-dashboard-toolbar .not-mobile {
     display: block !important;
   }
 }
 
-.report-dashboard-component .report-list {
+otus-report-dashboard otus-panel .report-list {
   min-width: 250px;
 }
-.report-dashboard-component .report-item {
+otus-report-dashboard otus-panel .report-list .report-item {
   min-width: 250px;
   background-color: #ffffff;
 }
 
 @media only screen and (max-width: 450px) {
-  .activity-manager-component .activity-manager-list-component .not-mobile {
+  otus-activity-manager otus-activity-list .not-mobile {
     display: none;
   }
 }
-.activity-manager-component .activity-manager-list-component .dynamic-table-container {
+otus-activity-manager otus-activity-list .dynamic-table-container {
   min-width: 800px;
 }
-.activity-manager-component .activity-manager-list-component .dynamic-table-container .dynamic-structure {
+otus-activity-manager otus-activity-list .dynamic-table-container .dynamic-structure {
   min-width: 750px !important;
 }
-.activity-manager-component .activity-manager-toolbar-component md-fab-speed-dial {
+otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial {
   max-height: 50px;
 }
 @media only screen and (max-width: 450px) {
-  .activity-manager-component .activity-manager-toolbar-component md-toolbar {
+  otus-activity-manager otus-activity-manager-toolbar md-toolbar {
     display: none !important;
   }
-  .activity-manager-component .activity-manager-toolbar-component md-fab-speed-dial {
+  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial {
     position: relative;
     display: flex;
     align-items: center;
     z-index: 20;
   }
-  .activity-manager-component .activity-manager-toolbar-component md-fab-speed-dial md-fab-trigger {
+  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial md-fab-trigger {
     width: 80%;
   }
-  .activity-manager-component .activity-manager-toolbar-component md-fab-speed-dial md-fab-trigger button {
+  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial md-fab-trigger button {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
@@ -110,59 +93,59 @@
   }
 }
 @media only screen and (min-width: 451px) {
-  .activity-manager-component .activity-manager-toolbar-component md-fab-speed-dial {
+  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial {
     display: none;
   }
 }
 @media only screen and (max-width: 451px) {
-  .activity-manager-component .activity-manager-commander-component md-fab-speed-dial {
+  otus-activity-manager otus-activity-manager-commander md-fab-speed-dial {
     display: none;
   }
 }
 
 @media only screen and (max-width: 550px) {
-  .control-panel-component .control-toolbar {
+  lab-control-panel .control-toolbar {
     display: none;
   }
-  .control-panel-component .mobile-control-toolbar {
+  lab-control-panel .mobile-control-toolbar {
     max-height: 65px;
   }
-  .control-panel-component .mobile-control-toolbar md-fab-speed-dial {
+  lab-control-panel .mobile-control-toolbar md-fab-speed-dial {
     max-height: 50px;
     display: flex;
     align-items: center;
     z-index: 20;
   }
-  .control-panel-component .mobile-control-toolbar md-fab-speed-dial md-fab-trigger {
+  lab-control-panel .mobile-control-toolbar md-fab-speed-dial md-fab-trigger {
     width: 80%;
   }
-  .control-panel-component .mobile-control-toolbar md-fab-speed-dial md-fab-trigger button {
+  lab-control-panel .mobile-control-toolbar md-fab-speed-dial md-fab-trigger button {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
     padding-left: 0;
     padding-right: 0;
   }
-  .control-panel-component .mobile-control-toolbar md-fab-speed-dial md-fab-actions button {
+  lab-control-panel .mobile-control-toolbar md-fab-speed-dial md-fab-actions button {
     min-width: 150px;
   }
 }
 @media only screen and (min-width: 551px) {
-  .control-panel-component .mobile-control-toolbar {
+  lab-control-panel .mobile-control-toolbar {
     display: none;
   }
-  .control-panel-component .control-toolbar div .mobile-input {
+  lab-control-panel .control-toolbar div .mobile-input {
     display: none;
   }
 }
 @media only screen and (max-width: 650px) {
-  .control-panel-component .collect-control-toolbar {
+  lab-control-panel .collect-control-toolbar {
     display: none;
   }
-  .control-panel-component .mobile-collect-control-toolbar {
+  lab-control-panel .mobile-collect-control-toolbar {
     max-height: 65px;
   }
-  .control-panel-component .mobile-collect-control-toolbar md-fab-speed-dial {
+  lab-control-panel .mobile-collect-control-toolbar md-fab-speed-dial {
     position: relative;
     top: -18px;
     max-height: 30px;
@@ -170,31 +153,31 @@
     align-items: center;
     z-index: 20;
   }
-  .control-panel-component .mobile-collect-control-toolbar fast-collection {
+  lab-control-panel .mobile-collect-control-toolbar fast-collection {
     position: relative;
     top: -15px;
   }
-  .control-panel-component .mobile-collect-control-toolbar fast-collection div {
+  lab-control-panel .mobile-collect-control-toolbar fast-collection div {
     min-width: 80px;
   }
-  .control-panel-component .mobile-collect-control-toolbar fast-collection div .desktop-input {
+  lab-control-panel .mobile-collect-control-toolbar fast-collection div .desktop-input {
     display: none;
   }
-  .control-panel-component .aliquots-control-toolbar {
+  lab-control-panel .aliquots-control-toolbar {
     display: none;
   }
-  .control-panel-component .mobile-aliquots-control-toolbar {
+  lab-control-panel .mobile-aliquots-control-toolbar {
     max-height: 65px;
   }
-  .control-panel-component .mobile-aliquots-control-toolbar div label {
+  lab-control-panel .mobile-aliquots-control-toolbar div label {
     position: relative;
     top: 10px;
   }
-  .control-panel-component .mobile-aliquots-control-toolbar div md-input-container {
+  lab-control-panel .mobile-aliquots-control-toolbar div md-input-container {
     position: relative;
     top: -15px;
   }
-  .control-panel-component .mobile-aliquots-control-toolbar md-fab-speed-dial {
+  lab-control-panel .mobile-aliquots-control-toolbar md-fab-speed-dial {
     position: relative;
     top: -18px;
     max-height: 30px;
@@ -203,26 +186,21 @@
     z-index: 20;
   }
 }
-@media only screen and (max-width: 360px) {
-  .control-panel-component .mobile-aliquots-control-toolbar div label {
-    font-size: 13px;
-  }
-}
 @media only screen and (max-width: 359px) {
-  .control-panel-component .mobile-aliquots-control-toolbar div label {
+  lab-control-panel .mobile-aliquots-control-toolbar div label {
     display: none;
   }
 }
 @media only screen and (min-width: 651px) {
-  .control-panel-component .mobile-collect-control-toolbar {
+  lab-control-panel .mobile-collect-control-toolbar {
     display: none;
   }
-  .control-panel-component .mobile-aliquots-control-toolbar {
+  lab-control-panel .mobile-aliquots-control-toolbar {
     display: none;
   }
 }
 
-.aliquots-view-component .aliquots-container {
+aliquots-view .aliquots-container {
   min-width: 900px;
 }
 
@@ -271,40 +249,43 @@ otus-sample-transportation-manager-list otus-sample-transportation-lot-info-side
   }
 }
 
-.lot-info-manager-display-component .subtitle-table-container {
+otus-lot-info-manager-display .subtitle-table-container {
   max-height: 200px;
 }
-.lot-info-manager-display-component .dynamic-table-container {
+otus-lot-info-manager-display .dynamic-table-container {
   min-width: 850px;
   max-height: 420px;
 }
-.lot-info-manager-display-component .dynamic-table-container .dynamic-structure {
+otus-lot-info-manager-display .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
-.lot-info-manager-display-component md-input-container md-datepicker {
+otus-lot-info-manager-display md-input-container md-datepicker {
   position: relative;
   left: -15px;
 }
 
-.exam-sending-view-component .dynamic-table-container {
+otus-view-sending-exam .dynamic-table-container-md-content {
+  min-height: 400px;
+}
+otus-view-sending-exam .dynamic-table-container-md-content .dynamic-table-container {
   min-width: 850px;
   max-height: 420px;
 }
-.exam-sending-view-component .dynamic-table-container .dynamic-structure {
+otus-view-sending-exam .dynamic-table-container-md-content .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
 @media screen and (max-width: 726px) {
-  .exam-sending-view-component .desktop-filter .md-subheader {
+  otus-view-sending-exam .desktop-filter .md-subheader {
     display: none !important;
   }
 }
 @media screen and (max-width: 600px) {
-  .exam-sending-view-component .desktop-filter {
+  otus-view-sending-exam .desktop-filter {
     display: none;
   }
 }
 @media screen and (min-width: 601px) {
-  .exam-sending-view-component .mobile-filter {
+  otus-view-sending-exam .mobile-filter {
     display: none;
   }
 }
@@ -349,7 +330,7 @@ otus-exam-lot-info-manager-display .aliquot-form {
   max-height: 70px;
 }
 otus-exam-lot-info-manager-display .aliquot-form md-input-container {
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 otus-exam-lot-info-sidenav md-sidenav {
