@@ -70,12 +70,6 @@
               otus-datasource, otus-datasource * {
                 display: none !important;
               }
-              
-              .footer-1 {
-                position: fixed;
-                bottom: 0;
-                display: block;
-               }
             }
             
             @media screen {
