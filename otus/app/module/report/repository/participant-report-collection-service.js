@@ -65,7 +65,6 @@
           return remoteStorage
             .list(rn)
             .then(function (response) {
-              console.log(response.data[0])
               request.resolve(response.data[0]);
             })
             .catch(function(e){
