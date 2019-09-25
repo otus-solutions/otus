@@ -44,10 +44,6 @@
         }
       });
 
-      scope.$on("$destroy", function() {
-        console.log('se foi')
-      });
-
       return deferred.promise;
     }
 
@@ -130,7 +126,7 @@
 
       newWindow.document.close();
 
-      newWindow.onbeforeunload = function(event) {
+      newWindow.onbeforeunload = function() {
         newWindow.close();
         callback();
         return;
