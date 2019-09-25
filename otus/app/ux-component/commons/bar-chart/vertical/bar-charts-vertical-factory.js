@@ -50,7 +50,7 @@
 
         var margin = { top: 20, right: 160, bottom: 80, left: 50 };
         var width = dataset[0].length * 120,
-          height = window.innerHeight - 500;
+          height = window.innerHeight - 550;
 
         var svg = d3.select(element)
           .append("svg")
@@ -58,7 +58,7 @@
           .attr("height", height + 150)
           .attr("margin", 250)
           .append("g")
-          .attr("transform", "translate(" + margin.left + "," + (margin.top + 20) + ")");
+          .attr("transform", "translate(" + margin.left + "," + (margin.top + 30) + ")");
 
         var x = d3.scaleBand()
           .domain(dataset[0].map(function (d) {
@@ -95,7 +95,7 @@
           .attr("class", "x axis")
           .style("font-size", "0.7em")
           .attr("transform", "translate(0," + height + ")")
-          .call(xAxis).selectAll("text").attr("transform", "translate(-40,35) rotate(-30)").attr("width", "50")
+          .call(xAxis).selectAll("text").attr("transform", "translate(-40,35) rotate(-30)").attr("width", "50");
 
         var groups = svg.selectAll("g.cost")
           .data(dataset)

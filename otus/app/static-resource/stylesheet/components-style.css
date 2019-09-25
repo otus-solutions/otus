@@ -389,4 +389,8 @@ otus-exam-lot-info-sidenav md-sidenav {
   }
 }
 
+otus-laboratory-monitoring-dashboard #orphans-by-exam svg {
+  min-width: 600px;
+}
+
 /*# sourceMappingURL=components-style.css.map */
