@@ -112,7 +112,7 @@
         </html>
       `;
 
-      var newWindow = $window.open('', '_blank');
+      var newWindow = $window.open('about:blank', '_blank');
       newWindow.document.write(initialHtmlStructure);
 
       angular.element(newWindow.document.body)
