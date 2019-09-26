@@ -6,8 +6,8 @@
     .component('otusActivityReport', {
       controller: 'activityReportCtrl as $ctrl',
       templateUrl: 'app/ux-component/report/activity-report/activity-report-template.html',
-      bindings:{
-        selectedParticipant : '<',
+      bindings: {
+        selectedParticipant: '<',
         showVisualizationButton: '<'
       }
     }).controller('activityReportCtrl', Controller);
@@ -16,19 +16,34 @@
     'otusjs.otus.uxComponent.ActivityReportService'
   ];
 
-  function Controller(ActivityReportService){
-    var self = this;
+  function Controller(ActivityReportService) {
+    const self = this;
     self.reloadActivityReport = reloadActivityReport;
     self.generateActivityReport = generateActivityReport;
     self.pendingActivityReport = pendingActivityReport;
+    self.missingDataSources = [];
 
     function reloadActivityReport() {
       let reportResult = ActivityReportService.reloadActivityReport(self.selectedParticipant);
-      reportResult.then(value => {
-        self.report = value.report;
-        self.activityReportReady = value.activityReportReady;
-        self.activityReportInfo = value.activityReportInfo;
-      });
+      reportResult
+        .then(value => {
+          value.report.getReportTemplate().then(() => {
+            value.report.missingDataSources.length ? _missingActivityReportArtifacts(value) : _enableActivityReportArtifacts(value)
+          })
+        })
+    }
+
+    function _enableActivityReportArtifacts(reportResultValues) {
+      self.activityReportReady = reportResultValues.activityReportReady;
+      self.activityReportInfo = reportResultValues.activityReportInfo;
+      self.report = reportResultValues.report
+    }
+
+    function _missingActivityReportArtifacts(reportResultValues) {
+      self.activityReportReady = false;
+      self.activityReportInfo = true;
+      self.missingDataSources = reportResultValues.report.missingDataSources;
+      console.log(self.missingDataSources)
     }
 
     function generateActivityReport(report) {
@@ -37,9 +52,8 @@
     }
 
     function pendingActivityReport() {
-      ActivityReportService.infoPendingReportAlert();
+      ActivityReportService.infoPendingReportAlert(self.missingDataSources);
       self.activityReportInfo = false
     }
   }
-
 }());
