@@ -43,7 +43,6 @@
       self.activityReportReady = false;
       self.activityReportInfo = true;
       self.missingDataSources = reportResultValues.report.missingDataSources;
-      console.log(self.missingDataSources)
     }
 
     function generateActivityReport(report) {

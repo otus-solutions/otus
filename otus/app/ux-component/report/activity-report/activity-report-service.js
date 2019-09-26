@@ -87,8 +87,8 @@
           .clickOutsideToClose(true)
           .title('Relatório Incompleto: Pendências Detectadas')
           .textContent(`Para visualizar/imprimir o relatório
-           será necessário validar os itens abaixo: 
-           ${missingDataSources[0]}.`)
+           será necessário validar os itens abaixo:\n            
+           ${missingDataSources}`)
           .ariaLabel('Alert: Relatório incompleto')
           .ok('Voltar')
       );
