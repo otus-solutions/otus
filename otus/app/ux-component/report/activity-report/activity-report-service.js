@@ -41,19 +41,19 @@
     //       return reportResult;
     //     });
 
-      //   reportResult.report.getReportTemplate();
-      //   console.log(reportResult.report);
-      //   return reportResult;
-      // })
-      // .catch(function () {
-      //   return {
-      //     activityID: selectedActivityID,
-      //     activityReportReady: false,
-      //     activityReportInfo: true,
-      //     activityReportPending: {context: {}
-      //     }
-      //   };
-      // });
+    //   reportResult.report.getReportTemplate();
+    //   console.log(reportResult.report);
+    //   return reportResult;
+    // })
+    // .catch(function () {
+    //   return {
+    //     activityID: selectedActivityID,
+    //     activityReportReady: false,
+    //     activityReportInfo: true,
+    //     activityReportPending: {context: {}
+    //     }
+    //   };
+    // });
     // }
 
     function reloadActivityReport(selectedParticipant) {
@@ -81,17 +81,49 @@
     }
 
     function infoPendingReportAlert(missingDataSources) {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .parent(angular.element(document.querySelector('#popupContainer')))
-          .clickOutsideToClose(true)
-          .title('Relatório Incompleto: Pendências Detectadas')
-          .textContent(`Para visualizar/imprimir o relatório
-           será necessário validar os itens abaixo:\n            
-           ${missingDataSources}`)
-          .ariaLabel('Alert: Relatório incompleto')
-          .ok('Voltar')
-      );
+      self.missingDataSources = missingDataSources;
+      // $mdDialog.show(
+      //   $mdDialog.alert()
+      //     .parent(angular.element(document.querySelector('#popupContainer')))
+      //     .clickOutsideToClose(true)
+      //     .title('Relatório Incompleto: Pendências Detectadas')
+      //     .textContent(`Para visualizar/imprimir o relatório
+      //      será necessário validar os itens abaixo:\n
+      //      ${missingDataSources}`)
+      //     .ariaLabel('Alert: Relatório incompleto')
+      //     .ok('Voltar')
+      // );
+
+      $mdDialog.show({
+        controller: DialogController,
+        templateUrl: 'app/ux-component/report/activity-report/activity-report-dialog-template.html',
+        parent: angular.element(document.body),
+        clickOutsideToClose: true,
+        //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+      })
+        .then(function (answer) {
+          $scope.status = 'You said the information was "' + answer + '".';
+        }, function () {
+          $scope.status = 'You cancelled the dialog.';
+        });
+
     }
+
+    function DialogController($scope, $mdDialog) {
+      $scope.missingDataSources = self.missingDataSources;
+
+    $scope.hide = function() {
+      $mdDialog.hide();
+    };
+
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+
+    $scope.answer = function(answer) {
+      $mdDialog.hide(answer);
+    };
+  }
+
   }
 }());
