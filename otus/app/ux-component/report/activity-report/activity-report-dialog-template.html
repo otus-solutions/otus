@@ -1,50 +1,58 @@
-<md-dialog aria-label="Relatório Incompleto: Pendências Detectadas">
-  <form ng-cloak>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Relatório Incompleto (Pendências Detectadas)</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
-          <md-icon aria-label="Close dialog">close</md-icon>
-        </md-button>
-      </div>
-    </md-toolbar>
+  <md-dialog aria-label="Pendências do Relatório de atividade a serem contempladas">
+   <form ng-cloak>
+     <md-toolbar>
+       <div class="md-toolbar-tools">
+         <h2>Pendências do Relatório de atividade a serem contempladas</h2>
+         <span flex></span>
+         <md-button class="md-icon-button" ng-click="cancel()">
+           <md-icon>close</md-icon>
+           <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+         </md-button>
+       </div>
+     </md-toolbar>
+     <!-- more observation -->
+     <div ng-if="description">
+       <md-dialog-content>
+         <div class="md-dialog-content">
+           <div layout="row" layout-align="center end">
+             <md-icon class="md-warn" layout-margin>warning</md-icon>
+             <p layout-margin>{{description}}</p>
+           </div>
+           <br>
+           <div ng-repeat="info in information">
+             <p> <b>Status:</b> {{info.status}}, <b>Data:</b> {{info.date}};</p>
+           </div>
+         </div>
+       </md-dialog-content>
+       <md-divider></md-divider>
+     </div>
+     <!-- default observation -->
+     <md-dialog-content>
+       <div class="md-dialog-content">
+         <div ng-repeat="datasource in missingDataSources track by $index" flex>
+           <span flex class="md-caption truncate">{{datasource}}</span>
+           <md-tooltip>{{'Obrigatório - ' + datasource}}</md-tooltip>
+         </div>
 
 
-    <md-dialog-content flex>
-      <div ng-repeat="datasource in missingDataSources track by $index" flex>
-        <span flex class="md-caption truncate">{{datasource}}</span>
-        <md-tooltip>{{'Obrigatório - ' + datasource}}</md-tooltip>
-      </div>
-    </md-dialog-content>
 
+<!--         <md-checkbox ng-change="change()" ng-model="doesNotApply" name="doesNotApply" class="md-block">-->
+<!--           O exame não será realizado-->
+<!--         </md-checkbox>-->
+<!--         <md-input-container ng-show="doesNotApply" class="md-block">-->
+<!--           <label>Observações</label>-->
+<!--           <textarea ng-change="change()" ng-model="observation" md-maxlength="150" rows="5" md-select-on-focus></textarea>-->
+<!--         </md-input-container>-->
+       </div>
+     </md-dialog-content>
+     <md-dialog-actions layout="row">
+       <md-button ng-disabled="disable" class="md-raised md-primary" aria-label="atualizar" ng-click="update()">
+         Salvar
+       </md-button>
+       <md-button aria-label="cancelar" class="md-raised" ng-click="cancel()">
+         voltar
+       </md-button>
+     </md-dialog-actions>
+   </form>
+ </md-dialog>
 
-<!--      <div layout="row" ng-repeat="datasource in missingDataSources track by $index" flex>-->
-<!--        <span class="bull-legend required">&bull;</span>-->
-<!--        <span flex class="md-caption truncate">{{datasource}}</span>-->
-<!--        <md-tooltip>{{'Obrigatório - ' + datasource}}</md-tooltip>-->
-<!--      </div>-->
-
-<!--      <div class="md-dialog-content">-->
-<!--        <h2>Using .md-dialog-content class that sets the padding as the spec</h2>-->
-<!--        <p>-->
-<!--          The mango is a juicy stone fruit belonging to the genus Mangifera, consisting of numerous tropical fruiting trees, cultivated mostly for edible fruit. The majority of these species are found in nature as wild mangoes. They all belong to the flowering plant family Anacardiaceae. The mango is native to South and Southeast Asia, from where it has been distributed worldwide to become one of the most cultivated fruits in the tropics.-->
-<!--        </p>-->
-
-<!--        <img style="margin: auto; max-width: 100%;" alt="Lush mango tree" src="img/mangues.jpg">-->
-
-<!--        <p>-->
-<!--          The highest concentration of Mangifera genus is in the western part of Malesia (Sumatra, Java and Borneo) and in Burma and India. While other Mangifera species (e.g. horse mango, M. foetida) are also grown on a more localized basis, Mangifera indica&mdash;the "common mango" or "Indian mango"&mdash;is the only mango tree commonly cultivated in many tropical and subtropical regions.-->
-<!--        </p>-->
-<!--        <p>-->
-<!--          It originated in Indian subcontinent (present day India and Pakistan) and Burma. It is the national fruit of India, Pakistan, and the Philippines, and the national tree of Bangladesh. In several cultures, its fruit and leaves are ritually used as floral decorations at weddings, public celebrations, and religious ceremonies.-->
-<!--        </p>-->
-<!--      </div>-->
-
-
-    <md-dialog-actions layout="row">
-      <span flex></span>
-      <md-button ng-click="answer('useful')"> voltar</md-button>
-    </md-dialog-actions>
-  </form>
-</md-dialog>

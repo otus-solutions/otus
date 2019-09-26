@@ -19,43 +19,6 @@
     self.generateActivityReport = generateActivityReport;
     self.infoPendingReportAlert = infoPendingReportAlert;
 
-
-    // function reloadActivityReport(selectedParticipant) {
-    //   let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
-    //   let reportResult = {};
-    //   //TODO: estamos buscando um relatório de exame para simular a replicação do mecanismo, modificar metodo para buscar relatório pelo ID da atividade
-    //   //simulação de erro (usa o catch): state de informação de pendência
-    //   //return ParticipantReportWidgetFactory.getActivityReport(0, selectedActivityID)
-    //   //simulação do caminho válido, que encontra o report e prepara para renderização
-    //   return ParticipantReportWidgetFactory.getActivityReport(selectedParticipant, selectedActivityID)
-    //     .then(report => {
-    //       return reportResult = {
-    //         activityID: selectedActivityID,
-    //         activityReportReady: true,
-    //         activityReportInfo: false,
-    //         report: report
-    //       }
-    //     })
-    //     .then(reportResult => {
-    //       reportResult.report.getReportTemplate();
-    //       return reportResult;
-    //     });
-
-    //   reportResult.report.getReportTemplate();
-    //   console.log(reportResult.report);
-    //   return reportResult;
-    // })
-    // .catch(function () {
-    //   return {
-    //     activityID: selectedActivityID,
-    //     activityReportReady: false,
-    //     activityReportInfo: true,
-    //     activityReportPending: {context: {}
-    //     }
-    //   };
-    // });
-    // }
-
     function reloadActivityReport(selectedParticipant) {
       let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
       let reportResult = {};
@@ -82,48 +45,28 @@
 
     function infoPendingReportAlert(missingDataSources) {
       self.missingDataSources = missingDataSources;
-      // $mdDialog.show(
-      //   $mdDialog.alert()
-      //     .parent(angular.element(document.querySelector('#popupContainer')))
-      //     .clickOutsideToClose(true)
-      //     .title('Relatório Incompleto: Pendências Detectadas')
-      //     .textContent(`Para visualizar/imprimir o relatório
-      //      será necessário validar os itens abaixo:\n
-      //      ${missingDataSources}`)
-      //     .ariaLabel('Alert: Relatório incompleto')
-      //     .ok('Voltar')
-      // );
 
       $mdDialog.show({
-        controller: DialogController,
+        controller: _DialogController,
         templateUrl: 'app/ux-component/report/activity-report/activity-report-dialog-template.html',
         parent: angular.element(document.body),
-        clickOutsideToClose: true,
-        //fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+        clickOutsideToClose: true
       })
-        .then(function (answer) {
-          $scope.status = 'You said the information was "' + answer + '".';
-        }, function () {
-          $scope.status = 'You cancelled the dialog.';
-        });
-
     }
 
-    function DialogController($scope, $mdDialog) {
+    function _DialogController($scope, $mdDialog) {
       $scope.missingDataSources = self.missingDataSources;
+      // $scope.hide = function() {
+      //   $mdDialog.hide();
+      // };
 
-    $scope.hide = function() {
-      $mdDialog.hide();
-    };
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      };
 
-    $scope.cancel = function() {
-      $mdDialog.cancel();
-    };
-
-    $scope.answer = function(answer) {
-      $mdDialog.hide(answer);
-    };
-  }
-
+      // $scope.answer = function(answer) {
+      //   $mdDialog.hide(answer);
+      // };
+    }
   }
 }());
