@@ -43,6 +43,7 @@
       self.activityReportReady = false;
       self.activityReportInfo = true;
       self.missingDataSources = reportResultValues.report.missingDataSources;
+      self.report = reportResultValues.report
     }
 
     function generateActivityReport(report) {
@@ -51,7 +52,8 @@
     }
 
     function pendingActivityReport() {
-      ActivityReportService.infoPendingReportAlert(self.missingDataSources);
+      //ActivityReportService.infoPendingReportAlert(self.missingDataSources);
+      ActivityReportService.infoPendingReportAlert(self.report);
       self.activityReportInfo = false
     }
   }
