@@ -48,6 +48,9 @@
     function infoPendingReportAlert(report) {
       self.report = report;
 
+      //simular recebimento de somente relatório com opcionais
+      //self.report.missingDataSources = [];
+
       $mdDialog.show({
         controller: _DialogController,
         templateUrl: 'app/ux-component/report/activity-report/activity-report-dialog-template.html',
@@ -62,7 +65,7 @@
       $scope.generateReport = function () {
         generateActivityReport($scope.report);
         _cleanReport();
-        $mdDialog.close();
+        $mdDialog.cancel();
       };
 
       $scope.cancel = function () {
