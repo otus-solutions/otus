@@ -20,12 +20,12 @@
       return ParticipantReportRepositoryService.getParticipantReportList(participant.recruitmentNumber);
     }
 
-    function fetchActivityReport(participant, activityID) {
-      return ParticipantReportRepositoryService.getActivityReport(participant.recruitmentNumber, activityID);
-    }
-
     function getFullReport(participant, reportId) {
       return ParticipantReportRepositoryService.getFullReport(participant.recruitmentNumber, reportId);
+    }
+
+    function fetchActivityReport(id) {
+      return ParticipantReportRepositoryService.getActivityReport(id);
     }
   }
 }());

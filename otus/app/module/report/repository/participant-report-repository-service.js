@@ -17,17 +17,16 @@
     self.getFullReport = getFullReport;
     self.getActivityReport = getActivityReport;
 
-
     function getParticipantReportList(rn) {
       return ParticipantReportCollectionService.getParticipantReportList(rn);
     }
 
-    function getActivityReport(rn, activityID) {
-      return ParticipantReportCollectionService.getActivityReport(rn,activityID);
-    }
-
     function getFullReport(rn, id) {
       return ParticipantReportCollectionService.getFullReport(rn, id);
+    }
+
+    function getActivityReport(id) {
+      return ParticipantReportCollectionService.getActivityReport(id);
     }
   }
 }());

@@ -13,7 +13,7 @@
   ];
 
   function Service(ParticipantActivityService, ParticipantReportWidgetFactory, LoadingScreenService, $mdDialog) {
-    var self = this;
+    let self = this;
 
     self.reloadActivityReport = reloadActivityReport;
     self.generateActivityReport = generateActivityReport;
@@ -22,10 +22,7 @@
     function reloadActivityReport(selectedParticipant) {
       let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
       self.reportResult = {};
-      //TODO: estamos buscando um relatório de exame para simular a replicação do mecanismo, modificar metodo para buscar relatório pelo ID da atividade
-      //simulação de erro (usa o catch): state de informação de pendência
-      //return ParticipantReportWidgetFactory.getActivityReport(0, selectedActivityID)
-      //simulação do caminho válido, que encontra o report e prepara para renderização
+
       return ParticipantReportWidgetFactory.getActivityReport(selectedParticipant, selectedActivityID)
         .then(report => {
           return self.reportResult = {

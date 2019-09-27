@@ -29,8 +29,8 @@
         });
     }
 
-    function getActivityReport(participant, activityID){
-      return ParticipantReportService.fetchActivityReport(participant, activityID)
+    function getActivityReport(participant, id){
+      return ParticipantReportService.fetchActivityReport(id)
         .then(function (report) {
           return new ParticipantReport($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory, report, participant);
         });

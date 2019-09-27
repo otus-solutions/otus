@@ -17,6 +17,7 @@
     self.initialize = initialize;
     self.list = list;
     self.getReport = getReport;
+    self.getActivityReport = getActivityReport;
 
     function initialize() {
       _rest = OtusRestResourceService.getReportResourceFactory();
@@ -35,6 +36,13 @@
         throw new Error('REST resource is not initialized.');
       }
       return _rest.getByRecruitmentNumber({rn:rn, id: id}).$promise;
+    }
+
+    function getActivityReport(id) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.getActivityReport({id:id}).$promise;
     }
   }
 }());

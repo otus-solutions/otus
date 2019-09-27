@@ -52,18 +52,17 @@
               request.reject(e);
             });
         });
-
       return request.promise;
     }
 
-//TODO: OTUS-606 simulando o retorno de um unico reportFake => trocar o metodo list e o rn
-    function getActivityReport(rn, activityID){
+    function getActivityReport(id){
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .list(rn)
+            //.getActivityReport(id)
+            .list(5001007, id)
             .then(function (response) {
               request.resolve(response.data[0]);
             })
@@ -73,7 +72,5 @@
         });
       return request.promise;
     }
-
-
   }
 }());
