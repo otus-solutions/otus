@@ -38,14 +38,15 @@
     }
 
     function generateActivityReport(report) {
-      LoadingScreenService.changeMessage(report.getLoadingMessage());
+      self.report = report;
+      LoadingScreenService.changeMessage(self.report.getLoadingMessage());
       LoadingScreenService.start();
       report.generateReport(LoadingScreenService.finish);
+      self.report = {};
     }
 
     function infoPendingReportAlert(report) {
       self.report = report;
-      console.log(self.report);
 
       $mdDialog.show({
         controller: _DialogController,
@@ -58,42 +59,21 @@
     function _DialogController($scope, $mdDialog) {
       $scope.report = self.report;
 
-      $scope.generateReport = function() {
+      $scope.generateReport = function () {
         generateActivityReport($scope.report);
-        $mdDialog.cancel();
-        $scope.report ={};
+        _cleanReport();
+        $mdDialog.close();
       };
 
       $scope.cancel = function () {
+        _cleanReport();
         $mdDialog.cancel();
       };
+
+      function _cleanReport() {
+        self.report = {};
+        $scope.report = {};
+      }
     }
-
-
-    // function infoPendingReportAlert(missingDataSources) {
-    //   self.missingDataSources = missingDataSources;
-    //
-    //   $mdDialog.show({
-    //     controller: _DialogController,
-    //     templateUrl: 'app/ux-component/report/activity-report/activity-report-dialog-template.html',
-    //     parent: angular.element(document.body),
-    //     clickOutsideToClose: true
-    //   })
-    // }
-
-    // function _DialogController($scope, $mdDialog) {
-    //   $scope.missingDataSources = self.missingDataSources;
-    //
-    //   $scope.generateReport = function() {
-    //     generateActivityReport(self.reportResult.report);
-    //     $mdDialog.cancel();
-    //     self.reportResult ={};
-    //
-    //   };
-    //
-    //   $scope.cancel = function () {
-    //     $mdDialog.cancel();
-    //   };
-    // }
   }
 }());

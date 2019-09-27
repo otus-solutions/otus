@@ -21,7 +21,6 @@
     self.reloadActivityReport = reloadActivityReport;
     self.generateActivityReport = generateActivityReport;
     self.pendingActivityReport = pendingActivityReport;
-    self.missingDataSources = [];
 
     function reloadActivityReport() {
       let reportResult = ActivityReportService.reloadActivityReport(self.selectedParticipant);
@@ -42,7 +41,6 @@
     function _missingActivityReportArtifacts(reportResultValues) {
       self.activityReportReady = false;
       self.activityReportInfo = true;
-      self.missingDataSources = reportResultValues.report.missingDataSources;
       self.report = reportResultValues.report
     }
 
@@ -52,7 +50,6 @@
     }
 
     function pendingActivityReport() {
-      //ActivityReportService.infoPendingReportAlert(self.missingDataSources);
       ActivityReportService.infoPendingReportAlert(self.report);
       self.activityReportInfo = false
     }
