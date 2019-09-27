@@ -10,22 +10,6 @@
          </md-button>
        </div>
      </md-toolbar>
-     <!-- more observation -->
-     <div ng-if="description">
-       <md-dialog-content>
-         <div class="md-dialog-content">
-           <div layout="row" layout-align="center end">
-             <md-icon class="md-warn" layout-margin>warning</md-icon>
-             <p layout-margin>{{description}}</p>
-           </div>
-           <br>
-           <div ng-repeat="info in information">
-             <p> <b>Status:</b> {{info.status}}, <b>Data:</b> {{info.date}};</p>
-           </div>
-         </div>
-       </md-dialog-content>
-       <md-divider></md-divider>
-     </div>
      <!-- default observation -->
      <md-dialog-content>
        <div class="md-dialog-content">
@@ -33,20 +17,10 @@
            <span flex class="md-caption truncate">{{datasource}}</span>
            <md-tooltip>{{'Obrigatório - ' + datasource}}</md-tooltip>
          </div>
-
-
-
-<!--         <md-checkbox ng-change="change()" ng-model="doesNotApply" name="doesNotApply" class="md-block">-->
-<!--           O exame não será realizado-->
-<!--         </md-checkbox>-->
-<!--         <md-input-container ng-show="doesNotApply" class="md-block">-->
-<!--           <label>Observações</label>-->
-<!--           <textarea ng-change="change()" ng-model="observation" md-maxlength="150" rows="5" md-select-on-focus></textarea>-->
-<!--         </md-input-container>-->
        </div>
      </md-dialog-content>
      <md-dialog-actions layout="row">
-       <md-button ng-disabled="disable" class="md-raised md-primary" aria-label="atualizar" ng-click="update()">
+       <md-button ng-disabled="disable" class="md-raised md-primary" aria-label="gerar relatório" ng-click="generateReport()">
          gerar relatório
        </md-button>
        <md-button aria-label="cancelar" class="md-raised" ng-click="cancel()">
@@ -55,4 +29,3 @@
      </md-dialog-actions>
    </form>
  </md-dialog>
-

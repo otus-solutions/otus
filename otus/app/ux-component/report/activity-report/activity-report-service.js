@@ -21,14 +21,14 @@
 
     function reloadActivityReport(selectedParticipant) {
       let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
-      let reportResult = {};
+      self.reportResult = {};
       //TODO: estamos buscando um relatório de exame para simular a replicação do mecanismo, modificar metodo para buscar relatório pelo ID da atividade
       //simulação de erro (usa o catch): state de informação de pendência
       //return ParticipantReportWidgetFactory.getActivityReport(0, selectedActivityID)
       //simulação do caminho válido, que encontra o report e prepara para renderização
       return ParticipantReportWidgetFactory.getActivityReport(selectedParticipant, selectedActivityID)
         .then(report => {
-          return reportResult = {
+          return self.reportResult = {
             activityID: selectedActivityID,
             activityReportReady: true,
             activityReportInfo: false,
@@ -56,17 +56,16 @@
 
     function _DialogController($scope, $mdDialog) {
       $scope.missingDataSources = self.missingDataSources;
-      // $scope.hide = function() {
-      //   $mdDialog.hide();
-      // };
+
+      $scope.generateReport = function() {
+        generateActivityReport(self.reportResult.report);
+        $mdDialog.cancel();
+        self.reportResult ={};
+      };
 
       $scope.cancel = function () {
         $mdDialog.cancel();
       };
-
-      // $scope.answer = function(answer) {
-      //   $mdDialog.hide(answer);
-      // };
     }
   }
 }());
