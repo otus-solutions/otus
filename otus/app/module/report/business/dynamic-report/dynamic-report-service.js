@@ -76,6 +76,10 @@
               .no-print, .no-print * {
                 visibility: visible;
               }
+              
+              body {
+                margin: 10px 100px 0 100px;
+               }
             }
             
             otus-script {
@@ -84,12 +88,8 @@
             
             otus-datasource {
               display: none;
-            }
-            
-            body {
-            margin: 20px;
-            }
-            
+            }          
+                    
             .button-print{
             bottom: 5px;
             right: 0;
@@ -104,20 +104,27 @@
           </style>
           <title>Relatório: ${report.label}</title>          
         </head>
-        <body>        
+        <button class="no-print button-print md-button md-fab md-mini" onclick="window.print()" >
+        <i class="material-icons white">print</i>
+        </button>
+        <body> 
         </body>
         </html>
       `;
-      var newWindow = $window.open('', '_blank');
+
+      var newWindow = $window.open('about:blank', '_blank');
       newWindow.document.write(initialHtmlStructure);
 
       angular.element(newWindow.document.body)
         .append(report.compiledTemplate);
-      newWindow.setTimeout(function(){
-        newWindow.print();
+
+      newWindow.document.close();
+
+      newWindow.onbeforeunload = function() {
         newWindow.close();
         callback();
-      }, 1500);
+        return;
+      }
     }
   }
 }());
