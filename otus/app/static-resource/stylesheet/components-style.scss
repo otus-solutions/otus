@@ -136,6 +136,16 @@ otus-activity-manager {
   }
 }
 
+otus-activity-adder-list {
+  .dynamic-table-container {
+    min-width: 800px;
+
+    .dynamic-structure {
+      min-width: 750px !important;
+    }
+  }
+}
+
 lab-control-panel {
 
   @media only screen and (max-width: 550px) {
