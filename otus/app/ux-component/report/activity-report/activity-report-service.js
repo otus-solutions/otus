@@ -15,11 +15,11 @@
   function Service(ParticipantActivityService, ParticipantReportWidgetFactory, LoadingScreenService, $mdDialog) {
     let self = this;
 
-    self.reloadActivityReport = reloadActivityReport;
+    self.loadActivityReport = loadActivityReport;
     self.generateActivityReport = generateActivityReport;
     self.infoPendingReportAlert = infoPendingReportAlert;
 
-    function reloadActivityReport(selectedParticipant) {
+    function loadActivityReport(selectedParticipant) {
       let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
       self.reportResult = {};
 
@@ -44,9 +44,6 @@
 
     function infoPendingReportAlert(report) {
       self.report = report;
-
-      //simular recebimento de somente relatório com opcionais
-      //self.report.missingDataSources = [];
 
       $mdDialog.show({
         controller: _DialogController,

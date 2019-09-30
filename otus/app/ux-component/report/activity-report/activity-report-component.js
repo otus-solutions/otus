@@ -18,12 +18,12 @@
 
   function Controller(ActivityReportService) {
     const self = this;
-    self.reloadActivityReport = reloadActivityReport;
+    self.loadActivityReport = loadActivityReport;
     self.generateActivityReport = generateActivityReport;
     self.pendingActivityReport = pendingActivityReport;
 
-    function reloadActivityReport() {
-      let reportResult = ActivityReportService.reloadActivityReport(self.selectedParticipant);
+    function loadActivityReport() {
+      let reportResult = ActivityReportService.loadActivityReport(self.selectedParticipant);
       reportResult
         .then(value => {
           value.report.missingDataSources.length ? _missingActivityReportArtifacts(value) : _enableActivityReportArtifacts(value)
