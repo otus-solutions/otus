@@ -29,9 +29,7 @@
     'otusjs.activity.business.ParticipantActivityService'
   ];
 
-  function Controller($q, $mdToast, $timeout, $mdDialog, EventService, CheckerItemFactory, DialogService, ActivityViewService, ActivityPlayerService,
-                      ApplicationStateService, ParticipantActivityService) {
-
+  function Controller($q, $mdToast, $timeout, $mdDialog, EventService, CheckerItemFactory, DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService, ParticipantActivityService) {
     var self = this;
     var confirmDeleteSelectedActivity;
 
@@ -45,7 +43,6 @@
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
-    //self.report = {};
 
     function onInit() {
       _buildDialogs();
@@ -143,16 +140,12 @@
         buttons: [
           {
             message: 'Ok',
-            action: function () {
-              $mdDialog.hide()
-            },
+            action: function () { $mdDialog.hide() },
             class: 'md-raised md-primary'
           },
           {
             message: 'Voltar',
-            action: function () {
-              $mdDialog.cancel()
-            },
+            action: function () { $mdDialog.cancel() },
             class: 'md-raised md-no-focus'
           }
         ]

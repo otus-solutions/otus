@@ -13,11 +13,10 @@
     }).controller('activityReportCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.ActivityReportService',
-    '$scope'
+    'otusjs.otus.uxComponent.ActivityReportService'
   ];
 
-  function Controller(ActivityReportService, $scope) {
+  function Controller(ActivityReportService) {
     const self = this;
     self.loadActivityReport = loadActivityReport;
     self.generateActivityReport = generateActivityReport;

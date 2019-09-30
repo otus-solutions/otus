@@ -10,7 +10,6 @@
     'otusjs.report.business.ParticipantReportWidgetFactory',
     'otusjs.deploy.LoadingScreenService',
     '$mdDialog'
-
   ];
 
   function Service(ParticipantActivityService, ParticipantReportWidgetFactory, LoadingScreenService, $mdDialog) {
@@ -19,7 +18,6 @@
     self.loadActivityReport = loadActivityReport;
     self.generateActivityReport = generateActivityReport;
     self.infoPendingReportAlert = infoPendingReportAlert;
-
 
     function loadActivityReport(selectedParticipant) {
       let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
@@ -57,7 +55,6 @@
 
     function _DialogController($scope, $mdDialog) {
       $scope.report = self.report;
-      console.log(self.report)
 
       $scope.generateReport = function () {
         generateActivityReport($scope.report);
