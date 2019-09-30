@@ -3,6 +3,7 @@
     <span flex>Lista de atividades</span>
     <otus-activity-report
       selected-participant=$ctrl.selectedParticipant;
+      ng-if="$ctrl.showVisualizationButton"
       show-visualization-button=$ctrl.showVisualizationButton;>
     </otus-activity-report>
     <md-button class="md-raised md-accent md-icon-button" aria-label="Preencher Atividade"

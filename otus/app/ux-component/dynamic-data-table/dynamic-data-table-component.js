@@ -44,11 +44,10 @@
   Controller.$inject = [
     '$filter',
     '$mdToast',
-    '$scope',
-    '$rootScope'
+    '$scope'
   ];
 
-  function Controller($filter, $mdToast, $scope, $rootScope) {
+  function Controller($filter, $mdToast, $scope) {
     var self = this;
 
     self.selectedItemCounter = 0;
@@ -579,7 +578,6 @@
         changeRowStyle(row);
       }
       row.specialFieldClicked = false;
-      $rootScope.$broadcast("swapRow");
     }
 
     function _selectRow(row) {

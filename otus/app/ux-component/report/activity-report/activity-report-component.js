@@ -22,6 +22,12 @@
     self.loadActivityReport = loadActivityReport;
     self.generateActivityReport = generateActivityReport;
     self.pendingActivityReport = pendingActivityReport;
+    self.$onInit = onInit;
+
+    function onInit() {
+      self.activityReportReady = false;
+      self.activityReportInfo =  false;
+    }
 
     function loadActivityReport() {
       let reportResult = ActivityReportService.loadActivityReport(self.selectedParticipant);
@@ -51,13 +57,6 @@
     function pendingActivityReport() {
       ActivityReportService.infoPendingReportAlert(self.report);
       self.activityReportInfo = false
-    }
-
-    $scope.$on("swapRow", () => _activitySwapEvent());
-
-    function _activitySwapEvent(){
-      self.activityReportReady = false;
-      self.activityReportInfo =  false;
     }
   }
 }());
