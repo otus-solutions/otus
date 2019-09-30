@@ -49,30 +49,9 @@
     var self = this;
     var _participantInfo = participant;
     const _loadingMessage = `
-    <style>
-      .close-button:hover {
-        background-color: #3b4796;
-        border: 2px solid #3b4796;
-        color: white;
-      }
-      .close-button {
-        padding: 10px;
-        text-align: center;
-        -webkit-transition-duration: 0.4s;/* Safari */
-        transition-duration: 0.4s;
-        background-color: #3883ff;
-        border: 2px solid #3883ff;
-        color: white;
-        border-radius: 3px;
-        box-shadow: 0 2px 5px 0 rgba(0,0,0,.26);
-     }
-    </style>
     Aguardando o fim da impressão, ou fechamento da visualização do relatório. 
     <br/>
     <br/>
-    <button class="close-button" onclick="window.otusCloseDynamicReport()">
-      Fechar Relatório
-    </button>
     `;
 
     self.objectType = 'ParticipantReport';
