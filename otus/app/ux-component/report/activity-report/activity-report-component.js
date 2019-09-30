@@ -13,10 +13,11 @@
     }).controller('activityReportCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.ActivityReportService'
+    'otusjs.otus.uxComponent.ActivityReportService',
+    '$scope'
   ];
 
-  function Controller(ActivityReportService) {
+  function Controller(ActivityReportService, $scope) {
     const self = this;
     self.loadActivityReport = loadActivityReport;
     self.generateActivityReport = generateActivityReport;
@@ -50,6 +51,13 @@
     function pendingActivityReport() {
       ActivityReportService.infoPendingReportAlert(self.report);
       self.activityReportInfo = false
+    }
+
+    $scope.$on("swapRow", () => _activitySwapEvent());
+
+    function _activitySwapEvent(){
+      self.activityReportReady = false;
+      self.activityReportInfo =  false;
     }
   }
 }());

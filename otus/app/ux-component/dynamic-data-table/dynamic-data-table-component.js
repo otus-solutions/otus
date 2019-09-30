@@ -44,10 +44,11 @@
   Controller.$inject = [
     '$filter',
     '$mdToast',
-    '$scope'
+    '$scope',
+    '$rootScope'
   ];
 
-  function Controller($filter, $mdToast, $scope) {
+  function Controller($filter, $mdToast, $scope, $rootScope) {
     var self = this;
 
     self.selectedItemCounter = 0;
@@ -101,7 +102,7 @@
     self.currentRowOnHover;
 
     function onInit() {
-      if(!$scope.safeApply){ 
+      if(!$scope.safeApply){
         $scope.safeApply = function(fn) {
           var phase = this.$root.$$phase;
           if(phase == '$apply' || phase == '$digest') {
@@ -578,6 +579,7 @@
         changeRowStyle(row);
       }
       row.specialFieldClicked = false;
+      $rootScope.$broadcast("swapRow");
     }
 
     function _selectRow(row) {

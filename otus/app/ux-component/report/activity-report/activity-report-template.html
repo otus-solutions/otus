@@ -10,7 +10,8 @@
   <md-icon aria-label="Relatório de Atividade">assignment</md-icon>
 </md-button>
 
-<md-button id="pendingInformation" class="md-raised md-accent md-icon-button" aria-label="Informações Pendentes" ng-click="$ctrl.pendingActivityReport()" ng-if="$ctrl.activityReportInfo">
+<md-button id="pendingInformation" class="md-raised md-accent md-icon-button" aria-label="Informações Pendentes" ng-click="$ctrl.pendingActivityReport()"
+           ng-if="!$ctrl.activityReportReady && $ctrl.showVisualizationButton && $ctrl.activityReportInfo">
   <md-tooltip md-direction="down">Pendências do Relatório</md-tooltip>
   <md-icon aria-label="Relatório de Atividade">assignment_late</md-icon>
 </md-button>
