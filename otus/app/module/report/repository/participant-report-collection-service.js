@@ -61,10 +61,11 @@
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            //.getActivityReport(id)
-            .list(5001007, id)
+            .getActivityReport(id)
+            //.list(5001007, id)
             .then(function (response) {
-              request.resolve(response.data[0]);
+              //request.resolve(response.data[0]);
+              request.resolve(response.data);
             })
             .catch(function(e){
               request.reject(e);

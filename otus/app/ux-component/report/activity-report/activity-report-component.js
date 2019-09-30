@@ -26,9 +26,7 @@
       let reportResult = ActivityReportService.reloadActivityReport(self.selectedParticipant);
       reportResult
         .then(value => {
-          value.report.getReportTemplate().then(() => {
-            value.report.missingDataSources.length ? _missingActivityReportArtifacts(value) : _enableActivityReportArtifacts(value)
-          })
+          value.report.missingDataSources.length ? _missingActivityReportArtifacts(value) : _enableActivityReportArtifacts(value)
         })
     }
 

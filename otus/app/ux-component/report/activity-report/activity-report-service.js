@@ -58,6 +58,7 @@
 
     function _DialogController($scope, $mdDialog) {
       $scope.report = self.report;
+      console.log(self.report)
 
       $scope.generateReport = function () {
         generateActivityReport($scope.report);
