@@ -9,10 +9,10 @@ ENV API_URL="http://teste"
 COPY source /usr/share/nginx/html/otus
 COPY server/nginx.conf /etc/nginx/nginx.conf
 COPY server/otus.conf /etc/nginx/conf.d/default.conf
-COPY server/entrypoint.sh /opt/entrypoint/entrypoint.sh
 
-RUN chmod 775 /opt/entrypoint/entrypoint.sh
+COPY server/entrypoint.sh /usr/local/bin/commands.sh
+RUN chmod +x /usr/local/bin/commands.sh
 
-CMD ["/bin/sh", "-c", "/opt/entrypoint/entrypoint.sh;","&&","nginx -g 'daemon off;'"]
+CMD ["/bin/sh", "-c", "/usr/local/bin/commands.sh;", "nginx", "-g", "daemon off;"]
 
 
