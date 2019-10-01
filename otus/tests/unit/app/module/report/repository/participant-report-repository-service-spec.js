@@ -6,17 +6,17 @@ describe('ParticipantReportRepository_UnitTest_Suite', () => {
   beforeEach(() => {
     angular.mock.module('otusjs.otus.report')
     angular.mock.inject($injector => {
-        Injections.ParticipantReportCollectionService = $injector.get('otusjs.report.repository.ParticipantReportCollectionService');
-        service = $injector.get('otusjs.report.repository.ParticipantReportRepositoryService', Injections);
-        Mock.rn = "987654";
-        Mock.id = "123456789";
-        spyOn(Injections.ParticipantReportCollectionService, "getParticipantReportList").and.callThrough();
-        spyOn(Injections.ParticipantReportCollectionService, "getFullReport").and.callThrough();
-        spyOn(Injections.ParticipantReportCollectionService, "getActivityReport").and.callThrough();
-      });
+      Injections.ParticipantReportCollectionService = $injector.get('otusjs.report.repository.ParticipantReportCollectionService');
+      service = $injector.get('otusjs.report.repository.ParticipantReportRepositoryService', Injections);
+      Mock.rn = "987654";
+      Mock.id = "123456789";
+      spyOn(Injections.ParticipantReportCollectionService, "getParticipantReportList").and.callThrough();
+      spyOn(Injections.ParticipantReportCollectionService, "getFullReport").and.callThrough();
+      spyOn(Injections.ParticipantReportCollectionService, "getActivityReport").and.callThrough();
+    });
   });
 
-  it('serviceExistence_check',() => {
+  it('serviceExistence_check', () => {
     expect(service).toBeDefined();
   });
 
