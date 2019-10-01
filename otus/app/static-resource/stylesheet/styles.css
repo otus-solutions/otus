@@ -89,7 +89,7 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
   box-shadow: none !important;
 }
 
-@media only screen and (max-width: 361px) {
+@media only screen and (max-width: 360px) {
   .md-dashboard-autocomplete input:not(.md-input) {
     font-size: 11px;
   }
