@@ -22,6 +22,7 @@
     self.selectParticipant = selectParticipant;
     /* Lifecycle hooks */
     self.$onInit = onInit;
+    self.find = window.innerWidth > 450;
     self.getCurrentState = getCurrentState;
     self.STATE = STATE;
 
