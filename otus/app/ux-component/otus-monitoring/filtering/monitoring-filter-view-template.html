@@ -48,7 +48,7 @@
             <md-card-content>
               <span class="md-subheader">Centros:</span>
               <div layout="row" layout-wrap flex>
-                <md-input-container ng-repeat="center in $ctrl.centers" class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter">
+                <md-input-container ng-repeat="center in $ctrl.centers" class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" flex-xs="25">
                   <md-checkbox ng-change="$ctrl.onFilter()" ng-model="$ctrl.selectedFieldCenters[center.acronym]">
                     {{center.acronym}}
                   </md-checkbox>
