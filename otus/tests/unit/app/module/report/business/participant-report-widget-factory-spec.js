@@ -8,7 +8,6 @@ describe('ParticipantReportWidgetFactory', function () {
 
   beforeEach(angular.mock.module('otusjs.otus.report'));
   beforeEach(function () {
-
     inject(function (_$rootScope_, _$q_, _$injector_) {
       scope = _$rootScope_;
       mockUtils();
@@ -49,6 +48,11 @@ describe('ParticipantReportWidgetFactory', function () {
     beforeEach(function () {
       report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
       spyOn(Mock.DynamicReportService, "precompile").and.returnValue(Promise.resolve());
+    });
+
+    it('getActivityReportMethod_should_return_promise', function(){
+      Mock.id = "123456"
+      expect(factory.getActivityReport(Mock.selectedParticipant, Mock.id)).toBePromise();
     });
 
     it('should precompile when get the template', function () {
@@ -120,7 +124,7 @@ describe('ParticipantReportWidgetFactory', function () {
 
       promise.then(function () {
         expect(Mock.DynamicReportService.precompile).toHaveBeenCalled();
-        
+
       });
     });
 
