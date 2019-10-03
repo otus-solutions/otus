@@ -114,7 +114,7 @@
           _manageDatasources(data.dataSources);
           _manageTemplate(data.template);
           if (self.hasAllDatasources) {
-            _precompileTemplate(_endLoading);
+            _endLoading();
           } else {
             _endLoading();
           }
@@ -136,8 +136,7 @@
           self.compiledTemplate = structure.compiledTemplate;
           self.fieldsError = structure.fieldsError;
           callback();
-        })
-        .catch(function (error) {
+        }).catch(function (error) {
           callback();
         });
     }
@@ -151,7 +150,7 @@
 
         if (ds.result[0]) {
           self.dataSources[ds.key] = ds.result;
-        } else if(ds.optional) {
+        } else if (ds.optional) {
           self.missingOptionalDataSources.push(ds.label);
         } else {
           self.missingDataSources.push(ds.label);

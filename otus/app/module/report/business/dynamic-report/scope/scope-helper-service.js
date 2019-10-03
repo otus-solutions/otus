@@ -15,7 +15,7 @@
     self.helper = {};
     self.helper.formatDate = formatDate;
     self.helper.getObjectByArray = getObjectByArray;
-
+    self.helper.parseToImage = parseToImage;
     self.fillScopeHelper = fillScopeHelper;
 
     function _propertiesIsEqual(item, json) {
@@ -37,9 +37,9 @@
       return $filter('date')(new Date(value), format);
     }
 
-    function getObjectByArray(array, propertyOrJson, value){
-      if(!array || !array.length || propertyOrJson === undefined) return undefined;
-      if(typeof propertyOrJson === "object"){
+    function getObjectByArray(array, propertyOrJson, value) {
+      if (!array || !array.length || propertyOrJson === undefined) return undefined;
+      if (typeof propertyOrJson === "object") {
         let itemFound = undefined;
         for (let i = 0; i < array.length; i++) {
           const item = array[i];
@@ -51,6 +51,15 @@
         return itemFound;
       }
       return _find(array, propertyOrJson, value);
+    }
+
+    function parseToImage(json) {
+      var arrayBufferView = new Uint8Array(JSON.parse(json).data);
+      var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+      var urlCreator = window.URL || window.webkitURL;
+      var imageUrl = urlCreator.createObjectURL(blob);
+      var img = document.querySelector("#retinography");
+      img.src = imageUrl;
     }
 
     function fillScopeHelper(scope) {
