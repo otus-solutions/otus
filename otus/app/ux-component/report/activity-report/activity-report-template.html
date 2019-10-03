@@ -11,7 +11,7 @@
 </md-button>
 
 <md-button id="pendingInformation" class="md-raised md-accent md-icon-button" aria-label="Pendências do Relatório" ng-click="$ctrl.pendingActivityReport()"
-           ng-if="!$ctrl.activityReportReady && $ctrl.showVisualizationButton && $ctrl.activityReportInfo">
+           ng-if="$ctrl.showVisualizationButton && $ctrl.activityReportInfo">
   <md-tooltip md-direction="down">Pendências do Relatório</md-tooltip>
   <md-icon aria-label="Pendências do Relatório">assignment_late</md-icon>
 </md-button>

@@ -23,6 +23,7 @@
       let selectedActivityID = ParticipantActivityService.getSelectedActivities().list()[0].getID();
       self.reportResult = {};
 
+
       return ParticipantReportWidgetFactory.getActivityReport(selectedParticipant, selectedActivityID)
         .then(report => {
           return self.reportResult = {
@@ -31,7 +32,7 @@
             activityReportInfo: false,
             report: report
           }
-        })
+        });
     }
 
     function generateActivityReport(report) {

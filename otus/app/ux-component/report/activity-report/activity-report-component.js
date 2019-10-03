@@ -30,9 +30,10 @@
 
     function loadActivityReport() {
       let reportResult = ActivityReportService.loadActivityReport(self.selectedParticipant);
-      reportResult
-        .then(value => {
-          value.report.missingDataSources.length ? _missingActivityReportArtifacts(value) : _enableActivityReportArtifacts(value)
+      reportResult.then(value => {
+          value.report.missingDataSources.length || value.report.missingOptionalDataSources.length ?
+            _missingActivityReportArtifacts(value) :
+            _enableActivityReportArtifacts(value)
         })
     }
 
