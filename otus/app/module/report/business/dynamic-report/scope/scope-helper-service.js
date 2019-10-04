@@ -10,6 +10,7 @@
   ];
 
   function Service($filter) {
+    var _document = {};
     var self = this;
 
     self.helper = {};
@@ -53,17 +54,20 @@
       return _find(array, propertyOrJson, value);
     }
 
-    function parseToImage(json) {
-      var arrayBufferView = new Uint8Array(JSON.parse(json).data);
-      var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-      var urlCreator = window.URL || window.webkitURL;
-      var imageUrl = urlCreator.createObjectURL(blob);
-      var img = document.querySelector("#retinography");
-      img.src = imageUrl;
+    function parseToImage(json, id) {
+      var img = _document.body.querySelector("#" + id);
+      if (img) {
+        var arrayBufferView = new Uint8Array(JSON.parse(json).data);
+        var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+        var urlCreator = window.URL || window.webkitURL;
+        var imageUrl = urlCreator.createObjectURL(blob);
+        img.src = imageUrl;
+      }
     }
 
-    function fillScopeHelper(scope) {
+    function fillScopeHelper(scope, document) {
       scope.helper = self.helper;
+      _document = document;
     }
   }
 }());

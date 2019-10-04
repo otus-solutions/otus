@@ -17,8 +17,8 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create() {
-      return new ScopeReport($rootScope, ScopeHelperService, {})
+    function create(reportDocument) {
+      return new ScopeReport($rootScope, ScopeHelperService, {}, reportDocument)
     }
 
     function fromJson(scopeInfo) {
@@ -28,7 +28,8 @@
     return self;
   }
 
-  function ScopeReport($rootScope, ScopeHelperService, scopeInfo) {
+  function ScopeReport($rootScope, ScopeHelperService, scopeInfo, reportDocument) {
+    var _document = reportDocument;
     var self = this;
 
     self.objectType = 'ScopeReport';
@@ -38,7 +39,7 @@
     onInit();
 
     function onInit() {
-      if(!self.required){
+      if (!self.required) {
         self.scope.ds = {};
         self.scope.data = {};
         self.scope.style = {};
@@ -49,16 +50,16 @@
       _setRequired();
       _fillHelper();
     }
-    
+
     function _valueIsValid(value) {
       let isValue = false;
-      if(value !== undefined){
-        if(typeof value == 'string'){
-          if(value.trim().length) isValue = true;
-        } else if(Array.isArray(value)){
-          if(value.length) isValue = true;
-        } else if(typeof value == 'object'){
-          if(JSON.stringify(value) !== JSON.stringify({})) isValue = true;
+      if (value !== undefined) {
+        if (typeof value == 'string') {
+          if (value.trim().length) isValue = true;
+        } else if (Array.isArray(value)) {
+          if (value.length) isValue = true;
+        } else if (typeof value == 'object') {
+          if (JSON.stringify(value) !== JSON.stringify({})) isValue = true;
         } else {
           isValue = true;
         }
@@ -85,13 +86,13 @@
         }
       }
     }
-    
+
     function setDatasource(datasource) {
       self.scope.ds = datasource;
     }
-    
+
     function _fillHelper() {
-      ScopeHelperService.fillScopeHelper(self.scope);
+      ScopeHelperService.fillScopeHelper(self.scope, _document);
     }
   }
 }());

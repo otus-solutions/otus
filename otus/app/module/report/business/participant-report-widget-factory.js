@@ -130,6 +130,7 @@
       self.loading = false;
     }
 
+    // TODO: This function should removed?
     function _precompileTemplate(callback) {
       DynamicReportService.precompile(self)
         .then(function (structure) {
