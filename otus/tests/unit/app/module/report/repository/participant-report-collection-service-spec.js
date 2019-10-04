@@ -51,6 +51,3 @@ function _mockRemoteStorage($q) {
     }
   };
 }
-
-
-
