@@ -14,10 +14,11 @@
     }).controller('activityReportCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.ActivityReportService'
+    'otusjs.otus.uxComponent.ActivityReportService',
+    '$mdToast'
   ];
 
-  function Controller(ActivityReportService) {
+  function Controller(ActivityReportService, $mdToast) {
     const self = this;
     self.loadActivityReport = loadActivityReport;
     self.generateActivityReport = generateActivityReport;
@@ -30,19 +31,21 @@
     }
 
     function loadActivityReport() {
-      console.log(self.stateSelectedActivity)
       let reportResult = ActivityReportService.loadActivityReport(self.selectedParticipant);
       reportResult.then(value => {
           value.report.missingDataSources.length || value.report.missingOptionalDataSources.length ?
             _missingActivityReportArtifacts(value) :
             _enableActivityReportArtifacts(value)
-        })
+        }).catch(error => {
+          _toastFoundError(error.data.MESSAGE);
+      })
     }
 
     function _enableActivityReportArtifacts(reportResultValues) {
       self.activityReportReady = reportResultValues.activityReportReady;
       self.activityReportInfo = reportResultValues.activityReportInfo;
       self.report = reportResultValues.report
+
     }
 
     function _missingActivityReportArtifacts(reportResultValues) {
@@ -60,5 +63,14 @@
       ActivityReportService.infoPendingReportAlert(self.report);
       self.activityReportInfo = false
     }
+
+    function _toastFoundError(message) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(message)
+          .hideDelay(4000)
+      );
+    }
+
   }
 }());
