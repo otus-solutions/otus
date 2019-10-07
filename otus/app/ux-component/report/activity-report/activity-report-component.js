@@ -15,10 +15,11 @@
 
   Controller.$inject = [
     'otusjs.otus.uxComponent.ActivityReportService',
-    '$mdToast'
+    '$mdToast',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(ActivityReportService, $mdToast) {
+  function Controller(ActivityReportService, $mdToast, LoadingScreenService) {
     const self = this;
     self.loadActivityReport = loadActivityReport;
     self.generateActivityReport = generateActivityReport;
@@ -27,31 +28,32 @@
 
     function onInit() {
       self.activityReportReady = false;
-      self.activityReportInfo =  false;
+      self.activityReportInfo = false;
     }
 
     function loadActivityReport() {
+      LoadingScreenService.start();
       let reportResult = ActivityReportService.loadActivityReport(self.selectedParticipant);
-      reportResult.then(value => {
-          value.report.missingDataSources.length || value.report.missingOptionalDataSources.length ?
-            _missingActivityReportArtifacts(value) :
-            _enableActivityReportArtifacts(value)
-        }).catch(error => {
-          _toastFoundError(error.data.MESSAGE);
+      reportResult
+        .then(value => { value.report.missingDataSources.length || value.report.missingOptionalDataSources.length ?
+          _missingActivityReportArtifacts(value) :
+          _enableActivityReportArtifacts(value);
       })
+        .catch(error => { _toastFoundError(error.data.MESSAGE);
+      })
+        .then(LoadingScreenService.finish());
     }
 
     function _enableActivityReportArtifacts(reportResultValues) {
       self.activityReportReady = reportResultValues.activityReportReady;
       self.activityReportInfo = reportResultValues.activityReportInfo;
-      self.report = reportResultValues.report
-
+      self.report = reportResultValues.report;
     }
 
     function _missingActivityReportArtifacts(reportResultValues) {
       self.activityReportReady = false;
       self.activityReportInfo = true;
-      self.report = reportResultValues.report
+      self.report = reportResultValues.report;
     }
 
     function generateActivityReport(report) {
@@ -61,7 +63,7 @@
 
     function pendingActivityReport() {
       ActivityReportService.infoPendingReportAlert(self.report);
-      self.activityReportInfo = false
+      self.activityReportInfo = false;
     }
 
     function _toastFoundError(message) {
