@@ -43,7 +43,7 @@
           error.message = "Relatório não encontrado!";
           _toastFoundError(error.message);
       })
-        .then(LoadingScreenService.finish());
+        .finally(LoadingScreenService.finish());
     }
 
     function _enableActivityReportArtifacts(reportResultValues) {
