@@ -17,8 +17,8 @@
     self.create = create;
     self.fromJson = fromJson;
 
-    function create(reportDocument) {
-      return new ScopeReport($rootScope, ScopeHelperService, {}, reportDocument)
+    function create() {
+      return new ScopeReport($rootScope, ScopeHelperService, {})
     }
 
     function fromJson(scopeInfo) {
@@ -28,8 +28,7 @@
     return self;
   }
 
-  function ScopeReport($rootScope, ScopeHelperService, scopeInfo, reportDocument) {
-    var _document = reportDocument;
+  function ScopeReport($rootScope, ScopeHelperService, scopeInfo) {
     var self = this;
 
     self.objectType = 'ScopeReport';
@@ -92,7 +91,7 @@
     }
 
     function _fillHelper() {
-      ScopeHelperService.fillScopeHelper(self.scope, _document);
+      ScopeHelperService.fillScopeHelper(self.scope);
     }
   }
 }());

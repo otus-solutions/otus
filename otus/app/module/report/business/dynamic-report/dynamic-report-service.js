@@ -18,11 +18,11 @@
     self.precompile = precompile;
     self.openReportInNewTab = openReportInNewTab;
 
-    function precompile(report, document) {
+    function precompile(report) {
       let returned = {};
       let deferred = $q.defer();
       let currentTemplate = report.template;
-      let scopeReport = ScopeReportFactory.create(document);
+      let scopeReport = ScopeReportFactory.create();
       let scope;
 
       scopeReport.setDatasource(report.dataSources);
@@ -116,7 +116,7 @@
       var newWindow = $window.open('about:blank', '_blank');
       newWindow.document.write(initialHtmlStructure);
 
-      precompile(report, newWindow.document)
+      precompile(report)
         .then(function (structure) {
           report.compiledTemplate = structure.compiledTemplate;
           report.fieldsError = structure.fieldsError;

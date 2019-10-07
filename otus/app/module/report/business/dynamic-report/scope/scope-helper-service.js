@@ -10,13 +10,14 @@
   ];
 
   function Service($filter) {
-    var _document = {};
+    var _compiledImages = false;
+    var responseImages = [];
     var self = this;
 
     self.helper = {};
     self.helper.formatDate = formatDate;
     self.helper.getObjectByArray = getObjectByArray;
-    self.helper.parseToImage = parseToImage;
+    self.helper.parseToRetinographyImage = parseToRetinographyImage;
     self.fillScopeHelper = fillScopeHelper;
 
     function _propertiesIsEqual(item, json) {
@@ -54,20 +55,37 @@
       return _find(array, propertyOrJson, value);
     }
 
-    function parseToImage(json, id) {
-      var img = _document.body.querySelector("#" + id);
-      if (img) {
-        var arrayBufferView = new Uint8Array(JSON.parse(json).data);
-        var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-        var urlCreator = window.URL || window.webkitURL;
-        var imageUrl = urlCreator.createObjectURL(blob);
-        img.src = imageUrl;
+    function parseToRetinographyImage(images, id) {
+      if (!_compiledImages) {
+        images.forEach(image => {
+          var arrayBufferView = new Uint8Array(JSON.parse(image.result).data);
+          var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+          var urlCreator = window.URL || window.webkitURL;
+          responseImages.push({
+            date: formatDate(image.date),
+            eye: _translateEye(image.eye),
+            url: urlCreator.createObjectURL(blob)
+          });
+        });
+        _compiledImages = true;
       }
+      return responseImages;
     }
 
-    function fillScopeHelper(scope, document) {
+    function fillScopeHelper(scope) {
       scope.helper = self.helper;
-      _document = document;
+    }
+
+    // TODO: 
+    function _translateEye(eye) {
+      switch (eye.toUpperCase()) {
+        case 'LEFT':
+          return 'Esquerdo';
+        case 'RIGHT':
+          return 'Direito';
+        default:
+          return;
+      }
     }
   }
 }());

@@ -130,18 +130,6 @@
       self.loading = false;
     }
 
-    // TODO: This function should removed?
-    function _precompileTemplate(callback) {
-      DynamicReportService.precompile(self)
-        .then(function (structure) {
-          self.compiledTemplate = structure.compiledTemplate;
-          self.fieldsError = structure.fieldsError;
-          callback();
-        }).catch(function (error) {
-          callback();
-        });
-    }
-
     function _manageDatasources(dataSourceList) {
       self.missingDataSources = [];
       self.missingOptionalDataSources = [];
