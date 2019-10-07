@@ -39,7 +39,9 @@
           _missingActivityReportArtifacts(value) :
           _enableActivityReportArtifacts(value);
       })
-        .catch(error => { _toastFoundError(error.data.MESSAGE);
+        .catch(error => {
+          error.message = "Relatório não encontrado!";
+          _toastFoundError(error.message);
       })
         .then(LoadingScreenService.finish());
     }
@@ -70,9 +72,8 @@
       $mdToast.show(
         $mdToast.simple()
           .textContent(message)
-          .hideDelay(4000)
+          .hideDelay(5000)
       );
     }
-
   }
 }());
