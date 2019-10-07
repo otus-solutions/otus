@@ -8,7 +8,8 @@
       templateUrl: 'app/ux-component/report/activity-report/activity-report-template.html',
       bindings: {
         selectedParticipant: '<',
-        showVisualizationButton: '<'
+        showVisualizationButton: '<',
+        statusSelectedActivity: '<'
       }
     }).controller('activityReportCtrl', Controller);
 
@@ -29,6 +30,7 @@
     }
 
     function loadActivityReport() {
+      console.log(self.stateSelectedActivity)
       let reportResult = ActivityReportService.loadActivityReport(self.selectedParticipant);
       reportResult.then(value => {
           value.report.missingDataSources.length || value.report.missingOptionalDataSources.length ?

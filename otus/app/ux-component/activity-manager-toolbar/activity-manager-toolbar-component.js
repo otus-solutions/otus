@@ -115,6 +115,7 @@
         self.showDeleteButton = true;
         self.showInfoButton = true;
         self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() ? true : false;
+        self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name
       } else {
         self.showVisualizationButton = false;
         self.showFillingButton = false;
@@ -140,12 +141,16 @@
         buttons: [
           {
             message: 'Ok',
-            action: function () { $mdDialog.hide() },
+            action: function () {
+              $mdDialog.hide()
+            },
             class: 'md-raised md-primary'
           },
           {
             message: 'Voltar',
-            action: function () { $mdDialog.cancel() },
+            action: function () {
+              $mdDialog.cancel()
+            },
             class: 'md-raised md-no-focus'
           }
         ]
@@ -168,6 +173,7 @@
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
         self.selectedItem = CheckerItemFactory.create(self.user);
         self.maxDate = new Date();
+
       }
 
       function querySearch(query) {

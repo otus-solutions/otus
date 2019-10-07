@@ -2,15 +2,15 @@
   <div class="md-toolbar-tools">
     <span flex>Lista de atividades</span>
 
-    <otus-activity-report selected-participant=$ctrl.selectedParticipant; ng-if="$ctrl.showVisualizationButton"
-      show-visualization-button=$ctrl.showVisualizationButton;>
-    </otus-activity-report>
-
     <md-button class="md-raised md-accent md-icon-button" aria-label="Preencher Atividade" ng-click="$ctrl.fillSelectedActivity()"
                ng-show="$ctrl.showFillingButton">
       <md-tooltip md-direction="down">Preencher Atividade</md-tooltip>
       <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
     </md-button>
+
+    <otus-activity-report ng-if="$ctrl.showVisualizationButton" selected-participant=$ctrl.selectedParticipant
+                          status-selected-activity=$ctrl.statusSelectedActivity show-visualization-button=$ctrl.showVisualizationButton;>
+    </otus-activity-report>
 
     <md-button class="md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"  ng-click="$ctrl.viewSelectedActivity()"
                ng-show="$ctrl.showViewerButton">
