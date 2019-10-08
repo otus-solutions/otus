@@ -15,10 +15,9 @@
   function Service($q, $window, $compile, ScopeReportFactory) {
     var self = this;
 
-    self.precompile = precompile;
     self.openReportInNewTab = openReportInNewTab;
 
-    function precompile(report) {
+    function _precompile(report) {
       let returned = {};
       let deferred = $q.defer();
       let currentTemplate = report.template;
@@ -116,7 +115,7 @@
       var newWindow = $window.open('about:blank', '_blank');
       newWindow.document.write(initialHtmlStructure);
 
-      precompile(report)
+      _precompile(report)
         .then(function (structure) {
           report.compiledTemplate = structure.compiledTemplate;
           report.fieldsError = structure.fieldsError;
