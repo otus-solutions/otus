@@ -2,24 +2,27 @@ describe('the Dynamic Report Service ', function () {
   var Mock = {};
   var service = {};
   var Injections = [];
+  var report = {};
 
   beforeEach(function () {
     mock();
 
     angular.mock.module('otusjs.otus');
     angular.mock.inject(function ($injector, $q, $window, $compile, $rootScope) {
-        Injections.$q = $q;
-        Injections.$window = $window;
-        Injections.$compile = $compile;
-        Injections.$rootScope = $rootScope;
-        Injections.ScopeReportFactory = $injector.get(
-          'otusjs.report.business.dynamicReport.scope.ScopeReportFactory'
-        );
+      Injections.$q = $q;
+      Injections.$window = $window;
+      Injections.$compile = $compile;
+      Injections.$rootScope = $rootScope;
+      Injections.ScopeReportFactory = $injector.get(
+        'otusjs.report.business.dynamicReport.scope.ScopeReportFactory'
+      );
       service = $injector.get(
         'otusjs.report.business.dynamicReport.DynamicReportService',
         Injections
       );
     });
+    spyOn(service, "precompile").and.returnValue(Promise.resolve());
+    console.log(service);
   });
 
   it('serviceExistence check ', function () {
@@ -32,14 +35,24 @@ describe('the Dynamic Report Service ', function () {
   });
 
   it('openReportInNewTabMethod should executed', function () {
-    spyOn(Injections.$window,'open').and.callThrough();
-    service.openReportInNewTab(Mock.Report,Mock.callback);
-    expect(Injections.$window.open).toHaveBeenCalledTimes(1);
+    spyOn(Injections.$window, 'open').and.callThrough();
+    service.openReportInNewTab(Mock.Report, Mock.callback);
+
+    promise.then(function () {
+      expect(Injections.$window.open).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('should called method precompile', function () {
+    spyOn(Injections.$window, 'open').and.callThrough();
+    service.openReportInNewTab(Mock.Report, Mock.callback);
+
+    expect(service.precompile).toHaveBeenCalledTimes(1);
   });
 
   function mock() {
     Mock.callback = {
-      callback: function () {}
+      callback: function () { }
     };
     Mock.Report = {
       compiledTemplate: `

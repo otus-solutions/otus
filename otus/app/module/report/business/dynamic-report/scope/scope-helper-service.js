@@ -55,7 +55,7 @@
       return _find(array, propertyOrJson, value);
     }
 
-    function parseToRetinographyImage(images, id) {
+    function parseToRetinographyImage(images) {
       if (!_compiledImages) {
         images.forEach(image => {
           var arrayBufferView = new Uint8Array(JSON.parse(image.result).data);
@@ -76,7 +76,6 @@
       scope.helper = self.helper;
     }
 
-    // TODO: 
     function _translateEye(eye) {
       switch (eye.toUpperCase()) {
         case 'LEFT':

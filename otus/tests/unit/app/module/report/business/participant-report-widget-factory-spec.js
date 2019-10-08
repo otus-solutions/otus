@@ -48,28 +48,6 @@ describe('ParticipantReportWidgetFactory', function () {
 
     beforeEach(function () {
       report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
-      spyOn(Mock.DynamicReportService, "precompile").and.returnValue(Promise.resolve());
-    });
-
-    it('should precompile when get the template', function () {
-      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
-
-      promise = report.getReportTemplate();
-
-      promise.then(function () {
-        expect(Mock.DynamicReportService.precompile).toHaveBeenCalled();
-      });
-    });
-
-    it('should not fetch when already have a compiled template', function () {
-      spyOn(Mock.ParticipantReportService, "getFullReport");
-
-      report.dirty = true;
-      promise = report.getReportTemplate();
-
-      promise.then(function () {
-        expect(Mock.DynamicReportService.precompile).not.toHaveBeenCalled();
-      });
     });
 
     it('should be available when get a complete set of datasources', function () {
@@ -105,26 +83,6 @@ describe('ParticipantReportWidgetFactory', function () {
     });
   });
 
-  describe('the reload report method', function () {
-
-
-    it('should fetch even when already have a compiled template', function () {
-      let report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
-      spyOn(Mock.DynamicReportService, "precompile").and.returnValue(Promise.resolve());
-      spyOn(Mock.ParticipantReportService, "getFullReport").and.returnValue(Promise.resolve(Mock.fullReportComplete));
-
-
-      report.dirty = true;
-
-      let promise = report.reloadReport();
-
-      promise.then(function () {
-        expect(Mock.DynamicReportService.precompile).toHaveBeenCalled();
-        
-      });
-    });
-
-  });
 
   describe('the generateReport method', function () {
     it('should call DynamicReportService.openReportInNewTab', function () {
@@ -143,7 +101,6 @@ describe('ParticipantReportWidgetFactory', function () {
 
     beforeEach(function () {
       report = factory.fromJson(Mock.ParticipantReportService, Mock.reportList[0], Mock.selectedParticipant);
-      spyOn(Mock.DynamicReportService, "precompile").and.returnValue(Promise.resolve());
     });
 
     it('should be initiated', function () {
