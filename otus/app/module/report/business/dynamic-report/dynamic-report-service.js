@@ -15,9 +15,10 @@
   function Service($q, $window, $compile, ScopeReportFactory) {
     var self = this;
 
+    self.precompile = precompile;
     self.openReportInNewTab = openReportInNewTab;
 
-    function _precompile(report) {
+    function precompile(report) {
       let returned = {};
       let deferred = $q.defer();
       let currentTemplate = report.template;
@@ -27,11 +28,7 @@
       scopeReport.setDatasource(report.dataSources);
       scope = scopeReport.scope;
 
-      currentTemplate = `${currentTemplate}
-        <otus-script>
-          {{data.testEndChangeScope = true}}
-        </otus-script>
-      `;
+      scope.data.testEndChangeScope = true;
 
       returned.compiledTemplate = $compile(currentTemplate)(scope);
 
@@ -115,7 +112,7 @@
       var newWindow = $window.open('about:blank', '_blank');
       newWindow.document.write(initialHtmlStructure);
 
-      _precompile(report)
+      precompile(report)
         .then(function (structure) {
           report.compiledTemplate = structure.compiledTemplate;
           report.fieldsError = structure.fieldsError;

@@ -33,15 +33,6 @@ describe('the Dynamic Report Service ', function () {
     });
   });
 
-  describe('openReportInNewTab method', function () {
-    it('should open new window when called', function () {
-      spyOn(Injections.$window, 'open').and.callThrough();
-      service.openReportInNewTab(Mock.Report, Mock.callback);
-
-      //expect(Injections.$window.open).toHaveBeenCalledTimes(1);
-    });
-  });
-
   function mock() {
     Mock.callback = {
       callback: function () { }
