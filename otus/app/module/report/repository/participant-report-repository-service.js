@@ -15,6 +15,7 @@
     //Participant Report Methods
     self.getParticipantReportList = getParticipantReportList;
     self.getFullReport = getFullReport;
+    self.getActivityReport = getActivityReport;
 
     function getParticipantReportList(rn) {
       return ParticipantReportCollectionService.getParticipantReportList(rn);
@@ -22,6 +23,10 @@
 
     function getFullReport(rn, id) {
       return ParticipantReportCollectionService.getFullReport(rn, id);
+    }
+
+    function getActivityReport(id) {
+      return ParticipantReportCollectionService.getActivityReport(id);
     }
   }
 }());

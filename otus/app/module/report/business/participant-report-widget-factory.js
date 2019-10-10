@@ -5,7 +5,6 @@
     .module('otusjs.report.business')
     .factory('otusjs.report.business.ParticipantReportWidgetFactory', factory);
 
-
   factory.$inject = [
     '$q',
     'otusjs.report.business.ParticipantReportService',
@@ -17,6 +16,7 @@
     var self = this;
 
     self.getParticipantReportList = getParticipantReportList;
+    self.getActivityReport = getActivityReport;
     self.fromJson = fromJson;
 
     function getParticipantReportList(participant) {
@@ -25,6 +25,15 @@
           return reports.map(function (report) {
             return new ParticipantReport($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory, report, participant)
           });
+        });
+    }
+
+    function getActivityReport(participant, id) {
+      return ParticipantReportService.fetchActivityReport(id)
+        .then(function (report) {
+          let participantReport = new ParticipantReport($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory, report, participant);
+          participantReport.load(report.dataSources, report.template);
+          return participantReport;
         });
     }
 
@@ -38,11 +47,7 @@
   function ParticipantReport($q, ParticipantReportService, DynamicReportService, DatasourceManagerFactory, report, participant) {
     var self = this;
     var _participantInfo = participant;
-    const _loadingMessage = `
-    Aguardando o fim da impressão, ou fechamento da visualização do relatório. 
-    <br/>
-    <br/>
-    `;
+    const _loadingMessage = `Aguardando o fim da impressão, ou fechamento da visualização do relatório.<br/><br/>`;
 
     self.objectType = 'ParticipantReport';
     self.id = report._id;
@@ -77,6 +82,7 @@
     self.generateReport = generateReport;
     self.reloadReport = reloadReport;
     self.getLoadingMessage = getLoadingMessage;
+    self.load = load;
 
     function expandAndCollapse() {
       self.status.expanded = !self.status.expanded;
@@ -111,33 +117,46 @@
 
       return ParticipantReportService.getFullReport(_participantInfo, self.id)
         .then(function (data) {
-          _manageDatasources(data.dataSources);
-          _manageTemplate(data.template);
-          if (self.hasAllDatasources) {
-            _precompileTemplate(_endLoading);
-          } else {
-            _endLoading();
-          }
+          load(data.dataSources, data.template);
         })
         .catch(function (e) {
           self.hasError = true;
+          _setStatus();
           _endLoading();
         });
     }
 
+    function load(dataSources, template) {
+      self.loading = true;
+      let defer = $q.defer();
+
+      _manageDatasources(dataSources);
+      _manageTemplate(template);
+      if (self.hasAllDatasources) {
+        _precompileTemplate(_endLoading)
+          .then(defer.resolve())
+          .catch(defer.resolve());
+      } else {
+        defer.resolve();
+        _setStatus();
+        _endLoading();
+      }
+    }
+
     function _endLoading() {
-      _setStatus();
       self.loading = false;
     }
 
     function _precompileTemplate(callback) {
-      DynamicReportService.precompile(self)
+      return DynamicReportService.precompile(self)
         .then(function (structure) {
           self.compiledTemplate = structure.compiledTemplate;
           self.fieldsError = structure.fieldsError;
+          _setStatus();
           callback();
         })
         .catch(function (error) {
+          _setStatus();
           callback();
         });
     }
@@ -151,7 +170,7 @@
 
         if (ds.result[0]) {
           self.dataSources[ds.key] = ds.result;
-        } else if(ds.optional) {
+        } else if (ds.optional) {
           self.missingOptionalDataSources.push(ds.label);
         } else {
           self.missingDataSources.push(ds.label);

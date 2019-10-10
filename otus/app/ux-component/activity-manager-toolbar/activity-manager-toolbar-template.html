@@ -1,30 +1,40 @@
 <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
   <div class="md-toolbar-tools">
     <span flex>Lista de atividades</span>
+
     <md-button class="md-raised md-accent md-icon-button" aria-label="Preencher Atividade" ng-click="$ctrl.fillSelectedActivity()"
-      ng-show="$ctrl.showFillingButton">
+               ng-show="$ctrl.showFillingButton">
       <md-tooltip md-direction="down">Preencher Atividade</md-tooltip>
       <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
     </md-button>
-    <md-button class="md-raised md-accent md-icon-button" aria-label="Visualizar Atividade" ng-click="$ctrl.viewSelectedActivity()"
-      ng-show="$ctrl.showViewerButton">
+
+    <otus-activity-report ng-if="$ctrl.showVisualizationButton" selected-participant=$ctrl.selectedParticipant
+                          status-selected-activity=$ctrl.statusSelectedActivity show-visualization-button=$ctrl.showVisualizationButton;>
+    </otus-activity-report>
+
+    <md-button class="md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"  ng-click="$ctrl.viewSelectedActivity()"
+               ng-show="$ctrl.showViewerButton">
       <md-tooltip md-direction="down">Visualizar Atividade</md-tooltip>
       <md-icon aria-label="Visualizar Atividade">playlist_add_check</md-icon>
     </md-button>
+
     <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Aferidor" ng-click="$ctrl.updateChecker()"
-      ng-show="$ctrl.isPaperActivity">
+               ng-show="$ctrl.isPaperActivity">
       <md-tooltip md-direction="down">Alterar Aferidor</md-tooltip>
       <md-icon aria-label="Preencher Atividade">transfer_within_a_station</md-icon>
     </md-button>
+
     <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey" ng-click="$ctrl.deleteSelectedActivity()"
-      ng-show="$ctrl.showDeleteButton">
+               ng-show="$ctrl.showDeleteButton">
       <md-tooltip md-direction="down">Excluir</md-tooltip>
       <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
     </md-button>
+
     <md-button class="md-raised md-accent md-icon-button" aria-label="Detalhes" ng-click="$ctrl.visualizeSelectedActivityInfo()"
-      ng-show="$ctrl.showInfoButton">
+               ng-show="$ctrl.showInfoButton">
       <md-tooltip md-direction="down">Detalhes</md-tooltip>
       <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>
     </md-button>
+
   </div>
 </md-toolbar>

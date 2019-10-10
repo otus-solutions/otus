@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -17,6 +17,7 @@
     //Participant Report Methods
     self.getParticipantReportList = getParticipantReportList;
     self.getFullReport = getFullReport;
+    self.getActivityReport = getActivityReport;
 
     function getParticipantReportList(rn) {
       var request = $q.defer();
@@ -28,7 +29,7 @@
             .then(function (response) {
               request.resolve(response.data);
             })
-            .catch(function(e){
+            .catch(function (e) {
               request.reject(e);
             });
         });
@@ -38,7 +39,6 @@
 
     function getFullReport(rn, id) {
       var request = $q.defer();
-
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
@@ -47,11 +47,27 @@
             .then(function (response) {
               request.resolve(response.data);
             })
-            .catch(function(e){
+            .catch(function (e) {
               request.reject(e);
             });
         });
+      return request.promise;
+    }
 
+    function getActivityReport(id) {
+      var request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getActivityReport(id)
+            .then(function (response) {
+              request.resolve(response.data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
       return request.promise;
     }
   }
