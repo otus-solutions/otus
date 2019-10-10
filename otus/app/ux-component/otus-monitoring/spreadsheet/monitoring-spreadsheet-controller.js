@@ -27,10 +27,10 @@
     }
 
     function createSpreadsheet(qData) {
+      self.listStyle = { 'min-width':qData.fieldCenters.length * 72 +250};
       self.datasets = qData.data;
       self.dates = qData.dates;
       self.fieldCenters = qData.fieldCenters;
     }
-
   }
 }());

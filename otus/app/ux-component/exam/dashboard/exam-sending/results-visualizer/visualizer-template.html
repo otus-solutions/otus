@@ -1,45 +1,52 @@
 <div ui-view layout="column" class="visualizer-component" ng-if="$ctrl.fileStructure" flex>
-  <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-with-problems="$ctrl.aliquotsWithProblems" disabled-save="$ctrl.disabledSave" csv-data="$ctrl.csvData" dynamic-data-table-change="$ctrl.updateDataTable"
-    error-aliquots="$ctrl.errorAliquots" sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
-  <md-content layout="column" flex>
+  <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-with-problems="$ctrl.aliquotsWithProblems"
+                                          disabled-save="$ctrl.disabledSave" csv-data="$ctrl.csvData"
+                                          dynamic-data-table-change="$ctrl.updateDataTable"
+                                          error-aliquots="$ctrl.errorAliquots"
+                                          sending-exam="$ctrl.sendingExam"></otus-result-visualizer-manager-toolbar>
+  <md-content>
     <div>
-      <md-card flex style="min-height: 150px">
+      <md-card flex >
         <md-card-title flex>
           <md-card-title-text>
             <span class="md-headline">Informações relacionadas ao arquivo que será enviado</span>
           </md-card-title-text>
         </md-card-title>
         <md-card-content flex>
-            <div layout="column" flex>
-              <div layout="row">
-                <li>Data e hora de envio: {{$ctrl.formattedDate}}</li>
-              </div>
-              <div layout="row">
-                <li>Nome do arquivo: {{$ctrl.sendingExam.examSendingLot.fileName}}</li>
-              </div>
-              <div layout="row">
-                <li>Centro de realização: {{$ctrl.sendingExam.examSendingLot.fieldCenter.acronym}}</li>
-              </div>
-              <div layout="row">
-                <li>Quantidade de resultados: {{$ctrl.sendingExam.examSendingLot.resultsQuantity}}</li>
-              </div>
-              <div layout="row">
-                <li>Operador: {{$ctrl.sendingExam.examSendingLot.operator}}</li>
-              </div>
+          <div layout="column" flex>
+            <div layout="row">
+              <li>Data e hora de envio: {{$ctrl.formattedDate}}</li>
             </div>
+            <div layout="row">
+              <li>Nome do arquivo: {{$ctrl.sendingExam.examSendingLot.fileName}}</li>
+            </div>
+            <div layout="row">
+              <li>Centro de realização: {{$ctrl.sendingExam.examSendingLot.fieldCenter.acronym}}</li>
+            </div>
+            <div layout="row">
+              <li>Quantidade de resultados: {{$ctrl.sendingExam.examSendingLot.resultsQuantity}}</li>
+            </div>
+            <div layout="row">
+              <li>Operador: {{$ctrl.sendingExam.examSendingLot.operator}}</li>
+            </div>
+          </div>
         </md-card-content>
       </md-card>
-      <div layout="row" layout-xs="column" ng-if="$ctrl.aliquotsWithProblems.length" ng-init="button={which: 'error'}" flex>
-        <md-button ng-if="button.which == 'error'" ng-click="$ctrl.changeResults('resultsWithErrors'); button.which = 'all'" class="md-warn md-accent"
-          aria-label="Salvar">
+      <div layout="row" layout-xs="column" ng-if="$ctrl.aliquotsWithProblems.length" ng-init="button={which: 'error'}"
+           flex>
+        <md-button ng-if="button.which == 'error'"
+                   ng-click="$ctrl.changeResults('resultsWithErrors'); button.which = 'all'" class="md-warn md-accent"
+                   aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir resultados com erro
         </md-button>
-        <md-button ng-if="button.which == 'all'" ng-click="$ctrl.changeResults('all'); button.which = 'error'" class="md-accent" aria-label="Salvar">
+        <md-button ng-if="button.which == 'all'" ng-click="$ctrl.changeResults('all'); button.which = 'error'"
+                   class="md-accent" aria-label="Salvar">
           <md-tooltip md-direction="down">exibir</md-tooltip>
           Exibir todos resultados
         </md-button>
-        <md-button ng-click="$ctrl.exportRrrors()" aria-label="Exportar relatório de erros" report-export option="CSV" report="$ctrl.csvData">
+        <md-button ng-click="$ctrl.exportRrrors()" aria-label="Exportar relatório de erros" report-export option="CSV"
+                   report="$ctrl.csvData">
           <md-tooltip md-direction="down">exportar</md-tooltip>
           Exportar relatório de erros
           <md-icon aria-label="Exportar relatório" class="material-icons">file_download</md-icon>
@@ -47,10 +54,12 @@
       </div>
     </div>
     <md-divider></md-divider>
-    <div class="dynamic-table-container">
-      <dynamic-data-table flex dynamic-table-settings="$ctrl.settings" table-update-function="$ctrl.updateDataTable">
-      </dynamic-data-table>
-    </div>
+    <md-content flex>
+      <div class="dynamic-table-container">
+        <dynamic-data-table flex dynamic-table-settings="$ctrl.settings" table-update-function="$ctrl.updateDataTable">
+        </dynamic-data-table>
+      </div>
+    </md-content>
   </md-content>
 </div>
 <div layout="column" layout-align="center center">

@@ -386,6 +386,17 @@ otus-view-sending-exam {
     }
   }
 
+  otus-result-visualizer {
+    .dynamic-table-container {
+      min-width: 850px;
+      max-height: 420px;
+
+      .dynamic-structure {
+        min-width: 800px !important;
+      }
+    }
+  }
+
   @media screen and (max-width: 726px) {
     .desktop-filter {
       .md-subheader {
@@ -513,6 +524,20 @@ otus-laboratory-monitoring-dashboard {
   #orphans-by-exam {
     svg {
       min-width: 600px;
+    }
+  }
+}
+
+otus-activity-category-adder {
+  otus-activity-category-adder-list {
+    md-card {
+      md-input-container {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 0;
+        margin-top: 0;
+        top: -5px;
+      }
     }
   }
 }
