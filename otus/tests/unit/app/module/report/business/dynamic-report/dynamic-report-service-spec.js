@@ -2,19 +2,20 @@ describe('the Dynamic Report Service ', function () {
   var Mock = {};
   var service = {};
   var Injections = [];
+  var report = {};
 
   beforeEach(function () {
     mock();
 
     angular.mock.module('otusjs.otus');
     angular.mock.inject(function ($injector, $q, $window, $compile, $rootScope) {
-        Injections.$q = $q;
-        Injections.$window = $window;
-        Injections.$compile = $compile;
-        Injections.$rootScope = $rootScope;
-        Injections.ScopeReportFactory = $injector.get(
-          'otusjs.report.business.dynamicReport.scope.ScopeReportFactory'
-        );
+      Injections.$q = $q;
+      Injections.$window = $window;
+      Injections.$compile = $compile;
+      Injections.$rootScope = $rootScope;
+      Injections.ScopeReportFactory = $injector.get(
+        'otusjs.report.business.dynamicReport.scope.ScopeReportFactory'
+      );
       service = $injector.get(
         'otusjs.report.business.dynamicReport.DynamicReportService',
         Injections
@@ -22,24 +23,19 @@ describe('the Dynamic Report Service ', function () {
     });
   });
 
-  it('serviceExistence check ', function () {
-    expect(service).toBeDefined();
-  });
+  describe('setup unit test basic', function () {
+    it('serviceExistence check ', function () {
+      expect(service).toBeDefined();
+    });
 
-  it('service methodsExistence check', function () {
-    expect(service.precompile).toBeDefined();
-    expect(service.openReportInNewTab).toBeDefined();
-  });
-
-  it('openReportInNewTabMethod should executed', function () {
-    spyOn(Injections.$window,'open').and.callThrough();
-    service.openReportInNewTab(Mock.Report,Mock.callback);
-    expect(Injections.$window.open).toHaveBeenCalledTimes(1);
+    it('service methodsExistence check', function () {
+      expect(service.openReportInNewTab).toBeDefined();
+    });
   });
 
   function mock() {
     Mock.callback = {
-      callback: function () {}
+      callback: function () { }
     };
     Mock.Report = {
       compiledTemplate: `

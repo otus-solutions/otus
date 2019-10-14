@@ -38,7 +38,7 @@
     onInit();
 
     function onInit() {
-      if(!self.required){
+      if (!self.required) {
         self.scope.ds = {};
         self.scope.data = {};
         self.scope.style = {};
@@ -49,16 +49,16 @@
       _setRequired();
       _fillHelper();
     }
-    
+
     function _valueIsValid(value) {
       let isValue = false;
-      if(value !== undefined){
-        if(typeof value == 'string'){
-          if(value.trim().length) isValue = true;
-        } else if(Array.isArray(value)){
-          if(value.length) isValue = true;
-        } else if(typeof value == 'object'){
-          if(JSON.stringify(value) !== JSON.stringify({})) isValue = true;
+      if (value !== undefined) {
+        if (typeof value == 'string') {
+          if (value.trim().length) isValue = true;
+        } else if (Array.isArray(value)) {
+          if (value.length) isValue = true;
+        } else if (typeof value == 'object') {
+          if (JSON.stringify(value) !== JSON.stringify({})) isValue = true;
         } else {
           isValue = true;
         }
@@ -85,11 +85,11 @@
         }
       }
     }
-    
+
     function setDatasource(datasource) {
       self.scope.ds = datasource;
     }
-    
+
     function _fillHelper() {
       ScopeHelperService.fillScopeHelper(self.scope);
     }
