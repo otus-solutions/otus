@@ -27,7 +27,7 @@
         var keys = Object.keys(dataset[0]);
 
         var margin = {top: 20, right: 100, bottom: 30, left: 50},
-          width = window.innerWidth - 400,
+          width = window.innerWidth - 400 < 700 ? 700 : window.innerWidth - 400 ,
           height = ((dataset.length + 1) * 50) - margin.top - margin.bottom;
 
         var y = d3.scaleBand()

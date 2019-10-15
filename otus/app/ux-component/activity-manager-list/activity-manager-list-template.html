@@ -1,6 +1,16 @@
 <div layout="column" flex class="menuBardemoBasicUsage">
-  <md-content md-whiteframe="3dp" layout-wrap="" layout="row" layout-align="start center" layout-padding="">
-    <md-card flex layout-padding="" layout-margin="" layout-align="start center" layout-fill="">
+  <md-content layout="row" ng-if="$ctrl.ready && $ctrl.isListEmpty" flex layout-align="center center">
+    <div class="label-light-gray">
+      <h3 class="md-display-3">Nenhuma Atividade Adicionada</h3>
+      <div>
+        <span class="md-body-1">Utilize o menu</span>
+        <md-icon md-svg-icon="plus" aria-label="Adicionar Atividade"></md-icon>
+        <span class="md-body-1">para adicionar atividades ao participante</span>
+      </div>
+    </div>
+  </md-content>
+  <md-content layout="column" ng-show="$ctrl.ready && !$ctrl.isListEmpty" flex>
+    <md-card  layout-padding="" layout-margin="" layout-align="start center">
       <md-card-actions layout="row" layout-gt-md="row" layout-align="start center" layout-wrap layout-fill>
         <h4>
           <md-icon>view_module</md-icon>
@@ -23,8 +33,7 @@
                      class="demo-header-searchbox md-text">
             </md-select-header>
             <md-optgroup label="Blocos">
-              <md-option ng-value="item" ng-repeat="item in $ctrl.groupList |
-              filter:$ctrl.searchTerm" ng-checked="$ctrl.existsGroup(item)">{{item}}</md-option>
+              <md-option ng-value="item" ng-repeat="item in $ctrl.groupList | filter:$ctrl.searchTerm" ng-checked="$ctrl.existsGroup(item)">{{item}}</md-option>
             </md-optgroup>
           </md-select>
         </md-input-container>
@@ -40,22 +49,11 @@
 
       </md-card-actions>
     </md-card>
-  </md-content>
-  <md-content layout="row" ng-if="$ctrl.isListEmpty" flex layout-align="center center">
-    <div class="label-light-gray">
-      <h3 class="md-display-3">Nenhuma Atividade Adicionada</h3>
-      <div>
-        <span class="md-body-1">Utilize o menu</span>
-        <md-icon md-svg-icon="plus" aria-label="Adicionar Atividade"></md-icon>
-        <span class="md-body-1">para adicionar atividades ao participante</span>
-      </div>
+    <div class="dynamic-table-container" flex>
+      <dynamic-data-table flex="100" dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.updateDataTable"></dynamic-data-table>
     </div>
   </md-content>
-
-  <md-content layout="column" ng-show="!$ctrl.isListEmpty" flex>
-    <dynamic-data-table flex="100" dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.updateDataTable"></dynamic-data-table>
-  </md-content>
-  <md-content md-whiteframe="3dp" style="height: 6em !important;" layout="row" layout-align="start center">
+  <md-content class="not-mobile" md-whiteframe="3dp" style="height: 6em !important;" layout="row" layout-align="start center">
 
   </md-content>
 </div>

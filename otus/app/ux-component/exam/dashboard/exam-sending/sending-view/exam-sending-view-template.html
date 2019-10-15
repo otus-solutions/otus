@@ -15,7 +15,7 @@
         </md-button>
       </div>
     </md-toolbar>
-    <div layout="row">
+    <div layout="column" class="desktop-filter">
       <div layout="column" flex>
         <md-subheader class="md-no-sticky moment-type-title">
           Filtros de Pesquisa
@@ -42,23 +42,56 @@
           </md-input-container>
         </div>
       </div>
+      <md-divider></md-divider>
     </div>
-    <md-divider></md-divider>
     <div layout="column" flex>
       <md-content layout="column" flex>
-        <dynamic-data-table flex
-                            headers="['Data e hora de envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
-                            elements-array="$ctrl.sendingList || []"
-                            elements-properties="['examSendingLot.realizationDate', 'examSendingLot.fileName', 'examSendingLot.fieldCenter.acronym', 'examSendingLot.resultsQuantity', 'examSendingLot.operator']"
-                            callback-after-change="$ctrl.dynamicDataTableChange"
-                            table-update-function="$ctrl.updateDataTable"
-                            order-indices="[0, 1, 2, 3, 4]"
-                            number-fields-aligned-left="10"
-                            flex-array="[10, 30, 15, 15, 20]"
-                            format-data="'dd/MM/yyyy HH:mm'"
-                            format-data-properties-array="['examSendingLot.realizationDate']"
-                            disable-filter="true">
-        </dynamic-data-table>
+        <div layout="column" class="mobile-filter">
+          <div layout="column" flex>
+            <md-subheader class="md-no-sticky moment-type-title">
+              Filtros de Pesquisa
+            </md-subheader>
+            <div layout="row" layout-xs="column" layout-align="center">
+              <md-input-container class="remove-errors-spacer">
+                <label>Período Inicial</label>
+                <md-datepicker ng-model="$ctrl.realizationBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
+              </md-input-container>
+              <md-input-container class="remove-errors-spacer">
+                <label>Período Fínal</label>
+                <md-datepicker ng-model="$ctrl.realizationEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
+              </md-input-container>
+              <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter" style="margin-left:15px;min-width: 150px">
+                <label class="md-subheader">Centro de envio:</label>
+                <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
+                  <md-tooltip>
+                    Centro responsável pelo envio do exame
+                  </md-tooltip>
+                  <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}">
+                    {{center}}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+            </div>
+          </div>
+          <md-divider></md-divider>
+        </div>
+        <md-content class="dynamic-table-container-md-content">
+          <div class="dynamic-table-container">
+            <dynamic-data-table flex
+                                headers="['Data e hora de envio', 'Nome do arquivo', 'Centro de realização', 'Quantidade de resultados', 'Operador responsável']"
+                                elements-array="$ctrl.sendingList || []"
+                                elements-properties="['examSendingLot.realizationDate', 'examSendingLot.fileName', 'examSendingLot.fieldCenter.acronym', 'examSendingLot.resultsQuantity', 'examSendingLot.operator']"
+                                callback-after-change="$ctrl.dynamicDataTableChange"
+                                table-update-function="$ctrl.updateDataTable"
+                                order-indices="[0, 1, 2, 3, 4]"
+                                number-fields-aligned-left="10"
+                                flex-array="[10, 30, 15, 15, 20]"
+                                format-data="'dd/MM/yyyy HH:mm'"
+                                format-data-properties-array="['examSendingLot.realizationDate']"
+                                disable-filter="true">
+            </dynamic-data-table>
+          </div>
+        </md-content>
       </md-content>
     </div>
   </md-content>

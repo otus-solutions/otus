@@ -89,6 +89,33 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
   box-shadow: none !important;
 }
 
+@media only screen and (max-width: 360px) {
+  .md-dashboard-autocomplete input:not(.md-input) {
+    font-size: 11px;
+  }
+  .md-dashboard-autocomplete .md-show-clear-button button {
+    display: none;
+  }
+
+  .md-autocomplete-participant input:not(.md-input) {
+    font-size: 11px;
+  }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 500px) {
+  .md-dashboard-autocomplete input:not(.md-input) {
+    font-size: 12px;
+  }
+  .md-dashboard-autocomplete .md-show-clear-button button {
+    display: none;
+  }
+
+  .md-autocomplete-participant input:not(.md-input) {
+    font-size: 12px;
+  }
+}
+
+
 .autocomplete-custom-participant-template li {
   border-bottom: 1px solid #ccc;
   height: auto;
@@ -374,7 +401,7 @@ md-sidenav.md-closed.md-locked-open-add-active {
   min-width: 100px !important;
   width: 50vw !important;
   max-width: 360px !important;
-} 
+}
 
 md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
   color: rgb(0,121,107);

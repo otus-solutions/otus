@@ -19,7 +19,6 @@
 
     function onInit() {
       self.onChangeFilter = onChangeFilter;
-      _registerOfFunction();
     }
 
     function clear(field) {
@@ -44,15 +43,5 @@
       let status = isNaN(parseInt(self.selectedStatus)) ? null : parseInt(self.selectedStatus);
       self.onUpdate(exams, self.selectedExamName, status, self.selectedCenter)
     }
-
-    function _clearBasicFilters() {
-      self.clear('examName');
-      self.clear('status');
-    }
-
-    function _registerOfFunction() {
-      $scope.$on('clear', _clearBasicFilters);
-    }
   }
-
 }());

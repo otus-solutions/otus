@@ -8,30 +8,57 @@
     </div>
   </otus-dashboard-toolbar>
   <md-content layout="column" layout-padding flex>
-    <link href="app/static-resource/stylesheet/heatmap.css" rel="stylesheet" />
+    <link href="app/static-resource/stylesheet/heatmap.css" rel="stylesheet"/>
     <br>
-    <otus-laboratory-flag-report-filter-component centers="$ctrl.centers" exams-status="$ctrl.status" exams-name-list="$ctrl.examsNameList"
-      on-update="$ctrl.updateData"></otus-laboratory-flag-report-filter-component>
-    <div ng-if="$ctrl.ready" layout="row" layout-align="center center">
-      <md-button ng-disabled="!$ctrl.examsData.data.length" class="md-accent md-raised" ng-click="$ctrl.downloadCSV()">EXPORTAR
-        <md-icon>get_app</md-icon>
-        <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados e os dados da
-          tela.
-        </md-tooltip>
-      </md-button>
-      <span flex></span>
-      <div flex="70" layout-align="end center">
-        <otus-paginator flex flex-gt-md="35" elements="$ctrl.rawExams.data" on-update="$ctrl.updatePage" ng-if="$ctrl.ready"></otus-paginator>
-      </div>
-    </div>
-    <md-divider></md-divider>
-    <md-content flex layout="row">
-      <md-content id="exam-heatmap" ng-show="$ctrl.examsData.data.length" ng-if="$ctrl.ready" layout="row" flex></md-content>
-      <div ng-if="$ctrl.error" layout="row" flex layout-align="center center" style="height: 400px; width: 400px; margin-left: auto; margin-right: auto;">
-        <div class="label-light-gray">
-          <h3 class="md-headline">{{$ctrl.message}}</h3>
+    <div hide-xs>
+      <otus-laboratory-flag-report-filter-component centers="$ctrl.centers" exams-status="$ctrl.status"
+                                                    exams-name-list="$ctrl.examsNameList"
+                                                    on-update="$ctrl.updateData"></otus-laboratory-flag-report-filter-component>
+      <div ng-if="$ctrl.ready" layout="row" layout-align="center center">
+        <md-button ng-disabled="!$ctrl.examsData.data.length" class="md-accent md-raised"
+                   ng-click="$ctrl.downloadCSV()">EXPORTAR
+          <md-icon>get_app</md-icon>
+          <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados e os dados da
+            tela.
+          </md-tooltip>
+        </md-button>
+        <span flex></span>
+        <div flex="70" layout-align="end center">
+          <otus-paginator flex flex-gt-md="35" elements="$ctrl.rawExams.data" on-update="$ctrl.updatePage"
+                          ng-if="$ctrl.ready"></otus-paginator>
         </div>
       </div>
+      <md-divider></md-divider>
+    </div>
+    <md-content flex layout="column">
+      <div hide-gt-xs >
+        <otus-laboratory-flag-report-filter-component centers="$ctrl.centers" exams-status="$ctrl.status"
+                                                      exams-name-list="$ctrl.examsNameList"
+                                                      on-update="$ctrl.updateData"></otus-laboratory-flag-report-filter-component>
+        <div ng-if="$ctrl.ready" layout="row"  layout-align="center center">
+          <md-button ng-disabled="!$ctrl.examsData.data.length" class="md-fab md-mini md-accent md-raised"
+                     ng-click="$ctrl.downloadCSV()">
+            <md-icon>get_app</md-icon>
+            <md-tooltip md-direction="down">O Relatório será exportado considerando os filtros aplicados e os dados da
+              tela.
+            </md-tooltip>
+          </md-button>
+          <div flex layout-align="end center">
+            <otus-paginator flex flex-gt-md="35" elements="$ctrl.rawExams.data" on-update="$ctrl.updatePage"
+                            ng-if="$ctrl.ready"></otus-paginator>
+          </div>
+        </div>
+        <md-divider></md-divider>
+      </div>
+      <md-content layout="row" class="exam-heatmap-container">
+        <div layout="column" id="exam-heatmap" ng-show="$ctrl.examsData.data.length" ng-style={'height':$ctrl.viewerHeight} ng-if="$ctrl.ready" ></div>
+        <div ng-if="$ctrl.error" layout="row" flex layout-align="center center"
+             style="height: 400px; width: 400px; margin-left: auto; margin-right: auto;">
+          <div class="label-light-gray">
+            <h3 class="md-headline">{{$ctrl.message}}</h3>
+          </div>
+        </div>
+      </md-content>
     </md-content>
   </md-content>
 </div>

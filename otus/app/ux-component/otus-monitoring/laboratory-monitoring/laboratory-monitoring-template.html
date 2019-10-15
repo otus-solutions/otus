@@ -14,10 +14,10 @@
   </otus-dashboard-toolbar>
   <md-content layout="column" layout-padding flex>
     <md-tabs md-border-bottom layout-fill>
-      <md-tab label="Pendências de Resultados"  ng-click="$ctrl.openTabPendingResultsByAliquots()">
-        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
+      <md-tab label="Pendências de Resultados" ng-click="$ctrl.openTabPendingResultsByAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center start">
           <md-card flex layout-fill layout-padding="">
-            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center">
               <div layout="column" flex layout-fill>
                 <h1 class=" remove-padding" layout-margin layout-padding>Pendências de Resultados</h1>
                 <h6 layout-margin class="remove-padding ">
@@ -36,34 +36,37 @@
                     <md-tooltip>
                       Centros
                     </md-tooltip>
-                    <md-option ng-repeat="center in $ctrl.centers track by $index" ng-selected="{{$index == $ctrl.centers.indexOf($ctrl.centerFilter) ? true : $index == 0 ? true : false}}"
-                      value="{{center}}" ng-click="$ctrl.loadDataByCenter('pending', center)">
+                    <md-option ng-repeat="center in $ctrl.centers track by $index"
+                               ng-selected="{{$index == $ctrl.centers.indexOf($ctrl.centerFilter) ? true : $index == 0 ? true : false}}"
+                               value="{{center}}" ng-click="$ctrl.loadDataByCenter('pending', center)">
                       {{center}}
                     </md-option>
                   </md-select>
                 </md-input-container>
                 <span flex="5"></span>
-                <md-button ng-click="$ctrl.downloadCSVFile('pending')" ng-disabled="$ctrl.error || $ctrl.disableDownloadCSVFile" class="md-raised md-primary md-icon-button">
+                <md-button ng-click="$ctrl.downloadCSVFile('pending')"
+                           ng-disabled="$ctrl.error || $ctrl.disableDownloadCSVFile"
+                           class="md-raised md-primary md-icon-button">
                   <md-icon>get_app</md-icon>
                   <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
                 </md-button>
               </div>
             </div>
+            <md-card-content layout="row" layout-align="center center">
+              <md-content>
+                <div ng-show="!$ctrl.error" id="pending-results-chart" layout="column"></div>
+              </md-content>
+              <div ng-if="$ctrl.error" class="label-light-gray">
+                <h2 flex>{{$ctrl.message}}</h2>
+              </div>
+            </md-card-content>
           </md-card>
         </md-content>
-        <md-content ng-show="!$ctrl.error" layout-padding>
-          <div id="pending-results-chart" layout="column"></div>
-        </md-content>
-        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
-          <div class="label-light-gray">
-            <h2 flex>{{$ctrl.message}}</h2>
-          </div>
-        </md-content>
       </md-tab>
-      <md-tab label="Acompanhamento de alíquotas"  ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
-        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
-          <md-card flex layout-fill layout-padding="">
-            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+      <md-tab label="Acompanhamento de alíquotas" ng-click="$ctrl.openTabQuantitativeByTypeOfAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center start">
+          <md-card flex layout-padding="">
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center">
               <div layout="column" flex layout-fill>
                 <h1 class=" remove-padding" layout-margin layout-padding>Acompanhamento de alíquotas</h1>
                 <h6 layout-margin class="remove-padding ">
@@ -82,28 +85,29 @@
                     <md-tooltip>
                       Centros
                     </md-tooltip>
-                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadDataByCenter('quantitative', center)">
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}"
+                               ng-click="$ctrl.loadDataByCenter('quantitative', center)">
                       {{center}}
                     </md-option>
                   </md-select>
                 </md-input-container>
               </div>
             </div>
+            <md-card-content layout="row" layout-align="center center">
+              <md-content>
+                <div ng-show="!$ctrl.error" id="quantitative-by-aliquots" layout="column"></div>
+              </md-content>
+              <div ng-if="$ctrl.error" class="label-light-gray">
+                <h2 flex>{{$ctrl.message}}</h2>
+              </div>
+            </md-card-content>
           </md-card>
         </md-content>
-        <md-content ng-show="!$ctrl.error" flex layout-padding>
-          <div id="quantitative-by-aliquots" flex></div>
-        </md-content>
-        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
-          <div class="label-light-gray">
-            <h2 flex>{{$ctrl.message}}</h2>
-          </div>
-        </md-content>
       </md-tab>
-      <md-tab label="Exames órfãos"  ng-click="$ctrl.openTabOrphanByExams()">
-        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
+      <md-tab label="Exames órfãos" ng-click="$ctrl.openTabOrphanByExams()">
+        <md-content layout="row" layout-margin="" layout-align="center center">
           <md-card flex layout-fill layout-padding="">
-            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
+            <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center">
               <div layout="column" flex layout-fill>
                 <h1 class=" remove-padding" layout-margin layout-padding>Exames órfãos</h1>
                 <h6 layout-margin class="remove-padding ">
@@ -116,25 +120,26 @@
               </div>
               <div layout="row" layout-align="center center" layout-fill flex>
                 <span flex></span>
-                <md-button ng-click="$ctrl.downloadCSVFile('orphan')" ng-disabled="$ctrl.errorInOrphansByExam" class="md-raised md-primary md-icon-button">
+                <md-button ng-click="$ctrl.downloadCSVFile('orphan')" ng-disabled="$ctrl.errorInOrphansByExam"
+                           class="md-raised md-primary md-icon-button">
                   <md-icon>get_app</md-icon>
                   <md-tooltip md-direction="down">Gerar CSV</md-tooltip>
                 </md-button>
               </div>
             </div>
+            <md-card-content layout="row" layout-align="center center">
+              <md-content>
+                <div ng-show="!$ctrl.errorInOrphansByExam" id="orphans-by-exam" layout="column"></div>
+              </md-content>
+              <div ng-if="$ctrl.errorInOrphansByExam" class="label-light-gray">
+                <h2 flex>{{$ctrl.message}}</h2>
+              </div>
+            </md-card-content>
           </md-card>
         </md-content>
-        <md-content ng-show="!$ctrl.errorInOrphansByExam" flex>
-          <div id="orphans-by-exam" flex></div>
-        </md-content>
-        <md-content ng-if="$ctrl.errorInOrphansByExam" layout="row" layout-align="center center" style="margin-top: 250px">
-          <div class="label-light-gray">
-            <h2 flex>{{$ctrl.message}}</h2>
-          </div>
-        </md-content>
       </md-tab>
-      <md-tab label="Armazenamento"  ng-click="$ctrl.openTabStorageByAliquots()">
-        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
+      <md-tab label="Armazenamento" ng-click="$ctrl.openTabStorageByAliquots()">
+        <md-content layout="row" layout-margin="" layout-align="center center">
           <md-card flex layout-fill layout-padding="">
             <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
               <div layout="column" flex layout-fill>
@@ -153,26 +158,27 @@
                     <md-tooltip>
                       Centros
                     </md-tooltip>
-                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadDataByCenter('storage', center)">
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}"
+                               ng-click="$ctrl.loadDataByCenter('storage', center)">
                       {{center}}
                     </md-option>
                   </md-select>
                 </md-input-container>
               </div>
             </div>
+            <md-card-content layout="row" layout-align="center center">
+              <md-content>
+                <div ng-show="!$ctrl.error" id="storage-by-exam" flex></div>
+              </md-content>
+              <div ng-if="$ctrl.error" class="label-light-gray">
+                <h2 flex>{{$ctrl.message}}</h2>
+              </div>
+            </md-card-content>
           </md-card>
-        </md-content>
-        <md-content ng-show="!$ctrl.error" flex layout-padding>
-          <div id="storage-by-exam" flex></div>
-        </md-content>
-        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
-          <div class="label-light-gray">
-            <h2 flex>{{$ctrl.message}}</h2>
-          </div>
         </md-content>
       </md-tab>
       <md-tab label="Resultados de Exames" ng-click="$ctrl.openTabByExam()">
-        <md-content layout="row" layout-margin="" layout-align="center center" layout-fill>
+        <md-content layout="row" layout-margin="" layout-align="center center">
           <md-card flex layout-fill layout-padding="">
             <div layout="row" layout-xs="column" layout-align-xs="center start" layout-align="center center" flex>
               <div layout="column" flex layout-fill>
@@ -191,22 +197,23 @@
                     <md-tooltip>
                       Centros
                     </md-tooltip>
-                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-click="$ctrl.loadDataByCenter('exam', center)">
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}"
+                               ng-click="$ctrl.loadDataByCenter('exam', center)">
                       {{center}}
                     </md-option>
                   </md-select>
                 </md-input-container>
               </div>
             </div>
+            <md-card-content>
+              <md-content >
+                <div ng-show="!$ctrl.error" id="results-by-exam" flex></div>
+              </md-content>
+              <div ng-if="$ctrl.error" class="label-light-gray">
+                <h2 flex>{{$ctrl.message}}</h2>
+              </div>
+            </md-card-content>
           </md-card>
-        </md-content>
-        <md-content ng-show="!$ctrl.error" flex layout-padding>
-          <div id="results-by-exam" flex></div>
-        </md-content>
-        <md-content ng-if="$ctrl.error" layout="row" layout-align="center center" style="margin-top: 250px">
-          <div class="label-light-gray">
-            <h2 flex>{{$ctrl.message}}</h2>
-          </div>
         </md-content>
       </md-tab>
     </md-tabs>

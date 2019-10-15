@@ -2,21 +2,27 @@
   <otus-dashboard-sidenav layout="row" participant="$ctrl.selectedParticipant"></otus-dashboard-sidenav>
   <otus-dashboard-toolbar layout="row" on-participant-select="$ctrl.selectParticipant(participant)">
     <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.PARTICIPANT_DASHBOARD">
-      <span>{{ $ctrl.selectedParticipant.recruitmentNumber }} - {{ $ctrl.selectedParticipant.name }}</span>
+      <span hide-xs>{{ $ctrl.selectedParticipant.recruitmentNumber }} - {{ $ctrl.selectedParticipant.name }}</span>
+      <span class="md-caption" hide-gt-xs>{{ $ctrl.selectedParticipant.recruitmentNumber }} - {{ $ctrl.selectedParticipant.name }}</span>
+      <md-icon class="icon-clickable" hide-gt-xs ng-click="$ctrl.find=!$ctrl.find">search</md-icon>
     </div>
     <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() == $ctrl.STATE.LABORATORY">
-      <md-icon md-svg-icon="eyedropper-variant" aria-label="Atividades">
+      <md-icon class="md-caption" md-svg-icon="eyedropper-variant" aria-label="Atividades">
         <md-tooltip>Laboratório</md-tooltip>
       </md-icon>
-      <span>{{ $ctrl.selectedParticipant.recruitmentNumber }} - {{ $ctrl.selectedParticipant.name }}</span>
+      <span hide-xs>{{ $ctrl.selectedParticipant.recruitmentNumber }} - {{ $ctrl.selectedParticipant.name }}</span>
+      <span class="md-caption" hide-gt-xs>{{ $ctrl.selectedParticipant.recruitmentNumber }} - {{ $ctrl.selectedParticipant.name }}</span>
+      <md-icon class="icon-clickable" hide-gt-xs ng-click="$ctrl.find=!$ctrl.find">search</md-icon>
     </div>
     <div flex layout="row" layout-align="center center" layout-margin ng-if="$ctrl.getCurrentState() != $ctrl.STATE.LABORATORY && $ctrl.getCurrentState() != $ctrl.STATE.PARTICIPANT_DASHBOARD">
-      <md-icon md-svg-icon="file-document-box" aria-label="Atividades" style="color: white">
+      <md-icon  class="md-caption" md-svg-icon="file-document-box" aria-label="Atividades" style="color: white">
         <md-tooltip md-direction="bottom">Atividades</md-tooltip>
       </md-icon>
-      <span>{{ $ctrl.selectedParticipant.recruitmentNumber }} - {{ $ctrl.selectedParticipant.name }}</span>
+      <span hide-xs>{{ $ctrl.selectedParticipant.recruitmentNumber }} - {{ $ctrl.selectedParticipant.name }}</span>
+      <span class="md-caption" hide-gt-xs>{{ $ctrl.selectedParticipant.recruitmentNumber }} - {{ $ctrl.selectedParticipant.name }}</span>
+      <md-icon class="icon-clickable" hide-gt-xs ng-click="$ctrl.find=!$ctrl.find">search</md-icon>
     </div>
   </otus-dashboard-toolbar>
-  <otus-participant-dashboard-toolbar layout="row"></otus-participant-dashboard-toolbar>
+  <otus-participant-dashboard-toolbar layout="row" ng-show="$ctrl.find"></otus-participant-dashboard-toolbar>
   <otus-dashboard-display layout="row" flex></otus-dashboard-display>
 </div>

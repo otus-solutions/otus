@@ -7,7 +7,12 @@
     </md-button>
 
     <span flex></span>
-    <h2><span>Dados de Atividade em Papel</span></h2>
+    <h3 hide-xs>
+      <span>Dados de Atividade em Papel</span>
+    </h3>
+    <h6 hide-gt-xs>
+      <span>Dados da Atividade</span>
+    </h6>
     <span flex></span>
 
     <md-button ng-click="$ctrl.goToActivityAdder()" aria-label="Continuar">
@@ -18,7 +23,8 @@
   </div>
 </md-toolbar>
 
-<div layout="row" flex layout-align="center center">
+
+<md-content layout="row" flex layout-align="center center">
   <div layout-margin layout="column">
     <div layout="column" class="label-light-gray">
       <h3 class="md-display-3">Informações de Realização</h3>
@@ -27,12 +33,16 @@
     </div>
     <div flex>
       <div>
-        <md-datepicker ng-model="$ctrl.paperActivityData.realizationDate" md-placeholder="Data de realização"></md-datepicker>
+        <md-datepicker ng-model="$ctrl.paperActivityData.realizationDate"
+                       md-placeholder="Data de realização"></md-datepicker>
       </div>
       <md-autocomplete flex md-no-cache="true" md-selected-item="$ctrl.selectedItem"
-      md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)" md-search-text="$ctrl.searchText"
-      md-selected-item-change="$ctrl.selectedItemChange(item)" md-items="item in $ctrl.querySearch($ctrl.searchText)"
-      md-item-text="item.text" md-min-length="0" placeholder="Aferidor (a)" md-menu-class="autocomplete-custom-template">
+                       md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
+                       md-search-text="$ctrl.searchText"
+                       md-selected-item-change="$ctrl.selectedItemChange(item)"
+                       md-items="item in $ctrl.querySearch($ctrl.searchText)"
+                       md-item-text="item.text" md-min-length="0" placeholder="Aferidor (a)"
+                       md-menu-class="autocomplete-custom-template">
         <md-item-template>
           <span class="item-title">
             <md-icon md-svg-icon="account"></md-icon>
@@ -50,4 +60,4 @@
       </md-autocomplete>
     </div>
   </div>
-</div>
+</md-content>

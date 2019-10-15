@@ -1,6 +1,6 @@
-<otus-panel header-label="'Relatórios'">
-  <div ng-repeat="report in $ctrl.reports" layout="row" style="width: 400px;" ng-if="$ctrl.ready">
-    <md-card class="md-whiteframe-3dp" ng-if="$ctrl.ready" style="background-color: #ffffff" flex>
+<otus-panel header-label="'Relatórios'" layout-align="'center center'" flex>
+  <div layout-wrap layout-align="center center" layout="row"  ng-if="$ctrl.ready" class="report-list" >
+    <md-card ng-repeat="report in $ctrl.reports" class="report-item md-whiteframe-3dp" ng-if="$ctrl.ready" flex-xs="100" flex-sm="45" flex="30">
       <md-card-header class="md-toolbar-tools">
         <md-icon ng-style="{color:report.status.color}">{{report.status.icon}}</md-icon>
         <md-card-header-text class="truncate">
@@ -17,9 +17,9 @@
         <md-progress-circular class="md-hue-2" md-diameter="20px"></md-progress-circular>
         <span class="md-caption">&nbsp;&nbsp;Carregando</span>
       </div>
-      <md-card-content ng-if="report.status.expanded && !report.loading" layout="column" flex>
+      <md-card-content ng-if="report.status.expanded && !report.loading" layout="column" layout-fill>
         <div layout="row" flex class="dashboard-legend"
-        ng-if="report.missingDataSources.length || report.fieldsError.length || report.missingOptionalDataSources.length">
+             ng-if="report.missingDataSources.length || report.fieldsError.length || report.missingOptionalDataSources.length">
           <div layout="row" layout-align="center center" flex="50">
             <span class="bull-legend required">&bull;</span>
             <span class="md-caption">Obrigatório</span>

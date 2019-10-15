@@ -1,10 +1,9 @@
 <div flex layout="row" layout-align="end center" layout-margin>
-  <span class="md-caption">Itens por página:</span>
+  <span hide-xs class="md-caption">Itens por página:</span>
   <md-select ng-model="pageSize" ng-change="$ctrl.onChangeSize()" aria-label="Quantidade de resultados">
     <md-option ng-repeat="size in rowPerPage track by $index" value="{{size}}">{{size}}</md-option>
   </md-select>
   <span class="md-caption">{{range + ' of ' + totalRows}}</span>
-  <span flex="5"></span>
   <md-button class="md-icon-button" ng-disabled="disabledPrevious" ng-click="$ctrl.goToPrevious()">
     <md-icon>keyboard_arrow_left</md-icon>
   </md-button>

@@ -226,14 +226,8 @@
     function _buildGraph(status) {
       if (self.filteredExams) {
         _heatmap_display(angular.copy(self.filteredExams), status);
-        $(window).resize(function () {
-          _heatmap_display(angular.copy(self.filteredExams), status);
-        })
       } else if (self.examsData) {
         _heatmap_display(angular.copy(self.examsData), status);
-        $(window).resize(function () {
-          _heatmap_display(angular.copy(self.examsData), status);
-        })
       } else {
         $("#exam-heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
       }
@@ -249,22 +243,11 @@
         .style("position", "absolute")
         .style("visibility", "hidden");
 
-      //==================================================
-      var columnsCount = self.examsData.columns.length;
-      var totalCellSize = CELL_SIZE * columnsCount;
+      var horizontalTranslation = 1920 / 15;
+      var verticalTranslation = window.innerHeight / 2.5;
 
-      // var horizontalTranslation = window.innerWidth / 3.5;
-      var horizontalTranslation = window.innerWidth / 15;
-      var verticalTranslation = window.innerHeight / 4;
-
-      var max = 1200;
-      var scale = max > innerWidth ? 1 : innerWidth / max;
-
-      var contentWidth = ((totalCellSize + horizontalTranslation) * scale) + horizontalTranslation;
-      var viewerWidth = contentWidth > innerWidth ? contentWidth : innerWidth;
-
-      var contentHeight = (((_amountOfElementsInPage * columnsCount) + verticalTranslation) * scale);
-      var viewerHeight = contentHeight > window.innerHeight ? contentHeight : window.innerHeight;
+      var viewerWidth = 1920;
+      self.viewerHeight = CELL_SIZE * self.examsData.data.length + verticalTranslation + 30;
       var legendHeight = 70;
       var legendElementWidth = CELL_SIZE * 4.5;
       var svg;
@@ -278,9 +261,9 @@
       svg = d3.select(heatmapId)
         .append("svg")
         .attr("width", viewerWidth)
-        .attr("height", viewerHeight)
+        .attr("height", self.viewerHeight)
         .append("g")
-        .attr("transform", "translate(" + horizontalTranslation + "," + verticalTranslation * scale + ")scale(" + scale + ")");
+        .attr("transform", "translate(" + horizontalTranslation + "," + verticalTranslation + ")");
 
       svg.append('defs')
         .append('pattern')
@@ -362,7 +345,7 @@
           d3.select("#order").property("selectedIndex", 0);
         });
 
-      //Index to lines to d3 
+      //Index to lines to d3
       var lineIndexOne = -1;
       var lineIndexTwo = -1;
       var lineIndexThree = -1;
@@ -437,7 +420,7 @@
 
       var legend = svg.append("g")
         .attr("class", "legend")
-        .attr("transform", "translate(-45,-300)")
+        .attr("transform", "translate(0,-300)")
         .selectAll(".legendElement")
         .data(self.labels)
         .enter().append("g")

@@ -45,7 +45,7 @@ describe('Bar Charts Vertical Factory Test', function () {
       d3.selectAll('svg').remove();
     });
     it('should create a char bar vertical', function () {
-      expect(getSvg().attr("height")).toEqual('-50');
+      expect(getSvg().attr("height")).toEqual('-100');
       expect(getSvg().attr("margin")).toEqual('250');
       expect(d3.selectAll('text.labelValue').attr("fill")).toEqual("#000");
       for (var i = 0; i < Mock.data[0].length; i++) {
@@ -64,7 +64,7 @@ describe('Bar Charts Vertical Factory Test', function () {
       d3.selectAll('svg').remove();
     });
     it('should create a char bar vertical', function () {
-      expect(getSvg().attr("height")).toEqual('-50');
+      expect(getSvg().attr("height")).toEqual('-100');
       expect(getSvg().attr("margin")).toEqual('250');
       expect(d3.selectAll('text.labelValue')._groups[0][0]).not.toBeDefined();
       expect(d3.selectAll('g.cost')._groups[0][0].style.fill).toEqual(WHITE);
@@ -81,7 +81,7 @@ describe('Bar Charts Vertical Factory Test', function () {
       d3.selectAll('svg').remove();
     });
     it('should create a char bar vertical', function () {
-      expect(getSvg().attr("height")).toEqual('-50');
+      expect(getSvg().attr("height")).toEqual('-100');
       expect(getSvg().attr("margin")).toEqual('250');
       expect(d3.selectAll('text.labelValue')._groups[0][0]).not.toBeDefined();
       expect(d3.selectAll('g.cost')._groups[0][0].style.fill).toEqual(Mock.colors[0]);

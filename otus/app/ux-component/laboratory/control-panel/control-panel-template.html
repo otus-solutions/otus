@@ -1,38 +1,102 @@
 <div layout="column" md-whiteframe="1" flex>
-  <div class="control-panel" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'main'">
+  <div class="control-panel control-toolbar" layout="row" layout-padding layout-align="start start"
+       ng-if="$ctrl.state === 'main'">
     <label-maker label-data="$ctrl.labels"></label-maker>
     <div layout="row" layout-align="center center">
-      <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('coleta')">Coleta de Tubos</md-button>
-      <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('aliquots')">Aliquotagem</md-button>
+      <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('coleta')">Coleta de
+        Tubos
+      </md-button>
+      <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('aliquots')">
+        Aliquotagem
+      </md-button>
     </div>
 
     <div layout="row" layout-align="end center" flex style="padding-top: 12px">
-      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" />
+      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant"/>
     </div>
   </div>
 
-  <div class="" layout="row" layout-xs="column" layout-padding layout-align="space-around start" ng-if="$ctrl.state === 'coleta'" flex>
+  <div class="mobile-control-toolbar" layout="row" layout-padding layout-wrap layout-align="start start"
+       ng-if="$ctrl.state === 'main'">
+    <md-fab-speed-dial md-direction="down" class="md-scale" flex>
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-accent">
+          Açoes
+          <md-icon md-svg-icon="menu"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <label-maker class="label-maker" label-data="$ctrl.labels"></label-maker>
+        <md-button class="md-primary md-raised md-mini" aria-label="Coleta de Tubos"
+                   ng-click="$ctrl.changeState('coleta')"
+        <md-tooltip md-direction="left">Coleta de Tubos</md-tooltip>
+        </md-button>
+        <md-button class="md-primary md-raised md-mini" aria-label="Aliquotagem"
+                   ng-click="$ctrl.changeState('aliquots')"
+        <md-tooltip md-direction="left">Aliquotagem</md-tooltip>
+        </md-button>
+      </md-fab-actions>
+    </md-fab-speed-dial>
+    <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant"/>
+  </div>
+
+  <div class="control-toolbar collect-control-toolbar" layout="row" layout-xs="column" layout-padding
+       layout-align="space-around start"
+       ng-if="$ctrl.state === 'coleta'" flex>
     <div layout="row" layout-align="start center" flex>
-      <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelTubeCollectionAndReturn()">Voltar</md-button>
-      <md-button class="md-primary md-raised" aria-label="cancelar coleta" ng-click="$ctrl.cancelCollect()">Cancelar</md-button>
+      <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelTubeCollectionAndReturn()">Voltar
+      </md-button>
+      <md-button class="md-primary md-raised" aria-label="cancelar coleta" ng-click="$ctrl.cancelCollect()">Cancelar
+      </md-button>
     </div>
     <div layout="row" layout-align="center center" layout-fill flex>
       <fast-collection tube-list="$ctrl.labParticipant.tubes"></fast-collection>
-      <md-button class="md-primary md-raised" aria-label="realizar coleta" ng-click="$ctrl.saveChangedTubes()">Salvar</md-button>
+      <md-button class="md-primary md-raised" aria-label="realizar coleta" ng-click="$ctrl.saveChangedTubes()">Salvar
+      </md-button>
       <div flex-offset="5">
       </div>
     </div>
-
     <div layout="row" layout-align="end none" flex="20" style="padding-top: 12px">
-      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant" />
+      <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant"/>
     </div>
   </div>
 
+  <div class="mobile-collect-control-toolbar" layout="row" layout-padding ng-if="$ctrl.state === 'coleta'">
+    <fast-collection tube-list="$ctrl.labParticipant.tubes" flex="80"></fast-collection>
+    <md-fab-speed-dial md-direction="down" class="md-scale" flex>
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-accent">
+          <md-icon md-svg-icon="menu"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <md-button class="md-fab md-raised md-mini" aria-label="voltar"
+                   ng-click="$ctrl.cancelTubeCollectionAndReturn()">
+          <md-icon>arrow_back</md-icon>
+          <md-tooltip md-direction="left">Voltar</md-tooltip>
+        </md-button>
+        <md-button class="md-fab md-primary md-raised md-mini" aria-label="cancelar coleta"
+                   ng-click="$ctrl.cancelCollect()">
+          <md-icon>cancel</md-icon>
+          <md-tooltip md-direction="left">Cancelar</md-tooltip>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary md-raised" aria-label="realizar coleta"
+                   ng-click="$ctrl.saveChangedTubes()">
+          <md-icon>save</md-icon>
+          <md-tooltip md-direction="left">Salvar</md-tooltip>
+        </md-button>
+        <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant"/>
+      </md-fab-actions>
+    </md-fab-speed-dial>
+  </div>
 
-  <div class="control-panel" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'aliquots'">
+
+  <div class="control-panel aliquots-control-toolbar" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'aliquots'">
     <div layout="row" layout-align="center center">
       <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAliquots()">Voltar</md-button>
-      <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-disabled="$ctrl.fetchChanges()" ng-click="$ctrl.saveAliquots()">Salvar</md-button>
+      <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-disabled="$ctrl.fetchChanges()"
+                 ng-click="$ctrl.saveAliquots()">Salvar
+      </md-button>
     </div>
 
     <div layout="column" layout-align="center center" flex>
@@ -40,20 +104,54 @@
         <label style="position:relative;top:13px">Processamento:</label>
         <md-input-container class="md-input-has-placeholder md-input-has-value" style="position: relative; top: -10px;">
           <input mdc-datetime-picker="" ng-change="$ctrl.verifyDate()"
-          show-icon="true" date="true" time="true" aria-label="Data de Processamento"
-          type="text" id="datetime" show-todays-date=""
-          max-date="$ctrl.now" ng-model="$ctrl.processingDate"
-          class="md-input" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A"
-            disable-parent-scroll="true">
+                 show-icon="true" date="true" time="true" aria-label="Data de Processamento"
+                 type="text" id="datetime" show-todays-date=""
+                 max-date="$ctrl.now" ng-model="$ctrl.processingDate"
+                 class="md-input" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A"
+                 disable-parent-scroll="true">
         </md-input-container>
-
       </div>
     </div>
-
-
     <div layout="row" layout-align="end center" flex="10" style="padding-top: 12px">
-      <laboratory-refresh-button state="$ctrl.state" />
+      <laboratory-refresh-button state="$ctrl.state"/>
     </div>
+  </div>
+
+  <div class="mobile-aliquots-control-toolbar" layout="row" layout-padding ng-if="$ctrl.state === 'aliquots'">
+    <div layout="row" flex="80">
+      <label>Processamento:</label>
+      <md-input-container class="md-input-has-placeholder md-input-has-value" style="position: relative;">
+        <input mdc-datetime-picker="" ng-change="$ctrl.verifyDate()"
+                date="true" time="true" aria-label="Data de Processamento"
+               type="text" id="datetime" show-todays-date=""
+               max-date="$ctrl.now" ng-model="$ctrl.processingDate"
+               class="md-input" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A"
+               disable-parent-scroll="true">
+        <md-tooltip>
+          Processamento
+        </md-tooltip>
+      </md-input-container>
+    </div>
+    <md-fab-speed-dial md-direction="down" class="md-scale" flex>
+      <md-fab-trigger>
+        <md-button aria-label="menu" class="md-fab md-accent">
+          <md-icon md-svg-icon="menu"></md-icon>
+        </md-button>
+      </md-fab-trigger>
+      <md-fab-actions>
+        <md-button class="md-fab md-raised md-mini" aria-label="voltar"
+                   ng-click="$ctrl.cancelAliquots()">
+          <md-icon>arrow_back</md-icon>
+          <md-tooltip md-direction="left">Voltar</md-tooltip>
+        </md-button>
+        <md-button class="md-fab md-mini md-primary md-raised" aria-label="realizar coleta"
+                   ng-click="$ctrl.saveAliquots()">
+          <md-icon>save</md-icon>
+          <md-tooltip md-direction="left">Salvar</md-tooltip>
+        </md-button>
+        <laboratory-refresh-button state="$ctrl.state" lab-participant="$ctrl.labParticipant"/>
+      </md-fab-actions>
+    </md-fab-speed-dial>
   </div>
 
 </div>

@@ -1,86 +1,81 @@
 <md-content layout="column" flex>
-      <div layout-align="start center" flex>
-        <md-card layout="row" flex="80" flex-offset="10">
-          <div layout="column" flex>
-            <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
-              Informações do Lote
-            </md-subheader>
-            <div flex>
-              <div flex layout-padding>
-                <div layout="row" layout-xs="column" flex>
-                  <div layout="column" layout-align="center start" flex="20" flex-md="15" flex-gt-md="10">
-                    <span>Centro: {{$ctrl.lot.fieldCenter.acronym}}</span>
-                  </div>
-                </div>
-                <div>
-                  <div layout="row" layout-xs="column" flex>
-                    <div layout="column" layout-align="center start" flex="35" >
-                      <span>Tipo do lote: {{$ctrl.lot.aliquotLabel}}</span>
-                    </div>
-                    <span></span>
-                  </div>
-                </div>
+  <div layout-align="start center" flex>
+    <md-card layout="row" layout-xs="column" flex>
+      <div layout="column" flex>
+        <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
+          Informações do Lote
+        </md-subheader>
+        <div flex>
+          <div flex layout="row" layout-align="center center" layout-padding>
+            <div layout="column" flex>
+              <span>Centro: {{$ctrl.lot.fieldCenter.acronym}}</span>
+            </div>
+            <div layout="row" layout-xs="column" flex>
+              <div layout="column" flex>
+                <span>Tipo do lote: {{$ctrl.lot.aliquotLabel}}</span>
               </div>
+              <span></span>
             </div>
-          </div>
-        </md-card>
-        <div flex layout="row" layout-align="center center">
-          <md-card flex="80">
-            <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
-              Alíquotas
-            </md-subheader>
-
-            <div  layout-align="center center" layout-padding>
-              <form layout="row" name="formAliquot" flex>
-                <md-input-container flex>
-                  <label>Insira o código da aliquota:</label>
-                  <input type="text" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode" ng-keydown="$ctrl.aliquotInputkeydown($event)" flex/>
-                  <div ng-messages="formAliquot['fast-trigger'].$error" role="alert">
-                    <div ng-message="customValidation">{{$ctrl.error}}</div>
-                  </div>
-                </md-input-container>
-                <div>
-                  <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-raised md-primary" aria-label="Adicionar Alíquota">
-                    <md-tooltip md-direction="down">Adicionar</md-tooltip>
-                    <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
-                  </md-button>
-                </div>
-              </form>
-
-
-            </div>
-            <!--<div layout="row" layout-padding ng-if="$ctrl.hasError" style="color:maroon" role="alert">-->
-              <!--<div>{{$ctrl.error}}</div>-->
-            <!--</div>-->
-            <md-divider></md-divider>
-            <dynamic-data-table flex
-              headers="['Código', 'Tipo', 'Recipiente', 'Aliquotagem']"
-              elements-array="$ctrl.lot.aliquotList"
-              elements-properties="['code', 'label', 'containerLabel', 'aliquotCollectionData.time']"
-              callback-after-change="$ctrl.dynamicDataTableChange"
-              table-update-function="$ctrl.ExamLotService.dynamicDataTableFunction.updateDataTable"
-
-              table-title="'Lista de Alíquotas'"
-              order-indices="[1,3,2,0]"
-              order-by-insertion="true"
-              number-fields-aligned-left="10"
-
-              flex-array="[20, 40, 20,20]"
-              format-data=""
-              format-data-properties-array="['aliquotCollectionData.time']"
-              format-data-index-array="[]"
-
-              disable-checkbox="false"
-              disable-filter="false"
-              disable-reorder="false"
-              disable-pagination="false"
-              selected-color=""
-              hover-color=""
-            >
-            </dynamic-data-table>
           </div>
         </div>
       </div>
+    </md-card>
+    <div flex layout="row" layout-align="center center">
+      <md-card flex>
+        <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
+          Alíquotas
+        </md-subheader>
+        <div layout-align="center center" layout-padding>
+          <form layout="row" name="formAliquot" class="aliquot-form" flex>
+            <md-input-container flex>
+              <label>Insira o código da aliquota:</label>
+              <input type="text" name="fast-trigger" value="Inserção rápida" ng-model="$ctrl.aliquotCode"
+                     ng-keydown="$ctrl.aliquotInputkeydown($event)" flex/>
+              <div ng-messages="formAliquot['fast-trigger'].$error" role="alert">
+                <div ng-message="customValidation">{{$ctrl.error}}</div>
+              </div>
+            </md-input-container>
+            <div>
+              <md-button ng-click="$ctrl.fastInsertion($ctrl.aliquotCode)" class="md-mini md-fab md-raised md-primary"
+                         aria-label="Adicionar Alíquota">
+                <md-tooltip md-direction="down">Adicionar</md-tooltip>
+                <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
+              </md-button>
+            </div>
+          </form>
+        </div>
+        <md-divider></md-divider>
+      </md-card>
+    </div>
+    <md-content>
+      <div flex layout="row" class="dynamic-table-container" layout-align="center center">
+        <dynamic-data-table flex
+                            headers="['Código', 'Tipo', 'Recipiente', 'Aliquotagem']"
+                            elements-array="$ctrl.lot.aliquotList"
+                            elements-properties="['code', 'label', 'containerLabel', 'aliquotCollectionData.time']"
+                            callback-after-change="$ctrl.dynamicDataTableChange"
+                            table-update-function="$ctrl.ExamLotService.dynamicDataTableFunction.updateDataTable"
+
+                            table-title="'Lista de Alíquotas'"
+                            order-indices="[1,3,2,0]"
+                            order-by-insertion="true"
+                            number-fields-aligned-left="10"
+
+                            flex-array="[20, 40, 20,20]"
+                            format-data=""
+                            format-data-properties-array="['aliquotCollectionData.time']"
+                            format-data-index-array="[]"
+
+                            disable-checkbox="false"
+                            disable-filter="false"
+                            disable-reorder="false"
+                            disable-pagination="false"
+                            selected-color=""
+                            hover-color=""
+        >
+        </dynamic-data-table>
+      </div>
+    </md-content>
 </md-content>
 
 

@@ -1,0 +1,543 @@
+otus-dashboard-sidenav {
+  md-sidenav {
+    position: fixed !important;
+    width: 320px;
+    min-width: 320px !important;
+  }
+
+  md-backdrop {
+    position: fixed !important;
+  }
+
+  md-backdrop ~ md-content {
+    position: fixed;
+    overflow: hidden;
+  }
+
+  @media (max-width: 456px) {
+    md-sidenav,
+    md-sidenav.md-locked-open,
+    md-sidenav.md-closed.md-locked-open-add-active {
+      position: fixed !important;
+      min-width: 320px !important;
+    }
+  }
+}
+
+otus-participants-list {
+  .dynamic-table-container-md-content {
+    max-height: 90%;
+  }
+  .dynamic-table-container {
+    min-width: 850px;
+
+    .dynamic-structure {
+      min-width: 800px !important;
+    }
+  }
+}
+
+otus-dashboard-toolbar {
+  @media only screen and (max-width: 799px) {
+    .not-mobile {
+      display: none;
+    }
+  }
+  @media only screen and (min-width: 800px) {
+    .mobile {
+      display: none;
+    }
+  }
+}
+
+otus-dashboard {
+  otus-dashboard-toolbar {
+    @media only screen and (max-width: 799px) {
+      .mobile {
+        display: none !important;
+      }
+      .not-mobile {
+        display: block !important;
+      }
+    }
+  }
+}
+
+otus-report-dashboard {
+  otus-panel{
+    .report-list {
+      min-width: 250px;
+      .report-item {
+        min-width: 250px;
+        background-color: #ffffff
+      }
+    }
+  }
+}
+
+otus-activity-manager {
+  otus-activity-list {
+    @media only screen and (max-width: 450px) {
+      .not-mobile {
+        display: none;
+      }
+    }
+
+    .dynamic-table-container {
+      min-width: 800px;
+
+      .dynamic-structure {
+        min-width: 750px !important;
+      }
+    }
+  }
+
+  otus-activity-manager-toolbar {
+    md-fab-speed-dial {
+      max-height: 50px;
+    }
+
+    @media only screen and (max-width: 450px) {
+      md-toolbar {
+        display: none !important;
+      }
+      md-fab-speed-dial {
+        position: relative;
+        display: flex;
+        align-items: center;
+        z-index: 20;
+
+        md-fab-trigger {
+          width: 80%;
+
+          button {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+          }
+        }
+      }
+    }
+    @media only screen and (min-width: 451px) {
+      md-fab-speed-dial {
+        display: none;
+      }
+    }
+  }
+
+  otus-activity-manager-commander {
+    @media only screen and (max-width: 451px) {
+      md-fab-speed-dial {
+        display: none;
+      }
+    }
+  }
+}
+
+otus-activity-adder-list {
+  .dynamic-table-container {
+    min-width: 800px;
+
+    .dynamic-structure {
+      min-width: 750px !important;
+    }
+  }
+}
+
+lab-control-panel {
+
+  @media only screen and (max-width: 550px) {
+    .control-toolbar {
+      display: none;
+    }
+    .mobile-control-toolbar {
+      max-height: 65px;
+
+      md-fab-speed-dial {
+        max-height: 50px;
+        display: flex;
+        align-items: center;
+        z-index: 20;
+
+        md-fab-trigger {
+          width: 80%;
+
+          button {
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            padding-left: 0;
+            padding-right: 0;
+          }
+        }
+
+        md-fab-actions {
+          button {
+            min-width: 150px;
+          }
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 551px) {
+    .mobile-control-toolbar {
+      display: none;
+    }
+    .control-toolbar {
+      div {
+        .mobile-input {
+          display: none;
+        }
+      }
+    }
+
+  }
+
+  @media only screen and (max-width: 650px) {
+    .collect-control-toolbar {
+      display: none;
+    }
+    .mobile-collect-control-toolbar {
+      max-height: 65px;
+
+      md-fab-speed-dial {
+        position: relative;
+        top: -18px;
+        max-height: 30px;
+        display: flex;
+        align-items: center;
+        z-index: 20;
+      }
+
+      fast-collection {
+        position: relative;
+        top: -15px;
+
+        div {
+          min-width: 80px;
+
+          .desktop-input {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .aliquots-control-toolbar {
+      display: none;
+    }
+    .mobile-aliquots-control-toolbar {
+      max-height: 65px;
+
+      div {
+        label {
+          position: relative;
+          top: 10px;
+        }
+
+        md-input-container {
+          position: relative;
+          top: -15px;
+        }
+      }
+
+      md-fab-speed-dial {
+        position: relative;
+        top: -18px;
+        max-height: 30px;
+        display: flex;
+        align-items: center;
+        z-index: 20;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 359px) {
+    .mobile-aliquots-control-toolbar {
+      div {
+        label {
+          display: none;
+        }
+      }
+    }
+  }
+
+  @media only screen and (min-width: 651px) {
+    .mobile-collect-control-toolbar {
+      display: none;
+    }
+
+    .mobile-aliquots-control-toolbar {
+      display: none;
+    }
+  }
+}
+
+aliquots-view {
+  .aliquots-container {
+    min-width: 900px;
+  }
+}
+
+otus-sample-transportation-manager-list {
+  otus-sample-transportation-lot-info-sidenav {
+    md-sidenav {
+      min-width: 320px !important;
+    }
+  }
+
+  .sample-transportation-lot-manager-list-component {
+    @media screen and (max-width: 726px) {
+      .desktop-filter {
+        div {
+          .md-subheader {
+            display: none !important;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .desktop-filter {
+        display: none;
+      }
+      .table-container {
+        min-width: 850px;
+
+        md-list {
+          min-width: 800px;
+        }
+      }
+      md-card {
+        width: 300px;
+
+        md-card-title {
+          md-card-title-text {
+            .md-subhead {
+              font-size: 10px;
+            }
+
+            .md-headline {
+              font-size: 14px;
+            }
+          }
+
+          div {
+            div {
+              otus-sample-transportation-lot-aliquots-chart {
+                display: block;
+                height: 87px;
+                width: 128px;
+                position: relative;
+                right: 44px;
+                top: -24px;
+              }
+            }
+          }
+        }
+      }
+    }
+    @media screen and (min-width: 601px) {
+      .mobile-filter {
+        display: none;
+      }
+      md-card {
+        width: 500px;
+      }
+    }
+  }
+}
+
+otus-lot-info-manager-display {
+  .subtitle-table-container {
+    max-height: 200px;
+  }
+
+  .dynamic-table-container {
+    min-width: 850px;
+    max-height: 420px;
+
+    .dynamic-structure {
+      min-width: 800px !important;
+    }
+  }
+
+  md-input-container {
+    md-datepicker {
+      position: relative;
+      left: -15px;
+    }
+  }
+}
+
+otus-view-sending-exam {
+  .dynamic-table-container-md-content{
+    min-height: 400px;
+    .dynamic-table-container {
+      min-width: 850px;
+      max-height: 420px;
+
+      .dynamic-structure {
+        min-width: 800px !important;
+      }
+    }
+  }
+
+  otus-result-visualizer {
+    .dynamic-table-container {
+      min-width: 850px;
+      max-height: 420px;
+
+      .dynamic-structure {
+        min-width: 800px !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: 726px) {
+    .desktop-filter {
+      .md-subheader {
+        display: none !important;
+      }
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .desktop-filter {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 601px) {
+    .mobile-filter {
+      display: none;
+    }
+  }
+}
+
+otus-exams-lots-manager {
+  .table-container {
+    min-width: 850px;
+
+    md-list {
+      min-width: 800px;
+    }
+  }
+
+  @media screen and (max-width: 726px) {
+    .desktop-filter {
+      .md-subheader {
+        display: none !important;
+      }
+    }
+  }
+  @media screen and (max-width: 650px) {
+    .desktop-filter {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 651px) {
+    .mobile-filter {
+      display: none;
+    }
+  }
+}
+
+otus-exam-lot-info-manager-display {
+  .dynamic-table-container {
+    min-width: 850px;
+
+    .dynamic-structure {
+      min-width: 800px !important;
+    }
+  }
+
+  @media screen and (max-width: 600px) {
+    .dynamic-table-container {
+      max-height: 395px;
+    }
+    .moment-type-title {
+      display: none !important;
+    }
+  }
+
+  .aliquot-form {
+    max-height: 70px;
+
+    md-input-container {
+      margin-bottom: 0;
+    }
+  }
+}
+
+otus-exam-lot-info-sidenav {
+  md-sidenav {
+    min-width: 320px !important;
+  }
+}
+
+otus-monitoring-dashboard {
+  @media screen and (max-width: 600px) {
+    .desktop-filter {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 601px) {
+    .mobile-filter {
+      display: none;
+    }
+  }
+}
+
+otus-flag-report-list-manager {
+  @media screen and (max-width: 650px) {
+    otus-flag-report-visualization {
+      md-content {
+        max-height: 400px;
+      }
+    }
+  }
+  @media screen and (min-width: 651px) {
+    otus-flag-report-visualization {
+      md-content {
+        max-height: 100%;
+      }
+    }
+  }
+}
+
+otus-laboratory-flag-report-list-manager {
+  .exam-heatmap-container {
+    @media screen and (max-width: 650px) {
+      min-height: 400px;
+    }
+    @media screen and (min-width: 651px) {
+      min-height: 100%;
+    }
+  }
+}
+
+otus-laboratory-monitoring-dashboard {
+  #orphans-by-exam {
+    svg {
+      min-width: 600px;
+    }
+  }
+}
+
+otus-activity-category-adder {
+  otus-activity-category-adder-list {
+    md-card {
+      md-input-container {
+        position: relative;
+        padding-left: 20px;
+        margin-bottom: 0;
+        margin-top: 0;
+        top: -5px;
+      }
+    }
+  }
+}
