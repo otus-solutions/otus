@@ -54,7 +54,7 @@ describe('monitoringSpreadsheetComponent test', function() {
 
   function mockData() {
     return {
-      data: [
+      fieldCenters: [
         {
           backgroundColor: "rgba(255, 163, 102, 0.2)",
           borderColor: "rgba(255, 163, 102, 1)",
