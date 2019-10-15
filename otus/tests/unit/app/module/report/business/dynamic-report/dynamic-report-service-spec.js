@@ -1,45 +1,44 @@
-xdescribe('the Dynamic Report Service ', function () {
+describe('the Dynamic Report Service ', function () {
   var Mock = {};
   var service = {};
-  var scope;
+  var Injections = [];
+  var report = {};
 
   beforeEach(function () {
-    angular.mock.module('otusjs.otus.report');
-    inject(function (_$injector_, _$q_, _$window_, _$compile_, _$rootScope_) {
-      var injections = {
-        '$q': _$q_,
-        '$window': _$window_,
-        '$compile': _$compile_,
-        '$rootScope': _$rootScope_,
-        'ScopeReportFactory': _$injector_.get(
-          'otusjs.report.business.dynamicReport.scope.ScopeReportFactory'
-        )
-      };
-      service = _$injector_.get(
+    mock();
+
+    angular.mock.module('otusjs.otus');
+    angular.mock.inject(function ($injector, $q, $window, $compile, $rootScope) {
+      Injections.$q = $q;
+      Injections.$window = $window;
+      Injections.$compile = $compile;
+      Injections.$rootScope = $rootScope;
+      Injections.ScopeReportFactory = $injector.get(
+        'otusjs.report.business.dynamicReport.scope.ScopeReportFactory'
+      );
+      service = $injector.get(
         'otusjs.report.business.dynamicReport.DynamicReportService',
-        injections
+        Injections
       );
     });
   });
 
-  xdescribe('precompile method ', function () {
-    beforeEach(function () {
-      mockReport();
+  describe('setup unit test basic', function () {
+    it('serviceExistence check ', function () {
+      expect(service).toBeDefined();
     });
-    it('should return valid structure', function (done) {
-      service.precompile(Mock.Report).then(function(returned) {
-        //The promise is never resolved
-        //The $compile never change scope
-        //This problem only occurs in test
-        expect(returned).not.toBe(undefined);
-        done()
-      });
+
+    it('service methodsExistence check', function () {
+      expect(service.openReportInNewTab).toBeDefined();
     });
   });
 
-  function mockReport() {
+  function mock() {
+    Mock.callback = {
+      callback: function () { }
+    };
     Mock.Report = {
-      template: `
+      compiledTemplate: `
         <otus-script>
           {{data.participantName = ds.participant[0].name}}
           {{required('sexo', ds.participant[0].sex, 'é obrigatório')}}
@@ -55,6 +54,4 @@ xdescribe('the Dynamic Report Service ', function () {
       }
     };
   }
-
-
 });

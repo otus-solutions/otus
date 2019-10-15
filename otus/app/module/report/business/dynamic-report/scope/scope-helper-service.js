@@ -10,12 +10,14 @@
   ];
 
   function Service($filter) {
+    var _compiledImages = false;
+    var responseImages = [];
     var self = this;
 
     self.helper = {};
     self.helper.formatDate = formatDate;
     self.helper.getObjectByArray = getObjectByArray;
-
+    self.helper.parseToRetinographyImage = parseToRetinographyImage;
     self.fillScopeHelper = fillScopeHelper;
 
     function _propertiesIsEqual(item, json) {
@@ -37,9 +39,9 @@
       return $filter('date')(new Date(value), format);
     }
 
-    function getObjectByArray(array, propertyOrJson, value){
-      if(!array || !array.length || propertyOrJson === undefined) return undefined;
-      if(typeof propertyOrJson === "object"){
+    function getObjectByArray(array, propertyOrJson, value) {
+      if (!array || !array.length || propertyOrJson === undefined) return undefined;
+      if (typeof propertyOrJson === "object") {
         let itemFound = undefined;
         for (let i = 0; i < array.length; i++) {
           const item = array[i];
@@ -53,8 +55,36 @@
       return _find(array, propertyOrJson, value);
     }
 
+    function parseToRetinographyImage(images) {
+      if (!_compiledImages) {
+        images.forEach(image => {
+          var arrayBufferView = new Uint8Array(JSON.parse(image.result).data);
+          var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+          var urlCreator = window.URL || window.webkitURL;
+          responseImages.push({
+            date: formatDate(image.date),
+            eye: _translateEye(image.eye),
+            url: urlCreator.createObjectURL(blob)
+          });
+        });
+        _compiledImages = true;
+      }
+      return responseImages;
+    }
+
     function fillScopeHelper(scope) {
       scope.helper = self.helper;
+    }
+
+    function _translateEye(eye) {
+      switch (eye.toUpperCase()) {
+        case 'LEFT':
+          return 'Esquerdo';
+        case 'RIGHT':
+          return 'Direito';
+        default:
+          return;
+      }
     }
   }
 }());

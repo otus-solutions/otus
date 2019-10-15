@@ -28,11 +28,7 @@
       scopeReport.setDatasource(report.dataSources);
       scope = scopeReport.scope;
 
-      currentTemplate = `${currentTemplate}
-        <otus-script>
-          {{data.testEndChangeScope = true}}
-        </otus-script>
-      `;
+      scope.data.testEndChangeScope = true;
 
       returned.compiledTemplate = $compile(currentTemplate)(scope);
 
@@ -47,15 +43,14 @@
       return deferred.promise;
     }
 
-
     function openReportInNewTab(report, callback) {
+
       let initialHtmlStructure = `
       <html>
-        <head>
-          <title>Relatório: ${report.label}</title>
+        <head>          
           <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet" />
           <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-          <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+          <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.1/angular-material.min.css">
           <style>
             @page {
               size: 210mm 297mm;
@@ -64,7 +59,7 @@
               margin-top: 125mm; 
               margin-bottom: 125mm;
             }
-         
+        
             @media print {
               .no-print, .no-print *,
               otus-script, otus-script *,
@@ -77,6 +72,10 @@
               .no-print, .no-print * {
                 visibility: visible;
               }
+              
+              body {
+                margin: 10px 100px 0 100px;
+              }
             }
             
             otus-script {
@@ -85,43 +84,49 @@
             
             otus-datasource {
               display: none;
+            }          
+                    
+            .button-print{
+            bottom: 5px;
+            right: 0;
+            position: fixed;
+            background-color: #3883ff;
             }
+            
+            .material-icons.white {
+            color: #ffffff;
+            }
+            
           </style>
+          <title>Relatório: ${report.label}</title>          
         </head>
-        <body>
-          <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-          <!-- ************************************* Angular ************************************* -->
-          <!-- Angular Material requires Angular.js Libraries -->
-          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-          <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
-
-          <!-- Angular Material Library -->
-          <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+        <button class="no-print button-print md-button md-fab md-mini" onclick="window.print()" >
+        <i class="material-icons white">print</i>
+        </button>
+        <body> 
         </body>
-      </html>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js" type="text/javascript"></script>
+        </html>
       `;
-      var newWindow = $window.open('', '_blank');
+
+      var newWindow = $window.open('about:blank', '_blank');
       newWindow.document.write(initialHtmlStructure);
 
-      angular.element(newWindow.document.body)
-      .append(report.compiledTemplate);
-      newWindow.setTimeout(function(){
-        newWindow.print();
+      precompile(report)
+        .then(function (structure) {
+          report.compiledTemplate = structure.compiledTemplate;
+          report.fieldsError = structure.fieldsError;
+          angular.element(newWindow.document.body)
+            .append(report.compiledTemplate);
+        }).catch(function (error) {
+          throw error;
+        });
+
+      newWindow.document.close();
+      newWindow.onbeforeunload = function () {
         newWindow.close();
         callback();
-      }, 500);
-
-      window.otusCloseDynamicReport = function(){
-        if(newWindow){
-          try {
-            newWindow.close();
-            if(callback) callback();
-          } catch (error) {
-
-          }
-        }
+        return;
       }
     }
   }

@@ -30,9 +30,9 @@
   ];
 
   function Controller($q, $mdToast, $timeout, $mdDialog, EventService, CheckerItemFactory, DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService, ParticipantActivityService) {
+    var self = this;
     var confirmDeleteSelectedActivity;
 
-    var self = this;
     /* Public methods */
     self.fillSelectedActivity = fillSelectedActivity;
     self.viewSelectedActivity = viewSelectedActivity;
@@ -40,27 +40,15 @@
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
     self.updateChecker = updateChecker;
     self.DialogController = DialogController;
-    self.goToActivityAdder = goToActivityAdder;
-    self.goToPaperActivityInitializer = goToPaperActivityInitializer;
+
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function onInit() {
-      self.isOpen = false;
       _buildDialogs();
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       EventService.onActivitySelected(_updateComponent);
-    }
-
-    function goToActivityAdder() {
-      window.sessionStorage.setItem('activityType', "Online");
-      ApplicationStateService.activateActivityAdder();
-    }
-
-    function goToPaperActivityInitializer() {
-      window.sessionStorage.setItem('activityType', "em Papel");
-      ApplicationStateService.activatePaperActivityInitializer();
     }
 
     function fillSelectedActivity() {
@@ -85,7 +73,7 @@
     function updateChecker() {
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
-        locals: { selectedActivity: self.selectedPaperActivity, updateList: self.updateList },
+        locals: {selectedActivity: self.selectedPaperActivity, updateList: self.updateList},
         templateUrl: 'app/ux-component/paper-activity-checker-update/paper-activity-checker-update-template.html',
         parent: angular.element(document.body),
         controller: self.DialogController,
@@ -127,6 +115,7 @@
         self.showDeleteButton = true;
         self.showInfoButton = true;
         self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() ? true : false;
+        self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name
       } else {
         self.showVisualizationButton = false;
         self.showFillingButton = false;
@@ -152,12 +141,16 @@
         buttons: [
           {
             message: 'Ok',
-            action: function () { $mdDialog.hide() },
+            action: function () {
+              $mdDialog.hide()
+            },
             class: 'md-raised md-primary'
           },
           {
             message: 'Voltar',
-            action: function () { $mdDialog.cancel() },
+            action: function () {
+              $mdDialog.cancel()
+            },
             class: 'md-raised md-no-focus'
           }
         ]
@@ -180,6 +173,7 @@
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
         self.selectedItem = CheckerItemFactory.create(self.user);
         self.maxDate = new Date();
+
       }
 
       function querySearch(query) {
@@ -210,9 +204,9 @@
               _showMessage("Aferidor não alterado.")
             }
           }).catch(function (e) {
-            self.cancel();
-            _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
-          });
+          self.cancel();
+          _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
+        });
       }
 
       function cancel() {

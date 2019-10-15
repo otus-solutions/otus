@@ -101,7 +101,7 @@
     self.currentRowOnHover;
 
     function onInit() {
-      if(!$scope.safeApply){ 
+      if(!$scope.safeApply){
         $scope.safeApply = function(fn) {
           var phase = this.$root.$$phase;
           if(phase == '$apply' || phase == '$digest') {

@@ -14,7 +14,7 @@
 
     self.fetchReportList = fetchReportList;
     self.getFullReport = getFullReport;
-
+    self.fetchActivityReport = fetchActivityReport;
 
     function fetchReportList(participant) {
       return ParticipantReportRepositoryService.getParticipantReportList(participant.recruitmentNumber);
@@ -23,6 +23,9 @@
     function getFullReport(participant, reportId) {
       return ParticipantReportRepositoryService.getFullReport(participant.recruitmentNumber, reportId);
     }
-  }
 
+    function fetchActivityReport(id) {
+      return ParticipantReportRepositoryService.getActivityReport(id);
+    }
+  }
 }());

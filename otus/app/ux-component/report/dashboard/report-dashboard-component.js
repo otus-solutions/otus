@@ -33,7 +33,7 @@
     function generateReport(report) {
       LoadingScreenService.changeMessage(report.getLoadingMessage());
       LoadingScreenService.start();
-      report.generateReport(LoadingScreenService.finish());
+      report.generateReport(LoadingScreenService.finish);
     }
 
     /* Lifecycle methods */
