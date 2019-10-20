@@ -20,3 +20,6 @@ package-lock.json
 **/.sonar
 **/*npm-debug.log
 **/.vscode/
+**/.terraform
+**/terraform.tfstate
+**/terraform.tfstate.backup
