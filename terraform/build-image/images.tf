@@ -1,6 +1,10 @@
 ###############################################
 ###               Variables                 ###
 ###############################################
+variable "otus-frontend-dockerfile" {
+  default = "."  
+}
+
 variable "otus-frontend-name" {
   default = "otus-frontend"  
 }
@@ -9,22 +13,46 @@ variable "otus-frontend-source" {
   default = "source"  
 }
 
+variable "otus-frontend-npminstall" {
+  default = "npm install --production"  
+}
+
+variable "otus-frontend-npmtest" {
+  default = "npm test"  
+}
+
 variable "otus-frontend-npmbuild" {
-  default = "run build"  
+  default = "npm run build"  
 }
 ###############################################
 ###  OTUS : Build Image Front-End           ###
 ###############################################
-resource "null_resource" "otus-frontend-build" {
+resource "null_resource" "otus-frontend-install" {
   provisioner "local-exec" {
-    working_dir = "source"
-    command = "npm ${var.otus-frontend-npmbuild}"
+    working_dir = "${var.otus-frontend-source}"
+    command = "${var.otus-frontend-npminstall}"
+  }
+} 
+
+resource "null_resource" "otus-frontend-test" {
+depends_on = [null_resource.otus-frontend-install]  
+  provisioner "local-exec" {
+    working_dir = "${var.otus-frontend-source}"
+    command = "${var.otus-frontend-npmtest}"
+  }
+} 
+
+resource "null_resource" "otus-frontend-build" {
+depends_on = [null_resource.otus-frontend-test]  
+  provisioner "local-exec" {
+    working_dir = "${var.otus-frontend-source}"
+    command = "${var.otus-frontend-npmbuild}"
   }
 } 
  
 resource "null_resource" "otus-frontend" {
 depends_on = [null_resource.otus-frontend-build]  
   provisioner "local-exec" {
-    command = "docker build -t ${var.otus-frontend-name} ."
+    command = "docker build -t ${var.otus-frontend-name} ${var.otus-frontend-dockerfile}"
   }
 }
