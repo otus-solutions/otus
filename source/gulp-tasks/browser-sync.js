@@ -1,12 +1,10 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
-var browserSyncSpa = require('browser-sync-middleware-spa');
-var minimist = require('minimist');
-​
+
 gulp.task('browser-sync', function() {
   console.log(process.argv);
   var index = process.argv.indexOf("--api-url");
-  var apiurl = process.argv[index + 1];
+  var apiurl = process.argv[index + 1] || 'https://localhost:51002';
   browserSync.init({
     server: {
       open: 'external',
@@ -19,9 +17,9 @@ gulp.task('browser-sync', function() {
           next();
         }
       ]
-    },
+    }
   });
-​
+
     gulp.watch([
       'app/**/*.html',
       'app/**/*.js',
