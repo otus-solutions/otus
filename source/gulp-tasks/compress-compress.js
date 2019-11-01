@@ -39,6 +39,7 @@ gulp.task('copy_code', ()=> {
     return gulp.src('./app/**/*')
     .pipe(gulp_if('index.html', replace('src="node_modules/', 'src="../dist/otus/node_modules/')))
     .pipe(gulp_if('index.html', replace('src="app/', 'src="../dist/otus/app/')))
+    .pipe(gulp_if('index.html', replace('href="app/', 'href="../dist/otus/app/')))
         .pipe(gulp.dest('../dist/otus/app'));
 });
 gulp.task('copy_node_modules', function () {
