@@ -7,8 +7,7 @@ gulp.task('browser-sync', function() {
   browserSync.init({
     server: {
       open: 'external',
-      baseDir: ['../dist/otus/'],
-      index: "app/index.html",
+      baseDir: ['./app', './'],
       middleware: [
         function(req, res, next) {
           res.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,7 +19,9 @@ gulp.task('browser-sync', function() {
     }
   });
 
-    gulp.watch([
-      '../dist/otus/index.html'
-    ]).on('change', browserSync.reload);
+  gulp.watch([
+    'app/**/*.html',
+    'app/**/*.js',
+    '../app/**/*.css'
+  ]).on('change', browserSync.reload);
 });
