@@ -23,7 +23,7 @@
   "scripts": {
     "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome",
     "test": "karma start karma.conf.js --single-run",
-    "start": "npm run gulp browser-sync",
+    "start": "gulp browser-sync --api-url $API_URL",
     "gulp": "gulp",
     "karma": "karma",
     "build": "gulp compress",
@@ -80,6 +80,7 @@
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "gulp-bump": "2.1.0",
+    "gulp-angular-embed-templates": "^2.2.0",
     "gulp-concat": "2.6.0",
     "gulp-minify": "0.0.11",
     "gulp-minify-css": "^1.2.4",
