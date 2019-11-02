@@ -1,27 +1,27 @@
-(function() {
-  'use strict';
+(function () {
+    'use strict';
 
-  angular
-    .module('otusjs.application.environment')
-    .run(Run);
+    angular
+        .module('otusjs.application.environment')
+        .run(Run);
 
-  Run.$inject = [
-    '$window',
-    'OtusRestResourceService'
-  ];
+    Run.$inject = [
+        '$window',
+        'OtusRestResourceService',
+        '$cookies'
+    ];
 
-  function Run(
-    $window,
-    OtusRestResourceService,
-    InstallerProxyService)
-  {
-    // Configure Otus Rest Client to use the correct back-end server URL
-    var __env = $window.__env;
-    OtusRestResourceService.setUrl(__env.apiUrl);
+    function Run(
+        $window,
+        OtusRestResourceService,
+        $cookies) {
+        // Configure Otus Rest Client to use the correct back-end server URL
+        var __env = $window.__env;
+        OtusRestResourceService.setUrl($cookies.get('Backend-Address'));
 
-    // InstallerProxyService.ready(function(response) {
-    //   ApplicationStateService.activateInstaller();
-    // });
-  }
+        // InstallerProxyService.ready(function(response) {
+        //   ApplicationStateService.activateInstaller();
+        // });
+    }
 
 }());

@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusjs.application.environment', [])
+    .module('otusjs.application.environment', ['ngCookies'])
     .run(runner);
 
     runner.$inject = [
