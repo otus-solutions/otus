@@ -22,7 +22,7 @@ variable "otus-frontend-npmtest" {
 }
 
 variable "otus-frontend-npmbuild" {
-  default = "npm run production"  
+  default = "npm run build"  
 }
 
 variable "otus-frontend-npmprune" {

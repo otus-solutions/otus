@@ -12,7 +12,6 @@ gulp.task('compress-compress', function () {
         .pipe(useref({
             transformPath: function (filePath) {
                 if (filePath.includes('node_modules')) {
-
                     console.log(filePath)
                 }
                 return filePath.replace('app/app', 'app')
@@ -27,22 +26,26 @@ gulp.task('compress-compress', function () {
         .pipe(gulp_if('*.js', embedTemplates({
             basePath: '.'
         })))
-        // .pipe(gulp_if('*.js', uglify().on('error', function (e) {
-        //     console.log(e);
-        // })))
         .pipe(gulp_if('*.css', minifyCss()))
-        // .pipe(gulp_if('index.html', replace('href="css', 'href="../dist/otus/css')))
-        .pipe(gulp.dest('../dist/otus'));
+        .pipe(gulp.dest('dist/otus'));
 });
 
 gulp.task('copy_code', ()=> {
     return gulp.src('./app/**/*')
-    .pipe(gulp_if('index.html', replace('src="node_modules/', 'src="../dist/otus/node_modules/')))
-    .pipe(gulp_if('index.html', replace('src="app/', 'src="../dist/otus/app/')))
-    .pipe(gulp_if('index.html', replace('href="app/', 'href="../dist/otus/app/')))
-        .pipe(gulp.dest('../dist/otus/app'));
+    .pipe(gulp_if('index.html', replace('src="app/', 'src="')))
+    .pipe(gulp_if('index.html', replace('href="app/', 'href="')))
+        .pipe(gulp.dest('dist/otus'));
 });
+
+gulp.task('embeded_template', ()=> {
+    return gulp.src('./dist/otus/**/*')
+        .pipe(gulp_if('*.js', embedTemplates({
+            basePath: '.'
+        })))
+        .pipe(gulp.dest('dist/otus'));
+});
+
 gulp.task('copy_node_modules', function () {
     return gulp.src('./node_modules/**/*')
-        .pipe(gulp.dest('../dist/otus/node_modules'));
+        .pipe(gulp.dest('dist/otus/node_modules'));
 });
