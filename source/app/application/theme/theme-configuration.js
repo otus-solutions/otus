@@ -39,6 +39,6 @@
 
     /*Configuration icons*/
     /* 24 is the size default of icons */
-    $mdIconProvider.defaultIconSet('app/static-resource/image/icons/mdi.svg', 24);
+    $mdIconProvider.defaultIconSet('static-resource/image/icons/mdi.svg', 24);
   }
 }());

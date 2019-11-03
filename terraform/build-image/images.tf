@@ -13,6 +13,10 @@ variable "otus-frontend-source" {
   default = "source"  
 }
 
+variable "otus-frontend-cleanup" {
+  default = "rm -rf dist node_modules package-lock.json"  
+}
+
 variable "otus-frontend-npminstall" {
   default = "npm install"  
 }
@@ -31,7 +35,15 @@ variable "otus-frontend-npmprune" {
 ###############################################
 ###  OTUS : Build Image Front-End           ###
 ###############################################
+resource "null_resource" "otus-frontend-cleanup" {
+  provisioner "local-exec" {
+    working_dir = "${var.otus-frontend-source}"
+    command = "${var.otus-frontend-cleanup}"
+  }
+} 
+
 resource "null_resource" "otus-frontend-install" {
+depends_on = [null_resource.otus-frontend-cleanup]  
   provisioner "local-exec" {
     working_dir = "${var.otus-frontend-source}"
     command = "${var.otus-frontend-npminstall}"

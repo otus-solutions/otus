@@ -11,16 +11,12 @@ variable "otus-frontend-apiurl"{
 }
 
 variable "otus-frontend-version"{
-  default = "latest"
-}
-
-resource "docker_image" "otus-frontend" {
-  name = "otus-frontend:${var.otus-frontend-version}"
+  default = "otus-frontend:latest"
 }
 
 resource "docker_container" "otus-frontend" {
   name = "otus-frontend"
-  image = "${docker_image.otus-frontend.name}"
+  image = "${var.otus-frontend-version}"
   env = ["API_URL=${var.otus-frontend-apiurl}"]
   ports {
 	internal = 80
