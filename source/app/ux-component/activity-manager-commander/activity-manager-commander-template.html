@@ -1,27 +1,40 @@
 <md-fab-speed-dial md-direction="left" style="margin-bottom: -12px !important;" class="md-fab-bottom-right md-fling">
   <md-fab-trigger>
-    <md-button aria-label="menu" class="md-fab md-accent">
+    <md-button aria-label="menu" class="md-fab md-accent" ng-click="$ctrl.goToActivityAdder()">
       <md-icon md-svg-icon="plus"></md-icon>
     </md-button>
-    <md-tooltip md-direction="top">
-      Adicionar atividade
-    </md-tooltip>
+    <md-tooltip md-direction="top"> Adicionar atividade</md-tooltip>
   </md-fab-trigger>
-
   <md-fab-actions>
-    <md-button aria-label="Atividade online" class="md-fab md-accent md-raised md-mini"
-    ng-click="$ctrl.goToActivityAdder()">
-      <md-icon md-svg-icon="signal" aria-label="Atividade online" style="color: white"></md-icon>
-      <md-tooltip md-direction="top">
-        Atividade online
-      </md-tooltip>
-    </md-button>
-    <md-button aria-label="Atividade em papel" class="md-fab md-accent md-raised md-mini"
-    ng-click="$ctrl.goToPaperActivityInitializer()">
-      <md-icon md-svg-icon="file-document" aria-label="Atividade em papel" style="color: white"></md-icon>
-      <md-tooltip md-direction="top">
-        Atividade em papel
-      </md-tooltip>
-    </md-button>
   </md-fab-actions>
 </md-fab-speed-dial>
+
+
+<!--original code bkp-->
+<!--<md-fab-speed-dial md-direction="left" style="margin-bottom: -12px !important;" class="md-fab-bottom-right md-fling">-->
+<!--  <md-fab-trigger>-->
+<!--    <md-button aria-label="menu" class="md-fab md-accent">-->
+<!--      <md-icon md-svg-icon="plus"></md-icon>-->
+<!--    </md-button>-->
+<!--    <md-tooltip md-direction="top">-->
+<!--      Adicionar atividade-->
+<!--    </md-tooltip>-->
+<!--  </md-fab-trigger>-->
+
+<!--  <md-fab-actions>-->
+<!--    <md-button aria-label="Atividade online" class="md-fab md-accent md-raised md-mini"-->
+<!--    ng-click="$ctrl.goToActivityAdder()">-->
+<!--      <md-icon md-svg-icon="signal" aria-label="Atividade online" style="color: white"></md-icon>-->
+<!--      <md-tooltip md-direction="top">-->
+<!--        Atividade online-->
+<!--      </md-tooltip>-->
+<!--    </md-button>-->
+<!--    <md-button aria-label="Atividade em papel" class="md-fab md-accent md-raised md-mini"-->
+<!--    ng-click="$ctrl.goToPaperActivityInitializer()">-->
+<!--      <md-icon md-svg-icon="file-document" aria-label="Atividade em papel" style="color: white"></md-icon>-->
+<!--      <md-tooltip md-direction="top">-->
+<!--        Atividade em papel-->
+<!--      </md-tooltip>-->
+<!--    </md-button>-->
+<!--  </md-fab-actions>-->
+<!--</md-fab-speed-dial>-->
