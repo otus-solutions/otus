@@ -38,7 +38,7 @@
     self.selectActivity = selectActivity;
     self.update = update;
     self.changeSort = changeSort;
-    self.dynamicDataTableChange = dynamicDataTableChange;
+    self.griidDataChange = griidDataChange;
     self.existsGroup = existsGroup;
     self.isIndeterminateGroups = isIndeterminateGroups;
     self.isCheckedGroup = isCheckedGroup;
@@ -101,12 +101,13 @@
             .map(ActivityItemFactory.create);
           self.AllActivities = angular.copy(self.activities);
           _groupsFilter();
-          self.updateDataTable(self.activities);
+          self.updateData(self.activities);
           self.isListEmpty = !self.activities.length;
           _selectedActivities = [];
           ActivityService.selectActivities(_selectedActivities);
           LoadingScreenService.finish();
           self.ready = true;
+          console.log(self.activities)
         });
     }
 
@@ -121,7 +122,9 @@
         .addColumnProperty('name')
         .addHeader('ACRÔNIMO', '15', 'center center', 2)
         .addColumnProperty('acronym')
-        .addHeader('MODO', '10', '', 3)
+          .addHeader('ID EXTERNO', '20', 'center center', 3)
+          .addColumnProperty('requiredExternalID')
+        .addHeader('MODO', '10', '', 4)
         .addIconWithFunction(function (element) {
           var structureIcon = { icon: "md-svg-icon", class: "", tooltip: "" };
           var OnLineStructure = {
@@ -142,12 +145,12 @@
           }
           return structureIcon;
         })
-        .addHeader('REALIZAÇÃO', '15', 'center center', 4)
+        .addHeader('REALIZAÇÃO', '15', 'center center', 5)
         .addColumnProperty('realizationDate', 'DATE')
         .setFormatData("'dd/MM/yy")
-        .addHeader('STATUS', '20', '', 5)
+        .addHeader('STATUS', '20', '', 6)
         .addColumnProperty('status')
-        .addHeader('CATEGORIA', '15', '', 6)
+        .addHeader('CATEGORIA', '15', '', 7)
         .addColumnProperty('category')
         .setCallbackAfterChange(self.dynamicDataTableChange)
         .setCheckbox(true);
@@ -158,7 +161,7 @@
       self.dynamicTableSettings = dynamicTableSettingsFactory.getSettings();
     }
 
-    function dynamicDataTableChange(change) {
+    function griidDataChange(change) {
       if (change.type === 'select' || change.type === 'deselect') {
         self.selectActivity(change.element);
       }
@@ -186,7 +189,7 @@
     function _groupsFilter(){
       _surveysFilter();
       _activitiesFilter();
-      self.updateDataTable(self.activities);
+      self.updateData(self.activities);
     }
 
     function existsGroup(item) {
