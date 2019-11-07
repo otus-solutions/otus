@@ -23,6 +23,8 @@
         var _selectedActivities = [];
         var _exitDialog;
         self.activities = [];
+        self.candidatesActivities = [];
+        self.statePreview = false;
 
         /* Public methods */
         self.addActivities = addActivities;
@@ -31,10 +33,10 @@
         self.querySearch = querySearch;
         self.$onInit = onInit;
 
-        self.selectedItemChange = function (item) {
-          console.log(item);
-          console.log(self.selectedItem);
-        }
+        // self.selectedItemChange = function (item) {
+        //   console.log(item);
+        //   console.log(self.selectedItem);
+        // }
 
         function onInit() {
             _exitDialog = {
@@ -77,8 +79,11 @@
             }
         }
 
-        function addPreviewActivity(activity) {
-            console.log(activity)
+        function addPreviewActivity(candidateActivity) {
+          if(candidateActivity){
+          self.candidatesActivities.push(candidateActivity);
+          self.statePreview = true;
+          }
         }
 
         function _loadCategories() {

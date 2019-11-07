@@ -7,16 +7,51 @@
 <!--  style="overflow-y: auto">-->
 <!--</otus-activity-adder-list>-->
 <style>
-    md-card {
+
+    md-card-title.flex {
         padding: 0px;
-        margin: 0px;
+    }
+
+    /*md-card {*/
+    /*    padding: 0px;*/
+    /*    margin: 0px;*/
+    /*}*/
+
+    /*.gridListdemoDynamicTiles .s64 {*/
+    /*    font-size: 64px;*/
+    /*}*/
+
+    /*.gridListdemoDynamicTiles .s32 {*/
+    /*    font-size: 48px;*/
+    /*}*/
+
+    .gridListdemoDynamicTiles md-grid-list {
+        margin: 10px;
+    }
+
+    /*.gridListdemoDynamicTiles md-grid-tile md-grid-tile-footer {*/
+    /*    background: rgba(19, 125, 108, 0.70);*/
+    /*    height: 36px;*/
+    /*}*/
+
+    /*.gridListdemoDynamicTiles md-grid-tile-footer figcaption {*/
+    /*    width: 100%;*/
+    /*}*/
+
+    /*.gridListdemoDynamicTiles md-grid-tile-footer figcaption md-icon {*/
+    /*    width: 5%;*/
+    /*    height: 3%;*/
+    /*}*/
+
+    .gridListdemoDynamicTiles md-grid-tile figure {
+        justify-content: normal;
     }
 
 </style>
 
-<md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
+<md-card md-theme-watch>
     <md-card-title>
-        <md-card-title-text flex="40"layout-align="center start" >
+        <md-card-title-text flex="40" layout-align="center start">
             <span class="md-headline">Gerenciador de Atividades</span>
             <span class="md-subhead">Inclusão de Formulários ao Participante</span>
         </md-card-title-text>
@@ -54,21 +89,22 @@
         </md-card-title-media>
     </md-card-title>
     <md-card-actions layout="row" layout-align="end center">
-        <span layout-padding class="md-subhead">Busca:</span>
-        <md-autocomplete flex md-no-cache="true" md-selected-item="$ctrl.selectedItem"
-                         md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
+        <span class="md-subhead" layout-padding>Busca:</span>
+        <md-autocomplete flex md-item-text="item.name" md-items="item in $ctrl.querySearch($ctrl.searchText)"
+                         md-menu-class="autocomplete-custom-template"
+                         md-min-length="0"
+                         md-no-cache="true"
                          md-search-text="$ctrl.searchText"
-                         md-selected-item-change="$ctrl.selectedItemChange(item)"
-                         md-items="item in $ctrl.querySearch($ctrl.searchText)"
-                         md-item-text="item.text" md-min-length="0" placeholder="Atividade"
-                         md-menu-class="autocomplete-custom-template">
+                         md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
+                         md-selected-item="$ctrl.selectedItem" md-selected-item-change="$ctrl.selectedItemChange(item)"
+                         placeholder="Atividade">
             <md-item-template>
           <span class="item-title">
-            <span md-highlight-text="$ctrl.searchText" md-highlight-flags="i">{{item.acronym}}</span>
+            <span md-highlight-flags="i" md-highlight-text="$ctrl.searchText">{{item.acronym}}</span>
           </span>
                 <span class="item-metadata">
             <span class="item-metastat">
-              <strong>{{item.name}}</strong>
+              {{item.name}}
             </span>
           </span>
             </md-item-template>
@@ -78,11 +114,79 @@
         </md-autocomplete>
 
 
-        <md-button class="md-icon-button"ng-click="$ctrl.addPreviewActivity($ctrl.activities)">
-            <md-icon md-font-set="material-icons">visibility</md-icon></md-button>
-        <md-button class="md-icon-button"><md-icon md-font-set="material-icons">save</md-icon></md-button>
-        <md-button class="md-icon-button"><md-icon md-font-set="material-icons">cancel</md-icon></md-icon></md-button>
+        <md-button class="md-icon-button" ng-click="$ctrl.addPreviewActivity($ctrl.selectedItem)">
+            <md-icon md-font-set="material-icons">visibility</md-icon>
+        </md-button>
+        <md-button class="md-icon-button">
+            <md-icon md-font-set="material-icons">save</md-icon>
+        </md-button>
+        <md-button class="md-icon-button">
+            <md-icon md-font-set="material-icons">cancel</md-icon>
+            </md-icon></md-button>
     </md-card-actions>
 </md-card>
 
+<div>
+    <md-content class="gridListdemoDynamicTiles" flex>
+        <md-grid-list md-cols="1" md-cols-gt-md="6" md-cols-md="3" md-cols-sm="2" md-gutter="8px"
+                      md-gutter-gt-sm="4px" md-row-height="4:3" md-row-height-gt-md="1:1" flex>
+            <md-grid-tile flex ng-repeat="tile in $ctrl.candidatesActivities" flex>
+                <div flex layout-margin="auto">
+                    <md-card flex>
+                        <md-card-title flex>
+                            <md-card-title-text flex>
+                                <div flex layout="row" layout-align="space-between center">
+                                    <md-button class="md-fab">{{tile.acronym}}</md-button>
+                                    <span class="md-button md-truncate" flex="40">{{tile.name}}</span>
+                                    <md-button class="md-icon-button">
+                                        <md-icon md-font-set="material-icons">cancel</md-icon>
+                                        </md-icon>
+                                    </md-button>
+                                </div>
+                                <div flex layout="column" layout-padding>
+                                    <span> Modo: {{tile.status}}</span>
+                                    <span> Categoria: {{tile.category}}</span>
+                                </div>
+                            </md-card-title-text>
+                        </md-card-title>
+                        <md-card-actions>
+                            <md-input-container>
+                                <label>ID Externo</label>
+                                <input ng-model="activity.ExternalID">
+                            </md-input-container>
+
+                        </md-card-actions>
+                    </md-card>
+                </div>
+            </md-grid-tile>
+        </md-grid-list>
+    </md-content>
+</div>
+
+
+<!--    <md-content class="gridListdemoDynamicTiles" flex ng-if="!self.candidatesActivities.length">-->
+<!--        <md-grid-list md-cols="1" md-cols-gt-md="6" md-cols-md="3" md-cols-sm="2" md-gutter="8px"-->
+<!--                      md-gutter-gt-sm="4px" md-row-height="4:3" md-row-height-gt-md="1:1">-->
+<!--            <md-grid-tile class="md-whiteframe-1dp"-->
+<!--                          md-colspan="2" md-colspan-sm="1" md-colspan-xs="1" md-rowspan="1"-->
+<!--                          ng-repeat="tile in $ctrl.candidatesActivities">-->
+<!--                <div layout-padding>-->
+<!--                    <div layout="row" layout-align="space-between">-->
+<!--                        <div layout="column">-->
+<!--                            <h3>{{tile.acronym}} {{tile.name}}</h3>-->
+<!--                            <span> Modo: {{tile.status}}</span>-->
+<!--                            <span> Categoria: {{tile.category}}</span>-->
+<!--                            <span>External ID: <input/></span>-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </md-grid-tile>-->
+<!--        </md-grid-list>-->
+
+
 <!--<md-icon aria-label="android" md-font-icon="android"></md-icon>-->
+
+<!--md-cols-gt-md="12" md-cols="3" md-cols-md="8"-->
+<!--md-row-height-gt-md="1:1" md-row-height="4:3"-->
+<!--md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px"-->
