@@ -31,6 +31,11 @@
         self.querySearch = querySearch;
         self.$onInit = onInit;
 
+        self.selectedItemChange = function (item) {
+          console.log(item);
+          console.log(self.selectedItem);
+        }
+
         function onInit() {
             _exitDialog = {
                 dialogToTitle: 'Alerta',

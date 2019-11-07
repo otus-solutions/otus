@@ -7,16 +7,16 @@
 <!--  style="overflow-y: auto">-->
 <!--</otus-activity-adder-list>-->
 <style>
-    .demo-swipe {
-        margin: 0;
-        padding: 0;
+    md-card {
+        padding: 0px;
+        margin: 0px;
     }
 
 </style>
 
 <md-card md-theme="{{ showDarkTheme ? 'dark-grey' : 'default' }}" md-theme-watch>
     <md-card-title>
-        <md-card-title-text flex="40">
+        <md-card-title-text flex="40"layout-align="center start" >
             <span class="md-headline">Gerenciador de Atividades</span>
             <span class="md-subhead">Inclusão de Formulários ao Participante</span>
         </md-card-title-text>
@@ -78,8 +78,10 @@
         </md-autocomplete>
 
 
-        <md-button ng-click="$ctrl.addPreviewActivity($ctrl.activities)">Incluir</md-button>
-        <md-button>Cancelar</md-button>
+        <md-button class="md-icon-button"ng-click="$ctrl.addPreviewActivity($ctrl.activities)">
+            <md-icon md-font-set="material-icons">visibility</md-icon></md-button>
+        <md-button class="md-icon-button"><md-icon md-font-set="material-icons">save</md-icon></md-button>
+        <md-button class="md-icon-button"><md-icon md-font-set="material-icons">cancel</md-icon></md-icon></md-button>
     </md-card-actions>
 </md-card>
 
