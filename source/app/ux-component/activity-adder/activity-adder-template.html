@@ -8,43 +8,9 @@
 <!--</otus-activity-adder-list>-->
 <style>
 
-    md-card-title.flex {
-        padding: 0px;
-    }
-
-    /*md-card {*/
-    /*    padding: 0px;*/
-    /*    margin: 0px;*/
-    /*}*/
-
-    /*.gridListdemoDynamicTiles .s64 {*/
-    /*    font-size: 64px;*/
-    /*}*/
-
-    /*.gridListdemoDynamicTiles .s32 {*/
-    /*    font-size: 48px;*/
-    /*}*/
-
     .gridListdemoDynamicTiles md-grid-list {
-        margin: 10px;
-    }
-
-    /*.gridListdemoDynamicTiles md-grid-tile md-grid-tile-footer {*/
-    /*    background: rgba(19, 125, 108, 0.70);*/
-    /*    height: 36px;*/
-    /*}*/
-
-    /*.gridListdemoDynamicTiles md-grid-tile-footer figcaption {*/
-    /*    width: 100%;*/
-    /*}*/
-
-    /*.gridListdemoDynamicTiles md-grid-tile-footer figcaption md-icon {*/
-    /*    width: 5%;*/
-    /*    height: 3%;*/
-    /*}*/
-
-    .gridListdemoDynamicTiles md-grid-tile figure {
-        justify-content: normal;
+        margin: 1px;
+        padding: 0px;
     }
 
 </style>
@@ -75,13 +41,13 @@
                     <div class="demo-swipe" md-swipe-left="onSwipeLeft($event, $target)">
                         <md-switch aria-label="ActivityType" class="md-primary" ng-false-value="'onLine'"
                                    ng-model="data.cb2" ng-true-value="'inPaper'">
-                            <span class="md-subhead">On Line / Em Papel</span>
+                            <span class="md-subhead">Online / Em Papel</span>
                         </md-switch>
                     </div>
                     <div class="demo-swipe" md-swipe-right="onSwipeRight($event, $target)">
-                        <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityUnit'"
-                                   ng-model="data.cb3" ng-true-value="'Activitylist'">
-                            <span class="md-subhead">Unitário / Lista</span>
+                        <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityList'"
+                                   ng-model="data.cb3" ng-true-value="'ActivityUnit'">
+                            <span class="md-subhead">Lista / Unitário</span>
                         </md-switch>
                     </div>
                 </div>
@@ -115,7 +81,7 @@
 
 
         <md-button class="md-icon-button" ng-click="$ctrl.addPreviewActivity($ctrl.selectedItem)">
-            <md-icon md-font-set="material-icons">visibility</md-icon>
+            <md-icon md-font-set="material-icons">add_circle</md-icon>
         </md-button>
         <md-button class="md-icon-button">
             <md-icon md-font-set="material-icons">save</md-icon>
@@ -127,66 +93,30 @@
 </md-card>
 
 <div>
-    <md-content class="gridListdemoDynamicTiles" flex>
-        <md-grid-list md-cols="1" md-cols-gt-md="6" md-cols-md="3" md-cols-sm="2" md-gutter="8px"
-                      md-gutter-gt-sm="4px" md-row-height="4:3" md-row-height-gt-md="1:1" flex>
-            <md-grid-tile flex ng-repeat="tile in $ctrl.candidatesActivities" flex>
-                <div flex layout-margin="auto">
-                    <md-card flex>
-                        <md-card-title flex>
-                            <md-card-title-text flex>
-                                <div flex layout="row" layout-align="space-between center">
-                                    <md-button class="md-fab">{{tile.acronym}}</md-button>
-                                    <span class="md-button md-truncate" flex="40">{{tile.name}}</span>
-                                    <md-button class="md-icon-button">
-                                        <md-icon md-font-set="material-icons">cancel</md-icon>
-                                        </md-icon>
-                                    </md-button>
-                                </div>
-                                <div flex layout="column" layout-padding>
-                                    <span> Modo: {{tile.status}}</span>
-                                    <span> Categoria: {{tile.category}}</span>
-                                </div>
-                            </md-card-title-text>
-                        </md-card-title>
-                        <md-card-actions>
-                            <md-input-container>
-                                <label>ID Externo</label>
-                                <input ng-model="activity.ExternalID">
-                            </md-input-container>
+    <md-content class="gridListdemoDynamicTiles">
+        <md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"
+                      md-gutter-gt-sm="8px" md-row-height="2.8:2" md-row-height-gt-md="1:1">
+            <md-grid-tile ng-repeat="tile in $ctrl.candidatesActivities">
 
-                        </md-card-actions>
-                    </md-card>
-                </div>
+                <md-whiteframe class="md-whiteframe-1dp" layout-fill>
+                    <div layout="row" layout-align="space-between start">
+                        <md-button class="md-fab">{{tile.acronym}}</md-button>
+                        <span class="md-button md-truncate" flex="60">{{tile.name}}</span>
+                        <md-button class="md-icon-button" flex="3">
+                            <md-icon md-font-set="material-icons">close</md-icon>
+                            </md-icon>
+                        </md-button>
+                    </div>
+                    <div flex layout="column" layout-padding>
+                        <span> Modo: {{tile.status}}</span>
+                        <span> Categoria: {{tile.category}}</span>
+                        <md-input-container>
+                            <label>ID Externo</label>
+                            <input ng-model="activity.ExternalID">
+                        </md-input-container>
+                    </div>
+                </md-whiteframe>
             </md-grid-tile>
         </md-grid-list>
     </md-content>
 </div>
-
-
-<!--    <md-content class="gridListdemoDynamicTiles" flex ng-if="!self.candidatesActivities.length">-->
-<!--        <md-grid-list md-cols="1" md-cols-gt-md="6" md-cols-md="3" md-cols-sm="2" md-gutter="8px"-->
-<!--                      md-gutter-gt-sm="4px" md-row-height="4:3" md-row-height-gt-md="1:1">-->
-<!--            <md-grid-tile class="md-whiteframe-1dp"-->
-<!--                          md-colspan="2" md-colspan-sm="1" md-colspan-xs="1" md-rowspan="1"-->
-<!--                          ng-repeat="tile in $ctrl.candidatesActivities">-->
-<!--                <div layout-padding>-->
-<!--                    <div layout="row" layout-align="space-between">-->
-<!--                        <div layout="column">-->
-<!--                            <h3>{{tile.acronym}} {{tile.name}}</h3>-->
-<!--                            <span> Modo: {{tile.status}}</span>-->
-<!--                            <span> Categoria: {{tile.category}}</span>-->
-<!--                            <span>External ID: <input/></span>-->
-
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </md-grid-tile>-->
-<!--        </md-grid-list>-->
-
-
-<!--<md-icon aria-label="android" md-font-icon="android"></md-icon>-->
-
-<!--md-cols-gt-md="12" md-cols="3" md-cols-md="8"-->
-<!--md-row-height-gt-md="1:1" md-row-height="4:3"-->
-<!--md-gutter-gt-md="16px" md-gutter-md="8px" md-gutter="4px"-->
