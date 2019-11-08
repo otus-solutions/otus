@@ -14,48 +14,47 @@
     }
 
 </style>
+<!--style="padding-left: 20px; margin-bottom: 0; margin-top: 0"-->
 
-<md-card md-theme-watch>
-    <md-card-title>
-        <md-card-title-text flex="40" layout-align="center start">
+<md-card>
+    <div layout="row" layout-align="space-between start" flex layout-margin>
+        <div layout="column" layout-align="space-between start">
             <span class="md-headline">Gerenciador de Atividades</span>
             <span class="md-subhead">Inclusão de Formulários ao Participante</span>
-        </md-card-title-text>
+        </div>
+        <div layout="row" layout-align="space-between start" layout-margin
+             md-swipe-left="onSwipeLeft($event, $target)">
+            <md-icon md-font-set="material-icons">assessment</md-icon>
+            <md-switch aria-label="ActivityType" class="md-primary" ng-false-value="'onLine'"
+                       ng-model="data.cb2" ng-true-value="'inPaper'">
+            </md-switch>
+            <md-icon md-font-set="material-icons">description</md-icon>
+        </div>
 
-        <md-card-title-media flex>
-            <div flex layout="row" layout-align="center center">
-                <div flex="60">
-                    <span class="md-subhead">Categoria:</span>
-                    <md-input-container style="padding-left: 20px; margin-bottom: 0; margin-top: 0">
-                        <md-select aria-label="Categoria"
-                                   ng-model="$ctrl.configuration[activity.surveyTemplate.identity.acronym].category">
-                            <md-option ng-repeat="category in $ctrl.categories track by $index"
-                                       ng-selected="category.isDefault"
-                                       ng-value="category">{{category.label | uppercase}}
-                            </md-option>
-                        </md-select>
-                    </md-input-container>
-                </div>
+        <div layout="row" layout-align="space-between start" layout-margin md-swipe-right="onSwipeRight($event, $target)">
+            <md-icon md-font-set="material-icons">bookmarks</md-icon>
+            <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityList'"
+                       ng-model="data.cb3" ng-true-value="'ActivityUnit'">
+            </md-switch>
+            <md-icon md-font-set="material-icons">bookmark_border</md-icon>
+        </div>
 
-                <div layout="column" layout-align="center start">
-                    <div class="demo-swipe" md-swipe-left="onSwipeLeft($event, $target)">
-                        <md-switch aria-label="ActivityType" class="md-primary" ng-false-value="'onLine'"
-                                   ng-model="data.cb2" ng-true-value="'inPaper'">
-                            <span class="md-subhead">Online / Em Papel</span>
-                        </md-switch>
-                    </div>
-                    <div class="demo-swipe" md-swipe-right="onSwipeRight($event, $target)">
-                        <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityList'"
-                                   ng-model="data.cb3" ng-true-value="'ActivityUnit'">
-                            <span class="md-subhead">Lista / Unitário</span>
-                        </md-switch>
-                    </div>
-                </div>
-            </div>
-        </md-card-title-media>
-    </md-card-title>
+        <md-input-container layout-align="space-between start" flex="20">
+            <md-select aria-label="Categoria"
+                       ng-model="$ctrl.configuration[activity.surveyTemplate.identity.acronym].category">
+                <md-option ng-repeat="category in $ctrl.categories track by $index"
+                           ng-selected="category.isDefault"
+                           ng-value="category">{{category.label | uppercase}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+
+    </div>
+
+
+
+
     <md-card-actions layout="row" layout-align="end center">
-        <span class="md-subhead" layout-padding>Busca:</span>
         <md-autocomplete flex md-item-text="item.name" md-items="item in $ctrl.querySearch($ctrl.searchText)"
                          md-menu-class="autocomplete-custom-template"
                          md-min-length="0"
@@ -63,7 +62,7 @@
                          md-search-text="$ctrl.searchText"
                          md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
                          md-selected-item="$ctrl.selectedItem" md-selected-item-change="$ctrl.selectedItemChange(item)"
-                         placeholder="Atividade">
+                         placeholder="Selecione">
             <md-item-template>
           <span class="item-title">
             <span md-highlight-flags="i" md-highlight-text="$ctrl.searchText">{{item.acronym}}</span>
@@ -83,11 +82,12 @@
         <md-button class="md-icon-button" ng-click="$ctrl.addPreviewActivity($ctrl.selectedItem)">
             <md-icon md-font-set="material-icons">add_circle</md-icon>
         </md-button>
+
         <md-button class="md-icon-button">
             <md-icon md-font-set="material-icons">save</md-icon>
         </md-button>
         <md-button class="md-icon-button">
-            <md-icon md-font-set="material-icons">cancel</md-icon>
+            <md-icon md-font-set="material-icons">close</md-icon>
             </md-icon></md-button>
     </md-card-actions>
 </md-card>
