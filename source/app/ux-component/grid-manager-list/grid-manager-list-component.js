@@ -23,20 +23,18 @@
 
     self.selectedItemCounter = 0;
     self.orderQuery;
-    self.orderInverse = false;
+    self.orderReverse = false;
     self.error;
 
     self.$onInit = onInit;
 
-    // self.changeOrder = changeOrder;
-    // self.orderByIndex = orderByIndex;
+    self.orderByIndex = orderByIndex;
     self.selectDeselect = selectDeselect;
     self.selectDeselectAll = selectDeselectAll;
     self.filterGridTile = filterGridTile;
 
     self.filter = '';
     self.filterAll = false;
-    self.filterAllChanged = filterAllChanged;
 
     function onInit() {
       if(!$scope.safeApply){
@@ -61,11 +59,12 @@
         self.callbackAfterChange = self.gridDataSettings;
       }
       self.elementsArray = [];
-      self.selectedColor = null;
-      self.hoverColor = null;
+      self.hoverGridHeaderWhiteframe = null;
       self.hoverGridHeaderColor = null;
 
-      if (!self.hoverGridHeaderColor) self.hoverGridHeaderColor = '#52AAEA';
+      if (!self.hoverGridHeaderWhiteframe) self.hoverGridHeaderWhiteframe = 'md-whiteframe-21dp';
+
+      if (!self.hoverGridHeaderColor) self.hoverGridHeaderColor = '#00695C';
 
       if (!self.callbackAfterChange) self.callbackAfterChange = function () {};
 
@@ -78,7 +77,7 @@
     function _refreshGrid(newElementsArray) {
       self.elementsArray = newElementsArray || self.elementsArray;
       self.selectedItemCounter = 0;
-      _creacteConfiguration();
+      _createConfiguration();
       $scope.safeApply();
     }
 
@@ -90,20 +89,12 @@
       );
     }
 
-    function filterAllChanged(value) {
-      var newValue = value !== undefined ? value : !self.filterAll;
-
-      self.filterAll = newValue;
-
-      filterGridTile();
-    }
-
     function filterGridTile() {
       if (self.filter.length) {
-        self.table.filteredRows = $filter('filter')(self.table.fullRows, self.filter);
+        self.filteredActiviteis = $filter('filter')(self.elementsArray, self.filter);
 
-        var count = self.table.filteredRows.length;
-        var msg = '';
+        let count = self.filteredActiviteis.length;
+        let msg = '';
         if (!count) {
           msg = 'Nenhum registro foi encontrado.';
         } else if (count === 1) {
@@ -113,7 +104,7 @@
         }
         _showMsg(msg);
       } else {
-        self.table.filteredRows = self.table.fullRows;
+        self.filteredActiviteis = self.elementsArray;
         self.filterAll = false;
       }
     }
@@ -126,44 +117,25 @@
       self.callbackAfterChange(change);
     }
 
-    function _creacteConfiguration() {
+    function _createConfiguration() {
       self.elementsArray.forEach(function (element) {
         element.actions =_createActions();
+        element.iconStatus = _createIconStatus(element.status);
       }, this);
     }
 
-    function changeOrder(index) {
-      var columnName = "column" + index;
-
-      if (columnName + '.orderValue' === self.orderQuery) {
-        self.orderInverse = !self.orderInverse;
-      } else {
-        self.orderInverse = false;
-        _setOrderQuery(columnName);
+    function _createIconStatus(status) {
+      let icon = 'fiber_new';
+      let statusFinalized = 'Finalizado';
+      if(status){
+        icon = (status === statusFinalized) ? 'check_circle' : 'save';
       }
+      return icon;
     }
 
-    function orderByIndex() {
-      _setOrderQuery('$index');
-      self.orderInverse = !self.orderInverse;
-    }
-
-    function _setOrderQuery(propertyName) {
-      if (propertyName) {
-        if (propertyName === '$index'){
-          self.orderQuery = propertyName;
-        }
-        else {
-          self.orderQuery = propertyName + '.orderValue';
-        }
-      } else {
-        self.orderQuery = [];
-        if (self.orderIndices) {
-          self.orderIndices.forEach(function (orderIndex) {
-            self.orderQuery.push('column' + orderIndex + '.orderValue');
-          });
-        }
-      }
+    function orderByIndex(propertyName) {
+      self.orderReverse = (self.orderQuery === propertyName) ? !self.orderReverse : false;
+      self.orderQuery = propertyName;
     }
 
     function selectDeselectAll() {
@@ -192,7 +164,8 @@
     function _select(activity) {
       if (!activity.actions.selected) {
         activity.actions.selected = true;
-        activity.actions.colorGrid = { 'background-color': self.hoverGridHeaderColor };
+        activity.actions.whiteframeGrid = self.hoverGridHeaderWhiteframe;
+        activity.actions.colorGrid = { 'background-color': self.hoverGridHeaderColor};
         self.selectedItemCounter++;
         _runCallbackOnChange(activity, 'select');
       }
@@ -201,6 +174,7 @@
     function _deselect(activity) {
       if (activity.actions.selected) {
         activity.actions.selected = false;
+        activity.actions.whiteframeGrid = null;
         activity.actions.colorGrid = null;
         self.selectedItemCounter--;
         _runCallbackOnChange(activity, 'deselect');
@@ -208,40 +182,11 @@
     }
 
     function _createActions() {
-      var actions = {
+      let actions = {
         selected: false,
         specialFieldClicked: false
       };
       return actions;
     }
-
-    function _remove(activity) {
-      self.elementsArray.splice(activity.index, 1);
-    }
-
-    function _updateRow(element, activity) {
-      var updatedRow = _createActions(element, activity.index);
-
-      activity.ref = updatedRow.ref;
-      activity.columns = updatedRow.columns;
-    }
-
-    function _isValidElement(element) {
-      var isvalid = false;
-      if (element && self.elementsProperties.length) {
-        for (var i = 0; i < self.elementsProperties.length; i++) {
-          var fullProperty = self.elementsProperties[i];
-          if (typeof fullProperty === "string") {
-            var property = fullProperty.split(".")[0];
-            if (element[property]) {
-              isvalid = true;
-              break;
-            }
-          }
-        }
-      }
-      return isvalid;
-    }
-
   }
 }());
