@@ -48,21 +48,18 @@
                 </md-option>
             </md-select>
         </md-input-container>
-
     </div>
 
-
-
-
     <md-card-actions layout="row" layout-align="end center">
-        <md-autocomplete flex md-item-text="item.name" md-items="item in $ctrl.querySearch($ctrl.searchText)"
+        <span layout="row" layout-align="start center" flex>
+        <md-autocomplete md-item-text="item.name" md-items="item in $ctrl.querySearch($ctrl.searchText)"
                          md-menu-class="autocomplete-custom-template"
                          md-min-length="0"
                          md-no-cache="true"
                          md-search-text="$ctrl.searchText"
                          md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
                          md-selected-item="$ctrl.selectedItem" md-selected-item-change="$ctrl.selectedItemChange(item)"
-                         placeholder="Selecione">
+                         placeholder="Selecione" flex="50">
             <md-item-template>
           <span class="item-title">
             <span md-highlight-flags="i" md-highlight-text="$ctrl.searchText">{{item.acronym}}</span>
@@ -78,16 +75,16 @@
             </md-not-found>
         </md-autocomplete>
 
-
         <md-button class="md-icon-button" ng-click="$ctrl.addPreviewActivity($ctrl.selectedItem)">
-            <md-icon md-font-set="material-icons">add_circle</md-icon>
+            <md-icon md-font-set="material-icons">add_box</md-icon>
         </md-button>
+        </span>
 
         <md-button class="md-icon-button">
             <md-icon md-font-set="material-icons">save</md-icon>
         </md-button>
         <md-button class="md-icon-button">
-            <md-icon md-font-set="material-icons">close</md-icon>
+            <md-icon md-font-set="material-icons">cancel</md-icon>
             </md-icon></md-button>
     </md-card-actions>
 </md-card>
