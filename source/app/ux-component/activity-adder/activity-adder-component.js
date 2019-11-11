@@ -25,6 +25,8 @@
         self.activities = [];
         self.candidatesActivities = [];
         self.statePreview = false;
+        self.mode = "inLine";
+        self.selectType = "activityUnit";
 
         /* Public methods */
         self.addActivities = addActivities;

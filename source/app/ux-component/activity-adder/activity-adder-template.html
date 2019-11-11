@@ -6,17 +6,17 @@
 <!--  on-activity-selection="$ctrl.catchActivity(activity)"-->
 <!--  style="overflow-y: auto">-->
 <!--</otus-activity-adder-list>-->
-<style>
 
+
+<style>
     .gridListdemoDynamicTiles md-grid-list {
         margin: 1px;
         padding: 0px;
     }
-
 </style>
 <!--style="padding-left: 20px; margin-bottom: 0; margin-top: 0"-->
 
-<md-card>
+<md-card style="background-color: #f5f5f5">
     <div layout="row" layout-align="space-between start" flex layout-margin>
         <div layout="column" layout-align="space-between start">
             <span class="md-headline">Gerenciador de Atividades</span>
@@ -26,15 +26,16 @@
              md-swipe-left="onSwipeLeft($event, $target)">
             <md-icon md-font-set="material-icons">assessment</md-icon>
             <md-switch aria-label="ActivityType" class="md-primary" ng-false-value="'onLine'"
-                       ng-model="data.cb2" ng-true-value="'inPaper'">
+                       ng-model="$ctrl.mode" ng-true-value="'paper'">
             </md-switch>
             <md-icon md-font-set="material-icons">description</md-icon>
         </div>
 
+
         <div layout="row" layout-align="space-between start" layout-margin md-swipe-right="onSwipeRight($event, $target)">
             <md-icon md-font-set="material-icons">bookmarks</md-icon>
             <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityList'"
-                       ng-model="data.cb3" ng-true-value="'ActivityUnit'">
+                       ng-model="$ctrl.selectType" ng-true-value="'activityUnit'">
             </md-switch>
             <md-icon md-font-set="material-icons">bookmark_border</md-icon>
         </div>
@@ -93,7 +94,8 @@
     <md-content class="gridListdemoDynamicTiles">
         <md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"
                       md-gutter-gt-sm="8px" md-row-height="2.8:2" md-row-height-gt-md="1:1">
-            <md-grid-tile ng-repeat="tile in $ctrl.candidatesActivities">
+            <md-grid-tile ng-repeat="tile in $ctrl.candidatesActivities
+">
 
                 <md-whiteframe class="md-whiteframe-1dp" layout-fill>
                     <div layout="row" layout-align="space-between start">
@@ -117,3 +119,5 @@
         </md-grid-list>
     </md-content>
 </div>
+
+<!-- line 96 <md-grid-tile ng-repeat="tile in $ctrl.candidatesActivities">-->
