@@ -6,6 +6,7 @@ var minifyCss = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var gulp_if = require('gulp-if');
 var embedTemplates = require('gulp-angular-embed-templates');
+var clean = require('gulp-clean');
 
 gulp.task('compress-compress', function () {
     return gulp.src('app/*.html')
@@ -49,3 +50,9 @@ gulp.task('copy_node_modules', function () {
     return gulp.src('./node_modules/**/*')
         .pipe(gulp.dest('dist/otus/node_modules'));
 });
+
+gulp.task('clean_dist', function () {
+    return gulp.src('dist/', {read: false})
+        .pipe(clean());
+});
+
