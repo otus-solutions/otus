@@ -24,6 +24,7 @@
     self.selectedItemCounter = 0;
     self.orderQuery;
     self.orderReverse = false;
+    self.selectAll = false;
     self.iconsDropUpDown ='arrow_drop_up';
     self.error;
 
@@ -51,7 +52,6 @@
         };
       }
       _initializeDefaultValues();
-      // self.orderByInsertion ? orderByIndex() : _setOrderQuery();
       self.updateFunction = _refreshGrid;
     }
 
@@ -63,7 +63,7 @@
       self.hoverGridHeaderWhiteframe = null;
       self.hoverGridHeaderColor = null;
 
-      if (!self.hoverGridHeaderWhiteframe) self.hoverGridHeaderWhiteframe = 'md-whiteframe-11dp';
+      if (!self.hoverGridHeaderWhiteframe) self.hoverGridHeaderWhiteframe = 'md-whiteframe-19dp';
 
       if (!self.hoverGridHeaderColor) self.hoverGridHeaderColor = '#00695C';
 
@@ -86,7 +86,7 @@
       $mdToast.show(
           $mdToast.simple()
               .textContent(msg)
-              // .hideDelay(self.hideDelayTime)
+              .hideDelay(1000)
       );
     }
 
@@ -106,7 +106,6 @@
         _showMsg(msg);
       } else {
         self.filteredActiviteis = self.elementsArray;
-        self.filterAll = false;
       }
     }
 
@@ -146,8 +145,10 @@
       self.elementsArray.forEach(function (activity) {
         if (deselect) {
           _deselect(activity);
+          self.selectAll = false;
         } else {
           _select(activity);
+          self.selectAll = true;
         }
       }, this);
     }
