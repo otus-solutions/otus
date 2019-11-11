@@ -45,9 +45,22 @@
 </style>
 <md-card class="md-whiteframe-1dp" layout="column" flex>
     <div ng-if="$ctrl.elementsArray" layout="row" layout-align="space-between">
-        <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
-            Lista de Atividades
-        </md-subheader>
+        <div layout="row" layout-align="start center" flex>
+            <div layout="column" layout-margin flex="60" flex-xs="100">
+                <md-input-container flex>
+                    <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter"
+                           ng-change="$ctrl.filterGridTile()"
+                           ng-model-options="{ allowInvalid: true, debounce: 500 }"
+                    />
+                </md-input-container>
+            </div>
+            <md-checkbox style="margin:0;" aria-label="Selecionar todas" class="md-primary" ng-checked="$ctrl.selectAll"
+                         ng-click="$ctrl.selectDeselectAll()">
+            <span class="md-body-1" style="padding-right:8px;">
+                Todas
+            </span>
+            </md-checkbox>
+        </div>
         <md-menu md-position-mode="target-right target">
             <md-button class="md-icon-button" ng-click="$mdOpenMenu()">
                 <md-icon md-font-set="material-icons">menu</md-icon>
@@ -98,25 +111,6 @@
         </md-menu>
     </div>
 
-    <div layout="column" layout-align="end end" flex>
-        <md-checkbox flex style="margin:0;" aria-label="Selecionar todos" class="md-primary" ng-checked="$ctrl.selectAll"
-                   ng-click="$ctrl.selectDeselectAll()">
-        <span class="md-body-1" style="padding-right:8px;">
-            Selecionar Todas as Atividades
-        </span>
-      </md-checkbox>
-    </div>
-
-    <div layout="row" layout-align="center center" flex>
-        <div layout="row" layout-margin flex>
-            <md-input-container flex>
-                <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter"
-                       ng-change="$ctrl.filterGridTile()"
-                       ng-model-options="{ allowInvalid: true, debounce: 500 }"
-                />
-            </md-input-container>
-        </div>
-    </div>
     <div ng-if="$ctrl.error.isError">
         <h1>{{$ctrl.error.msg}}</h1>
     </div>
