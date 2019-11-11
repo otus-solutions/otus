@@ -13,10 +13,10 @@
 
     .gridListdemoDynamicTiles md-grid-tile md-grid-tile-header {
         background: rgba(19, 125, 108, 0.68);
-    }
-
-    .gridListdemoDynamicTiles md-grid-tile-footer figcaption {
+        position: relative;
         width: 100%;
+        overflow: inherit;
+        padding: 8px;
     }
 
     .gridListdemoDynamicTiles md-grid-tile-header figcaption {
@@ -29,7 +29,15 @@
 
     .gridListdemoDynamicTiles md-grid-tile figure {
         justify-content: normal;
+        flex-direction: column;
+        align-items: start;
     }
+
+    .gridListdemoDynamicTiles .grid-aligh{
+        padding-left: 10px;
+        padding-top: 5px;
+    }
+
     .gridListdemoDynamicTiles md-grid-tile:hover {
         background: #F5F5F5;
     }
@@ -47,6 +55,7 @@
                 <md-menu-item>
                     <md-button ng-click="$ctrl.orderByIndex('name')">
                         Ordenar por nome da Atividade
+                        <md-icon md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
@@ -93,29 +102,27 @@
     </div>
 
     <md-content ng-if="!$ctrl.error.isError" class="gridListdemoDynamicTiles" flex>
-        <md-grid-list md-cols="1" md-cols-sm="3" md-cols-md="4" md-cols-gt-md="6" md-row-height-gt-md="4:3" md-row-height-sm="4:4" md-row-height-md="4:4"
-                      md-row-height="3.1:2" md-gutter-gt-md="8px" md-gutter="12px" md-gutter-gt-sm="6px">
+        <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="6" md-cols-gt-md="6" md-row-height-gt-md="5:3" md-row-height-sm="4:2" md-row-height-md="4:4"  md-row-height-lg="5:4"
+                      md-row-height="4:2" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-gt-sm="6px">
             <md-grid-tile ng-repeat="activity in $ctrl.elementsArray | filter:$ctrl.filter | orderBy:$ctrl.orderQuery:$ctrl.orderReverse"
                           ng-click="$ctrl.selectDeselect(activity)" name="activity{{$index}}"
                           id="activity{{$index}}"
                           aria-label="activity{{$index}}"
-                          md-rowspan="1" md-colspan="1" md-colspan-sm="1" md-colspan-xs="1" md-whiteframe="3" class="{{activity.actions.whiteframeGrid}}">
-                <div layout-padding >
-                    <md-grid-tile-header class="{{activity.actions.whiteframeGrid}}" ng-style="activity.actions.colorGrid">
-                        <div layout="row" layout-align="space-between center">
-                            <div layout="row">
-                                <md-icon class="md-avatar-icon" style="fill: white" md-svg-icon="{{activity.mode.icon}}"></md-icon>
-                                <h3>{{activity.acronym}}</h3>
-                            </div>
-                            <md-icon style="color: white" md-font-library="material-icons"">{{activity.iconStatus}}</md-icon>
+                          md-rowspan="1" md-colspan="1" md-colspan-lg="2" md-colspan-md="2" md-colspan-sm="1" md-colspan-xs="1" md-whiteframe="3" class="{{activity.actions.whiteframeGrid}}">
+                <md-grid-tile-header class="{{activity.actions.whiteframeGrid}}" ng-style="activity.actions.colorGrid">
+                    <div layout="row" layout-align="space-between center">
+                        <div layout="row">
+                            <md-icon class="md-avatar-icon" style="fill: white" md-svg-icon="{{activity.mode.icon}}"></md-icon>
+                            <h3>{{activity.acronym}}</h3>
                         </div>
-                    </md-grid-tile-header>
-                    <div layout="column">
-                        <span>{{activity.name}}</span>
-                        <span> ID Externo: 32176453276154716235</span>
-                        <span> Realização: {{activity.realizationDate}}</span>
-                        <span>{{activity.category}}</span>
+                        <md-icon style="color: white" md-font-library="material-icons"">{{activity.iconStatus}}</md-icon>
                     </div>
+                </md-grid-tile-header>
+                <div class="grid-aligh" layout="column">
+                    <span>{{activity.name}}</span>
+                    <span class="md-caption" style="color: gray;">ID Externo: <small class="md-body-2" style="color: black;">32176453276154716235{{activity.requiredExternalID}}</small></span>
+                    <span class="md-caption" style="color: gray;">Realização: <small class="md-body-2" style="color: black;">{{activity.realizationDate}}</small></span>
+                    <span>{{activity.category}}</span>
                 </div>
             </md-grid-tile>
         </md-grid-list>

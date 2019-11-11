@@ -24,6 +24,7 @@
     self.selectedItemCounter = 0;
     self.orderQuery;
     self.orderReverse = false;
+    self.iconsDropUpDown ='arrow_drop_up';
     self.error;
 
     self.$onInit = onInit;
@@ -62,7 +63,7 @@
       self.hoverGridHeaderWhiteframe = null;
       self.hoverGridHeaderColor = null;
 
-      if (!self.hoverGridHeaderWhiteframe) self.hoverGridHeaderWhiteframe = 'md-whiteframe-21dp';
+      if (!self.hoverGridHeaderWhiteframe) self.hoverGridHeaderWhiteframe = 'md-whiteframe-11dp';
 
       if (!self.hoverGridHeaderColor) self.hoverGridHeaderColor = '#00695C';
 
@@ -135,11 +136,12 @@
 
     function orderByIndex(propertyName) {
       self.orderReverse = (self.orderQuery === propertyName) ? !self.orderReverse : false;
+      self.iconsDropUpDown = self.orderReverse ? 'arrow_drop_up' : 'arrow_drop_down';
       self.orderQuery = propertyName;
     }
 
     function selectDeselectAll() {
-      var deselect = (self.selectedItemCounter === self.elementsArray.length);
+      let deselect = (self.selectedItemCounter === self.elementsArray.length);
 
       self.elementsArray.forEach(function (activity) {
         if (deselect) {
