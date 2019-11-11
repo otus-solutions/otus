@@ -55,32 +55,37 @@
                 <md-menu-item>
                     <md-button ng-click="$ctrl.orderByIndex('name')">
                         Ordenar por nome da Atividade
-                        <md-icon md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
+                        <md-icon ng-if="$ctrl.orderQuery === 'name'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
                     <md-button ng-click="$ctrl.orderByIndex('acronym')">
                         Ordenar por acrônimo da Atividade
+                        <md-icon ng-if="$ctrl.orderQuery === 'acronym'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
                     <md-button ng-click="$ctrl.orderByIndex('requiredExternalID')">
                         Ordenar por ID Externo
+                        <md-icon ng-if="$ctrl.orderQuery === 'requiredExternalID'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
                     <md-button ng-click="$ctrl.orderByIndex('status')">
                         Ordenar por Status
+                        <md-icon ng-if="$ctrl.orderQuery === 'status'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
                     <md-button ng-click="$ctrl.orderByIndex('realizationDate')">
                         Ordenar por Data de realização
+                        <md-icon ng-if="$ctrl.orderQuery === 'realizationDate'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
                     </md-button>
                 </md-menu-item>
                 <md-menu-item>
                     <md-button ng-click="$ctrl.orderByIndex('category')">
                         Ordenar por Categoria
+                        <md-icon ng-if="$ctrl.orderQuery === 'category'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
                     </md-button>
                 </md-menu-item>
         </md-menu>
