@@ -46,7 +46,7 @@
 <md-card class="md-whiteframe-1dp" layout="column" flex>
     <div ng-if="$ctrl.elementsArray" layout="row" layout-align="space-between">
         <div layout="row" layout-align="start center" flex>
-            <div layout="column" layout-margin flex="60" flex-xs="100">
+            <div layout="column" layout-margin flex="40" flex-xs="100">
                 <md-input-container flex>
                     <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter"
                            ng-change="$ctrl.filterGridTile()"
@@ -66,48 +66,13 @@
                 <md-icon md-font-set="material-icons">menu</md-icon>
             </md-button>
             <md-menu-content>
-                <md-menu-item>
-                    <md-button ng-click="$ctrl.orderByIndex('$index')">
-                        Ordenar por inserção
-                        <md-icon ng-if="$ctrl.orderQuery === '$index'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
+                <md-menu-item ng-repeat="item in $ctrl.itemsOrderBy">
+                    <md-button  id="{{item.index}}" ng-click="$ctrl.orderByIndex(item.index)">
+                        Ordenar por {{item.value}}
+                        <md-icon ng-if="$ctrl.orderQuery === item.index" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
                     </md-button>
                 </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="$ctrl.orderByIndex('name')">
-                        Ordenar por nome da Atividade
-                        <md-icon ng-if="$ctrl.orderQuery === 'name'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="$ctrl.orderByIndex('acronym')">
-                        Ordenar por acrônimo da Atividade
-                        <md-icon ng-if="$ctrl.orderQuery === 'acronym'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="$ctrl.orderByIndex('requiredExternalID')">
-                        Ordenar por ID Externo
-                        <md-icon ng-if="$ctrl.orderQuery === 'requiredExternalID'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="$ctrl.orderByIndex('status')">
-                        Ordenar por Status
-                        <md-icon ng-if="$ctrl.orderQuery === 'status'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="$ctrl.orderByIndex('realizationDate')">
-                        Ordenar por Data de realização
-                        <md-icon ng-if="$ctrl.orderQuery === 'realizationDate'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
-                    </md-button>
-                </md-menu-item>
-                <md-menu-item>
-                    <md-button ng-click="$ctrl.orderByIndex('category')">
-                        Ordenar por Categoria
-                        <md-icon ng-if="$ctrl.orderQuery === 'category'" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
-                    </md-button>
-                </md-menu-item>
+            </md-menu-content>
         </md-menu>
     </div>
 

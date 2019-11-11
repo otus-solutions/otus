@@ -22,10 +22,11 @@
     var self = this;
 
     self.selectedItemCounter = 0;
-    self.orderQuery;
     self.orderReverse = false;
     self.selectAll = false;
     self.iconsDropUpDown ='arrow_drop_up';
+    self.orderQuery;
+    self.itemsOrderBy;
     self.error;
 
     self.$onInit = onInit;
@@ -52,6 +53,7 @@
         };
       }
       _initializeDefaultValues();
+      _createItemsOrderBy();
       self.updateFunction = _refreshGrid;
     }
 
@@ -80,6 +82,55 @@
       self.selectedItemCounter = 0;
       _createConfiguration();
       $scope.safeApply();
+    }
+
+    function _createItemsOrderBy() {
+      self.itemsOrderBy = [
+        {
+          index: '$index',
+          value: 'inserção'
+        },
+        {
+          index: 'name',
+          value: 'nome da Atividade'
+        },
+        {
+          index: 'acronym',
+          value: 'acrônimo da Atividade'
+        },
+        {
+          index: 'requiredExternalID',
+          value: 'ID Externo'
+        },
+        {
+          index:  'status',
+          value: 'Status'
+        },
+        {
+          index:  'realizationDate',
+          value: 'Data de realização'
+        },
+        {
+          index:  'category',
+          value: 'Categoria'
+        }
+      ]
+    }
+
+    function _createConfiguration() {
+      self.elementsArray.forEach(function (element) {
+        element.actions =_createActions();
+        element.iconStatus = _createIconStatus(element.status);
+      }, this);
+    }
+
+    function _createIconStatus(status) {
+      let icon = 'fiber_new';
+      let statusFinalized = 'Finalizado';
+      if(status){
+        icon = (status === statusFinalized) ? 'check_circle' : 'save';
+      }
+      return icon;
     }
 
     function _showMsg(msg) {
@@ -115,22 +166,6 @@
         element: activity
       };
       self.callbackAfterChange(change);
-    }
-
-    function _createConfiguration() {
-      self.elementsArray.forEach(function (element) {
-        element.actions =_createActions();
-        element.iconStatus = _createIconStatus(element.status);
-      }, this);
-    }
-
-    function _createIconStatus(status) {
-      let icon = 'fiber_new';
-      let statusFinalized = 'Finalizado';
-      if(status){
-        icon = (status === statusFinalized) ? 'check_circle' : 'save';
-      }
-      return icon;
     }
 
     function orderByIndex(propertyName) {
