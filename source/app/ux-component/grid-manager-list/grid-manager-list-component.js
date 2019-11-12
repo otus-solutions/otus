@@ -40,18 +40,6 @@
     self.filterAll = false;
 
     function onInit() {
-      if(!$scope.safeApply){
-        $scope.safeApply = function(fn) {
-          var phase = this.$root.$$phase;
-          if(phase == '$apply' || phase == '$digest') {
-            if(fn && (typeof(fn) === 'function')) {
-              fn();
-            }
-          } else {
-            this.$apply(fn);
-          }
-        };
-      }
       _initializeDefaultValues();
       _createItemsOrderBy();
       self.updateFunction = _refreshGrid;
@@ -88,7 +76,6 @@
       self.selectedItemCounter = 0;
 
       _createConfiguration();
-      $scope.safeApply();
     }
 
     function _createItemsOrderBy() {

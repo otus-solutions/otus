@@ -70,7 +70,7 @@
 
     function update() {
       _loadActivities();
-      _buildDynamicTableSettings();
+      // _buildDynamicTableSettings();
     }
 
     function onInit() {
@@ -86,7 +86,7 @@
       self.isListEmpty = true;
       self.otusActivityManager.listComponent = self;
       _loadActivities();
-      _buildDynamicTableSettings();
+      // _buildDynamicTableSettings();
       $element.find('#searchBlock').on('keydown', function(ev) {
         ev.stopPropagation();
       });
@@ -107,7 +107,6 @@
           ActivityService.selectActivities(_selectedActivities);
           LoadingScreenService.finish();
           self.ready = true;
-          console.log(self.activities)
         });
     }
 
@@ -116,50 +115,50 @@
       self.reverseSort = order;
     }
 
-    function _buildDynamicTableSettings() {
-      let dynamicTableSettingsFactory =  DynamicTableSettingsFactory.create()
-        .addHeader('NOME', '25', '', 1)
-        .addColumnProperty('name')
-        .addHeader('ACRÔNIMO', '15', 'center center', 2)
-        .addColumnProperty('acronym')
-          .addHeader('ID EXTERNO', '20', 'center center', 3)
-          .addColumnProperty('requiredExternalID')
-        .addHeader('MODO', '10', '', 4)
-        .addIconWithFunction(function (element) {
-          var structureIcon = { icon: "md-svg-icon", class: "", tooltip: "" };
-          var OnLineStructure = {
-            icon: "equalizer",
-            class: "activity-item-icon md-avatar-icon",
-            tooltip: "On line",
-          };
-          var paperStructure = {
-            icon: 'description',
-            class: "activity-item-icon md-avatar-icon",
-            tooltip: "Em papel",
-          };
-
-          if(element.mode.name === "Em papel"){
-            structureIcon = paperStructure;
-          } else {
-            structureIcon = OnLineStructure;
-          }
-          return structureIcon;
-        })
-        .addHeader('REALIZAÇÃO', '15', 'center center', 5)
-        .addColumnProperty('realizationDate', 'DATE')
-        .setFormatData("'dd/MM/yy")
-        .addHeader('STATUS', '20', '', 6)
-        .addColumnProperty('status')
-        .addHeader('CATEGORIA', '15', '', 7)
-        .addColumnProperty('category')
-        .setCallbackAfterChange(self.dynamicDataTableChange)
-        .setCheckbox(true);
-
-      if (window.innerHeight <= 650){
-        dynamicTableSettingsFactory.setTitle("Lista de Atividades")
-      }
-      self.dynamicTableSettings = dynamicTableSettingsFactory.getSettings();
-    }
+    // function _buildDynamicTableSettings() {
+    //   let dynamicTableSettingsFactory =  DynamicTableSettingsFactory.create()
+    //     .addHeader('NOME', '25', '', 1)
+    //     .addColumnProperty('name')
+    //     .addHeader('ACRÔNIMO', '15', 'center center', 2)
+    //     .addColumnProperty('acronym')
+    //       .addHeader('ID EXTERNO', '20', 'center center', 3)
+    //       .addColumnProperty('requiredExternalID')
+    //     .addHeader('MODO', '10', '', 4)
+    //     .addIconWithFunction(function (element) {
+    //       var structureIcon = { icon: "md-svg-icon", class: "", tooltip: "" };
+    //       var OnLineStructure = {
+    //         icon: "equalizer",
+    //         class: "activity-item-icon md-avatar-icon",
+    //         tooltip: "On line",
+    //       };
+    //       var paperStructure = {
+    //         icon: 'description',
+    //         class: "activity-item-icon md-avatar-icon",
+    //         tooltip: "Em papel",
+    //       };
+    //
+    //       if(element.mode.name === "Em papel"){
+    //         structureIcon = paperStructure;
+    //       } else {
+    //         structureIcon = OnLineStructure;
+    //       }
+    //       return structureIcon;
+    //     })
+    //     .addHeader('REALIZAÇÃO', '15', 'center center', 5)
+    //     .addColumnProperty('realizationDate', 'DATE')
+    //     .setFormatData("'dd/MM/yy")
+    //     .addHeader('STATUS', '20', '', 6)
+    //     .addColumnProperty('status')
+    //     .addHeader('CATEGORIA', '15', '', 7)
+    //     .addColumnProperty('category')
+    //     .setCallbackAfterChange(self.dynamicDataTableChange)
+    //     .setCheckbox(true);
+    //
+    //   if (window.innerHeight <= 650){
+    //     dynamicTableSettingsFactory.setTitle("Lista de Atividades")
+    //   }
+    //   self.dynamicTableSettings = dynamicTableSettingsFactory.getSettings();
+    // }
 
     function griidDataChange(change) {
       if (change.type === 'select' || change.type === 'deselect') {

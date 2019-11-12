@@ -1,53 +1,76 @@
-<div>
-  <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
-    <div class="md-toolbar-tools">
-      <span flex>Lista de atividades</span>
+<style>
+  .coolBottomSheet {
+    transition-duration: 0s
+  }
 
-      <md-button class="md-raised md-accent md-icon-button" aria-label="Preencher Atividade"
+  .bottomSheetdemoBasicUsage .md-inline-list-icon-label {
+    display: inline-block;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: -10px;
+    height: 24px;
+    vertical-align: middle; }
+
+  .bottomSheetdemoBasicUsage .md-grid-item-content {
+    height: 90px;
+    padding-top: 10px; }
+
+  .bottomSheetdemoBasicUsage .md-grid-item-content md-icon {
+    height: 48px;
+    width: 48px; }
+
+  .bottomSheetdemoBasicUsage .md-grid-text {
+    padding-bottom: 5px; }
+
+  .bottomSheetdemoBasicUsage md-list-item, .bottomSheetdemoBasicUsage md-list-item .md-list-item-inner {
+    min-height: 48px; }
+
+  .bottomSheetdemoBasicUsage .md-subheader .md-subheader-inner {
+    padding: 0; }
+</style>
+<md-bottom-sheet class="md-grid coolBottomSheet" layout="column" ng-show="$ctrl.showBottomSheet">
+  <div layout-padding style="height: 6em !important;">
+    <div layout="row" layout-align="center center">
+      <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Preencher Atividade"
                  ng-click="$ctrl.fillSelectedActivity()"
                  ng-show="$ctrl.showFillingButton">
-        <md-tooltip md-direction="down">Preencher Atividade</md-tooltip>
+        <md-tooltip md-direction="top">Preencher Atividade</md-tooltip>
         <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
       </md-button>
-
       <otus-activity-report ng-if="$ctrl.showVisualizationButton" selected-participant=$ctrl.selectedParticipant
                             status-selected-activity=$ctrl.statusSelectedActivity show-visualization-button=$ctrl.showVisualizationButton;>
       </otus-activity-report>
-
-      <md-button class="md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"
+      <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"
                  ng-click="$ctrl.viewSelectedActivity()"
                  ng-show="$ctrl.showViewerButton">
-        <md-tooltip md-direction="down">Visualizar Atividade</md-tooltip>
+        <md-tooltip md-direction="top">Visualizar Atividade</md-tooltip>
         <md-icon aria-label="Visualizar Atividade">playlist_add_check</md-icon>
       </md-button>
-
-      <md-button class="md-raised md-accent md-icon-button" aria-label="Alterar Aferidor"
+      <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Alterar Aferidor"
                  ng-click="$ctrl.updateChecker()"
                  ng-show="$ctrl.isPaperActivity">
-        <md-tooltip md-direction="down">Alterar Aferidor</md-tooltip>
+        <md-tooltip md-direction="top">Alterar Aferidor</md-tooltip>
         <md-icon aria-label="Preencher Atividade">transfer_within_a_station</md-icon>
       </md-button>
-
-      <md-button class="md-raised md-icon-button" aria-label="Excluir" style="background-color: grey"
+      <md-button class="md-grid-item-content md-raised md-icon-button" aria-label="Excluir" style="background-color: grey"
                  ng-click="$ctrl.deleteSelectedActivity()"
                  ng-show="$ctrl.showDeleteButton">
-        <md-tooltip md-direction="down">Excluir</md-tooltip>
+        <md-tooltip md-direction="top">Excluir</md-tooltip>
         <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
       </md-button>
-
-      <md-button class="md-raised md-accent md-icon-button" aria-label="Detalhes"
+      <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Detalhes"
                  ng-click="$ctrl.visualizeSelectedActivityInfo()"
                  ng-show="$ctrl.showInfoButton">
-        <md-tooltip md-direction="down">Detalhes</md-tooltip>
+        <md-tooltip md-direction="top">Detalhes</md-tooltip>
         <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>
       </md-button>
-
     </div>
-  </md-toolbar>
-  <md-fab-speed-dial md-direction="down" class="md-scale">
+  </div>
+</md-bottom-sheet>
+<div>
+  <md-fab-speed-dial md-direction="top" class="md-scale">
     <md-fab-trigger>
       <md-button aria-label="menu" class="md-accent">
-        Açoes
         <md-icon md-svg-icon="menu"></md-icon>
       </md-button>
     </md-fab-trigger>
