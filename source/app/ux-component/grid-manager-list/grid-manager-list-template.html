@@ -1,17 +1,17 @@
 <style>
-    .gridListdemoDynamicTiles .s64 {
+    .gridListDynamicTiles .s64 {
         font-size: 64px;
     }
 
-    .gridListdemoDynamicTiles .s32 {
+    .gridListDynamicTiles .s32 {
         font-size: 48px;
     }
 
-    .gridListdemoDynamicTiles md-grid-list {
+    .gridListDynamicTiles md-grid-list {
         margin: 10px;
     }
 
-    .gridListdemoDynamicTiles md-grid-tile md-grid-tile-header {
+    .gridListDynamicTiles md-grid-tile md-grid-tile-header {
         background: rgba(19, 125, 108, 0.68);
         position: relative;
         width: 100%;
@@ -19,26 +19,26 @@
         padding: 8px;
     }
 
-    .gridListdemoDynamicTiles md-grid-tile-header figcaption {
+    .gridListDynamicTiles md-grid-tile-header figcaption {
         display: block;
         width: 100%;
     }
-    .gridListdemoDynamicTiles md-grid-tile-header figcaption md-icon {
+    .gridListDynamicTiles md-grid-tile-header figcaption md-icon {
         margin: 0;
     }
 
-    .gridListdemoDynamicTiles md-grid-tile figure {
+    .gridListDynamicTiles md-grid-tile figure {
         justify-content: normal;
         flex-direction: column;
         align-items: start;
     }
 
-    .gridListdemoDynamicTiles .grid-aligh{
+    .gridListDynamicTiles .grid-aligh{
         padding-left: 10px;
         padding-top: 5px;
     }
 
-    .gridListdemoDynamicTiles md-grid-tile:hover {
+    .gridListDynamicTiles md-grid-tile:hover {
         background: #F5F5F5;
         cursor: pointer;
     }
@@ -66,11 +66,12 @@
                 <md-icon md-font-set="material-icons">menu</md-icon>
             </md-button>
             <md-menu-content>
-                <md-menu-item ng-repeat="item in $ctrl.itemsOrderBy">
+                <md-menu-item ng-repeat="item in $ctrl.itemsOrderBy" layout="column">
                     <md-button  id="{{item.index}}" ng-click="$ctrl.orderByIndex(item.index)">
                         Ordenar por {{item.value}}
                         <md-icon ng-if="$ctrl.orderQuery === item.index" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
                     </md-button>
+                    <md-divider></md-divider>
                 </md-menu-item>
             </md-menu-content>
         </md-menu>
@@ -80,8 +81,8 @@
         <h1>{{$ctrl.error.msg}}</h1>
     </div>
 
-    <md-content ng-if="!$ctrl.error.isError" class="gridListdemoDynamicTiles" flex>
-        <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="6" md-cols-gt-md="6" md-row-height-gt-md="5:3" md-row-height-sm="4:2" md-row-height-md="4:4"  md-row-height-lg="5:4"
+    <md-content ng-if="!$ctrl.error.isError" class="gridListDynamicTiles" flex>
+        <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="6" md-cols-gt-md="6" md-row-height-gt-md="5:3" md-row-height-sm="4:2" md-row-height-md="3:4"  md-row-height-lg="5:4"
                       md-row-height="4:2" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-gt-sm="6px">
             <md-grid-tile ng-repeat="activity in $ctrl.elementsArray | filter:$ctrl.filter | orderBy:$ctrl.orderQuery:$ctrl.orderReverse"
                           ng-click="$ctrl.selectDeselect(activity)" name="activity{{$index}}"
