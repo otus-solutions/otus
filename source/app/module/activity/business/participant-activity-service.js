@@ -59,11 +59,11 @@
                 });
         }
 
-        function createActivity(survey) {
+        function createActivity(survey, configuration) {
             let loggedUser = ContextService.getLoggedUser();
             return getSelectedParticipant()
                 .then(selectedParticipant => {
-                    ActivityFacadeService.createActivity(survey, loggedUser, selectedParticipant, self.activityConfigurations);
+                    ActivityFacadeService.createActivity(survey, loggedUser, selectedParticipant, configuration);
                     return { surveyActivity: ActivityFacadeService.surveyActivity }
                 });
         }

@@ -29,6 +29,8 @@
         self.mode = "ONLINE";
         self.selectType = "activityUnit";
         self.iconMode = "";
+        self.configuration = {};
+
 
         /* Public methods */
         //self.addActivities = addActivities;
@@ -110,16 +112,15 @@
 
         function addActivity(survey) {
             if (survey && self.mode === 'ONLINE') {
-                console.log(ParticipantActivityService.createActivity(survey));
-                ParticipantActivityService.createActivity(survey)
+                ParticipantActivityService.createActivity(survey, self.configuration)
                     .then(result => {
-                        console.log(result.surveyActivity.objectType)
                         self.selectedActivities.push(result.surveyActivity);
                     });
             }
             if (survey && self.mode === 'PAPER') {
                 self.selectedActivities.push(_mountActivityPreview(survey));
             }
+
             self.statePreview = true;
         }
 
