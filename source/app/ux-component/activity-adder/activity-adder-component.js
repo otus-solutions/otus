@@ -15,10 +15,10 @@
         'otusjs.application.dialog.DialogShowService',
         'otusjs.deploy.LoadingScreenService',
         '$q',
-        '$timeout',
+        '$timeout'
     ];
 
-    function Controller(ParticipantActivityService, ApplicationStateService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout, ActivityFacadeService) {
+    function Controller(ParticipantActivityService, ApplicationStateService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout) {
         var self = this;
         // var _selectedActivities = [];
         var _exitDialog;
@@ -28,14 +28,15 @@
         self.statePreview = false;
         self.mode = "ONLINE";
         self.selectType = "activityUnit";
+        self.iconMode = "";
 
         /* Public methods */
-        self.addActivities = addActivities;
-        self.catchActivity = catchActivity;
+        //self.addActivities = addActivities;
+        //self.catchActivity = catchActivity;
 
         self.addActivity = addActivity;
-
         self.querySearch = querySearch;
+        self.getIconModeState = getIconModeState;
         self.$onInit = onInit;
 
         // self.selectedItemChange = function (item) {
@@ -73,14 +74,14 @@
         //     }
         // }
 
-        function addActivities() {
-            if (_selectedActivities.length > 0) {
-                self.selectedActivities = [];
-                ApplicationStateService.activateActivityCategories();
-            } else {
-                DialogService.showDialog(_exitDialog);
-            }
-        }
+        // function addActivities() {
+        //     if (_selectedActivities.length > 0) {
+        //         self.selectedActivities = [];
+        //         ApplicationStateService.activateActivityCategories();
+        //     } else {
+        //         DialogService.showDialog(_exitDialog);
+        //     }
+        // }
 
         // function catchActivity(activity) {
         //     var activityIndex = _selectedActivities.indexOf(activity.acronym);
@@ -94,18 +95,18 @@
         // }
 
 
-        function catchActivity(activity) {
-            var activityIndex = self.selectedActivities.indexOf(activity.acronym);
-            console.log(activity);
-            if (activityIndex !== -1) {
-                self.selectedActivities.splice(activityIndex, 1);
-                window.sessionStorage.setItem('selectedActivities', JSON.stringify(self.selectedActivities));
-            } else {
-                self.selectedActivities.push(activity.acronym);
-                window.sessionStorage.setItem('selectedActivities', JSON.stringify(self.selectedActivities));
-            }
-            console.log(self.selectedActivities)
-        }
+        // function catchActivity(activity) {
+        //     var activityIndex = self.selectedActivities.indexOf(activity.acronym);
+        //     console.log(activity);
+        //     if (activityIndex !== -1) {
+        //         self.selectedActivities.splice(activityIndex, 1);
+        //         window.sessionStorage.setItem('selectedActivities', JSON.stringify(self.selectedActivities));
+        //     } else {
+        //         self.selectedActivities.push(activity.acronym);
+        //         window.sessionStorage.setItem('selectedActivities', JSON.stringify(self.selectedActivities));
+        //     }
+        //     console.log(self.selectedActivities)
+        // }
 
         function addActivity(survey) {
             if (survey && self.mode === 'ONLINE') {
@@ -119,20 +120,13 @@
             if (survey && self.mode === 'PAPER') {
                 self.selectedActivities.push(_mountActivityPreview(survey));
             }
-
             self.statePreview = true;
         }
 
-        function _mountActivityPreview(activity) {
-            let activityPreview = {
-                acronym: activity.acronym,
-                mode: self.mode,
-                category: "a definir"
-            }
-
-            return activityPreview;
-
+        function getIconModeState(activity){
+            return activity.mode === "ONLINE" ?  "assessment": "description"
         }
+
 
         function _loadCategories() {
             ParticipantActivityService

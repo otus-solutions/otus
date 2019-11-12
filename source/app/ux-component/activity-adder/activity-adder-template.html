@@ -154,12 +154,11 @@
             <md-grid-tile-header ng-style="activity.actions.colorGrid">
                 <div layout="row" layout-align="space-between center">
                     <div layout="row">
-                        <md-icon class="md-avatar-icon" md-svg-icon="{{activity.mode.icon}}"
-                                 style="fill: white"></md-icon>
+                        <md-icon md-font-set="material-icons" style="color: white">{{$ctrl.getIconModeState(activity)}}</md-icon>
                         <h3>{{activity.surveyForm.acronym}}</h3>
                     </div>
                     <md-button class="md-icon-button">
-                        <md-icon md-font-set="material-icons" style="color: #FFFFFF">cancel</md-icon>
+                        <md-icon md-font-set="material-icons" style="color:white">cancel</md-icon>
                         </md-icon>
                     </md-button>
 
