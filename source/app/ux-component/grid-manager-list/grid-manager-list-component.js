@@ -78,8 +78,15 @@
     }
 
     function _refreshGrid(newElementsArray) {
+      if(self.elementsArray.length){
+        if(self.elementsArray.length != newElementsArray.length){
+          _upadateSelectDeselect();
+        }
+      }
+
       self.elementsArray = newElementsArray || self.elementsArray;
       self.selectedItemCounter = 0;
+
       _createConfiguration();
       $scope.safeApply();
     }
@@ -120,17 +127,24 @@
     function _createConfiguration() {
       self.elementsArray.forEach(function (element) {
         element.actions =_createActions();
-        element.iconStatus = _createIconStatus(element.status);
+        element.activityStatus = _createStatus(element.status);
       }, this);
     }
 
-    function _createIconStatus(status) {
+    function _createStatus(status) {
       let icon = 'fiber_new';
       let statusFinalized = 'Finalizado';
+      let statusTooltip = 'Criado';
+      let activityStatus = [];
+
       if(status){
         icon = (status === statusFinalized) ? 'check_circle' : 'save';
+        statusTooltip = (status === statusFinalized) ? statusFinalized : 'Salvo';
       }
-      return icon;
+      activityStatus.icon = icon;
+      activityStatus.statusTooltip = statusTooltip;
+
+      return activityStatus;
     }
 
     function _showMsg(msg) {
@@ -141,8 +155,15 @@
       );
     }
 
+    function _upadateSelectDeselect() {
+      self.elementsArray.forEach(function (activity) {
+            _deselect(activity)
+          });
+    }
+
     function filterGridTile() {
       if (self.filter.length) {
+        _upadateSelectDeselect();
         self.filteredActiviteis = $filter('filter')(self.elementsArray, self.filter);
 
         let count = self.filteredActiviteis.length;
