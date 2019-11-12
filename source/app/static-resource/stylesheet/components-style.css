@@ -68,23 +68,23 @@ otus-activity-manager otus-activity-list .dynamic-table-container {
 otus-activity-manager otus-activity-list .dynamic-table-container .dynamic-structure {
   min-width: 750px !important;
 }
-otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial {
+otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
   max-height: 50px;
 }
 @media only screen and (max-width: 450px) {
-  otus-activity-manager otus-activity-manager-toolbar md-toolbar {
+  otus-activity-manager otus-activity-manager-bottom-sheet md-toolbar {
     display: none !important;
   }
-  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial {
+  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
     position: relative;
     display: flex;
     align-items: center;
     z-index: 20;
   }
-  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial md-fab-trigger {
+  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial md-fab-trigger {
     width: 80%;
   }
-  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial md-fab-trigger button {
+  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial md-fab-trigger button {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
@@ -93,7 +93,7 @@ otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial {
   }
 }
 @media only screen and (min-width: 451px) {
-  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial {
+  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
     display: none;
   }
 }
