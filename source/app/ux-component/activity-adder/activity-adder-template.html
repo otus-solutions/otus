@@ -25,8 +25,8 @@
         <div layout="row" layout-align="space-between start" layout-margin
              md-swipe-left="onSwipeLeft($event, $target)">
             <md-icon md-font-set="material-icons">assessment</md-icon>
-            <md-switch aria-label="ActivityType" class="md-primary" ng-false-value="'onLine'"
-                       ng-model="$ctrl.mode" ng-true-value="'paper'">
+            <md-switch aria-label="ActivityType" class="md-primary" ng-false-value="'ONLINE'"
+                       ng-model="$ctrl.mode" ng-true-value="'PAPER'">
             </md-switch>
             <md-icon md-font-set="material-icons">description</md-icon>
         </div>
@@ -53,7 +53,8 @@
 
     <md-card-actions layout="row" layout-align="end center">
         <span layout="row" layout-align="start center" flex>
-        <md-autocomplete md-item-text="item.name" md-items="item in $ctrl.querySearch($ctrl.searchText)"
+        <md-autocomplete id="autocomplete_selectSurvey" md-item-text="item.name"
+                         md-items="item in $ctrl.querySearch($ctrl.searchText)"
                          md-menu-class="autocomplete-custom-template"
                          md-min-length="0"
                          md-no-cache="true"
@@ -76,7 +77,7 @@
             </md-not-found>
         </md-autocomplete>
 
-        <md-button class="md-icon-button" ng-click="$ctrl.addPreviewActivity($ctrl.selectedItem)">
+        <md-button class="md-icon-button" ng-click="$ctrl.addActivity($ctrl.selectedItem)">
             <md-icon md-font-set="material-icons">add_box</md-icon>
         </md-button>
         </span>
@@ -94,12 +95,11 @@
     <md-content class="gridListdemoDynamicTiles">
         <md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"
                       md-gutter-gt-sm="8px" md-row-height="2.8:2" md-row-height-gt-md="1:1">
-            <md-grid-tile ng-repeat="tile in $ctrl.candidatesActivities
-">
+            <md-grid-tile ng-repeat="tile in $ctrl.selectedActivities">
 
                 <md-whiteframe class="md-whiteframe-1dp" layout-fill>
                     <div layout="row" layout-align="space-between start">
-                        <md-button class="md-fab">{{tile.acronym}}</md-button>
+                        <md-button class="md-fab">{{tile.surveyForm.acronym}}</md-button>
                         <span class="md-button md-truncate" flex="60">{{tile.name}}</span>
                         <md-button class="md-icon-button" flex="3">
                             <md-icon md-font-set="material-icons">close</md-icon>
@@ -107,7 +107,7 @@
                         </md-button>
                     </div>
                     <div flex layout="column" layout-padding>
-                        <span> Modo: {{tile.status}}</span>
+                        <span> Modo: {{tile.mode}}</span>
                         <span> Categoria: {{tile.category}}</span>
                         <md-input-container>
                             <label>ID Externo</label>
@@ -121,3 +121,8 @@
 </div>
 
 <!-- line 96 <md-grid-tile ng-repeat="tile in $ctrl.candidatesActivities">-->
+
+<!--line 79-->
+<!--<md-button class="md-icon-button" ng-click="$ctrl.addPreviewActivity($ctrl.selectedItem)">-->
+<!--    <md-icon md-font-set="material-icons">add_box</md-icon>-->
+<!--</md-button>-->
