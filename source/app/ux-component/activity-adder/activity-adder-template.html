@@ -13,11 +13,57 @@
         margin: 1px;
         padding: 0px;
     }
+
+    .gridListdemoDynamicTiles .s64 {
+        font-size: 64px;
+    }
+
+    .gridListdemoDynamicTiles .s32 {
+        font-size: 48px;
+    }
+
+    .gridListdemoDynamicTiles md-grid-list {
+        margin: 10px;
+    }
+
+    .gridListdemoDynamicTiles md-grid-tile md-grid-tile-header {
+        background: rgba(19, 125, 108, 0.68);
+        position: relative;
+        width: 100%;
+        overflow: inherit;
+        padding: 8px;
+    }
+
+    .gridListdemoDynamicTiles md-grid-tile-header figcaption {
+        display: block;
+        width: 100%;
+    }
+
+    .gridListdemoDynamicTiles md-grid-tile-header figcaption md-icon {
+        margin: 0;
+    }
+
+    .gridListdemoDynamicTiles md-grid-tile figure {
+        justify-content: normal;
+        flex-direction: column;
+        align-items: start;
+    }
+
+    .gridListdemoDynamicTiles .grid-aligh {
+        padding-left: 10px;
+        padding-top: 5px;
+    }
+
+    .gridListdemoDynamicTiles md-grid-tile:hover {
+        background: #F5F5F5;
+        cursor: pointer;
+    }
+
 </style>
 <!--style="padding-left: 20px; margin-bottom: 0; margin-top: 0"-->
 
 <md-card style="background-color: #f5f5f5">
-    <div layout="row" layout-align="space-between start" flex layout-margin>
+    <div flex layout="row" layout-align="space-between start" layout-margin>
         <div layout="column" layout-align="space-between start">
             <span class="md-headline">Gerenciador de Atividades</span>
             <span class="md-subhead">Inclusão de Formulários ao Participante</span>
@@ -32,7 +78,8 @@
         </div>
 
 
-        <div layout="row" layout-align="space-between start" layout-margin md-swipe-right="onSwipeRight($event, $target)">
+        <div layout="row" layout-align="space-between start" layout-margin
+             md-swipe-right="onSwipeRight($event, $target)">
             <md-icon md-font-set="material-icons">bookmarks</md-icon>
             <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityList'"
                        ng-model="$ctrl.selectType" ng-true-value="'activityUnit'">
@@ -40,7 +87,7 @@
             <md-icon md-font-set="material-icons">bookmark_border</md-icon>
         </div>
 
-        <md-input-container layout-align="space-between start" flex="20">
+        <md-input-container flex="20" layout-align="space-between start">
             <md-select aria-label="Categoria"
                        ng-model="$ctrl.configuration[activity.surveyTemplate.identity.acronym].category">
                 <md-option ng-repeat="category in $ctrl.categories track by $index"
@@ -52,16 +99,17 @@
     </div>
 
     <md-card-actions layout="row" layout-align="end center">
-        <span layout="row" layout-align="start center" flex>
-        <md-autocomplete id="autocomplete_selectSurvey" md-item-text="item.name"
+        <span flex layout="row" layout-align="start center">
+        <md-autocomplete flex="50" id="autocomplete_selectSurvey"
+                         md-item-text="item.name"
                          md-items="item in $ctrl.querySearch($ctrl.searchText)"
                          md-menu-class="autocomplete-custom-template"
                          md-min-length="0"
                          md-no-cache="true"
                          md-search-text="$ctrl.searchText"
                          md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
-                         md-selected-item="$ctrl.selectedItem" md-selected-item-change="$ctrl.selectedItemChange(item)"
-                         placeholder="Selecione" flex="50">
+                         md-selected-item="$ctrl.selectedItem"
+                         md-selected-item-change="$ctrl.selectedItemChange(item)" placeholder="Selecione">
             <md-item-template>
           <span class="item-title">
             <span md-highlight-flags="i" md-highlight-text="$ctrl.searchText">{{item.acronym}}</span>
@@ -91,34 +139,76 @@
     </md-card-actions>
 </md-card>
 
-<div>
-    <md-content class="gridListdemoDynamicTiles">
-        <md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"
-                      md-gutter-gt-sm="8px" md-row-height="2.8:2" md-row-height-gt-md="1:1">
-            <md-grid-tile ng-repeat="tile in $ctrl.selectedActivities">
+<md-content class="gridListdemoDynamicTiles" flex ng-if="!$ctrl.error.isError">
+    <md-grid-list md-cols="1" md-cols-gt-md="6" md-cols-md="6" md-cols-sm="2" md-gutter="12px"
+                  md-gutter-gt-md="14px" md-gutter-gt-sm="6px" md-row-height="4:2"
+                  md-row-height-gt-md="5:3" md-row-height-lg="5:4" md-row-height-md="4:4" md-row-height-sm="4:2">
+        <md-grid-tile
+                aria-label="activity{{$index}}"
+                class="{{activity.actions.whiteframeGrid}}" id="activity{{$index}}"
+                md-colspan="1"
+                md-colspan-lg="2"
+                md-colspan-md="2" md-colspan-sm="1" md-colspan-xs="1" md-rowspan="1" md-whiteframe="3"
+                name="activity{{$index}}"
+                ng-repeat="activity in $ctrl.selectedActivities">
+            <md-grid-tile-header ng-style="activity.actions.colorGrid">
+                <div layout="row" layout-align="space-between center">
+                    <div layout="row">
+                        <md-icon class="md-avatar-icon" md-svg-icon="{{activity.mode.icon}}"
+                                 style="fill: white"></md-icon>
+                        <h3>{{activity.surveyForm.acronym}}</h3>
+                    </div>
+                    <md-button class="md-icon-button">
+                        <md-icon md-font-set="material-icons" style="color: #FFFFFF">cancel</md-icon>
+                        </md-icon>
+                    </md-button>
 
-                <md-whiteframe class="md-whiteframe-1dp" layout-fill>
-                    <div layout="row" layout-align="space-between start">
-                        <md-button class="md-fab">{{tile.surveyForm.acronym}}</md-button>
-                        <span class="md-button md-truncate" flex="60">{{tile.name}}</span>
-                        <md-button class="md-icon-button" flex="3">
-                            <md-icon md-font-set="material-icons">close</md-icon>
-                            </md-icon>
-                        </md-button>
-                    </div>
-                    <div flex layout="column" layout-padding>
-                        <span> Modo: {{tile.mode}}</span>
-                        <span> Categoria: {{tile.category}}</span>
-                        <md-input-container>
-                            <label>ID Externo</label>
-                            <input ng-model="activity.ExternalID">
-                        </md-input-container>
-                    </div>
-                </md-whiteframe>
-            </md-grid-tile>
-        </md-grid-list>
-    </md-content>
-</div>
+                </div>
+            </md-grid-tile-header>
+            <div class="grid-aligh" layout="column">
+                <span>{{activity.surveyForm.name}}</span>
+                <span class="md-caption" style="color: gray;">Categoria:
+                    <small class="md-body-2" style="color: black;">{{activity.category}}</small>
+                </span>
+                <span>{{activity.category}}</span>
+                <md-input-container>
+                    <label>ID Externo</label>
+                    <input ng-model="activity.ExternalID">
+                </md-input-container>
+
+            </div>
+        </md-grid-tile>
+    </md-grid-list>
+</md-content>
+
+
+<!--<div>-->
+<!--    <md-content class="gridListdemoDynamicTiles">-->
+<!--        <md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"-->
+<!--                      md-gutter-gt-sm="8px" md-row-height="2.8:2" md-row-height-gt-md="1:1">-->
+<!--            <md-grid-tile ng-repeat="tile in $ctrl.selectedActivities">-->
+<!--                <md-whiteframe class="md-whiteframe-1dp" layout-fill>-->
+<!--                    <div layout="row" layout-align="space-between start">-->
+<!--                        <md-button class="md-fab">{{tile.surveyForm.acronym}}</md-button>-->
+<!--                        <span class="md-button md-truncate" flex="60">{{tile.name}}</span>-->
+<!--                        <md-button class="md-icon-button" flex="3">-->
+<!--                            <md-icon md-font-set="material-icons">close</md-icon>-->
+<!--                            </md-icon>-->
+<!--                        </md-button>-->
+<!--                    </div>-->
+<!--                    <div flex layout="column" layout-padding>-->
+<!--                        <span> Modo: {{tile.mode}}</span>-->
+<!--                        <span> Categoria: {{tile.category}}</span>-->
+<!--                        <md-input-container>-->
+<!--                            <label>ID Externo</label>-->
+<!--                            <input ng-model="activity.ExternalID">-->
+<!--                        </md-input-container>-->
+<!--                    </div>-->
+<!--                </md-whiteframe>-->
+<!--            </md-grid-tile>-->
+<!--        </md-grid-list>-->
+<!--    </md-content>-->
+<!--</div>-->
 
 <!-- line 96 <md-grid-tile ng-repeat="tile in $ctrl.candidatesActivities">-->
 
