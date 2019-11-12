@@ -92,16 +92,24 @@
                     <div layout="row" layout-align="space-between center">
                         <div layout="row">
                             <md-icon class="md-avatar-icon" style="fill: white" md-svg-icon="{{activity.mode.icon}}"></md-icon>
+                            <md-tooltip md-direction="top">
+                                {{activity.mode.name}}
+                            </md-tooltip>
                             <h3>{{activity.acronym}}</h3>
                         </div>
-                        <md-icon style="color: white" md-font-library="material-icons"">{{activity.iconStatus}}</md-icon>
+                        <div>
+                            <md-icon style="color: white" md-font-library="material-icons"">{{activity.activityStatus.icon}}</md-icon>
+                            <md-tooltip md-direction="top">
+                                {{activity.activityStatus.statusTooltip}}
+                            </md-tooltip>
+                        </div>
                     </div>
                 </md-grid-tile-header>
                 <div class="grid-aligh" layout="column">
                     <span>{{activity.name}}</span>
-                    <span class="md-caption" style="color: gray;">ID Externo: <small class="md-body-2" style="color: black;">3217645327615471623{{$index}} {{activity.requiredExternalID}}</small></span>
                     <span class="md-caption" style="color: gray;">Realização: <small class="md-body-2" style="color: black;">{{activity.realizationDate}}</small></span>
-                    <span>{{activity.category}}</span>
+                    <span class="md-caption" style="color: gray;">Categoria: <small class="md-body-2" style="color: black;">{{activity.category}}</small></span>
+                    <span class="md-caption" style="color: gray;">ID Externo: <small class="md-body-2" style="color: black;">3217645327615471623{{$index}} {{activity.requiredExternalID}}</small></span>
                 </div>
             </md-grid-tile>
         </md-grid-list>
