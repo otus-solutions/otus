@@ -70,7 +70,6 @@
 
     function update() {
       _loadActivities();
-      // _buildDynamicTableSettings();
     }
 
     function onInit() {
@@ -86,7 +85,6 @@
       self.isListEmpty = true;
       self.otusActivityManager.listComponent = self;
       _loadActivities();
-      // _buildDynamicTableSettings();
       $element.find('#searchBlock').on('keydown', function(ev) {
         ev.stopPropagation();
       });
