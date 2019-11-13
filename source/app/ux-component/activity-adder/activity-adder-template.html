@@ -163,7 +163,7 @@
                 <div class="grid-align" layout="column" flex>
                     <div layout="column">
                         <span class="md-subhead">{{activity.surveyForm.name}}</span>
-                        <span class="md-caption" style="color: gray;">Categoria:
+                        <span class="md-caption" ng-style="{color:'#797985'}">Categoria:
                             <small class="md-body-2" style="color: black;">{{activity.category.label}}</small>
                         </span>
                     </div>
@@ -173,8 +173,8 @@
                         <input ng-model="activity.ExternalID">
                     </md-input-container>
 
-                    <div ng-if="activity.mode === 'ONLINE'" layout="column" layout-align="center center">
-                        <small md-class="color:'blue'">Data de realização e o responsável pelo preenchimento.</small>
+                    <div ng-if="activity.mode === 'ONLIN'" layout="column" layout-align="center center">
+                        <small ng-style="{color:'#797985'}">Data de realização e o responsável pelo preenchimento.</small>
                         <md-datepicker layout md-placeholder="Data de realização"
                                        ng-model="$ctrl.paperActivityData.realizationDate"></md-datepicker>
 
@@ -204,8 +204,9 @@
                             </md-not-found>
                         </md-autocomplete>
                     </div>
-
-
+                    <div ng-if="activity.mode === 'ONLINE'" layout="column" layout-align="end center" ng-style="{background:'#e9e9e9', height:'100px'}">
+                        <small ng-style="{color:'#9e9e9e', marginTop:'50px', padding: '0px'}">* Área exclusiva para informações de atividade em papel</small>
+                    </div>
                 </div>
             </md-grid-tile>
         </md-grid-list>
