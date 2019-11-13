@@ -18,7 +18,7 @@
     '$scope'
   ];
 
-  function Controller($filter, $mdToast, $scope) {
+  function Controller($filter, $mdToast) {
     var self = this;
 
     self.selectedItemCounter = 0;

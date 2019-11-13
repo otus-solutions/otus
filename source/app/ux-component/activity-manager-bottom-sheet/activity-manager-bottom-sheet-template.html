@@ -6,7 +6,7 @@
   }
 </style>
 <md-bottom-sheet class="coolBottomSheet"  ng-show="$ctrl.showBottomSheet">
-  <div layout="row" layout-align="center center" style="height: 6em;">
+  <div layout="row" layout-align="center center" style="height: 4em;">
     <md-button hide-sm class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Preencher Atividade"
                ng-click="$ctrl.fillSelectedActivity()"
                ng-show="$ctrl.showFillingButton">
@@ -42,16 +42,3 @@
     </md-button>
   </div>
 </md-bottom-sheet>
-<div>
-  <md-fab-speed-dial class="md-scale">
-    <div layout-padding>
-      <md-button aria-label="Atividade online" class="md-grid-item-content md-icon-button md-accent md-raised md-mini"
-                 ng-click="$ctrl.goToActivityAdder()">
-        <md-icon md-svg-icon="plus" aria-label="Atividade online" style="color: white"></md-icon>
-        <md-tooltip md-direction="top"  >
-          Adicionar Atividade
-        </md-tooltip>
-      </md-button>
-    </div>
-  </md-fab-speed-dial>
-</div>
