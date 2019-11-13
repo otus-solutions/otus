@@ -5,7 +5,10 @@
         .module('otusjs.otus.uxComponent')
         .component('otusActivityAdder', {
             controller: Controller,
-            templateUrl: 'app/ux-component/activity-adder/activity-adder-template.html'
+            templateUrl: 'app/ux-component/activity-adder/activity-adder-template.html',
+            bindings: {
+                checkers: '<'
+            }
         });
 
     Controller.$inject = [
@@ -37,8 +40,10 @@
         //self.catchActivity = catchActivity;
 
         self.addActivity = addActivity;
-        self.querySearch = querySearch;
-        self.getIconModeState = getIconModeState;
+        self.surveyQuerySearch = surveyQuerySearch;
+        self.checkerQuerySearch = checkerQuerySearch;
+
+        self.getModeIcon = getModeIcon;  //getModeIcon
         self.$onInit = onInit;
 
         // self.selectedItemChange = function (item) {
@@ -65,6 +70,8 @@
             LoadingScreenService.start();
             _loadCategories();
             _loadActivities();
+            self.paperActivityData = {};
+            self.paperActivityData.realizationDate = new Date();
         }
 
         // function addActivities() {
@@ -124,7 +131,7 @@
             self.statePreview = true;
         }
 
-        function getIconModeState(activity){
+        function getModeIcon(activity){
             return activity.mode === "ONLINE" ?  "assessment": "description"
         }
 
@@ -148,8 +155,8 @@
                 }).then(LoadingScreenService.finish());
         }
 
-        function querySearch(query) {
-            var results = query ? self.activities.filter(_createFilterFor(query)) : self.activities;
+        function surveyQuerySearch(query) {
+            var results = query ? self.activities.filter(_activityCreateFilterFor(query)) : self.activities;
             var deferred = $q.defer();
 
             $timeout(function () {
@@ -159,15 +166,36 @@
             return deferred.promise;
         }
 
-        function _createFilterFor(query) {
+        function _activityCreateFilterFor(query) {
             var lowercaseQuery = angular.lowercase(query);
-
             return function filterFn(activity) {
                 return activity.name.toLowerCase().indexOf(lowercaseQuery) > -1 ||
                     activity.acronym.toLowerCase().indexOf(lowercaseQuery) > -1;
             };
         }
 
+        function checkerQuerySearch(query) {
+            var results = query ? self.checkers.filter(_checkerCreateFilterFor(query)) : self.checkers;
+            var deferred = $q.defer();
+
+            $timeout(function() {
+                deferred.resolve(results);
+            }, Math.random() * 1000, false);
+
+            return deferred.promise;
+        }
+
+        function _checkerCreateFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+            return function filterFn(checker) {
+                return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
+            };
+        }
 
     }
 }());
+
+//clean
+///home/fabiano/ccem/otus/source/app/deploy/state/activity/paper-activity-initializer-state-provider.js
+//source/app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js
+//source/app/ux-component/activity-category-adder/activity-category-adder-component.js
