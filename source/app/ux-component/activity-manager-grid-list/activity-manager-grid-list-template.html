@@ -1,49 +1,10 @@
-<style>
-    .gridListDynamicTiles md-grid-list {
-        margin: 10px;
-    }
-
-    .gridListDynamicTiles md-grid-tile md-grid-tile-header {
-        background: rgba(19, 125, 108, 0.68);
-        position: relative;
-        width: 100%;
-        overflow: inherit;
-        padding: 8px;
-    }
-
-    .gridListDynamicTiles md-grid-tile-header figcaption {
-        display: block;
-        width: 100%;
-    }
-    .gridListDynamicTiles md-grid-tile-header figcaption md-icon {
-        margin: 0;
-    }
-
-    .gridListDynamicTiles md-grid-tile figure {
-        justify-content: normal;
-        flex-direction: column;
-        align-items: start;
-        transition-duration: 0s
-    }
-
-    .gridListDynamicTiles .grid-aligh{
-        padding-left: 10px;
-        padding-top: 5px;
-    }
-
-    .gridListDynamicTiles md-grid-tile:hover {
-        background: #F5F5F5;
-        cursor: pointer;
-    }
-</style>
 <md-card class="md-whiteframe-1dp" layout="column" flex>
     <div ng-if="$ctrl.elementsArray" layout="row" layout-align="space-between">
         <div layout="row" layout-align="start center" flex>
             <div layout="column" layout-margin flex="40" flex-xs="100">
                 <md-input-container flex>
                     <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter"
-                           ng-change="$ctrl.filterGridTile()"
-                    />
+                           ng-change="$ctrl.filterGridTile()"/>
                 </md-input-container>
             </div>
             <md-checkbox style="margin:0;" aria-label="Selecionar todas" class="md-primary" ng-checked="$ctrl.selectAll"
@@ -69,11 +30,7 @@
         </md-menu>
     </div>
 
-    <div ng-if="$ctrl.error.isError">
-        <h1>{{$ctrl.error.msg}}</h1>
-    </div>
-
-    <md-content ng-if="!$ctrl.error.isError" class="gridListDynamicTiles" flex>
+    <md-content class="gridListDynamicTiles" flex>
         <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="6" md-cols-gt-md="6" md-row-height-gt-md="5:3" md-row-height-sm="4:2" md-row-height-md="3:4"  md-row-height-lg="5:4"
                       md-row-height="4:2" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-gt-sm="6px">
             <md-grid-tile ng-repeat="activity in $ctrl.elementsArray | filter:$ctrl.filter | orderBy:$ctrl.orderQuery:$ctrl.orderReverse"
@@ -98,11 +55,15 @@
                         </div>
                     </div>
                 </md-grid-tile-header>
-                <div class="grid-aligh" layout="column">
-                    <span>{{activity.name}}</span>
-                    <span class="md-caption" ng-style="{color:'#797985'}">Realização: <small class="md-body-2" ng-style="{color: 'black'}">{{activity.realizationDate}}</small></span>
-                    <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2" ng-style="{color: 'black'}">{{activity.category}}</small></span>
-                    <span class="md-caption" ng-style="{color:'#797985'}">ID Externo: <small class="md-body-2" ng-style="{color: 'black'}">3217645327615471623{{$index}} {{activity.requiredExternalID}}</small></span>
+                <div class="grid-aligh" >
+                    <div class="clipped" flex="100" flex-xs="90" flex-sm="80">
+                        <span class="md-body-2">{{activity.name}}</span>
+                    </div>
+                    <div layout="column">
+                        <span class="md-caption" ng-style="{color:'#797985'}">Realização: <small class="md-body-2" ng-style="{color:'black'}">{{activity.realizationDate}}</small></span>
+                        <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2" ng-style="{color:'black'}">{{activity.category}}</small></span>
+                        <span class="md-caption" ng-style="{color:'#797985'}">ID Externo: <small class="md-body-2" ng-style="{color:'black'}">3217645327615471623{{$index}} {{activity.requiredExternalID}}</small></span>
+                    </div>
                 </div>
             </md-grid-tile>
         </md-grid-list>
