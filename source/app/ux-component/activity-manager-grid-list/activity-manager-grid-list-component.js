@@ -3,8 +3,8 @@
 
   angular
       .module('otusjs.otus.uxComponent')
-      .component('gridList', {
-        templateUrl: 'app/ux-component/grid-manager-list/grid-manager-list-template.html',
+      .component('activityGridList', {
+        templateUrl: 'app/ux-component/activity-manager-grid-list/activity-manager-grid-list-template.html',
         bindings: {
           gridDataSettings: "=",
           updateFunction: '=?'
@@ -27,7 +27,6 @@
     self.iconsDropUpDown ='arrow_drop_up';
     self.orderQuery;
     self.itemsOrderBy;
-    self.error;
 
     self.$onInit = onInit;
 
@@ -37,7 +36,6 @@
     self.filterGridTile = filterGridTile;
 
     self.filter = '';
-    self.filterAll = false;
 
     function onInit() {
       _initializeDefaultValues();
@@ -58,11 +56,6 @@
       if (!self.hoverGridHeaderColor) self.hoverGridHeaderColor = '#00695C';
 
       if (!self.callbackAfterChange) self.callbackAfterChange = function () {};
-
-      self.error = {
-        isError: false,
-        msg: "Devem ser informadas a mesma quantidade de valores e de cabeçalhos."
-      };
     }
 
     function _refreshGrid(newElementsArray) {
@@ -138,7 +131,7 @@
       $mdToast.show(
           $mdToast.simple()
               .textContent(msg)
-              .hideDelay(1000)
+              .hideDelay(2000)
       );
     }
 
@@ -163,8 +156,6 @@
           msg = count + ' Registros foram encontrados.'
         }
         _showMsg(msg);
-      } else {
-        self.filteredActiviteis = self.elementsArray;
       }
     }
 
