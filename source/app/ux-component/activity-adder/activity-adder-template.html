@@ -173,7 +173,7 @@
                         <input ng-model="activity.ExternalID">
                     </md-input-container>
 
-                    <div ng-if="activity.mode === 'ONLIN'" layout="column" layout-align="center center">
+                    <div ng-if="activity.mode === 'PAPER'" layout="column" layout-align="center center">
                         <small ng-style="{color:'#797985'}">Data de realização e o responsável pelo preenchimento.</small>
                         <md-datepicker layout md-placeholder="Data de realização"
                                        ng-model="$ctrl.paperActivityData.realizationDate"></md-datepicker>
@@ -204,7 +204,7 @@
                             </md-not-found>
                         </md-autocomplete>
                     </div>
-                    <div ng-if="activity.mode === 'ONLINE'" layout="column" layout-align="end center" ng-style="{background:'#e9e9e9', height:'100px'}">
+                    <div ng-if="activity.mode === 'ONLINE'" layout="column" layout-align="end center" ng-style="{background:'#efefef', height:'100px'}">
                         <small ng-style="{color:'#9e9e9e', marginTop:'50px', padding: '0px'}">* Área exclusiva para informações de atividade em papel</small>
                     </div>
                 </div>

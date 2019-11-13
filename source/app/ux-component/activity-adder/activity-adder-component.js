@@ -118,15 +118,16 @@
         // }
 
         function addActivity(survey) {
-            if (survey && self.mode === 'ONLINE') {
+            // if (survey && self.mode === 'ONLINE') {
                 ParticipantActivityService.createActivity(survey, self.configuration)
                     .then(result => {
+                        result.surveyActivity.mode = self.mode;
                         self.selectedActivities.push(result.surveyActivity);
                     });
-            }
-            if (survey && self.mode === 'PAPER') {
-                self.selectedActivities.push(_mountActivityPreview(survey));
-            }
+            // }
+            // if (survey && self.mode === 'PAPER') {
+            //     self.selectedActivities.push(_mountActivityPreview(survey));
+            // }
 
             self.statePreview = true;
         }
