@@ -1,126 +1,57 @@
 <style>
   .coolBottomSheet {
+    padding-left: 0;
+    padding-right: 0;
     transition-duration: 0s
   }
-
-  .bottomSheetdemoBasicUsage .md-inline-list-icon-label {
-    display: inline-block;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-top: -10px;
-    height: 24px;
-    vertical-align: middle; }
-
-  .bottomSheetdemoBasicUsage .md-grid-item-content {
-    height: 90px;
-    padding-top: 10px; }
-
-  .bottomSheetdemoBasicUsage .md-grid-item-content md-icon {
-    height: 48px;
-    width: 48px; }
-
-  .bottomSheetdemoBasicUsage .md-grid-text {
-    padding-bottom: 5px; }
-
-  .bottomSheetdemoBasicUsage md-list-item, .bottomSheetdemoBasicUsage md-list-item .md-list-item-inner {
-    min-height: 48px; }
-
-  .bottomSheetdemoBasicUsage .md-subheader .md-subheader-inner {
-    padding: 0; }
 </style>
-<md-bottom-sheet class="md-grid coolBottomSheet" layout="column" ng-show="$ctrl.showBottomSheet">
-    <div layout="row" layout-align="center center" style=" height: 6em;">
-      <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Preencher Atividade"
-                 ng-click="$ctrl.fillSelectedActivity()"
-                 ng-show="$ctrl.showFillingButton">
-        <md-tooltip md-direction="top">Preencher Atividade</md-tooltip>
-        <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
-      </md-button>
-        <otus-activity-report ng-if="$ctrl.showVisualizationButton" selected-participant=$ctrl.selectedParticipant
-                              status-selected-activity=$ctrl.statusSelectedActivity show-visualization-button=$ctrl.showVisualizationButton;>
-        </otus-activity-report>
-      <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"
-                 ng-click="$ctrl.viewSelectedActivity()"
-                 ng-show="$ctrl.showViewerButton">
-        <md-tooltip md-direction="top">Visualizar Atividade</md-tooltip>
-        <md-icon aria-label="Visualizar Atividade">playlist_add_check</md-icon>
-      </md-button>
-      <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Alterar Aferidor"
-                 ng-click="$ctrl.updateChecker()"
-                 ng-show="$ctrl.isPaperActivity">
-        <md-tooltip md-direction="top">Alterar Aferidor</md-tooltip>
-        <md-icon aria-label="Preencher Atividade">transfer_within_a_station</md-icon>
-      </md-button>
-      <md-button class="md-grid-item-content md-raised md-icon-button" aria-label="Excluir" style="background-color: grey"
-                 ng-click="$ctrl.deleteSelectedActivity()"
-                 ng-show="$ctrl.showDeleteButton">
-        <md-tooltip md-direction="top">Excluir</md-tooltip>
-        <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
-      </md-button>
-      <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Detalhes"
-                 ng-click="$ctrl.visualizeSelectedActivityInfo()"
-                 ng-show="$ctrl.showInfoButton">
-        <md-tooltip md-direction="top">Detalhes</md-tooltip>
-        <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>
-      </md-button>
-    </div>
+<md-bottom-sheet class="coolBottomSheet"  ng-show="$ctrl.showBottomSheet">
+  <div layout="row" layout-align="center center" style="height: 6em;">
+    <md-button hide-sm class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Preencher Atividade"
+               ng-click="$ctrl.fillSelectedActivity()"
+               ng-show="$ctrl.showFillingButton">
+      <md-tooltip md-direction="top">Preencher Atividade</md-tooltip>
+      <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
+    </md-button>
+    <otus-activity-report ng-if="$ctrl.showVisualizationButton" selected-participant=$ctrl.selectedParticipant
+                          status-selected-activity=$ctrl.statusSelectedActivity show-visualization-button=$ctrl.showVisualizationButton;>
+    </otus-activity-report>
+    <md-button hide-sm class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"
+               ng-click="$ctrl.viewSelectedActivity()"
+               ng-show="$ctrl.showViewerButton">
+      <md-tooltip md-direction="top">Visualizar Atividade</md-tooltip>
+      <md-icon aria-label="Visualizar Atividade">playlist_add_check</md-icon>
+    </md-button>
+    <md-button hide-sm class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Alterar Aferidor"
+               ng-click="$ctrl.updateChecker()"
+               ng-show="$ctrl.isPaperActivity">
+      <md-tooltip md-direction="top">Alterar Aferidor</md-tooltip>
+      <md-icon aria-label="Preencher Atividade">transfer_within_a_station</md-icon>
+    </md-button>
+    <md-button hide-sm class="md-grid-item-content md-raised md-icon-button" aria-label="Excluir" style="background-color: grey"
+               ng-click="$ctrl.deleteSelectedActivity()"
+               ng-show="$ctrl.showDeleteButton">
+      <md-tooltip md-direction="top">Excluir</md-tooltip>
+      <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
+    </md-button>
+    <md-button hide-sm class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Detalhes"
+               ng-click="$ctrl.visualizeSelectedActivityInfo()"
+               ng-show="$ctrl.showInfoButton">
+      <md-tooltip md-direction="top">Detalhes</md-tooltip>
+      <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>
+    </md-button>
+  </div>
 </md-bottom-sheet>
 <div>
-  <md-fab-speed-dial md-direction="top" class="md-scale">
-    <md-fab-trigger>
-      <md-button aria-label="menu" class="md-accent">
-        <md-icon md-svg-icon="menu"></md-icon>
-      </md-button>
-    </md-fab-trigger>
-
-    <md-fab-actions>
-      <md-button aria-label="Atividade online" class="md-accent md-raised md-mini"
+  <md-fab-speed-dial class="md-scale">
+    <div layout-padding>
+      <md-button aria-label="Atividade online" class="md-grid-item-content md-icon-button md-accent md-raised md-mini"
                  ng-click="$ctrl.goToActivityAdder()">
-        <md-icon md-svg-icon="signal" aria-label="Atividade online" style="color: white"></md-icon>
-        <md-tooltip md-direction="left"  >
-          Atividade online
+        <md-icon md-svg-icon="plus" aria-label="Atividade online" style="color: white"></md-icon>
+        <md-tooltip md-direction="top"  >
+          Adicionar Atividade
         </md-tooltip>
       </md-button>
-      <md-button aria-label="Atividade em papel" class="md-accent md-raised md-mini"
-                 ng-click="$ctrl.goToPaperActivityInitializer()">
-        <md-icon md-svg-icon="file-document" aria-label="Atividade em papel" style="color: white"></md-icon>
-        <md-tooltip md-direction="left">
-          Atividade em papel
-        </md-tooltip>
-      </md-button>
-
-<!--      <md-button class="md-accent md-raised md-mini" aria-label="Preencher Atividade"-->
-<!--                 ng-click="$ctrl.fillSelectedActivity()"-->
-<!--                 ng-show="$ctrl.showFillingButton">-->
-<!--        <md-tooltip md-direction="left">Preencher Atividade</md-tooltip>-->
-<!--        <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>-->
-<!--      </md-button>-->
-<!--      <md-button class="md-accent md-raised md-mini" aria-label="Visualizar Atividade"-->
-<!--                 ng-click="$ctrl.viewSelectedActivity()"-->
-<!--                 ng-show="$ctrl.showViewerButton">-->
-<!--        <md-tooltip md-direction="left">Visualizar Atividade</md-tooltip>-->
-<!--        <md-icon aria-label="Visualizar Atividade">playlist_add_check</md-icon>-->
-<!--      </md-button>-->
-<!--      <otus-activity-report ng-if="$ctrl.showVisualizationButton" selected-participant=$ctrl.selectedParticipant-->
-<!--                            status-selected-activity=$ctrl.statusSelectedActivity show-visualization-button=$ctrl.showVisualizationButton;>-->
-<!--      </otus-activity-report>-->
-<!--      <md-button class="md-accent md-raised md-mini" aria-label="Alterar Aferidor" ng-click="$ctrl.updateChecker()"-->
-<!--                 ng-show="$ctrl.isPaperActivity">-->
-<!--        <md-tooltip md-direction="left">Alterar Aferidor</md-tooltip>-->
-<!--        <md-icon aria-label="Preencher Atividade">transfer_within_a_station</md-icon>-->
-<!--      </md-button>-->
-<!--      <md-button class="md-accent md-raised md-mini" aria-label="Excluir" style="background-color: grey"-->
-<!--                 ng-click="$ctrl.deleteSelectedActivity()"-->
-<!--                 ng-show="$ctrl.showDeleteButton">-->
-<!--        <md-tooltip md-direction="left">Excluir</md-tooltip>-->
-<!--        <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>-->
-<!--      </md-button>-->
-<!--      <md-button class="md-accent md-raised md-mini" aria-label="Detalhes"-->
-<!--                 ng-click="$ctrl.visualizeSelectedActivityInfo()"-->
-<!--                 ng-show="$ctrl.showInfoButton">-->
-<!--        <md-tooltip md-direction="left">Detalhes</md-tooltip>-->
-<!--        <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>-->
-<!--      </md-button>-->
-    </md-fab-actions>
+    </div>
   </md-fab-speed-dial>
 </div>

@@ -1,12 +1,4 @@
 <style>
-    .gridListDynamicTiles .s64 {
-        font-size: 64px;
-    }
-
-    .gridListDynamicTiles .s32 {
-        font-size: 48px;
-    }
-
     .gridListDynamicTiles md-grid-list {
         margin: 10px;
     }
@@ -51,19 +43,18 @@
                 <md-input-container flex>
                     <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter"
                            ng-change="$ctrl.filterGridTile()"
-                           ng-model-options="{ allowInvalid: true, debounce: 500 }"
                     />
                 </md-input-container>
             </div>
             <md-checkbox style="margin:0;" aria-label="Selecionar todas" class="md-primary" ng-checked="$ctrl.selectAll"
                          ng-click="$ctrl.selectDeselectAll()">
-            <span class="md-body-1" style="padding-right:8px;">
+            <span class="md-body-2" style="padding-right:8px;">
                 Todas
             </span>
             </md-checkbox>
         </div>
         <md-menu md-position-mode="target-right target">
-            <md-button class="md-icon-button" ng-click="$mdOpenMenu()">
+            <md-button class="md-icon-button" ng-click="$mdMenu.open()">
                 <md-icon md-font-set="material-icons">menu</md-icon>
             </md-button>
             <md-menu-content>
@@ -109,9 +100,9 @@
                 </md-grid-tile-header>
                 <div class="grid-aligh" layout="column">
                     <span>{{activity.name}}</span>
-                    <span class="md-caption" style="color: gray;">Realização: <small class="md-body-2" style="color: black;">{{activity.realizationDate}}</small></span>
-                    <span class="md-caption" style="color: gray;">Categoria: <small class="md-body-2" style="color: black;">{{activity.category}}</small></span>
-                    <span class="md-caption" style="color: gray;">ID Externo: <small class="md-body-2" style="color: black;">3217645327615471623{{$index}} {{activity.requiredExternalID}}</small></span>
+                    <span class="md-caption" ng-style="{color:'#797985'}">Realização: <small class="md-body-2" ng-style="{color: 'black'}">{{activity.realizationDate}}</small></span>
+                    <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2" ng-style="{color: 'black'}">{{activity.category}}</small></span>
+                    <span class="md-caption" ng-style="{color:'#797985'}">ID Externo: <small class="md-body-2" ng-style="{color: 'black'}">3217645327615471623{{$index}} {{activity.requiredExternalID}}</small></span>
                 </div>
             </md-grid-tile>
         </md-grid-list>
