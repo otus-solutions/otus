@@ -133,7 +133,7 @@
         }
 
         function getModeIcon(activity){
-            return activity.mode === "ONLINE" ?  "assessment": "description"
+            return activity.mode === "ONLINE" ?  "signal": "file-document"
         }
 
 

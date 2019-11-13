@@ -73,11 +73,11 @@
         </div>
         <div layout="row" layout-align="space-between start" layout-margin
              md-swipe-left="onSwipeLeft($event, $target)">
-            <md-icon md-font-set="material-icons">assessment</md-icon>
+            <md-icon md-font-library="material-icons" md-svg-icon="signal"></md-icon>
             <md-switch aria-label="ActivityType" class="md-primary" ng-false-value="'ONLINE'"
                        ng-model="$ctrl.mode" ng-true-value="'PAPER'">
             </md-switch>
-            <md-icon md-font-set="material-icons">description</md-icon>
+            <md-icon md-font-library="material-icons" md-svg-icon="file-document"></md-icon>
         </div>
 
 
@@ -150,7 +150,7 @@
                 <md-grid-tile-header ng-style="activity.actions.colorGrid">
                     <div layout="row" layout-align="space-between center">
                         <div layout="row">
-                            <md-icon md-font-set="material-icons" style="color: white">{{$ctrl.getModeIcon(activity)}}
+                            <md-icon style="color: white" md-font-library="material-icons" md-svg-icon="{{$ctrl.getModeIcon(activity)}}""></md-icon>
                             </md-icon>
                             <h3>{{activity.surveyForm.acronym}}</h3>
                         </div>
