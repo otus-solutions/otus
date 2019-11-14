@@ -15,14 +15,14 @@ describe('signupController Test suite', function () {
       Injections.SignupService = $injector.get("otusjs.user.access.service.SignupService");
       Injections.LoadingScreenService = $injector.get("otusjs.deploy.LoadingScreenService");
     })
-  })
+  });
 
 
   beforeEach(function () {
     angular.mock.inject(function ($controller) {
       ctrl = $controller('otusjs.otus.uxComponent.SignupController', Injections);
     })
-  })
+  });
 
   // beforeEach(function () {
   //   angular.mock.inject(function ($controller) {
