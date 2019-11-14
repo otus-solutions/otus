@@ -7,7 +7,7 @@
 </style>
 <md-bottom-sheet class="coolBottomSheet" md-whiteframe="3dp" ng-show="$ctrl.showBottomSheet">
   <div layout="row" layout-align="center center" style="height: 4em;">
-    <md-button hide-sm class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Preencher Atividade"
+    <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Preencher Atividade"
                ng-click="$ctrl.fillSelectedActivity()"
                ng-show="$ctrl.showFillingButton">
       <md-tooltip md-direction="top">Preencher Atividade</md-tooltip>
@@ -16,25 +16,25 @@
     <otus-activity-report ng-if="$ctrl.showVisualizationButton" selected-participant=$ctrl.selectedParticipant
                           status-selected-activity=$ctrl.statusSelectedActivity show-visualization-button=$ctrl.showVisualizationButton;>
     </otus-activity-report>
-    <md-button hide-sm class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"
+    <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"
                ng-click="$ctrl.viewSelectedActivity()"
                ng-show="$ctrl.showViewerButton">
       <md-tooltip md-direction="top">Visualizar Atividade</md-tooltip>
       <md-icon aria-label="Visualizar Atividade">playlist_add_check</md-icon>
     </md-button>
-    <md-button hide-sm class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Alterar Aferidor"
+    <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Alterar Aferidor"
                ng-click="$ctrl.updateChecker()"
                ng-show="$ctrl.isPaperActivity">
       <md-tooltip md-direction="top">Alterar Aferidor</md-tooltip>
       <md-icon aria-label="Preencher Atividade">transfer_within_a_station</md-icon>
     </md-button>
-    <md-button hide-sm class="md-grid-item-content md-raised md-icon-button" aria-label="Excluir" style="background-color: grey"
+    <md-button class="md-grid-item-content md-raised md-icon-button" aria-label="Excluir" style="background-color: grey"
                ng-click="$ctrl.deleteSelectedActivity()"
                ng-show="$ctrl.showDeleteButton">
       <md-tooltip md-direction="top">Excluir</md-tooltip>
       <md-icon md-font-set="material-icons" style="color: white" aria-label="Excluir">delete</md-icon>
     </md-button>
-    <md-button hide-sm class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Detalhes"
+    <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Detalhes"
                ng-click="$ctrl.visualizeSelectedActivityInfo()"
                ng-show="$ctrl.showInfoButton">
       <md-tooltip md-direction="top">Detalhes</md-tooltip>
