@@ -427,6 +427,7 @@ activity-grid-list .gridListDynamicTiles md-grid-tile figure {
 activity-grid-list .gridListDynamicTiles .grid-aligh{
   padding-left: 10px;
   padding-top: 5px;
+  width: 100%;
 }
 
 activity-grid-list .gridListDynamicTiles md-grid-tile:hover {
@@ -439,6 +440,7 @@ activity-grid-list .gridListDynamicTiles md-grid-tile:hover {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    width: 90%;
   }
 }
 /*# sourceMappingURL=components-style.css.map */
