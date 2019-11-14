@@ -398,6 +398,7 @@ otus-activity-category-adder otus-activity-category-adder-list md-card md-input-
 
 activity-grid-list .gridListDynamicTiles md-grid-list {
   margin: 10px;
+  transition-duration: 0s;
 }
 
 activity-grid-list .gridListDynamicTiles md-grid-tile md-grid-tile-header {
@@ -421,7 +422,7 @@ activity-grid-list .gridListDynamicTiles md-grid-tile figure {
   justify-content: normal;
   flex-direction: column;
   align-items: start;
-  transition-duration: 0s
+  transition-duration: 0s;
 }
 
 activity-grid-list .gridListDynamicTiles .grid-aligh{
