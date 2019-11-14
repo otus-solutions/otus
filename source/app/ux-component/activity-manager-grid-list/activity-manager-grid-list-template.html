@@ -31,7 +31,7 @@
         </md-menu>
     </div>
 
-    <md-content class="gridListDynamicTiles" flex>
+    <div class="gridListDynamicTiles">
         <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="6" md-cols-gt-md="6" md-row-height-gt-md="5:3" md-row-height-sm="4:2" md-row-height-md="3:4"  md-row-height-lg="5:4"
                       md-row-height="4:2" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-gt-sm="6px">
             <md-grid-tile ng-repeat="activity in $ctrl.elementsArray | filter:$ctrl.filter | orderBy:$ctrl.orderQuery:$ctrl.orderReverse"
@@ -66,7 +66,10 @@
                         <span class="md-caption" ng-style="{color:'#797985'}">ID Externo: <small class="md-body-2" ng-style="{color:'black'}">{{activity.externalID}}</small></span>
                     </div>
                 </div>
+                 <md-tooltip md-direction="top">
+                     {{activity.name}}
+                 </md-tooltip>
             </md-grid-tile>
         </md-grid-list>
-    </md-content>
+    </div>
 </md-card>
