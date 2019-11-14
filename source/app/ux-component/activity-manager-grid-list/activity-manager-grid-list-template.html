@@ -4,7 +4,8 @@
             <div layout="column" layout-margin flex="50" flex-sm="70" flex-xs="100">
                 <md-input-container flex>
                     <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter"
-                           ng-change="$ctrl.filterGridTile()"/>
+                           ng-change="$ctrl.filterGridTile()"
+                           ng-model-options="{ allowInvalid: true, debounce: 500 }"/>
                 </md-input-container>
             </div>
             <md-checkbox style="margin:0;" aria-label="Selecionar todas" class="md-primary" ng-checked="$ctrl.selectAll"
