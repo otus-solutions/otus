@@ -14,8 +14,7 @@
 
   Controller.$inject = [
     '$filter',
-    '$mdToast',
-    '$scope'
+    '$mdToast'
   ];
 
   function Controller($filter, $mdToast) {
