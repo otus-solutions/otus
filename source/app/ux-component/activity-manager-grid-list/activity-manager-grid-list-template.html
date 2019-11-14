@@ -32,7 +32,7 @@
     </div>
 
     <div class="gridListDynamicTiles">
-        <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="6"  md-cols-lg="3" md-cols-gt-md="6" md-row-height-gt-md="5:3" md-row-height-sm="4:2" md-row-height-md="3:4"  md-row-height-lg="5:2"
+        <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="6"  md-cols-lg="3" md-cols-gt-md="6" md-row-height-gt-md="6:4" md-row-height-sm="4:2" md-row-height-md="3:4"  md-row-height-lg="5:2"
                       md-row-height="4:2" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-gt-sm="6px">
             <md-grid-tile ng-repeat="activity in $ctrl.elementsArray | filter:$ctrl.filter | orderBy:$ctrl.orderQuery:$ctrl.orderReverse"
                           ng-click="$ctrl.selectDeselect(activity)" name="activity{{$index}}"
@@ -58,7 +58,7 @@
                 </md-grid-tile-header>
                 <div  class="grid-aligh" layout="column">
                     <div class="clipped">
-                        <span class="md-body-2">{{activity.name}}</span>
+                        <span class="md-body-2">{{activity.name}} </span>
                     </div>
                     <span class="md-caption" ng-style="{color:'#797985'}">Realização: <small class="md-body-2" ng-style="{color:'black'}">{{activity.realizationDate}}</small></span>
                     <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2" ng-style="{color:'black'}">{{activity.category}}</small></span>
