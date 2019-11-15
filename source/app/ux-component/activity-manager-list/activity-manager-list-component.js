@@ -18,12 +18,11 @@
     'otusjs.activity.core.EventService',
     'otusjs.otus.uxComponent.ActivityItemFactory',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
     '$scope',
     '$element'
   ];
 
-  function Controller(ActivityService, GroupActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope, $element) {
+  function Controller(ActivityService, GroupActivityService, EventService, ActivityItemFactory, LoadingScreenService, $scope, $element) {
     var self = this;
 
     var _selectedActivities = [];
