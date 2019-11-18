@@ -9,7 +9,7 @@
 
 
 <style>
-    *{
+    * {
         margin: 0%;
         padding: 0%;
     }
@@ -100,11 +100,11 @@
 </md-card>
 
 <!--<md-grid-list md-cols="3" md-row-height="2.3:2">-->
-<md-grid-list md-cols="3" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-xs="1";
-             md-row-height="2.2:2">
+<md-grid-list ; md-cols="3" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-xs="1"
+              md-row-height="2.2:2">
 
-    <md-grid-tile ng-repeat="activityDto in $ctrl.activityDtos" layout-margin="10px">
-        <md-card class="md-whiteframe-1dp" style="width: 100%" layout-fill layout-padding>
+    <md-grid-tile layout-margin="10px" ng-repeat="activityDto in $ctrl.activityDtos">
+        <md-card class="md-whiteframe-1dp" layout-fill layout-padding style="width: 100%">
             <div layout="row" layout-align="space-between center" ng-style="{background: '#5ba499'}">
                 <div layout="row" layout-margin>
                     <md-icon md-font-library="material-icons" md-svg-icon="{{$ctrl.getModeIcon(activityDto)}}"
@@ -119,7 +119,7 @@
                 </div>
             </div>
 
-            <div layout="column" layout-padding layout-align="space-between stretch">
+            <div layout="column" layout-align="space-between stretch">
                 <div layout="column">
                     <div layout="column" layout-align="start start">
                         <span class="md-subhead" layout-fill md-truncate>{{activityDto.surveyForm.name}}</span>
@@ -130,12 +130,13 @@
 
                 <div layout="column" layout-align="start start" ng-if="activityDto.mode === 'PAPER'">
                     <small class="md-caption" ng-style="{color:'#797985'}">Informações do preenchimento obrigatório.</small>
-
-                    <md-input-container flex="45" style="margin-top: 40px" id="date">
+                    <md-input-container id="date">
                         <label ng-show="$ctrl.birthdate">Data de Realização</label>
-                        <input mdc-datetime-picker="" show-icon="true" date="true" time="false" aria-label="Data de Nascimento" type="text" id="datetime"
-                               placeholder="Data de Realização" max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
-                               format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
+                        <input aria-label="Data de Nascimento" class="md-input" date="true" disable-parent-scroll="true"
+                               format="DD/MM/YYYY" id="datetime" max-date="$ctrl.maxDate"
+                               mdc-datetime-picker="" ng-change="$ctrl.onFilter()" ng-model="$ctrl.birthdate"
+                               placeholder="Data de Realização" readonly="readonly"
+                               show-icon="true" time="false" type="text">
                     </md-input-container>
 
                     <md-autocomplete md-item-text="item.text"
@@ -164,14 +165,17 @@
                         </md-not-found>
                     </md-autocomplete>
                 </div>
-                <div ng-if="activity.mode === 'ONLINE'"
-                     ng-style="{background:'#efefef'}">
-                    <small ng-style="{color:'#9e9e9e'}">* Área exclusiva para informações de atividade em papel</small>
+
+                <div ng-if="activityDto.mode === 'ONLINE'" layout="column">
+                    <small class="md-caption" ng-style="{color:'#797985'}">Informações do Usuário.</small>
+                    <span class="item-metastat">Nome: <strong>{{activityDto.user.name}} {{activityDto.user.surname}}</strong></span>
+                    <span class="item-metastat">Email: <strong>{{activityDto.user.email}}</strong></span>
                 </div>
+
                 <div>
                     <md-input-container ng-if="activityDto.surveyForm.isRequiredExternalID()">
                         <label>ID Externo</label>
-                        <input ng-model="activityDto.ExternalID">
+                        <input ng-model="activityDto.configuration.externalID">
                     </md-input-container>
                     <md-input-container ng-if="!activityDto.surveyForm.isRequiredExternalID()">
                         <small ng-style="{color:'#9e9e9e'}">* ID Externo não requerido</small>

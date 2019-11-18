@@ -11,20 +11,22 @@
         var self = this;
         self.create = create;
 
-        function create(survey, configuration, mode){
-            let activityDto = new ActivityDto(survey, configuration, mode);
+        function create(survey, configuration, mode, user){
+            let activityDto = new ActivityDto(survey, configuration, mode, user);
             return activityDto;
         }
 
         return self;
     }
 
-    function ActivityDto(survey, configuration, mode) {
+    function ActivityDto(survey, configuration, mode, user) {
         let self = this;
         self.OBJECT_TYPE = 'ActivityDto';
         self.surveyForm = survey;
-        self.configuration = configuration;
+        self.configuration = configuration || {};
+        self.configuration.externalID = configuration.externalID || null;
         self.mode = mode;
+        mode === 'ONLINE' ? self.user = user : self.user = null;
     }
 
 

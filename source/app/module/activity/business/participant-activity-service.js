@@ -63,7 +63,8 @@
         }
 
         function createActivityDto(survey, configuration, mode){
-            let activityDto = ActivityDtoFactory.create(survey, configuration, mode)
+            let loggedUser = ContextService.getLoggedUser();
+            let activityDto = ActivityDtoFactory.create(survey, configuration, mode , loggedUser);
             return activityDto;
         }
 
