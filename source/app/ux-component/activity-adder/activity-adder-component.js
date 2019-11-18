@@ -72,6 +72,7 @@
                 ]
             };
             LoadingScreenService.start();
+            _loadActivityDtosfromStorage();
             _loadCategories();
             _loadSurveys();
             //self.paperActivityData = {};
@@ -188,6 +189,16 @@
                 return survey.name.toLowerCase().indexOf(lowercaseQuery) > -1 ||
                     survey.acronym.toLowerCase().indexOf(lowercaseQuery) > -1;
             };
+        }
+
+
+        function _loadActivityDtosfromStorage(){
+          let _storageActivityDtos = angular.copy(JSON.parse(window.sessionStorage.getItem('activityDtos')));
+          if(_storageActivityDtos){
+              console.log(self.activityDtos)
+              self.activityDtos = _storageActivityDtos;
+              console.log(_storageActivityDtos);
+          }
         }
 
 

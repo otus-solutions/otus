@@ -69,10 +69,17 @@
         }
 
         function saveActivities(activityDtos){
-            activityDtos.forEach(activityDto => {
-                console.log(activityDto);
+            getSelectedParticipant().then(function (selectedParticipant) {
+                let _storageActivityDtos = JSON.parse(window.sessionStorage.getItem('activityDtos'))
+                console.log(_storageActivityDtos);
+                window.sessionStorage.removeItem('activityDtos');
 
-            });
+
+            })
+            // activityDtos.forEach(activityDto => {
+            //     console.log(activityDto);
+            //
+            // });
 
 
         }
