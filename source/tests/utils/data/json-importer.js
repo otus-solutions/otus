@@ -8,6 +8,7 @@ Test.utils.data.activity = [
       {
         "_id": "5be45306e69a690064fb1e1c",
         "isDiscarded": false,
+        "externalID": 5000123,
         "mode": {
           "name": "Em papel"
         },
@@ -26,6 +27,55 @@ Test.utils.data.activity = [
                 "description": "",
                 "keywords": []
               }
+          }
+        },
+        "statusHistory": {
+          "objectType": "ActivityStatus",
+          "name": "FINALIZED",
+          "date": "2018-11-08T15:15:45.810Z",
+          "user": {
+            "name": "Emanoel",
+            "surname": "Vianna",
+            "phone": "51999999999",
+            "email": "otus@otus.com"
+          },
+          "getHistory": function () {
+            return [{
+              "objectType": "ActivityStatus",
+              "name": "FINALIZED",
+              "date": "2018-11-08T15:15:45.810Z",
+              "user": {
+                "name": "Emanoel",
+                "surname": "Vianna",
+                "phone": "51999999999",
+                "email": "otus@otus.com"
+              }
+            }]
+          },
+        }
+      },
+      {
+        "_id": "5be45306e69a690064fb1e1g",
+        "isDiscarded": false,
+        "externalID": 5000124,
+        "mode": {
+          "name": "Em papel"
+        },
+        "getID": function () {
+          return "5be45306e69a690064fb1e1g";
+        },
+        "surveyForm": {
+          "surveyTemplate": {
+            "identity":
+                {
+                  "extents": "StudioObject",
+                  "objectType": "SurveyIdentity",
+                  "name": "CISE",
+                  "acronym": "CIS-R",
+                  "recommendedTo": "",
+                  "description": "",
+                  "keywords": []
+                }
           }
         },
         "statusHistory": {
