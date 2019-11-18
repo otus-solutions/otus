@@ -103,13 +103,13 @@
 <md-grid-list md-cols="3" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-xs="1";
              md-row-height="2.2:2">
 
-    <md-grid-tile ng-repeat="activity in $ctrl.activityDtos" layout-margin="10px">
-        <md-card class="md-whiteframe-1dp" layout-fill>
+    <md-grid-tile ng-repeat="activityDto in $ctrl.activityDtos" layout-margin="10px">
+        <md-card class="md-whiteframe-1dp" style="width: 100%" layout-fill layout-padding>
             <div layout="row" layout-align="space-between center" ng-style="{background: '#5ba499'}">
                 <div layout="row" layout-margin>
-                    <md-icon md-font-library="material-icons" md-svg-icon="{{$ctrl.getModeIcon(activity)}}"
+                    <md-icon md-font-library="material-icons" md-svg-icon="{{$ctrl.getModeIcon(activityDto)}}"
                              ng-style="{color: 'white'}"></md-icon>
-                    <h4 ng-style="{color: '#FFFFFF'}">{{activity.surveyForm.acronym}}</h4>
+                    <h4 ng-style="{color: '#FFFFFF'}">{{activityDto.surveyForm.acronym}}</h4>
                 </div>
                 <div>
                     <md-button class="md-icon-button">
@@ -122,16 +122,21 @@
             <div layout="column" layout-padding layout-align="space-between stretch">
                 <div layout="column">
                     <div layout="column" layout-align="start start">
-                        <span class="md-subhead" layout-fill md-truncate>{{activity.surveyForm.name}}</span>
-                        <span class="md-caption" ng-style="{color:'#797985'}">{{activity.category.label}}</span>
+                        <span class="md-subhead" layout-fill md-truncate>{{activityDto.surveyForm.name}}</span>
+                        <span class="md-caption" ng-style="{color:'#797985'}">{{activityDto.category.label}}</span>
                     </div>
                 </div>
 
 
-                <div layout="column" layout-align="start start" ng-if="activity.mode === 'PAPER'">
+                <div layout="column" layout-align="start start" ng-if="activityDto.mode === 'PAPER'">
                     <small class="md-caption" ng-style="{color:'#797985'}">Informações do preenchimento obrigatório.</small>
-                    <md-datepicker md-placeholder="Data de realização"
-                                   ng-model="$ctrl.paperActivityData.realizationDate"></md-datepicker>
+
+                    <md-input-container flex="45" style="margin-top: 40px" id="date">
+                        <label ng-show="$ctrl.birthdate">Data de Realização</label>
+                        <input mdc-datetime-picker="" show-icon="true" date="true" time="false" aria-label="Data de Nascimento" type="text" id="datetime"
+                               placeholder="Data de Realização" max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
+                               format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
+                    </md-input-container>
 
                     <md-autocomplete md-item-text="item.text"
                                      md-items="item in $ctrl.checkerQuerySearch($ctrl.checkerSearchText)"
@@ -164,11 +169,11 @@
                     <small ng-style="{color:'#9e9e9e'}">* Área exclusiva para informações de atividade em papel</small>
                 </div>
                 <div>
-                    <md-input-container ng-if="activity.surveyForm.isRequiredExternalID()">
+                    <md-input-container ng-if="activityDto.surveyForm.isRequiredExternalID()">
                         <label>ID Externo</label>
-                        <input ng-model="activity.ExternalID">
+                        <input ng-model="activityDto.ExternalID">
                     </md-input-container>
-                    <md-input-container ng-if="!activity.surveyForm.isRequiredExternalID()">
+                    <md-input-container ng-if="!activityDto.surveyForm.isRequiredExternalID()">
                         <small ng-style="{color:'#9e9e9e'}">* ID Externo não requerido</small>
                     </md-input-container>
                 </div>
@@ -191,6 +196,10 @@ ng-style="{color:'#9e9e9e', padding:'30px'}"
 <md-button class="md-icon-button" ng-click="$ctrl.addActivity($ctrl.selectedItem)">
 
 style="padding-left: 20px; margin-bottom: 0; margin-top: 0"
+
+<md-datepicker md-placeholder="Data de realização"
+                                   ng-model="$ctrl.paperActivityData.realizationDate"></md-datepicker>
+
 
 
 
