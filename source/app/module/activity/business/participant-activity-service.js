@@ -10,14 +10,14 @@
         'otusjs.activity.core.ContextService',
         'otusjs.activity.repository.ActivityRepositoryService',
         'otusjs.activity.repository.UserRepositoryService',
-        'otusjs.model.activity.ActivityFacadeService',
         'otusjs.activity.business.ActivityDtoFactory'
     ];
 
-    function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, ActivityFacadeService, ActivityDtoFactory) {
+    function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, ActivityDtoFactory) {
         var self = this;
         var _paperActivityCheckerData = null;
         self.activityConfigurations = new Object();
+        self.activities = [];
 
 
         /* Public methods */
@@ -70,19 +70,28 @@
 
         function saveActivities(activityDtos){
             getSelectedParticipant().then(function (selectedParticipant) {
-                let _storageActivityDtos = JSON.parse(window.sessionStorage.getItem('activityDtos'))
-                console.log(_storageActivityDtos);
+                activityDtos.forEach(activityDto => {
+                    activityDto.mode === 'ONLINE' ? _createOnLineActivity(activityDto, selectedParticipant):_createPaperActivity(activityDto, selectedParticipant);
+                });
+                ActivityRepositoryService.saveActivities(self.activities);
                 window.sessionStorage.removeItem('activityDtos');
+            });
+        }
 
-
-            })
-            // activityDtos.forEach(activityDto => {
-            //     console.log(activityDto);
-            //
-            // });
-
+        function _createOnLineActivity(activityDto, selectedParticipant){
+            ActivityRepositoryService.createOnLineActivity(activityDto.surveyForm,
+                activityDto.user, selectedParticipant, activityDto.configuration)
+                .then(OnlineActivity => self.activities.push(OnlineActivity));
 
         }
+
+        function _createPaperActivity(activityDto, selectedParticipant){
+            ActivityRepositoryService.createPaperActivity(activityDto.surveyForm,
+                activityDto.user, selectedParticipant, activityDto.paperActivityCheckerData, activityDto.configuration);
+            self.activities.push(paperActivity)
+                .then(paperActivity => self.activities.push(paperActivity));
+        }
+
 
         // function createActivity(survey, configuration) {
         //     let loggedUser = ContextService.getLoggedUser();
