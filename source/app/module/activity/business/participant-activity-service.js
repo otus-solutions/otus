@@ -10,10 +10,11 @@
         'otusjs.activity.core.ContextService',
         'otusjs.activity.repository.ActivityRepositoryService',
         'otusjs.activity.repository.UserRepositoryService',
-        'otusjs.model.activity.ActivityFacadeService'
+        'otusjs.model.activity.ActivityFacadeService',
+        'otusjs.activity.business.ActivityDtoFactory'
     ];
 
-    function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, ActivityFacadeService) {
+    function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, ActivityFacadeService, ActivityDtoFactory) {
         var self = this;
         var _paperActivityCheckerData = null;
         self.activityConfigurations = new Object();
@@ -38,7 +39,9 @@
         self.addActivityRevision = addActivityRevision;
         self.getActivityRevisions = getActivityRevisions;
 
-        self.createActivity = createActivity;
+        //self.createActivity = createActivity;
+        self.createActivityDto = createActivityDto;
+        self.saveActivities = saveActivities;
 
 
         function add() {
@@ -59,14 +62,28 @@
                 });
         }
 
-        function createActivity(survey, configuration) {
-            let loggedUser = ContextService.getLoggedUser();
-            return getSelectedParticipant()
-                .then(selectedParticipant => {
-                    ActivityFacadeService.createActivity(survey, loggedUser, selectedParticipant, configuration);
-                    return { surveyActivity: ActivityFacadeService.surveyActivity }
-                });
+        function createActivityDto(survey, configuration, mode){
+            let activityDto = ActivityDtoFactory.create(survey, configuration, mode)
+            return activityDto;
         }
+
+        function saveActivities(activityDtos){
+            activityDtos.forEach(activityDto => {
+                console.log(activityDto);
+
+            });
+
+
+        }
+
+        // function createActivity(survey, configuration) {
+        //     let loggedUser = ContextService.getLoggedUser();
+        //     return getSelectedParticipant()
+        //         .then(selectedParticipant => {
+        //             ActivityFacadeService.createActivity(survey, loggedUser, selectedParticipant, configuration);
+        //             return { surveyActivity: ActivityFacadeService.surveyActivity }
+        //         });
+        // }
 
         function setActivitiesSelection(surveys) {
             self.listSurveys = surveys;

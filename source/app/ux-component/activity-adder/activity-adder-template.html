@@ -9,61 +9,18 @@
 
 
 <style>
-    .gridListdemoDynamicTiles md-grid-list {
-        margin: 10px;
-        padding: 0px;
-    }
-
-    /*.gridListdemoDynamicTiles .s64 {*/
-    /*    font-size: 64px;*/
-    /*}*/
-
-    /*.gridListdemoDynamicTiles .s32 {*/
-    /*    font-size: 48px;*/
-    /*}*/
-
-
-    .gridListdemoDynamicTiles md-grid-tile md-grid-tile-header {
-        background: rgba(19, 125, 108, 0.68);
-        position: relative;
-        width: 100%;
-        overflow: inherit;
-        padding: 8px;
-    }
-
-    .gridListdemoDynamicTiles md-grid-tile-header figcaption {
-        display: block;
-        width: 100%;
+    *{
+        margin: 0%;
+        padding: 0%;
     }
 
 
-    .gridListdemoDynamicTiles md-grid-tile figure {
-        justify-content: normal;
-        flex-direction: column;
-        align-items: start;
-    }
-
-    .gridListdemoDynamicTiles .grid-align {
-        padding: 20px;
-
-    }
-
-    .gridListdemoDynamicTiles md-grid-tile:hover {
-        background: #F5F5F5;
-        cursor: pointer;
-    }
-
-    md-input-container{
-        margin-top: 10px;
+    md-input-container {
         margin-bottom: 0px;
-        padding: 0px;
-
-
-
     }
 
 </style>
-<!--style="padding-left: 20px; margin-bottom: 0; margin-top: 0"-->
+
 
 <md-card style="background-color: #f5f5f5">
     <div flex layout="row" layout-align="space-between start" layout-margin>
@@ -128,13 +85,13 @@
             </md-not-found>
         </md-autocomplete>
 
-        <md-button class="md-icon-button" ng-click="$ctrl.addActivity($ctrl.selectedItem)">
+        <md-button class="md-icon-button" ng-click="$ctrl.addActivityDtos($ctrl.selectedItem)">
             <md-icon md-font-set="material-icons">add_box</md-icon>
         </md-button>
         </span>
 
         <md-button class="md-icon-button">
-            <md-icon md-font-set="material-icons">save</md-icon>
+            <md-icon md-font-set="material-icons" ng-click="$ctrl.saveActivities()">save</md-icon>
         </md-button>
         <md-button class="md-icon-button">
             <md-icon md-font-set="material-icons">cancel</md-icon>
@@ -142,205 +99,103 @@
     </md-card-actions>
 </md-card>
 
-<div>
-    <md-content class="gridListdemoDynamicTiles">
-        <md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"
-                      md-gutter-gt-sm="8px" md-row-height="2.3:2" md-row-height-gt-md="1:1">
-            <md-grid-tile class="md-whiteframe-1dp" ng-repeat="activity in $ctrl.selectedActivities">
-                <md-grid-tile-header ng-style="activity.actions.colorGrid">
-                    <div layout="row" layout-align="space-between center">
-                        <div layout="row">
-                            <md-icon style="color: white" md-font-library="material-icons" md-svg-icon="{{$ctrl.getModeIcon(activity)}}""></md-icon>
-                            </md-icon>
-                            <h3>{{activity.surveyForm.acronym}}</h3>
-                        </div>
-                        <md-button class="md-icon-button">
-                            <md-icon md-font-set="material-icons" style="color:white">cancel</md-icon>
-                            </md-icon>
-                        </md-button>
-                    </div>
-                </md-grid-tile-header>
-                <div class="grid-align" layout="column" flex>
-                    <div layout="column">
-                        <span class="md-subhead">{{activity.surveyForm.name}}</span>
-                        <span class="md-caption" ng-style="{color:'#797985'}">Categoria:
-                            <small class="md-body-2" style="color: black;">{{activity.category.label}}</small>
-                        </span>
-                    </div>
+<!--<md-grid-list md-cols="3" md-row-height="2.3:2">-->
+<md-grid-list md-cols="3" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-xs="1";
+             md-row-height="2.2:2">
 
-                    <md-input-container class="md-block">
+    <md-grid-tile ng-repeat="activity in $ctrl.activityDtos" layout-margin="10px">
+        <md-card class="md-whiteframe-1dp" layout-fill>
+            <div layout="row" layout-align="space-between center" ng-style="{background: '#5ba499'}">
+                <div layout="row" layout-margin>
+                    <md-icon md-font-library="material-icons" md-svg-icon="{{$ctrl.getModeIcon(activity)}}"
+                             ng-style="{color: 'white'}"></md-icon>
+                    <h4 ng-style="{color: '#FFFFFF'}">{{activity.surveyForm.acronym}}</h4>
+                </div>
+                <div>
+                    <md-button class="md-icon-button">
+                        <md-icon md-font-set="material-icons" style="color:white">cancel</md-icon>
+                        </md-icon>
+                    </md-button>
+                </div>
+            </div>
+
+            <div layout="column" layout-padding layout-align="space-between stretch">
+                <div layout="column">
+                    <div layout="column" layout-align="start start">
+                        <span class="md-subhead" layout-fill md-truncate>{{activity.surveyForm.name}}</span>
+                        <span class="md-caption" ng-style="{color:'#797985'}">{{activity.category.label}}</span>
+                    </div>
+                </div>
+
+
+                <div layout="column" layout-align="start start" ng-if="activity.mode === 'PAPER'">
+                    <small class="md-caption" ng-style="{color:'#797985'}">Informações do preenchimento obrigatório.</small>
+                    <md-datepicker md-placeholder="Data de realização"
+                                   ng-model="$ctrl.paperActivityData.realizationDate"></md-datepicker>
+
+                    <md-autocomplete md-item-text="item.text"
+                                     md-items="item in $ctrl.checkerQuerySearch($ctrl.checkerSearchText)"
+                                     md-menu-class="autocomplete-custom-template"
+                                     md-min-length="0"
+                                     md-no-cache="true"
+                                     md-search-text="$ctrl.checkerSearchText"
+                                     md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
+                                     md-selected-item="$ctrl.checkerSelectedItem"
+                                     md-selected-item-change="$ctrl.checkerSelectedItemChange(item)"
+                                     placeholder="Aferidor (a)">
+                        <md-item-template>
+                                      <span class="item-title">
+                                        <md-icon md-svg-icon="account"></md-icon>
+                                        <span md-highlight-flags="i" md-highlight-text="$ctrl.checkerSearchText">{{ item.title }}</span>
+                                      </span>
+                            <span class="item-metadata">
+                                        <span class="item-metastat">
+                                          E-mail: <strong>{{ item.metastat.email }}</strong>
+                                        </span>
+                                      </span>
+                        </md-item-template>
+                        <md-not-found>
+                            Nenhum resultado para "{{ $ctrl.checkerSearchText }}" foi encontrado.
+                        </md-not-found>
+                    </md-autocomplete>
+                </div>
+                <div ng-if="activity.mode === 'ONLINE'"
+                     ng-style="{background:'#efefef'}">
+                    <small ng-style="{color:'#9e9e9e'}">* Área exclusiva para informações de atividade em papel</small>
+                </div>
+                <div>
+                    <md-input-container ng-if="activity.surveyForm.isRequiredExternalID()">
                         <label>ID Externo</label>
                         <input ng-model="activity.ExternalID">
                     </md-input-container>
-
-                    <div ng-if="activity.mode === 'PAPER'" layout="column" layout-align="center center">
-                        <small ng-style="{color:'#797985'}">Data de realização e o responsável pelo preenchimento.</small>
-                        <md-datepicker layout md-placeholder="Data de realização"
-                                       ng-model="$ctrl.paperActivityData.realizationDate"></md-datepicker>
-
-                        <md-autocomplete md-item-text="item.text"
-                                         md-items="item in $ctrl.checkerQuerySearch($ctrl.checkerSearchText)"
-                                         md-menu-class="autocomplete-custom-template"
-                                         md-min-length="0"
-                                         md-no-cache="true"
-                                         md-search-text="$ctrl.checkerSearchText"
-                                         md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
-                                         md-selected-item="$ctrl.checkerSelectedItem"
-                                         md-selected-item-change="$ctrl.checkerSelectedItemChange(item)"
-                                         placeholder="Aferidor (a)">
-                            <md-item-template>
-                              <span class="item-title">
-                                <md-icon md-svg-icon="account"></md-icon>
-                                <span md-highlight-flags="i" md-highlight-text="$ctrl.checkerSearchText">{{ item.title }}</span>
-                              </span>
-                                <span class="item-metadata">
-                                <span class="item-metastat">
-                                  E-mail: <strong>{{ item.metastat.email }}</strong>
-                                </span>
-                              </span>
-                            </md-item-template>
-                            <md-not-found>
-                                Nenhum resultado para "{{ $ctrl.checkerSearchText }}" foi encontrado.
-                            </md-not-found>
-                        </md-autocomplete>
-                    </div>
-                    <div ng-if="activity.mode === 'ONLINE'" layout="column" layout-align="end center" ng-style="{background:'#efefef', height:'100px'}">
-                        <small ng-style="{color:'#9e9e9e', marginTop:'50px', padding: '0px'}">* Área exclusiva para informações de atividade em papel</small>
-                    </div>
+                    <md-input-container ng-if="!activity.surveyForm.isRequiredExternalID()">
+                        <small ng-style="{color:'#9e9e9e'}">* ID Externo não requerido</small>
+                    </md-input-container>
                 </div>
-            </md-grid-tile>
-        </md-grid-list>
-    </md-content>
-</div>
+            </div>
+        </md-card>
+    </md-grid-tile>
+</md-grid-list>
+</md-content>
 
-<!--<md-content class="gridListdemoDynamicTiles" flex ng-if="!$ctrl.error.isError">-->
-<!--    <md-grid-list md-cols="1" md-cols-gt-md="6" md-cols-md="6" md-cols-sm="2" md-gutter="12px"-->
-<!--                  md-gutter-gt-md="14px" md-gutter-gt-sm="18px" md-row-height="4:2"-->
-<!--                  md-row-height-gt-md="5:3" md-row-height-lg="5:4" md-row-height-md="4:4" md-row-height-sm="4:2">-->
-<!--        <md-grid-tile-->
-<!--                aria-label="activity{{$index}}"-->
-<!--                class="{{activity.actions.whiteframeGrid}}" id="activity{{$index}}"-->
-<!--                md-colspan="1"-->
-<!--                md-colspan-lg="2"-->
-<!--                md-colspan-md="2" md-colspan-sm="1" md-colspan-xs="1" md-rowspan="1" md-whiteframe="3"-->
-<!--                name="activity{{$index}}"-->
-<!--                ng-repeat="activity in $ctrl.selectedActivities">-->
-<!--            <md-grid-tile-header ng-style="activity.actions.colorGrid">-->
-<!--                <div layout="row" layout-align="space-between center">-->
-<!--                    <div layout="row">-->
-<!--                        <md-icon md-font-set="material-icons" style="color: white">{{$ctrl.getModeIcon(activity)}}</md-icon>-->
-<!--                        <h3>{{activity.surveyForm.acronym}}</h3>-->
-<!--                    </div>-->
-<!--                    <md-button class="md-icon-button">-->
-<!--                        <md-icon md-font-set="material-icons" style="color:white">cancel</md-icon>-->
-<!--                        </md-icon>-->
-<!--                    </md-button>-->
-<!--                </div>-->
-<!--            </md-grid-tile-header>-->
-<!--            <div class="grid-align" layout="column">-->
-<!--                <span>{{activity.surveyForm.name}}</span>-->
-<!--                <span class="md-caption" style="color: gray;">Categoria:-->
-<!--                    <small class="md-body-2" style="color: black;">{{activity.category.label}}</small>-->
-<!--                </span>-->
-<!--                <md-input-container>-->
-<!--                    <label>ID Externo</label>-->
-<!--                    <input ng-model="activity.ExternalID">-->
-<!--                </md-input-container>-->
+<!--
 
-<!--                <div ng-if="activity.mode === 'ONLINE'" layout-wrap>-->
-<!--                    <div>-->
-<!--                        <md-datepicker ng-model="$ctrl.paperActivityData.realizationDate"-->
-<!--                                       md-placeholder="Data de realização"></md-datepicker>-->
-<!--                    </div>-->
-<!--                    <md-autocomplete flex md-no-cache="true" md-selected-item="$ctrl.checkerSelectedItem"-->
-<!--                                     md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"-->
-<!--                                     md-search-text="$ctrl.checkerSearchText"-->
-<!--                                     md-selected-item-change="$ctrl.checkerSelectedItemChange(item)"-->
-<!--                                     md-items="item in $ctrl.checkerQuerySearch($ctrl.checkerSearchText)"-->
-<!--                                     md-item-text="item.text" md-min-length="0" placeholder="Aferidor (a)"-->
-<!--                                     md-menu-class="autocomplete-custom-template">-->
-<!--                        <md-item-template>-->
-<!--          <span class="item-title">-->
-<!--            <md-icon md-svg-icon="account"></md-icon>-->
-<!--            <span md-highlight-text="$ctrl.checkerSearchText" md-highlight-flags="i">{{ item.title }}</span>-->
-<!--          </span>-->
-<!--                            <span class="item-metadata">-->
-<!--            <span class="item-metastat">-->
-<!--              E-mail: <strong>{{ item.metastat.email }}</strong>-->
-<!--            </span>-->
-<!--          </span>-->
-<!--                        </md-item-template>-->
-<!--                        <md-not-found>-->
-<!--                            Nenhum resultado para "{{ $ctrl.checkerSearchText }}" foi encontrado.-->
-<!--                        </md-not-found>-->
-<!--                    </md-autocomplete>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </md-grid-tile>-->
-<!--    </md-grid-list>-->
-<!--</md-content>-->
+<md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"
 
-<!--        <div>-->
-<!--            <div>-->
-<!--                <md-datepicker ng-model="activity.paperActivityData.realizationDate"-->
-<!--                               md-placeholder="Data de realização"></md-datepicker>-->
-<!--            </div>-->
-<!--            <md-autocomplete flex md-no-cache="true" md-selected-item="$ctrl.checkerSelectedItem"-->
-<!--                             md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"-->
-<!--                             md-search-text="$ctrl.checkerSearchText"-->
-<!--                             md-selected-item-change="$ctrl.checkerSelectedItemChange(item)"-->
-<!--                             md-items="item in $ctrl.checkerQuerySearch($ctrl.checkerSearchText)"-->
-<!--                             md-item-text="item.text" md-min-length="0" placeholder="Aferidor (a)"-->
-<!--                             md-menu-class="autocomplete-custom-template">-->
-<!--                <md-item-template>-->
-<!--          <span class="item-title">-->
-<!--            <md-icon md-svg-icon="account"></md-icon>-->
-<!--            <span md-highlight-text="$ctrl.checkerSearchText" md-highlight-flags="i">{{ item.title }}</span>-->
-<!--          </span>-->
-<!--                    <span class="item-metadata">-->
-<!--            <span class="item-metastat">-->
-<!--              E-mail: <strong>{{ item.metastat.email }}</strong>-->
-<!--            </span>-->
-<!--          </span>-->
-<!--                </md-item-template>-->
-<!--                <md-not-found>-->
-<!--                    Nenhum resultado para "{{ $ctrl.checkerSearchText }}" foi encontrado.-->
-<!--                </md-not-found>-->
-<!--            </md-autocomplete>-->
-<!--        </div>-->
+<md-grid-list md-cols="1" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-sm="2" md-cols-xs="1";
+         md-gutter="8px"md-gutter-gt-sm="8px" md-row-height="2.3:2" md-row-height-gt-md="1:1">
+
+ng-style="{color:'#9e9e9e', padding:'30px'}"
 
 
-<!--<div>-->
-<!--    <md-content class="gridListdemoDynamicTiles">-->
-<!--        <md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"-->
-<!--                      md-gutter-gt-sm="8px" md-row-height="2.8:2" md-row-height-gt-md="1:1">-->
-<!--            <md-grid-tile ng-repeat="tile in $ctrl.selectedActivities">-->
-<!--                <md-whiteframe class="md-whiteframe-1dp" layout-fill>-->
-<!--                    <div layout="row" layout-align="space-between start">-->
-<!--                        <md-button class="md-fab">{{tile.surveyForm.acronym}}</md-button>-->
-<!--                        <span class="md-button md-truncate" flex="60">{{tile.name}}</span>-->
-<!--                        <md-button class="md-icon-button" flex="3">-->
-<!--                            <md-icon md-font-set="material-icons">close</md-icon>-->
-<!--                            </md-icon>-->
-<!--                        </md-button>-->
-<!--                    </div>-->
-<!--                    <div flex layout="column" layout-padding>-->
-<!--                        <span> Modo: {{tile.mode}}</span>-->
-<!--                        <span> Categoria: {{tile.category}}</span>-->
-<!--                        <md-input-container>-->
-<!--                            <label>ID Externo</label>-->
-<!--                            <input ng-model="activity.ExternalID">-->
-<!--                        </md-input-container>-->
-<!--                    </div>-->
-<!--                </md-whiteframe>-->
-<!--            </md-grid-tile>-->
-<!--        </md-grid-list>-->
-<!--    </md-content>-->
-<!--</div>-->
+<md-button class="md-icon-button" ng-click="$ctrl.addActivity($ctrl.selectedItem)">
 
-<!-- line 96 <md-grid-tile ng-repeat="tile in $ctrl.candidatesActivities">-->
+style="padding-left: 20px; margin-bottom: 0; margin-top: 0"
 
-<!--line 79-->
-<!--<md-button class="md-icon-button" ng-click="$ctrl.addPreviewActivity($ctrl.selectedItem)">-->
-<!--    <md-icon md-font-set="material-icons">add_box</md-icon>-->
-<!--</md-button>-->
+
+
+
+
+
+
+-->

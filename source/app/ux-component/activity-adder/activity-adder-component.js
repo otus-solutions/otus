@@ -25,14 +25,16 @@
         var self = this;
         // var _selectedActivities = [];
         var _exitDialog;
-        self.activities = [];
+        self.surveys = [];
 
-        self.selectedActivities = [];
+        //self.selectedActivities = [];
         self.statePreview = false;
         self.mode = "ONLINE";
         self.selectType = "activityUnit";
         self.iconMode = "";
         self.configuration = {};
+
+        self.activityDtos = [];
 
 
         /* Public methods */
@@ -40,8 +42,10 @@
         //self.catchActivity = catchActivity;
 
         self.addActivity = addActivity;
+        self.addActivityDtos = addActivityDtos;
+        self.saveActivities = saveActivities;
         self.surveyQuerySearch = surveyQuerySearch;
-        self.checkerQuerySearch = checkerQuerySearch;
+        //self.checkerQuerySearch = checkerQuerySearch;
 
         self.getModeIcon = getModeIcon;  //getModeIcon
         self.$onInit = onInit;
@@ -69,9 +73,9 @@
             };
             LoadingScreenService.start();
             _loadCategories();
-            _loadActivities();
-            self.paperActivityData = {};
-            self.paperActivityData.realizationDate = new Date();
+            _loadSurveys();
+            //self.paperActivityData = {};
+            //self.paperActivityData.realizationDate = new Date();
         }
 
         // function addActivities() {
@@ -117,11 +121,22 @@
         //     console.log(self.selectedActivities)
         // }
 
+        function addActivityDtos(survey){
+            let dto = ParticipantActivityService.createActivityDto(survey, self.configuration, self.mode);
+            self.activityDtos.push(dto);
+            window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos));
+        }
+
+        function saveActivities(){
+            ParticipantActivityService.saveActivities(self.activityDtos);
+        }
+
         function addActivity(survey) {
             // if (survey && self.mode === 'ONLINE') {
                 ParticipantActivityService.createActivity(survey, self.configuration)
                     .then(result => {
                         result.surveyActivity.mode = self.mode;
+                        console.log(result.surveyActivity)
                         self.selectedActivities.push(result.surveyActivity);
                     });
             // }
@@ -145,19 +160,19 @@
                 });
         }
 
-        function _loadActivities() {
+        function _loadSurveys() {
             ParticipantActivityService.listAvailables()
-                .then(function (activities) {
-                    self.activities = angular.copy(activities);
-                    self.AllActivities = angular.copy(self.activities);
-                    if (activities.length) {
+                .then(function (surveys) {
+                    self.surveys = angular.copy(surveys);
+                    self.AllSurveys = angular.copy(self.surveys);
+                    if (surveys.length) {
                         self.isListEmpty = false;
                     }
                 }).then(LoadingScreenService.finish());
         }
 
         function surveyQuerySearch(query) {
-            var results = query ? self.activities.filter(_activityCreateFilterFor(query)) : self.activities;
+            var results = query ? self.survey.filter(_activityCreateFilterFor(query)) : self.surveys;
             var deferred = $q.defer();
 
             $timeout(function () {
@@ -169,29 +184,32 @@
 
         function _activityCreateFilterFor(query) {
             var lowercaseQuery = angular.lowercase(query);
-            return function filterFn(activity) {
-                return activity.name.toLowerCase().indexOf(lowercaseQuery) > -1 ||
-                    activity.acronym.toLowerCase().indexOf(lowercaseQuery) > -1;
+            return function filterFn(survey) {
+                return survey.name.toLowerCase().indexOf(lowercaseQuery) > -1 ||
+                    survey.acronym.toLowerCase().indexOf(lowercaseQuery) > -1;
             };
         }
 
-        function checkerQuerySearch(query) {
-            var results = query ? self.checkers.filter(_checkerCreateFilterFor(query)) : self.checkers;
-            var deferred = $q.defer();
 
-            $timeout(function() {
-                deferred.resolve(results);
-            }, Math.random() * 1000, false);
+//metodos de busca dos aferidores
 
-            return deferred.promise;
-        }
-
-        function _checkerCreateFilterFor(query) {
-            var lowercaseQuery = angular.lowercase(query);
-            return function filterFn(checker) {
-                return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
-            };
-        }
+        // function checkerQuerySearch(query) {
+        //     var results = query ? self.checkers.filter(_checkerCreateFilterFor(query)) : self.checkers;
+        //     var deferred = $q.defer();
+        //
+        //     $timeout(function() {
+        //         deferred.resolve(results);
+        //     }, Math.random() * 1000, false);
+        //
+        //     return deferred.promise;
+        // }
+        //
+        // function _checkerCreateFilterFor(query) {
+        //     var lowercaseQuery = angular.lowercase(query);
+        //     return function filterFn(checker) {
+        //         return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
+        //     };
+        // }
 
     }
 }());
@@ -200,3 +218,5 @@
 ///home/fabiano/ccem/otus/source/app/deploy/state/activity/paper-activity-initializer-state-provider.js
 //source/app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js
 //source/app/ux-component/activity-category-adder/activity-category-adder-component.js
+
+//statusHistory.newInitializedOfflineRegistry(paperActivityData);
