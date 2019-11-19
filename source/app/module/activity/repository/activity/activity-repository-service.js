@@ -187,14 +187,13 @@
             return ModuleService
                 .whenActivityFacadeServiceReady()
                 .then(function (ActivityFacadeService) {
-                    return ActivityFacadeService.createPaperActivity(survey, loggedUser, participant, paperActivityData, configuration);
+                    return ActivityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configuration);
                 });
         }
 
 
         function saveActivities(activities) {
           var work = _setupWorkProgress();
-          console.log(activities)
           ActivityCollectionService.insert(activities).then(work.finish);
         }
     }

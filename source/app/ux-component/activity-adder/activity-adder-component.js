@@ -66,7 +66,7 @@
                 ]
             };
             LoadingScreenService.start();
-            _loadActivityDtosfromStorage();
+            //_loadActivityDtosfromStorage();
             _loadCategories();
             _loadSurveys();
         }

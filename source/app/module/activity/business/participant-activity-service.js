@@ -70,13 +70,14 @@
 
         function saveActivities(activityDtos){
             _prepareActivities(activityDtos)
-                .then(() => ActivityRepositoryService.saveActivities(self.activities));
+                //.then(() => ActivityRepositoryService.saveActivities(self.activities));
             window.sessionStorage.removeItem('activityDtos');
         }
 
         function _prepareActivities(activityDtos){
             return getSelectedParticipant().then(function (selectedParticipant) {
                 activityDtos.forEach(activityDto => {
+                    console.log(activityDto);
                     activityDto.mode === 'ONLINE' ? _createOnLineActivity(activityDto, selectedParticipant):_createPaperActivity(activityDto, selectedParticipant);
                 });
             });

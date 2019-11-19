@@ -98,11 +98,18 @@
     </md-card-actions>
 </md-card>
 
-<otus-activity-adder-card activity-dtos="$ctrl.activityDtos" checkers="$ctrl.checkers"></otus-activity-adder-card>
+<md-grid-list ; md-cols="3" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-xs="1"  md-row-height="2.2:2">
+    <md-grid-tile layout-margin="10px" ng-repeat="activityDto in $ctrl.activityDtos">
+        <otus-activity-adder-card activity-dto="activityDto" checkers="$ctrl.checkers">
+    </md-grid-tile>
+</md-grid-list>
+
 
 </md-content>
 
 <!--
+<otus-activity-adder-card activity-dtos="$ctrl.activityDtos" checkers="$ctrl.checkers"></otus-activity-adder-card>
+
 
 <md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"
 

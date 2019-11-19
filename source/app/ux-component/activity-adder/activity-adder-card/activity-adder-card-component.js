@@ -8,7 +8,8 @@
             controller: Controller,
             bindings: {
                 activityDtos: '=',
-                checkers: '<'
+                checkers: '<',
+                activityDto: '='
 
             }
         });
@@ -22,6 +23,9 @@
         var self = this;
         self.checkerQuerySearch = checkerQuerySearch;
         self.getModeIcon = getModeIcon;
+        self.checkerSelectedItemChange = checkerSelectedItemChange;
+        self.realizationDate;
+
 
         function checkerQuerySearch(query) {
             var results = query ? self.checkers.filter(_checkerCreateFilterFor(query)) : self.checkers;
@@ -41,8 +45,12 @@
             };
         }
 
-        function getModeIcon(activity){
-            return activity.mode === "ONLINE" ?  "signal": "file-document"
+        function checkerSelectedItemChange(checker) {
+            self.activityDto.updatePaperActivityData(checker, self.realizationDate);
+        }
+
+        function getModeIcon(){
+            return self.activityDto.mode === "ONLINE" ?  "signal": "file-document"
         }
     }
 
