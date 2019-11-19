@@ -69,26 +69,28 @@
         }
 
         function saveActivities(activityDtos){
-            getSelectedParticipant().then(function (selectedParticipant) {
+            _prepareActivities(activityDtos)
+                .then(() => ActivityRepositoryService.saveActivities(self.activities));
+            window.sessionStorage.removeItem('activityDtos');
+        }
+
+        function _prepareActivities(activityDtos){
+            return getSelectedParticipant().then(function (selectedParticipant) {
                 activityDtos.forEach(activityDto => {
                     activityDto.mode === 'ONLINE' ? _createOnLineActivity(activityDto, selectedParticipant):_createPaperActivity(activityDto, selectedParticipant);
                 });
-                ActivityRepositoryService.saveActivities(self.activities);
-                window.sessionStorage.removeItem('activityDtos');
             });
         }
 
         function _createOnLineActivity(activityDto, selectedParticipant){
-            ActivityRepositoryService.createOnLineActivity(activityDto.surveyForm,
-                activityDto.user, selectedParticipant, activityDto.configuration)
+            ActivityRepositoryService.createOnLineActivity(activityDto.surveyForm, activityDto.user, selectedParticipant, activityDto.configuration)
                 .then(OnlineActivity => self.activities.push(OnlineActivity));
 
         }
 
         function _createPaperActivity(activityDto, selectedParticipant){
             ActivityRepositoryService.createPaperActivity(activityDto.surveyForm,
-                activityDto.user, selectedParticipant, activityDto.paperActivityCheckerData, activityDto.configuration);
-            self.activities.push(paperActivity)
+                activityDto.user, selectedParticipant, activityDto.paperActivityCheckerData, activityDto.configuration)
                 .then(paperActivity => self.activities.push(paperActivity));
         }
 

@@ -14,7 +14,6 @@
         padding: 0%;
     }
 
-
     md-input-container {
         margin-bottom: 0px;
     }
@@ -99,92 +98,8 @@
     </md-card-actions>
 </md-card>
 
-<!--<md-grid-list md-cols="3" md-row-height="2.3:2">-->
-<md-grid-list ; md-cols="3" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-xs="1"
-              md-row-height="2.2:2">
+<otus-activity-adder-card activity-dtos="$ctrl.activityDtos"></otus-activity-adder-card>
 
-    <md-grid-tile layout-margin="10px" ng-repeat="activityDto in $ctrl.activityDtos">
-        <md-card class="md-whiteframe-1dp" layout-fill layout-padding style="width: 100%">
-            <div layout="row" layout-align="space-between center" ng-style="{background: '#5ba499'}">
-                <div layout="row" layout-margin>
-                    <md-icon md-font-library="material-icons" md-svg-icon="{{$ctrl.getModeIcon(activityDto)}}"
-                             ng-style="{color: 'white'}"></md-icon>
-                    <h4 ng-style="{color: '#FFFFFF'}">{{activityDto.surveyForm.acronym}}</h4>
-                </div>
-                <div>
-                    <md-button class="md-icon-button">
-                        <md-icon md-font-set="material-icons" style="color:white">cancel</md-icon>
-                        </md-icon>
-                    </md-button>
-                </div>
-            </div>
-
-            <div layout="column" layout-align="space-between stretch">
-                <div layout="column">
-                    <div layout="column" layout-align="start start">
-                        <span class="md-subhead" layout-fill md-truncate>{{activityDto.surveyForm.name}}</span>
-                        <span class="md-caption" ng-style="{color:'#797985'}">{{activityDto.category.label}}</span>
-                    </div>
-                </div>
-
-
-                <div layout="column" layout-align="start start" ng-if="activityDto.mode === 'PAPER'">
-                    <small class="md-caption" ng-style="{color:'#797985'}">Informações do preenchimento obrigatório.</small>
-                    <md-input-container id="date">
-                        <label ng-show="$ctrl.birthdate">Data de Realização</label>
-                        <input aria-label="Data de Nascimento" class="md-input" date="true" disable-parent-scroll="true"
-                               format="DD/MM/YYYY" id="datetime" max-date="$ctrl.maxDate"
-                               mdc-datetime-picker="" ng-change="$ctrl.onFilter()" ng-model="$ctrl.birthdate"
-                               placeholder="Data de Realização" readonly="readonly"
-                               show-icon="true" time="false" type="text">
-                    </md-input-container>
-
-                    <md-autocomplete md-item-text="item.text"
-                                     md-items="item in $ctrl.checkerQuerySearch($ctrl.checkerSearchText)"
-                                     md-menu-class="autocomplete-custom-template"
-                                     md-min-length="0"
-                                     md-no-cache="true"
-                                     md-search-text="$ctrl.checkerSearchText"
-                                     md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
-                                     md-selected-item="$ctrl.checkerSelectedItem"
-                                     md-selected-item-change="$ctrl.checkerSelectedItemChange(item)"
-                                     placeholder="Aferidor (a)">
-                        <md-item-template>
-                                      <span class="item-title">
-                                        <md-icon md-svg-icon="account"></md-icon>
-                                        <span md-highlight-flags="i" md-highlight-text="$ctrl.checkerSearchText">{{ item.title }}</span>
-                                      </span>
-                            <span class="item-metadata">
-                                        <span class="item-metastat">
-                                          E-mail: <strong>{{ item.metastat.email }}</strong>
-                                        </span>
-                                      </span>
-                        </md-item-template>
-                        <md-not-found>
-                            Nenhum resultado para "{{ $ctrl.checkerSearchText }}" foi encontrado.
-                        </md-not-found>
-                    </md-autocomplete>
-                </div>
-
-                <div ng-if="activityDto.mode === 'ONLINE'" layout="column">
-                    <small class="md-caption" ng-style="{color:'#797985'}">Informações do Usuário.</small>
-                    <span class="item-metastat">Nome: <strong>{{activityDto.user.name}} {{activityDto.user.surname}}</strong></span>
-                    <span class="item-metastat">Email: <strong>{{activityDto.user.email}}</strong></span>
-                </div>
-
-                <div>
-                    <md-input-container ng-if="activityDto.surveyForm.isRequiredExternalID()">
-                        <label>ID Externo</label>
-                        <input ng-model="activityDto.configuration.externalID">
-                    </md-input-container>
-                    <md-input-container ng-if="!activityDto.surveyForm.isRequiredExternalID()">
-                        <small ng-style="{color:'#9e9e9e'}">* ID Externo não requerido</small>
-                    </md-input-container>
-                </div>
-            </div>
-        </md-card>
-    </md-grid-tile>
-</md-grid-list>
 </md-content>
 
 <!--
@@ -203,12 +118,5 @@ style="padding-left: 20px; margin-bottom: 0; margin-top: 0"
 
 <md-datepicker md-placeholder="Data de realização"
                                    ng-model="$ctrl.paperActivityData.realizationDate"></md-datepicker>
-
-
-
-
-
-
-
 
 -->

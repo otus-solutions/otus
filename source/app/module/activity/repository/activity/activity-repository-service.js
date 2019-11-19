@@ -113,7 +113,6 @@
         }
 
         function _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService, configuration) {
-
             return surveys.map(function (survey) {
                 var configActivity = configuration[survey.surveyTemplate.identity.acronym];
                 var activity = activityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configActivity);
@@ -178,8 +177,8 @@
         function createOnLineActivity(survey, loggedUser, participant, configuration) {
             return ModuleService
                 .whenActivityFacadeServiceReady()
-                .then(function (activityFacadeService) {
-                    return activityFacadeService.createActivity(survey, loggedUser, participant, null, configuration);
+                .then(function (ActivityFacadeService) {
+                    return ActivityFacadeService.createActivity(survey, loggedUser, participant, null, configuration);
                 });
         }
 
@@ -187,15 +186,16 @@
         function createPaperActivity(survey, loggedUser, participant, paperActivityData, configuration) {
             return ModuleService
                 .whenActivityFacadeServiceReady()
-                .then(function (activityFacadeService) {
-                    return activityFacadeService.createPaperActivity(survey, loggedUser, participant, paperActivityData, configuration);
+                .then(function (ActivityFacadeService) {
+                    return ActivityFacadeService.createPaperActivity(survey, loggedUser, participant, paperActivityData, configuration);
                 });
         }
 
 
         function saveActivities(activities) {
-            console.log(activities);
-            activities.forEach(activity => save(activity));
+          var work = _setupWorkProgress();
+          console.log(activities)
+          ActivityCollectionService.insert(activities).then(work.finish);
         }
     }
 

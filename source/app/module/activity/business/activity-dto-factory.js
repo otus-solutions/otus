@@ -15,16 +15,16 @@
             let activityDto = new ActivityDto(survey, configuration, mode, user);
             return activityDto;
         }
-
         return self;
     }
 
-    function ActivityDto(survey, configuration, mode, user) {
+    function ActivityDto(survey, configuration, mode, user, paperActivityCheckerData) {
         let self = this;
         self.OBJECT_TYPE = 'ActivityDto';
         self.surveyForm = survey;
         self.configuration = configuration || {};
-        self.configuration.externalID = configuration.externalID || null;
+        self.paperActivityCheckerData = paperActivityCheckerData || null;
+        //self.configuration.externalID = configuration.externalID || null;
         self.mode = mode;
         mode === 'ONLINE' ? self.user = user : self.user = null;
     }
