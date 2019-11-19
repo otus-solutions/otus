@@ -1,13 +1,3 @@
-<!--<otus-activity-adder-toolbar  title="Atividade"-->
-<!--  on-add-activities="$ctrl.addActivities()">-->
-<!--</otus-activity-adder-toolbar>-->
-
-<!--<otus-activity-adder-list layout="column" flex-->
-<!--  on-activity-selection="$ctrl.catchActivity(activity)"-->
-<!--  style="overflow-y: auto">-->
-<!--</otus-activity-adder-list>-->
-
-
 <style>
     * {
         margin: 0%;
@@ -17,48 +7,97 @@
     md-input-container {
         margin-bottom: 0px;
     }
+    .card-width {
+        width: 60%;
+    }
+
+    @media screen and (max-width: 651px) {
+        .card-width {
+            width: 100%;
+        }
+    }
 </style>
 
-
-<md-card style="background-color: #f5f5f5">
-    <div flex layout="row" layout-align="space-between start" layout-margin>
-        <div layout="column" layout-align="space-between start">
-            <span class="md-headline">Gerenciador de Atividades</span>
-            <span class="md-subhead">Inclusão de Formulários ao Participante</span>
+<md-content>
+    <md-card style="background-color: #f5f5f5">
+        <div flex layout="row" layout-xs="column" layout-align="space-between start">
+            <div layout-padding>
+                <div layout="column" layout-align="space-between start">
+                    <span class="md-headline">Gerenciador de Atividades</span>
+                    <span class="md-subhead">Inclusão de Formulários ao Participante</span>
+                </div>
+            </div>
+            <div layout="row" layout-align="space-between center" class="card-width">
+                <div layout="column" layout-align-xs="space-between center">
+                    <div layout="row" layout-align="space-between start" layout-margin
+                         md-swipe-left="onSwipeLeft($event, $target)">
+                        <div>
+                            <md-icon md-font-library="material-icons" md-svg-icon="signal"></md-icon>
+                            <md-tooltip md-direction="top">
+                                Online
+                            </md-tooltip>
+                        </div>
+                        <md-switch aria-label="ActivityType" class="md-primary" ng-false-value="'ONLINE'"
+                                   ng-model="$ctrl.mode" ng-true-value="'PAPER'">
+                        </md-switch>
+                        <div>
+                            <md-icon md-font-library="material-icons" md-svg-icon="file-document"></md-icon>
+                            <md-tooltip md-direction="top">
+                                Em papel
+                            </md-tooltip>
+                        </div>
+                    </div>
+                    <div layout="row" layout-align="space-between start" layout-margin
+                         md-swipe-right="onSwipeRight($event, $target)">
+                        <div>
+                            <md-icon md-font-set="material-icons">bookmarks</md-icon>
+                            <md-tooltip md-direction="top">
+                                Lista
+                            </md-tooltip>
+                        </div>
+                        <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityList'"
+                                   ng-model="$ctrl.selectType" ng-true-value="'activityUnit'">
+                        </md-switch>
+                        <div>
+                            <md-icon md-font-set="material-icons">bookmark_border</md-icon>
+                            <md-tooltip md-direction="top">
+                                Unitário
+                            </md-tooltip>
+                        </div>
+                    </div>
+                </div>
+                <div layout="column" layout-padding flex>
+                    <div layout="row" layout-align="end center">
+                        <md-button class="md-icon-button md-primary">
+                            <md-icon md-font-set="material-icons">cancel</md-icon>
+                            <md-tooltip md-direction="top">
+                                Cancelar
+                            </md-tooltip>
+                        </md-button>
+                        <md-button class="md-icon-button md-accent">
+                            <md-icon md-font-set="material-icons" ng-click="$ctrl.saveActivities()">save</md-icon>
+                            <md-tooltip md-direction="top">
+                                Salvar
+                            </md-tooltip>
+                        </md-button>
+                    </div>
+                    <div layout="row" layout-align="center center">
+                        <md-input-container flex="20" flex-xs="80" layout-align="space-between start">
+                            <md-select aria-label="Categoria"
+                                       ng-model="$ctrl.configuration.category">
+                                <md-option ng-repeat="category in $ctrl.categories track by $index"
+                                           ng-selected="category.isDefault"
+                                           ng-value="category">{{category.label | uppercase}}
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div layout="row" layout-align="space-between start" layout-margin
-             md-swipe-left="onSwipeLeft($event, $target)">
-            <md-icon md-font-library="material-icons" md-svg-icon="signal"></md-icon>
-            <md-switch aria-label="ActivityType" class="md-primary" ng-false-value="'ONLINE'"
-                       ng-model="$ctrl.mode" ng-true-value="'PAPER'">
-            </md-switch>
-            <md-icon md-font-library="material-icons" md-svg-icon="file-document"></md-icon>
-        </div>
-
-
-        <div layout="row" layout-align="space-between start" layout-margin
-             md-swipe-right="onSwipeRight($event, $target)">
-            <md-icon md-font-set="material-icons">bookmarks</md-icon>
-            <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityList'"
-                       ng-model="$ctrl.selectType" ng-true-value="'activityUnit'">
-            </md-switch>
-            <md-icon md-font-set="material-icons">bookmark_border</md-icon>
-        </div>
-
-        <md-input-container flex="20" layout-align="space-between start">
-            <md-select aria-label="Categoria"
-                       ng-model="$ctrl.configuration.category">
-                <md-option ng-repeat="category in $ctrl.categories track by $index"
-                           ng-selected="category.isDefault"
-                           ng-value="category">{{category.label | uppercase}}
-                </md-option>
-            </md-select>
-        </md-input-container>
-    </div>
-
-    <md-card-actions layout="row" layout-align="end center">
-        <span flex layout="row" layout-align="start center">
-        <md-autocomplete flex="50" id="autocomplete_selectSurvey"
+        <div layout="row" layout-xs="column" layout-align="end center" layout-padding>
+            <span flex layout="row" layout-align="start center">
+        <md-autocomplete flex="40" flex-xs="100" id="autocomplete_selectSurvey"
                          md-item-text="item.name"
                          md-items="item in $ctrl.surveyQuerySearch($ctrl.searchText)"
                          md-menu-class="autocomplete-custom-template"
@@ -82,47 +121,22 @@
                 Nenhum resultado para "{{ $ctrl.searchText }}" foi encontrado.
             </md-not-found>
         </md-autocomplete>
-
         <md-button class="md-icon-button" ng-click="$ctrl.addActivityDtos($ctrl.selectedItem)">
             <md-icon md-font-set="material-icons">add_box</md-icon>
+            <md-tooltip md-direction="top">
+                        Adicionar
+            </md-tooltip>
         </md-button>
         </span>
-
-        <md-button class="md-icon-button">
-            <md-icon md-font-set="material-icons" ng-click="$ctrl.saveActivities()">save</md-icon>
-        </md-button>
-        <md-button class="md-icon-button">
-            <md-icon md-font-set="material-icons">cancel</md-icon>
-            </md-icon></md-button>
-    </md-card-actions>
-</md-card>
+        </div>
+    </md-card>
 
 <md-content>
-<md-grid-list md-cols="3" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-xs="1" md-row-height="2.2:2">
-    <md-grid-tile ng-repeat="activityDto in $ctrl.activityDtos">
-        <otus-activity-adder-card activity-dto="activityDto" checkers="$ctrl.checkers">
-    </md-grid-tile>
-</md-grid-list>
-
+    <md-card>
+        <md-grid-list md-cols="3" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-xs="1" md-row-height="2.2:2">
+            <md-grid-tile ng-repeat="activityDto in $ctrl.activityDtos">
+                <otus-activity-adder-card activity-dto="activityDto" checkers="$ctrl.checkers">
+            </md-grid-tile>
+        </md-grid-list>
+    </md-card>
 </md-content>
-
-<!--
-<otus-activity-adder-card activity-dtos="$ctrl.activityDtos" checkers="$ctrl.checkers"></otus-activity-adder-card>
-
-
-<md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"
-
-<md-grid-list md-cols="1" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-sm="2" md-cols-xs="1";
-         md-gutter="8px"md-gutter-gt-sm="8px" md-row-height="2.3:2" md-row-height-gt-md="1:1">
-
-ng-style="{color:'#9e9e9e', padding:'30px'}"
-
-
-<md-button class="md-icon-button" ng-click="$ctrl.addActivity($ctrl.selectedItem)">
-
-style="padding-left: 20px; margin-bottom: 0; margin-top: 0"
-
-<md-datepicker md-placeholder="Data de realização"
-                                   ng-model="$ctrl.paperActivityData.realizationDate"></md-datepicker>
-
--->
