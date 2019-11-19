@@ -45,7 +45,6 @@
         self.addActivityDtos = addActivityDtos;
         self.saveActivities = saveActivities;
         self.surveyQuerySearch = surveyQuerySearch;
-        self.checkerQuerySearch = checkerQuerySearch;
 
         self.getModeIcon = getModeIcon;  //getModeIcon
         self.$onInit = onInit;
@@ -185,31 +184,11 @@
             };
         }
 
-
         function _loadActivityDtosfromStorage(){
           let _storageActivityDtos = angular.copy(JSON.parse(window.sessionStorage.getItem('activityDtos')));
           if(_storageActivityDtos){
               self.activityDtos = _storageActivityDtos;
           }
-        }
-
-
-        function checkerQuerySearch(query) {
-            var results = query ? self.checkers.filter(_checkerCreateFilterFor(query)) : self.checkers;
-            var deferred = $q.defer();
-
-            $timeout(function() {
-                deferred.resolve(results);
-            }, Math.random() * 1000, false);
-
-            return deferred.promise;
-        }
-
-        function _checkerCreateFilterFor(query) {
-            var lowercaseQuery = angular.lowercase(query);
-            return function filterFn(checker) {
-                return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
-            };
         }
 
     }
