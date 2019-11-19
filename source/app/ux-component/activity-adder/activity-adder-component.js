@@ -46,7 +46,6 @@
         self.saveActivities = saveActivities;
         self.surveyQuerySearch = surveyQuerySearch;
 
-        self.getModeIcon = getModeIcon;  //getModeIcon
         self.$onInit = onInit;
 
 
@@ -140,11 +139,6 @@
 
             //self.statePreview = true;
         //}
-
-        function getModeIcon(activity){
-            return activity.mode === "ONLINE" ?  "signal": "file-document"
-        }
-
 
         function _loadCategories() {
             ParticipantActivityService

@@ -9,6 +9,7 @@
             bindings: {
                 activityDtos: '=',
                 checkers: '<'
+
             }
         });
     //binding = activityDto
@@ -19,9 +20,8 @@
 
     function Controller($q, $timeout) {
         var self = this;
-
-
         self.checkerQuerySearch = checkerQuerySearch;
+        self.getModeIcon = getModeIcon;
 
         function checkerQuerySearch(query) {
             var results = query ? self.checkers.filter(_checkerCreateFilterFor(query)) : self.checkers;
@@ -41,7 +41,9 @@
             };
         }
 
-
+        function getModeIcon(activity){
+            return activity.mode === "ONLINE" ?  "signal": "file-document"
+        }
     }
 
 })();
