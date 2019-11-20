@@ -3,8 +3,6 @@
         margin: 0%;
         padding: 0%;
     }
-
-
 </style>
 
 
@@ -27,10 +25,9 @@
         <div layout="column">
             <div layout="column" layout-align="start start">
                 <span class="md-subhead" layout-fill md-truncate>{{$ctrl.activityDto.surveyForm.name}}</span>
-                <span class="md-caption" ng-style="{color:'#797985'}">{{$ctrl.activityDto.category.label}}</span>
+                <span class="md-caption" ng-style="{color:'#797985'}">{{$ctrl.activityDto.configuration.category.label}}</span>
             </div>
         </div>
-
 
         <div layout="column" layout-align="start start" ng-if="$ctrl.activityDto.mode === 'PAPER'">
             <small class="md-caption" ng-style="{color:'#797985'}">Informações do preenchimento obrigatório.</small>
@@ -75,6 +72,7 @@
             <span class="item-metastat">Nome: <strong>{{$ctrl.activityDto.user.name}} {{$ctrl.activityDto.user.surname}}</strong></span>
             <span class="item-metastat">Email: <strong>{{$ctrl.activityDto.user.email}}</strong></span>
         </div>
+
 
         <div>
             <md-input-container ng-if="$ctrl.activityDto.surveyForm.isRequiredExternalID()">
