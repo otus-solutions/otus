@@ -6,7 +6,7 @@
       restrict: 'A',
       link: function (scope, element, attrs) {
         if(attrs.showAllParticipantsButton == "true") {
-          const button = angular.element('<button style="width:auto;top:-4px;right:2px;" ng-if="attrs.showParticipantsButton">' + attrs.labelButton + '</button>').addClass('md-button md-primary md-margin md-autocomplete');
+          const button = angular.element('<button ng-if="attrs.showParticipantsButton">' + attrs.labelButton + '</button>').addClass('md-button md-primary md-margin md-autocomplete');
           $('md-autocomplete-wrap').append(button);
           let searchTextModel = $parse(attrs.mdSearchText);
           scope.$watch(searchTextModel, function (searchText) {
