@@ -64,12 +64,12 @@
                 </div>
                 <div flex layout="column" layout-padding>
                     <div layout="row" layout-align="end center">
-                        <md-button class="md-icon-button md-primary">
-                            <md-icon md-font-set="material-icons">cancel</md-icon>
-                            <md-tooltip md-direction="bottom">cancelar</md-tooltip>
+                        <md-button class="md-icon-button md-primary" ng-click="$ctrl.resetActivityDtos()" ng-disabled="!$ctrl.activityDtos.length">
+                            <md-icon md-font-set="material-icons">delete</md-icon>
+                            <md-tooltip md-direction="bottom">deletar lista</md-tooltip>
                         </md-button>
-                        <md-button class="md-icon-button md-accent">
-                            <md-icon md-font-set="material-icons" ng-click="$ctrl.saveActivities()">save</md-icon>
+                        <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()" ng-disabled="!$ctrl.activityDtos.length">
+                            <md-icon md-font-set="material-icons">save</md-icon>
                             <md-tooltip md-direction="bottom">Salvar</md-tooltip>
                         </md-button>
                     </div>

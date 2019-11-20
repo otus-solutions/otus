@@ -45,6 +45,7 @@
         self.addActivityDtos = addActivityDtos;
         self.saveActivities = saveActivities;
         self.surveyQuerySearch = surveyQuerySearch;
+        self.resetActivityDtos = resetActivityDtos;
 
         self.$onInit = onInit;
 
@@ -177,6 +178,10 @@
                 return survey.name.toLowerCase().indexOf(lowercaseQuery) > -1 ||
                     survey.acronym.toLowerCase().indexOf(lowercaseQuery) > -1;
             };
+        }
+
+        function resetActivityDtos(){
+            self.activityDtos = [];
         }
 
         function _loadActivityDtosfromStorage(){
