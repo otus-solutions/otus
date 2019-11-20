@@ -117,6 +117,7 @@
         function addActivityDtos(survey){
             let dto = ParticipantActivityService.createActivityDto(survey, self.configuration, self.mode, self.paperActivityCheckerData);
             self.activityDtos.push(dto);
+            self.searchText = '';
             window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos));
         }
 
