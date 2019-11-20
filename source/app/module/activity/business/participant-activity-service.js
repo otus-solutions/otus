@@ -10,10 +10,11 @@
         'otusjs.activity.core.ContextService',
         'otusjs.activity.repository.ActivityRepositoryService',
         'otusjs.activity.repository.UserRepositoryService',
-        'otusjs.activity.business.ActivityDtoFactory'
+        'otusjs.activity.business.ActivityDtoFactory',
+        'otusjs.application.state.ApplicationStateService'
     ];
 
-    function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, ActivityDtoFactory) {
+    function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, ActivityDtoFactory,ApplicationStateService) {
         var self = this;
         var _paperActivityCheckerData = null;
         self.activityConfigurations = new Object();
@@ -39,7 +40,6 @@
         self.addActivityRevision = addActivityRevision;
         self.getActivityRevisions = getActivityRevisions;
 
-        //self.createActivity = createActivity;
         self.createActivityDto = createActivityDto;
         self.saveActivities = saveActivities;
 
@@ -70,15 +70,18 @@
 
         function saveActivities(activityDtos){
             _prepareActivities(activityDtos)
-                //.then(() => ActivityRepositoryService.saveActivities(self.activities));
+                .then(() => ActivityRepositoryService.saveActivities(self.activities))
+                .then(() => ApplicationStateService.activateParticipantActivities())
+                .then(() => self.activities = []);
+
+
             window.sessionStorage.removeItem('activityDtos');
         }
 
         function _prepareActivities(activityDtos){
             return getSelectedParticipant().then(function (selectedParticipant) {
                 activityDtos.forEach(activityDto => {
-                    console.log(activityDto);
-                    activityDto.mode === 'ONLINE' ? _createOnLineActivity(activityDto, selectedParticipant):_createPaperActivity(activityDto, selectedParticipant);
+                    activityDto.mode === "ONLINE" ? _createOnLineActivity(activityDto, selectedParticipant):_createPaperActivity(activityDto, selectedParticipant);
                 });
             });
         }
@@ -91,19 +94,10 @@
 
         function _createPaperActivity(activityDto, selectedParticipant){
             ActivityRepositoryService.createPaperActivity(activityDto.surveyForm,
-                activityDto.user, selectedParticipant, activityDto.paperActivityCheckerData, activityDto.configuration)
+                activityDto.user, selectedParticipant, activityDto.paperActivityData, activityDto.configuration)
                 .then(paperActivity => self.activities.push(paperActivity));
         }
 
-
-        // function createActivity(survey, configuration) {
-        //     let loggedUser = ContextService.getLoggedUser();
-        //     return getSelectedParticipant()
-        //         .then(selectedParticipant => {
-        //             ActivityFacadeService.createActivity(survey, loggedUser, selectedParticipant, configuration);
-        //             return { surveyActivity: ActivityFacadeService.surveyActivity }
-        //         });
-        // }
 
         function setActivitiesSelection(surveys) {
             self.listSurveys = surveys;

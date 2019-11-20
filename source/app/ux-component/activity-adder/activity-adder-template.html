@@ -121,6 +121,7 @@
                 Nenhum resultado para "{{ $ctrl.searchText }}" foi encontrado.
             </md-not-found>
         </md-autocomplete>
+
         <md-button class="md-icon-button" ng-click="$ctrl.addActivityDtos($ctrl.selectedItem)">
             <md-icon md-font-set="material-icons">add_box</md-icon>
             <md-tooltip md-direction="top">
@@ -140,3 +141,24 @@
         </md-grid-list>
     </md-card>
 </md-content>
+
+<!--
+<otus-activity-adder-card activity-dtos="$ctrl.activityDtos" checkers="$ctrl.checkers"></otus-activity-adder-card>
+
+
+<md-grid-list md-cols="3" md-cols-gt-md="3" md-cols-md="3" md-cols-sm="3" md-gutter="8px"
+
+<md-grid-list md-cols="1" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-sm="2" md-cols-xs="1";
+         md-gutter="8px"md-gutter-gt-sm="8px" md-row-height="2.3:2" md-row-height-gt-md="1:1">
+
+ng-style="{color:'#9e9e9e', padding:'30px'}"
+
+
+<md-button class="md-icon-button" ng-click="$ctrl.addActivity($ctrl.selectedItem)">
+
+style="padding-left: 20px; margin-bottom: 0; margin-top: 0"
+
+<md-datepicker md-placeholder="Data de realização"
+                                   ng-model="$ctrl.paperActivityData.realizationDate"></md-datepicker>
+
+-->

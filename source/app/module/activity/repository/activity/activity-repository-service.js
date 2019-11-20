@@ -72,7 +72,6 @@
             return _createActivity(surveys, loggedUser, participant, paperActivityData, configuration);
         }
 
-
         function save(activity) {
             return _update([_toDbObject(activity)]);
         }
@@ -182,7 +181,6 @@
                 });
         }
 
-
         function createPaperActivity(survey, loggedUser, participant, paperActivityData, configuration) {
             return ModuleService
                 .whenActivityFacadeServiceReady()
@@ -190,7 +188,6 @@
                     return ActivityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configuration);
                 });
         }
-
 
         function saveActivities(activities) {
           var work = _setupWorkProgress();

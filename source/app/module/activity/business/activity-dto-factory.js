@@ -28,12 +28,12 @@
         self.configuration = configuration || {};
         //self.configuration.externalID = configuration.externalID || null;
         self.mode = mode;
-        mode === 'ONLINE' ? self.user = user : self.user = null;
+        self.user = user || null;
         self.paperActivityData = null;
 
 
         function updatePaperActivityData(checkerData, realizationDate) {
-            self.paperActivityData = {}
+            self.paperActivityData = {};
             self.paperActivityData.checker = checkerData.checker;
             self.paperActivityData.realizationDate = realizationDate;
         }
