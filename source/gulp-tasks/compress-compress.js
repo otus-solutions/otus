@@ -43,6 +43,7 @@ gulp.task('embeded_template', ()=> {
         .pipe(gulp_if('*.js', embedTemplates({
             basePath: '.'
         })))
+        .pipe(gulp_if('ux-component/**/*.js', replace('app/', '')))
         .pipe(gulp.dest('dist/otus'));
 });
 
