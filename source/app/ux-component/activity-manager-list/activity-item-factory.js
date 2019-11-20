@@ -56,7 +56,7 @@
       } else if ('FINALIZED' === status.name) {
         return 'Finalizado';
       } else {
-        return '';
+        return 'Criado';
       }
     }
 
