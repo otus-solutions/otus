@@ -35,8 +35,8 @@
     </div>
 
     <div class="gridListDynamicTiles">
-        <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="6"  md-cols-lg="3" md-cols-gt-md="6" md-row-height-gt-md="6:4" md-row-height-sm="4:2" md-row-height-md="3:4"  md-row-height-lg="5:2"
-                      md-row-height="4:2" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-gt-sm="6px">
+        <md-grid-list md-cols="3"  md-cols-xs="1" md-cols-sm="2" md-cols-md="6"  md-cols-lg="3" md-cols-gt-md="6" md-row-height-gt-md="6:4" md-row-height-sm="4:2" md-row-height-md="3:4"  md-row-height-lg="5:2"
+                      md-row-height="6:2"  md-row-height-xs="3:2" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-gt-sm="6px">
             <md-grid-tile ng-repeat="activity in $ctrl.elementsArray | filter:$ctrl.filter | orderBy:$ctrl.orderQuery:$ctrl.orderReverse"
                           ng-click="$ctrl.selectDeselect(activity)" name="activity{{$index}}"
                           id="activity{{$index}}"
