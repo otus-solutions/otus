@@ -24,9 +24,9 @@
         self.orderReverse = false;
         self.selectAll = false;
         self.iconsDropUpDown ='arrow_drop_up';
+        self.filter = '';
         self.orderQuery;
         self.itemsOrderBy;
-        self.filter = '';
 
         self.$onInit = onInit;
         self.orderByIndex = orderByIndex;
@@ -42,6 +42,7 @@
 
         function _initializeDefaultValues() {
             self.elementsArray = [];
+            self.filteredActiviteis = [];
             self.hoverGridHeaderWhiteframe = 'md-whiteframe-19dp';
             self.hoverGridHeaderColor = '#00695C';
 
@@ -56,10 +57,13 @@
             if(self.elementsArray.length){
                 if(self.elementsArray.length != newElementsArray.length){
                     _upadateSelectDeselect();
+                    self.filter = '';
+                    self.selectAll = false;
                 }
             }
 
             self.elementsArray = newElementsArray || self.elementsArray;
+            self.filteredActiviteis = self.elementsArray;
             self.selectedItemCounter = 0;
 
             _createConfiguration();
@@ -150,6 +154,8 @@
                     msg = count + ' Registros foram encontrados.'
                 }
                 _showMsg(msg);
+            } else {
+                self.filteredActiviteis = self.elementsArray;
             }
         }
 
@@ -168,15 +174,23 @@
         }
 
         function selectDeselectAll() {
-            let deselect = (self.selectedItemCounter === self.elementsArray.length);
+            let deselect;
+
+            self.selectedItemCounter = self.elementsArray.filter(function (activity) {
+                return activity.actions.selected;
+            }).length;
+
+            deselect = (self.selectedItemCounter === self.filteredActiviteis.length);
 
             self.elementsArray.forEach(function (activity) {
-                if (deselect) {
-                    _deselect(activity);
-                    self.selectAll = false;
-                } else {
-                    _select(activity);
-                    self.selectAll = true;
+                if(self.filteredActiviteis.includes(activity)){
+                    if (deselect) {
+                        _deselect(activity);
+                        self.selectAll = false;
+                    } else {
+                        _select(activity);
+                        self.selectAll = true;
+                    }
                 }
             }, this);
         }
