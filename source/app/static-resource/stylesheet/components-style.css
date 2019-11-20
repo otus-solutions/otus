@@ -305,10 +305,10 @@ otus-view-sending-exam otus-result-visualizer .dynamic-table-container .dynamic-
 }
 
 otus-exams-lots-manager .table-container {
-  min-width: 850px;
+  min-width: 750px;
 }
 otus-exams-lots-manager .table-container md-list {
-  min-width: 800px;
+  min-width: 700px;
 }
 @media screen and (max-width: 726px) {
   otus-exams-lots-manager .desktop-filter .md-subheader {
