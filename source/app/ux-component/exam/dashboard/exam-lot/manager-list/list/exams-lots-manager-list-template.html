@@ -94,22 +94,22 @@
         <div class="table-container">
           <md-list flex>
             <md-list-item class="md-1-line" style="margin-left:8px">
-              <div class="md-list-item-text" layout="column" flex>
+              <div class="md-list-item-text" layout="column" flex="15">
                 <div layout="row" layout-align="start center" layout-padding>
                   <span layout="column">Código</span>
                 </div>
               </div>
-              <div class="md-list-item-text" layout="column" flex>
+              <div class="md-list-item-text" layout="column" flex="20">
                 <div layout="row" layout-align="start center" layout-padding>
                   <span layout="column">Exame</span>
                 </div>
               </div>
-              <div class="md-list-item-text" layout="column" flex>
+              <div class="md-list-item-text" layout="column" flex="25">
                 <div layout="row" layout-align="start center" layout-padding>
                   <span layout="column">Data de Realização</span>
                 </div>
               </div>
-              <div class="md-list-item-text" layout="column" flex>
+              <div class="md-list-item-text" layout="column" flex="25">
                 <div layout="row" layout-align="start " layout-padding>
                   <span layout="column">Responsável</span>
                 </div>
@@ -119,23 +119,23 @@
             <md-list-item ng-repeat="Lot in $ctrl.lotsList | orderBy: 'code' track by $index"
                           ng-class="{ 'selectedState': Lot.isSelected, 'regularState': !Lot.isSelected }"
                           ng-click="$ctrl.selectLot(Lot)">
-              <div class="md-list-item-text" layout="column" flex>
+              <div class="md-list-item-text" layout="column" flex="15">
                 <div layout="row" layout-align="start center" layout-padding>
                   <span layout="column">{{ Lot.code }}</span>
                 </div>
               </div>
-              <div class="md-list-item-text" layout="column" flex>
+              <div class="md-list-item-text" layout="column" flex="20">
                 <div layout="row" layout-align="start center" layout-padding>
                   <span layout="column">{{ Lot.aliquotLabel }}</span>
                 </div>
               </div>
-              <div class="md-list-item-text" layout="column" flex>
+              <div class="md-list-item-text" layout="column" flex="25">
                 <div layout="row" layout-align="start center" layout-padding>
                   <span layout="column">{{ Lot.realizationDate | date:'dd/MM/yyyy - h:mm'}}</span>
                 </div>
               </div>
-              <div class="md-list-item-text" layout="column" flex>
-                <div layout="row" layout-align="start center" layout-padding>
+              <div class="md-list-item-text" layout="column" flex="25">
+                <div layout="row" layout-align="start start" layout-padding>
                   <span layout="column">{{ Lot.operator}}</span>
                 </div>
               </div>
