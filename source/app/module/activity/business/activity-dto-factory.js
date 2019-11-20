@@ -5,12 +5,9 @@
         .module('otusjs.activity.business')
         .factory('otusjs.activity.business.ActivityDtoFactory', Factory);
 
-    Factory.$inject = [];
-
     function Factory() {
         var self = this;
         self.create = create;
-
 
         function create(survey, configuration, mode, user){
             let activityDto = new ActivityDto(survey, configuration, mode, user);
@@ -31,16 +28,10 @@
         self.user = user || null;
         self.paperActivityData = null;
 
-
         function updatePaperActivityData(checkerData, realizationDate) {
             self.paperActivityData = {};
             self.paperActivityData.checker = checkerData.checker;
             self.paperActivityData.realizationDate = realizationDate;
         }
     }
-
-
-
-
-
 })();

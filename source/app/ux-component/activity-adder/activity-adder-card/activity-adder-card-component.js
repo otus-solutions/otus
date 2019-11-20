@@ -24,6 +24,7 @@
         self.checkerQuerySearch = checkerQuerySearch;
         self.getModeIcon = getModeIcon;
         self.checkerSelectedItemChange = checkerSelectedItemChange;
+        self.deleteActivityDto = deleteActivityDto;
         self.realizationDate;
 
 
@@ -52,6 +53,11 @@
         function getModeIcon(){
             return self.activityDto.mode === "ONLINE" ?  "signal": "file-document"
         }
+
+        function deleteActivityDto(){
+            self.activityDtos.splice(self.activityDtos.indexOf(self.activityDto), 1);
+        }
+
     }
 
 })();
