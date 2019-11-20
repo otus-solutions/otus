@@ -114,7 +114,7 @@
                     </md-autocomplete>
                 </span>
 
-                <md-button class="md-icon-button" ng-click="$ctrl.addActivityDtos($ctrl.selectedItem)">
+                <md-button class="md-icon-button" ng-click="$ctrl.addActivityDtos($ctrl.selectedItem)" ng-disabled="$ctrl.searchText === ''">
                     <md-icon md-font-set="material-icons">add_box</md-icon>
                     <md-tooltip md-direction="top">Adicionar</md-tooltip>
                 </md-button>
