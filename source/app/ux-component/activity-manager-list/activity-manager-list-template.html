@@ -40,7 +40,12 @@
                        ng-checked="$ctrl.isCheckedGroup()"
                        md-indeterminate="$ctrl.isIndeterminateGroups()"
                        ng-click="$ctrl.toggleAllGroups()">
-            Todos
+            <span class="md-body-2">
+                Todos
+            </span>
+            <md-tooltip md-direction="top">
+              Selecionar todos
+            </md-tooltip>
           </md-checkbox>
         </div>
 
