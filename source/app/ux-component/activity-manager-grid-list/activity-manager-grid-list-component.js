@@ -115,7 +115,7 @@
             let statusTooltip = 'Criado';
             let activityStatus = [];
 
-            if(status){
+            if(status !== statusTooltip){
                 icon = (status === statusFinalized) ? 'check_circle' : 'save';
                 statusTooltip = (status === statusFinalized) ? statusFinalized : 'Salvo';
             }
