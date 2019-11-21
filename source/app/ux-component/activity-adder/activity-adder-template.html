@@ -1,35 +1,12 @@
-<style>
-    * {
-        margin: 0%;
-        padding: 0%;
-    }
-
-    md-input-container {
-        margin-bottom: 0px;
-    }
-
-    .card-width {
-        width: 60%;
-    }
-
-    @media screen and (max-width: 651px) {
-        .card-width {
-            width: 100%;
-        }
-    }
-</style>
-
 <md-content>
     <md-card style="background-color: #f5f5f5">
-        <div flex layout="row" layout-align="space-between start" layout-xs="column">
-            <div layout-padding>
-                <div layout="column" layout-align="space-between start">
+        <div layout="column" layout-align="space-between start">
+            <div class="card-width" layout="row"  layout-xs="column" layout-align="space-between center">
+                <div layout="column" layout-align="space-between start" style="padding-left: 10px;">
                     <span class="md-headline">Gerenciador de Atividades</span>
                     <span class="md-subhead">Inclusão de Formulários ao Participante</span>
                 </div>
-            </div>
-            <div class="card-width" layout="row" layout-align="space-between center">
-                <div layout="column" layout-align-xs="space-between center">
+                <div layout="row" layout-align-xs="space-between center">
                     <div layout="row" layout-align="space-between start" layout-margin
                          md-swipe-left="onSwipeLeft($event, $target)">
                         <div>
@@ -55,42 +32,39 @@
                         <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityList'"
                                    ng-model="$ctrl.selectType" ng-true-value="'activityUnit'">
                         </md-switch>
-                        <md-tooltip md-direction="bottom">Tipo de Inclusão</md-tooltip>
+                        <md-tooltip md-direction="top">Tipo de Inclusão</md-tooltip>
                         <div>
                             <md-icon md-font-set="material-icons">bookmark_border</md-icon>
-                            <md-tooltip md-direction="right">Unitário</md-tooltip>
+                            <md-tooltip md-direction="top">Unitário</md-tooltip>
                         </div>
                     </div>
                 </div>
-                <div flex layout="column" layout-padding>
-                    <div layout="row" layout-align="end center">
-                        <md-button class="md-icon-button md-primary" ng-click="$ctrl.resetActivityDtos()" ng-disabled="!$ctrl.activityDtos.length">
-                            <md-icon md-font-set="material-icons">delete</md-icon>
-                            <md-tooltip md-direction="bottom">deletar lista</md-tooltip>
-                        </md-button>
-                        <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()"
-                                   ng-disabled="!$ctrl.isAllFilled()">
-                            <md-icon md-font-set="material-icons">save</md-icon>
-                            <md-tooltip md-direction="bottom">Salvar</md-tooltip>
-                        </md-button>
-                    </div>
-                    <div layout="row" layout-align="center center">
-                        <md-input-container flex="20" flex-xs="80" layout-align="space-between start">
-                            <md-select aria-label="Categoria"
-                                       ng-model="$ctrl.configuration.category">
-                                <md-option ng-repeat="category in $ctrl.categories track by $index"
-                                           ng-selected="category.isDefault"
-                                           ng-value="category">{{category.label | uppercase}}
-                                </md-option>
-                            </md-select>
-                        </md-input-container>
-                        <md-tooltip md-direction="bottom">Categoria</md-tooltip>
-                    </div>
+            </div>
+            <div class="card-width" layout="row" layout-align="space-between center" style="padding-left: 10px;">
+                <md-input-container flex="15" flex-xs="50" flex-sm="30" layout-align="space-between start">
+                    <md-select aria-label="Categoria"
+                               ng-model="$ctrl.configuration.category">
+                        <md-option ng-repeat="category in $ctrl.categories track by $index"
+                                   ng-selected="category.isDefault"
+                                   ng-value="category">{{category.label | uppercase}}
+                        </md-option>
+                    </md-select>
+                    <md-tooltip md-direction="bottom">Categoria</md-tooltip>
+                </md-input-container>
+                <div layout="row" layout-align="space-between center">
+                    <md-button class="md-icon-button md-primary" ng-click="$ctrl.resetActivityDtos()" ng-disabled="!$ctrl.activityDtos.length">
+                        <md-icon md-font-set="material-icons">delete</md-icon>
+                        <md-tooltip md-direction="bottom">deletar</md-tooltip>
+                    </md-button>
+                    <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()" ng-disabled="!$ctrl.isAllFilled()">
+                        <md-icon md-font-set="material-icons">save</md-icon>
+                        <md-tooltip md-direction="bottom">Salvar</md-tooltip>
+                    </md-button>
                 </div>
             </div>
         </div>
-        <div layout="row" layout-align="end center" layout-padding layout-xs="column">
-            <span flex layout="row" layout-align="start center">
+        <div layout="row" layout-align="end center" layout-padding>
+            <span flex layout="row" layout-align="center center">
                 <span flex="40" flex-xs="100">
                     <md-tooltip md-direction="top">Lista de Formulários</md-tooltip>
                     <md-autocomplete id="autocomplete_selectSurvey"
@@ -127,17 +101,13 @@
 <!--            invalid: {{$ctrl.externalIdForm.$invalid}}<br>-->
 <!--            pristine: {{$ctrl.externalIdForm.$pristine}}<br>-->
 
-
-    <md-content>
-        <md-card>
-            <md-grid-list md-cols="3" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-xs="1" md-row-height="2.2:2">
-                <md-grid-tile ng-repeat="activityDto in $ctrl.activityDtos">
-                    <otus-activity-adder-card activity-dto="activityDto"
-                                              activity-dtos="$ctrl.activityDtos"
-                                              checkers="$ctrl.checkers"
-                                              is-valid-external-id-form = "$ctrl.isValidExternalIdForm">
-
-                </md-grid-tile>
-            </md-grid-list>
-        </md-card>
-    </md-content>
+    <md-grid-list md-cols="3" md-cols-gt-md="6" md-cols-lg="5" md-cols-md="3" md-cols-sm="2" md-cols-xs="1" md-row-height-sm="4:4.5" md-row-height-md="2:2.2" md-row-height-lg="5:7"
+                  md-row-height-gt-md="5:6" md-row-height="7:4" md-row-height-xs="3:3" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-sm="6px"">
+    <md-grid-tile class="md-whiteframe-3dp" ng-repeat="activityDto in $ctrl.activityDtos">
+        <otus-activity-adder-card activity-dto="activityDto"
+                                  activity-dtos="$ctrl.activityDtos"
+                                  checkers="$ctrl.checkers"
+                                  is-valid-external-id-form = "$ctrl.isValidExternalIdForm">
+    </md-grid-tile>
+    </md-grid-list>
+</md-content>
