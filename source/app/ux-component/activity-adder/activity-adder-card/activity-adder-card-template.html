@@ -39,9 +39,8 @@
                 <div ng-messages="checkerForm.realizationDate.$error">
                     <div ng-message="required">Informe uma data!</div>
                 </div>
-
-
             </md-input-container>
+
             <md-autocomplete md-item-text="item.text"
                              md-items="item in $ctrl.checkerQuerySearch($ctrl.checkerSearchText)"
                              md-menu-class="autocomplete-custom-template"
@@ -51,7 +50,7 @@
                              md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
                              md-selected-item="$ctrl.checkerSelectedItem"
                              md-selected-item-change="$ctrl.checkerSelectedItemChange(item, activityDto)"
-                             placeholder="Aferidor (a)" style="width: 90%">
+                             placeholder="Aferidor (a)" style="width: 90%" required md-input-name="autocompleteChecker">
                 <md-item-template>
                     <span class="item-title">
                         <md-icon md-svg-icon="account"></md-icon>
@@ -64,6 +63,9 @@
                 <md-not-found>
                     Nenhum resultado para "{{ $ctrl.checkerSearchText }}" foi encontrado.
                 </md-not-found>
+                <div ng-messages="checkerForm.autocompleteChecker.$error">
+                    <div ng-message="required">Informe um Aferidor!</div>
+                </div>
             </md-autocomplete>
         </form>
     </div>

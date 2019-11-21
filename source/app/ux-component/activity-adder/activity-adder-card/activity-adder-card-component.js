@@ -55,7 +55,12 @@
         }
 
         function checkerSelectedItemChange(checker) {
-            self.activityDto.updatePaperActivityData(checker, self.realizationDate);
+            console.log(self.activityDto);
+            if(checker) self.activityDto.updatePaperActivityData(checker, self.realizationDate);
+            else self.activityDto.paperActivityData = null;
+            console.log(self.activityDto);
+
+
         }
 
         function getModeIcon(){
