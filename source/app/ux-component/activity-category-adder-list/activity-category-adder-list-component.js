@@ -66,8 +66,8 @@
           _loadCategories();
           _configurationCategories();
         });
-
     }
+    
     function returnToActivitiesAdder() {
       ApplicationStateService.activateActivityAdder();
     }

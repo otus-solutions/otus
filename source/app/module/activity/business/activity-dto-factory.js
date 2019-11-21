@@ -1,38 +1,51 @@
 (function () {
-    'use strict';
+	'use strict';
 
-    angular
-        .module('otusjs.activity.business')
-        .factory('otusjs.activity.business.ActivityDtoFactory', Factory);
+	angular
+		.module('otusjs.activity.business')
+		.factory('otusjs.activity.business.ActivityDtoFactory', Factory);
 
-    function Factory() {
-        var self = this;
-        self.create = create;
+	function Factory() {
+		var self = this;
+		self.create = create;
 
-        function create(survey, configuration, mode, user){
-            let activityDto = new ActivityDto(survey, configuration, mode, user);
-            return activityDto;
-        }
-        return self;
-    }
+		function create(survey, configuration, mode, user) {
+			return new ActivityDto(survey, configuration, mode, user);
+		}
+		return self;
+	}
 
-    function ActivityDto(survey, configuration, mode, user) {
-        let self = this;
-         self.updatePaperActivityData = updatePaperActivityData;
+	function ActivityDto(survey, configuration, mode, user) {
+		let self = this;
+		self.objectType = 'ActivityDto';
+		self.surveyForm = survey;
+		self.configuration = configuration || {};
+		//self.configuration.externalID = configuration.externalID || null;
+		self.mode = mode;
+		self.user = user || null;
+		self.paperActivityData = null;
+		self.externalID = null;
 
-        self.OBJECT_TYPE = 'ActivityDto';
-        self.surveyForm = survey;
-        self.configuration = configuration || {};
-        //self.configuration.externalID = configuration.externalID || null;
-        self.mode = mode;
-        self.user = user || null;
-        self.paperActivityData = null;
-        self.externalID = null;
+		/* Public methods */
+		self.updatePaperActivityData = updatePaperActivityData;
+		self.toJSON = toJSON;
 
-        function updatePaperActivityData(checkerData, realizationDate) {
-            self.paperActivityData = {};
-            self.paperActivityData.checker = checkerData.checker;
-            self.paperActivityData.realizationDate = realizationDate;
-        }
-    }
+		function updatePaperActivityData(checkerData, realizationDate) {
+			self.paperActivityData = {};
+			self.paperActivityData.checker = checkerData.checker;
+			self.paperActivityData.realizationDate = realizationDate;
+		}
+
+		function toJSON() {
+			return {
+				objectType: self.objectType,
+				surveyForm: self.surveyForm,
+				configuration: self.configuration,
+				mode: self.mode,
+				user: self.user,
+				paperActivityData: self.paperActivityData,
+				externalID: self.externalID
+			};
+		}
+	}
 })();

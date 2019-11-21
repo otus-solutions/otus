@@ -118,6 +118,7 @@
 		// }
 
 		function addActivityDtos(survey) {
+			console.log(survey);
 			let dto = ParticipantActivityService.createActivityDto(survey, self.configuration, self.mode, self.paperActivityCheckerData);
 			self.activityDtos.push(dto);
 			self.searchText = '';
@@ -223,7 +224,7 @@
 
 		function _saveInSessionStorage() {
 			window.sessionStorage.removeItem('activityDtos');
-			window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos));
+			window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos.toJSON()));
 		}
 
 	}
