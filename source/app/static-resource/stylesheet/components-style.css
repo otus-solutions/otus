@@ -436,7 +436,7 @@ activity-grid-list .gridListDynamicTiles md-grid-tile:hover {
   cursor: pointer;
 }
 
-@media only screen and (max-width: 799px) {
+@media only screen and (max-width: 999px) {
   activity-grid-list .gridListDynamicTiles .clipped {
     overflow: hidden;
     white-space: nowrap;
