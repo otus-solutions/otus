@@ -35,19 +35,16 @@
 		self.configuration = {};
 		self.paperActivityCheckerData = null;
 		self.activityDtos = [];
-		self.isValidExternalIdForm = true;
-
 
 		/* Public methods */
 		//self.addActivities = addActivities;
 		//self.catchActivity = catchActivity;
 
-		//self.addActivity = addActivity;
 		self.addActivityDtos = addActivityDtos;
 		self.saveActivities = saveActivities;
 		self.surveyQuerySearch = surveyQuerySearch;
 		self.resetActivityDtos = resetActivityDtos;
-		self.isAllFilled = isAllFilled;
+		self.isFormInvalid = isFormInvalid;
 
 		self.$onInit = onInit;
 
@@ -69,7 +66,7 @@
 				]
 			};
 			LoadingScreenService.start();
-			_loadActivityDtosfromStorage();
+			//_loadActivityDtosfromStorage();
 			_loadCategories();
 			_loadSurveys();
 		}
@@ -128,48 +125,29 @@
 			ParticipantActivityService.saveActivities(self.activityDtos);
 		}
 
-		function isAllFilled() {
-			let allFilledState = false;
-			if (!self.activityDtos.length) allFilledState = false;
+		function isFormInvalid() {
+			let invalidFormState = true;
+			if (!self.activityDtos.length) invalidFormState = true;
 			else {
-				self.activityDtos.forEach(dto => {
-					console.log(dto);
-					switch (dto.mode) {
-						case "ONLINE": {
-							allFilledState = _isValidExternalIDFill(dto);
-						}
-
-						case "PAPER": {
-
-						}
-					}
-				});
+			    self.activityDtos.every(_checkFilledInput) ? invalidFormState = false : invalidFormState = true;
 			}
-			return allFilledState;
+			console.log(invalidFormState);
+			return invalidFormState;
 		}
 
-		function _isValidExternalIDFill(dto) {
-			if (dto.surveyForm.isRequiredExternalID()) {
-				if (dto.externalID === null) return false;
-				else return true;
-			}
-		}
-
-		// function addActivity(survey) {
-		//     // if (survey && self.mode === 'ONLINE') {
-		//         ParticipantActivityService.createActivity(survey, self.configuration)
-		//             .then(result => {
-		//                 result.surveyActivity.mode = self.mode;
-		//                 console.log(result.surveyActivity)
-		//                 self.selectedActivities.push(result.surveyActivity);
-		//             });
-		// }
-		// if (survey && self.mode === 'PAPER') {
-		//     self.selectedActivities.push(_mountActivityPreview(survey));
-		// }
-
-		//self.statePreview = true;
-		//}
+		function _checkFilledInput(dto){
+            switch (dto.mode) {
+                case "ONLINE": {
+                    if(dto.surveyForm.isRequiredExternalID()){
+                        return dto.externalID !== undefined;
+                    }
+                    break;
+                }
+                case "PAPER": {
+                    break;
+                }
+            }
+        }
 
 		function _loadCategories() {
 			ParticipantActivityService
