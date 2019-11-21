@@ -437,4 +437,14 @@ otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-header {
   padding: 8px;
 }
 
+@media screen and (max-width: 799px) {
+  otus-activity-adder .card-width-category {
+    width: 100%;
+    padding-left: 20px;
+  }
+
+  otus-activity-adder .card-width-layout-sm {
+    width: 100%;
+  }
+}
 /*# sourceMappingURL=components-style.css.map */
