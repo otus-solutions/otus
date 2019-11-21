@@ -12,8 +12,8 @@ otus-dashboard-sidenav md-backdrop ~ md-content {
 }
 @media (max-width: 456px) {
   otus-dashboard-sidenav md-sidenav,
-otus-dashboard-sidenav md-sidenav.md-locked-open,
-otus-dashboard-sidenav md-sidenav.md-closed.md-locked-open-add-active {
+  otus-dashboard-sidenav md-sidenav.md-locked-open,
+  otus-dashboard-sidenav md-sidenav.md-closed.md-locked-open-add-active {
     position: fixed !important;
     min-width: 320px !important;
   }
@@ -394,6 +394,47 @@ otus-activity-category-adder otus-activity-category-adder-list md-card md-input-
   margin-bottom: 0;
   margin-top: 0;
   top: -5px;
+}
+
+otus-activity-adder-card {
+  width: 100%;
+}
+
+otus-activity-adder-card md-grid-tile-header figcaption {
+  display: block;
+  width: 100%;
+}
+
+otus-activity-adder-card .grid-aligh{
+  padding-left: 10px;
+  padding-top: 5px;
+  width: 100%;
+}
+otus-activity-adder md-input-container {
+  margin-bottom: 0px;
+}
+
+otus-activity-adder .card-width {
+  width: 100%;
+}
+
+otus-activity-adder md-grid-tile figure {
+  justify-content: normal;
+  flex-direction: column;
+  align-items: start;
+  transition-duration: 0s;
+}
+
+otus-activity-adder md-grid-list {
+  margin: 10px;
+  transition-duration: 0s;
+}
+
+otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-header {
+  position: relative;
+  width: 100%;
+  overflow: inherit;
+  padding: 8px;
 }
 
 /*# sourceMappingURL=components-style.css.map */
