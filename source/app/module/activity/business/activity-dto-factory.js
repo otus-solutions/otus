@@ -27,6 +27,7 @@
         self.mode = mode;
         self.user = user || null;
         self.paperActivityData = null;
+        self.externalID = null;
 
         function updatePaperActivityData(checkerData, realizationDate) {
             self.paperActivityData = {};

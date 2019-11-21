@@ -35,6 +35,7 @@
         self.configuration = {};
         self.paperActivityCheckerData = null;
         self.activityDtos = [];
+        self.isValidExternalIdForm = true;
 
 
         /* Public methods */
@@ -46,6 +47,7 @@
         self.saveActivities = saveActivities;
         self.surveyQuerySearch = surveyQuerySearch;
         self.resetActivityDtos = resetActivityDtos;
+        self.isAllFilled = isAllFilled;
 
         self.$onInit = onInit;
 
@@ -115,15 +117,42 @@
         //     console.log(self.selectedActivities)
         // }
 
-        function addActivityDtos(survey){
+        function addActivityDtos(survey) {
             let dto = ParticipantActivityService.createActivityDto(survey, self.configuration, self.mode, self.paperActivityCheckerData);
             self.activityDtos.push(dto);
             self.searchText = '';
             window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos));
         }
 
-        function saveActivities(){
+        function saveActivities() {
             ParticipantActivityService.saveActivities(self.activityDtos);
+        }
+
+        function isAllFilled() {
+            let allFilledState = false;
+            if (!self.activityDtos.length) allFilledState = false;
+            else {
+                self.activityDtos.forEach(dto => {
+                    console.log(dto);
+                    switch(dto.mode){
+                        case "ONLINE": {
+                           allFilledState = _isValidExternalIDFill(dto);
+                        }
+
+                        case "PAPER": {
+
+                        }
+                    }
+                });
+            }
+            return allFilledState;
+        }
+
+        function _isValidExternalIDFill(dto){
+            if (dto.surveyForm.isRequiredExternalID()) {
+                if (dto.externalID === null) return false;
+                else return true;
+            }
         }
 
         // function addActivity(survey) {
@@ -134,12 +163,12 @@
         //                 console.log(result.surveyActivity)
         //                 self.selectedActivities.push(result.surveyActivity);
         //             });
-            // }
-            // if (survey && self.mode === 'PAPER') {
-            //     self.selectedActivities.push(_mountActivityPreview(survey));
-            // }
+        // }
+        // if (survey && self.mode === 'PAPER') {
+        //     self.selectedActivities.push(_mountActivityPreview(survey));
+        // }
 
-            //self.statePreview = true;
+        //self.statePreview = true;
         //}
 
         function _loadCategories() {
@@ -180,15 +209,16 @@
             };
         }
 
-        function resetActivityDtos(){
+        function resetActivityDtos() {
+            console.log(self.self.externalIDForm)
             self.activityDtos = [];
         }
 
-        function _loadActivityDtosfromStorage(){
-          let _storageActivityDtos = angular.copy(JSON.parse(window.sessionStorage.getItem('activityDtos')));
-          if(_storageActivityDtos){
-              self.activityDtos = _storageActivityDtos;
-          }
+        function _loadActivityDtosfromStorage() {
+            let _storageActivityDtos = angular.copy(JSON.parse(window.sessionStorage.getItem('activityDtos')));
+            if (_storageActivityDtos) {
+                self.activityDtos = _storageActivityDtos;
+            }
         }
 
     }
@@ -200,3 +230,6 @@
 //source/app/ux-component/activity-category-adder/activity-category-adder-component.js
 
 //statusHistory.newInitializedOfflineRegistry(paperActivityData);
+
+//fetchChances
+//source/app/ux-component/laboratory/control-panel/control-panel-component.js

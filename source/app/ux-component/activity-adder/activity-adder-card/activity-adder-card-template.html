@@ -29,6 +29,7 @@
             </div>
         </div>
 
+
         <div layout="column" layout-align="start start" ng-if="$ctrl.activityDto.mode === 'PAPER'">
             <small class="md-caption" ng-style="{color:'#797985'}">Informações do preenchimento obrigatório.</small>
             <md-input-container id="date">
@@ -73,15 +74,23 @@
             <span class="item-metastat">Email: <strong>{{$ctrl.activityDto.user.email}}</strong></span>
         </div>
 
+            valid :{{externalIdForm.$valid}}<br>
+            invalid: {{externalIdForm.$invalid}}<br>
+            pristine: {{externalIdForm.$pristine}}<br>
 
-        <div>
+
+        <form name = "externalIdForm" novalidate>
             <md-input-container ng-if="$ctrl.activityDto.surveyForm.isRequiredExternalID()">
                 <label>ID Externo</label>
-                <input ng-model="$ctrl.activityDto.configuration.externalID">
+                <input ng-model="$ctrl.activityDto.externalID" required>
+                <div ng-messages="externalIdForm.$error">
+                    <div ng-message="required">* preenchimento obrigatório!</div>
+                </div>
             </md-input-container>
             <md-input-container ng-if="!$ctrl.activityDto.surveyForm.isRequiredExternalID()">
                 <small ng-style="{color:'#9e9e9e'}">* ID Externo não requerido</small>
             </md-input-container>
-        </div>
+        </form>
     </div>
 </md-card>
+

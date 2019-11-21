@@ -68,7 +68,8 @@
                             <md-icon md-font-set="material-icons">delete</md-icon>
                             <md-tooltip md-direction="bottom">deletar lista</md-tooltip>
                         </md-button>
-                        <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()" ng-disabled="!$ctrl.activityDtos.length">
+                        <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()"
+                                   ng-disabled="!$ctrl.isAllFilled()">
                             <md-icon md-font-set="material-icons">save</md-icon>
                             <md-tooltip md-direction="bottom">Salvar</md-tooltip>
                         </md-button>
@@ -122,13 +123,20 @@
         </div>
     </md-card>
 
+<!--    valid :{{$ctrl.externalIdForm.$valid}}<br>-->
+<!--            invalid: {{$ctrl.externalIdForm.$invalid}}<br>-->
+<!--            pristine: {{$ctrl.externalIdForm.$pristine}}<br>-->
+
+
     <md-content>
         <md-card>
             <md-grid-list md-cols="3" md-cols-lg="6" md-cols-md="3" md-cols-sm="2" md-cols-xs="1" md-row-height="2.2:2">
                 <md-grid-tile ng-repeat="activityDto in $ctrl.activityDtos">
                     <otus-activity-adder-card activity-dto="activityDto"
                                               activity-dtos="$ctrl.activityDtos"
-                                              checkers="$ctrl.checkers">
+                                              checkers="$ctrl.checkers"
+                                              is-valid-external-id-form = "$ctrl.isValidExternalIdForm">
+
                 </md-grid-tile>
             </md-grid-list>
         </md-card>

@@ -9,23 +9,31 @@
             bindings: {
                 activityDtos: '=',
                 checkers: '<',
-                activityDto: '='
-
+                activityDto: '=',
+                isValidExternalIdForm: '='
             }
         });
     //binding = activityDto
     Controller.$inject = [
         '$q',
-        '$timeout'
+        '$timeout',
+        '$scope'
     ];
 
-    function Controller($q, $timeout) {
+    function Controller($q, $timeout, $rootScope) {
         var self = this;
         self.checkerQuerySearch = checkerQuerySearch;
         self.getModeIcon = getModeIcon;
         self.checkerSelectedItemChange = checkerSelectedItemChange;
         self.deleteActivityDto = deleteActivityDto;
+        self.$onInit = onInit;
+
         self.realizationDate;
+        self.isValidExternalIdForm = true;
+
+
+        function onInit() {
+        }
 
 
         function checkerQuerySearch(query) {
