@@ -1,4 +1,4 @@
-<md-card class="md-whiteframe-3dp" layout="column">
+<div layout="column">
     <div ng-if="$ctrl.elementsArray" layout="row" layout-align="space-between">
         <div layout="row" layout-align="start center" flex>
             <div layout="column" layout-margin flex="50" flex-sm="70" flex-xs="100">
@@ -8,15 +8,17 @@
                            ng-model-options="{ allowInvalid: true, debounce: 500 }"/>
                 </md-input-container>
             </div>
-            <md-checkbox style="margin:0;" aria-label="Selecionar todas" class="md-primary" ng-checked="$ctrl.selectAll"
-                         ng-click="$ctrl.selectDeselectAll()">
-            <span class="md-body-2" style="padding-right:8px;">
-                Todas
-            </span>
-                <md-tooltip md-direction="top">
-                    Selecionar todas
-                </md-tooltip>
-            </md-checkbox>
+            <div>
+                <md-checkbox style="margin-bottom: 12px !important;" aria-label="Selecionar todas" class="md-primary" ng-checked="$ctrl.selectAll"
+                             ng-click="$ctrl.selectDeselectAll()">
+                    <span class="md-body-2">
+                        Todas
+                    </span>
+                    <md-tooltip md-direction="top">
+                        Selecionar todas
+                    </md-tooltip>
+                </md-checkbox>
+            </div>
         </div>
         <md-menu md-position-mode="target-right target">
             <md-button class="md-icon-button" ng-click="$mdMenu.open()">
@@ -27,6 +29,9 @@
                     <md-button  id="{{item.index}}" ng-click="$ctrl.orderByIndex(item.index)">
                         Ordenar por {{item.value}}
                         <md-icon ng-if="$ctrl.orderQuery === item.index" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
+                        <md-tooltip md-direction="top">
+                            Ordenar
+                        </md-tooltip>
                     </md-button>
                     <md-divider></md-divider>
                 </md-menu-item>
@@ -35,13 +40,13 @@
     </div>
 
     <div class="gridListDynamicTiles">
-        <md-grid-list md-cols="3"  md-cols-xs="1" md-cols-sm="2" md-cols-md="6"  md-cols-lg="3" md-cols-gt-md="6" md-row-height-gt-md="6:4" md-row-height-sm="4:2" md-row-height-md="3:4"  md-row-height-lg="5:2"
-                      md-row-height="6:2"  md-row-height-xs="3:2" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-sm="6px">
+        <md-grid-list md-cols="3"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="8" md-cols-lg="5" md-cols-gt-md="6" md-row-height-gt-md="6:4" md-row-height-sm="2.7:2" md-row-height-md="5:4"  md-row-height-lg="6:4"
+                      md-row-height="6:2"  md-row-height-xs="4:2" md-row-height-xl="4:3.7" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-sm="6px">
             <md-grid-tile ng-repeat="activity in $ctrl.elementsArray | filter:$ctrl.filter | orderBy:$ctrl.orderQuery:$ctrl.orderReverse"
                           ng-click="$ctrl.selectDeselect(activity)" name="activity{{$index}}"
                           id="activity{{$index}}"
                           aria-label="activity{{$index}}"
-                          md-rowspan="1" md-colspan="1" md-colspan-lg="1" md-colspan-md="2" md-colspan-sm="1" md-colspan-xs="1" md-whiteframe="3" class="{{activity.actions.whiteframeGrid}}">
+                          md-rowspan="1" md-colspan="1" md-colspan-xl="1" md-colspan-lg="1" md-colspan-md="1" md-colspan-sm="1" md-colspan-xs="1" md-whiteframe="3" class="{{activity.actions.whiteframeGrid}}">
                 <md-grid-tile-header ng-style="activity.actions.colorGrid">
                     <div layout="row" layout-align="space-between center">
                         <div layout="row">
@@ -73,4 +78,4 @@
             </md-grid-tile>
         </md-grid-list>
     </div>
-</md-card>
+</div>
