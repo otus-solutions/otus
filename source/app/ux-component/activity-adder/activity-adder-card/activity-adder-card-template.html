@@ -74,7 +74,7 @@
     <div layout="column" ng-if="$ctrl.activityDto.mode === 'ONLINE'">
         <small class="md-caption" ng-style="{color:'#797985'}">Informações do Usuário.</small>
         <span class="md-caption" ng-style="{color:'#797985'}">Nome: <small class="md-body-2" ng-style="{color:'black'}">{{$ctrl.activityDto.user.surname}}</small></span>
-        <span class="md-caption" ng-style="{color:'#797985'}">Email: <small class="md-body-2"
+        <span class="md-caption" ng-style="{color:'#797985'}" md-truncate>Email: <small class="md-body-2"
                                                                             ng-style="{color:'black'}">{{$ctrl.activityDto.user.email}}</small></span>
     </div>
     <div style="margin-top: 0">
