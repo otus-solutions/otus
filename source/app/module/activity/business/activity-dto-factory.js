@@ -26,7 +26,7 @@
         //self.configuration.externalID = configuration.externalID || null;
         self.mode = mode;
         self.user = user || null;
-        self.paperActivityData = null;
+        self.paperActivityData = undefined;
         self.externalID = undefined;
 
         function updatePaperActivityData(checkerData, realizationDate) {

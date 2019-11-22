@@ -1,210 +1,217 @@
 (function () {
-	'use strict';
+    'use strict';
 
-	angular
-		.module('otusjs.otus.uxComponent')
-		.component('otusActivityAdder', {
-			controller: Controller,
-			templateUrl: 'app/ux-component/activity-adder/activity-adder-template.html',
-			bindings: {
-				checkers: '<'
-			}
-		});
+    angular
+        .module('otusjs.otus.uxComponent')
+        .component('otusActivityAdder', {
+            controller: Controller,
+            templateUrl: 'app/ux-component/activity-adder/activity-adder-template.html',
+            bindings: {
+                checkers: '<'
+            }
+        });
 
-	Controller.$inject = [
-		'otusjs.activity.business.ParticipantActivityService',
-		'otusjs.application.state.ApplicationStateService',
-		'$mdDialog',
-		'otusjs.application.dialog.DialogShowService',
-		'otusjs.deploy.LoadingScreenService',
-		'$q',
-		'$timeout'
-	];
+    Controller.$inject = [
+        'otusjs.activity.business.ParticipantActivityService',
+        'otusjs.application.state.ApplicationStateService',
+        '$mdDialog',
+        'otusjs.application.dialog.DialogShowService',
+        'otusjs.deploy.LoadingScreenService',
+        '$q',
+        '$timeout'
+    ];
 
-	function Controller(ParticipantActivityService, ApplicationStateService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout) {
-		var self = this;
-		// var _selectedActivities = [];
-		var _exitDialog;
-		self.surveys = [];
+    function Controller(ParticipantActivityService, ApplicationStateService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout) {
+        var self = this;
+        // var _selectedActivities = [];
+        var _exitDialog;
+        self.surveys = [];
 
-		//self.selectedActivities = [];
-		self.statePreview = false;
-		self.mode = "ONLINE";
-		self.selectType = "activityUnit";
-		self.iconMode = "";
-		self.configuration = {};
-		self.paperActivityCheckerData = null;
-		self.activityDtos = [];
-
-		/* Public methods */
-		//self.addActivities = addActivities;
-		//self.catchActivity = catchActivity;
-
-		self.addActivityDtos = addActivityDtos;
-		self.saveActivities = saveActivities;
-		self.surveyQuerySearch = surveyQuerySearch;
-		self.resetActivityDtos = resetActivityDtos;
-		self.isFormInvalid = isFormInvalid;
-
-		self.$onInit = onInit;
+        //self.selectedActivities = [];
+        self.statePreview = false;
+        self.mode = "ONLINE";
+        self.selectType = "activityUnit";
+        self.iconMode = "";
+        self.configuration = {};
+        self.paperActivityCheckerData = null;
+        self.activityDtos = [];
 
 
-		function onInit() {
-			_exitDialog = {
-				dialogToTitle: 'Alerta',
-				titleToText: 'ATENÇÃO!',
-				textDialog: 'Você deve selecionar ao menos uma atividade.',
-				ariaLabel: 'Alerta de Erro',
-				buttons: [
-					{
-						message: 'Fechar',
-						action: function () {
-							$mdDialog.hide()
-						},
-						class: 'md-raised md-no-focus'
-					}
-				]
-			};
-			LoadingScreenService.start();
-			//_loadActivityDtosfromStorage();
-			_loadCategories();
-			_loadSurveys();
-		}
+        /* Public methods */
+        //self.addActivities = addActivities;
+        //self.catchActivity = catchActivity;
 
-		// function addActivities() {
-		//     if (_selectedActivities.length > 0) {
-		//         _selectedActivities = [];
-		//         ApplicationStateService.activateActivityCategories();
-		//     } else {
-		//         DialogService.showDialog(_exitDialog);
-		//     }
-		// }
+        self.addActivityDtos = addActivityDtos;
+        self.saveActivities = saveActivities;
+        self.surveyQuerySearch = surveyQuerySearch;
+        self.resetActivityDtos = resetActivityDtos;
+        self.isFormInvalid = isFormInvalid;
 
-		// function addActivities() {
-		//     if (_selectedActivities.length > 0) {
-		//         self.selectedActivities = [];
-		//         ApplicationStateService.activateActivityCategories();
-		//     } else {
-		//         DialogService.showDialog(_exitDialog);
-		//     }
-		// }
-
-		// function catchActivity(activity) {
-		//     var activityIndex = _selectedActivities.indexOf(activity.acronym);
-		//     if (activityIndex !== -1) {
-		//         _selectedActivities.splice(activityIndex, 1);
-		//         window.sessionStorage.setItem('selectedActivities', JSON.stringify(_selectedActivities));
-		//     } else {
-		//         _selectedActivities.push(activity.acronym);
-		//         window.sessionStorage.setItem('selectedActivities', JSON.stringify(_selectedActivities));
-		//     }
-		// }
+        self.$onInit = onInit;
 
 
-		// function catchActivity(activity) {
-		//     var activityIndex = self.selectedActivities.indexOf(activity.acronym);
-		//     console.log(activity);
-		//     if (activityIndex !== -1) {
-		//         self.selectedActivities.splice(activityIndex, 1);
-		//         window.sessionStorage.setItem('selectedActivities', JSON.stringify(self.selectedActivities));
-		//     } else {
-		//         self.selectedActivities.push(activity.acronym);
-		//         window.sessionStorage.setItem('selectedActivities', JSON.stringify(self.selectedActivities));
-		//     }
-		//     console.log(self.selectedActivities)
-		// }
+        function onInit() {
+            _exitDialog = {
+                dialogToTitle: 'Alerta',
+                titleToText: 'ATENÇÃO!',
+                textDialog: 'Você deve selecionar ao menos uma atividade.',
+                ariaLabel: 'Alerta de Erro',
+                buttons: [
+                    {
+                        message: 'Fechar',
+                        action: function () {
+                            $mdDialog.hide()
+                        },
+                        class: 'md-raised md-no-focus'
+                    }
+                ]
+            };
+            LoadingScreenService.start();
+            //_loadActivityDtosfromStorage();
+            _loadCategories();
+            _loadSurveys();
+        }
 
-		function addActivityDtos(survey) {
-			let dto = ParticipantActivityService.createActivityDto(survey, self.configuration, self.mode, self.paperActivityCheckerData);
-			self.activityDtos.push(dto);
-			self.searchText = '';
-			_saveInSessionStorage();
-		}
+        // function addActivities() {
+        //     if (_selectedActivities.length > 0) {
+        //         _selectedActivities = [];
+        //         ApplicationStateService.activateActivityCategories();
+        //     } else {
+        //         DialogService.showDialog(_exitDialog);
+        //     }
+        // }
 
-		function saveActivities() {
-			ParticipantActivityService.saveActivities(self.activityDtos);
-		}
+        // function addActivities() {
+        //     if (_selectedActivities.length > 0) {
+        //         self.selectedActivities = [];
+        //         ApplicationStateService.activateActivityCategories();
+        //     } else {
+        //         DialogService.showDialog(_exitDialog);
+        //     }
+        // }
 
-		function isFormInvalid() {
-			let invalidFormState = true;
-			if (!self.activityDtos.length) invalidFormState = true;
-			else {
-			    self.activityDtos.every(_checkFilledInput) ? invalidFormState = false : invalidFormState = true;
-			}
-			console.log(invalidFormState);
-			return invalidFormState;
-		}
+        // function catchActivity(activity) {
+        //     var activityIndex = _selectedActivities.indexOf(activity.acronym);
+        //     if (activityIndex !== -1) {
+        //         _selectedActivities.splice(activityIndex, 1);
+        //         window.sessionStorage.setItem('selectedActivities', JSON.stringify(_selectedActivities));
+        //     } else {
+        //         _selectedActivities.push(activity.acronym);
+        //         window.sessionStorage.setItem('selectedActivities', JSON.stringify(_selectedActivities));
+        //     }
+        // }
 
-		function _checkFilledInput(dto){
+
+        // function catchActivity(activity) {
+        //     var activityIndex = self.selectedActivities.indexOf(activity.acronym);
+        //     console.log(activity);
+        //     if (activityIndex !== -1) {
+        //         self.selectedActivities.splice(activityIndex, 1);
+        //         window.sessionStorage.setItem('selectedActivities', JSON.stringify(self.selectedActivities));
+        //     } else {
+        //         self.selectedActivities.push(activity.acronym);
+        //         window.sessionStorage.setItem('selectedActivities', JSON.stringify(self.selectedActivities));
+        //     }
+        //     console.log(self.selectedActivities)
+        // }
+
+        function addActivityDtos(survey) {
+            let dto = ParticipantActivityService.createActivityDto(survey, self.configuration, self.mode, self.paperActivityCheckerData);
+            self.activityDtos.push(dto);
+            self.searchText = '';
+            _saveInSessionStorage();
+        }
+
+        function saveActivities() {
+            ParticipantActivityService.saveActivities(self.activityDtos);
+        }
+
+        function isFormInvalid() {
+            let invalidFormState = true;
+            if (!self.activityDtos.length) invalidFormState = true;
+            else {
+                self.activityDtos.every(_checkFilledInput) ? invalidFormState = false : invalidFormState = true;
+            }
+            console.log(invalidFormState);
+            return invalidFormState;
+        }
+
+        function _checkFilledInput(dto) {
             switch (dto.mode) {
                 case "ONLINE": {
-                    if(dto.surveyForm.isRequiredExternalID()){
-                        return dto.externalID !== undefined;
-                    }
+                    if (dto.surveyForm.isRequiredExternalID()) return dto.externalID !== undefined;
                     break;
                 }
                 case "PAPER": {
-                    break;
+                    console.log(dto)
+                    if (dto.surveyForm.isRequiredExternalID()) {
+                        return dto.paperActivityData !== undefined && dto.externalID !== undefined;
+                        break;
+                    }
+                    else {
+                        return dto.paperActivityData !== undefined;
+                        break;
+                    }
                 }
             }
         }
 
-		function _loadCategories() {
-			ParticipantActivityService
-				.listAllCategories()
-				.then(function (response) {
-					self.categories = response;
-				});
-		}
+        function _loadCategories() {
+            ParticipantActivityService
+                .listAllCategories()
+                .then(function (response) {
+                    self.categories = response;
+                });
+        }
 
-		function _loadSurveys() {
-			ParticipantActivityService.listAvailables()
-				.then(function (surveys) {
-					self.surveys = angular.copy(surveys);
-					self.AllSurveys = angular.copy(self.surveys);
-					if (surveys.length) {
-						self.isListEmpty = false;
-					}
-				}).then(LoadingScreenService.finish());
-		}
+        function _loadSurveys() {
+            ParticipantActivityService.listAvailables()
+                .then(function (surveys) {
+                    self.surveys = angular.copy(surveys);
+                    self.AllSurveys = angular.copy(self.surveys);
+                    if (surveys.length) {
+                        self.isListEmpty = false;
+                    }
+                }).then(LoadingScreenService.finish());
+        }
 
-		function surveyQuerySearch(query) {
-			var results = query ? self.surveys.filter(_activityCreateFilterFor(query)) : self.surveys;
-			var deferred = $q.defer();
+        function surveyQuerySearch(query) {
+            var results = query ? self.surveys.filter(_activityCreateFilterFor(query)) : self.surveys;
+            var deferred = $q.defer();
 
-			$timeout(function () {
-				deferred.resolve(results);
-			}, Math.random() * 1000, false);
+            $timeout(function () {
+                deferred.resolve(results);
+            }, Math.random() * 1000, false);
 
-			return deferred.promise;
-		}
+            return deferred.promise;
+        }
 
-		function _activityCreateFilterFor(query) {
-			var lowercaseQuery = angular.lowercase(query);
-			return function filterFn(survey) {
-				return survey.name.toLowerCase().indexOf(lowercaseQuery) > -1 ||
-					survey.acronym.toLowerCase().indexOf(lowercaseQuery) > -1;
-			};
-		}
+        function _activityCreateFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+            return function filterFn(survey) {
+                return survey.name.toLowerCase().indexOf(lowercaseQuery) > -1 ||
+                    survey.acronym.toLowerCase().indexOf(lowercaseQuery) > -1;
+            };
+        }
 
-		function resetActivityDtos() {
-			console.log(self.self.externalIDForm)
-			self.activityDtos = [];
-		}
+        function resetActivityDtos() {
+            console.log(self.self.externalIDForm)
+            self.activityDtos = [];
+        }
 
-		function _loadActivityDtosfromStorage() {
-			let _storageActivityDtos = angular.copy(JSON.parse(window.sessionStorage.getItem('activityDtos')));
-			if (_storageActivityDtos) {
-				self.activityDtos = _storageActivityDtos;
-			}
-		}
+        function _loadActivityDtosfromStorage() {
+            let _storageActivityDtos = angular.copy(JSON.parse(window.sessionStorage.getItem('activityDtos')));
+            if (_storageActivityDtos) {
+                self.activityDtos = _storageActivityDtos;
+            }
+        }
 
-		function _saveInSessionStorage() {
-			window.sessionStorage.removeItem('activityDtos');
-			window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos));
-		}
+        function _saveInSessionStorage() {
+            window.sessionStorage.removeItem('activityDtos');
+            window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos));
+        }
 
-	}
+    }
 }());
 
 //clean
