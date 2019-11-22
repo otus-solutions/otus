@@ -208,7 +208,12 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
 }
 
 aliquots-view .aliquots-container {
-  min-width: 900px;
+  min-width: 700px;
+}
+@media screen and (max-width: 768px) {
+  aliquots-view .input-footer-message {
+    font-size: 11px;
+  }
 }
 
 otus-sample-transportation-manager-list otus-sample-transportation-lot-info-sidenav md-sidenav {
