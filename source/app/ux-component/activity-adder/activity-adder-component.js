@@ -169,7 +169,7 @@
 		}
 
 		function surveyQuerySearch(query) {
-			var results = query ? self.survey.filter(_activityCreateFilterFor(query)) : self.surveys;
+			var results = query ? self.surveys.filter(_activityCreateFilterFor(query)) : self.surveys;
 			var deferred = $q.defer();
 
 			$timeout(function () {

@@ -4,7 +4,7 @@
             <div class="card-width" layout="row" layout-sm="column" layout-xs="column" layout-align="space-between center" layout-align-sm="space-between start">
                 <div layout="column" layout-align="space-between start" style="padding-left: 10px;">
                     <span class="md-headline">Gerenciador de Atividades</span>
-                     <span class="md-subhead">Inclusão de Formulários ao Participante</span>
+                    <span class="md-subhead">Inclusão de Formulários ao Participante</span>
                 </div>
                 <div class="card-width-layout-sm" layout="row" layout-xs="column" layout-sm="row" layout-align="space-between center" flex="70" flex-xs="100" flex-sm="100" flex-md="60">
                     <div layout="row" layout-align-xs="space-between center">
@@ -36,7 +36,7 @@
                             <md-tooltip md-direction="top">Tipo de Inclusão</md-tooltip>
                             <div>
                                 <md-icon md-font-set="material-icons">bookmark_border</md-icon>
-                                <md-tooltip md-direction="left">Unitário</md-tooltip>
+                                <md-tooltip md-direction="right">Unitário</md-tooltip>
                             </div>
                         </div>
                     </div>
@@ -82,12 +82,11 @@
                                      md-selected-item="$ctrl.selectedItem"
                                      md-selected-item-change="$ctrl.selectedItemChange(item)" placeholder="Selecione">
                         <md-item-template>
-                            <span class="item-title">
-                                <span md-highlight-flags="i" md-highlight-text="$ctrl.searchText">{{item.acronym}}</span>
-                            </span>
-                            <span class="item-metadata">
-                                <span class="item-metastat">{{item.name}}</span>
-                            </span>
+                                <span class="item-title" md-highlight-flags="^i" md-highlight-text="$ctrl.searchText">{{item.acronym}}</span>
+                                <span class="item-metadata">{{item.name}}</span>
+                            <md-not-found>
+                             Nenhuma equivalência encontrada.
+                            </md-not-found>
                         </md-item-template>
                         <md-not-found>Nenhum resultado para "{{ $ctrl.searchText }}" foi encontrado.</md-not-found>
                     </md-autocomplete>
