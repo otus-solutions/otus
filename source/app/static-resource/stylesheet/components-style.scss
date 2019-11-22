@@ -278,7 +278,12 @@ lab-control-panel {
 
 aliquots-view {
   .aliquots-container {
-    min-width: 900px;
+    min-width: 700px;
+  }
+  @media screen and (max-width: 768px) {
+    .input-footer-message {
+        font-size: 11px;
+    }
   }
 }
 
