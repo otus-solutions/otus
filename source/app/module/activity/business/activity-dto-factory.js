@@ -22,9 +22,9 @@
 		self.configuration = configuration || {};
 		//self.configuration.externalID = configuration.externalID || null;
 		self.mode = mode;
-		self.user = user || null;
-		self.paperActivityData = null;
-		self.externalID = null;
+		self.user = user || undefined;
+		self.paperActivityData = undefined;
+		self.externalID = undefined;
 
 		/* Public methods */
 		self.updatePaperActivityData = updatePaperActivityData;

@@ -9,18 +9,16 @@
             bindings: {
                 activityDtos: '=',
                 checkers: '<',
-                activityDto: '=',
-                isValidExternalIdForm: '='
+                activityDto: '='
             }
         });
-    //binding = activityDto
+
     Controller.$inject = [
         '$q',
-        '$timeout',
-        '$scope'
+        '$timeout'
     ];
 
-    function Controller($q, $timeout, $rootScope) {
+    function Controller($q, $timeout) {
         var self = this;
         self.checkerQuerySearch = checkerQuerySearch;
         self.getModeIcon = getModeIcon;
@@ -55,7 +53,8 @@
         }
 
         function checkerSelectedItemChange(checker) {
-            self.activityDto.updatePaperActivityData(checker, self.realizationDate);
+            if(checker && self.realizationDate) self.activityDto.updatePaperActivityData(checker, self.realizationDate);
+            else self.activityDto.paperActivityData = undefined;
         }
 
         function getModeIcon(){

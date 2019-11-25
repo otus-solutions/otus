@@ -7,7 +7,8 @@
         </div>
         <div>
             <md-button class="md-icon-button">
-                <md-icon md-font-set="material-icons" style="color:white" ng-click="$ctrl.deleteActivityDto()">delete</md-icon>
+                <md-icon md-font-set="material-icons" ng-click="$ctrl.deleteActivityDto()" style="color:white">delete
+                </md-icon>
                 </md-icon>
                 <md-tooltip md-direction="top">
                     Remover
@@ -21,75 +22,74 @@
     <div layout="column">
         <div layout="column" layout-align="start start">
             <span class="md-body-2" layout-fill md-truncate>{{$ctrl.activityDto.surveyForm.name}}</span>
-            <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2" ng-style="{color:'black'}">{{$ctrl.activityDto.configuration.category.label}}</small></span>
+            <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2"
+                                                                                    ng-style="{color:'black'}">{{$ctrl.activityDto.configuration.category.label}}</small></span>
         </div>
     </div>
     <div layout="column" layout-align="start start" ng-if="$ctrl.activityDto.mode === 'PAPER'">
-        <small class="md-caption" ng-style="{color:'#797985'}">Informações do preenchimento obrigatório.</small>
-        <md-input-container id="date">
-            <label ng-show="$ctrl.realizationDate">Data de Realização</label>
-            <input aria-label="Data de Nascimento" class="md-input" date="true" disable-parent-scroll="true"
-                   format="DD/MM/YYYY" id="datetime" max-date="$ctrl.maxDate"
-                   mdc-datetime-picker="" ng-change="$ctrl.onFilter()" ng-model="$ctrl.realizationDate"
-                   placeholder="Data de Realização" readonly="readonly"
-                   show-icon="true" time="false" type="text">
-        </md-input-container>
-        <md-autocomplete md-item-text="item.text"
-                         md-items="item in $ctrl.checkerQuerySearch($ctrl.checkerSearchText)"
-                         md-menu-class="autocomplete-custom-template"
-                         md-min-length="0"
-                         md-no-cache="true"
-                         md-search-text="$ctrl.checkerSearchText"
-                         md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
-                         md-selected-item="$ctrl.checkerSelectedItem"
-                         md-selected-item-change="$ctrl.checkerSelectedItemChange(item, activityDto)"
-                         placeholder="Aferidor (a)" style="width: 90%">
-            <md-item-template>
-                                      <span class="item-title">
-                                        <md-icon md-svg-icon="account"></md-icon>
-                                        <span md-highlight-flags="i" md-highlight-text="$ctrl.checkerSearchText">{{ item.title }}</span>
-                                      </span>
-                <span class="item-metadata">
-                                        <span class="item-metastat">
-                                          E-mail: <strong>{{ item.metastat.email }}</strong>
-                                        </span>
-                                      </span>
-            </md-item-template>
-            <md-not-found>
-                Nenhum resultado para "{{ $ctrl.checkerSearchText }}" foi encontrado.
-            </md-not-found>
-        </md-autocomplete>
-    </div>
-    valid :{{externalIdForm.$valid}}<br>
-    invalid: {{externalIdForm.$invalid}}<br>
-    pristine: {{externalIdForm.$pristine}}<br>
+        <form name="checkerForm">
+            <small class="md-caption" ng-style="{color:'#797985'}">Informações do preenchimento obrigatório.</small>
+            <md-input-container id="date">
+                <label ng-show="$ctrl.realizationDate">Data de Realização</label>
+                <input aria-label="Data de Nascimento" class="md-input" date="true" disable-parent-scroll="true" name="realizationDate"
+                       format="DD/MM/YYYY" id="datetime" max-date="$ctrl.maxDate"
+                       mdc-datetime-picker="" ng-change="$ctrl.checkerSelectedItemChange($ctrl.checkerSearchText)" ng-model="$ctrl.realizationDate"
+                       placeholder="Data de Realização" readonly="readonly"
+                       show-icon="true" time="false" type="text" required>
+                <div ng-messages="checkerForm.realizationDate.$error">
+                    <div ng-message="required">Informe uma data!</div>
+                </div>
+            </md-input-container>
 
-    <form name = "externalIdForm" novalidate>
-        <md-input-container ng-if="$ctrl.activityDto.surveyForm.isRequiredExternalID()">
-            <label>ID Externo</label>
-            <input ng-model="$ctrl.activityDto.externalID" required>
-            <div ng-messages="externalIdForm.$error">
-                <div ng-message="required">* preenchimento obrigatório!</div>
-            </div>
-        </md-input-container>
-        <md-input-container ng-if="!$ctrl.activityDto.surveyForm.isRequiredExternalID()">
-            <small ng-style="{color:'#9e9e9e'}">* ID Externo não requerido</small>
-        </md-input-container>
-    </form>
-    <div ng-if="$ctrl.activityDto.mode === 'ONLINE'" layout="column">
+            <md-autocomplete md-item-text="item.text"
+                             md-items="item in $ctrl.checkerQuerySearch($ctrl.checkerSearchText)"
+                             md-menu-class="autocomplete-custom-template"
+                             md-min-length="0"
+                             md-no-cache="true"
+                             md-search-text="$ctrl.checkerSearchText"
+                             md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
+                             md-selected-item="$ctrl.checkerSelectedItem"
+                             md-selected-item-change="$ctrl.checkerSelectedItemChange(item, activityDto)"
+                             placeholder="Aferidor (a)" style="width: 90%" required md-input-name="autocompleteChecker">
+                <md-item-template>
+                    <span class="item-title">
+                        <md-icon md-svg-icon="account"></md-icon>
+                        <span md-highlight-flags="i" md-highlight-text="$ctrl.checkerSearchText">{{ item.title }}</span>
+                    </span>
+                    <span class="item-metadata">
+                        <span class="item-metastat">E-mail: <strong>{{ item.metastat.email }}</strong></span>
+                    </span>
+                </md-item-template>
+                <md-not-found>
+                    Nenhum resultado para "{{ $ctrl.checkerSearchText }}" foi encontrado.
+                </md-not-found>
+                <div ng-messages="checkerForm.autocompleteChecker.$error">
+                    <div ng-message="required">Informe um Aferidor!</div>
+                </div>
+            </md-autocomplete>
+        </form>
+    </div>
+
+
+    <div layout="column" ng-if="$ctrl.activityDto.mode === 'ONLINE'">
         <small class="md-caption" ng-style="{color:'#797985'}">Informações do Usuário.</small>
         <span class="md-caption" ng-style="{color:'#797985'}">Nome: <small class="md-body-2" ng-style="{color:'black'}">{{$ctrl.activityDto.user.surname}}</small></span>
-        <span class="md-caption" ng-style="{color:'#797985'}">Email: <small class="md-body-2" ng-style="{color:'black'}">{{$ctrl.activityDto.user.email}}</small></span>
+        <span class="md-caption" ng-style="{color:'#797985'}" md-truncate>Email: <small class="md-body-2"
+                                                                            ng-style="{color:'black'}">{{$ctrl.activityDto.user.email}}</small></span>
     </div>
-
-    <div style="padding-top: 5px">
-        <md-input-container ng-if="$ctrl.activityDto.surveyForm.isRequiredExternalID()">
-            <label>ID Externo</label>
-            <input ng-model="$ctrl.activityDto.configuration.externalID">
-        </md-input-container>
-        <md-input-container ng-if="!$ctrl.activityDto.surveyForm.isRequiredExternalID()">
-            <small ng-style="{color:'#9e9e9e'}">* ID Externo não requerido</small>
-        </md-input-container>
+    <div style="margin-top: 0">
+        <form name="externalIdForm" novalidate>
+            <md-input-container ng-if="$ctrl.activityDto.surveyForm.isRequiredExternalID()">
+                <label>ID Externo</label>
+                <input ng-model="$ctrl.activityDto.externalID" placeholder="Preenchimento Obrigatório" required>
+                <div ng-messages="externalIdForm.$error">
+                    <div ng-message="required">Dado Inválido!</div>
+                </div>
+            </md-input-container>
+            <md-input-container ng-if="!$ctrl.activityDto.surveyForm.isRequiredExternalID()">
+                <small ng-style="{color:'#9e9e9e'}">ID Externo não requerido *</small>
+            </md-input-container>
+        </form>
     </div>
 </div>
 <md-tooltip md-direction="top">
