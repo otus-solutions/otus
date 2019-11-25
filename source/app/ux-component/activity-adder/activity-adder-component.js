@@ -45,7 +45,6 @@
         self.saveActivities = saveActivities;
         self.surveyQuerySearch = surveyQuerySearch;
         self.resetActivityDtos = resetActivityDtos;
-        self.isFormInvalid = isFormInvalid;
 
         self.$onInit = onInit;
 
@@ -126,15 +125,15 @@
             ParticipantActivityService.saveActivities(self.activityDtos);
         }
 
-        function isFormInvalid() {
-            let invalidFormState = true;
-            if (!self.activityDtos.length) invalidFormState = true;
-            else {
-                self.activityDtos.every(_checkFilledInput) ? invalidFormState = false : invalidFormState = true;
-            }
-            console.log(invalidFormState);
-            return invalidFormState;
-        }
+        // function isFormInvalid() {
+        //     let invalidFormState = true;
+        //     if (!self.activityDtos.length) invalidFormState = true;
+        //     else {
+        //         self.activityDtos.every(_checkFilledInput) ? invalidFormState = false : invalidFormState = true;
+        //     }
+        //     console.log(invalidFormState);
+        //     return invalidFormState;
+        // }
 
         function _checkFilledInput(dto) {
             switch (dto.mode) {

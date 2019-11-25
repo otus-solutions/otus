@@ -28,7 +28,7 @@
                              md-swipe-right="onSwipeRight($event, $target)">
                             <div>
                                 <md-icon md-font-set="material-icons">bookmarks</md-icon>
-                                <md-tooltip md-direction="left">Lista</md-tooltip>
+                                <md-tooltip md-direction="bottom">Lista</md-tooltip>
                             </div>
                             <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityList'"
                                        ng-model="$ctrl.selectType" ng-true-value="'activityUnit'">
@@ -36,7 +36,7 @@
                             <md-tooltip md-direction="top">Tipo de Inclusão</md-tooltip>
                             <div>
                                 <md-icon md-font-set="material-icons">bookmark_border</md-icon>
-                                <md-tooltip md-direction="right">Unitário</md-tooltip>
+                                <md-tooltip md-direction="bottom">Unitário</md-tooltip>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                                 <md-icon md-font-set="material-icons">delete</md-icon>
                                 <md-tooltip md-direction="bottom">deletar</md-tooltip>
                             </md-button>
-                            <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()" ng-disabled="$ctrl.isFormInvalid()">
+                            <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()">
                                 <md-icon md-font-set="material-icons">save</md-icon>
                                 <md-tooltip md-direction="bottom">Salvar</md-tooltip>
                             </md-button>
