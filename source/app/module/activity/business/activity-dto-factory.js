@@ -9,18 +9,18 @@
 		var self = this;
 		self.create = create;
 
-		function create(survey, configuration, mode, user) {
-			return new ActivityDto(survey, configuration, mode, user);
+		function create(survey, configuration, mode, user, externalID) {
+			return new ActivityDto(survey, configuration, mode, user, externalID);
 		}
 		return self;
 	}
 
-	function ActivityDto(survey, configuration, mode, user) {
+	function ActivityDto(survey, configuration, mode, user, externalID) {
 		let self = this;
 		self.objectType = 'ActivityDto';
 		self.surveyForm = survey;
 		self.configuration = configuration || {};
-		//self.configuration.externalID = configuration.externalID || null;
+		self.externalID = externalID || null;
 		self.mode = mode;
 		self.user = user || undefined;
 		self.paperActivityData = undefined;
