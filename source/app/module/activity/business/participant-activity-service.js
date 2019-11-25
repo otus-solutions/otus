@@ -12,10 +12,10 @@
 		'otusjs.activity.repository.UserRepositoryService',
 		'otusjs.activity.business.ActivityDtoFactory',
 		'otusjs.application.state.ApplicationStateService',
-		'SurveyFactory'
+		'SurveyFormFactory'
 	];
 
-	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, ActivityDtoFactory, ApplicationStateService, SurveyFactory) {
+	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, ActivityDtoFactory, ApplicationStateService, SurveyFormFactory) {
 		var self = this;
 		var _paperActivityCheckerData = null;
 		self.activityConfigurations = new Object();
@@ -180,10 +180,7 @@
 		}
 
 		function updateCheckerActivity(recruitmentNumber, id, activityStatus) {
-			return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({
-				id,
-				activityStatus
-			}));
+			return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({ id, activityStatus }));
 		}
 
 		function addActivityRevision(activityRevision, activity) {
@@ -195,7 +192,7 @@
 		}
 
 		function getSurveyFromJson(json) {
-			return SurveyFactory.fromJsonObject(json);
+			return SurveyFormFactory.fromJsonObject(json);
 		}
 	}
 }());
