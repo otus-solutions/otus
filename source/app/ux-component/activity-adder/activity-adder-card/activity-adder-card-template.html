@@ -1,9 +1,9 @@
 <md-grid-tile-header ng-style="{background: '#5ba499'}">
     <div layout="row" layout-align="space-between center">
         <div layout="row">
-            <md-icon md-font-library="material-icons" md-svg-icon="{{$ctrl.getModeIcon()}}"
+            <md-icon md-font-library="material-icons" md-svg-icon="{{::$ctrl.getModeIcon()}}"
                      ng-style="{color: 'white'}"></md-icon>
-            <h3 ng-style="{color: '#FFFFFF'}">{{$ctrl.getAcronym()}}</h3>
+            <h3 ng-style="{color: '#FFFFFF'}">{{::$ctrl.getAcronym()}}</h3>
         </div>
         <div>
             <md-button class="md-icon-button">
@@ -23,7 +23,7 @@
         <div layout="column" layout-align="start start">
             <span class="md-body-2" layout-fill md-truncate>{{$ctrl.activityDto.surveyForm.name}}</span>
             <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2"
-                                                                                    ng-style="{color:'black'}">{{$ctrl.activityDto.configuration.category.label}}</small></span>
+                                                                                    ng-style="{color:'black'}">{{::$ctrl.activityDto.configuration.category.label}}</small></span>
         </div>
     </div>
     <div layout="column" layout-align="start start" ng-if="$ctrl.activityDto.mode === 'PAPER'">
@@ -57,7 +57,7 @@
                         <span md-highlight-flags="i" md-highlight-text="$ctrl.checkerSearchText">{{ item.title }}</span>
                     </span>
                     <span class="item-metadata">
-                        <span class="item-metastat">E-mail: <strong>{{ item.metastat.email }}</strong></span>
+                        <span class="item-metastat">E-mail: <strong>{{::item.metastat.email }}</strong></span>
                     </span>
                 </md-item-template>
                 <md-not-found>
@@ -72,10 +72,10 @@
 
 
     <div layout="column" ng-if="$ctrl.activityDto.mode === 'ONLINE'">
-        <small class="md-caption" ng-style="{color:'#797985'}">Informações do Usuário.</small>
-        <span class="md-caption" ng-style="{color:'#797985'}">Nome: <small class="md-body-2" ng-style="{color:'black'}">{{$ctrl.activityDto.user.surname}}</small></span>
+        <small class="md-caption" ng-style="{color:'#797985'}">Informações do Usuário:</small>
+        <span class="md-caption" ng-style="{color:'#797985'}">Nome: <small class="md-body-2" ng-style="{color:'black'}">{{::$ctrl.activityDto.user.surname}}</small></span>
         <span class="md-caption" ng-style="{color:'#797985'}" md-truncate>Email: <small class="md-body-2"
-                                                                            ng-style="{color:'black'}">{{$ctrl.activityDto.user.email}}</small></span>
+                                                                            ng-style="{color:'black'}">{{::$ctrl.activityDto.user.email}}</small></span>
     </div>
     <div style="margin-top: 0">
         <form name="externalIdForm" novalidate>
