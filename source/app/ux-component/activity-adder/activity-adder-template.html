@@ -68,8 +68,9 @@
             </div>
         </div>
         <div layout="row" layout-align="end center" layout-padding>
-            <span flex layout="row" layout-align="center center">
-                <span flex="40" flex-xs="100">
+
+            <div flex layout="row" layout-align="center center" ng-if="!$ctrl.selectAction()">
+                <span flex="40" flex-xs="100" >
                     <md-tooltip md-direction="top">Lista de Formulários</md-tooltip>
                     <md-autocomplete id="autocomplete_selectSurvey"
                                      md-item-text="item.name"
@@ -88,12 +89,34 @@
                         <md-not-found>Nenhum resultado para "{{ $ctrl.searchText }}" foi encontrado.</md-not-found>
                     </md-autocomplete>
                 </span>
-
                 <md-button class="md-icon-button" ng-click="$ctrl.addActivityDtos($ctrl.selectedItem)" ng-disabled="$ctrl.searchText === ''">
                     <md-icon md-font-set="material-icons">add_box</md-icon>
                     <md-tooltip md-direction="top">Adicionar</md-tooltip>
                 </md-button>
-            </span>
+            </div>
+            <div flex layout="row" layout-align="center center" ng-if="$ctrl.selectAction()">
+                <md-input-container md-whiteframe="1" flex="40" flex-xs="100" style="background: white">
+                    <label>Blocos</label>
+                    <md-select ng-model="$ctrl.selectedGroups"
+                               md-on-close="$ctrl.clearSearchTerm()"
+                               data-md-container-class="selectdemoSelectHeader"
+                               multiple flex>
+                        <md-select-header class="demo-select-header">
+                            <input id="searchBlock" ng-model="$ctrl.searchTerm"
+                                   type="search"
+                                   placeholder="Digite o bloco desejado..."
+                                   class="demo-header-searchbox md-text">
+                        </md-select-header>
+                        <md-optgroup label="Blocos">
+                            <md-option ng-value="item" ng-repeat="item in $ctrl.selectionOptions | filter:$ctrl.searchTerm track by $index" ng-disabled="$ctrl.disabledGroups($index)" >{{item}}</md-option>
+                        </md-optgroup>
+                    </md-select>
+                </md-input-container>
+                <md-button class="md-icon-button" ng-click="$ctrl.addActivitiesGroup($ctrl.selectedGroups)" ng-disabled="$ctrl.selectedGroups === ''">
+                    <md-icon md-font-set="material-icons">add_box</md-icon>
+                    <md-tooltip md-direction="top">Adicionar Blocos</md-tooltip>
+                </md-button>
+            </div>
         </div>
     </md-card>
 
