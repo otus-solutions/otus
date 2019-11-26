@@ -56,6 +56,7 @@
         self.clearSearchTerm = clearSearchTerm;
         self.addActivitiesGroup = addActivitiesGroup;
         self.disabledGroups = disabledGroups;
+        self.displayGrid = displayGrid;
 
         self.$onInit = onInit;
 
@@ -94,12 +95,20 @@
 
         function _loadSurveysGroup() {
             self.selectedGroups = [];
+            self.selectedGroupsResult = [];
             self.groupList = [];
             GroupActivityService.getSurveyGroupsByUser().then(function (data) {
                 self.surveysGroups = data;
                 self.groupList = self.surveysGroups.getGroupNames();
                 self.selectionOptions = self.selectionOptions.concat(self.groupList);
             });
+        }
+
+        function displayGrid() {
+          if(window.innerWidth == 1366){
+            return '1:1.5';
+          }
+          return '1:1.05';
         }
 
         function _surveysFilter(){
