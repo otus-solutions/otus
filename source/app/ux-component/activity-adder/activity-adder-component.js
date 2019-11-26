@@ -22,9 +22,10 @@
 	];
 
 	function Controller(ParticipantActivityService, ApplicationStateService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout) {
-		var self = this;
+		let self = this;
 		// var _selectedActivities = [];
-		var _exitDialog;
+		//var _exitDialog;
+		let confirmDeleteSelectedActivity;
 		self.surveys = [];
 
 		//self.selectedActivities = [];
@@ -48,24 +49,24 @@
 
 		self.$onInit = onInit;
 
-
 		function onInit() {
-			_exitDialog = {
-				dialogToTitle: 'Alerta',
-				titleToText: 'ATENÇÃO!',
-				textDialog: 'Você deve selecionar ao menos uma atividade.',
-				ariaLabel: 'Alerta de Erro',
-				buttons: [
-					{
-						message: 'Fechar',
-						action: function () {
-							$mdDialog.hide()
-						},
-						class: 'md-raised md-no-focus'
-					}
-				]
-			};
+			// _exitDialog = {
+			// 	dialogToTitle: 'Alerta',
+			// 	titleToText: 'ATENÇÃO!',
+			// 	textDialog: 'Você deve selecionar ao menos uma atividade.',
+			// 	ariaLabel: 'Alerta de Erro',
+			// 	buttons: [
+			// 		{
+			// 			message: 'Fechar',
+			// 			action: function () {
+			// 				$mdDialog.hide()
+			// 			},
+			// 			class: 'md-raised md-no-focus'
+			// 		}
+			// 	]
+			// };
 			LoadingScreenService.start();
+			_buildDialogs();
 			_loadCategories();
 			_loadSurveys();
 			_loadActivityDtosfromStorage();
@@ -100,7 +101,6 @@
 		//     }
 		// }
 
-
 		// function catchActivity(activity) {
 		//     var activityIndex = self.selectedActivities.indexOf(activity.acronym);
 		//     console.log(activity);
@@ -125,6 +125,7 @@
 			ParticipantActivityService.saveActivities(self.activityDtos);
 		}
 
+		//Lógica feita para validação dos inputs dos cards
 		// function isFormInvalid() {
 		//     let invalidFormState = true;
 		//     if (!self.activityDtos.length) invalidFormState = true;
@@ -135,25 +136,25 @@
 		//     return invalidFormState;
 		// }
 
-		function _checkFilledInput(dto) {
-			switch (dto.mode) {
-				case "ONLINE": {
-					if (dto.surveyForm.isRequiredExternalID()) return dto.externalID !== undefined;
-					break;
-				}
-				case "PAPER": {
-					console.log(dto)
-					if (dto.surveyForm.isRequiredExternalID()) {
-						return dto.paperActivityData !== undefined && dto.externalID !== undefined;
-						break;
-					}
-					else {
-						return dto.paperActivityData !== undefined;
-						break;
-					}
-				}
-			}
-		}
+		// function _checkFilledInput(dto) {
+		// 	switch (dto.mode) {
+		// 		case "ONLINE": {
+		// 			if (dto.surveyForm.isRequiredExternalID()) return dto.externalID !== undefined;
+		// 			break;
+		// 		}
+		// 		case "PAPER": {
+		// 			console.log(dto)
+		// 			if (dto.surveyForm.isRequiredExternalID()) {
+		// 				return dto.paperActivityData !== undefined && dto.externalID !== undefined;
+		// 				break;
+		// 			}
+		// 			else {
+		// 				return dto.paperActivityData !== undefined;
+		// 				break;
+		// 			}
+		// 		}
+		// 	}
+		// }
 
 		function _loadCategories() {
 			ParticipantActivityService
@@ -193,11 +194,6 @@
 			};
 		}
 
-		function resetActivityDtos() {
-			console.log(self.self.externalIDForm)
-			self.activityDtos = [];
-		}
-
 		function _loadActivityDtosfromStorage() {
 			let resultFromStorage = JSON.parse(window.sessionStorage.getItem('activityDtos'));
 			if (resultFromStorage) {
@@ -216,6 +212,44 @@
 			window.sessionStorage.removeItem('activityDtos');
 			window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos));
 		}
+
+		function resetActivityDtos() {
+			self.activityDtos = [];
+			window.sessionStorage.removeItem('activityDtos');
+		}
+
+		function resetActivityDtos() {
+			DialogService.showDialog(confirmDeleteSelectedActivity).then(()=>{
+				self.activityDtos = [];
+				window.sessionStorage.removeItem('activityDtos');
+			});
+		}
+
+		function _buildDialogs() {
+			confirmDeleteSelectedActivity = {
+				dialogToTitle: 'Confirmação',
+				titleToText: 'Exclusão da Lista de Formulários',
+				textDialog: 'Deseja excluir os itens adicionados?',
+				ariaLabel: 'Confirmação de exclusão',
+				buttons: [
+					{
+						message: 'Ok',
+						action: function () {
+							$mdDialog.hide()
+						},
+						class: 'md-raised md-primary'
+					},
+					{
+						message: 'Voltar',
+						action: function () {
+							$mdDialog.cancel()
+						},
+						class: 'md-raised md-no-focus'
+					}
+				]
+			};
+		}
+
 
 	}
 }());
