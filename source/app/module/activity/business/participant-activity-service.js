@@ -87,14 +87,14 @@
 		}
 
 		function _createOnLineActivity(activityDto, selectedParticipant) {
-			ActivityRepositoryService.createOnLineActivity(activityDto.surveyForm, activityDto.user, selectedParticipant, activityDto.configuration)
+			ActivityRepositoryService.createOnLineActivity(activityDto.surveyForm, activityDto.user, selectedParticipant, activityDto.configuration, activityDto.externalID)
 				.then(OnlineActivity => self.activities.push(OnlineActivity));
 
 		}
 
 		function _createPaperActivity(activityDto, selectedParticipant) {
 			ActivityRepositoryService.createPaperActivity(activityDto.surveyForm,
-				activityDto.user, selectedParticipant, activityDto.paperActivityData, activityDto.configuration)
+				activityDto.user, selectedParticipant, activityDto.paperActivityData, activityDto.configuration, activityDto.externalID)
 				.then(paperActivity => self.activities.push(paperActivity));
 		}
 

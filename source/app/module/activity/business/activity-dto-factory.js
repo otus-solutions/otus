@@ -20,11 +20,11 @@
 		self.objectType = 'ActivityDto';
 		self.surveyForm = survey;
 		self.configuration = configuration || {};
-		self.externalID = externalID || null;
 		self.mode = mode;
-		self.user = user || undefined;
-		self.paperActivityData = undefined;
-		self.externalID = undefined;
+        self.user = user || undefined;
+        self.paperActivityData = undefined;
+        self.externalID = externalID || null;
+
 
 		/* Public methods */
 		self.updatePaperActivityData = updatePaperActivityData;

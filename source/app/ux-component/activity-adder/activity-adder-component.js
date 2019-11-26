@@ -115,7 +115,6 @@
 		// }
 
 		function addActivityDtos(survey) {
-			console.log(survey);
 			let dto = ParticipantActivityService.createActivityDto(survey, self.configuration, self.mode, self.paperActivityCheckerData);
 			self.activityDtos.push(dto);
 			self.searchText = '';

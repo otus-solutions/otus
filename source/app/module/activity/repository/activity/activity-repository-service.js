@@ -173,19 +173,19 @@
         }
 
 
-        function createOnLineActivity(survey, loggedUser, participant, configuration) {
+        function createOnLineActivity(survey, loggedUser, participant, configuration, externalID) {
             return ModuleService
                 .whenActivityFacadeServiceReady()
                 .then(function (ActivityFacadeService) {
-                    return ActivityFacadeService.createActivity(survey, loggedUser, participant, null, configuration);
+                    return ActivityFacadeService.createActivity(survey, loggedUser, participant, null, configuration, externalID);
                 });
         }
 
-        function createPaperActivity(survey, loggedUser, participant, paperActivityData, configuration) {
+        function createPaperActivity(survey, loggedUser, participant, paperActivityData, configuration, externalID) {
             return ModuleService
                 .whenActivityFacadeServiceReady()
                 .then(function (ActivityFacadeService) {
-                    return ActivityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configuration);
+                    return ActivityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configuration, externalID);
                 });
         }
 

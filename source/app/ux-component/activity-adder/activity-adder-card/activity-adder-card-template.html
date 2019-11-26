@@ -81,7 +81,7 @@
         <form name="externalIdForm" novalidate>
             <md-input-container ng-if="$ctrl.activityDto.surveyForm.isRequiredExternalID()">
                 <label>ID Externo</label>
-                <input ng-model="$ctrl.externalID" placeholder="Preenchimento Obrigatório" required>
+                <input ng-model="$ctrl.activityDto.externalID" placeholder="Preenchimento Obrigatório" required>
                 <div ng-messages="externalIdForm.$error">
                     <div ng-message="required">Dado Inválido!</div>
                 </div>
