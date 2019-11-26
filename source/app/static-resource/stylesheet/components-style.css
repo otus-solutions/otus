@@ -448,6 +448,13 @@ otus-activity-adder  md-input-container {
   border: none;
 }
 
+otus-activity-adder-card md-input-container {
+   padding: 0 15px 0 0;
+   margin: 0;
+   height: 40px;
+   border: none;
+}
+
 @media screen and (max-width: 799px) {
   otus-activity-adder .card-width-category {
     width: 100%;

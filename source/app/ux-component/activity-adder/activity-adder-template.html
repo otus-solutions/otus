@@ -40,8 +40,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-width-category" layout="row" layout-align="space-between center" flex="60" flex-xs="80" flex-sm="50" flex-md="40">
-                        <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="40" layout-align="space-between start">
+                    <div class="card-width-category" layout="row" layout-align="space-between center" flex="60" flex-xs="80" flex-sm="50" flex-md="50">
+                        <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30" layout-align="space-between start">
                             <md-select aria-label="Categoria"
                                        ng-model="$ctrl.configuration.category">
                                 <md-option ng-repeat="category in $ctrl.categories track by $index"
@@ -56,7 +56,7 @@
                                 <md-icon md-font-set="material-icons">delete</md-icon>
                                 <md-tooltip md-direction="bottom">deletar</md-tooltip>
                             </md-button>
-                            <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()">
+                            <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()" ng-disabled="!$ctrl.activityDtos.length">
                                 <md-icon md-font-set="material-icons">save</md-icon>
                                 <md-tooltip md-direction="bottom">Salvar</md-tooltip>
                             </md-button>

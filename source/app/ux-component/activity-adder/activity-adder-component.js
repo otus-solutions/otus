@@ -106,7 +106,7 @@
 
         function displayGrid() {
           if(window.innerWidth == 1366){
-            return '1:1.5';
+            return '1:1.7';
           }
           return '1:1.05';
         }
