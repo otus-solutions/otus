@@ -25,7 +25,8 @@
 		let self = this;
 		// var _selectedActivities = [];
 		//var _exitDialog;
-		let confirmDeleteSelectedActivity;
+		let confirmDeletePreActivities;
+		let confirmSavePreActivities;
 		self.surveys = [];
 
 		//self.selectedActivities = [];
@@ -121,9 +122,6 @@
 			_saveInSessionStorage();
 		}
 
-		function saveActivities() {
-			ParticipantActivityService.saveActivities(self.activityDtos);
-		}
 
 		//Lógica feita para validação dos inputs dos cards
 		// function isFormInvalid() {
@@ -219,19 +217,39 @@
 		}
 
 		function resetActivityDtos() {
-			DialogService.showDialog(confirmDeleteSelectedActivity).then(()=>{
+			DialogService.showDialog(confirmDeletePreActivities).then(()=>{
 				self.activityDtos = [];
 				window.sessionStorage.removeItem('activityDtos');
 			});
 		}
 
+		function saveActivities() {
+			DialogService.showDialog(confirmSavePreActivities).then(()=>{
+				ParticipantActivityService.saveActivities(self.activityDtos);
+			});
+
+		}
+
 		function _buildDialogs() {
-			confirmDeleteSelectedActivity = {
+			confirmDeletePreActivities = {
 				dialogToTitle: 'Confirmação',
 				titleToText: 'Exclusão da Lista de Formulários',
 				textDialog: 'Deseja excluir os itens adicionados?',
 				ariaLabel: 'Confirmação de exclusão',
-				buttons: [
+				buttons: _prepareButtons()
+			};
+
+			confirmSavePreActivities = {
+				dialogToTitle: 'Confirmação',
+				titleToText: 'Salvar Lista de Formulários',
+				textDialog: 'Deseja adicionar os itens ao participante?',
+				ariaLabel: 'Confirmação de exclusão',
+				buttons: _prepareButtons()
+			};
+
+
+			function _prepareButtons(){
+				return [
 					{
 						message: 'Ok',
 						action: function () {
@@ -247,7 +265,7 @@
 						class: 'md-raised md-no-focus'
 					}
 				]
-			};
+			}
 		}
 
 
