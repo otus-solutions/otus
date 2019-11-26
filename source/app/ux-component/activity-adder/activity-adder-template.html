@@ -56,7 +56,7 @@
                                 <md-icon md-font-set="material-icons">delete</md-icon>
                                 <md-tooltip md-direction="bottom">deletar</md-tooltip>
                             </md-button>
-                            <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()">
+                            <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()" ng-disabled="!$ctrl.activityDtos.length">
                                 <md-icon md-font-set="material-icons">save</md-icon>
                                 <md-tooltip md-direction="bottom">Salvar</md-tooltip>
                             </md-button>
