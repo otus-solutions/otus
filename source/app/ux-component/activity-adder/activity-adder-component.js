@@ -156,7 +156,7 @@
     }
 
     function addPreActivities(survey) {
-      let dto = ParticipantActivityService.createActivityDto(survey, self.configuration, self.mode, self.paperActivityCheckerData);
+      let dto = ParticipantActivityService.createPreActivity(survey, self.configuration, self.mode, self.paperActivityCheckerData);
       self.preActivities.push(dto);
       self.searchText = '';
       _saveInSessionStorage();
@@ -204,7 +204,7 @@
         let _activitiesFromStorage = []
         resultFromStorage.forEach(result => {
           let survey = ParticipantActivityService.getSurveyFromJson(result.surveyForm);
-          _activitiesFromStorage.push(ParticipantActivityService.createActivityDto(survey, result.configuration, result.mode, result.paperActivityCheckerData));
+          _activitiesFromStorage.push(ParticipantActivityService.createPreActivity(survey, result.configuration, result.mode, result.paperActivityCheckerData));
         });
         if (_activitiesFromStorage) {
           self.preActivities = _activitiesFromStorage;
@@ -234,9 +234,6 @@
       if(dto.mode === "ONLINE" && !dto.surveyForm.isRequiredExternalID()) dto.preActivityValid = true;
       return dto.preActivityValid === true;
     }
-
-
-
 
     function _buildDialogs() {
       confirmDeletePreActivities = {
@@ -273,19 +270,20 @@
       function _prepareButtons() {
         return [
           {
-            message: 'Ok',
-            action: function () {
-              $mdDialog.hide()
-            },
-            class: 'md-raised md-primary'
-          },
-          {
             message: 'Voltar',
             action: function () {
               $mdDialog.cancel()
             },
             class: 'md-raised md-no-focus'
+          },
+          {
+            message: 'Ok',
+            action: function () {
+              $mdDialog.hide()
+            },
+            class: 'md-raised md-primary'
           }
+
         ]
       }
     }

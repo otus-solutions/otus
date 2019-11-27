@@ -10,12 +10,12 @@
 		'otusjs.activity.core.ContextService',
 		'otusjs.activity.repository.ActivityRepositoryService',
 		'otusjs.activity.repository.UserRepositoryService',
-		'otusjs.activity.business.ActivityDtoFactory',
+		'otusjs.activity.business.PreActivityFactory',
 		'otusjs.application.state.ApplicationStateService',
 		'SurveyFormFactory'
 	];
 
-	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, ActivityDtoFactory, ApplicationStateService, SurveyFormFactory) {
+	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
 		var self = this;
 		var _paperActivityCheckerData = null;
 		self.activityConfigurations = new Object();
@@ -39,7 +39,7 @@
 		self.configurationStructure = configurationStructure;
 		self.addActivityRevision = addActivityRevision;
 		self.getActivityRevisions = getActivityRevisions;
-		self.createActivityDto = createActivityDto;
+		self.createPreActivity = createPreActivity;
 		self.saveActivities = saveActivities;
 		self.getSurveyFromJson = getSurveyFromJson;
 
@@ -49,7 +49,7 @@
 
 			getSelectedParticipant()
 				.then(function (selectedParticipant) {
-					_paperActivityCheckerData = JSON.parse(window.sessionStorage.getItem('activityPaper'));
+          _paperActivityCheckerData = JSON.parse(window.sessionStorage.getItem('activityPaper'))
 					if (_paperActivityCheckerData) {
 						_paperActivityCheckerData.realizationDate = new Date(_paperActivityCheckerData.realizationDate);
 						ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData, self.activityConfigurations);
@@ -59,12 +59,12 @@
 					} else {
 						ActivityRepositoryService.createFromSurvey(self.listSurveys, loggedUser, selectedParticipant, self.activityConfigurations);
 					}
-				});
+				})
 		}
 
-		function createActivityDto(survey, configuration, mode) {
+		function createPreActivity(survey, configuration, mode) {
 			let loggedUser = ContextService.getLoggedUser();
-			let preActivity = ActivityDtoFactory.create(survey, configuration, mode, loggedUser);
+			let preActivity = PreActivityFactory.create(survey, configuration, mode, loggedUser);
 			return preActivity;
 		}
 
@@ -77,8 +77,9 @@
 		}
 
 		function _prepareActivities(preActivities) {
-			return getSelectedParticipant().then(function (selectedParticipant) {
+			return getSelectedParticipant().then(selectedParticipant => {
 				preActivities.forEach(preActivity => {
+				  console.log("teste integração (bug papel) tipo selecionado:"+preActivity.mode)
 					preActivity.mode === "ONLINE" ? _createOnLineActivity(preActivity, selectedParticipant) : _createPaperActivity(preActivity, selectedParticipant);
 				});
 			});

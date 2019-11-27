@@ -3,7 +3,7 @@
 
 	angular
 		.module('otusjs.activity.business')
-		.factory('otusjs.activity.business.ActivityDtoFactory', Factory);
+		.factory('otusjs.activity.business.PreActivityFactory', Factory);
 
 	function Factory() {
 		var self = this;
