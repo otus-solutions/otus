@@ -92,6 +92,7 @@
 		}
 
 		function _createPaperActivity(preActivity, selectedParticipant) {
+		  console.log("paper2")
 			ActivityRepositoryService.createPaperActivity(preActivity.surveyForm,
 				preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID)
 				.then(paperActivity => self.activities.push(paperActivity));
