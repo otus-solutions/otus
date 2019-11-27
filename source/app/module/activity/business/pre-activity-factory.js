@@ -3,21 +3,21 @@
 
 	angular
 		.module('otusjs.activity.business')
-		.factory('otusjs.activity.business.ActivityDtoFactory', Factory);
+		.factory('otusjs.activity.business.PreActivityFactory', Factory);
 
 	function Factory() {
-		var self = this;
+		let self = this;
 		self.create = create;
 
 		function create(survey, configuration, mode, user, externalID) {
-			return new ActivityDto(survey, configuration, mode, user, externalID);
+			return new preActivity(survey, configuration, mode, user, externalID);
 		}
 		return self;
 	}
 
-	function ActivityDto(survey, configuration, mode, user, externalID) {
+	function preActivity(survey, configuration, mode, user, externalID) {
 		let self = this;
-		self.objectType = 'ActivityDto';
+		self.objectType = 'preActivity';
 		self.surveyForm = survey;
 		self.configuration = configuration || {};
 		self.mode = mode;
