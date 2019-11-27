@@ -26,7 +26,7 @@
 		self.checkerQuerySearch = checkerQuerySearch;
 		self.getModeIcon = getModeIcon;
 		self.checkerSelectedItemChange = checkerSelectedItemChange;
-		self.deleteActivityDto = deleteActivityDto;
+		self.deletePreActivity = deletePreActivity;
 		self.getAcronym = getAcronym;
 		self.updateExternalID = updateExternalID;
 
@@ -68,8 +68,11 @@
 			return self.activityDto.surveyForm.surveyTemplate.identity.acronym;
 		}
 
-		function deleteActivityDto() {
+		function deletePreActivity() {
 			self.activityDtos.splice(self.activityDtos.indexOf(self.activityDto), 1);
+      window.sessionStorage.removeItem('activityDtos');
+      window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos));
+
 		}
 
 		function updateExternalID(externalID) {
