@@ -113,15 +113,16 @@
                     </md-select>
                 </md-input-container>
                 <md-button class="md-icon-button" ng-click="$ctrl.addActivitiesGroup($ctrl.selectedGroups)" ng-disabled="$ctrl.selectedGroups === ''">
-                    <md-icon md-font-set="material-icons">add_box</md-icon>
+                    <md-icon md-font-set="material-icons" ng-show="$ctrl.processing">add_box</md-icon>
+                    <md-progress-circular md-mode="indeterminate" ng-hide="$ctrl.processing" md-diameter="28px" ></md-progress-circular>
                     <md-tooltip md-direction="top">Adicionar Blocos</md-tooltip>
                 </md-button>
             </div>
         </div>
     </md-card>
 
-    <md-grid-list md-cols="3" md-cols-gt-md="6" md-cols-xl="7" md-cols-lg="6" md-cols-md="4" md-cols-sm="3" md-cols-xs="1" md-row-height-sm="3:4.4" md-row-height-md="2:3"
-                  md-row-height-lg="{{$ctrl.displayGrid()}}" md-row-height-gt-md="5:6" md-row-height-xl="5:6.5" md-row-height="7:4" md-row-height-xs="1:0.9" md-gutter-gt-md="14px" md-gutter="12px"
+    <md-grid-list md-cols="3" md-cols-gt-md="6" md-cols-xl="7" md-cols-lg="6" md-cols-md="4" md-cols-sm="3" md-cols-xs="1" md-row-height-sm="{{$ctrl.displayGridSmall()}}" md-row-height-md="1:1.3"
+                  md-row-height-lg="{{$ctrl.displayGridLarge()}}" md-row-height-gt-md="5:6" md-row-height-xl="5:6.1" md-row-height="7:4" md-row-height-xs="1:0.9" md-gutter-gt-md="14px" md-gutter="12px"
                   md-gutter-sm="6px"">
     <md-grid-tile class="md-whiteframe-3dp" ng-repeat="activityDto in $ctrl.activityDtos">
         <otus-activity-adder-card activity-dto="activityDto"

@@ -37,6 +37,7 @@
 
     //self.selectedActivities = [];
     self.statePreview = false;
+    self.processing = true;
     self.mode = "ONLINE";
     self.selectType = "activityUnit";
     self.iconMode = "";
@@ -57,7 +58,8 @@
     self.clearSearchTerm = clearSearchTerm;
     self.addActivitiesGroup = addActivitiesGroup;
     self.disabledGroups = disabledGroups;
-    self.displayGrid = displayGrid;
+    self.displayGridLarge = displayGridLarge;
+    self.displayGridSmall = displayGridSmall;
 
     self.$onInit = onInit;
 
@@ -105,11 +107,18 @@
       });
     }
 
-    function displayGrid() {
-      if (window.innerWidth == 1366) {
-        return '1:1.7';
+    function displayGridLarge() {
+      if (window.innerWidth < 1400) {
+        return '1:1.6';
       }
       return '1:1.05';
+    }
+
+    function displayGridSmall() {
+      if (window.innerWidth < 680) {
+        return '1:1.7';
+      }
+      return '3:4';
     }
 
     function _surveysFilter() {
@@ -150,8 +159,13 @@
 
     function addActivitiesGroup(item) {
       self.selectedGroupsResult = item.includes(option) ? self.groupList.slice(0) : item;
+      self.processing = false;
 
       _groupsFilter();
+
+      $timeout(function(){
+        self.processing = true;
+      },3000);
 
       self.activities.forEach(activity => {
         addActivityDtos(activity);
