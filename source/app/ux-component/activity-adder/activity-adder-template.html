@@ -52,11 +52,11 @@
                             <md-tooltip md-direction="top">Categoria</md-tooltip>
                         </md-input-container>
                         <div layout="row" layout-align="space-between center">
-                            <md-button class="md-icon-button md-primary" ng-click="$ctrl.resetActivityDtos()" ng-disabled="!$ctrl.activityDtos.length">
+                            <md-button class="md-icon-button md-primary" ng-click="$ctrl.resetPreActivities()" ng-disabled="!$ctrl.preActivities.length">
                                 <md-icon md-font-set="material-icons">delete</md-icon>
                                 <md-tooltip md-direction="bottom">deletar</md-tooltip>
                             </md-button>
-                            <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()" ng-disabled="!$ctrl.activityDtos.length">
+                            <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()" ng-disabled="!$ctrl.preActivities.length">
                                 <md-icon md-font-set="material-icons">save</md-icon>
                                 <md-tooltip md-direction="bottom">Salvar</md-tooltip>
                             </md-button>
@@ -89,7 +89,7 @@
                         <md-not-found>Nenhum resultado para "{{ $ctrl.searchText }}" foi encontrado.</md-not-found>
                     </md-autocomplete>
                 </span>
-                <md-button class="md-icon-button" ng-click="$ctrl.addActivityDtos($ctrl.selectedItem)" ng-disabled="$ctrl.searchText === ''">
+                <md-button class="md-icon-button" ng-click="$ctrl.addPreActivities($ctrl.selectedItem)" ng-disabled="$ctrl.searchText === ''">
                     <md-icon md-font-set="material-icons">add_box</md-icon>
                     <md-tooltip md-direction="top">Adicionar</md-tooltip>
                 </md-button>
@@ -123,9 +123,9 @@
     <md-grid-list md-cols="3" md-cols-gt-md="6" md-cols-xl="7" md-cols-lg="6" md-cols-md="4" md-cols-sm="3" md-cols-xs="1" md-row-height-sm="3:4.4" md-row-height-md="2:3"
                   md-row-height-lg="{{$ctrl.displayGrid()}}" md-row-height-gt-md="5:6" md-row-height-xl="5:6.5" md-row-height="7:4" md-row-height-xs="1:0.9" md-gutter-gt-md="14px" md-gutter="12px"
                   md-gutter-sm="6px"">
-    <md-grid-tile class="md-whiteframe-3dp" ng-repeat="activityDto in $ctrl.activityDtos">
+    <md-grid-tile class="md-whiteframe-3dp" ng-repeat="activityDto in $ctrl.preActivities">
         <otus-activity-adder-card pre-activity="activityDto"
-                                  pre-activities="$ctrl.activityDtos"
+                                  pre-activities="$ctrl.preActivities"
                                   checkers="$ctrl.checkers"
                                   inputValidateState = "$ctrl.verifyValidityInputs"
         >
