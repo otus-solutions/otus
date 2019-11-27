@@ -121,9 +121,6 @@
       self.activities = self.surveys.filter(function (activity) {
         return self.selectedSurveys.includes(activity.acronym)
       });
-      if (!self.selectedGroups.length) {
-        self.activities = angular.copy(self.surveys);
-      }
     }
 
     function disabledGroups(index) {
@@ -139,6 +136,8 @@
     }
 
     function addActivitiesGroup(item) {
+      self.activities = [];
+      self.selectedGroupsResult = [];
       self.selectedGroupsResult = item.includes(option) ? self.groupList.slice(0) : item;
       self.processing = false;
 

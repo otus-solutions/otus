@@ -112,7 +112,7 @@
                         </md-optgroup>
                     </md-select>
                 </md-input-container>
-                <md-button class="md-icon-button" ng-click="$ctrl.addActivitiesGroup($ctrl.selectedGroups)" ng-disabled="$ctrl.selectedGroups === ''">
+                <md-button class="md-icon-button" ng-click="$ctrl.addActivitiesGroup($ctrl.selectedGroups)" ng-disabled="$ctrl.selectedGroups == ''">
                     <md-icon md-font-set="material-icons" ng-show="$ctrl.processing">add_box</md-icon>
                     <md-progress-circular md-mode="indeterminate" ng-hide="$ctrl.processing" md-diameter="28px" ></md-progress-circular>
                     <md-tooltip md-direction="top">Adicionar Blocos</md-tooltip>
