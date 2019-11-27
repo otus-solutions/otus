@@ -6,7 +6,7 @@
       <h3 ng-style="{color: '#FFFFFF'}">{{::$ctrl.getAcronym()}}</h3>
     </div>
     <div>
-      <md-button class="md-icon-button" ng-click="$ctrl.deleteActivityDto()">
+      <md-button class="md-icon-button" ng-click="$ctrl.deletePreActivity()">
         <md-icon md-font-set="material-icons"  style="color:white">delete</md-icon>
         <md-tooltip md-direction="top">Remover</md-tooltip>
       </md-button>
@@ -17,12 +17,12 @@
 <div class="grid-aligh" layout="column" layout-align="space-between stretch">
   <div layout="column">
     <div layout="column" layout-align="start start">
-      <span class="md-body-2" layout-fill md-truncate>{{$ctrl.activityDto.surveyForm.name}}</span>
+      <span class="md-body-2" layout-fill md-truncate>{{$ctrl.preActivity.surveyForm.name}}</span>
       <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2" ng-style="{color:'black'}">
-        {{::$ctrl.activityDto.configuration.category.label}}</small></span>
+        {{::$ctrl.preActivity.configuration.category.label}}</small></span>
     </div>
   </div>
-  <div layout="column" layout-align="start start" ng-if="$ctrl.activityDto.mode === 'PAPER'">
+  <div layout="column" layout-align="start start" ng-if="$ctrl.preActivity.mode === 'PAPER'">
     <form name="$ctrl.checkerForm" style="margin-top: 10px">
       <small class="md-caption" ng-style="{color:'#797985'}">Campos de preenchimento obrigatório:</small>
       <md-input-container style="margin-top: 12px; margin-bottom: 12px" id="date">
@@ -45,7 +45,7 @@
                        md-search-text="$ctrl.checkerSearchText"
                        md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
                        md-selected-item="$ctrl.checkerSelectedItem"
-                       md-selected-item-change="$ctrl.checkerSelectedItemChange(item, activityDto)"
+                       md-selected-item-change="$ctrl.checkerSelectedItemChange(item, preActivity)"
                        placeholder="Aferidor (a)" required style="width: 90%">
         <md-item-template>
                     <span class="item-title">
@@ -67,18 +67,18 @@
   </div>
 
 
-  <div layout="column" ng-if="$ctrl.activityDto.mode === 'ONLINE'">
+  <div layout="column" ng-if="$ctrl.preActivity.mode === 'ONLINE'">
     <small class="md-caption" ng-style="{color:'#797985', 'margin-top': '10px'}">Informações do usuário:</small>
-    <span class="md-caption" ng-style="{color:'#797985'}">Nome: <small class="md-body-2" ng-style="{color:'black'}">{{::$ctrl.activityDto.user.surname}}</small></span>
+    <span class="md-caption" ng-style="{color:'#797985'}">Nome: <small class="md-body-2" ng-style="{color:'black'}">{{::$ctrl.preActivity.user.surname}}</small></span>
     <span class="md-caption" md-truncate ng-style="{color:'#797985'}">Email: <small class="md-body-2" ng-style="{color:'black'}">
-      {{::$ctrl.activityDto.user.email}}</small></span>
+      {{::$ctrl.preActivity.user.email}}</small></span>
   </div>
   <form name="$ctrl.externalIdForm" style="height: 40px" novalidate>
-    <md-input-container ng-if="$ctrl.activityDto.surveyForm.isRequiredExternalID()" md-no-float class="md-block" style="padding-top: 10px">
+    <md-input-container ng-if="$ctrl.preActivity.surveyForm.isRequiredExternalID()" md-no-float class="md-block" style="padding-top: 10px">
       <input name="externalid" ng-model="$ctrl.externalID" ng-change="$ctrl.updateExternalID($ctrl.externalID)"
              placeholder="Id externo" aria-label="Id externo" required>
     </md-input-container>
-    <md-input-container ng-if="!$ctrl.activityDto.surveyForm.isRequiredExternalID()">
+    <md-input-container ng-if="!$ctrl.preActivity.surveyForm.isRequiredExternalID()">
       <small ng-style="{color:'#9e9e9e'}">Id externo não requerido *</small>
     </md-input-container>
   </form>

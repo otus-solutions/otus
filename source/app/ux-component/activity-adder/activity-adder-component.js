@@ -43,17 +43,17 @@
     self.iconMode = "";
     self.configuration = {};
     self.paperActivityCheckerData = null;
-    self.activityDtos = [];
+    self.preActivities = [];
     self.selectionOptions = [];
 
     /* Public methods */
     //self.addActivities = addActivities;
     //self.catchActivity = catchActivity;
 
-    self.addActivityDtos = addActivityDtos;
+    self.addPreActivities = addPreActivities;
     self.saveActivities = saveActivities;
     self.surveyQuerySearch = surveyQuerySearch;
-    self.resetActivityDtos = resetActivityDtos;
+    self.resetPreActivities = resetPreActivities;
     self.selectAction = selectAction;
     self.clearSearchTerm = clearSearchTerm;
     self.addActivitiesGroup = addActivitiesGroup;
@@ -85,7 +85,7 @@
       _loadCategories();
       _loadSurveys();
       _loadSurveysGroup();
-      _loadActivityDtosfromStorage();
+      _loadPreActivitiesfromStorage();
     }
 
     function clearSearchTerm() {
@@ -168,55 +168,13 @@
       },3000);
 
       self.activities.forEach(activity => {
-        addActivityDtos(activity);
+        addPreActivities(activity);
       });
     }
 
-    // function addActivities() {
-    //     if (_selectedActivities.length > 0) {
-    //         _selectedActivities = [];
-    //         ApplicationStateService.activateActivityCategories();
-    //     } else {
-    //         DialogService.showDialog(_exitDialog);
-    //     }
-    // }
-
-    // function addActivities() {
-    //     if (_selectedActivities.length > 0) {
-    //         self.selectedActivities = [];
-    //         ApplicationStateService.activateActivityCategories();
-    //     } else {
-    //         DialogService.showDialog(_exitDialog);
-    //     }
-    // }
-
-    // function catchActivity(activity) {
-    //     var activityIndex = _selectedActivities.indexOf(activity.acronym);
-    //     if (activityIndex !== -1) {
-    //         _selectedActivities.splice(activityIndex, 1);
-    //         window.sessionStorage.setItem('selectedActivities', JSON.stringify(_selectedActivities));
-    //     } else {
-    //         _selectedActivities.push(activity.acronym);
-    //         window.sessionStorage.setItem('selectedActivities', JSON.stringify(_selectedActivities));
-    //     }
-    // }
-
-    // function catchActivity(activity) {
-    //     var activityIndex = self.selectedActivities.indexOf(activity.acronym);
-    //     console.log(activity);
-    //     if (activityIndex !== -1) {
-    //         self.selectedActivities.splice(activityIndex, 1);
-    //         window.sessionStorage.setItem('selectedActivities', JSON.stringify(self.selectedActivities));
-    //     } else {
-    //         self.selectedActivities.push(activity.acronym);
-    //         window.sessionStorage.setItem('selectedActivities', JSON.stringify(self.selectedActivities));
-    //     }
-    //     console.log(self.selectedActivities)
-    // }
-
-    function addActivityDtos(survey) {
+    function addPreActivities(survey) {
       let dto = ParticipantActivityService.createActivityDto(survey, self.configuration, self.mode, self.paperActivityCheckerData);
-      self.activityDtos.push(dto);
+      self.preActivities.push(dto);
       self.searchText = '';
       _saveInSessionStorage();
     }
@@ -259,8 +217,8 @@
       };
     }
 
-    function _loadActivityDtosfromStorage() {
-      let resultFromStorage = JSON.parse(window.sessionStorage.getItem('activityDtos'));
+    function _loadPreActivitiesfromStorage() {
+      let resultFromStorage = JSON.parse(window.sessionStorage.getItem('preActivities'));
       if (resultFromStorage) {
         let _activitiesFromStorage = []
         resultFromStorage.forEach(result => {
@@ -268,26 +226,26 @@
           _activitiesFromStorage.push(ParticipantActivityService.createActivityDto(survey, result.configuration, result.mode, result.paperActivityCheckerData));
         });
         if (_activitiesFromStorage) {
-          self.activityDtos = _activitiesFromStorage;
+          self.preActivities = _activitiesFromStorage;
         }
       }
     }
 
     function _saveInSessionStorage() {
-      window.sessionStorage.removeItem('activityDtos');
-      window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos));
+      window.sessionStorage.removeItem('preActivities');
+      window.sessionStorage.setItem('preActivities', JSON.stringify(self.preActivities));
     }
 
-    function resetActivityDtos() {
+    function resetPreActivities() {
       DialogService.showDialog(confirmDeletePreActivities).then(() => {
-        self.activityDtos = [];
-        window.sessionStorage.removeItem('activityDtos');
+        self.preActivities = [];
+        window.sessionStorage.removeItem('preActivities');
       });
     }
 
     function saveActivities() {
-      self.activityDtos.every(_checkFilledInput) ?
-        DialogService.showDialog(confirmSavePreActivities).then(() => ParticipantActivityService.saveActivities(self.activityDtos)):
+      self.preActivities.every(_checkFilledInput) ?
+        DialogService.showDialog(confirmSavePreActivities).then(() => ParticipantActivityService.saveActivities(self.preActivities)):
         DialogService.showDialog(invalidPreActivities);
     }
 
@@ -300,9 +258,9 @@
     //Lógica feita para validação dos inputs dos cards
     // function isFormInvalid() {
     //     let invalidFormState = true;
-    //     if (!self.activityDtos.length) invalidFormState = true;
+    //     if (!self.preActivities.length) invalidFormState = true;
     //     else {
-    //         self.activityDtos.every(_checkFilledInput) ? invalidFormState = false : invalidFormState = true;
+    //         self.preActivities.every(_checkFilledInput) ? invalidFormState = false : invalidFormState = true;
     //     }
     //     console.log(invalidFormState);
     //     return invalidFormState;
