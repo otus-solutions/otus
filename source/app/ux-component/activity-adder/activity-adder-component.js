@@ -283,7 +283,8 @@
     }
 
     function _checkFilledInput(dto) {
-      console.log(dto.preActivityValid);
+      console.log(dto);
+      if(!dto.surveyForm.isRequiredExternalID()) dto.preActivityValid = true;
       return dto.preActivityValid === true;
     }
 

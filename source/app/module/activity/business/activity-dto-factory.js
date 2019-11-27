@@ -26,11 +26,11 @@
     self.externalID = externalID || null;
     self.preActivityValid = false;
 
-
 		/* Public methods */
 		self.updatePaperActivityData = updatePaperActivityData;
     self.updatePreActivityValid = updatePreActivityValid;
 		self.toJSON = toJSON;
+
 
 		function updatePaperActivityData(checkerData, realizationDate) {
 			self.paperActivityData = {};
