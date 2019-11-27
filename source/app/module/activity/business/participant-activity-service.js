@@ -64,8 +64,8 @@
 
 		function createActivityDto(survey, configuration, mode) {
 			let loggedUser = ContextService.getLoggedUser();
-			let activityDto = ActivityDtoFactory.create(survey, configuration, mode, loggedUser);
-			return activityDto;
+			let preActivity = ActivityDtoFactory.create(survey, configuration, mode, loggedUser);
+			return preActivity;
 		}
 
 		function saveActivities(preActivities) {
@@ -78,21 +78,21 @@
 
 		function _prepareActivities(preActivities) {
 			return getSelectedParticipant().then(function (selectedParticipant) {
-				preActivities.forEach(activityDto => {
-					activityDto.mode === "ONLINE" ? _createOnLineActivity(activityDto, selectedParticipant) : _createPaperActivity(activityDto, selectedParticipant);
+				preActivities.forEach(preActivity => {
+					preActivity.mode === "ONLINE" ? _createOnLineActivity(preActivity, selectedParticipant) : _createPaperActivity(preActivity, selectedParticipant);
 				});
 			});
 		}
 
-		function _createOnLineActivity(activityDto, selectedParticipant) {
-			ActivityRepositoryService.createOnLineActivity(activityDto.surveyForm, activityDto.user, selectedParticipant, activityDto.configuration, activityDto.externalID)
+		function _createOnLineActivity(preActivity, selectedParticipant) {
+			ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID)
 				.then(OnlineActivity => self.activities.push(OnlineActivity));
 
 		}
 
-		function _createPaperActivity(activityDto, selectedParticipant) {
-			ActivityRepositoryService.createPaperActivity(activityDto.surveyForm,
-				activityDto.user, selectedParticipant, activityDto.paperActivityData, activityDto.configuration, activityDto.externalID)
+		function _createPaperActivity(preActivity, selectedParticipant) {
+			ActivityRepositoryService.createPaperActivity(preActivity.surveyForm,
+				preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID)
 				.then(paperActivity => self.activities.push(paperActivity));
 		}
 
