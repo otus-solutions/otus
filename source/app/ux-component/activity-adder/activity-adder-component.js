@@ -24,10 +24,8 @@
 
   function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout) {
     const option = "Todos";
-    var self = this;
-    // var _selectedActivities = [];
-    var _exitDialog;
 
+    let self = this;
     let confirmDeletePreActivities;
     let confirmSavePreActivities;
     let invalidPreActivities;
@@ -46,9 +44,6 @@
     self.selectionOptions = [];
 
     /* Public methods */
-    //self.addActivities = addActivities;
-    //self.catchActivity = catchActivity;
-
     self.addPreActivities = addPreActivities;
     self.saveActivities = saveActivities;
     self.surveyQuerySearch = surveyQuerySearch;
@@ -62,22 +57,7 @@
     self.$onInit = onInit;
 
     function onInit() {
-      // _exitDialog = {
-      //     dialogToTitle: 'Alerta',
-      //     titleToText: 'ATENÇÃO!',
-      //     textDialog: 'Você deve selecionar ao menos uma atividade.',
-      //     ariaLabel: 'Alerta de Erro',
-      //     buttons: [
-      //         {
-      //             message: 'Fechar',
-      //             action: function () {
-      //                 $mdDialog.hide()
-      //             },
-      //             class: 'md-raised md-no-focus'
-      //         }
-      //     ]
-      // };
-      self.selectionOptions.push(option);
+      //self.selectionOptions.push(option);
       LoadingScreenService.start();
       _buildDialogs();
       _loadCategories();
@@ -150,12 +130,9 @@
 
     function addActivitiesGroup(item) {
       self.selectedGroupsResult = item.includes(option) ? self.groupList.slice(0) : item;
-
       _groupsFilter();
 
-      self.activities.forEach(activity => {
-        addPreActivities(activity);
-      });
+      self.activities.forEach(activity => addPreActivities(activity));
     }
 
     function addPreActivities(survey) {
@@ -168,14 +145,12 @@
     function _loadCategories() {
       ParticipantActivityService
         .listAllCategories()
-        .then(function (response) {
-          self.categories = response;
-        });
+        .then(response => self.categories = response);
     }
 
     function _loadSurveys() {
       ParticipantActivityService.listAvailables()
-        .then(function (surveys) {
+        .then(surveys => {
           self.surveys = angular.copy(surveys);
           self.AllSurveys = angular.copy(self.surveys);
           if (surveys.length) {
@@ -188,7 +163,7 @@
       var results = query ? self.surveys.filter(_activityCreateFilterFor(query)) : self.surveys;
       var deferred = $q.defer();
 
-      $timeout(function () {
+      $timeout(() => {
         deferred.resolve(results);
       }, Math.random() * 1000, false);
 
@@ -241,36 +216,6 @@
     }
 
 
-    //Lógica feita para validação dos inputs dos cards
-    // function isFormInvalid() {
-    //     let invalidFormState = true;
-    //     if (!self.preActivities.length) invalidFormState = true;
-    //     else {
-    //         self.preActivities.every(_checkFilledInput) ? invalidFormState = false : invalidFormState = true;
-    //     }
-    //     console.log(invalidFormState);
-    //     return invalidFormState;
-    // }
-
-    //function _checkFilledInput(dto) {
-    // switch (dto.mode) {
-    // 	case "ONLINE": {
-    // 		if (dto.surveyForm.isRequiredExternalID()) return dto.externalID !== undefined;
-    // 		break;
-    // 	}
-    // 	case "PAPER": {
-    // 		console.log(dto)
-    // 		if (dto.surveyForm.isRequiredExternalID()) {
-    // 			return dto.paperActivityData !== undefined && dto.externalID !== undefined;
-    // 			break;
-    // 		}
-    // 		else {
-    // 			return dto.paperActivityData !== undefined;
-    // 			break;
-    // 		}
-    // 	}
-    // }
-    //}
 
 
     function _buildDialogs() {
@@ -326,13 +271,3 @@
     }
   }
 }());
-
-//clean
-///home/fabiano/ccem/otus/source/app/deploy/state/activity/paper-activity-initializer-state-provider.js
-//source/app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js
-//source/app/ux-component/activity-category-adder/activity-category-adder-component.js
-
-//statusHistory.newInitializedOfflineRegistry(paperActivityData);
-
-//fetchChances
-//source/app/ux-component/laboratory/control-panel/control-panel-component.js

@@ -68,19 +68,17 @@
 			return activityDto;
 		}
 
-		function saveActivities(activityDtos) {
-			_prepareActivities(activityDtos)
+		function saveActivities(preActivities) {
+			_prepareActivities(preActivities)
 				.then(() => ActivityRepositoryService.saveActivities(self.activities))
 				.then(() => ApplicationStateService.activateParticipantActivities())
 				.then(() => self.activities = []);
-
-
-			window.sessionStorage.removeItem('activityDtos');
+			window.sessionStorage.removeItem('preActivities');
 		}
 
-		function _prepareActivities(activityDtos) {
+		function _prepareActivities(preActivities) {
 			return getSelectedParticipant().then(function (selectedParticipant) {
-				activityDtos.forEach(activityDto => {
+				preActivities.forEach(activityDto => {
 					activityDto.mode === "ONLINE" ? _createOnLineActivity(activityDto, selectedParticipant) : _createPaperActivity(activityDto, selectedParticipant);
 				});
 			});
