@@ -59,7 +59,6 @@
     self.$onInit = onInit;
 
     function onInit() {
-      //self.selectionOptions.push(option);
       LoadingScreenService.start();
       _buildDialogs();
       _loadCategories();
@@ -85,6 +84,8 @@
         self.groupList = self.surveysGroups.getGroupNames();
         self.selectionOptions = self.selectionOptions.concat(self.groupList);
       });
+
+       self.selectionOptions.push(option);
     }
 
     function displayGridLarge() {
@@ -143,7 +144,7 @@
 
       _groupsFilter();
 
-      $timeout(function(){
+      $timeout(() => {
         self.processing = true;
       },3000);
 
