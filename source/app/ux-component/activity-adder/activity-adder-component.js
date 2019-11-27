@@ -82,10 +82,13 @@
       GroupActivityService.getSurveyGroupsByUser().then(function (data) {
         self.surveysGroups = data;
         self.groupList = self.surveysGroups.getGroupNames();
+
+        if(self.groupList.length > 0){
+          self.selectionOptions.push(option);
+        }
+
         self.selectionOptions = self.selectionOptions.concat(self.groupList);
       });
-
-       self.selectionOptions.push(option);
     }
 
     function displayGridLarge() {
