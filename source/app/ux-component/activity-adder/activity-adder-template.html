@@ -126,7 +126,9 @@
     <md-grid-tile class="md-whiteframe-3dp" ng-repeat="activityDto in $ctrl.activityDtos">
         <otus-activity-adder-card activity-dto="activityDto"
                                   activity-dtos="$ctrl.activityDtos"
-                                  checkers="$ctrl.checkers">
+                                  checkers="$ctrl.checkers"
+                                  inputValidateState = "$ctrl.verifyValidityInputs"
+        >
         </otus-activity-adder-card>
     </md-grid-tile>
     </md-grid-list>

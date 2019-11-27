@@ -22,8 +22,8 @@
   <div layout="column">
     <div layout="column" layout-align="start start">
       <span class="md-body-2" layout-fill md-truncate>{{$ctrl.activityDto.surveyForm.name}}</span>
-      <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2"
-                                                                              ng-style="{color:'black'}">{{::$ctrl.activityDto.configuration.category.label}}</small></span>
+      <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2" ng-style="{color:'black'}">
+        {{::$ctrl.activityDto.configuration.category.label}}</small></span>
     </div>
   </div>
   <div layout="column" layout-align="start start" ng-if="$ctrl.activityDto.mode === 'PAPER'">
@@ -83,7 +83,7 @@
   <div style="margin-top: 0">
     <form name="$ctrl.externalIdForm" novalidate>
       <md-input-container ng-if="$ctrl.activityDto.surveyForm.isRequiredExternalID()" md-no-float class="md-block" style="padding-top: 10px">
-        <input name="externalid" ng-model="$ctrl.activityDto.externalID" placeholder="Id externo" aria-label="Id externo" required>
+        <input name="externalid" ng-model="$ctrl.externalID" ng-change="$ctrl.updateExternalID(externalID)" placeholder="Id externo" aria-label="Id externo" required>
         <small class="error" ng-show="$ctrl.externalIdForm.externalid.$pristine || $ctrl.externalIdForm.$invalid">Preenchimento
           Obrigatório</small>
 

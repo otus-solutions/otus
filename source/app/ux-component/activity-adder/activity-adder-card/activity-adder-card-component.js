@@ -21,7 +21,6 @@
 	function Controller($q, $timeout) {
 		var self = this;
 		self.realizationDate;
-		self.isValidExternalIdForm = true;
 
 		/* Public methods */
 		self.checkerQuerySearch = checkerQuerySearch;
@@ -29,6 +28,7 @@
 		self.checkerSelectedItemChange = checkerSelectedItemChange;
 		self.deleteActivityDto = deleteActivityDto;
 		self.getAcronym = getAcronym;
+		self.updateExternalID = updateExternalID;
 
 
 		function checkerQuerySearch(query) {
@@ -50,7 +50,10 @@
 		}
 
 		function checkerSelectedItemChange(checker) {
-			if (checker && self.realizationDate) self.activityDto.updatePaperActivityData(checker, self.realizationDate);
+			if (checker && self.realizationDate) {
+			  self.activityDto.updatePaperActivityData(checker, self.realizationDate);
+			  //self.activityDto.updateActivityDtoValid(self.paperForm.$valid);
+			}
 			else self.activityDto.paperActivityData = undefined;
 		}
 
@@ -65,6 +68,11 @@
 		function deleteActivityDto() {
 			self.activityDtos.splice(self.activityDtos.indexOf(self.activityDto), 1);
 		}
+
+		function updateExternalID(externalID) {
+		  self.activityDto.externalID = externalID;
+		  self.activityDto.updatePreActivityValid(self.externalIdForm.$valid);
+    }
 
 	}
 

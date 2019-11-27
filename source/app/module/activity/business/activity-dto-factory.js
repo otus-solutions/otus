@@ -21,13 +21,15 @@
 		self.surveyForm = survey;
 		self.configuration = configuration || {};
 		self.mode = mode;
-        self.user = user || undefined;
-        self.paperActivityData = undefined;
-        self.externalID = externalID || null;
+		self.user = user || undefined;
+    self.paperActivityData = undefined;
+    self.externalID = externalID || null;
+    self.preActivityValid = false;
 
 
 		/* Public methods */
 		self.updatePaperActivityData = updatePaperActivityData;
+    self.updatePreActivityValid = updatePreActivityValid;
 		self.toJSON = toJSON;
 
 		function updatePaperActivityData(checkerData, realizationDate) {
@@ -35,6 +37,10 @@
 			self.paperActivityData.checker = checkerData.checker;
 			self.paperActivityData.realizationDate = realizationDate;
 		}
+
+    function updatePreActivityValid(state){
+		  self.preActivityValid = state;
+    }
 
 		function toJSON() {
 			return {
@@ -44,7 +50,8 @@
 				mode: self.mode,
 				user: self.user,
 				paperActivityData: self.paperActivityData,
-				externalID: self.externalID
+				externalID: self.externalID,
+        preActivityValid: self.preActivityValid
 			};
 		}
 	}
