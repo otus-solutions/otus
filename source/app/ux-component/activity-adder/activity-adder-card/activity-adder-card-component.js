@@ -52,9 +52,12 @@
 		function checkerSelectedItemChange(checker) {
 			if (checker && self.realizationDate) {
 			  self.activityDto.updatePaperActivityData(checker, self.realizationDate);
-			  //self.activityDto.updateActivityDtoValid(self.paperForm.$valid);
+			  self.activityDto.updatePreActivityValid(self.checkerForm.$valid);
 			}
-			else self.activityDto.paperActivityData = undefined;
+			else {
+			  self.activityDto.paperActivityData = undefined
+        self.activityDto.updatePreActivityValid(self.checkerForm.$valid);
+			};
 		}
 
 		function getModeIcon() {
@@ -71,9 +74,9 @@
 
 		function updateExternalID(externalID) {
 		  self.activityDto.externalID = externalID;
-		  self.activityDto.updatePreActivityValid(self.externalIdForm.$valid);
+		  if(self.activityDto.mode === "PAPER") self.activityDto.updatePreActivityValid(self.externalIdForm.$valid && self.checkerForm.$valid);
+		  else self.activityDto.updatePreActivityValid(self.externalIdForm.$valid);
     }
-
 	}
 
 })();

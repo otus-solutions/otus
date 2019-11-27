@@ -6,13 +6,9 @@
       <h3 ng-style="{color: '#FFFFFF'}">{{::$ctrl.getAcronym()}}</h3>
     </div>
     <div>
-      <md-button class="md-icon-button">
-        <md-icon md-font-set="material-icons" ng-click="$ctrl.deleteActivityDto()" style="color:white">delete
-        </md-icon>
-        </md-icon>
-        <md-tooltip md-direction="top">
-          Remover
-        </md-tooltip>
+      <md-button class="md-icon-button" ng-click="$ctrl.deleteActivityDto()">
+        <md-icon md-font-set="material-icons"  style="color:white">delete</md-icon>
+        <md-tooltip md-direction="top">Remover</md-tooltip>
       </md-button>
     </div>
   </div>
@@ -27,7 +23,7 @@
     </div>
   </div>
   <div layout="column" layout-align="start start" ng-if="$ctrl.activityDto.mode === 'PAPER'">
-    <form name="checkerForm" style="margin-top: 10px">
+    <form name="$ctrl.checkerForm" style="margin-top: 10px">
       <small class="md-caption" ng-style="{color:'#797985'}">Campos de preenchimento obrigatório:</small>
       <md-input-container style="margin-top: 12px; margin-bottom: 12px" id="date">
         <label ng-show="$ctrl.realizationDate">Data de Realização</label>
@@ -38,9 +34,6 @@
                ng-model="$ctrl.realizationDate"
                placeholder="Data de Realização" readonly="readonly"
                required show-icon="true" time="false" type="text">
-        <div ng-messages="checkerForm.realizationDate.$error">
-          <div ng-message="required">Informe uma data!</div>
-        </div>
       </md-input-container>
 
       <md-autocomplete md-input-name="autocompleteChecker"
@@ -52,7 +45,8 @@
                        md-search-text="$ctrl.checkerSearchText"
                        md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
                        md-selected-item="$ctrl.checkerSelectedItem"
-                       md-selected-item-change="$ctrl.checkerSelectedItemChange(item, activityDto)" placeholder="Aferidor (a)" required style="width: 90%">
+                       md-selected-item-change="$ctrl.checkerSelectedItemChange(item, activityDto)"
+                       placeholder="Aferidor (a)" required style="width: 90%">
         <md-item-template>
                     <span class="item-title">
                         <md-icon md-svg-icon="account"></md-icon>
@@ -83,17 +77,19 @@
   <div style="margin-top: 0">
     <form name="$ctrl.externalIdForm" novalidate>
       <md-input-container ng-if="$ctrl.activityDto.surveyForm.isRequiredExternalID()" md-no-float class="md-block" style="padding-top: 10px">
-        <input name="externalid" ng-model="$ctrl.externalID" ng-change="$ctrl.updateExternalID(externalID)" placeholder="Id externo" aria-label="Id externo" required>
-        <small class="error" ng-show="$ctrl.externalIdForm.externalid.$pristine || $ctrl.externalIdForm.$invalid">Preenchimento
-          Obrigatório</small>
-
+        <input name="externalid" ng-model="$ctrl.externalID" ng-change="$ctrl.updateExternalID($ctrl.externalID)"
+               placeholder="Id externo" aria-label="Id externo" required>
       </md-input-container>
-      <md-input-container ng-if="!$ctrl.activityDto.surveyForm.isRequiredExternalID()" >
+      <md-input-container ng-if="!$ctrl.activityDto.surveyForm.isRequiredExternalID()">
         <small ng-style="{color:'#9e9e9e'}">Id externo não requerido *</small>
       </md-input-container>
     </form>
   </div>
 </div>
-<md-tooltip md-direction="top">
-  {{$ctrl.activityDto.surveyForm.name}}
-</md-tooltip>
+
+<small class="error" ng-show="$ctrl.checkerForm.autocompleteChecker.$pristine ||
+                              $ctrl.checkerForm.realizationDate.$pristine ||
+                              $ctrl.checkerForm.$invalid ||
+                              $ctrl.externalIdForm.externalid.$pristine ||
+                              $ctrl.externalIdForm.$invalid
+">Preenchimento Obrigatório</small>

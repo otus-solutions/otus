@@ -265,11 +265,6 @@
     }
 
     function resetActivityDtos() {
-      self.activityDtos = [];
-      window.sessionStorage.removeItem('activityDtos');
-    }
-
-    function resetActivityDtos() {
       DialogService.showDialog(confirmDeletePreActivities).then(() => {
         self.activityDtos = [];
         window.sessionStorage.removeItem('activityDtos');
@@ -283,8 +278,7 @@
     }
 
     function _checkFilledInput(dto) {
-      console.log(dto);
-      if(!dto.surveyForm.isRequiredExternalID()) dto.preActivityValid = true;
+      if(dto.mode === "ONLINE" && !dto.surveyForm.isRequiredExternalID()) dto.preActivityValid = true;
       return dto.preActivityValid === true;
     }
 
@@ -341,7 +335,7 @@
       invalidPreActivities = {
         dialogToTitle: 'Aviso',
         titleToText: 'Existem Formulários inválidos',
-        textDialog: 'Solicitamos que retorne para lista e preencha os campos dos formulários incompletos',
+        textDialog: 'Retorne e preencha os campos dos formulários incompletos',
         ariaLabel: 'Aviso de formulários inválidos',
         buttons: [{
           message: 'Voltar',
