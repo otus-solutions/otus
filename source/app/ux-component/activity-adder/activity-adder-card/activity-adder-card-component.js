@@ -50,6 +50,9 @@
 		}
 
 		function checkerSelectedItemChange(checker) {
+		  console.log("quem vem invalid")
+		  console.log(self.realizationDate)
+      console.log(checker);
 			if (checker && self.realizationDate) {
 			  self.preActivity.updatePaperActivityData(checker, self.realizationDate);
 			  self.preActivity.updatePreActivityValid(self.checkerForm.$valid);

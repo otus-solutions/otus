@@ -71,7 +71,7 @@
 
             <div flex layout="row" layout-align="center center" ng-if="!$ctrl.selectAction()">
                 <span flex="40" flex-xs="100" >
-                    <md-tooltip md-direction="top">Lista de Formulários</md-tooltip>
+                    <md-tooltip md-direction="bottom">Lista de Formulários</md-tooltip>
                     <md-autocomplete id="autocomplete_selectSurvey"
                                      md-item-text="item.name"
                                      md-items="item in $ctrl.surveyQuerySearch($ctrl.searchText)"
