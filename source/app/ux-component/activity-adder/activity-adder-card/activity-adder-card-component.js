@@ -7,9 +7,9 @@
 			templateUrl: 'app/ux-component/activity-adder/activity-adder-card/activity-adder-card-template.html',
 			controller: Controller,
 			bindings: {
-				activityDtos: '=',
+				preActivities: '=',
 				checkers: '<',
-				activityDto: '='
+				preActivity: '='
 			}
 		});
 
@@ -51,34 +51,34 @@
 
 		function checkerSelectedItemChange(checker) {
 			if (checker && self.realizationDate) {
-			  self.activityDto.updatePaperActivityData(checker, self.realizationDate);
-			  self.activityDto.updatePreActivityValid(self.checkerForm.$valid);
+			  self.preActivity.updatePaperActivityData(checker, self.realizationDate);
+			  self.preActivity.updatePreActivityValid(self.checkerForm.$valid);
 			}
 			else {
-			  self.activityDto.paperActivityData = undefined
-        self.activityDto.updatePreActivityValid(self.checkerForm.$valid);
+			  self.preActivity.paperActivityData = undefined
+        self.preActivity.updatePreActivityValid(self.checkerForm.$valid);
 			};
 		}
 
 		function getModeIcon() {
-			return self.activityDto.mode === "ONLINE" ? "signal" : "file-document"
+			return self.preActivity.mode === "ONLINE" ? "signal" : "file-document"
 		}
 
 		function getAcronym() {
-			return self.activityDto.surveyForm.surveyTemplate.identity.acronym;
+			return self.preActivity.surveyForm.surveyTemplate.identity.acronym;
 		}
 
 		function deletePreActivity() {
-			self.activityDtos.splice(self.activityDtos.indexOf(self.activityDto), 1);
-      window.sessionStorage.removeItem('activityDtos');
-      window.sessionStorage.setItem('activityDtos', JSON.stringify(self.activityDtos));
+			self.preActivities.splice(self.preActivities.indexOf(self.preActivity), 1);
+      window.sessionStorage.removeItem('preActivities');
+      window.sessionStorage.setItem('preActivities', JSON.stringify(self.preActivities));
 
 		}
 
 		function updateExternalID(externalID) {
-		  self.activityDto.externalID = externalID;
-		  if(self.activityDto.mode === "PAPER") self.activityDto.updatePreActivityValid(self.externalIdForm.$valid && self.checkerForm.$valid);
-		  else self.activityDto.updatePreActivityValid(self.externalIdForm.$valid);
+		  self.preActivity.externalID = externalID;
+		  if(self.preActivity.mode === "PAPER") self.preActivity.updatePreActivityValid(self.externalIdForm.$valid && self.checkerForm.$valid);
+		  else self.preActivity.updatePreActivityValid(self.externalIdForm.$valid);
     }
 	}
 
