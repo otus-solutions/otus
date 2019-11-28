@@ -30,7 +30,7 @@
         <input aria-label="Data de Nascimento" class="md-input" date="true" disable-parent-scroll="true"
                format="DD/MM/YYYY"
                id="datetime" max-date="$ctrl.maxDate" mdc-datetime-picker=""
-               name="realizationDate" ng-change="$ctrl.checkerSelectedItemChange($ctrl.checkerSearchText)"
+               name="realizationDate" ng-change="$ctrl.updateRealizationDate($ctrl.realizationDate)"
                ng-model="$ctrl.realizationDate"
                placeholder="Data de Realização" readonly="readonly"
                required show-icon="true" time="false" type="text">
@@ -45,7 +45,7 @@
                        md-search-text="$ctrl.checkerSearchText"
                        md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
                        md-selected-item="$ctrl.checkerSelectedItem"
-                       md-selected-item-change="$ctrl.checkerSelectedItemChange(item, preActivity)"
+                       md-selected-item-change="$ctrl.checkerSelectedItemChange(item)"
                        placeholder="Aferidor (a)" required style="width: 90%">
         <md-item-template>
                     <span class="item-title">

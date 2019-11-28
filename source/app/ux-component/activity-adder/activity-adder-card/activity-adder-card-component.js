@@ -29,6 +29,7 @@
 		self.deletePreActivity = deletePreActivity;
 		self.getAcronym = getAcronym;
 		self.updateExternalID = updateExternalID;
+		self.updateRealizationDate = updateRealizationDate;
 
 
 		function checkerQuerySearch(query) {
@@ -50,15 +51,12 @@
 		}
 
 		function checkerSelectedItemChange(checker) {
-		  console.log("quem vem invalid")
-		  console.log(self.realizationDate)
-      console.log(checker);
 			if (checker && self.realizationDate) {
 			  self.preActivity.updatePaperActivityData(checker, self.realizationDate);
 			  self.preActivity.updatePreActivityValid(self.checkerForm.$valid);
 			}
 			else {
-			  self.preActivity.paperActivityData = undefined
+			  self.preActivity.paperActivityData = undefined;
         self.preActivity.updatePreActivityValid(self.checkerForm.$valid);
 			};
 		}
@@ -83,6 +81,12 @@
 		  if(self.preActivity.mode === "PAPER") self.preActivity.updatePreActivityValid(self.externalIdForm.$valid && self.checkerForm.$valid);
 		  else self.preActivity.updatePreActivityValid(self.externalIdForm.$valid);
     }
+
+
+    function updateRealizationDate(updatedDate){
+		  self.realizationDate = updatedDate;
+    }
+
 	}
 
 })();

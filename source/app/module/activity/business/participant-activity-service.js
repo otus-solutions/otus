@@ -79,9 +79,10 @@
 		function _prepareActivities(preActivities) {
 			return getSelectedParticipant().then(selectedParticipant => {
 				preActivities.forEach(preActivity => {
-				  console.log("teste integração (bug papel) tipo selecionado:"+preActivity.mode)
-				  console.log("teste integração (bug papel) tipo selecionado:"+preActivity.paperActivityData)
-					preActivity.mode === "ONLINE" ? _createOnLineActivity(preActivity, selectedParticipant) : _createPaperActivity(preActivity, selectedParticipant);
+				  switch (preActivity.mode) {
+            case "ONLINE": _createOnLineActivity(preActivity, selectedParticipant); break;
+            case "PAPER":  _createPaperActivity(preActivity, selectedParticipant); break;
+          }
 				});
 			});
 		}
@@ -89,7 +90,6 @@
 		function _createOnLineActivity(preActivity, selectedParticipant) {
 			ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID)
 				.then(OnlineActivity => self.activities.push(OnlineActivity));
-
 		}
 
 		function _createPaperActivity(preActivity, selectedParticipant) {

@@ -253,9 +253,9 @@
       };
 
       invalidPreActivities = {
-        dialogToTitle: 'Aviso',
-        titleToText: 'Existem Formulários inválidos',
-        textDialog: 'Retorne e preencha os campos dos formulários incompletos',
+        dialogToTitle: 'Pendência de Informações',
+        titleToText: 'Detecção de Formulários Incompletos',
+        textDialog: 'Retorne para lista e preencha os campos obrigatórios',
         ariaLabel: 'Aviso de formulários inválidos',
         buttons: [{
           message: 'Voltar',
