@@ -93,7 +93,7 @@
 		}
 
 		function _createPaperActivity(preActivity, selectedParticipant) {
-		  if(!preActivity.paperActivityData) throw error("interrupted operation: invalid checker data")
+		  if(!preActivity.paperActivityData) throw Error("interrupted operation: invalid checker data");
       else {
 			ActivityRepositoryService.createPaperActivity(preActivity.surveyForm,
 				preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID)
