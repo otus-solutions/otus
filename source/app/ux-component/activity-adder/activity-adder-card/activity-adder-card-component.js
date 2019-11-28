@@ -20,7 +20,7 @@
 
 	function Controller($q, $timeout) {
 		var self = this;
-		self.realizationDate = null;
+		self.realizationDate = new Date();
 
 		/* Public methods */
 		self.checkerQuerySearch = checkerQuerySearch;
@@ -79,7 +79,11 @@
 
     function updateRealizationDate(updatedDate){
 		  self.realizationDate = updatedDate;
-      self.checkerSearchText = "";
+      _cleanCheckerSearchText();
+    }
+
+    function _cleanCheckerSearchText(){
+		  self.checkerSearchText = "";
     }
 	}
 

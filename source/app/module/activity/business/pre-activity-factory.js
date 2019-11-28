@@ -33,9 +33,12 @@
 
 
 		function updatePaperActivityData(checkerData, realizationDate) {
-			self.paperActivityData = {};
-			self.paperActivityData.checker = checkerData.checker;
-			self.paperActivityData.realizationDate = realizationDate;
+		  if(!checkerData) self.preActivityValid = false;
+		  else{
+        self.paperActivityData = {};
+        self.paperActivityData.checker = checkerData.checker;
+        self.paperActivityData.realizationDate = realizationDate;
+      }
 		}
 
     function updatePreActivityValid(state){

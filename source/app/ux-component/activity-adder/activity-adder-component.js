@@ -44,6 +44,7 @@
     self.paperActivityCheckerData = null;
     self.preActivities = [];
     self.selectionOptions = [];
+    self.checkerSearchText;
 
     /* Public methods */
     self.addPreActivities = addPreActivities;
@@ -216,6 +217,7 @@
     }
 
     function _checkFilledInput(dto) {
+      console.log(dto.preActivityValid)
       if(dto.mode === "ONLINE" && !dto.surveyForm.isRequiredExternalID()) dto.preActivityValid = true;
       return dto.preActivityValid === true;
     }

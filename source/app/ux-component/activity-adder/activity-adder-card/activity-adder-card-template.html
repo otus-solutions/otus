@@ -43,7 +43,7 @@
                        md-min-length="0"
                        md-no-cache="true"
                        md-search-text="$ctrl.checkerSearchText"
-                       md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
+                       md-search-text-change="$ctrl.preActivity.updatePreActivityValid(false)"
                        md-selected-item="$ctrl.checkerSelectedItem"
                        md-selected-item-change="$ctrl.checkerSelectedItemChange($ctrl.checkerSelectedItem)"
                        placeholder="Aferidor (a)" style="width: 90%" ng-disabled="!$ctrl.realizationDate" required>
@@ -83,9 +83,7 @@
     </md-input-container>
   </form>
   <small class="error" ng-show="$ctrl.checkerForm.autocompleteChecker.$pristine ||
-                              $ctrl.checkerForm.realizationDate.$pristine ||
                               $ctrl.checkerForm.$invalid ||
                               $ctrl.externalIdForm.externalid.$pristine ||
-                              $ctrl.externalIdForm.$invalid
-">Preenchimento Obrigatório</small>
+                              $ctrl.externalIdForm.$invalid">Preenchimento Obrigatório</small>
 </div>
