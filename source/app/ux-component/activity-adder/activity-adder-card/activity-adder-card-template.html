@@ -46,7 +46,7 @@
                        md-search-text-change="$ctrl.checkerSearchTextChange($ctrl.checkerSearchText)"
                        md-selected-item="$ctrl.checkerSelectedItem"
                        md-selected-item-change="$ctrl.checkerSelectedItemChange(item)"
-                       placeholder="Aferidor (a)" required style="width: 90%">
+                       placeholder="Aferidor (a)" required style="width: 90%" ng-disabled="!$ctrl.realizationDate">
         <md-item-template>
                     <span class="item-title">
                         <md-icon md-svg-icon="account"></md-icon>

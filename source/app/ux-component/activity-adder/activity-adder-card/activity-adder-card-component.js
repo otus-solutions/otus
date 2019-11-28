@@ -20,7 +20,7 @@
 
 	function Controller($q, $timeout) {
 		var self = this;
-		self.realizationDate;
+		self.realizationDate = null;
 
 		/* Public methods */
 		self.checkerQuerySearch = checkerQuerySearch;
@@ -73,7 +73,6 @@
 			self.preActivities.splice(self.preActivities.indexOf(self.preActivity), 1);
       window.sessionStorage.removeItem('preActivities');
       window.sessionStorage.setItem('preActivities', JSON.stringify(self.preActivities));
-
 		}
 
 		function updateExternalID(externalID) {
@@ -81,7 +80,6 @@
 		  if(self.preActivity.mode === "PAPER") self.preActivity.updatePreActivityValid(self.externalIdForm.$valid && self.checkerForm.$valid);
 		  else self.preActivity.updatePreActivityValid(self.externalIdForm.$valid);
     }
-
 
     function updateRealizationDate(updatedDate){
 		  self.realizationDate = updatedDate;
