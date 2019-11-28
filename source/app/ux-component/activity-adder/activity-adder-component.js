@@ -31,6 +31,7 @@
     let invalidPreActivities;
 
     self.surveys = [];
+    self.activities = [];
     self.selectedSurveys = [];
 
     //self.selectedActivities = [];
@@ -78,6 +79,7 @@
       self.selectedGroups = [];
       self.selectedGroupsResult = [];
       self.groupList = [];
+      self.selectionOptions = [];
       GroupActivityService.getSurveyGroupsByUser().then(function (data) {
         self.surveysGroups = data;
         self.groupList = self.surveysGroups.getGroupNames();
@@ -170,7 +172,6 @@
       ParticipantActivityService.listAvailables()
         .then(surveys => {
           self.surveys = angular.copy(surveys);
-          self.AllSurveys = angular.copy(self.surveys);
           if (surveys.length) {
             self.isListEmpty = false;
           }
@@ -178,8 +179,13 @@
     }
 
     function surveyQuerySearch(query) {
-      var results = query ? self.surveys.filter(_activityCreateFilterFor(query)) : self.surveys;
+      var results = [];
       var deferred = $q.defer();
+
+      self.selectedGroupsResult = self.selectedGroupsResult.concat(self.groupList);
+      _groupsFilter();
+
+      results = query ? self.activities.filter(_activityCreateFilterFor(query)) : self.activities;
 
       $timeout(() => {
         deferred.resolve(results);
