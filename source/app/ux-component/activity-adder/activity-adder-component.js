@@ -64,7 +64,6 @@
       _loadCategories();
       _loadSurveys();
       _loadSurveysGroup();
-      _loadPreActivitiesfromStorage();
     }
 
     function clearSearchTerm() {
@@ -159,7 +158,6 @@
       let dto = ParticipantActivityService.createPreActivity(survey, self.configuration, self.mode, self.paperActivityCheckerData);
       self.preActivities.push(dto);
       self.searchText = '';
-      _saveInSessionStorage();
     }
 
     function _loadCategories() {
@@ -198,29 +196,9 @@
       };
     }
 
-    function _loadPreActivitiesfromStorage() {
-      let resultFromStorage = JSON.parse(window.sessionStorage.getItem('preActivities'));
-      if (resultFromStorage) {
-        let _activitiesFromStorage = []
-        resultFromStorage.forEach(result => {
-          let survey = ParticipantActivityService.getSurveyFromJson(result.surveyForm);
-          _activitiesFromStorage.push(ParticipantActivityService.createPreActivity(survey, result.configuration, result.mode, result.paperActivityCheckerData));
-        });
-        if (_activitiesFromStorage) {
-          self.preActivities = _activitiesFromStorage;
-        }
-      }
-    }
-
-    function _saveInSessionStorage() {
-      window.sessionStorage.removeItem('preActivities');
-      window.sessionStorage.setItem('preActivities', JSON.stringify(self.preActivities));
-    }
-
     function resetPreActivities() {
       DialogService.showDialog(confirmDeletePreActivities).then(() => {
         self.preActivities = [];
-        window.sessionStorage.removeItem('preActivities');
       });
     }
 
