@@ -185,7 +185,6 @@
             return ModuleService
                 .whenActivityFacadeServiceReady()
                 .then(function (ActivityFacadeService) {
-                  console.log("teste de integração paper3 contéudo de paperActivityData: "+ paperActivityData);
                     return ActivityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configuration, externalID);
                 });
         }

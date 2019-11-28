@@ -83,8 +83,8 @@
 
     function updateRealizationDate(updatedDate){
 		  self.realizationDate = updatedDate;
+      self.checkerSearchText = "";
     }
-
 	}
 
 })();
