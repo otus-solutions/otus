@@ -1,7 +1,7 @@
-<md-content id="user-login-page" layout="column" flex>
+<div id="user-login-page" layout="column" flex>
   <img src="static-resource/image/banner.png" style="width: 100%;">
-  <md-content flex layout="row" layout-align="center start" ng-show="!$ctrl.recovery" style="background-color: #FFFFFF">
-    <md-card class="card" layout-padding flex-gt-sm="45" flex="80" flex-gt-lg="30" flex-gt-md="35" >
+  <div flex layout="row" layout-align="center start" ng-show="!$ctrl.recovery" style="background-color: #FFFFFF">
+    <md-card class="card" layout-padding flex-gt-sm="50" flex="80" flex-gt-lg="30" flex-gt-md="40" >
       <form name="loginForm" class="content" flex="" layout-fill layout-align="start start" layout="row">
         <div layout="column" flex>
           <div  layout-fill layout="column" flex-offset="10">
@@ -39,9 +39,9 @@
         </div>
       </form>
     </md-card>
-  </md-content>
+  </div>
   <!-- user access recovery -->
-  <md-content flex layout="row" layout-align="center start" ng-show="$ctrl.recovery" style="background-color: #FFFFFF">
+  <div flex layout="row" layout-align="center start" ng-show="$ctrl.recovery" style="background-color: #FFFFFF">
     <md-card class="card" layout-padding flex="80" flex-gt-sm="45">
       <form name="accessRecoveryForm" class="content" layout="row">
         <div  layout-fill layout="column" flex-offset="10">
@@ -61,5 +61,6 @@
         <div flex></div>
       </form>
     </md-card>
-  </md-content>
-</md-content>
+  </div>
+
+</div>
