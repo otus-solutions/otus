@@ -33,33 +33,28 @@
 
 
 		function checkerQuerySearch(query) {
-			var results = query ? self.checkers.filter(_checkerCreateFilterFor(query)) : self.checkers;
-			var deferred = $q.defer();
-      deferred.resolve(results);
-			// $timeout(function () {
-			// 	deferred.resolve(results);
-			// }, Math.random() * 1000, false);
+			let results = query ? self.checkers.filter(_checkerCreateFilterFor(query)) : self.checkers;
+			let deferred = $q.defer();
+
+			$timeout(function () {
+				deferred.resolve(results);
+			}, Math.random() * 1000, false);
 
 			return deferred.promise;
 		}
 
 		function _checkerCreateFilterFor(query) {
-			var lowercaseQuery = angular.lowercase(query);
+			let lowercaseQuery = angular.lowercase(query);
 			return function filterFn(checker) {
 				return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
 			};
 		}
 
 		function checkerSelectedItemChange(checker) {
-		  console.log(checker);
-			if (checker && self.realizationDate) {
+			if (checker) {
 			  self.preActivity.updatePaperActivityData(checker, self.realizationDate);
 			  self.preActivity.updatePreActivityValid(self.checkerForm.$valid);
 			}
-			else {
-			  self.preActivity.paperActivityData = undefined;
-        self.preActivity.updatePreActivityValid(self.checkerForm.$valid);
-			};
 		}
 
 		function getModeIcon() {
