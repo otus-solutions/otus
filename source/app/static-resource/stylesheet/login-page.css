@@ -4,10 +4,11 @@
 /*----------------------Novo login-----------------------------*/
 .card {
   width: 60%;
-  top: 20%;
+  top: 5%;
   margin: 0 auto;
   position: relative;
   z-index: 50;
+  box-shadow: 0 0 !important;
 }
 #user-login-page {
   height: 100%;

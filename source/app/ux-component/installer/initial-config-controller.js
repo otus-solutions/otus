@@ -26,12 +26,33 @@
     self.validateDomain = validateDomain;
     self.resetValidationEmail = resetValidationEmail;
     self.resetValidationDomain = resetValidationDomain;
+    self.invalidUser = invalidUser;
+    self.invalidProject = invalidProject;
+    self.next = next;
+    self.goBack = goBack;
 
     init();
 
     function init() {
       installerResource = OtusRestResourceService.getOtusInstallerResource();
+      $scope.step = 1;
+      $scope.invalidDomain = true;
+    }
 
+    function next() {
+      $scope.step++;
+    }
+
+    function goBack() {
+      $scope.step--;
+    }
+
+    function invalidUser() {
+      return $scope.initialConfigForm.name.$invalid || $scope.initialConfigForm.surname.$invalid || $scope.initialConfigForm.phone.$invalid || $scope.initialConfigForm.password.$invalid  || $scope.initialConfigForm.passwordConfirmation.$invalid;
+    }
+
+    function invalidProject() {
+      return $scope.initialConfigForm.projectName.$invalid;
     }
 
     function register(project) {
@@ -45,6 +66,9 @@
           _showErrorMessage(response);
         }
         $scope.isLoading = false;
+      }, function (error) {
+        _showErrorMessage(error );
+        $scope.isLoading = false;
       });
     }
 
@@ -54,8 +78,13 @@
 
       domainInstallerResource.ready(function(response) {
         if (!response.data) {
+          $scope.invalidDomain = true;
           _showDomainComunicationError();
         }
+        $scope.invalidDomain = false;
+      }, function (error) {
+        _showDomainComunicationError();
+        $scope.invalidDomain = true;
       });
     }
 
@@ -118,7 +147,7 @@
 
       DialogService.showDialog(alert)
         .finally(function() {
-          // ApplicationStateService.activateLogin();
+          ApplicationStateService.activateLogin();
         });
     }
 
