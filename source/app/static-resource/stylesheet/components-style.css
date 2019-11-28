@@ -208,7 +208,12 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
 }
 
 aliquots-view .aliquots-container {
-  min-width: 900px;
+  min-width: 700px;
+}
+@media screen and (max-width: 768px) {
+  aliquots-view .input-footer-message {
+    font-size: 11px;
+  }
 }
 
 otus-sample-transportation-manager-list otus-sample-transportation-lot-info-sidenav md-sidenav {
@@ -305,10 +310,10 @@ otus-view-sending-exam otus-result-visualizer .dynamic-table-container .dynamic-
 }
 
 otus-exams-lots-manager .table-container {
-  min-width: 850px;
+  min-width: 750px;
 }
 otus-exams-lots-manager .table-container md-list {
-  min-width: 800px;
+  min-width: 700px;
 }
 @media screen and (max-width: 726px) {
   otus-exams-lots-manager .desktop-filter .md-subheader {
