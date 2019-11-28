@@ -33,8 +33,6 @@
     self.surveys = [];
     self.activities = [];
     self.selectedSurveys = [];
-
-    //self.selectedActivities = [];
     self.statePreview = false;
     self.processing = true;
     self.mode = "ONLINE";
@@ -268,7 +266,6 @@
             },
             class: 'md-raised md-primary'
           }
-
         ]
       }
     }

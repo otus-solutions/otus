@@ -67,8 +67,6 @@
 
 		function deletePreActivity() {
 			self.preActivities.splice(self.preActivities.indexOf(self.preActivity), 1);
-      window.sessionStorage.removeItem('preActivities');
-      window.sessionStorage.setItem('preActivities', JSON.stringify(self.preActivities));
 		}
 
 		function updateExternalID(externalID) {
