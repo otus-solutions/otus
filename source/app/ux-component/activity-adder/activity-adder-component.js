@@ -141,6 +141,7 @@
 
     function addActivitiesGroup(item) {
       self.activities = [];
+      self.selectedGroups = [];
       self.selectedGroupsResult = [];
       self.selectedGroupsResult = item.includes(option) ? self.groupList.slice(0) : item;
       self.processing = false;
