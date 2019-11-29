@@ -20,14 +20,15 @@
     'otusjs.deploy.LoadingScreenService',
     '$q',
     '$timeout',
-    '$element'
+    '$element',
+
   ];
 
   function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout, $element) {
     const option = "Todos";
 
     let self = this;
-    let confirmDeletePreActivities;
+    let confirmCancelPreActivities;
     let confirmSavePreActivities;
     let invalidPreActivities;
 
@@ -216,8 +217,9 @@
     }
 
     function resetPreActivities() {
-      DialogService.showDialog(confirmDeletePreActivities).then(() => {
+      DialogService.showDialog(confirmCancelPreActivities).then(() => {
         self.preActivities = [];
+        ApplicationStateService.activateParticipantActivities();
       });
     }
 
@@ -241,10 +243,10 @@
     }
 
     function _buildDialogs() {
-      confirmDeletePreActivities = {
+      confirmCancelPreActivities = {
         dialogToTitle: 'Confirmação',
         titleToText: 'Cancelamento da Lista de Formulários',
-        textDialog: 'Atenção: A lista com itens adicionados será redefinida',
+        textDialog: 'Deseja sair do Gerenciador de Atividades ?',
         ariaLabel: 'Confirmação de cancelamento',
         buttons: _prepareButtons()
       };
