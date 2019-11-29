@@ -19,10 +19,11 @@
     'otusjs.application.dialog.DialogShowService',
     'otusjs.deploy.LoadingScreenService',
     '$q',
-    '$timeout'
+    '$timeout',
+    '$element'
   ];
 
-  function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout) {
+  function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout, $element) {
     const option = "Todos";
 
     let self = this;
@@ -64,6 +65,9 @@
       _loadCategories();
       _loadSurveys();
       _loadSurveysGroup();
+       $element.find('input').on('keydown', function(ev) {
+          ev.stopPropagation();
+      });
     }
 
     function clearSearchTerm() {
