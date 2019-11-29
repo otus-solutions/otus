@@ -53,6 +53,7 @@
 		function checkerSelectedItemChange(checker) {
 			if (checker) {
 			  self.preActivity.updatePaperActivityData(checker, self.realizationDate);
+        self.checkerForm.autocompleteChecker.$setValidity("", true);
 			  self.preActivity.updatePreActivityValid(self.checkerForm.$valid);
 			}
 		}

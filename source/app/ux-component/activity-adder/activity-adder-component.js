@@ -159,7 +159,12 @@
     }
 
     function addPreActivities(survey) {
-      let dto = ParticipantActivityService.createPreActivity(survey, self.configuration, self.mode, self.paperActivityCheckerData);
+      let dto = ParticipantActivityService.createPreActivity(
+        survey,
+        angular.copy(self.configuration),
+        angular.copy(self.mode),
+        angular.copy(self.paperActivityCheckerData));
+
       self.preActivities.push(dto);
       self.searchText = '';
     }
