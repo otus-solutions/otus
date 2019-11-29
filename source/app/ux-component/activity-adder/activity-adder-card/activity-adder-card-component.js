@@ -30,6 +30,7 @@
 		self.getAcronym = getAcronym;
 		self.updateExternalID = updateExternalID;
 		self.updateRealizationDate = updateRealizationDate;
+		self.monitoringCheckerFormSearchTextChange = monitoringCheckerFormSearchTextChange;
 
 
 		function checkerQuerySearch(query) {
@@ -69,6 +70,12 @@
 		function deletePreActivity() {
 			self.preActivities.splice(self.preActivities.indexOf(self.preActivity), 1);
 		}
+
+		function monitoringCheckerFormSearchTextChange(){
+		  self.checkerForm.autocompleteChecker.$setValidity('', false);
+		  self.preActivity.updatePreActivityValid(false);
+
+    }
 
 		function updateExternalID(externalID) {
 		  self.preActivity.externalID = externalID;

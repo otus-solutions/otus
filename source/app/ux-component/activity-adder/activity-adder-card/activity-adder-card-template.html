@@ -43,7 +43,7 @@
                        md-min-length="0"
                        md-no-cache="true"
                        md-search-text="$ctrl.checkerSearchText"
-                       md-search-text-change="$ctrl.checkerForm.autocompleteChecker.$setValidity('', false)"
+                       md-search-text-change="$ctrl.monitoringCheckerFormSearchTextChange()"
                        md-selected-item="$ctrl.checkerSelectedItem"
                        md-selected-item-change="$ctrl.checkerSelectedItemChange($ctrl.checkerSelectedItem)"
                        placeholder="Aferidor (a)" style="width: 90%" ng-disabled="!$ctrl.realizationDate" required>
