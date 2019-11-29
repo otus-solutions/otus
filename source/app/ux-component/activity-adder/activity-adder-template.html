@@ -79,7 +79,7 @@
                                      md-min-length="0"
                                      md-no-cache="true"
                                      md-search-text="$ctrl.searchText"
-                                     md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)"
+                                     md-search-text-change="ctrl.monitoringSearchTextChange(false)"
                                      md-selected-item="$ctrl.selectedItem"
                                      md-selected-item-change="$ctrl.selectedItemChange(item)" placeholder="Selecione">
                         <md-item-template>
@@ -89,7 +89,7 @@
                         <md-not-found>Nenhum resultado para "{{ $ctrl.searchText }}" foi encontrado.</md-not-found>
                     </md-autocomplete>
                 </span>
-                <md-button class="md-icon-button" ng-click="$ctrl.addPreActivities($ctrl.selectedItem)" ng-disabled="$ctrl.searchText === ''">
+                <md-button class="md-icon-button" ng-click="$ctrl.addPreActivities($ctrl.selectedItem)" ng-disabled="$ctrl.btnAddPreActivitiesDisable">
                     <md-icon md-font-set="material-icons">add_box</md-icon>
                     <md-tooltip md-direction="top">Adicionar</md-tooltip>
                 </md-button>
@@ -112,7 +112,7 @@
                         </md-optgroup>
                     </md-select>
                 </md-input-container>
-                <md-button class="md-icon-button" ng-click="$ctrl.addActivitiesGroup($ctrl.selectedGroups)" ng-disabled="$ctrl.selectedGroups == ''">
+                <md-button class="md-icon-button" ng-click="$ctrl.addActivitiesGroup($ctrl.selectedGroups)" ng-disabled="!$ctrl.selectedGroups.length">
                     <md-icon md-font-set="material-icons" ng-show="$ctrl.processing">add_box</md-icon>
                     <md-progress-circular md-mode="indeterminate" ng-hide="$ctrl.processing" md-diameter="28px" ></md-progress-circular>
                     <md-tooltip md-direction="top">Adicionar Blocos</md-tooltip>

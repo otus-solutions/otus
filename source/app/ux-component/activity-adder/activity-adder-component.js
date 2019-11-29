@@ -44,6 +44,7 @@
     self.preActivities = [];
     self.selectionOptions = [];
     self.checkerSearchText;
+    self.btnAddPreActivitiesDisable = true;
 
     /* Public methods */
     self.addPreActivities = addPreActivities;
@@ -56,6 +57,8 @@
     self.disabledGroups = disabledGroups;
     self.displayGridLarge = displayGridLarge;
     self.displayGridSmall = displayGridSmall;
+    self.monitoringSearchTextChange = monitoringSearchTextChange;
+    self.selectedItemChange = selectedItemChange;
 
     self.$onInit = onInit;
 
@@ -65,7 +68,7 @@
       _loadCategories();
       _loadSurveys();
       _loadSurveysGroup();
-       $element.find('input').on('keydown', function(ev) {
+       $element.find('#searchBlock').on('keydown', function(ev) {
           ev.stopPropagation();
       });
     }
@@ -169,6 +172,8 @@
 
       self.preActivities.push(dto);
       self.searchText = '';
+      self.btnAddPreActivitiesDisable = true;
+
     }
 
     function _loadCategories() {
@@ -227,6 +232,14 @@
       console.log(dto.preActivityValid)
       if(dto.mode === "ONLINE" && !dto.surveyForm.isRequiredExternalID()) dto.preActivityValid = true;
       return dto.preActivityValid === true;
+    }
+
+    function monitoringSearchTextChange(state){
+      self.addStateValid = state;
+    }
+
+    function selectedItemChange(item){
+      if(item) self.btnAddPreActivitiesDisable = false;
     }
 
     function _buildDialogs() {
