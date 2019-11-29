@@ -440,6 +440,7 @@ otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-header {
 otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-footer {
   padding-left: 10px;
   color: red;
+  height: 24px;
   background: rgba(0,0,0,.05);
 }
 
