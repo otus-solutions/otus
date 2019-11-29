@@ -37,13 +37,12 @@
     self.statePreview = false;
     self.processing = true;
     self.mode = "ONLINE";
-    self.selectType = "activityUnit";
+    self.selectType = "activityList";
     self.iconMode = "";
     self.configuration = {};
     self.paperActivityCheckerData = null;
     self.preActivities = [];
     self.selectionOptions = [];
-    self.checkerSearchText;
     self.btnAddPreActivitiesDisable = true;
 
     /* Public methods */
@@ -164,13 +163,13 @@
     }
 
     function addPreActivities(survey) {
-      let dto = ParticipantActivityService.createPreActivity(
+      let preActivity = ParticipantActivityService.createPreActivity(
         survey,
         angular.copy(self.configuration),
         angular.copy(self.mode),
         angular.copy(self.paperActivityCheckerData));
 
-      self.preActivities.push(dto);
+      self.preActivities.unshift(preActivity);
       self.searchText = '';
       self.btnAddPreActivitiesDisable = true;
 

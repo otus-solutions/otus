@@ -17,7 +17,7 @@
 
 	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
 		var self = this;
-		
+
 		self.activityConfigurations = new Object();
 		self.activities = [];
 
@@ -66,7 +66,7 @@
 
 		function _createOnLineActivity(preActivity, selectedParticipant) {
 			ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID)
-				.then(OnlineActivity => self.activities.push(OnlineActivity));
+				.then(onlineActivity => self.activities.push(onlineActivity));
 		}
 
 		function _createPaperActivity(preActivity, selectedParticipant) {
