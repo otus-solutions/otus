@@ -69,7 +69,7 @@
         </div>
         <div layout="row" layout-align="end center" layout-padding>
 
-            <div flex layout="row" layout-align="center center" ng-if="!$ctrl.selectAction()">
+            <div flex layout="row" layout-align="center center" ng-show="!$ctrl.selectAction()">
                 <span flex="40" flex-xs="100" >
                     <md-tooltip md-direction="bottom">Lista de Formulários</md-tooltip>
                     <md-autocomplete id="autocomplete_selectSurvey"
@@ -94,7 +94,7 @@
                     <md-tooltip md-direction="top">Adicionar</md-tooltip>
                 </md-button>
             </div>
-            <div flex layout="row" layout-align="center center" ng-if="$ctrl.selectAction()">
+            <div flex layout="row" layout-align="center center" ng-show="$ctrl.selectAction()">
                 <md-input-container md-whiteframe="1" flex="40" flex-xs="100" style="background: white">
                     <label>Blocos</label>
                     <md-select ng-model="$ctrl.selectedGroups"

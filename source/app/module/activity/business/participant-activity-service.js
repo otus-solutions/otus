@@ -17,14 +17,11 @@
 
 	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
 		var self = this;
-		var _paperActivityCheckerData = null;
+		
 		self.activityConfigurations = new Object();
 		self.activities = [];
 
-
 		/* Public methods */
-		self.initializePaperActivityData = initializePaperActivityData;
-		self.add = add;
 		self.listAll = listAll;
 		self.listAllCategories = listAllCategories;
 		self.listAvailables = listAvailables;
@@ -43,25 +40,6 @@
 		self.saveActivities = saveActivities;
 		self.getSurveyFromJson = getSurveyFromJson;
 
-
-		function add() {
-			var loggedUser = ContextService.getLoggedUser();
-
-			getSelectedParticipant()
-				.then(function (selectedParticipant) {
-          _paperActivityCheckerData = JSON.parse(window.sessionStorage.getItem('activityPaper'))
-					if (_paperActivityCheckerData) {
-						_paperActivityCheckerData.realizationDate = new Date(_paperActivityCheckerData.realizationDate);
-						ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData, self.activityConfigurations);
-						_paperActivityCheckerData = null;
-						window.sessionStorage.removeItem('activityPaper');
-						window.sessionStorage.removeItem('activityType');
-					} else {
-						ActivityRepositoryService.createFromSurvey(self.listSurveys, loggedUser, selectedParticipant, self.activityConfigurations);
-					}
-				})
-		}
-
 		function createPreActivity(survey, configuration, mode) {
 			let loggedUser = ContextService.getLoggedUser();
 			let preActivity = PreActivityFactory.create(survey, configuration, mode, loggedUser);
@@ -73,7 +51,6 @@
 				.then(() => ActivityRepositoryService.saveActivities(self.activities))
 				.then(() => ApplicationStateService.activateParticipantActivities())
 				.then(() => self.activities = []);
-			window.sessionStorage.removeItem('preActivities');
 		}
 
 		function _prepareActivities(preActivities) {
@@ -101,7 +78,6 @@
       }
 		}
 
-
 		function setActivitiesSelection(surveys) {
 			self.listSurveys = surveys;
 			_constructCollectionConfiguration();
@@ -124,11 +100,6 @@
 
 		function getById(activityInfo) {
 			return ActivityRepositoryService.getById(activityInfo);
-		}
-
-		function initializePaperActivityData(paperActivityCheckerData) {
-			window.sessionStorage.setItem('activityPaper', JSON.stringify(paperActivityCheckerData));
-			_paperActivityCheckerData = paperActivityCheckerData;
 		}
 
 		function selectActivities(activities) {
@@ -157,14 +128,6 @@
 
 		function listActivityCheckers() {
 			return UserRepositoryService.listAll();
-		}
-
-		function useSelectedActivity() {
-			var selectedActivities = getSelectedActivities();
-			if (selectedActivities.length === 1) {
-				ContextService.setActivityInUse(selectedActivities[0]);
-				ModuleService.ActivityFacadeService.useActivity(selectedActivities[0]);
-			}
 		}
 
 		/* Activity Configuration Methods */
