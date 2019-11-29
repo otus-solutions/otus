@@ -53,8 +53,8 @@
                         </md-input-container>
                         <div layout="row" layout-align="space-between center">
                             <md-button class="md-icon-button md-primary" ng-click="$ctrl.resetPreActivities()" ng-disabled="!$ctrl.preActivities.length">
-                                <md-icon md-font-set="material-icons">delete</md-icon>
-                                <md-tooltip md-direction="bottom">deletar</md-tooltip>
+                                <md-icon md-font-set="material-icons">clear</md-icon>
+                                <md-tooltip md-direction="bottom">Cancelar</md-tooltip>
                             </md-button>
                             <md-button class="md-icon-button md-accent" ng-click="$ctrl.saveActivities()" ng-disabled="!$ctrl.preActivities.length">
                                 <md-icon md-font-set="material-icons">save</md-icon>
@@ -112,7 +112,7 @@
                         </md-optgroup>
                     </md-select>
                 </md-input-container>
-                <md-button class="md-icon-button" ng-click="$ctrl.addActivitiesGroup($ctrl.selectedGroups)" ng-disabled="!$ctrl.selectedGroups.length">
+                <md-button class="md-icon-button" ng-click="$ctrl.addPreActivitiesGroup($ctrl.selectedGroups)" ng-disabled="!$ctrl.selectedGroups.length">
                     <md-icon md-font-set="material-icons" ng-show="$ctrl.processing">add_box</md-icon>
                     <md-progress-circular md-mode="indeterminate" ng-hide="$ctrl.processing" md-diameter="28px" ></md-progress-circular>
                     <md-tooltip md-direction="top">Adicionar Blocos</md-tooltip>

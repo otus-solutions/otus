@@ -52,7 +52,7 @@
     self.resetPreActivities = resetPreActivities;
     self.selectAction = selectAction;
     self.clearSearchTerm = clearSearchTerm;
-    self.addActivitiesGroup = addActivitiesGroup;
+    self.addPreActivitiesGroup = addPreActivitiesGroup;
     self.disabledGroups = disabledGroups;
     self.displayGridLarge = displayGridLarge;
     self.displayGridSmall = displayGridSmall;
@@ -67,8 +67,8 @@
       _loadCategories();
       _loadSurveys();
       _loadSurveysGroup();
-       $element.find('#searchBlock').on('keydown', function(ev) {
-          ev.stopPropagation();
+      $element.find('#searchBlock').on('keydown', function (ev) {
+        ev.stopPropagation();
       });
     }
 
@@ -89,7 +89,7 @@
         self.surveysGroups = data;
         self.groupList = self.surveysGroups.getGroupNames();
 
-        if(self.groupList.length > 0){
+        if (self.groupList.length > 0) {
           self.selectionOptions.push(option);
         }
 
@@ -144,7 +144,7 @@
       return disabledResult;
     }
 
-    function addActivitiesGroup(item) {
+    function addPreActivitiesGroup(item) {
       self.activities = [];
       self.selectedGroups = [];
       self.selectedGroupsResult = [];
@@ -155,7 +155,7 @@
 
       $timeout(() => {
         self.processing = true;
-      },3000);
+      }, 3000);
 
       self.activities.forEach(activity => {
         addPreActivities(activity);
@@ -223,30 +223,29 @@
 
     function saveActivities() {
       self.preActivities.every(_checkFilledInput) ?
-        DialogService.showDialog(confirmSavePreActivities).then(() => ParticipantActivityService.saveActivities(self.preActivities)):
+        DialogService.showDialog(confirmSavePreActivities).then(() => ParticipantActivityService.saveActivities(self.preActivities)) :
         DialogService.showDialog(invalidPreActivities);
     }
 
-    function _checkFilledInput(dto) {
-      console.log(dto.preActivityValid)
-      if(dto.mode === "ONLINE" && !dto.surveyForm.isRequiredExternalID()) dto.preActivityValid = true;
-      return dto.preActivityValid === true;
+    function _checkFilledInput(preActivity) {
+      if (preActivity.mode === "ONLINE" && !preActivity.surveyForm.isRequiredExternalID()) preActivity.preActivityValid = true;
+      return preActivity.preActivityValid === true;
     }
 
-    function monitoringSearchTextChange(state){
+    function monitoringSearchTextChange(state) {
       self.addStateValid = state;
     }
 
-    function selectedItemChange(item){
-      if(item) self.btnAddPreActivitiesDisable = false;
+    function selectedItemChange(item) {
+      if (item) self.btnAddPreActivitiesDisable = false;
     }
 
     function _buildDialogs() {
       confirmDeletePreActivities = {
         dialogToTitle: 'Confirmação',
-        titleToText: 'Exclusão da Lista de Formulários',
-        textDialog: 'Deseja excluir os itens adicionados?',
-        ariaLabel: 'Confirmação de exclusão',
+        titleToText: 'Cancelamento da Lista de Formulários',
+        textDialog: 'Atenção: A lista com itens adicionados será redefinida',
+        ariaLabel: 'Confirmação de cancelamento',
         buttons: _prepareButtons()
       };
 
