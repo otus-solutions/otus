@@ -81,8 +81,9 @@
       <small ng-style="{color:'#9e9e9e'}">Id externo não requerido *</small>
     </md-input-container>
   </form>
-  <small class="error" ng-show="$ctrl.checkerForm.autocompleteChecker.$pristine ||
+</div>
+<md-grid-tile-footer ng-show="$ctrl.checkerForm.autocompleteChecker.$pristine ||
                               $ctrl.checkerForm.$invalid ||
                               $ctrl.externalIdForm.externalid.$pristine ||
-                              $ctrl.externalIdForm.$invalid">Itens obrigatórios pendentes *</small>
-</div>
+                              $ctrl.externalIdForm.$invalid"><small>Itens obrigatórios pendentes *</small>
+</md-grid-tile-footer>
