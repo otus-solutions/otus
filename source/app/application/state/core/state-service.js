@@ -17,7 +17,6 @@
     self.activateActivityAdder = activateActivityAdder;
     self.activateActivityPlayer = activateActivityPlayer;
     self.activateActivityViewer = activateActivityViewer;
-    self.activatePaperActivityInitializer = activatePaperActivityInitializer;
     self.activateInstaller = activateInstaller;
     self.activateLogin = activateLogin;
     self.activateError = activateError;
@@ -25,7 +24,6 @@
     self.activateDashboard = activateDashboard;
     self.activateParticipantDashboard = activateParticipantDashboard;
     self.activateCreateParticipant = activateCreateParticipant;
-    // self.activateReportDashboard = activateReportDashboard;
     self.activateParticipantActivities = activateParticipantActivities;
     self.activateParticipantReports = activateParticipantReports;
     self.activateSignup = activateSignup;
@@ -44,7 +42,6 @@
     self.activateManagerParticipants = activateManagerParticipants;
     self.activateParticipantsList = activateParticipantsList;
     self.activateActivityImport = activateActivityImport;
-    // self.activateErrorOffline = activateErrorOffline;
     self.activateLaboratoryMonitoring = activateLaboratoryMonitoring;
     self.activateActivityFlagsReport = activateActivityFlagsReport;
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
@@ -63,10 +60,6 @@
 
     function activateActivityViewer() {
       $state.go(STATE.ACTIVITY_VIEWER);
-    }
-
-    function activatePaperActivityInitializer() {
-      $state.go(STATE.PAPER_ACTIVITY_INITIALIZER);
     }
 
     function activateInstaller() {
@@ -179,9 +172,5 @@
     function getCurrentState() {
       return $state.current.name;
     }
-    // function activateErrorOffline() {
-    //   self.currentState = 'Offline';
-    //   $state.go(APP_STATE.ERROR_OFFLINE);
-    // }
   }
 }());
