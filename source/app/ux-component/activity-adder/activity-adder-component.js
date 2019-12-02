@@ -139,7 +139,7 @@
         disabledResult = false;
       } else if (self.selectedGroups.includes(option) && index > 0) {
         disabledResult = true
-      } else if (!self.selectedGroups.includes(option) && index == 0) {
+      } else if (!self.selectedGroups.includes(option) && index == 0 && !self.searchTerm) {
         disabledResult = true;
       }
       return disabledResult;
