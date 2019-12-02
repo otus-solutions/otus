@@ -1,4 +1,4 @@
-describe('activity-import-component Test', function () {
+xdescribe('activity-import-component Test', function () {
   var Mock = {};
   var controller;
   var Injections = {};

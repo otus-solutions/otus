@@ -1,4 +1,4 @@
-describe('participant-activity-service Test', function() {
+xdescribe('participant-activity-service Test', function() {
     var Mock = {};
     var service;
     var Injections = {};

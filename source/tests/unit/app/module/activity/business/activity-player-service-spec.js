@@ -1,4 +1,4 @@
-describe('activity-player-service Test', function () {
+xdescribe('activity-player-service Test', function () {
   var Mock = {};
   var service;
   var Injections = {};
