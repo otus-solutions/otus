@@ -19,7 +19,6 @@
     self.goToActivityAdder = goToActivityAdder;
 
     function goToActivityAdder() {
-      window.sessionStorage.setItem('activityType', "Online");
       ApplicationStateService.activateActivityAdder();
     }
    }
