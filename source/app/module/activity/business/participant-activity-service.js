@@ -17,11 +17,13 @@
 
 	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
 		var self = this;
+		var _paperActivityCheckerData = null;
 
 		self.activityConfigurations = new Object();
 		self.activities = [];
 
 		/* Public methods */
+    self.add = add;
 		self.listAll = listAll;
 		self.listAllCategories = listAllCategories;
 		self.listAvailables = listAvailables;
@@ -39,6 +41,24 @@
 		self.createPreActivity = createPreActivity;
 		self.saveActivities = saveActivities;
 		self.getSurveyFromJson = getSurveyFromJson;
+
+		 function add() {
+      var loggedUser = ContextService.getLoggedUser();
+
+      getSelectedParticipant()
+        .then(function (selectedParticipant) {
+          _paperActivityCheckerData = JSON.parse(window.sessionStorage.getItem('activityPaper'));
+          if (_paperActivityCheckerData) {
+            _paperActivityCheckerData.realizationDate = new Date(_paperActivityCheckerData.realizationDate);
+            ActivityRepositoryService.createFromPaperActivity(self.listSurveys, loggedUser, selectedParticipant, _paperActivityCheckerData, self.activityConfigurations);
+            _paperActivityCheckerData = null;
+            window.sessionStorage.removeItem('activityPaper');
+            window.sessionStorage.removeItem('activityType');
+          } else {
+            ActivityRepositoryService.createFromSurvey(self.listSurveys, loggedUser, selectedParticipant, self.activityConfigurations);
+          }
+        });
+    }
 
 		function createPreActivity(survey, configuration, mode) {
 			let loggedUser = ContextService.getLoggedUser();

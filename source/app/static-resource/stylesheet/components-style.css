@@ -405,13 +405,21 @@ otus-activity-adder-card md-grid-tile-header figcaption {
   width: 100%;
 }
 
-otus-activity-adder-card .grid-aligh{
+otus-activity-adder-card .grid-align{
   padding-left: 10px;
   padding-top: 5px;
   width: 100%;
 }
+
 otus-activity-adder md-input-container {
   margin-bottom: 0px;
+}
+
+otus-activity-adder .button-hover :hover {
+  background-color: rgba(0,0,0,.06);
+  border-radius: 0 0 0 0;
+  width: auto;
+  height: auto;
 }
 
 otus-activity-adder .card-width {
