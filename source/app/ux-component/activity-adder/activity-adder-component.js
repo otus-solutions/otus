@@ -68,7 +68,7 @@
       _loadCategories();
       _loadSurveys();
       _loadSurveysGroup();
-      $element.find('#searchBlock').on('keydown', function (ev) {
+      $element.find('#search').on('keydown', function (ev) {
         ev.stopPropagation();
       });
     }

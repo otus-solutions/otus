@@ -102,13 +102,13 @@
                                data-md-container-class="selectdemoSelectHeader"
                                multiple flex>
                         <md-select-header class="demo-select-header">
-                            <input id="searchBlock" ng-model="$ctrl.searchTerm"
+                            <input id="search" ng-model="$ctrl.searchTerm"
                                    type="search"
                                    placeholder="Digite o bloco desejado..."
                                    class="demo-header-searchbox md-text">
                         </md-select-header>
                         <md-optgroup label="Blocos">
-                            <md-option ng-value="item" ng-repeat="item in $ctrl.selectionOptions | filter:$ctrl.searchTerm track by $index" ng-disabled="$ctrl.disabledGroups($index)" >{{item}}</md-option>
+                            <md-option ng-value="item" ng-repeat="item in $ctrl.selectionOptions | filter:$ctrl.searchTerm" ng-disabled="$ctrl.disabledGroups($index)" >{{item}}</md-option>
                         </md-optgroup>
                     </md-select>
                 </md-input-container>
