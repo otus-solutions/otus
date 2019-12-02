@@ -347,14 +347,14 @@ Test.utils.data.aliquot = {
     "processing" : "2019-05-20T16:43:47.701Z"
   },
   "aliquotHistory" : [
-        {
-          "objectType": "AliquotEvent",
-          "type": "CONVERTED_STORAGE",
-          "userEmail": "otus@gmail.com",
-          "description": "Falta de material para completar os exames",
-          "date": "2019-05-14T12:36:23.631Z"
-        }
-      ]
+    {
+      "objectType": "AliquotEvent",
+      "type": "CONVERTED_STORAGE",
+      "userEmail": "otus@gmail.com",
+      "description": "Falta de material para completar os exames",
+      "date": "2019-05-14T12:36:23.631Z"
+    }
+  ]
 };
 Test.utils.data.activityPASC = {
   "_id": "58ee02de28110d317f1ad09b",
@@ -380,6 +380,492 @@ Test.utils.data.activityPASC = {
         "keywords": []
       },
       "dataSources": [],
+      "NavigationManager":{
+        "getNavigationList" : function () {
+          return [{
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "BEGIN NODE",
+              "index": 0,
+              "inNavigations": [],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "BEGIN NODE",
+                  "destination": "PASC1",
+                  "name": "BEGIN NODE_PASC1",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "END NODE",
+              "index": 1,
+              "inNavigations": [
+                null,
+                {
+                  "origin": "PASC18"
+                }
+              ],
+              "isDefault": false,
+              "routes": []
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC1",
+              "index": 2,
+              "inNavigations": [
+                {
+                  "origin": "BEGIN NODE"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC1",
+                  "destination": "PASC2",
+                  "name": "PASC1_PASC2",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC2",
+              "index": 3,
+              "inNavigations": [
+                {
+                  "origin": "PASC1"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC2",
+                  "destination": "PASC3",
+                  "name": "PASC2_PASC3",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC3",
+              "index": 4,
+              "inNavigations": [
+                {
+                  "origin": "PASC2"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC3",
+                  "destination": "PASC4",
+                  "name": "PASC3_PASC4",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC4",
+              "index": 5,
+              "inNavigations": [
+                {
+                  "origin": "PASC3"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC4",
+                  "destination": "PASC6",
+                  "name": "PASC4_PASC6",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC6",
+              "index": 7,
+              "inNavigations": [
+                null,
+                {
+                  "origin": "PASC4"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC6",
+                  "destination": "PASC7",
+                  "name": "PASC6_PASC7",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC7",
+              "index": 8,
+              "inNavigations": [
+                {
+                  "origin": "PASC6"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC7",
+                  "destination": "PASC8",
+                  "name": "PASC7_PASC8",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC8",
+              "index": 9,
+              "inNavigations": [
+                {
+                  "origin": "PASC7"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC8",
+                  "destination": "PASC9",
+                  "name": "PASC8_PASC9",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC9",
+              "index": 10,
+              "inNavigations": [
+                {
+                  "origin": "PASC8"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC9",
+                  "destination": "PASC10",
+                  "name": "PASC9_PASC10",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC10",
+              "index": 11,
+              "inNavigations": [
+                {
+                  "origin": "PASC9"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC10",
+                  "destination": "PASC11",
+                  "name": "PASC10_PASC11",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC11",
+              "index": 12,
+              "inNavigations": [
+                {
+                  "origin": "PASC10"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC11",
+                  "destination": "PASC12",
+                  "name": "PASC11_PASC12",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC12",
+              "index": 13,
+              "inNavigations": [
+                {
+                  "origin": "PASC11"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC12",
+                  "destination": "PASC13",
+                  "name": "PASC12_PASC13",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC13",
+              "index": 14,
+              "inNavigations": [
+                {
+                  "origin": "PASC12"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC13",
+                  "destination": "PASC14",
+                  "name": "PASC13_PASC14",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC14",
+              "index": 15,
+              "inNavigations": [
+                {
+                  "origin": "PASC13"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC14",
+                  "destination": "PASC15",
+                  "name": "PASC14_PASC15",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC15",
+              "index": 16,
+              "inNavigations": [
+                {
+                  "origin": "PASC14"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC15",
+                  "destination": "PASC18",
+                  "name": "PASC15_PASC18",
+                  "isDefault": true,
+                  "conditions": []
+                },
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC15",
+                  "destination": "PASC16",
+                  "name": "PASC15_PASC16",
+                  "isDefault": false,
+                  "conditions": [
+                    {
+                      "extents": "StudioObject",
+                      "objectType": "RouteCondition",
+                      "name": "ROUTE_CONDITION_0",
+                      "rules": [
+                        {
+                          "extents": "SurveyTemplateObject",
+                          "objectType": "Rule",
+                          "when": "PASC15",
+                          "operator": "equal",
+                          "answer": "1",
+                          "isMetadata": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC16",
+              "index": 17,
+              "inNavigations": [
+                {
+                  "origin": "PASC15"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC16",
+                  "destination": "PASC18",
+                  "name": "PASC16_PASC18",
+                  "isDefault": true,
+                  "conditions": []
+                },
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC16",
+                  "destination": "PASC17",
+                  "name": "PASC16_PASC17",
+                  "isDefault": false,
+                  "conditions": [
+                    {
+                      "extents": "StudioObject",
+                      "objectType": "RouteCondition",
+                      "name": "ROUTE_CONDITION_0",
+                      "rules": [
+                        {
+                          "extents": "SurveyTemplateObject",
+                          "objectType": "Rule",
+                          "when": "PASC16",
+                          "operator": "equal",
+                          "answer": "PASCalt7",
+                          "isMetadata": false
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC17",
+              "index": 18,
+              "inNavigations": [
+                {
+                  "origin": "PASC16"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC17",
+                  "destination": "PASC18",
+                  "name": "PASC17_PASC18",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            },
+            {
+              "extents": "SurveyTemplateObject",
+              "objectType": "Navigation",
+              "origin": "PASC18",
+              "index": 19,
+              "inNavigations": [
+                {
+                  "origin": "PASC17"
+                },
+                {
+                  "origin": "PASC15"
+                },
+                {
+                  "origin": "PASC16"
+                }
+              ],
+              "isDefault": false,
+              "routes": [
+                {
+                  "extents": "SurveyTemplateObject",
+                  "objectType": "Route",
+                  "origin": "PASC18",
+                  "destination": "END NODE",
+                  "name": "PASC18_END NODE",
+                  "isDefault": true,
+                  "conditions": []
+                }
+              ]
+            }
+          ]
+        }
+      },
       "metainfo": {
         "extents": "StudioObject",
         "objectType": "SurveyMetaInfo",
@@ -3476,7 +3962,8 @@ Test.utils.data.activityPASC = {
       ]
     },
     "isDiscarded": false,
-    "version": 1
+    "version": 1,
+    "requiredExternalID" : true
   },
   "mode": "ONLINE",
   "participantData": {
