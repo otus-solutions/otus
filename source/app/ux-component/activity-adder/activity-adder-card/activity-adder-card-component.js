@@ -11,7 +11,7 @@
 				checkers: '<',
 				preActivity: '='
 			}
-		});
+		}).controller('otusActivityAdderCardCtrl', Controller);
 
 	Controller.$inject = [
 		'$q',
