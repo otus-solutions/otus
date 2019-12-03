@@ -51,7 +51,7 @@
     ];
 
 
-    function _listCheckers(ActivityService, CheckerItemFactory, Application, SessionContextService) {
+    function _listCheckers(ActivityService, CheckerItemFactory, Application) {
       return Application
           .isDeployed()
           .then(function() {
@@ -66,9 +66,7 @@
     _listCheckers.$inject = [
       'otusjs.activity.business.ParticipantActivityService',
       'otusjs.otus.uxComponent.CheckerItemFactory',
-      'otusjs.application.core.ModuleService',
-      'otusjs.application.session.core.ContextService'
+      'otusjs.application.core.ModuleService'
     ];
-
   }
 }());
