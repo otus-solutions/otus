@@ -55,7 +55,7 @@
 			if (checker) {
 			  self.preActivity.updatePaperActivityData(checker, self.realizationDate);
         self.checkerForm.autocompleteChecker.$setValidity("", true);
-			  self.preActivity.updatePreActivityValid(self.checkerForm.$valid);
+			  self.preActivity.updatePreActivityValid(self.checkerForm.$valid, self.externalIdForm.$valid);
 			}
 		}
 
@@ -79,8 +79,8 @@
 
 		function updateExternalID(externalID) {
 		  self.preActivity.externalID = externalID;
-		  if(self.preActivity.mode === "PAPER") self.preActivity.updatePreActivityValid(self.externalIdForm.$valid && self.checkerForm.$valid);
-		  else self.preActivity.updatePreActivityValid(self.externalIdForm.$valid);
+		  if(self.preActivity.mode === "PAPER") self.preActivity.updatePreActivityValid(self.checkerForm.$valid, self.externalIdForm.$valid);
+		  else self.preActivity.updatePreActivityValid(self.checkerForm.$valid, self.externalIdForm.$valid);
     }
 
     function updateRealizationDate(updatedDate){
