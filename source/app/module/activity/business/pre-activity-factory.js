@@ -41,9 +41,17 @@
       }
 		}
 
-    function updatePreActivityValid(state){
-		  self.preActivityValid = state;
+
+    function updatePreActivityValid(stateChecker, stateIdExternal){
+		  if(self.surveyForm.isRequiredExternalID()) self.preActivityValid = stateChecker && stateIdExternal;
+		  if(stateChecker && stateIdExternal) self.preActivityValid = stateChecker;
+		  if(stateChecker === null && stateIdExternal) self.preActivityValid = stateIdExternal;
+
     }
+
+    // function updatePreActivityValid(state){
+		//   self.preActivityValid = state;
+    // }
 
 		function toJSON() {
 			return {

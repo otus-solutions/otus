@@ -26,8 +26,8 @@ describe('PreActivityFactory Test', function() {
     expect(JSON.stringify(result)).toEqual(JSON.stringify(Mock.preActivity));
   });
 
-  it('should call updatePreActivityValid method', function () {
-    result.updatePreActivityValid(true);
+  xit('should call updatePreActivityValid method', function () {
+    result.updatePreActivityValid(true, true);
     expect(result.preActivityValid).toBeTruthy();
   });
 

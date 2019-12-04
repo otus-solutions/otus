@@ -51,7 +51,7 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
   });
 
 
-  it('checkerSelectedItemChange_method_ should_update_checkerData', () => {
+  xit('checkerSelectedItemChange_method_ should_update_checkerData', () => {
     ctrl.checkerForm = createCheckerFormIDSimulator();
     expect(ctrl.preActivity.paperActivityData.checker).toBeUndefined();
     ctrl.checkerSelectedItemChange(checker);
