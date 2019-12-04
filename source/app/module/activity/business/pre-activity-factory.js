@@ -43,8 +43,10 @@
 
 
     function updatePreActivityValid(stateChecker, stateIdExternal){
-		  if(self.surveyForm.isRequiredExternalID()) self.preActivityValid = stateChecker && stateIdExternal
-      else self.preActivityValid = stateChecker;
+		  if(self.surveyForm.isRequiredExternalID()) self.preActivityValid = stateChecker && stateIdExternal;
+		  if(stateChecker && stateIdExternal) self.preActivityValid = stateChecker;
+		  if(stateChecker === null && stateIdExternal) self.preActivityValid = stateIdExternal;
+
     }
 
     // function updatePreActivityValid(state){

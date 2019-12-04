@@ -80,7 +80,7 @@
 		function updateExternalID(externalID) {
 		  self.preActivity.externalID = externalID;
 		  if(self.preActivity.mode === "PAPER") self.preActivity.updatePreActivityValid(self.checkerForm.$valid, self.externalIdForm.$valid);
-		  else self.preActivity.updatePreActivityValid(self.checkerForm.$valid, self.externalIdForm.$valid);
+		  else self.preActivity.updatePreActivityValid(null, self.externalIdForm.$valid);
     }
 
     function updateRealizationDate(updatedDate){
