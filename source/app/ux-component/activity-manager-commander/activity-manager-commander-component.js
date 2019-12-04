@@ -4,9 +4,9 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusActivityManagerCommander', {
-      controller: Controller,
+      controller: 'otusActivityManagerCommanderCtrl as $ctrl',
       templateUrl: 'app/ux-component/activity-manager-commander/activity-manager-commander-template.html'
-    });
+    }).controller('otusActivityManagerCommanderCtrl', Controller);
 
   Controller.$inject = [
     'otusjs.application.state.ApplicationStateService'
