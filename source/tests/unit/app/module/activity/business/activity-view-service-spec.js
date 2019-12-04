@@ -1,4 +1,4 @@
-xdescribe('activity-view-service Test', function () {
+describe('activity-view-service Test', function () {
   var Mock = {};
   var service;
   var Injections = {};
@@ -10,10 +10,7 @@ xdescribe('activity-view-service Test', function () {
 
     _mockData();
 
-    angular.mock.module('otusjs.activity', function ($provide) {
-      $provide.value('otusjs.deploy.SurveyRestService', {});
-      $provide.value('otusjs.deploy.SurveyGroupRestService', {});
-    });
+    angular.mock.module('otusjs.otus');
 
     inject(function (_$injector_) {
       Injections = {
