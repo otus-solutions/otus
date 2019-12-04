@@ -13,6 +13,7 @@ describe('PreActivityFactory Test', function() {
     });
 
     result = factory.create(Mock.survey,Mock.configuration,Mock.mode,Mock.user,Mock.externalID);
+    result.surveyForm.isRequiredExternalID = jasmine.createSpy();
   });
 
 
@@ -26,7 +27,7 @@ describe('PreActivityFactory Test', function() {
     expect(JSON.stringify(result)).toEqual(JSON.stringify(Mock.preActivity));
   });
 
-  xit('should call updatePreActivityValid method', function () {
+  it('should call updatePreActivityValid method', function () {
     result.updatePreActivityValid(true, true);
     expect(result.preActivityValid).toBeTruthy();
   });

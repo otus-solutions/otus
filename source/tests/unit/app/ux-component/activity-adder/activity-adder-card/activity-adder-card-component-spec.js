@@ -17,7 +17,9 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
 
       checker = Test.utils.data.checker;
       ctrl.checkers = [checker, checker];
-      ctrl.preActivity = createMockPreActivity()
+      ctrl.preActivity = Mock.createMockPreActivity();
+      ctrl.checkerForm = Mock.createCheckerFormIDSimulator();
+      ctrl.externalIdForm = Mock.createExternalIdFormSimulator();
     });
   });
 
@@ -50,23 +52,53 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
     Mock.scope.$digest();
   });
 
-
-  xit('checkerSelectedItemChange_method_ should_update_checkerData', () => {
-    ctrl.checkerForm = createCheckerFormIDSimulator();
+  it('checkerSelectedItemChange_method_ should_update_checkerData_and_validity_preActivity', () => {
     expect(ctrl.preActivity.paperActivityData.checker).toBeUndefined();
     ctrl.checkerSelectedItemChange(checker);
     expect(ctrl.preActivity.paperActivityData.checker.name).toBe("Otus");
+    expect(ctrl.preActivity.updatePreActivityValid).toHaveBeenCalledTimes(1)
+  });
+
+  it('getModeIcon_method_should_select_icon_mode_of_preActivity', () => {
+    ctrl.preActivity.mode = 'ONLINE';
+    expect(ctrl.getModeIcon()).toBe("signal");
+    ctrl.preActivity.mode = 'PAPER';
+    expect(ctrl.getModeIcon()).toBe("file-document");
+  });
+
+  it('getAcronym_method_should_return_with_acronymName', () => {
+    expect(ctrl.getAcronym()).toBe('CSJ');
+  });
+
+  it('deletePreActivity_method_should_delete_preactivity_by_index', () => {
+    ctrl.preActivities = [];
+    ctrl.preActivities.push(ctrl.preActivity);
+    expect(ctrl.preActivities.length).toBe(1);
+    ctrl.deletePreActivity();
+    expect(ctrl.preActivities.length).toBe(0);
+  });
+
+  it('monitoringCheckerFormSearchTextChange_method_should_call_stateValidator', () => {
+    ctrl.monitoringCheckerFormSearchTextChange()
+    expect(ctrl.preActivity.updatePreActivityValid).toHaveBeenCalledTimes(1)
+  });
+
+  it('updateExternalID_method_should_update_attribute_externalID ', () => {
+    expect(ctrl.preActivity.externalID).toBe(null);
+    ctrl.updateExternalID('123456');
+    expect(ctrl.preActivity.updatePreActivityValid).toHaveBeenCalledTimes(1)
+    expect(ctrl.preActivity.externalID).toBe('123456')
+  });
+
+  it('updateRealizationDate_method_should', () => {
+    ctrl.updateRealizationDate('Wed Dec 04 2019 15:43:24');
+    expect(ctrl.realizationDate).toBe('Wed Dec 04 2019 15:43:24');
   });
 
 
-
-  // it('should ', () => { });
-  // it('should ', () => { });
-  // it('should ', () => { });
-  // it('should ', () => { });
-
-  function createMockPreActivity(){
+  Mock.createMockPreActivity = () => {
     ctrl.preActivity = Test.utils.data.preActivity;
+    ctrl.preActivity.updatePreActivityValid = jasmine.createSpy();
     ctrl.preActivity.updatePaperActivityData =
       (checkerData, realizationDate) => {
         if(!checkerData) Mock.preActivity.preActivityValid = false;
@@ -76,20 +108,24 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
           ctrl.preActivity.paperActivityData.realizationDate = realizationDate;
         }
       };
-
-    ctrl.preActivity.updatePreActivityValid = (state) => {
-      ctrl.preActivity.preActivityValid = state;
-    };
     return ctrl.preActivity;
   }
 
-  function createCheckerFormIDSimulator() {
+  Mock.createCheckerFormIDSimulator = () => {
     return {
       'autocompleteChecker': {
         '$setValidity': jasmine.createSpy()
       }
     }
-  }
+  };
+
+  Mock.createExternalIdFormSimulator = () => {
+    return {
+      'externalIdForm': {
+        '$valid': true
+      }
+    }
+  };
 
 });
 

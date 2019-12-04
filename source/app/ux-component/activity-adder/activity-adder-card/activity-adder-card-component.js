@@ -74,7 +74,6 @@
 		function monitoringCheckerFormSearchTextChange(){
 		  self.checkerForm.autocompleteChecker.$setValidity('', false);
 		  self.preActivity.updatePreActivityValid(false);
-
     }
 
 		function updateExternalID(externalID) {
