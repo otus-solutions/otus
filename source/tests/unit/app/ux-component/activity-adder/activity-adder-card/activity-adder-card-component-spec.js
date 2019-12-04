@@ -2,18 +2,22 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
   let ctrl;
   let Injections = [];
   let Mock = {};
+  let checker;
 
   beforeEach(() => {
-    angular.mock.module('otusjs.otus.uxComponent');
+    angular.mock.module('otusjs.otus');
     angular.mock.inject(($injector, $controller, $rootScope) => {
       Injections.$q = $injector.get('$q');
       Injections.$timeout = $injector.get('$timeout');
       ctrl = $controller('otusActivityAdderCardCtrl', Injections);
 
       Mock.scope = $rootScope.$new();
-      ctrl.checkers = ['user1', 'user2'];
       Mock.deferred = Injections.$q.defer();
       spyOn(Injections.$q, 'defer').and.returnValue(Mock.deferred);
+
+      checker = Test.utils.data.checker;
+      ctrl.checkers = [checker, checker];
+      ctrl.preActivity = createMockPreActivity()
     });
   });
 
@@ -47,10 +51,45 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
   });
 
 
+  it('checkerSelectedItemChange_method_ should_update_checkerData', () => {
+    ctrl.checkerForm = createCheckerFormIDSimulator();
+    expect(ctrl.preActivity.paperActivityData.checker).toBeUndefined();
+    ctrl.checkerSelectedItemChange(checker);
+    expect(ctrl.preActivity.paperActivityData.checker.name).toBe("Otus");
+  });
+
+
 
   // it('should ', () => { });
   // it('should ', () => { });
   // it('should ', () => { });
   // it('should ', () => { });
-  // it('should ', () => { });
+
+  function createMockPreActivity(){
+    ctrl.preActivity = Test.utils.data.preActivity;
+    ctrl.preActivity.updatePaperActivityData =
+      (checkerData, realizationDate) => {
+        if(!checkerData) Mock.preActivity.preActivityValid = false;
+        else{
+          ctrl.preActivity.paperActivityData = {};
+          ctrl.preActivity.paperActivityData.checker = checkerData.checker;
+          ctrl.preActivity.paperActivityData.realizationDate = realizationDate;
+        }
+      };
+
+    ctrl.preActivity.updatePreActivityValid = (state) => {
+      ctrl.preActivity.preActivityValid = state;
+    };
+    return ctrl.preActivity;
+  }
+
+  function createCheckerFormIDSimulator() {
+    return {
+      'autocompleteChecker': {
+        '$setValidity': jasmine.createSpy()
+      }
+    }
+  }
+
 });
+
