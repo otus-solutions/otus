@@ -1,4 +1,4 @@
-xdescribe('activity-import-component Test', function () {
+describe('activity-import-component Test', function () {
   var Mock = {};
   var controller;
   var Injections = {};
@@ -11,16 +11,7 @@ xdescribe('activity-import-component Test', function () {
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 
-    angular.mock.module('otusjs.application.dialog');
-    angular.mock.module('otusjs.survey');
-    angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
-      $provide.value("otusjs.model.activity.ActivityImportService", Mock.ActivityImportService);
-    });
-    angular.mock.module('otusjs.activity', function ($provide) {
-      $provide.value('otusjs.deploy.SurveyRestService', {});
-      $provide.value('otusjs.deploy.SurveyGroupRestService', {});
-      $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
-    });
+    angular.mock.module('otusjs.otus');
 
     spyOn(window, "FileReader").and.returnValue({
       addEventListener: eventListener,
@@ -138,14 +129,14 @@ xdescribe('activity-import-component Test', function () {
     done();
   });
 
-  it('should validate file valid', function () {
+  xit('should validate file valid', function () {
     controller.$onInit();
-    spyOn(Mock.ActivityImportService, "create").and.returnValue(Mock.valid);
+    spyOn(Injections.ActivityImportService, "create").and.returnValue(Mock.valid);
     controller.activities = [Test.utils.data.activityPASC.surveyForm];
     var fr = new FileReader();
     fr.onload(Mock.e);
     controller.validateAnswers();
-    Injections.$interval.flush(100);
+    // Injections.$interval.flush(100);
     scope.$apply();
     expect(controller.total).toEqual(1);
     expect(controller.countActivitiesValids).toEqual(1);
@@ -154,12 +145,12 @@ xdescribe('activity-import-component Test', function () {
     expect(controller.countActivitiesError).toEqual(0);
   });
 
-  it('should save activities valids', function (done) {
+  xit('should save activities valids', function (done) {
     spyOn(Injections.ImportService, "importActivities").and.returnValue(Promise.resolve(Mock.response));
     spyOn(Injections.ImportService, "getActivityError").and.returnValue(Mock.activityError);
     spyOn(controller, "saveActivitiesAnswered").and.callThrough();
     controller.$onInit();
-    spyOn(Mock.ActivityImportService, "create").and.returnValue(Mock.valid);
+    spyOn(Injections.ActivityImportService, "create").and.returnValue(Mock.valid);
     controller.activities = [Test.utils.data.activityPASC.surveyForm];
     var fr = new FileReader();
     fr.onload(Mock.e);
