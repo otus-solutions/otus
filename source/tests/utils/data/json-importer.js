@@ -3963,6 +3963,8 @@ Test.utils.data.activityPASC = {
     },
     "isDiscarded": false,
     "version": 1,
+    "name": "PRESSÃO ARTERIAL",
+    "acronym": "PASC",
     "requiredExternalID" : true
   },
   "mode": "ONLINE",

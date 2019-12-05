@@ -4,12 +4,12 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusActivityAdder', {
-      controller: Controller,
+      controller: 'otusActivityAdderCtrl as $ctrl',
       templateUrl: 'app/ux-component/activity-adder/activity-adder-template.html',
       bindings: {
         checkers: '<'
       }
-    });
+    }).controller('otusActivityAdderCtrl', Controller);
 
   Controller.$inject = [
     'otusjs.activity.business.ParticipantActivityService',
@@ -20,8 +20,7 @@
     'otusjs.deploy.LoadingScreenService',
     '$q',
     '$timeout',
-    '$element',
-
+    '$element'
   ];
 
   function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout, $element) {
@@ -141,11 +140,14 @@
         disabledResult = true
       } else if (!self.selectedGroups.includes(option) && index == 0 && !self.searchTerm) {
         disabledResult = true;
+      } else {
+        disabledResult = false;
       }
       return disabledResult;
     }
 
     function addPreActivitiesGroup(item) {
+      let deferred = $q.defer();
       self.activities = [];
       self.selectedGroups = [];
       self.selectedGroupsResult = [];
@@ -154,13 +156,14 @@
 
       _groupsFilter();
 
-      $timeout(() => {
-        self.processing = true;
-      }, 3000);
-
       self.activities.forEach(activity => {
         addPreActivities(activity);
       });
+
+      $timeout(() => {
+        deferred.resolve(self.activities);
+        self.processing = true;
+      }, Math.random() * 1000, false);
     }
 
     function addPreActivities(survey) {
