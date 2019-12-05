@@ -1,43 +1,32 @@
-<md-content id="user-login-page" layout="column" flex>
-  <md-toolbar flex="30" id="divtop" class="md-tall md-primary" layout-padding layout="row" layout-align="start center">
-    <span flex-gt-sm="30" flex-sm="10"></span>
-    <h2 class="system-name">
-      <span class="md-display-1">Otus</span>
-    </h2>
-  </md-toolbar>
-  <md-content flex layout="row" layout-align="center start" ng-show="!$ctrl.recovery">
-    <md-card class="card" layout-padding flex-gt-sm="45" flex="80" >
-      <div layout="row" layout-align="center start">
-        <div flex-gt-sm="25" flex-sm="15"></div>
-        <img class="logotype" src="static-resource/image/OtusImg.png" flex="80" flex-gt-sm="40">
-        <div flex></div>
-      </div>
-      <div layout="column" flex></div>
+<div id="user-login-page" layout="column" flex>
+  <img src="static-resource/image/banner.png" style="width: 100%;">
+  <div flex layout="row" layout-align="center start" ng-show="!$ctrl.recovery" style="background-color: #FFFFFF">
+    <md-card class="card" layout-padding flex-gt-xs="50" flex="80" flex-gt-lg="30" flex-gt-md="40" >
       <form name="loginForm" class="content" flex="" layout-fill layout-align="start start" layout="row">
         <div layout="column" flex>
           <div  layout-fill layout="column" flex-offset="10">
             <div layout="row" flex>
-              <span flex-gt-sm="20" flex-sm="10"></span>
-              <md-input-container flex flex-gt-sm="60" style="margin: 0 !important;">
+              <span flex-gt-xs="20" flex-sm="10"></span>
+              <md-input-container flex flex-gt-xs="60" style="margin: 0 !important;">
                 <label>Email</label>
                 <input required name="userEmail" ng-model="user.email">
                 <div ng-messages="loginForm.userEmail.$error">
                   <div ng-message="required">Obrigatório</div>
                 </div>
               </md-input-container>
-              <span flex-gt-sm="20" flex-sm="10"></span>
+              <span flex-gt-xs="20" flex-sm="10"></span>
             </div>
             <div layout="row" flex>
-              <span flex-gt-sm="20" flex-sm="10"></span>
+              <span flex-gt-xs="20" flex-sm="10"></span>
 
-              <md-input-container flex flex-gt-sm="60" style="margin: 0 !important;">
+              <md-input-container flex flex-gt-xs="60" style="margin: 0 !important;">
                 <label>Senha</label>
                 <input required name="userPassword" ng-model="user.password" type="password" />
                 <div ng-messages="loginForm.userPassword.$error">
                   <div ng-message="required">Obrigatório</div>
                 </div>
               </md-input-container>
-              <span flex-gt-sm="20" flex-sm="10"></span>
+              <span flex-gt-xs="20" flex-sm="10"></span>
             </div>
           </div>
           <span show-gt-sm="30" hide style="margin-top:30px"></span>
@@ -50,19 +39,13 @@
         </div>
       </form>
     </md-card>
-  </md-content>
+  </div>
   <!-- user access recovery -->
-  <md-content flex layout="row" layout-align="center start" ng-show="$ctrl.recovery">
-    <md-card class="card" layout-padding flex="80" flex-gt-sm="45">
-      <div layout="row" layout-align="center start">
-        <div flex="20"></div>
-        <img class="logotype" src="static-resource/image/OtusImg.png" flex="40">
-        <div flex></div>
-      </div>
-      <div layout="column" flex></div>
+  <div flex layout="row" layout-align="center start" ng-show="$ctrl.recovery" style="background-color: #FFFFFF">
+    <md-card class="card" layout-padding flex="80" flex-gt-xs="45">
       <form name="accessRecoveryForm" class="content" layout="row">
         <div  layout-fill layout="column" flex-offset="10">
-          <md-input-container layout-margin flex>
+          <md-input-container layout-margin flex>,
             <label>Email</label>
             <input required name="userEmail" ng-model="user.email" ng-change="$ctrl.resetValidation()">
             <div ng-messages="accessRecoveryForm.userEmail.$error">
@@ -71,12 +54,12 @@
             </div>
           </md-input-container>
           <div flex="40" layout-fill flex layout-fill layout="column"  layout-margin=""  layout-gt-sm="row">
-            <md-button type="button" class="md-raised md-no-focus" ng-click="$ctrl.goBack()">Voltar</md-button>
+            <md-button type="button" class="md-raised md-no-focus" ng-click="$ctrl.goBack()">Voltar</md-button>,
             <md-button type="submit" class="md-raised md-accent" ng-disabled="accessRecoveryForm.$invalid" ng-click="$ctrl.sendRecovery(user)">Solicitar troca de senha</md-button>
           </div>
         </div>
         <div flex></div>
       </form>
     </md-card>
-  </md-content>
-</md-content>
+  </div>
+</div>

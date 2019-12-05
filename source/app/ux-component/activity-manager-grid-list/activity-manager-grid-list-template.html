@@ -1,0 +1,81 @@
+<div layout="column">
+    <div ng-if="$ctrl.elementsArray" layout="row" layout-align="space-between">
+        <div layout="row" layout-align="start center" flex>
+            <div layout="column" layout-margin flex="50" flex-sm="70" flex-xs="100">
+                <md-input-container flex>
+                    <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter"
+                           ng-change="$ctrl.filterGridTile()"
+                           ng-model-options="{ allowInvalid: true, debounce: 500 }"/>
+                </md-input-container>
+            </div>
+            <div>
+                <md-checkbox style="margin-bottom: 12px !important;" aria-label="Selecionar todas" class="md-primary" ng-checked="$ctrl.selectAll"
+                             ng-click="$ctrl.selectDeselectAll()">
+                    <span class="md-body-2">
+                        Todas
+                    </span>
+                    <md-tooltip md-direction="top">
+                        Selecionar todas
+                    </md-tooltip>
+                </md-checkbox>
+            </div>
+        </div>
+        <md-menu md-position-mode="target-right target">
+            <md-button class="md-icon-button" ng-click="$mdMenu.open()">
+                <md-icon md-font-set="material-icons">menu</md-icon>
+            </md-button>
+            <md-menu-content>
+                <md-menu-item ng-repeat="item in $ctrl.itemsOrderBy" layout="column">
+                    <md-button  id="{{item.index}}" ng-click="$ctrl.orderByIndex(item.index)">
+                        Ordenar por {{item.value}}
+                        <md-icon ng-if="$ctrl.orderQuery === item.index" md-font-set="material-icons">{{$ctrl.iconsDropUpDown}}</md-icon>
+                        <md-tooltip md-direction="top">
+                            Ordenar
+                        </md-tooltip>
+                    </md-button>
+                    <md-divider></md-divider>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+
+    <div class="gridListDynamicTiles">
+        <md-grid-list md-cols="3"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="8" md-cols-lg="5" md-cols-gt-md="6" md-row-height-gt-md="6:4" md-row-height-sm="2.7:2" md-row-height-md="5:4"  md-row-height-lg="6:4"
+                      md-row-height="6:2"  md-row-height-xs="4:2" md-row-height-xl="4:3.7" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-sm="6px">
+            <md-grid-tile ng-repeat="activity in $ctrl.elementsArray | filter:$ctrl.filter | orderBy:$ctrl.orderQuery:$ctrl.orderReverse"
+                          ng-click="$ctrl.selectDeselect(activity)" name="activity{{$index}}"
+                          id="activity{{$index}}"
+                          aria-label="activity{{$index}}"
+                          md-rowspan="1" md-colspan="1" md-colspan-xl="1" md-colspan-lg="1" md-colspan-md="1" md-colspan-sm="1" md-colspan-xs="1" md-whiteframe="3" class="{{activity.actions.whiteframeGrid}}">
+                <md-grid-tile-header ng-style="activity.actions.colorGrid">
+                    <div layout="row" layout-align="space-between center">
+                        <div layout="row">
+                            <md-icon class="md-avatar-icon" style="fill: white" md-svg-icon="{{activity.mode.icon}}"></md-icon>
+                            <md-tooltip md-direction="top">
+                                {{activity.mode.name}}
+                            </md-tooltip>
+                            <h3>{{activity.acronym}}</h3>
+                        </div>
+                        <div>
+                            <md-icon ng-style="{color: 'white'}" md-font-library="material-icons"">{{activity.activityStatus.icon}}</md-icon>
+                            <md-tooltip md-direction="top">
+                                {{activity.activityStatus.statusTooltip}}
+                            </md-tooltip>
+                        </div>
+                    </div>
+                </md-grid-tile-header>
+                <div  class="grid-aligh" layout="column">
+                    <div class="clipped">
+                        <span class="md-body-2">{{activity.name}} </span>
+                    </div>
+                    <span class="md-caption" ng-style="{color:'#797985'}">Realização: <small class="md-body-2" ng-style="{color:'black'}">{{activity.realizationDate}}</small></span>
+                    <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2" ng-style="{color:'black'}">{{activity.category}}</small></span>
+                    <span class="md-caption" ng-style="{color:'#797985'}">ID Externo: <small class="md-body-2" ng-style="{color:'black'}">{{activity.externalID}}</small></span>
+                </div>
+                <md-tooltip md-direction="top">
+                    {{activity.name}}
+                </md-tooltip>
+            </md-grid-tile>
+        </md-grid-list>
+    </div>
+</div>

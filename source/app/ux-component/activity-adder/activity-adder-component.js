@@ -147,7 +147,6 @@
     }
 
     function addPreActivitiesGroup(item) {
-      let deferred = $q.defer();
       self.activities = [];
       self.selectedGroups = [];
       self.selectedGroupsResult = [];
@@ -156,14 +155,13 @@
 
       _groupsFilter();
 
+      $timeout(() => {
+        self.processing = true;
+      }, 2000);
+
       self.activities.forEach(activity => {
         addPreActivities(activity);
       });
-
-      $timeout(() => {
-        deferred.resolve(self.activities);
-        self.processing = true;
-      }, Math.random() * 1000, false);
     }
 
     function addPreActivities(survey) {

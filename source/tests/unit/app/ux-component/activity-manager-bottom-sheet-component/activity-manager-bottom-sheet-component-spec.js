@@ -1,6 +1,6 @@
-describe('otusActivityManagerToolbar', function () {
+describe('otusActivityManagerBottomSheet', function () {
 
-  var UNIT_NAME = 'otusActivityManagerToolbarCtrl';
+  var UNIT_NAME = 'otusActivityManagerBottomSheetCtrl';
   var Mock = {};
   var Bindings = {};
   var Injections = {};

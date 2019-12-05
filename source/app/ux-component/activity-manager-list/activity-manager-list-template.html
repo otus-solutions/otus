@@ -10,17 +10,15 @@
     </div>
   </md-content>
   <md-content layout="column" ng-show="$ctrl.ready && !$ctrl.isListEmpty" flex>
-    <md-card  layout-padding="" layout-margin="" layout-align="start center">
-      <md-card-actions layout="row" layout-gt-md="row" layout-align="start center" layout-wrap layout-fill>
+    <md-card>
+      <md-card-actions layout="row" layout-align="start center" layout-padding>
         <h4>
           <md-icon>view_module</md-icon>
-          Visualização por Blocos
           <md-tooltip md-direction="right">
             Selecione o bloco de atividade a ser visualizado.
           </md-tooltip>
         </h4>
-        <span flex-gt-md="5" flex="100" ></span>
-        <md-input-container flex-gt-md="50" flex="70">
+        <md-input-container flex="20" flex-md="50" flex-sm="60" flex-xs="60">
           <label>Blocos</label>
           <md-select ng-model="$ctrl.selectedGroups"
                      md-on-close="$ctrl.clearSearchTerm()"
@@ -37,24 +35,25 @@
             </md-optgroup>
           </md-select>
         </md-input-container>
-        <span flex-gt-md="5" flex="10"></span>
-        <md-input-container flex>
+        <div>
           <md-checkbox style="margin-bottom: 0px !important;" aria-label="Select All"
                        ng-checked="$ctrl.isCheckedGroup()"
                        md-indeterminate="$ctrl.isIndeterminateGroups()"
                        ng-click="$ctrl.toggleAllGroups()">
-            Todos
+            <span class="md-body-2">
+                Todos
+            </span>
+            <md-tooltip md-direction="top">
+              Selecionar todos
+            </md-tooltip>
           </md-checkbox>
-        </md-input-container>
+        </div>
 
       </md-card-actions>
     </md-card>
-    <div class="dynamic-table-container" flex>
-      <dynamic-data-table flex="100" dynamic-table-settings="$ctrl.dynamicTableSettings" table-update-function="$ctrl.updateDataTable"></dynamic-data-table>
+    <div flex>
+      <activity-grid-list flex="100" grid-data-settings="$ctrl.griidDataChange" update-function="$ctrl.updateData"></activity-grid-list>
     </div>
-  </md-content>
-  <md-content class="not-mobile" md-whiteframe="3dp" style="height: 6em !important;" layout="row" layout-align="start center">
-
   </md-content>
 </div>
 
