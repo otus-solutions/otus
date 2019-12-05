@@ -52,15 +52,8 @@
 
 
     function _listCheckers(ActivityService, CheckerItemFactory, Application) {
-      return Application
-          .isDeployed()
-          .then(function() {
-            try {
-              return ActivityService.listActivityCheckers().map(CheckerItemFactory.create);
-            } catch (e) {
-              console.log(e);
-            }
-          });
+      return Application.isDeployed()
+        .then(() => ActivityService.listActivityCheckers().map(CheckerItemFactory.create));
     }
 
     _listCheckers.$inject = [
