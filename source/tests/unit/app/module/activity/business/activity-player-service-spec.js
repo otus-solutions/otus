@@ -5,10 +5,7 @@ describe('activity-player-service Test', function () {
 
   beforeEach(function () {
     mockData();
-    angular.mock.module('otusjs.activity', function ($provide) {
-      $provide.value('otusjs.deploy.SurveyRestService', {});
-      $provide.value('otusjs.deploy.SurveyGroupRestService', {});
-    });
+    angular.mock.module('otusjs.otus');
 
     inject(function (_$injector_) {
       Injections = {

@@ -449,4 +449,89 @@ activity-grid-list .gridListDynamicTiles md-grid-tile:hover {
     width: 90%;
   }
 }
+
+otus-activity-adder-card {
+  width: 100%;
+}
+
+otus-activity-adder-card md-grid-tile-header figcaption {
+  display: block;
+  width: 100%;
+}
+
+otus-activity-adder-card .grid-align{
+  padding-left: 10px;
+  padding-top: 5px;
+  width: 100%;
+}
+
+otus-activity-adder md-input-container {
+  margin-bottom: 0px;
+}
+
+otus-activity-adder .button-hover :hover {
+  background-color: rgba(0,0,0,.06);
+  border-radius: 0 0 0 0;
+  width: auto;
+  height: auto;
+}
+
+otus-activity-adder .card-width {
+  width: 100%;
+}
+
+otus-activity-adder md-grid-tile figure {
+  justify-content: normal;
+  flex-direction: column;
+  align-items: start;
+  transition-duration: 0s;
+}
+
+otus-activity-adder md-grid-list {
+  margin: 10px;
+  transition-duration: 0s;
+}
+
+otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-header {
+  position: relative;
+  width: 100%;
+  overflow: inherit;
+  padding: 8px;
+}
+
+otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-footer {
+  padding-left: 10px;
+  color: red;
+  height: 24px;
+  background: rgba(0,0,0,.05);
+}
+
+otus-activity-adder md-select {
+  margin: 5px 0 0;
+}
+
+otus-activity-adder  md-input-container {
+  margin: 0;
+  height: 40px;
+  padding: 0 15px;
+  border: none;
+}
+
+otus-activity-adder-card md-input-container {
+   padding: 0 15px 0 0;
+   margin: 0;
+   height: 40px;
+   border: none;
+}
+
+@media screen and (max-width: 799px) {
+  otus-activity-adder .card-width-category {
+    width: 100%;
+    padding-left: 20px;
+  }
+
+  otus-activity-adder .card-width-layout-sm {
+    width: 100%;
+  }
+}
 /*# sourceMappingURL=components-style.css.map */

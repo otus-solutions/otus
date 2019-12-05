@@ -1,0 +1,90 @@
+<md-grid-tile-header ng-style="{background: '#5ba499'}">
+  <div layout="row" layout-align="space-between center">
+    <div layout="row">
+      <md-icon md-font-library="material-icons" md-svg-icon="{{::$ctrl.getModeIcon()}}"
+               ng-style="{color: 'white'}"></md-icon>
+      <h3 ng-style="{color: '#FFFFFF'}">{{::$ctrl.getAcronym()}}</h3>
+    </div>
+    <div>
+      <md-button class="md-icon-button" ng-click="$ctrl.deletePreActivity()">
+        <md-icon md-font-set="material-icons"  style="color:white">delete</md-icon>
+        <md-tooltip md-direction="top">Remover</md-tooltip>
+      </md-button>
+    </div>
+  </div>
+</md-grid-tile-header>
+
+<div class="grid-align" layout="column" layout-align="space-between stretch">
+  <div layout="column">
+    <div layout="column" layout-align="start start">
+      <span class="md-body-2" layout-fill md-truncate>{{$ctrl.preActivity.surveyForm.name}}</span>
+      <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2" ng-style="{color:'black'}">
+        {{::$ctrl.preActivity.configuration.category.label}}</small></span>
+    </div>
+  </div>
+  <div layout="column" layout-align="start start" ng-if="$ctrl.preActivity.mode === 'PAPER'">
+    <form name="$ctrl.checkerForm" style="margin-top: 10px">
+      <small class="md-caption" ng-style="{color:'#797985'}">Informações do Aferidor:</small>
+      <md-input-container style="margin-top: 12px; margin-bottom: 12px" id="date">
+        <input aria-label="Data de Nascimento" class="md-input" date="true" disable-parent-scroll="true"
+               format="DD/MM/YYYY"
+               id="datetime" max-date="$ctrl.maxDate" mdc-datetime-picker=""
+               name="realizationDate" ng-change="$ctrl.updateRealizationDate($ctrl.realizationDate)"
+               ng-model="$ctrl.realizationDate"
+               required show-icon="true" time="false" type="text">
+        <md-tooltip md-direction="top">Data de Realização</md-tooltip>
+      </md-input-container>
+
+      <md-autocomplete md-input-name="autocompleteChecker"
+                       md-item-text="item.text"
+                       md-items="item in $ctrl.checkerQuerySearch($ctrl.checkerSearchText)"
+                       md-menu-class="autocomplete-custom-template"
+                       md-min-length="0"
+                       md-no-cache="true"
+                       md-search-text="$ctrl.checkerSearchText"
+                       md-search-text-change="$ctrl.monitoringCheckerFormSearchTextChange()"
+                       md-selected-item="$ctrl.checkerSelectedItem"
+                       md-selected-item-change="$ctrl.checkerSelectedItemChange($ctrl.checkerSelectedItem)"
+                       placeholder="Aferidor (a)" style="width: 90%" ng-disabled="!$ctrl.realizationDate" required>
+        <md-item-template>
+                    <span class="item-title">
+                        <md-icon md-svg-icon="account"></md-icon>
+                        <span md-highlight-flags="i" md-highlight-text="$ctrl.checkerSearchText">{{ item.title }}</span>
+                    </span>
+          <span class="item-metadata">
+                        <span class="item-metastat">E-mail: <strong>{{::item.metastat.email }}</strong></span>
+                    </span>
+        </md-item-template>
+        <md-not-found>
+          Nenhum resultado para "{{ $ctrl.checkerSearchText }}" foi encontrado.
+        </md-not-found>
+        <div ng-messages="checkerForm.autocompleteChecker.$error">
+          <div ng-message="required">Informe um Aferidor!</div>
+        </div>
+      </md-autocomplete>
+    </form>
+  </div>
+
+
+  <div layout="column" ng-if="$ctrl.preActivity.mode === 'ONLINE'">
+    <small class="md-caption" ng-style="{color:'#797985', 'margin-top': '10px'}">Informações do Usuário:</small>
+    <span class="md-caption" ng-style="{color:'#797985'}">Nome: <small class="md-body-2" ng-style="{color:'black'}">{{::$ctrl.preActivity.user.name}} {{::$ctrl.preActivity.user.surname}}</small></span>
+    <span class="md-caption" md-truncate ng-style="{color:'#797985'}">Email: <small class="md-body-2" ng-style="{color:'black'}">
+      {{::$ctrl.preActivity.user.email}}</small></span>
+  </div>
+  <form name="$ctrl.externalIdForm" style="height: 40px" novalidate>
+    <md-input-container ng-if="$ctrl.preActivity.surveyForm.isRequiredExternalID()" md-no-float class="md-block" style="padding-top: 10px">
+      <input name="externalid" ng-model="$ctrl.externalID" ng-change="$ctrl.updateExternalID($ctrl.externalID)"
+             placeholder="Id externo" aria-label="Id externo" required>
+      <md-tooltip md-direction="bottom">ID Externo</md-tooltip>
+    </md-input-container>
+    <md-input-container ng-if="!$ctrl.preActivity.surveyForm.isRequiredExternalID()">
+      <small ng-style="{color:'#9e9e9e'}">Id externo não requerido *</small>
+    </md-input-container>
+  </form>
+</div>
+<md-grid-tile-footer ng-show="$ctrl.checkerForm.autocompleteChecker.$pristine ||
+                              $ctrl.checkerForm.$invalid ||
+                              $ctrl.externalIdForm.externalid.$pristine ||
+                              $ctrl.externalIdForm.$invalid"><small>Itens obrigatórios pendentes *</small>
+</md-grid-tile-footer>

@@ -7,10 +7,8 @@
       'ACCESS': 'access',
       'ERROR': 'error',
       'ACTIVITY_ADDER': 'activity-adder',
-      'ACTIVITY_CATEGORY_ADDER': 'activity-category-adder',
       'ACTIVITY_PLAYER': 'activity-player',
       'ACTIVITY_VIEWER': 'activity-viewer',
-      'PAPER_ACTIVITY_INITIALIZER': 'paper-activity-initializer',
       'APPLICATION': 'application',
       'DASHBOARD': 'dashboard',
       'PARTICIPANT_DASHBOARD': 'participant-dashboard',
@@ -51,10 +49,8 @@
     'otusjs.deploy.ErrorStateProvider',
     'otusjs.deploy.ActivityStateProvider',
     'otusjs.deploy.ActivityAdderStateProvider',
-    'otusjs.deploy.ActivityCategoryStateProvider',
     'otusjs.deploy.ActivityPlayerStateProvider',
     'otusjs.deploy.ActivityViewerStateProvider',
-    'otusjs.deploy.PaperActivityInitializerStateProvider',
     'otusjs.deploy.DashboardStateProvider',
     'otusjs.deploy.ParticipantDashboardStateProvider',
     'otusjs.deploy.ParticipantsManagerStateProvider',
@@ -88,10 +84,8 @@
     ErrorStateProvider,
     ActivityStateProvider,
     ActivityAdderStateProvider,
-    ActivityCategoryStateProvider,
     ActivityPlayerStateProvider,
     ActivityViewerStateProvider,
-    PaperActivityInitializerStateProvider,
     DashboardProvider,
     ParticipantDashboardProvider,
     ParticipantsManagerStateProvider,
@@ -123,10 +117,8 @@
     $stateProvider.state(ErrorStateProvider.state);
     $stateProvider.state(ActivityStateProvider.state);
     $stateProvider.state(ActivityAdderStateProvider.state);
-    $stateProvider.state(ActivityCategoryStateProvider.state);
     $stateProvider.state(ActivityPlayerStateProvider.state);
     $stateProvider.state(ActivityViewerStateProvider.state);
-    $stateProvider.state(PaperActivityInitializerStateProvider.state);
     $stateProvider.state(LoginStateProvider.state);
     $stateProvider.state(SignupStateProvider.state);
     $stateProvider.state(SignupResultStateProvider.state);
