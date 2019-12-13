@@ -8,7 +8,7 @@
 
   factory.$inject = [
     '$rootScope',
-    'otusjs.report.business.dynamicReport.scope.ScopeHelperService'
+    'otusjs.report.business.dynamicReport.scope.ScopeHelperFactory'
   ];
 
   function factory($rootScope, ScopeHelperService) {
@@ -18,11 +18,13 @@
     self.fromJson = fromJson;
 
     function create() {
-      return new ScopeReport($rootScope, ScopeHelperService, {})
+      let service = ScopeHelperService.create();
+      return new ScopeReport($rootScope, service, {})
     }
 
     function fromJson(scopeInfo) {
-      return new ScopeReport($rootScope, ScopeHelperService, scopeInfo)
+      let service = ScopeHelperService.create();
+      return new ScopeReport($rootScope, service, scopeInfo)
     }
 
     return self;

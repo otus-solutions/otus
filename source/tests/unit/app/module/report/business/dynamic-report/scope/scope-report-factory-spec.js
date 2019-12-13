@@ -9,7 +9,7 @@ describe('the Scope Report factory ', function () {
       var injections = {
         '$rootScope': _$rootScope_,
         'ScopeHelperService': _$injector_.get(
-          'otusjs.report.business.dynamicReport.scope.ScopeHelperService'
+          'otusjs.report.business.dynamicReport.scope.ScopeHelperFactory'
         )
       };
       factory = _$injector_.get(

@@ -10,9 +10,9 @@ describe('the Scope Helper service ', function () {
         '$filter': _$filter_
       };
       service = _$injector_.get(
-        'otusjs.report.business.dynamicReport.scope.ScopeHelperService',
+        'otusjs.report.business.dynamicReport.scope.ScopeHelperFactory',
         injections
-      );
+      ).create();
     });
   });
 
@@ -134,7 +134,7 @@ describe('the Scope Helper service ', function () {
       {
         date: '2019-09-09T17:40:34.699Z',
         eye: 'left',
-        result: "{\"type\":\"Buffer\",\"data\":[255,216,255,224,0,16,74,70,73,70,0,1,2,0,0,1,0,1,0,0,255]}"
+        result: "[{\"type\":\"Buffer\",\"data\":[255,216,255,224,0,16,74,70,73,70,0,1,2,0,0,1,0,1,0,0,255]}]"
       }
     ]
   }
