@@ -55,19 +55,22 @@
       return _find(array, propertyOrJson, value);
     }
 
-    function parseToRetinographyImage(images) {
+    function parseToRetinographyImage(imageDataArray) {
       if (!_compiledImages) {
-        images.forEach(image => {
-          var arrayBufferView = new Uint8Array(JSON.parse(image.result).data);
-          var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-          var urlCreator = window.URL || window.webkitURL;
-          responseImages.push({
-            date: formatDate(image.date),
-            eye: _translateEye(image.eye),
-            url: urlCreator.createObjectURL(blob)
+        imageDataArray.forEach(imageData => {
+          var parsedResult = JSON.parse(imageData.result);
+          parsedResult.forEach(imageBuffer => {
+            var arrayBufferView = new Uint8Array(imageBuffer.data);
+            var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+            var urlCreator = window.URL || window.webkitURL;
+            responseImages.push({
+              date: formatDate(imageData.date),
+              eye: _translateEye(imageData.eye),
+              url: urlCreator.createObjectURL(blob)
+            });
           });
+          _compiledImages = true;
         });
-        _compiledImages = true;
       }
       return responseImages;
     }
