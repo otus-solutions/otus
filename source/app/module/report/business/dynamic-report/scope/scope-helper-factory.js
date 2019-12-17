@@ -3,11 +3,23 @@
 
   angular
     .module('otusjs.report.business.dynamicReport.scope')
-    .service('otusjs.report.business.dynamicReport.scope.ScopeHelperService', Service);
+    .factory('otusjs.report.business.dynamicReport.scope.ScopeHelperFactory', Factory);
 
-  Service.$inject = [
+  Factory.$inject = [
     '$filter'
   ];
+
+  function Factory($filter) {
+    var self = this;
+
+    self.create = create;
+
+    function create() {
+      return new Service($filter);
+    }
+
+    return self;
+  }
 
   function Service($filter) {
     var _compiledImages = false;
@@ -55,19 +67,25 @@
       return _find(array, propertyOrJson, value);
     }
 
-    function parseToRetinographyImage(images) {
+    function parseToRetinographyImage(imageDataArray) {
       if (!_compiledImages) {
-        images.forEach(image => {
-          var arrayBufferView = new Uint8Array(JSON.parse(image.result).data);
-          var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
-          var urlCreator = window.URL || window.webkitURL;
-          responseImages.push({
-            date: formatDate(image.date),
-            eye: _translateEye(image.eye),
-            url: urlCreator.createObjectURL(blob)
+        imageDataArray.forEach(imageData => {
+          var parsedResult = JSON.parse(imageData.result);
+          parsedResult.forEach(imageBuffer => {
+            var arrayBufferView = new Uint8Array(imageBuffer.data);
+            var blob = new Blob([arrayBufferView], { type: "image/jpeg" });
+            var urlCreator = window.URL || window.webkitURL;
+            var obj = {
+              date: formatDate(imageData.date),
+              eye: _translateEye(imageData.eye),
+              url: urlCreator.createObjectURL(blob)
+            };
+            responseImages.push(obj);
+            console.log(obj.url);
+
           });
+          _compiledImages = true;
         });
-        _compiledImages = true;
       }
       return responseImages;
     }
