@@ -12,10 +12,11 @@
     }).controller('userActivityPendencyCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.UserActivityPendencyService'
+    'otusjs.otus.uxComponent.UserActivityPendencyService',
+    'otusjs.otus.uxComponent.UserActivityPendencyValue'
   ];
 
-  function Controller(UserActivityPendencyService) {
+  function Controller(UserActivityPendencyService, VALUE) {
     const self = this;
 
     self.$onInit = onInit;
@@ -24,8 +25,8 @@
     function onInit() {}
 
     function createUserActivityPendency(){
-      UserActivityPendencyService.createUserActivityPendency()
-      console.log("create pendency")
+      UserActivityPendencyService.createUserActivityPendency();
+
     }
 
 

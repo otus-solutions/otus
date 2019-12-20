@@ -1,8 +1,8 @@
-<md-dialog aria-label="Pendências do Relatório">
+<md-dialog aria-label="Criação de Pendência da Atividade">
   <form ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Pendências do Relatório</h2>
+        <h2>Pendência de Atividade</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <md-icon>close</md-icon>
@@ -49,9 +49,9 @@
   </md-dialog-content>
   <md-dialog-actions layout="row">
     <md-button ng-disabled="" class="md-raised md-primary"
-               aria-label="gerar relatório" ng-click="generateReport()">Gerar
+               aria-label="criar pendência" ng-click="">{{createButtonInfo}}
     </md-button>
-    <md-button aria-label="cancelar" class="md-raised" ng-click="cancel()">Cancelar</md-button>
+    <md-button aria-label="cancelar" class="md-raised" ng-click="cancel()">{{cancelButtonInfo}}</md-button>
   </md-dialog-actions>
 </md-dialog>
 
