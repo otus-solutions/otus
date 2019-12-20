@@ -14,8 +14,11 @@
       <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
     </md-button>
     <otus-activity-report ng-if="$ctrl.showVisualizationButton" selected-participant=$ctrl.selectedParticipant
-                          status-selected-activity=$ctrl.statusSelectedActivity show-visualization-button=$ctrl.showVisualizationButton;>
+                          status-selected-activity=$ctrl.statusSelectedActivity
+                          show-visualization-button=$ctrl.showVisualizationButton>
     </otus-activity-report>
+    <otus-user-activity-pendency></otus-user-activity-pendency>
+
     <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"
                ng-click="$ctrl.viewSelectedActivity()"
                ng-show="$ctrl.showViewerButton">
