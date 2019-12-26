@@ -23,11 +23,9 @@
     self.DialogController = DialogController;
 
     function userActivityPendencyDialog(selectedActivity) {
-      self.selectedActivity = selectedActivity;
-
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
-        locals: {selectedActivity: self.selectedPaperActivity, updateList: self.updateList},
+        locals: {selectedActivity: selectedActivity, updateList: self.updateList},
         templateUrl: 'app/ux-component/pendency/user-activity-pendency/user-activity-pendency-dialog-template.html',
         parent: angular.element(document.body),
         controller: self.DialogController,
@@ -38,23 +36,21 @@
       });
     }
 
-    function DialogController(selectedActivity, updateList) {
+    function DialogController(selectedActivity) {
       var self = this;
-      self.selectedActivity = selectedActivity;
+
       //self.user = selectedActivity.statusHistory.getInitializedOfflineRegistry().user;
       //self.date = selectedActivity.statusHistory.getInitializedOfflineRegistry().date;
       /* Public methods */
       self.querySearch = querySearch;
-      self.createUserActivityPendency = createUserActivityPendency;
+      self.updateUserActivityPendency = updateUserActivityPendency;
       self.cancel = cancel;
-
-      onInit();
+      self.$onInit = onInit();
 
       function onInit() {
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
         //self.selectedItem = CheckerItemFactory.create(self.user);
         self.maxDate = new Date();
-
       }
 
       function querySearch(query) {
@@ -68,7 +64,7 @@
         return deferred.promise;
       }
 
-      function createUserActivityPendency(){
+      function updateUserActivityPendency(){
         console.log(self);
         console.log(self.selectedActivity);
       }

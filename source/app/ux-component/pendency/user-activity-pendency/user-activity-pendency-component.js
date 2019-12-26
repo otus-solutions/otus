@@ -25,7 +25,6 @@
     function onInit() {}
 
     function createUserActivityPendency(){
-      console.log(self.selectedActivity)
       UserActivityPendencyService.userActivityPendencyDialog(self.selectedActivity);
     }
   }

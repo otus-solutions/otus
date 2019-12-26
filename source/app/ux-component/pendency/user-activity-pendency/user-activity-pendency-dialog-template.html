@@ -12,13 +12,14 @@
 <div layout="row" flex layout-align="center center">
   <div layout-margin layout="column">
     <div layout-margin layout="column" class="label-light-gray">
-      <span class="md-headline">Criação de Evento</span>
+      <span class="md-headline">Dados do Evento</span>
       <span class="md-body-2">Informe <b>vencimento</b> e o <b>responsável pelo monitoramento.</b></span>
     </div>
     <div flex>
       <div>
-        <md-datepicker ng-model="vm.date" md-placeholder="Data de vencimento" md-max-date="vm.maxDate"></md-datepicker>
+        <md-datepicker ng-model="vm.date" md-placeholder="DD/MM/AAAA" md-max-date="vm.maxDate"></md-datepicker>
       </div>
+
       <md-autocomplete flex  md-selected-item="vm.selectedItem"
                        md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
                        md-selected-item-change="vm.selectedItemChange(item)" md-items="item in vm.querySearch(vm.searchText)"
@@ -43,8 +44,8 @@
 </div>
 <md-dialog-actions layout="row">
   <span flex></span>
-  <md-button ng-click="vm.createUserActivityPendency()" class="md-raised md-primary" aria-label="Criar" ng-disabled="!vm.selectedItem.checker">
-    Criar
+  <md-button ng-click="vm.updateUserActivityPendency()" class="md-raised md-primary" aria-label="Salvar" ng-disabled="!vm.selectedItem.checker">
+    Salvar
   </md-button>
   <md-button ng-click="vm.cancel()" class="md-raised md-no-focus" aria-label="Cancelar">
     Cancelar

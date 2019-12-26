@@ -91,6 +91,7 @@
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = participantData;
+
       } else {
         ParticipantActivityService
           .getSelectedParticipant()
