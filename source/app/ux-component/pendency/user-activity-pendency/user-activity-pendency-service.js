@@ -12,11 +12,13 @@
     '$mdDialog',
     'otusjs.otus.uxComponent.UserActivityPendencyValue',
     'otusjs.activity.business.ParticipantActivityService',
-    'otusjs.otus.uxComponent.CheckerItemFactory'
-
+    'otusjs.otus.uxComponent.CheckerItemFactory',
+    'otusjs.activity.core.ContextService',
+    'otusjs.model.pendency.UserActivityPendency'
   ];
 
-  function Service($q, $mdToast, $timeout,$mdDialog, VALUES, ParticipantActivityService, CheckerItemFactory) {
+  function Service($q, $mdToast, $timeout,$mdDialog, VALUES, ParticipantActivityService,
+                   CheckerItemFactory, ContextService, userActivityPendencyFactory) {
     const self = this;
 
     self.userActivityPendencyDialog = userActivityPendencyDialog;
@@ -49,7 +51,6 @@
 
       function onInit() {
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
-        //self.selectedItem = CheckerItemFactory.create(self.user);
         self.maxDate = new Date();
       }
 
@@ -65,11 +66,16 @@
       }
 
       function updateUserActivityPendency(){
-        console.log(self);
-        console.log(self.selectedActivity);
-        console.log(self.date);
-        console.log(self.selectedItem.checker);
+        let activity = self.selectedActivity;
+        let dueDate = self.date;
+        let receiver = self.selectedItem.checker.email;
+        let requester = ContextService.getLoggedUser().email;
+
+        let userActivityPendency = userActivityPendencyFactory.create(requester, receiver, dueDate, activity);
+        console.log(userActivityPendency);
+
       }
+
 
       // function updateCheckerActivity() {
       //   var activityStatus = angular.copy(self.selectedActivity.statusHistory.getInitializedOfflineRegistry());
@@ -117,20 +123,6 @@
 
 }());
 
-// let json = {
-//   id: self.id,
-//   objectType: self.objectType,
-//   creationDate: self.creationDate,
-//   dueDate: self.dueDate,
-//   requester: self.requester,
-//   receiver: self.receiver,
-//   activityInfo: {
-//     id: self.activityInfo.id,
-//     acronym: self.activityInfo.acronym,
-//     recruitmentNumber: self.activityInfo.recruitmentNumber,
-//     lastStatusName: self.activityInfo.lastStatusName,
-//     externalID: self.activityInfo.externalID
-//   }
-// };
+
 
 
