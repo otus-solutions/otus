@@ -19,11 +19,11 @@
   function Service($q, $mdToast, $timeout,$mdDialog, VALUE, ParticipantActivityService, CheckerItemFactory) {
     const self = this;
 
-    self.createUserActivityPendency = createUserActivityPendency;
+    self.userActivityPendencyDialog = userActivityPendencyDialog;
     self.DialogController = DialogController;
 
-    function createUserActivityPendency(activity) {
-      self.activity = activity;
+    function userActivityPendencyDialog(selectedActivity) {
+      self.selectedActivity = selectedActivity;
 
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
@@ -45,7 +45,7 @@
       //self.date = selectedActivity.statusHistory.getInitializedOfflineRegistry().date;
       /* Public methods */
       self.querySearch = querySearch;
-      // self.updateCheckerActivity = updateCheckerActivity;
+      self.createUserActivityPendency = createUserActivityPendency;
       self.cancel = cancel;
 
       onInit();
@@ -66,6 +66,11 @@
         }, Math.random() * 1000, false);
 
         return deferred.promise;
+      }
+
+      function createUserActivityPendency(){
+        console.log(self);
+        console.log(self.selectedActivity);
       }
 
       // function updateCheckerActivity() {
@@ -94,21 +99,21 @@
         $mdDialog.cancel();
       }
 
-      // function _showMessage(msg) {
-      //   $mdToast.show(
-      //     $mdToast.simple()
-      //       .position("bottom right")
-      //       .textContent(msg)
-      //       .hideDelay(3000));
-      // }
+      function _showMessage(msg) {
+        $mdToast.show(
+          $mdToast.simple()
+            .position("bottom right")
+            .textContent(msg)
+            .hideDelay(3000));
+      }
 
-      // function _createFilterFor(query) {
-      //   var lowercaseQuery = angular.lowercase(query);
-      //
-      //   return function filterFn(checker) {
-      //     return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
-      //   };
-      // }
+      function _createFilterFor(query) {
+        var lowercaseQuery = angular.lowercase(query);
+
+        return function filterFn(checker) {
+          return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
+        };
+      }
     }
 
 

@@ -73,7 +73,7 @@
     function updateChecker() {
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
-        locals: {selectedActivity: self.selectedPaperActivity, updateList: self.updateList},
+        locals: {selectedActivity: self.selectedActivity, updateList: self.updateList},
         templateUrl: 'app/ux-component/paper-activity-checker-update/paper-activity-checker-update-template.html',
         parent: angular.element(document.body),
         controller: self.DialogController,
@@ -128,11 +128,7 @@
         self.isPaperActivity = false;
       }
 
-      if (self.isPaperActivity) {
-        self.selectedPaperActivity = angular.copy(selectedActivities[0]);
-      } else {
-        delete self.selectedPaperActivity;
-      }
+       self.selectedActivity = angular.copy(selectedActivities[0]);
     }
 
     function _buildDialogs() {
@@ -209,11 +205,14 @@
           }).catch(function (e) {
           self.cancel();
           _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
-        });
+        })
+          .then(_cleanSelectedActivity());
       }
 
       function cancel() {
+        _cleanSelectedActivity();
         $mdDialog.cancel();
+
       }
 
       function _showMessage(msg) {
@@ -231,6 +230,11 @@
           return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
         };
       }
+
+      function _cleanSelectedActivity(){
+        self.selectedActivity = null;
+      }
+
     }
 
   }
