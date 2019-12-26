@@ -16,7 +16,7 @@
 
   ];
 
-  function Service($q, $mdToast, $timeout,$mdDialog, VALUE, ParticipantActivityService, CheckerItemFactory) {
+  function Service($q, $mdToast, $timeout,$mdDialog, VALUES, ParticipantActivityService, CheckerItemFactory) {
     const self = this;
 
     self.userActivityPendencyDialog = userActivityPendencyDialog;
@@ -38,7 +38,7 @@
 
     function DialogController(selectedActivity) {
       var self = this;
-
+      self.selectedActivity = selectedActivity;
       //self.user = selectedActivity.statusHistory.getInitializedOfflineRegistry().user;
       //self.date = selectedActivity.statusHistory.getInitializedOfflineRegistry().date;
       /* Public methods */
@@ -67,6 +67,8 @@
       function updateUserActivityPendency(){
         console.log(self);
         console.log(self.selectedActivity);
+        console.log(self.date);
+        console.log(self.selectedItem.checker);
       }
 
       // function updateCheckerActivity() {
@@ -111,10 +113,24 @@
         };
       }
     }
-
-
-
-
   }
 
 }());
+
+// let json = {
+//   id: self.id,
+//   objectType: self.objectType,
+//   creationDate: self.creationDate,
+//   dueDate: self.dueDate,
+//   requester: self.requester,
+//   receiver: self.receiver,
+//   activityInfo: {
+//     id: self.activityInfo.id,
+//     acronym: self.activityInfo.acronym,
+//     recruitmentNumber: self.activityInfo.recruitmentNumber,
+//     lastStatusName: self.activityInfo.lastStatusName,
+//     externalID: self.activityInfo.externalID
+//   }
+// };
+
+
