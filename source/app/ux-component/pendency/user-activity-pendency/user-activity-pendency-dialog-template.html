@@ -1,113 +1,52 @@
-<md-dialog aria-label="Criação de Pendência da Atividade">
-  <form ng-cloak>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Pendência de Atividade</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
-          <md-icon>close</md-icon>
-          <md-tooltip md-direction="bottom">Fechar</md-tooltip>
-        </md-button>
-      </div>
-    </md-toolbar>
-
-    <md-dialog-content>
-<!--      <div class="md-dialog-content">-->
-<!--        <div layout="row" flex class="dashboard-legend"-->
-<!--             ng-if="report.missingDataSources.length || report.fieldsError.length || report.missingOptionalDataSources.length">-->
-<!--          <div layout="row" layout-align="center center" flex="50">-->
-<!--            <span class="bull-legend required">&bull;</span>-->
-<!--            <span class="md-caption">Obrigatório</span>-->
-<!--          </div>-->
-<!--          <div layout="row" layout-align="center center" flex="50" class="legend-separator">-->
-<!--            <span class="bull-legend optional">&bull;</span>-->
-<!--            <span class="md-caption">Opcional</span>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div layout="row" ng-repeat="datasource in report.missingDataSources track by $index" ng-if="datasource"-->
-<!--             layout-align="left center" flex>-->
-<!--          <span class="bull-legend required">&bull;</span>-->
-<!--          <span flex class="md-caption truncate">{{datasource}}</span>-->
-<!--          <md-tooltip>{{'Obrigatório - ' + datasource}}</md-tooltip>-->
-<!--        </div>-->
-<!--        <div layout="row" ng-repeat="field in report.fieldsError track by $index" ng-if="report.fieldsError.length"-->
-<!--             layout-align="left center" flex>-->
-<!--          <span class="bull-legend required">&bull;</span>-->
-<!--          <span class="md-caption">{{'Campo "' + field.fieldName + '" ' + (field.msg)}}</span>-->
-<!--          <md-tooltip>{{'Obrigatório - ' + 'Campo "' + field.fieldName + '" ' + (field.msg)}}</md-tooltip>-->
-<!--        </div>-->
-<!--        <div layout="row" ng-repeat="datasource in report.missingOptionalDataSources track by $index"-->
-<!--             ng-if="report.missingOptionalDataSources.length" layout-align="left center" flex>-->
-<!--          <span class="bull-legend optional">&bull;</span>-->
-<!--          <span class="md-caption">{{datasource}}</span>-->
-<!--          <md-tooltip>{{'Opcional - ' + datasource}}</md-tooltip>-->
-<!--        </div>-->
-<!--      </div>-->
-    </md-dialog-content>
-  </form>
-
-  </md-dialog-content>
-  <md-dialog-actions layout="row">
-    <md-button ng-disabled="" class="md-raised md-primary"
-               aria-label="criar pendência" ng-click="">{{createButtonInfo}}
+<md-toolbar style="z-index: 1" class="md-primary md-hue-1">
+  <div class="md-toolbar-tools">
+    <h2><span>Pendência de Atividade</span></h2>
+    <span flex></span>
+    <md-button class="md-icon-button" ng-click="vm.cancel() "aria-label="Fechar">
+      <md-icon aria-label="Fechar">close</md-icon>
+      <md-tooltip md-direction="bottom">Fechar</md-tooltip>
     </md-button>
-    <md-button aria-label="cancelar" class="md-raised" ng-click="cancel()">{{cancelButtonInfo}}</md-button>
-  </md-dialog-actions>
-</md-dialog>
+  </div>
+</md-toolbar>
 
-<!--<md-dialog aria-label="Pendências do Relatório">-->
-<!--  <form ng-cloak>-->
-<!--    <md-toolbar>-->
-<!--      <div class="md-toolbar-tools">-->
-<!--        <h2>Pendências do Relatório</h2>-->
-<!--        <span flex></span>-->
-<!--        <md-button class="md-icon-button" ng-click="cancel()">-->
-<!--          <md-icon>close</md-icon>-->
-<!--          <md-tooltip md-direction="bottom">Fechar</md-tooltip>-->
-<!--        </md-button>-->
-<!--      </div>-->
-<!--    </md-toolbar>-->
-
-<!--    <md-dialog-content>-->
-<!--      <div class="md-dialog-content">-->
-<!--        <div layout="row" flex class="dashboard-legend"-->
-<!--             ng-if="report.missingDataSources.length || report.fieldsError.length || report.missingOptionalDataSources.length">-->
-<!--          <div layout="row" layout-align="center center" flex="50">-->
-<!--            <span class="bull-legend required">&bull;</span>-->
-<!--            <span class="md-caption">Obrigatório</span>-->
-<!--          </div>-->
-<!--          <div layout="row" layout-align="center center" flex="50" class="legend-separator">-->
-<!--            <span class="bull-legend optional">&bull;</span>-->
-<!--            <span class="md-caption">Opcional</span>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <div layout="row" ng-repeat="datasource in report.missingDataSources track by $index" ng-if="datasource"-->
-<!--             layout-align="left center" flex>-->
-<!--          <span class="bull-legend required">&bull;</span>-->
-<!--          <span flex class="md-caption truncate">{{datasource}}</span>-->
-<!--          <md-tooltip>{{'Obrigatório - ' + datasource}}</md-tooltip>-->
-<!--        </div>-->
-<!--        <div layout="row" ng-repeat="field in report.fieldsError track by $index" ng-if="report.fieldsError.length"-->
-<!--             layout-align="left center" flex>-->
-<!--          <span class="bull-legend required">&bull;</span>-->
-<!--          <span class="md-caption">{{'Campo "' + field.fieldName + '" ' + (field.msg)}}</span>-->
-<!--          <md-tooltip>{{'Obrigatório - ' + 'Campo "' + field.fieldName + '" ' + (field.msg)}}</md-tooltip>-->
-<!--        </div>-->
-<!--        <div layout="row" ng-repeat="datasource in report.missingOptionalDataSources track by $index"-->
-<!--             ng-if="report.missingOptionalDataSources.length" layout-align="left center" flex>-->
-<!--          <span class="bull-legend optional">&bull;</span>-->
-<!--          <span class="md-caption">{{datasource}}</span>-->
-<!--          <md-tooltip>{{'Opcional - ' + datasource}}</md-tooltip>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </md-dialog-content>-->
-<!--  </form>-->
-
-<!--  </md-dialog-content>-->
-<!--  <md-dialog-actions layout="row">-->
-<!--    <md-button ng-disabled="{{report.missingDataSources.length}}" class="md-raised md-primary"-->
-<!--               aria-label="gerar relatório" ng-click="generateReport()">Gerar-->
-<!--    </md-button>-->
-<!--    <md-button aria-label="cancelar" class="md-raised" ng-click="cancel()">Cancelar</md-button>-->
-<!--  </md-dialog-actions>-->
-<!--</md-dialog>-->
+<div layout="row" flex layout-align="center center">
+  <div layout-margin layout="column">
+    <div layout-margin layout="column" class="label-light-gray">
+      <span class="md-headline">Criação de Evento</span>
+      <span class="md-body-2">Informe <b>vencimento</b> e o <b>responsável pelo monitoramento.</b></span>
+    </div>
+    <div flex>
+      <div>
+        <md-datepicker ng-model="vm.date" md-placeholder="Data de vencimento" md-max-date="vm.maxDate"></md-datepicker>
+      </div>
+      <md-autocomplete flex  md-selected-item="vm.selectedItem"
+                       md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
+                       md-selected-item-change="vm.selectedItemChange(item)" md-items="item in vm.querySearch(vm.searchText)"
+                       md-item-text="item.text" md-min-length="0" placeholder="Responsável (a)" md-menu-class="autocomplete-custom-template">
+        <md-item-template>
+          <span class="item-title">
+            <md-icon md-svg-icon="account"></md-icon>
+            <span md-highlight-text="vm.searchText" md-highlight-flags="i">{{ item.title }}</span>
+          </span>
+          <span class="item-metadata">
+            <span class="item-metastat">
+              E-mail: <strong>{{ item.metastat.email }}</strong>
+            </span>
+          </span>
+        </md-item-template>
+        <md-not-found>
+          Nenhum resultado para "{{ vm.searchText }}" foi encontrado.
+        </md-not-found>
+      </md-autocomplete>
+    </div>
+  </div>
+</div>
+<md-dialog-actions layout="row">
+  <span flex></span>
+  <md-button ng-click="vm.updateCheckerActivity()" class="md-raised md-primary" aria-label="Criar" ng-disabled="!vm.selectedItem.checker">
+    Criar
+  </md-button>
+  <md-button ng-click="vm.cancel()" class="md-raised md-no-focus" aria-label="Cancelar">
+    Cancelar
+  </md-button>
+</md-dialog-actions>

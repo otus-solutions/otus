@@ -26,10 +26,7 @@
 
     function createUserActivityPendency(){
       UserActivityPendencyService.createUserActivityPendency();
-
     }
-
-
   }
 
 
