@@ -1,4 +1,4 @@
-(function (){
+(function () {
   'use strict'
 
   angular
@@ -10,15 +10,14 @@
     '$mdToast',
     '$timeout',
     '$mdDialog',
-    'otusjs.otus.uxComponent.UserActivityPendencyValue',
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.otus.uxComponent.CheckerItemFactory',
-    'otusjs.activity.core.ContextService',
-    'otusjs.model.pendency.UserActivityPendency'
+    'otusjs.model.pendency.UserActivityPendencyFactory',
+    'otusjs.otus.uxComponent.UserActivityPendencyValue',
   ];
 
-  function Service($q, $mdToast, $timeout,$mdDialog, VALUES, ParticipantActivityService,
-                   CheckerItemFactory, ContextService, userActivityPendencyFactory) {
+  function Service($q, $mdToast, $timeout, $mdDialog, ParticipantActivityService,
+                   CheckerItemFactory, userActivityPendencyFactory, Values,) {
     const self = this;
 
     self.userActivityPendencyDialog = userActivityPendencyDialog;
@@ -45,13 +44,13 @@
       //self.date = selectedActivity.statusHistory.getInitializedOfflineRegistry().date;
       /* Public methods */
       self.querySearch = querySearch;
-      self.updateUserActivityPendency = updateUserActivityPendency;
+      self.saveUserActivityPendency = saveUserActivityPendency;
       self.cancel = cancel;
       self.$onInit = onInit();
 
       function onInit() {
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
-        self.maxDate = new Date();
+        self.minDate = new Date();
       }
 
       function querySearch(query) {
@@ -65,15 +64,16 @@
         return deferred.promise;
       }
 
-      function updateUserActivityPendency(){
-        let activity = self.selectedActivity;
-        let dueDate = self.date;
-        let receiver = self.selectedItem.checker.email;
-        let requester = ContextService.getLoggedUser().email;
+      function saveUserActivityPendency() {
+        ParticipantActivityService.saveUserActivityPendency(_buildUserActivityPendency());
+      }
 
-        let userActivityPendency = userActivityPendencyFactory.create(requester, receiver, dueDate, activity);
-        console.log(userActivityPendency);
-
+      function _buildUserActivityPendency() {
+        return userActivityPendencyFactory.create(
+          angular.copy(self.selectedItem.checker.email),
+          angular.copy(self.date),
+          angular.copy(self.selectedActivity)
+        )
       }
 
 

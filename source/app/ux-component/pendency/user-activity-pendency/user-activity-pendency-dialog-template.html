@@ -17,7 +17,7 @@
     </div>
     <form name="pendencyForm" novalidate flex>
       <div>
-        <md-datepicker ng-model="vm.date" md-placeholder="DD/MM/AAAA" md-max-date="vm.maxDate" required></md-datepicker>
+        <md-datepicker ng-model="vm.date" md-placeholder="DD/MM/AAAA" md-min-date="vm.minDate" required></md-datepicker>
       </div>
 
       <md-autocomplete flex  required md-selected-item="vm.selectedItem"
@@ -44,7 +44,7 @@
 </div>
 <md-dialog-actions layout="row">
   <span flex></span>
-  <md-button ng-click="vm.updateUserActivityPendency()" class="md-raised md-primary" aria-label="Salvar" ng-disabled = pendencyForm.$invalid>
+  <md-button ng-click="vm.saveUserActivityPendency()" class="md-raised md-primary" aria-label="Salvar" ng-disabled = pendencyForm.$invalid>
     Salvar
   </md-button>
   <md-button ng-click="vm.cancel()" class="md-raised md-no-focus" aria-label="Cancelar">

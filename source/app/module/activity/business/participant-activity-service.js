@@ -41,6 +41,7 @@
 		self.createPreActivity = createPreActivity;
 		self.saveActivities = saveActivities;
 		self.getSurveyFromJson = getSurveyFromJson;
+		self.saveUserActivityPendency = saveUserActivityPendency;
 
 		 function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -180,5 +181,11 @@
 		function getSurveyFromJson(json) {
 			return SurveyFormFactory.fromJsonObject(json);
 		}
+
+		function saveUserActivityPendency(userActivityPendency) {
+		  console.log(userActivityPendency)
+
+
+    }
 	}
 }());
