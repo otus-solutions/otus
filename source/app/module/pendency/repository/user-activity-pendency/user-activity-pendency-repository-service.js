@@ -5,15 +5,17 @@
     .module('otusjs.pendency.repository')
     .service('otusjs.pendency.repository.UserActivityPendencyRepositoryService', Service);
 
-  Service.$inject = [];
+  Service.$inject = [
+    'otusjs.pendency.repository.UserActivityPendencyCollectionService'
+  ];
 
-  function Service() {
+  function Service(UserActivityPendencyCollectionService) {
     const self = this
 
     self.saveUserActivityPendency = saveUserActivityPendency;
 
     function saveUserActivityPendency(userActivityPendency) {
-      return userActivityPendency;
+      return UserActivityPendencyCollectionService.saveUserActivityPendency(userActivityPendency);
       }
 
   }
