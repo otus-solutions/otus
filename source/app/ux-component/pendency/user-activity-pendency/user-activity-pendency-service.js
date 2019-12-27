@@ -65,10 +65,12 @@
       }
 
       function saveUserActivityPendency() {
-        ParticipantActivityService.saveUserActivityPendency(_buildUserActivityPendency());
+        //return ParticipantActivityService.saveUserActivityPendency(_buildUserActivityPendency());
+        console.log(ParticipantActivityService.saveUserActivityPendency(_buildUserActivityPendency()));
       }
 
       function _buildUserActivityPendency() {
+        //TODO OTUS-638: fazer busca de pendencia por id da atividade e deserializar
         return userActivityPendencyFactory.create(
           angular.copy(self.selectedItem.checker.email),
           angular.copy(self.date),

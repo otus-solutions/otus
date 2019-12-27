@@ -12,10 +12,12 @@
 		'otusjs.activity.repository.UserRepositoryService',
 		'otusjs.activity.business.PreActivityFactory',
 		'otusjs.application.state.ApplicationStateService',
-		'SurveyFormFactory'
+		'SurveyFormFactory',
+    'otusjs.pendency.repository.UserActivityPendencyRepositoryService'
 	];
 
-	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
+	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService,
+                   PreActivityFactory, ApplicationStateService, SurveyFormFactory, UserActivityPendencyRepositoryService) {
 		var self = this;
 		var _paperActivityCheckerData = null;
 
@@ -183,9 +185,7 @@
 		}
 
 		function saveUserActivityPendency(userActivityPendency) {
-		  console.log(userActivityPendency)
-
-
+      return UserActivityPendencyRepositoryService.saveUserActivityPendency(userActivityPendency)
     }
 	}
 }());
