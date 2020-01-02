@@ -22,6 +22,8 @@
     self.onLogout = onLogout;
 
     function fireParticipantSelected(data) {
+      console.log('selecionou');
+      console.log(data);
       _notifyEvent(_onParticipantSelectedListeners, data, _onParticipantSelectedListeners.length);
     }
 
