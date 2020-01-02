@@ -5,13 +5,13 @@
     .service('otus.deploy.PendencyModuleBootstrap', Service);
 
   Service.$inject = [
+    'otusjs.pendency.core.ModuleService',
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
-    'otusjs.deploy.UserActivityPendencyRestService',
-    //'otusjs.monitoring.core.ModuleService',
+    'otusjs.deploy.UserActivityPendencyRestService'
   ];
 
-  function Service(ContextFactory, StorageService, UserActivityPendencyRestService) {
+  function Service( ModuleService, ContextFactory, StorageService, UserActivityPendencyRestService,) {
     const self = this;
     /* Public methods */
 
@@ -23,17 +23,16 @@
     function bootstrap() {
       configureContext(ContextFactory);
       configureStorage(StorageService.session);
-      //ModuleService.configureRemoteStorage(UserActivityPendencyRestService);
+      ModuleService.configureRemoteStorage(UserActivityPendencyRestService);
     }
 
     function configureContext(context) {
-      //ModuleService.configureContext(context);
+      ModuleService.configureContext(context);
     }
 
     function configureStorage(storage) {
-       //ModuleService.configureStorage(storage);
+       ModuleService.configureStorage(storage);
     }
-
   }
 
 }());
