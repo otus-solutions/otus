@@ -59,7 +59,7 @@
         }
 
         function _reactToParticipantChange(selectedParticipant) {
-            self.selectParticipant = selectedParticipant;
+            self.selectedParticipant = selectedParticipant;
             _buildDashboard();
         }
 
