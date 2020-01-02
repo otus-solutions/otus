@@ -3,21 +3,22 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .service('otusjs.otus.uxComponent.UserActivityPendencyService', Service);
+    .service('otusjs.otus.uxComponent.UserActivityPendencyDialogService', Service);
 
   Service.$inject = [
     '$q',
     '$mdToast',
     '$timeout',
     '$mdDialog',
+    'otusjs.pendency.business.UserActivityPendencyService',
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.otus.uxComponent.CheckerItemFactory',
     'otusjs.model.pendency.UserActivityPendencyFactory',
     'otusjs.otus.uxComponent.UserActivityPendencyValue',
   ];
 
-  function Service($q, $mdToast, $timeout, $mdDialog, ParticipantActivityService,
-                   CheckerItemFactory, userActivityPendencyFactory, Values,) {
+  function Service($q, $mdToast, $timeout, $mdDialog, UserActivityPendencyService,
+                   ParticipantActivityService, CheckerItemFactory, userActivityPendencyFactory, Values,) {
     const self = this;
 
     self.userActivityPendencyDialog = userActivityPendencyDialog;
@@ -66,7 +67,7 @@
 
       function saveUserActivityPendency() {
         //return ParticipantActivityService.saveUserActivityPendency(_buildUserActivityPendency());
-        console.log(ParticipantActivityService.saveUserActivityPendency(_buildUserActivityPendency()));
+        console.log(UserActivityPendencyService.saveUserActivityPendency(_buildUserActivityPendency()));
       }
 
       function _buildUserActivityPendency() {

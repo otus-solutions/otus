@@ -13,7 +13,7 @@
 		'otusjs.activity.business.PreActivityFactory',
 		'otusjs.application.state.ApplicationStateService',
 		'SurveyFormFactory',
-    'otusjs.pendency.repository.UserActivityPendencyRepositoryService'
+
 	];
 
 	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService,
@@ -43,7 +43,6 @@
 		self.createPreActivity = createPreActivity;
 		self.saveActivities = saveActivities;
 		self.getSurveyFromJson = getSurveyFromJson;
-		self.saveUserActivityPendency = saveUserActivityPendency;
 
 		 function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -183,9 +182,5 @@
 		function getSurveyFromJson(json) {
 			return SurveyFormFactory.fromJsonObject(json);
 		}
-
-		function saveUserActivityPendency(userActivityPendency) {
-      return UserActivityPendencyRepositoryService.saveUserActivityPendency(userActivityPendency)
-    }
 	}
 }());

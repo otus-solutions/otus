@@ -13,7 +13,7 @@
     }).controller('userActivityPendencyCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.UserActivityPendencyService'
+    'otusjs.otus.uxComponent.UserActivityPendencyDialogService'
   ];
 
   function Controller(UserActivityPendencyService) {
