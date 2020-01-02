@@ -45,10 +45,8 @@
 
         /* Lifecycle methods */
         function onInit() {
-            // LoadingScreenService.start();
             _loadParticipant();
             _buildLegend();
-            // _buildDashboard();
             EventService.onParticipantSelected(_reactToParticipantChange);
         }
 
