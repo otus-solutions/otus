@@ -16,11 +16,19 @@
 
     /* Public methods */
     self.initialize = initialize;
+    self.create = create;
 
     function initialize() {
       _rest = OtusRestResourceService.getUserActivityPendencyResource();
-      console.log(_rest);
     }
+
+    function create (pendency){
+      if(!_rest){
+        throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      }
+      return _rest.create(pendency).$promise;
+    }
+
 
 
   }

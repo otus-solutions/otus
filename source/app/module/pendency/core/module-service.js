@@ -19,6 +19,7 @@
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;
     self.configureRemoteStorage = configureRemoteStorage;
+    self.getUserActivityPendencyRemoteStorage = getUserActivityPendencyRemoteStorage;
 
     function configureContext(context) {
       ContextService.configureContext(context);
@@ -33,10 +34,18 @@
       _genericPendencyStorageDefer.resolve(_remoteStorage.genericPendency);
     };
 
+    function getUserActivityPendencyRemoteStorage() {
+      if(_remoteStorage.genericPendency){
+        _genericPendencyStorageDefer = $q.defer();
+        _genericPendencyStorageDefer.resolve(_remoteStorage.genericPendency);
+      }
+      return {
+        whenReady() {
+          return _genericPendencyStorageDefer.promise;
+        }
+      }
 
-
-
-
+    }
 
   }
 
