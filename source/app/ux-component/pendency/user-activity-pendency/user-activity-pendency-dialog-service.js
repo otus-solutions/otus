@@ -68,7 +68,16 @@
 
       function saveUserActivityPendency() {
         //return ParticipantActivityService.saveUserActivityPendency(_buildUserActivityPendency());
-        console.log(UserActivityPendencyService.saveUserActivityPendency(_buildUserActivityPendency()));
+        UserActivityPendencyService.saveUserActivityPendency(_buildUserActivityPendency())
+          .then(value => {
+            if(value) {
+              $mdToast.show(
+                $mdToast.simple()
+                  .textContent('Pendência criada com sucesso.')
+                  .hideDelay(2000)
+              );
+            }
+          });
       }
 
       function _buildUserActivityPendency() {
