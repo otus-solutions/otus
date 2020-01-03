@@ -73,7 +73,7 @@
     // Custom context methods
     //--------------------------------------------------------------------------------------------
 
-    function _removeParticipantFromMemory() {  //bugfix: OTUS-128
+    function _removeParticipantFromMemory() {
       setSelectedParticipant();
     }
     function getSelectedParticipant() {
