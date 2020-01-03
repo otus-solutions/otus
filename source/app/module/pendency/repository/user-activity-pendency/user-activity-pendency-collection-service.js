@@ -21,8 +21,7 @@
       let request = $q.defer();
       _remoteStorage.whenReady()
         .then(remoteStorage => {
-          console.log(remoteStorage)
-          return remoteStorage.create(userActivityPendency)
+          return remoteStorage.create(userActivityPendency.toJSON())
             .then(response => {
               request.resolve(response.data);
             })
