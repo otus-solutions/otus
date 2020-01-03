@@ -16,6 +16,7 @@
     let _remoteStorage = ModuleService.getUserActivityPendencyRemoteStorage();
 
     self.saveUserActivityPendency = saveUserActivityPendency;
+    self.getPendencyByActivityId = getPendencyByActivityId;
 
     function saveUserActivityPendency(userActivityPendency) {
       let request = $q.defer();
@@ -28,6 +29,22 @@
             .catch( e => request.reject(e));
         });
       return request.promise;
+    }
+
+
+    function getPendencyByActivityId(id) {
+      let request = $q.defer();
+      _remoteStorage.whenReady()
+        .then(remoteStorage => {
+          return remoteStorage.getPendencyByActivityId(id)
+            .then(response => {
+              request.resolve(response.data);
+            })
+            .catch( e => request.reject(e));
+        });
+      return request.promise;
+
+
     }
   }
 

@@ -17,20 +17,21 @@
     /* Public methods */
     self.initialize = initialize;
     self.create = create;
+    self.getPendencyByActivityId = getPendencyByActivityId;
 
     function initialize() {
       _rest = OtusRestResourceService.getUserActivityPendencyResource();
     }
 
-    function create (pendency){
-      if(!_rest){
-        throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      }
-      return _rest.create(pendency).$promise;
+    function create (jsonPendency){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.create(jsonPendency).$promise;
     }
 
-
-
+    function getPendencyByActivityId(id) {
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE)
+      return _rest.getByActivityId({activityId: id}).$promise;
+    }
   }
 
 

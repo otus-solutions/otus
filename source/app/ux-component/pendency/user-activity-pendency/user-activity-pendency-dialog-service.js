@@ -52,6 +52,7 @@
       function onInit() {
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
         self.minDate = new Date();
+        _getUserActivityPendencyByActivityId("5dfd1bd807ef686e9ad1399b");
       }
 
       function querySearch(query) {
@@ -71,12 +72,23 @@
       }
 
       function _buildUserActivityPendency() {
+
+
         //TODO OTUS-638: fazer busca de pendencia por id da atividade e deserializar
         return userActivityPendencyFactory.create(
           angular.copy(self.selectedItem.checker.email),
           angular.copy(self.date),
           angular.copy(self.selectedActivity)
         )
+      }
+
+      function _getUserActivityPendencyByActivityId(id){
+        let pendency = UserActivityPendencyService.getPendencyByActivityId(id);
+        pendency
+          .then(data => console.log(data))
+          .catch(e => console.log(e))
+
+
       }
 
 

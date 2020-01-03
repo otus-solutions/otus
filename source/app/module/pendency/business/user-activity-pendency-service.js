@@ -13,9 +13,14 @@
     const self = this;
 
     self.saveUserActivityPendency = saveUserActivityPendency;
+    self.getPendencyByActivityId = getPendencyByActivityId;
 
     function saveUserActivityPendency(userActivityPendency) {
       return UserActivityPendencyCollectionService.saveUserActivityPendency(userActivityPendency)
+    }
+
+    function getPendencyByActivityId(id) {
+      return UserActivityPendencyCollectionService.getPendencyByActivityId(id);
     }
   }
 
