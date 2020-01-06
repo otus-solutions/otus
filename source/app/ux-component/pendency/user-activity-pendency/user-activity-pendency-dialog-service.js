@@ -20,10 +20,10 @@
   function Service($q, $mdToast, $timeout, $mdDialog, UserActivityPendencyService, ParticipantActivityService,
                    CheckerItemFactory, userActivityPendencyFactory, Constant) {
     const self = this;
-    self.userActivityPendencyDialog = userActivityPendencyDialog;
+    self.openUserActivityPendencyDialog = openUserActivityPendencyDialog;
     self.DialogController = DialogController;
 
-    function userActivityPendencyDialog(selectedActivity) {
+    function openUserActivityPendencyDialog(selectedActivity) {
       return UserActivityPendencyService.getPendencyByActivityId(selectedActivity.getID())
         .then(foundPendency => {
           _invokeDialogComponent(Constant.TEMPLATE_UPDATE_USER_ACTIVITY_PENDENCY,
@@ -52,10 +52,11 @@
       var self = this;
       self.selectedActivity = selectedActivity;
       self.foundPendency = foundPendency;
+      self.Constant = Constant;
 
       /* Public methods */
       self.querySearch = querySearch;
-      self.saveUserActivityPendency = saveUserActivityPendency;
+      self.createUserActivityPendency = createUserActivityPendency;
       self.updateUserActivityPendency = updateUserActivityPendency;
       self.deleteUserActivityPendency = deleteUserActivityPendency;
       self.cancel = cancel;
@@ -67,16 +68,16 @@
         _fillUpdateForm();
       }
 
-      function _fillUpdateForm(){
+      function _fillUpdateForm() {
         if (self.foundPendency) {
           self.selectedItem = _filterForEmail(foundPendency.receiver)[0];
           self.date = foundPendency.dueDate;
         }
       }
 
-      function _filterForEmail(receiver){
+      function _filterForEmail(receiver) {
         return self.checkers.filter((item) => {
-          return item.checker.email === receiver;
+            return item.checker.email === receiver;
           }
         )
       }
@@ -92,33 +93,32 @@
         return deferred.promise;
       }
 
-      function saveUserActivityPendency() {
-        UserActivityPendencyService.saveUserActivityPendency(_buildUserActivityPendency())
+      function createUserActivityPendency() {
+        UserActivityPendencyService.createUserActivityPendency(_buildUserActivityPendency())
           .then(value => {
             self.cancel();
-            if (value) {
-              $mdToast.show(
-                $mdToast.simple()
-                  .textContent('Pendência salva com sucesso.')
-                  .hideDelay(2000)
-              )
-            }
+            if (value) _showMessage(Constant.MSG_CREATE_SUCCESS);
+            else _showMessage(Constant.MSG_CREATE_FAIL);
           });
       }
 
       function updateUserActivityPendency() {
-        // UserActivityPendencyService.updateUserActivityPendency(
-        //   id, emailUser, dueDate).then(value => console.log(value));
+        UserActivityPendencyService.updateUserActivityPendency(foundPendency._id, _buildUserActivityPendency())
+          .then(value => {
+            self.cancel();
+            if (value) _showMessage(Constant.MSG_UPDATE_SUCCESS);
+            else _showMessage(Constant.MSG_UPDATE_FAIL);
 
-
-        console.log("teste de atualização");
-        console.log(self.selectedItem.checker.email);
-        $mdDialog.cancel()
+          });
       }
 
       function deleteUserActivityPendency() {
-        console.log("teste de exclusão");
-        $mdDialog.cancel()
+        UserActivityPendencyService.deleteUserActivityPendency(foundPendency._id)
+          .then(value => {
+            self.cancel();
+            if(value) _showMessage(Constant.MSG_DELETE_SUCESS);
+            else _showMessage(Constant.MSG_DELETE_FAIL);
+          });
       }
 
 
@@ -160,7 +160,7 @@
       function _showMessage(msg) {
         $mdToast.show(
           $mdToast.simple()
-            .position("bottom right")
+            .position("bottom left")
             .textContent(msg)
             .hideDelay(3000));
       }

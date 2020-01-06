@@ -16,26 +16,34 @@
 
     /* Public methods */
     self.initialize = initialize;
-    self.create = create;
+    self.createUserActivityPendency = createUserActivityPendency;
     self.getPendencyByActivityId = getPendencyByActivityId;
+    self.updateUserActivityPendency = updateUserActivityPendency;
+    self.deleteUserActivityPendency = deleteUserActivityPendency;
 
     function initialize() {
       _rest = OtusRestResourceService.getUserActivityPendencyResource();
     }
 
-    function create (jsonPendency){
+    function createUserActivityPendency (jsonPendency){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.create(jsonPendency).$promise;
     }
 
     function getPendencyByActivityId(id) {
-      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE)
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.getByActivityId({activityId: id}).$promise;
     }
+
+    function updateUserActivityPendency(foundPendencyId, jsonUpdatedPendency){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.update({id: foundPendencyId}, jsonUpdatedPendency).$promise;
+    }
+
+    function deleteUserActivityPendency(foundPendencyId){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.delete({id: foundPendencyId}).$promise;
+    }
   }
-
-
-
-
 
 }());

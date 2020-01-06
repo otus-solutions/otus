@@ -26,7 +26,7 @@
 
     function save() {
       _testInternalState();
-      _storage.setItem(MONITORING_CONTEXT, _context.toJson());
+      _storage.setItem(PENDENCY_CONTEXT, _context.toJson());
     }
 
     //--------------------------------------------------------------------------------------------
@@ -40,14 +40,12 @@
       _storage = storage;
     }
 
-
-
     //--------------------------------------------------------------------------------------------
     // Internal context methods
     //--------------------------------------------------------------------------------------------
     function _restoreContextData() {
       isValid();
-      _context.fromJson(_storage.getItem(MONITORING_CONTEXT));
+      _context.fromJson(_storage.getItem(PENDENCY_CONTEXT));
     }
 
     function _testInternalState() {
@@ -59,8 +57,5 @@
       }
     }
 
-
   }
-
-
 }());

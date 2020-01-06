@@ -1,10 +1,10 @@
 <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
   <div class="md-toolbar-tools">
-    <h2><span>Pendência de Atividade</span></h2>
+    <h2><span>{{vm.Constant.TITLE_TOOLBAR_ACTIVITY_PENDENCY_DIALOG}}</span></h2>
     <span flex></span>
-    <md-button class="md-icon-button" ng-click="vm.cancel() "aria-label="Fechar">
-      <md-icon aria-label="Fechar">close</md-icon>
-      <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+    <md-button class="md-icon-button" ng-click="vm.cancel() "aria-label={{vm.Constant.TITLE_CLOSE}}>
+      <md-icon aria-label={{vm.Constant.TITLE_CLOSE}}>{{vm.Constant.TITLE_CLOSE_ICON}}</md-icon>
+      <md-tooltip md-direction="bottom">{{vm.Constant.TITLE_CLOSE}}</md-tooltip>
     </md-button>
   </div>
 </md-toolbar>
@@ -44,7 +44,7 @@
 </div>
 <md-dialog-actions layout="row">
   <span flex></span>
-  <md-button ng-click="vm.saveUserActivityPendency()" class="md-raised md-primary" aria-label="Salvar" ng-disabled = pendencyForm.$invalid>
+  <md-button ng-click="vm.createUserActivityPendency()" class="md-raised md-primary" aria-label="Salvar" ng-disabled = pendencyForm.$invalid>
     Salvar
   </md-button>
   <md-button ng-click="vm.cancel()" class="md-raised md-no-focus" aria-label="Cancelar">

@@ -1,25 +1,5 @@
 <md-button class="md-grid-item-content md-raised md-accent md-icon-button loadReport" aria-label="Criar Pendência"
-           ng-click="$ctrl.createUserActivityPendency()">
+           ng-click="$ctrl.openUserActivityPendencyDialog()">
   <md-tooltip md-direction="top">Gerenciador de Pendência</md-tooltip>
   <md-icon aria-label="Gerenciador de Pendência">assignment_ind</md-icon>
 </md-button>
-
-
-<!--<md-button class="md-grid-item-content md-raised md-accent md-icon-button loadReport" aria-label="Carregar Relatório" ng-click="$ctrl.loadActivityReport()"-->
-<!--           ng-if="!$ctrl.activityReportReady && $ctrl.showVisualizationButton && !$ctrl.activityReportInfo"-->
-<!--           ng-disabled="{{$ctrl.statusSelectedActivity !=='FINALIZED'}}">-->
-<!--  <md-tooltip md-direction="top">Carregar Relatório</md-tooltip>-->
-<!--  <md-icon aria-label="Carregar Relatório" >assignment_returned</md-icon>-->
-<!--</md-button>-->
-
-<!--<md-button class="md-grid-item-content md-raised md-accent md-icon-button generateReport" aria-label="Gerar Relatório" ng-click="$ctrl.generateActivityReport($ctrl.report)"-->
-<!--           ng-if="$ctrl.activityReportReady && $ctrl.showVisualizationButton && !$ctrl.activityReportInfo">-->
-<!--  <md-tooltip md-direction="top">Gerar Relatório</md-tooltip>-->
-<!--  <md-icon aria-label="Gerar Relatório">assignment</md-icon>-->
-<!--</md-button>-->
-
-<!--<md-button class="md-grid-item-content md-raised md-accent md-icon-button pendingInformation" aria-label="Pendências do Relatório" ng-click="$ctrl.pendingActivityReport()"-->
-<!--           ng-if="$ctrl.showVisualizationButton && $ctrl.activityReportInfo">-->
-<!--  <md-tooltip md-direction="top">Pendências do Relatório</md-tooltip>-->
-<!--  <md-icon aria-label="Pendências do Relatório">assignment_late</md-icon>-->
-<!--</md-button>-->

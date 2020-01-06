@@ -9,18 +9,28 @@
     'otusjs.pendency.repository.UserActivityPendencyRepositoryService'
   ];
 
-  function Service (UserActivityPendencyCollectionService){
+  function Service (UserActivityPendencyRepositoryService){
     const self = this;
 
-    self.saveUserActivityPendency = saveUserActivityPendency;
+    self.createUserActivityPendency = createUserActivityPendency;
     self.getPendencyByActivityId = getPendencyByActivityId;
+    self.updateUserActivityPendency = updateUserActivityPendency;
+    self.deleteUserActivityPendency = deleteUserActivityPendency;
 
-    function saveUserActivityPendency(userActivityPendency) {
-      return UserActivityPendencyCollectionService.saveUserActivityPendency(userActivityPendency)
+    function createUserActivityPendency(userActivityPendency) {
+      return UserActivityPendencyRepositoryService.createUserActivityPendency(userActivityPendency)
     }
 
     function getPendencyByActivityId(id) {
-      return UserActivityPendencyCollectionService.getPendencyByActivityId(id);
+      return UserActivityPendencyRepositoryService.getPendencyByActivityId(id);
+    }
+
+    function updateUserActivityPendency(foundPendencyId, updatedPendency) {
+      return UserActivityPendencyRepositoryService.updateUserActivityPendency(foundPendencyId, updatedPendency)
+    }
+
+    function deleteUserActivityPendency(foundPendencyId){
+      return UserActivityPendencyRepositoryService.deleteUserActivityPendency(foundPendencyId);
     }
   }
 

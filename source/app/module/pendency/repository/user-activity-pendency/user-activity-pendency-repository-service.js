@@ -12,15 +12,25 @@
   function Service(UserActivityPendencyCollectionService) {
     const self = this
 
-    self.saveUserActivityPendency = saveUserActivityPendency;
+    self.createUserActivityPendency = createUserActivityPendency;
     self.getPendencyByActivityId = getPendencyByActivityId;
+    self.updateUserActivityPendency = updateUserActivityPendency;
+    self.deleteUserActivityPendency = deleteUserActivityPendency;
 
-    function saveUserActivityPendency(userActivityPendency) {
-      return UserActivityPendencyCollectionService.saveUserActivityPendency(userActivityPendency);
+    function createUserActivityPendency(userActivityPendency) {
+      return UserActivityPendencyCollectionService.createUserActivityPendency(userActivityPendency);
     }
 
     function getPendencyByActivityId(id){
       return UserActivityPendencyCollectionService.getPendencyByActivityId(id);
+    }
+
+    function updateUserActivityPendency(foundPendencyId, updatedPendency) {
+      return UserActivityPendencyCollectionService.updateUserActivityPendency(foundPendencyId, updatedPendency);
+    }
+
+    function deleteUserActivityPendency(foundPendencyId){
+      return UserActivityPendencyCollectionService.deleteUserActivityPendency(foundPendencyId);
     }
 
   }

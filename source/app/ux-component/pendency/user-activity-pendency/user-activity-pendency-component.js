@@ -16,16 +16,16 @@
     'otusjs.otus.uxComponent.UserActivityPendencyDialogService'
   ];
 
-  function Controller(UserActivityPendencyService) {
+  function Controller(UserActivityPendencyDialogService) {
     const self = this;
 
     self.$onInit = onInit;
-    self.createUserActivityPendency = createUserActivityPendency;
+    self.openUserActivityPendencyDialog = openUserActivityPendencyDialog;
 
     function onInit() {}
 
-    function createUserActivityPendency(){
-      UserActivityPendencyService.userActivityPendencyDialog(self.selectedActivity);
+    function openUserActivityPendencyDialog(){
+      UserActivityPendencyDialogService.openUserActivityPendencyDialog(self.selectedActivity);
     }
   }
 
