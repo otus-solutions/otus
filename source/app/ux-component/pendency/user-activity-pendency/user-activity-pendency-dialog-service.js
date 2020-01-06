@@ -17,25 +17,24 @@
     'otusjs.otus.uxComponent.UserActivityPendencyConstant',
   ];
 
-  function Service($q, $mdToast, $timeout, $mdDialog, UserActivityPendencyService,
-                   ParticipantActivityService, CheckerItemFactory, userActivityPendencyFactory, Constant,) {
+  function Service($q, $mdToast, $timeout, $mdDialog, UserActivityPendencyService, ParticipantActivityService,
+                   CheckerItemFactory, userActivityPendencyFactory, Constant) {
     const self = this;
-
     self.userActivityPendencyDialog = userActivityPendencyDialog;
     self.DialogController = DialogController;
 
-
     function userActivityPendencyDialog(selectedActivity) {
       return UserActivityPendencyService.getPendencyByActivityId(selectedActivity.getID())
-      .then( foundPendency => {
-        _invokeDialogComponent(Constant.TEMPLATE_UPDATE_USER_ACTIVITY_PENDENCY,
-          selectedActivity, foundPendency);
-      })
-      .catch(() => {
-      _invokeDialogComponent(Constant.TEMPLATE_CREATE_USER_ACTIVITY_PENDENCY, selectedActivity );
-    })}
+        .then(foundPendency => {
+          _invokeDialogComponent(Constant.TEMPLATE_UPDATE_USER_ACTIVITY_PENDENCY,
+            selectedActivity, foundPendency);
+        })
+        .catch(() => {
+          _invokeDialogComponent(Constant.TEMPLATE_CREATE_USER_ACTIVITY_PENDENCY, selectedActivity);
+        })
+    }
 
-    function _invokeDialogComponent(selectedTemplateUrl, selectedActivity, foundPendency){
+    function _invokeDialogComponent(selectedTemplateUrl, selectedActivity, foundPendency) {
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
         locals: {selectedActivity: selectedActivity, updateList: self.updateList, foundPendency: foundPendency},
@@ -53,11 +52,7 @@
       var self = this;
       self.selectedActivity = selectedActivity;
       self.foundPendency = foundPendency;
-      if(foundPendency){
-        console.log(foundPendency)
-        self.user = foundPendency.receiver;
-        self.date = foundPendency.dueDate;
-      }
+
       /* Public methods */
       self.querySearch = querySearch;
       self.saveUserActivityPendency = saveUserActivityPendency;
@@ -69,6 +64,21 @@
       function onInit() {
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
         self.minDate = new Date();
+        _fillUpdateForm();
+      }
+
+      function _fillUpdateForm(){
+        if (self.foundPendency) {
+          self.selectedItem = _filterForEmail(foundPendency.receiver)[0];
+          self.date = foundPendency.dueDate;
+        }
+      }
+
+      function _filterForEmail(receiver){
+        return self.checkers.filter((item) => {
+          return item.checker.email === receiver;
+          }
+        )
       }
 
       function querySearch(query) {
@@ -83,25 +93,32 @@
       }
 
       function saveUserActivityPendency() {
-        //return ParticipantActivityService.saveUserActivityPendency(_buildUserActivityPendency());
         UserActivityPendencyService.saveUserActivityPendency(_buildUserActivityPendency())
           .then(value => {
-            if(value) {
+            self.cancel();
+            if (value) {
               $mdToast.show(
                 $mdToast.simple()
                   .textContent('Pendência salva com sucesso.')
                   .hideDelay(2000)
-              );
+              )
             }
           });
       }
 
       function updateUserActivityPendency() {
+        // UserActivityPendencyService.updateUserActivityPendency(
+        //   id, emailUser, dueDate).then(value => console.log(value));
+
+
         console.log("teste de atualização");
+        console.log(self.selectedItem.checker.email);
+        $mdDialog.cancel()
       }
 
       function deleteUserActivityPendency() {
         console.log("teste de exclusão");
+        $mdDialog.cancel()
       }
 
 
