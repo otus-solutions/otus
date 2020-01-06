@@ -1,5 +1,5 @@
 (function () {
-  'use strict'
+  'use strict';
 
   angular
     .module('otusjs.otus.uxComponent')
@@ -14,21 +14,32 @@
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.otus.uxComponent.CheckerItemFactory',
     'otusjs.model.pendency.UserActivityPendencyFactory',
-    'otusjs.otus.uxComponent.UserActivityPendencyValue',
+    'otusjs.otus.uxComponent.UserActivityPendencyConstant',
   ];
 
   function Service($q, $mdToast, $timeout, $mdDialog, UserActivityPendencyService,
-                   ParticipantActivityService, CheckerItemFactory, userActivityPendencyFactory, Values,) {
+                   ParticipantActivityService, CheckerItemFactory, userActivityPendencyFactory, Constant,) {
     const self = this;
 
     self.userActivityPendencyDialog = userActivityPendencyDialog;
     self.DialogController = DialogController;
 
+
     function userActivityPendencyDialog(selectedActivity) {
+      return UserActivityPendencyService.getPendencyByActivityId(selectedActivity.getID())
+      .then( foundPendency => {
+        _invokeDialogComponent(Constant.TEMPLATE_UPDATE_USER_ACTIVITY_PENDENCY,
+          selectedActivity, foundPendency);
+      })
+      .catch(() => {
+      _invokeDialogComponent(Constant.TEMPLATE_CREATE_USER_ACTIVITY_PENDENCY, selectedActivity );
+    })}
+
+    function _invokeDialogComponent(selectedTemplateUrl, selectedActivity, foundPendency){
       self.cancel = $mdDialog.cancel;
       $mdDialog.show({
-        locals: {selectedActivity: selectedActivity, updateList: self.updateList},
-        templateUrl: 'app/ux-component/pendency/user-activity-pendency/user-activity-pendency-dialog-template.html',
+        locals: {selectedActivity: selectedActivity, updateList: self.updateList, foundPendency: foundPendency},
+        templateUrl: selectedTemplateUrl,
         parent: angular.element(document.body),
         controller: self.DialogController,
         controllerAs: "vm",
@@ -38,21 +49,26 @@
       });
     }
 
-    function DialogController(selectedActivity) {
+    function DialogController(selectedActivity, foundPendency) {
       var self = this;
       self.selectedActivity = selectedActivity;
-      //self.user = selectedActivity.statusHistory.getInitializedOfflineRegistry().user;
-      //self.date = selectedActivity.statusHistory.getInitializedOfflineRegistry().date;
+      self.foundPendency = foundPendency;
+      if(foundPendency){
+        console.log(foundPendency)
+        self.user = foundPendency.receiver;
+        self.date = foundPendency.dueDate;
+      }
       /* Public methods */
       self.querySearch = querySearch;
       self.saveUserActivityPendency = saveUserActivityPendency;
+      self.updateUserActivityPendency = updateUserActivityPendency;
+      self.deleteUserActivityPendency = deleteUserActivityPendency;
       self.cancel = cancel;
       self.$onInit = onInit();
 
       function onInit() {
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
         self.minDate = new Date();
-        _getUserActivityPendencyByActivityId("5dfd1bd807ef686e9ad1399b");
       }
 
       function querySearch(query) {
@@ -73,31 +89,28 @@
             if(value) {
               $mdToast.show(
                 $mdToast.simple()
-                  .textContent('Pendência criada com sucesso.')
+                  .textContent('Pendência salva com sucesso.')
                   .hideDelay(2000)
               );
             }
           });
       }
 
+      function updateUserActivityPendency() {
+        console.log("teste de atualização");
+      }
+
+      function deleteUserActivityPendency() {
+        console.log("teste de exclusão");
+      }
+
+
       function _buildUserActivityPendency() {
-
-
-        //TODO OTUS-638: fazer busca de pendencia por id da atividade e deserializar
         return userActivityPendencyFactory.create(
           angular.copy(self.selectedItem.checker.email),
           angular.copy(self.date),
           angular.copy(self.selectedActivity)
         )
-      }
-
-      function _getUserActivityPendencyByActivityId(id){
-        let pendency = UserActivityPendencyService.getPendencyByActivityId(id);
-        pendency
-          .then(data => console.log(data))
-          .catch(e => console.log(e))
-
-
       }
 
 
