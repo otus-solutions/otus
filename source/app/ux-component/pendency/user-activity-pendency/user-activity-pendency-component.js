@@ -13,11 +13,14 @@
     }).controller('userActivityPendencyCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.UserActivityPendencyDialogService'
+    'otusjs.otus.uxComponent.UserActivityPendencyDialogService',
+    'otusjs.otus.uxComponent.UserActivityPendencyConstant'
+
   ];
 
-  function Controller(UserActivityPendencyDialogService) {
+  function Controller(UserActivityPendencyDialogService, Constant) {
     const self = this;
+    self.Constant = Constant;
 
     self.openUserActivityPendencyDialog = openUserActivityPendencyDialog;
 

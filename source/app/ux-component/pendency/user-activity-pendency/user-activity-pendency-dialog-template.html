@@ -1,10 +1,10 @@
 <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
   <div class="md-toolbar-tools">
-    <h2><span>{{vm.Constant.TITLE_TOOLBAR_ACTIVITY_PENDENCY_DIALOG}}</span></h2>
+    <h2><span>{{vm.Constant.TOOLBAR_ACTIVITY_PENDENCY_DIALOG_TITLE}}</span></h2>
     <span flex></span>
-    <md-button class="md-icon-button" ng-click="vm.cancel() "aria-label={{vm.Constant.TITLE_CLOSE}}>
-      <md-icon aria-label={{vm.Constant.TITLE_CLOSE}}>{{vm.Constant.TITLE_CLOSE_ICON}}</md-icon>
-      <md-tooltip md-direction="bottom">{{vm.Constant.TITLE_CLOSE}}</md-tooltip>
+    <md-button class="md-icon-button" ng-click="vm.cancel() " aria-label={{vm.Constant.CLOSE_TITLE}}>
+      <md-icon aria-label={{vm.Constant.CLOSE_TITLE}}>{{vm.Constant.CLOSE_ICON_TITLE}}</md-icon>
+      <md-tooltip md-direction="bottom">{{vm.Constant.CLOSE_TITLE}}</md-tooltip>
     </md-button>
   </div>
 </md-toolbar>
@@ -12,18 +12,23 @@
 <div layout="row" flex layout-align="center center">
   <div layout-margin layout="column">
     <div layout-margin layout="column" class="label-light-gray">
-      <span class="md-headline">Criar Evento</span>
-      <span class="md-body-2">Informe <b>vencimento</b> e o <b>responsável pelo monitoramento.</b></span>
+      <span class="md-headline">{{vm.Constant.EVENT_CREATE_TITLE}}</span>
+      <span class="md-body-2" ng-bind-html=vm.Constant.FIELD_FILLER_TITLE></span>
     </div>
     <form name="pendencyForm" novalidate flex>
       <div>
-        <md-datepicker ng-model="vm.date" md-placeholder="DD/MM/AAAA" md-min-date="vm.minDate" required></md-datepicker>
+        <md-datepicker ng-model="vm.date" md-placeholder={{vm.Constant.DATE_FORMAT_TITLE}}
+                       md-min-date="vm.minDate" required>
+        </md-datepicker>
       </div>
 
-      <md-autocomplete flex  required md-selected-item="vm.selectedItem"
+      <md-autocomplete flex required md-selected-item="vm.selectedItem"
                        md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
-                       md-selected-item-change="vm.selectedItemChange(item)" md-items="item in vm.querySearch(vm.searchText)"
-                       md-item-text="item.text" md-min-length="0" placeholder="Responsável (a)" md-menu-class="autocomplete-custom-template">
+                       md-selected-item-change="vm.selectedItemChange(item)"
+                       md-items="item in vm.querySearch(vm.searchText)"
+                       md-item-text="item.text" md-min-length="0"
+                       placeholder ={{vm.Constant.AUTOCOMPLETE_CHECKER_TITLE}}
+                       md-menu-class="autocomplete-custom-template">
         <md-item-template>
           <span class="item-title">
             <md-icon md-svg-icon="account"></md-icon>
@@ -44,10 +49,11 @@
 </div>
 <md-dialog-actions layout="row">
   <span flex></span>
-  <md-button ng-click="vm.createUserActivityPendency()" class="md-raised md-primary" aria-label="Salvar" ng-disabled = pendencyForm.$invalid>
-    Salvar
+  <md-button class="md-raised md-primary" aria-label={{vm.Constant.CREATE_TITLE}}
+             ng-click="vm.createUserActivityPendency()"
+             ng-disabled=pendencyForm.$invalid>{{vm.Constant.CREATE_TITLE}}
   </md-button>
-  <md-button ng-click="vm.cancel()" class="md-raised md-no-focus" aria-label="Cancelar">
-    Cancelar
+  <md-button ng-click="vm.cancel()" class="md-raised md-no-focus" aria-label={{vm.Constant.CANCEL_TITLE}}>
+    {{vm.Constant.CANCEL_TITLE}}
   </md-button>
 </md-dialog-actions>
