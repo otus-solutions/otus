@@ -11,10 +11,10 @@
     'otusjs.deploy.UserActivityPendencyRestService'
   ];
 
-  function Service( ModuleService, ContextFactory, StorageService, UserActivityPendencyRestService) {
+  function Service( ModuleService, ContextFactory, StorageService, UserActivityPendencyRestService,) {
     const self = this;
-
     /* Public methods */
+
     self.bootstrap = bootstrap;
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;

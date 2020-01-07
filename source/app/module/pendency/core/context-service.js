@@ -1,11 +1,9 @@
 (function () {
-  'use strict'
+  'use strict';
 
   angular
     .module('otusjs.pendency.core')
     .service('otusjs.pendency.core.ContextService', Service);
-
-  Service.$inject = [];
 
   function Service() {
     const self = this;
