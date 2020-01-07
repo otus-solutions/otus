@@ -105,6 +105,12 @@
       return request.promise;
     }
 
+    /**
+     * Updates checker activity in collection.
+     * @param {(string)} id - the activity id to be updated
+     * @param {(object)} user - the user to be updated
+     * @memberof ActivityCollectionService
+     */
 
     function updateCheckerActivity(recruitmentNumber, checkerUpdated) {
       var request = $q.defer();

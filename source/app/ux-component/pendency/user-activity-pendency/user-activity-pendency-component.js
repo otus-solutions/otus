@@ -19,16 +19,11 @@
   function Controller(UserActivityPendencyDialogService) {
     const self = this;
 
-    self.$onInit = onInit;
     self.openUserActivityPendencyDialog = openUserActivityPendencyDialog;
-
-    function onInit() {}
 
     function openUserActivityPendencyDialog(){
       UserActivityPendencyDialogService.openUserActivityPendencyDialog(self.selectedActivity);
     }
   }
-
-
 
 }());

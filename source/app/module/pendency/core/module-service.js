@@ -1,5 +1,5 @@
 (function () {
-  'use strict'
+  'use strict';
 
   angular
     .module('otusjs.pendency.core')
@@ -23,19 +23,19 @@
 
     function configureContext(context) {
       ContextService.configureContext(context);
-    };
+    }
 
     function configureStorage(storage) {
       ContextService.configureStorage(storage);
-    };
+    }
 
     function configureRemoteStorage(restService) {
       _remoteStorage.genericPendency = restService;
       _genericPendencyStorageDefer.resolve(_remoteStorage.genericPendency);
-    };
+    }
 
     function getUserActivityPendencyRemoteStorage() {
-      if(_remoteStorage.genericPendency){
+      if (_remoteStorage.genericPendency) {
         _genericPendencyStorageDefer = $q.defer();
         _genericPendencyStorageDefer.resolve(_remoteStorage.genericPendency);
       }
@@ -44,9 +44,7 @@
           return _genericPendencyStorageDefer.promise;
         }
       }
-
     }
 
   }
-
 }());

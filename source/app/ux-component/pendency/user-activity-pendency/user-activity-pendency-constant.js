@@ -20,12 +20,7 @@
       MSG_DELETE_FAIL: 'FALHA na exclusão da pendência.',
 
       TEMPLATE_UPDATE_USER_ACTIVITY_PENDENCY : 'app/ux-component/pendency/user-activity-pendency/update-user-activity-pendency-dialog-template.html',
-
-
-
-
       TEMPLATE_CREATE_USER_ACTIVITY_PENDENCY : 'app/ux-component/pendency/user-activity-pendency/user-activity-pendency-dialog-template.html',
-
 
       TITLE_TOOLBAR_ACTIVITY_PENDENCY_DIALOG : 'Pendência de Atividade',
       TITLE_CLOSE: 'Fechar',

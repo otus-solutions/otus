@@ -1,5 +1,5 @@
 (function () {
-  'use strict'
+  'use strict';
 
   angular.module('otusjs.deploy')
     .service('otus.deploy.PendencyModuleBootstrap', Service);
@@ -11,14 +11,13 @@
     'otusjs.deploy.UserActivityPendencyRestService'
   ];
 
-  function Service( ModuleService, ContextFactory, StorageService, UserActivityPendencyRestService,) {
+  function Service( ModuleService, ContextFactory, StorageService, UserActivityPendencyRestService) {
     const self = this;
-    /* Public methods */
 
+    /* Public methods */
     self.bootstrap = bootstrap;
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;
-
 
     function bootstrap() {
       configureContext(ContextFactory);

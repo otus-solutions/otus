@@ -12,12 +12,11 @@
 		'otusjs.activity.repository.UserRepositoryService',
 		'otusjs.activity.business.PreActivityFactory',
 		'otusjs.application.state.ApplicationStateService',
-		'SurveyFormFactory',
-
+		'SurveyFormFactory'
 	];
 
 	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService,
-                   PreActivityFactory, ApplicationStateService, SurveyFormFactory, UserActivityPendencyRepositoryService) {
+                   PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
 		var self = this;
 		var _paperActivityCheckerData = null;
 

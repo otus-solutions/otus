@@ -1,5 +1,5 @@
 (function () {
-  'use strict'
+  'use strict';
 
   angular
     .module('otusjs.pendency.repository')
@@ -10,7 +10,7 @@
   ];
 
   function Service(UserActivityPendencyCollectionService) {
-    const self = this
+    const self = this;
 
     self.createUserActivityPendency = createUserActivityPendency;
     self.getPendencyByActivityId = getPendencyByActivityId;

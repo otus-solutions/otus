@@ -108,7 +108,6 @@
             self.cancel();
             if (value) _showMessage(Constant.MSG_UPDATE_SUCCESS);
             else _showMessage(Constant.MSG_UPDATE_FAIL);
-
           });
       }
 
@@ -121,7 +120,6 @@
           });
       }
 
-
       function _buildUserActivityPendency() {
         return userActivityPendencyFactory.create(
           angular.copy(self.selectedItem.checker.email),
@@ -129,29 +127,6 @@
           angular.copy(self.selectedActivity)
         )
       }
-
-
-      // function updateCheckerActivity() {
-      //   var activityStatus = angular.copy(self.selectedActivity.statusHistory.getInitializedOfflineRegistry());
-      //   activityStatus.setUser(self.selectedItem.checker);
-      //   activityStatus.setDate(self.date);
-      //   ParticipantActivityService.updateCheckerActivity(
-      //     self.selectedActivity.participantData.recruitmentNumber,
-      //     self.selectedActivity.getID(),
-      //     activityStatus)
-      //     .then(function (response) {
-      //       self.cancel();
-      //       if (response) {
-      //         updateList();
-      //         _showMessage("Salvo com sucesso.")
-      //       } else {
-      //         _showMessage("Aferidor não alterado.")
-      //       }
-      //     }).catch(function (e) {
-      //     self.cancel();
-      //     _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
-      //   });
-      // }
 
       function cancel() {
         $mdDialog.cancel();
@@ -166,8 +141,7 @@
       }
 
       function _createFilterFor(query) {
-        var lowercaseQuery = angular.lowercase(query);
-
+        let lowercaseQuery = angular.lowercase(query);
         return function filterFn(checker) {
           return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
         };

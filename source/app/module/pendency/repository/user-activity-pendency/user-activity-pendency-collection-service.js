@@ -1,5 +1,5 @@
 (function () {
-  'use strict'
+  'use strict';
 
   angular
     .module('otusjs.pendency.repository')
@@ -8,7 +8,6 @@
   Service.$inject = [
     '$q',
     'otusjs.pendency.core.ModuleService'
-
   ];
 
   function Service($q, ModuleService) {
@@ -33,7 +32,6 @@
       return request.promise;
     }
 
-
     function getPendencyByActivityId(id) {
       let request = $q.defer();
       _remoteStorage.whenReady()
@@ -46,7 +44,6 @@
         });
       return request.promise;
     }
-
 
     function updateUserActivityPendency(foundPendencyId, updatedPendency) {
       let request = $q.defer();
@@ -75,5 +72,4 @@
     }
 
   }
-
 }());

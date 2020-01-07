@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -27,9 +27,7 @@
     'otusjs.deploy.ProjectModuleBootstrap',
     'otusjs.deploy.ReportModuleBootstrap',
     'otusjs.deploy.MonitoringModuleBootstrap',
-    'otus.deploy.PendencyModuleBootstrap',
-
-
+    'otus.deploy.PendencyModuleBootstrap'
   ];
 
   function Service(
@@ -55,11 +53,8 @@
     ReportModuleBootstrap,
     MonitoringModuleBootstrap,
     PendencyModuleBootstrap
-
-    ) {
-
+  ) {
     var self = this;
-
     self.run = run;
 
     function run() {
