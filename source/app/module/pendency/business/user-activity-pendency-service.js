@@ -1,9 +1,9 @@
 (function(){
-  'use strict'
+  'use strict';
 
   angular
     .module('otusjs.pendency.business')
-    .service('otusjs.pendency.business.UserActivityPendencyService', Service)
+    .service('otusjs.pendency.business.UserActivityPendencyService', Service);
 
   Service.$inject = [
     'otusjs.pendency.repository.UserActivityPendencyRepositoryService'
