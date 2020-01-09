@@ -27,7 +27,7 @@
             .then(response => {
               request.resolve(response.data);
             })
-            .catch( e => request.reject(e));
+            .catch(e => request.reject(e));
         });
       return request.promise;
     }
@@ -40,7 +40,7 @@
             .then(response => {
               request.resolve(response.data);
             })
-            .catch( e => request.reject(e));
+            .catch(e => request.reject(e));
         });
       return request.promise;
     }
@@ -53,7 +53,7 @@
             .then(response => {
               request.resolve(response.data);
             })
-            .catch( e => request.reject(e));
+            .catch(e => request.reject(e));
         });
       return request.promise;
     }
@@ -66,7 +66,7 @@
             .then(response => {
               request.resolve(response.data);
             })
-            .catch( e => request.reject(e));
+            .catch(e => request.reject(e));
         });
       return request.promise;
     }

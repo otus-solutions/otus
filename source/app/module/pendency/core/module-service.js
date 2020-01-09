@@ -44,7 +44,6 @@
           return _genericPendencyStorageDefer.promise;
         }
       }
-
     }
 
   }

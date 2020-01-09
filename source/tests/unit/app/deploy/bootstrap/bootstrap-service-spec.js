@@ -1,7 +1,6 @@
-describe('_UnitTest_Suite', () => {
+describe('BootstrapService_UnitTest_Suite', () => {
   let service;
   let Injections = [];
-  let Mock = {};
 
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
