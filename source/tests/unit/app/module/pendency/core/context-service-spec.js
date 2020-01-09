@@ -8,17 +8,14 @@ describe('ContextService_UnitTest_Suite', () => {
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
     angular.mock.inject($injector => {
-      // Injections.ContextService = $injector.get('otusjs.pendency.core.ContextService');
       service = $injector.get('otusjs.pendency.core.ContextService');
 
       Mock.contextFactory = $injector.get('otusjs.application.context.ContextFactory');
       Mock.StorageService = $injector.get('otusjs.application.storage.StorageService');
 
       spyOn(Mock.contextFactory, 'create').and.callThrough();
-      // spyOn(Mock.contextFactory.create, 'toJson').and.callThrough();
       spyOn(Mock.StorageService.session, 'setItem').and.callThrough();
       spyOn(Mock.StorageService.session, 'getItem').and.callThrough();
-      // spyOn(Injections.$q, 'defer').and.returnValue({resolve: function (data) {}});
 
     });
   });

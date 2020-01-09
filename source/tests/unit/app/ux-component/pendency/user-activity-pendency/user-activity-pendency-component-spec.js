@@ -18,7 +18,6 @@ describe('otusUserActivityPendencyComponent_UnitTest_Suite', () => {
   });
 
   it('ctrlExistence_check', () => {
-    console.log(ctrl);
     expect(ctrl).toBeDefined();
   });
 
