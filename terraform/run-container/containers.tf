@@ -7,7 +7,7 @@ variable "otus-frontend-port"{
 }
 
 variable "otus-frontend-apiurl"{
-  default = "http://localhost:51006"
+  default = "http://localhost:51002"
 }
 
 variable "otus-frontend-version"{
