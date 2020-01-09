@@ -27,13 +27,12 @@ describe('otusActivityManagerList Test', function() {
 
     inject(function(_$injector_, _$controller_) {
       Injections = {
-        "ActivityItemFactory" : _$injector_.get('otusjs.otus.uxComponent.ActivityItemFactory'),
-        "DynamicTableSettingsFactory" : _$injector_.get('otusjs.otus.uxComponent.DynamicTableSettingsFactory')
+        "ActivityItemFactory" : _$injector_.get('otusjs.otus.uxComponent.ActivityItemFactory')
       };
 
       controller = _$controller_(UNIT_NAME, Injections);
       controller.otusActivityManager = {};
-      controller.updateDataTable = function(){};
+      controller.updateData = function(){};
       spyOn(Injections.ActivityItemFactory, "create").and.callFake(function (activity) {
         return activity;
       });
@@ -57,6 +56,7 @@ describe('otusActivityManagerList Test', function() {
       expect(controller.clearSearchTerm).toBeDefined();
       expect(controller.selectedGroups).toBeDefined();
       expect(controller.selectedSurveys).toBeDefined();
+      expect(controller.griidDataChange).toBeDefined();
       controller.$onInit();
       expect(Mock.ParticipantActivityService.listAll).toHaveBeenCalledTimes(1);
       expect(Mock.GroupActivityService.getSurveyGroupsByUser).toHaveBeenCalledTimes(1);
@@ -67,28 +67,6 @@ describe('otusActivityManagerList Test', function() {
     });
   });
 
-  describe('dynamic table tests', function () {
-    it('should create dynamic table settings', function(done){
-      expect(controller).toBeDefined();
-      expect(controller.dynamicTableSettings).toBeUndefined();
-      controller.$onInit();
-      expect(controller.dynamicTableSettings).toBeDefined();
-      Mock.ParticipantActivityService.listAll().then(function (activities) {
-        done();
-      });
-      expect(controller.dynamicTableSettings.headers).toEqual(HEADERS_NAMES);
-      expect(controller.dynamicTableSettings.flexArray).toEqual(FLEX_ARRAY);
-      expect(controller.dynamicTableSettings.elementsProperties[0]).toEqual(ELEMENTS_ARRAY[0]);
-      expect(controller.dynamicTableSettings.elementsProperties[1]).toEqual(ELEMENTS_ARRAY[1]);
-      expect(typeof controller.dynamicTableSettings.elementsProperties[2].iconWithFunction.iconFunction)
-        .toEqual(typeof ELEMENTS_ARRAY[2].iconWithFunction.iconFunction);
-      expect(controller.dynamicTableSettings.elementsProperties[3]).toEqual(ELEMENTS_ARRAY[3]);
-      expect(controller.dynamicTableSettings.elementsProperties[4]).toEqual(ELEMENTS_ARRAY[4]);
-      expect(controller.dynamicTableSettings.elementsProperties[5]).toEqual(ELEMENTS_ARRAY[5]);
-    });
-
-  });
-
   describe("groups(bloc) tests", function () {
     beforeEach(function () {
       controller.selectedGroups = [];
@@ -96,7 +74,7 @@ describe('otusActivityManagerList Test', function() {
       controller.groupList = Mock.groupManager.getGroupNames();
       controller.AllActivities = Mock.AllActivities;
       controller.searchTerm = "CD";
-      spyOn(controller, "updateDataTable").and.callThrough();
+      spyOn(controller, "updateData").and.callThrough();
       spyOn(Mock.groupManager, "getGroupNames").and.callThrough();
       spyOn(Mock.groupManager, "getGroupSurveys").and.callThrough();
     });
@@ -113,13 +91,19 @@ describe('otusActivityManagerList Test', function() {
 
       controller.toggleAllGroups();
       expect(Mock.groupManager.getGroupSurveys).toHaveBeenCalledTimes(Mock.groupManager.getGroupNames().length);
-      expect(controller.updateDataTable).toHaveBeenCalledTimes(1);
+      expect(controller.updateData).toHaveBeenCalledTimes(1);
       expect(controller.isIndeterminateGroups()).toBeFalsy();
 
       expect(controller.existsGroup("CI")).toBeTruthy();
       expect(controller.isCheckedGroup()).toBeTruthy();
       controller.selectedGroups.pop();
       expect(controller.isIndeterminateGroups()).toBeTruthy();
+    });
+
+    it('griidDataChangeMethod should call selectActivity', function () {
+      spyOn(controller, "selectActivity").and.callThrough();
+      controller.griidDataChange(Mock.change);
+      expect(controller.selectActivity).toHaveBeenCalledTimes(1);
     });
 
     it('should clear term to find group', function () {
@@ -158,6 +142,10 @@ describe('otusActivityManagerList Test', function() {
       finish: function(){}
     };
 
+    Mock.change = {
+      type:'select',
+      element:Test.utils.data.activity[0].activities
+    };
 
     Mock.EventService = {
       onParticipantSelected: function () {}

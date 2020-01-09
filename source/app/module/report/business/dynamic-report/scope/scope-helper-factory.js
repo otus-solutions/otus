@@ -81,8 +81,6 @@
               url: urlCreator.createObjectURL(blob)
             };
             responseImages.push(obj);
-            console.log(obj.url);
-
           });
           _compiledImages = true;
         });

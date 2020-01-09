@@ -3,9 +3,9 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusActivityManagerToolbar', {
-      controller: "otusActivityManagerToolbarCtrl as $ctrl",
-      templateUrl: 'app/ux-component/activity-manager-toolbar/activity-manager-toolbar-template.html',
+    .component('otusActivityManagerBottomSheet', {
+      controller: "otusActivityManagerBottomSheetCtrl as $ctrl",
+      templateUrl: 'app/ux-component/activity-manager-bottom-sheet/activity-manager-bottom-sheet-template.html',
       require: {
         otusActivityManager: '^otusActivityManager'
       },
@@ -13,7 +13,7 @@
         'updateList': '&',
         'onViewInfo': '&'
       }
-    }).controller("otusActivityManagerToolbarCtrl", Controller);
+    }).controller("otusActivityManagerBottomSheetCtrl", Controller);
 
   Controller.$inject = [
     '$q',
@@ -102,6 +102,7 @@
 
     function _updateComponent(selectedActivities) {
       if (selectedActivities.length <= 0) {
+        self.showBottomSheet = false;
         self.showVisualizationButton = false;
         self.showViewerButton = false;
         self.showFillingButton = false;
@@ -109,6 +110,7 @@
         self.showInfoButton = false;
         self.isPaperActivity = false;
       } else if (selectedActivities.length === 1) {
+        self.showBottomSheet = true;
         self.showVisualizationButton = true;
         self.showFillingButton = true;
         self.showViewerButton = true;
@@ -117,6 +119,7 @@
         self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() ? true : false;
         self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name
       } else {
+        self.showBottomSheet = true;
         self.showVisualizationButton = false;
         self.showFillingButton = false;
         self.showViewerButton = false;

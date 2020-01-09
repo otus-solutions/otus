@@ -18,12 +18,11 @@
     'otusjs.activity.core.EventService',
     'otusjs.otus.uxComponent.ActivityItemFactory',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
     '$scope',
     '$element'
   ];
 
-  function Controller(ActivityService, GroupActivityService, EventService, ActivityItemFactory, LoadingScreenService, DynamicTableSettingsFactory, $scope, $element) {
+  function Controller(ActivityService, GroupActivityService, EventService, ActivityItemFactory, LoadingScreenService, $scope, $element) {
     var self = this;
 
     var _selectedActivities = [];
@@ -38,7 +37,7 @@
     self.selectActivity = selectActivity;
     self.update = update;
     self.changeSort = changeSort;
-    self.dynamicDataTableChange = dynamicDataTableChange;
+    self.griidDataChange = griidDataChange;
     self.existsGroup = existsGroup;
     self.isIndeterminateGroups = isIndeterminateGroups;
     self.isCheckedGroup = isCheckedGroup;
@@ -70,7 +69,6 @@
 
     function update() {
       _loadActivities();
-      _buildDynamicTableSettings();
     }
 
     function onInit() {
@@ -86,7 +84,6 @@
       self.isListEmpty = true;
       self.otusActivityManager.listComponent = self;
       _loadActivities();
-      _buildDynamicTableSettings();
       $element.find('#searchBlock').on('keydown', function(ev) {
         ev.stopPropagation();
       });
@@ -101,7 +98,7 @@
             .map(ActivityItemFactory.create);
           self.AllActivities = angular.copy(self.activities);
           _groupsFilter();
-          self.updateDataTable(self.activities);
+          self.updateData(self.activities);
           self.isListEmpty = !self.activities.length;
           _selectedActivities = [];
           ActivityService.selectActivities(_selectedActivities);
@@ -115,50 +112,7 @@
       self.reverseSort = order;
     }
 
-    function _buildDynamicTableSettings() {
-      let dynamicTableSettingsFactory =  DynamicTableSettingsFactory.create()
-        .addHeader('NOME', '25', '', 1)
-        .addColumnProperty('name')
-        .addHeader('ACRÔNIMO', '15', 'center center', 2)
-        .addColumnProperty('acronym')
-        .addHeader('MODO', '10', '', 3)
-        .addIconWithFunction(function (element) {
-          var structureIcon = { icon: "md-svg-icon", class: "", tooltip: "" };
-          var OnLineStructure = {
-            icon: "equalizer",
-            class: "activity-item-icon md-avatar-icon",
-            tooltip: "On line",
-          };
-          var paperStructure = {
-            icon: 'description',
-            class: "activity-item-icon md-avatar-icon",
-            tooltip: "Em papel",
-          };
-
-          if(element.mode.name === "Em papel"){
-            structureIcon = paperStructure;
-          } else {
-            structureIcon = OnLineStructure;
-          }
-          return structureIcon;
-        })
-        .addHeader('REALIZAÇÃO', '15', 'center center', 4)
-        .addColumnProperty('realizationDate', 'DATE')
-        .setFormatData("'dd/MM/yy")
-        .addHeader('STATUS', '20', '', 5)
-        .addColumnProperty('status')
-        .addHeader('CATEGORIA', '15', '', 6)
-        .addColumnProperty('category')
-        .setCallbackAfterChange(self.dynamicDataTableChange)
-        .setCheckbox(true);
-
-      if (window.innerHeight <= 650){
-        dynamicTableSettingsFactory.setTitle("Lista de Atividades")
-      }
-      self.dynamicTableSettings = dynamicTableSettingsFactory.getSettings();
-    }
-
-    function dynamicDataTableChange(change) {
+    function griidDataChange(change) {
       if (change.type === 'select' || change.type === 'deselect') {
         self.selectActivity(change.element);
       }
@@ -186,7 +140,7 @@
     function _groupsFilter(){
       _surveysFilter();
       _activitiesFilter();
-      self.updateDataTable(self.activities);
+      self.updateData(self.activities);
     }
 
     function existsGroup(item) {

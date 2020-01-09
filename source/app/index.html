@@ -254,11 +254,9 @@
 <script src="app/deploy/state/access/signup-result-state-provider.js"></script>
 <script src="app/deploy/state/access/signup-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-adder-state-provider.js"></script>
-<script src="app/deploy/state/activity/activity-category-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-player-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-viewer-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-state-provider.js"></script>
-<script src="app/deploy/state/activity/paper-activity-initializer-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-import-state-provider.js"></script>
 <script src="app/deploy/state/dashboard/dashboard-state-provider.js"></script>
 <script src="app/deploy/state/participant-dashboard/participant-dashboard-state-provider.js"></script>
@@ -301,6 +299,7 @@
 <script src="app/module/activity/business/participant-activity-service.js"></script>
 <script src="app/module/activity/business/group-activity-service.js"></script>
 <script src="app/module/activity/business/activity-import-service.js"></script>
+<script src="app/module/activity/business/pre-activity-factory.js"></script>
 <!-- # Activity > Core -->
 <script src="app/module/activity/core/module.js"></script>
 <script src="app/module/activity/core/context-service.js"></script>
@@ -528,18 +527,18 @@
 <script src="app/ux-component/commons/bar-chart/horizontal/bar-charts-horizontal-factory.js"></script>
 <script src="app/ux-component/commons/bar-chart/multi/bar-chart-multi-factory.js"></script>
 <script src="app/ux-component/activity-adder/activity-adder-component.js"></script>
+<script src="app/ux-component/activity-adder/activity-adder-card/activity-adder-card-component.js"></script>
 <script src="app/ux-component/error/error-component.js"></script>
 <script src="app/ux-component/activity-adder-list/activity-adder-list-component.js"></script>
 <script src="app/ux-component/activity-adder-toolbar/activity-adder-toolbar-component.js"></script>
-<script src="app/ux-component/activity-category-adder/activity-category-adder-component.js"></script>
-<script src="app/ux-component/activity-category-adder-list/activity-category-adder-list-component.js"></script>
 <script src="app/ux-component/activity-information/activity-information-component.js"></script>
 <script src="app/ux-component/activity-information/activity-status-item-factory.js"></script>
 <script src="app/ux-component/activity-manager/activity-manager-component.js"></script>
 <script src="app/ux-component/activity-manager-commander/activity-manager-commander-component.js"></script>
 <script src="app/ux-component/activity-manager-list/activity-item-factory.js"></script>
 <script src="app/ux-component/activity-manager-list/activity-manager-list-component.js"></script>
-<script src="app/ux-component/activity-manager-toolbar/activity-manager-toolbar-component.js"></script>
+<script src="app/ux-component/activity-manager-bottom-sheet/activity-manager-bottom-sheet-component.js"></script>
+<script src="app/ux-component/activity-manager-grid-list/activity-manager-grid-list-component.js"></script>
 <script src="app/ux-component/activity-player/activity-player-component.js"></script>
 <script src="app/ux-component/activity-viewer/activity-viewer-component.js"></script>
 <script src="app/ux-component/activity-import/activity-import-component.js"></script>
@@ -665,7 +664,6 @@
 <!--   ----    -->
 <!--   ----    -->
 <script src="app/ux-component/paper-activity-initializer/checker-item-factory.js"></script>
-<script src="app/ux-component/paper-activity-initializer/paper-activity-initializer-component.js"></script>
 <script src="app/ux-component/participant-search/show-all-participants-directive.js"></script>
 <script src="app/ux-component/participant-search/participant-search-component.js"></script>
 <script src="app/ux-component/user-login/login-controller.js"></script>
@@ -682,6 +680,7 @@
 <!-- user access recovery -->
 <script src="app/ux-component/user-login-access-recovery/user-login-access-recovery-controller.js"></script>
 <script src="app/ux-component/user-login-access-recovery/user-login-access-recovery-component.js"></script>
+
 
 <!-- endbuild -->
 <!-- enduncache -->

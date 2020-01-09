@@ -34,6 +34,7 @@
     self.status = _getStatus();
     self.isDiscarded = activity.isDiscarded;
     self.activity = activity;
+    self.externalID = activity.externalID;
     self.id = activity.getID();
 
     function _getFormattedDate() {
@@ -55,7 +56,7 @@
       } else if ('FINALIZED' === status.name) {
         return 'Finalizado';
       } else {
-        return '';
+        return 'Criado';
       }
     }
 

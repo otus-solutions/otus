@@ -1,43 +1,48 @@
 (function () {
-  'use strict';
+	'use strict';
 
-  angular
-    .module('otusjs.activity.business')
-    .service('otusjs.activity.business.ParticipantActivityService', Service);
+	angular
+		.module('otusjs.activity.business')
+		.service('otusjs.activity.business.ParticipantActivityService', Service);
 
-  Service.$inject = [
-    'otusjs.activity.core.ModuleService',
-    'otusjs.activity.core.ContextService',
-    'otusjs.activity.repository.ActivityRepositoryService',
-    'otusjs.activity.repository.UserRepositoryService'
-  ];
+	Service.$inject = [
+		'otusjs.activity.core.ModuleService',
+		'otusjs.activity.core.ContextService',
+		'otusjs.activity.repository.ActivityRepositoryService',
+		'otusjs.activity.repository.UserRepositoryService',
+		'otusjs.activity.business.PreActivityFactory',
+		'otusjs.application.state.ApplicationStateService',
+		'SurveyFormFactory'
+	];
 
-  function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService) {
-    var self = this;
-    var _paperActivityCheckerData = null;
-    self.activityConfigurations = new Object();
+	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
+		var self = this;
+		var _paperActivityCheckerData = null;
 
+		self.activityConfigurations = new Object();
+		self.activities = [];
 
-    /* Public methods */
-    self.initializePaperActivityData = initializePaperActivityData;
+		/* Public methods */
     self.add = add;
-    self.listAll = listAll;
-    self.listAllCategories = listAllCategories;
-    self.listAvailables = listAvailables;
-    self.selectActivities = selectActivities;
-    self.getSelectedActivities = getSelectedActivities;
-    self.getSelectedParticipant = getSelectedParticipant;
-    self.listActivityCheckers = listActivityCheckers;
-    self.getById = getById;
-    self.setActivitiesSelection = setActivitiesSelection;
-    self.getActivitiesSelection = getActivitiesSelection;
-    self.updateCheckerActivity = updateCheckerActivity;
+		self.listAll = listAll;
+		self.listAllCategories = listAllCategories;
+		self.listAvailables = listAvailables;
+		self.selectActivities = selectActivities;
+		self.getSelectedActivities = getSelectedActivities;
+		self.getSelectedParticipant = getSelectedParticipant;
+		self.listActivityCheckers = listActivityCheckers;
+		self.getById = getById;
+		self.setActivitiesSelection = setActivitiesSelection;
+		self.getActivitiesSelection = getActivitiesSelection;
+		self.updateCheckerActivity = updateCheckerActivity;
+		self.configurationStructure = configurationStructure;
+		self.addActivityRevision = addActivityRevision;
+		self.getActivityRevisions = getActivityRevisions;
+		self.createPreActivity = createPreActivity;
+		self.saveActivities = saveActivities;
+		self.getSurveyFromJson = getSurveyFromJson;
 
-    self.configurationStructure = configurationStructure;
-    self.addActivityRevision = addActivityRevision;
-    self.getActivityRevisions = getActivityRevisions;
-
-    function add() {
+		 function add() {
       var loggedUser = ContextService.getLoggedUser();
 
       getSelectedParticipant()
@@ -55,96 +60,125 @@
         });
     }
 
-    function setActivitiesSelection(surveys) {
-      self.listSurveys = surveys;
-      _constructCollectionConfiguration();
-    }
+		function createPreActivity(survey, configuration, mode) {
+			let loggedUser = ContextService.getLoggedUser();
+			let preActivity = PreActivityFactory.create(survey, configuration, mode, loggedUser);
+			return preActivity;
+		}
 
-    function getActivitiesSelection() {
-      return self.listSurveys;
-    }
+		function saveActivities(preActivities) {
+			_prepareActivities(preActivities)
+				.then(() => ActivityRepositoryService.saveActivities(self.activities))
+				.then(() => ApplicationStateService.activateParticipantActivities())
+				.then(() => self.activities = []);
+		}
 
-    function listAll() {
-      return getSelectedParticipant()
-        .then(function (selectedParticipant) {
-          return ActivityRepositoryService.listAll(selectedParticipant);
-        });
-    }
+		function _prepareActivities(preActivities) {
+			return getSelectedParticipant().then(selectedParticipant => {
+				preActivities.forEach(preActivity => {
+				  switch (preActivity.mode) {
+            case "ONLINE": _createOnLineActivity(preActivity, selectedParticipant); break;
+            case "PAPER":  _createPaperActivity(preActivity, selectedParticipant); break;
+          }
+				});
+			});
+		}
 
-    function listAvailables() {
-      return ActivityRepositoryService.listAvailables();
-    }
+		function _createOnLineActivity(preActivity, selectedParticipant) {
+			ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID)
+				.then(onlineActivity => self.activities.push(onlineActivity));
+		}
 
-    function getById(activityInfo) {
-      return ActivityRepositoryService.getById(activityInfo);
-    }
-
-    function initializePaperActivityData(paperActivityCheckerData) {
-      window.sessionStorage.setItem('activityPaper', JSON.stringify(paperActivityCheckerData));
-      _paperActivityCheckerData = paperActivityCheckerData;
-    }
-
-    function selectActivities(activities) {
-      ContextService.selectActivities(activities);
-    }
-
-    function getSelectedActivities() {
-      return {
-        list: function list() {
-          return ContextService.getSelectedActivities();
-        },
-        discard: function discard() {
-          var toDiscard = ContextService.getSelectedActivities().map(function (activity) {
-            activity.isDiscarded = true;
-            return activity;
-          });
-          ActivityRepositoryService.discard(toDiscard);
-          ContextService.clearSelectedActivities();
-        }
-      };
-    }
-
-    function getSelectedParticipant() {
-      return ContextService.getSelectedParticipant();
-    }
-
-    function listActivityCheckers() {
-      return UserRepositoryService.listAll();
-    }
-
-    function useSelectedActivity() {
-      var selectedActivities = getSelectedActivities();
-      if (selectedActivities.length === 1) {
-        ContextService.setActivityInUse(selectedActivities[0]);
-        ModuleService.ActivityFacadeService.useActivity(selectedActivities[0]);
+		function _createPaperActivity(preActivity, selectedParticipant) {
+		  if(!preActivity.paperActivityData) throw Error("interrupted operation: invalid checker data");
+      else {
+			ActivityRepositoryService.createPaperActivity(preActivity.surveyForm,
+				preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID)
+				.then(paperActivity => self.activities.push(paperActivity));
       }
-    }
+		}
 
-    /* Activity Configuration Methods */
-    function configurationStructure() {
-      return self.activityConfigurations;
-    }
+		function setActivitiesSelection(surveys) {
+			self.listSurveys = surveys;
+			_constructCollectionConfiguration();
+		}
 
-    function _constructCollectionConfiguration() {
-      self.listSurveys.forEach(function (template) {
-        self.activityConfigurations[template.surveyTemplate.identity.acronym] = {};
-      });
-    }
+		function getActivitiesSelection() {
+			return self.listSurveys;
+		}
 
-    function listAllCategories() {
-      return ActivityRepositoryService.listAllCategories();
-    }
+		function listAll() {
+			return getSelectedParticipant()
+				.then(function (selectedParticipant) {
+					return ActivityRepositoryService.listAll(selectedParticipant);
+				});
+		}
 
-    function updateCheckerActivity(recruitmentNumber, id, activityStatus) {
-      return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({id, activityStatus}));
-    }
+		function listAvailables() {
+			return ActivityRepositoryService.listAvailables();
+		}
 
-    function addActivityRevision(activityRevision, activity) {
-      return ActivityRepositoryService.addActivityRevision(activityRevision, activity);
-    }
+		function getById(activityInfo) {
+			return ActivityRepositoryService.getById(activityInfo);
+		}
 
-    function getActivityRevisions(activityID, activity) {
-      return ActivityRepositoryService.getActivityRevisions(activityID, activity);
-    }
-  }
+		function selectActivities(activities) {
+			ContextService.selectActivities(activities);
+		}
+
+		function getSelectedActivities() {
+			return {
+				list: function list() {
+					return ContextService.getSelectedActivities();
+				},
+				discard: function discard() {
+					var toDiscard = ContextService.getSelectedActivities().map(function (activity) {
+						activity.isDiscarded = true;
+						return activity;
+					});
+					ActivityRepositoryService.discard(toDiscard);
+					ContextService.clearSelectedActivities();
+				}
+			};
+		}
+
+		function getSelectedParticipant() {
+			return ContextService.getSelectedParticipant();
+		}
+
+		function listActivityCheckers() {
+			return UserRepositoryService.listAll();
+		}
+
+		/* Activity Configuration Methods */
+		function configurationStructure() {
+			return self.activityConfigurations;
+		}
+
+		function _constructCollectionConfiguration() {
+			self.listSurveys.forEach(function (template) {
+				self.activityConfigurations[template.surveyTemplate.identity.acronym] = {};
+			});
+		}
+
+		function listAllCategories() {
+			return ActivityRepositoryService.listAllCategories();
+		}
+
+		function updateCheckerActivity(recruitmentNumber, id, activityStatus) {
+			return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({ id, activityStatus }));
+		}
+
+		function addActivityRevision(activityRevision, activity) {
+			return ActivityRepositoryService.addActivityRevision(activityRevision, activity);
+		}
+
+		function getActivityRevisions(activityID, activity) {
+			return ActivityRepositoryService.getActivityRevisions(activityID, activity);
+		}
+
+		function getSurveyFromJson(json) {
+			return SurveyFormFactory.fromJsonObject(json);
+		}
+	}
 }());

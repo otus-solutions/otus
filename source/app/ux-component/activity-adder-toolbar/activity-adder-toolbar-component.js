@@ -42,6 +42,5 @@
       } else {
         ApplicationStateService.activateParticipantActivities();
       }
-    }
-  }
+    }  }
 }());
