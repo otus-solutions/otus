@@ -21,26 +21,29 @@
 
     function createUserActivityPendency(userActivityPendency) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage =>  remoteStorage.createUserActivityPendency(userActivityPendency.toJSON()))
+        .then(remoteStorage => remoteStorage.createUserActivityPendency(userActivityPendency.toJSON()))
         .then(response => response.data);
     }
 
     function getPendencyByActivityId(id) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage =>  remoteStorage.getPendencyByActivityId(id))
+        .then(remoteStorage => remoteStorage.getPendencyByActivityId(id))
         .then(response => response.data);
     }
 
     function updateUserActivityPendency(foundPendencyId, updatedPendency) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage =>  remoteStorage.updateUserActivityPendency(foundPendencyId, updatedPendency.toJSON())
-          .then(response => response.data));
+        .then(remoteStorage => remoteStorage.updateUserActivityPendency(foundPendencyId, updatedPendency.toJSON()))
+        .then(response => response.data);
     }
 
     function deleteUserActivityPendency(foundPendencyId) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage =>  remoteStorage.deleteUserActivityPendency(foundPendencyId))
+        .then(remoteStorage => remoteStorage.deleteUserActivityPendency(foundPendencyId))
         .then(response => response.data);
     }
+
+
+
   }
 }());
