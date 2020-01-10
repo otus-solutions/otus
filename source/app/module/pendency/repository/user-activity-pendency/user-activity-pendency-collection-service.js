@@ -20,56 +20,27 @@
     self.deleteUserActivityPendency = deleteUserActivityPendency;
 
     function createUserActivityPendency(userActivityPendency) {
-      let request = $q.defer();
-      _remoteStorage.whenReady()
-        .then(remoteStorage => {
-          return remoteStorage.createUserActivityPendency(userActivityPendency.toJSON())
-            .then(response => {
-              request.resolve(response.data);
-            })
-            .catch(e => request.reject(e));
-        });
-      return request.promise;
+      return _remoteStorage.whenReady()
+        .then(remoteStorage =>  remoteStorage.createUserActivityPendency(userActivityPendency.toJSON()))
+        .then(response => response.data);
     }
 
     function getPendencyByActivityId(id) {
-      let request = $q.defer();
-      _remoteStorage.whenReady()
-        .then(remoteStorage => {
-          return remoteStorage.getPendencyByActivityId(id)
-            .then(response => {
-              request.resolve(response.data);
-            })
-            .catch(e => request.reject(e));
-        });
-      return request.promise;
+      return _remoteStorage.whenReady()
+        .then(remoteStorage =>  remoteStorage.getPendencyByActivityId(id))
+        .then(response => response.data);
     }
 
     function updateUserActivityPendency(foundPendencyId, updatedPendency) {
-      let request = $q.defer();
-      _remoteStorage.whenReady()
-        .then(remoteStorage => {
-          return remoteStorage.updateUserActivityPendency(foundPendencyId, updatedPendency.toJSON())
-            .then(response => {
-              request.resolve(response.data);
-            })
-            .catch(e => request.reject(e));
-        });
-      return request.promise;
+      return _remoteStorage.whenReady()
+        .then(remoteStorage =>  remoteStorage.updateUserActivityPendency(foundPendencyId, updatedPendency.toJSON())
+          .then(response => response.data));
     }
 
     function deleteUserActivityPendency(foundPendencyId) {
-      let request = $q.defer();
-      _remoteStorage.whenReady()
-        .then(remoteStorage => {
-          return remoteStorage.deleteUserActivityPendency(foundPendencyId)
-            .then(response => {
-              request.resolve(response.data);
-            })
-            .catch(e => request.reject(e));
-        });
-      return request.promise;
+      return _remoteStorage.whenReady()
+        .then(remoteStorage =>  remoteStorage.deleteUserActivityPendency(foundPendencyId))
+        .then(response => response.data);
     }
-
   }
 }());

@@ -48,6 +48,14 @@
       });
     }
 
+    function _showMessage(msg) {
+      $mdToast.show(
+        $mdToast.simple()
+          .position("bottom left")
+          .textContent(msg)
+          .hideDelay(3000));
+    }
+
     function DialogController(selectedActivity, foundPendency) {
       var self = this;
       self.selectedActivity = selectedActivity;
@@ -100,6 +108,8 @@
             if (value) _showMessage(Constant.MSG_CREATE_SUCCESS);
             else _showMessage(Constant.MSG_CREATE_FAIL);
           });
+
+
       }
 
       function updateUserActivityPendency() {
@@ -109,13 +119,14 @@
             if (value) _showMessage(Constant.MSG_UPDATE_SUCCESS);
             else _showMessage(Constant.MSG_UPDATE_FAIL);
           });
+
       }
 
       function deleteUserActivityPendency() {
         UserActivityPendencyService.deleteUserActivityPendency(foundPendency._id)
           .then(value => {
             self.cancel();
-            if(value) _showMessage(Constant.MSG_DELETE_SUCESS);
+            if (value) _showMessage(Constant.MSG_DELETE_SUCESS);
             else _showMessage(Constant.MSG_DELETE_FAIL);
           });
       }
@@ -130,14 +141,6 @@
 
       function cancel() {
         $mdDialog.cancel();
-      }
-
-      function _showMessage(msg) {
-        $mdToast.show(
-          $mdToast.simple()
-            .position("bottom left")
-            .textContent(msg)
-            .hideDelay(3000));
       }
 
       function _createFilterFor(query) {
