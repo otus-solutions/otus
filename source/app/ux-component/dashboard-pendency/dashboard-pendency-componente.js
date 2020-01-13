@@ -9,12 +9,15 @@
     }).controller('otusDashboardPendencyCtrl', Controller);
 
   Controller.$inject = [
-    "otusjs.model.pendency.UserActivityPendencyFactory",
+    'otusjs.report.core.EventService',
+    'otusjs.otus.dashboard.service.DashboardService',
+    'otusjs.model.pendency.UserActivityPendencyFactory',
     'otusjs.participant.business.ParticipantManagerService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.activity.business.ParticipantActivityService',
+    'otusjs.application.state.ApplicationStateService',
   ];
 //TODO tem criar três botões, direto para tela de lista de atividades, visualização da atividade, preencher atividade
-  function Controller(UserActivityPendencyFactory,ParticipantManagerService, ApplicationStateService) {
+  function Controller(EventService, DashboardService, UserActivityPendencyFactory, ParticipantManagerService, ParticipantActivityService, ApplicationStateService) {
     var self = this;
 
     var artefacts = {};
@@ -46,11 +49,19 @@
 
     //TODO transferir para um service
     function loadParticipant() {
+      artefacts.participants = [];
        ParticipantManagerService.setup()
       .then(() => ParticipantManagerService.listIdexers())
-      .then(values => {artefacts.participants = values});
-
+      .then(values => {artefacts.participants.push(values)});
+      EventService.onParticipantSelected(Mock.userActivityPendency.activityInfo);
        console.log(artefacts.participants)
+      DashboardService
+          .getSelectedParticipant()
+          .then(function (participantData) {
+            self.selectedParticipant = participantData;
+            self.isEmpty = false;
+          });
+      ApplicationStateService.activateParticipantActivities();
 
       // var test = artefacts.participants.filter(Mock.userActivityPendency.getActivityRecruitmentNumber());
       // console.log( test )
@@ -70,7 +81,7 @@
     Mock.userActivityPendencyFactory = UserActivityPendencyFactory;
     Mock.UserActivityPendencyDocument = JSON.stringify(test);
     Mock.userActivityPendency = Mock.userActivityPendencyFactory.fromJsonObject(Mock.UserActivityPendencyDocument);
-    console.log(Mock.userActivityPendency)
+    console.log(Mock.userActivityPendency.activityInfo)
     Mock._id = Mock.userActivityPendency.getID();
 
     participantFilter()
