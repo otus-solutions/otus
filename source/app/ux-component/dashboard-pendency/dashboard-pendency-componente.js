@@ -16,9 +16,11 @@
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.activity.business.ActivityPlayerService',
+    'otusjs.pendency.business.UserActivityPendencyService'
   ];
 //TODO tem criar três botões, direto para tela de lista de atividades, visualização da atividade, preencher atividade
-  function Controller(EventService, DashboardService, UserActivityPendencyFactory, ParticipantManagerService, ParticipantActivityService, ApplicationStateService, ActivityPlayerService) {
+  function Controller(EventService, DashboardService, UserActivityPendencyFactory, ParticipantManagerService, ParticipantActivityService,
+                      ApplicationStateService, ActivityPlayerService, UserActivityPendencyService) {
     var self = this;
 
     var artefacts = {};
@@ -43,11 +45,44 @@
       }
     };
 
+    function getOpenedUserActivityPendenciesToReceiver(){
+
+      const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+
+      UserActivityPendencyService.getAllUserActivityPendenciesToReceiver() // TODO change to getOpened
+        .then(values => {
+          console.log('inside values'); console.log(values);
+          self.openedUserActivityPendencies = [];
+
+          for(let pendency of values){
+            const creationDate = new Date(pendency.creationDate);
+            const dueDate = new Date(pendency.dueDate);
+            const days = (dueDate - creationDate) / MILLISECONDS_PER_DAY;
+
+            self.openedUserActivityPendencies.push({
+              creationDate: creationDate.getDate() +"/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
+              timePending: {
+                months: Math.floor(days / 30),
+                days: days % 30
+              },
+              activityInfo: pendency.activityInfo
+            });
+          }
+
+          console.log('self.openedUserActivityPendencies'); console.log(self.openedUserActivityPendencies);
+        })
+        .catch(() => {
+          self.openedUserActivityPendencies = [];
+        });
+    }
+
     function onInit() {
       self.participantManagerReady = false;
       ParticipantManagerService.setup()
         .then(() => self.participantManagerReady = true);
       self.pendencyListReady = false;
+
+      getOpenedUserActivityPendenciesToReceiver();
     }
 
     function selectParticipant(rn) {
