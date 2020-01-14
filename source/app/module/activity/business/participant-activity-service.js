@@ -15,7 +15,8 @@
 		'SurveyFormFactory'
 	];
 
-	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
+	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService,
+                   PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
 		var self = this;
 		var _paperActivityCheckerData = null;
 
