@@ -7355,3 +7355,16 @@ Test.utils.data.preActivity = {
   "externalID": null,
   "preActivityValid": false
 }
+Test.utils.data.userActivityPendency = {
+  "_id" : "5e137acf6f34296229baf794",
+  "objectType" : "userActivityPendency",
+  "creationDate" : "2020-01-06T18:22:07.716Z",
+  "dueDate" : "2020-01-14T03:00:00.000Z",
+  "requester" : "fdrtec@gmail.com",
+  "receiver" : "fagnerschwalm@gmail.com",
+  "activityInfo" : {
+    "id" : "5dfd1bd807ef686e9ad1399b",
+    "acronym" : "CSJ",
+    "recruitmentNumber" : 1166657
+  }
+}

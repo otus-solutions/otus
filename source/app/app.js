@@ -13,6 +13,7 @@
       'otusjs.otus.monitoring',
       'otusjs.otus.dashboard',
       'otusjs.otus.uxComponent',
+      'otusjs.otus.pendency',
       'otusjs.application',
       'otusjs.deploy',
       'ngSanitize'

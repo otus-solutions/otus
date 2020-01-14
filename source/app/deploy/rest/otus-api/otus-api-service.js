@@ -23,7 +23,8 @@
     'otusjs.deploy.ParticipantReportRestService',
     'otusjs.deploy.monitoring.MonitoringRestService',
     'otusjs.deploy.user.UserAccessRecoveryRestService',
-    'otusjs.deploy.monitoring.LaboratoryMonitoringRestService'
+    'otusjs.deploy.monitoring.LaboratoryMonitoringRestService',
+    'otusjs.deploy.UserActivityPendencyRestService'
   ];
 
   function Service(
@@ -44,7 +45,8 @@
     ParticipantReportRestService,
     MonitoringRestService,
     UserAccessRecoveryRestService,
-    LaboratoryMonitoringRestService
+    LaboratoryMonitoringRestService,
+    UserActivityPendencyRestService
   ) {
     var self = this;
 
@@ -78,6 +80,7 @@
       ParticipantReportRestService.initialize();
       MonitoringRestService.initialize();
       LaboratoryMonitoringRestService.initialize();
+      UserActivityPendencyRestService.initialize();
     }
   }
 }());

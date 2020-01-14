@@ -192,6 +192,7 @@
 <script src="app/deploy/bootstrap/user-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/report-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/monitoring-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/pendency-module-bootstrap.js"></script>
 <!-- # Deploy > Data Source -->
 <script src="app/deploy/data-source/data-source-loader-service.js"></script>
 <script src="app/deploy/data-source/activity-data-source-service.js"></script>
@@ -245,6 +246,7 @@
 <script src="app/deploy/rest/otus-api/monitoring/laboratory/laboratory-monitoring-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/report/participant-report-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/static-variable/static-variable-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/pendency/user-activity-pendency-rest-service.js"></script>
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
 <script src="app/deploy/state/error/error-state-provider.js"></script>
@@ -519,6 +521,26 @@
 
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
+
+<!-- build:js scripts/pendency-module.min.js -->
+<!-- # Module > Pendency -->
+<script src="app/module/pendency/module.js"></script>
+
+<!-- # Pendency > Business -->
+<script src="app/module/pendency/business/module.js"></script>
+<script src="app/module/pendency/business/user-activity-pendency-service.js"></script>
+<!-- # Pendency > Core -->
+<script src="app/module/pendency/core/module.js"></script>
+<script src="app/module/pendency/core/module-service.js"></script>
+<script src="app/module/pendency/core/context-service.js"></script>
+<!-- # Pendency > Repository -->
+<script src="app/module/pendency/repository/module.js"></script>
+<script src="app/module/pendency/repository/user-activity-pendency/user-activity-pendency-repository-service.js"></script>
+<script src="app/module/pendency/repository/user-activity-pendency/user-activity-pendency-collection-service.js"></script>
+<!-- # Pendency > Storage -->
+<script src="app/module/pendency/storage/module.js"></script>
+<!-- endbuild -->
+<!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/ux-component-module.min.js -->
 <script src="app/ux-component/module.js"></script>
 <script src="app/ux-component/commons/report-export/report-export-directive.js"></script>
@@ -602,6 +624,11 @@
 <script src="app/ux-component/report/dashboard/report-dashboard-component.js"></script>
 <script src="app/ux-component/report/activity-report/activity-report-component.js"></script>
 <script src="app/ux-component/report/activity-report/activity-report-service.js"></script>
+
+<!--pendency-ux-->
+<script src="app/ux-component/pendency/user-activity-pendency/user-activity-pendency-component.js"></script>
+<script src="app/ux-component/pendency/user-activity-pendency/user-activity-pendency-dialog-service.js"></script>
+<script src="app/ux-component/pendency/user-activity-pendency/user-activity-pendency-constant.js"></script>
 
 <!--  dynamic-data-table  -->
 <script src="app/ux-component/dynamic-data-table/dynamic-data-table-component.js"></script>
