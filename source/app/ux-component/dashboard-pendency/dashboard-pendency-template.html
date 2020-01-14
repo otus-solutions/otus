@@ -5,6 +5,8 @@
 </md-toolbar>
 
 <md-content>
+  <md-button ng-click="$ctrl.loadActivity()"" ng-disabled="!$ctrl.participantManagerReady">selectActivity</md-button>
+  <md-button ng-click="$ctrl.loadActivityPlayer()"" ng-disabled="!$ctrl.participantManagerReady">selectActivityPlayer</md-button>
   <md-list flex>
     <md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader>
     <md-list-item class="md-3-line" ng-repeat="item in todos" ng-click="null">
