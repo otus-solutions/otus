@@ -45,7 +45,16 @@
       }
     };
 
-    function getOpenedUserActivityPendenciesToReceiver(){
+    function onInit() {
+      self.participantManagerReady = false;
+      ParticipantManagerService.setup()
+        .then(() => self.participantManagerReady = true);
+      self.pendencyListReady = false;
+
+      _getOpenedUserActivityPendenciesToReceiver();
+    }
+
+    function _getOpenedUserActivityPendenciesToReceiver(){
 
       const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
@@ -58,6 +67,7 @@
             const creationDate = new Date(pendency.creationDate);
             const dueDate = new Date(pendency.dueDate);
             const days = (dueDate - creationDate) / MILLISECONDS_PER_DAY;
+            pendency.activityInfo['lastStatus'] = _createStatus(pendency.activityInfo.lastStatusName);
 
             self.openedUserActivityPendencies.push({
               creationDate: creationDate.getDate() +"/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
@@ -76,13 +86,22 @@
         });
     }
 
-    function onInit() {
-      self.participantManagerReady = false;
-      ParticipantManagerService.setup()
-        .then(() => self.participantManagerReady = true);
-      self.pendencyListReady = false;
-
-      getOpenedUserActivityPendenciesToReceiver();
+    function _createStatus(status) {
+      const dict = {
+        FINALIZED: {
+          icon: 'check_circle',
+          tooltip: 'Finalizado'
+        },
+        CREATED: {
+          icon: 'fiber_new',
+          tooltip: 'Criado'
+        },
+        SAVED: {
+          icon: 'save',
+          tooltip: 'Salvo'
+        }
+      };
+      return dict[status];
     }
 
     function selectParticipant(rn) {

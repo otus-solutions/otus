@@ -7,67 +7,66 @@
 <md-content>
   <md-button ng-click="$ctrl.loadActivity()"" ng-disabled="!$ctrl.participantManagerReady">selectActivity</md-button>
   <md-button ng-click="$ctrl.loadActivityPlayer()"" ng-disabled="!$ctrl.participantManagerReady">selectActivityPlayer</md-button>
+
   <md-list flex>
-    <md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader>
+<!--    <md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader>-->
     <md-list-item class="md-3-line" ng-repeat="item in $ctrl.openedUserActivityPendencies" ng-click="null">
-      <!-- <img ng-src="{{item.face}}?{{$index}}" class="md-avatar" alt="{{item.who}}" /> -->
+
       <div class="md-list-item-text" layout="column">
-        <p>{{ item.activityInfo.recruitmentNumber }}</p>
-        <p>{{ item.activityInfo.acronym }}</p>
-        <p>{{ item.activityInfo.name }}</p>
-        <p>{{ item.activityInfo.lastStatusName }}</p>
-        <p>Data de criação: {{ item.creationDate }}</p>
-        <p>Tempo pendente: {{ item.timePending.months }} meses {{item.timePending.days}} dias</p>
+        <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento: <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small></span>
+        <span class="md-caption" ng-style="{color:'#797985'}">Atividade: <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }} - {{ item.activityInfo.name }}</small></span>
 
-      </div>
-    </md-list-item>
+        <span class="md-caption" ng-style="{color:'#797985'}">Criação: <small class="md-body-2" ng-style="{color:'black'}">{{item.creationDate}}</small></span>
+        <span class="md-caption" ng-style="{color:'#797985'}">Tempo pendente: <small class="md-body-2" ng-style="{color:'black'}">{{ item.timePending.months }} meses {{item.timePending.days}} dias</small></span>
 
-    <md-divider ></md-divider>
-    <md-subheader class="md-no-sticky">2 line item</md-subheader>
-    <md-list-item class="md-2-line">
-      <img ng-src="{{todos[0].face}}?20" class="md-avatar" alt="{{todos[0].who}}" />
-      <div class="md-list-item-text">
-        <h3>{{ todos[0].who }}</h3>
-        <p>Secondary text</p>
+        <div>
+          <md-icon ng-style="{color: '#00897b'}" md-font-library="material-icons"">{{item.activityInfo.lastStatus.icon}}</md-icon>
+          <md-tooltip md-direction="top">
+            {{item.activityInfo.lastStatus.tooltip}}
+          </md-tooltip>
+        </div>
+
+        <md-divider ></md-divider>
       </div>
-    </md-list-item>
-    <md-divider ></md-divider>
-    <md-subheader class="md-no-sticky">3 line item, long paragraph (see on mobile)</md-subheader>
-    <md-list-item class="md-3-line md-long-text">
-      <img ng-src="{{todos[0].face}}?25" class="md-avatar" alt="{{todos[0].who}}" />
-      <div class="md-list-item-text">
-        <h3>{{ todos[0].who }}</h3>
-        <p>
-          Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
-          Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum
-          velit. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.
-        </p>
-      </div>
-    </md-list-item>
-    <md-list-item class="md-3-line md-long-text">
-      <img ng-src="{{todos[1].face}}?25" class="md-avatar" alt="{{todos[1].who}}" />
-      <div class="md-list-item-text">
-        <h3>{{ todos[1].who }}</h3>
-        <p>
-          Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam.
-          Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum
-          velit. Class aptent taciti sociosqu ad litra torquent per conubia nostra, per inceptos himenaeos.
-        </p>
-      </div>
-    </md-list-item>
-    <md-divider ></md-divider>
-    <md-subheader class="md-no-sticky">Classes</md-subheader>
-    <md-list-item class="md-2-line" ng-repeat="phone in phones">
-      <md-icon md-svg-icon="{{phone.options.icon}}" ng-if="phone.options.icon" ng-class="{'md-avatar-icon': phone.options.avatarIcon}"></md-icon>
-      <img ng-src="{{phone.options.face}}?25" class="md-avatar" alt="{{phone.options.face}}"
-           ng-if="phone.options.face"/>
-      <div class="md-list-item-text" ng-class="{'md-offset': phone.options.offset }">
-        <h3> {{ phone.number }} </h3>
-        <p> {{ phone.type }} </p>
-      </div>
-      <md-button class="md-secondary md-icon-button" ng-click="doSecondaryAction($event)" ng-if="phone.options.actionIcon" aria-label="call">
-        <md-icon md-svg-icon="{{phone.options.actionIcon}}"></md-icon>
-      </md-button>
     </md-list-item>
   </md-list>
+
+<!--  <div class="gridListDynamicTiles">-->
+<!--  <md-grid-list md-cols="1"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="8" md-cols-lg="5" md-cols-gt-md="6" md-row-height-gt-md="6:4" md-row-height-sm="2.7:2" md-row-height-md="5:4"  md-row-height-lg="6:4"-->
+<!--                md-row-height="6:2"  md-row-height-xs="4:2" md-row-height-xl="4:3.7" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-sm="6px">-->
+<!--    <md-grid-tile ng-repeat="item in $ctrl.openedUserActivityPendencies"-->
+<!--                  ng-click="null"-->
+<!--                  name="pendency{{$index}}"-->
+<!--                  id="pendency{{$index}}"-->
+<!--                  aria-label="pendency{{$index}}"-->
+<!--                  md-rowspan="1" md-colspan="1" md-colspan-xl="1" md-colspan-lg="1" md-colspan-md="1" md-colspan-sm="1" md-colspan-xs="1" md-whiteframe="3"">-->
+<!--      <md-grid-tile-header >&lt;!&ndash;        ng-style="activity.actions.colorGrid"&ndash;&gt;-->
+<!--        <div layout="row" layout-align="space-between center">-->
+<!--          <div layout="row">-->
+<!--&lt;!&ndash;            <md-icon class="md-avatar-icon" style="fill: white" md-svg-icon="{{activity.mode.icon}}"></md-icon>&ndash;&gt;-->
+<!--            <md-tooltip md-direction="top">-->
+<!--              {{item.activityInfo.name}}-->
+<!--            </md-tooltip>-->
+<!--            <h3>{{item.activityInfo.acronym}}</h3>-->
+<!--          </div>-->
+<!--          <div>-->
+<!--&lt;!&ndash;            <md-icon ng-style="{color: 'white'}" md-font-library="material-icons"">{{activity.activityStatus.icon}}</md-icon>&ndash;&gt;-->
+<!--&lt;!&ndash;            <md-tooltip md-direction="top">&ndash;&gt;-->
+<!--&lt;!&ndash;              {{activity.activityStatus.statusTooltip}}&ndash;&gt;-->
+<!--&lt;!&ndash;            </md-tooltip>&ndash;&gt;-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </md-grid-tile-header>-->
+<!--      <div  class="grid-aligh" layout="column">-->
+<!--        <div class="clipped">-->
+<!--          <span class="md-body-2">{{item.activityInfo.name}} </span>-->
+<!--        </div>-->
+<!--        <span class="md-caption" ng-style="{color:'#797985'}">Criação: <small class="md-body-2" ng-style="{color:'black'}">{{item.creationDate}}</small></span>-->
+<!--        <span class="md-caption" ng-style="{color:'#797985'}">Tempo pendente: <small class="md-body-2" ng-style="{color:'black'}">{{ item.timePending.months }} meses {{item.timePending.days}} dias</small></span>-->
+<!--      </div>-->
+
+<!--    </md-grid-tile>-->
+<!--  </md-grid-list>-->
+<!--  </div>-->
+
 </md-content>
