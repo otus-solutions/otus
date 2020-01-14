@@ -22,6 +22,7 @@
     }
 
     function onParticipantSelected(listener) {
+      console.log(listener)
       _onParticipantSelectedListeners.push(listener);
     }
 

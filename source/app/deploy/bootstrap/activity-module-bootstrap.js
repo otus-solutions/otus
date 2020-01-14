@@ -68,8 +68,6 @@
       ModuleService.configureActivityFacadeService(facade);
     }
 
-
-
     function configureActivityPlayerService(service) {
       ModuleService.configureActivityPlayerService(service);
     }

@@ -1,0 +1,63 @@
+<md-toolbar style="z-index: 1" class="md-primary md-hue-1">
+  <div class="md-toolbar-tools">
+    <h2><span>{{vm.Constant.TOOLBAR_ACTIVITY_PENDENCY_DIALOG_TITLE}}</span></h2>
+    <span flex></span>
+    <md-button class="md-icon-button" ng-click="vm.cancel() "aria-label={{vm.Constant.CLOSE_TITLE}}>
+      <md-icon aria-label={{vm.Constant.CLOSE_TITLE}}>{{vm.Constant.CLOSE_ICON_TITLE}}</md-icon>
+      <md-tooltip md-direction="bottom">{{vm.Constant.CLOSE_TITLE}}</md-tooltip>
+    </md-button>
+  </div>
+</md-toolbar>
+
+<div layout="row" flex layout-align="center center">
+  <div layout-margin layout="column">
+    <div layout-margin layout="column" class="label-light-gray">
+      <span class="md-headline">{{vm.Constant.EVENT_UPDATE_TITLE}}</span>
+      <span class="md-body-2" ng-bind-html=vm.Constant.FIELD_FILLER_TITLE></span>
+    </div>
+    <form name="pendencyForm" novalidate flex>
+      <div>
+        <md-datepicker ng-model="vm.date"
+                       md-min-date="vm.minDate" required>
+        </md-datepicker>
+      </div>
+
+      <md-autocomplete flex required md-selected-item="vm.selectedItem"
+                       md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
+                       md-selected-item-change="vm.selectedItemChange(item)"
+                       md-items="item in vm.querySearch(vm.searchText)"
+                       md-item-text="item.text" md-min-length="0"
+                       md-menu-class="autocomplete-custom-template">
+        <md-item-template>
+          <span class="item-title">
+            <md-icon md-svg-icon="account"></md-icon>
+            <span md-highlight-text="vm.searchText" md-highlight-flags="i">{{ item.title }}</span>
+          </span>
+          <span class="item-metadata">
+            <span class="item-metastat">
+              E-mail: <strong>{{ item.metastat.email }}</strong>
+            </span>
+          </span>
+        </md-item-template>
+        <md-not-found>
+          Nenhum resultado para "{{ vm.searchText }}" foi encontrado.
+        </md-not-found>
+      </md-autocomplete>
+    </form>
+  </div>
+</div>
+<md-dialog-actions layout="row">
+  <md-button class="md-raised md-warn" aria-label={{vm.Constant.DELETE_TITLE}}"
+             ng-click="vm.deleteUserActivityPendency()">{{vm.Constant.DELETE_TITLE}}
+
+  </md-button>
+  <span flex></span>
+  <md-button class="md-raised md-primary" aria-label="Atualizar"
+             ng-click="vm.updateUserActivityPendency()"
+             ng-disabled=pendencyForm.$invalid>{{vm.Constant.UPDATE_TITLE}}
+  </md-button>
+  <md-button class="md-raised md-no-focus" aria-label={{vm.Constant.CANCEL_TITLE}}"
+             ng-click="vm.cancel()">{{vm.Constant.CANCEL_TITLE}}
+  </md-button>
+
+</md-dialog-actions>
