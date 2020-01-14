@@ -120,6 +120,7 @@
 		}
 
 		function getById(activityInfo) {
+		   console.log(activityInfo)
 			return ActivityRepositoryService.getById(activityInfo);
 		}
 

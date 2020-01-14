@@ -57,6 +57,7 @@
         }
 
         function getById(activityInfo) {
+          console.log(activityInfo)
             return ActivityCollectionService.getById(activityInfo).then(_toEntity);
         }
 

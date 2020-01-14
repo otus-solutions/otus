@@ -39,9 +39,9 @@
       "requester": "flavia.avila@ufrgs.br",
       "receiver": "ativ_created@otus.com",
       "activityInfo": {
-        "id": "5a33cb4b28f10d1043710f82",
+        "id": "5b8569b7086a5e5ee91527dc",
         "acronym": "DSOC",
-        "recruitmentNumber": 5005283
+        "recruitmentNumber": 2000735
       }
     };
 
@@ -128,8 +128,15 @@
     }
 
     function _loadActivities() {
+      let activityInfo = Mock.userActivityPendency.activityInfo;
+      //activityInfo.participantData = {};
+      //////activityInfo.participantData.recruitmentNumber = Mock.userActivityPendency.getActivityRecruitmentNumber();
       //todo buscar pelo backend uma atividade
-      ParticipantActivityService
+      console.log(activityInfo)
+      var x = ParticipantActivityService.getById(activityInfo).then(onlineActivity => console.log(onlineActivity));;
+      console.log(x)
+
+      /*ParticipantActivityService
         .listAll()
         .then(function(activities) {
           self.activities = activities
@@ -143,7 +150,7 @@
           var teste = self.AllActivities.find(element => console.log(element.getID()))
           ParticipantActivityService.selectActivities(_selectedActivities);
           self.ready = true;
-        });
+        });*/
     }
 
     //TODO transferir para um service
@@ -181,7 +188,7 @@
     Mock.userActivityPendencyFactory = UserActivityPendencyFactory;
     Mock.UserActivityPendencyDocument = JSON.stringify(test);
     Mock.userActivityPendency = Mock.userActivityPendencyFactory.fromJsonObject(Mock.UserActivityPendencyDocument);
-    console.log(Mock.userActivityPendency.activityInfo)
+    console.log(Mock.userActivityPendency)
     Mock._id = Mock.userActivityPendency.getID();
 
     // participantFilter()

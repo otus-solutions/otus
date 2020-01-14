@@ -213,6 +213,7 @@
     }
 
     function getById(activityInfo) {
+      console.log(activityInfo)
       var request = $q.defer();
       _remoteStorage
         .whenReady()
