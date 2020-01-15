@@ -103,34 +103,22 @@
       return request.promise;
     }
 
-    function getById(activityInfo) {
+    function getById(ActivityId, rn) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      console.log(activityInfo)
-      if(activityInfo.participantData){
-        var request = $q.defer();
-        _rest.getById({rn : activityInfo.participantData.recruitmentNumber, id: activityInfo.getID()})
-          .$promise
-          .then(function(response) {
-            if (response.data) {
-              request.resolve([response.data]);
-            } else {
-              request.resolve([]);
-            }
-          });
-      } else {
-        var request = $q.defer();
-        _rest.getById({rn : activityInfo.recruitmentNumber, id: activityInfo.id})
-          .$promise
-          .then(function(response) {
-            if (response.data) {
-              request.resolve([response.data]);
-            } else {
-              request.resolve([]);
-            }
-          });
-      }
+      console.log(ActivityId, rn)
+
+      var request = $q.defer();
+      _rest.getById({rn : rn, id: ActivityId})
+        .$promise
+        .then(function(response) {
+          if (response.data) {
+            request.resolve([response.data]);
+          } else {
+            request.resolve([]);
+          }
+        });
 
       return request.promise;
     }
