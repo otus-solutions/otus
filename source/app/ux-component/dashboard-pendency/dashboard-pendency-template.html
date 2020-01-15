@@ -1,4 +1,4 @@
-<md-toolbar layout="row" class="md-hue-2">
+<md-toolbar layout="column" class="md-hue-2">
   <div class="md-toolbar-tools">
     <span>Pendências</span>
   </div>
@@ -8,16 +8,17 @@
   <md-button ng-click="$ctrl.loadActivity()"" ng-disabled="!$ctrl.participantManagerReady">selectActivity</md-button>
   <md-button ng-click="$ctrl.loadActivityPlayer()"" ng-disabled="!$ctrl.participantManagerReady">selectActivityPlayer</md-button>
 
+  <md-divider ></md-divider>
   <md-list flex>
 <!--    <md-subheader class="md-no-sticky">3 line item (with hover)</md-subheader>-->
     <md-list-item class="md-3-line" ng-repeat="item in $ctrl.openedUserActivityPendencies" ng-click="null">
 
       <div class="md-list-item-text" layout="column">
-        <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento: <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small></span>
         <span class="md-caption" ng-style="{color:'#797985'}">Atividade: <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }} - {{ item.activityInfo.name }}</small></span>
+        <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento: <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small></span>
 
-        <span class="md-caption" ng-style="{color:'#797985'}">Criação: <small class="md-body-2" ng-style="{color:'black'}">{{item.creationDate}}</small></span>
-        <span class="md-caption" ng-style="{color:'#797985'}">Tempo pendente: <small class="md-body-2" ng-style="{color:'black'}">{{ item.timePending.months }} meses {{item.timePending.days}} dias</small></span>
+        <span class="md-caption" ng-style="{color:'#797985'}">Pendente desde: <small class="md-body-2" ng-style="{color:'black'}">{{ item.creationDate }} ({{ item.timePending }})</small></span>
+<!--        <span class="md-caption" ng-style="{color:'#797985'}">Tempo pendente: <small class="md-body-2" ng-style="{color:'black'}">{{ item.timePending }} </small></span>-->
 
         <div>
           <md-icon ng-style="{color: '#00897b'}" md-font-library="material-icons"">{{item.activityInfo.lastStatus.icon}}</md-icon>
@@ -30,6 +31,8 @@
       </div>
     </md-list-item>
   </md-list>
+
+  <md-divider ></md-divider>
 
 <!--  <div class="gridListDynamicTiles">-->
 <!--  <md-grid-list md-cols="1"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="8" md-cols-lg="5" md-cols-gt-md="6" md-row-height-gt-md="6:4" md-row-height-sm="2.7:2" md-row-height-md="5:4"  md-row-height-lg="6:4"-->

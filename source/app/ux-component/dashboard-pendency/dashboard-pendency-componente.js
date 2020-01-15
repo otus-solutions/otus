@@ -60,21 +60,25 @@
 
       UserActivityPendencyService.getAllUserActivityPendenciesToReceiver() // TODO change to getOpened
         .then(values => {
-          console.log('inside values'); console.log(values);
           self.openedUserActivityPendencies = [];
 
           for(let pendency of values){
             const creationDate = new Date(pendency.creationDate);
-            const dueDate = new Date(pendency.dueDate);
-            const days = (dueDate - creationDate) / MILLISECONDS_PER_DAY;
+            creationDate.setHours(0,0,0,0);
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            let days = (today - creationDate) / MILLISECONDS_PER_DAY;
+            const months = Math.floor(days / 30);
+            days = days % 30;
+
+            const timePending = (months===0 ? '' : `${months} meses `) +
+              (days===0 ? '' : `${days} dias`);
+
             pendency.activityInfo['lastStatus'] = _createStatus(pendency.activityInfo.lastStatusName);
 
             self.openedUserActivityPendencies.push({
-              creationDate: creationDate.getDate() +"/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
-              timePending: {
-                months: Math.floor(days / 30),
-                days: days % 30
-              },
+              creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
+              timePending: timePending,
               activityInfo: pendency.activityInfo
             });
           }
