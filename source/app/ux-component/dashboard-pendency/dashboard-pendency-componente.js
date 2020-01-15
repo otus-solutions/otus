@@ -58,6 +58,8 @@
 
       const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
+      console.log('window', window.width);
+
       UserActivityPendencyService.getAllUserActivityPendenciesToReceiver() // TODO change to getOpened
         .then(values => {
           self.openedUserActivityPendencies = [];
@@ -81,9 +83,20 @@
               timePending: timePending,
               activityInfo: pendency.activityInfo
             });
+
+            self.openedUserActivityPendencies.push({
+              creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
+              timePending: timePending,
+              activityInfo: pendency.activityInfo
+            });self.openedUserActivityPendencies.push({
+              creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
+              timePending: timePending,
+              activityInfo: pendency.activityInfo
+            });
           }
 
           console.log('self.openedUserActivityPendencies'); console.log(self.openedUserActivityPendencies);
+
         })
         .catch(() => {
           self.openedUserActivityPendencies = [];
@@ -103,7 +116,19 @@
         SAVED: {
           icon: 'save',
           tooltip: 'Salvo'
-        }
+        },
+        OPENED: {
+          icon: 'open_in_new',
+          tooltip: 'Aberto'
+        },
+        INITIALIZED_ONLINE: {
+          icon: 'play_circle_filled',
+          tooltip: 'Inicializado'
+        },
+        INITIALIZED_OFFLINE: {
+          icon: 'play_circle_filled',
+          tooltip: 'Inicializado'
+        },
       };
       return dict[status];
     }
