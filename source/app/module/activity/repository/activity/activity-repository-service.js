@@ -56,9 +56,9 @@
             return SurveyCollectionService.listAll().then(_toEntity);
         }
 
-        function getById(activityInfo) {
-          console.log(activityInfo)
-            return ActivityCollectionService.getById(activityInfo).then(_toEntity);
+        function getById(activityId, rn) {
+          console.log(activityId, rn)
+            return ActivityCollectionService.getById(activityId, rn).then(_toEntity);
         }
 
         function listAllSurveys() {

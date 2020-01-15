@@ -39,9 +39,10 @@
       "requester": "flavia.avila@ufrgs.br",
       "receiver": "ativ_created@otus.com",
       "activityInfo": {
-        "id": "5b8569b7086a5e5ee91527dc",
+        //"id": "5b8569b7086a5e5ee91527dc",
         "acronym": "DSOC",
-        "recruitmentNumber": 2000735
+        "recruitmentNumber": 2000735,
+        "id": "5bb22262e103cf07800f470c"
       }
     };
 
@@ -158,11 +159,14 @@
 
     function _loadActivities() {
       let activityInfo = Mock.userActivityPendency.activityInfo;
-      //activityInfo.participantData = {};
-      //////activityInfo.participantData.recruitmentNumber = Mock.userActivityPendency.getActivityRecruitmentNumber();
+      activityInfo.participantData = {
+        recruitmentNumber: Mock.userActivityPendency.getActivityRecruitmentNumber()
+      }
+
       //todo buscar pelo backend uma atividade
       console.log(activityInfo)
-      var x = ParticipantActivityService.getById(activityInfo).then(onlineActivity => console.log(onlineActivity));;
+      var x = ParticipantActivityService.getActivity(Mock.userActivityPendency.getActivityID(), Mock.userActivityPendency.getActivityRecruitmentNumber())
+        .then(onlineActivity => ParticipantActivityService.selectActivities(onlineActivity));
       console.log(x)
 
       /*ParticipantActivityService

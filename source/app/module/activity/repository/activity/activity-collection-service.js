@@ -212,14 +212,14 @@
       return request.promise;
     }
 
-    function getById(activityInfo) {
-      console.log(activityInfo)
+    function getById(activityId, rn) {
+      console.log(activityId, rn)
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           remoteStorage
-            .getById(activityInfo)
+            .getById(activityId, rn)
             .then(function (response) {
               request.resolve(response);
             }).catch(function () {
