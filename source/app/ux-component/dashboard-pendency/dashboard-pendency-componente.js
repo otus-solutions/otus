@@ -9,25 +9,23 @@
     }).controller('otusDashboardPendencyCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.report.core.EventService',
-    'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.model.pendency.UserActivityPendencyFactory',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.activity.business.ActivityPlayerService',
+    'otusjs.activity.business.ActivityViewService',
     'otusjs.pendency.business.UserActivityPendencyService'
   ];
-//TODO tem criar três botões, direto para tela de lista de atividades, visualização da atividade, preencher atividade
-  function Controller(EventService, DashboardService, UserActivityPendencyFactory, ParticipantManagerService, ParticipantActivityService,
-                      ApplicationStateService, ActivityPlayerService, UserActivityPendencyService) {
-    var self = this;
 
-    var artefacts = {};
+  function Controller(UserActivityPendencyFactory, ParticipantManagerService, ParticipantActivityService,
+                      ApplicationStateService, ActivityPlayerService, ActivityViewService, UserActivityPendencyService) {
+    var self = this;
 
     self.$onInit = onInit();
     self.loadActivities = loadActivities;
     self.loadActivityPlayer = loadActivityPlayer;
+    self.loadActivityViewer = loadActivityViewer;
     self.selectParticipant = selectParticipant;
     const Mock = {};
 
@@ -150,64 +148,22 @@
 
     function loadActivityPlayer() {
       selectParticipant(Mock.userActivityPendency.getActivityRecruitmentNumber());
-      //todo inicializar player
-      // _loadActivity()
       ParticipantActivityService.getActivity(Mock.userActivityPendency.getActivityID(), Mock.userActivityPendency.getActivityRecruitmentNumber())
         .then(onActivity => ParticipantActivityService.selectActivities(onActivity))
         .then(() => ActivityPlayerService.load().then(function () {
           ApplicationStateService.activateActivityPlayer()
-        }))
+        }));
+      ParticipantActivityService.clearSelectedActivities();
     }
 
-    function _loadActivity() {
-      //todo buscar pelo backend uma atividade
-      //ParticipantActivityService.getActivity(Mock.userActivityPendency.getActivityID(), Mock.userActivityPendency.getActivityRecruitmentNumber())
-      // .then(onActivity => ParticipantActivityService.selectActivities(onActivity));
-
-      /*ParticipantActivityService
-        .listAll()
-        .then(function(activities) {
-          self.activities = activities
-          console.log(self.activities)
-          // .map(ActivityItemFactory.create);
-          self.AllActivities = angular.copy(self.activities);
-          console.log(self.AllActivities)
-          // self.isListEmpty = !self.activities.length;
-          var _selectedActivities = [];
-
-          var teste = self.AllActivities.find(element => console.log(element.getID()))
-          ParticipantActivityService.selectActivities(_selectedActivities);
-          self.ready = true;
-        });*/
-    }
-
-    //TODO transferir para um service
-    function loadParticipant() {
+    function loadActivityViewer() {
       selectParticipant(Mock.userActivityPendency.getActivityRecruitmentNumber());
-      ApplicationStateService.activateParticipantDashboard();
-
-      // .then(() => ParticipantManagerService.listIdexers())
-      // .then(values => {artefacts.participants.push(values)});
-      // EventService.onParticipantSelected(Mock.userActivityPendency.activityInfo);
-      //  console.log(artefacts.participants)
-      // DashboardService
-      //     .getSelectedParticipant()
-      //     .then(function (participantData) {
-      //       self.selectedParticipant = participantData;
-      //       self.isEmpty = false;
-      //     });
-      // ApplicationStateService.activateParticipantActivities();
-
-      // var test = artefacts.participants.filter(Mock.userActivityPendency.getActivityRecruitmentNumber());
-      // console.log( test )
-      // selectParticipant(test)
-    }
-
-    function participantFilter(){
-      loadParticipant()
-      // ApplicationStateService.activateParticipantActivities();
-      //  var view = test.participants.filter(Mock.userActivityPendency.getActivityRecruitmentNumber())
-      // console.log(view)
+      ParticipantActivityService.getActivity(Mock.userActivityPendency.getActivityID(), Mock.userActivityPendency.getActivityRecruitmentNumber())
+        .then(onActivity => ParticipantActivityService.selectActivities(onActivity))
+        .then(() => ActivityViewService.load().then(function () {
+          ApplicationStateService.activateActivityViewer()
+        }));
+      ParticipantActivityService.clearSelectedActivities();
     }
 
     /* Public methods */
@@ -218,21 +174,6 @@
     Mock.userActivityPendency = Mock.userActivityPendencyFactory.fromJsonObject(Mock.UserActivityPendencyDocument);
     console.log(Mock.userActivityPendency)
     Mock._id = Mock.userActivityPendency.getID();
-
-    // participantFilter()
-    //console.log(ParticipantManagerService.listIdexers)
-    // );
-    // Mock.userActivityPendency.getActivityRecruitmentNumber()
-    // ParticipantManagerService.filter(Mock.userActivityPendency.getActivityRecruitmentNumber()).then(
-    //   function(value){
-    //     console.log(value)
-    //   }
-    // );
-
-
-    // searchParticipant();
-    // ParticipantManagerService.setup().then(searchParticipant());
-    // console.log(ParticipantManagerService.listIdexers())
 
   }
 

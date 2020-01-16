@@ -43,6 +43,7 @@
 		self.saveActivities = saveActivities;
 		self.getSurveyFromJson = getSurveyFromJson;
 		self.getActivity = getActivity;
+		self.clearSelectedActivities = clearSelectedActivities;
 
 		 function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -187,5 +188,9 @@
 		function getSurveyFromJson(json) {
 			return SurveyFormFactory.fromJsonObject(json);
 		}
+
+		function clearSelectedActivities() {
+      ContextService.clearSelectedActivities();
+    }
 	}
 }());
