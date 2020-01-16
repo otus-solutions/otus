@@ -9,7 +9,7 @@
     }).controller('otusDashboardPendencyCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.model.pendency.UserActivityPendencyFactory',
+    'otusjs.model.pendency.UserActivityPendency',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.application.state.ApplicationStateService',
@@ -27,22 +27,6 @@
     self.loadActivityPlayer = loadActivityPlayer;
     self.loadActivityViewer = loadActivityViewer;
     self.selectParticipant = selectParticipant;
-    const Mock = {};
-
-    let test = {
-      "_id": "5e06659bf9d5924d303db335",
-      "objectType": "userActivityPendency",
-      "creationDate": "2019-12-19T19:31:08.570Z",
-      "dueDate": "2020-12-19T19:31:08.570Z",
-      "requester": "flavia.avila@ufrgs.br",
-      "receiver": "ativ_created@otus.com",
-      "activityInfo": {
-        "id": "5b8569b7086a5e5ee91527dc",
-        "acronym": "DSOC",
-        "recruitmentNumber": 2000735,
-        //"id": "5bb22262e103cf07800f470c"
-      }
-    };
 
     function onInit() {
       self.participantManagerReady = false;
@@ -79,16 +63,6 @@
             pendency.activityInfo['lastStatus'] = _createStatus(pendency.activityInfo.lastStatusName);
 
             self.openedUserActivityPendencies.push({
-              creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
-              timePending: timePending,
-              activityInfo: pendency.activityInfo
-            });
-
-            self.openedUserActivityPendencies.push({
-              creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
-              timePending: timePending,
-              activityInfo: pendency.activityInfo
-            });self.openedUserActivityPendencies.push({
               creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
               timePending: timePending,
               activityInfo: pendency.activityInfo
@@ -166,15 +140,6 @@
         }));
       ParticipantActivityService.clearSelectedActivities();
     }
-
-    /* Public methods */
-
-    /*Build artifacts from MockDocument*/
-    Mock.userActivityPendencyFactory = UserActivityPendencyFactory;
-    Mock.UserActivityPendencyDocument = JSON.stringify(test);
-    Mock.userActivityPendency = Mock.userActivityPendencyFactory.fromJsonObject(Mock.UserActivityPendencyDocument);
-    console.log(Mock.userActivityPendency)
-    Mock._id = Mock.userActivityPendency.getID();
 
   }
 
