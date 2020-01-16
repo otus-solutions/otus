@@ -3,7 +3,9 @@ var browserSync = require('browser-sync').create();
 
 gulp.task('browser-sync', function() {
   var index = process.argv.indexOf("--api-url");
+  var indexPlayer = process.argv.indexOf("--player-url");
   var apiurl = process.argv[index + 1] || 'http://localhost:51002';
+  var apiPlayer = process.argv[indexPlayer + 1] || 'http://localhost:51002';
   browserSync.init({
     server: {
       open: 'external',
@@ -13,6 +15,7 @@ gulp.task('browser-sync', function() {
           res.setHeader('Access-Control-Allow-Origin', '*');
           res.setHeader('Access-Control-Allow-Headers', '*');
           res.setHeader('Set-Cookie',['Backend-Address='+apiurl+';path=/']);
+          res.setHeader('Set-Cookie',['Player-Address='+apiPlayer+';path=/']);
           next();
         }
       ]

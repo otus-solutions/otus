@@ -90,7 +90,7 @@
       _dbManager.otus.lokiDb.collections.forEach(function (collection) {
         collection.clear();
       });
-      // _dbManager.otus.lokiDb.deleteDatabase();
+      _dbManager.otus.lokiDb.deleteDatabase();
     }
 
     function addCollection(dbName, storage) {

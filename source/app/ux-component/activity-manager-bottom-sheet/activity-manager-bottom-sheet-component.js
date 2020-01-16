@@ -53,7 +53,7 @@
 
     function fillSelectedActivity() {
       ActivityPlayerService.load().then(function () {
-        ApplicationStateService.activateActivityPlayer();
+        ApplicationStateService.activateActivityPlayer();//todo aqui
       });
     }
 

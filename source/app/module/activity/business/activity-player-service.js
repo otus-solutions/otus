@@ -8,10 +8,11 @@
   Service.$inject = [
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.activity.core.ModuleService',
-    'otusjs.activity.core.ContextService'
+    'otusjs.activity.core.ContextService',
+    '$cookies'
   ];
 
-  function Service(ParticipantActivityService, ModuleService, ContextService) {
+  function Service(ParticipantActivityService, ModuleService, ContextService, $cookies) {
     var self = this;
 
     var activityToPlay = null;
@@ -22,36 +23,28 @@
     function load() {
       activityToPlay = null;
       var _activity = ContextService.getSelectedActivities()[0];
-      return ParticipantActivityService.getById(_activity).then(function (response) {
-        if (Array.isArray(response)) {
-          if (response.length > 0) {
-            activityToPlay = angular.copy(response[0]);
-          }
-        }
-
-        return ModuleService
-          .whenActivityFacadeServiceReady()
-          .then(function (ActivityFacadeService) {
-            _setActivityToPlay(ActivityFacadeService);
-          });
-
-      });
+      _runSurveyPlayer(_activity.getID());
     }
 
-    function _setActivityToPlay(ActivityFacadeService) {
-      ContextService.selectActivities([activityToPlay]);
-      ActivityFacadeService.useActivity(activityToPlay);
-      ActivityFacadeService.openSurveyActivity(ContextService.getLoggedUser());
-      ContextService.setActivityToPlay(activityToPlay);
-      _setupPlayer();
+
+    function _getUrlPreviewPlayer(id) {
+      var callback = location.href;
+      var token = sessionStorage.getItem("outk");
+      var url = $cookies.get('Player-Address');
+      if (_isValidUrl(url)){
+        return url.concat("?activity=").concat(id).concat('&').concat('token=').concat(token).concat('&').concat('callback=').concat(callback);
+      } else {
+        return url.concat('/').concat("?activity=").concat(id).concat('&').concat('token=').concat(token).concat('&').concat('callback=').concat(callback);
+      }
     }
 
-    function _setupPlayer() {
-      ModuleService
-        .whenActivityPlayerServiceReady()
-        .then(function (PlayerService) {
-          PlayerService.setup();
-        });
+    function _isValidUrl(url) {
+      const regex = new RegExp(/\/$/g);
+      return regex.test(url);
+    }
+
+    function _runSurveyPlayer(id) {
+      location.href = _getUrlPreviewPlayer(id);
     }
   }
 }());

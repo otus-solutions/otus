@@ -17,7 +17,6 @@
     var _activityDataSourceDefer = $q.defer();
     var _surveyDataSourceDefer = $q.defer();
     var _activityFacadeServiceDefer = $q.defer();
-    var _activityPlayerServiceDefer = $q.defer();
 
     self.RemoteStorage = {};
     self.DataSource = {};
@@ -29,14 +28,12 @@
     self.configureStorage = configureStorage;
     self.configureActivityDataSourceService = configureActivityDataSourceService;
     self.configureActivityFacadeService = configureActivityFacadeService;
-    self.configureActivityPlayerService = configureActivityPlayerService;
     self.configureUserDataSourceService = configureUserDataSourceService;
     self.addModel = addModel;
     self.getActivityRemoteStorage = getActivityRemoteStorage;
     self.setActivityRemoteStorage = setActivityRemoteStorage;
     self.whenActivityDataSourceServiceReady = whenActivityDataSourceServiceReady;
     self.whenActivityFacadeServiceReady = whenActivityFacadeServiceReady;
-    self.whenActivityPlayerServiceReady = whenActivityPlayerServiceReady;
     self.whenSurveyDataSourceServiceReady = whenSurveyDataSourceServiceReady;
 
     function configureContext(context) {
@@ -55,11 +52,6 @@
     function configureActivityFacadeService(facade) {
       self.Model.ActivityFacadeService = facade;
       _activityFacadeServiceDefer.resolve(self.Model.ActivityFacadeService);
-    }
-
-    function configureActivityPlayerService(service) {
-      self.Model.ActivityPlayerService = service;
-      _activityPlayerServiceDefer.resolve(self.Model.ActivityPlayerService);
     }
 
     function configureUserDataSourceService(dataSource) {
@@ -100,14 +92,6 @@
         _activityFacadeServiceDefer.resolve(self.Model.ActivityFacadeService);
       }
       return _activityFacadeServiceDefer.promise;
-    }
-
-    function whenActivityPlayerServiceReady() {
-      if (self.Model.ActivityPlayerService) {
-        _activityPlayerServiceDefer = $q.defer();
-        _activityPlayerServiceDefer.resolve(self.Model.ActivityPlayerService);
-      }
-      return _activityPlayerServiceDefer.promise;
     }
 
     function whenSurveyDataSourceServiceReady() {
