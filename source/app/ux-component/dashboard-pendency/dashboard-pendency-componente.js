@@ -57,13 +57,14 @@
 
       const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
-      console.log('window', window.width);
-
       UserActivityPendencyService.getAllUserActivityPendenciesToReceiver() // TODO change to getOpened
         .then(values => {
           self.openedUserActivityPendencies = [];
 
-          for(let pendency of values){
+          for(let item of values){
+            console.log(item)
+            let pendency = UserActivityPendencyFactory.fromJsonObject(item);
+            console.log(pendency)
             const creationDate = new Date(pendency.creationDate);
             creationDate.setHours(0,0,0,0);
             const today = new Date();
@@ -141,14 +142,14 @@
       }
     }
 
-    function loadActivities() {
-      selectParticipant(Mock.userActivityPendency.getActivityRecruitmentNumber());
+    function loadActivities(rn) {
+      selectParticipant(rn);
       ApplicationStateService.activateParticipantActivities()
     }
 
-    function loadActivityPlayer() {
-      selectParticipant(Mock.userActivityPendency.getActivityRecruitmentNumber());
-      ParticipantActivityService.getActivity(Mock.userActivityPendency.getActivityID(), Mock.userActivityPendency.getActivityRecruitmentNumber())
+    function loadActivityPlayer(rn, activityId) {
+      selectParticipant(rn);
+      ParticipantActivityService.getActivity(activityId, rn)
         .then(onActivity => ParticipantActivityService.selectActivities(onActivity))
         .then(() => ActivityPlayerService.load().then(function () {
           ApplicationStateService.activateActivityPlayer()
@@ -156,9 +157,9 @@
       ParticipantActivityService.clearSelectedActivities();
     }
 
-    function loadActivityViewer() {
-      selectParticipant(Mock.userActivityPendency.getActivityRecruitmentNumber());
-      ParticipantActivityService.getActivity(Mock.userActivityPendency.getActivityID(), Mock.userActivityPendency.getActivityRecruitmentNumber())
+    function loadActivityViewer(rn, activityId) {
+      selectParticipant(rn);
+      ParticipantActivityService.getActivity(activityId, rn)
         .then(onActivity => ParticipantActivityService.selectActivities(onActivity))
         .then(() => ActivityViewService.load().then(function () {
           ApplicationStateService.activateActivityViewer()
