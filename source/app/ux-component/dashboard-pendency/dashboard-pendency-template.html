@@ -1,40 +1,110 @@
-<md-toolbar layout="column" class="md-hue-2">
-  <div class="md-toolbar-tools">
-    <span>Pendências</span>
-  </div>
-</md-toolbar>
+,<style>
+  .full-list-items{
+    min-width: 90vw;
+  }
 
-<md-content class="scrollbar scrollbar-default" flex>
-  <md-button ng-click="$ctrl.loadActivities()" ng-disabled="!$ctrl.participantManagerReady">selectActivity</md-button>
-  <md-button ng-click="$ctrl.loadActivityPlayer()" ng-disabled="!$ctrl.participantManagerReady">selectActivityPlayer</md-button>
-  <md-button ng-click="$ctrl.loadActivityViewer()" ng-disabled="!$ctrl.participantManagerReady">selectActivityViewer</md-button>
+  .no-shadow {
+    transition: none !important;
+    box-shadow: none !important;
+  }
+</style>
 
-  <md-divider></md-divider>
-  <md-list >
-    <md-list-item class="md-3-line" ng-repeat="item in $ctrl.openedUserActivityPendencies" ng-click="null">
-      <div layout="column">
-        <div class="md-list-item-text" layout="row">
-          <span class="md-caption" ng-style="{color:'#797985'}"><small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }} - {{ item.activityInfo.name }}</small></span>
-          <div>
-            <md-icon ng-style="{color: '#00897b'}" md-font-library="material-icons" layout-align="end end">{{item.activityInfo.lastStatus.icon}}</md-icon>
+<md-card layout="column" class="full-list-items">
+  <md-card-content>
+
+    <md-card-header flex layout-align="start center" class="md-primary header-home-options">
+      <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">warning</md-icon>
+      <md-card-header-text>
+        <span class="md-header" layout-padding>PENDÊNCIAS DE ATIVIDADE
+          <span ng-style="{color: '#f77a7a'}" > ({{ $ctrl.openedUserActivityPendencies.length }})</span>
+        </span>
+      </md-card-header-text>
+    </md-card-header>
+
+    <md-grid-list md-cols="4"  md-cols-md="3" md-cols-sm="2" md-cols-xs="1"
+                  md-row-height-xl="1:0.5" >
+    <md-grid-tile class="md-whiteframe-1dp" ng-repeat="item in $ctrl.openedUserActivityPendencies">
+      <div layout="column" layout-xs="column" layout-sm="column" layout-md="column">
+
+        <div layout="row">
+          <md-icon ng-style="{color: '#00897b'}" md-font-library="material-icons" layout-align="end end">{{item.activityInfo.lastStatus.icon}}
             <md-tooltip md-direction="top">
               {{item.activityInfo.lastStatus.tooltip}}
             </md-tooltip>
-          </div>
+          </md-icon>
+          <span class="md-caption" ng-style="{color:'#797985'}">
+                <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }} - {{ item.activityInfo.name }}</small></span>
         </div>
-        <div class="md-list-item-text" layout="column">
-          <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento:
-            <small class="md-body-2"  ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small>
-          </span>
+
+        <div class="md-list-item-text" layout="column" layout-xs="column" layout-sm="column" layout-md="column">
+              <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento:
+                <small class="md-body-2"  ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small>
+              </span>
           <span class="md-caption" ng-style="{color:'#797985'}">Pendente desde:
-            <small class="md-body-2" ng-style="{color:'black'}">{{ item.creationDate }} ({{ item.timePending }})</small>
-          </span>
+                <small class="md-body-2" ng-style="{color:'black'}">{{ item.creationDate }} ({{ item.timePending }})</small>
+              </span>
         </div>
+
+        <div name="action-buttons" layout="row" layout-align="start center">
+          <md-button ng-click="$ctrl.loadActivities()" ng-disabled="!$ctrl.participantManagerReady">
+            <md-icon ng-style="{color: 'blue'}" md-font-library="material-icons" layout-align="end end">cached
+              <md-tooltip md-direction="top">
+                Faz algo
+              </md-tooltip>
+            </md-icon>
+          </md-button>
+
+          <md-button ng-click="$ctrl.loadActivities()" ng-disabled="!$ctrl.participantManagerReady">
+            <md-icon ng-style="{color: 'blue'}" md-font-library="material-icons" layout-align="end end">help
+              <md-tooltip md-direction="top">
+                Faz algo
+              </md-tooltip>
+            </md-icon>
+          </md-button>
+
+          <md-button ng-click="$ctrl.loadActivities()" ng-disabled="!$ctrl.participantManagerReady">
+            <md-icon ng-style="{color: 'blue'}" md-font-library="material-icons" layout-align="end end">explore
+              <md-tooltip md-direction="top">
+                Faz algo
+              </md-tooltip>
+            </md-icon>
+          </md-button>
+        </div>
+
+
       </div>
-      <md-divider></md-divider>
-    </md-list-item>
-  </md-list>
+    </md-grid-tile>
+    </md-grid-list>
 
-  <md-divider></md-divider>
-</md-content>
+<!--      <md-list >-->
+<!--        <md-list-item class="md-3-line" ng-repeat="item in $ctrl.openedUserActivityPendencies" ng-click="null">-->
+<!--          <div layout="column" layout-xs="column" layout-sm="column" layout-md="column">-->
+<!--            -->
+<!--            <div class="md-list-item-text" layout="row">-->
+<!--              <div name="activity-status">-->
+<!--                <md-icon ng-style="{color: '#00897b'}" md-font-library="material-icons" layout-align="end end">{{item.activityInfo.lastStatus.icon}}</md-icon>-->
+<!--                <md-tooltip md-direction="top">-->
+<!--                  {{item.activityInfo.lastStatus.tooltip}}-->
+<!--                </md-tooltip>-->
 
+<!--                <span class="md-caption" ng-style="{color:'#797985'}">-->
+<!--                  <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }} - {{ item.activityInfo.name }}</small></span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="md-list-item-text" layout="column" layout-xs="column" layout-sm="column" layout-md="column">-->
+<!--              <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento:-->
+<!--                <small class="md-body-2"  ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small>-->
+<!--              </span>-->
+<!--              <span class="md-caption" ng-style="{color:'#797985'}">Pendente desde:-->
+<!--                <small class="md-body-2" ng-style="{color:'black'}">{{ item.creationDate }} ({{ item.timePending }})</small>-->
+<!--              </span>-->
+<!--            </div>-->
+
+<!--          </div>-->
+<!--          <md-divider></md-divider>-->
+<!--        </md-list-item>-->
+<!--      </md-list>-->
+
+<!--    <md-divider></md-divider>-->
+  </md-card-content>
+</md-card>
