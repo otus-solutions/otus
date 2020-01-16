@@ -26,7 +26,7 @@
     var artefacts = {};
 
     self.$onInit = onInit();
-    self.loadActivity = loadActivity;
+    self.loadActivities = loadActivities;
     self.loadActivityPlayer = loadActivityPlayer;
     self.selectParticipant = selectParticipant;
     const Mock = {};
@@ -39,10 +39,10 @@
       "requester": "flavia.avila@ufrgs.br",
       "receiver": "ativ_created@otus.com",
       "activityInfo": {
-        //"id": "5b8569b7086a5e5ee91527dc",
+        "id": "5b8569b7086a5e5ee91527dc",
         "acronym": "DSOC",
         "recruitmentNumber": 2000735,
-        "id": "5bb22262e103cf07800f470c"
+        //"id": "5bb22262e103cf07800f470c"
       }
     };
 
@@ -143,7 +143,7 @@
       }
     }
 
-    function loadActivity() {
+    function loadActivities() {
       selectParticipant(Mock.userActivityPendency.getActivityRecruitmentNumber());
       ApplicationStateService.activateParticipantActivities()
     }
@@ -151,23 +151,18 @@
     function loadActivityPlayer() {
       selectParticipant(Mock.userActivityPendency.getActivityRecruitmentNumber());
       //todo inicializar player
-      _loadActivities();
-      ActivityPlayerService.load().then(function () {
-        ApplicationStateService.activateActivityPlayer()
-      })
+      // _loadActivity()
+      ParticipantActivityService.getActivity(Mock.userActivityPendency.getActivityID(), Mock.userActivityPendency.getActivityRecruitmentNumber())
+        .then(onActivity => ParticipantActivityService.selectActivities(onActivity))
+        .then(() => ActivityPlayerService.load().then(function () {
+          ApplicationStateService.activateActivityPlayer()
+        }))
     }
 
-    function _loadActivities() {
-      let activityInfo = Mock.userActivityPendency.activityInfo;
-      activityInfo.participantData = {
-        recruitmentNumber: Mock.userActivityPendency.getActivityRecruitmentNumber()
-      }
-
+    function _loadActivity() {
       //todo buscar pelo backend uma atividade
-      console.log(activityInfo)
-      var x = ParticipantActivityService.getActivity(Mock.userActivityPendency.getActivityID(), Mock.userActivityPendency.getActivityRecruitmentNumber())
-        .then(onlineActivity => ParticipantActivityService.selectActivities(onlineActivity));
-      console.log(x)
+      //ParticipantActivityService.getActivity(Mock.userActivityPendency.getActivityID(), Mock.userActivityPendency.getActivityRecruitmentNumber())
+      // .then(onActivity => ParticipantActivityService.selectActivities(onActivity));
 
       /*ParticipantActivityService
         .listAll()
