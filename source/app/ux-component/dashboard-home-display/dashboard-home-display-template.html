@@ -12,9 +12,9 @@
     max-height: 70px !important;
   }
 
-  /*.content-card-home {*/
-  /*  min-height: 40px !important;*/
-  /*}*/
+  .full-width{
+    min-width: 90vw;
+  }
 </style>
 <md-content flex>
 <div layout="row" layout-xs="column"  layout-sm="column" layout-align="end start" flex>
@@ -24,7 +24,7 @@
       <div layout="column" layout-padding layout-align="center center">
 <!--        <span layout="row" class="md-display-2">Olá {{ $ctrl.loggedUser.name }}!</span>-->
 <!--        <span layout="row" class="md-headline">Utilize as opções a seguir para navegar no sistema.</span>-->
-        <otus-participant-search on-select="$ctrl.selectParticipant(participant)" show-all-participants="$ctrl.managerParticipantsDashboard()"
+        <otus-participant-search class="full-width" on-select="$ctrl.selectParticipant(participant)" show-all-participants="$ctrl.managerParticipantsDashboard()"
                                  show-all-participants-button="true" ng-disabled="!$ctrl.participantsReady" layout-fill on-ready="$ctrl.participantsReady">
         </otus-participant-search>
         <div ng-if="!$ctrl.showAllParticipantsButtoninsideSearch">
