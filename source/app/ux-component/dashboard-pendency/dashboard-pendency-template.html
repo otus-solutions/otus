@@ -3,6 +3,14 @@
     min-width: 90vw;
   }
 
+  .header-list {
+    background-color: #f77a7a;
+    font-weight: bold;
+    color: #FFFFFF !important;
+    min-height: 70px !important;
+    max-height: 70px !important;
+  }
+
   .no-shadow {
     transition: none !important;
     box-shadow: none !important;
@@ -12,11 +20,11 @@
 <md-card layout="column" class="full-list-items">
   <md-card-content>
 
-    <md-card-header flex layout-align="start center" class="md-primary header-home-options">
+    <md-card-header flex layout-align="start center" class="md-primary header-list" ng-style="{color: '#f77a7a'}">
       <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">warning</md-icon>
       <md-card-header-text>
         <span class="md-header" layout-padding>PENDÊNCIAS DE ATIVIDADE
-          <span ng-style="{color: '#f77a7a'}" > ({{ $ctrl.openedUserActivityPendencies.length }})</span>
+          <span ng-style="{color: 'red'}" > ({{ $ctrl.openedUserActivityPendencies.length }})</span>
         </span>
       </md-card-header-text>
     </md-card-header>
