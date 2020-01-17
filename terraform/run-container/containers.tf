@@ -10,6 +10,10 @@ variable "otus-frontend-apiurl"{
   default = "http://localhost:51002"
 }
 
+variable "otus-frontend-playerurl"{
+  default = "http://localhost:51002"
+}
+
 variable "otus-frontend-version"{
   default = "otus-frontend:latest"
 }
@@ -17,7 +21,10 @@ variable "otus-frontend-version"{
 resource "docker_container" "otus-frontend" {
   name = "otus-frontend"
   image = "${var.otus-frontend-version}"
-  env = ["API_URL=${var.otus-frontend-apiurl}"]
+  env = [
+    "API_URL=${var.otus-frontend-apiurl}",
+    "PLAYER_URL=${var.otus-frontend-playerurl}"
+  ]
   ports {
 	internal = 80
 	external = "${var.otus-frontend-port}"
