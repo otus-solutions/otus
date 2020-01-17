@@ -73,7 +73,7 @@
           </div>
 
           <div name="action-buttons" layout="row" layout-align="start center">
-            <md-button ng-click="$ctrl.loadActivities()" ng-disabled="!$ctrl.participantManagerReady">
+            <md-button ng-click="$ctrl.loadActivities(item.activityInfo.recruitmentNumber)" ng-disabled="!$ctrl.participantManagerReady">
               <md-icon ng-style="{color: 'blue'}" md-font-library="material-icons" layout-align="end end">cached
                 <md-tooltip md-direction="top">
                   Faz algo
@@ -81,7 +81,7 @@
               </md-icon>
             </md-button>
 
-            <md-button ng-click="$ctrl.loadActivities()" ng-disabled="!$ctrl.participantManagerReady">
+            <md-button ng-click="$ctrl.loadActivityPlayer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
               <md-icon ng-style="{color: 'blue'}" md-font-library="material-icons" layout-align="end end">help
                 <md-tooltip md-direction="top">
                   Faz algo
@@ -89,7 +89,7 @@
               </md-icon>
             </md-button>
 
-            <md-button ng-click="$ctrl.loadActivities()" ng-disabled="!$ctrl.participantManagerReady">
+            <md-button ng-click="$ctrl.loadActivityViewer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
               <md-icon ng-style="{color: 'blue'}" md-font-library="material-icons" layout-align="end end">explore
                 <md-tooltip md-direction="top">
                   Faz algo
