@@ -130,7 +130,6 @@
     }
 
 		function selectActivities(activities) {
-		   console.log(activities)
 			ContextService.selectActivities(activities);
 		}
 

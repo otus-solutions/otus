@@ -107,7 +107,6 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      console.log(ActivityId, rn)
 
       var request = $q.defer();
       _rest.getById({rn : rn, id: ActivityId})

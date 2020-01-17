@@ -118,9 +118,11 @@
     }
 
     function getParticipant(rn) {
-      return participantList.find(element => element.recruitmentNumber == rn); //todo
-      // console.log(participantList.find(element => element == rn));
-      //if undefined throw error
+      let participant = participantList.find(element => element.recruitmentNumber == rn);
+      if (!participant) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return participant
     }
   }
 }());

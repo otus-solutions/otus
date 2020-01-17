@@ -9,6 +9,8 @@
     }).controller('otusDashboardPendencyCtrl', Controller);
 
   Controller.$inject = [
+    '$q',
+    '$mdToast',
     'otusjs.model.pendency.UserActivityPendencyFactory',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.activity.business.ParticipantActivityService',
@@ -18,9 +20,11 @@
     'otusjs.pendency.business.UserActivityPendencyService'
   ];
 
-  function Controller(UserActivityPendencyFactory, ParticipantManagerService, ParticipantActivityService,
+  function Controller($q, $mdToast, UserActivityPendencyFactory, ParticipantManagerService, ParticipantActivityService,
                       ApplicationStateService, ActivityPlayerService, ActivityViewService, UserActivityPendencyService) {
     var self = this;
+
+    self.messageError = '';
 
     self.$onInit = onInit();
     self.loadActivities = loadActivities;
@@ -66,6 +70,7 @@
             self.openedUserActivityPendencies.push({
               creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
               timePending: timePending,
+              activityId: pendency.activityId,
               activityInfo: pendency.activityInfo
             });
           }
@@ -112,37 +117,49 @@
     }
 
     function selectParticipant(rn) {
-      try {
-        let participant = ParticipantManagerService.getParticipant(rn);
+      var deferred = $q.defer();
+      let participant = ParticipantManagerService.getParticipant(rn);
+      if(participant){
         ParticipantManagerService.selectParticipant(participant);
-      } catch (e) {
-        //toast
+        deferred.resolve();
+      } else {
+        self.messageError = 'Error ao processar a busca do participante. Tente novamente.';
+        let position = angular.extend({}, {bottom: true, top: false, left: false, right: true});
+        $mdToast.show(
+          $mdToast.simple()
+            //.position(position)
+            .textContent(self.messageError)
+            .hideDelay(3000)
+        );
+        deferred.reject();
       }
+
+      return deferred.promise;
     }
 
     function loadActivities(rn) {
-      selectParticipant(rn);
-      ApplicationStateService.activateParticipantActivities()
+      selectParticipant(rn).then(() => ApplicationStateService.activateParticipantActivities());
     }
 
     function loadActivityPlayer(rn, activityId) {
-      selectParticipant(rn);
+      selectParticipant(rn).then(() => {
       ParticipantActivityService.getActivity(activityId, rn)
         .then(onActivity => ParticipantActivityService.selectActivities(onActivity))
         .then(() => ActivityPlayerService.load().then(function () {
           ApplicationStateService.activateActivityPlayer()
         }));
-      ParticipantActivityService.clearSelectedActivities();
+      ParticipantActivityService.clearSelectedActivities()});
     }
 
     function loadActivityViewer(rn, activityId) {
-      selectParticipant(rn);
-      ParticipantActivityService.getActivity(activityId, rn)
-        .then(onActivity => ParticipantActivityService.selectActivities(onActivity))
-        .then(() => ActivityViewService.load().then(function () {
-          ApplicationStateService.activateActivityViewer()
-        }));
-      ParticipantActivityService.clearSelectedActivities();
+      selectParticipant(rn).then(() => {
+        ParticipantActivityService.getActivity(activityId, rn)
+          .then(onActivity => ParticipantActivityService.selectActivities(onActivity))
+          .then(() => ActivityViewService.load().then(function () {
+            ApplicationStateService.activateActivityViewer()
+          }));
+        ParticipantActivityService.clearSelectedActivities();
+      })
     }
 
   }
