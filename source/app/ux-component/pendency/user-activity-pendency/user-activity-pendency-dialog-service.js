@@ -133,9 +133,11 @@
 
       function _buildUserActivityPendency() {
         return userActivityPendencyFactory.create(
+          undefined,
           angular.copy(self.selectedItem.checker.email),
+          undefined,
           angular.copy(self.date),
-          angular.copy(self.selectedActivity)
+          angular.copy(self.selectedActivity.getID())
         )
       }
 

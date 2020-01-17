@@ -9,7 +9,7 @@
     }).controller('otusDashboardPendencyCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.model.pendency.UserActivityPendency',
+    'otusjs.model.pendency.UserActivityPendencyFactory',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.application.state.ApplicationStateService',
@@ -48,7 +48,6 @@
           self.openedUserActivityPendencies = [];
 
           for(let item of values){
-            console.log(item)
             let pendency = UserActivityPendencyFactory.fromJsonObject(item);
             console.log(pendency)
             const creationDate = new Date(pendency.creationDate);
