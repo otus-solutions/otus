@@ -21,8 +21,6 @@
     self.laboratoryChecking;
     self.userAccessToLaboratory;
 
-    self.menuLaboratotyIsOpen = false;
-
     /* Lifecycle hooks */
     self.$onInit = onInit;
     /* Public methods */
@@ -42,8 +40,6 @@
       _fetchPermissions();
       _onResize();
       window.addEventListener("resize",_onResize);
-
-      self.menuLaboratotyIsOpen = false;
     }
 
     function _onResize() {
