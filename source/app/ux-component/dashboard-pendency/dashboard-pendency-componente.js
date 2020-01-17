@@ -118,22 +118,22 @@
 
     function selectParticipant(rn) {
       var deferred = $q.defer();
-      let participant = ParticipantManagerService.getParticipant(rn);
-      if(participant){
+      rn = 4444
+      try {
+        let participant = ParticipantManagerService.getParticipant(rn);
         ParticipantManagerService.selectParticipant(participant);
         deferred.resolve();
-      } else {
+      } catch (e) {
+        console.error(e);
         self.messageError = 'Error ao processar a busca do participante. Tente novamente.';
-        let position = angular.extend({}, {bottom: true, top: false, left: false, right: true});
         $mdToast.show(
           $mdToast.simple()
-            //.position(position)
+            .position('bottom right')
             .textContent(self.messageError)
             .hideDelay(3000)
         );
         deferred.reject();
       }
-
       return deferred.promise;
     }
 
@@ -143,12 +143,12 @@
 
     function loadActivityPlayer(rn, activityId) {
       selectParticipant(rn).then(() => {
-      ParticipantActivityService.getActivity(activityId, rn)
-        .then(onActivity => ParticipantActivityService.selectActivities(onActivity))
-        .then(() => ActivityPlayerService.load().then(function () {
-          ApplicationStateService.activateActivityPlayer()
-        }));
-      ParticipantActivityService.clearSelectedActivities()});
+        ParticipantActivityService.getActivity(activityId, rn)
+          .then(onActivity => ParticipantActivityService.selectActivities(onActivity))
+          .then(() => ActivityPlayerService.load().then(function () {
+            ApplicationStateService.activateActivityPlayer()
+          }));
+        ParticipantActivityService.clearSelectedActivities()});
     }
 
     function loadActivityViewer(rn, activityId) {
