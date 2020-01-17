@@ -119,10 +119,11 @@
 
     function getParticipant(rn) {
       let participant = participantList.find(element => element.recruitmentNumber == rn);
-      if (!participant) {
-        throw new Error('REST resource is not initialized.');
+      if (participant) {
+        return participant;
+      } else {
+        throw new Error('ParticipantList is not initialized.');
       }
-      return participant
     }
   }
 }());
