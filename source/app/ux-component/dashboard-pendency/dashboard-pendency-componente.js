@@ -27,6 +27,8 @@
     self.loadActivityPlayer = loadActivityPlayer;
     self.loadActivityViewer = loadActivityViewer;
     self.selectParticipant = selectParticipant;
+    self.openedUserActivityPendencies = [];
+    self.existOpenedUserActivityPendencies = false;
 
     function onInit() {
       self.participantManagerReady = false;
@@ -69,11 +71,14 @@
             });
           }
 
+          self.existOpenedUserActivityPendencies = (self.openedUserActivityPendencies.length > 0);
+
           console.log('self.openedUserActivityPendencies'); console.log(self.openedUserActivityPendencies);
 
         })
         .catch(() => {
           self.openedUserActivityPendencies = [];
+          self.existOpenedUserActivityPendencies = false;
         });
     }
 

@@ -4,7 +4,7 @@
   }
 
   .header-list {
-    background-color: #f77a7a;
+    background-color: #009588;
     font-weight: bold;
     color: #FFFFFF !important;
     min-height: 70px !important;
@@ -15,23 +15,41 @@
     transition: none !important;
     box-shadow: none !important;
   }
+
+  .warning-card {
+    background-color: #ff0000;
+    /*box-shadow: rgba(0, 0, 0, 0.3) 2px 2px 2px ;*/
+    -moz-transform: rotate(30deg);
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ffffff;
+  }
+
 </style>
 
 <md-card layout="column" class="full-list-items">
   <md-card-content>
-
     <md-card-header flex layout-align="start center" class="md-primary header-list" ng-style="{color: '#f77a7a'}">
-      <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">warning</md-icon>
       <md-card-header-text>
-        <span class="md-header" layout-padding>PENDÊNCIAS DE ATIVIDADE
-          <span ng-style="{color: 'red'}" > ({{ $ctrl.openedUserActivityPendencies.length }})</span>
-        </span>
+        <span class="md-header" layout-padding>PENDÊNCIAS DE ATIVIDADE</span>
       </md-card-header-text>
+      <md-card layout="row" layout-margin ng-hide="!$ctrl.existOpenedUserActivityPendencies"
+               class="warning-card" ng-style="{'background-color': '#ff0000'}">
+        <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;" ng-style="{color: 'yellow'}">warning</md-icon>
+        <span ng-style="{color: 'yellow'}" > {{ $ctrl.openedUserActivityPendencies.length }}</span>
+      </md-card>
     </md-card-header>
 
-    <md-grid-list md-cols="4"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="8" md-cols-lg="5" md-cols-gt-md="6" md-row-height-gt-md="1:0.5" md-row-height-sm="1:0.5" md-row-height-md="1:0.5"  md-row-height-lg="1:0.5"
+    <div ng-hide="$ctrl.existOpenedUserActivityPendencies" >
+      Você não possui pendências de atividade.
+    </div>
+
+    <md-grid-list md-cols="4"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="8" md-cols-lg="5" md-cols-gt-md="6"
+                  md-row-height-gt-md="1:0.5" md-row-height-sm="1:0.5" md-row-height-md="1:0.5"  md-row-height-lg="1:0.5"
                   md-row-height="1:0.5"  md-row-height-xs="1:0.5" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-sm="6px" md-row-height-xl="1:0.5" >
-      <md-grid-tile class="md-whiteframe-1dp" ng-repeat="item in $ctrl.openedUserActivityPendencies">
+
+      <md-grid-tile ng-hide="!$ctrl.existOpenedUserActivityPendencies"
+                    class="md-whiteframe-1dp" ng-repeat="item in $ctrl.openedUserActivityPendencies">
         <div layout="column" layout-xs="column" layout-sm="column" layout-md="column">
 
           <div layout="row">
@@ -45,12 +63,17 @@
           </div>
 
           <div class="md-list-item-text" layout="column" layout-xs="column" layout-sm="column" layout-md="column">
-              <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento:
-                <small class="md-body-2"  ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small>
-              </span>
             <span class="md-caption" ng-style="{color:'#797985'}">Pendente desde:
                 <small class="md-body-2" ng-style="{color:'black'}">{{ item.creationDate }} ({{ item.timePending }})</small>
               </span>
+              <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento:
+                <small class="md-body-2"  ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small>
+              </span>
+            <div ng-show="(item.activityInfo.externalID.length>0)">
+              <span class="md-caption" ng-style="{color:'#797985'}">ID externo:
+                <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.externalID }}</small>
+              </span>
+            </div>
           </div>
 
           <div name="action-buttons" layout="row" layout-align="start center">
