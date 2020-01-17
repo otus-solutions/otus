@@ -557,4 +557,9 @@ otus-dashboard-pendency  .scrollbar-default::-webkit-scrollbar-thumb {
   background-color: #2BBBAD;
 }
 
+.no-shadow {
+  transition: none !important;
+  box-shadow: none !important;
+}
+
 /*# sourceMappingURL=components-style.css.map */

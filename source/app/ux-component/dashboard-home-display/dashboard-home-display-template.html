@@ -43,20 +43,45 @@
 
 <!--    Laboratory buttons-->
     <div layout="column" layout-align="center center" layout-fill layout-padding flex layout-wrap>
-      <div layout="column" ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" flex-xs  >
+      <div layout="column" ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"  >
 
         <div layout="row" layout-align="center center">
 <!--          <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">colorize</md-icon>-->
           <span class="md-header" layout-padding ><h2>LABORATÓRIO</h2></span>
         </div>
 
+
+        <div class="lock-size" layout="row" layout-align="center center">
+          <md-fab-speed-dial md-open="$ctrl.menuLaboratotyIsOpen" md-direction="down">
+            <md-fab-trigger>
+              <md-button aria-label="menu" class="md-fab">
+                <md-icon>menu</md-icon>
+              </md-button>
+            </md-fab-trigger>
+
+            <md-fab-actions>
+              <md-button aria-label="Twitter" class="md-fab md-raised md-mini">
+                <md-icon >local_shipping</md-icon>
+              </md-button>
+              <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
+                <md-icon>event_note</md-icon>
+              </md-button>
+              <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
+                <md-icon >event_available</md-icon>
+              </md-button>
+            </md-fab-actions>
+          </md-fab-speed-dial>
+        </div>
+
+
         <div layout="row" layout-xs="column" layout-sm="column" layout-md="column">
           <md-card layout-fill ng-init="showLaboratory=true" class="card-button">
             <md-card-content layout="column" layout-align="start start" flex>
               <md-button ng-click="$ctrl.sampleTransportDashboard()" class="md-body-1 option " layout-margin=""
-                         layout-align="center">
+                         layout-align="center" >
                 <md-icon layout-margin>local_shipping</md-icon>
-                Transporte de amostra
+                <span style="font-size:12px;">Transporte de amostra</span>
+
               </md-button>
             </md-card-content>
           </md-card>
@@ -80,6 +105,8 @@
           </md-card>
         </div>
       </div>
+
+      <md-divider class="full-width"></md-divider>
 
 <!--      Monitoring buttons-->
       <div flex-xs layout="column">

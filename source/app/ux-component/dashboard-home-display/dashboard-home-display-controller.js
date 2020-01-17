@@ -21,6 +21,8 @@
     self.laboratoryChecking;
     self.userAccessToLaboratory;
 
+    self.menuLaboratotyIsOpen = false;
+
     /* Lifecycle hooks */
     self.$onInit = onInit;
     /* Public methods */
