@@ -42,6 +42,8 @@
       _fetchPermissions();
       _onResize();
       window.addEventListener("resize",_onResize);
+
+      self.menuLaboratotyIsOpen = false;
     }
 
     function _onResize() {

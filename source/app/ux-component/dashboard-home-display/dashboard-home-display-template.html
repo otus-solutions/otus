@@ -42,6 +42,30 @@
     </div>
 
 <!--    Laboratory buttons-->
+
+    <div layout="row" layout-align="center center">
+      <md-fab-speed-dial md-open="$ctrl.menuLaboratotyIsOpen" md-direction="down" ng-class="'md-fling'">
+        <md-fab-trigger>
+          <md-button class="md-accent md-raised md-button" style="min-width: 80vw">
+            <md-icon>menu</md-icon>LABORATÓRIO
+          </md-button>
+        </md-fab-trigger>
+
+        <md-fab-actions>
+          <md-button class="md-body-1 option ">
+            <md-icon>local_shipping</md-icon> Transporte de amostra
+          </md-button>
+          <md-button class="md-body-1 option ">
+            <md-icon>event_note</md-icon> Lotes de exames
+          </md-button>
+          <md-button class="md-body-1 option ">
+            <md-icon>event_available</md-icon> Envios de exames
+          </md-button>
+        </md-fab-actions>
+      </md-fab-speed-dial>
+    </div>
+
+
     <div layout="column" layout-align="center center" layout-fill layout-padding flex layout-wrap>
       <div layout="column" ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"  >
 
@@ -49,30 +73,6 @@
 <!--          <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">colorize</md-icon>-->
           <span class="md-header" layout-padding ><h2>LABORATÓRIO</h2></span>
         </div>
-
-
-        <div class="lock-size" layout="row" layout-align="center center">
-          <md-fab-speed-dial md-open="$ctrl.menuLaboratotyIsOpen" md-direction="down">
-            <md-fab-trigger>
-              <md-button aria-label="menu" class="md-fab">
-                <md-icon>menu</md-icon>
-              </md-button>
-            </md-fab-trigger>
-
-            <md-fab-actions>
-              <md-button aria-label="Twitter" class="md-fab md-raised md-mini">
-                <md-icon >local_shipping</md-icon>
-              </md-button>
-              <md-button aria-label="Facebook" class="md-fab md-raised md-mini">
-                <md-icon>event_note</md-icon>
-              </md-button>
-              <md-button aria-label="Google Hangout" class="md-fab md-raised md-mini">
-                <md-icon >event_available</md-icon>
-              </md-button>
-            </md-fab-actions>
-          </md-fab-speed-dial>
-        </div>
-
 
         <div layout="row" layout-xs="column" layout-sm="column" layout-md="column">
           <md-card layout-fill ng-init="showLaboratory=true" class="card-button">
