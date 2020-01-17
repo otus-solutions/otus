@@ -9,10 +9,12 @@
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.activity.core.ModuleService',
     'otusjs.activity.core.ContextService',
-    '$cookies'
+    'otusjs.application.session.core.ContextService',
+    '$cookies',
+    '$window'
   ];
 
-  function Service(ParticipantActivityService, ModuleService, ContextService, $cookies) {
+  function Service(ParticipantActivityService, ModuleService, ContextService, ContextUserService, $cookies, $window) {
     var self = this;
 
     var activityToPlay = null;
@@ -29,7 +31,7 @@
 
     function _getUrlPreviewPlayer(id) {
       var callback = location.href;
-      var token = sessionStorage.getItem("outk");
+      var token = ContextUserService.getToken();
       var url = $cookies.get('Player-Address');
       if (_isValidUrl(url)){
         return url.concat("?activity=").concat(id).concat('&').concat('token=').concat(token).concat('&').concat('callback=').concat(callback);
@@ -44,7 +46,7 @@
     }
 
     function _runSurveyPlayer(id) {
-      location.href = _getUrlPreviewPlayer(id);
+      $window.location.href = _getUrlPreviewPlayer(id);
     }
   }
 }());

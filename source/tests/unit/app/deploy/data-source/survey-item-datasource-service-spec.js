@@ -26,16 +26,11 @@ describe('SurveyItemDatasourceService', function () {
 
   it('serviceMethodsExistence check', function () {
     expect(service.up).toBeDefined();
-    expect(service.setupDatasources).toBeDefined();
   });
 
   it('upMethod should initialize the rest service', function () {
     expect(service.up()).toBePromise();
     expect(Injections.SurveyItemRestService.initialize).toHaveBeenCalledTimes(1);
-  });
-
-  it('setupDatasourcesMethod should return promise', function () {
-    expect(service.setupDatasources(Mock.dsDefsArray)).toBePromise();
   });
 
   function mock() {

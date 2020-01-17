@@ -21,6 +21,7 @@
 
     var SESSION_CONTEXT = 'session_context';
     var LOGGED_USER = 'loggedUser';
+    var USER_TOKEN = 'outk';
 
     //--------------------------------------------------------------------------------------------
     // Data from other contexts
@@ -45,7 +46,7 @@
     self.getToken = getToken;
 
     function begin(sessionData) {
-      $window.sessionStorage.setItem('outk', sessionData.token);
+      $window.sessionStorage.setItem(USER_TOKEN, sessionData.token);
 
       loggedUserPromise = $q.defer();
       loggedUserPromise.resolve(sessionData);
@@ -64,7 +65,7 @@
 
     function end() {
       _storage.removeItem(SESSION_CONTEXT);
-      $window.sessionStorage.removeItem('outk');
+      $window.sessionStorage.removeItem(USER_TOKEN);
     }
 
     function isValid() {
@@ -141,7 +142,7 @@
     // Custom context methods
     //--------------------------------------------------------------------------------------------
     function getToken() {
-      return null;
+      return $window.sessionStorage.getItem(USER_TOKEN);
     }
   }
 }());

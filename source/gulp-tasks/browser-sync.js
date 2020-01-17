@@ -14,8 +14,7 @@ gulp.task('browser-sync', function() {
         function(req, res, next) {
           res.setHeader('Access-Control-Allow-Origin', '*');
           res.setHeader('Access-Control-Allow-Headers', '*');
-          res.setHeader('Set-Cookie',['Backend-Address='+apiurl+';path=/']);
-          res.setHeader('Set-Cookie',['Player-Address='+apiPlayer+';path=/']);
+          res.setHeader('Set-Cookie',['Backend-Address='+apiurl+';path=/', 'Player-Address='+apiPlayer+';path=/']);
           next();
         }
       ]
