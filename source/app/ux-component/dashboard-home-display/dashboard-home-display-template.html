@@ -40,40 +40,35 @@
     </div>
 
 <!--    Laboratory buttons-->
-    <div hide-xs layout="column" layout-align="center center" layout-fill layout-padding flex layout-wrap>
+    <div hide-xs layout="column" layout-align="center center">
       <div layout="column" ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"  >
 
         <div layout="row" layout-align="center center">
-<!--          <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">colorize</md-icon>-->
+          <md-icon style="font-size:30px;color:#000000;">colorize</md-icon>
           <span class="md-header" layout-padding ><h2>LABORATÓRIO</h2></span>
         </div>
 
         <div layout="row" layout-xs="column" layout-sm="column" layout-md="column">
           <md-card layout-fill ng-init="showLaboratory=true" class="card-button">
-            <md-card-content layout="column" layout-align="start start" flex>
-              <md-button ng-click="$ctrl.sampleTransportDashboard()" class="md-body-1 option " layout-margin=""
-                         layout-align="center" >
-                <md-icon layout-margin>local_shipping</md-icon>
-                <span style="font-size:12px;">Transporte de amostra</span>
-
+            <md-card-content layout="column" layout-align="start start">
+              <md-button ng-click="$ctrl.sampleTransportDashboard()" class="md-body-1 option " layout-margin="" layout-align="center" >
+                <md-icon layout-margin>local_shipping</md-icon>Transporte de amostra
               </md-button>
             </md-card-content>
           </md-card>
 
           <md-card layout-fill ng-init="showLaboratory=true" class="card-button">
-            <md-card-content layout="column" layout-align="start start" flex>
+            <md-card-content layout="column" layout-align="start start">
               <md-button ng-click="$ctrl.examsDashboard()" class="md-body-1 option" layout-margin="" layout-align="center">
-                <md-icon layout-margin>event_note</md-icon>
-                Lotes de exames
+                <md-icon layout-margin>event_note</md-icon>Lotes de exames
               </md-button>
             </md-card-content>
           </md-card>
 
           <md-card layout-fill ng-init="showLaboratory=true" class="card-button">
-            <md-card-content layout="column" layout-align="start start" flex>
+            <md-card-content layout="column" layout-align="start start">
               <md-button ng-click="$ctrl.sendingExam()" class="md-body-1 option" layout-margin="" layout-align="center">
-                <md-icon layout-margin>event_available</md-icon>
-                Envios de exames
+                <md-icon layout-margin>event_available</md-icon>Envios de exames
               </md-button>
             </md-card-content>
           </md-card>
@@ -86,7 +81,7 @@
       <div flex-xs layout="column">
 
         <div layout="row" layout-align="center center">
-<!--          <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;">assessment</md-icon>-->
+          <md-icon style="font-size:30px;color:#000000;">assessment</md-icon>
           <span class="md-header" layout-padding><h2>MONITORAMENTO</h2></span>
         </div>
 
@@ -131,7 +126,7 @@
 
 
 <!--    Mobile-->
-    <div hide-gt-xs layout="column" layout-align="center center" layout-padding flex>
+    <div hide-gt-xs layout="column" layout-align-xs="center center" layout-padding flex>
 
         <!--      Laboratory-->
         <md-card layout-fill ng-init="showLaboratory=true" class="content-card-home">

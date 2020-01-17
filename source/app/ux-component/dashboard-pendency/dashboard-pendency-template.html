@@ -25,11 +25,13 @@
       <md-card-header-text>
         <span class="md-header" layout-padding>PENDÊNCIAS DE ATIVIDADE</span>
       </md-card-header-text>
+
+<!--      warning red box-->
       <md-card ng-hide="!$ctrl.existOpenedUserActivityPendencies"
                layout="row" layout-margin
                class="warning-card" ng-style="{'background-color': '#ff0000'}"
                layout-align="center center">
-        <md-icon style="font-size:30px;height:30px;width:30px;color:#FFFFFF;" ng-style="{color: 'yellow'}">warning</md-icon>
+        <md-icon style="font-size:30px;height:30px;width:30px;" ng-style="{color: 'yellow'}">warning</md-icon>
         <span ng-style="{color: 'yellow'}"> {{ $ctrl.openedUserActivityPendencies.length }}</span>
       </md-card>
     </md-card-header>
