@@ -118,7 +118,6 @@
 
     function selectParticipant(rn) {
       var deferred = $q.defer();
-      rn = 4444
       try {
         let participant = ParticipantManagerService.getParticipant(rn);
         ParticipantManagerService.selectParticipant(participant);
@@ -130,6 +129,7 @@
           $mdToast.simple()
             .position('bottom right')
             .textContent(self.messageError)
+            .theme('error-toast')
             .hideDelay(3000)
         );
         deferred.reject();
