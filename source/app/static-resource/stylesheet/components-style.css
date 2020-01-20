@@ -580,6 +580,16 @@ otus-dashboard-pendency md-grid-tile md-grid-tile-header {
   padding: 8px;
 }
 
+otus-dashboard-pendency md-grid-tile md-grid-tile-footer {
+  background: rgba(255, 255, 255, 0.0);
+  overflow: inherit;
+  padding: 8px;
+}
+
+otus-dashboard-pendency md-grid-tile-footer figcaption {
+  display: block;
+}
+
 otus-dashboard-pendency md-grid-tile-header figcaption {
   display: block;
   width: 100%;
