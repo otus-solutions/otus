@@ -27,7 +27,7 @@
         <span class="md-header" layout-padding>PENDÊNCIAS DE ATIVIDADE</span>
       </md-card-header-text>
 
-<!--      warning red box-->
+      <!--      warning red box-->
       <md-card ng-hide="!$ctrl.existOpenedUserActivityPendencies"
                layout="row" layout-margin
                class="warning-card" ng-style="{'background-color': '#ff0000'}"
@@ -40,28 +40,38 @@
     <div ng-hide="$ctrl.existOpenedUserActivityPendencies" >Você não possui pendências de atividade.</div>
 
     <md-grid-list md-cols="4"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="6" md-cols-lg="4" md-cols-gt-md="4"
-                  md-row-height-gt-md="1:0.5" md-row-height-sm="1:0.5" md-row-height-md="1:0.5"  md-row-height-lg="1:0.7"
-                  md-row-height="1:0.5"  md-row-height-xs="1:0.5" md-gutter-gt-md="10px" md-gutter="12px" md-gutter-sm="6px" md-row-height-xl="1:0.5" >
+                  md-row-height-gt-md="1:0.7" md-row-height-sm="1:0.9" md-row-height-md="1:0.9"  md-row-height-lg="1:0.7"
+                  md-row-height="1:0.7"  md-row-height-xs="1:0.7" md-gutter-gt-md="10px" md-gutter="12px" md-gutter-sm="6px" md-row-height-xl="1:0.7" >
 
       <md-grid-tile ng-hide="!$ctrl.existOpenedUserActivityPendencies"
                     class="md-whiteframe-1dp" ng-repeat="item in $ctrl.openedUserActivityPendencies">
-        <div layout="column" layout-xs="column" layout-sm="column" layout-md="column">
-
-          <div layout="row">
-            <md-icon ng-style="{color: '#00897b'}" md-font-library="material-icons" layout-align="end end">{{item.activityInfo.lastStatus.icon}}
-              <md-tooltip md-direction="top">
-                {{item.activityInfo.lastStatus.tooltip}}
-              </md-tooltip>
-            </md-icon>
+        <md-grid-tile-header>
+          <div layout="row" layout-align="space-between center">
+            <div layout="row">
+              <md-icon class="md-avatar-icon" ng-style="{color: '#00897b'}" md-font-library="material-icons" layout-align="end end">
+                {{item.activityInfo.lastStatus.icon}}
+                <md-tooltip md-direction="top">
+                  {{item.activityInfo.lastStatus.tooltip}}
+                </md-tooltip>
+              </md-icon>
+            </div>
             <span class="md-caption" ng-style="{color:'#797985'}">
-                <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }} - {{ item.activityInfo.name }}</small></span>
+                <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }}</small></span>
+            <div>
+            </div>
+          </div>
+        </md-grid-tile-header>
+        <div layout="column" layout-xs="column" layout-sm="column" layout-md="column">
+          <div layout="row">
+            <span class="md-caption" ng-style="{color:'#797985'}">
+                <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.name }}</small></span>
           </div>
 
           <div class="md-list-item-text" layout="column" layout-xs="column" layout-sm="column" layout-md="column">
             <span class="md-caption" ng-style="{color:'#797985'}">Pendente desde:
                 <small class="md-body-2" ng-style="{color:'black'}">{{ item.creationDate }} ({{ item.timePending }})</small>
               </span>
-              <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento:
+            <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento:
                 <small class="md-body-2"  ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small>
               </span>
             <div ng-show="(item.activityInfo.externalID.length>0)">

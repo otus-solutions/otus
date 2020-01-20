@@ -573,7 +573,7 @@ otus-dashboard-pendency md-grid-list {
 }
 
 otus-dashboard-pendency md-grid-tile md-grid-tile-header {
-  background: rgba(19, 125, 108, 0.68);
+  background: rgba(255, 255, 255, 0.0);
   position: relative;
   width: 100%;
   overflow: inherit;
@@ -587,6 +587,10 @@ otus-dashboard-pendency md-grid-tile-header figcaption {
 
 otus-dashboard-pendency md-grid-tile-header figcaption md-icon {
   margin: 0;
+}
+
+otus-dashboard-pendency md-grid-tile {
+  border-radius: 5px;
 }
 
 otus-dashboard-pendency md-grid-tile figure {
