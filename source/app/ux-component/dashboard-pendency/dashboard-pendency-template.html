@@ -19,8 +19,9 @@
   }
 </style>
 
-<md-card layout="column" class="full-list-items">
-  <md-card-content>
+<md-card layout="column" class="full-list-items no-border">
+  <md-card-content class="no-padding">
+
     <md-card-header flex layout-align="start center" class="md-primary header-list" ng-style="{color: '#f77a7a'}">
       <md-card-header-text>
         <span class="md-header" layout-padding>PENDÊNCIAS DE ATIVIDADE</span>
@@ -36,9 +37,7 @@
       </md-card>
     </md-card-header>
 
-    <div ng-hide="$ctrl.existOpenedUserActivityPendencies" >
-      Você não possui pendências de atividade.
-    </div>
+    <div ng-hide="$ctrl.existOpenedUserActivityPendencies" >Você não possui pendências de atividade.</div>
 
     <md-grid-list md-cols="4"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="8" md-cols-lg="5" md-cols-gt-md="6"
                   md-row-height-gt-md="1:0.5" md-row-height-sm="1:0.5" md-row-height-md="1:0.5"  md-row-height-lg="1:0.5"

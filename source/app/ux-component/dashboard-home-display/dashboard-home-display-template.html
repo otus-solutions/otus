@@ -23,120 +23,126 @@
   .full-width{
     min-width: 90vw;
   }
+
+  .test {
+    padding: 0px;
+
+  }
 </style>
 <md-content flex>
-<div layout="row" layout-xs="column"  layout-sm="column" layout-align="end start" flex>
+  <div layout="row" layout-xs="column" layout-align="end start" flex>
 
-  <div layout="column" layout-align="start start" layout-padding layout-fill flex="100">
-    <div layout="row" layout-padding style="width: 100%;" layout-align="center center" >
-      <div layout="column" layout-padding layout-align="center center">
-        <otus-participant-search class="full-width" on-select="$ctrl.selectParticipant(participant)" show-all-participants="$ctrl.managerParticipantsDashboard()"
-                                 show-all-participants-button="true" ng-disabled="!$ctrl.participantsReady" layout-fill on-ready="$ctrl.participantsReady">
-        </otus-participant-search>
-        <div ng-if="!$ctrl.showAllParticipantsButtoninsideSearch">
-          <button class="md-accent md-raised md-button" ng-click="$ctrl.managerParticipantsDashboard()">EXIBIR TODOS PARTICIPANTES</button>
-        </div>
-      </div>
-    </div>
-
-<!--    Laboratory buttons-->
-    <div hide-xs layout="column" layout-align="center center">
-      <div layout="column" ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"  >
-
-        <div layout="row" layout-align="center center">
-          <md-icon style="font-size:30px;color:#000000;">colorize</md-icon>
-          <span class="md-header" layout-padding ><h2>LABORATÓRIO</h2></span>
-        </div>
-
-        <div layout="row" layout-xs="column" layout-sm="column" layout-md="column">
-          <md-card layout-fill ng-init="showLaboratory=true" class="card-button">
-            <md-card-content layout="column" layout-align="start start">
-              <md-button ng-click="$ctrl.sampleTransportDashboard()" class="md-body-1 option " layout-margin="" layout-align="center" >
-                <md-icon layout-margin>local_shipping</md-icon>Transporte de amostra
-              </md-button>
-            </md-card-content>
-          </md-card>
-
-          <md-card layout-fill ng-init="showLaboratory=true" class="card-button">
-            <md-card-content layout="column" layout-align="start start">
-              <md-button ng-click="$ctrl.examsDashboard()" class="md-body-1 option" layout-margin="" layout-align="center">
-                <md-icon layout-margin>event_note</md-icon>Lotes de exames
-              </md-button>
-            </md-card-content>
-          </md-card>
-
-          <md-card layout-fill ng-init="showLaboratory=true" class="card-button">
-            <md-card-content layout="column" layout-align="start start">
-              <md-button ng-click="$ctrl.sendingExam()" class="md-body-1 option" layout-margin="" layout-align="center">
-                <md-icon layout-margin>event_available</md-icon>Envios de exames
-              </md-button>
-            </md-card-content>
-          </md-card>
+    <div layout="column" layout-align="start center" layout-align-xs="center center" layout-padding layout-fill flex="100">
+      <div layout="row" layout-padding style="width: 100%;" layout-align="center center" >
+        <div layout="column" layout-padding layout-align="center center">
+          <otus-participant-search class="full-width" on-select="$ctrl.selectParticipant(participant)" show-all-participants="$ctrl.managerParticipantsDashboard()"
+                                   show-all-participants-button="true" ng-disabled="!$ctrl.participantsReady" layout-fill on-ready="$ctrl.participantsReady">
+          </otus-participant-search>
+          <div ng-if="!$ctrl.showAllParticipantsButtoninsideSearch">
+            <button class="md-accent md-raised md-button" ng-click="$ctrl.managerParticipantsDashboard()">EXIBIR TODOS PARTICIPANTES</button>
+          </div>
         </div>
       </div>
 
-      <md-divider class="full-width"></md-divider>
+      <!--    Menu buttons-->
+      <div hide-xs layout="column" layout-sm="row" layout-md="row" layout-align="center center" layout-align-sm="center start" layout-align-md="center start">
+        <!--    Laboratory buttons-->
+        <div layout="column" layout-align="center center"
+             ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"
+             style-gt-md="margin-bottom: 16px;" style="margin-right: 16px;">
 
-<!--      Monitoring buttons-->
-      <div flex-xs layout="column">
+          <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
+            <md-icon style="font-size:20px;color:#000000;">colorize</md-icon>
+            <span class="md-header" layout-padding ><h2>LABORATÓRIO</h2></span>
+          </div>
 
-        <div layout="row" layout-align="center center">
-          <md-icon style="font-size:30px;color:#000000;">assessment</md-icon>
-          <span class="md-header" layout-padding><h2>MONITORAMENTO</h2></span>
+          <div layout="row" layout-sm="column" layout-md="column">
+            <md-card class="card-button" ng-init="showLaboratory=true" layout-fill >
+              <md-card-content class="no-padding" layout="column" layout-align="start start">
+                <md-button ng-click="$ctrl.sampleTransportDashboard()" layout-align="center" layout-margin="">
+                  <md-icon>local_shipping</md-icon>Transporte de amostra
+                </md-button>
+              </md-card-content>
+            </md-card>
+
+            <md-card class="card-button" ng-init="showLaboratory=true" layout-fill >
+              <md-card-content class="no-padding" layout="column" layout-align="start start">
+                <md-button ng-click="$ctrl.examsDashboard()" layout-align="center" layout-margin="">
+                  <md-icon>event_note</md-icon>Lotes de exames
+                </md-button>
+              </md-card-content>
+            </md-card>
+
+            <md-card class="card-button" ng-init="showLaboratory=true" layout-fill >
+              <md-card-content class="no-padding" layout="column" layout-align="start start" >
+                <md-button ng-click="$ctrl.sendingExam()" layout-align="center" layout-margin="">
+                  <md-icon>event_available</md-icon>Envios de exames
+                </md-button>
+              </md-card-content>
+            </md-card>
+
+          </div>
         </div>
 
-        <div flex layout="row" layout-xs="column" layout-sm="column" layout-md="column">
-          <md-card layout-fill class="card-button">
-            <md-card-content layout="column" layout-align="start start" flex>
-              <md-button ng-click="$ctrl.startMonitoring()" layout-margin="" class="md-body-1 option ">
-                <md-icon layout-margin>description</md-icon>Atividades do centro
-              </md-button>
-            </md-card-content>
-          </md-card>
+        <!--      Monitoring buttons-->
+        <div layout="column" layout-align="center center">
 
-          <md-card layout-fill class="card-button">
-            <md-card-content layout="column" layout-align="start start" flex>
-              <md-button ng-click="$ctrl.activateActivityFlagsReport()" class="md-body-1 option" layout-margin=""
-                         layout-align="center">
-                <md-icon layout-margin>flag</md-icon>Flags para Atividades
-              </md-button>
-            </md-card-content>
-          </md-card>
+          <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
+            <md-icon style="font-size:30px;color:#000000;">assessment</md-icon>
+            <span class="md-header" layout-padding><h2>MONITORAMENTO</h2></span>
+          </div>
 
-          <md-card layout-fill class="card-button" ng-init="showLaboratory=true" >
-            <md-card-content layout="column" layout-align="start start" flex>
-              <md-button ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" ng-click="$ctrl.laboratoryActivityFlagsReport()"
-                         class="md-body-1 option" layout-margin="" layout-align="center">
-                <md-icon layout-margin>flag</md-icon>Flags para Laboratório
-              </md-button>
-            </md-card-content>
-          </md-card>
+          <div layout="row" layout-sm="column" layout-md="column">
+            <md-card class="card-button" layout-fill >
+              <md-card-content class="no-padding" layout="column" layout-align="start start">
+                <md-button class="md-body-1 option" ng-click="$ctrl.startMonitoring()" layout-margin="">
+                  <md-icon layout-margin>description</md-icon>Atividades do centro
+                </md-button>
+              </md-card-content>
+            </md-card>
 
-          <md-card layout-fill ng-init="showLaboratory=true" class="content-card-home">
-            <md-card-content layout="column" layout-align="start start" flex>
-              <md-button ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" ng-click="$ctrl.laboratoryMonitoring()"
-                         class="md-body-1 option" layout-margin="" layout-align="center">
-                <md-icon layout-margin>assignment_turned_in</md-icon>Controle laboratorial
-              </md-button>
-            </md-card-content>
-          </md-card>
+            <md-card class="card-button" layout-fill >
+              <md-card-content class="no-padding" layout="column" layout-align="start start">
+                <md-button class="md-body-1 option" ng-click="$ctrl.activateActivityFlagsReport()" layout-margin=""
+                           layout-align="center">
+                  <md-icon layout-margin>flag</md-icon>Flags para Atividades
+                </md-button>
+              </md-card-content>
+            </md-card>
+
+            <md-card class="card-button" layout-fill ng-init="showLaboratory=true" >
+              <md-card-content class="no-padding" layout="column" layout-align="start start">
+                <md-button class="md-body-1 option"
+                           ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" ng-click="$ctrl.laboratoryActivityFlagsReport()"
+                           layout-margin="" layout-align="center">
+                  <md-icon layout-margin>flag</md-icon>Flags para Laboratório
+                </md-button>
+              </md-card-content>
+            </md-card>
+
+            <md-card class="card-button" layout-fill ng-init="showLaboratory=true" >
+              <md-card-content layout="column" layout-align="start start" class="no-padding">
+                <md-button class="md-body-1 option" layout-margin="" layout-align="center"
+                           ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" ng-click="$ctrl.laboratoryMonitoring()">
+                  <md-icon layout-margin>assignment_turned_in</md-icon>Controle laboratorial
+                </md-button>
+              </md-card-content>
+            </md-card>
+          </div>
         </div>
       </div>
-    </div>
 
-
-<!--    Mobile-->
-    <div hide-gt-xs layout="column" layout-align-xs="center center" layout-padding flex>
-
+      <!--    Menu buttons Mobile-->
+      <div hide-gt-xs layout="column" layout-align="start start" >
         <!--      Laboratory-->
-        <md-card layout-fill ng-init="showLaboratory=true" class="content-card-home">
+        <md-card class="card-button" layout-fill ng-init="showLaboratory=true">
           <md-card-content layout="row" layout-align="center center">
-
+            <md-icon>colorize</md-icon>LABORATÓRIO
             <div class="md-menu-demo" ng-cloak>
               <div class="menu-demo-container" layout-align="center center" layout="column">
                 <md-menu>
-                  <md-button ng-click="$mdMenu.open($event)"">
-                  <md-icon>colorize</md-icon>LABORATÓRIO
+                  <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
+                    <md-icon>more_vert</md-icon>
                   </md-button>
                   <md-menu-content width="3">
                     <md-menu-item>
@@ -160,23 +166,21 @@
                 </md-menu>
               </div>
             </div>
-
           </md-card-content>
         </md-card>
-
         <!--        Monitoring-->
-        <md-card layout-fill class="content-card-home">
+        <md-card class="card-button" layout-fill >
           <md-card-content layout="row" layout-align="center center">
-
+            <md-icon>assessment</md-icon>MONITORAMENTO
             <div class="md-menu-demo" ng-cloak>
               <div class="menu-demo-container" layout-align="center center" layout="column">
                 <md-menu>
-                  <md-button ng-click="$mdMenu.open($event)"">
-                  <md-icon>assessment</md-icon>MONITORAMENTO
+                  <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
+                    <md-icon>more_vert</md-icon>
                   </md-button>
                   <md-menu-content width="3">
                     <md-menu-item>
-                      <md-button ng-click="$ctrl.startMonitoring()" layout-margin="" class="md-body-1 option ">
+                      <md-button ng-click="$ctrl.startMonitoring()" layout-margin class="md-body-1 option ">
                         <md-icon layout-margin>description</md-icon>Atividades do centro
                       </md-button>
                     </md-menu-item>
@@ -205,16 +209,16 @@
                 </md-menu>
               </div>
             </div>
-
           </md-card-content>
         </md-card>
+      </div>
+
+      <br>
+
+      <!--    Activity Pendency List-->
+      <otus-dashboard-pendency layout="column" layout-align="center center" layout-fill layout-padding flex ></otus-dashboard-pendency>
 
     </div>
-
-<!--    Activity Pendency List-->
-    <otus-dashboard-pendency layout="column" layout-align="center center" layout-fill layout-padding flex ></otus-dashboard-pendency>
-
+    <span flex flex-xs="0"></span>
   </div>
-  <span flex flex-xs="0"></span>
-</div>
 </md-content>
