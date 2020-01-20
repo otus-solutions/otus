@@ -567,6 +567,45 @@ md-toast.md-error-toast-theme .md-toast-content {
     font-weight: bold;
 }
 
+otus-dashboard-pendency md-grid-list {
+  margin: 10px;
+  transition-duration: 0s;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-header {
+  background: rgba(19, 125, 108, 0.68);
+  position: relative;
+  width: 100%;
+  overflow: inherit;
+  padding: 8px;
+}
+
+otus-dashboard-pendency md-grid-tile-header figcaption {
+  display: block;
+  width: 100%;
+}
+
+otus-dashboard-pendency md-grid-tile-header figcaption md-icon {
+  margin: 0;
+}
+
+otus-dashboard-pendency md-grid-tile figure {
+  justify-content: normal;
+  flex-direction: column;
+  align-items: start;
+  transition-duration: 0s;
+  padding: 8px;
+}
+
+@media only screen and (max-width: 999px) {
+  otus-dashboard-pendency .clipped {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 90%;
+  }
+}
+
 .no-padding {
   padding: 0;
 }
