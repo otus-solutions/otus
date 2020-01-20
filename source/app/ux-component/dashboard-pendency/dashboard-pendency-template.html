@@ -40,9 +40,9 @@
       Você não possui pendências de atividade.
     </div>
 
-    <md-grid-list md-cols="4"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="8" md-cols-lg="5" md-cols-gt-md="6"
-                  md-row-height-gt-md="1:0.5" md-row-height-sm="1:0.5" md-row-height-md="1:0.5"  md-row-height-lg="1:0.5"
-                  md-row-height="1:0.5"  md-row-height-xs="1:0.5" md-gutter-gt-md="14px" md-gutter="12px" md-gutter-sm="6px" md-row-height-xl="1:0.5" >
+    <md-grid-list md-cols="4"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="6" md-cols-lg="4" md-cols-gt-md="4"
+                  md-row-height-gt-md="1:0.5" md-row-height-sm="1:0.5" md-row-height-md="1:0.5"  md-row-height-lg="1:0.7"
+                  md-row-height="1:0.5"  md-row-height-xs="1:0.5" md-gutter-gt-md="10px" md-gutter="12px" md-gutter-sm="6px" md-row-height-xl="1:0.5" >
 
       <md-grid-tile ng-hide="!$ctrl.existOpenedUserActivityPendencies"
                     class="md-whiteframe-1dp" ng-repeat="item in $ctrl.openedUserActivityPendencies">
@@ -73,26 +73,27 @@
           </div>
 
           <div name="action-buttons" layout="row" layout-align="start center">
-            <md-button ng-click="$ctrl.loadActivities(item.activityInfo.recruitmentNumber)" ng-disabled="!$ctrl.participantManagerReady">
-              <md-icon ng-style="{color: 'blue'}" md-font-library="material-icons" layout-align="end end">cached
+            <md-button class="md-grid-item-content md-raised md-accent md-icon-button" ng-click="$ctrl.loadActivities(item.activityInfo.recruitmentNumber)" ng-disabled="!$ctrl.participantManagerReady">
+
+              <md-icon md-svg-icon="file-document-box"  material-iconslayout-align="end end">
                 <md-tooltip md-direction="top">
-                  Faz algo
+                  Atividades
                 </md-tooltip>
               </md-icon>
             </md-button>
 
-            <md-button ng-click="$ctrl.loadActivityPlayer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
-              <md-icon ng-style="{color: 'blue'}" md-font-library="material-icons" layout-align="end end">help
+            <md-button class="md-grid-item-content md-raised md-accent md-icon-button"  ng-click="$ctrl.loadActivityPlayer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
+              <md-icon md-svg-icon="clipboard-check" layout-align="end end">
                 <md-tooltip md-direction="top">
-                  Faz algo
+                  Preencher Atividade
                 </md-tooltip>
               </md-icon>
             </md-button>
 
-            <md-button ng-click="$ctrl.loadActivityViewer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
-              <md-icon ng-style="{color: 'blue'}" md-font-library="material-icons" layout-align="end end">explore
+            <md-button  class="md-grid-item-content md-raised md-accent md-icon-button" ng-click="$ctrl.loadActivityViewer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
+              <md-icon md-font-library="material-icons" layout-align="end end">playlist_add_check
                 <md-tooltip md-direction="top">
-                  Faz algo
+                  Visualizar Ativiadade
                 </md-tooltip>
               </md-icon>
             </md-button>
