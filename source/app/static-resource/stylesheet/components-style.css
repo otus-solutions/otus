@@ -562,4 +562,8 @@ otus-dashboard-pendency  .scrollbar-default::-webkit-scrollbar-thumb {
   box-shadow: none !important;
 }
 
+md-toast.md-error-toast-theme .md-toast-content {
+    background-color: darkred;
+    font-weight: bold;
+}
 /*# sourceMappingURL=components-style.css.map */
