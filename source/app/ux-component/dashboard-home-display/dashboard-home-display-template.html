@@ -24,10 +24,17 @@
     min-width: 90vw;
   }
 
-  .test {
-    padding: 0px;
-
+  .first-menu-margin {
+    margin-bottom: 24px;
   }
+
+  @media screen and (max-width: 1279px) {
+    .first-menu-margin {
+      margin-bottom: 0px;
+      margin-right: 16px;
+    }
+  }
+
 </style>
 <md-content flex>
   <div layout="row" layout-xs="column" layout-align="end start" flex>
@@ -49,7 +56,7 @@
         <!--    Laboratory buttons-->
         <div layout="column" layout-align="center center"
              ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"
-             style-gt-md="margin-bottom: 16px;" style="margin-right: 16px;">
+             class="first-menu-margin">
 
           <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
             <md-icon style="font-size:20px;color:#000000;">colorize</md-icon>
