@@ -19,7 +19,7 @@
     border-color: #ffffff;
     padding-left: 8px;
     padding-right: 8px;
-    width: 60px;
+    min-width: 60px;
   }
 </style>
 
@@ -37,7 +37,7 @@
                class="warning-card" ng-style="{'background-color': '#ff0000'}"
                layout-align="center center">
         <md-icon style="font-size:30px;height:30px;width:30px;" ng-style="{color: 'yellow'}">warning</md-icon>
-        <span ng-style="{color: 'yellow'}"> {{ $ctrl.openedUserActivityPendencies.length }}</span>
+        <span ng-style="{color: 'yellow'}" flex> {{ $ctrl.openedUserActivityPendencies.length }}</span>
       </div>
     </md-card-header>
 
@@ -61,14 +61,13 @@
             </div>
             <span class="md-caption" ng-style="{color:'#797985'}">
                 <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }}</small></span>
-            <div>
-            </div>
+            <div flex="10"></div>
           </div>
         </md-grid-tile-header>
         <div layout="column">
           <div layout="row">
             <span class="md-caption" ng-style="{color:'#797985'}">
-                <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.name }}</small></span>
+                <small class="md-body-2 clipped" ng-style="{color:'black'}">{{ item.activityInfo.name }}</small></span>
           </div>
 
           <div class="md-list-item-text" layout="column" layout-xs="column" layout-sm="column" layout-md="column">
