@@ -118,12 +118,11 @@
     }
 
     function getParticipant(rn) {
-      let participant = participantList.find(element => element.recruitmentNumber == rn);
-      if (participant) {
-        return participant;
-      } else {
+      let participant = participantList.find(element => element.recruitmentNumber === rn);
+      if(!participant){
         throw new Error('ParticipantList is not initialized.');
       }
+      return participant;
     }
   }
 }());
