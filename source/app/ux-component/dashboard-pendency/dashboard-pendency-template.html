@@ -15,7 +15,11 @@
     -moz-transform: rotate(30deg);
     border-width: 1px;
     border-style: solid;
+    border-radius: 5px;
     border-color: #ffffff;
+    padding-left: 8px;
+    padding-right: 8px;
+    width: 60px;
   }
 </style>
 
@@ -28,20 +32,20 @@
       </md-card-header-text>
 
       <!--      warning red box-->
-      <md-card ng-hide="!$ctrl.existOpenedUserActivityPendencies"
-               layout="row" layout-margin
+      <div ng-hide="!$ctrl.existOpenedUserActivityPendencies"
+               layout="row"
                class="warning-card" ng-style="{'background-color': '#ff0000'}"
                layout-align="center center">
         <md-icon style="font-size:30px;height:30px;width:30px;" ng-style="{color: 'yellow'}">warning</md-icon>
         <span ng-style="{color: 'yellow'}"> {{ $ctrl.openedUserActivityPendencies.length }}</span>
-      </md-card>
+      </div>
     </md-card-header>
 
     <div ng-hide="$ctrl.existOpenedUserActivityPendencies" >Você não possui pendências de atividade.</div>
 
     <md-grid-list md-cols="4"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="6" md-cols-lg="4" md-cols-gt-md="4"
-                  md-row-height-gt-md="1:0.9" md-row-height-sm="1:1" md-row-height-md="1:1"  md-row-height-lg="1:0.7"
-                  md-row-height="1:0.9"  md-row-height-xs="1:0.6" md-gutter-gt-md="10px" md-gutter="12px" md-gutter-sm="6px" md-row-height-xl="1:0.7" >
+                  md-row-height-gt-md="1:0.5" md-row-height-sm="{{$ctrl.displayGridSmall()}}" md-row-height-md="1:1"  md-row-height-lg="{{$ctrl.displayGridLarge()}}"
+                  md-row-height="1:0.9"  md-row-height-xs="1:0.6" md-gutter-gt-md="10px" md-gutter="12px" md-gutter-sm="6px" md-row-height-xl="1:0.8" >
 
       <md-grid-tile ng-hide="!$ctrl.existOpenedUserActivityPendencies"
                     class="md-whiteframe-1dp" ng-repeat="item in $ctrl.openedUserActivityPendencies">

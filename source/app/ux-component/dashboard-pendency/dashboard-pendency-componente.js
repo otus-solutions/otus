@@ -31,6 +31,9 @@
     self.loadActivityPlayer = loadActivityPlayer;
     self.loadActivityViewer = loadActivityViewer;
     self.selectParticipant = selectParticipant;
+    self.displayGridLarge = displayGridLarge;
+    self.displayGridSmall = displayGridSmall;
+
     self.openedUserActivityPendencies = [];
     self.existOpenedUserActivityPendencies = false;
 
@@ -114,6 +117,21 @@
         },
       };
       return dict[status];
+    }
+
+
+    function displayGridLarge() {
+      if (window.innerWidth < 1400) {
+        return '1:0.75';
+      }
+      return '1:0.5';
+    }
+
+    function displayGridSmall() {
+      if (window.innerWidth < 680) {
+        return '1:1.3';
+      }
+      return '1:1';
     }
 
     function selectParticipant(rn) {
