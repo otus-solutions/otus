@@ -22,8 +22,8 @@
     min-width: 60px;
   }
 
-  .background-warning{
-    background: rgba(0,0,0,.05);
+  .priority-icon-late{
+    background: green;
   }
 </style>
 
@@ -73,6 +73,14 @@
             </div>
             <span class="md-caption" ng-style="{color:'#797985'}">
                 <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }}</small></span>
+            <div name="priority-icon" layout="row" ng-hide="!$ctrl.showOpenedPendencies">
+              <md-icon class="md-avatar-icon" ng-style="{color: item.priority.color}" md-font-library="material-icons" layout-align="end end"">
+              arrow_upward
+                <md-tooltip md-direction="top">
+                  Prioridade {{item.priority.level}}
+                </md-tooltip>
+              </md-icon>
+            </div>
             <div flex="10"></div>
           </div>
           <md-divider></md-divider>
@@ -85,7 +93,10 @@
 
           <div class="md-list-item-text" layout="column" layout-xs="column" layout-sm="column" layout-md="column">
             <span class="md-caption" ng-style="{color:'#797985'}">Pendente desde:
-                <small class="md-body-2" ng-style="{color:'black'}">{{ item.creationDate }} ({{ item.timePending }})</small>
+                <small class="md-body-2" ng-style="{color:'black'}">{{ item.creationDate }} ({{ item.existenceTime }})</small>
+              </span>
+            <span class="md-caption" ng-style="{color:'#797985'}">Vencimento:
+                <small class="md-body-2" ng-style="{color:'black'}">{{ item.dueDate }} ({{ item.deadLine.str }})</small>
               </span>
             <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento:
                 <small class="md-body-2"  ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small>

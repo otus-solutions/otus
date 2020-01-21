@@ -52,51 +52,6 @@
       _getOpenedUserActivityPendenciesToReceiver();
     }
 
-    function _extractPendencyFromJsonItem(pendencyJson){
-      const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
-      const NUM_DAYS_MINIMUM_TO_WARNING = 7;
-      const backgroundColor = {
-        LATE: '#FFA886',
-        ALMOST_LATE: "#f8f8ab",
-        OK: "white"
-      };
-      let pendency = UserActivityPendencyFactory.fromJsonObject(pendencyJson);
-      const creationDate = new Date(pendency.creationDate);
-      creationDate.setHours(0,0,0,0);
-      const dueDate = new Date(pendency.dueDate);
-      dueDate.setHours(0,0,0,0);
-      const today = new Date();
-      today.setHours(0,0,0,0);
-      const daysLate = (dueDate - today) / MILLISECONDS_PER_DAY;
-      let daysForResolve = (today - creationDate) / MILLISECONDS_PER_DAY;
-      // const months = Math.floor(daysForResolve / 30);
-      // daysForResolve = daysForResolve % 30;
-
-      // const timePending = (months===0 ? '' : `${months} meses `) +
-      //   (daysForResolve===0 ? '' : `${daysForResolve} dias`);
-
-      const timePending = `há ${daysForResolve}, venc ${dueDate.getDate()}/${dueDate.getMonth()+1}/${dueDate.getFullYear()} faltam ${daysLate}`;//.
-
-      pendency.activityInfo['lastStatus'] = _createStatus(pendency.activityInfo.lastStatusName);
-
-      return {
-        creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
-        timePending: timePending,
-        activityId: pendency.activityId,
-        activityInfo: pendency.activityInfo,
-        daysLate: daysLate,
-        backgroundColor: (daysLate < 0? backgroundColor.LATE : (daysLate <= NUM_DAYS_MINIMUM_TO_WARNING ? backgroundColor.ALMOST_LATE : backgroundColor.OK))
-      };
-    }
-
-    function _sortPendenciesByDueDate(pendenciesList){
-      pendenciesList.sort(function(a, b){
-        if(a.daysLate < b.daysLate) return -1;
-        if(a.daysLate > b.daysLate) return 1;
-        return 0;
-      });
-    }
-
     function _getOpenedUserActivityPendenciesToReceiver(){
       UserActivityPendencyService.getOpenedUserActivityPendenciesToReceiver()
         .then(values => {
@@ -134,17 +89,90 @@
     function _changePendenciesListToShow(){
       if(self.showOpenedPendencies){
         if(!self.userActivityPendencies.done){
+          self.showOpenedPendencies = !self.showOpenedPendencies;
           _getFinalizedUserActivityPendenciesToReceiver();
+          return;
         }
-        else{
-          self.userActivityPendencies.curr = self.userActivityPendencies.done;
-        }
+        self.userActivityPendencies.curr = self.userActivityPendencies.done;
       }
       else{
         self.userActivityPendencies.curr = self.userActivityPendencies.opened;
       }
       self.userActivityPendencies.currIsEmpty = (self.userActivityPendencies.curr.length > 0);
       self.showOpenedPendencies = !self.showOpenedPendencies;
+    }
+
+    function _extractPendencyFromJsonItem(pendencyJson){
+      const NUM_DAYS_MINIMUM_TO_WARNING = 7;
+      const backgroundColor = {
+        LATE: "red", // "#ffa886",
+        ALMOST_LATE: "orange", // "#f8f8ab",
+        OK: "green"
+      };
+
+      let pendency = UserActivityPendencyFactory.fromJsonObject(pendencyJson);
+      const creationDate = _extractDateZeroTime(new Date(pendency.creationDate));
+      const dueDate = _extractDateZeroTime(new Date(pendency.dueDate));
+      const today = _extractDateZeroTime(new Date());
+
+      const deadLine = _extractDuration(today, dueDate);
+      const existenceTime = _extractDuration(creationDate, today);
+      pendency.activityInfo['lastStatus'] = _createStatus(pendency.activityInfo.lastStatusName);
+
+      let priority = {
+        color: backgroundColor.OK,
+        level: 'Baixa'
+      };
+      if(deadLine.days < 0){
+        priority = {
+          color: backgroundColor.LATE,
+          level: 'Alta'
+        };
+      }
+      else if(deadLine.days < NUM_DAYS_MINIMUM_TO_WARNING){
+        priority = {
+          color: backgroundColor.ALMOST_LATE,
+          level: 'Média'
+        };
+      }
+
+      return {
+        activityId: pendency.activityId,
+        activityInfo: pendency.activityInfo,
+        creationDate: _formatDate(creationDate),
+        existenceTime: existenceTime.str,
+        dueDate: _formatDate(dueDate),
+        deadLine: deadLine,
+        priority: priority
+      };
+    }
+
+    function _extractDateZeroTime(date){
+      date.setHours(0,0,0,0);
+      return date;
+    }
+
+    function _extractDuration(beginDate, endDate){
+      const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+      const days = (endDate - beginDate) / MILLISECONDS_PER_DAY;
+      const months = Math.floor(days / 30);
+      const remainingDays = Math.abs(days % 30);
+      return {
+        days: days,
+        str: (months===0 ? '' : `${months} m `) + (remainingDays===0 ? '' : `${remainingDays} d`)
+      }
+    }
+
+    function _formatDate(date) {
+      return date.getDate() + "/"+ (date.getMonth()+1) + "/" + date.getFullYear();
+    }
+
+    function _sortPendenciesByDueDate(pendenciesList){
+      pendenciesList.sort(function(a, b){
+        if(a.deadLine.days < b.deadLine.days) return -1;
+        if(a.deadLine.days > b.deadLine.days) return 1;
+        return 0;
+      });
     }
 
     function _createStatus(status) {
