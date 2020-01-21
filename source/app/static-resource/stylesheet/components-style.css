@@ -577,7 +577,6 @@ otus-dashboard-pendency md-grid-tile md-grid-tile-header {
   position: relative;
   width: 100%;
   overflow: inherit;
-  padding: 8px;
 }
 
 otus-dashboard-pendency md-grid-tile md-grid-tile-footer {

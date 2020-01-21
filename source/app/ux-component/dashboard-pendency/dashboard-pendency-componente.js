@@ -56,7 +56,6 @@
 
           for(let item of values){
             let pendency = UserActivityPendencyFactory.fromJsonObject(item);
-            console.log(pendency)
             const creationDate = new Date(pendency.creationDate);
             creationDate.setHours(0,0,0,0);
             const today = new Date();
@@ -79,8 +78,6 @@
           }
 
           self.existOpenedUserActivityPendencies = (self.openedUserActivityPendencies.length > 0);
-
-          console.log('self.openedUserActivityPendencies'); console.log(self.openedUserActivityPendencies);
 
         })
         .catch(() => {
