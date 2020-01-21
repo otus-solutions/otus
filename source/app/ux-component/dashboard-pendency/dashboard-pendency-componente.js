@@ -50,7 +50,7 @@
 
       const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
 
-      UserActivityPendencyService.getAllUserActivityPendenciesToReceiver() // TODO change to getOpened
+      UserActivityPendencyService.getOpenedUserActivityPendenciesToReceiver()
         .then(values => {
           self.openedUserActivityPendencies = [];
 
@@ -58,14 +58,19 @@
             let pendency = UserActivityPendencyFactory.fromJsonObject(item);
             const creationDate = new Date(pendency.creationDate);
             creationDate.setHours(0,0,0,0);
+            const dueDate = new Date(pendency.dueDate);
+            dueDate.setHours(0,0,0,0);
             const today = new Date();
             today.setHours(0,0,0,0);
-            let days = (today - creationDate) / MILLISECONDS_PER_DAY;
-            const months = Math.floor(days / 30);
-            days = days % 30;
+            const daysLate = (dueDate - today) / MILLISECONDS_PER_DAY;
+            let daysForResolve = (today - creationDate) / MILLISECONDS_PER_DAY;
+            // const months = Math.floor(daysForResolve / 30);
+            // daysForResolve = daysForResolve % 30;
 
-            const timePending = (months===0 ? '' : `${months} meses `) +
-              (days===0 ? '' : `${days} dias`);
+            // const timePending = (months===0 ? '' : `${months} meses `) +
+            //   (daysForResolve===0 ? '' : `${daysForResolve} dias`);
+
+            const timePending = `há ${daysForResolve}, venc ${dueDate.getDate()}/${dueDate.getMonth()+1}/${dueDate.getFullYear()} faltam ${daysLate}`;//.
 
             pendency.activityInfo['lastStatus'] = _createStatus(pendency.activityInfo.lastStatusName);
 
@@ -73,12 +78,18 @@
               creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
               timePending: timePending,
               activityId: pendency.activityId,
-              activityInfo: pendency.activityInfo
+              activityInfo: pendency.activityInfo,
+              daysLate: daysLate
             });
           }
 
-          self.existOpenedUserActivityPendencies = (self.openedUserActivityPendencies.length > 0);
+          self.openedUserActivityPendencies.sort(function(a, b){
+            if(a.daysLate < b.daysLate) return -1;
+            if(a.daysLate > b.daysLate) return 1;
+            return 0;
+          });
 
+          self.existOpenedUserActivityPendencies = (self.openedUserActivityPendencies.length > 0);
         })
         .catch(() => {
           self.openedUserActivityPendencies = [];
