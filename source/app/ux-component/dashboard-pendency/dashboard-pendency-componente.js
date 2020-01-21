@@ -34,8 +34,14 @@
     self.displayGridLarge = displayGridLarge;
     self.displayGridSmall = displayGridSmall;
 
-    self.openedUserActivityPendencies = [];
-    self.existOpenedUserActivityPendencies = false;
+    self.userActivityPendencies = {
+      opened: [],
+      done: null,
+      curr: [],
+      currIsEmpty: true
+    };
+    self.showOpenedPendencies = true;
+    self.changePendenciesListToShow = _changePendenciesListToShow;
 
     function onInit() {
       self.participantManagerReady = false;
@@ -46,55 +52,99 @@
       _getOpenedUserActivityPendenciesToReceiver();
     }
 
-    function _getOpenedUserActivityPendenciesToReceiver(){
-
+    function _extractPendencyFromJsonItem(pendencyJson){
       const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+      const NUM_DAYS_MINIMUM_TO_WARNING = 7;
+      const backgroundColor = {
+        LATE: '#FFA886',
+        ALMOST_LATE: "#f8f8ab",
+        OK: "white"
+      };
+      let pendency = UserActivityPendencyFactory.fromJsonObject(pendencyJson);
+      const creationDate = new Date(pendency.creationDate);
+      creationDate.setHours(0,0,0,0);
+      const dueDate = new Date(pendency.dueDate);
+      dueDate.setHours(0,0,0,0);
+      const today = new Date();
+      today.setHours(0,0,0,0);
+      const daysLate = (dueDate - today) / MILLISECONDS_PER_DAY;
+      let daysForResolve = (today - creationDate) / MILLISECONDS_PER_DAY;
+      // const months = Math.floor(daysForResolve / 30);
+      // daysForResolve = daysForResolve % 30;
 
+      // const timePending = (months===0 ? '' : `${months} meses `) +
+      //   (daysForResolve===0 ? '' : `${daysForResolve} dias`);
+
+      const timePending = `há ${daysForResolve}, venc ${dueDate.getDate()}/${dueDate.getMonth()+1}/${dueDate.getFullYear()} faltam ${daysLate}`;//.
+
+      pendency.activityInfo['lastStatus'] = _createStatus(pendency.activityInfo.lastStatusName);
+
+      return {
+        creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
+        timePending: timePending,
+        activityId: pendency.activityId,
+        activityInfo: pendency.activityInfo,
+        daysLate: daysLate,
+        backgroundColor: (daysLate < 0? backgroundColor.LATE : (daysLate <= NUM_DAYS_MINIMUM_TO_WARNING ? backgroundColor.ALMOST_LATE : backgroundColor.OK))
+      };
+    }
+
+    function _sortPendenciesByDueDate(pendenciesList){
+      pendenciesList.sort(function(a, b){
+        if(a.daysLate < b.daysLate) return -1;
+        if(a.daysLate > b.daysLate) return 1;
+        return 0;
+      });
+    }
+
+    function _getOpenedUserActivityPendenciesToReceiver(){
       UserActivityPendencyService.getOpenedUserActivityPendenciesToReceiver()
         .then(values => {
-          self.openedUserActivityPendencies = [];
-
+          self.userActivityPendencies.opened = [];
           for(let item of values){
-            let pendency = UserActivityPendencyFactory.fromJsonObject(item);
-            const creationDate = new Date(pendency.creationDate);
-            creationDate.setHours(0,0,0,0);
-            const dueDate = new Date(pendency.dueDate);
-            dueDate.setHours(0,0,0,0);
-            const today = new Date();
-            today.setHours(0,0,0,0);
-            const daysLate = (dueDate - today) / MILLISECONDS_PER_DAY;
-            let daysForResolve = (today - creationDate) / MILLISECONDS_PER_DAY;
-            // const months = Math.floor(daysForResolve / 30);
-            // daysForResolve = daysForResolve % 30;
-
-            // const timePending = (months===0 ? '' : `${months} meses `) +
-            //   (daysForResolve===0 ? '' : `${daysForResolve} dias`);
-
-            const timePending = `há ${daysForResolve}, venc ${dueDate.getDate()}/${dueDate.getMonth()+1}/${dueDate.getFullYear()} faltam ${daysLate}`;//.
-
-            pendency.activityInfo['lastStatus'] = _createStatus(pendency.activityInfo.lastStatusName);
-
-            self.openedUserActivityPendencies.push({
-              creationDate: creationDate.getDate() + "/"+ (creationDate.getMonth()+1) + "/" + creationDate.getFullYear(),
-              timePending: timePending,
-              activityId: pendency.activityId,
-              activityInfo: pendency.activityInfo,
-              daysLate: daysLate
-            });
+            self.userActivityPendencies.opened.push(_extractPendencyFromJsonItem(item));
           }
-
-          self.openedUserActivityPendencies.sort(function(a, b){
-            if(a.daysLate < b.daysLate) return -1;
-            if(a.daysLate > b.daysLate) return 1;
-            return 0;
-          });
-
-          self.existOpenedUserActivityPendencies = (self.openedUserActivityPendencies.length > 0);
+          _sortPendenciesByDueDate(self.userActivityPendencies.opened);
+          self.userActivityPendencies.curr = self.userActivityPendencies.opened;
+          self.userActivityPendencies.currIsEmpty = (self.userActivityPendencies.curr.length > 0);
         })
         .catch(() => {
-          self.openedUserActivityPendencies = [];
-          self.existOpenedUserActivityPendencies = false;
+          self.userActivityPendencies.opened = self.userActivityPendencies.curr = [];
+          self.userActivityPendencies.currIsEmpty = false;
         });
+    }
+
+    function _getFinalizedUserActivityPendenciesToReceiver(){
+      UserActivityPendencyService.getDoneUserActivityPendenciesToReceiver()
+        .then(values => {
+          self.userActivityPendencies.done = [];
+          for(let item of values){
+            self.userActivityPendencies.done.push(_extractPendencyFromJsonItem(item));
+          }
+          _sortPendenciesByDueDate(self.userActivityPendencies.done);
+          self.userActivityPendencies.curr = self.userActivityPendencies.done;
+          self.userActivityPendencies.currIsEmpty = (self.userActivityPendencies.curr.length > 0);
+        })
+        .catch(() => {
+          self.userActivityPendencies.done = self.userActivityPendencies.curr = [];
+          self.userActivityPendencies.currIsEmpty = false;
+        });
+    }
+
+    function _changePendenciesListToShow(){
+      if(self.showOpenedPendencies){
+        if(!self.userActivityPendencies.done){
+          _getFinalizedUserActivityPendenciesToReceiver();
+        }
+        else{
+          self.userActivityPendencies.curr = self.userActivityPendencies.done;
+        }
+      }
+      else{
+        self.userActivityPendencies.curr = self.userActivityPendencies.opened;
+      }
+      self.userActivityPendencies.currIsEmpty = (self.userActivityPendencies.curr.length > 0);
+      self.showOpenedPendencies = !self.showOpenedPendencies;
     }
 
     function _createStatus(status) {
