@@ -90,7 +90,6 @@
     // Methods for application integration
     //--------------------------------------------------------------------------------------------
     function configureContext(contextFactory) {
-      //todo como ativa-lo
       _context = contextFactory.create(PARTICIPANT_CONTEXT);
     }
 
