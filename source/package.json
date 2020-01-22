@@ -32,7 +32,7 @@
     "unit": "gulp unit --path"
   },
   "dependencies": {
-    "alasql": "^0.4.3",
+    "alasql": "0.4.3",
     "angular": "1.5.8",
     "angular-animate": "1.5.8",
     "angular-aria": "1.5.8",
@@ -40,7 +40,7 @@
     "angular-cookies": "1.5.11",
     "angular-immutable": "0.1.2",
     "angular-material": "1.1.20",
-    "angular-material-badge": "^1.2.9",
+    "angular-material-badge": "1.2.9",
     "angular-material-icons": "0.6.0",
     "angular-messages": "1.5.8",
     "angular-resource": "1.5.5",

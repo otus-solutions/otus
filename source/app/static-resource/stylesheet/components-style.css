@@ -615,8 +615,8 @@ otus-dashboard-pendency .md-badge{
   background-color: rgb(255, 0 ,0);
 }
 
-otus-dashboard-pendency .md-badge element style{
-  top: 0px;
+otus-dashboard-pendency md-card md-card-content{
+  border-radius: 5px;
 }
 
 otus-dashboard-pendency .full-list-items{
@@ -629,6 +629,8 @@ otus-dashboard-pendency .header-list {
   color: #FFFFFF !important;
   min-height: 70px !important;
   max-height: 70px !important;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .no-padding {
