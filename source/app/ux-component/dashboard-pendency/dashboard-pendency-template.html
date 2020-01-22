@@ -1,47 +1,15 @@
-<style>
-  .full-list-items{
-    min-width: 90vw;
-  }
-
-  .header-list {
-    background-color: #009588;
-    font-weight: bold;
-    color: #FFFFFF !important;
-    min-height: 70px !important;
-    max-height: 70px !important;
-  }
-
-  .warning-card {
-    -moz-transform: rotate(30deg);
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 5px;
-    border-color: #ffffff;
-    padding-left: 8px;
-    padding-right: 8px;
-    min-width: 60px;
-  }
-
-  .priority-icon-late{
-    background: green;
-  }
-</style>
-
 <md-card layout="column" class="full-list-items no-border">
   <md-card-content class="no-padding">
 
     <md-card-header flex layout-align="start center" class="md-primary header-list" ng-style="{color: '#f77a7a'}">
       <md-card-header-text layout="row">
         <span class="md-header" layout-padding>PENDÊNCIAS DE ATIVIDADE</span>
-
         <md-icon layout-margin md-badge="{{$ctrl.userActivityPendencies.curr.length}}" ng-hide="!$ctrl.showOpenedPendencies && $ctrl.userActivityPendencies.currIsEmpty"
                  md-font-library="material-icons" ng-style="{color: 'yellow'}">warning</md-icon>
       </md-card-header-text>
 
-
       <md-switch layout-margin  ng-model="$ctrl.whichIsShowing" ng-true-value="'Finalizadas'" ng-false-value="'Em aberto'"
-      ng-change="$ctrl.changePendenciesListToShow()"
-      ng-style="{color: white}">
+                  ng-change="$ctrl.changePendenciesListToShow()" class="md-primary">
         {{ $ctrl.whichIsShowing }}
       </md-switch>
 
@@ -60,25 +28,23 @@
             <div layout="row">
               <md-icon class="md-avatar-icon" ng-style="{color: '#00897b'}" md-font-library="material-icons" layout-align="end end">
                 {{item.activityInfo.lastStatus.icon}}
-                <md-tooltip md-direction="top">
-                  {{item.activityInfo.lastStatus.tooltip}}
-                </md-tooltip>
+                <md-tooltip md-direction="top">{{item.activityInfo.lastStatus.tooltip}}</md-tooltip>
               </md-icon>
             </div>
             <span class="md-caption" ng-style="{color:'#797985'}">
-                <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }}</small></span>
-            <div name="priority-icon" layout="row" ng-hide="!$ctrl.showOpenedPendencies">
-              <md-icon class="md-avatar-icon" ng-style="{color: item.priority.color}" md-font-library="material-icons" layout-align="end end"">
-              arrow_upward
-                <md-tooltip md-direction="top">
-                  Prioridade {{item.priority.level}}
-                </md-tooltip>
-              </md-icon>
+                <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }}</small>
+            </span>
+            <div name="deadline-time" ng-hide="!$ctrl.showOpenedPendencies && item.deadLineColor">
+              <span class="md-caption" layout-align="end end">
+                <small class="md-body-2 clipped" ng-style="{color: item.deadLineColor}">{{ item.deadLine }}</small>
+                <md-tooltip md-direction="top">{{ item.dueDate }}</md-tooltip>
+              </span>
             </div>
             <div flex="10" ng-show="!$ctrl.showOpenedPendencies"></div>
           </div>
           <md-divider></md-divider>
         </md-grid-tile-header>
+
         <div layout="column">
           <div layout="row">
             <span class="md-caption" ng-style="{color:'#797985'}">
@@ -86,13 +52,13 @@
           </div>
 
           <div class="md-list-item-text" layout="column" layout-xs="column" layout-sm="column" layout-md="column">
-            <span class="md-caption" ng-style="{color:'#797985'}">Nº recrutamento:
+            <span class="md-caption" ng-style="{color:'#797985'}">NR:
                 <small class="md-body-2"  ng-style="{color:'black'}">{{ item.activityInfo.recruitmentNumber }}</small>
               </span>
-            <span class="md-caption" ng-style="{color:'#797985'}">Iniciada:
-                <small class="md-body-2" ng-style="{color:'black'}">{{ item.creationDate }} ({{ item.existenceTime }})</small>
+            <span class="md-caption" ng-style="{color:'#797985'}">Iniciada há:
+                <small class="md-body-2" ng-style="{color:'black'}">{{ item.existenceTime }} dia(s)</small>
+                <md-tooltip md-direction="top">{{ item.creationDate }}</md-tooltip>
               </span>
-
             <div ng-show="(item.activityInfo.externalID.length>0)">
               <span class="md-caption" ng-style="{color:'#797985'}">ID externo:
                 <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.externalID }}</small>

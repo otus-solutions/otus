@@ -618,6 +618,18 @@ otus-dashboard-pendency .md-badge element style{
   top: 0px;
 }
 
+otus-dashboard-pendency .full-list-items{
+  min-width: 90vw;
+}
+
+otus-dashboard-pendency .header-list {
+  background-color: #009588;
+  font-weight: bold;
+  color: #FFFFFF !important;
+  min-height: 70px !important;
+  max-height: 70px !important;
+}
+
 @media only screen and (max-width: 999px) {
   otus-dashboard-pendency .clipped {
     overflow: hidden;

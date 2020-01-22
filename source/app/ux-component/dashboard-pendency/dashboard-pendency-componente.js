@@ -106,45 +106,28 @@
     function _extractPendencyFromJsonItem(pendencyJson){
       const NUM_DAYS_MINIMUM_TO_WARNING = 7;
       const backgroundColor = {
-        LATE: "red", // "#ffa886",
-        ALMOST_LATE: "orange", // "#f8f8ab",
-        OK: "green"
+        LATE: "red",
+        ALMOST_LATE: "orange",
+        OK: null
       };
 
       let pendency = UserActivityPendencyFactory.fromJsonObject(pendencyJson);
       const creationDate = _extractDateZeroTime(new Date(pendency.creationDate));
       const dueDate = _extractDateZeroTime(new Date(pendency.dueDate));
       const today = _extractDateZeroTime(new Date());
-
-      const deadLine = _extractDuration(today, dueDate);
-      const existenceTime = _extractDuration(creationDate, today);
+      const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
+      const deadLine = (dueDate - today) / MILLISECONDS_PER_DAY;
+      const existenceTime = (today - creationDate) / MILLISECONDS_PER_DAY;
       pendency.activityInfo['lastStatus'] = _createStatus(pendency.activityInfo.lastStatusName);
-
-      let priority = {
-        color: backgroundColor.OK,
-        level: 'Baixa'
-      };
-      if(deadLine.days < 0){
-        priority = {
-          color: backgroundColor.LATE,
-          level: 'Alta'
-        };
-      }
-      else if(deadLine.days < NUM_DAYS_MINIMUM_TO_WARNING){
-        priority = {
-          color: backgroundColor.ALMOST_LATE,
-          level: 'Média'
-        };
-      }
 
       return {
         activityId: pendency.activityId,
         activityInfo: pendency.activityInfo,
         creationDate: _formatDate(creationDate),
-        existenceTime: existenceTime.str,
+        existenceTime: existenceTime,
         dueDate: _formatDate(dueDate),
         deadLine: deadLine,
-        priority: priority
+        deadLineColor: (deadLine <= 0 ? backgroundColor.LATE : (deadLine < NUM_DAYS_MINIMUM_TO_WARNING? backgroundColor.ALMOST_LATE : backgroundColor.OK))
       };
     }
 
@@ -153,25 +136,14 @@
       return date;
     }
 
-    function _extractDuration(beginDate, endDate){
-      const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
-      const days = (endDate - beginDate) / MILLISECONDS_PER_DAY;
-      const months = Math.floor(days / 30);
-      const remainingDays = Math.abs(days % 30);
-      return {
-        days: days,
-        str: (months===0 ? '' : `${months} m `) + (remainingDays===0 ? '' : `${remainingDays} d`)
-      }
-    }
-
     function _formatDate(date) {
       return date.getDate() + "/"+ (date.getMonth()+1) + "/" + date.getFullYear();
     }
 
     function _sortPendenciesByDueDate(pendenciesList){
       pendenciesList.sort(function(a, b){
-        if(a.deadLine.days < b.deadLine.days) return -1;
-        if(a.deadLine.days > b.deadLine.days) return 1;
+        if(a.deadLine < b.deadLine) return -1;
+        if(a.deadLine > b.deadLine) return 1;
         return 0;
       });
     }
