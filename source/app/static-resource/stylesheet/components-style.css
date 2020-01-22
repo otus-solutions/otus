@@ -610,6 +610,14 @@ otus-dashboard-pendency md-grid-tile figure {
   padding: 8px;
 }
 
+otus-dashboard-pendency .md-badge{
+  background-color: rgb(255, 0 ,0);
+}
+
+otus-dashboard-pendency .md-badge element style{
+  top: 0px;
+}
+
 @media only screen and (max-width: 999px) {
   otus-dashboard-pendency .clipped {
     overflow: hidden;

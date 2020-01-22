@@ -41,6 +41,7 @@
       currIsEmpty: true
     };
     self.showOpenedPendencies = true;
+    self.whichIsShowing ='Em aberto';
     self.changePendenciesListToShow = _changePendenciesListToShow;
 
     function onInit() {
