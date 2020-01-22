@@ -66,8 +66,17 @@
             </div>
           </div>
         </div>
-        <md-grid-tile-footer layout="row" layout-align="center center">
-          <md-button class="md-grid-item-content md-raised md-accent md-icon-button"
+        <md-grid-tile-footer>
+          <div layout="row" layout-align="space-between center">
+          <md-button  class="md-icon-button" ng-click="$ctrl.loadActivityViewer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
+            <md-icon md-font-library="material-icons" layout-align="end end">playlist_add_check
+              <md-tooltip md-direction="top">
+                Visualizar Ativiadade
+              </md-tooltip>
+            </md-icon>
+          </md-button>
+
+          <md-button class="md-icon-button"
                      ng-click="$ctrl.loadActivities(item.activityInfo.recruitmentNumber)" ng-disabled="!$ctrl.participantManagerReady">
             <md-icon md-svg-icon="file-document-box"  material-iconslayout-align="end end">
               <md-tooltip md-direction="top">
@@ -76,21 +85,14 @@
             </md-icon>
           </md-button>
 
-          <md-button class="md-grid-item-content md-raised md-accent md-icon-button"  ng-click="$ctrl.loadActivityPlayer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
+          <md-button class="md-primary md-icon-button"  ng-click="$ctrl.loadActivityPlayer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
             <md-icon md-svg-icon="clipboard-check" layout-align="end end">
               <md-tooltip md-direction="top">
                 Preencher Atividade
               </md-tooltip>
             </md-icon>
           </md-button>
-
-          <md-button  class="md-grid-item-content md-raised md-accent md-icon-button" ng-click="$ctrl.loadActivityViewer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
-            <md-icon md-font-library="material-icons" layout-align="end end">playlist_add_check
-              <md-tooltip md-direction="top">
-                Visualizar Ativiadade
-              </md-tooltip>
-            </md-icon>
-          </md-button>
+        </div>
         </md-grid-tile-footer>
       </md-grid-tile>
     </md-grid-list>
