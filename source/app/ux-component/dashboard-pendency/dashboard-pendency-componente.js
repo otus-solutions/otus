@@ -116,8 +116,8 @@
       const dueDate = _extractDateZeroTime(new Date(pendency.dueDate));
       const today = _extractDateZeroTime(new Date());
       const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
-      const deadLine = (dueDate - today) / MILLISECONDS_PER_DAY;
-      const existenceTime = (today - creationDate) / MILLISECONDS_PER_DAY;
+      const deadLine = Math.floor((dueDate - today) / MILLISECONDS_PER_DAY);
+      const existenceTime = Math.floor((today - creationDate) / MILLISECONDS_PER_DAY);
       pendency.activityInfo['lastStatus'] = _createStatus(pendency.activityInfo.lastStatusName);
 
       return {
