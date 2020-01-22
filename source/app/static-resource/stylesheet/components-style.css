@@ -459,7 +459,7 @@ otus-activity-adder-card md-grid-tile-header figcaption {
   width: 100%;
 }
 
-otus-activity-adder-card .grid-align{
+.grid-align{
   padding-left: 10px;
   padding-top: 5px;
   width: 100%;

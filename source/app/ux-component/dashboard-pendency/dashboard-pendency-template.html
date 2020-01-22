@@ -45,10 +45,13 @@
           <md-divider></md-divider>
         </md-grid-tile-header>
 
-        <div layout="column">
-          <div layout="row">
-            <span class="md-caption" ng-style="{color:'#797985'}">
-                <small class="md-body-2 clipped" ng-style="{color:'black'}">{{ item.activityInfo.name }}</small></span>
+        <div class="grid-align" layout="column" layout-align="space-between stretch">
+          <div layout="column">
+            <span class="md-caption" ng-style="{color:'#797985'}" md-body-2 layout-fill ng-binding md-truncate>
+                <small class="md-body-2 clipped" ng-style="{color:'black'}">
+                  {{ item.activityInfo.name }}
+                </small>
+            </span>
           </div>
 
           <div class="md-list-item-text" layout="column" layout-xs="column" layout-sm="column" layout-md="column">
