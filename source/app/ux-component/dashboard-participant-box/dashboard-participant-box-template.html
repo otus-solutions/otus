@@ -37,6 +37,12 @@
           <md-button id="surveyforms-menu" ng-click="$ctrl.loadLaboratory()">Laboratório</md-button>
         </div>
       </md-list-item>
+      <md-list-item ng-if="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" class="md-2-line">
+        <div layout-align="start center">
+          <md-icon md-svg-icon="eyedropper-variant" aria-label="Segmentos" class="md-accent"></md-icon>
+          <md-button id="follow-up-menu" ng-click="$ctrl.loadFollowUps()">Segmentos</md-button>
+        </div>
+      </md-list-item>
       <!-- <md-list-item>
       <div layout-align="start center">
         <md-icon md-font-library="material-icons">insert_chart</md-icon>

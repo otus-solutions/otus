@@ -16,6 +16,7 @@
       'INSTALLER': 'installer',
       'LOGIN': 'login',
       'LABORATORY': 'laboratory-participant',
+      'PARTICIPANT_FOLLOWUPS': 'participant-followup',
       'PARTICIPANT': 'participant',
       'PARTICIPANT_ACTIVITY': 'activity',
       'PARTICIPANT_REPORT': 'report',

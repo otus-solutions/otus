@@ -16,6 +16,7 @@
     self.listIdexers = listIdexers;
     self.create = create;
     self.getAllowNewParticipants = getAllowNewParticipants;
+    self.getFollowUps = getFollowUps;
 
     function get() {}
 
@@ -25,6 +26,13 @@
       var _dataSource = ModuleService.DataSource.Participant;
       if (_dataSource) {
         return _dataSource.create(participant);
+      }
+    }
+
+    function getFollowUps(recruitmentNumber) {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.getFollowUps(recruitmentNumber);
       }
     }
 

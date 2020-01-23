@@ -22,6 +22,7 @@
     self.loadParticipantActivities = loadParticipantActivities;
     self.loadParticipantReports = loadParticipantReports;
     self.loadLaboratory = loadLaboratory;
+    self.loadFollowUps = loadFollowUps;
     self.home = home;
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -50,6 +51,11 @@
 
     function loadLaboratory() {
       ApplicationStateService.activateLaboratory();
+      self.onClose();
+    }
+
+    function loadFollowUps() {
+      ApplicationStateService.activateParticipantFollowUps();
       self.onClose();
     }
 

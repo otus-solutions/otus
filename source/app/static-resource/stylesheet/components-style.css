@@ -12,8 +12,8 @@ otus-dashboard-sidenav md-backdrop ~ md-content {
 }
 @media (max-width: 456px) {
   otus-dashboard-sidenav md-sidenav,
-  otus-dashboard-sidenav md-sidenav.md-locked-open,
-  otus-dashboard-sidenav md-sidenav.md-closed.md-locked-open-add-active {
+otus-dashboard-sidenav md-sidenav.md-locked-open,
+otus-dashboard-sidenav md-sidenav.md-closed.md-locked-open-add-active {
     position: fixed !important;
     min-width: 320px !important;
   }
@@ -68,23 +68,23 @@ otus-activity-manager otus-activity-list .dynamic-table-container {
 otus-activity-manager otus-activity-list .dynamic-table-container .dynamic-structure {
   min-width: 750px !important;
 }
-otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
+otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial {
   max-height: 50px;
 }
 @media only screen and (max-width: 450px) {
-  otus-activity-manager otus-activity-manager-bottom-sheet md-toolbar {
+  otus-activity-manager otus-activity-manager-toolbar md-toolbar {
     display: none !important;
   }
-  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
+  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial {
     position: relative;
     display: flex;
     align-items: center;
     z-index: 20;
   }
-  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial md-fab-trigger {
+  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial md-fab-trigger {
     width: 80%;
   }
-  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial md-fab-trigger button {
+  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial md-fab-trigger button {
     width: 100%;
     margin-left: 0;
     margin-right: 0;
@@ -93,7 +93,7 @@ otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
   }
 }
 @media only screen and (min-width: 451px) {
-  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
+  otus-activity-manager otus-activity-manager-toolbar md-fab-speed-dial {
     display: none;
   }
 }
@@ -401,137 +401,4 @@ otus-activity-category-adder otus-activity-category-adder-list md-card md-input-
   top: -5px;
 }
 
-activity-grid-list .gridListDynamicTiles md-grid-list {
-  margin: 10px;
-  transition-duration: 0s;
-}
-
-activity-grid-list .gridListDynamicTiles md-grid-tile md-grid-tile-header {
-  background: rgba(19, 125, 108, 0.68);
-  position: relative;
-  width: 100%;
-  overflow: inherit;
-  padding: 8px;
-}
-
-activity-grid-list .gridListDynamicTiles md-grid-tile-header figcaption {
-  display: block;
-  width: 100%;
-}
-
-activity-grid-list .gridListDynamicTiles md-grid-tile-header figcaption md-icon {
-  margin: 0;
-}
-
-activity-grid-list .gridListDynamicTiles md-grid-tile figure {
-  justify-content: normal;
-  flex-direction: column;
-  align-items: start;
-  transition-duration: 0s;
-}
-
-activity-grid-list .gridListDynamicTiles .grid-aligh{
-  padding-left: 10px;
-  padding-top: 5px;
-  width: 100%;
-}
-
-activity-grid-list .gridListDynamicTiles md-grid-tile:hover {
-  background: #F5F5F5;
-  cursor: pointer;
-}
-
-@media only screen and (max-width: 999px) {
-  activity-grid-list .gridListDynamicTiles .clipped {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 90%;
-  }
-}
-
-otus-activity-adder-card {
-  width: 100%;
-}
-
-otus-activity-adder-card md-grid-tile-header figcaption {
-  display: block;
-  width: 100%;
-}
-
-otus-activity-adder-card .grid-align{
-  padding-left: 10px;
-  padding-top: 5px;
-  width: 100%;
-}
-
-otus-activity-adder md-input-container {
-  margin-bottom: 0px;
-}
-
-otus-activity-adder .button-hover :hover {
-  background-color: rgba(0,0,0,.06);
-  border-radius: 0 0 0 0;
-  width: auto;
-  height: auto;
-}
-
-otus-activity-adder .card-width {
-  width: 100%;
-}
-
-otus-activity-adder md-grid-tile figure {
-  justify-content: normal;
-  flex-direction: column;
-  align-items: start;
-  transition-duration: 0s;
-}
-
-otus-activity-adder md-grid-list {
-  margin: 10px;
-  transition-duration: 0s;
-}
-
-otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-header {
-  position: relative;
-  width: 100%;
-  overflow: inherit;
-  padding: 8px;
-}
-
-otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-footer {
-  padding-left: 10px;
-  color: red;
-  height: 24px;
-  background: rgba(0,0,0,.05);
-}
-
-otus-activity-adder md-select {
-  margin: 5px 0 0;
-}
-
-otus-activity-adder  md-input-container {
-  margin: 0;
-  height: 40px;
-  padding: 0 15px;
-  border: none;
-}
-
-otus-activity-adder-card md-input-container {
-   padding: 0 15px 0 0;
-   margin: 0;
-   height: 40px;
-   border: none;
-}
-
-@media screen and (max-width: 799px) {
-  otus-activity-adder .card-width-category {
-    width: 100%;
-    padding-left: 20px;
-  }
-
-  otus-activity-adder .card-width-layout-sm {
-    width: 100%;
-  }
-}
 /*# sourceMappingURL=components-style.css.map */
