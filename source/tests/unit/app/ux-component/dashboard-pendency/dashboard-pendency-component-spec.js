@@ -1,21 +1,18 @@
-fdescribe('otusDashboardPendency Test', function() {
+describe('otusDashboardPendency Test', function() {
 
   var UNIT_NAME = 'otusDashboardPendencyCtrl';
   var Injections = {};
   var controller = {};
   var DATA_RN = "9892854";
+  var DATA_ACTIVITY = "54321";
   var Mock = {};
 
-
   beforeEach(function() {
-    mocks();
 
     angular.mock.module('otusjs.otus');
 
-    inject(function($injector, $controller, $rootScope, $compile) {
-      //Mock.scope = $rootScope.$new();
-      //Mock.element = angular.element('<input>');
-      //Mock.element = $compile(Mock.element)(Mock.scope);
+    inject(function($injector, $controller, $rootScope) {
+      Mock.scope = $rootScope.$new();
 
       Injections.ParticipantActivityService = $injector.get('otusjs.activity.business.ParticipantActivityService');
       Injections.ApplicationStateService = $injector.get('otusjs.application.state.ApplicationStateService');
@@ -26,17 +23,33 @@ fdescribe('otusDashboardPendency Test', function() {
       Injections.UserActivityPendencyService = $injector.get('otusjs.pendency.business.UserActivityPendencyService');
       Injections.$q = $injector.get('$q');
       Injections.$mdToast = $injector.get('$mdToast');
-      //Injections.$element = Mock.element;
 
       controller = $controller(UNIT_NAME, Injections);
 
       Mock.deferred = Injections.$q.defer();
+      Mock.foundPendency = Test.utils.data.userActivityPendency;
 
     });
+
+    spyOn(Injections.ParticipantManagerService,"getParticipant");
+    spyOn(Injections.ParticipantManagerService,"selectParticipant");
+    spyOn(Injections.ParticipantManagerService,"setup").and.returnValue(Promise.resolve({}));
+    spyOn(Injections.ParticipantActivityService,"getActivity").and.returnValue(Promise.resolve({}));
+    spyOn(Injections.ParticipantActivityService,"selectActivities").and.returnValue(Promise.resolve());
+    spyOn(Injections.ActivityPlayerService,"load").and.returnValue(Promise.resolve());
+    spyOn(Injections.ActivityViewService,"load").and.returnValue(Promise.resolve());
+    spyOn(Injections.UserActivityPendencyService,"getOpenedUserActivityPendenciesToReceiver").and.returnValue(Promise.resolve([Mock.foundPendency,Mock.foundPendency]));
+    spyOn(Injections.ApplicationStateService,"activateParticipantActivities");
+    spyOn(Injections.ApplicationStateService,"activateActivityPlayer");
+    spyOn(Injections.ApplicationStateService,"activateActivityViewer");
+    spyOn(Injections.ParticipantActivityService,"clearSelectedActivities");
+
+    controller.$onInit();
   });
 
   it('should controller defined', function() {
     expect(controller).toBeDefined();
+    expect(controller.$onInit).toBeDefined();
     expect(controller.loadActivities).toBeDefined();
     expect(controller.loadActivityPlayer).toBeDefined();
     expect(controller.loadActivityViewer).toBeDefined();
@@ -45,35 +58,67 @@ fdescribe('otusDashboardPendency Test', function() {
     expect(controller.displayGridSmall).toBeDefined();
   });
 
-  it('should call selectParticipant method', function () {
-    spyOn(Injections.ParticipantManagerService,"getParticipant")
-    spyOn(Injections.ParticipantManagerService,"selectParticipant")
+  it('should call onInit method', function () {
+    expect(Injections.ParticipantManagerService.setup).toHaveBeenCalledTimes(1);
+    expect(Injections.UserActivityPendencyService.getOpenedUserActivityPendenciesToReceiver).toHaveBeenCalledTimes(1);
+  });
 
+  it('should call selectParticipant method', function () {
     expect(controller.selectParticipant(DATA_RN)).toBePromise();
 
     expect(Injections.ParticipantManagerService.getParticipant).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantManagerService.selectParticipant).toHaveBeenCalledTimes(1);
   });
 
-  xit('should call loadActivities method', function (done) {
-    spyOn(Injections.ParticipantManagerService,"getParticipant").and.returnValue(Promise.resolve());
-    spyOn(Injections.ParticipantManagerService,"selectParticipant");
-    spyOn(Injections.ApplicationStateService,"activateParticipantActivities");
+  it('should call loadActivities method', function (done) {
     spyOn(controller,"selectParticipant").and.returnValue(Promise.resolve());
 
-    controller.loadActivities(DATA_RN)
+    controller.loadActivities(DATA_RN);
 
-    controller.selectParticipant(DATA_RN).then(function () {
+    Mock.scope.$digest();
+
     expect(Injections.ParticipantManagerService.getParticipant).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantManagerService.selectParticipant).toHaveBeenCalledTimes(1);
     expect(Injections.ApplicationStateService.activateParticipantActivities).toHaveBeenCalledTimes(1);
     done();
-  })
-  .then(function () {
-  expect(Injections.ApplicationStateService.activateParticipantActivities).toHaveBeenCalledTimes(0);
-  done();
-  })
-  done();
+  });
+
+  it('should call loadActivityPlayer method', function (done) {
+    spyOn(controller,"selectParticipant").and.returnValue(Promise.resolve());
+
+    controller.loadActivityPlayer(DATA_RN, DATA_ACTIVITY);
+    Mock.scope.$digest();
+
+    expect(Injections.ParticipantManagerService.getParticipant).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantManagerService.selectParticipant).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantActivityService.getActivity).toHaveBeenCalledTimes(1);
+    Injections.ParticipantActivityService.getActivity().then(function() {
+      expect(Injections.ParticipantActivityService.selectActivities).toHaveBeenCalledTimes(1);
+      done();
+    });
+    expect(Injections.ActivityPlayerService.load).toHaveBeenCalledTimes(0);
+    expect(Injections.ApplicationStateService.activateActivityPlayer).toHaveBeenCalledTimes(0);
+    expect(Injections.ParticipantActivityService.clearSelectedActivities).toHaveBeenCalledTimes(1);
+    done();
+  });
+
+  it('should call loadActivityViewer method', function (done) {
+    spyOn(controller,"selectParticipant").and.returnValue(Promise.resolve());
+
+    controller.loadActivityViewer(DATA_RN, DATA_ACTIVITY);
+    Mock.scope.$digest();
+
+    expect(Injections.ParticipantManagerService.getParticipant).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantManagerService.selectParticipant).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantActivityService.getActivity).toHaveBeenCalledTimes(1);
+    Injections.ParticipantActivityService.getActivity().then(function() {
+      expect(Injections.ParticipantActivityService.selectActivities).toHaveBeenCalledTimes(1);
+      expect(Injections.ActivityViewService.load).toHaveBeenCalledTimes(0);
+      expect(Injections.ApplicationStateService.activateActivityViewer).toHaveBeenCalledTimes(0);
+      expect(Injections.ParticipantActivityService.clearSelectedActivities).toHaveBeenCalledTimes(1);
+      done();
+    });
+    done();
   });
 
   it('should call displayGridLarge method', function () {
@@ -89,61 +134,5 @@ fdescribe('otusDashboardPendency Test', function() {
     window.innerWidth = 800;
     expect(controller.displayGridSmall()).toEqual('1:1');
   });
-
-
-  function mocks() {
-    Mock.group = ["Desfechos","Laboratório","Clínica"];
-    Mock.surveysGroups = {
-      getGroupSurveys: function () {
-        return [Mock.survey];
-      },
-      getGroupNames: function () {
-        return jasmine.createSpy()
-      }
-    };
-    Mock.survey = Test.utils.data.activityPASC.surveyForm;
-    Mock.survey.isRequiredExternalID = function(){
-      return false;
-    };
-    Mock.mode = Test.utils.data.activityPASC.mode;
-    Mock.configuration = {
-      category: {
-        disabled: false,
-        isDefault: true,
-        label: "Normal",
-        name: "C0",
-        objectType: "ActivityCategory"
-      }
-    };
-    Mock.participant = Test.utils.data.activityPASC.participantData;
-    Mock.configuration = {
-      category: {
-        disabled: false,
-        isDefault: true,
-        label: "Normal",
-        name: "C0",
-        objectType: "ActivityCategory"
-      }
-    };
-    Mock.externalID = "32432432";
-    Mock.user = {
-      email: "fulano@gmail.com",
-      fieldCenter: {},
-      name: "Adonis",
-      phone: "5199999999",
-      surname: "Garcia",
-      token: "eyJhbGciOiJIUzI1NiJ9AOFIMALEM"
-    };
-    Mock.preActivity = {
-      configuration: Mock.configuration,
-      externalID: Mock.externalID,
-      mode: Mock.mode,
-      objectType: "preActivity",
-      paperActivityData: "",
-      preActivityValid: false,
-      surveyForm: Mock.survey,
-      user: Mock.user
-    };
-  }
 
 });

@@ -103,14 +103,6 @@ describe('participant-manager-service Test', function() {
     expect(service.getParticipantList()).toEqual([]);
   });
 
-  xit('getParticipantMethod should find method participantList', function () {
-    spyOn(Injections.SearchQueryFactory, "newParticipantFilter").and.callThrough();
-    service.setup();
-    expect(Injections.ParticipantRepositoryService.listIdexers).toHaveBeenCalledTimes(1);
-    expect(Injections.SearchQueryFactory.newParticipantFilter).toHaveBeenCalledTimes(1);
-    expect(service.getParticipant(DATA_RN)).toEqual([]);
-  });
-
   it('getParticipantMethod should find method participantList return error', function () {
     service.setup();
     expect(service.getParticipant).toThrowError(ERROR_MESSAGE);

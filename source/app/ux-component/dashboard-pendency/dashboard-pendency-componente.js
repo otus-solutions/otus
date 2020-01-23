@@ -26,7 +26,7 @@
 
     self.messageError = '';
 
-    self.$onInit = onInit();
+    self.$onInit = onInit;
     self.loadActivities = loadActivities;
     self.loadActivityPlayer = loadActivityPlayer;
     self.loadActivityViewer = loadActivityViewer;
@@ -177,7 +177,6 @@
       };
       return dict[status];
     }
-
 
     function displayGridLarge() {
       if (window.innerWidth < 1400) {
