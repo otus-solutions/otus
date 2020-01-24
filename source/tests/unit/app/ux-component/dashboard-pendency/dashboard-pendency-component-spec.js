@@ -21,6 +21,7 @@ describe('otusDashboardPendency Test', function() {
       Injections.ActivityPlayerService = $injector.get('otusjs.activity.business.ActivityPlayerService');
       Injections.ActivityViewService = $injector.get('otusjs.activity.business.ActivityViewService');
       Injections.UserActivityPendencyService = $injector.get('otusjs.pendency.business.UserActivityPendencyService');
+      Injections.$filter = $injector.get('$filter');
       Injections.$q = $injector.get('$q');
       Injections.$mdToast = $injector.get('$mdToast');
 
@@ -50,6 +51,7 @@ describe('otusDashboardPendency Test', function() {
   it('should controller defined', function() {
     expect(controller).toBeDefined();
     expect(controller.$onInit).toBeDefined();
+    expect(controller.filterGridTile).toBeDefined();
     expect(controller.loadActivities).toBeDefined();
     expect(controller.loadActivityPlayer).toBeDefined();
     expect(controller.loadActivityViewer).toBeDefined();
@@ -61,6 +63,14 @@ describe('otusDashboardPendency Test', function() {
   it('should call onInit method', function () {
     expect(Injections.ParticipantManagerService.setup).toHaveBeenCalledTimes(1);
     expect(Injections.UserActivityPendencyService.getOpenedUserActivityPendenciesToReceiver).toHaveBeenCalledTimes(1);
+  });
+
+  it('filterGridTileMethod should filter the activities', function () {
+    expect(controller.filter).toEqual("");
+    controller.userActivityPendencies.curr.push(Mock.foundPendency);
+    controller.filter = "CSJ";
+    controller.filterGridTile();
+    expect(controller.filteredActiviteis.length).toEqual(1);
   });
 
   it('should call selectParticipant method', function () {

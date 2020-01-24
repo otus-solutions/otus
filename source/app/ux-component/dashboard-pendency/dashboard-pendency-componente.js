@@ -11,6 +11,7 @@
   Controller.$inject = [
     '$q',
     '$mdToast',
+    '$filter',
     'otusjs.model.pendency.UserActivityPendencyFactory',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.activity.business.ParticipantActivityService',
@@ -20,11 +21,12 @@
     'otusjs.pendency.business.UserActivityPendencyService'
   ];
 
-  function Controller($q, $mdToast, UserActivityPendencyFactory, ParticipantManagerService, ParticipantActivityService,
+  function Controller($q, $mdToast, $filter, UserActivityPendencyFactory, ParticipantManagerService, ParticipantActivityService,
                       ApplicationStateService, ActivityPlayerService, ActivityViewService, UserActivityPendencyService) {
     var self = this;
 
     self.messageError = '';
+    self.filter = '';
 
     self.$onInit = onInit;
     self.loadActivities = loadActivities;
@@ -33,6 +35,7 @@
     self.selectParticipant = selectParticipant;
     self.displayGridLarge = displayGridLarge;
     self.displayGridSmall = displayGridSmall;
+    self.filterGridTile = filterGridTile;
 
     self.userActivityPendencies = {
       opened: [],
@@ -176,6 +179,33 @@
         },
       };
       return dict[status];
+    }
+
+    function filterGridTile() {
+      if (self.filter.length) {
+        self.filteredActiviteis = $filter('filter')(self.userActivityPendencies.curr, self.filter);
+
+        let count = self.filteredActiviteis.length;
+        let msg = '';
+        if (!count) {
+          msg = 'Nenhum registro foi encontrado.';
+        } else if (count === 1) {
+          msg = count + ' Registro foi encontrado.'
+        } else {
+          msg = count + ' Registros foram encontrados.'
+        }
+        _showMsg(msg);
+      } else {
+        self.filteredActiviteis = self.userActivityPendencies.curr;
+      }
+    }
+
+    function _showMsg(msg) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msg)
+          .hideDelay(2000)
+      );
     }
 
     function displayGridLarge() {

@@ -9,12 +9,20 @@
       </md-card-header-text>
 
       <md-switch layout-margin  ng-model="$ctrl.whichIsShowing" ng-true-value="'Finalizadas'" ng-false-value="'Em aberto'"
-                  ng-change="$ctrl.changePendenciesListToShow()" class="md-primary">
+                 ng-change="$ctrl.changePendenciesListToShow()" class="md-primary">
         {{ $ctrl.whichIsShowing }}
       </md-switch>
 
     </md-card-header>
-
+    <div layout-padding ng-hide="!$ctrl.userActivityPendencies.currIsEmpty" layout="row" layout-align="start center" flex>
+      <div layout-margin layout="column" flex="40" flex-sm="70" flex-xs="100">
+        <md-input-container flex>
+          <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter"
+                 ng-change="$ctrl.filterGridTile()"
+                 ng-model-options="{ allowInvalid: true, debounce: 500 }"/>
+        </md-input-container>
+      </div>
+    </div>
     <div layout-padding ng-hide="$ctrl.userActivityPendencies.currIsEmpty" >Você não possui pendências de atividade.</div>
 
     <md-grid-list md-cols="4"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="6" md-cols-lg="4" md-cols-gt-md="4"
@@ -22,7 +30,7 @@
                   md-row-height="1:0.9"  md-row-height-xs="1:0.6" md-gutter-gt-md="10px" md-gutter="12px" md-gutter-sm="6px" md-row-height-xl="1:0.8" >
 
       <md-grid-tile ng-hide="!$ctrl.userActivityPendencies.currIsEmpty"
-                    class="md-whiteframe-1dp" ng-repeat="item in $ctrl.userActivityPendencies.curr">
+                    class="md-whiteframe-1dp" ng-repeat="item in $ctrl.userActivityPendencies.curr | filter:$ctrl.filter">
         <md-grid-tile-header>
           <div layout="row" layout-align="space-between center">
             <div layout="row">
@@ -71,31 +79,31 @@
         </div>
         <md-grid-tile-footer>
           <div layout="row" layout-align="space-between center">
-          <md-button  class="md-icon-button" ng-click="$ctrl.loadActivityViewer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
-            <md-icon md-font-library="material-icons" layout-align="end end">playlist_add_check
-              <md-tooltip md-direction="top">
-                Visualizar Ativiadade
-              </md-tooltip>
-            </md-icon>
-          </md-button>
+            <md-button  class="md-icon-button" ng-click="$ctrl.loadActivityViewer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
+              <md-icon md-font-library="material-icons" layout-align="end end">playlist_add_check
+                <md-tooltip md-direction="top">
+                  Visualizar Ativiadade
+                </md-tooltip>
+              </md-icon>
+            </md-button>
 
-          <md-button class="md-icon-button"
-                     ng-click="$ctrl.loadActivities(item.activityInfo.recruitmentNumber)" ng-disabled="!$ctrl.participantManagerReady">
-            <md-icon md-svg-icon="file-document-box"  material-iconslayout-align="end end">
-              <md-tooltip md-direction="top">
-                Atividades
-              </md-tooltip>
-            </md-icon>
-          </md-button>
+            <md-button class="md-icon-button"
+                       ng-click="$ctrl.loadActivities(item.activityInfo.recruitmentNumber)" ng-disabled="!$ctrl.participantManagerReady">
+              <md-icon md-svg-icon="file-document-box"  material-iconslayout-align="end end">
+                <md-tooltip md-direction="top">
+                  Atividades
+                </md-tooltip>
+              </md-icon>
+            </md-button>
 
-          <md-button class="md-primary md-icon-button"  ng-click="$ctrl.loadActivityPlayer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
-            <md-icon md-svg-icon="clipboard-check" layout-align="end end">
-              <md-tooltip md-direction="top">
-                Preencher Atividade
-              </md-tooltip>
-            </md-icon>
-          </md-button>
-        </div>
+            <md-button class="md-primary md-icon-button"  ng-click="$ctrl.loadActivityPlayer(item.activityInfo.recruitmentNumber, item.activityId)" ng-disabled="!$ctrl.participantManagerReady">
+              <md-icon md-svg-icon="clipboard-check" layout-align="end end">
+                <md-tooltip md-direction="top">
+                  Preencher Atividade
+                </md-tooltip>
+              </md-icon>
+            </md-button>
+          </div>
         </md-grid-tile-footer>
       </md-grid-tile>
     </md-grid-list>
