@@ -613,6 +613,7 @@ otus-dashboard-pendency md-grid-tile figure {
 
 otus-dashboard-pendency .md-badge{
   background-color: rgb(255, 0 ,0);
+  z-index: 10;
 }
 
 otus-dashboard-pendency md-card md-card-content{
@@ -621,6 +622,10 @@ otus-dashboard-pendency md-card md-card-content{
 
 otus-dashboard-pendency .full-list-items{
   min-width: 90vw;
+}
+
+otus-dashboard-pendency  md-input-container {
+  margin: 0;
 }
 
 otus-dashboard-pendency .header-list {

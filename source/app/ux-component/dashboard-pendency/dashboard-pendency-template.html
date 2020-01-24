@@ -9,12 +9,20 @@
       </md-card-header-text>
 
       <md-switch layout-margin  ng-model="$ctrl.whichIsShowing" ng-true-value="'Finalizadas'" ng-false-value="'Em aberto'"
-                  ng-change="$ctrl.changePendenciesListToShow()" class="md-primary">
+                 ng-change="$ctrl.changePendenciesListToShow()" class="md-primary">
         {{ $ctrl.whichIsShowing }}
       </md-switch>
 
     </md-card-header>
-
+    <div layout-padding ng-hide="!$ctrl.userActivityPendencies.currIsEmpty" layout="row" layout-align="start center" flex>
+      <div layout-margin layout="column" flex="40" flex-sm="70" flex-xs="100">
+        <md-input-container flex>
+          <input type="text" flex placeholder="Filtro de busca" ng-model="$ctrl.filter"
+                 ng-change="$ctrl.filterGridTile()"
+                 ng-model-options="{ allowInvalid: true, debounce: 500 }"/>
+        </md-input-container>
+      </div>
+    </div>
     <div layout-padding ng-hide="$ctrl.userActivityPendencies.currIsEmpty" >Você não possui pendências de atividade.</div>
 
     <md-grid-list md-cols="4"  md-cols-xs="1" md-cols-sm="3" md-cols-md="4" md-cols-xl="6" md-cols-lg="4" md-cols-gt-md="4"
@@ -22,26 +30,27 @@
                   md-row-height="1:0.9"  md-row-height-xs="1:0.6" md-gutter-gt-md="10px" md-gutter="12px" md-gutter-sm="6px" md-row-height-xl="1:0.8" >
 
       <md-grid-tile ng-hide="!$ctrl.userActivityPendencies.currIsEmpty"
-                    class="md-whiteframe-1dp" ng-repeat="item in $ctrl.userActivityPendencies.curr">
-        <md-grid-tile-header ng-style="{background: item.color.background}">
+                    class="md-whiteframe-1dp" ng-repeat="item in $ctrl.userActivityPendencies.curr | filter:$ctrl.filter">
+        <md-grid-tile-header>
           <div layout="row" layout-align="space-between center">
             <div layout="row">
-              <md-icon class="md-avatar-icon" md-font-library="material-icons" layout-align="end end" layout-margin="2px">
+              <md-icon class="md-avatar-icon" ng-style="{color: '#00897b'}" md-font-library="material-icons" layout-align="end end">
                 {{item.activityInfo.lastStatus.icon}}
                 <md-tooltip md-direction="top">{{item.activityInfo.lastStatus.tooltip}}</md-tooltip>
               </md-icon>
             </div>
-            <span class="md-caption">
+            <span class="md-caption" ng-style="{color:'#797985'}">
                 <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }}</small>
             </span>
-            <div name="deadline-time" ng-hide="!$ctrl.showOpenedPendencies">
-              <span class="md-caption" layout-align="end end" layout-margin="2px">
-                <small class="md-body-2 clipped no-opacity" ng-style="{color: item.color.text}">{{ item.deadLine }} dias</small>
+            <div name="deadline-time" ng-hide="!$ctrl.showOpenedPendencies && item.deadLineColor">
+              <span class="md-caption" layout-align="end end">
+                <small class="md-body-2 clipped" ng-style="{color: item.deadLineColor}">{{ item.deadLine }}</small>
                 <md-tooltip md-direction="top">{{ item.dueDate }}</md-tooltip>
               </span>
             </div>
             <div flex="10" ng-show="!$ctrl.showOpenedPendencies"></div>
           </div>
+          <md-divider></md-divider>
         </md-grid-tile-header>
 
         <div class="grid-align" layout="column" layout-align="space-between stretch">
