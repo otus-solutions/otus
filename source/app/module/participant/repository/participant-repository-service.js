@@ -17,6 +17,7 @@
     self.create = create;
     self.getAllowNewParticipants = getAllowNewParticipants;
     self.getFollowUps = getFollowUps;
+    self.activateFollowUpEvent = activateFollowUpEvent;
 
     function get() {}
 
@@ -33,6 +34,13 @@
       var _dataSource = ModuleService.DataSource.Participant;
       if (_dataSource) {
         return _dataSource.getFollowUps(recruitmentNumber);
+      }
+    }
+
+    function activateFollowUpEvent(recruitmentNumber, event) {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.activateFollowUpEvent(recruitmentNumber, event);
       }
     }
 

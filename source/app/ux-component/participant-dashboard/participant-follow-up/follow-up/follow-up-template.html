@@ -1,0 +1,14 @@
+<md-whiteframe class="md-whiteframe-4dp" layout="column" layout-margin="" flex>
+  <div>
+    {{$ctrl.followUpData.description}}
+  </div>
+  <div layout="row" flex="">
+    <div flex="5"></div>
+    <otus-follow-up-event layout-align="center end" ng-repeat="event in $ctrl.followUpData.events track by event.order"
+                          event-data="event"
+                          flex></otus-follow-up-event>
+  </div>
+</md-whiteframe>
+
+
+

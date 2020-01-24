@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.participant.business')
-    .service('otusjs.participant.business.ParticipantFollowupService', Service);
+    .service('otusjs.participant.business.ParticipantFollowUpService', Service);
 
   Service.$inject = [
     '$q',
@@ -13,11 +13,25 @@
   function Service($q, ParticipantRepositoryService) {
     var self = this;
 
-    self.getFollowups = getFollowups;
+    self.getFollowUps = getFollowUps;
+    self.activateFollowUpEvent = activateFollowUpEvent;
 
-    function getFollowups(recruitmentNumber) {
+    function getFollowUps(recruitmentNumber) {
       var deferred = $q.defer();
       ParticipantRepositoryService.getFollowUps(recruitmentNumber)
+        .then(function (response) {
+          deferred.resolve(response);
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function activateFollowUpEvent(recruitmentNumber, event) {
+      var deferred = $q.defer();
+      ParticipantRepositoryService.activateFollowUpEvent(recruitmentNumber, event)
         .then(function (response) {
           deferred.resolve(response);
         })

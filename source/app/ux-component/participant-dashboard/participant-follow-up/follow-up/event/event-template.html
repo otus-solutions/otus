@@ -1,0 +1,15 @@
+<md-whiteframe class="md-whiteframe-3dp" layout="column" flex>
+  <div layout="row" layout-align="center start" layout-margin flex>
+    <md-icon flex="5">{{$ctrl.eventData.icon}}</md-icon>
+    <p flex>{{$ctrl.eventData.description}}</p>
+    <md-button class="md-icon-button md-accent" aria-label="More">
+      <md-icon>play_arrow</md-icon>
+    </md-button>
+  </div>
+  <div ng-if="$ctrl.eventData.participantEvents.length > 0" layout="row" layout-padding="">
+    <div flex="5"></div>
+    <md-whiteframe ng-repeat="participantEvent in $ctrl.eventData.participantEvents" class="md-whiteframe-3dp" layout="column" flex>
+      <p> {{participantEvent }} </p>
+    </md-whiteframe>
+  </div>
+</md-whiteframe>

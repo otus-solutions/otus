@@ -20,9 +20,9 @@
 
     self.state = {
       parent: STATE.PARTICIPANT_DASHBOARD,
-      name: STATE.PARTICIPANT_FOLLOWUPS,
-      url: '/' + STATE.PARTICIPANT_FOLLOWUPS,
-      template: '<otus-participant-followup flex></otus-participant-followup>',
+      name: STATE.PARTICIPANT_FOLLOW_UPS,
+      url: '/' + STATE.PARTICIPANT_FOLLOW_UPS,
+      template: '<otus-participant-follow-up flex></otus-participant-follow-up>',
       data: {
         redirect: _redirect
       }

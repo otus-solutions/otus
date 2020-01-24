@@ -80,7 +80,7 @@
     }
 
     function activateParticipantFollowUps() {
-      $state.go(STATE.PARTICIPANT_FOLLOWUPS);
+      $state.go(STATE.PARTICIPANT_FOLLOW_UPS);
     }
 
     function activateDashboard() {

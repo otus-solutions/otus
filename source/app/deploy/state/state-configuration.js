@@ -18,7 +18,7 @@
       'INSTALLER': 'installer',
       'LOGIN': 'login',
       'PARTICIPANT': 'participant',
-      'PARTICIPANT_FOLLOWUPS': 'participant-followup',
+      'PARTICIPANT_FOLLOW_UPS': 'participant-follow-up',
       'PARTICIPANT_ACTIVITY': 'activity',
       'PARTICIPANT_REPORT': 'report',
       'SESSION': 'session',

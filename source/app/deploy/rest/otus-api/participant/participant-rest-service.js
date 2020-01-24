@@ -19,6 +19,7 @@
     self.create = create;
     self.getByRecruitmentNumber = getByRecruitmentNumber;
     self.getFollowUps = getFollowUps;
+    self.activateFollowUpEvent = activateFollowUpEvent;
 
     function initialize() {
       _rest = OtusRestResourceService.getParticipantResource();
@@ -61,16 +62,45 @@
             "order": 0,
             "participantEvents": [
               {
-                "_id": "5e28786b600f31392c24d73e",
+                "_id": "5e2b1665ff6a0a524204b528",
                 "activated": true,
+                "status": "ACCOMPLISHED",
                 "description": "",
                 "objectType": "FollowUp",
                 "eventId": "5e28766c600f31392c24d73d",
                 "participant": "5e271f34f511b164206b66a6",
-                "date": "2019-01-22T16:29:31.131Z"
+                "date": "2019-01-23T16:08:05.940Z"
               }
             ],
-            "events": []
+            "events": [
+              {
+                "_id" : "5e2881ef34d7de000769c1a4",
+                "objectType" : "ActivityAutoFillEvent",
+                "activated" : true,
+                "description" : "Event",
+                "acronym" : "acronym",
+                "name" : "name",
+                "followUpId" : "5e1f4b25420db12b9a1766a8",
+                "order" : 13,
+                "participantEvents": [
+                  {
+                    "_id": "5e2b1665ff6a0a524204b528",
+                    "activated": true,
+                    "status": "ACCOMPLISHED",
+                    "description": "",
+                    "objectType": "ActivityAutoFillEvent",
+                    "eventId": "5e28766c600f31392c24d73d",
+                    "participant": "5e271f34f511b164206b66a6",
+                    "date": "2019-01-23T16:08:05.940Z"
+                  }
+                ],
+              }
+            ],
+            "deadline": {
+              "startDate": "2019-01-23T16:08:05.940Z",
+              "finalDate": "2019-11-24T17:08:05.940Z",
+              "remainingDays": -61
+            }
           },
           {
             "_id": "5e1f568735cbca35dddd1fd7",
@@ -80,7 +110,24 @@
             "windowBetween": 60,
             "time": 300,
             "order": 2,
-            "events": []
+            "participantEvents": [
+              {
+                "_id": "5e2b1e55e607135ebe43fcfe",
+                "activated": true,
+                "status": "PENDING",
+                "description": "FollowUp 2",
+                "objectType": "followUp",
+                "eventId": "5e1f568735cbca35dddd1fd7",
+                "participant": "5e271f34f511b164206b66a6",
+                "date": "2020-01-24T16:41:57.773Z"
+              }
+            ],
+            "events": [],
+            "deadline": {
+              "startDate": "2020-01-24T16:41:57.773Z",
+              "finalDate": "2020-09-20T16:41:57.773Z",
+              "remainingDays": 239
+            }
           },
           {
             "_id": "5e1f56fd35cbca35dddd1fd8",
@@ -90,6 +137,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 3,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -100,6 +148,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 4,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -110,6 +159,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 5,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -120,6 +170,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 6,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -130,6 +181,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 7,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -140,6 +192,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 8,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -150,6 +203,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 9,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -160,6 +214,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 10,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -170,6 +225,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 11,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -180,6 +236,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 12,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -190,6 +247,7 @@
             "windowBetween": 60,
             "time": 300,
             "order": 13,
+            "participantEvents": [],
             "events": []
           },
           {
@@ -200,11 +258,22 @@
             "windowBetween": 60,
             "time": 300,
             "order": 14,
+            "participantEvents": [],
             "events": []
           }
         ]
       });
       // return _rest.getFollowUps({recruitmentNumber}).$promise;
+    }
+
+    function activateFollowUpEvent(recruitmentNumber, event) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return Promise.resolve(event);
+      // return _rest.activateFollowUpEvent({
+      //   rn: recruitmentNumber
+      // }, event).$promise;
     }
   }
 }());

@@ -22,6 +22,7 @@
     self.create = create;
     self.getAllowNewParticipants = getAllowNewParticipants;
     self.getFollowUps = getFollowUps;
+    self.activateFollowUpEvent = activateFollowUpEvent;
 
     function up() {
       _loadingDefer = $q.defer();
@@ -74,6 +75,18 @@
       var deferred = $q.defer();
       ParticipantRestService
         .getFollowUps(recruitmentNumber)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        }).catch(function (err) {
+          deferred.reject(err);
+        });
+      return deferred.promise;
+    }
+
+    function activateFollowUpEvent(recruitmentNumber, event) {
+      var deferred = $q.defer();
+      ParticipantRestService
+        .activateFollowUpEvent(recruitmentNumber, event)
         .then(function (response) {
           deferred.resolve(response.data);
         }).catch(function (err) {
