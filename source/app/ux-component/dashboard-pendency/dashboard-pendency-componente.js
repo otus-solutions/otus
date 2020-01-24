@@ -105,10 +105,22 @@
 
     function _extractPendencyFromJsonItem(pendencyJson){
       const NUM_DAYS_MINIMUM_TO_WARNING = 7;
-      const backgroundColor = {
-        LATE: "red",
-        ALMOST_LATE: "orange",
-        OK: null
+      const priorityColor = {
+        LATE: {
+          text: "red",
+          background: "#fff9f9"
+        },
+        ALMOST_LATE: {
+          text: "orange",
+          background: "#fffaf2"
+        },
+        OK: {
+          text: "green",
+          background: "#f1f8f2"
+        },
+        FINALIZED: {
+          background: "#babdb6"
+        }
       };
 
       let pendency = UserActivityPendencyFactory.fromJsonObject(pendencyJson);
@@ -127,7 +139,9 @@
         existenceTime: existenceTime,
         dueDate: _formatDate(dueDate),
         deadLine: deadLine,
-        deadLineColor: (deadLine <= 0 ? backgroundColor.LATE : (deadLine < NUM_DAYS_MINIMUM_TO_WARNING? backgroundColor.ALMOST_LATE : backgroundColor.OK))
+        color: (!self.showOpenedPendencies ? priorityColor.FINALIZED :
+                                            (deadLine <= 0 ? priorityColor.LATE :
+                                                            (deadLine < NUM_DAYS_MINIMUM_TO_WARNING? priorityColor.ALMOST_LATE : priorityColor.OK)))
       };
     }
 
