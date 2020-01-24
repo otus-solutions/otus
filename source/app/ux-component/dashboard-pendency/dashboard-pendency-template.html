@@ -31,26 +31,25 @@
 
       <md-grid-tile ng-hide="!$ctrl.userActivityPendencies.currIsEmpty"
                     class="md-whiteframe-1dp" ng-repeat="item in $ctrl.userActivityPendencies.curr | filter:$ctrl.filter">
-        <md-grid-tile-header>
+        <md-grid-tile-header ng-style="{background: item.color.background}">
           <div layout="row" layout-align="space-between center">
             <div layout="row">
-              <md-icon class="md-avatar-icon" ng-style="{color: '#00897b'}" md-font-library="material-icons" layout-align="end end">
+              <md-icon class="md-avatar-icon" ng-style="{color: 'black'}" md-font-library="material-icons" layout-align="end end" layout-margin="2px">
                 {{item.activityInfo.lastStatus.icon}}
                 <md-tooltip md-direction="top">{{item.activityInfo.lastStatus.tooltip}}</md-tooltip>
               </md-icon>
             </div>
-            <span class="md-caption" ng-style="{color:'#797985'}">
+            <span class="md-caption"">
                 <small class="md-body-2" ng-style="{color:'black'}">{{ item.activityInfo.acronym }}</small>
             </span>
-            <div name="deadline-time" ng-hide="!$ctrl.showOpenedPendencies && item.deadLineColor">
-              <span class="md-caption" layout-align="end end">
-                <small class="md-body-2 clipped" ng-style="{color: item.deadLineColor}">{{ item.deadLine }}</small>
+            <div name="deadline-time" ng-hide="!$ctrl.showOpenedPendencies">
+              <span class="md-caption" layout-align="end end" layout-margin="2px">
+                <small class="md-body-2 clipped" ng-style="{color: item.color.text}">{{ item.deadLine }} dia(s)</small>
                 <md-tooltip md-direction="top">{{ item.dueDate }}</md-tooltip>
               </span>
             </div>
             <div flex="10" ng-show="!$ctrl.showOpenedPendencies"></div>
           </div>
-          <md-divider></md-divider>
         </md-grid-tile-header>
 
         <div class="grid-align" layout="column" layout-align="space-between stretch">

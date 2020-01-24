@@ -108,7 +108,7 @@
 
     function _extractPendencyFromJsonItem(pendencyJson){
       const NUM_DAYS_MINIMUM_TO_WARNING = 7;
-      const priorityColor = {
+      const tileHeaderColor = {
         LATE: {
           text: "red",
           background: "#fff9f9"
@@ -122,7 +122,7 @@
           background: "#f1f8f2"
         },
         FINALIZED: {
-          background: "#babdb6"
+          background: "#f2f2f2"
         }
       };
 
@@ -142,9 +142,9 @@
         existenceTime: existenceTime,
         dueDate: _formatDate(dueDate),
         deadLine: deadLine,
-        color: (!self.showOpenedPendencies ? priorityColor.FINALIZED :
-                                            (deadLine <= 0 ? priorityColor.LATE :
-                                                            (deadLine < NUM_DAYS_MINIMUM_TO_WARNING? priorityColor.ALMOST_LATE : priorityColor.OK)))
+        color: (!self.showOpenedPendencies ? tileHeaderColor.FINALIZED :
+                                            (deadLine <= 0 ? tileHeaderColor.LATE :
+                                                            (deadLine < NUM_DAYS_MINIMUM_TO_WARNING? tileHeaderColor.ALMOST_LATE : tileHeaderColor.OK)))
       };
     }
 
