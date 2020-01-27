@@ -6,18 +6,41 @@
     .controller('otusFollowUpEventCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.dashboard.core.EventService',
-    'otusjs.otus.dashboard.core.ContextService',
-    'otusjs.participant.business.ParticipantFollowUpService'
+    'otusjs.otus.uxComponent.DynamicTableSettingsFactory'
   ];
 
-}());
-function Controller(EventService, DashboardService, ParticipantFollowupService) {
-  var self = this;
+  function Controller(DynamicTableSettingsFactory) {
+    var self = this;
 
-  self.$onInit = onInit;
+    self.$onInit = onInit;
+    self.translatedStatus = {
+      ACCOMPLISHED: "finalizado"
+    };
 
-  function onInit() {
-    self.eventData;
+    function onInit() {
+      _buildDynamicTableSettings();
+    }
+
+    self.dynamicDataTableChange = dynamicDataTableChange;
+    function dynamicDataTableChange(change) {
+      if (change.type === 'select' || change.type === 'deselect') {
+        self.selectActivity(change.element);
+      }
+    }
+
+    function _buildDynamicTableSettings() {
+      self.dynamicTableSettings = DynamicTableSettingsFactory.create()
+        .setElementsArray(self.eventData.participantEvents)
+        .addHeader('DATA', '50', '', 2)
+        .addColumnProperty('name')
+        .addHeader('STATUS', '50', '', 1)
+        .addColumnProperty('acronym')
+        .setCallbackAfterChange(self.dynamicDataTableChange)
+        .setFilter(false)
+        .setTitle("Eventos criados")
+        .setCheckbox(false)
+        .getSettings();
+    }
   }
-}
+}());
+

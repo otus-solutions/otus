@@ -92,6 +92,16 @@
                     "eventId": "5e28766c600f31392c24d73d",
                     "participant": "5e271f34f511b164206b66a6",
                     "date": "2019-01-23T16:08:05.940Z"
+                  },
+                  {
+                    "_id": "5e2b1665ff6a0a524204b528",
+                    "activated": true,
+                    "status": "ACCOMPLISHED",
+                    "description": "",
+                    "objectType": "FollowUp",
+                    "eventId": "5e28766c600f31392c24d73d",
+                    "participant": "5e271f34f511b164206b66a6",
+                    "date": "2019-01-23T16:08:05.940Z"
                   }
                 ],
               }
