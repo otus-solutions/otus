@@ -2,6 +2,8 @@ describe('participant-manager-service Test', function() {
   var Mock = {};
   var service;
   var Injections = {};
+  var DATA_RN = "9892854";
+  var ERROR_MESSAGE = "ParticipantList is not initialized.";
 
   beforeEach(function() {
     angular.mock.module('otusjs.otus');
@@ -20,7 +22,11 @@ describe('participant-manager-service Test', function() {
           return Promise.resolve(mockProjectConfiguration());
         }
       });
-      $provide.value('otusjs.utils.SearchQueryFactory',{});
+      $provide.value('otusjs.utils.SearchQueryFactory',{
+        newParticipantFilter: function() {
+          return Promise.resolve([{recruitmentNumber:DATA_RN}]);
+        }
+      });
     });
   });
 
@@ -30,7 +36,7 @@ describe('participant-manager-service Test', function() {
       Injections.EventService = _$injector_.get('otusjs.participant.core.EventService');
       Injections.ParticipantRepositoryService =  _$injector_.get('otusjs.participant.repository.ParticipantRepositoryService');
       Injections.SearchQueryFactory = _$injector_.get('otusjs.utils.SearchQueryFactory');
-      Injections.$q = _$injector_.get('$q')
+      Injections.$q = _$injector_.get('$q');
 
       service = _$injector_.get('otusjs.participant.business.ParticipantManagerService', Injections);
     });
@@ -56,6 +62,8 @@ describe('participant-manager-service Test', function() {
     expect(service.filter).toBeDefined();
     expect(service.selectParticipant).toBeDefined();
     expect(service.getSelectedParticipant).toBeDefined();
+    expect(service.getParticipantList).toBeDefined();
+    expect(service.getParticipant).toBeDefined();
   });
 
   it('should called method create', function() {
@@ -88,6 +96,16 @@ describe('participant-manager-service Test', function() {
   it('getSelectedParticipantMethod should called method getSelectedParticipant', function () {
     service.getSelectedParticipant();
     expect(Injections.ContextService.getSelectedParticipant).toHaveBeenCalledTimes(1);
+  });
+
+  it('getParticipantListMethod should called method participantList', function () {
+    service.setup();
+    expect(service.getParticipantList()).toEqual([]);
+  });
+
+  it('getParticipantMethod should find method participantList return error', function () {
+    service.setup();
+    expect(service.getParticipant).toThrowError(ERROR_MESSAGE);
   });
 
   function mock() {

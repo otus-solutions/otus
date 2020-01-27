@@ -7,6 +7,8 @@
       'ngMaterial',
       'ngMessages',
       'ngAnimate',
+      /* Angular Material Badge */
+      'ngMdBadge',
 
       /* 3rd-party modules */
       'ui.router',

@@ -103,12 +103,13 @@
       return request.promise;
     }
 
-    function getById(activityInfo) {
+    function getById(ActivityId, rn) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
+
       var request = $q.defer();
-      _rest.getById({rn : activityInfo.participantData.recruitmentNumber, id: activityInfo.getID()})
+      _rest.getById({rn : rn, id: ActivityId})
         .$promise
         .then(function(response) {
           if (response.data) {

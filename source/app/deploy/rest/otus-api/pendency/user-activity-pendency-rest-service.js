@@ -20,6 +20,9 @@
     self.getPendencyByActivityId = getPendencyByActivityId;
     self.updateUserActivityPendency = updateUserActivityPendency;
     self.deleteUserActivityPendency = deleteUserActivityPendency;
+    self.getAllUserActivityPendenciesToReceiver = getAllUserActivityPendenciesToReceiver;
+    self.getOpenedUserActivityPendenciesToReceiver = getOpenedUserActivityPendenciesToReceiver;
+    self.getDoneUserActivityPendenciesToReceiver = getDoneUserActivityPendenciesToReceiver;
 
     function initialize() {
       _rest = OtusRestResourceService.getUserActivityPendencyResource();
@@ -43,6 +46,21 @@
     function deleteUserActivityPendency(foundPendencyId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.delete({id: foundPendencyId}).$promise;
+    }
+
+    function getAllUserActivityPendenciesToReceiver(){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.getAllPendenciesToReceiver().$promise;
+    }
+
+    function getOpenedUserActivityPendenciesToReceiver(){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.getOpenedPendenciesToReceiver().$promise;
+    }
+
+    function getDoneUserActivityPendenciesToReceiver(){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.getDonePendenciesToReceiver().$promise;
     }
   }
 

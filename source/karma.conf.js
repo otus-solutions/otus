@@ -27,6 +27,7 @@ module.exports = function (config) {
       NODE_MODULES_ROOT_PATH + 'angular-animate/angular-animate.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-aria/angular-aria.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-material/angular-material.min.js',
+      NODE_MODULES_ROOT_PATH + 'angular-material-badge/angular-material-badge.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-messages/angular-messages.min.js',
       NODE_MODULES_ROOT_PATH + 'angular-mocks/angular-mocks.js',
       NODE_MODULES_ROOT_PATH + 'angular-ui-router/release/angular-ui-router.js',

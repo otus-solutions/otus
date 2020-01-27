@@ -32,6 +32,9 @@ describe('UserActivityPendencyCollectionService_UnitTest_Suite', () => {
       getPendencyByActivityId: jasmine.anything(),
       updateUserActivityPendency: jasmine.anything(),
       deleteUserActivityPendency: jasmine.anything(),
+      getAllUserActivityPendenciesToReceiver: jasmine.anything(),
+      getOpenedUserActivityPendenciesToReceiver: jasmine.anything(),
+      getDoneUserActivityPendenciesToReceiver: jasmine.anything(),
     };
 
     /*Injection of a restServiceMock in context(boostrap action simulation)*/
@@ -58,6 +61,9 @@ describe('UserActivityPendencyCollectionService_UnitTest_Suite', () => {
     expect(service.getPendencyByActivityId).toBeDefined();
     expect(service.updateUserActivityPendency).toBeDefined();
     expect(service.deleteUserActivityPendency).toBeDefined();
+    expect(service.getAllUserActivityPendenciesToReceiver).toBeDefined();
+    expect(service.getOpenedUserActivityPendenciesToReceiver).toBeDefined();
+    expect(service.getDoneUserActivityPendenciesToReceiver).toBeDefined();
   });
 
   it('createUserActivityPendencyMethod_should_positiveAnswer_on_successfulPersistence', () => {
@@ -157,4 +163,81 @@ describe('UserActivityPendencyCollectionService_UnitTest_Suite', () => {
     Mock.scope.$digest();
   });
 
+   it('getAllUserActivityPendenciesToReceiverMethod_should_document_on_successfulFind', () => {
+    let response = {data: true};
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.resolve(response);
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.resolve(response);
+    spyOn(Mock.remoteStorage, "getAllUserActivityPendenciesToReceiver").and.returnValue(Mock.deferredInternal.promise);
+
+    service.getAllUserActivityPendenciesToReceiver().then(data => expect(data).toBeTruthy());
+    Mock.scope.$digest();
+  });
+
+   it('getAllUserActivityPendenciesToReceiverMethod_should_handle_ error_coming_by_exception', () => {
+    let response = {error: false};
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.reject(response);
+    spyOn(Mock.remoteStorage, "getAllUserActivityPendenciesToReceiver").and.returnValue(Mock.deferredInternal.promise);
+
+    service.getAllUserActivityPendenciesToReceiver().catch(e => expect(e.error).toBeFalsy());
+    Mock.scope.$digest();
+  });
+
+    it('getOpenedUserActivityPendenciesToReceiverMethod_should_document_on_successfulFind', () => {
+    let response = {data: true};
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.resolve(response);
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.resolve(response);
+    spyOn(Mock.remoteStorage, "getOpenedUserActivityPendenciesToReceiver").and.returnValue(Mock.deferredInternal.promise);
+
+    service.getOpenedUserActivityPendenciesToReceiver().then(data => expect(data).toBeTruthy());
+    Mock.scope.$digest();
+  });
+
+   it('getOpenedUserActivityPendenciesToReceiverMethod_should_handle_ error_coming_by_exception', () => {
+    let response = {error: false};
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.reject(response);
+    spyOn(Mock.remoteStorage, "getOpenedUserActivityPendenciesToReceiver").and.returnValue(Mock.deferredInternal.promise);
+
+    service.getOpenedUserActivityPendenciesToReceiver().catch(e => expect(e.error).toBeFalsy());
+    Mock.scope.$digest();
+  });
+
+  it('getDoneUserActivityPendenciesToReceiverMethod_should_document_on_successfulFind', () => {
+    let response = {data: true};
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.resolve(response);
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.resolve(response);
+    spyOn(Mock.remoteStorage, "getDoneUserActivityPendenciesToReceiver").and.returnValue(Mock.deferredInternal.promise);
+
+    service.getDoneUserActivityPendenciesToReceiver().then(data => expect(data).toBeTruthy());
+    Mock.scope.$digest();
+  });
+
+  it('getDoneUserActivityPendenciesToReceiverMethod_should_handle_ error_coming_by_exception', () => {
+    let response = {error: false};
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.reject(response);
+    spyOn(Mock.remoteStorage, "getDoneUserActivityPendenciesToReceiver").and.returnValue(Mock.deferredInternal.promise);
+
+    service.getDoneUserActivityPendenciesToReceiver().catch(e => expect(e.error).toBeFalsy());
+    Mock.scope.$digest();
+  });
 });

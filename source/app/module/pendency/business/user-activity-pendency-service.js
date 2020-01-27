@@ -16,6 +16,9 @@
     self.getPendencyByActivityId = getPendencyByActivityId;
     self.updateUserActivityPendency = updateUserActivityPendency;
     self.deleteUserActivityPendency = deleteUserActivityPendency;
+    self.getAllUserActivityPendenciesToReceiver = getAllUserActivityPendenciesToReceiver;
+    self.getOpenedUserActivityPendenciesToReceiver = getOpenedUserActivityPendenciesToReceiver;
+    self.getDoneUserActivityPendenciesToReceiver = getDoneUserActivityPendenciesToReceiver;
 
     function createUserActivityPendency(userActivityPendency) {
       return UserActivityPendencyRepositoryService.createUserActivityPendency(userActivityPendency)
@@ -31,6 +34,18 @@
 
     function deleteUserActivityPendency(foundPendencyId){
       return UserActivityPendencyRepositoryService.deleteUserActivityPendency(foundPendencyId);
+    }
+
+    function getAllUserActivityPendenciesToReceiver(){
+      return UserActivityPendencyRepositoryService.getAllUserActivityPendenciesToReceiver();
+    }
+
+    function getOpenedUserActivityPendenciesToReceiver(){
+      return UserActivityPendencyRepositoryService.getOpenedUserActivityPendenciesToReceiver();
+    }
+
+    function getDoneUserActivityPendenciesToReceiver(){
+      return UserActivityPendencyRepositoryService.getDoneUserActivityPendenciesToReceiver();
     }
   }
 
