@@ -1,4 +1,4 @@
 <md-content layout="column" style="max-height: 100%">
   <md-button ng-if="$ctrl.followUps[0].participantEvents.length <= 0" class="md-raised md-accent" ng-click="$ctrl.activateFollowUps()">Inicializar segmentos</md-button>
-  <otus-follow-up ng-repeat="followUp in $ctrl.followUps track by followUp.order" follow-up-data="followUp" is-first-follow-up="$index == 0" layout="row" layout-align="center center"></otus-follow-up>
+  <otus-follow-up ng-repeat="followUp in $ctrl.followUps track by followUp.order" selected-participant="$ctrl.selectedParticipant" follow-up-data="followUp" is-first-follow-up="$index == 0" layout="row" layout-align="center center"></otus-follow-up>
 </md-content>

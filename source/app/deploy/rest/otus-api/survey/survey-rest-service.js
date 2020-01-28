@@ -18,6 +18,7 @@
     self.initialize = initialize;
     self.list = list;
     self.listAll = listAll;
+    self.getSurveyByAcronym = getSurveyByAcronym;
 
     function initialize() {
       _rest = OtusRestResourceService.getSurveyResource();
@@ -64,6 +65,14 @@
 
       return request.promise;
     }
+
+    function getSurveyByAcronym(acronym) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.getSurveys({acronym: acronym}).$promise;
+    }
+
 
   }
 }());

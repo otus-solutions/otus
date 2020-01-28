@@ -6,41 +6,42 @@
     .controller('otusFollowUpEventCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.DynamicTableSettingsFactory'
+    '$document',
+    '$compile',
+    '$scope',
+    'otusjs.participant.business.ParticipantFollowUpService'
   ];
 
-  function Controller(DynamicTableSettingsFactory) {
+  function Controller($document, $compile, $scope, ParticipantFollowUpService) {
     var self = this;
 
+
     self.$onInit = onInit;
+    self.changeHistoryState = changeHistoryState;
+
     self.translatedStatus = {
-      ACCOMPLISHED: "finalizado"
+      ACCOMPLISHED: "Realizado",
+      PENDING: "Pendente"
+    };
+
+    let htmlComponents = {
+      ActivityAutoFillEvent: "<activity-auto-fill-event></activity-auto-fill-event>"
     };
 
     function onInit() {
-      _buildDynamicTableSettings();
+      self.historyIsOpen = false;
+      angular.element(document).ready(function () {
+        let html = htmlComponents[self.eventData.objectType];
+        let template = angular.element(html);
+        let linkFn = $compile(template);
+        let element = linkFn($scope);
+        let parent = $document.find('#event-body-'+self.eventData._id);
+        parent[0].appendChild(element[0]);
+      });
     }
 
-    self.dynamicDataTableChange = dynamicDataTableChange;
-    function dynamicDataTableChange(change) {
-      if (change.type === 'select' || change.type === 'deselect') {
-        self.selectActivity(change.element);
-      }
-    }
-
-    function _buildDynamicTableSettings() {
-      self.dynamicTableSettings = DynamicTableSettingsFactory.create()
-        .setElementsArray(self.eventData.participantEvents)
-        .addHeader('DATA', '50', '', 2)
-        .addColumnProperty('name')
-        .addHeader('STATUS', '50', '', 1)
-        .addColumnProperty('acronym')
-        .setCallbackAfterChange(self.dynamicDataTableChange)
-        .setFilter(false)
-        .setTitle("Eventos criados")
-        .setCheckbox(false)
-        .getSettings();
+    function changeHistoryState() {
+      self.historyIsOpen = !self.historyIsOpen;
     }
   }
 }());
-

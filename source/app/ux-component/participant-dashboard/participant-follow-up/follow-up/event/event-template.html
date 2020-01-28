@@ -1,23 +1,41 @@
-<md-whiteframe class="md-whiteframe-3dp" layout="column" flex>
-  <div layout="row" layout-align="center start" layout-margin flex>
-    <md-icon flex="5">{{$ctrl.eventData.icon}}</md-icon>
-    <p flex>{{$ctrl.eventData.description}}</p>
-    <md-button class="md-icon-button md-accent" aria-label="More">
-      <md-icon>play_arrow</md-icon>
-    </md-button>
-  </div>
-  <div ng-if="$ctrl.eventData.participantEvents.length > 0" layout="row" layout-padding="">
-    <div flex="5"></div>
-    <md-whiteframe class="md-whiteframe-3dp" layout="column" flex>
-      <md-list class="md-dense" flex>
-        <md-subheader class="md-no-sticky">Eventos Criados</md-subheader>
+<div layout="row" id="event-container" flex>
+  <md-card-content flex>
+
+    <div layout="row" layout-align="start center" flex>
+      <md-button class="md-fab md-mini" >
+        <md-icon >{{$ctrl.eventData.icon}}</md-icon>
+      </md-button>
+      <div layout="column" flex>
+        <span flex class="md-headline">{{$ctrl.eventData.description}}</span>
+        <span flex class="md-subheader">{{$ctrl.translatedStatus[$ctrl.eventData.participantEvents[$ctrl.eventData.participantEvents.length-1].status]}}</span>
+      </div>
+      <md-button class=" md-fab md-mini md-accent" ng-click="$ctrl.activateEvent()" aria-label="More">
+        <md-icon>play_arrow</md-icon>
+      </md-button>
+    </div>
+    <div id="event-body-{{$ctrl.eventData._id}}" layout="row"></div>
+
+    <div layout="column" flex>
+      <div layout="row" layout-align="center center" flex>
+        <span ng-if="!$ctrl.historyIsOpen" flex><span class="md-subheader">Atualizado em {{$ctrl.eventData.participantEvents[$ctrl.eventData.participantEvents.length-1].date | date : "d/M/yyyy h:mm a"}} </span>
+        </span>
+        <span ng-if="$ctrl.historyIsOpen" flex> Histórico de eventos disparados </span>
+        <md-button class="md-icon-button md-accent" ng-click="$ctrl.changeHistoryState()" aria-label="More">
+          <md-icon ng-if="!$ctrl.historyIsOpen">keyboard_arrow_down</md-icon>
+          <md-icon ng-if="$ctrl.historyIsOpen">keyboard_arrow_up</md-icon>
+        </md-button>
+      </div>
+      <md-list class="md-dense" ng-if="$ctrl.historyIsOpen">
         <md-list-item class="md-3-line" ng-repeat="item in $ctrl.eventData.participantEvents">
           <div class="md-list-item-text" layout="column">
-            <h3>Data: {{ item.date }}</h3>
+            <h3>Evento criado em: {{ item.date | date : "d/M/yyyy h:mm a" }}</h3>
             <h4>Status: {{ $ctrl.translatedStatus[item.status] }}</h4>
           </div>
+          <md-divider ng-if="!$last"></md-divider>
         </md-list-item>
       </md-list>
-    </md-whiteframe>
-  </div>
-</md-whiteframe>
+    </div>
+
+  </md-card-content>
+</div>
+<md-divider></md-divider>

@@ -401,4 +401,12 @@ otus-activity-category-adder otus-activity-category-adder-list md-card md-input-
   top: -5px;
 }
 
+otus-follow-up-event #event-icon {
+  max-width: 60px;
+  max-height: 60px;
+}
+otus-follow-up-event #event-container {
+  padding-bottom: 5px;
+}
+
 /*# sourceMappingURL=components-style.css.map */
