@@ -5,16 +5,16 @@
     </md-icon>
     <div layout="column" flex>
       <span class="md-title" flex>{{$ctrl.followUpData.description}}</span>
-      <span class="md-subheader">Inicio 10/10/2020</span>
+      <span class="md-subheader" ng-if="$ctrl.followUpData.deadline.startDate">Inicio {{$ctrl.followUpData.deadline.startDate | date : "d/M/yyyy h:mm a" }}</span>
+      <span class="md-subheader" ng-if="!$ctrl.followUpData.deadline.startDate">Segmento não iniciado</span>
     </div>
-    <span class="md-subheader">30 dias restantes</span>
+    <span class="md-subheader" ng-if="$ctrl.followUpData.deadline.remainingDays > 0">{{$ctrl.followUpData.deadline.remainingDays}} dias restantes</span>
   </div>
 
   <div layout="column" flex="">
     <otus-follow-up-event selected-participant="$ctrl.selectedParticipant" layout-align="center end"
-                          ng-repeat="event in $ctrl.followUpData.events track by event.order"
+                          ng-repeat="event in $ctrl.followUpData.events track by event.order+$ctrl.selectedParticipant.recruitmentNumber"
                           event-data="event"
-                          id="{{event._id}}"
                           flex></otus-follow-up-event>
   </div>
 </md-card>

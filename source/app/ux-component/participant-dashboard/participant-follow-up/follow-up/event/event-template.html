@@ -2,8 +2,8 @@
   <md-card-content flex>
 
     <div layout="row" layout-align="start center" flex>
-      <md-button class="md-fab md-mini" >
-        <md-icon >{{$ctrl.eventData.icon}}</md-icon>
+      <md-button class="md-fab md-mini md-primary" disabled >
+        <md-icon>{{$ctrl.eventData.icon}}</md-icon>
       </md-button>
       <div layout="column" flex>
         <span flex class="md-headline">{{$ctrl.eventData.description}}</span>
@@ -13,14 +13,15 @@
         <md-icon>play_arrow</md-icon>
       </md-button>
     </div>
-    <div id="event-body-{{$ctrl.eventData._id}}" layout="row"></div>
+    <div id="event-body-{{$ctrl.eventData._id}}-{{$ctrl.selectedParticipant.recruitmentNumber}}" layout="row"></div>
 
     <div layout="column" flex>
       <div layout="row" layout-align="center center" flex>
-        <span ng-if="!$ctrl.historyIsOpen" flex><span class="md-subheader">Atualizado em {{$ctrl.eventData.participantEvents[$ctrl.eventData.participantEvents.length-1].date | date : "d/M/yyyy h:mm a"}} </span>
+        <span ng-if="!$ctrl.historyIsOpen && $ctrl.eventData.participantEvents.length > 0" flex><span class="md-subheader">Atualizado em {{$ctrl.eventData.participantEvents[$ctrl.eventData.participantEvents.length-1].date | date : "d/M/yyyy h:mm a"}} </span>
         </span>
         <span ng-if="$ctrl.historyIsOpen" flex> Histórico de eventos disparados </span>
-        <md-button class="md-icon-button md-accent" ng-click="$ctrl.changeHistoryState()" aria-label="More">
+        <span ng-if="$ctrl.eventData.participantEvents.length <= 0" class="md-subheader" flex> Evento não iniciado </span>
+        <md-button class="md-icon-button md-accent" ng-click="$ctrl.changeHistoryState()" ng-disabled="$ctrl.eventData.participantEvents.length <= 0" aria-label="More">
           <md-icon ng-if="!$ctrl.historyIsOpen">keyboard_arrow_down</md-icon>
           <md-icon ng-if="$ctrl.historyIsOpen">keyboard_arrow_up</md-icon>
         </md-button>
@@ -35,7 +36,6 @@
         </md-list-item>
       </md-list>
     </div>
-
   </md-card-content>
 </div>
 <md-divider></md-divider>

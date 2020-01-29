@@ -35,6 +35,8 @@
         self.createPaperActivity = createPaperActivity;
         self.saveActivities = saveActivities;
 
+        self.createActivity = createActivity;
+
         function listAll(participant) {
             if (!participant) {
                 throw new Error('No participant selected to list activities.', 'activity-repository-service.js', 63);
@@ -192,6 +194,10 @@
         function saveActivities(activities) {
           var work = _setupWorkProgress();
           ActivityCollectionService.insert(activities).then(work.finish);
+        }
+
+        function createActivity(activity) {
+          return ActivityCollectionService.insert([activity]);
         }
     }
 

@@ -7,7 +7,7 @@
       controller: 'otusFollowUpEventCtrl as $ctrl',
       templateUrl: 'app/ux-component/participant-dashboard/participant-follow-up/follow-up/event/event-template.html',
       bindings: {
-        eventData: '<',
+        eventData: '=',
         selectedParticipant: '<'
       }
     });

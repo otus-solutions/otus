@@ -35,7 +35,7 @@
         let template = angular.element(html);
         let linkFn = $compile(template);
         let element = linkFn($scope);
-        let parent = $document.find('#event-body-'+self.eventData._id);
+        let parent = $document.find('#event-body-'+self.eventData._id+'-'+self.selectedParticipant.recruitmentNumber);
         parent[0].appendChild(element[0]);
       });
     }
