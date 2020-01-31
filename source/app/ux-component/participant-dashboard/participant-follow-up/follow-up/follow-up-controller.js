@@ -6,11 +6,13 @@
     .controller('otusFollowUpCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.participant.business.ParticipantFollowUpService'
+    '$mdDialog',
+    'otusjs.participant.business.ParticipantFollowUpService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
 }());
-function Controller(ParticipantFollowUpService) {
+function Controller($mdDialog, ParticipantFollowUpService, DialogShowService) {
   var self = this;
   self.isCanceled = false;
 
@@ -26,9 +28,36 @@ function Controller(ParticipantFollowUpService) {
   }
 
   function deactivateFollowUp() {
-    ParticipantFollowUpService.deactivateFollowUpEvent(self.followUpData.participantEvents[0]._id).then((result)=>{
-      self.isCanceled = true;
-      self.followUpData.status = "CANCELED";
-    })
+    _showDialog("O segmento ("+self.followUpData.description+") sera desativado permanentemente!").then(()=>{
+      ParticipantFollowUpService.deactivateFollowUpEvent(self.followUpData.participantEvents[0]._id).then((result)=>{
+        self.isCanceled = true;
+        self.followUpData.status = "CANCELED";
+      })
+    }).catch(()=>{
+
+    });
+  }
+
+  function _showDialog(msg) {
+    var _exitDialog = {
+      dialogToTitle:'Cancelamento de Segmento',
+      titleToText:'Cancelar Segmento?',
+      textDialog: msg,
+      ariaLabel:'Confirmação de cancelamento',
+      buttons: [
+        {
+          message:'Ok',
+          action:function(){$mdDialog.hide()},
+          class:'md-raised md-primary'
+        },
+        {
+          message:'Cancelar',
+          action:function(){$mdDialog.cancel()},
+          class:'md-raised md-no-focus'
+        }
+      ]
+    };
+
+    return DialogShowService.showDialog( _exitDialog);
   }
 }

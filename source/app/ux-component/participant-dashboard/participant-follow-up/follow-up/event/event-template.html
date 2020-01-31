@@ -7,7 +7,7 @@
       </md-button>
       <div layout="column" flex>
         <span flex id="event-description" class="md-headline">{{$ctrl.eventData.description}}</span>
-        <span flex class="md-subheader">{{$ctrl.translatedStatus[$ctrl.eventData.participantEvents[$ctrl.eventData.participantEvents.length-1].status]}}</span>
+        <span flex class="md-subheader">{{$ctrl.translatedStatus[$ctrl.eventData.status]}}</span>
       </div>
       <md-button class=" md-fab md-mini md-accent" ng-click="$ctrl.activateEvent()" ng-disabled="$ctrl.followUpIsCanceled || !$ctrl.followUpIsActivated" aria-label="More">
         <md-icon>play_arrow</md-icon>

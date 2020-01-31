@@ -46,7 +46,7 @@
       ParticipantFollowupService.getFollowUps(participant.recruitmentNumber).then(function(result) {
         self.followUps = FollowUpFactory.fromArray(result);
         self.followUps.map(function(followUp) {
-          followUp.isActivated = followUp.participantEvents.length > 0 && followUp.participantEvents[0].status == "PENDING";
+          followUp.isActivated = followUp.participantEvents.length > 0 && followUp.participantEvents[0].status === "PENDING";
           return followUp;
         });
         if(self.followUps.length > 0 && self.followUps[0].participantEvents.length > 0) {

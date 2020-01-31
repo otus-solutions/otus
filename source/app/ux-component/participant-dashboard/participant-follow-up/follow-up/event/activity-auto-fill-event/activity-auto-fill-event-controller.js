@@ -6,10 +6,12 @@
     .controller('activityAutoFillEventCtrl', Controller);
 
   Controller.$inject = [
+    '$mdDialog',
     '$mdToast',
     '$compile',
     '$scope',
     'SurveyFormFactory',
+    'otusjs.application.dialog.DialogShowService',
     'otusjs.participant.business.ParticipantFollowUpService',
     'otusjs.model.activity.ActivityFactory',
     'otusjs.activity.business.ParticipantActivityService',
@@ -18,7 +20,7 @@
     'otusjs.application.session.core.ContextService'
   ];
 
-  function Controller($mdToast, $compile, $scope, SurveyFormFactory, ParticipantFollowUpService, ActivityFactory, ParticipantActivityService, ConfigurationRestService, ActivityRepositoryService, SessionContextService) {
+  function Controller($mdDialog, $mdToast, $compile, $scope, SurveyFormFactory, DialogShowService, ParticipantFollowUpService, ActivityFactory, ParticipantActivityService, ConfigurationRestService, ActivityRepositoryService, SessionContextService) {
     var self = this;
 
     self.$onInit = onInit;
@@ -29,31 +31,34 @@
     }
 
     function activateEvent() {
-      SessionContextService.getLoggedUser().then((user) => {
-        ConfigurationRestService.getSurveyByAcronym(self.eventData.acronym).then((surveyForm) => {
-          if (surveyForm.data.length > 0) {
-            ParticipantActivityService
-              .listAllCategories()
-              .then((response) => {
-                if (response.length > 0) {
-                  let activityConfiguration = {};
-                  activityConfiguration.category = response[0];
-                  let activity = ActivityFactory.createAutoFillActivity(SurveyFormFactory.fromJsonObject(surveyForm.data[surveyForm.data.length - 1]), user, self.parent.selectedParticipant, activityConfiguration);
-                  ActivityRepositoryService.createActivity(activity).then((result) => {
-                    self.eventData.activityId = result._id;
-                    ParticipantFollowUpService.activateFollowUpEvent(self.parent.selectedParticipant.recruitmentNumber, self.eventData).then(function (result) {
-                      self.eventData.participantEvents.push(result);
+      _showDialog(self.eventData.description).then(()=>{
+        SessionContextService.getLoggedUser().then((user) => {
+          ConfigurationRestService.getSurveyByAcronym(self.eventData.acronym).then((surveyForm) => {
+            if (surveyForm.data.length > 0) {
+              ParticipantActivityService
+                .listAllCategories()
+                .then((response) => {
+                  if (response.length > 0) {
+                    let activityConfiguration = {};
+                    activityConfiguration.category = response[0];
+                    let activity = ActivityFactory.createAutoFillActivity(SurveyFormFactory.fromJsonObject(surveyForm.data[surveyForm.data.length - 1]), user, self.parent.selectedParticipant, activityConfiguration);
+                    ActivityRepositoryService.createActivity(activity).then((result) => {
+                      self.eventData.activityId = result._id;
+                      ParticipantFollowUpService.activateFollowUpEvent(self.parent.selectedParticipant.recruitmentNumber, self.eventData).then(function (result) {
+                        self.parent.eventData.participantEvents.push(result);
+                        self.parent.eventData.status = "PENDING"
+                      });
+                    }).catch(()=>{
+                      _showToast(5000, "Ocorreu um erro, entre em contato com o administrador do sistema");
                     });
-                  }).catch(()=>{
-                    _showToast(5000, "Ocorreu um erro, entre em contato com o administrador do sistema");
-                  });
-                } else {
-                  _showToast(3000, "Não existem categorias de atividade cadastradas no sistema");
-                }
-              });
-          } else {
-            _showToast(3000, "Atividade não encontrada");
-          }
+                  } else {
+                    _showToast(3000, "Não existem categorias de atividade cadastradas no sistema");
+                  }
+                });
+            } else {
+              _showToast(3000, "Atividade não encontrada");
+            }
+          });
         });
       });
     }
@@ -65,6 +70,29 @@
           .position("right bottom")
           .hideDelay(delay)
       );
+    }
+
+    function _showDialog(msg) {
+      var _exitDialog = {
+        dialogToTitle:'Ativação de Evento',
+        titleToText:'Ativar Evento?',
+        textDialog: msg,
+        ariaLabel:'Confirmação de cancelamento',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Cancelar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogShowService.showDialog( _exitDialog);
     }
   }
 }());

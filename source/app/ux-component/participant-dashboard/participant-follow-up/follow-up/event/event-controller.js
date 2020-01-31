@@ -30,6 +30,19 @@
 
     function onInit() {
       self.historyIsOpen = false;
+      if(self.eventData.participantEvents.length > 0) {
+        let pendingEvent = self.eventData.participantEvents.find((event)=>{
+          return event.status === "PENDING";
+        });
+
+        if(pendingEvent) {
+          self.eventData.status = "PENDING"
+        } else {
+          self.eventData.status = "ACCOMPLISHED"
+        }
+      }
+
+      self.status =
       angular.element(document).ready(function () {
         let html = htmlComponents[self.eventData.objectType];
         let template = angular.element(html);
