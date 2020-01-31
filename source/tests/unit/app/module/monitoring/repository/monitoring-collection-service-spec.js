@@ -346,6 +346,7 @@ describe("MonitoringCollectionService_Suite", function () {
   function mockInitialize() {
     Mock._remoteStorage = Injections.ModuleService.getMonitoringRemoteStorage();
     Mock._laboratoryMonitoringStorage = Injections.ModuleService.getLaboratoryMonitoringRemoteStorage();
+    //Mock factory client representation(MonitoringResourceFactory)
     Mock.remoteStorage = {
       listAcronyms: jasmine.anything(),
       getStatusOfActivities: jasmine.anything(),

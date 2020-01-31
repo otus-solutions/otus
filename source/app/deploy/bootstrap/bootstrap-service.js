@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -26,7 +26,8 @@
     'otusjs.deploy.StorageLoaderService',
     'otusjs.deploy.ProjectModuleBootstrap',
     'otusjs.deploy.ReportModuleBootstrap',
-    'otusjs.deploy.MonitoringModuleBootstrap'
+    'otusjs.deploy.MonitoringModuleBootstrap',
+    'otus.deploy.PendencyModuleBootstrap'
   ];
 
   function Service(
@@ -50,10 +51,10 @@
     StorageLoaderService,
     ProjectModuleBootstrap,
     ReportModuleBootstrap,
-    MonitoringModuleBootstrap) {
-
+    MonitoringModuleBootstrap,
+    PendencyModuleBootstrap
+  ) {
     var self = this;
-
     self.run = run;
 
     function run() {
@@ -61,12 +62,13 @@
       AccessModuleBootstrap.bootstrap();
       ActivityModuleBootstrap.bootstrap();
       ParticipantModuleBootstrap.bootstrap();
-      SessionModuleBootstrap.bootstrap();      
+      SessionModuleBootstrap.bootstrap();
       UserModuleBootstrap.bootstrap();
       LaboratoryModuleBootstrap.bootstrap();
       ProjectModuleBootstrap.bootstrap();
       ReportModuleBootstrap.bootstrap();
       MonitoringModuleBootstrap.bootstrap();
+      PendencyModuleBootstrap.bootstrap();
 
       //--------------------------------------------------------------------------------------------
       // Here the application identifies if should recover a "logged state" or request a new

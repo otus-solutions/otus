@@ -1,23 +1,29 @@
-xdescribe('otus-api-service Test', function() {
-    var Mock = {};
-    var service;
-    var Injections = {};
+describe('OtusApiService_UnitTest_Suite', () => {
+  let service;
+  let Injections = [];
 
-    beforeEach(function() {
-      //TODO: update module name
-      angular.mock.module('otus-api-service');
-
-      inject(function(_$injector_) {
-        Injections = {
-          injection1: _$injector_.get('serviço1'),
-          injection2: _$injector_.get('serviço2')
-        };
-
-        service = _$injector_.get('serviçoPrincipal', Injections);
-      });
+  beforeEach(() => {
+    angular.mock.module('otusjs.otus');
+    angular.mock.inject($injector => {
+      Injections.UserActivityPendencyRestService = $injector.get('otusjs.deploy.UserActivityPendencyRestService');
+      service = $injector.get('otusjs.deploy.OtusApiService', Injections);
+      spyOn(Injections.UserActivityPendencyRestService, 'initialize');
     });
-    it('fail test', function() {
-        expect(true).toBe(false);
-    });
+  });
+
+  it('serviceExistence_check', () => {
+    expect(service).toBeDefined();
+  });
+
+  it('serviceMethodsExistence_check', () => {
+    expect(service.initializeOpenResources).toBeDefined();
+    expect(service.initializeConfigurationResources).toBeDefined();
+    expect(service.initializeRestrictResources).toBeDefined();
+  });
+
+  it('initializeRestrictResourcesMethod_should_evoke_initialize_by_UserActivityPendencyRestService', () => {
+    service.initializeRestrictResources();
+    expect(Injections.UserActivityPendencyRestService.initialize).toHaveBeenCalledTimes(1);
+  });
 
 });

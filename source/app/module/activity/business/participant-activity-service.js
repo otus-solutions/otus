@@ -15,11 +15,12 @@
 		'SurveyFormFactory'
 	];
 
-	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService, PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
+	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService,
+                   PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
 		var self = this;
 		var _paperActivityCheckerData = null;
 
-		self.activityConfigurations = new Object();
+		self.activityConfigurations = {};
 		self.activities = [];
 
 		/* Public methods */
@@ -41,6 +42,8 @@
 		self.createPreActivity = createPreActivity;
 		self.saveActivities = saveActivities;
 		self.getSurveyFromJson = getSurveyFromJson;
+		self.getActivity = getActivity;
+		self.clearSelectedActivities = clearSelectedActivities;
 
 		 function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -119,8 +122,12 @@
 		}
 
 		function getById(activityInfo) {
-			return ActivityRepositoryService.getById(activityInfo);
+			return getActivity(activityInfo.getID(), activityInfo.participantData.recruitmentNumber);
 		}
+
+		function getActivity(activityId, rn) {
+      return ActivityRepositoryService.getById(activityId, rn);
+    }
 
 		function selectActivities(activities) {
 			ContextService.selectActivities(activities);
@@ -180,5 +187,9 @@
 		function getSurveyFromJson(json) {
 			return SurveyFormFactory.fromJsonObject(json);
 		}
+
+		function clearSelectedActivities() {
+      ContextService.clearSelectedActivities();
+    }
 	}
 }());

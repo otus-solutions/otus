@@ -111,6 +111,7 @@
      * @param {(object)} user - the user to be updated
      * @memberof ActivityCollectionService
      */
+
     function updateCheckerActivity(recruitmentNumber, checkerUpdated) {
       var request = $q.defer();
 
@@ -211,13 +212,13 @@
       return request.promise;
     }
 
-    function getById(activityInfo) {
+    function getById(activityId, rn) {
       var request = $q.defer();
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           remoteStorage
-            .getById(activityInfo)
+            .getById(activityId, rn)
             .then(function (response) {
               request.resolve(response);
             }).catch(function () {

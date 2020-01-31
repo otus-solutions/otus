@@ -459,7 +459,7 @@ otus-activity-adder-card md-grid-tile-header figcaption {
   width: 100%;
 }
 
-otus-activity-adder-card .grid-align{
+.grid-align{
   padding-left: 10px;
   padding-top: 5px;
   width: 100%;
@@ -533,5 +533,121 @@ otus-activity-adder-card md-input-container {
   otus-activity-adder .card-width-layout-sm {
     width: 100%;
   }
+}
+
+ .scrollbar {
+  height: 85vh;
+  background: #fff;
+  overflow-y: scroll;
+}
+
+.scrollbar-default::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #F5F5F5;
+  border-radius: 10px;
+}
+
+.scrollbar-default::-webkit-scrollbar {
+  background-color: #F5F5F5;
+}
+
+.scrollbar-default::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #2BBBAD;
+}
+
+.no-shadow {
+  transition: none !important;
+  box-shadow: none !important;
+}
+
+md-toast.md-error-toast-theme .md-toast-content {
+    background-color: darkred;
+    font-weight: bold;
+}
+
+otus-dashboard-pendency md-grid-list {
+  margin: 10px;
+  transition-duration: 0s;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-header {
+  background: rgba(255, 255, 255, 0.0);
+  position: relative;
+  width: 100%;
+  overflow: inherit;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-footer {
+  background: rgba(255, 255, 255, 0.0);
+  overflow: inherit;
+  padding: 8px;
+}
+
+otus-dashboard-pendency md-grid-tile-footer figcaption {
+  display: block;
+  width: 100%;
+}
+
+otus-dashboard-pendency md-grid-tile-header figcaption {
+  display: block;
+  width: 100%;
+}
+
+otus-dashboard-pendency md-grid-tile-header figcaption md-icon {
+  margin: 0;
+}
+
+otus-dashboard-pendency md-grid-tile {
+  border-radius: 5px;
+}
+
+otus-dashboard-pendency md-grid-tile figure {
+  justify-content: normal;
+  flex-direction: column;
+  align-items: normal;
+  transition-duration: 0s;
+  padding: 8px;
+}
+
+otus-dashboard-pendency .md-badge{
+  background-color: rgb(255, 0 ,0);
+  z-index: 10;
+}
+
+otus-dashboard-pendency md-card md-card-content{
+  border-radius: 5px;
+}
+
+otus-dashboard-pendency .full-list-items{
+  min-width: 90vw;
+}
+
+otus-dashboard-pendency  md-input-container {
+  margin: 0;
+}
+
+otus-dashboard-pendency .header-list {
+  background-color: #009588;
+  font-weight: bold;
+  color: #FFFFFF !important;
+  min-height: 70px !important;
+  max-height: 70px !important;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.no-border {
+  padding: 0;
+  margin: 0;
 }
 /*# sourceMappingURL=components-style.css.map */

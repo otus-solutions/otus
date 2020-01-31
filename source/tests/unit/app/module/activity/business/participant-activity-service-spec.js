@@ -4,6 +4,8 @@ describe('participant-activity-service Test', function() {
   var Injections = {};
   var ID = "12345";
   var DATA = {activityID: "54321"};
+  var DATA_ACTIVITY = "54321";
+  var DATA_RN = "0000000";
   var ACTIVITY_REVISION = {revision: DATA};
 
   beforeEach(function() {
@@ -56,9 +58,21 @@ describe('participant-activity-service Test', function() {
     });
 
     it('should call getById method', function () {
-      service.getById(DATA);
+      service.getById(Mock.DATA_ACTIVITY_INFO);
       expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledTimes(1);
-      expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledWith(DATA);
+      expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledWith(DATA_ACTIVITY,DATA_RN);
+    });
+
+    it('should call getActivity method', function () {
+      service.getActivity(DATA_ACTIVITY,DATA_RN);
+      expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledTimes(1);
+      expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledWith(DATA_ACTIVITY,DATA_RN);
+    });
+
+    it('should call clearSelectedActivities method', function () {
+      spyOn(Injections.ContextService,"clearSelectedActivities");
+      service.clearSelectedActivities();
+      expect(Injections.ContextService.clearSelectedActivities).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -100,6 +114,7 @@ describe('participant-activity-service Test', function() {
   });
 
   function mocks() {
+    Mock.DATA_ACTIVITY_INFO = {getID: function () { return "54321"},participantData: {recruitmentNumber:"0000000"}};
     Mock.survey = Test.utils.data.activityPASC.surveyForm;
     Mock.mode = Test.utils.data.activityPASC.mode;
     Mock.configuration = {
