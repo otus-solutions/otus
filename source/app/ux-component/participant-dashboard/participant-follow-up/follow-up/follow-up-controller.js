@@ -6,30 +6,29 @@
     .controller('otusFollowUpCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.dashboard.core.EventService',
-    'otusjs.otus.dashboard.core.ContextService',
     'otusjs.participant.business.ParticipantFollowUpService'
   ];
 
 }());
-function Controller(EventService, DashboardService, ParticipantFollowupService) {
+function Controller(ParticipantFollowUpService) {
   var self = this;
+  self.isCanceled = false;
 
   self.$onInit = onInit;
+  self.deactivateFollowUp = deactivateFollowUp;
 
   function onInit() {
     _verifyStatus();
   }
 
-
   function _verifyStatus() {
-    self.isActivated = self.followUpData.participantEvents.length > 0;
-    if(self.isActivated || self.isFirstFollowUp) {
-      self.colorLeft = '#299288';
-      self.colorRight = '#24baaa';
-    } else {
-      self.colorLeft = '#565456';
-      self.colorRight = '#bfbfc7';
-    }
+    self.isCanceled = self.followUpData.participantEvents.length > 0 &&  self.followUpData.participantEvents[0].status === "CANCELED";
+  }
+
+  function deactivateFollowUp() {
+    ParticipantFollowUpService.deactivateFollowUpEvent(self.followUpData.participantEvents[0]._id).then((result)=>{
+      self.isCanceled = true;
+      self.followUpData.status = "CANCELED";
+    })
   }
 }

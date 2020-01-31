@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -6,6 +6,7 @@
     .controller('activityAutoFillEventCtrl', Controller);
 
   Controller.$inject = [
+    '$mdToast',
     '$compile',
     '$scope',
     'SurveyFormFactory',
@@ -17,7 +18,7 @@
     'otusjs.application.session.core.ContextService'
   ];
 
-  function Controller($compile, $scope, SurveyFormFactory, ParticipantFollowUpService, ActivityFactory, ParticipantActivityService, ConfigurationRestService, ActivityRepositoryService, SessionContextService) {
+  function Controller($mdToast, $compile, $scope, SurveyFormFactory, ParticipantFollowUpService, ActivityFactory, ParticipantActivityService, ConfigurationRestService, ActivityRepositoryService, SessionContextService) {
     var self = this;
 
     self.$onInit = onInit;
@@ -34,22 +35,36 @@
             ParticipantActivityService
               .listAllCategories()
               .then((response) => {
-                let activityConfiguration = {};
-                activityConfiguration.category = response[0];
-                let activity = ActivityFactory.createAutoFillActivity(SurveyFormFactory.fromJsonObject(surveyForm.data[surveyForm.data.length-1]), user, self.parent.selectedParticipant, activityConfiguration);
-                ActivityRepositoryService.createActivity(activity).then((result) => {
-                  self.eventData.activityId = result._id;
-                  ParticipantFollowUpService.activateFollowUpEvent(self.parent.selectedParticipant.recruitmentNumber, self.eventData).then(function(result) {
-                    self.eventData.participantEvents.push(result);
+                if (response.length > 0) {
+                  let activityConfiguration = {};
+                  activityConfiguration.category = response[0];
+                  let activity = ActivityFactory.createAutoFillActivity(SurveyFormFactory.fromJsonObject(surveyForm.data[surveyForm.data.length - 1]), user, self.parent.selectedParticipant, activityConfiguration);
+                  ActivityRepositoryService.createActivity(activity).then((result) => {
+                    self.eventData.activityId = result._id;
+                    ParticipantFollowUpService.activateFollowUpEvent(self.parent.selectedParticipant.recruitmentNumber, self.eventData).then(function (result) {
+                      self.eventData.participantEvents.push(result);
+                    });
+                  }).catch(()=>{
+                    _showToast(5000, "Ocorreu um erro, entre em contato com o administrador do sistema");
                   });
-                });
+                } else {
+                  _showToast(3000, "Não existem categorias de atividade cadastradas no sistema");
+                }
               });
           } else {
-
+            _showToast(3000, "Atividade não encontrada");
           }
         });
       });
+    }
 
+    function _showToast(delay, msg) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msg)
+          .position("right bottom")
+          .hideDelay(delay)
+      );
     }
   }
 }());

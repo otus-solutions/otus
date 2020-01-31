@@ -556,3 +556,10 @@ otus-follow-up-event{
     padding-bottom: 5px;
   }
 }
+otus-follow-up-event {
+  @media screen and (max-width: 600px){
+    #event-description {
+      font-size: 18px;
+    }
+  }
+}

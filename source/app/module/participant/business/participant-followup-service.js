@@ -15,6 +15,7 @@
 
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
+    self.deactivateFollowUpEvent = deactivateFollowUpEvent;
 
     function getFollowUps(recruitmentNumber) {
       var deferred = $q.defer();
@@ -32,6 +33,19 @@
     function activateFollowUpEvent(recruitmentNumber, event) {
       var deferred = $q.defer();
       ParticipantRepositoryService.activateFollowUpEvent(recruitmentNumber, event)
+        .then(function (response) {
+          deferred.resolve(response);
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function deactivateFollowUpEvent(followUpId) {
+      var deferred = $q.defer();
+      ParticipantRepositoryService.deactivateFollowUpEvent(followUpId)
         .then(function (response) {
           deferred.resolve(response);
         })

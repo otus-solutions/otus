@@ -20,6 +20,7 @@
     self.getByRecruitmentNumber = getByRecruitmentNumber;
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
+    self.deactivateFollowUpEvent = deactivateFollowUpEvent;
 
     function initialize() {
       _rest = OtusRestResourceService.getParticipantResource();
@@ -58,6 +59,12 @@
       return _followUpRest.activateFollowUpEvent({
         rn: recruitmentNumber
       }, event).$promise;
+    }
+
+    function deactivateFollowUpEvent(followUpId) {
+      return _followUpRest.deactivateFollowUpEvent({
+        followUpId: followUpId
+      }).$promise;
     }
   }
 }());

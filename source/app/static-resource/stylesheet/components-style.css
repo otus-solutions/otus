@@ -409,4 +409,10 @@ otus-follow-up-event #event-container {
   padding-bottom: 5px;
 }
 
+@media screen and (max-width: 600px) {
+  otus-follow-up-event #event-description {
+    font-size: 18px;
+  }
+}
+
 /*# sourceMappingURL=components-style.css.map */

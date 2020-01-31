@@ -8,7 +8,9 @@
       templateUrl: 'app/ux-component/participant-dashboard/participant-follow-up/follow-up/event/event-template.html',
       bindings: {
         eventData: '=',
-        selectedParticipant: '<'
+        selectedParticipant: '<',
+        followUpIsCanceled: '<',
+        followUpIsActivated: '<'
       }
     });
 }());

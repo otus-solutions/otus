@@ -1,18 +1,28 @@
-<md-card layout-padding layout="column" flex="80">
-  <div layout="row" layout-align="start start" flex>
-    <md-icon layout-margin="" class="material-icons" layout="column">
-      linear_scale
-    </md-icon>
-    <div layout="column" flex>
-      <span class="md-title" flex>{{$ctrl.followUpData.description}}</span>
-      <span class="md-subheader" ng-if="$ctrl.followUpData.deadline.startDate">Inicio {{$ctrl.followUpData.deadline.startDate | date : "d/M/yyyy h:mm a" }}</span>
-      <span class="md-subheader" ng-if="!$ctrl.followUpData.deadline.startDate">Segmento não iniciado</span>
+<md-card layout-padding layout="column" flex="80" flex-xs="100">
+  <div layout="row" layout-xs="column" layout-align="center center" flex>
+    <div layout="row" layout-align="center center" flex>
+      <md-icon layout-margin="" class="material-icons" layout="column">
+        linear_scale
+      </md-icon>
+      <div layout="column" flex>
+        <span class="md-title" flex>{{$ctrl.followUpData.description}}</span>
+      </div>
     </div>
-    <span class="md-subheader" ng-if="$ctrl.followUpData.deadline.remainingDays > 0">{{$ctrl.followUpData.deadline.remainingDays}} dias restantes</span>
+    <div layout="column" layout-xs="row">
+      <span class="md-subheader" ng-if="$ctrl.followUpData.isActivated && !$ctrl.isCanceled">Inicio {{$ctrl.followUpData.deadline.startDate | date : "d/M/yyyy" }} </span>
+      <span class="md-subheader" ng-if="$ctrl.followUpData.isActivated > 0 && !$ctrl.isCanceled"><span hide-gt-xs>(</span>{{$ctrl.followUpData.deadline.remainingDays}} dias restantes<span hide-gt-xs>)</span></span>
+      <span class="md-subheader" ng-if="!$ctrl.followUpData.deadline.startDate && !$ctrl.isCanceled">Segmento não iniciado</span>
+      <span class="md-subheader" ng-if="$ctrl.isCanceled">Segmento cancelado</span>
+      <span class="md-subheader" ng-if="!$ctrl.isCanceled && !$ctrl.isActivated">Finalizado em {{$ctrl.followUpData.deadline.finalDate | date : "d/M/yyyy"}}</span>
+    </div>
+    <md-button ng-if="$ctrl.followUpData.deadline.remainingDays > 0 && !$ctrl.isCanceled" class="md-icon-button" aria-label="More" ng-click="$ctrl.deactivateFollowUp()">
+      <md-icon>cancel_presentation</md-icon>
+      <md-tooltip>Cancelar segmento</md-tooltip>
+    </md-button>
   </div>
 
   <div layout="column" flex="">
-    <otus-follow-up-event selected-participant="$ctrl.selectedParticipant" layout-align="center end"
+    <otus-follow-up-event follow-up-is-activated="$ctrl.followUpData.isActivated" follow-up-is-canceled="$ctrl.isCanceled" selected-participant="$ctrl.selectedParticipant" layout-align="center end"
                           ng-repeat="event in $ctrl.followUpData.events track by event.order+$ctrl.selectedParticipant.recruitmentNumber"
                           event-data="event"
                           flex></otus-follow-up-event>

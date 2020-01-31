@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -18,10 +18,13 @@
     self.getAllowNewParticipants = getAllowNewParticipants;
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
+    self.deactivateFollowUpEvent = deactivateFollowUpEvent;
 
-    function get() {}
+    function get() {
+    }
 
-    function list() {}
+    function list() {
+    }
 
     function create(participant) {
       var _dataSource = ModuleService.DataSource.Participant;
@@ -44,6 +47,13 @@
       }
     }
 
+    function deactivateFollowUpEvent(followUpId) {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.deactivateFollowUpEvent(followUpId);
+      }
+    }
+
     function getAllowNewParticipants() {
       var _dataSource = ModuleService.DataSource.Participant;
       if (_dataSource) {
@@ -51,14 +61,16 @@
       }
     }
 
-    function remove() {}
+    function remove() {
+    }
 
-    function update() {}
+    function update() {
+    }
 
     function listIdexers() {
       var _dataSource = ModuleService.DataSource.Participant;
       if (_dataSource) {
-         return _dataSource.listIndexers();
+        return _dataSource.listIndexers();
       }
     }
   }
