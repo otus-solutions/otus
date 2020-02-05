@@ -26,7 +26,6 @@ describe('activity-view-service Test', function () {
     spyOn(Injections.ContextService, "setActivityToPlay");
     spyOn(Injections.ParticipantActivityService, "getById").and.returnValue(Promise.resolve([{}]));
     spyOn(Injections.ModuleService, "whenActivityFacadeServiceReady").and.returnValue(Promise.resolve(Mock.ActivityFacadeService));
-    spyOn(Injections.ModuleService, "whenActivityPlayerServiceReady").and.returnValue(Promise.resolve(Mock.PlayerService));
     spyOn(Mock.ActivityFacadeService, "useActivity");
     spyOn(Mock.PlayerService, "setup");
   });

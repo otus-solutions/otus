@@ -23,7 +23,7 @@
   "scripts": {
     "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome",
     "test": "karma start karma.conf.js --single-run",
-    "start": "gulp browser-sync --api-url $API_URL",
+    "start": "gulp browser-sync --api-url $API_URL --player-url $PLAYER_URL",
     "gulp": "gulp",
     "karma": "karma",
     "build": "gulp compress",
