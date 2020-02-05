@@ -18,6 +18,9 @@
     self.getPendencyByActivityId = getPendencyByActivityId;
     self.updateUserActivityPendency = updateUserActivityPendency;
     self.deleteUserActivityPendency = deleteUserActivityPendency;
+    self.getAllUserActivityPendenciesToReceiver = getAllUserActivityPendenciesToReceiver;
+    self.getOpenedUserActivityPendenciesToReceiver = getOpenedUserActivityPendenciesToReceiver;
+    self.getDoneUserActivityPendenciesToReceiver = getDoneUserActivityPendenciesToReceiver;
 
     function createUserActivityPendency(userActivityPendency) {
       return _remoteStorage.whenReady()
@@ -43,7 +46,23 @@
         .then(response => response.data);
     }
 
+    function getAllUserActivityPendenciesToReceiver() {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.getAllUserActivityPendenciesToReceiver())
+        .then(response => response.data);
+    }
 
+    function getOpenedUserActivityPendenciesToReceiver() {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.getOpenedUserActivityPendenciesToReceiver())
+        .then(response => response.data);
+    }
+
+    function getDoneUserActivityPendenciesToReceiver() {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.getDoneUserActivityPendenciesToReceiver())
+        .then(response => response.data);
+    }
 
   }
 }());

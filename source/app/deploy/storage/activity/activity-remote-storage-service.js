@@ -119,11 +119,11 @@
      * @memberof ActivityRemoteStorageService
      */
 
-    function getById(activityInfo) {
+    function getById(activityId, rn) {
       var deferred = $q.defer();
 
       ActivityRestService
-        .getById(activityInfo)
+        .getById(activityId, rn)
         .then(function(response) {
           deferred.resolve(response);
         }).catch(function () {

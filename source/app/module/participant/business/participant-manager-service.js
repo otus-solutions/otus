@@ -17,6 +17,7 @@
     var self = this;
     var _filteredParticipants = [];
     var query;
+    var participantList = [];
 
     /* Public methods */
     self.setup = setup;
@@ -26,17 +27,19 @@
     self.filter = filter;
     self.selectParticipant = selectParticipant;
     self.getSelectedParticipant = getSelectedParticipant;
-
+    self.getParticipantList = getParticipantList;
+    self.getParticipant = getParticipant;
     var _setupSuccess;
 
     function setup() {
       var defer = $q.defer();
       setTimeout(function () {
         var promise = ParticipantRepositoryService.listIdexers();
-        promise.then(function (_participants) {
-          if (_participants) {
-            query = SearchQueryFactory.newParticipantFilter(_participants);
-            _stringfyRNs(_participants);
+        promise.then(function (participants) {
+          if (participants) {
+            query = SearchQueryFactory.newParticipantFilter(participants);
+            _stringfyRNs(participants);
+            participantList = participants;
             _setupSuccess = true;
             defer.resolve(_setupSuccess);
           } else {
@@ -108,6 +111,18 @@
         });
 
       return deferred.promise;
+    }
+
+    function getParticipantList() {
+      return participantList;
+    }
+
+    function getParticipant(rn) {
+      let participant = participantList.find(element => element.recruitmentNumber === rn);
+      if(!participant){
+        throw new Error('ParticipantList is not initialized.');
+      }
+      return participant;
     }
   }
 }());
