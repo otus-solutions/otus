@@ -13,6 +13,9 @@ describe('UserActivityPendencyRepositoryService_UnitTest_Suite', () => {
       spyOn(Injections.UserActivityPendencyCollectionService, 'getPendencyByActivityId');
       spyOn(Injections.UserActivityPendencyCollectionService, 'updateUserActivityPendency');
       spyOn(Injections.UserActivityPendencyCollectionService, 'deleteUserActivityPendency');
+      spyOn(Injections.UserActivityPendencyCollectionService, 'getAllUserActivityPendenciesToReceiver');
+      spyOn(Injections.UserActivityPendencyCollectionService, 'getOpenedUserActivityPendenciesToReceiver');
+      spyOn(Injections.UserActivityPendencyCollectionService, 'getDoneUserActivityPendenciesToReceiver');
 
       Mock.userActivityPendencyFactory = $injector.get('otusjs.model.pendency.UserActivityPendencyFactory');
       Mock.UserActivityPendencyDocument = JSON.stringify(Test.utils.data.userActivityPendency);
@@ -30,6 +33,9 @@ describe('UserActivityPendencyRepositoryService_UnitTest_Suite', () => {
     expect(service.getPendencyByActivityId).toBeDefined();
     expect(service.updateUserActivityPendency).toBeDefined();
     expect(service.deleteUserActivityPendency).toBeDefined();
+    expect(service.getAllUserActivityPendenciesToReceiver).toBeDefined();
+    expect(service.getOpenedUserActivityPendenciesToReceiver).toBeDefined();
+    expect(service.getDoneUserActivityPendenciesToReceiver).toBeDefined();
   });
 
   it('createUserActivityPendencyMethod_should_evoke_create_byUserActivityPendencyCollectionService', () => {
@@ -50,5 +56,20 @@ describe('UserActivityPendencyRepositoryService_UnitTest_Suite', () => {
   it('deleteUserActivityPendencyMethod_should_evoke_deletePendency_byUserActivityPendencyCollectionService', () => {
     service.deleteUserActivityPendency(Mock._id)
     expect(Injections.UserActivityPendencyCollectionService.deleteUserActivityPendency).toHaveBeenCalledTimes(1)
+  });
+
+  it('getAllUserActivityPendenciesToReceiverMethod_should_evoke_getPendencyAllUser_byUserActivityPendencyCollectionService', () => {
+    service.getAllUserActivityPendenciesToReceiver()
+    expect(Injections.UserActivityPendencyCollectionService.getAllUserActivityPendenciesToReceiver).toHaveBeenCalledTimes(1)
+  });
+
+  it('getOpenedUserActivityPendenciesToReceiverMethod_should_evoke_getPendencyOpenedUser_byUserActivityPendencyCollectionService', () => {
+    service.getOpenedUserActivityPendenciesToReceiver()
+    expect(Injections.UserActivityPendencyCollectionService.getOpenedUserActivityPendenciesToReceiver).toHaveBeenCalledTimes(1)
+  });
+
+  it('getDoneUserActivityPendenciesToReceiverMethod_should_evoke_getPendencyDoneUser_byUserActivityPendencyCollectionService', () => {
+    service.getDoneUserActivityPendenciesToReceiver()
+    expect(Injections.UserActivityPendencyCollectionService.getDoneUserActivityPendenciesToReceiver).toHaveBeenCalledTimes(1)
   });
 });

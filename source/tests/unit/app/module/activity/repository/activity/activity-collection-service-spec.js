@@ -82,10 +82,10 @@ describe('activity-collection-service Test', function() {
     });
 
     it('should get activity by ID', function (done) {
-      service.getById([{}]);
+      service.getById({},{});
       Injections.ModuleService.getActivityRemoteStorage().whenReady().then(function (remoteStorage) {
         expect(Mock.remoteStorage.getById).toHaveBeenCalledTimes(1);
-        expect(Mock.remoteStorage.getById).toHaveBeenCalledWith([{}]);
+        expect(Mock.remoteStorage.getById).toHaveBeenCalledWith({},{});
         remoteStorage.getById().then(function () {
           done();
         });

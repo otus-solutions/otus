@@ -28,11 +28,11 @@
       _runSurveyPlayer(_activity.getID());
     }
 
-
     function _getUrlPreviewPlayer(id) {
       var callback = location.href;
       var token = ContextUserService.getToken();
       var url = $cookies.get('Player-Address');
+      if (!url) return $window.location.href;
       if (_isValidUrl(url)){
         return url.concat("?activity=").concat(id).concat('&').concat('token=').concat(token).concat('&').concat('callback=').concat(callback);
       } else {

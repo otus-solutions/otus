@@ -5,15 +5,14 @@ describe('activity-repository-service Test', function() {
   var ID = "12345";
   var ACRONYM = "PASC";
   var VERSION = 1;
-  var SURVEY_ACTIVITIES = [{},{}]
+  var SURVEY_ACTIVITIES = [{},{}];
   var DATA = {activityID: "54321"};
+  var DATA_ACTIVITY = "54321";
+  var DATA_RN = "0000000";
   var ACTIVITY_REVISION = {revision: DATA};
 
   beforeEach(function() {
-    angular.mock.module('otusjs.activity', function ($provide) {
-     $provide.value('otusjs.deploy.SurveyRestService', {});
-     $provide.value('otusjs.deploy.SurveyGroupRestService', {});
-    });
+    angular.mock.module('otusjs.otus');
 
     inject(function(_$injector_) {
       Injections = {
@@ -78,9 +77,9 @@ describe('activity-repository-service Test', function() {
     });
 
     it('should call getById method', function () {
-      service.getById(DATA);
+      service.getById(DATA_ACTIVITY,DATA_RN);
       expect(Injections.ActivityCollectionService.getById).toHaveBeenCalledTimes(1);
-      expect(Injections.ActivityCollectionService.getById).toHaveBeenCalledWith(DATA);
+      expect(Injections.ActivityCollectionService.getById).toHaveBeenCalledWith(DATA_ACTIVITY,DATA_RN);
     });
 
   });
