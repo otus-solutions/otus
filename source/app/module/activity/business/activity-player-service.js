@@ -29,7 +29,8 @@
     }
 
     function _getUrlPreviewPlayer(id) {
-      var callback = location.href;
+      var callback = angular.copy($window.location.href) || "";
+      callback = callback.replace("#","HASHTAG");
       var token = ContextUserService.getToken();
       var url = $cookies.get('Player-Address');
       if (!url) return $window.location.href;

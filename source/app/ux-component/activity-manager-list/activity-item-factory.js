@@ -71,6 +71,11 @@
           name: 'Online',
           icon: 'signal'
         };
+      } else if ('AUTOFILL' === activity.mode){
+        return {
+          name: 'Auto Preenchimento',
+          icon: 'home_work'
+        }
       } else {
         return {
           name: '',
