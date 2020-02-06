@@ -3,7 +3,7 @@ variable "otus-frontend-name"{
 }
 
 variable "otus-frontend-port"{
-  default = 51001
+  default = 51008
 }
 
 variable "otus-frontend-apiurl"{
