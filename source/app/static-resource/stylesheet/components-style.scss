@@ -546,3 +546,20 @@ otus-activity-category-adder {
     }
   }
 }
+
+otus-follow-up-event{
+  #event-icon {
+    max-width: 60px;
+    max-height: 60px;
+  }
+  #event-container {
+    padding-bottom: 5px;
+  }
+}
+otus-follow-up-event {
+  @media screen and (max-width: 600px){
+    #event-description {
+      font-size: 18px;
+    }
+  }
+}

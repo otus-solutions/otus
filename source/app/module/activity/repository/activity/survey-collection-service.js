@@ -18,6 +18,7 @@
     self.listAll = listAll;
     self.listAcronyms = listAcronyms;
     self.getSurveyGroupsByUser = getSurveyGroupsByUser;
+    self.getSurveyByAcronym = getSurveyByAcronym;
 
     function listAll() {
       return _executeWork(function(dataSource) {
@@ -29,6 +30,10 @@
       return _executeWork(function(dataSource) {
         return dataSource.getData().find();
       });
+    }
+
+    function getSurveyByAcronym(acronym) {
+      return SurveyRestService.getSurveyByAcronym(acronym);
     }
 
     function getSurveyGroupsByUser() {

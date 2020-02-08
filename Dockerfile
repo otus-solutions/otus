@@ -4,6 +4,7 @@ RUN rm -rf /usr/share/nginx/html/index.html
 RUN rm -rf /usr/share/nginx/html/50x.html
 
 ENV API_URL="http://localhost:51002"
+ENV PLAYER_URL="http://localhost:51001"
 
 COPY source/dist/otus /usr/share/nginx/html/otus
 COPY server/nginx.conf /etc/nginx/nginx.conf
