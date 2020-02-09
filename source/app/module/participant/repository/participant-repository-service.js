@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -16,15 +16,41 @@
     self.listIdexers = listIdexers;
     self.create = create;
     self.getAllowNewParticipants = getAllowNewParticipants;
+    self.getFollowUps = getFollowUps;
+    self.activateFollowUpEvent = activateFollowUpEvent;
+    self.deactivateFollowUpEvent = deactivateFollowUpEvent;
 
-    function get() {}
+    function get() {
+    }
 
-    function list() {}
+    function list() {
+    }
 
     function create(participant) {
       var _dataSource = ModuleService.DataSource.Participant;
       if (_dataSource) {
         return _dataSource.create(participant);
+      }
+    }
+
+    function getFollowUps(recruitmentNumber) {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.getFollowUps(recruitmentNumber);
+      }
+    }
+
+    function activateFollowUpEvent(recruitmentNumber, event) {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.activateFollowUpEvent(recruitmentNumber, event);
+      }
+    }
+
+    function deactivateFollowUpEvent(followUpId) {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.deactivateFollowUpEvent(followUpId);
       }
     }
 
@@ -35,14 +61,16 @@
       }
     }
 
-    function remove() {}
+    function remove() {
+    }
 
-    function update() {}
+    function update() {
+    }
 
     function listIdexers() {
       var _dataSource = ModuleService.DataSource.Participant;
       if (_dataSource) {
-         return _dataSource.listIndexers();
+        return _dataSource.listIndexers();
       }
     }
   }

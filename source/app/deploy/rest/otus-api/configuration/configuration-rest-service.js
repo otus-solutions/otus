@@ -16,6 +16,7 @@
     /* Public methods */
     self.initialize = initialize;
     self.getSurveys = getSurveys;
+    self.getSurveyByAcronym = getSurveyByAcronym;
 
     function initialize() {
       _rest = OtusRestResourceService.getConfigurationResource();
@@ -26,6 +27,13 @@
         throw new Error('REST resource is not initialized.');
       }
       return _rest.getSurveys().$promise;
+    }
+
+    function getSurveyByAcronym(acronym) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.getByAcronym({acronym: acronym}).$promise;
     }
   }
 }());

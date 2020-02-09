@@ -109,15 +109,18 @@
         self.showFillingButton = false;
         self.showDeleteButton = false;
         self.showInfoButton = false;
+        self.showPendenciesButton = false;
         self.isPaperActivity = false;
       } else if (selectedActivities.length === 1) {
+        var isAutoFill = selectedActivities[0].mode === "AUTOFILL" ? true : false;
         self.showBottomSheet = true;
         self.showVisualizationButton = true;
-        self.showFillingButton = true;
+        self.showFillingButton = !isAutoFill;
         self.showViewerButton = true;
-        self.showDeleteButton = true;
+        self.showDeleteButton = !isAutoFill;
+        self.showPendenciesButton = !isAutoFill;
         self.showInfoButton = true;
-        self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() ? true : false;
+        self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() != undefined ? true : false;
         self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name
       } else {
         self.showBottomSheet = true;
@@ -126,6 +129,7 @@
         self.showViewerButton = false;
         self.showDeleteButton = true;
         self.showInfoButton = false;
+        self.showPendenciesButton = false;
         self.isPaperActivity = false;
       }
 

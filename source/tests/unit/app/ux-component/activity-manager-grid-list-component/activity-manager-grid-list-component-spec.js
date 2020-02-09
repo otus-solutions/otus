@@ -30,7 +30,6 @@ describe('otusActivityManagerGridList Test', function() {
     it('onInitMethod should inicialized the controller variables', function () {
         expect(controller.elementsArray).toEqual(ELEMENTS_ARRAY);
         expect(controller.hoverGridHeaderWhiteframe).toEqual('md-whiteframe-19dp');
-        expect(controller.hoverGridHeaderColor).toEqual('#00695C');
         expect(controller.gridDataSettings).toBeUndefined();
         expect(controller.callbackAfterChange).toBeDefined();
     });

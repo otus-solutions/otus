@@ -21,6 +21,9 @@
     self.listIndexers = listIndexers;
     self.create = create;
     self.getAllowNewParticipants = getAllowNewParticipants;
+    self.getFollowUps = getFollowUps;
+    self.activateFollowUpEvent = activateFollowUpEvent;
+    self.deactivateFollowUpEvent = deactivateFollowUpEvent;
 
     function up() {
       _loadingDefer = $q.defer();
@@ -51,8 +54,8 @@
           deferred.resolve(response.data);
           _loadData();
         }).catch(function (err) {
-          deferred.reject(err);
-        });
+        deferred.reject(err);
+      });
       return deferred.promise;
     }
 
@@ -63,9 +66,45 @@
         .then(function (response) {
           deferred.resolve(response.data);
         }).catch(function (error) {
-          deferred.reject(error);
-        });
+        deferred.reject(error);
+      });
 
+      return deferred.promise;
+    }
+
+    function getFollowUps(recruitmentNumber) {
+      var deferred = $q.defer();
+      ParticipantRestService
+        .getFollowUps(recruitmentNumber)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        }).catch(function (err) {
+          deferred.reject(err);
+        });
+      return deferred.promise;
+    }
+
+    function activateFollowUpEvent(recruitmentNumber, event) {
+      var deferred = $q.defer();
+      ParticipantRestService
+        .activateFollowUpEvent(recruitmentNumber, event)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        }).catch(function (err) {
+          deferred.reject(err);
+        });
+      return deferred.promise;
+    }
+
+    function deactivateFollowUpEvent(followUpId) {
+      var deferred = $q.defer();
+      ParticipantRestService
+        .deactivateFollowUpEvent(followUpId)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        }).catch(function (err) {
+          deferred.reject(err);
+        });
       return deferred.promise;
     }
 

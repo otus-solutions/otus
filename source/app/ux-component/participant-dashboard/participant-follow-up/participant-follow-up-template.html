@@ -1,0 +1,12 @@
+<md-content ng-if="!$ctrl.hasError" layout="column" style="max-height: 100%">
+  <md-button ng-if="$ctrl.followUps[0].participantEvents.length <= 0" class="md-raised md-accent"
+             ng-click="$ctrl.activateFollowUps()">Inicializar segmentos
+  </md-button>
+  <otus-follow-up ng-repeat="followUp in $ctrl.followUps track by followUp.order+$ctrl.selectedParticipant.recruitmentNumber"
+                  selected-participant="$ctrl.selectedParticipant" follow-up-data="followUp"
+                  is-first-follow-up="$index == 0" layout="row" layout-align="center center"></otus-follow-up>
+</md-content>
+<div ng-if="$ctrl.hasError" layout="column" layout-align="center center" flex>
+  <img src="static-resource/image/coruja_pesquisadora.png">
+  <p class="md-title">{{$ctrl.errorMessage}}</p>
+</div>
