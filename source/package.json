@@ -1,6 +1,6 @@
 {
   "name": "otus",
-  "version": "1.28.0",
+  "version": "1.29.0",
   "description": "Tool for data entry in a research environment.",
   "keywords": [
     "otus",
@@ -55,18 +55,18 @@
     "jquery": "3.0.0",
     "jsbarcode": "^3.5.7",
     "json2csv": "^3.11.5",
-    "label-maker-js": "https://github.com/ccem-dev/label-maker-js.git#1.2.0",
     "lokijs": "1.4.2",
     "moment": "2.12.0",
     "ng-material-datetimepicker": "^1.13.0",
-    "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#feature-OCJ-1",
-    "otus-domain-client": "https://github.com/ccem-dev/otus-domain-client-js.git#1.1.0",
-    "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#feature/OTUS-1",
-    "otus-preview-js": "https://github.com/ccem-dev/otus-preview-js.git#1.15.3",
-    "otus-validation-js": "https://github.com/ccem-dev/otus-validation-js.git#1.1.0",
-    "please-wait": "0.0.5",
     "require-dir": "^1.0.0",
-    "xlsx-core": "^1.0.3"
+    "xlsx-core": "^1.0.3",
+    "label-maker-js": "1.2.0",
+    "otus-client-js": "1.21.0",
+    "otus-domain-client": "1.1.0",
+    "otus-model-js": "1.28.0",
+    "otus-preview-js": "1.15.3",
+    "otus-validation-js": "1.1.0",
+    "please-wait": "0.0.5"
   },
   "devDependencies": {
     "angular-mocks": "1.4.9",
