@@ -5,81 +5,168 @@
   </md-button>
 </div>
 <md-divider></md-divider>
-<md-content flex layout-align="start center" layout="column" layout-padding layout-margin>
-  <div layout="row" flex>
-    <span flex="10"></span>
-    <otus-panel header-label="'Novo Participante'" flex style="width:800px">
-      <md-card flex>
-        <md-card-content flex>
-          <form name="participantForm" layout="column">
-            <div layout-gt-xs="row">
-              <span flex="10">
-                <md-input-container  ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">
-                  <input ng-model="$ctrl.centerCode" ng-disabled="true" id="centerCode" style="text-align: right">
-                  <md-tooltip md-direction="down">O código do centro sera o(s) primeiro(s) digito(s) do número de recrutamento</md-tooltip>
-                </md-input-container>
-              </span>
-              <md-input-container flex>
-                <label ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (máx. {{14-$ctrl.centerCode.toString().length}} dígitos)</label>
-                <label ng-if="$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (Gerado automaticamente)</label>
-                <input ng-model="$ctrl.recruitmentNumber" ng-disabled="$ctrl.permissions.autoGenerateRecruitmentNumber" numbers-only maxlength="{{14-$ctrl.centerCode.toString().length}}" id="rn" ng-change="$ctrl.onFilter()">
-                <md-tooltip md-direction="down" ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber" >Insira no máximo {{14-$ctrl.centerCode.toString().length}} dígitos.</md-tooltip>
-                <md-tooltip md-direction="down" ng-if="$ctrl.permissions.autoGenerateRecruitmentNumber" >Gerado automaticamente pelo sistema.</md-tooltip>
-              </md-input-container>
-              <span flex="10"></span>
-            </div>
-            <div layout-gt-xs="row">
-              <span flex="10"></span>
-              <md-input-container flex>
-                <label>Nome Completo</label>
-                <input ng-model="$ctrl.participant.name" id="name" ng-change="$ctrl.onFilter()">
-              </md-input-container>
-              <span flex="10"></span>
-            </div>
-            <div layout-gt-xs="row" layout-align="center center">
-              <span flex="10"></span>
-              <md-input-container flex="30">
-                <label>Sexo</label>
-                <md-select ng-model="$ctrl.participant.sex" id="sex" ng-change="$ctrl.onFilter()">
-                  <md-option value="M">Masculino</md-option>
-                  <md-option value="F">Feminino</md-option>
-                </md-select>
-              </md-input-container>
-              <span flex="5"></span>
-              <md-input-container flex="45" style="margin-top: 40px" id="date">
-                <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
-                <input mdc-datetime-picker="" show-icon="true" date="true" time="false" aria-label="Data de Nascimento" type="text" id="datetime" placeholder="Data de Nascimento" max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
-                  format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
-              </md-input-container>
-              <span flex="10"></span>
-            </div>
-            <div layout-gt-xs="row">
-              <span flex="10"></span>
-              <md-input-container flex>
-                <label>Centro</label>
-                <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" id="center" ng-disabled="$ctrl.centerFilterDisabled">
-                  <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center.acronym}}" ng-selected="$index == $ctrl.centerFilterselectedIndex">
-                    {{center.name}}
-                  </md-option>
-                </md-select>
-              </md-input-container>
-              <span flex="10"></span>
-            </div>
-            <div layout-gt-sm="row" layout-align="end" layout-margin="">
-              <span flex></span>
-              <md-button class="md-warn md-raised md-button" ng-click="$ctrl.clearParticipant()">
-                <md-icon aria-label="Limpar">clear</md-icon>
-                <md-tooltip md-direction="down">Limpar</md-tooltip>
-              </md-button>
-              <md-button class="md-accent md-raised md-button" ng-click="$ctrl.saveParticipant()">
-                <md-icon aria-label="Adicionar">save</md-icon>
-                <md-tooltip md-direction="down">Salvar</md-tooltip>
-              </md-button>
-            </div>
-          </form>
-        </md-card-content>
-      </md-card>
-    </otus-panel>
-    <span flex="10"></span>
-  </div>
+<md-content flex>
+  <md-tabs class="md-raised" md-center-tabs md-dynamic-height>
+    <md-tab label="Identificado" flex layout="column" ng-click="$ctrl.updateMode()">
+      <md-content flex layout-align="center center" layout="row" layout-fill="">
+        <div layout="row" layout-xs="column" flex="100" layout-align="center center">
+          <otus-panel header-label="'Novo Participante Identificado'" flex="100" flex-gt-xs="70" flex-gt-sm="60"
+                      flex-gt-md="50" flex-gt-lg="40" layout-fill>
+            <md-card flex>
+              <md-card-content flex="100">
+                <form name="participantForm" layout="column" flex>
+                  <div layout-gt-xs="row" layout-fill="">
+
+                    <md-input-container ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber" layout-fill="">
+                      <input ng-model="$ctrl.centerCode" ng-disabled="true" style="text-align: right">
+                      <md-tooltip md-direction="down">O código do centro será o(s) primeiro(s) digito(s) do número de
+                        recrutamento
+                      </md-tooltip>
+                    </md-input-container>
+                    <span flex="10"></span>
+                    <md-input-container flex="100" layout-fill="">
+                      <label ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (máx.
+                        {{14-$ctrl.centerCode.toString().length}} dígitos)</label>
+                      <label ng-if="$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (Gerado
+                        automaticamente)</label>
+                      <input ng-model="$ctrl.recruitmentNumber"
+                             ng-disabled="$ctrl.permissions.autoGenerateRecruitmentNumber" numbers-only
+                             maxlength="{{14-$ctrl.centerCode.toString().length}}" ng-change="$ctrl.onFilter()">
+                      <md-tooltip md-direction="down" ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Insira no
+                        máximo {{14-$ctrl.centerCode.toString().length}} dígitos.
+                      </md-tooltip>
+                      <md-tooltip md-direction="down" ng-if="$ctrl.permissions.autoGenerateRecruitmentNumber">Gerado
+                        automaticamente pelo sistema.
+                      </md-tooltip>
+                    </md-input-container>
+                    <span flex="10"></span>
+                  </div>
+                  <div layout-gt-xs="row">
+                    <span flex="10"></span>
+                    <md-input-container flex layout-fill="">
+                      <label>Nome Completo</label>
+                      <input ng-model="$ctrl.participant.name" id="name" ng-change="$ctrl.onFilter()">
+                    </md-input-container>
+                    <span flex="10"></span>
+                  </div>
+                  <div layout-gt-xs="row" layout-align="center center">
+                    <span flex="10"></span>
+                    <md-input-container flex="30" layout-fill="">
+                      <label>Sexo</label>
+                      <md-select ng-model="$ctrl.participant.sex" id="sex" ng-change="$ctrl.onFilter()">
+                        <md-option value="M">Masculino</md-option>
+                        <md-option value="F">Feminino</md-option>
+                      </md-select>
+                    </md-input-container>
+                    <span flex="10"></span>
+                    <md-input-container flex="65" style="margin-top: 25px" id="date" layout-fill="">
+                      <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
+                      <input mdc-datetime-picker="" show-icon="true" date="true" time="false"
+                             aria-label="Data de Nascimento" type="text" id="datetime" placeholder="Data de Nascimento"
+                             max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
+                             format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
+                    </md-input-container>
+                    <span flex="10"></span>
+                  </div>
+                  <div layout-gt-xs="row">
+                    <span flex="10"></span>
+                    <md-input-container flex="50" layout-fill="">
+                      <label>Centro</label>
+                      <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" id="centerIdentified"
+                                 ng-disabled="$ctrl.centerFilterDisabled">
+                        <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center.acronym}}"
+                                   ng-selected="$index == $ctrl.centerFilterselectedIndex">
+                          {{center.name}}
+                        </md-option>
+                      </md-select>
+                    </md-input-container>
+                    <span flex="10"></span>
+                  </div>
+                  <div layout="row" layout-align="end" layout-margin="">
+                    <span flex></span>
+                    <md-button class="md-raised md-icon-button" ng-click="$ctrl.clearParticipant()">
+                      <md-icon aria-label="Limpar">clear</md-icon>
+                      <md-tooltip md-direction="down">Limpar</md-tooltip>
+                    </md-button>
+                    <md-button class="md-accent md-raised md-icon-button" ng-click="$ctrl.saveParticipant()">
+                      <md-icon aria-label="Adicionar">save</md-icon>
+                      <md-tooltip md-direction="down">Salvar</md-tooltip>
+                    </md-button>
+                  </div>
+                </form>
+              </md-card-content>
+            </md-card>
+          </otus-panel>
+        </div>
+      </md-content>
+    </md-tab>
+    <md-tab label="Anônimo" ng-click="$ctrl.updateMode()">
+      <md-content flex layout-align="center center" layout="row" layout-fill="">
+        <div layout="row" layout-xs="column" flex="100" layout-align="center center">
+          <otus-panel header-label="'Novo Participante Anônimo'" flex="100" flex-gt-xs="70" flex-gt-sm="60"
+                      flex-gt-md="50" flex-gt-lg="40" layout-fill>
+            <md-card flex>
+              <md-card-content flex="100">
+                <form name="participantForm" layout="column" flex>
+                  <div layout-gt-xs="row" layout-fill="">
+
+                    <md-input-container ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber" layout-fill="">
+                      <input ng-model="$ctrl.centerCode" ng-disabled="true" id="centerCode" style="text-align: right">
+                      <md-tooltip md-direction="down">O código do centro será o(s) primeiro(s) digito(s) do número de
+                        recrutamento
+                      </md-tooltip>
+                    </md-input-container>
+                    <span flex="10"></span>
+                    <md-input-container flex="100" layout-fill="">
+                      <label ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (máx.
+                        {{14-$ctrl.centerCode.toString().length}} dígitos)</label>
+                      <label ng-if="$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (Gerado
+                        automaticamente)</label>
+                      <input ng-model="$ctrl.recruitmentNumber"
+                             ng-disabled="$ctrl.permissions.autoGenerateRecruitmentNumber" numbers-only
+                             maxlength="{{14-$ctrl.centerCode.toString().length}}" id="rn" ng-change="$ctrl.onFilter()">
+                      <md-tooltip md-direction="down" ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Insira no
+                        máximo {{14-$ctrl.centerCode.toString().length}} dígitos.
+                      </md-tooltip>
+                      <md-tooltip md-direction="down" ng-if="$ctrl.permissions.autoGenerateRecruitmentNumber">Gerado
+                        automaticamente pelo sistema.
+                      </md-tooltip>
+                    </md-input-container>
+                    <span flex="10"></span>
+                  </div>
+                  <div layout-gt-xs="row">
+                    <span flex="10"></span>
+                    <md-input-container flex="50" layout-fill="">
+                      <label>Centro</label>
+                      <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" id="center"
+                                 ng-disabled="$ctrl.centerFilterDisabled">
+                        <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center.acronym}}"
+                                   ng-selected="$index == $ctrl.centerFilterselectedIndex">
+                          {{center.name}}
+                        </md-option>
+                      </md-select>
+                    </md-input-container>
+                    <span flex="10"></span>
+                  </div>
+                  <div layout="row" layout-align="end">
+                    <span flex></span>
+                    <md-button class="md-raised md-icon-button" ng-click="$ctrl.clearParticipant()">
+                      <md-icon aria-label="Limpar">clear</md-icon>
+                      <md-tooltip md-direction="down">Limpar</md-tooltip>
+                    </md-button>
+                    <md-button class="md-accent md-raised md-icon-button" ng-click="$ctrl.saveParticipant()">
+                      <md-icon aria-label="Adicionar">save</md-icon>
+                      <md-tooltip md-direction="down">Salvar</md-tooltip>
+                    </md-button>
+                  </div>
+                </form>
+                <span flex="80"></span>
+              </md-card-content>
+            </md-card>
+          </otus-panel>
+        </div>
+      </md-content>
+    </md-tab>
+  </md-tabs>
+
 </md-content>

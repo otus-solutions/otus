@@ -8,11 +8,12 @@
   Service.$inject = [
     '$q',
     'otusjs.deploy.ParticipantRestService',
+    'otusjs.model.participant.ParticipantFactory',
     'otusjs.deploy.ProjectConfigurationRestService',
     'otusjs.participant.storage.ParticipantStorageService'
   ];
 
-  function Service($q, ParticipantRestService, ProjectConfigurationRestService, ParticipantStorageService) {
+  function Service($q, ParticipantRestService, ParticipantFactory, ProjectConfigurationRestService, ParticipantStorageService) {
     var self = this;
     var _loadingDefer = $q.defer();
 
@@ -113,7 +114,7 @@
         .list()
         .then(function (response) {
           ParticipantStorageService.getCollection().clear();
-          ParticipantStorageService.getCollection().insert(response.data);
+          ParticipantStorageService.getCollection().insert(ParticipantFactory.fromArray(response.data));
           ParticipantStorageService.save();
           _loadingDefer.resolve();
         });

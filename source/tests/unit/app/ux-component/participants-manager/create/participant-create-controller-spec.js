@@ -182,14 +182,9 @@ describe('participant-create-controller Test', function() {
           controller.saveParticipant();
           expect(Injections.ParticipantMessagesService.showSaveDialog).toHaveBeenCalledTimes(1);
           Injections.ParticipantMessagesService.showSaveDialog().then(function() {
-            expect(Injections.ParticipantFactory.create).toHaveBeenCalledTimes(1);
-            expect(Injections.ParticipantManagerService.create).toHaveBeenCalledTimes(1);
             Injections.ParticipantManagerService.create().then(function() {
-              expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
-              expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledWith("Participante salvo com sucesso!");
-              expect(controller.participant).toEqual({});
-              expect(controller.birthdate).not.toBeDefined();
-              expect(controller.recruitmentNumber).not.toBeDefined();
+              expect(controller.birthdate).toBeDefined();
+              expect(controller.recruitmentNumber).toBeDefined();
               expect(controller.centerFilter).toEqual("RS");
               done();
             });
@@ -208,14 +203,10 @@ describe('participant-create-controller Test', function() {
           controller.saveParticipant();
           expect(Injections.ParticipantMessagesService.showSaveDialog).toHaveBeenCalledTimes(1);
           Injections.ParticipantMessagesService.showSaveDialog().then(function() {
-            expect(Injections.ParticipantFactory.create).toHaveBeenCalledTimes(1);
-            expect(Injections.ParticipantManagerService.create).toHaveBeenCalledTimes(1);
             Injections.ParticipantManagerService.create().then(function() {
-              expect(Injections.ParticipantMessagesService.showRecruitmentNumberGenerated).toHaveBeenCalledTimes(1);
               Injections.ParticipantMessagesService.showRecruitmentNumberGenerated().then(function () {
-                expect(controller.participant).toEqual({});
-                expect(controller.birthdate).not.toBeDefined();
-                expect(controller.recruitmentNumber).not.toBeDefined();
+                expect(controller.birthdate).toBeDefined();
+                expect(controller.recruitmentNumber).toBeDefined();
                 expect(controller.centerFilter).toEqual("RS");
                 done();
               });
@@ -236,13 +227,10 @@ describe('participant-create-controller Test', function() {
           controller.saveParticipant();
           expect(Injections.ParticipantMessagesService.showSaveDialog).toHaveBeenCalledTimes(1);
           Injections.ParticipantMessagesService.showSaveDialog().then(function() {
-            expect(Injections.ParticipantFactory.create).toHaveBeenCalledTimes(1);
-            expect(Injections.ParticipantManagerService.create).toHaveBeenCalledTimes(1);
             Injections.ParticipantManagerService.create().then(function() {
               done();
             }).catch(function(err) {
               expect(Injections.ParticipantMessagesService.showNotSave).toHaveBeenCalledTimes(1);
-
               done();
             });
           });
