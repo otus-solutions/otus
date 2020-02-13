@@ -25,7 +25,7 @@
     };
 
     let htmlComponents = {
-      ActivityAutoFillEvent: "<activity-auto-fill-event parent='$ctrl'></activity-auto-fill-event>"
+      ActivityAutoFillEvent: "<activity-auto-fill-event event-component='$ctrl'></activity-auto-fill-event>"
     };
 
     function onInit() {

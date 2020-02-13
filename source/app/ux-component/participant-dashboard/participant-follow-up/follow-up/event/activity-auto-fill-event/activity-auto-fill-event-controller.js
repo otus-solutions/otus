@@ -26,8 +26,8 @@
     self.$onInit = onInit;
 
     function onInit() {
-      self.eventData = self.parent.eventData;
-      self.parent.activateEvent = activateEvent;
+      self.eventData = self.eventComponent.eventData;
+      self.eventComponent.activateEvent = activateEvent;
     }
 
     function activateEvent() {
@@ -41,12 +41,12 @@
                   if (response.length > 0) {
                     let activityConfiguration = {};
                     activityConfiguration.category = response[0];
-                    let activity = ActivityFactory.createAutoFillActivity(SurveyFormFactory.fromJsonObject(surveyForm.data[surveyForm.data.length - 1]), user, self.parent.selectedParticipant, activityConfiguration);
+                    let activity = ActivityFactory.createAutoFillActivity(SurveyFormFactory.fromJsonObject(surveyForm.data[surveyForm.data.length - 1]), user, self.eventComponent.selectedParticipant, activityConfiguration);
                     ActivityRepositoryService.createActivity(activity).then((result) => {
                       self.eventData.activityId = result._id;
-                      ParticipantFollowUpService.activateFollowUpEvent(self.parent.selectedParticipant.recruitmentNumber, self.eventData).then(function (result) {
-                        self.parent.eventData.participantEvents.push(result);
-                        self.parent.eventData.status = "PENDING"
+                      ParticipantFollowUpService.activateFollowUpEvent(self.eventComponent.selectedParticipant.recruitmentNumber, self.eventData).then(function (result) {
+                        self.eventComponent.eventData.participantEvents.push(result);
+                        self.eventComponent.eventData.status = "PENDING"
                       });
                     }).catch(()=>{
                       _showToast(5000, "Ocorreu um erro, entre em contato com o administrador do sistema");
