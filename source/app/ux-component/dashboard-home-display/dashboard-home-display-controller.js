@@ -33,6 +33,7 @@
     self.managerParticipantsDashboard = managerParticipantsDashboard;
     self.activateActivityFlagsReport = activateActivityFlagsReport;
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
+    self.pendencyViewer = pendencyViewer;
 
     function onInit() {
       _loadLoggedUser();
@@ -117,6 +118,11 @@
       return UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
         self.userAccessToLaboratory = response;
       });
+    }
+
+    function pendencyViewer() {
+      alert("Pendency Viewer")
+      //ApplicationStateService.activateLaboratoryMonitoring();
     }
 
   }

@@ -127,7 +127,7 @@
               </md-card-content>
             </md-card>
 
-            <md-card class="card-button" layout-fill ng-init="showLaboratory=true" >
+            <md-card class="card-button" layout-fill>
               <md-card-content layout="column" layout-align="start start" class="no-padding">
                 <md-button class="md-body-1 option" layout-margin="" layout-align="center"
                            ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" ng-click="$ctrl.laboratoryMonitoring()">
@@ -135,6 +135,17 @@
                 </md-button>
               </md-card-content>
             </md-card>
+
+            <md-card class="card-button" layout-fill ng-init="showLaboratory=true" >
+              <md-card-content layout="column" layout-align="start start" class="no-padding">
+                <md-button class="md-body-1 option" layout-margin="" layout-align="center"
+                           ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" ng-click="$ctrl.pendencyViewer()">
+                  <md-icon layout-margin>visibility</md-icon>Visualizador de Pendências
+                </md-button>
+              </md-card-content>
+            </md-card>
+
+
           </div>
         </div>
       </div>
