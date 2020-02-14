@@ -13,6 +13,7 @@
       'DASHBOARD': 'dashboard',
       'PARTICIPANT_DASHBOARD': 'participant-dashboard',
       'PARTICIPANT_CREATE': 'participant-create',
+      'PARTICIPANT_UPDATE': 'participant-update',
       'PARTICIPANTS_MANAGER': 'participants-manager',
       'PARTICIPANTS_LIST': 'participants-list',
       'INSTALLER': 'installer',
@@ -57,6 +58,7 @@
     'otusjs.deploy.ParticipantsManagerStateProvider',
     'otusjs.deploy.ParticipantsListStateProvider',
     'otusjs.deploy.ParticipantCreateStateProvider',
+    'otusjs.deploy.ParticipantUpdateStateProvider',
     'otusjs.deploy.ParticipantFollowUpStateProvider',
     'otusjs.deploy.InstallerStateProvider',
     'otusjs.deploy.LoginStateProvider',
@@ -93,6 +95,7 @@
     ParticipantsManagerStateProvider,
     ParticipantsListStateProvider,
     ParticipantCreateStateProvider,
+    ParticipantUpdateStateProvider,
     InstallerProvider,
     LoginStateProvider,
     ParticipantStateProvider,
@@ -129,6 +132,7 @@
     $stateProvider.state(ParticipantsManagerStateProvider.state);
     $stateProvider.state(ParticipantsListStateProvider.state);
     $stateProvider.state(ParticipantCreateStateProvider.state);
+    $stateProvider.state(ParticipantUpdateStateProvider.state);
     $stateProvider.state(InstallerProvider.state);
     $stateProvider.state(ParticipantStateProvider.state);
     $stateProvider.state(SessionStateProvider.state);

@@ -22,6 +22,7 @@
     /* Public methods */
     self.setup = setup;
     self.create = create;
+    self.update = update;
     self.listIdexers = listIdexers;
     self.getAllowNewParticipants = getAllowNewParticipants;
     self.filter = filter;
@@ -77,6 +78,19 @@
     function create(participant) {
       var deferred = $q.defer();
       ParticipantRepositoryService.create(participant)
+        .then(function (response) {
+          deferred.resolve(response);
+        })
+        .catch(function (err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function update(participant) {
+      var deferred = $q.defer();
+      ParticipantRepositoryService.update(participant)
         .then(function (response) {
           deferred.resolve(response);
         })

@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .controller('otusParticipantCreateCtrl', Controller);
+    .controller('otusParticipantUpdateCtrl', Controller);
 
   Controller.$inject = [
     '$element',
@@ -15,10 +15,22 @@
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.participant.business.ParticipantManagerService',
-    'otusjs.participant.business.ParticipantMessagesService'
+    'otusjs.participant.business.ParticipantMessagesService',
+    'otusjs.otus.dashboard.service.DashboardService'
   ];
 
-  function Controller($element, ImmutableDate, mdcDateTimeDialog, ApplicationStateService, mdcDefaultParams, ParticipantFactory, ProjectFieldCenterService, dashboardContextService, ParticipantManagerService, ParticipantMessagesService) {
+  function Controller(
+    $element,
+    ImmutableDate,
+    mdcDateTimeDialog,
+    ApplicationStateService,
+    mdcDefaultParams,
+    ParticipantFactory,
+    ProjectFieldCenterService,
+    dashboardContextService,
+    ParticipantManagerService,
+    ParticipantMessagesService,
+    DashboardService) {
     var self = this;
 
 
@@ -34,44 +46,23 @@
 
     /* Public methods */
     self.saveParticipant = saveParticipant;
-    self.clearParticipant = clearParticipant;
-    self.listParticipants = listParticipants;
+    self.dashboardParticipant = dashboardParticipant;
     self.onFilter = onFilter;
 
 
     function onInit() {
+
+      DashboardService
+        .getSelectedParticipant()
+        .then(function (participantData) {
+          self.participant = participantData;
+          self.birthdate = new Date(self.participant.birthdate.value)
+        });
       self.identified = true;
       self.maxDate = new Date();
       self.centers = {};
       _loadAllCenters();
     }
-
-    function _restoreFields() {
-      var _restoreParticipant = JSON.parse(localStorage.getItem("newParticipant")) || ParticipantFactory.create();
-      if (_restoreParticipant.recruitmentNumber) {
-        self.recruitmentNumber = _restoreParticipant.recruitmentNumber;
-      }
-      if (_restoreParticipant.birthdate) {
-        self.birthdate = _restoreParticipant.birthdate;
-      }
-      if (_restoreParticipant.fieldCenter) {
-        self.centerFilter = self.centers.find(function (center) {
-          return center.acronym === _restoreParticipant.fieldCenter.acronym;
-        });
-        self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : -1;
-      }
-      self.participant = _restoreParticipant;
-    }
-
-    self.$onChanges = function () {
-      if (!self.permissions.participantRegistration) {
-        ApplicationStateService.activateParticipantsList();
-      }
-    };
-
-    self.$onDestroy = function () {
-      localStorage.removeItem("newParticipant");
-    };
 
     function _getCenterCode(acronym) {
       var center = self.centers.filter(function (center) {
@@ -91,13 +82,10 @@
             self.centerFilter = self.centers.find(function (center) {
               return center.acronym === userData.fieldCenter.acronym;
             });
-            self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : -1;
+            self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
             self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
             self.centerFilter = angular.copy(self.centerFilter.acronym);
-          } else {
-            self.centerFilter = "";
           }
-          _restoreFields();
         });
     }
 
@@ -147,7 +135,7 @@
 
     function _fieldsValidate() {
       var _valid = true;
-      if (!self.participant){
+      if (!self.participant) {
         self.participant = ParticipantFactory.create();
       }
       if (!self.participant.recruitmentNumber && !self.permissions.autoGenerateRecruitmentNumber) {
@@ -163,7 +151,7 @@
         _showDialogBirthdate();
         _valid = false;
       } else if (!self.participant.fieldCenter) {
-        if (self.identified){
+        if (self.identified) {
           $element.find('#centerIdentifield').focus();
         } else {
           $element.find('#center').focus();
@@ -174,54 +162,30 @@
       return _valid;
     }
 
-    function clearParticipant() {
-      ParticipantMessagesService.showClearDialog()
-        .then(function () {
-          _setClear();
-        });
-    }
 
-    function _setClear() {
-      localStorage.removeItem("newParticipant");
-      delete self.participant;
-      delete self.birthdate;
-      delete self.recruitmentNumber;
-      self.userCenter ? self.userCenter : delete self.centerFilter;
-      self.participant = {};
-    }
-
-    function listParticipants() {
-      ApplicationStateService.activateParticipantsList();
+    function dashboardParticipant() {
+      ApplicationStateService.activateParticipantDashboard();
     }
 
     function saveParticipant() {
       if (_fieldsValidate()) {
-        ParticipantMessagesService.showSaveDialog()
+        ParticipantMessagesService.showUpdateDialog()
           .then(function () {
             self.onFilter();
-            if (self.permissions.participantRegistration) {
-              var _participant = _getParticipantData();
-              ParticipantManagerService.create(_participant)
-                .then(function (response) {
-                  if (!self.permissions.autoGenerateRecruitmentNumber) {
-                    if (response.recruitmentNumber === self.participant.recruitmentNumber) {
-                      _setClear();
-                      ParticipantMessagesService.showToast("Participante salvo com sucesso!");
-                      self.listParticipants();
-                    }
-                  } else {
-                    ParticipantMessagesService.showRecruitmentNumberGenerated(ParticipantFactory.fromJson(response).toJSON()).then(function () {
-                      _setClear();
-                    })
-                  }
+            var _participant = _getParticipantData();
+            ParticipantManagerService.update(_participant)
+              .then(function (response) {
+                var p = ParticipantFactory.fromJson(response).toJSON()
+                ParticipantManagerService.selectParticipant(p);
+                ParticipantMessagesService.showUpdateParticipant(p).then(function () {
+                  self.dashboardParticipant();
                 })
-                .catch(function (err) {
-                  ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
-                });
-            } else {
-              ParticipantMessagesService.showNotSave("Sistema não habilitado para cadastros de participantes!");
-              self.listParticipants();
-            }
+
+              })
+              .catch(function (err) {
+                ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
+              });
+
           });
       } else {
         ParticipantMessagesService.showToast("Favor, preencha todos os campos!");
@@ -229,25 +193,16 @@
     }
 
     function _getParticipantData() {
-      if(self.identified) {
+      if (self.identified) {
         return ParticipantFactory.fromJson(self.participant)
       } else {
         let _participantData = ParticipantFactory.fromJson(self.participant);
         if (_participantData.recruitmentNumber) {
-          return {recruitmentNumber: _participantData.recruitmentNumber, fieldCenter: _participantData.fieldCenter };
+          return {recruitmentNumber: _participantData.recruitmentNumber, fieldCenter: _participantData.fieldCenter};
         } else {
-          return {fieldCenter: ParticipantFactory.fromJson(self.participant).fieldCenter };
+          return {fieldCenter: ParticipantFactory.fromJson(self.participant).fieldCenter};
         }
       }
     }
-
-
-    self.updateMode = function () {
-      self.identified = !self.identified;
-      _setClear();
-      self.participant = ParticipantFactory.create();
-    }
-
-
   }
 }());

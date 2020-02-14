@@ -6,10 +6,11 @@
     .service('otusjs.deploy.model.ActivityFacadeService', Service);
 
   Service.$inject = [
+    'otusjs.model.participant.ParticipantFactory',
     'otusjs.model.activity.ActivityFacadeService'
   ];
 
-  function Service(ActivityFacadeService) {
+  function Service(ParticipantFactory, ActivityFacadeService) {
     var self = this;
     var _currentUser = null;
 
@@ -36,9 +37,9 @@
 
     function createActivity(template, user, participant, paperActivityData, configuration, externalID) {
       if (paperActivityData) {
-        ActivityFacadeService.createPaperActivity(template, user, participant, paperActivityData, configuration, externalID);
+        ActivityFacadeService.createPaperActivity(template, user, ParticipantFactory.fromJson(participant).toJSON(), paperActivityData, configuration, externalID);
       } else {
-        ActivityFacadeService.createActivity(template, user, participant, configuration, externalID);
+        ActivityFacadeService.createActivity(template, user, ParticipantFactory.fromJson(participant).toJSON(), configuration, externalID);
       }
 
       return getActivity();

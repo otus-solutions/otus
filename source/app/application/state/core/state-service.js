@@ -25,6 +25,7 @@
     self.activateDashboard = activateDashboard;
     self.activateParticipantDashboard = activateParticipantDashboard;
     self.activateCreateParticipant = activateCreateParticipant;
+    self.activateUpdateParticipant = activateUpdateParticipant;
     self.activateParticipantActivities = activateParticipantActivities;
     self.activateParticipantReports = activateParticipantReports;
     self.activateSignup = activateSignup;
@@ -93,6 +94,10 @@
 
     function activateCreateParticipant() {
       $state.go(STATE.PARTICIPANT_CREATE);
+    }
+
+    function activateUpdateParticipant() {
+      $state.go(STATE.PARTICIPANT_UPDATE);
     }
 
     function activateManagerParticipants() {

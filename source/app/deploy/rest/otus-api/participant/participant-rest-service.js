@@ -17,6 +17,7 @@
     self.initialize = initialize;
     self.list = list;
     self.create = create;
+    self.update = update;
     self.getByRecruitmentNumber = getByRecruitmentNumber;
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
@@ -46,6 +47,13 @@
         throw new Error('REST resource is not initialized.');
       }
       return _rest.create({}, participant).$promise;
+    }
+
+    function update(participant) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.update({}, participant).$promise;
     }
 
     function getFollowUps(recruitmentNumber) {
