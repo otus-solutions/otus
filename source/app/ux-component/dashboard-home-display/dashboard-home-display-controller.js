@@ -121,9 +121,7 @@
     }
 
     function pendencyViewer() {
-      alert("Pendency Viewer")
-      //ApplicationStateService.activateLaboratoryMonitoring();
+      ApplicationStateService.activatePendencyViewer();
     }
-
   }
 }());

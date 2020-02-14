@@ -46,6 +46,7 @@
     self.activateLaboratoryMonitoring = activateLaboratoryMonitoring;
     self.activateActivityFlagsReport = activateActivityFlagsReport;
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
+    self.activatePendencyViewer = activatePendencyViewer;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -176,6 +177,10 @@
 
     function getCurrentState() {
       return $state.current.name;
+    }
+
+    function activatePendencyViewer(){
+      $state.go(STATE.PENDENCY_VIEWER);
     }
   }
 }());

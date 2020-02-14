@@ -39,7 +39,8 @@
       'LABORATORY_FLAG_REPORT': 'laboratory-flag-report',
       'FLAG_MANAGER_LIST': 'manager-list',
       'LABORATORY_MONITORING_DASHBOARD': 'laboratory-monitoring',
-      'ACTIVITY_IMPORT': 'activity-import'
+      'ACTIVITY_IMPORT': 'activity-import',
+      'PENDENCY_VIEWER': 'pendency-viewer'
     })
     .config(Configuration);
 
@@ -78,42 +79,46 @@
     'otusjs.deploy.LaboratoryFlagReportStateProvider',
     'otusjs.deploy.ActivityFlagReportStateProvider',
     'otusjs.deploy.LaboratoryMonitoringStateProvider',
-    'otusjs.deploy.ActivityImportStateProvider'
+    'otusjs.deploy.ActivityImportStateProvider',
+    'otusjs.deploy.PendencyViewerStateProvider'
+
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
-    AccessStateProvider,
-    ErrorStateProvider,
-    ActivityStateProvider,
-    ActivityAdderStateProvider,
-    ActivityPlayerStateProvider,
-    ActivityViewerStateProvider,
-    DashboardProvider,
-    ParticipantDashboardProvider,
-    ParticipantsManagerStateProvider,
-    ParticipantsListStateProvider,
-    ParticipantCreateStateProvider,
-    InstallerProvider,
-    LoginStateProvider,
-    ParticipantStateProvider,
-    SignupStateProvider,
-    SignupResultStateProvider,
-    SessionStateProvider,
-    LaboratoryStateProvider,
-    SampleTransportationLotAdderProvider,
-    SampleTransportationManagerListProvider,
-    SampleTransportationProvider,
-    ExamLotStateProvider,
-    ExamLotManagerListState,
-    ExamLotInfoManagerState,
-    SendingExamState,
-    ExamResultsVisualizer,
-    MonitoringStateProvider,
-    UserAccessRecoveryProvider,
-    LaboratoryFlagReportStateProvider,
-    ActivityFlagReportStateProvider,
-    LaboratoryMonitoringStateProvider,
-    ActivityImportStateProvider
+                         AccessStateProvider,
+                         ErrorStateProvider,
+                         ActivityStateProvider,
+                         ActivityAdderStateProvider,
+                         ActivityPlayerStateProvider,
+                         ActivityViewerStateProvider,
+                         DashboardProvider,
+                         ParticipantDashboardProvider,
+                         ParticipantsManagerStateProvider,
+                         ParticipantsListStateProvider,
+                         ParticipantCreateStateProvider,
+                         ParticipantFollowUpStateProvider,
+                         InstallerProvider,
+                         LoginStateProvider,
+                         ParticipantStateProvider,
+                         SignupStateProvider,
+                         SignupResultStateProvider,
+                         SessionStateProvider,
+                         LaboratoryStateProvider,
+                         SampleTransportationLotAdderProvider,
+                         SampleTransportationManagerListProvider,
+                         SampleTransportationProvider,
+                         ExamLotStateProvider,
+                         ExamLotManagerListState,
+                         ExamLotInfoManagerState,
+                         SendingExamState,
+                         ExamResultsVisualizer,
+                         MonitoringStateProvider,
+                         UserAccessRecoveryProvider,
+                         LaboratoryFlagReportStateProvider,
+                         ActivityFlagReportStateProvider,
+                         LaboratoryMonitoringStateProvider,
+                         ActivityImportStateProvider,
+                         PendencyViewerStateProvider
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ErrorStateProvider.state);
@@ -147,6 +152,7 @@
     $stateProvider.state(ActivityFlagReportStateProvider.state);
     $stateProvider.state(LaboratoryMonitoringStateProvider.state);
     $stateProvider.state(ActivityImportStateProvider.state);
+    $stateProvider.state(PendencyViewerStateProvider.state);
 
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
