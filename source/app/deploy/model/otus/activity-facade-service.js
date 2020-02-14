@@ -36,13 +36,18 @@
     }
 
     function createActivity(template, user, participant, paperActivityData, configuration, externalID) {
+      var _participant = _normalizeParticipant(participant);
       if (paperActivityData) {
-        ActivityFacadeService.createPaperActivity(template, user, ParticipantFactory.fromJson(participant).toJSON(), paperActivityData, configuration, externalID);
+        ActivityFacadeService.createPaperActivity(template, user, _participant, paperActivityData, configuration, externalID);
       } else {
-        ActivityFacadeService.createActivity(template, user, ParticipantFactory.fromJson(participant).toJSON(), configuration, externalID);
+        ActivityFacadeService.createActivity(template, user, _participant, configuration, externalID);
       }
 
       return getActivity();
+    }
+
+    function _normalizeParticipant(participant) {
+      return ParticipantFactory.fromJson(participant).toJSON()
     }
 
     function openSurveyActivity(user) {
