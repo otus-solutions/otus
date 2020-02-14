@@ -4,10 +4,10 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('pendencyListComponent', {
-      controller: 'pendencyListComponentCtrl as $ctrl',
+      controller: 'pendencyListCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list/pendency-list-template.html',
       bindings: {}
-    }).controller('pendencyListComponent', Controller);
+    }).controller('pendencyListCtrl', Controller);
 
   Controller.$inject = [];
 

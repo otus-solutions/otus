@@ -22,7 +22,7 @@
       parent: STATE.SESSION,
       name: STATE.PENDENCY_VIEWER,
       url: '/' + STATE.PENDENCY_VIEWER,
-      template: '<h1>home pendency</h1>',
+      template: '<pendency-view-component></pendency-view-component>',
       resolve: {
         resolve: _resolve
       },
