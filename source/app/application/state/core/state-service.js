@@ -79,6 +79,10 @@
       $state.go(STATE.LABORATORY);
     }
 
+    function activateUnattachedLaboratory() {
+      $state.go(STATE.UNATTACHED_LABORATORY);
+    }
+
     function activateParticipantFollowUps() {
       $state.go(STATE.PARTICIPANT_FOLLOW_UPS);
     }

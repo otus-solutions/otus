@@ -111,7 +111,7 @@
           if (error.data.MESSAGE.match("Laboratory not found")){
             self.attacheError = "Laboratório não encontrado";
           } else if (error.data.MESSAGE.match("Laboratory is already attached")) {
-            self.attacheError = "Laboratório ja foi vinculado a um participante";
+            self.attacheError = "Laboratório já foi vinculado a um participante";
           } else if (error.data.MESSAGE.match("Invalid configuration")) {
             if (error.data.CONTENT.laboratoryCollectGroup !== error.data.CONTENT.participantCollectGroup){
               self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
