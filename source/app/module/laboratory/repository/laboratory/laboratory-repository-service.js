@@ -32,6 +32,9 @@
     self.deleteLot = deleteLot;
     self.deleteAliquot = deleteAliquot;
 
+    /* Unattached Laboratory Methods */
+    self.attacheLaboratory = attacheLaboratory;
+
 
     function initializeLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
@@ -97,6 +100,10 @@
 
     function deleteLot(lotCode) {
       return LaboratoryCollectionService.deleteLot(lotCode);
+    }
+
+    function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
+      return LaboratoryCollectionService.attacheLaboratory(recruitmentNumber,laboratoryIdentification);
     }
   }
 }());

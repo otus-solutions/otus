@@ -52,6 +52,9 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
 
+    /* Unattached Laboratory Methods */
+    self.attacheLaboratory = attacheLaboratory;
+
     /**
      * Adds laboratories to collection.
      * @param {(object)} laboratory - the laboratory to be updated
@@ -307,6 +310,19 @@
       var deferred = $q.defer();
       SampleTransportRestService
         .deleteLot(lotCode)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .attacheLaboratory(recruitmentNumber, laboratoryIdentification)
         .then(function(response) {
           deferred.resolve(response.data);
         })

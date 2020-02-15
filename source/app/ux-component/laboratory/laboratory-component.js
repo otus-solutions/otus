@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -10,27 +10,33 @@
 
   Controller.$inject = [
     '$q',
+    '$mdDialog',
+    'otusjs.application.dialog.DialogShowService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.laboratory.business.unattached.UnattachedLaboratoryService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.laboratory.core.EventService',
     'otusjs.otus.uxComponent.Publisher',
     '$scope'
   ];
 
-  function Controller($q, ParticipantLaboratoryService, LoadingScreenService, EventService, Publisher, $scope) {
+  function Controller($q, $mdDialog, DialogShowService, ParticipantLaboratoryService, UnattachedLaboratoryService, LoadingScreenService, EventService, Publisher, $scope) {
     var self = this;
 
     /* Public methods */
     self.$onInit = onInit;
     self.intializeLaboratory = intializeLaboratory;
+    self.attacheLaboratory = attacheLaboratory;
 
     function onInit() {
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       self.hasLaboratory = false;
+      self.ready = false;
+      self.attacheHasErrors = false;
       ParticipantLaboratoryService.onParticipantSelected(_setupLaboratory);
       Publisher.unsubscribe('refresh-laboratory-participant');
-      Publisher.subscribe('refresh-laboratory-participant',_refreshLaboratory);
+      Publisher.subscribe('refresh-laboratory-participant', _refreshLaboratory);
       _setupLaboratory();
     }
 
@@ -40,7 +46,7 @@
       } else {
         ParticipantLaboratoryService
           .getSelectedParticipant()
-          .then(function(participantData) {
+          .then(function (participantData) {
             self.selectedParticipant = participantData;
           });
       }
@@ -48,11 +54,13 @@
 
     function _refreshLaboratory(currentState) {
       LoadingScreenService.start();
+      self.ready = false;
       self.hasLaboratory = false;
       ParticipantLaboratoryService
         .hasLaboratory()
-        .then(function(hasLaboratory) {
+        .then(function (hasLaboratory) {
           self.hasLaboratory = hasLaboratory;
+          self.ready = true;
           if (hasLaboratory) {
             _fetchLaboratory(currentState);
           }
@@ -65,8 +73,9 @@
       self.hasLaboratory = false;
       ParticipantLaboratoryService
         .hasLaboratory()
-        .then(function(hasLaboratory) {
+        .then(function (hasLaboratory) {
           self.hasLaboratory = hasLaboratory;
+          self.ready = true;
           if (hasLaboratory) {
             _fetchLaboratory();
           }
@@ -80,13 +89,48 @@
 
       ParticipantLaboratoryService
         .initializeLaboratory()
-        .then(function(laboratory) {
+        .then(function (laboratory) {
           if (laboratory) {
             self.hasLaboratory = true;
+            self.ready = true;
             _fetchLaboratory();
           }
           LoadingScreenService.finish();
         });
+    }
+
+    function attacheLaboratory() {
+      self.attacheError = null;
+      LoadingScreenService.start();
+      UnattachedLaboratoryService.attacheLaboratory(self.laboratoryIdentification).then(function () {
+        _refreshLaboratory();
+        LoadingScreenService.finish();
+      }).catch(function (error) {
+        self.attacheHaveErrors = true;
+        if (error.data) {
+          if (error.data.MESSAGE.match("Laboratory not found")){
+            self.attacheError = "Laboratório não encontrado";
+          } else if (error.data.MESSAGE.match("Laboratory is already attached")) {
+            self.attacheError = "Laboratório ja foi vinculado a um participante";
+          } else if (error.data.MESSAGE.match("Invalid configuration")) {
+            if (error.data.CONTENT.laboratoryCollectGroup !== error.data.CONTENT.participantCollectGroup){
+              self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
+            }
+            if (error.data.CONTENT.laboratoryFieldCenter !== error.data.CONTENT.participantFieldCenter){
+              if (self.attacheError) {
+                self.attacheError += " e " + "ao mesmo centro"
+              } else {
+                self.attacheError = "O laboratório e o participante devem pertencer ao mesmo centro";
+              }
+            }
+          } else {
+            self.attacheError = "Ocorreu um erro, entre em contato com o administrador do sistema";
+          }
+        } else {
+          self.attacheError = "Ocorreu um erro, entre em contato com o administrador do sistema";
+        }
+        LoadingScreenService.finish();
+      });
     }
 
     function _fetchLaboratory(currentState) {
@@ -117,7 +161,7 @@
     }
 
     function _removeTubesWithOrderNull(tubeList) {
-      var firstIndexOfOrderNull = tubeList.findIndex(function(tube) {
+      var firstIndexOfOrderNull = tubeList.findIndex(function (tube) {
         return tube.order === null;
       });
       return tubeList.splice(firstIndexOfOrderNull, tubeList.length);

@@ -51,6 +51,9 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
 
+    /* Unattached Laboratory Methods */
+    self.attacheLaboratory = attacheLaboratory;
+
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
      * all methods of this service that deal with data and don't need parameters to operator over
@@ -410,6 +413,25 @@
         .then(function (remoteStorage) {
           remoteStorage
             .deleteLot(lotCode)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .attacheLaboratory(recruitmentNumber, laboratoryIdentification)
             .then(function (data) {
               request.resolve(data);
             })

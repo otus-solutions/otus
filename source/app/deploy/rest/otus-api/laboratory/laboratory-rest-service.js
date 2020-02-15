@@ -13,6 +13,7 @@
     var self = this;
     var _participantRest = null;
     var _configurationRest = null;
+    var _unattachedRest = null;
 
     /* Public methods */
     self.initialize = initialize;
@@ -31,9 +32,13 @@
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getAliquotConfiguration = getAliquotConfiguration;
 
+    /* Unattached Laboratory Methods */
+    self.attacheLaboratory = attacheLaboratory;
+
     function initialize() {
       _participantRest = OtusRestResourceService.getLaboratoryParticipantResource();
       _configurationRest = OtusRestResourceService.getLaboratoryConfigurationResource();
+      _unattachedRest = OtusRestResourceService.getUnattachedLaboratoryResource();
     }
 
     /* laboratory-participant methods */
@@ -127,6 +132,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _configurationRest.getCheckingExist().$promise;
+    }
+
+    function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.attache({recruitmentNumber:recruitmentNumber,laboratoryIdentification:laboratoryIdentification}).$promise;
     }
   }
 }());

@@ -1,13 +1,38 @@
 <div layout="column" flex>
-  <div>
-    <div layout="column" layout-align="center center" style=" margin-bottom: 3px;">
-      <md-button ng-show="!$ctrl.hasLaboratory" class="md-raised md-primary" ng-click="$ctrl.intializeLaboratory()">Iniciar Laboratório</md-button>
-      <lab-control-panel  ng-if="$ctrl.hasLaboratory" lab-participant="$ctrl.participantLaboratory" state="$ctrl.state" labels="$ctrl.labels" layout-fill/>
+  <div ng-show="$ctrl.ready && !$ctrl.hasLaboratory" layout="row" layout-xs="column"  style="height: 98%">
+    <div layout="column" layout-align="center center" flex="50" flex-xs="100">
+      <span class="md-title" layout-margin>Criar laboratório do participante</span>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.intializeLaboratory()">Iniciar Laboratório</md-button>
+    </div>
+    <div layout="column" layout-align="center center" flex="50" flex-xs="100" style="padding-top: 100px;">
+      <div layout="column" layout-align="center center" flex="100">
+        <span class="md-title">Vincular laboratório do participante</span>
+        <div layout="row" layout-align="center start">
+          <md-input-container class="md-icon-float md-icon-right md-block">
+            <label>Id do Laboratório</label>
+            <input ng-model="$ctrl.laboratoryIdentification" type="number" min="0" step="1">
+          </md-input-container>
+          <md-button class="md-fab md-mini md-primary" ng-click="$ctrl.attacheLaboratory()" aria-label="More">
+            <md-icon> compare_arrows</md-icon>
+          </md-button>
+        </div>
+      </div>
+      <div layout-margin style="height: 50px; width: 98%" flex-auto>
+        <md-toolbar ng-if="$ctrl.attacheHaveErrors" class="md-warn">
+          <h2 class="md-toolbar-tools" layout-align="center center">
+            <span>{{$ctrl.attacheError}}</span>
+          </h2>
+        </md-toolbar>
+      </div>
     </div>
   </div>
-  <div layout="column" flex>
-    <div ng-if="$ctrl.hasLaboratory" layout="row" flex>
-      <lab-main-panel participant-laboratory="$ctrl.participantLaboratory" layout="row" flex state="$ctrl.state" />
+  <div ng-if="$ctrl.ready && $ctrl.hasLaboratory" layout="column" flex>
+    <div layout="column" layout-align="center center" style=" margin-bottom: 3px;">
+      <lab-control-panel lab-participant="$ctrl.participantLaboratory" state="$ctrl.state" labels="$ctrl.labels"
+                         layout-fill/>
+    </div>
+    <div layout="row" flex>
+      <lab-main-panel participant-laboratory="$ctrl.participantLaboratory" layout="row" flex state="$ctrl.state"/>
     </div>
   </div>
 </div>
