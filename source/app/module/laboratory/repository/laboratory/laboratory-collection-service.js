@@ -53,6 +53,7 @@
 
     /* Unattached Laboratory Methods */
     self.attacheLaboratory = attacheLaboratory;
+    self.listUnattached = listUnattached;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -432,6 +433,25 @@
         .then(function (remoteStorage) {
           remoteStorage
             .attacheLaboratory(recruitmentNumber, laboratoryIdentification)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function listUnattached(collectGroupName, center, page, quantity) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .listUnattached(collectGroupName, center, page, quantity)
             .then(function (data) {
               request.resolve(data);
             })

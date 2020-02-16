@@ -15,20 +15,35 @@
     var self = this;
 
     self.attacheLaboratory = attacheLaboratory;
+    self.listUnattached = listUnattached;
 
     function attacheLaboratory(laboratoryIdentification) {
       var request = $q.defer();
       getSelectedParticipant()
         .then(function (participant) {
           self.participant = participant;
-              return LaboratoryRepositoryService
-                .attacheLaboratory(participant.recruitmentNumber,laboratoryIdentification)
-                .then(function () {
-                  request.resolve();
-                }).catch(function (e) {
-                  request.reject(e);
-                });
+          return LaboratoryRepositoryService
+            .attacheLaboratory(participant.recruitmentNumber, laboratoryIdentification)
+            .then(function () {
+              request.resolve();
+            }).catch(function (e) {
+              request.reject(e);
+            });
         });
+      return request.promise;
+    }
+
+    function listUnattached(collectGroupName, center, page, quantity) {
+      var request = $q.defer();
+
+      LaboratoryRepositoryService
+        .listUnattached(collectGroupName, center, page, quantity)
+        .then(function (result) {
+          request.resolve(result);
+        }).catch(function (e) {
+        request.reject(e);
+      });
+
       return request.promise;
     }
 

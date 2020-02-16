@@ -17,6 +17,7 @@
     self.getCheckingExist = getCheckingExist;
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.fetchAliquotsDescriptors = fetchAliquotsDescriptors;
+    self.getQualityControlGroupNames = getQualityControlGroupNames;
 
     /* Laboratory Configuration */
 
@@ -44,6 +45,23 @@
             defer.resolve(LaboratoryConfigurationService.checkLaboratoryConfiguration());
           });
       }
+      return defer.promise;
+    }
+
+    function getQualityControlGroupNames() {
+      var defer = $q.defer();
+
+      LaboratoryRepositoryService.getLaboratoryDescriptors()
+        .then(function (response) {
+          let names = [];
+          response.data.collectGroupConfiguration.groupDescriptors.forEach(function (descriptor) {
+            names.push(descriptor.name)
+          });
+          defer.resolve(names);
+        }, function (e) {
+          defer.reject(e);
+        });
+
       return defer.promise;
     }
 

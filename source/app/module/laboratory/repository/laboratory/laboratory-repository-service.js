@@ -34,6 +34,7 @@
 
     /* Unattached Laboratory Methods */
     self.attacheLaboratory = attacheLaboratory;
+    self.listUnattached = listUnattached;
 
 
     function initializeLaboratory(participant) {
@@ -104,6 +105,10 @@
 
     function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
       return LaboratoryCollectionService.attacheLaboratory(recruitmentNumber,laboratoryIdentification);
+    }
+
+    function listUnattached(collectGroupName, center, page, quantity) {
+      return LaboratoryCollectionService.listUnattached(collectGroupName, center, page, quantity);
     }
   }
 }());

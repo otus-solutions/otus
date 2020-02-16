@@ -54,6 +54,7 @@
 
     /* Unattached Laboratory Methods */
     self.attacheLaboratory = attacheLaboratory;
+    self.listUnattached = listUnattached;
 
     /**
      * Adds laboratories to collection.
@@ -323,6 +324,19 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .attacheLaboratory(recruitmentNumber, laboratoryIdentification)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function listUnattached(collectGroupName, center, page, quantity) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .listUnattached(collectGroupName, center, page, quantity)
         .then(function(response) {
           deferred.resolve(response.data);
         })

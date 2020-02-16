@@ -34,6 +34,7 @@
 
     /* Unattached Laboratory Methods */
     self.attacheLaboratory = attacheLaboratory;
+    self.listUnattached = listUnattached;
 
     function initialize() {
       _participantRest = OtusRestResourceService.getLaboratoryParticipantResource();
@@ -139,6 +140,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _unattachedRest.attache({recruitmentNumber:recruitmentNumber,laboratoryIdentification:laboratoryIdentification}).$promise;
+    }
+
+    function listUnattached(collectGroupName, center, page, quantity) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.listLaboratories({descriptorName:collectGroupName, acronym:center, page:page, quantity:quantity}).$promise;
     }
   }
 }());
