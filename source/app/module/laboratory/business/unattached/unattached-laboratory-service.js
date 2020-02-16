@@ -16,6 +16,7 @@
 
     self.attacheLaboratory = attacheLaboratory;
     self.listUnattached = listUnattached;
+    self.getById = getById;
 
     function attacheLaboratory(laboratoryIdentification) {
       var request = $q.defer();
@@ -34,6 +35,20 @@
     }
 
     function listUnattached(collectGroupName, center, page, quantity) {
+      var request = $q.defer();
+
+      LaboratoryRepositoryService
+        .listUnattached(collectGroupName, center, page, quantity)
+        .then(function (result) {
+          request.resolve(result);
+        }).catch(function (e) {
+        request.reject(e);
+      });
+
+      return request.promise;
+    }
+
+    function getById(laboratoryOid) {
       var request = $q.defer();
 
       LaboratoryRepositoryService

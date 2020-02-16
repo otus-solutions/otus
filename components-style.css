@@ -416,10 +416,7 @@ otus-follow-up-event #event-container {
 }
 
 unattached-laboratory md-grid-tile-header {
-  background: rgba(19, 125, 108, 0.68) !important;
-}
-unattached-laboratory md-grid-tile-header figcaption {
-  width: 100%;
+  background: rgba(19, 125, 108, 0.68);
 }
 
 /*# sourceMappingURL=components-style.css.map */

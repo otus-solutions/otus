@@ -33,8 +33,11 @@
     self.getAliquotConfiguration = getAliquotConfiguration;
 
     /* Unattached Laboratory Methods */
+    self.initializeUnattached = initializeUnattached;
     self.attacheLaboratory = attacheLaboratory;
     self.listUnattached = listUnattached;
+    self.getUnattachedById = getUnattachedById;
+    self.discardUnattached = discardUnattached;
 
     function initialize() {
       _participantRest = OtusRestResourceService.getLaboratoryParticipantResource();
@@ -135,6 +138,13 @@
       return _configurationRest.getCheckingExist().$promise;
     }
 
+    function initializeUnattached(acronym, descriptorName) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.initialize({acronym:acronym,descriptorName:descriptorName}).$promise;
+    }
+
     function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
       if (!_configurationRest) {
         throw new Error('REST resource is no initialized.');
@@ -147,6 +157,20 @@
         throw new Error('REST resource is no initialized.');
       }
       return _unattachedRest.listLaboratories({descriptorName:collectGroupName, acronym:center, page:page, quantity:quantity}).$promise;
+    }
+
+    function getUnattachedById(laboratoryOid) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.getById({laboratoryOid:laboratoryOid}).$promise;
+    }
+
+    function discardUnattached(laboratoryOid) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.discard({laboratoryOid:laboratoryOid}).$promise;
     }
   }
 }());

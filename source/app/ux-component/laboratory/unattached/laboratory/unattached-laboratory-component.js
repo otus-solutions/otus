@@ -5,9 +5,9 @@
     .module('otusjs.otus.uxComponent')
     .component('unattachedLaboratory', {
       controller: 'unattachedLaboratoryCtrl as $ctrl',
-      templateUrl: 'app/ux-component/laboratory/unattached/unattached-laboratory-template.html',
+      templateUrl: 'app/ux-component/laboratory/unattached/laboratory/unattached-laboratory-template.html',
       bindings: {
-        user: '<'
+        laboratoryData: '<'
       }
     });
 }());

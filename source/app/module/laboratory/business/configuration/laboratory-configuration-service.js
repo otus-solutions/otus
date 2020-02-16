@@ -55,7 +55,9 @@
         .then(function (response) {
           let names = [];
           response.data.collectGroupConfiguration.groupDescriptors.forEach(function (descriptor) {
-            names.push(descriptor.name)
+            if (descriptor.type === "QUALITY_CONTROL"){
+              names.push(descriptor.name)
+            }
           });
           defer.resolve(names);
         }, function (e) {

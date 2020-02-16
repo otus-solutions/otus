@@ -17,6 +17,10 @@
       return new LaboratoryLabel(participant, laboratory);
     }
 
+    function create(laboratory) {
+      return new LaboratoryLabel(null, laboratory);
+    }
+
     return self;
   }
 
@@ -25,10 +29,19 @@
     var DEFAULT = 'DEFAULT';
     var self = this;
 
-    self.recruitment_number = participant.recruitmentNumber;
-    self.participant_name = participant.name;
-    self.gender = participant.sex;
-    self.birthday = _convertFormatDate(new Date(participant.birthdate.value));
+    if (participant){
+      self.recruitment_number = participant.recruitmentNumber;
+      self.participant_name = participant.name;
+      self.gender = participant.sex;
+      self.birthday = _convertFormatDate(new Date(participant.birthdate.value));
+    } else {
+      self.recruitment_number = "_______________________";
+      self.participant_name = "_______________________";
+      self.gender = "__";
+      self.birthday = "__/__/___";
+    }
+
+
     self.cq_group = (laboratory.collectGroupName !== undefined && laboratory.collectGroupName !== DEFAULT) ? laboratory.collectGroupName : NONE;
     self.tubes = laboratory.tubes;
     _buildTubeLabel(self.tubes);

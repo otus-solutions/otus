@@ -22,7 +22,7 @@
       parent: STATE.SESSION,
       name: STATE.UNATTACHED_LABORATORY,
       url: '/' + STATE.UNATTACHED_LABORATORY,
-      template: '<unattached-laboratory layout="row" user="$resolve.user" flex></unattached-laboratory>',
+      template: '<unattached-laboratory-dashboard layout="column" user="$resolve.user" flex></unattached-laboratory-dashboard>',
       resolve: {
         user: _resolveUserLogged
       },
