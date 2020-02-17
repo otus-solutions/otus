@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('pendencyListComponent', {
+    .component('pendencyList', {
       controller: 'pendencyListCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list/pendency-list-template.html',
       bindings: {}
@@ -16,9 +16,35 @@
 
     //TODO: (OTUS-645) service for get List of Pendencies
     self.pendencies = [
-      {item: "abc"},
-      {item: "def"},
-      {item: "ghi"}
+      {
+        creationDate: new Date(),
+        dueDate: new Date(),
+        requester: ["fulano@detal"],
+        receiver: ["detal@fulano"],
+        acronym: "ABC",
+        rn: 123567890,
+        status : "FINALIZED"
+      },
+
+      {
+        creationDate: new Date(),
+        dueDate: new Date(),
+        requester: ["fulano@detal"],
+        receiver: ["detal@fulano"],
+        acronym: "ABC",
+        rn: 123567890,
+        status : "FINALIZED"
+      },
+
+      {
+        creationDate: new Date(),
+        dueDate: new Date(),
+        requester: ["fulano@detal"],
+        receiver: ["detal@fulano"],
+        acronym: "ABC",
+        rn: 123567890,
+        status : "FINALIZED"
+      }
     ];
 
   }
