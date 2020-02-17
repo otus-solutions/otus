@@ -19,13 +19,11 @@
 
 
 <md-whiteframe class="md-whiteframe-3dp wh-layout" layout-padding>
-
-
   <span class="rn"> <md-icon>account_circle</md-icon> {{$ctrl.item.rn}}</span>
   <span class="acronym"><md-icon>description</md-icon> {{$ctrl.item.acronym}}</span>
-  <span class="due-date"><md-icon></md-icon>Data de Vencimento: {{$ctrl.item.dueDate}}</span>
-  <span class="creation-date"><md-icon></md-icon>Data de Criação: {{$ctrl.item.creationDate}}</span>
-  <span class="requester"><md-icon></md-icon>Requisitado por: {{$ctrl.item.requester}}</span>
-  <span class="receiver"><md-icon></md-icon>Revisor Solicitado:{{$ctrl.item.receiver}}</span>
-  <span class="status"><md-icon></md-icon>Status: {{$ctrl.item.status}}</span>
+  <span class="duo-date"><md-icon>hourglass_empty</md-icon> {{$ctrl.item.dueDate}}</span>
+  <span class="creation-date"><md-icon>timer</md-icon> {{$ctrl.item.creationDate}}</span>
+  <span class="requester"><md-icon>record_voice_over</md-icon> {{$ctrl.item.requester}}</span>
+  <span class="receiver"><md-icon>assignment_turned_in</md-icon> {{$ctrl.item.receiver}}</span>
+  <span class="status"><md-icon>event</md-icon> {{$ctrl.item.status}}</span>
 </md-whiteframe>
