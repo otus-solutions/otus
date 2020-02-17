@@ -1,16 +1,16 @@
 <style>
   .wh-layout {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr) .5fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas:
-      "rn rn acronym dueDate"
-      "creationDate requester receiver status"
+      "rn       receiver  duoDate       status"
+      "acronym  requester creationDate  . "
   }
 
   .rn {  grid-area: rn;  }
   .acronym {  grid-area:acronym ;  }
-  .due-date{  grid-area: dueDate;  }
+  .duo-date{  grid-area: duoDate;  }
   .creation-date {  grid-area: creationDate;  }
   .requester {  grid-area:requester ;  }
   .receiver {  grid-area:receiver ;  }
@@ -18,13 +18,14 @@
 </style>
 
 
-<md-whiteframe class="md-whiteframe-3dp wh-layout" layout layout-align="center center">
-  <span class="rn">Número de Recrutamento: {{$ctrl.item.rn}}</span>
-  <span class="acronym">Acrônimo: {{$ctrl.item.acronym}}</span>
-  <span class="due-date">Data de Vencimento: {{$ctrl.item.dueDate}}</span>
-  <span class="creation-date">Data de Criação: {{$ctrl.item.creationDate}}</span>
-  <span class="requester">Requisitado por: {{$ctrl.item.requester}}</span>
-  <span class="receiver">Enviado a:{{$ctrl.item.receiver}}</span>
-  <span class="status">Status: {{$ctrl.item.status}}</span>
-</md-whiteframe>
+<md-whiteframe class="md-whiteframe-3dp wh-layout" layout-padding>
 
+
+  <span class="rn"> <md-icon>account_circle</md-icon> {{$ctrl.item.rn}}</span>
+  <span class="acronym"><md-icon>description</md-icon> {{$ctrl.item.acronym}}</span>
+  <span class="due-date"><md-icon></md-icon>Data de Vencimento: {{$ctrl.item.dueDate}}</span>
+  <span class="creation-date"><md-icon></md-icon>Data de Criação: {{$ctrl.item.creationDate}}</span>
+  <span class="requester"><md-icon></md-icon>Requisitado por: {{$ctrl.item.requester}}</span>
+  <span class="receiver"><md-icon></md-icon>Revisor Solicitado:{{$ctrl.item.receiver}}</span>
+  <span class="status"><md-icon></md-icon>Status: {{$ctrl.item.status}}</span>
+</md-whiteframe>

@@ -17,34 +17,36 @@
     //TODO: (OTUS-645) service for get List of Pendencies
     self.pendencies = [
       {
-        creationDate: new Date(),
-        dueDate: new Date(),
-        requester: ["fulano@detal"],
-        receiver: ["detal@fulano"],
-        acronym: "ABC",
+        creationDate: "01/03/2020",
+        dueDate: "17/02/2020",
+        requester: "supervisor@otus.com.br",
+        receiver: "revisor@otus.com.br",
+        acronym: "ELSA1",
         rn: 123567890,
         status : "FINALIZED"
       },
 
       {
-        creationDate: new Date(),
-        dueDate: new Date(),
-        requester: ["fulano@detal"],
-        receiver: ["detal@fulano"],
-        acronym: "ABC",
-        rn: 123567890,
+        creationDate: "02/03/2020",
+        dueDate: "17/02/2020",
+        requester: "supervisor@otus.com.br",
+        receiver: "revisor@otus.com.br",
+        acronym: "ELSA2",
+        rn: 9874563210,
         status : "FINALIZED"
       },
 
       {
-        creationDate: new Date(),
-        dueDate: new Date(),
-        requester: ["fulano@detal"],
-        receiver: ["detal@fulano"],
-        acronym: "ABC",
-        rn: 123567890,
+        creationDate: "03/03/2020",
+        dueDate: "17/02/2020",
+        requester: "supervisor@otus.com.br",
+        receiver: "revisor@otus.com.br",
+        acronym: "ELSA3",
+        rn: 4569871230,
         status : "FINALIZED"
-      }
+      },
+
+
     ];
 
   }
