@@ -38,6 +38,7 @@
     self.listUnattached = listUnattached;
     self.getUnattachedById = getUnattachedById;
     self.discardUnattached = discardUnattached;
+    self.getUnattachedByIdentification = getUnattachedByIdentification;
 
     function initialize() {
       _participantRest = OtusRestResourceService.getLaboratoryParticipantResource();
@@ -171,6 +172,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _unattachedRest.discard({laboratoryOid:laboratoryOid}).$promise;
+    }
+
+    function getUnattachedByIdentification(laboratoryIdentification) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.getByIdentification({laboratoryIdentification:laboratoryIdentification}).$promise;
     }
   }
 }());

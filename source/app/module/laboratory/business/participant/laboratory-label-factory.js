@@ -12,12 +12,13 @@
 
     /* Public interface */
     self.create = create;
+    self.createForUnattached = createForUnattached;
 
     function create(participant, laboratory) {
       return new LaboratoryLabel(participant, laboratory);
     }
 
-    function create(laboratory) {
+    function createForUnattached(laboratory) {
       return new LaboratoryLabel(null, laboratory);
     }
 
@@ -35,10 +36,10 @@
       self.gender = participant.sex;
       self.birthday = _convertFormatDate(new Date(participant.birthdate.value));
     } else {
-      self.recruitment_number = "_______________________";
-      self.participant_name = "_______________________";
+      self.recruitment_number = '000000000';
+      self.participant_name = "________________";
       self.gender = "__";
-      self.birthday = "__/__/___";
+      self.birthday = "__/__/____";
     }
 
 
@@ -54,6 +55,7 @@
     }
 
     function _buildTubeLabel(tubes) {
+
       tubes.forEach(function(tube) {
         tube.label = tube.label + ' ' + tube.momentLabel;
       });

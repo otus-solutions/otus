@@ -31,7 +31,7 @@
       }
     };
 
-    function _redirect($q, ActivityContextService, Application, UserAccessPermissionService) {
+    function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
 
       Application
@@ -44,7 +44,6 @@
                 return;
               }
               deferred.resolve();
-              ActivityContextService.restore();
             } catch (e) {
               deferred.resolve(STATE.LOGIN);
             }
@@ -56,17 +55,17 @@
 
     _redirect.$inject = [
       '$q',
-      'otusjs.activity.core.ContextService',
       'otusjs.application.core.ModuleService',
       'otusjs.user.business.UserAccessPermissionService'
     ];
 
-    function _resolveUserLogged(SessionContextService, Application) {
+    function _resolveUserLogged(SessionContextService, laboratoryContextService, Application) {
       return Application
         .isDeployed()
         .then(function () {
           try {
             SessionContextService.restore();
+            laboratoryContextService.restore();
             var user = SessionContextService.getData('loggedUser');
             return user;
           } catch (e) {
@@ -77,6 +76,7 @@
 
     _resolveUserLogged.$inject = [
       'otusjs.application.session.core.ContextService',
+      'otusjs.laboratory.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
 

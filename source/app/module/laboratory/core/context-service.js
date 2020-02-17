@@ -55,6 +55,10 @@
     self.getSelectedFieldCenter = getSelectedFieldCenter;
     self.setSelectedExamType = setSelectedExamType;
     self.getSelectedExamType = getSelectedExamType;
+    self.setUnattachedCenterFilter = setUnattachedCenterFilter;
+    self.getUnattachedCenterFilter = getUnattachedCenterFilter;
+    self.setUnattachedGroupFilter = setUnattachedGroupFilter;
+    self.getUnattachedGroupFilter = getUnattachedGroupFilter;
 
     function begin() {
       _context.clear();
@@ -201,6 +205,22 @@
 
     function setLotInfoManagerAction(action) {
       setData('lotInfoManagerAction', action);
+    }
+
+    function setUnattachedCenterFilter(centerFilter) {
+      setData("unattachedFieldCenterFilter",centerFilter);
+    }
+
+    function getUnattachedCenterFilter() {
+      return getData("unattachedFieldCenterFilter");
+    }
+
+    function setUnattachedGroupFilter(collectGroupsFilter) {
+      setData("unattachedCollectGroupsFilter",collectGroupsFilter);
+    }
+
+    function getUnattachedGroupFilter() {
+      return getData("unattachedCollectGroupsFilter");
     }
 
     function getLotInfoManagerAction() {

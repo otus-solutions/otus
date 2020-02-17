@@ -35,6 +35,10 @@
     /* Unattached Laboratory Methods */
     self.attacheLaboratory = attacheLaboratory;
     self.listUnattached = listUnattached;
+    self.createUnattached = createUnattached;
+    self.getUnattachedById = getUnattachedById;
+    self.discardUnattached = discardUnattached;
+    self.getUnattachedByIdentification = getUnattachedByIdentification;
 
 
     function initializeLaboratory(participant) {
@@ -109,6 +113,22 @@
 
     function listUnattached(collectGroupName, center, page, quantity) {
       return LaboratoryCollectionService.listUnattached(collectGroupName, center, page, quantity);
+    }
+
+    function createUnattached(fieldCenterAcronym, collectGroupName) {
+      return LaboratoryCollectionService.createUnattached(fieldCenterAcronym, collectGroupName);
+    }
+
+    function getUnattachedById(laboratoryOid) {
+      return LaboratoryCollectionService.getUnattachedById(laboratoryOid);
+    }
+
+    function discardUnattached(laboratoryOid) {
+      return LaboratoryCollectionService.discardUnattached(laboratoryOid);
+    }
+
+    function getUnattachedByIdentification(laboratoryIdentification) {
+      return LaboratoryCollectionService.getUnattachedByIdentification(laboratoryIdentification);
     }
   }
 }());

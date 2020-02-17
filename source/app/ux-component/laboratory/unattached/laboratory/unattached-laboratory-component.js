@@ -7,7 +7,8 @@
       controller: 'unattachedLaboratoryCtrl as $ctrl',
       templateUrl: 'app/ux-component/laboratory/unattached/laboratory/unattached-laboratory-template.html',
       bindings: {
-        laboratoryData: '<'
+        laboratoryData: '<',
+        reloadData: '&'
       }
     });
 }());

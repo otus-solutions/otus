@@ -8,15 +8,19 @@
   Service.$inject = [
     '$q',
     'otusjs.laboratory.repository.LaboratoryRepositoryService',
-    'otusjs.laboratory.core.ContextService'
+    'otusjs.laboratory.core.ContextService',
   ];
 
   function Service($q, LaboratoryRepositoryService, ContextService) {
     var self = this;
 
     self.attacheLaboratory = attacheLaboratory;
+    self.attacheLaboratoryToParticipant = attacheLaboratoryToParticipant;
+    self.createUnattached = createUnattached;
     self.listUnattached = listUnattached;
     self.getById = getById;
+    self.discardUnattached = discardUnattached;
+    self.getUnattachedByIdentification = getUnattachedByIdentification;
 
     function attacheLaboratory(laboratoryIdentification) {
       var request = $q.defer();
@@ -31,6 +35,34 @@
               request.reject(e);
             });
         });
+      return request.promise;
+    }
+
+    function attacheLaboratoryToParticipant(laboratoryIdentification, recruitmentNumber) {
+      var request = $q.defer();
+
+      LaboratoryRepositoryService
+        .attacheLaboratory(recruitmentNumber, laboratoryIdentification)
+        .then(function () {
+          request.resolve();
+        }).catch(function (e) {
+        request.reject(e);
+      });
+
+      return request.promise;
+    }
+
+    function createUnattached(fieldCenterAcronym, collectGroupName) {
+      var request = $q.defer();
+
+      LaboratoryRepositoryService
+        .createUnattached(fieldCenterAcronym, collectGroupName)
+        .then(function (result) {
+          request.resolve(result);
+        }).catch(function (e) {
+        request.reject(e);
+      });
+
       return request.promise;
     }
 
@@ -52,7 +84,36 @@
       var request = $q.defer();
 
       LaboratoryRepositoryService
-        .listUnattached(collectGroupName, center, page, quantity)
+        .getUnattachedById(laboratoryOid)
+        .then(function (result) {
+          request.resolve(result);
+        }).catch(function (e) {
+        request.reject(e);
+      });
+
+      return request.promise;
+    }
+
+    function discardUnattached(laboratoryOid) {
+      var request = $q.defer();
+
+      LaboratoryRepositoryService
+        .discardUnattached(laboratoryOid)
+        .then(function (result) {
+          request.resolve(result);
+        }).catch(function (e) {
+        request.reject(e);
+      });
+
+      return request.promise;
+    }
+
+
+    function getUnattachedByIdentification(laboratoryIdentification) {
+      var request = $q.defer();
+
+      LaboratoryRepositoryService
+        .getUnattachedByIdentification(laboratoryIdentification)
         .then(function (result) {
           request.resolve(result);
         }).catch(function (e) {

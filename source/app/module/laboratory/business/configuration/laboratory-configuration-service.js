@@ -55,7 +55,7 @@
         .then(function (response) {
           let names = [];
           response.data.collectGroupConfiguration.groupDescriptors.forEach(function (descriptor) {
-            if (descriptor.type === "QUALITY_CONTROL"){
+            if (descriptor.type === "QUALITY_CONTROL" || descriptor.type === "DEFAULT"){
               names.push(descriptor.name)
             }
           });
