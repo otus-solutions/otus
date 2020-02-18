@@ -1,9 +1,9 @@
 <style>
   .plc-layout {
+    /*width: 98vw;*/
     display: grid;
-    width: 98vw;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: .5fr 1fr .1fr;
+    grid-template-rows: .5fr .1fr .1fr;
     grid-template-areas:
       "title   title   title    ordination  ordination ordination"
       "filter  filter  filter   filter      filter     filter"
@@ -15,10 +15,6 @@
   .filter { grid-area: filter}
   .submit { grid-area: submit}
 
-  .md-button {
-     width: 95vw;
-  }
-
 </style>
 
 <!--style="background-color: #f5f5f5-->
@@ -26,18 +22,31 @@
   <md-card class="plc-layout" style="background-color: #f5f5f5" layout-margin>
     <div layout="column" class="title">
       <span class="md-headline">Filtragem e Ordenação</span>
-      <span class="md-subhead">Painel de controle da Lista de Pendências</span>
+      <span class="md-subhead">Painel de Controle da Lista de Pendências</span>
     </div>
     <div class="ordination">Espaço para Ordenação</div>
 
 
-    <div layout="row" ng-repeat="item in $ctrl.pendencyAttributes" layout-padding>
-      <div class="filter">{{item}}</div>
+
+
+    <div layout="row" ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
+      <div class="filter">
+        <md-icon>{{item}}</md-icon>
+<!--        <md-checkbox-->
+<!--          ng-checked="$ctrl.exists(item, selected)"-->
+<!--          ng-click="$ctrl.toggle(item, selected)">-->
+<!--        </md-checkbox>-->
+        <md-input></md-input>
+      </div>
     </div>
 
+    <div flex="100">
+      <h2 class="md-title">Selected Items</h2>
+      <code style="display: block; padding: 8px;">{{$ctrl.selected | json}}</code>
+    </div>
 
     <div class="submit">
-      <md-button class="md-raised md-primary" ng-disabled="">Listar</md-button>
+      <md-button layout-fill class="md-raised md-primary" ng-disabled="">Listar</md-button>
     </div>
 
 <!--   <form ng-submit="">-->

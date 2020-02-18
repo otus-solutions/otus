@@ -1,7 +1,7 @@
 <style>
   .pi-layout {
     display: grid;
-    width: 98vw;
+    /*width: 98vw;*/
     grid-template-columns: repeat(3, 1fr) .5fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas:
@@ -27,6 +27,6 @@
   <span class="creation-date"><md-icon>schedule</md-icon> {{$ctrl.item.creationDate}}</span>
   <span class="requester"><md-icon>record_voice_over</md-icon> {{$ctrl.item.requester}}</span>
   <span class="receiver"><md-icon>assignment_turned_in</md-icon> {{$ctrl.item.receiver}}</span>
-  <span class="externalID"><md-icon>extension</md-icon> {{$ctrl.item.externalID}}</span>
+  <span class="externalID"><md-icon>fingerprint</md-icon> {{$ctrl.item.externalID}}</span>
   <span class="remainingDays"><md-icon>speed</md-icon> {{$ctrl.item.remainingDays}}</span>
 </md-whiteframe>

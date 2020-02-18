@@ -16,8 +16,33 @@
     const self = this;
 
     self.pendencyAttributes = [
-      "RN", "Acrônimo", "Id Externo",  "supervisor", "revisor", "dtVencimento"
-    ]
+      "account_circle",
+      "description",
+      "fingerprint",
+      "record_voice_over",
+      "assignment_turned_in",
+      "hourglass_empty"
+    ];
+
+    self.selected = [];
+
+    self.exists = function (item, list) {
+      return list.indexOf(item) > -1;
+    };
+
+    self.toggle = function (item, list) {
+      var idx = list.indexOf(item);
+      if (idx > -1) {
+        list.splice(idx, 1);
+      }
+      else {
+        list.push(item);
+      }
+    };
+
+
+
+
 
     self.orderingPreference = {};
   }
