@@ -26,25 +26,20 @@
 
     self.selected = [];
 
-    self.exists = function (item, list) {
-      return list.indexOf(item) > -1;
+    self.checkStates = {};
+    self.infoFilter = [];
+
+    self.exists = (item) => {
+      self.checkStates[item] = true;
+
     };
-
-    self.toggle = function (item, list) {
-      var idx = list.indexOf(item);
-      if (idx > -1) {
-        list.splice(idx, 1);
-      }
-      else {
-        list.push(item);
-      }
-    };
-
-
-
-
 
     self.orderingPreference = {};
+
+    self.requiredPendencies = (infoFilter) => {
+      console.log(infoFilter);
+
+    }
   }
 
 }());

@@ -26,27 +26,24 @@
     </div>
     <div class="ordination">Espaço para Ordenação</div>
 
-
-
-
     <div layout="row" ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
-      <div class="filter">
+      <span class="filter">
         <md-icon>{{item}}</md-icon>
-<!--        <md-checkbox-->
-<!--          ng-checked="$ctrl.exists(item, selected)"-->
-<!--          ng-click="$ctrl.toggle(item, selected)">-->
-<!--        </md-checkbox>-->
+        <md-checkbox aria-label={{item}} ng-model="$ctrl.checkState[item]"
+          ng-click="$ctrl.exists(item, selected)" ng-if="!$ctrl.checkState[item]">
+        </md-checkbox>
+         <md-input-container ng-if="$ctrl.checkState[item]">
+        <input ng-model="$ctrl.infoFilter[$index]" required>
+      </md-input-container>
         <md-input></md-input>
-      </div>
-    </div>
-
-    <div flex="100">
-      <h2 class="md-title">Selected Items</h2>
-      <code style="display: block; padding: 8px;">{{$ctrl.selected | json}}</code>
+      </span>
     </div>
 
     <div class="submit">
-      <md-button layout-fill class="md-raised md-primary" ng-disabled="">Listar</md-button>
+      <md-button layout-fill
+                 class="md-raised md-primary"
+                 ng-disabled=""
+                 ng-click="$ctrl.requiredPendencies($ctrl.infoFilter)">Listar</md-button>
     </div>
 
 <!--   <form ng-submit="">-->
