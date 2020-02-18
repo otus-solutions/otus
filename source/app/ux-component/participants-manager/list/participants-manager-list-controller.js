@@ -44,7 +44,7 @@
 
     function _buildParticipants(){
       self.participants.map(function(participant) {
-        participant.birthday = new Date(participant.birthdate.value);
+        participant.birthday = participant.birthdate ? new Date(participant.birthdate.value) : "";
         participant.obito = participant.late ? 'Sim': 'Não';
       });
       self.selectedParticipant = null;
