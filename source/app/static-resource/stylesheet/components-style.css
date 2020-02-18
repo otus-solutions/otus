@@ -675,4 +675,7 @@ unattached-laboratory md-input-container {
   margin-bottom: 0px;
 }
 
+unattached-laboratory-dashboard otus-panel {
+  min-width: 320px;
+}
 /*# sourceMappingURL=components-style.css.map */

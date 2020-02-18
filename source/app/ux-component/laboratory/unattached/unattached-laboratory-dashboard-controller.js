@@ -18,6 +18,8 @@
 
   function Controller($mdToast, $filter, ProjectFieldCenterService, SessionContextService, UnattachedLaboratoryService, LaboratoryConfigurationService, laboratoryContextService, LoadingScreenService) {
     var self = this;
+    const LABORATORY_NOT_FOUND_MESSAGE = "Laboratório não encontrado";
+    const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
     self.centers = [];
     self.creationState = false;
 
@@ -54,13 +56,27 @@
 
     function getByIdentification() {
       UnattachedLaboratoryService.getUnattachedByIdentification(self.identificationFilter).then(function (result) {
-        self.haveErrors = false;
-        self.unattachedLaboratoryList = [result];
-        self.collectGroupsFilter=result.collectGroupName;
-        self.centerFilter=result.fieldCenterAcronym;
-        console.log(result)
+        let currentStatus = result.actionHistory[result.actionHistory.length-1].action;
+        if (currentStatus === "DISCARDED") {
+          self.error = "O laboratório " + result.identification + " foi removido do sistema";
+          _showToast(self.error);
+        } else if (currentStatus === "ATTACHED") {
+          self.error = "O laboratório " + result.identification + " já foi vinculado a um participante";
+          _showToast(self.error);
+        } else {
+          self.haveErrors = false;
+          self.unattachedLaboratoryList = [result];
+          self.collectGroupsFilter=result.collectGroupName;
+          self.centerFilter=result.fieldCenterAcronym;
+        }
       }).catch(function (error) {
-        console.log(error)
+        if (error.data) {
+          self.error = "Laboratório não encontrado";
+        } else {
+          self.error = "Ocorreu um erro, entre em contato com o administrador do sistema";
+        }
+        LoadingScreenService.finish();
+        _showToast(self.error);
       })
     }
 
@@ -70,18 +86,15 @@
 
     function createUnattachedLaboratory() {
       LoadingScreenService.start();
-      UnattachedLaboratoryService.createUnattached(self.selectedCenter, self.selectedCollectGroup).then(function () {
+      let center = self.userHaveCenter ? self.centerFilter : self.selectedCenter;
+      UnattachedLaboratoryService.createUnattached(center, self.selectedCollectGroup).then(function () {
         self.collectGroupsFilter=self.selectedCollectGroup;
-        self.centerFilter=self.selectedCenter;
+        self.centerFilter=center;
         onFilter();
         changeCreation();
         LoadingScreenService.finish();
       }).catch(function () {
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent("Ocorreu um erro, entre em contato com o administrador do sistema")
-            .hideDelay(3000)
-        );
+        _showToast("Ocorreu um erro, entre em contato com o administrador do sistema");
         LoadingScreenService.finish();
       });
     }
@@ -118,15 +131,23 @@
         self.haveErrors = true;
         if (error.data) {
           if (error.data.MESSAGE.match("There are no results")) {
-            self.errorMessage = "Não há laboratórios criados para estas especificações";
+            self.errorMessage = LABORATORY_NOT_FOUND_MESSAGE;
           } else {
-            self.errorMessage = "Ocorreu um erro, entre em contato com o administrador do sistema";
+            self.errorMessage = UNEXPECTED_ERROR_MESSAGE;
           }
         } else {
-          self.errorMessage = "Ocorreu um erro, entre em contato com o administrador do sistema";
+          self.errorMessage = UNEXPECTED_ERROR_MESSAGE;
         }
         LoadingScreenService.finish();
       });
     }
+  }
+
+  function _showToast(msg) {
+    $mdToast.show(
+      $mdToast.simple()
+        .textContent(msg)
+        .hideDelay(10000)
+    );
   }
 }());
