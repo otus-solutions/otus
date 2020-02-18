@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('pendencyItem', {
+    .component('otusPendencyItem', {
       controller:'pendencyItemCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-item/pendency-item-template.html',
       bindings: {

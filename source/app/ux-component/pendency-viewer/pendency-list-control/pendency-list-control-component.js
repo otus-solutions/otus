@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('pendencyListControl', {
+    .component('otusPendencyListControl', {
       controller:'pendencyListControlCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-control/pendency-list-control-template.html',
       bindings: {
@@ -14,6 +14,12 @@
 
   function Controller() {
     const self = this;
+
+    self.pendencyAttributes = [
+      "RN", "Acrônimo", "Id Externo",  "supervisor", "revisor", "dtVencimento"
+    ]
+
+    self.orderingPreference = {};
   }
 
 }());

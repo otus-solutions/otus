@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('pendencyList', {
+    .component('otusPendencyList', {
       controller: 'pendencyListCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list/pendency-list-template.html',
       bindings: {}
@@ -18,22 +18,25 @@
     self.pendencies = [
       {
         creationDate: "17/02/2020",
-        dueDate: "01/03/2020",
+        dueDate: "18/02/2020",
         requester: "supervisor@otus.com.br",
         receiver: "revisor@otus.com.br",
         acronym: "ELSA1",
         rn: 123567890,
-        status : "FINALIZADO"
+        externalID : "XYZ789-ABC456",
+        remainingDays: 1
+
       },
 
       {
         creationDate: "17/02/2020",
-        dueDate: "02/03/2020",
+        dueDate: "27/02/2020",
         requester: "supervisor@otus.com.br",
         receiver: "revisor@otus.com.br",
         acronym: "ELSA2",
         rn: 9874563210,
-        status : "FINALIZADO"
+        externalID : "XYZ789-ABC456",
+        remainingDays: 10
       },
 
       {
@@ -43,7 +46,8 @@
         receiver: "revisor@otus.com.br",
         acronym: "ELSA3",
         rn: 4569871230,
-        status : "FINALIZADO"
+        externalID : "XYZ789-ABC456",
+        remainingDays: 15
       },
 
 

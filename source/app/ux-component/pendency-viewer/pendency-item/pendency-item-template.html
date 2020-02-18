@@ -1,11 +1,12 @@
 <style>
-  .wh-layout {
+  .pi-layout {
     display: grid;
+    width: 98vw;
     grid-template-columns: repeat(3, 1fr) .5fr;
     grid-template-rows: 1fr 1fr;
     grid-template-areas:
-      "rn       receiver  duoDate       status"
-      "acronym  requester creationDate  . "
+      "rn       receiver  duoDate       remainingDays"
+      "acronym  requester creationDate  externalID"
   }
 
   .rn {  grid-area: rn;  }
@@ -14,16 +15,18 @@
   .creation-date {  grid-area: creationDate;  }
   .requester {  grid-area:requester ;  }
   .receiver {  grid-area:receiver ;  }
-  .status {  grid-area: status;  }
+  .externalID {  grid-area:externalID ;  }
+  .remainingDays {  grid-area: remainingDays;  }
 </style>
 
 
-<md-whiteframe class="md-whiteframe-3dp wh-layout" layout-padding>
+<md-whiteframe class="md-whiteframe-3dp pi-layout" layout-margin>
   <span class="rn"> <md-icon>account_circle</md-icon> {{$ctrl.item.rn}}</span>
   <span class="acronym"><md-icon>description</md-icon> {{$ctrl.item.acronym}}</span>
   <span class="duo-date"><md-icon>hourglass_empty</md-icon> {{$ctrl.item.dueDate}}</span>
   <span class="creation-date"><md-icon>schedule</md-icon> {{$ctrl.item.creationDate}}</span>
   <span class="requester"><md-icon>record_voice_over</md-icon> {{$ctrl.item.requester}}</span>
   <span class="receiver"><md-icon>assignment_turned_in</md-icon> {{$ctrl.item.receiver}}</span>
-  <span class="status"><md-icon>notifications</md-icon> {{$ctrl.item.status}}</span>
+  <span class="externalID"><md-icon>extension</md-icon> {{$ctrl.item.externalID}}</span>
+  <span class="remainingDays"><md-icon>speed</md-icon> {{$ctrl.item.remainingDays}}</span>
 </md-whiteframe>

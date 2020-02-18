@@ -1,1 +1,55 @@
-<h1>Painel de controle</h1>
+<style>
+  .plc-layout {
+    display: grid;
+    width: 98vw;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: .5fr 1fr .1fr;
+    grid-template-areas:
+      "title   title   title    ordination  ordination ordination"
+      "filter  filter  filter   filter      filter     filter"
+      "submit  submit  submit   submit      submit     submit"
+  }
+
+  .title { grid-area: title}
+  .ordination { grid-area: ordination}
+  .filter { grid-area: filter}
+  .submit { grid-area: submit}
+
+  .md-button {
+     width: 95vw;
+  }
+
+</style>
+
+<!--style="background-color: #f5f5f5-->
+
+  <md-card class="plc-layout" style="background-color: #f5f5f5" layout-margin>
+    <div layout="column" class="title">
+      <span class="md-headline">Filtragem e Ordenação</span>
+      <span class="md-subhead">Painel de controle da Lista de Pendências</span>
+    </div>
+    <div class="ordination">Espaço para Ordenação</div>
+
+
+    <div layout="row" ng-repeat="item in $ctrl.pendencyAttributes" layout-padding>
+      <div class="filter">{{item}}</div>
+    </div>
+
+
+    <div class="submit">
+      <md-button class="md-raised md-primary" ng-disabled="">Listar</md-button>
+    </div>
+
+<!--   <form ng-submit="">-->
+<!--     <md-radio-group ng-model="$ctrl.orderingPreference" ng-repeat="choice in $ctrl.ordination" layout="row">-->
+<!--       <md-radio-button value=choice>{{choice}}</md-radio-button>-->
+<!--     </md-radio-group>-->
+
+<!--     <p>Selected Value: <span class="radioValue">{{ ordering.preference }}</span> </p>-->
+<!--   </form>-->
+
+
+
+
+  </md-card>
+</div>

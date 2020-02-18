@@ -1,5 +1,5 @@
 <style>
-  .wrapper-viewer {
+  .pv-layout {
     display: grid;
     grid-gap: 0em;
     height: 100vh;
@@ -11,12 +11,12 @@
   }
 
   otus-dashboard-toolbar { grid-area: toolbar }
-  pendency-list-control { grid-area: control }
-  pendency-list { grid-area: list }
+  otus-pendency-list-control { grid-area: control }
+  otus-pendency-list { grid-area: list }
 
 </style>
 
-<div class="wrapper-viewer">
+<div class="pv-layout">
   <otus-dashboard-sidenav layout="row">
     <hide-participant-box></hide-participant-box>
   </otus-dashboard-sidenav>
@@ -25,6 +25,6 @@
       <span layout-align="center center">Visualizador de Pendências</span>
     </div>
   </otus-dashboard-toolbar>
-  <pendency-list-control></pendency-list-control>
-  <pendency-list></pendency-list>
+  <otus-pendency-list-control></otus-pendency-list-control>
+  <otus-pendency-list></otus-pendency-list>
 </div>
