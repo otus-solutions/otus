@@ -7,29 +7,16 @@
 
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: .03fr .1fr 1fr;
-    grid-template-areas:
-      "toolbar toolbar toolbar toolbar"
-      "control control control control"
-      "list    list    list    list"
-    }
-
-  .control-panel {
-    grid-area: control;
-    background-color: #afb1b3;
+    grid-template-areas: "toolbar toolbar toolbar toolbar" "control control control control" "list    list    list    list"
   }
 
-  .pendency-list {
-    grid-area: list;
-    background: bisque;
-  }
-
-  otus-dashboard-toolbar {
-    grid-area: toolbar;
-  }
+  otus-dashboard-toolbar { grid-area: toolbar }
+  pendency-list-control { grid-area: control }
+  pendency-list { grid-area: list }
 
 </style>
 
-<div class="wrapper-viewer" >
+<div class="wrapper-viewer">
   <otus-dashboard-sidenav layout="row">
     <hide-participant-box></hide-participant-box>
   </otus-dashboard-sidenav>
@@ -38,6 +25,6 @@
       <span layout-align="center center">Visualizador de Pendências</span>
     </div>
   </otus-dashboard-toolbar>
-    <div class="control-panel">ESPAÇO PARA OS FILTROS E INPUTS</div>
-    <pendency-list class="pendency-list"></pendency-list>
+  <pendency-list-control></pendency-list-control>
+  <pendency-list></pendency-list>
 </div>
