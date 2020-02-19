@@ -25,20 +25,17 @@
     ];
 
     self.selected = [];
-
     self.checkStates = {};
     self.infoFilter = [];
 
     self.exists = (item) => {
       self.checkStates[item] = true;
-
-
     };
 
     self.clear = (item) => {
       console.log(self.checkStates[item])
-      self.checkStates[item] = !self.checkStates[item];
-      console.log(self.checkStates[item])
+      self.checkStates[item] = false;
+      console.log(self.checkStates)
 
     }
 

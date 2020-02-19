@@ -53,7 +53,7 @@
            </md-checkbox>
         </span>
         <span ng-if="$ctrl.checkState[item]">
-           <md-input-container ng-if="$ctrl.checkState[item]">
+           <md-input-container>
              <md-icon>{{item}}</md-icon>
              <input ng-model="$ctrl.infoFilter[$index]" required aria-label={{item}}>
              <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
