@@ -33,7 +33,9 @@
     };
 
     self.clear = (item) => {
-      console.log(self.checkStates[item])
+      console.log(self.checkStates)
+      console.log(self.checkStates[item]);
+      console.log(item);
       self.checkStates[item] = false;
       console.log(self.checkStates)
 
