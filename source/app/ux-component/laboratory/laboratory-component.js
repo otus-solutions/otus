@@ -17,10 +17,11 @@
     'otusjs.deploy.LoadingScreenService',
     'otusjs.laboratory.core.EventService',
     'otusjs.otus.uxComponent.Publisher',
+    'otusjs.model.participant.ParticipantFactory',
     '$scope'
   ];
 
-  function Controller($q, $mdDialog, DialogShowService, ParticipantLaboratoryService, UnattachedLaboratoryService, LoadingScreenService, EventService, Publisher, $scope) {
+  function Controller($q, $mdDialog, DialogShowService, ParticipantLaboratoryService, UnattachedLaboratoryService, LoadingScreenService, EventService, Publisher, ParticipantFactory, $scope) {
     var self = this;
 
     /* Public methods */
@@ -42,12 +43,12 @@
 
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
-        self.selectedParticipant = participantData;
+        self.selectedParticipant = ParticipantFactory.fromJson(participantData);;
       } else {
         ParticipantLaboratoryService
           .getSelectedParticipant()
           .then(function (participantData) {
-            self.selectedParticipant = participantData;
+            self.selectedParticipant = ParticipantFactory.fromJson(participantData);
           });
       }
     }

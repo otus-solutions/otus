@@ -1,18 +1,36 @@
-<div layout="column" flex>
-  <div ng-show="$ctrl.ready && !$ctrl.hasLaboratory" layout="row" layout-xs="column"  style="height: 98%">
+<md-content layout="column" flex>
+  <div layout="row" layout-xs="column" layout-align="center center" layout-padding="" ng-if="!$ctrl.selectedParticipant.identified">
+    <md-button class="md-icon-button md-warn"> <md-icon>warning</md-icon></md-button>
+     <span align="center" class="md-title" layout-align="center center" layout-padding=""> O participante deve possuir todos os dados básicos de recrutamento para utilizar este recurso.</span>
+  </div>
+  <div ng-show="$ctrl.ready && !$ctrl.hasLaboratory" layout="row" layout-xs="column" style="height: 98%">
     <div layout="column" layout-align="center center" flex="50" flex-xs="100">
       <span class="md-title" layout-margin>Criar laboratório do participante</span>
-      <md-button class="md-raised md-primary" ng-click="$ctrl.intializeLaboratory()">Iniciar Laboratório</md-button>
+      <div layout="row" layout-align="center center">
+        <p layout-padding="" flex="80" class="md-subheader" align="center">Ao utilizar a função Inicializar Laboratório
+          novos tubos serão criado
+          e a respectiva sequência adicionada ao participante selecionado.</p>
+      </div>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.intializeLaboratory()"
+                 ng-disabled="!$ctrl.selectedParticipant.identified">Iniciar Laboratório
+      </md-button>
     </div>
-    <div layout="column" layout-align="center center" flex="50" flex-xs="100" style="padding-top: 100px;">
+    <div layout="column" layout-align="center center" flex="50" flex-xs="100" class="spacing-second-block">
       <div layout="column" layout-align="center center" flex="100">
         <span class="md-title">Vincular laboratório do participante</span>
+        <div layout="row" layout-align="center center">
+          <p layout-padding="" flex="80" class="md-subheader" align="center">Utilize o função vincular laboratório para
+            atribuir um conjunto de tubos previamente criados
+            ao participante selecionado, para isso utilize o id do laboratório.</p>
+        </div>
         <div layout="row" layout-align="center start">
           <md-input-container class="md-icon-float md-icon-right md-block">
             <label>Id do Laboratório</label>
-            <input ng-model="$ctrl.laboratoryIdentification" type="number" min="0" step="1">
+            <input ng-model="$ctrl.laboratoryIdentification" type="number" min="0" step="1"
+                   ng-disabled="!$ctrl.selectedParticipant.identified">
           </md-input-container>
-          <md-button class="md-fab md-mini md-primary" ng-click="$ctrl.attacheLaboratory()" aria-label="More">
+          <md-button class="md-fab md-mini md-primary" ng-click="$ctrl.attacheLaboratory()" aria-label="More"
+                     ng-disabled="!$ctrl.selectedParticipant.identified">
             <md-icon> compare_arrows</md-icon>
           </md-button>
         </div>
@@ -35,4 +53,4 @@
       <lab-main-panel participant-laboratory="$ctrl.participantLaboratory" layout="row" flex state="$ctrl.state"/>
     </div>
   </div>
-</div>
+</md-content>

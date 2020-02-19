@@ -102,6 +102,8 @@
             self.attacheError = "Numero de recrutamento " + self.recruitmentNumber + " não encontrado";
           } else if (error.data.MESSAGE.match("Laboratory is already attached")) {
             self.attacheError = "Laboratório já foi vinculado a um participante";
+          } else if (error.data.MESSAGE.match("Participant not identified")) {
+            self.attacheError = "Participante não identificado";
           } else if (error.data.MESSAGE.match("Invalid configuration")) {
             if (error.data.CONTENT.laboratoryCollectGroup !== error.data.CONTENT.participantCollectGroup) {
               self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
@@ -148,13 +150,15 @@
       };
       return DialogShowService.showDialog( _deleteDialog);
     }
+
+    function _showToast(msg) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msg)
+          .hideDelay(10000)
+      );
+    }
+
   }
 
-  function _showToast(msg) {
-    $mdToast.show(
-      $mdToast.simple()
-        .textContent(msg)
-        .hideDelay(10000)
-    );
-  }
 }());

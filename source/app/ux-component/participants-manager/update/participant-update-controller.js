@@ -51,17 +51,23 @@
 
 
     function onInit() {
+      try {
+        self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant);
+        self.birthdate = new Date(self.participant.birthdate.value);
+        self.participant.identified = true;
+        DashboardService
+          .getSelectedParticipant()
+          .then(function (participantData) {
+            self.participant =  ParticipantFactory.fromJson(participantData);
+            self.birthdate = new Date(self.participant.birthdate.value)
+          })
+        self.maxDate = new Date();
+        self.centers = {};
+        _loadAllCenters();
+      } catch (e) {
+        alert(66)
+      }
 
-      DashboardService
-        .getSelectedParticipant()
-        .then(function (participantData) {
-          self.participant = participantData;
-          self.birthdate = new Date(self.participant.birthdate.value)
-        });
-      self.identified = true;
-      self.maxDate = new Date();
-      self.centers = {};
-      _loadAllCenters();
     }
 
     function _getCenterCode(acronym) {
@@ -136,7 +142,7 @@
     function _fieldsValidate() {
       var _valid = true;
       if (!self.participant) {
-        self.participant = ParticipantFactory.create();
+        self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")));
       }
       if (!self.participant.recruitmentNumber && !self.permissions.autoGenerateRecruitmentNumber) {
         $element.find('#rn').focus();
@@ -172,7 +178,7 @@
         ParticipantMessagesService.showUpdateDialog()
           .then(function () {
             self.onFilter();
-            var _participant = _getParticipantData();
+            var _participant = ParticipantFactory.fromJson(self.participant);
             ParticipantManagerService.update(_participant)
               .then(function (response) {
                 var p = ParticipantFactory.fromJson(response).toJSON()
@@ -192,17 +198,5 @@
       }
     }
 
-    function _getParticipantData() {
-      if (self.identified) {
-        return ParticipantFactory.fromJson(self.participant)
-      } else {
-        let _participantData = ParticipantFactory.fromJson(self.participant);
-        if (_participantData.recruitmentNumber) {
-          return {recruitmentNumber: _participantData.recruitmentNumber, fieldCenter: _participantData.fieldCenter};
-        } else {
-          return {fieldCenter: ParticipantFactory.fromJson(self.participant).fieldCenter};
-        }
-      }
-    }
   }
 }());

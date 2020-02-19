@@ -40,6 +40,7 @@
 
 
     function onInit() {
+      self.participant = ParticipantFactory.create();
       self.identified = true;
       self.maxDate = new Date();
       self.centers = {};
@@ -47,7 +48,7 @@
     }
 
     function _restoreFields() {
-      var _restoreParticipant = JSON.parse(localStorage.getItem("newParticipant")) || ParticipantFactory.create();
+      var _restoreParticipant = JSON.parse(localStorage.getItem("newParticipant"));
       if (_restoreParticipant.recruitmentNumber) {
         self.recruitmentNumber = _restoreParticipant.recruitmentNumber;
       }
@@ -89,10 +90,10 @@
           if (userData.fieldCenter.acronym) {
             self.userCenter = userData.fieldCenter.acronym;
             self.centerFilter = self.centers.find(function (center) {
-              return center.acronym === userData.fieldCenter.acronym;
+              return center.acronym == self.userCenter;
             });
             self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : -1;
-            self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
+            self.centerFilterDisabled = userData.fieldCenter.acronym ? true : false;
             self.centerFilter = angular.copy(self.centerFilter.acronym);
           } else {
             self.centerFilter = "";
@@ -187,7 +188,7 @@
       delete self.birthdate;
       delete self.recruitmentNumber;
       self.userCenter ? self.userCenter : delete self.centerFilter;
-      self.participant = {};
+      self.participant = ParticipantFactory.create();
     }
 
     function listParticipants() {
@@ -201,6 +202,7 @@
             self.onFilter();
             if (self.permissions.participantRegistration) {
               var _participant = _getParticipantData();
+              if (self.permissions.autoGenerateRecruitmentNumber) delete _participant.recruitmentNumber;
               ParticipantManagerService.create(_participant)
                 .then(function (response) {
                   if (!self.permissions.autoGenerateRecruitmentNumber) {
@@ -230,13 +232,15 @@
 
     function _getParticipantData() {
       if(self.identified) {
-        return ParticipantFactory.fromJson(self.participant)
+        self.participant.identified = true;
+        return ParticipantFactory.fromJson(self.participant).toJSON();
       } else {
-        let _participantData = ParticipantFactory.fromJson(self.participant);
+        self.participant.identified = false;
+        let _participantData = ParticipantFactory.fromJson(self.participant).toJSON();
         if (_participantData.recruitmentNumber) {
-          return {recruitmentNumber: _participantData.recruitmentNumber, fieldCenter: _participantData.fieldCenter };
+          return {recruitmentNumber: _participantData.recruitmentNumber, fieldCenter: _participantData.fieldCenter, identified: false };
         } else {
-          return {fieldCenter: ParticipantFactory.fromJson(self.participant).fieldCenter };
+          return {fieldCenter: ParticipantFactory.fromJson(self.participant).fieldCenter, identified: false };
         }
       }
     }
@@ -245,7 +249,6 @@
     self.updateMode = function () {
       self.identified = !self.identified;
       _setClear();
-      self.participant = ParticipantFactory.create();
     }
 
 

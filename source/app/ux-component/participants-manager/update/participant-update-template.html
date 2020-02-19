@@ -52,8 +52,7 @@
               <span flex="10"></span>
               <md-input-container flex="50" layout-fill="">
                 <label>Centro</label>
-                <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" id="centerIdentified"
-                           ng-disabled="$ctrl.centerFilterDisabled">
+                <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" id="centerIdentified">
                   <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center.acronym}}"
                              ng-selected="center.acronym == $ctrl.participant.fieldCenter.acronym">
                     {{center.name}}
