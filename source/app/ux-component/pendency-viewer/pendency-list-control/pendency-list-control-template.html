@@ -31,7 +31,6 @@
     margin: 0px;
   }
 
-
 </style>
 
 <md-card class="plc-layout" style="background-color: #f5f5f5" layout-margin>
@@ -53,7 +52,7 @@
       <span ng-if="$ctrl.checkStates[item]">
            <md-input-container>
              <md-icon>{{item}}</md-icon>
-             <input ng-model="$ctrl.infoFilter[$index]" required aria-label={{item}}>
+             <input ng-model="$ctrl.selectedFilters[item]" required aria-label={{item}}>
              <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
         </md-input-container>
         </span>
@@ -63,7 +62,7 @@
   <div class="submit">
     <md-button layout-fill
                class="md-raised md-primary"
-               ng-click="$ctrl.getPendencyList($ctrl.infoFilter)">Listar
+               ng-click="$ctrl.getPendencyList($ctrl.selectedFilters)">Listar
     </md-button>
   </div>
 

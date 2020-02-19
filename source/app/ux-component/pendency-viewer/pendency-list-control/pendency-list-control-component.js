@@ -27,14 +27,15 @@
       "hourglass_empty"
     ];
 
-    self.infoFilter = [];
+    self.selectedFilters = {};
 
     function clear(item){
+      delete self.selectedFilters[item];
       self.checkStates[item] = false;
     }
 
-    function getPendencyList(infoFilter){
-      console.log(infoFilter);
+    function getPendencyList(selectedFilters){
+      console.log(selectedFilters);
     }
   }
 
