@@ -15,6 +15,9 @@
   function Controller() {
     const self = this;
 
+    self.clear = clear;
+    self.getPendencyList = getPendencyList;
+
     self.pendencyAttributes = [
       "account_circle",
       "description",
@@ -24,28 +27,14 @@
       "hourglass_empty"
     ];
 
-    self.selected = [];
-    self.checkStates = {};
     self.infoFilter = [];
 
-    self.exists = (item) => {
-      self.checkStates[item] = true;
-    };
-
-    self.clear = (item) => {
-      console.log(self.checkStates)
-      console.log(self.checkStates[item]);
-      console.log(item);
+    function clear(item){
       self.checkStates[item] = false;
-      console.log(self.checkStates)
-
     }
 
-    self.orderingPreference = {};
-
-    self.requiredPendencies = (infoFilter) => {
+    function getPendencyList(infoFilter){
       console.log(infoFilter);
-
     }
   }
 
