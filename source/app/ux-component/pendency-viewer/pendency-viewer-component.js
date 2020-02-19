@@ -9,11 +9,18 @@
       bindings: {}
     }).controller('pendencyViewCtrl', Controller);
 
-  Controller.$inject = [];
+  Controller.$inject = ['otusjs.pendencyViewer.PendencyViewerService'];
 
-  function Controller() {
+  function Controller(PendencyViewerService) {
     const self = this;
 
+    self.pendencies = [];
+    self.getPendencies = getPendencies;
+
+    function getPendencies(selectedFilters) {
+      console.log("list pendency");
+      self.pendencies = PendencyViewerService.getPendencies(selectedFilters);
+    }
   }
 
 }());

@@ -7,6 +7,7 @@
       controller:'pendencyListControlCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-control/pendency-list-control-template.html',
       bindings: {
+        getPendencies: '&'
       }
     }).controller('pendencyListControlCtrl', Controller);
 
@@ -16,7 +17,7 @@
     const self = this;
 
     self.clear = clear;
-    self.getPendencyList = getPendencyList;
+    //self.getPendencyList = getPendencyList;
 
     self.pendencyAttributes = [
       "account_circle",
@@ -34,9 +35,9 @@
       self.checkStates[item] = false;
     }
 
-    function getPendencyList(selectedFilters){
-      console.log(selectedFilters);
-    }
+    // function getPendencyList(selectedFilters){
+    //   console.log(selectedFilters);
+    // }
   }
 
 }());
