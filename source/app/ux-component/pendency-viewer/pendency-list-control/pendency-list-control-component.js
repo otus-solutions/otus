@@ -32,7 +32,15 @@
     self.exists = (item) => {
       self.checkStates[item] = true;
 
+
     };
+
+    self.clear = (item) => {
+      console.log(self.checkStates[item])
+      self.checkStates[item] = !self.checkStates[item];
+      console.log(self.checkStates[item])
+
+    }
 
     self.orderingPreference = {};
 

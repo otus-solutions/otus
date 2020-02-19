@@ -2,60 +2,84 @@
   .plc-layout {
     /*width: 98vw;*/
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: .5fr .1fr .1fr;
-    grid-template-areas:
-      "title   title   title    ordination  ordination ordination"
-      "filter  filter  filter   filter      filter     filter"
-      "submit  submit  submit   submit      submit     submit"
+    grid-template-columns: repeat(6, 1.5fr);
+    grid-template-rows: .1fr 1fr .1fr;
+    grid-template-areas: "title   title   title    ordination  ordination ordination" "filter  filter  filter   filter      filter     filter" "submit  submit  submit   submit      submit     submit"
   }
 
-  .title { grid-area: title}
-  .ordination { grid-area: ordination}
-  .filter { grid-area: filter}
-  .submit { grid-area: submit}
+  .title {
+    grid-area: title
+  }
+
+  .ordination {
+    grid-area: ordination
+  }
+
+  .filter {
+    grid-area: filter
+  }
+
+  .submit {
+    grid-area: submit
+  }
+
+  md-input-container {
+    padding: 0px;
+    margin: 0px;
+  }
+
+
+
+
 
 </style>
 
 <!--style="background-color: #f5f5f5-->
 
-  <md-card class="plc-layout" style="background-color: #f5f5f5" layout-margin>
-    <div layout="column" class="title">
-      <span class="md-headline">Filtragem e Ordenação</span>
-      <span class="md-subhead">Painel de Controle da Lista de Pendências</span>
-    </div>
-    <div class="ordination">Espaço para Ordenação</div>
+<md-card class="plc-layout" style="background-color: #f5f5f5" layout-margin>
+  <div layout="column" class="title">
+    <span class="md-headline">Filtragem e Ordenação</span>
+    <span class="md-subhead">Painel de Controle da Lista de Pendências</span>
+  </div>
+  <div class="ordination">Espaço para Ordenação</div>
 
-    <div layout="row" ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
-      <span class="filter">
-        <md-icon>{{item}}</md-icon>
-        <md-checkbox aria-label={{item}} ng-model="$ctrl.checkState[item]"
-          ng-click="$ctrl.exists(item, selected)" ng-if="!$ctrl.checkState[item]">
-        </md-checkbox>
-         <md-input-container ng-if="$ctrl.checkState[item]">
-        <input ng-model="$ctrl.infoFilter[$index]" required>
-      </md-input-container>
-        <md-input></md-input>
-      </span>
-    </div>
-
-    <div class="submit">
-      <md-button layout-fill
-                 class="md-raised md-primary"
-                 ng-disabled=""
-                 ng-click="$ctrl.requiredPendencies($ctrl.infoFilter)">Listar</md-button>
-    </div>
-
-<!--   <form ng-submit="">-->
-<!--     <md-radio-group ng-model="$ctrl.orderingPreference" ng-repeat="choice in $ctrl.ordination" layout="row">-->
-<!--       <md-radio-button value=choice>{{choice}}</md-radio-button>-->
-<!--     </md-radio-group>-->
-
-<!--     <p>Selected Value: <span class="radioValue">{{ ordering.preference }}</span> </p>-->
-<!--   </form>-->
+  <div layout="row" ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
+      <div class="filter">
+        <span ng-if="!$ctrl.checkState[item]">
+           <md-icon>{{item}}</md-icon>
+           <md-checkbox aria-label={{item}}
+                        ng-model="$ctrl.checkState[item]"
+                        ng-click="$ctrl.exists(item, selected)">
+           </md-checkbox>
+        </span>
+        <span ng-if="$ctrl.checkState[item]">
+           <md-input-container ng-if="$ctrl.checkState[item]">
+             <md-icon>{{item}}</md-icon>
+             <input ng-model="$ctrl.infoFilter[$index]" required aria-label={{item}}>
+             <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
+        </md-input-container>
+        </span>
 
 
+      </div>
+  </div>
+
+  <div class="submit">
+    <md-button layout-fill
+               class="md-raised md-primary"
+               ng-disabled=""
+               ng-click="$ctrl.requiredPendencies($ctrl.infoFilter)">Listar
+    </md-button>
+  </div>
+
+  <!--   <form ng-submit="">-->
+  <!--     <md-radio-group ng-model="$ctrl.orderingPreference" ng-repeat="choice in $ctrl.ordination" layout="row">-->
+  <!--       <md-radio-button value=choice>{{choice}}</md-radio-button>-->
+  <!--     </md-radio-group>-->
+
+  <!--     <p>Selected Value: <span class="radioValue">{{ ordering.preference }}</span> </p>-->
+  <!--   </form>-->
 
 
-  </md-card>
+</md-card>
 </div>
