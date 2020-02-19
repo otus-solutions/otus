@@ -32,6 +32,7 @@
     self.activateSignupResult = activateSignupResult;
     self.getCurrentState = getCurrentState;
     self.activateSampleTransportation = activateSampleTransportation;
+    self.activateUnattachedLaboratory = activateUnattachedLaboratory;
     self.activateSampleTransportationLotInfoManager = activateSampleTransportationLotInfoManager;
     self.activateSampleTransportationManagerList = activateSampleTransportationManagerList;
     self.activateActivityCategories = activateActivityCategories;
@@ -78,6 +79,10 @@
 
     function activateLaboratory() {
       $state.go(STATE.LABORATORY);
+    }
+
+    function activateUnattachedLaboratory() {
+      $state.go(STATE.UNATTACHED_LABORATORY);
     }
 
     function activateParticipantFollowUps() {
