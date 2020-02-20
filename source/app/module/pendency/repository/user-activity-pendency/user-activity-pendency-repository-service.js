@@ -19,6 +19,7 @@
     self.getAllUserActivityPendenciesToReceiver = getAllUserActivityPendenciesToReceiver;
     self.getOpenedUserActivityPendenciesToReceiver = getOpenedUserActivityPendenciesToReceiver;
     self.getDoneUserActivityPendenciesToReceiver = getDoneUserActivityPendenciesToReceiver;
+    self.getAllPendencies = getAllPendencies;
 
     function createUserActivityPendency(userActivityPendency) {
       return UserActivityPendencyCollectionService.createUserActivityPendency(userActivityPendency);
@@ -47,6 +48,12 @@
     function getDoneUserActivityPendenciesToReceiver(){
       return UserActivityPendencyCollectionService.getDoneUserActivityPendenciesToReceiver();
     }
+
+    function getAllPendencies(searchSettings){
+      return UserActivityPendencyCollectionService.getAllPendencies(searchSettings);
+    }
+
+
 
   }
 }());

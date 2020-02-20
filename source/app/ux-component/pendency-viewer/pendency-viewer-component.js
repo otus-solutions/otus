@@ -15,11 +15,22 @@
     const self = this;
 
     self.pendencies = [];
-    self.getPendencies = getPendencies;
+    self.getAllPendencies = getAllPendencies;
 
-    function getPendencies(selectedFilters) {
+    const searchSettingsTest = {
+      "currentQuantity": 4,
+      "quantityToGet": 10,
+      "filter": {
+        "receiver":  ["fdrtec@gmail.com"]
+      }
+    }
+
+    function getAllPendencies(searchSettings) {
       console.log("list pendency");
-      self.pendencies = PendencyViewerService.getPendencies(selectedFilters);
+      //self.pendencies = PendencyViewerService.getAllPendencies(searchSettingsTest);
+      PendencyViewerService.getAllPendencies(searchSettingsTest)
+        .then(data => console.log(data))
+        .catch(err => console.log("error:" +err))
     }
   }
 
