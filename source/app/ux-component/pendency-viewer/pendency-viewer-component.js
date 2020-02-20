@@ -26,11 +26,8 @@
     }
 
     function getAllPendencies(searchSettings) {
-      console.log("list pendency");
-      //self.pendencies = PendencyViewerService.getAllPendencies(searchSettingsTest);
       PendencyViewerService.getAllPendencies(searchSettingsTest)
-        .then(data => console.log(data))
-        .catch(err => console.log("error:" +err))
+        .then( data => self.pendencies = data);
     }
   }
 

@@ -5,14 +5,27 @@
     .module('otusjs.otus.uxComponent')
     .service('otusjs.pendencyViewer.PendencyViewerService', Service);
 
-  Service.$inject = ['otusjs.pendency.repository.UserActivityPendencyRepositoryService'];
+  Service.$inject = [
+    'otusjs.pendency.repository.UserActivityPendencyRepositoryService',
+    'otusjs.model.pendency.UserActivityPendencyFactory'
+  ];
 
-  function Service(UserActivityPendencyRepositoryService) {
+  function Service(UserActivityPendencyRepositoryService, UserActivityPendencyFactory) {
     const self = this;
     self.getAllPendencies = getAllPendencies;
 
     function getAllPendencies(searchSettings) {
-      return  UserActivityPendencyRepositoryService.getAllPendencies(searchSettings);
+      return UserActivityPendencyRepositoryService.getAllPendencies(searchSettings)
+        .then(data => parsePendencies(data))
+        .catch(err => console.log("error:" + err))
+    }
+
+    function parsePendencies(pendencyJsonArray){
+      let parsedPendencies = [];
+      pendencyJsonArray.forEach( item => {
+        parsedPendencies.push(UserActivityPendencyFactory.fromJsonObject(item));
+      });
+      return parsedPendencies;
     }
 
     // function getPendencies(selectedFilters) {
