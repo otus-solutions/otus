@@ -11,31 +11,14 @@
       }
     }).controller('pendencyItemCtrl', Controller);
 
-  Controller.$inject = [];
+  Controller.$inject = ['otusjs.pendencyViewer.PendencyViewerService'];
 
-  function Controller() {
+  function Controller(PendencyViewerService) {
     const self = this;
 
-    self.dueDate = _formatDate(new Date(self.item.dueDate));
-    self.creationDate = _formatDate(new Date(self.item.creationDate));
-    self.remainingDays = calculateRemainingDays(self.item.dueDate);
-
-    function _formatDate(date) {
-      return date.getDate() + "/"+ (date.getMonth()+1) + "/" + date.getFullYear();
-    }
-
-    function calculateRemainingDays(dueDate){
-      let today = _extractDateZeroTime(new Date());
-      let due = _extractDateZeroTime(new Date(dueDate));
-      const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
-      let deadLine = Math.floor((due - today) / MILLISECONDS_PER_DAY);
-      return deadLine;
-    }
-
-    function _extractDateZeroTime(date){
-      date.setHours(0,0,0,0);
-      return date;
-    }
+    self.dueDate = PendencyViewerService.formatDate(new Date(self.item.dueDate));
+    self.creationDate = PendencyViewerService.formatDate(new Date(self.item.creationDate));
+    self.remainingDays = PendencyViewerService.calculateRemainingDays(self.item.dueDate);
   }
 
 }());
