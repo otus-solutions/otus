@@ -141,13 +141,15 @@
         LoadingScreenService.finish();
       });
     }
+
+    function _showToast(msg) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msg)
+          .hideDelay(10000)
+      );
+    }
   }
 
-  function _showToast(msg) {
-    $mdToast.show(
-      $mdToast.simple()
-        .textContent(msg)
-        .hideDelay(10000)
-    );
-  }
+
 }());
