@@ -2,12 +2,23 @@
   .pi-layout {
     display: grid;
     /*width: 98vw;*/
-    grid-template-columns: repeat(3, 1fr) .5fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-columns: repeat(3, .1fr) .1fr repeat(2, .2fr)  .1fr repeat(3, .15fr);
+    /*grid-template-rows: .1fr;*/
     grid-template-areas:
-      "rn       receiver  duoDate       remainingDays"
-      "acronym  requester creationDate  externalID"
+      "acronym rn  externalID . receiver requester . creationDate  duoDate remainingDays "
+
   }
+
+
+  /*.pi-layout {*/
+  /*  display: grid;*/
+  /*  !*width: 98vw;*!*/
+  /*  grid-template-columns: repeat(3, 1fr) .5fr;*/
+  /*  grid-template-rows: 1fr 1fr;*/
+  /*  grid-template-areas:*/
+  /*    "rn       receiver  duoDate       remainingDays"*/
+  /*    "acronym  requester creationDate  externalID"*/
+  /*}*/
 
   .rn {  grid-area: rn;  }
   .acronym {  grid-area:acronym ;  }
@@ -19,6 +30,17 @@
   .remainingDays {  grid-area: remainingDays;  }
 </style>
 
+
+<!--<md-whiteframe class="md-whiteframe-3dp pi-layout" layout-margin ng-cloak>-->
+<!--  <span class="rn"> <md-icon>account_circle</md-icon> {{$ctrl.item.activityInfo.recruitmentNumber}}</span>-->
+<!--  <span class="acronym"><md-icon>description</md-icon> {{$ctrl.item.activityInfo.acronym}}</span>-->
+<!--  <span class="duo-date"><md-icon>hourglass_empty</md-icon> {{$ctrl.dueDate}}</span>-->
+<!--  <span class="creation-date"><md-icon>schedule</md-icon> {{$ctrl.creationDate}}</span>-->
+<!--  <span class="requester"><md-icon>record_voice_over</md-icon> {{$ctrl.item.requester}}</span>-->
+<!--  <span class="receiver"><md-icon>assignment_turned_in</md-icon> {{$ctrl.item.receiver}}</span>-->
+<!--  <span class="externalID"><md-icon>fingerprint</md-icon> {{$ctrl.item.externalID}}</span>-->
+<!--  <span class="remainingDays"><md-icon>speed</md-icon> {{$ctrl.remainingDays}}</span>-->
+<!--</md-whiteframe>-->
 
 <md-whiteframe class="md-whiteframe-3dp pi-layout" layout-margin ng-cloak>
   <span class="rn"> <md-icon>account_circle</md-icon> {{$ctrl.item.activityInfo.recruitmentNumber}}</span>
