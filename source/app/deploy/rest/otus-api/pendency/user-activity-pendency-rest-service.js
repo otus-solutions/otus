@@ -65,7 +65,6 @@
     }
 
     function getAllPendencies(searchSettings) {
-      console.log(searchSettings);
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.getAllPendencies(searchSettings).$promise;
     }
