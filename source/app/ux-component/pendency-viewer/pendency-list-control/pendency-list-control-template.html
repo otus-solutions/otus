@@ -43,7 +43,9 @@
   <div layout="row" ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
     <div class="filter">
         <span ng-if="!$ctrl.checkStates[item.title]">
-           <md-icon>{{item.icon}}</md-icon>
+           <md-icon>{{item.icon}}
+             <md-tooltip md-direction="top">{{item.translatedTitle}}</md-tooltip>
+           </md-icon>
            <md-checkbox aria-label={{item.translatedTitle}}
                         ng-model="$ctrl.checkStates[item.title]"
                         ng-click="$ctrl.exists(item, selected)">
@@ -51,8 +53,10 @@
         </span>
       <span ng-if="$ctrl.checkStates[item.title]">
            <md-input-container>
-             <md-icon>{{item.icon}}</md-icon>
-             <input ng-model="$ctrl.selectedFilters[item.title]" required aria-label={{item.translatedTitle}}>
+             <md-icon>{{item.icon}}
+                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+             </md-icon>
+             <input ng-model="$ctrl.searchSettings.filter[item.title]" aria-label={{item.translatedTitle}} required>
              <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
         </md-input-container>
         </span>
@@ -60,9 +64,8 @@
   </div>
 
   <div class="submit">
-    <md-button layout-fill
-               class="md-raised md-primary"
-               ng-click="$ctrl.getPendencies($ctrl.selectedFilters)">Listar
+    <md-button layout-fill class="md-raised md-primary"
+               ng-click="$ctrl.getPendencies($ctrl.searchSettings)">Listar
     </md-button>
   </div>
 

@@ -25,6 +25,6 @@
       <span layout-align="center center">Visualizador de Pendências</span>
     </div>
   </otus-dashboard-toolbar>
-  <otus-pendency-list-control get-pendencies="$ctrl.getAllPendencies()"></otus-pendency-list-control>
+  <otus-pendency-list-control search-settings="$ctrl.searchSettings" get-pendencies="$ctrl.getAllPendencies($ctrl.searchSettings)"></otus-pendency-list-control>
   <otus-pendency-list pendencies="$ctrl.pendencies"></otus-pendency-list>
 </md-content>

@@ -15,18 +15,11 @@
     const self = this;
 
     self.pendencies = [];
+    self.searchSettings = {};
     self.getAllPendencies = getAllPendencies;
 
-    const searchSettingsTest = {
-      "currentQuantity": 4,
-      "quantityToGet": 10,
-      "filter": {
-        "receiver":  ["fdrtec@gmail.com"]
-      }
-    }
-
     function getAllPendencies(searchSettings) {
-      PendencyViewerService.getAllPendencies(searchSettingsTest)
+      PendencyViewerService.getAllPendencies(searchSettings)
         .then( data => self.pendencies = data);
     }
   }
