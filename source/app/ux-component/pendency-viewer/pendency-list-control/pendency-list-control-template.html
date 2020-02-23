@@ -4,10 +4,7 @@
     display: grid;
     grid-template-columns: repeat(6, 1.5fr);
     grid-template-rows: .1fr 1fr .1fr;
-    grid-template-areas:
-      "title   title   title    ordination  ordination ordination"
-      "filter  filter  filter   filter      filter     filter"
-      "submit  submit  submit   submit      submit     submit"
+    grid-template-areas: "title   title   title    ordination  ordination ordination" "filter  filter  filter   filter      filter     filter" "submit  submit  submit   submit      submit     submit"
   }
 
   .title {
@@ -52,12 +49,17 @@
            </md-checkbox>
         </span>
       <span ng-if="$ctrl.checkStates[item.title]">
-           <md-input-container>
-             <md-icon>{{item.icon}}
+        <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)"
+                                 show-participants-button="false"
+                                 class="md-primary md" on-ready="true">
+        </otus-participant-search>
+
+        <md-input-container>
+          <md-icon>{{item.icon}}
                 <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-             </md-icon>
-             <input ng-model="$ctrl.searchSettings.filter[item.title]" aria-label={{item.translatedTitle}} required>
-             <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
+          </md-icon>
+          <input ng-model="$ctrl.searchSettings.filter[item.title]" aria-label={{item.translatedTitle}} required>
+          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
         </md-input-container>
         </span>
     </div>
