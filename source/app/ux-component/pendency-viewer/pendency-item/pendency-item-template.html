@@ -4,7 +4,7 @@
     .pi-layout {
       display: grid;
       /*width: 98vw;*/
-      grid-template-columns: .15fr .15fr .1fr .15fr repeat(2, .3fr) .1fr repeat(3, .2fr);
+      grid-template-columns: .2fr .25fr .4fr .05fr repeat(2, .55fr) .05fr repeat(2, .28fr) .15fr;
       /*grid-template-rows: .1fr;*/
       grid-template-areas: "acronym rn  externalID . receiver requester . creationDate  duoDate remainingDays "
     }
@@ -87,6 +87,7 @@
   <span class="creation-date"><md-icon>schedule</md-icon> {{$ctrl.creationDate}}</span>
   <span class="requester"><md-icon>record_voice_over</md-icon> {{$ctrl.item.requester}}</span>
   <span class="receiver"><md-icon>assignment_turned_in</md-icon> {{$ctrl.item.receiver}}</span>
-  <span class="externalID"><md-icon>fingerprint</md-icon> {{$ctrl.item.externalID}}</span>
+<!--  <span class="externalID"><md-icon>fingerprint</md-icon> {{$ctrl.item.externalID}}</span>-->
+  <span class="externalID"><md-icon>fingerprint</md-icon>ABCD-9876-XYZ</span>
   <span class="remainingDays"><md-icon>speed</md-icon> {{$ctrl.remainingDays}}</span>
 </md-card>
