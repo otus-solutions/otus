@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -39,15 +39,16 @@
     self.onFilter = onFilter;
 
 
-
     function onInit() {
+      self.participant = ParticipantFactory.create();
+      self.identified = true;
       self.maxDate = new Date();
       self.centers = {};
       _loadAllCenters();
     }
 
     function _restoreFields() {
-      var _restoreParticipant = JSON.parse(localStorage.getItem("newParticipant")) || {};
+      var _restoreParticipant = JSON.parse(localStorage.getItem("newParticipant"));
       if (_restoreParticipant.recruitmentNumber) {
         self.recruitmentNumber = _restoreParticipant.recruitmentNumber;
       }
@@ -55,27 +56,27 @@
         self.birthdate = _restoreParticipant.birthdate;
       }
       if (_restoreParticipant.fieldCenter) {
-        self.centerFilter = self.centers.find(function(center) {
+        self.centerFilter = self.centers.find(function (center) {
           return center.acronym === _restoreParticipant.fieldCenter.acronym;
         });
-        self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
+        self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : -1;
       }
       self.participant = _restoreParticipant;
     }
 
-    self.$onChanges = function() {
+    self.$onChanges = function () {
       if (!self.permissions.participantRegistration) {
         ApplicationStateService.activateParticipantsList();
       }
     };
 
-    self.$onDestroy = function() {
+    self.$onDestroy = function () {
       localStorage.removeItem("newParticipant");
     };
 
     function _getCenterCode(acronym) {
-      var center =  self.centers.filter(function (center) {
-        if(center.acronym === acronym){
+      var center = self.centers.filter(function (center) {
+        if (center.acronym === acronym) {
           return center.code;
         }
       });
@@ -85,15 +86,17 @@
     function setUserFieldCenter() {
       dashboardContextService
         .getLoggedUser()
-        .then(function(userData) {
+        .then(function (userData) {
           if (userData.fieldCenter.acronym) {
             self.userCenter = userData.fieldCenter.acronym;
-            self.centerFilter = self.centers.find(function(center) {
-              return center.acronym === userData.fieldCenter.acronym;
+            self.centerFilter = self.centers.find(function (center) {
+              return center.acronym == self.userCenter;
             });
-            self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
-            self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
+            self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : -1;
+            self.centerFilterDisabled = userData.fieldCenter.acronym ? true : false;
             self.centerFilter = angular.copy(self.centerFilter.acronym);
+          } else {
+            self.centerFilter = "";
           }
           _restoreFields();
         });
@@ -103,7 +106,7 @@
       mdcDateTimeDialog.show({
         maxDate: self.maxDate,
         time: false
-      }).then(function(date) {
+      }).then(function (date) {
         self.birthdate = date;
         _setBirthdate(self.birthdate);
       });
@@ -120,7 +123,7 @@
         _setBirthdate(self.birthdate);
       }
       if (self.recruitmentNumber) {
-        self.participant.recruitmentNumber = parseInt(self.centerCode+self.recruitmentNumber);
+        self.participant.recruitmentNumber = parseInt(self.centerCode + self.recruitmentNumber);
       }
       if (self.centerFilter) {
         self.centerCode = _getCenterCode(self.centerFilter);
@@ -136,7 +139,8 @@
     }
 
     function _loadAllCenters() {
-      ProjectFieldCenterService.loadCenters().then(function(result) {
+      self.centers = [];
+      ProjectFieldCenterService.loadCenters().then(function (result) {
         self.centers = angular.copy(result);
         setUserFieldCenter();
       });
@@ -144,21 +148,27 @@
 
     function _fieldsValidate() {
       var _valid = true;
-
+      if (!self.participant){
+        self.participant = ParticipantFactory.create();
+      }
       if (!self.participant.recruitmentNumber && !self.permissions.autoGenerateRecruitmentNumber) {
         $element.find('#rn').focus();
         _valid = false;
-      } else if (!self.participant.name) {
+      } else if (!self.participant.name && self.identified) {
         $element.find('#name').focus();
         _valid = false;
-      } else if (!self.participant.sex) {
+      } else if (!self.participant.sex && self.identified) {
         $element.find('#sex').focus();
         _valid = false;
-      } else if (!self.participant.birthdate) {
+      } else if (!self.participant.birthdate && self.identified) {
         _showDialogBirthdate();
         _valid = false;
       } else if (!self.participant.fieldCenter) {
-        $element.find('#center').focus();
+        if (self.identified){
+          $element.find('#centerIdentifield').focus();
+        } else {
+          $element.find('#center').focus();
+        }
         _valid = false;
       }
 
@@ -167,7 +177,7 @@
 
     function clearParticipant() {
       ParticipantMessagesService.showClearDialog()
-        .then(function() {
+        .then(function () {
           _setClear();
         });
     }
@@ -178,7 +188,7 @@
       delete self.birthdate;
       delete self.recruitmentNumber;
       self.userCenter ? self.userCenter : delete self.centerFilter;
-      self.participant = {};
+      self.participant = ParticipantFactory.create();
     }
 
     function listParticipants() {
@@ -188,25 +198,26 @@
     function saveParticipant() {
       if (_fieldsValidate()) {
         ParticipantMessagesService.showSaveDialog()
-          .then(function() {
+          .then(function () {
             self.onFilter();
             if (self.permissions.participantRegistration) {
-              var _participant = ParticipantFactory.create(self.participant);
+              var _participant = _getParticipantData();
+              if (self.permissions.autoGenerateRecruitmentNumber) delete _participant.recruitmentNumber;
               ParticipantManagerService.create(_participant)
-                .then(function(response) {
-                  if(!self.permissions.autoGenerateRecruitmentNumber){
+                .then(function (response) {
+                  if (!self.permissions.autoGenerateRecruitmentNumber) {
                     if (response.recruitmentNumber === self.participant.recruitmentNumber) {
                       _setClear();
                       ParticipantMessagesService.showToast("Participante salvo com sucesso!");
+                      self.listParticipants();
                     }
                   } else {
-                    ParticipantMessagesService.showRecruitmentNumberGenerated(response).
-                      then(function () {
+                    ParticipantMessagesService.showRecruitmentNumberGenerated(ParticipantFactory.fromJson(response).toJSON()).then(function () {
                       _setClear();
                     })
                   }
                 })
-                .catch(function(err) {
+                .catch(function (err) {
                   ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
                 });
             } else {
@@ -217,6 +228,27 @@
       } else {
         ParticipantMessagesService.showToast("Favor, preencha todos os campos!");
       }
+    }
+
+    function _getParticipantData() {
+      if(self.identified) {
+        self.participant.identified = true;
+        return ParticipantFactory.fromJson(self.participant).toJSON();
+      } else {
+        self.participant.identified = false;
+        let _participantData = ParticipantFactory.fromJson(self.participant).toJSON();
+        if (_participantData.recruitmentNumber) {
+          return {recruitmentNumber: _participantData.recruitmentNumber, fieldCenter: _participantData.fieldCenter, identified: false };
+        } else {
+          return {fieldCenter: ParticipantFactory.fromJson(self.participant).fieldCenter, identified: false };
+        }
+      }
+    }
+
+
+    self.updateMode = function () {
+      self.identified = !self.identified;
+      _setClear();
     }
 
 

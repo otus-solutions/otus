@@ -52,6 +52,14 @@
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
 
+    /* Unattached Laboratory Methods */
+    self.attacheLaboratory = attacheLaboratory;
+    self.listUnattached = listUnattached;
+    self.createUnattached = createUnattached;
+    self.getUnattachedById = getUnattachedById;
+    self.discardUnattached = discardUnattached;
+    self.getUnattachedByIdentification = getUnattachedByIdentification;
+
     /**
      * Adds laboratories to collection.
      * @param {(object)} laboratory - the laboratory to be updated
@@ -307,6 +315,84 @@
       var deferred = $q.defer();
       SampleTransportRestService
         .deleteLot(lotCode)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function createUnattached(fieldCenterAcronym, collectGroupName) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .initializeUnattached(fieldCenterAcronym, collectGroupName)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .attacheLaboratory(recruitmentNumber, laboratoryIdentification)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function listUnattached(collectGroupName, center, page, quantity) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .listUnattached(collectGroupName, center, page, quantity)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function getUnattachedById(laboratoryOid) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .getUnattachedById(laboratoryOid)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function discardUnattached(laboratoryOid) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .discardUnattached(laboratoryOid)
+        .then(function(response) {
+          deferred.resolve(response.data);
+        })
+        .catch(function(e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function getUnattachedByIdentification(laboratoryIdentification) {
+      var deferred = $q.defer();
+      LaboratoryRestService
+        .getUnattachedByIdentification(laboratoryIdentification)
         .then(function(response) {
           deferred.resolve(response.data);
         })

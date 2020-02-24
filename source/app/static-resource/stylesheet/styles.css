@@ -432,3 +432,18 @@ md-tab-content{
 .selectdemoSelectHeader>md-select-menu {
   margin-top: 45px !important;
 }
+
+.spacing-second-block{
+  padding-top: 110px !important;
+}
+@media screen and (max-width: 600px) {
+  .spacing-second-block{
+    padding-top: 50px !important;
+  }
+}
+
+.md-button-wrapper{
+max-width: 100% !important;
+  word-break: break-all !important;
+  overflow: hidden !important;
+}

@@ -48,13 +48,11 @@ describe('activity-facade-service Test', function() {
     it('should create activity online', function () {
       service.createActivity(Mock.template,Mock.user,Mock.participant,null,Mock.configuration,Mock.externalID);
       expect(Injections.ActivityFacadeService.createActivity).toHaveBeenCalledTimes(1);
-      expect(Injections.ActivityFacadeService.createActivity).toHaveBeenCalledWith(Mock.template,Mock.user,Mock.participant,Mock.configuration,Mock.externalID);
     });
 
     it('should create activity paper', function () {
       service.createActivity(Mock.template,Mock.user,Mock.participant,true,Mock.configuration,Mock.externalID);
       expect(Injections.ActivityFacadeService.createPaperActivity).toHaveBeenCalledTimes(1);
-      expect(Injections.ActivityFacadeService.createPaperActivity).toHaveBeenCalledWith(Mock.template,Mock.user,Mock.participant,true,Mock.configuration,Mock.externalID);
     });
   });
 

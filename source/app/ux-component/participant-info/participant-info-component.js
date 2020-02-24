@@ -52,17 +52,21 @@
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = participantData;
-        self.participantBirthdate = new Date(self.selectedParticipant.birthdate.value);
+        self.participantBirthdate = self.selectedParticipant.birthdate ? new Date(self.selectedParticipant.birthdate.value) : '';
         self.isEmpty = false;
       } else {
         DashboardService
         .getSelectedParticipant()
         .then(function(participantData) {
             self.selectedParticipant = participantData;
-            self.participantBirthdate = new Date(self.selectedParticipant.birthdate.value);
+            self.participantBirthdate = self.selectedParticipant.birthdate ? new Date(self.selectedParticipant.birthdate.value) : '';
             self.isEmpty = false;
           });
       }
+    }
+
+    self.updateParticipant = function () {
+      ApplicationStateService.activateUpdateParticipant();
     }
   }
 }());

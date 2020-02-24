@@ -1,0 +1,112 @@
+<div>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row" flex="">
+    <div flex layout="row" layout-align="center center" layout-margin>
+      <span layout-align="center center">Laboratórios desvinculados</span>
+    </div>
+  </otus-dashboard-toolbar>
+  <div layout="row" layout-xs="column" flex ng-if="!$ctrl.creationState">
+    <div layout="row" layout-align="start start" layout-align-xs="center center" flex="50" flex-xs="100">
+      <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px">
+        <label class="md-subheader">Grupo de controle:</label>
+        <md-select ng-model="$ctrl.collectGroupsFilter" ng-change="$ctrl.onFilter()">
+          <md-tooltip>
+            Grupo de coleta
+          </md-tooltip>
+          <md-option ng-repeat="collectGroup in $ctrl.collectGroups track by $index" value="{{collectGroup}}">
+            {{collectGroup}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+      <md-input-container class="remove-errors-spacer" ng-if="!$ctrl.userHaveCenter"
+                          style="margin-left:15px;min-width: 150px">
+        <label class="md-subheader">Centro:</label>
+        <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()"
+                   ng-disabled="$ctrl.centerFilterDisabled">
+          <md-tooltip>
+            Centro
+          </md-tooltip>
+          <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}">
+            {{center}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+    <div layout="row" layout-align="start center" layout-align-xs="center center" flex="50" flex-xs="100">
+      <md-input-container class="remove-errors-spacer">
+        <label>Identificação do laboratório</label>
+        <input ng-model="$ctrl.identificationFilter" type="number" min="0" step="1">
+      </md-input-container>
+      <md-button class="md-icon-button md-primary" ng-click="$ctrl.getByIdentification()" aria-label="More">
+        <md-icon>search</md-icon>
+      </md-button>
+    </div>
+    <div layout="row" flex="10" flex-xs="100" layout-align="end center" layout-align-xs="center center">
+      <md-button class="md-fab md-mini md-primary" ng-click="$ctrl.changeCreation()">
+        <md-icon>add</md-icon>
+      </md-button>
+    </div>
+  </div>
+</div>
+<md-content flex ng-if="!$ctrl.haveErrors && !$ctrl.creationState" layout-padding="" layout-margin="">
+  <md-grid-list md-cols="3" md-cols-xs="1" md-cols-sm="2" md-cols-md="3" md-cols-lg="4" md-cols-xl="6" md-cols-gt-md="6"
+                md-row-height-xs="4:2" md-row-height-sm="8:4" md-row-height-md="6:4" md-row-height-lg="6:4"
+                md-row-height-xl="4:3"
+                md-gutter-gt-md="14px"
+                md-gutter="12px" md-gutter-sm="6px">
+    <md-grid-tile ng-repeat="unattachedLaboratory in $ctrl.unattachedLaboratoryList"
+                  name="unattachedLaboratory{{$index}}"
+                  id="unattachedLaboratory{{$index}}"
+                  aria-label="unattachedLaboratory{{$index}}"
+                  md-rowspan="1" md-colspan="1" md-colspan-xl="1" md-colspan-lg="1" md-colspan-md="1"
+                  md-colspan-sm="1" md-colspan-xs="1" md-whiteframe="3">
+      <unattached-laboratory laboratory-data="unattachedLaboratory" reload-data="$ctrl.reloadData()" user="$ctrl.user"
+                             layout="column" flex></unattached-laboratory>
+    </md-grid-tile>
+  </md-grid-list>
+</md-content>
+<div layout="row" layout-align="center center" ng-if="$ctrl.creationState" flex>
+  <otus-panel header-label="'Novo laboratório'" flex="50">
+    <div layout="column" layout-align="center center" flex="100">
+      <div layout="column" flex>
+        <div layout="row" flex>
+          <p flex layout="row" layout-align="end end">Grupo de controle:</p>
+          <md-input-container class="remove-errors-spacer" style="margin-left:15px;min-width: 150px">
+            <md-select ng-model="$ctrl.selectedCollectGroup">
+              <md-option ng-repeat="collectGroup in $ctrl.collectGroups track by $index" value="{{collectGroup}}">
+                {{collectGroup}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+        <div layout="row" flex ng-if="!$ctrl.userHaveCenter">
+          <p flex layout="row" layout-align="end end">Centro:</p>
+          <md-input-container class="remove-errors-spacer"
+                              style="margin-left:15px;min-width: 150px">
+
+            <md-select ng-model="$ctrl.selectedCenter">
+              <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}">
+                {{center}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+      </div>
+      <div layout="row" flex layout-align="end end" layout-margin style="width: 100%">
+        <md-button class="md-raised md-button" ng-click="$ctrl.changeCreation()">
+          <md-icon aria-label="Limpar">clear</md-icon>
+          CANCELAR
+        </md-button>
+        <md-button class="md-accent md-raised md-button" ng-click="$ctrl.createUnattachedLaboratory()">
+          <md-icon aria-label="Adicionar">save</md-icon>
+          SALVAR
+        </md-button>
+      </div>
+    </div>
+  </otus-panel>
+</div>
+<div layout="column" layout-align="center center" ng-if="$ctrl.haveErrors && !$ctrl.creationState">
+  <h3 class="md-title">{{$ctrl.errorMessage}}</h3>
+</div>

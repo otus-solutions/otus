@@ -15,21 +15,23 @@
     /* Public methods */
     self.listIdexers = listIdexers;
     self.create = create;
+    self.update = update;
     self.getAllowNewParticipants = getAllowNewParticipants;
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
 
-    function get() {
-    }
-
-    function list() {
-    }
-
     function create(participant) {
       var _dataSource = ModuleService.DataSource.Participant;
       if (_dataSource) {
         return _dataSource.create(participant);
+      }
+    }
+
+    function update(participant) {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.update(participant);
       }
     }
 
@@ -59,12 +61,6 @@
       if (_dataSource) {
         return _dataSource.getAllowNewParticipants();
       }
-    }
-
-    function remove() {
-    }
-
-    function update() {
     }
 
     function listIdexers() {
