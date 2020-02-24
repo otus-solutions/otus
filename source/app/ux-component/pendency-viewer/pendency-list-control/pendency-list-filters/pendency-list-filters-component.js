@@ -16,6 +16,21 @@
   function Controller() {
     const self = this;
 
+    self.chanceInputViewState = chanceInputViewState;
+
+    self.inputViewState = {
+      rn: false,
+      acronym: false,
+      requester: false,
+      receiver: false,
+      dueDate: false,
+      externalID: false
+    };
+
+
+
+    self.clear = clear;
+
     self.pendencyAttributes = [
       {title: 'rn', translatedTitle: 'Número de Recrutamento', icon: 'account_circle'},
       {title: 'acronym', translatedTitle: 'Sigla do Formulário', icon: 'description'},
@@ -24,6 +39,15 @@
       {title: 'receiver', translatedTitle: 'Revisor Responsável', icon: 'assignment_turned_in'},
       {title: 'dueDate', translatedTitle: 'Data de Vencimento', icon: 'hourglass_empty'}
     ];
+
+    function clear(item) {
+      delete self.searchSettings[item.title];
+      self.checkStates[item.title] = false;
+    }
+
+    function chanceInputViewState(type){
+      self.inputViewState[type] = true;
+    }
   }
 
 }());

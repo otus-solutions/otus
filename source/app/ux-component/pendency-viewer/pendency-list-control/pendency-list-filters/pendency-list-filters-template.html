@@ -2,48 +2,64 @@
   .plf-layout {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: .1fr;
-    grid-template-areas:
-      "item item item"
-      "item item item"
+    grid-template-rows: .1fr 1fr 1fr;
+    grid-template-areas: "toolbar toolbar toolbar" "item    item    item" "item    item    item"
   }
 
-    .item-filter {
-      grid-area: item;
-    }
+  .item-filter {
+    grid-area: item;
+  }
+
+  .toolbar {
+    grid-area: toolbar;
+    background: #00907e;
+    color: #ffffff;
+  }
 
 
 </style>
 
-<md-card  class="plf-layout">
-<div ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
-  <div class="item-filter">
-        <span ng-if="!$ctrl.checkStates[item.title]">
-           <md-icon>{{item.icon}}
-             <md-tooltip md-direction="top">{{item.translatedTitle}}</md-tooltip>
-           </md-icon>
-           <md-checkbox aria-label={{item.translatedTitle}}
-                        ng-model="$ctrl.checkStates[item.title]"
-                        ng-click="$ctrl.exists(item, selected)">
-           </md-checkbox>
-        </span>
-    <span ng-if="$ctrl.checkStates[item.title]">
-        <otus-participant-search flex
-                                 on-select="$ctrl.selectParticipant(participant)"
-                                 pendency-filter-item= "item"
-                                 search-settings="$ctrl.searchSettings"
-                                 show-participants-button="false"
-                                 class="" on-ready="true">
-        </otus-participant-search>
+<md-card class="plf-layout" layout-margin>
+  <span class="toolbar md-hue-3" layout-padding>FILTROS</span>
+  <div ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
+    <div class="item-filter">
+        <span ng-if="!$ctrl.inputViewState[item.title]">
 
-        <md-input-container>
-          <md-icon>{{item.icon}}
+          <md-button layout-fill class="md-raised"
+                     aria-label={{item.translatedTitle}}
+                     ng-click="$ctrl.chanceInputViewState(item.title)">
+            <md-icon>{{item.icon}}
+             <md-tooltip md-direction="right">{{item.translatedTitle}}</md-tooltip>
+           </md-icon>
+          </md-button>
+
+
+          <!--           <md-checkbox aria-label={{item.translatedTitle}}-->
+          <!--                        ng-model="$ctrl.checkStates[item.title]"-->
+          <!--                        ng-click="$ctrl.exists(item, selected)">-->
+          <!--           </md-checkbox>-->
+        </span>
+      <span ng-if="$ctrl.inputViewState[item.title]" layout="row">
+        <md-icon>{{item.icon}}
                 <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
           </md-icon>
-          <input ng-model="$ctrl.searchSettings.filter[item.title]" aria-label={{item.translatedTitle}} required>
-          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
-        </md-input-container>
+        <otus-participant-search flex
+                                 on-select="$ctrl.selectParticipant(participant)"
+                                 pendency-filter-item="item"
+                                 search-settings="$ctrl.searchSettings"
+                                 show-participants-button="false"
+                                 class="md-raised" on-ready="true">
+        </otus-participant-search>
+        <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
+
+<!--        <md-input-container>-->
+<!--          <md-icon>{{item.icon}}-->
+<!--                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>-->
+<!--          </md-icon>-->
+<!--          <input ng-model="$ctrl.searchSettings.filter[item.title]" aria-label={{item.translatedTitle}} required>-->
+<!--          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>-->
+<!--        </md-input-container>-->
         </span>
+    </div>
   </div>
-</div>
 </md-card>

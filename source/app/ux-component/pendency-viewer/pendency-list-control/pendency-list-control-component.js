@@ -17,7 +17,7 @@
   function Controller() {
     const self = this;
 
-    self.clear = clear;
+
     self.openFilters = openFilters;
     self.closeFilters = closeFilters;
 
@@ -32,10 +32,7 @@
     //   {title: 'dueDate', translatedTitle: 'Data de Vencimento', icon: 'hourglass_empty'}
     // ];
 
-    function clear(item) {
-      delete self.searchSettings[item.title];
-      self.checkStates[item.title] = false;
-    }
+
 
 
     self.searchSettings = {
