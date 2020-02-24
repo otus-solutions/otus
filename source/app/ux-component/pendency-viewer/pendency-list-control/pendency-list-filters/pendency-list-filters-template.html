@@ -1,0 +1,49 @@
+<style>
+  .plf-layout {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: .1fr;
+    grid-template-areas:
+      "item item item"
+      "item item item"
+  }
+
+    .item-filter {
+      grid-area: item;
+    }
+
+
+</style>
+
+<md-card  class="plf-layout">
+<div ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
+  <div class="item-filter">
+        <span ng-if="!$ctrl.checkStates[item.title]">
+           <md-icon>{{item.icon}}
+             <md-tooltip md-direction="top">{{item.translatedTitle}}</md-tooltip>
+           </md-icon>
+           <md-checkbox aria-label={{item.translatedTitle}}
+                        ng-model="$ctrl.checkStates[item.title]"
+                        ng-click="$ctrl.exists(item, selected)">
+           </md-checkbox>
+        </span>
+    <span ng-if="$ctrl.checkStates[item.title]">
+        <otus-participant-search flex
+                                 on-select="$ctrl.selectParticipant(participant)"
+                                 pendency-filter-item= "item"
+                                 search-settings="$ctrl.searchSettings"
+                                 show-participants-button="false"
+                                 class="" on-ready="true">
+        </otus-participant-search>
+
+        <md-input-container>
+          <md-icon>{{item.icon}}
+                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+          </md-icon>
+          <input ng-model="$ctrl.searchSettings.filter[item.title]" aria-label={{item.translatedTitle}} required>
+          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
+        </md-input-container>
+        </span>
+  </div>
+</div>
+</md-card>

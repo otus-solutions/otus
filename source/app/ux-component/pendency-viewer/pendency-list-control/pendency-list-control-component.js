@@ -18,25 +18,39 @@
     const self = this;
 
     self.clear = clear;
+    self.openFilters = openFilters;
+    self.closeFilters = closeFilters;
 
-    self.pendencyAttributes = [
-      {title: 'rn', translatedTitle: 'Número de Recrutamento', icon: 'account_circle'},
-      {title: 'acronym', translatedTitle: 'Sigla do Formulário', icon: 'description'},
-      {title: 'externalID', translatedTitle: 'ID Externo', icon: 'fingerprint'},
-      {title: 'requester', translatedTitle: 'Usuário Solicitante', icon: 'record_voice_over'},
-      {title: 'receiver', translatedTitle: 'Revisor Responsável', icon: 'assignment_turned_in'},
-      {title: 'dueDate', translatedTitle: 'Data de Vencimento', icon: 'hourglass_empty'}
-    ];
+    self.filtersViewEnable = false;
+
+    // self.pendencyAttributes = [
+    //   {title: 'rn', translatedTitle: 'Número de Recrutamento', icon: 'account_circle'},
+    //   {title: 'acronym', translatedTitle: 'Sigla do Formulário', icon: 'description'},
+    //   {title: 'externalID', translatedTitle: 'ID Externo', icon: 'fingerprint'},
+    //   {title: 'requester', translatedTitle: 'Usuário Solicitante', icon: 'record_voice_over'},
+    //   {title: 'receiver', translatedTitle: 'Revisor Responsável', icon: 'assignment_turned_in'},
+    //   {title: 'dueDate', translatedTitle: 'Data de Vencimento', icon: 'hourglass_empty'}
+    // ];
 
     function clear(item) {
       delete self.searchSettings[item.title];
       self.checkStates[item.title] = false;
     }
 
+
     self.searchSettings = {
       "currentQuantity": 4,
       "quantityToGet": 10,
       "filter": {}
+    }
+
+    function openFilters() {
+      self.filtersViewEnable = true;
+    }
+
+    function closeFilters () {
+      if(self.filtersViewEnable) self.filtersViewEnable = !self.filtersViewEnable;
+
     }
 
     // self.searchSettings = {
