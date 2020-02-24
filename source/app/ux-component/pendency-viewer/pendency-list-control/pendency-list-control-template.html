@@ -28,6 +28,10 @@
     margin: 0px;
   }
 
+  otus-participant-search {
+    background-color: #ffffff;
+  }
+
 </style>
 
 <md-card class="plc-layout" style="background-color: #f5f5f5" layout-margin ng-cloak>
@@ -49,9 +53,12 @@
            </md-checkbox>
         </span>
       <span ng-if="$ctrl.checkStates[item.title]">
-        <otus-participant-search flex on-select="$ctrl.selectParticipant(participant)"
+        <otus-participant-search flex
+                                 on-select="$ctrl.selectParticipant(participant)"
+                                 pendency-filter-item= "item"
+                                 search-settings="$ctrl.searchSettings"
                                  show-participants-button="false"
-                                 class="md-primary md" on-ready="true">
+                                 class="" on-ready="true">
         </otus-participant-search>
 
         <md-input-container>

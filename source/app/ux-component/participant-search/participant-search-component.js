@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -8,9 +8,11 @@
       templateUrl: 'app/ux-component/participant-search/participant-search-template.html',
       bindings: {
         onSelect: '&',
-        showAllParticipantsButton:"<",
+        showAllParticipantsButton: "<",
         showAllParticipants: '&',
-        onReady: '='
+        onReady: '=',
+        pendencyFilterItem: '=',
+        searchSettings: '='
       }
     });
 
@@ -21,10 +23,12 @@
     'otusjs.application.state.ApplicationStateService',
     'otusjs.otus.dashboard.core.ContextService',
     '$mdDialog',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.pendencyViewer.PendencyViewerService'
   ];
 
-  function Controller(STATE, $q, ParticipantManagerService, ApplicationStateService, dashboardContextService, $mdDialog, DialogService) {
+  function Controller(STATE, $q, ParticipantManagerService, ApplicationStateService,
+                      dashboardContextService, $mdDialog, DialogService, PendencyViewerService) {
     var self = this;
 
 
@@ -41,7 +45,7 @@
 
     function onInit() {
       self.inputedText = '';
-      if(ApplicationStateService.getCurrentState() != STATE.DASHBOARD){
+      if (ApplicationStateService.getCurrentState() != STATE.DASHBOARD) {
         self.autoCompleteClass = 'md-autocomplete-participant';
       } else {
         self.autoCompleteClass = 'md-dashboard-autocomplete';
@@ -55,7 +59,7 @@
     function querySearch() {
       var request = $q.defer();
       ParticipantManagerService.filter(self.inputedText)
-        .then(function(value) {
+        .then(function (value) {
           request.resolve(value);
         });
       return request.promise;
@@ -63,16 +67,20 @@
 
     function selectParticipant() {
       _buildDialogs();
-      if (!self.selectedParticipant){
+      if (!self.selectedParticipant) {
         return;
-      } else if(ApplicationStateService.getCurrentState() == STATE.DASHBOARD){
+      } else if (ApplicationStateService.getCurrentState() == STATE.DASHBOARD) {
         _setParticipant();
         ApplicationStateService.activateParticipantDashboard();
-      } else if(ApplicationStateService.getCurrentState() == STATE.LABORATORY && dashboardContextService.getChangedState()) {
-        DialogService.showDialog(confirmParticipantChange).then(function() {
-        _setParticipant();
-        dashboardContextService.setChangedState();
+      } else if (ApplicationStateService.getCurrentState() == STATE.LABORATORY && dashboardContextService.getChangedState()) {
+        DialogService.showDialog(confirmParticipantChange).then(function () {
+          _setParticipant();
+          dashboardContextService.setChangedState();
         });
+      } else if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER) {
+        PendencyViewerService.getSelectedParticipantRN(self.selectedParticipant,
+          self.pendencyFilterItem, self.searchSettings);
+
       } else {
         _setParticipant();
       }
@@ -88,20 +96,24 @@
 
     function _buildDialogs() {
       confirmParticipantChange = {
-        dialogToTitle:'Descartar',
-        titleToText:'Confirmar troca de participante:',
-        textDialog:'Alterações não finalizadas serão descartadas.',
-        ariaLabel:'Confirmação de troca',
+        dialogToTitle: 'Descartar',
+        titleToText: 'Confirmar troca de participante:',
+        textDialog: 'Alterações não finalizadas serão descartadas.',
+        ariaLabel: 'Confirmação de troca',
         buttons: [
           {
-            message:'Ok',
-            action:function(){$mdDialog.hide()},
-            class:'md-raised md-primary'
+            message: 'Ok',
+            action: function () {
+              $mdDialog.hide()
+            },
+            class: 'md-raised md-primary'
           },
           {
-            message:'Voltar',
-            action:function(){$mdDialog.cancel()},
-            class:'md-raised md-no-focus'
+            message: 'Voltar',
+            action: function () {
+              $mdDialog.cancel()
+            },
+            class: 'md-raised md-no-focus'
           }
         ]
       };

@@ -33,6 +33,12 @@
       self.checkStates[item.title] = false;
     }
 
+    self.searchSettings = {
+      "currentQuantity": 4,
+      "quantityToGet": 10,
+      "filter": {}
+    }
+
     // self.searchSettings = {
     //   currentQuantity: 100,
     //   quantityToGet: 50,
@@ -51,20 +57,19 @@
     //   }
     // }
 
-    self.searchSettings = {
-      "currentQuantity": 4,
-      "quantityToGet": 10,
-      "filter": {
-        "dueDate": null,
-        "requester": null,
-        "receiver": null,
-        "acronym": null,
-        "rn": null,
-        "status": null,
-        "externalID": null
-      }
-
-    }
+    // self.searchSettings = {
+    //   "currentQuantity": 4,
+    //   "quantityToGet": 10,
+    //   "filter": {
+    //     "dueDate": null,
+    //     "requester": null,
+    //     "receiver": null,
+    //     "acronym": null,
+    //     "rn": null,
+    //     "status": null,
+    //     "externalID": null
+    //   }
+    // }
 
     // self.searchSettings = {
     //   "currentQuantity": 4,
