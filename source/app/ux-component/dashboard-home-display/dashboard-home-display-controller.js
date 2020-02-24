@@ -33,6 +33,7 @@
     self.managerParticipantsDashboard = managerParticipantsDashboard;
     self.activateActivityFlagsReport = activateActivityFlagsReport;
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
+    self.unattachedLaboratory = unattachedLaboratory;
 
     function onInit() {
       _loadLoggedUser();
@@ -58,6 +59,10 @@
 
     function startMonitoring() {
       ApplicationStateService.activateMonitoring();
+    }
+
+    function unattachedLaboratory() {
+      ApplicationStateService.activateUnattachedLaboratory();
     }
 
     function setFocus() {

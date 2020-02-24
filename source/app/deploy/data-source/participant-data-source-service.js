@@ -8,11 +8,12 @@
   Service.$inject = [
     '$q',
     'otusjs.deploy.ParticipantRestService',
+    'otusjs.model.participant.ParticipantFactory',
     'otusjs.deploy.ProjectConfigurationRestService',
     'otusjs.participant.storage.ParticipantStorageService'
   ];
 
-  function Service($q, ParticipantRestService, ProjectConfigurationRestService, ParticipantStorageService) {
+  function Service($q, ParticipantRestService, ParticipantFactory, ProjectConfigurationRestService, ParticipantStorageService) {
     var self = this;
     var _loadingDefer = $q.defer();
 
@@ -20,6 +21,7 @@
     self.up = up;
     self.listIndexers = listIndexers;
     self.create = create;
+    self.update = update;
     self.getAllowNewParticipants = getAllowNewParticipants;
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
@@ -50,6 +52,19 @@
       var deferred = $q.defer();
       ParticipantRestService
         .create(participant)
+        .then(function (response) {
+          deferred.resolve(response.data);
+          _loadData();
+        }).catch(function (err) {
+        deferred.reject(err);
+      });
+      return deferred.promise;
+    }
+
+    function update(participant) {
+      var deferred = $q.defer();
+      ParticipantRestService
+        .update(participant)
         .then(function (response) {
           deferred.resolve(response.data);
           _loadData();
@@ -113,7 +128,8 @@
         .list()
         .then(function (response) {
           ParticipantStorageService.getCollection().clear();
-          ParticipantStorageService.getCollection().insert(response.data);
+          let _participants = ParticipantFactory.fromArray(response.data);
+          ParticipantStorageService.getCollection().insert(_participants);
           ParticipantStorageService.save();
           _loadingDefer.resolve();
         });

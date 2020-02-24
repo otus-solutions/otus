@@ -17,7 +17,9 @@
     const DELAY = 3000;
     self.showClearDialog = showClearDialog;
     self.showRecruitmentNumberGenerated = showRecruitmentNumberGenerated;
+    self.showUpdateParticipant = showUpdateParticipant;
     self.showSaveDialog = showSaveDialog;
+    self.showUpdateDialog = showUpdateDialog;
     self.showNotSave = showNotSave;
     self.showToast = showToast;
 
@@ -70,10 +72,43 @@
 
     }
 
+    function showUpdateDialog() {
+
+      var _saveDialog = {
+        dialogToTitle:'Atualizar',
+        titleToText:'Confirmar alteração em Participante',
+        textDialog:'Deseja salvar as alterações?',
+        ariaLabel:'Confirmação de finalização',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Voltar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogShowService.showDialog(_saveDialog);
+
+    }
+
     function showRecruitmentNumberGenerated(participantData) {
       return $mdDialog.show($mdDialog.alert()
         .title('Novo participante criado')
         .textContent('Participante '+participantData.name+' criado com número de recrutamento: '+participantData.recruitmentNumber)
+        .ariaLabel('Confirmação de finalização')
+        .ok('Ok'));
+    }
+
+    function showUpdateParticipant(participantData) {
+      return $mdDialog.show($mdDialog.alert()
+        .title('Participante atualizado')
+        .textContent('Participante '+participantData.name+' atualizado com sucesso.')
         .ariaLabel('Confirmação de finalização')
         .ok('Ok'));
     }

@@ -1,0 +1,80 @@
+<div layout="row" layout-align="start center" layout-margin="">
+  <md-button class="md-button md-icon-button md-primary md-raised" ng-click="$ctrl.dashboardParticipant()">
+    <md-icon aria-label="Limpar">keyboard_return</md-icon>
+    <md-tooltip md-direction="down">Voltar</md-tooltip>
+  </md-button>
+</div>
+<md-divider></md-divider>
+<md-content flex layout-align="center center" layout="row" layout-fill="">
+  <div layout="row" layout-xs="column" flex="100" layout-align="center center">
+    <otus-panel header-label="'Atualizar Participante'" flex="100" flex-gt-xs="70" flex-gt-sm="60"
+                flex-gt-md="50" flex-gt-lg="40" layout-fill>
+      <md-card flex>
+        <md-card-content flex="100" >
+          <form name="participantForm" layout="column" flex style="padding: 20px 0 10px 0">
+            <div layout-gt-xs="row" layout-fill="">
+              <span flex="10"></span>
+              <md-input-container flex="100" layout-fill="">
+                <label >Número de Recrutamento</label>
+                <input ng-model="$ctrl.participant.recruitmentNumber"
+                       ng-disabled="true" >
+              </md-input-container>
+              <span flex="10"></span>
+            </div>
+            <div layout-gt-xs="row">
+              <span flex="10"></span>
+              <md-input-container flex layout-fill="">
+                <label>Nome Completo</label>
+                <input ng-model="$ctrl.participant.name" id="name" ng-change="$ctrl.onFilter()">
+              </md-input-container>
+              <span flex="10"></span>
+            </div>
+            <div layout-gt-xs="row" layout-align="center center">
+              <span flex="10"></span>
+              <md-input-container flex="30" layout-fill="">
+                <label>Sexo</label>
+                <md-select ng-model="$ctrl.participant.sex" id="sex" ng-change="$ctrl.onFilter()">
+                  <md-option value="M">Masculino</md-option>
+                  <md-option value="F">Feminino</md-option>
+                </md-select>
+              </md-input-container>
+              <span flex="10"></span>
+              <md-input-container flex="65" style="margin-top: 25px" id="date" layout-fill="">
+                <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
+                <input mdc-datetime-picker="" show-icon="true" date="true" time="false"
+                       aria-label="Data de Nascimento" type="text" id="datetime" placeholder="Data de Nascimento"
+                       max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
+                       format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
+              </md-input-container>
+              <span flex="10"></span>
+            </div>
+            <div layout-gt-xs="row">
+              <span flex="10"></span>
+              <md-input-container flex="50" layout-fill="">
+                <label>Centro</label>
+                <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" id="centerIdentified">
+                  <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center.acronym}}"
+                             ng-selected="center.acronym == $ctrl.participant.fieldCenter.acronym">
+                    {{center.name}}
+                  </md-option>
+                </md-select>
+              </md-input-container>
+              <span flex="10"></span>
+            </div>
+            <div layout="row" layout-align="end" layout-margin="">
+              <span flex></span>
+              <md-button class="md-raised md-button" ng-click="$ctrl.dashboardParticipant()">
+                <md-icon aria-label="Limpar">clear</md-icon>CANCELAR
+                <md-tooltip md-direction="down">Limpar</md-tooltip>
+              </md-button>
+              <md-button class="md-accent md-raised md-button" ng-click="$ctrl.saveParticipant()">
+                <md-icon aria-label="Adicionar">save</md-icon> SALVAR
+                <md-tooltip md-direction="down">Salvar</md-tooltip>
+              </md-button>
+            </div>
+          </form>
+        </md-card-content>
+      </md-card>
+    </otus-panel>
+  </div>
+</md-content>
