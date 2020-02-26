@@ -40,7 +40,7 @@
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'rn'" layout="row">
         <md-icon>{{item.icon}}
                 <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-          </md-icon>
+        </md-icon>
         <otus-participant-search flex
                                  on-select="$ctrl.selectParticipant(participant)"
                                  pendency-filter-item="item"
@@ -50,14 +50,22 @@
         </otus-participant-search>
         <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
 
-<!--        <md-input-container>-->
-<!--          <md-icon>{{item.icon}}-->
-<!--                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>-->
-<!--          </md-icon>-->
-<!--          <input ng-model="$ctrl.searchSettings.filter[item.title]" aria-label={{item.translatedTitle}} required>-->
-<!--          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>-->
-<!--        </md-input-container>-->
-        </span>
+        <!--        <md-input-container>-->
+        <!--          <md-icon>{{item.icon}}-->
+        <!--                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>-->
+        <!--          </md-icon>-->
+        <!--          <input ng-model="$ctrl.searchSettings.filter[item.title]" aria-label={{item.translatedTitle}} required>-->
+        <!--          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>-->
+        <!--        </md-input-container>-->
+      </span>
+      <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'requester'" layout="row">
+         <md-icon>{{item.icon}}
+                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+        </md-icon>
+        <otus-checker-search flex></otus-checker-search>
+        <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+      </span>
+
     </div>
   </div>
 </md-card>

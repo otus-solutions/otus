@@ -33,13 +33,15 @@
     // ];
 
 
-
-
     self.searchSettings = {
       "currentQuantity": 0,
       "quantityToGet": 50,
+      "order": {
+        "fields": ["creationDate", "rn"],
+        "mode": 1
+      },
       "filter": {}
-    }
+    };
 
     function openFilters() {
       self.filtersViewEnable = true;
@@ -47,7 +49,6 @@
 
     function closeFilters () {
       if(self.filtersViewEnable) self.filtersViewEnable = !self.filtersViewEnable;
-
     }
 
     // self.searchSettings = {
