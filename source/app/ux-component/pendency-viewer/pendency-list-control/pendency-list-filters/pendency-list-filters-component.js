@@ -17,6 +17,7 @@
     const self = this;
 
     self.chanceInputViewState = chanceInputViewState;
+    self.clear = clear;
 
     self.inputViewState = {
       rn: false,
@@ -26,10 +27,6 @@
       dueDate: false,
       externalID: false
     };
-
-
-
-    self.clear = clear;
 
     self.pendencyAttributes = [
       {title: 'rn', translatedTitle: 'Número de Recrutamento', icon: 'account_circle'},
@@ -41,13 +38,12 @@
     ];
 
     function clear(item) {
-      delete self.searchSettings[item.title];
+      delete self.searchSettings.filter[item.title];
       self.inputViewState[item.title] = false;
     }
 
     function chanceInputViewState(item){
       self.inputViewState[item.title] = true;
-      console.log(self.pendencyAttributes.title)
     }
   }
 

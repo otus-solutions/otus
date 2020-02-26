@@ -36,8 +36,8 @@
 
 
     self.searchSettings = {
-      "currentQuantity": 4,
-      "quantityToGet": 10,
+      "currentQuantity": 0,
+      "quantityToGet": 30,
       "filter": {}
     }
 

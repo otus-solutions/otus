@@ -16,11 +16,14 @@
     color: #ffffff;
   }
 
+  #participantSearchAutoCompleteId {
+    background-color: #ffffff;
+  }
 
 </style>
 
 <md-card class="plf-layout" layout-margin>
-  <span class="toolbar md-hue-3" layout-padding>FILTROS</span>
+  <span class="toolbar" layout-padding>FILTROS</span>
   <div ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
     <div class="item-filter">
         <span ng-if="!$ctrl.inputViewState[item.title]">
@@ -43,7 +46,7 @@
                                  pendency-filter-item="item"
                                  search-settings="$ctrl.searchSettings"
                                  show-participants-button="false"
-                                 class="md-raised" on-ready="true">
+                                 on-ready="true">
         </otus-participant-search>
         <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
 

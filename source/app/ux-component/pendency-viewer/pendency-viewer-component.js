@@ -14,9 +14,23 @@
   function Controller(PendencyViewerService) {
     const self = this;
 
-    self.pendencies = [];
-    self.searchSettings = {};
     self.getAllPendencies = getAllPendencies;
+    self.$onInit = onInit;
+
+
+    self.searchSettings = {
+      "currentQuantity": 0,
+      "quantityToGet": 30,
+      "filter": {}
+    };
+
+    self.pendencies = [];
+
+
+
+    function onInit(){
+      getAllPendencies(self.searchSettings);
+    }
 
     function getAllPendencies(searchSettings) {
       PendencyViewerService.getAllPendencies(searchSettings)
