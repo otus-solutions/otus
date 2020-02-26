@@ -42,11 +42,12 @@
 
     function clear(item) {
       delete self.searchSettings[item.title];
-      self.checkStates[item.title] = false;
+      self.inputViewState[item.title] = false;
     }
 
-    function chanceInputViewState(type){
-      self.inputViewState[type] = true;
+    function chanceInputViewState(item){
+      self.inputViewState[item.title] = true;
+      console.log(self.pendencyAttributes.title)
     }
   }
 

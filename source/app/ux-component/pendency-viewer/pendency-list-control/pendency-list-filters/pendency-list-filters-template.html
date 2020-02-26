@@ -27,19 +27,14 @@
 
           <md-button layout-fill class="md-raised"
                      aria-label={{item.translatedTitle}}
-                     ng-click="$ctrl.chanceInputViewState(item.title)">
+                     ng-click="$ctrl.chanceInputViewState(item)">
             <md-icon>{{item.icon}}
              <md-tooltip md-direction="right">{{item.translatedTitle}}</md-tooltip>
            </md-icon>
           </md-button>
-
-
-          <!--           <md-checkbox aria-label={{item.translatedTitle}}-->
-          <!--                        ng-model="$ctrl.checkStates[item.title]"-->
-          <!--                        ng-click="$ctrl.exists(item, selected)">-->
-          <!--           </md-checkbox>-->
         </span>
-      <span ng-if="$ctrl.inputViewState[item.title]" layout="row">
+
+      <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'rn'" layout="row">
         <md-icon>{{item.icon}}
                 <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
           </md-icon>
@@ -50,7 +45,7 @@
                                  show-participants-button="false"
                                  class="md-raised" on-ready="true">
         </otus-participant-search>
-        <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
 
 <!--        <md-input-container>-->
 <!--          <md-icon>{{item.icon}}-->
