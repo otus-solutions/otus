@@ -87,7 +87,7 @@
                           <input ng-model="$ctrl.searchSettings.filter[item.title]"
                                  ng-change="$ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
                                  aria-label={{item.translatedTitle}} required>
-                          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
+                          <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
                         </md-input-container>
       </span>
       <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'externalID')"  layout="row">
@@ -97,8 +97,19 @@
                           </md-icon>
                           <input ng-model="$ctrl.searchSettings.filter[item.title]"
                                  aria-label={{item.translatedTitle}} required>
-                          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
+                          <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
                         </md-input-container>
+      </span>
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'dueDate')"  layout="row">
+                          <md-icon>{{item.icon}}
+                                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+                          </md-icon>
+                          <md-datepicker layout-fill ng-model="$ctrl.searchSettings.filter[item.title]"
+                                         md-placeholder="DD/MM/AAAA"
+                                         aria-label={{item.translatedTitle}}>
+                          </md-datepicker>
+                          <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+
       </span>
 
     </div>
