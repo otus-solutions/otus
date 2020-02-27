@@ -20,9 +20,9 @@
     background-color: #ffffff;
   }
 
-  /*input{*/
-  /*  text-transform: uppercase;*/
-  /*}*/
+  input{
+    text-transform: uppercase;
+  }
 
 </style>
 
@@ -80,6 +80,17 @@
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')"  layout="row">
+                        <md-input-container flex>
+                          <md-icon>{{item.icon}}
+                                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+                          </md-icon>
+                          <input ng-model="$ctrl.searchSettings.filter[item.title]"
+                                 ng-change="$ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
+                                 aria-label={{item.translatedTitle}} required>
+                          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
+                        </md-input-container>
+      </span>
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'externalID')"  layout="row">
                         <md-input-container flex>
                           <md-icon>{{item.icon}}
                                 <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
