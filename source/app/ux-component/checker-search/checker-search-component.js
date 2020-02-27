@@ -32,7 +32,7 @@
     self.selectedItemChange = selectedItemChange;
 
     function onInit() {
-      self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
+      self.checkers = angular.copy(ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create));
     }
 
     function querySearch(query) {

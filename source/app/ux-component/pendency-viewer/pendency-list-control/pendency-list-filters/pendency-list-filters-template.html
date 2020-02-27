@@ -20,6 +20,10 @@
     background-color: #ffffff;
   }
 
+  /*input{*/
+  /*  text-transform: uppercase;*/
+  /*}*/
+
 </style>
 
 <md-card class="plf-layout" layout-margin>
@@ -50,13 +54,7 @@
         </otus-participant-search>
         <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
 
-        <!--        <md-input-container>-->
-        <!--          <md-icon>{{item.icon}}-->
-        <!--                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>-->
-        <!--          </md-icon>-->
-        <!--          <input ng-model="$ctrl.searchSettings.filter[item.title]" aria-label={{item.translatedTitle}} required>-->
-        <!--          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>-->
-        <!--        </md-input-container>-->
+
       </span>
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'requester'" layout="row">
          <md-icon>{{item.icon}}
@@ -69,7 +67,6 @@
         </otus-checker-search>
         <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
       </span>
-
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'receiver'" layout="row">
          <md-icon>{{item.icon}}
                 <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
@@ -80,6 +77,17 @@
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
         <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+      </span>
+
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')"  layout="row">
+                        <md-input-container flex>
+                          <md-icon>{{item.icon}}
+                                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+                          </md-icon>
+                          <input ng-model="$ctrl.searchSettings.filter[item.title]"
+                                 aria-label={{item.translatedTitle}} required>
+                          <md-icon ng-click="$ctrl.clear(item)">clear</md-icon>
+                        </md-input-container>
       </span>
 
     </div>
