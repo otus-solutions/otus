@@ -62,7 +62,11 @@
          <md-icon>{{item.icon}}
                 <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
-        <otus-checker-search flex></otus-checker-search>
+        <otus-checker-search flex
+                             pendency-filter-item="item"
+                             search-settings="$ctrl.searchSettings"
+                             placeholder-title="{{item.translatedTitle}}">
+        </otus-checker-search>
         <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
       </span>
 

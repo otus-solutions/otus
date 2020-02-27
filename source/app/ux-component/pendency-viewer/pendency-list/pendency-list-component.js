@@ -17,9 +17,5 @@
     const self = this;
   }
 
-
-
-
-
 }());
 

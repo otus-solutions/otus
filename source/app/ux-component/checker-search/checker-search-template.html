@@ -1,14 +1,14 @@
 <md-autocomplete flex required md-selected-item="$ctrl.selectedItem"
-                 md-search-text-change="$ctrl.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
+                 md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)" md-search-text="$ctrl.searchText"
                  md-selected-item-change="$ctrl.selectedItemChange(item)"
-                 md-items="item in ctrl.querySearch(vm.searchText)"
+                 md-items="item in $ctrl.querySearch($ctrl.searchText)"
                  md-item-text="item.text" md-min-length="0"
-                 placeholder = "usuario"
+                 placeholder = {{$ctrl.placeholderTitle}}
                  md-menu-class="autocomplete-custom-template">
   <md-item-template>
           <span class="item-title">
             <md-icon md-svg-icon="account"></md-icon>
-            <span md-highlight-text="vm.searchText" md-highlight-flags="i">{{ item.title }}</span>
+            <span md-highlight-text="$ctrl.searchText" md-highlight-flags="i">{{ item.title }}</span>
           </span>
     <span class="item-metadata">
             <span class="item-metastat">
@@ -17,6 +17,6 @@
           </span>
   </md-item-template>
   <md-not-found>
-    Nenhum resultado para "{{ vm.searchText }}" foi encontrado.
+    Nenhum resultado para "{{ $ctrl.searchText }}" foi encontrado.
   </md-not-found>
 </md-autocomplete>

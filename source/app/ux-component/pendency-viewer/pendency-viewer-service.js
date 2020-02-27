@@ -16,6 +16,7 @@
     self.formatDate = formatDate;
     self.calculateRemainingDays = calculateRemainingDays;
     self.getSelectedParticipantRN = getSelectedParticipantRN;
+    self.getChecker = getChecker;
 
     function getAllPendencies(searchSettings) {
       return UserActivityPendencyRepositoryService.getAllPendencies(searchSettings)
@@ -51,7 +52,10 @@
     function getSelectedParticipantRN(participant, pendencyFilterItem, searchSettings){
       searchSettings.filter[pendencyFilterItem.title] = participant.recruitmentNumber;
     }
-  }
 
+    function getChecker(user, pendencyFilterItem, searchSettings){
+      searchSettings.filter[pendencyFilterItem.title] = [user.checker.email];
+    }
+  }
 
 }());

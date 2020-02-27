@@ -17,16 +17,13 @@
     self.getAllPendencies = getAllPendencies;
     self.$onInit = onInit;
 
-
     self.searchSettings = {
       "currentQuantity": 0,
-      "quantityToGet": 50,
+      "quantityToGet": 100,
       "filter": {}
     };
 
     self.pendencies = [];
-
-
 
     function onInit(){
       getAllPendencies(self.searchSettings);
