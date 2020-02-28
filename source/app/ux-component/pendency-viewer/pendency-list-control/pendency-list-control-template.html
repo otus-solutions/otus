@@ -2,9 +2,9 @@
   .plc-layout {
     /*width: 98vw;*/
     display: grid;
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr) .2fr;
     grid-template-rows: .1fr .2fr .1fr;
-    grid-template-areas: "title" "filter" "submit"
+    grid-template-areas: "title . ordination" "filter filter filter" "submit submit submit"
   }
 
   .title {
@@ -46,8 +46,27 @@
       <md-tooltip md-direction="right">ocultar filtros</md-tooltip>
     </md-button>
   </div>
+  <div class="ordination" layout="row" layout-align="space-between start" layout-margin
+       md-swipe-left="onSwipeLeft($event, $target)">
+    <div>
+      <md-icon md-font-set="material-icons">arrow_upward
+        <md-tooltip md-direction="bottom">crescente</md-tooltip>
+      </md-icon>
+    </div>
+    <md-switch aria-label="ActivityType" class="md-primary" ng-false-value= 1
+               ng-model="$ctrl.searchSettings.order.mode" ng-true-value= -1>
+    </md-switch>
+    <md-tooltip md-direction="top">Ordenação</md-tooltip>
+    <div>
+      <md-icon md-font-set="material-icons">arrow_downward
+        <md-tooltip md-direction="bottom">decrescente</md-tooltip>
+      </md-icon>
+
+    </div>
+  </div>
+
   <otus-pendecy-list-filters ng-hide="!$ctrl.filtersViewEnable"
-    class="filter" search-settings="$ctrl.searchSettings">
+                             class="filter" search-settings="$ctrl.searchSettings">
   </otus-pendecy-list-filters>
 
   <div class="submit">

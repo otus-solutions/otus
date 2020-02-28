@@ -20,7 +20,13 @@
     self.searchSettings = {
       "currentQuantity": 0,
       "quantityToGet": 100,
-      "filter": {}
+      "order": {
+        "fields":["rn", "dueDate"],
+        "mode": 1
+      },
+      "filter":{
+        "status": ""
+      }
     };
 
     self.pendencies = [];
