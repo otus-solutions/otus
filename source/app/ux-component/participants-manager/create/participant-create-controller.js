@@ -48,7 +48,7 @@
     }
 
     function _restoreFields() {
-      var _restoreParticipant = JSON.parse(localStorage.getItem("newParticipant"));
+      var _restoreParticipant = JSON.parse(localStorage.getItem("newParticipant")) || {};
       if (_restoreParticipant.recruitmentNumber) {
         self.recruitmentNumber = _restoreParticipant.recruitmentNumber;
       }
