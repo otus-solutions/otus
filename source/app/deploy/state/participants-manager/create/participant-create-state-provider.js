@@ -28,6 +28,9 @@
       },
       resolve: {
         permissions: _loadParticipantRegistration
+      },
+      onExit: function () {
+        localStorage.removeItem("newParticipant");
       }
     };
 

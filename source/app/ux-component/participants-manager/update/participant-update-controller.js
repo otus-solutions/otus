@@ -16,7 +16,8 @@
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.participant.business.ParticipantMessagesService',
-    'otusjs.otus.dashboard.service.DashboardService'
+    'otusjs.otus.dashboard.service.DashboardService',
+    '$scope'
   ];
 
   function Controller(
@@ -30,7 +31,8 @@
     dashboardContextService,
     ParticipantManagerService,
     ParticipantMessagesService,
-    DashboardService) {
+    DashboardService,
+    $scope) {
     var self = this;
 
 
@@ -49,18 +51,21 @@
     self.dashboardParticipant = dashboardParticipant;
     self.onFilter = onFilter;
 
+    $scope.$watch('$ctrl.birthdate',function (newValue) {
+      if (newValue) self.onFilter();
+    });
+
 
     function onInit() {
       try {
         self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant);
-        self.birthdate = new Date(self.participant.birthdate.value);
-        self.participant.identified = true;
-        DashboardService
-          .getSelectedParticipant()
-          .then(function (participantData) {
-            self.participant =  ParticipantFactory.fromJson(participantData);
-            self.birthdate = new Date(self.participant.birthdate.value)
-          })
+        self.isIdentified = self.participant.toJSON().identified;
+        if(self.isIdentified){
+          self.birthdate = new Date(self.participant.birthdate.value)
+        } else {
+          self.birthdate = null;
+        }
+        if (!self.birthdate) self.participant.birthdate = {value: null};
         self.maxDate = new Date();
         self.centers = {};
         _loadAllCenters();
@@ -69,6 +74,10 @@
       }
 
     }
+
+    self.$onDestroy = function () {
+      delete self.participant;
+    };
 
     function _getCenterCode(acronym) {
       var center = self.centers.filter(function (center) {
@@ -112,6 +121,7 @@
     }
 
     function onFilter() {
+      self.validFields();
       if (self.birthdate) {
         _setBirthdate(self.birthdate);
       }
@@ -128,7 +138,6 @@
       if (!self.participant.late) {
         self.participant.late = false;
       }
-      localStorage.setItem("newParticipant", JSON.stringify(self.participant));
     }
 
     function _loadAllCenters() {
@@ -138,6 +147,16 @@
         setUserFieldCenter();
       });
     }
+    self.isValid = false;
+
+    self.validFields = function () {
+      if (!self.birthdate) self.participant.birthdate.value = null;
+      if (self.participant.recruitmentNumber && self.participant.name && self.participant.sex && self.participant.birthdate.value && self.participant.fieldCenter){
+        self.isValid = true;
+      } else {
+        self.isValid = false;
+      }
+    };
 
     function _fieldsValidate() {
       var _valid = true;
@@ -181,7 +200,7 @@
             var _participant = ParticipantFactory.fromJson(self.participant);
             ParticipantManagerService.update(_participant)
               .then(function (response) {
-                var p = ParticipantFactory.fromJson(response).toJSON()
+                var p = ParticipantFactory.fromJson(response).toJSON();
                 ParticipantManagerService.selectParticipant(p);
                 ParticipantMessagesService.showUpdateParticipant(p).then(function () {
                   self.dashboardParticipant();

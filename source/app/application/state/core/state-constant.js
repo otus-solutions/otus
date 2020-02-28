@@ -21,6 +21,7 @@
       'PARTICIPANT': 'participant',
       'PARTICIPANT_ACTIVITY': 'activity',
       'PARTICIPANT_REPORT': 'report',
+      'PARTICIPANT_UPDATE': 'participant-update',
       'SESSION': 'session',
       'SIGNUP': 'signup',
       'SIGNUP_RESULT': 'signup-result',
