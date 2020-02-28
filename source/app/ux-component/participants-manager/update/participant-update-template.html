@@ -7,7 +7,7 @@
 <md-divider></md-divider>
 <div layout="column" ng-show="!$ctrl.isIdentified">
   <div layout="row" layout-padding="" flex layout-align="center center" layout-wrap="">
-    <p flex align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto, preencha todos os campos para identifica-lo.</p>
+    <p flex align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto, preencha todos os campos para identificá-lo.</p>
   </div>
 </div>
 <spa flex="10" ng-if="$ctrl.isIdentified"></spa>
@@ -48,7 +48,7 @@
               <md-input-container flex="65" style="margin-top: 25px" id="date" layout-fill="">
                 <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
                 <input mdc-datetime-picker="" show-icon="true" date="true" time="false" required
-                       aria-label="Data de Nascimento" type="text" id="datetime" placeholder="Data de Nascimento"
+                       aria-label="Data de Nascimento" type="text" id="datetime" placeholder="{{$ctrl.birthdate ? '': 'Data de Nascimento'}}"
                        max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
                        format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
               </md-input-container>
