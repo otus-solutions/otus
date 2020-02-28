@@ -60,15 +60,12 @@
       try {
         self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant);
         self.isIdentified = self.participant.toJSON().identified;
-        self.birthdate = self.participant.birthdate.value ? new Date(self.participant.birthdate.value) : null;
-        self.participant.identified = true;
+        if(self.isIdentified){
+          self.birthdate = new Date(self.participant.birthdate.value)
+        } else {
+          self.birthdate = null;
+        }
         if (!self.birthdate) self.participant.birthdate = {value: null};
-        DashboardService
-          .getSelectedParticipant()
-          .then(function (participantData) {
-            self.participant =  ParticipantFactory.fromJson(participantData);
-            self.birthdate = new Date(self.participant.birthdate.value)
-          });
         self.maxDate = new Date();
         self.centers = {};
         _loadAllCenters();
@@ -153,7 +150,6 @@
     self.isValid = false;
 
     self.validFields = function () {
-      console.info(self.participant)
       if (!self.birthdate) self.participant.birthdate.value = null;
       if (self.participant.recruitmentNumber && self.participant.name && self.participant.sex && self.participant.birthdate.value && self.participant.fieldCenter){
         self.isValid = true;
