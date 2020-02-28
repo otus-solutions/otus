@@ -31,7 +31,7 @@
                         automaticamente)</label>
                       <input ng-model="$ctrl.recruitmentNumber"
                              ng-disabled="$ctrl.permissions.autoGenerateRecruitmentNumber" numbers-only
-                             maxlength="{{14-$ctrl.centerCode.toString().length}}" ng-change="$ctrl.onFilter()">
+                             maxlength="{{14-$ctrl.centerCode.toString().length}}" ng-change="$ctrl.onFilter()" aria-label="Número de Recrutamento">
                       <md-tooltip md-direction="down" ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Insira no
                         máximo {{14-$ctrl.centerCode.toString().length}} dígitos.
                       </md-tooltip>
@@ -123,7 +123,7 @@
                       <label ng-if="$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (Gerado
                         automaticamente)</label>
                       <input ng-model="$ctrl.recruitmentNumber"
-                             ng-disabled="$ctrl.permissions.autoGenerateRecruitmentNumber" numbers-only
+                             ng-disabled="$ctrl.permissions.autoGenerateRecruitmentNumber" numbers-only aria-label="Número de Recrutamento"
                              maxlength="{{14-$ctrl.centerCode.toString().length}}" id="rn" ng-change="$ctrl.onFilter()">
                       <md-tooltip md-direction="down" ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Insira no
                         máximo {{14-$ctrl.centerCode.toString().length}} dígitos.

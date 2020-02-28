@@ -22,7 +22,6 @@
     self.selectParticipant = selectParticipant;
     /* Lifecycle hooks */
     self.$onInit = onInit;
-    self.find = window.innerWidth > 450;
     self.getCurrentState = getCurrentState;
     self.STATE = STATE;
 
@@ -32,6 +31,8 @@
 
     /* Lifecycle methods */
     function onInit() {
+      self.find = window.innerWidth > 450;
+
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       self.selectedParticipant = null;
