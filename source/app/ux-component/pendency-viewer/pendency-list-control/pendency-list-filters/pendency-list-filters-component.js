@@ -18,6 +18,7 @@
 
     self.chanceInputViewState = chanceInputViewState;
     self.clear = clear;
+    self.allStatus = allStatus;
 
     self.inputViewState = {
       rn: false,
@@ -44,6 +45,11 @@
 
     function chanceInputViewState(item){
       self.inputViewState[item.title] = true;
+    }
+
+    function allStatus() {
+      delete self.searchSettings.filter.status;
+
     }
   }
 

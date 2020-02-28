@@ -2,8 +2,12 @@
   .plf-layout {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: .1fr 1fr 1fr;
-    grid-template-areas: "toolbar toolbar toolbar" "item    item    item" "item    item    item"
+    grid-template-rows: .1fr .1fr 1fr 1fr;
+    grid-template-areas:
+      "toolbar toolbar toolbar"
+      "status  status  status"
+      "item    item    item"
+      "item    item    item"
   }
 
   .item-filter {
@@ -16,6 +20,10 @@
     color: #ffffff;
   }
 
+  .status {
+    grid-area: status;
+  }
+
   #participantSearchAutoCompleteId {
     background-color: #ffffff;
   }
@@ -24,6 +32,11 @@
 
 <md-card class="plf-layout" layout-margin>
   <span class="toolbar" layout-padding>FILTROS</span>
+    <md-radio-group class="status" ng-model="$ctrl.searchSettings.filter.status" layout="row" layout-align="space-around center">
+      <md-radio-button value = "All" class="md-primary">Todas</md-radio-button>
+      <md-radio-button value="FINALIZED" class="md-primary">Finalizadas</md-radio-button>
+      <md-radio-button value="NOT_FINALIZED" class="md-primary">Em Aberto</md-radio-button>
+    </md-radio-group>
   <div ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
     <div class="item-filter">
         <span ng-if="!$ctrl.inputViewState[item.title]">

@@ -25,7 +25,7 @@
         "mode": 1
       },
       "filter":{
-        "status": ""
+        "status": "NOT_FINALIZED"
       }
     };
 
