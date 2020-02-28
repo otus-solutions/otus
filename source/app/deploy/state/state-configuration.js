@@ -98,6 +98,7 @@
     ParticipantsListStateProvider,
     ParticipantCreateStateProvider,
     ParticipantUpdateStateProvider,
+    ParticipantFollowUpStateProvider,
     InstallerProvider,
     LoginStateProvider,
     ParticipantStateProvider,
