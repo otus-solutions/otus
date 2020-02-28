@@ -1,58 +1,80 @@
 <md-content layout="column" flex>
   <div layout-align="start center" flex>
-    <md-card layout="row" flex>
-      <div layout="column" flex>
-        <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
-          Informações do Lote
-        </md-subheader>
-        <div flex>
-          <div flex layout-padding>
-            <div flex>
-              <div layout="row" layout-xs="column" flex>
-                <div layout="column" layout-align="center start" flex="20" flex-md="15" flex-gt-md="10">
-                  <span>Envio:</span>
+    <div layout-gt-md="row" flex>
+      <md-card layout="row" flex>
+        <div layout="column" flex>
+          <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
+            Informações do Lote
+          </md-subheader>
+          <div flex>
+            <div flex layout-padding>
+              <div flex>
+                <div layout="row" layout-xs="column" flex>
+                  <div layout="column" layout-align="center start" flex="20" flex-md="25" flex-gt-md="20">
+                    <span>Envio:</span>
+                  </div>
+                  <md-input-container class="remove-errors-spacer input-container-lot-margin">
+                    <md-datepicker ng-model="$ctrl.lot.shipmentDate"
+                                   ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})"
+                                   aria-label="Data de Envio"></md-datepicker>
+                  </md-input-container>
+                  <md-input-container class="remove-errors-spacer input-container-lot-margin">
+                    <md-icon class="material-icons">access_time</md-icon>
+                    <input type="time" ng-model="$ctrl.lot.shipmentDate"
+                           ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0"
+                           max="4999">
+                  </md-input-container>
                 </div>
-                <md-input-container class="remove-errors-spacer input-container-lot-margin">
-                  <md-datepicker ng-model="$ctrl.lot.shipmentDate"
-                                 ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})"
-                                 aria-label="Data de Envio"></md-datepicker>
-                </md-input-container>
-                <md-input-container class="remove-errors-spacer input-container-lot-margin">
-                  <md-icon class="material-icons">access_time</md-icon>
-                  <input type="time" ng-model="$ctrl.lot.shipmentDate"
-                         ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0"
-                         max="4999">
-                </md-input-container>
               </div>
-            </div>
-            <div>
-              <div layout="row" layout-xs="column" flex>
-                <div layout="column" layout-align="center start" flex="20" flex-md="15" flex-gt-md="10">
-                  <span>Processamento:</span>
+              <div>
+                <div layout="row" layout-xs="column" flex>
+                  <div layout="column" layout-align="center start" flex="20" flex-md="25" flex-gt-md="20">
+                    <span>Processamento:</span>
+                  </div>
+                  <md-input-container class="remove-errors-spacer input-container-lot-margin">
+                    <md-datepicker ng-model="$ctrl.lot.processingDate"
+                                   ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})"
+                                   aria-label="Data de processamento"></md-datepicker>
+                  </md-input-container>
+                  <md-input-container class="remove-errors-spacer input-container-lot-margin">
+                    <md-icon class="material-icons">access_time</md-icon>
+                    <input type="time" ng-model="$ctrl.lot.processingDate"
+                           ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0"
+                           max="4999">
+                  </md-input-container>
                 </div>
-                <md-input-container class="remove-errors-spacer input-container-lot-margin">
-                  <md-datepicker ng-model="$ctrl.lot.processingDate"
-                                 ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})"
-                                 aria-label="Data de processamento"></md-datepicker>
-                </md-input-container>
-                <md-input-container class="remove-errors-spacer input-container-lot-margin">
-                  <md-icon class="material-icons">access_time</md-icon>
-                  <input type="time" ng-model="$ctrl.lot.processingDate"
-                         ng-change="$ctrl.onLotAlteration({ newData: $ctrl.lot.toJSON()})" aria-label="Tempo" min="0"
-                         max="4999">
-                </md-input-container>
-              </div>
-              <md-divider></md-divider>
-              <div layout="row" layout-align="start center">
-                <span>Responsável: </span> <span class="md-body-1" layout-margin
-                                                 layout-padding>{{$ctrl.lot.operator}}</span>
+                <div layout="row" layout-align="start center">
+                  <span>Responsável: </span> <span class="md-body-1" layout-margin
+                                                   layout-padding>{{$ctrl.lot.operator}}</span>
+                </div>
+
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </md-card>
-    <div flex layout="row" layout-align="center center">
+      </md-card>
+      <md-card layout="column" flex flex-gt-md="30">
+        <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
+          Rastreio do Lote
+        </md-subheader>
+        <div layout="row" layout-align="start center" layout-wrap layout-padding>
+          <md-input-container flex="100" flex-gt-xs="80">
+            <label>De:</label>
+            <md-select ng-model="$ctrl.lot.originLocationPoint" ng-keydown="$ctrl.clearLot()">
+              <md-option ng-repeat="origin in $ctrl.originLocationPoints track by $index" value="{{origin._id}}" selected="origin._id==$ctrl.selectedOriginLocationPoint">{{origin.name}}</md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container flex="100" flex-gt-xs="80">
+            <label>Para:</label>
+            <md-select ng-model="$ctrl.lot.destinationLocationPoint" ng-disabled="$ctrl.lot.code">
+              <md-option ng-repeat="destination in $ctrl.destinationLocationPoints track by $index" value="{{destination._id}}">{{destination.name}}</md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+      </md-card>
+    </div>
+    <div flex layout="row" layout-align="center center" ng-show="$ctrl.lot.originLocationPoint.length">
       <md-card flex>
         <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
           <div layout="row">

@@ -87,8 +87,8 @@
       return LaboratoryCollectionService.getAliquots(lotAliquot, unique);
     }
 
-    function getLots() {
-      return LaboratoryCollectionService.getLots();
+    function getLots(locationPointId) {
+      return LaboratoryCollectionService.getLots(locationPointId);
     }
 
     function createLot(lotStructure) {

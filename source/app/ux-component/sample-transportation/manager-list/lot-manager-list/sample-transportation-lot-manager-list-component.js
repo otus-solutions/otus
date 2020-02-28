@@ -16,14 +16,16 @@
 
   Controller.$inject = [
     'otusjs.deploy.FieldCenterRestService',
+    'otusjs.deploy.LocationPointRestService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
     '$mdToast',
     'otusjs.laboratory.core.ContextService',
     'otusjs.otus.dashboard.core.ContextService',
-    '$filter'
+    '$filter',
+    'otusjs.model.locationPoint.LocationPointFactory'
   ];
 
-  function Controller(ProjectFieldCenterService, AliquotTransportationService, $mdToast, laboratoryContextService, dashboardContextService, $filter) {
+  function Controller(ProjectFieldCenterService, LocationPointRestService, AliquotTransportationService, $mdToast, laboratoryContextService, dashboardContextService, $filter, LocationPointFactory) {
     var self = this;
 
     //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
@@ -47,6 +49,7 @@
     self.centers = [];
     self.lotsList = [];
     self.lotsListImutable = [];
+    self.locationFilter = '';
 
     self.showMore = showMore;
 
@@ -60,29 +63,16 @@
     self.onFilter = onFilter;
 
     function onInit() {
-      ProjectFieldCenterService.loadCenters().then(function(result) {
-        self.lotDataSet = [];
-        self.colorSet = [];
-        self.centers = $filter('orderBy')(self.centers);
-        result.forEach(function(fieldCenter) {
-          self.centers.push(fieldCenter.acronym)
-        });
-        _LoadLotsList();
-        setUserFieldCenter();
+      LocationPointRestService.getUserLocationPoint().then(function (response) {
+        self.userLocationsPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
       });
+
       self.otusSampleTransportationManagerList.listComponent = self;
     }
 
-    function setUserFieldCenter() {
-      dashboardContextService
-        .getLoggedUser()
-        .then(function(userData) {
-          self.centerFilter = userData.fieldCenter.acronym ? userData.fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter() ? laboratoryContextService.getSelectedFieldCenter() : "";
-          laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
-          self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : 0;
-          self.centerFilterDisabled = userData.fieldCenter.acronym ? "disabled" : "";
-        });
-    }
+    self.getLots = function () {
+      _LoadLotsList();
+    };
 
     function selectLot(lot) {
       var activityIndex = self.selectedLots.indexOf(lot);
@@ -100,7 +90,7 @@
     }
 
     function _LoadLotsList() {
-      AliquotTransportationService.getLots().then(function(response) {
+      AliquotTransportationService.getLots(self.locationFilter).then(function(response) {//TODO: LISTAGEM POR LOCATION
         self.lotsList = response;
         self.lotsListImutable = response;
         self.onFilter();
@@ -111,16 +101,10 @@
     function onFilter() {
       self.selectedLots = [];
       self.show = self.limit;
-      laboratoryContextService.setSelectedFieldCenter(self.centerFilter);
+      // laboratoryContextService.setSelectedFieldCenter(self.centerFilter);//TODO VERIFICAR
       if (self.lotsListImutable.length) {
-        self.lotsList = self.lotsListImutable.filter(function(lot) {
-          if (self.centerFilter.length) {
-            return lot.fieldCenter.acronym == self.centerFilter;
-          } else {
-            return lot;
-          }
-        }).filter(function(FilteredByCenter) {
-          var lotFormatedData = $filter('date')(FilteredByCenter.shipmentDate, 'yyyyMMdd');
+        self.lotsList = self.lotsListImutable.filter(function(lotFilter) {
+          var lotFormatedData = $filter('date')(lotFilter.shipmentDate, 'yyyyMMdd');
           if (self.shipmentBeginFilter && self.shipmentEndFilter) {
             var initialDateFormated = $filter('date')(self.shipmentBeginFilter, 'yyyyMMdd');
             var finalDateFormated = $filter('date')(self.shipmentEndFilter, 'yyyyMMdd');
@@ -134,10 +118,10 @@
                 .textContent(msgDataInvalida)
                 .hideDelay(4000)
               );
-              return FilteredByCenter;
+              return lotFilter;
             }
           } else {
-            return FilteredByCenter;
+            return lotFilter;
           }
         });
         _setChartData();

@@ -5,10 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationManagerList', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/manager-list/sample-transportation-manager-list-template.html',
-      bindings: {
-        lots: "<"
-      }
+      templateUrl: 'app/ux-component/sample-transportation/manager-list/sample-transportation-manager-list-template.html'
     });
 
   Controller.$inject = [
@@ -26,6 +23,7 @@
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
+    self.lots = [];
 
     /* Public methods */
     self.handleViewInfoAction = handleViewInfoAction;

@@ -54,7 +54,6 @@
       } else {
         self.lot = AliquotTransportationService.createAliquotLot();
         self.lot.operator = self.stateData['user'].email;
-        self.lot.fieldCenter = { "acronym" : self.stateData['user'].fieldCenter.acronym ? self.stateData['user'].fieldCenter.acronym : laboratoryContextService.getSelectedFieldCenter()};
         self.lot.shipmentDate = new Date();
         self.lot.processingDate = new Date();
       }
@@ -78,6 +77,10 @@
     }
 
     function createLot() {
+      if (!self.lot.destinationLocationPoint.length || !self.lot.originLocationPoint.length) {
+        _toastRouterEmpty();
+        return;
+      }
       AliquotTransportationService.createLot(self.lot.toJSON()).then(function() {
         ApplicationStateService.activateSampleTransportationManagerList();
         self.updateLotStateData();
@@ -115,6 +118,16 @@
         .hideDelay(3000)
       );
     }
+
+    function _toastRouterEmpty() {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent('Informe o rastreio do lote.')
+          .hideDelay(3000)
+      );
+    }
+
+
 
     function _toastAliquotsRemoved(count) {
       $mdToast.show(
@@ -222,7 +235,8 @@
       if (!self.lot.chartDataSet.chartId) {
         self.lot.chartDataSet.chartId = "1";
       }
-      self.lot.chartDataSet.fieldCenter = self.lot.fieldCenter;
+      // self.lot.chartDataSet.fieldCenter = self.lot.fieldCenter;
+      // self.lot.chartDataSet.locationPoint = self.lot.originLocationPoint.name;
       self.lot.chartDataSet.backgroundColor = color;
     }
 

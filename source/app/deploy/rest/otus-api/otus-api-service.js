@@ -24,7 +24,8 @@
     'otusjs.deploy.monitoring.MonitoringRestService',
     'otusjs.deploy.user.UserAccessRecoveryRestService',
     'otusjs.deploy.monitoring.LaboratoryMonitoringRestService',
-    'otusjs.deploy.UserActivityPendencyRestService'
+    'otusjs.deploy.UserActivityPendencyRestService',
+    'otusjs.deploy.LocationPointRestService'
   ];
 
   function Service(
@@ -46,7 +47,8 @@
     MonitoringRestService,
     UserAccessRecoveryRestService,
     LaboratoryMonitoringRestService,
-    UserActivityPendencyRestService
+    UserActivityPendencyRestService,
+    LocationPointRestService
   ) {
     var self = this;
 
@@ -81,6 +83,7 @@
       MonitoringRestService.initialize();
       LaboratoryMonitoringRestService.initialize();
       UserActivityPendencyRestService.initialize();
+      LocationPointRestService.initialize();
     }
   }
 }());

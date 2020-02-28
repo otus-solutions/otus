@@ -59,12 +59,12 @@
       return deferred.promise;
     }
 
-    function getLots() {
+    function getLots(locationPointId) {
       var deferred = $q.defer();
 
       LaboratoryConfigurationService.fetchAliquotsDescriptors()
         .then(function() {
-          LaboratoryRepositoryService.getLots()
+          LaboratoryRepositoryService.getLots(locationPointId)
             .then(function(response) {
               var lots = JSON.parse(response).map(function(lotJson) {
                 return TransportationService.buildAliquotLotFromJson(

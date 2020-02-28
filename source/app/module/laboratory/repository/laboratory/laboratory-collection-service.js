@@ -341,14 +341,14 @@
       return request.promise;
     }
 
-    function getLots() {
+    function getLots(locationPointId) {
       var request = $q.defer();
 
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getLots()
+            .getLots(locationPointId)
             .then(function (lots) {
               request.resolve(lots);
             });
