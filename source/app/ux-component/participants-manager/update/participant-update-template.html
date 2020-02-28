@@ -10,9 +10,9 @@
     <p flex align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto, preencha todos os campos para identificá-lo.</p>
   </div>
 </div>
-<spa flex="10" ng-if="$ctrl.isIdentified"></spa>
+<span flex="10" ng-if="$ctrl.isIdentified"></span>
 <md-content flex layout-align="center start" layout="row" layout-fill="">
-  <div layout="row" layout-xs="column" flex="100" layout-align="center center">
+  <div layout="row" layout-xs="column" flex="100" layout-align="center center" layout-fill="">
     <otus-panel header-label="'Atualizar Participante'" flex="100" flex-gt-xs="70" flex-gt-sm="60"
                 flex-gt-md="50" flex-gt-lg="40" layout-fill>
       <md-card flex>
@@ -35,9 +35,9 @@
               </md-input-container>
               <span flex="10"></span>
             </div>
-            <div layout-gt-xs="row" layout-align="center center">
+            <div layout-gt-xs="row" layout-xs="column" layout-align="center center">
               <span flex="10"></span>
-              <md-input-container flex="30" layout-fill="">
+              <md-input-container flex="30" layout-fill="" flex-xs="100">
                 <label>Sexo</label>
                 <md-select ng-model="$ctrl.participant.sex" id="sex" required="" ng-change="$ctrl.onFilter()">
                   <md-option value="M">Masculino</md-option>
@@ -45,7 +45,7 @@
                 </md-select>
               </md-input-container>
               <span flex="10"></span>
-              <md-input-container flex="65" style="margin-top: 25px" id="date" layout-fill="">
+              <md-input-container flex="65" style="margin-top: 25px" id="date" layout-fill="" flex-xs="100">
                 <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
                 <input mdc-datetime-picker="" show-icon="true" date="true" time="false" required
                        aria-label="Data de Nascimento" type="text" id="datetime" placeholder="{{$ctrl.birthdate ? '': 'Data de Nascimento'}}"
@@ -56,7 +56,7 @@
             </div>
             <div layout-gt-xs="row">
               <span flex="10"></span>
-              <md-input-container flex="50" layout-fill="">
+              <md-input-container flex="50" flex-xs="100" layout-fill="">
                 <label>Centro</label>
                 <md-select required="" ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" id="centerIdentified">
                   <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center.acronym}}"
@@ -69,16 +69,16 @@
             </div>
             <div layout="row" layout-align="end" layout-margin="">
               <span flex></span>
-              <md-button class="md-raised md-button" ng-click="$ctrl.dashboardParticipant()">
+              <md-button class="md-raised md-icon-button md-button" ng-click="$ctrl.dashboardParticipant()">
                 <md-icon aria-label="Limpar">clear</md-icon>
-                CANCELAR
                 <md-tooltip md-direction="down">Limpar</md-tooltip>
+
               </md-button>
-              <md-button class="md-accent md-raised md-button" ng-click="$ctrl.saveParticipant()"
+              <md-button class="md-accent md-icon-button md-raised md-button" ng-click="$ctrl.saveParticipant()"
                          ng-disabled="!$ctrl.isValid">
                 <md-icon aria-label="Adicionar">save</md-icon>
-                SALVAR
                 <md-tooltip md-direction="down">Salvar</md-tooltip>
+
               </md-button>
             </div>
           </form>
