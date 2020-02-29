@@ -51,12 +51,12 @@
 
     <span ng-if="$ctrl.inputViewState['sortingCriteria']"
           layout="row" layout-align="space-between center">
-      <md-icon ng-click="$ctrl.resetCriteriaOrderCustomization()">build</md-icon>
+      <md-icon ng-click="$ctrl.resetCriteriaOrderCustomization()">refresh</md-icon>
       <div class='container' dragula='"new-order-list"'
            dragula-model='$ctrl.searchSettings.order.fields'
            layout="row">
-        <md-chips ng-repeat='text in $ctrl.searchSettings.order.fields'>
-          <md-chip>{{text}}</md-chip>
+        <md-chips ng-repeat='criteria in $ctrl.searchSettings.order.fields'>
+          <md-chip>{{criteria}}</md-chip>
         </md-chips>
       </div>
       <md-icon ng-click="$ctrl.chanceStateCriteria()">replay</md-icon>

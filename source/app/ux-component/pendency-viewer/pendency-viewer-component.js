@@ -17,8 +17,6 @@
     self.getAllPendencies = getAllPendencies;
     self.$onInit = onInit;
 
-    // "fields":["dueDate","rn", "acronym", "externalID", "requester", "receiver"],
-
     self.searchSettings = {
       "currentQuantity": 0,
       "quantityToGet": 100,

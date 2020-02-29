@@ -34,10 +34,10 @@
 
     self.pendencyAttributes = [
       {title: 'rn', translatedTitle: 'Número de Recrutamento', icon: 'account_circle'},
-      {title: 'acronym', translatedTitle: 'Sigla do Formulário', icon: 'description'},
-      {title: 'externalID', translatedTitle: 'ID Externo', icon: 'fingerprint'},
+      {title: 'receiver', translatedTitle: 'Revisor Responsável', icon: 'assignment_ind'},
       {title: 'requester', translatedTitle: 'Usuário Solicitante', icon: 'record_voice_over'},
-      {title: 'receiver', translatedTitle: 'Revisor Responsável', icon: 'assignment_turned_in'},
+      {title: 'acronym', translatedTitle: 'Sigla do Formulário', icon: 'assignment'},
+      {title: 'externalID', translatedTitle: 'ID Externo', icon: 'fingerprint'},
       {title: 'dueDate', translatedTitle: 'Data de Vencimento', icon: 'hourglass_empty'}
     ];
 
