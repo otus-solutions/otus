@@ -46,6 +46,16 @@
       <md-tooltip md-direction="right">ocultar filtros</md-tooltip>
     </md-button>
   </div>
+
+  <div class='wrapper'>
+    <div class='container' dragula='"another-bag"' dragula-model='$ctrl.searchSettings.order.fields'>
+      <div ng-repeat='text in $ctrl.searchSettings.order.fields' ng-bind='text'></div>
+    </div>
+  </div>
+
+
+
+
   <div class="ordination" layout="row" layout-align="space-between start" layout-margin
        md-swipe-left="onSwipeLeft($event, $target)">
     <div>

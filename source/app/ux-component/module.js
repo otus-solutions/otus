@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusjs.otus.uxComponent', ['ngMaterialDatePicker'])
+    .module('otusjs.otus.uxComponent', ['ngMaterialDatePicker', angularDragula(angular)])
     .config(function($mdDateLocaleProvider) {
     /**
      * @param date {Date}
