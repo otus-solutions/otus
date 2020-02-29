@@ -21,7 +21,7 @@
       "currentQuantity": 0,
       "quantityToGet": 100,
       "order": {
-        "fields":["rn", "dueDate"],
+        "fields":["dueDate","rn", "acronym", "externalID", "requester", "receiver"],
         "mode": 1
       },
       "filter":{
