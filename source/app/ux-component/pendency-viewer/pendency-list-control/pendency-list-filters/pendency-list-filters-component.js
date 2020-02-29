@@ -19,7 +19,8 @@
     self.chanceInputViewState = chanceInputViewState;
     self.clear = clear;
     self.allStatus = allStatus;
-    self.insertCriteria = insertCriteria;
+    self.chanceStateCriteria = chanceStateCriteria;
+    self.resetCriteriaOrderCustomization = resetCriteriaOrderCustomization
 
     self.inputViewState = {
       rn: false,
@@ -45,7 +46,7 @@
       self.inputViewState[item.title] = false;
     }
 
-    function chanceInputViewState(item){
+    function chanceInputViewState(item) {
       self.inputViewState[item.title] = true;
     }
 
@@ -53,9 +54,24 @@
       delete self.searchSettings.filter.status;
     }
 
-    function insertCriteria() {
-      self.inputViewState['sortingCriteria'] = true;
-      self.searchSettings.order.fields = ["dueDate","rn", "acronym", "externalID", "requester", "receiver"];
+    function chanceStateCriteria() {
+      if (self.inputViewState['sortingCriteria']) {
+        self.inputViewState['sortingCriteria'] = !self.inputViewState['sortingCriteria'];
+        self.searchSettings.order.fields = ["dueDate"];
+      } else {
+        self.inputViewState['sortingCriteria'] = true;
+        _populateCriteriaOrder();
+      }
     }
+
+    function resetCriteriaOrderCustomization() {
+      _populateCriteriaOrder();
+    }
+
+    function _populateCriteriaOrder(){
+      self.searchSettings.order.fields = ["dueDate", "rn", "acronym", "externalID", "requester", "receiver"];
+    }
+
+
   }
 }());
