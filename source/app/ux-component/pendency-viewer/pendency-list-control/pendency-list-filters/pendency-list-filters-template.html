@@ -2,12 +2,13 @@
   .plf-layout {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: .1fr .1fr 1fr 1fr;
+    grid-template-rows: .1fr .1fr .1fr 1fr 1fr;
     grid-template-areas:
-      "toolbar toolbar toolbar"
-      "status  status  status"
-      "item    item    item"
-      "item    item    item"
+      "toolbar         toolbar         toolbar"
+    " sortingCriteria  sortingCriteria sortingCriteria"
+      "status          status          status"
+      "item            item            item"
+      "item            item            item"
   }
 
   .item-filter {
@@ -24,6 +25,10 @@
     grid-area: status;
   }
 
+  .sorting-criteria {
+    grid-area: sortingCriteria;
+  }
+
   #participantSearchAutoCompleteId {
     background-color: #ffffff;
   }
@@ -32,94 +37,117 @@
 
 <md-card class="plf-layout" layout-margin>
   <span class="toolbar" layout-padding>FILTROS</span>
-    <md-radio-group class="status" ng-model="$ctrl.searchSettings.filter.status" layout="row" layout-align="space-around center">
-      <md-radio-button value = "ALL" class="md-primary">Todas</md-radio-button>
-      <md-radio-button value="FINALIZED" class="md-primary">Finalizadas</md-radio-button>
-      <md-radio-button value="NOT_FINALIZED" class="md-primary">Em Aberto</md-radio-button>
-    </md-radio-group>
+
+  <div class='sorting-criteria'>
+    <span ng-if="!$ctrl.inputViewState['sortingCriteria']">
+              <md-button layout-fill class="md-raised"
+                         aria-label="critérios de ordernação"
+                         ng-click="$ctrl.insertCriteria()">
+                <md-icon>swap_calls
+                 <md-tooltip md-direction="right">Critérios de ordernação</md-tooltip>
+               </md-icon>
+              </md-button>
+            </span>
+
+    <div ng-if="$ctrl.inputViewState['sortingCriteria']"
+         class='container' dragula='"new-order-list"'
+         dragula-model='$ctrl.searchSettings.order.fields'
+         layout="row" layout-align="center center">
+      <md-chips ng-repeat='text in $ctrl.searchSettings.order.fields'>
+        <md-chip>{{text}}</md-chip>
+      </md-chips>
+    </div>
+  </div>
+
+
+  <md-radio-group class="status" ng-model="$ctrl.searchSettings.filter.status" layout="row"
+                  layout-align="space-around center">
+    <md-radio-button value="ALL" class="md-primary">Todas</md-radio-button>
+    <md-radio-button value="FINALIZED" class="md-primary">Finalizadas</md-radio-button>
+    <md-radio-button value="NOT_FINALIZED" class="md-primary">Em Aberto</md-radio-button>
+  </md-radio-group>
   <div ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
     <div class="item-filter">
-        <span ng-if="!$ctrl.inputViewState[item.title]">
-
-          <md-button layout-fill class="md-raised"
-                     aria-label={{item.translatedTitle}}
-                     ng-click="$ctrl.chanceInputViewState(item)">
-            <md-icon>{{item.icon}}
-             <md-tooltip md-direction="right">{{item.translatedTitle}}</md-tooltip>
-           </md-icon>
-          </md-button>
-        </span>
+            <span ng-if="!$ctrl.inputViewState[item.title]">
+              <md-button layout-fill class="md-raised"
+                         aria-label={{item.translatedTitle}}
+                         ng-click="$ctrl.chanceInputViewState(item)">
+                <md-icon>{{item.icon}}
+                 <md-tooltip md-direction="right">{{item.translatedTitle}}</md-tooltip>
+               </md-icon>
+              </md-button>
+            </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'rn'" layout="row">
-        <md-icon>{{item.icon}}
-                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-        </md-icon>
-        <otus-participant-search flex
-                                 on-select="$ctrl.selectParticipant(participant)"
+            <md-icon>{{item.icon}}
+                    <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+            </md-icon>
+            <otus-participant-search flex
+                                     on-select="$ctrl.selectParticipant(participant)"
+                                     pendency-filter-item="item"
+                                     search-settings="$ctrl.searchSettings"
+                                     show-participants-button="false"
+                                     on-ready="true">
+            </otus-participant-search>
+            <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+
+
+          </span>
+      <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'requester'" layout="row">
+             <md-icon>{{item.icon}}
+                    <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+            </md-icon>
+            <otus-checker-search flex
                                  pendency-filter-item="item"
                                  search-settings="$ctrl.searchSettings"
-                                 show-participants-button="false"
-                                 on-ready="true">
-        </otus-participant-search>
-        <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
-
-
-      </span>
-      <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'requester'" layout="row">
-         <md-icon>{{item.icon}}
-                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-        </md-icon>
-        <otus-checker-search flex
-                             pendency-filter-item="item"
-                             search-settings="$ctrl.searchSettings"
-                             placeholder-title="{{item.translatedTitle}}">
-        </otus-checker-search>
-        <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
-      </span>
+                                 placeholder-title="{{item.translatedTitle}}">
+            </otus-checker-search>
+            <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+          </span>
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'receiver'" layout="row">
-         <md-icon>{{item.icon}}
-                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-        </md-icon>
-        <otus-checker-search flex
-                             pendency-filter-item="item"
-                             search-settings="$ctrl.searchSettings"
-                             placeholder-title="{{item.translatedTitle}}">
-        </otus-checker-search>
-        <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
-      </span>
+             <md-icon>{{item.icon}}
+                    <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+            </md-icon>
+            <otus-checker-search flex
+                                 pendency-filter-item="item"
+                                 search-settings="$ctrl.searchSettings"
+                                 placeholder-title="{{item.translatedTitle}}">
+            </otus-checker-search>
+            <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+          </span>
 
-      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')"  layout="row">
-                        <md-input-container flex>
-                          <md-icon>{{item.icon}}
-                                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-                          </md-icon>
-                          <input ng-model="$ctrl.searchSettings.filter[item.title]"
-                                 ng-change="$ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
-                                 aria-label={{item.translatedTitle}} required>
-                          <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
-                        </md-input-container>
-      </span>
-      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'externalID')"  layout="row">
-                        <md-input-container flex>
-                          <md-icon>{{item.icon}}
-                                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-                          </md-icon>
-                          <input ng-model="$ctrl.searchSettings.filter[item.title]"
-                                 aria-label={{item.translatedTitle}} required>
-                          <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
-                        </md-input-container>
-      </span>
-      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'dueDate')"  layout="row">
-                          <md-icon>{{item.icon}}
-                                <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-                          </md-icon>
-                          <md-datepicker layout-fill ng-model="$ctrl.searchSettings.filter[item.title]"
-                                         md-placeholder="DD/MM/AAAA"
-                                         aria-label={{item.translatedTitle}}>
-                          </md-datepicker>
-                          <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')" layout="row">
+                            <md-input-container flex>
+                              <md-icon>{{item.icon}}
+                                    <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+                              </md-icon>
+                              <input ng-model="$ctrl.searchSettings.filter[item.title]"
+                                     ng-change="$ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
+                                     aria-label={{item.translatedTitle}} required>
+                              <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+                            </md-input-container>
+          </span>
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'externalID')" layout="row">
+                            <md-input-container flex>
+                              <md-icon>{{item.icon}}
+                                    <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+                              </md-icon>
+                              <input ng-model="$ctrl.searchSettings.filter[item.title]"
+                                     aria-label={{item.translatedTitle}} required>
+                              <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+                            </md-input-container>
+          </span>
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'dueDate')" layout="row">
+                              <md-icon>{{item.icon}}
+                                    <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+                              </md-icon>
+                              <md-datepicker layout-fill ng-model="$ctrl.searchSettings.filter[item.title]"
+                                             md-placeholder="DD/MM/AAAA"
+                                             aria-label={{item.translatedTitle}}>
+                              </md-datepicker>
+                              <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
 
-      </span>
+          </span>
 
     </div>
   </div>

@@ -12,9 +12,9 @@
       }
     }).controller('pendencyListControlCtrl', Controller);
 
-  Controller.$inject = ['dragulaService'];
+  Controller.$inject = [];
 
-  function Controller(dragulaService) {
+  function Controller() {
     const self = this;
 
     self.openFilters = openFilters;

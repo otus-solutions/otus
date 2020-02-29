@@ -4,7 +4,10 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr) .2fr;
     grid-template-rows: .1fr .2fr .1fr;
-    grid-template-areas: "title . ordination" "filter filter filter" "submit submit submit"
+    grid-template-areas:
+      "title  .      ordination"
+      "filter filter filter"
+      "submit submit submit"
   }
 
   .title {
@@ -32,6 +35,10 @@
     background-color: #ffffff;
   }
 
+  md-chips.md-default-theme .md-chips {
+    box-shadow: none;
+  }
+
 </style>
 
 <md-card class="plc-layout" style="background-color: #f5f5f5" layout-margin ng-cloak>
@@ -47,16 +54,6 @@
     </md-button>
   </div>
 
-  <div class='wrapper'>
-    <div class='container' dragula='"new-order-list"' dragula-model='$ctrl.searchSettings.order.fields' layout="row">
-      <md-chips ng-repeat='text in $ctrl.searchSettings.order.fields'>
-        <md-chip>{{text}}</md-chip>
-      </md-chips>
-    </div>
-  </div>
-
-
-
   <div class="ordination" layout="row" layout-align="space-between start" layout-margin
        md-swipe-left="onSwipeLeft($event, $target)">
     <div>
@@ -64,28 +61,28 @@
         <md-tooltip md-direction="bottom">crescente</md-tooltip>
       </md-icon>
     </div>
-    <md-switch aria-label="ActivityType" class="md-primary" ng-false-value= 1
-               ng-model="$ctrl.searchSettings.order.mode" ng-true-value= -1>
+    <md-switch aria-label="ActivityType" class="md-primary" ng-false-value=1
+               ng-model="$ctrl.searchSettings.order.mode" ng-true-value=-1>
     </md-switch>
     <md-tooltip md-direction="top">Ordenação</md-tooltip>
     <div>
       <md-icon md-font-set="material-icons">arrow_downward
         <md-tooltip md-direction="bottom">decrescente</md-tooltip>
       </md-icon>
-
     </div>
   </div>
 
   <otus-pendecy-list-filters ng-hide="!$ctrl.filtersViewEnable"
-                             class="filter" search-settings="$ctrl.searchSettings">
+    class="filter"
+    search-settings="$ctrl.searchSettings">
   </otus-pendecy-list-filters>
 
   <div class="submit">
     <md-button layout-fill class="md-raised md-primary"
-               ng-click="$ctrl.getPendencies($ctrl.searchSettings)">Listar
+               ng-click="$ctrl.getPendencies($ctrl.searchSettings)">
+      Listar
     </md-button>
   </div>
-
 </md-card>
 </div>
 

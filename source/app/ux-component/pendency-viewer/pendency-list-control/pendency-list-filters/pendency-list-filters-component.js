@@ -11,14 +11,15 @@
       }
     }).controller('pendencyListFiltersCtrl', Controller);
 
-  Controller.$inject = [];
+  Controller.$inject = ['dragulaService'];
 
-  function Controller() {
+  function Controller(dragulaService) {
     const self = this;
 
     self.chanceInputViewState = chanceInputViewState;
     self.clear = clear;
     self.allStatus = allStatus;
+    self.insertCriteria = insertCriteria;
 
     self.inputViewState = {
       rn: false,
@@ -26,7 +27,8 @@
       requester: false,
       receiver: false,
       dueDate: false,
-      externalID: false
+      externalID: false,
+      sortingCriteria: false
     };
 
     self.pendencyAttributes = [
@@ -49,8 +51,11 @@
 
     function allStatus() {
       delete self.searchSettings.filter.status;
+    }
 
+    function insertCriteria() {
+      self.inputViewState['sortingCriteria'] = true;
+      self.searchSettings.order.fields = ["dueDate","rn", "acronym", "externalID", "requester", "receiver"];
     }
   }
-
 }());
