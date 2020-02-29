@@ -3,7 +3,12 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: .1fr .1fr .1fr 1fr 1fr;
-    grid-template-areas: "toolbar         toolbar         toolbar" " sortingCriteria  sortingCriteria sortingCriteria" "status          status          status" "item            item            item" "item            item            item"
+    grid-template-areas:
+      "toolbar         toolbar         toolbar"
+      "status          status          status"
+      "item            item            item"
+      "item            item            item"
+      "sortingCriteria sortingCriteria sortingCriteria"
   }
 
   .item-filter {
