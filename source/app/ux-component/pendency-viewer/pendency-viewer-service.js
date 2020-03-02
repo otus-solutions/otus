@@ -33,7 +33,7 @@
     }
 
     function formatDate(date) {
-      return date.getDate() + "/"+ (date.getMonth()+1) + "/" + date.getFullYear();
+      return date.getUTCDate() + "/"+ (date.getUTCMonth()+1) + "/" + date.getUTCFullYear();
     }
 
     function calculateRemainingDays(dueDate){

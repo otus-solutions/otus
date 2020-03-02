@@ -56,10 +56,6 @@
           "status": "NOT_FINALIZED"
         }
       };
-
-
-        console.log(searchSettings)
-
     }
 
     function chanceInputViewState(item) {
