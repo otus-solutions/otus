@@ -7,7 +7,8 @@
       controller:'pendencyItemCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-item/pendency-item-template.html',
       bindings: {
-        item: '<'
+        item: '<',
+        pendencyAttributes: '<'
       }
     }).controller('pendencyItemCtrl', Controller);
 

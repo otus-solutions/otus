@@ -30,6 +30,15 @@
       }
     };
 
+    self.pendencyAttributes = [
+      {title: 'rn', translatedTitle: 'Número de Recrutamento', icon: 'account_circle'},
+      {title: 'requester', translatedTitle: 'Solicitante', icon: 'record_voice_over'},
+      {title: 'receiver', translatedTitle: 'Responsável', icon: 'assignment_ind'},
+      {title: 'acronym', translatedTitle: 'Sigla do Formulário', icon: 'assignment'},
+      {title: 'externalID', translatedTitle: 'ID Externo', icon: 'fingerprint'},
+      {title: 'dueDate', translatedTitle: 'Data de Vencimento', icon: 'hourglass_empty'}
+    ];
+
     self.pendencies = [];
 
     function onInit(){

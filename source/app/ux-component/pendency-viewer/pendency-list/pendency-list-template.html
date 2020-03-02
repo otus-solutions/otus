@@ -5,5 +5,5 @@
 </style>
 
 <md-list ng-repeat="pendency in $ctrl.pendencies" ng-cloak>
-  <otus-pendency-item item="pendency"></otus-pendency-item>
+  <otus-pendency-item item="pendency" pendency-attributes="$ctrl.pendencyAttributes"></otus-pendency-item>
 </md-list>

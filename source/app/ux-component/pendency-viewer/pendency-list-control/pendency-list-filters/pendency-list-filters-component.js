@@ -7,7 +7,9 @@
       controller: 'pendencyListFiltersCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-control/pendency-list-filters/pendency-list-filters-template.html',
       bindings: {
-        searchSettings: '='
+        searchSettings: '=',
+        pendencyAttributes : '<'
+
       }
     }).controller('pendencyListFiltersCtrl', Controller);
 
@@ -31,15 +33,6 @@
       externalID: false,
       sortingCriteria: false
     };
-
-    self.pendencyAttributes = [
-      {title: 'rn', translatedTitle: 'Número de Recrutamento', icon: 'account_circle'},
-      {title: 'receiver', translatedTitle: 'Revisor Responsável', icon: 'assignment_ind'},
-      {title: 'requester', translatedTitle: 'Usuário Solicitante', icon: 'record_voice_over'},
-      {title: 'acronym', translatedTitle: 'Sigla do Formulário', icon: 'assignment'},
-      {title: 'externalID', translatedTitle: 'ID Externo', icon: 'fingerprint'},
-      {title: 'dueDate', translatedTitle: 'Data de Vencimento', icon: 'hourglass_empty'}
-    ];
 
     function clear(item) {
       delete self.searchSettings.filter[item.title];

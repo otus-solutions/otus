@@ -9,6 +9,8 @@
       bindings: {
         getPendencies: '&',
         searchSettings: '=',
+        pendencyAttributes: '<'
+
       }
     }).controller('pendencyListControlCtrl', Controller);
 

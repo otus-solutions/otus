@@ -85,57 +85,58 @@
         <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
-        <otus-participant-search flex
+        <otus-participant-search layout-fill
                                  on-select="$ctrl.selectParticipant(participant)"
                                  pendency-filter-item="item"
                                  search-settings="$ctrl.searchSettings"
                                  show-participants-button="false"
                                  on-ready="true">
         </otus-participant-search>
-        <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'requester'" layout="row">
         <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
-        <otus-checker-search flex pendency-filter-item="item"
+        <otus-checker-search layout-fill pendency-filter-item="item"
                              search-settings="$ctrl.searchSettings"
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
-        <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'receiver'" layout="row">
         <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
-        <otus-checker-search flex pendency-filter-item="item"
+        <otus-checker-search layout-fill pendency-filter-item="item"
                              search-settings="$ctrl.searchSettings"
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
-        <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')" layout="row">
-        <md-input-container flex>
+        <md-input-container layout-fill>
           <md-icon>{{item.icon}}
             <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
           </md-icon>
           <input ng-model="$ctrl.searchSettings.filter[item.title]"
                  ng-change="$ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
                  aria-label={{item.translatedTitle}} required>
-          <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+          <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
         </md-input-container>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'externalID')" layout="row">
-        <md-input-container flex><md-icon>{{item.icon}}
+        <md-input-container layout-fill>
+          <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
           <input ng-model="$ctrl.searchSettings.filter[item.title]"
                  aria-label={{item.translatedTitle}} required>
-          <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+          <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
         </md-input-container>
       </span>
 
@@ -148,7 +149,7 @@
                        md-placeholder="DD/MM/AAAA"
                        aria-label={{item.translatedTitle}}>
         </md-datepicker>
-        <md-icon ng-click="$ctrl.clear(item)">replay</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
       </span>
 
     </div>

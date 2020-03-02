@@ -45,12 +45,12 @@
   <div layout="row" class="title" layout-align="start center">
     <span class="md-title">Painel de Controle</span>
     <md-button class="md-button md-icon-button" ng-click="$ctrl.openFilters()" ng-hide="$ctrl.filtersViewEnable">
-      <md-icon md-font-set="material-icons">visibility</md-icon>
-      <md-tooltip md-direction="right">mostrar filtros</md-tooltip>
+      <md-icon md-font-set="material-icons">visibility_off</md-icon>
+      <md-tooltip md-direction="right">filtros ocultos</md-tooltip>
     </md-button>
     <md-button class="md-button md-icon-button" ng-click="$ctrl.closeFilters()" ng-hide="!$ctrl.filtersViewEnable">
-      <md-icon md-font-set="material-icons">visibility_off</md-icon>
-      <md-tooltip md-direction="right">ocultar filtros</md-tooltip>
+      <md-icon md-font-set="material-icons">visibility</md-icon>
+      <md-tooltip md-direction="right">filtros habilitados</md-tooltip>
     </md-button>
   </div>
 
@@ -74,7 +74,8 @@
 
   <otus-pendecy-list-filters ng-hide="!$ctrl.filtersViewEnable"
     class="filter"
-    search-settings="$ctrl.searchSettings">
+    search-settings="$ctrl.searchSettings"
+    pendency-attributes="$ctrl.pendencyAttributes">
   </otus-pendecy-list-filters>
 
   <div class="submit">
