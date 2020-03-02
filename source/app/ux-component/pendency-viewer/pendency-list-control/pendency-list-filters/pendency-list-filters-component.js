@@ -20,19 +20,13 @@
 
     self.chanceInputViewState = chanceInputViewState;
     self.clear = clear;
+    self.clearAll = clearAll;
     self.allStatus = allStatus;
     self.chanceStateCriteria = chanceStateCriteria;
-    self.resetCriteriaOrderCustomization = resetCriteriaOrderCustomization
+    self.resetCriteriaOrderCustomization = resetCriteriaOrderCustomization;
 
-    self.inputViewState = {
-      rn: false,
-      acronym: false,
-      requester: false,
-      receiver: false,
-      dueDate: false,
-      externalID: false,
-      sortingCriteria: false
-    };
+    clearAll(self.searchSettings);
+
 
     function clear(item) {
       delete self.searchSettings.filter[item.title];
@@ -40,9 +34,32 @@
     }
 
     function clearAll(searchSettings){
-      searchSettings.forEach(item => {
-        console.log(item)
-      })
+      self.inputViewState = {
+        rn: false,
+        acronym: false,
+        requester: false,
+        receiver: false,
+        dueDate: false,
+        externalID: false,
+        sortingCriteria: false
+      };
+
+      self.searchSettings = {
+        "currentQuantity": 0,
+        "quantityToGet": 100,
+        "order": {
+
+          "fields":["dueDate"],
+          "mode": 1
+        },
+        "filter":{
+          "status": "NOT_FINALIZED"
+        }
+      };
+
+
+        console.log(searchSettings)
+
     }
 
     function chanceInputViewState(item) {

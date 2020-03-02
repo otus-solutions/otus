@@ -1,20 +1,19 @@
-<style>
+style>
   .plf-layout {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: .1fr .1fr 1fr 1fr;
-    grid-template-areas:
-      "toolbar         toolbar         toolbar"
-      "status          sortingCriteria resetAll"
-      "item            item            item"
-      "item            item            item"
+    grid-template-rows: .01fr .1fr 1fr 1fr;
+    grid-template-areas: "toolbar         toolbar         toolbar"
+                         "status          sortingCriteria sortingCriteria"
+                         "item            item            item"
+                         "item            item            item"
   }
 
   .item-filter {
     grid-area: item;
   }
 
-  .toolbar {
+  md-toolbar-filler {
     grid-area: toolbar;
     background: #00907e;
     color: #ffffff;
@@ -28,10 +27,6 @@
     grid-area: sortingCriteria;
   }
 
-  .reset-all {
-    grid-area: resetAll;
-  }
-
   #participantSearchAutoCompleteId {
     background-color: #ffffff;
   }
@@ -39,7 +34,15 @@
 </style>
 
 <md-card class="plf-layout" layout-margin>
-  <span class="toolbar" layout-padding>FILTROS</span>
+  <md-toolbar-filler layout="row" layout-align="space-between center" layout-margin>
+    <span>FILTROS</span>
+    <md-button aria-label="reinicializar filtros" class="md-fab md-mini"
+               ng-click="$ctrl.clearAll($ctrl.searchSettings)">
+      <md-icon>autorenew
+        <md-tooltip md-direction="left">reinicializar filtros</md-tooltip>
+      </md-icon>
+    </md-button>
+  </md-toolbar-filler>
 
   <div class='sorting-criteria'>
     <span ng-if="!$ctrl.inputViewState['sortingCriteria']">
@@ -66,15 +69,6 @@
     </span>
   </div>
 
-  <span class='reset-all'>
-      <md-button layout-fill class="md-raised"
-                 aria-label="critérios de ordernação"
-                 ng-click="$ctrl.clearAll()">
-        <md-icon>autorenew
-          <md-tooltip md-direction="right">reinicializar filtros</md-tooltip>
-        </md-icon>
-      </md-button>
-    </span>
 
   <md-radio-group class="status" ng-model="$ctrl.searchSettings.filter.status" layout="row"
                   layout-align="space-around center">
