@@ -71,7 +71,5 @@
     function _populateCriteriaOrder(){
       self.searchSettings.order.fields = ["dueDate", "rn", "acronym", "externalID", "requester", "receiver"];
     }
-
-
   }
 }());

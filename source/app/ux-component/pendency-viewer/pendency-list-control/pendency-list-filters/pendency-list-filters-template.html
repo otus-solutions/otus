@@ -2,13 +2,12 @@
   .plf-layout {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: .1fr .1fr .1fr 1fr 1fr;
+    grid-template-rows: .1fr .1fr 1fr 1fr;
     grid-template-areas:
       "toolbar         toolbar         toolbar"
-      "status          status          status"
+      "status          sortingCriteria sortingCriteria"
       "item            item            item"
       "item            item            item"
-      "sortingCriteria sortingCriteria sortingCriteria"
   }
 
   .item-filter {
@@ -52,14 +51,14 @@
     <span ng-if="$ctrl.inputViewState['sortingCriteria']"
           layout="row" layout-align="space-between center">
       <md-icon ng-click="$ctrl.resetCriteriaOrderCustomization()">refresh</md-icon>
-      <div class='container' dragula='"new-order-list"'
+      <div class='container' dragula='new-order-list'
            dragula-model='$ctrl.searchSettings.order.fields'
            layout="row">
         <md-chips ng-repeat='criteria in $ctrl.searchSettings.order.fields'>
           <md-chip>{{criteria}}</md-chip>
         </md-chips>
       </div>
-      <md-icon ng-click="$ctrl.chanceStateCriteria()">replay</md-icon>
+      <md-icon ng-click="$ctrl.chanceStateCriteria()">cancel</md-icon>
     </span>
   </div>
 
