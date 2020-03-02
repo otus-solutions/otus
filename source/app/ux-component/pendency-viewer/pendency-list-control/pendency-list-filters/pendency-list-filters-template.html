@@ -5,7 +5,7 @@
     grid-template-rows: .1fr .1fr 1fr 1fr;
     grid-template-areas:
       "toolbar         toolbar         toolbar"
-      "status          sortingCriteria sortingCriteria"
+      "status          sortingCriteria resetAll"
       "item            item            item"
       "item            item            item"
   }
@@ -26,6 +26,10 @@
 
   .sorting-criteria {
     grid-area: sortingCriteria;
+  }
+
+  .reset-all {
+    grid-area: resetAll;
   }
 
   #participantSearchAutoCompleteId {
@@ -61,6 +65,16 @@
       <md-icon ng-click="$ctrl.chanceStateCriteria()">cancel</md-icon>
     </span>
   </div>
+
+  <span class='reset-all'>
+      <md-button layout-fill class="md-raised"
+                 aria-label="critérios de ordernação"
+                 ng-click="$ctrl.clearAll()">
+        <md-icon>autorenew
+          <md-tooltip md-direction="right">reinicializar filtros</md-tooltip>
+        </md-icon>
+      </md-button>
+    </span>
 
   <md-radio-group class="status" ng-model="$ctrl.searchSettings.filter.status" layout="row"
                   layout-align="space-around center">

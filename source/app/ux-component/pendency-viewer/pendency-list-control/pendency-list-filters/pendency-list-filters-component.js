@@ -39,6 +39,12 @@
       self.inputViewState[item.title] = false;
     }
 
+    function clearAll(searchSettings){
+      searchSettings.forEach(item => {
+        console.log(item)
+      })
+    }
+
     function chanceInputViewState(item) {
       self.inputViewState[item.title] = true;
     }

@@ -46,6 +46,7 @@ module.exports = function (config) {
       NODE_MODULES_ROOT_PATH + 'jasmine-promise-matchers/dist/jasmine-promise-matchers.js',
       NODE_MODULES_ROOT_PATH + 'lokijs/src/loki-indexed-adapter.js',
       NODE_MODULES_ROOT_PATH + 'angular-cookies/angular-cookies.min.js',
+      NODE_MODULES_ROOT_PATH + 'angularjs-dragula/dist/angularjs-dragula.min.js',
 
       /* Otus platform*/
       NODE_MODULES_ROOT_PATH + 'otus-client-js/dist/otus-client-min.js',
