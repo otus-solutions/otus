@@ -15,7 +15,8 @@
     'otusjs.deploy.LoadingScreenService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.deploy.LocationPointRestService',
-    'otusjs.model.locationPoint.LocationPointFactory'
+    'otusjs.model.locationPoint.LocationPointFactory',
+    '$scope'
   ];
 
   function Controller(
@@ -28,7 +29,8 @@
     LoadingScreenService,
     DialogService,
     LocationPointRestService,
-    LocationPointFactory) {
+    LocationPointFactory,
+    $scope) {
     var self = this;
 
     var messageLoading =
@@ -41,7 +43,7 @@
     self.changeNavItem = changeNavItem;
 
     self.AliquotTransportationService = AliquotTransportationService;
-    self.clearLot = clearLot
+    self.clearLot = clearLot;
     self.aliquotInputkeydown = aliquotInputkeydown;
     self.insertAliquotsByPeriod = insertAliquotsByPeriod;
     self.periodInputkeydown = periodInputkeydown;
@@ -49,6 +51,14 @@
     self.removeElement = removeElement;
 
     var _confirmAliquotsInsertionByPeriod, _confirmAlterOriginLocation;
+
+    $scope.$watch('$ctrl.lot.originLocationPoint', function (newValue, oldValue) {
+      if (oldValue){
+        if (self.lot.aliquotList.length && !self.lot.code){
+          self.clearLot(oldValue);
+        }
+      }
+    });
 
 
     function changeNavItem(newNavItem) {
@@ -61,13 +71,18 @@
 
     function onInit() {
       LocationPointRestService.getLocationPoints().then(function (response) {
-        self.destinationLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
+        if (response.data) {
+          var result = response.data;
+          if (result.transportLocationPoints){
+            self.destinationLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
+          }
+        }
       });
 
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.originLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
+        self.selectedOriginLocationPoint = angular.copy(self.originLocationPoints[0]._id);
       });
-      self.selectedOriginLocationPoint = angular.copy(self.originLocationPoints[0]._id);
       self.storage = false;
       _updateContainerLabel();
       self.aliquotCode = "";
@@ -163,7 +178,7 @@
       _updateDynamicTable();
     }
 
-    function clearLot() {
+    function clearLot(oldValue) {
       if (self.lot.originLocationPoint != self.selectedOriginLocationPoint) {
 
         DialogService.showDialog(_confirmAlterOriginLocation).then(function () {
@@ -177,6 +192,7 @@
           LoadingScreenService.finish();
 
         }).catch(function () {
+          self.lot.originLocationPoint = oldValue;
         });
       }
 
@@ -208,7 +224,7 @@
 
       _confirmAlterOriginLocation = {
         dialogToTitle: 'ATENÇÃO',
-        titleToText: 'Confirmar alteração de origem das alíquotas:',
+        titleToText: 'Confirmar alteração de origem do material:',
         textDialog: 'Ao confirmar essa ação, todo o material existente será removido do lote.',
         ariaLabel: 'Confirmar alteração de origem',
         buttons: [
@@ -337,7 +353,7 @@
 
     function _findAliquot(code) {
       var _query = AliquotTransportationQueryFactory.create(code, null, null,
-        self.lot.fieldCenter.acronym, self.lot.getAliquotCodeList(), self.storage);
+        self.lot.originLocationPoint, self.lot.getAliquotCodeList(), self.storage);
       return self.AliquotTransportationService.getAliquots(_query.toJSON(), true)
         .then(function (availableAliquot) {
           if (availableAliquot) {

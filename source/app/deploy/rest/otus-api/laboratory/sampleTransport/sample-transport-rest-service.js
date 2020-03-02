@@ -17,8 +17,7 @@
     self.initialize = initialize;
     self.create = create;
     self.getAliquots = getAliquots;
-    self.getAliquotsByLocationPoint = getAliquotsByLocationPoint;
-    self.getLotsByLocationPoint = getLotsByLocationPoint;
+    self.getLots = getLots;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -36,24 +35,17 @@
         throw new Error('REST resource is no initialized.');
       }
       if (unique) {
-        return _rest.getAliquot({}, lotAliquot).$promise;
+        return _rest.getAliquot({locationPointId: lotAliquot.locationPoint}, lotAliquot).$promise;
       } else {
-        return _rest.getAliquotsByPeriod({}, lotAliquot).$promise;
+        return _rest.getAliquotsByPeriod({locationPointId: lotAliquot.locationPoint}, lotAliquot).$promise;
       }
     }
 
-    function getAliquotsByLocationPoint(locationPointId) {
-      if (!_rest){
-        throw new Error('Rest resource is no initialized.');
-      }
-      return _rest.getAliquotsByLocationPoint({locationPointId}).$promise
-    }
-
-    function getLotsByLocationPoint(locationPointId) {
+    function getLots(locationPointId) {
       if (!_rest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _rest.getLotsByLocationPoint({locationPointId}).$promise;
+      return _rest.getLots({locationPointId}).$promise;
     }
 
     function createLot(persistanceStructure) {

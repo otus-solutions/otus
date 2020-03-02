@@ -81,6 +81,18 @@
       return deferred.promise;
     }
 
+    self.fetchConfiguration = fetchConfiguration;
+    function fetchConfiguration() {
+      var deferred = $q.defer();
+
+      LaboratoryConfigurationService.fetchAliquotsDescriptors()
+        .then(function() {
+          deferred.resolve(true);
+        });
+
+      return deferred.promise;
+    }
+
     function createLot(lotStructure) {
       var deferred = $q.defer();
 

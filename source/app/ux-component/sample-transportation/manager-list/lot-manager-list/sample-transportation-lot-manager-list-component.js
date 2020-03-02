@@ -101,7 +101,6 @@
     function onFilter() {
       self.selectedLots = [];
       self.show = self.limit;
-      // laboratoryContextService.setSelectedFieldCenter(self.centerFilter);//TODO VERIFICAR
       if (self.lotsListImutable.length) {
         self.lotsList = self.lotsListImutable.filter(function(lotFilter) {
           var lotFormatedData = $filter('date')(lotFilter.shipmentDate, 'yyyyMMdd');
@@ -130,7 +129,7 @@
 
     function _setChartData() {
       self.lotsList.forEach(function(lot) {
-        lot.chartDataSet.backgroundColor = color;
+        lot.chartAliquotDataSet.backgroundColor = color;
       });
     }
   }

@@ -259,7 +259,7 @@
       var deferred = $q.defer();
 
       SampleTransportRestService
-        .getLotsByLocationPoint(locationPointId)
+        .getLots(locationPointId)
         .then(function(response) {
           deferred.resolve(response.data);
         });

@@ -7,8 +7,7 @@
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/lot-info-manager/sample-transportation-lot-info-manager-template.html',
       bindings: {
-        stateData: "<",
-        lots: "<"
+        stateData: "<"
       }
     });
 
@@ -23,7 +22,7 @@
 
   function Controller($mdToast, $mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService, DialogService) {
     var self = this;
-    var _confirmCancel;
+    var _confirmCancel, _confirmSave;
     var _deleteAlreadyUsedAliquotsDialog;
 
     //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
@@ -82,8 +81,13 @@
         return;
       }
       AliquotTransportationService.createLot(self.lot.toJSON()).then(function() {
-        ApplicationStateService.activateSampleTransportationManagerList();
-        self.updateLotStateData();
+        DialogService.showDialog(_confirmSave).then(function() {
+          self.updateLotStateData();
+          ApplicationStateService.activateSampleTransportationManagerList();
+        }).catch(function () {
+          self.updateLotStateData();
+          ApplicationStateService.activateSampleTransportationManagerList();
+        });
       }, function(err) {
         _backendErrorAliquotsAlreadyUsed(err.data.CONTENT.value);
         _toastOtherLot()
@@ -96,7 +100,7 @@
         self.updateLotStateData();
       }, function(err) {
         _backendErrorAliquotsAlreadyUsed(err.data.CONTENT.value);
-        _toastOtherLot()
+        _toastOtherLot();
       });
     }
 
@@ -187,12 +191,12 @@
       self.lot.processingDate.setMilliseconds(0);
     }
 
-    function _fetchgCollectedAliquots() {
-      AliquotTransportationService.getAliquots()
-        .then(function(response) {
-          self.fullAliquotsList = response;
-        });
-    }
+    // function _fetchCollectedAliquots() {
+    //   AliquotTransportationService.getAliquots()
+    //     .then(function(response) {
+    //       self.fullAliquotsList = response;
+    //     });
+    // }
 
     function _buildDialogs() {
       self.getButtons = getButtons;
@@ -221,6 +225,17 @@
         ariaLabel:'Confirmação de cancelamento',
         buttons: getButtons()
       };
+      _confirmSave = {
+        dialogToTitle:'Confirmação',
+        titleToText:'Lote salvo com sucesso:',
+        textDialog:'O material inserido no lote encontrasse disponível para o destino informado.',
+        ariaLabel:'Confirmação de sucesso',
+        buttons: [ {
+          message:'Ok',
+          action:function(){$mdDialog.hide()},
+          class:'md-raised md-primary'
+        }]
+      };
 
       _deleteAlreadyUsedAliquotsDialog = {
         dialogToTitle:'Cancelamento',
@@ -232,12 +247,10 @@
     }
 
     function setChartData() {
-      if (!self.lot.chartDataSet.chartId) {
-        self.lot.chartDataSet.chartId = "1";
+      if (!self.lot.chartAliquotDataSet.chartId) {
+        self.lot.chartAliquotDataSet.chartId = "1";
       }
-      // self.lot.chartDataSet.fieldCenter = self.lot.fieldCenter;
-      // self.lot.chartDataSet.locationPoint = self.lot.originLocationPoint.name;
-      self.lot.chartDataSet.backgroundColor = color;
+      self.lot.chartAliquotDataSet.backgroundColor = color;
     }
 
   }

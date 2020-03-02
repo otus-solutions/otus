@@ -56,17 +56,24 @@ describe('Lot info manager display component', function() {
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory', Mock.AliquotTransportationFactory);
       $provide.value('otusjs.application.dialog.DialogShowService', Mock.DialogShowService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
+      $provide.value('otusjs.deploy.LocationPointRestService', {getLocationPoints: function () {
+          return Promise.resolve({data:{transportLocationPoints:[]}});
+        }, getUserLocationPoint: function () {
+          return Promise.resolve({data:{transportLocationPoints:[]}})
+        }});
+      $provide.value('otusjs.model.locationPoint.LocationPointFactory', {});
     });
   });
 
   beforeEach(function() {
-    inject(function(_$injector_, _$controller_) {
+    inject(function(_$injector_, _$controller_, _$rootScope_) {
 
       $controller = _$controller_;
       Injections = {
         $mdDialog: _$injector_.get('$mdDialog'),
         $mdToast: _$injector_.get('$mdToast'),
         $filter: _$injector_.get('$filter'),
+        $scope: {$watch: function(){}},
         DynamicTableSettingsFactory: _$injector_.get('otusjs.otus.uxComponent.DynamicTableSettingsFactory'),
         DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService'),
         $q: _$injector_.get('$q')

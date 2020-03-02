@@ -85,16 +85,16 @@
                     <md-card-actions layout="row" layout-align="end center"></md-card-actions>
                   </div>
                   <div layout="column" flex="">
-                    <otus-sample-transportation-lot-aliquots-chart lot-data-set="lot.chartDataSet"></otus-sample-transportation-lot-aliquots-chart>
+                    <otus-sample-transportation-lot-aliquots-chart lot-data-set="lot.chartAliquotDataSet"></otus-sample-transportation-lot-aliquots-chart>
                   </div>
             </div>
           </md-card-title>
-          <md-card-content layout="column" style="height:180px;" ng-if="lot.chartDataSet.labels.length > 0">
+          <md-card-content layout="column" style="height:180px;" ng-if="lot.chartAliquotDataSet.labels.length > 0">
             <md-content md-content class="no-background-color">
-              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="lot.chartDataSet"></otus-sample-transportation-lot-chart-subtitle-table>
+              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="lot.chartAliquotDataSet"></otus-sample-transportation-lot-chart-subtitle-table>
             </md-content>
           </md-card-content>
-          <md-card-content layout-align="center center" layout="column" ng-if="!lot.chartDataSet.labels.length">
+          <md-card-content layout-align="center center" layout="column" ng-if="!lot.chartAliquotDataSet.labels.length">
             <span class="md-subhead">Não há Alíquotas no lote</span>
           </md-card-content>
         </md-card>

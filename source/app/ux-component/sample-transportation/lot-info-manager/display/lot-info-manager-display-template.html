@@ -60,21 +60,21 @@
         <div layout="row" layout-align="start center" layout-wrap layout-padding>
           <md-input-container flex="100" flex-gt-xs="80">
             <label>De:</label>
-            <md-select ng-model="$ctrl.lot.originLocationPoint" ng-keydown="$ctrl.clearLot()">
-              <md-option ng-repeat="origin in $ctrl.originLocationPoints track by $index" value="{{origin._id}}" selected="origin._id==$ctrl.selectedOriginLocationPoint">{{origin.name}}</md-option>
+            <md-select ng-model="$ctrl.lot.originLocationPoint" ng-disabled="$ctrl.lot.code">
+              <md-option ng-repeat="origin in $ctrl.originLocationPoints" value="{{origin._id}}">{{origin.name}}</md-option>
             </md-select>
           </md-input-container>
 
           <md-input-container flex="100" flex-gt-xs="80">
             <label>Para:</label>
             <md-select ng-model="$ctrl.lot.destinationLocationPoint" ng-disabled="$ctrl.lot.code">
-              <md-option ng-repeat="destination in $ctrl.destinationLocationPoints track by $index" value="{{destination._id}}">{{destination.name}}</md-option>
+              <md-option ng-repeat="destination in $ctrl.destinationLocationPoints | filter: { _id: '!'+$ctrl.lot.originLocationPoint} track by $index" value="{{destination._id}}">{{destination.name}}</md-option>
             </md-select>
           </md-input-container>
         </div>
       </md-card>
     </div>
-    <div flex layout="row" layout-align="center center" ng-show="$ctrl.lot.originLocationPoint.length">
+    <div flex layout="row" layout-align="center center">
       <md-card flex>
         <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
           <div layout="row">
@@ -142,11 +142,11 @@
         <div layout="row" layout-margin>
           <div layout="column" flex-gt-sm="40" flex-gt-md="25" flex="40">
             <otus-sample-transportation-lot-aliquots-chart
-              lot-data-set="$ctrl.lot.chartDataSet"></otus-sample-transportation-lot-aliquots-chart>
+              lot-data-set="$ctrl.lot.chartAliquotDataSet"></otus-sample-transportation-lot-aliquots-chart>
           </div>
           <div layout="column" flex class="subtitle-table-container">
             <md-content class="no-background-color">
-              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lot.chartDataSet"
+              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lot.chartAliquotDataSet"
                                                                    flex></otus-sample-transportation-lot-chart-subtitle-table>
             </md-content>
           </div>

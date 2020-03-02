@@ -22,7 +22,7 @@
       parent: STATE.SAMPLE_TRANSPORTATION_DASHBOARD,
       name: STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER,
       url: '/' + STATE.SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER,
-      template: '<otus-sample-transportation-lot-info-manager lots="$resolve.lots" state-data="$resolve.stateData" layout="column" flex></otus-sample-transportation-lot-info-manager>',
+      template: '<otus-sample-transportation-lot-info-manager state-data="$resolve.stateData" layout="column" flex></otus-sample-transportation-lot-info-manager>',
       resolve:{
         stateData: _loadStateData,
         lots: _resolveLots
@@ -30,7 +30,7 @@
     };
 
     function _resolveLots(AliquotTransportationService) {
-      return AliquotTransportationService.getLots();
+      return AliquotTransportationService.fetchConfiguration();
     }
 
     function _loadStateData(SessionContextService, LaboratoryContextService, Application) {
