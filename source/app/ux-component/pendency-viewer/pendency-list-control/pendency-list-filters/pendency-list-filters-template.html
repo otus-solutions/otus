@@ -9,6 +9,10 @@
                          "item            item            item"
   }
 
+  .padding-layout-fill {
+    padding: 0 10px 0 10px;
+  }
+
   .item-filter {
     grid-area: item;
   }
@@ -56,7 +60,7 @@
 
   <div class='sorting-criteria'>
     <span ng-if="!$ctrl.inputViewState['sortingCriteria']">
-      <md-button layout-fill class="md-raised"
+      <md-button layout-fill class="md-raised padding-layout-fill"
                  aria-label="critérios de ordernação"
                  ng-click="$ctrl.chanceStateCriteria()">
         <md-icon>swap_calls
@@ -90,7 +94,7 @@
   <div ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
     <div class="item-filter">
       <span ng-if="!$ctrl.inputViewState[item.title]">
-        <md-button layout-fill class="md-raised"
+        <md-button layout-fill class="md-raised padding-layout-fill"
                    aria-label={{item.translatedTitle}}
                    ng-click="$ctrl.chanceInputViewState(item)">
           <md-icon>{{item.icon}}
@@ -103,7 +107,7 @@
         <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
-        <otus-participant-search layout-fill
+        <otus-participant-search layout-fill class="padding-layout-fill"
                                  on-select="$ctrl.selectParticipant(participant)"
                                  pendency-filter-item="item"
                                  search-settings="$ctrl.searchSettings"
@@ -117,7 +121,7 @@
         <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
-        <otus-checker-search layout-fill pendency-filter-item="item"
+        <otus-checker-search layout-fill class="padding-layout-fill" pendency-filter-item="item"
                              search-settings="$ctrl.searchSettings"
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
@@ -128,7 +132,7 @@
         <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
-        <otus-checker-search layout-fill pendency-filter-item="item"
+        <otus-checker-search layout-fill class="padding-layout-fill" pendency-filter-item="item"
                              search-settings="$ctrl.searchSettings"
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
@@ -136,7 +140,7 @@
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')" layout="row">
-        <md-input-container layout-fill>
+        <md-input-container layout-fill class="padding-layout-fill">
           <md-icon>{{item.icon}}
             <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
           </md-icon>
@@ -148,7 +152,7 @@
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'externalID')" layout="row">
-        <md-input-container layout-fill>
+        <md-input-container layout-fill class="padding-layout-fill">
           <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
@@ -162,7 +166,7 @@
         <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
-        <md-datepicker layout-fill
+        <md-datepicker layout-fill class="padding-layout-fill"
                        ng-model="$ctrl.searchSettings.filter[item.title]"
                        md-placeholder="DD/MM/AAAA"
                        aria-label={{item.translatedTitle}}>

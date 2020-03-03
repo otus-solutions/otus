@@ -5,8 +5,8 @@
       display: grid;
       /*width: 98vw;*/
       grid-template-columns: .2fr .25fr .4fr .05fr repeat(2, .56fr) .05fr repeat(2, .28fr) .15fr;
-      /*grid-template-rows: .1fr;*/
-      grid-template-areas: "acronym rn  externalID .  requester receiver . creationDate  duoDate remainingDays "
+      grid-template-rows: 1fr;
+      grid-template-areas: "acronym rn  externalID .  requester receiver . creationDate  duoDate remainingDays ";
     }
   }
 
@@ -21,6 +21,7 @@
         "rn         . requester .  duoDate"
         "externalID . .         .  creationDate"
     }
+
   }
 
   /*@media screen and (max-width: 768px) {*/
@@ -66,31 +67,59 @@
   .remainingDays {
     grid-area: remainingDays;
   }
+
+  .padding {
+    padding: 0 3px 0 3px;
+  }
 </style>
 
 <md-card class="pi-layout" layout-margin ng-cloak>
-  <span class="rn"> <md-icon>{{$ctrl.pendencyAttributes[0].icon}}
-    <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[0].translatedTitle}}</md-tooltip>
-  </md-icon> {{$ctrl.item.activityInfo.recruitmentNumber}}</span>
-  <span class="requester"><md-icon>{{$ctrl.pendencyAttributes[1].icon}}
-        <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[1].translatedTitle}}</md-tooltip>
-  </md-icon> {{$ctrl.item.requester}}</span>
-  <span class="receiver"><md-icon>{{$ctrl.pendencyAttributes[2].icon}}
-        <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[2].translatedTitle}}</md-tooltip>
-  </md-icon> {{$ctrl.item.receiver}}</span>
-  <span class="acronym"><md-icon>{{$ctrl.pendencyAttributes[3].icon}}
-        <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[3].translatedTitle}}</md-tooltip>
-  </md-icon> {{$ctrl.item.activityInfo.acronym}}</span>
-  <span class="externalID"><md-icon>{{$ctrl.pendencyAttributes[4].icon}}
-        <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[4].translatedTitle}}</md-tooltip>
-  </md-icon> {{$ctrl.item.externalID}}</span>
-  <span class="duo-date"><md-icon>{{$ctrl.pendencyAttributes[5].icon}}
-        <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[5].translatedTitle}}</md-tooltip>
-  </md-icon> {{$ctrl.dueDate}}</span>
-  <span class="creation-date"><md-icon>schedule
-        <md-tooltip md-direction="bottom">Data de Criação</md-tooltip>
-  </md-icon> {{$ctrl.creationDate}}</span>
-  <span class="remainingDays"><md-icon>speed
-        <md-tooltip md-direction="bottom">Dias Restantes</md-tooltip>
-  </md-icon> {{$ctrl.remainingDays}}</span>
+  <div class="rn">
+    <md-icon>{{$ctrl.pendencyAttributes[0].icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[0].translatedTitle}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.item.activityInfo.recruitmentNumber}}</span>
+  </div>
+  <div class="requester">
+    <md-icon>{{$ctrl.pendencyAttributes[1].icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[1].translatedTitle}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.item.requester}}</span>
+  </div>
+  <div class="receiver">
+    <md-icon>{{$ctrl.pendencyAttributes[2].icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[2].translatedTitle}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.item.receiver}}</span>
+  </div>
+  <div class="acronym">
+    <md-icon>{{$ctrl.pendencyAttributes[3].icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[3].translatedTitle}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.item.activityInfo.acronym}}</span>
+  </div>
+  <div class="externalID">
+    <md-icon>{{$ctrl.pendencyAttributes[4].icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[4].translatedTitle}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.item.externalID}}</span>
+  </div>
+  <div class="duo-date">
+    <md-icon>{{$ctrl.pendencyAttributes[5].icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[5].translatedTitle}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.dueDate}}</span>
+  </div>
+  <div class="creation-date">
+    <md-icon>schedule
+      <md-tooltip md-direction="bottom">Data de Criação</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.creationDate}}</span>
+  </div>
+  <div class="remainingDays">
+    <md-icon>speed
+      <md-tooltip md-direction="bottom">Dias Restantes</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.remainingDays}}</span>
+  </div>
 </md-card>
