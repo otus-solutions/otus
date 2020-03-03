@@ -1,0 +1,43 @@
+<style>
+
+  md-card {
+    padding: 0px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: .1fr .8fr;
+    grid-template-areas:
+      "inputLeft inputRight"
+      "nextPage nextPage"
+  }
+
+  .input-left {
+    grid-area: inputLeft;
+  }
+
+  .input-right {
+    grid-area: inputRight;
+  }
+
+  .next-page {
+    grid-area: nextPage;
+  }
+
+</style>
+
+
+<md-card layout-align="center end">
+    <md-input-container class="md-icon-float md-block input-left">
+      <md-icon md-font-set="material-icons">fast_rewind</md-icon>
+      <input ng-model="$ctrl.searchSettings.currentQuantity" type="number">
+    </md-input-container>
+
+    <md-input-container class="md-icon-float md-block input-right">
+      <input ng-model="$ctrl.searchSettings.quantityToGet" type="number">
+      <md-icon md-font-set="material-icons">fast_forward</md-icon>
+    </md-input-container>
+
+  <md-button layout-fill class="md-raised md-primary next-page"
+             ng-click="$ctrl.getPendencies($ctrl.searchSettings)">
+    próxima página
+  </md-button>
+</md-card>

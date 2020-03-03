@@ -19,7 +19,7 @@
 
     self.searchSettings = {
       "currentQuantity": 0,
-      "quantityToGet": 100,
+      "quantityToGet": 5,
       "order": {
 
         "fields":["dueDate"],

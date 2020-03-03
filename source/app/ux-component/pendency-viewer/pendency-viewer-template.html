@@ -6,20 +6,23 @@
   .pv-layout {
     display: grid;
     grid-gap: 0em;
-    height: 100vh;
+    /*height: 100vh;*/
     width: 100vw;
 
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: .03fr .1fr 1fr;
+    grid-template-columns: repeat(4, 1fr) .7fr;
+    grid-template-rows: .03fr .1fr 1fr .05fr;
     grid-template-areas:
-      "toolbar toolbar toolbar toolbar"
-      "control control control control"
-      "list    list    list    list"
+      "toolbar toolbar toolbar toolbar toolbar"
+      "control control control control control"
+      "list    list    list      list  list"
+      ".       .       .         .     paginator"
+
   }
 
   otus-dashboard-toolbar { grid-area: toolbar }
   otus-pendency-list-control { grid-area: control }
   otus-pendency-list { grid-area: list }
+  otus-pendency-list-paginator { grid-area: paginator}
 
 </style>
 
@@ -36,6 +39,8 @@
                               get-pendencies="$ctrl.getAllPendencies($ctrl.searchSettings)"
                               pendency-attributes="$ctrl.pendencyAttributes"></otus-pendency-list-control>
   <otus-pendency-list pendencies="$ctrl.pendencies"
-                      pendency-attributes="$ctrl.pendencyAttributes"
-  ></otus-pendency-list>
+                      pendency-attributes="$ctrl.pendencyAttributes">
+  </otus-pendency-list>
+  <otus-pendency-list-paginator></otus-pendency-list-paginator>
+
 </md-content>
