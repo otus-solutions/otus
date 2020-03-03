@@ -13,9 +13,9 @@
       }
     }).controller('pendencyListFiltersCtrl', Controller);
 
-  Controller.$inject = ['dragulaService'];
+  Controller.$inject = ['dragulaService', '$scope'];
 
-  function Controller(dragulaService) {
+  function Controller(dragulaService, $scope) {
     const self = this;
 
     self.chanceInputViewState = chanceInputViewState;
@@ -24,6 +24,7 @@
     self.allStatus = allStatus;
     self.chanceStateCriteria = chanceStateCriteria;
     self.resetCriteriaOrderCustomization = resetCriteriaOrderCustomization;
+    self.changePaginationViewState = changePaginationViewState;
 
     clearAll(self.searchSettings);
 
@@ -83,5 +84,10 @@
     function _populateCriteriaOrder(){
       self.searchSettings.order.fields = ["dueDate", "rn", "acronym", "externalID", "requester", "receiver"];
     }
+
+    function changePaginationViewState() {
+      console.log("trocou")
+    }
+
   }
 }());

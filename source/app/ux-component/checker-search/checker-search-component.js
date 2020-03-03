@@ -9,7 +9,8 @@
       bindings: {
         searchSettings: '=',
         pendencyFilterItem: '=',
-        placeholderTitle: '@'
+        placeholderTitle: '@',
+        changeWatcher: '&'
       }
     });
 
@@ -30,6 +31,7 @@
     self.$onInit = onInit;
     self.querySearch = querySearch;
     self.selectedItemChange = selectedItemChange;
+    self.searchTextChange = searchTextChange;
 
     function onInit() {
       self.checkers = angular.copy(ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create));
@@ -51,13 +53,19 @@
 
       return function filterFn(checker) {
         return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1
-        || checker.checker.email.toLowerCase().indexOf(lowercaseQuery) > -1;
+          || checker.checker.email.toLowerCase().indexOf(lowercaseQuery) > -1;
       };
     }
 
     function selectedItemChange(item) {
-      if(ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER && item){
+      if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER && item) {
         PendencyViewerService.getChecker(item, self.pendencyFilterItem, self.searchSettings);
+      }
+    }
+
+    function searchTextChange(searchText) {
+      if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER) {
+        self.changeWatcher()
       }
     }
   }
