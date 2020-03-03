@@ -85,7 +85,7 @@
 
 
   <md-radio-group class="status" ng-model="$ctrl.searchSettings.filter.status" layout="row"
-                  layout-align="space-around center">
+                  layout-align="space-around center" ng-change="$ctrl.changePaginationViewState()">
     <md-radio-button value="ALL" class="md-primary">Todas</md-radio-button>
     <md-radio-button value="FINALIZED" class="md-primary">Finalizadas</md-radio-button>
     <md-radio-button value="NOT_FINALIZED" class="md-primary">Em Aberto</md-radio-button>
@@ -112,6 +112,7 @@
                                  pendency-filter-item="item"
                                  search-settings="$ctrl.searchSettings"
                                  show-participants-button="false"
+                                 change-watcher="$ctrl.changePaginationViewState()"
                                  on-ready="true">
         </otus-participant-search>
         <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
@@ -123,6 +124,7 @@
         </md-icon>
         <otus-checker-search layout-fill class="padding-layout-fill" pendency-filter-item="item"
                              search-settings="$ctrl.searchSettings"
+                             change-watcher="$ctrl.changePaginationViewState()"
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
         <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
@@ -134,6 +136,7 @@
         </md-icon>
         <otus-checker-search layout-fill class="padding-layout-fill" pendency-filter-item="item"
                              search-settings="$ctrl.searchSettings"
+                             change-watcher="$ctrl.changePaginationViewState()"
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
         <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
@@ -145,7 +148,7 @@
             <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
           </md-icon>
           <input ng-model="$ctrl.searchSettings.filter[item.title]"
-                 ng-change="$ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
+                 ng-change="$ctrl.changePaginationViewState(); $ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
                  aria-label={{item.translatedTitle}} required>
           <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
         </md-input-container>
@@ -157,6 +160,7 @@
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
           <input ng-model="$ctrl.searchSettings.filter[item.title]"
+                 ng-change="$ctrl.changePaginationViewState()"
                  aria-label={{item.translatedTitle}} required>
           <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
         </md-input-container>
@@ -168,6 +172,7 @@
         </md-icon>
         <md-datepicker layout-fill class="padding-layout-fill"
                        ng-model="$ctrl.searchSettings.filter[item.title]"
+                       ng-change="$ctrl.changePaginationViewState()"
                        md-placeholder="DD/MM/AAAA"
                        aria-label={{item.translatedTitle}}>
         </md-datepicker>

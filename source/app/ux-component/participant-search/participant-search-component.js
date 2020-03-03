@@ -12,7 +12,8 @@
         showAllParticipants: '&',
         onReady: '=',
         pendencyFilterItem: '=',
-        searchSettings: '='
+        searchSettings: '=',
+        changeWatcher: '&'
       }
     });
 
@@ -39,6 +40,8 @@
     self.selectParticipant = selectParticipant;
     self.showParticipants = self.showAllParticipants;
     self.showParticipantsButton = self.showAllParticipantsButton;
+    self.searchTextChange = searchTextChange;
+
 
 
     var confirmParticipantChange;
@@ -81,6 +84,7 @@
         PendencyViewerService.getSelectedParticipantRN(self.selectedParticipant,
           self.pendencyFilterItem, self.searchSettings);
 
+
       } else {
         _setParticipant();
       }
@@ -92,6 +96,12 @@
         participant: self.selectedParticipant
       });
       self.inputedText = '';
+    }
+
+    function searchTextChange(searchText) {
+      if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER) {
+        self.changeWatcher()
+      }
     }
 
     function _buildDialogs() {
