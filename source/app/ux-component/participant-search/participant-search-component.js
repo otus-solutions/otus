@@ -42,8 +42,6 @@
     self.showParticipantsButton = self.showAllParticipantsButton;
     self.searchTextChange = searchTextChange;
 
-
-
     var confirmParticipantChange;
 
     function onInit() {
@@ -98,9 +96,12 @@
       self.inputedText = '';
     }
 
-    function searchTextChange(searchText) {
-      if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER) {
-        self.changeWatcher()
+    function searchTextChange() {
+      switch (ApplicationStateService.getCurrentState()) {
+        case STATE.PENDENCY_VIEWER:
+          if(self.inputedText === "") delete self.searchSettings.filter["rn"];
+          else self.searchSettings.filter["rn"] = self.inputedText;
+          self.changeWatcher();
       }
     }
 

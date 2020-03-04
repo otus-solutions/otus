@@ -49,9 +49,15 @@
     function getAllPendencies(searchSettings) {
       if(self.stuntmanSearchSettings) self.stuntmanSearchSettings = null;
       self.stuntmanSearchSettings = angular.copy(searchSettings);
+      self.stuntmanSearchSettings.currentQuantity = 5;
       PendencyViewerService.getAllPendencies(searchSettings)
         .then( data => self.pendencies = data);
     }
+
+    function _prepareParametersForPagination(searchSettings){
+
+    }
+
   }
 
 }());
