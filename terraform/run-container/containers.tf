@@ -11,7 +11,7 @@ variable "otus-frontend-apiurl"{
 }
 
 variable "otus-frontend-playerurl"{
-  default = "http://localhost:51002"
+  default = "http://localhost:51001"
 }
 
 variable "otus-frontend-version"{
