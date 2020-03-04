@@ -35,11 +35,6 @@
     background-color: #ffffff;
   }
 
-  /*md-icon {*/
-  /*  color: black;*/
-  /*  opacity: 0.54;*/
-  /*}*/
-
   md-input-container.md-default-theme {
     color: black;
     opacity: 0.54;
@@ -166,14 +161,15 @@
         </md-input-container>
       </span>
 
-      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'dueDate')" layout="row">
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'dueDate')" layout="row" layout-align="space-between center">
         <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
-        <md-datepicker layout-fill class="padding-layout-fill"
+        <md-datepicker"
                        ng-model="$ctrl.searchSettings.filter[item.title]"
                        ng-change="$ctrl.changePaginationViewState()"
                        md-placeholder="DD/MM/AAAA"
+                       md-hide-icons="calendar"
                        aria-label={{item.translatedTitle}}>
         </md-datepicker>
         <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>

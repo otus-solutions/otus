@@ -63,9 +63,12 @@
       }
     }
 
-    function searchTextChange(searchText) {
-      if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER) {
-        self.changeWatcher()
+    function searchTextChange() {
+      switch (ApplicationStateService.getCurrentState()) {
+        case STATE.PENDENCY_VIEWER:
+          if(self.inputedText === "") delete self.searchSettings.filter[self.pendencyFilterItem.title];
+          else self.searchSettings.filter[self.pendencyFilterItem.title] = self.inputedText;
+          self.changeWatcher();
       }
     }
   }
