@@ -26,22 +26,22 @@
     grid-area: submit
   }
 
-  md-input-container {
+  .pendency-list-control md-input-container {
     padding: 0px;
     margin: 0px;
   }
 
-  otus-participant-search {
+ .pendency-list-control otus-participant-search {
     background-color: #ffffff;
   }
 
-  md-chips.md-default-theme .md-chips {
+ .pendency-list-control md-chips.md-default-theme .md-chips {
     box-shadow: none;
   }
 
 </style>
 
-<md-card class="plc-layout" style="background-color: #f5f5f5" layout-margin ng-cloak>
+<md-card class="plc-layout pendency-list-control" style="background-color: #f5f5f5" layout-margin ng-cloak>
   <div layout="row" class="title" layout-align="start center">
     <span class="md-title">Painel de Controle</span>
     <md-button class="md-button md-icon-button" ng-click="$ctrl.openFilters()" ng-hide="$ctrl.filtersViewEnable">

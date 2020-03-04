@@ -1,8 +1,4 @@
 <style>
-  .md-button.md-default-theme.md-raised:not([disabled]) md-icon, .md-button.md-raised:not([disabled]) md-icon {
-    color: rgb(119,119,119);
-   }
-
   .pv-layout {
     display: grid;
     grid-gap: 0em;
@@ -19,14 +15,14 @@
 
   }
 
-  otus-dashboard-toolbar { grid-area: toolbar }
-  otus-pendency-list-control { grid-area: control }
-  otus-pendency-list { grid-area: list }
-  otus-pendency-list-paginator { grid-area: paginator}
+  .pendency-viewer otus-dashboard-toolbar { grid-area: toolbar }
+  .pendency-viewer otus-pendency-list-control { grid-area: control }
+  .pendency-viewer otus-pendency-list { grid-area: list }
+  .pendency-viewer otus-pendency-list-paginator { grid-area: paginator}
 
 </style>
 
-<md-content class="pv-layout" ng-cloak>
+<md-content class="pv-layout pendency-viewer" ng-cloak>
   <otus-dashboard-sidenav layout="row">
     <hide-participant-box></hide-participant-box>
   </otus-dashboard-sidenav>
