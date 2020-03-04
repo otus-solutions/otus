@@ -30,6 +30,7 @@
       }
     };
 
+
     self.pendencyAttributes = [
       {title: 'rn', translatedTitle: 'Número de Recrutamento', icon: 'account_circle'},
       {title: 'requester', translatedTitle: 'Solicitante', icon: 'record_voice_over'},
@@ -46,6 +47,8 @@
     }
 
     function getAllPendencies(searchSettings) {
+      if(self.stuntmanSearchSettings) self.stuntmanSearchSettings = null;
+      self.stuntmanSearchSettings = angular.copy(searchSettings);
       PendencyViewerService.getAllPendencies(searchSettings)
         .then( data => self.pendencies = data);
     }

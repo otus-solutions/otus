@@ -19,7 +19,6 @@
     width: 3vw;
     border: none;
     margin-left: 2vw;
-
   }
 
   .next-page {
@@ -29,11 +28,11 @@
 </style>
 
 <md-card>
-  <input ng-model="$ctrl.searchSettings.currentQuantity" type="number" class="input-left container">
+  <input ng-model="$ctrl.stuntmanSearchSettings.currentQuantity" type="number" class="input-left container">
   <md-button layout-fill class="md-raised md-primary next-page"
-             ng-click="$ctrl.getPendencies($ctrl.searchSettings)">
+             ng-click="$ctrl.getNextPage($ctrl.stuntmanSearchSettings)">
     <md-icon md-font-set="material-icons">fast_forward</md-icon>
-    <md-tooltip md-direction="right">Próxima Página</md-tooltip>
+    <md-tooltip md-direction="left">Próxima Página</md-tooltip>
   </md-button>
-  <input ng-model="$ctrl.searchSettings.quantityToGet" type="number" class="input-right container">
+  <input ng-model="$ctrl.stuntmanSearchSettings.quantityToGet" type="number" class="input-right container">
 </md-card>

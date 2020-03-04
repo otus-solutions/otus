@@ -6,7 +6,7 @@
   .pv-layout {
     display: grid;
     grid-gap: 0em;
-    /*height: 100vh;*/
+    height: 100vh;
     width: 100vw;
 
     grid-template-columns: repeat(4, 1fr) .7fr;
@@ -41,6 +41,7 @@
   <otus-pendency-list pendencies="$ctrl.pendencies"
                       pendency-attributes="$ctrl.pendencyAttributes">
   </otus-pendency-list>
-  <otus-pendency-list-paginator search-settings="$ctrl.searchSettings"></otus-pendency-list-paginator>
-
+  <otus-pendency-list-paginator stuntman-search-settings="$ctrl.stuntmanSearchSettings"
+                                pendencies="$ctrl.pendencies">
+  </otus-pendency-list-paginator>
 </md-content>
