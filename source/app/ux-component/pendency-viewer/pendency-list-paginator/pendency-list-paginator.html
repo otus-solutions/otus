@@ -1,9 +1,9 @@
 <style>
   .paginationCard {
     display: grid;
-    grid-template-columns: .1fr 1fr .1fr;
+    grid-template-columns: .1fr 1fr 1fr .1fr;
     grid-template-rows: 1fr;
-    grid-template-areas: "inputLeft nextPage inputRight"
+    grid-template-areas: "inputLeft previousPage nextPage inputRight"
   }
 
   .input-left {
@@ -18,6 +18,10 @@
     grid-area: nextPage;
   }
 
+  .previous-page {
+    grid-area: previousPage;
+  }
+
   .inputStuntmanSearchSettings {
     width: 3.6vw;
     border: none;
@@ -28,10 +32,15 @@
 
 <md-card class="paginationCard" ng-if="$ctrl.paginatorActive">
   <input ng-model="$ctrl.stuntmanSearchSettings.currentQuantity" type="number" min="0" class="input-left container inputStuntmanSearchSettings">
+  <md-button layout-fill class="md-raised md-primary previous-page"
+             ng-click="$ctrl.getPreviousPage($ctrl.stuntmanSearchSettings)">
+    <md-icon md-font-set="material-icons">fast_rewind</md-icon>
+    <md-tooltip md-direction="top">Página Anterior</md-tooltip>
+  </md-button>
   <md-button layout-fill class="md-raised md-primary next-page"
              ng-click="$ctrl.getNextPage($ctrl.stuntmanSearchSettings)">
     <md-icon md-font-set="material-icons">fast_forward</md-icon>
-    <md-tooltip md-direction="left">Próxima Página</md-tooltip>
+    <md-tooltip md-direction="top">Próxima Página</md-tooltip>
   </md-button>
   <input ng-model="$ctrl.stuntmanSearchSettings.quantityToGet" type="number" max="100"class="input-right container inputStuntmanSearchSettings">
 </md-card>

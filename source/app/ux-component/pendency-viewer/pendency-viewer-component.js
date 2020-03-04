@@ -19,9 +19,8 @@
 
     self.searchSettings = {
       "currentQuantity": 0,
-      "quantityToGet": 5,
+      "quantityToGet": 20,
       "order": {
-
         "fields":["dueDate"],
         "mode": 1
       },
@@ -29,7 +28,6 @@
         "status": "NOT_FINALIZED"
       }
     };
-
 
     self.pendencyAttributes = [
       {title: 'rn', translatedTitle: 'Número de Recrutamento', icon: 'account_circle'},
@@ -57,7 +55,7 @@
       if(self.stuntmanSearchSettings) self.stuntmanSearchSettings = null;
       self.paginatorActive = true;
       self.stuntmanSearchSettings = angular.copy(searchSettings);
-      self.stuntmanSearchSettings.currentQuantity = 5;
+      self.stuntmanSearchSettings.currentQuantity = self.stuntmanSearchSettings.quantityToGet;
     }
   }
 

@@ -18,11 +18,18 @@
     const self = this;
 
     self.getNextPage = getNextPage;
+    self.getPreviousPage = getPreviousPage;
 
     function getNextPage(stuntmanSearchSettings) {
       PendencyViewerService.getAllPendencies(stuntmanSearchSettings)
         .then( data => self.pendencies = data);
-      stuntmanSearchSettings.currentQuantity += 5;
+      stuntmanSearchSettings.currentQuantity += stuntmanSearchSettings.quantityToGet;
+    }
+
+    function getPreviousPage(stuntmanSearchSettings) {
+      PendencyViewerService.getAllPendencies(stuntmanSearchSettings)
+        .then( data => self.pendencies = data);
+      stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet;
     }
   }
 }());
