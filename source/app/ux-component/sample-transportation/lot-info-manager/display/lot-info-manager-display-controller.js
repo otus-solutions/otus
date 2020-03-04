@@ -8,8 +8,8 @@
   Controller.$inject = [
     '$mdDialog',
     '$filter',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationMessagesService',
+    'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
+    'otusjs.laboratory.business.project.transportation.MaterialTransportationMessagesService',
     'otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
     'otusjs.deploy.LoadingScreenService',
@@ -22,8 +22,8 @@
   function Controller(
     $mdDialog,
     $filter,
-    AliquotTransportationService,
-    AliquotTransportationMessagesService,
+    MaterialTransportationService,
+    MaterialTransportationMessagesService,
     AliquotTransportationQueryFactory,
     DynamicTableSettingsFactory,
     LoadingScreenService,
@@ -42,9 +42,10 @@
     self.currentNavItem = "insertionByPeriod";
     self.changeNavItem = changeNavItem;
 
-    self.AliquotTransportationService = AliquotTransportationService;
+    self.MaterialTransportationService = MaterialTransportationService;
     self.clearLot = clearLot;
     self.aliquotInputkeydown = aliquotInputkeydown;
+    self.tubeInputkeydown = tubeInputkeydown;
     self.insertAliquotsByPeriod = insertAliquotsByPeriod;
     self.periodInputkeydown = periodInputkeydown;
     self.dynamicDataTableChange = dynamicDataTableChange;
@@ -53,8 +54,8 @@
     var _confirmAliquotsInsertionByPeriod, _confirmAlterOriginLocation;
 
     $scope.$watch('$ctrl.lot.originLocationPoint', function (newValue, oldValue) {
-      if (oldValue){
-        if (self.lot.aliquotList.length && !self.lot.code){
+      if (oldValue && newValue != oldValue) {
+        if (self.lot.aliquotList.length && !self.lot.code) {
           self.clearLot(oldValue);
         }
       }
@@ -67,13 +68,14 @@
 
     /* Public methods */
     self.fastInsertion = fastInsertion;
+    self.insertionTube = insertionTube;
     self.selectAliquot = selectAliquot;
 
     function onInit() {
       LocationPointRestService.getLocationPoints().then(function (response) {
         if (response.data) {
           var result = response.data;
-          if (result.transportLocationPoints){
+          if (result.transportLocationPoints) {
             self.destinationLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
           }
         }
@@ -99,7 +101,7 @@
         //property, formatType
         .addColumnProperty('code')
         //header, flex, align, ordinationPriorityIndex
-        .addHeader('Tipo', '25', '', 1)
+        .addHeader('Tipo', '20', '', 1)
         //property, formatType
         .addColumnProperty('label')
         //header, flex, align, ordinationPriorityIndex
@@ -107,7 +109,7 @@
         //property, formatType
         .addColumnProperty('containerLabel')
         //header, flex, align, ordinationPriorityIndex
-        .addHeader('Processamento', '15', '', 2)
+        .addHeader('Processado/Coletado', '20', '', 2)
         //property, formatType
         .addColumnProperty('aliquotCollectionData.processing', 'DATE')
         .addHeader('Função', '15', '', 5)
@@ -115,15 +117,15 @@
         //icon, tooltip, classButton, successMsg,
         //buttonFuntion, returnsSuccess, renderElement, renderGrid, removeElement, receiveCallback
         .addColumnIconButton(
-          'delete_forever', 'Remover Alíquota', '', 'A Alíquota foi removida',
+          'delete_forever', 'Remover Material', '', 'O material foi removido',
           self.removeElement, false, false, true, false, false
         )
 
-        .setElementsArray(self.lot.aliquotList)
+        .setElementsArray(_getMaterialList())
         .setTitle('Lista de Arquivos')
         .setCallbackAfterChange(self.dynamicDataTableChange)
         //Don't use with Service, in this case pass Service as attribute in the template
-        // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
+        // .setTableUpdateFunction(MaterialTransportationService.dynamicDataTableFunction.updateDataTable)
         /*
           //Optional Config's
           .setFormatData("'Dia - 'dd/MM/yy")
@@ -136,6 +138,10 @@
 
         */
         .getSettings();
+    }
+
+    function _getMaterialList() {
+      return self.lot.aliquotList.concat(self.lot.getTubeForDynamicTable());
     }
 
     function dynamicDataTableChange(change) {
@@ -167,14 +173,25 @@
         newData: self.lot.toJSON()
       });
       self.setChartData();
+      var elements = _getMaterialList();
       _updateContainerLabel();
-      _dynamicDataTableUpdate();
+      _dynamicDataTableUpdate(elements);
     }
 
     function removeElement(element) {
       _unselectedAllAliquot();
       var aliquotIndex = self.lot.aliquotList.indexOf(element);
-      self.lot.removeAliquotByIndex(aliquotIndex);
+      if (aliquotIndex < 0) {
+        var tube = self.lot.tubeList.find(function (tube) {
+          if (tube.code == element.code) return tube;
+        });
+        var tubeIndex = self.lot.tubeList.indexOf(tube);
+
+        if (tubeIndex > -1) self.lot.removeTubeByIndex(tubeIndex);
+      } else {
+
+        self.lot.removeAliquotByIndex(aliquotIndex);
+      }
       _updateDynamicTable();
     }
 
@@ -246,14 +263,14 @@
       };
     }
 
-    function _dynamicDataTableUpdate() {
-      self.AliquotTransportationService.dynamicDataTableFunction.updateDataTable();
+    function _dynamicDataTableUpdate(newArrayElements) {
+      self.MaterialTransportationService.dynamicDataTableFunction.updateDataTable(newArrayElements);
       self.selectedAliquots = [];
     }
 
     function _updateContainerLabel() {
       self.lot.aliquotList.forEach(function (aliquot) {
-        aliquot.containerLabel = self.AliquotTransportationService.getContainerLabelToAliquot(aliquot);
+        aliquot.containerLabel = self.MaterialTransportationService.getContainerLabelToAliquot(aliquot);
       }, this);
     }
 
@@ -269,6 +286,14 @@
       if (charCode == '13' && self.aliquotCode.length > 0) {
         event.preventDefault();
         self.fastInsertion(self.aliquotCode);
+      }
+    }
+
+    function tubeInputkeydown(event) {
+      var charCode = event.which || event.keyCode;
+      if (charCode == '13' && self.tubeCode.length > 0) {
+        event.preventDefault();
+        self.insertionTube(self.tubeCode);
       }
     }
 
@@ -298,10 +323,10 @@
           }).catch(function () {
           });
         } else {
-          AliquotTransportationMessagesService.invalidPeriodInterval();
+          MaterialTransportationMessagesService.invalidPeriodInterval();
         }
       } else {
-        AliquotTransportationMessagesService.unselectedPeriod();
+        MaterialTransportationMessagesService.unselectedPeriod();
       }
 
       return successInsertion;
@@ -316,18 +341,18 @@
       _ajustHours();
       var _query = AliquotTransportationQueryFactory.create(null, self.initialDate.toISOString(), self.finalDate.toISOString(),
         self.lot.originLocationPoint, self.lot.getAliquotCodeList(), self.storage);
-      return self.AliquotTransportationService.getAliquots(_query.toJSON(), false)
+      return self.MaterialTransportationService.getAliquots(_query.toJSON(), false)
         .then(function (response) {
           if (response.length) {
             self.lot.insertAliquotList(response);
-            AliquotTransportationMessagesService.successInAliquotInsertion();
+            MaterialTransportationMessagesService.successInAliquotInsertion();
             return response;
           } else {
-            AliquotTransportationMessagesService.notAliquotsInserted();
+            MaterialTransportationMessagesService.notMaterialInsert();
             return false;
           }
         }).catch(function (err) {
-          AliquotTransportationMessagesService.notAliquotsInserted();
+          MaterialTransportationMessagesService.notMaterialInsert();
           return false;
         });
 
@@ -351,35 +376,83 @@
       }
     }
 
-    function _findAliquot(code) {
-      var _query = AliquotTransportationQueryFactory.create(code, null, null,
-        self.lot.originLocationPoint, self.lot.getAliquotCodeList(), self.storage);
-      return self.AliquotTransportationService.getAliquots(_query.toJSON(), true)
-        .then(function (availableAliquot) {
-          if (availableAliquot) {
-            if (_isDuplicated(code)) {
-              AliquotTransportationMessagesService.toastDuplicated(code);
+    function insertionTube(tubeCode) {
+      var successInsertion = false;
+      if (tubeCode) {
+        _findTube(tubeCode).then(function (foundTube) {
+          if (foundTube) {
+            if (tubeCode == foundTube.code) {
+              _updateDynamicTable();
+              successInsertion = true;
+            }
+          }
+        }).catch(function (err) {
+        });
+
+        self.tubeCode = "";
+        return successInsertion;
+      }
+    }
+
+    function _findTube(tubeCode) {
+      return self.MaterialTransportationService.getTube(self.lot.originLocationPoint, tubeCode)
+        .then(function (availableTube) {
+          if (availableTube) {
+            if (_isDuplicatedTube(tubeCode)) {
+              MaterialTransportationMessagesService.toastDuplicated(tubeCode);
               return;
             } else {
-              self.lot.insertAliquot(availableAliquot);
-              AliquotTransportationMessagesService.successInAliquotInsertion();
-              return availableAliquot;
+              self.lot.insertTube(availableTube);
+              MaterialTransportationMessagesService.successInTubeInsertion();
+              return availableTube;
             }
           } else {
-            AliquotTransportationMessagesService.toastNotFoundError(code);
-            return availableAliquot;
+            MaterialTransportationMessagesService.toastNotFoundError(tubeCode);
+            return availableTube;
           }
-        }).catch(function () {
-          AliquotTransportationMessagesService.toastOtherLot(code);
+        }).catch(function (err) {
+          MaterialTransportationMessagesService.messageError(err.data.MESSAGE);
           return;
         });
 
 
     }
 
+
+    function _findAliquot(code) {
+      var _query = AliquotTransportationQueryFactory.create(code, null, null,
+        self.lot.originLocationPoint, self.lot.getAliquotCodeList(), self.storage);
+      return self.MaterialTransportationService.getAliquots(_query.toJSON(), true)
+        .then(function (availableAliquot) {
+          if (availableAliquot) {
+            if (_isDuplicated(code)) {
+              MaterialTransportationMessagesService.toastDuplicated(code);
+              return;
+            } else {
+              self.lot.insertAliquot(availableAliquot);
+              MaterialTransportationMessagesService.successInAliquotInsertion();
+              return availableAliquot;
+            }
+          } else {
+            MaterialTransportationMessagesService.toastNotFoundError(code);
+            return availableAliquot;
+          }
+        }).catch(function (err) {
+          MaterialTransportationMessagesService.messageError(err.data.MESSAGE);
+          return;
+        });
+
+    }
+
     function _isDuplicated(code) {
       return self.lot.getAliquotCodeList().find(function (aliquotCode) {
         return aliquotCode == code;
+      });
+    }
+
+    function _isDuplicatedTube(code) {
+      return self.lot.getTubeCodeList().find(function (tubeCode) {
+        return tubeCode == code;
       });
     }
   }

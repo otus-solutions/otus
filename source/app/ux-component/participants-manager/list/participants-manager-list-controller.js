@@ -98,7 +98,7 @@
         .setTitle('Lista de Participantes')
         // .setCallbackAfterChange(self.dynamicDataTableChange)
         //Don't use with Service, in this case pass Service as attribute in the template
-        // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
+        // .setTableUpdateFunction(MaterialTransportationService.dynamicDataTableFunction.updateDataTable)
         /*
           //Optional Config's
 

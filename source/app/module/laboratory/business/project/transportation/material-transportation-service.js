@@ -4,7 +4,7 @@
   angular
     .module('otusjs.laboratory.business.project.transportation')
     .service(
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+      'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
       service);
 
   service.$inject = [
@@ -25,6 +25,7 @@
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -51,6 +52,19 @@
       LaboratoryRepositoryService.getAliquots(lotAliquot, unique)
         .then(function(response) {
           deferred.resolve(JSON.parse(response));
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function getTube(locationPointId, tubeCode) {
+      var deferred = $q.defer();
+      LaboratoryRepositoryService.getTube(locationPointId, tubeCode)
+        .then(function(response) {
+          deferred.resolve(response);
         })
         .catch(function(err) {
           deferred.reject(err);
