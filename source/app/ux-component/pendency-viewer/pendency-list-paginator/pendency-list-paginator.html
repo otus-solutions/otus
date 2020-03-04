@@ -26,7 +26,7 @@
 
 </style>
 
-<md-card class="paginationCard">
+<md-card class="paginationCard" ng-if="$ctrl.paginatorActive">
   <input ng-model="$ctrl.stuntmanSearchSettings.currentQuantity" type="number" class="input-left container inputStuntmanSearchSettings">
   <md-button layout-fill class="md-raised md-primary next-page"
              ng-click="$ctrl.getNextPage($ctrl.stuntmanSearchSettings)">

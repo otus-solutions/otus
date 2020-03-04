@@ -26,6 +26,8 @@
     self.resetCriteriaOrderCustomization = resetCriteriaOrderCustomization;
     self.changePaginationViewState = changePaginationViewState;
 
+
+
     clearAll(self.searchSettings);
 
 
@@ -86,6 +88,7 @@
     }
 
     function changePaginationViewState() {
+
       console.log("trocou")
     }
 

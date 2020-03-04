@@ -41,23 +41,24 @@
     ];
 
     self.pendencies = [];
+    self.paginatorActive = false;
 
     function onInit(){
       getAllPendencies(self.searchSettings);
     }
 
     function getAllPendencies(searchSettings) {
-      if(self.stuntmanSearchSettings) self.stuntmanSearchSettings = null;
-      self.stuntmanSearchSettings = angular.copy(searchSettings);
-      self.stuntmanSearchSettings.currentQuantity = 5;
+      _prepareParametersForPagination(searchSettings);
       PendencyViewerService.getAllPendencies(searchSettings)
         .then( data => self.pendencies = data);
     }
 
     function _prepareParametersForPagination(searchSettings){
-
+      if(self.stuntmanSearchSettings) self.stuntmanSearchSettings = null;
+      self.paginatorActive = true;
+      self.stuntmanSearchSettings = angular.copy(searchSettings);
+      self.stuntmanSearchSettings.currentQuantity = 5;
     }
-
   }
 
 }());
