@@ -13,7 +13,9 @@ variable "otus-frontend-apiurl"{
 variable "otus-frontend-playerurl"{
   default = "http://localhost:51001"
 }
-
+variable "otus-api-network" {
+  default = "otus-api-network"
+}
 variable "otus-frontend-version"{
   default = "otus-frontend:latest"
 }
@@ -28,5 +30,8 @@ resource "docker_container" "otus-frontend" {
   ports {
 	internal = 80
 	external = "${var.otus-frontend-port}"
+  }
+    networks_advanced {
+    name    = "${var.otus-api-network}"
   }
 }
