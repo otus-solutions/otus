@@ -5,7 +5,9 @@
     .component('otusPendencyListPaginator', {
       controller:'pendencyListPaginatorCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-paginator/pendency-list-paginator.html',
-      bindings: {}
+      bindings: {
+        searchSettings: '='
+      }
     }).controller('pendencyListPaginatorCtrl', Controller);
 
   Controller.$inject = [];
@@ -14,7 +16,6 @@
     const self = this;
 
     self.paginatorActive = true;
-
 
   }
 }());
