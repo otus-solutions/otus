@@ -22,14 +22,24 @@
 
     function getNextPage(stuntmanSearchSettings) {
       PendencyViewerService.getAllPendencies(stuntmanSearchSettings)
-        .then( data => self.pendencies = data);
-      stuntmanSearchSettings.currentQuantity += stuntmanSearchSettings.quantityToGet;
+        .then( data => self.pendencies = data)
+        .then(self.pendencies.length ? stuntmanSearchSettings.currentQuantity += stuntmanSearchSettings.quantityToGet :
+          stuntmanSearchSettings.currentQuantity += 0);
     }
 
     function getPreviousPage(stuntmanSearchSettings) {
       PendencyViewerService.getAllPendencies(stuntmanSearchSettings)
-        .then( data => self.pendencies = data);
-      stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet;
+        .then( data => self.pendencies = data)
+        .then(self.pendencies.length ? _validatesLowerLimit(stuntmanSearchSettings):
+          stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet);
     }
+
+    function _validatesLowerLimit(stuntmanSearchSettings){
+      if(stuntmanSearchSettings.currentQuantity > 0){
+        stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet;
+      }
+      else(stuntmanSearchSettings.currentQuantity += 0)
+    }
+
   }
 }());
