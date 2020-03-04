@@ -19,7 +19,7 @@
   }
 
   .inputStuntmanSearchSettings {
-    width: 3vw;
+    width: 3.6vw;
     border: none;
     margin-left: 2vw;
   }
@@ -27,11 +27,11 @@
 </style>
 
 <md-card class="paginationCard" ng-if="$ctrl.paginatorActive">
-  <input ng-model="$ctrl.stuntmanSearchSettings.currentQuantity" type="number" class="input-left container inputStuntmanSearchSettings">
+  <input ng-model="$ctrl.stuntmanSearchSettings.currentQuantity" type="number" min="0" class="input-left container inputStuntmanSearchSettings">
   <md-button layout-fill class="md-raised md-primary next-page"
              ng-click="$ctrl.getNextPage($ctrl.stuntmanSearchSettings)">
     <md-icon md-font-set="material-icons">fast_forward</md-icon>
     <md-tooltip md-direction="left">Próxima Página</md-tooltip>
   </md-button>
-  <input ng-model="$ctrl.stuntmanSearchSettings.quantityToGet" type="number" class="input-right container inputStuntmanSearchSettings">
+  <input ng-model="$ctrl.stuntmanSearchSettings.quantityToGet" type="number" max="100"class="input-right container inputStuntmanSearchSettings">
 </md-card>

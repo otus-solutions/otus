@@ -9,7 +9,8 @@
       bindings: {
         getPendencies: '&',
         searchSettings: '=',
-        pendencyAttributes: '<'
+        pendencyAttributes: '<',
+        paginatorActive: '='
 
       }
     }).controller('pendencyListControlCtrl', Controller);
