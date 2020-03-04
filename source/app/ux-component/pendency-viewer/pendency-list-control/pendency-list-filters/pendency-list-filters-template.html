@@ -169,8 +169,7 @@
         <md-icon>{{item.icon}}
           <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
         </md-icon>
-        <md-datepicker"
-                       ng-model="$ctrl.searchSettings.filter[item.title]"
+        <md-datepicker ng-model="$ctrl.searchSettings.filter[item.title]"
                        ng-change="$ctrl.changePaginationViewState()"
                        md-placeholder="DD/MM/AAAA"
                        md-hide-icons="calendar"

@@ -8,7 +8,8 @@
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-control/pendency-list-filters/pendency-list-filters-template.html',
       bindings: {
         searchSettings: '=',
-        pendencyAttributes : '<'
+        pendencyAttributes : '<',
+        paginatorActive : '='
 
       }
     }).controller('pendencyListFiltersCtrl', Controller);
@@ -86,8 +87,7 @@
     }
 
     function changePaginationViewState() {
-      console.log("trocou")
+      self.paginatorActive = false;
     }
-
   }
 }());

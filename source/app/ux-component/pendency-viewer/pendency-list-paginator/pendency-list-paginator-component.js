@@ -7,7 +7,8 @@
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-paginator/pendency-list-paginator.html',
       bindings: {
         stuntmanSearchSettings: '=',
-        pendencies: '='
+        pendencies: '=',
+        paginatorActive: '<'
       }
     }).controller('pendencyListPaginatorCtrl', Controller);
 
@@ -17,8 +18,6 @@
     const self = this;
 
     self.getNextPage = getNextPage;
-
-    self.paginatorActive = true;
 
     function getNextPage(stuntmanSearchSettings) {
       PendencyViewerService.getAllPendencies(stuntmanSearchSettings)

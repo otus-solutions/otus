@@ -37,11 +37,14 @@
   </otus-dashboard-toolbar>
   <otus-pendency-list-control search-settings="$ctrl.searchSettings"
                               get-pendencies="$ctrl.getAllPendencies($ctrl.searchSettings)"
-                              pendency-attributes="$ctrl.pendencyAttributes"></otus-pendency-list-control>
+                              pendency-attributes="$ctrl.pendencyAttributes"
+                              paginator-active="$ctrl.paginatorActive">
+  </otus-pendency-list-control>
   <otus-pendency-list pendencies="$ctrl.pendencies"
                       pendency-attributes="$ctrl.pendencyAttributes">
   </otus-pendency-list>
   <otus-pendency-list-paginator stuntman-search-settings="$ctrl.stuntmanSearchSettings"
-                                pendencies="$ctrl.pendencies">
+                                pendencies="$ctrl.pendencies"
+                                paginator-active="$ctrl.paginatorActive">
   </otus-pendency-list-paginator>
 </md-content>
