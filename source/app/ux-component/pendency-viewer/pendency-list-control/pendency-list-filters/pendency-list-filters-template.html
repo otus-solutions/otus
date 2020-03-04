@@ -4,9 +4,9 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: .01fr .1fr 1fr 1fr;
     grid-template-areas: "toolbar         toolbar         toolbar"
-                         "status          sortingCriteria sortingCriteria"
-                         "item            item            item"
-                         "item            item            item"
+    "status          sortingCriteria sortingCriteria"
+    "item            item            item"
+    "item            item            item"
   }
 
   .padding-layout-fill {
@@ -35,14 +35,18 @@
     background-color: #ffffff;
   }
 
-  md-input-container.md-default-theme {
+  .pendency-list-filters  md-input-container.md-default-theme {
     color: black;
     opacity: 0.54;
   }
 
+  .pendency-list-filters .md-autocomplete-participant {
+    background-color: #ffffff !important;
+  }
+
 </style>
 
-<md-card class="plf-layout" layout-margin>
+<md-card class="plf-layout pendency-list-filters" layout-margin>
   <md-toolbar-filler layout="row" layout-align="space-between center" layout-margin>
     <span>FILTROS</span>
     <md-button aria-label="reinicializar filtros" class="md-fab md-mini"
