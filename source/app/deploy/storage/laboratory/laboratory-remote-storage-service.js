@@ -255,11 +255,11 @@
      * @returns {Promise} promise
      * @memberof LaboratoryRemoteStorageService
      */
-    function getLots() {
+    function getLots(locationPointId) {
       var deferred = $q.defer();
 
       SampleTransportRestService
-        .getLots()
+        .getLots(locationPointId)
         .then(function(response) {
           deferred.resolve(response.data);
         });

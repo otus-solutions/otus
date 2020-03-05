@@ -22,18 +22,8 @@
       parent: STATE.SAMPLE_TRANSPORTATION_DASHBOARD,
       name: STATE.SAMPLE_TRANSPORTATION_MANAGER_LIST,
       url: '/' + STATE.SAMPLE_TRANSPORTATION_MANAGER_LIST,
-      template: '<otus-sample-transportation-manager-list lots="$resolve.lots" layout="column" flex></otus-sample-transportation-manager-list>',
-      resolve:{
-        lots: _resolveLots
-      }
+      template: '<otus-sample-transportation-manager-list layout="column" flex></otus-sample-transportation-manager-list>',
     };
 
-    function _resolveLots(AliquotTransportationService) {
-      return AliquotTransportationService.getLots();
-    }
-
-    _resolveLots.$inject = [
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationService'
-    ];
   }
 }());
