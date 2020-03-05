@@ -3,7 +3,7 @@
 
   angular.module('otusjs.otus.uxComponent')
     .component('otusPendencyListPaginator', {
-      controller:'pendencyListPaginatorCtrl as $ctrl',
+      controller: 'pendencyListPaginatorCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-paginator/pendency-list-paginator.html',
       bindings: {
         stuntmanSearchSettings: '=',
@@ -12,34 +12,69 @@
       }
     }).controller('pendencyListPaginatorCtrl', Controller);
 
-  Controller.$inject = ['otusjs.pendencyViewer.PendencyViewerService'];
+  Controller.$inject = ['otusjs.pendencyViewer.PendencyViewerService', '$mdToast'];
 
-  function Controller(PendencyViewerService) {
+  function Controller(PendencyViewerService, $mdToast) {
     const self = this;
 
     self.getNextPage = getNextPage;
     self.getPreviousPage = getPreviousPage;
+    self.refreshListByCurrentQuantity = refreshListByCurrentQuantity;
+
+    self.activeNextPage = true;
+    self.activePreviousPage = false;
 
     function getNextPage(stuntmanSearchSettings) {
+      stuntmanSearchSettings.currentQuantity += stuntmanSearchSettings.quantityToGet
       PendencyViewerService.getAllPendencies(stuntmanSearchSettings)
-        .then( data => self.pendencies = data)
-        .then(self.pendencies.length ? stuntmanSearchSettings.currentQuantity += stuntmanSearchSettings.quantityToGet :
-          stuntmanSearchSettings.currentQuantity += 0);
+        .then(pendencies => PendencyViewerService.checkPaginatorLimit(pendencies, stuntmanSearchSettings))
+        .then(checkedData => {
+          self.pendencies = checkedData.pendencies;
+          self.activePreviousPage = checkedData.activePreviousPage;
+          self.activeNextPage = checkedData.activeNextPage;
+        })
+        .catch(e => {
+          self.activeNextPage = e.activePage;
+          _showToast(e.msg)
+        });
     }
 
     function getPreviousPage(stuntmanSearchSettings) {
+      stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet;
       PendencyViewerService.getAllPendencies(stuntmanSearchSettings)
-        .then( data => self.pendencies = data)
-        .then(self.pendencies.length ? _validatesLowerLimit(stuntmanSearchSettings):
-          stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet);
+        .then(pendencies => PendencyViewerService.checkPaginatorLimit(pendencies, stuntmanSearchSettings))
+        .then(checkedData => {
+          self.pendencies = checkedData.pendencies;
+          self.activePreviousPage = checkedData.activePreviousPage;
+          self.activeNextPage = checkedData.activeNextPage;
+        }).catch(e => {
+          self.activePreviousPage = e.activePage;
+          _showToast(e.msg);
+      });
     }
 
-    function _validatesLowerLimit(stuntmanSearchSettings){
-      if(stuntmanSearchSettings.currentQuantity > 0){
-        stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet;
-      }
-      else(stuntmanSearchSettings.currentQuantity += 0)
+    function _showToast(msg) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msg)
+          .position("left bottom")
+          .hideDelay(4000)
+      );
     }
 
+    function refreshListByCurrentQuantity() {
+      PendencyViewerService.getAllPendencies(self.stuntmanSearchSettings)
+        .then(pendencies => PendencyViewerService.checkPaginatorLimit(pendencies, self.stuntmanSearchSettings))
+        .then(checkedData => {
+          self.pendencies = checkedData.pendencies;
+          // self.activeNextPage = true;
+          // self.activePreviousPage = true;
+        }).catch(e => {
+        self.activeNextPage = true;
+        self.activePreviousPage = true;
+        _showToast(e.msg);
+      });
+
+    }
   }
 }());

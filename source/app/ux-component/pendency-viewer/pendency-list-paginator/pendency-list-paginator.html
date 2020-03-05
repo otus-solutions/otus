@@ -31,16 +31,20 @@
 </style>
 
 <md-card class="paginationCard" ng-if="$ctrl.paginatorActive">
-  <input ng-model="$ctrl.stuntmanSearchSettings.currentQuantity" type="number" min="0" class="input-left container inputStuntmanSearchSettings">
+  <input ng-model="$ctrl.stuntmanSearchSettings.currentQuantity" ng-blur="$ctrl.refreshListByCurrentQuantity()"
+         type="number" min="0" class="input-left container inputStuntmanSearchSettings">
   <md-button layout-fill class="md-raised md-primary previous-page"
+             ng-disabled="!$ctrl.activePreviousPage"
              ng-click="$ctrl.getPreviousPage($ctrl.stuntmanSearchSettings)">
     <md-icon md-font-set="material-icons">fast_rewind</md-icon>
     <md-tooltip md-direction="top">Página Anterior</md-tooltip>
   </md-button>
   <md-button layout-fill class="md-raised md-primary next-page"
+             ng-disabled="!$ctrl.activeNextPage"
              ng-click="$ctrl.getNextPage($ctrl.stuntmanSearchSettings)">
     <md-icon md-font-set="material-icons">fast_forward</md-icon>
     <md-tooltip md-direction="top">Próxima Página</md-tooltip>
   </md-button>
-  <input ng-model="$ctrl.stuntmanSearchSettings.quantityToGet" type="number" max="100"class="input-right container inputStuntmanSearchSettings">
+  <input ng-model="$ctrl.stuntmanSearchSettings.quantityToGet" type="number"
+         max="100" min="1"class="input-right container inputStuntmanSearchSettings">
 </md-card>

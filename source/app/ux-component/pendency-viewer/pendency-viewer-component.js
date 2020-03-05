@@ -36,7 +36,6 @@
       if(self.stuntmanSearchSettings) self.stuntmanSearchSettings = null;
       self.paginatorActive = true;
       self.stuntmanSearchSettings = angular.copy(searchSettings);
-      self.stuntmanSearchSettings.currentQuantity = self.stuntmanSearchSettings.quantityToGet;
     }
   }
 

@@ -8,11 +8,12 @@
   Service.$inject = [
     'otusjs.pendency.repository.UserActivityPendencyRepositoryService',
     'otusjs.model.pendency.UserActivityPendencyFactory',
-    'PENDENCY_VIEWER_TITLES'
+    'PENDENCY_VIEWER_TITLES',
+    '$q'
 
   ];
 
-  function Service(UserActivityPendencyRepositoryService, UserActivityPendencyFactory, PENDENCY_VIEWER_TITLES) {
+  function Service(UserActivityPendencyRepositoryService, UserActivityPendencyFactory, PENDENCY_VIEWER_TITLES, $q) {
     const self = this;
     self.getSearchSettings = getSearchSettings;
     self.getPendencyAttributes = getPendencyAttributes;
@@ -22,6 +23,9 @@
     self.calculateRemainingDays = calculateRemainingDays;
     self.getSelectedParticipantRN = getSelectedParticipantRN;
     self.getChecker = getChecker;
+    self.checkPaginatorLimit = checkPaginatorLimit;
+
+    const deferred = $q.defer();
 
     function getSearchSettings() {
       return {
@@ -100,6 +104,41 @@
     function getChecker(user, pendencyFilterItem, searchSettings){
       searchSettings.filter[pendencyFilterItem.title] = [user.checker.email];
     }
+
+    // function checkUpperLimit(pendencies, searchSettings){
+    //   let activeNextPage = true;
+    //   let activePreviousPage = true;
+    //   if(pendencies.length < searchSettings.quantityToGet) {
+    //     _callRejectionPromise();
+    //     return deferred.promise;
+    //   }
+    //   else return { pendencies, activePreviousPage, activeNextPage };
+    // }
+    //
+    // function checkLowerLimit(pendencies, searchSettings){
+    //   let activeNextPage = true;
+    //   let activePreviousPage = true;
+    //   if(searchSettings.currentQuantity < 1 ) {
+    //     _callRejectionPromise(activePreviousPage);
+    //     return deferred.promise;
+    //   }
+    //   return { pendencies, activePreviousPage, activeNextPage };
+    // }
+
+    function checkPaginatorLimit(pendencies, searchSettings){
+      let activeNextPage = true;
+      let activePreviousPage = true;
+      if(searchSettings.currentQuantity < 1 || pendencies.length < searchSettings.quantityToGet) {
+        _callRejectionPromise(activePreviousPage);
+        return deferred.promise;
+      }
+      return { pendencies, activePreviousPage, activeNextPage };
+    }
+
+    function _callRejectionPromise(){
+      deferred.reject({msg: "Nenhum Item Novo", activePage: false});
+    }
+
   }
 
 }());
