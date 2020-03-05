@@ -8,15 +8,19 @@
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-control/pendency-list-filters/pendency-list-filters-template.html',
       bindings: {
         searchSettings: '=',
-        pendencyAttributes : '<',
-        paginatorActive : '='
+        pendencyAttributes: '<',
+        paginatorActive: '='
 
       }
     }).controller('pendencyListFiltersCtrl', Controller);
 
-  Controller.$inject = ['dragulaService', '$scope'];
+  Controller.$inject = [
+    'dragulaService',
+    'otusjs.pendencyViewer.PendencyViewerService',
+    'PENDENCY_VIEWER_TITLES'
+  ];
 
-  function Controller(dragulaService, $scope) {
+  function Controller(dragulaService, PendencyViewerService) {
     const self = this;
 
     self.chanceInputViewState = chanceInputViewState;
@@ -29,35 +33,15 @@
 
     clearAll(self.searchSettings);
 
-
     function clear(item) {
       delete self.searchSettings.filter[item.title];
       self.inputViewState[item.title] = false;
     }
 
-    function clearAll(searchSettings){
-      self.inputViewState = {
-        rn: false,
-        acronym: false,
-        requester: false,
-        receiver: false,
-        dueDate: false,
-        externalID: false,
-        sortingCriteria: false
-      };
-
-      self.searchSettings = {
-        "currentQuantity": 0,
-        "quantityToGet": 10,
-        "order": {
-
-          "fields":["dueDate"],
-          "mode": 1
-        },
-        "filter":{
-          "status": "NOT_FINALIZED"
-        }
-      };
+    function clearAll(searchSettings) {
+      if (searchSettings) searchSettings = null;
+      self.inputViewState = PendencyViewerService.getInputViewState();
+      self.searchSettings = PendencyViewerService.getSearchSettings();
     }
 
     function chanceInputViewState(item) {
@@ -82,8 +66,10 @@
       _populateCriteriaOrder();
     }
 
-    function _populateCriteriaOrder(){
-      self.searchSettings.order.fields = ["dueDate", "rn", "acronym", "externalID", "requester", "receiver"];
+    function _populateCriteriaOrder() {
+      self.searchSettings.order.fields = [
+        "dueDate", "rn", "acronym", "externalID", "requester", "receiver"
+      ];
     }
 
     function changePaginationViewState() {

@@ -111,14 +111,14 @@
     <span class="padding">{{$ctrl.dueDate}}</span>
   </div>
   <div class="creation-date">
-    <md-icon>schedule
-      <md-tooltip md-direction="bottom">Data de Criação</md-tooltip>
+    <md-icon>{{$ctrl.pendencyAttributes[6].icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[6].translatedTitle}}</md-tooltip>
     </md-icon>
     <span class="padding">{{$ctrl.creationDate}}</span>
   </div>
   <div class="remainingDays">
-    <md-icon>speed
-      <md-tooltip md-direction="bottom">Dias Restantes</md-tooltip>
+    <md-icon>{{$ctrl.pendencyAttributes[7].icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.pendencyAttributes[7].translatedTitle}}</md-tooltip>
     </md-icon>
     <span class="padding">{{$ctrl.remainingDays}}</span>
   </div>
