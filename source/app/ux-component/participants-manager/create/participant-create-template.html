@@ -31,7 +31,7 @@
                         automaticamente)</label>
                       <input ng-model="$ctrl.recruitmentNumber"
                              ng-disabled="$ctrl.permissions.autoGenerateRecruitmentNumber" numbers-only
-                             maxlength="{{14-$ctrl.centerCode.toString().length}}" ng-change="$ctrl.onFilter()">
+                             maxlength="{{14-$ctrl.centerCode.toString().length}}" ng-change="$ctrl.onFilter()" aria-label="Número de Recrutamento">
                       <md-tooltip md-direction="down" ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Insira no
                         máximo {{14-$ctrl.centerCode.toString().length}} dígitos.
                       </md-tooltip>
@@ -84,12 +84,12 @@
                   </div>
                   <div layout="row" layout-align="end" layout-margin="">
                     <span flex></span>
-                    <md-button class="md-raised md-button" ng-click="$ctrl.clearParticipant()">
-                      <md-icon aria-label="Limpar">clear</md-icon> CANCELAR
-                      <md-tooltip md-direction="down">Limpar</md-tooltip>
+                    <md-button class="md-raised md-raised md-icon-button" ng-click="$ctrl.clearParticipant()">
+                      <md-icon aria-label="Limpar">clear</md-icon>
+                      <md-tooltip md-direction="down">Cancelar</md-tooltip>
                     </md-button>
-                    <md-button class="md-accent md-raised md-button" ng-click="$ctrl.saveParticipant()">
-                      <md-icon aria-label="Adicionar">save</md-icon> SALVAR
+                    <md-button class="md-accent md-raised md-icon-button" ng-click="$ctrl.saveParticipant()">
+                      <md-icon aria-label="Salvar">save</md-icon>
                       <md-tooltip md-direction="down">Salvar</md-tooltip>
                     </md-button>
                   </div>
@@ -123,7 +123,7 @@
                       <label ng-if="$ctrl.permissions.autoGenerateRecruitmentNumber">Número de Recrutamento (Gerado
                         automaticamente)</label>
                       <input ng-model="$ctrl.recruitmentNumber"
-                             ng-disabled="$ctrl.permissions.autoGenerateRecruitmentNumber" numbers-only
+                             ng-disabled="$ctrl.permissions.autoGenerateRecruitmentNumber" numbers-only aria-label="Número de Recrutamento"
                              maxlength="{{14-$ctrl.centerCode.toString().length}}" id="rn" ng-change="$ctrl.onFilter()">
                       <md-tooltip md-direction="down" ng-if="!$ctrl.permissions.autoGenerateRecruitmentNumber">Insira no
                         máximo {{14-$ctrl.centerCode.toString().length}} dígitos.
