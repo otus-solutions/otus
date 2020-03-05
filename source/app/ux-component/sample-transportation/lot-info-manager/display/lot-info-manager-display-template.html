@@ -59,27 +59,32 @@
         </md-subheader>
         <div layout="row" layout-align="start center" layout-wrap layout-padding>
           <md-input-container flex="100" flex-gt-xs="80">
-            <label>De:</label>
-            <md-select ng-model="$ctrl.lot.originLocationPoint" ng-disabled="$ctrl.lot.code">
-              <md-option ng-repeat="origin in $ctrl.originLocationPoints" value="{{origin._id}}">{{origin.name}}</md-option>
+            <label>Origem:</label>
+            <md-select ng-model="$ctrl.lot.originLocationPoint" ng-disabled="$ctrl.lot.code" id="originLocationPoint">
+              <md-option ng-repeat="origin in $ctrl.originLocationPoints" value="{{origin._id}}">{{origin.name}}
+              </md-option>
             </md-select>
           </md-input-container>
 
           <md-input-container flex="100" flex-gt-xs="80">
-            <label>Para:</label>
+            <label>Destino:</label>
             <md-select ng-model="$ctrl.lot.destinationLocationPoint" ng-disabled="$ctrl.lot.code">
-              <md-option ng-repeat="destination in $ctrl.destinationLocationPoints | filter: { _id: '!'+$ctrl.lot.originLocationPoint} track by $index" value="{{destination._id}}">{{destination.name}}</md-option>
+              <md-option
+                ng-repeat="destination in $ctrl.destinationLocationPoints | filter: { _id: '!'+$ctrl.lot.originLocationPoint} track by $index"
+                value="{{destination._id}}">{{destination.name}}
+              </md-option>
             </md-select>
           </md-input-container>
         </div>
       </md-card>
     </div>
     <div flex layout="row" layout-align="center center">
-      <md-card flex>
+      <span class="md-display-1" ng-show="!$ctrl.lot.originLocationPoint" layout-margin="">Informe a origem do Lote.</span>
+      <md-card flex ng-show="$ctrl.lot.originLocationPoint">
         <md-subheader class="md-no-sticky moment-type-title backgroud-color-default left-alignment">
           <div layout="row">
             <span>
-          Alíquotas
+          Materiais
         </span>
             <span flex></span>
             <md-input-container ng-show="$ctrl.currentNavItem == 'insertionByPeriod'"
@@ -94,7 +99,7 @@
           </div>
         </md-subheader>
         <md-tabs>
-          <md-tab label="Inserção por Período">
+          <md-tab label="Inserção por Período" ng-click="$ctrl.changeNavItem('insertionByPeriod')">
             <div layout-align="start center" layout="row" layout-xs="column" layout-padding>
               <div layout-align="center center">
                 <span>Período Inicial:</span>
@@ -121,7 +126,7 @@
               </div>
             </div>
           </md-tab>
-          <md-tab label="Inserção Individual">
+          <md-tab label="Inserção de Alíquota" ng-click="$ctrl.changeNavItem('aliquotInsertion')">
             <div layout="row" layout-xs="column" layout-align="center center" layout-padding>
               <span class="single-aliquot-label" hide-xs>Código:</span>
               <input type="text" numbers-only class="aliquot-lot-input" flex placeholder="Alíquota" name="fast-trigger"
@@ -136,26 +141,59 @@
               </div>
             </div>
           </md-tab>
+          <md-tab label="Inserção de Tubo" ng-click="$ctrl.changeNavItem('tubeInsertion')">
+            <div layout="row" layout-xs="column" layout-align="center center" layout-padding>
+              <span class="single-aliquot-label" hide-xs>Código:</span>
+              <input type="text" numbers-only class="aliquot-lot-input" flex placeholder="Tubo" name="fast-trigger"
+                     value="Inserção rápida" ng-model="$ctrl.tubeCode"
+                     ng-keydown="$ctrl.tubeInputkeydown($event)"/>
+              <div>
+                <md-button ng-click="$ctrl.insertionTube($ctrl.tubeCode)" class="md-raised md-primary"
+                           aria-label="Adicionar Tubo" ng-disabled="!$ctrl.tubeCode.length">
+                  <md-tooltip md-direction="down">Adicionar</md-tooltip>
+                  <md-icon md-svg-icon="plus" aria-label="Adicionar"></md-icon>
+                </md-button>
+              </div>
+            </div>
+          </md-tab>
         </md-tabs>
 
-
-        <div layout="row" layout-margin>
-          <div layout="column" flex-gt-sm="40" flex-gt-md="25" flex="40">
-            <otus-sample-transportation-lot-aliquots-chart
-              lot-data-set="$ctrl.lot.chartAliquotDataSet"></otus-sample-transportation-lot-aliquots-chart>
+        <div layout="column" layout-fill="" flex="100">
+          <div layout="row" layout-margin ng-if="$ctrl.lot.aliquotsInfo.length">
+            <div layout="column" flex-gt-sm="40" flex-gt-md="25" flex="40">
+              <otus-sample-transportation-lot-aliquots-chart
+                lot-data-set="$ctrl.lot.chartAliquotDataSet"></otus-sample-transportation-lot-aliquots-chart>
+            </div>
+            <div layout="column" flex class="subtitle-table-container" layout-fill="">
+              <span class="md-title" layout-margin="">Alíquotas inseridas</span>
+              <md-content class="no-background-color" layout-fill="">
+                <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lot.chartAliquotDataSet"
+                                                                     flex></otus-sample-transportation-lot-chart-subtitle-table>
+              </md-content>
+            </div>
           </div>
-          <div layout="column" flex class="subtitle-table-container">
-            <md-content class="no-background-color">
-              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lot.chartAliquotDataSet"
-                                                                   flex></otus-sample-transportation-lot-chart-subtitle-table>
-            </md-content>
+          <md-divider></md-divider>
+          <span flex="20"></span>
+          <div layout="row" layout-margin ng-if="$ctrl.lot.tubesInfo.length">
+            <div layout="column" flex-gt-sm="40" flex-gt-md="25" flex="40">
+              <otus-sample-transportation-lot-tubes-chart
+                lot-data-set="$ctrl.lot.chartTubeDataSet"></otus-sample-transportation-lot-tubes-chart>
+            </div>
+            <div layout="column" flex class="subtitle-table-container" layout-fill="">
+              <span class="md-title" layout-margin="">Tubos inseridos</span>
+              <md-content class="no-background-color" flex layout-fill="">
+                <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lot.chartTubeDataSet"
+                                                                     flex></otus-sample-transportation-lot-chart-subtitle-table>
+              </md-content>
+            </div>
           </div>
         </div>
+
         <md-divider></md-divider>
-        <md-content>
+        <md-content ng-show="$ctrl.lot.aliquotList.length + $ctrl.lot.tubeList.length">
           <div class="dynamic-table-container">
             <dynamic-data-table flex dynamic-table-settings="$ctrl.dynamicTableSettings"
-                                table-update-function="$ctrl.AliquotTransportationService.dynamicDataTableFunction.updateDataTable">
+                                table-update-function="$ctrl.MaterialTransportationService.dynamicDataTableFunction.updateDataTable">
             </dynamic-data-table>
           </div>
         </md-content>

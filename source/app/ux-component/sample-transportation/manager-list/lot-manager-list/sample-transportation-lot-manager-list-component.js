@@ -15,9 +15,10 @@
     });
 
   Controller.$inject = [
+    'otusjs.deploy.LoadingScreenService',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.deploy.LocationPointRestService',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+    'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
     '$mdToast',
     'otusjs.laboratory.core.ContextService',
     'otusjs.otus.dashboard.core.ContextService',
@@ -25,7 +26,7 @@
     'otusjs.model.locationPoint.LocationPointFactory'
   ];
 
-  function Controller(ProjectFieldCenterService, LocationPointRestService, AliquotTransportationService, $mdToast, laboratoryContextService, dashboardContextService, $filter, LocationPointFactory) {
+  function Controller(LoadingScreenService, ProjectFieldCenterService, LocationPointRestService, MaterialTransportationService, $mdToast, laboratoryContextService, dashboardContextService, $filter, LocationPointFactory) {
     var self = this;
 
     //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
@@ -63,6 +64,7 @@
     self.onFilter = onFilter;
 
     function onInit() {
+
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationsPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
       });
@@ -90,11 +92,16 @@
     }
 
     function _LoadLotsList() {
-      AliquotTransportationService.getLots(self.locationFilter).then(function(response) {//TODO: LISTAGEM POR LOCATION
+      LoadingScreenService.changeMessage('Aguarde o carregamento dos lotes de transporte.');
+      LoadingScreenService.start();
+      MaterialTransportationService.getLots(self.locationFilter).then(function(response) {
         self.lotsList = response;
         self.lotsListImutable = response;
         self.onFilter();
         _setChartData();
+        LoadingScreenService.finish();
+      }).catch(function () {
+        LoadingScreenService.finish();
       });
     }
 
@@ -130,6 +137,7 @@
     function _setChartData() {
       self.lotsList.forEach(function(lot) {
         lot.chartAliquotDataSet.backgroundColor = color;
+        lot.chartTubeDataSet.backgroundColor = color;
       });
     }
   }

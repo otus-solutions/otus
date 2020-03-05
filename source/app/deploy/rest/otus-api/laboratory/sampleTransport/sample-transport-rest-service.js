@@ -18,6 +18,7 @@
     self.create = create;
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -46,6 +47,13 @@
         throw new Error('REST resource is no initialized.');
       }
       return _rest.getLots({locationPointId}).$promise;
+    }
+
+    function getTube(locationPointId, tubeCode) {
+      if (!_rest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _rest.getTube({locationPointId, tubeCode}).$promise;
     }
 
     function createLot(persistanceStructure) {

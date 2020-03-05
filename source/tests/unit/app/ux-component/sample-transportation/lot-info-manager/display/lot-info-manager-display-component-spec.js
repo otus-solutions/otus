@@ -17,7 +17,7 @@ describe('Lot info manager display component', function() {
       }
     };
 
-    Mock.AliquotTransportationService = {
+    Mock.MaterialTransportationService = {
       getContainerLabelToAliquot: function(aliquot) {},
       getAliquots: function(query) {},
       dynamicDataTableFunction: {
@@ -28,7 +28,7 @@ describe('Lot info manager display component', function() {
     Mock.AliquotTransportationMesssagesService = {
       unselectedPeriod: function() {},
       invalidPeriodInterval: function() {},
-      notAliquotsInserted: function() {},
+      notMaterialInsert: function() {},
       successInAliquotInsertion: function() {},
       toastOtherLot: function() {},
       toastNotFoundError: function() {},
@@ -51,8 +51,8 @@ describe('Lot info manager display component', function() {
     };
     Mock.lot = new TransportationLot();
     angular.mock.module(function($provide) {
-      $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationService', Mock.AliquotTransportationService);
-      $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationMessagesService', Mock.AliquotTransportationMesssagesService);
+      $provide.value('otusjs.laboratory.business.project.transportation.MaterialTransportationService', Mock.MaterialTransportationService);
+      $provide.value('otusjs.laboratory.business.project.transportation.MaterialTransportationMessagesService', Mock.AliquotTransportationMesssagesService);
       $provide.value('otusjs.laboratory.business.project.transportation.AliquotTransportationQueryFactory', Mock.AliquotTransportationFactory);
       $provide.value('otusjs.application.dialog.DialogShowService', Mock.DialogShowService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
@@ -129,7 +129,7 @@ describe('Lot info manager display component', function() {
           return Promise.reject();
         }
       });
-      spyOn(ctrl.AliquotTransportationService, 'getAliquots').and.callFake(function() {
+      spyOn(ctrl.MaterialTransportationService, 'getAliquots').and.callFake(function() {
         return Promise.resolve([].concat(mockWorkAliquots()));
       });
     });
@@ -151,7 +151,7 @@ describe('Lot info manager display component', function() {
       ctrl.$onInit();
       ctrl.insertAliquotsByPeriod();
       Injections.$mdDialog.show(jasmine.any(Object)).then(function() {
-        ctrl.AliquotTransportationService.getAliquots().then(function(result) {
+        ctrl.MaterialTransportationService.getAliquots().then(function(result) {
           expect(ctrl.lot.insertAliquotList).toHaveBeenCalledWith(result);
           expect(ctrl.lot.insertAliquotList).toHaveBeenCalledTimes(1);
           expect(ctrl.lot.aliquotList.length).toBeGreaterThan(_length);
@@ -172,7 +172,7 @@ describe('Lot info manager display component', function() {
       spyOn(Mock.AliquotTransportationMesssagesService, 'successInAliquotInsertion').and.callThrough();
       spyOn(Mock.AliquotTransportationMesssagesService, 'toastDuplicated').and.callThrough();
       spyOn(ctrl.lot, 'insertAliquot').and.callThrough();
-      spyOn(ctrl.AliquotTransportationService, 'getAliquots').and.callFake(function() {
+      spyOn(ctrl.MaterialTransportationService, 'getAliquots').and.callFake(function() {
         return Promise.resolve(mockWorkAliquots());
       });
     });
@@ -181,7 +181,7 @@ describe('Lot info manager display component', function() {
       var _length = ctrl.lot.aliquotList.length;
       ctrl.aliquotCode = "363123445";
       ctrl.fastInsertion(ctrl.aliquotCode);
-      ctrl.AliquotTransportationService.getAliquots().then(function(result) {
+      ctrl.MaterialTransportationService.getAliquots().then(function(result) {
         expect(ctrl.lot.insertAliquot).toHaveBeenCalledWith(mockWorkAliquots());
         expect(ctrl.lot.insertAliquot).toHaveBeenCalledTimes(1);
         expect(ctrl.lot.aliquotList.length).toBeGreaterThan(_length);
@@ -194,7 +194,7 @@ describe('Lot info manager display component', function() {
     it('should not insert duplicated WorkAliquot', function(done) {
       ctrl.aliquotCode = "363123446";
       ctrl.fastInsertion(ctrl.aliquotCode);
-      ctrl.AliquotTransportationService.getAliquots().then(function(result) {
+      ctrl.MaterialTransportationService.getAliquots().then(function(result) {
         expect(Mock.AliquotTransportationMesssagesService.toastDuplicated).toHaveBeenCalledTimes(1);
         done();
       });
@@ -246,6 +246,10 @@ describe('Lot info manager display component', function() {
 
   function TransportationLot() {
     var self = this;
+
+    self.getTubeForDynamicTable = () => {
+      return [];
+    };
     self.fieldCenter = {
       acronym: 'RS'
     };

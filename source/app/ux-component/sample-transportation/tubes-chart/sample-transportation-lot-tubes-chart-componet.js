@@ -3,9 +3,9 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusSampleTransportationLotAliquotsChart', {
+    .component('otusSampleTransportationLotTubesChart', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/aliquots-chart/sample-transportation-lot-aliquots-chart-template.html',
+      templateUrl: 'app/ux-component/sample-transportation/tubes-chart/sample-transportation-lot-tubes-chart-template.html',
       bindings: {
         lotDataSet: '<'
       }
@@ -35,7 +35,7 @@
     }
 
     function _renderChart() {
-      self.ctx = document.getElementById('aliquot'.concat(self.lotDataSet.chartId)).getContext('2d');
+      self.ctx = document.getElementById("tubes".concat(self.lotDataSet.chartId)).getContext('2d');
       var chartBorderWidth = 0;
       if(self.lotDataSet.data.length>1){
         chartBorderWidth = 1;
@@ -56,9 +56,9 @@
             display: false
           },
           tooltips: {
-            display: true,
+            display: false,
             custom: function (tooltipModel) {
-              var tooltipEl = document.getElementById('chartjs-tooltip'.concat(self.lotDataSet.chartId));
+              var tooltipEl = document.getElementById('chartjs-tubes-tooltip'.concat(self.lotDataSet.chartId));
               if (tooltipModel.opacity === 0) {
                 tooltipEl.style.opacity = 0;
                 return;
@@ -74,7 +74,7 @@
                 bodyLines.forEach(function (body) {
                   innerHtml = body;
                 });
-                var tableRoot = tooltipEl.querySelector('.chartjs-tooltip-key'.concat(self.lotDataSet.chartId));
+                var tableRoot = tooltipEl.querySelector('span');
                 tableRoot.innerHTML = innerHtml;
               }
 
@@ -87,5 +87,6 @@
         }
       });
     }
+
   }
 }());
