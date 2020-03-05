@@ -20,7 +20,7 @@
     'PENDENCY_VIEWER_TITLES'
   ];
 
-  function Controller(dragulaService, PendencyViewerService) {
+  function Controller(dragulaService, PendencyViewerService, PENDENCY_VIEWER_TITLES) {
     const self = this;
 
     self.chanceInputViewState = chanceInputViewState;
