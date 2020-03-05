@@ -246,6 +246,10 @@ describe('Lot info manager display component', function() {
 
   function TransportationLot() {
     var self = this;
+
+    self.getTubeForDynamicTable = () => {
+      return [];
+    };
     self.fieldCenter = {
       acronym: 'RS'
     };
