@@ -2,7 +2,7 @@
   .plf-layout {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: .01fr .1fr 1fr 1fr;
+    grid-template-rows: .01fr .1fr .5fr .5fr;
     grid-template-areas: "toolbar         toolbar         toolbar"
     "status          sortingCriteria sortingCriteria"
     "item            item            item"
@@ -79,7 +79,7 @@
            dragula-model='$ctrl.searchSettings.order.fields'
            layout="row">
         <md-chips ng-repeat='criteria in $ctrl.searchSettings.order.fields'>
-          <md-chip>{{criteria}}</md-chip>
+          <md-chip>{{$ctrl.pendencyAttributes[criteria].translatedTitle}}</md-chip>
         </md-chips>
       </div>
       <md-icon ng-click="$ctrl.chanceStateCriteria()">cancel</md-icon>
@@ -95,7 +95,7 @@
   </md-radio-group>
 
   <div ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
-    <div class="item-filter">
+    <div class="item-filter" ng-if="item.title !== 'creationDate' && item.title !== 'remainingDays'">
       <span ng-if="!$ctrl.inputViewState[item.title]">
         <md-button layout-fill class="md-raised padding-layout-fill"
                    aria-label={{item.translatedTitle}}

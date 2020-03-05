@@ -37,19 +37,6 @@
       };
     }
 
-    // function getPendencyAttributes() {
-    //   return [
-    //     {title: 'rn', translatedTitle: PENDENCY_VIEWER_TITLES.RN, icon: 'account_circle'},
-    //     {title: 'requester', translatedTitle: PENDENCY_VIEWER_TITLES.REQUESTER, icon: 'record_voice_over'},
-    //     {title: 'receiver', translatedTitle: PENDENCY_VIEWER_TITLES.RECEIVER, icon: 'assignment_ind'},
-    //     {title: 'acronym', translatedTitle: PENDENCY_VIEWER_TITLES.ACRONYM, icon: 'assignment'},
-    //     {title: 'externalID', translatedTitle: PENDENCY_VIEWER_TITLES.EXTERNAL_ID, icon: 'fingerprint'},
-    //     {title: 'dueDate', translatedTitle: PENDENCY_VIEWER_TITLES.DUE_DATE, icon: 'hourglass_empty'},
-    //     {title: 'creationDate', translatedTitle: PENDENCY_VIEWER_TITLES.CREATION_DATE, icon: 'schedule'},
-    //     {title: 'remainingDays', translatedTitle: PENDENCY_VIEWER_TITLES.REMAINING_DAYS, icon: 'speed'},
-    //   ];
-    // }
-
     function getPendencyAttributes() {
       return  {
         rn: {title: 'rn', translatedTitle: PENDENCY_VIEWER_TITLES.RN, icon: 'account_circle'},
