@@ -28,11 +28,11 @@
     }
 
     function getAllPendencies(searchSettings) {
-      _prepareParametersForPagination(searchSettings);
       PendencyViewerService.getAllPendencies(searchSettings)
         .then(data => {
-          if (!data.length) self.paginatorActive = false;
-          self.pendencies = data
+          self.pendencies = data;
+          if(!self.pendencies.length) self.paginatorActive = false;
+          else _prepareParametersForPagination(searchSettings);
         });
     }
 
