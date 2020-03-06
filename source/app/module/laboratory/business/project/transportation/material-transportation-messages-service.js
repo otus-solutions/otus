@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -26,108 +26,69 @@
     self.notMaterialInsert = notMaterialInsert;
     self.notCodeAliquotsFound = notCodeAliquotsFound;
 
+    var _notFoundLocation = new RegExp(/is not in transportation lot origin location point/g);
+    var _aliquotNotFound = new RegExp(/Aliquot not found/g);
+    var _tubeNotFound = new RegExp(/Tube not found/g);
+    var _tubeNotCollected = new RegExp(/Tube is not collected/g);
+
 
     function toastNotFoundError(code) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('O material "' + code + '" não foi encontrada.')
-        .hideDelay(timeShowMsg)
-      );
+      _show('O material "' + code + '" não foi encontrada.');
     }
 
     function toastDuplicated(code) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('O material "' + code + '" já esta no lote.')
-        .hideDelay(timeShowMsg)
-      );
+      _show('O material "' + code + '" já esta no lote.');
     }
 
     function toastWrongFieldCenter(code) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('O material "' + code + '" não pertence a este centro.')
-        .hideDelay(timeShowMsg)
-      );
+      _show('O material "' + code + '" não pertence a este centro.');
     }
 
     function toastOtherLot(code) {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('O material "' + code + '" já esta em outro lote.')
-        .hideDelay(timeShowMsg)
-      );
+      _show('O material "' + code + '" já esta em outro lote.');
     }
 
     function unselectedPeriod() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('Por favor, selecione o Período Inicial e o Período Final antes de prosseguir.')
-        .hideDelay(timeShowMsg)
-      );
+      _show('Por favor, selecione o Período Inicial e o Período Final antes de prosseguir.');
     }
 
     function invalidPeriodInterval() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('O Início do Período, não pode ser superior ao Final do Período.')
-        .hideDelay(timeShowMsg)
-      );
+      _show('O Início do Período, não pode ser superior ao Final do Período.');
     }
 
     function successInAliquotInsertion() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('A(s) alíquota(s) foi(ram) inserida(s) com sucesso.')
-        .hideDelay(timeShowMsg)
-      );
+      _show('A(s) alíquota(s) foi(ram) inserida(s) com sucesso.');
     }
 
     function successInTubeInsertion() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('O tubo foi inserido com sucesso.')
-        .hideDelay(timeShowMsg)
-      );
+      _show('O tubo foi inserido com sucesso.');
     }
 
     function notMaterialInsert() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('Nenhum material foi inserido.')
-        .hideDelay(timeShowMsg)
-      );
+      _show('Nenhum material foi inserido.');
     }
 
     function notCodeAliquotsFound() {
-      $mdToast.show(
-        $mdToast.simple()
-        .textContent('Nenhum código foi informado.')
-        .hideDelay(timeShowMsg)
-      );
+      _show('Nenhum código foi informado.');
     }
 
     self.messageError = function (message) {
-      var _notFound = new RegExp(/origin location not found/g);
-      var _aliquotNotFound = new RegExp(/Aliquot not found/g);
-      var _otherLocation = new RegExp(/is not in transportation lot origin location point/g);
-      if (_notFound.test(message) || _aliquotNotFound.test(message)) {
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('O material não foi encontrado.')
-            .hideDelay(timeShowMsg)
-        );
-        return;
-      }
-      if (_otherLocation.test(message)){
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('O material está em outro lote')
-            .hideDelay(timeShowMsg)
-        );
-        return;
+      if (_tubeNotFound.test(message) || _aliquotNotFound.test(message)) {
+        _show('O material não foi encontrado.');
+      } else if (_notFoundLocation.test(message)) {
+        _show('O material não está na localização de origem.');
+      } else if (_tubeNotCollected.test(message)) {
+        _show('O material não foi coletado.');
       }
     };
+
+    function _show(txt) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(txt)
+          .hideDelay(timeShowMsg)
+      );
+    }
 
     return self;
   }
