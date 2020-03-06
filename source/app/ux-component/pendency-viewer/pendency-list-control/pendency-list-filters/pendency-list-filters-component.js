@@ -16,12 +16,14 @@
 
   Controller.$inject = [
     'dragulaService',
-    'otusjs.pendencyViewer.PendencyViewerService'
+    'otusjs.pendencyViewer.PendencyViewerService',
+    'PENDENCY_VIEWER_TITLES'
 
   ];
 
-  function Controller(dragulaService, PendencyViewerService) {
+  function Controller(dragulaService, PendencyViewerService, PENDENCY_VIEWER_TITLES) {
     const self = this;
+    self.PENDENCY_VIEWER_TITLES = PENDENCY_VIEWER_TITLES;
 
     self.chanceInputViewState = chanceInputViewState;
     self.clear = clear;

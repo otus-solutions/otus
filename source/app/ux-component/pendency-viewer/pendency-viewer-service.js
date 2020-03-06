@@ -134,7 +134,7 @@
     function _checkPaginatorLimit(pendencies, searchSettings) {
       let activeNextPage = true;
       let activePreviousPage = true;
-      if (searchSettings.currentQuantity < 0 || pendencies.length < searchSettings.quantityToGet) {
+      if (searchSettings.currentQuantity < 0 || pendencies.length == 0) {
         _callRejectionPromise(activePreviousPage);
         return deferred.promise;
       }

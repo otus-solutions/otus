@@ -12,10 +12,11 @@
       }
     }).controller('pendencyListPaginatorCtrl', Controller);
 
-  Controller.$inject = ['otusjs.pendencyViewer.PendencyViewerService'];
+  Controller.$inject = ['otusjs.pendencyViewer.PendencyViewerService', 'PENDENCY_VIEWER_TITLES'];
 
-  function Controller(PendencyViewerService) {
+  function Controller(PendencyViewerService, PENDENCY_VIEWER_TITLES) {
     const self = this;
+    self.PENDENCY_VIEWER_TITLES = PENDENCY_VIEWER_TITLES;
     self.activeNextPage = true;
     self.activePreviousPage = false;
     //self.activePage = true;

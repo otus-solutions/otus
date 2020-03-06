@@ -34,8 +34,6 @@
 
 </style>
 
-<!--ng-blur="$ctrl.refreshListByCurrentQuantity()"-->
-
 <md-card class="paginationCard" ng-if="$ctrl.paginatorActive">
   <input ng-model="$ctrl.stuntmanSearchSettings.currentQuantity"
          type="number" min="0" class="input-left container inputStuntmanSearchSettings">
@@ -43,19 +41,19 @@
              ng-disabled="!$ctrl.activePreviousPage"
              ng-click="$ctrl.getPreviousPage($ctrl.stuntmanSearchSettings)">
     <md-icon md-font-set="material-icons">fast_rewind</md-icon>
-    <md-tooltip md-direction="top">Página Anterior</md-tooltip>
+    <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.PREVIOUS_PAGE_BUTTON}}</md-tooltip>
   </md-button>
   <md-button layout-fill class="md-raised md-primary play-page"
              ng-click="$ctrl.runCustomPagination($ctrl.stuntmanSearchSettings)">
     <md-icon md-font-set="material-icons">play_arrow</md-icon>
-    <md-tooltip md-direction="top">Nova Consulta</md-tooltip>
+    <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.CUSTOM_PAGE_BUTTON}}</md-tooltip>
   </md-button>
   <md-button layout-fill class="md-raised md-primary next-page"
              ng-disabled="!$ctrl.activeNextPage"
              ng-click="$ctrl.getNextPage($ctrl.stuntmanSearchSettings)">
     <md-icon md-font-set="material-icons">fast_forward</md-icon>
-    <md-tooltip md-direction="top">Próxima Página</md-tooltip>
+    <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.NEXT_PAGE_BUTTON}}</md-tooltip>
   </md-button>
   <input ng-model="$ctrl.stuntmanSearchSettings.quantityToGet" type="number"
-         min="1"class="input-right container inputStuntmanSearchSettings">
+         min="0" class="input-right container inputStuntmanSearchSettings">
 </md-card>
