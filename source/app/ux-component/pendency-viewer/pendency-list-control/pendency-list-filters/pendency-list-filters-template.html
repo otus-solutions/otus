@@ -48,6 +48,14 @@
     background-color: #ffffff !important;
   }
 
+  .icon-cursor {
+    cursor: pointer;
+  }
+
+  icon-move {
+    cursor: move;
+  }
+
 </style>
 
 <md-card class="plf-layout pendency-list-filters" layout-margin>
@@ -74,7 +82,10 @@
 
     <span ng-if="$ctrl.inputViewState['sortingCriteria']"
           layout="row" layout-align="space-between center">
-      <md-icon ng-click="$ctrl.resetCriteriaOrderCustomization()">refresh</md-icon>
+      <md-button class="md-icon-button" ng-click="$ctrl.resetCriteriaOrderCustomization()">
+        <md-icon >refresh</md-icon>
+        <md-tooltip md-direction="right">reset</md-tooltip>
+      </md-button>
       <div class='container' dragula='new-order-list'
            dragula-model='$ctrl.searchSettings.order.fields'
            layout="row">
@@ -82,7 +93,11 @@
           <md-chip>{{$ctrl.pendencyAttributes[criteria].translatedTitle}}</md-chip>
         </md-chips>
       </div>
-      <md-icon ng-click="$ctrl.chanceStateCriteria()">cancel</md-icon>
+      <md-button class="md-icon-button" ng-click="$ctrl.chanceStateCriteria()">
+        <md-icon>cancel</md-icon>
+        <md-tooltip md-direction="left">cancelar</md-tooltip>
+      </md-button>
+
     </span>
   </div>
 
@@ -118,7 +133,7 @@
                                  change-watcher="$ctrl.changePaginationViewState()"
                                  on-ready="true">
         </otus-participant-search>
-        <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">cancel</md-icon>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'requester'" layout="row">
@@ -130,7 +145,7 @@
                              change-watcher="$ctrl.changePaginationViewState()"
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
-        <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">cancel</md-icon>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'receiver'" layout="row">
@@ -142,7 +157,7 @@
                              change-watcher="$ctrl.changePaginationViewState()"
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
-        <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">cancel</md-icon>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')" layout="row">
@@ -153,7 +168,7 @@
           <input ng-model="$ctrl.searchSettings.filter[item.title]"
                  ng-change="$ctrl.changePaginationViewState(); $ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
                  aria-label={{item.translatedTitle}} required>
-          <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
+          <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">cancel</md-icon>
         </md-input-container>
       </span>
 
@@ -165,7 +180,7 @@
           <input ng-model="$ctrl.searchSettings.filter[item.title]"
                  ng-change="$ctrl.changePaginationViewState()"
                  aria-label={{item.translatedTitle}} required>
-          <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
+          <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">cancel</md-icon>
         </md-input-container>
       </span>
 
@@ -179,7 +194,7 @@
                        md-hide-icons="calendar"
                        aria-label={{item.translatedTitle}}>
         </md-datepicker>
-        <md-icon ng-click="$ctrl.clear(item)">cancel</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">cancel</md-icon>
       </span>
 
     </div>

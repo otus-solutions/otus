@@ -16,14 +16,13 @@
 
   function Controller(PendencyViewerService) {
     const self = this;
+    self.activeNextPage = true;
+    self.activePreviousPage = false;
+    //self.activePage = true;
 
     self.getNextPage = getNextPage;
     self.getPreviousPage = getPreviousPage;
     self.runCustomPagination = runCustomPagination;
-
-    self.activeNextPage = true;
-    self.activePreviousPage = false;
-    self.activePage = true;
 
 
     function getNextPage(stuntmanSearchSettings) {
