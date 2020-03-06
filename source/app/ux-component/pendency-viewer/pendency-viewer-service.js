@@ -27,10 +27,6 @@
     self.calculateRemainingDays = calculateRemainingDays;
     self.getSelectedParticipantRN = getSelectedParticipantRN;
     self.getChecker = getChecker;
-    self.checkPaginatorLimit = checkPaginatorLimit;
-    self.updatesScreenArtifacts = updatesScreenArtifacts;
-    self.restorePaginator = restorePaginator;
-    self.callMessage = callMessage;
 
     const deferred = $q.defer();
 
@@ -87,30 +83,6 @@
       return parsedPendencies;
     }
 
-    function callValidationPendenciesLimits(vm, stuntmanSearchSettings, mode) {
-      getAllPendencies(stuntmanSearchSettings)
-        .then(pendencies => checkPaginatorLimit(pendencies, stuntmanSearchSettings))
-        .then(checkedData => pdatesScreenArtifacts(vm, checkedData))
-        .catch(e => {
-          callMessage(e.msg);
-          switch (mode) {
-            case "next": {
-              vm.activeNextPage = e.activePage;
-              break;
-            }
-            case "previous": {
-              vm.activePreviousPage = e.activePage;
-              break;
-            }
-            case "refreshListByCurrentQuantity": {
-              restorePaginator(vm);
-              break;
-            }
-          }
-        });
-
-    }
-
     function formatDate(date) {
       return date.getUTCDate() + "/" + (date.getUTCMonth() + 1) + "/" + date.getUTCFullYear();
     }
@@ -136,7 +108,30 @@
       searchSettings.filter[pendencyFilterItem.title] = [user.checker.email];
     }
 
-    function checkPaginatorLimit(pendencies, searchSettings) {
+    function callValidationPendenciesLimits(vm, stuntmanSearchSettings, mode) {
+      getAllPendencies(stuntmanSearchSettings)
+        .then(pendencies => _checkPaginatorLimit(pendencies, stuntmanSearchSettings))
+        .then(checkedData => _updatesScreenArtifacts(vm, checkedData))
+        .catch(e => {
+          _callMessage(e.msg);
+          switch (mode) {
+            case "next": {
+              vm.activeNextPage = e.activePage;
+              break;
+            }
+            case "previous": {
+              vm.activePreviousPage = e.activePage;
+              break;
+            }
+            case "refreshListByCurrentQuantity": {
+              _restorePaginator(vm);
+              break;
+            }
+          }
+        });
+    }
+
+    function _checkPaginatorLimit(pendencies, searchSettings) {
       let activeNextPage = true;
       let activePreviousPage = true;
       if (searchSettings.currentQuantity < 0 || pendencies.length < searchSettings.quantityToGet) {
@@ -147,21 +142,21 @@
     }
 
     function _callRejectionPromise() {
-      deferred.reject({msg: "Nenhum Item Novo", activePage: false});
+      deferred.reject({msg: PENDENCY_VIEWER_TITLES.NO_NEW_ITEMS, activePage: false});
     }
 
-    function updatesScreenArtifacts(vm, checkedData) {
+    function _updatesScreenArtifacts(vm, checkedData) {
       vm.pendencies = checkedData.pendencies;
       vm.activePreviousPage = checkedData.activePreviousPage;
       vm.activeNextPage = checkedData.activeNextPage;
     }
 
-    function restorePaginator(vm) {
+    function _restorePaginator(vm) {
       let confirm = $mdDialog.confirm()
-        .title('Critério Inválido')
-        .textContent('O número informado ultrapassou limite do paginador.')
-        .ariaLabel('Critério Inválido')
-        .ok('Restaurar');
+        .title(PENDENCY_VIEWER_TITLES.INVALID_CRITERION)
+        .textContent(PENDENCY_VIEWER_TITLES.CONTEXT_INVALID_CRITERION)
+        .ariaLabel(PENDENCY_VIEWER_TITLES.INVALID_CRITERION)
+        .ok(PENDENCY_VIEWER_TITLES.BOTTON_RESTORE_PAGINATOR);
 
       $mdDialog.show(confirm).then(function () {
         vm.stuntmanSearchSettings.currentQuantity = 0;
@@ -170,7 +165,7 @@
       });
     }
 
-    function callMessage(msg) {
+    function _callMessage(msg) {
       $mdToast.show(
         $mdToast.simple()
           .textContent(msg)

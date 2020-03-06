@@ -11,7 +11,11 @@
       'EXTERNAL_ID': 'ID',
       'DUE_DATE': 'Vencimento',
       'CREATION_DATE': 'Criação',
-      'REMAINING_DAYS': 'Dias restantes '
+      'REMAINING_DAYS': 'Dias restantes',
+      'NO_NEW_ITEMS': 'Nenhum Item Novo',
+      'INVALID_CRITERION': 'Critério Inválido',
+      'CONTEXT_INVALID_CRITERION': 'O número informado ultrapassou limite do paginador.',
+      'BOTTON_RESTORE_PAGINATOR': 'Restaurar'
     });
 
 }());
