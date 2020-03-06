@@ -12,10 +12,11 @@
       }
     }).controller('pendencyListCtrl', Controller);
 
-  Controller.$inject = [];
+  Controller.$inject = ['PENDENCY_VIEWER_TITLES'];
 
-  function Controller() {
+  function Controller(PENDENCY_VIEWER_TITLES) {
     const self = this;
+    self.PENDENCY_VIEWER_TITLES = PENDENCY_VIEWER_TITLES;
   }
 
 }());

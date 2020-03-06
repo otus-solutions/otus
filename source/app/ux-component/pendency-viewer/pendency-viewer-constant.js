@@ -35,6 +35,7 @@
       'STANDARD_DATE_FORMAT':'DD/MM/AAAA',
       'PREVIOUS_PAGE_BUTTON':'Página Anterior',
       'CUSTOM_PAGE_BUTTON':'Nova Consulta',
-      'NEXT_PAGE_BUTTON':'Próxima Página'
+      'NEXT_PAGE_BUTTON':'Próxima Página',
+      'EMPTY_PENDENCY_INFO':'Nenhuma Pendência Encontrada'
     });
 }());
