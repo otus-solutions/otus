@@ -38,6 +38,7 @@
 
     self.$onInit = onInit;
 
+
     self.dynamicTableSettings;
     self.currentNavItem = "insertionByPeriod";
     self.changeNavItem = changeNavItem;
@@ -55,7 +56,7 @@
 
     $scope.$watch('$ctrl.lot.originLocationPoint', function (newValue, oldValue) {
       if (oldValue && newValue != oldValue) {
-        if (self.lot.aliquotList.length && !self.lot.code) {
+        if ((self.lot.aliquotList.length || self.lot.tubeList.length) && !self.lot.code) {
           self.clearLot(oldValue);
         }
       }
@@ -72,6 +73,7 @@
     self.selectAliquot = selectAliquot;
 
     function onInit() {
+      self.selectedOriginLocationPoint = "";
       LocationPointRestService.getLocationPoints().then(function (response) {
         if (response.data) {
           var result = response.data;
@@ -205,11 +207,15 @@
           for (var i = 0; i < self.lot.aliquotList.length; i++) {
             self.lot.removeAliquotByIndex(i);
           }
+          for (var i = 0; i < self.lot.tubeList.length; i++) {
+            self.lot.removeTubeByIndex(i);
+          }
           _updateDynamicTable();
           LoadingScreenService.finish();
 
         }).catch(function () {
           self.lot.originLocationPoint = oldValue;
+          self.selectedOriginLocationPoint = oldValue;
         });
       }
 
