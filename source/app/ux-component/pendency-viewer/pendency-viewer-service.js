@@ -9,21 +9,28 @@
     'otusjs.pendency.repository.UserActivityPendencyRepositoryService',
     'otusjs.model.pendency.UserActivityPendencyFactory',
     'PENDENCY_VIEWER_TITLES',
-    '$q'
+    '$q',
+    '$mdDialog',
+    '$mdToast'
 
   ];
 
-  function Service(UserActivityPendencyRepositoryService, UserActivityPendencyFactory, PENDENCY_VIEWER_TITLES, $q) {
+  function Service(UserActivityPendencyRepositoryService, UserActivityPendencyFactory,
+                   PENDENCY_VIEWER_TITLES, $q, $mdDialog, $mdToast) {
     const self = this;
     self.getSearchSettings = getSearchSettings;
     self.getPendencyAttributes = getPendencyAttributes;
     self.getInputViewState = getInputViewState;
     self.getAllPendencies = getAllPendencies;
+    self.callValidationPendenciesLimits = callValidationPendenciesLimits;
     self.formatDate = formatDate;
     self.calculateRemainingDays = calculateRemainingDays;
     self.getSelectedParticipantRN = getSelectedParticipantRN;
     self.getChecker = getChecker;
     self.checkPaginatorLimit = checkPaginatorLimit;
+    self.updatesScreenArtifacts = updatesScreenArtifacts;
+    self.restorePaginator = restorePaginator;
+    self.callMessage = callMessage;
 
     const deferred = $q.defer();
 
@@ -32,17 +39,17 @@
         "currentQuantity": 0,
         "quantityToGet": 10,
         "order": {
-          "fields":["dueDate"],
+          "fields": ["dueDate"],
           "mode": 1
         },
-        "filter":{
+        "filter": {
           "status": "NOT_FINALIZED"
         }
       };
     }
 
     function getPendencyAttributes() {
-      return  {
+      return {
         rn: {title: 'rn', translatedTitle: PENDENCY_VIEWER_TITLES.RN, icon: 'account_circle'},
         requester: {title: 'requester', translatedTitle: PENDENCY_VIEWER_TITLES.REQUESTER, icon: 'record_voice_over'},
         receiver: {title: 'receiver', translatedTitle: PENDENCY_VIEWER_TITLES.RECEIVER, icon: 'assignment_ind'},
@@ -72,19 +79,43 @@
         .catch(err => console.log("error:" + err))
     }
 
-    function _parsePendencies(pendencyJsonArray){
+    function _parsePendencies(pendencyJsonArray) {
       let parsedPendencies = [];
-      pendencyJsonArray.forEach( item => {
+      pendencyJsonArray.forEach(item => {
         parsedPendencies.push(UserActivityPendencyFactory.fromJsonObject(item));
       });
       return parsedPendencies;
     }
 
-    function formatDate(date) {
-      return date.getUTCDate() + "/"+ (date.getUTCMonth()+1) + "/" + date.getUTCFullYear();
+    function callValidationPendenciesLimits(vm, stuntmanSearchSettings, mode) {
+      getAllPendencies(stuntmanSearchSettings)
+        .then(pendencies => checkPaginatorLimit(pendencies, stuntmanSearchSettings))
+        .then(checkedData => pdatesScreenArtifacts(vm, checkedData))
+        .catch(e => {
+          callMessage(e.msg);
+          switch (mode) {
+            case "next": {
+              vm.activeNextPage = e.activePage;
+              break;
+            }
+            case "previous": {
+              vm.activePreviousPage = e.activePage;
+              break;
+            }
+            case "refreshListByCurrentQuantity": {
+              restorePaginator(vm);
+              break;
+            }
+          }
+        });
+
     }
 
-    function calculateRemainingDays(dueDate){
+    function formatDate(date) {
+      return date.getUTCDate() + "/" + (date.getUTCMonth() + 1) + "/" + date.getUTCFullYear();
+    }
+
+    function calculateRemainingDays(dueDate) {
       let today = _extractDateZeroTime(new Date());
       let due = _extractDateZeroTime(new Date(dueDate));
       const MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000;
@@ -92,53 +123,61 @@
       return deadLine;
     }
 
-    function _extractDateZeroTime(date){
-      date.setHours(0,0,0,0);
+    function _extractDateZeroTime(date) {
+      date.setHours(0, 0, 0, 0);
       return date;
     }
 
-    function getSelectedParticipantRN(participant, pendencyFilterItem, searchSettings){
+    function getSelectedParticipantRN(participant, pendencyFilterItem, searchSettings) {
       searchSettings.filter[pendencyFilterItem.title] = participant.recruitmentNumber;
     }
 
-    function getChecker(user, pendencyFilterItem, searchSettings){
+    function getChecker(user, pendencyFilterItem, searchSettings) {
       searchSettings.filter[pendencyFilterItem.title] = [user.checker.email];
     }
 
-    // function checkUpperLimit(pendencies, searchSettings){
-    //   let activeNextPage = true;
-    //   let activePreviousPage = true;
-    //   if(pendencies.length < searchSettings.quantityToGet) {
-    //     _callRejectionPromise();
-    //     return deferred.promise;
-    //   }
-    //   else return { pendencies, activePreviousPage, activeNextPage };
-    // }
-    //
-    // function checkLowerLimit(pendencies, searchSettings){
-    //   let activeNextPage = true;
-    //   let activePreviousPage = true;
-    //   if(searchSettings.currentQuantity < 1 ) {
-    //     _callRejectionPromise(activePreviousPage);
-    //     return deferred.promise;
-    //   }
-    //   return { pendencies, activePreviousPage, activeNextPage };
-    // }
-
-    function checkPaginatorLimit(pendencies, searchSettings){
+    function checkPaginatorLimit(pendencies, searchSettings) {
       let activeNextPage = true;
       let activePreviousPage = true;
-      if(searchSettings.currentQuantity < 1 || pendencies.length < searchSettings.quantityToGet) {
+      if (searchSettings.currentQuantity < 0 || pendencies.length < searchSettings.quantityToGet) {
         _callRejectionPromise(activePreviousPage);
         return deferred.promise;
       }
-      return { pendencies, activePreviousPage, activeNextPage };
+      return {pendencies, activePreviousPage, activeNextPage};
     }
 
-    function _callRejectionPromise(){
+    function _callRejectionPromise() {
       deferred.reject({msg: "Nenhum Item Novo", activePage: false});
     }
 
+    function updatesScreenArtifacts(vm, checkedData) {
+      vm.pendencies = checkedData.pendencies;
+      vm.activePreviousPage = checkedData.activePreviousPage;
+      vm.activeNextPage = checkedData.activeNextPage;
+    }
+
+    function restorePaginator(vm) {
+      let confirm = $mdDialog.confirm()
+        .title('Critério Inválido')
+        .textContent('O número informado ultrapassou limite do paginador.')
+        .ariaLabel('Critério Inválido')
+        .ok('Restaurar');
+
+      $mdDialog.show(confirm).then(function () {
+        vm.stuntmanSearchSettings.currentQuantity = 0;
+        vm.activePreviousPage = true;
+        vm.activeNextPage = true;
+      });
+    }
+
+    function callMessage(msg) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msg)
+          .position("left bottom")
+          .hideDelay(3000)
+      );
+    }
   }
 
 }());

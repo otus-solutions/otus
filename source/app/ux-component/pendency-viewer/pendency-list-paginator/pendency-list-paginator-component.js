@@ -8,7 +8,7 @@
       bindings: {
         stuntmanSearchSettings: '=',
         pendencies: '=',
-        paginatorActive: '<'
+        paginatorActive: '<',
       }
     }).controller('pendencyListPaginatorCtrl', Controller);
 
@@ -19,62 +19,27 @@
 
     self.getNextPage = getNextPage;
     self.getPreviousPage = getPreviousPage;
-    self.refreshListByCurrentQuantity = refreshListByCurrentQuantity;
+    self.runCustomPagination = runCustomPagination;
 
     self.activeNextPage = true;
     self.activePreviousPage = false;
+    self.activePage = true;
+
 
     function getNextPage(stuntmanSearchSettings) {
-      stuntmanSearchSettings.currentQuantity += stuntmanSearchSettings.quantityToGet
-      PendencyViewerService.getAllPendencies(stuntmanSearchSettings)
-        .then(pendencies => PendencyViewerService.checkPaginatorLimit(pendencies, stuntmanSearchSettings))
-        .then(checkedData => {
-          self.pendencies = checkedData.pendencies;
-          self.activePreviousPage = checkedData.activePreviousPage;
-          self.activeNextPage = checkedData.activeNextPage;
-        })
-        .catch(e => {
-          self.activeNextPage = e.activePage;
-          _showToast(e.msg)
-        });
+      stuntmanSearchSettings.currentQuantity += stuntmanSearchSettings.quantityToGet;
+      PendencyViewerService.callValidationPendenciesLimits(self, stuntmanSearchSettings, "next");
     }
 
     function getPreviousPage(stuntmanSearchSettings) {
-      stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet;
-      PendencyViewerService.getAllPendencies(stuntmanSearchSettings)
-        .then(pendencies => PendencyViewerService.checkPaginatorLimit(pendencies, stuntmanSearchSettings))
-        .then(checkedData => {
-          self.pendencies = checkedData.pendencies;
-          self.activePreviousPage = checkedData.activePreviousPage;
-          self.activeNextPage = checkedData.activeNextPage;
-        }).catch(e => {
-          self.activePreviousPage = e.activePage;
-          _showToast(e.msg);
-      });
+      stuntmanSearchSettings.quantityToGet > stuntmanSearchSettings.currentQuantity ?
+        stuntmanSearchSettings.currentQuantity = 0 :
+        stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet;
+      PendencyViewerService.callValidationPendenciesLimits(self, stuntmanSearchSettings, "previous");
     }
 
-    function _showToast(msg) {
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent(msg)
-          .position("left bottom")
-          .hideDelay(4000)
-      );
-    }
-
-    function refreshListByCurrentQuantity() {
-      PendencyViewerService.getAllPendencies(self.stuntmanSearchSettings)
-        .then(pendencies => PendencyViewerService.checkPaginatorLimit(pendencies, self.stuntmanSearchSettings))
-        .then(checkedData => {
-          self.pendencies = checkedData.pendencies;
-          // self.activeNextPage = true;
-          // self.activePreviousPage = true;
-        }).catch(e => {
-        self.activeNextPage = true;
-        self.activePreviousPage = true;
-        _showToast(e.msg);
-      });
-
+    function runCustomPagination(stuntmanSearchSettings) {
+      PendencyViewerService.callValidationPendenciesLimits(self, stuntmanSearchSettings, "refreshListByCurrentQuantity");
     }
   }
 }());
