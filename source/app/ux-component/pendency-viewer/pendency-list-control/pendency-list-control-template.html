@@ -2,7 +2,7 @@
 
   @media screen and (min-width: 768px) {
     .plc-layout {
-      /*width: 98vw;*/
+      width: 98vw;
       display: grid;
       grid-template-columns: 1fr .2fr;
       grid-template-rows: .1fr .2fr .1fr;
@@ -24,13 +24,12 @@
     }
   }
 
-
   .title {
     grid-area: title
   }
 
   .ordination {
-    grid-area: ordination
+    grid-area: ordination;
   }
 
   .filter {
@@ -38,7 +37,8 @@
   }
 
   .submit {
-    grid-area: submit
+    grid-area: submit;
+    /*width: 80vw;*/
   }
 
   .pendency-list-control md-input-container {

@@ -2,8 +2,9 @@
   @media screen and (min-width: 768px){
     .plf-layout {
       display: grid;
+      /*width: 90vw;*/
       grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: .01fr .1fr .3fr .5fr .5fr .5fr;
+      grid-template-rows: .01fr .1fr 1fr .5fr .5fr .5fr;
       grid-template-areas:
       "toolbar         toolbar"
       "status          status"
@@ -99,24 +100,22 @@
       </md-button>
     </span>
 
-    <span ng-if="$ctrl.inputViewState['sortingCriteria']"
-          layout="row" layout-align="space-between center">
-      <md-button class="md-icon-button" ng-click="$ctrl.resetCriteriaOrderCustomization()">
-        <md-icon >refresh</md-icon>
-        <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.REORDERING_ITEMS}}</md-tooltip>
-      </md-button>
-      <div class='container' dragula='new-order-list'
+    <span ng-if="$ctrl.inputViewState['sortingCriteria']" layout="row" layout-align="center center">
+      <md-icon ng-click="$ctrl.resetCriteriaOrderCustomization()" class="icon-cursor">refresh
+      <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.REORDERING_ITEMS}}</md-tooltip>
+      </md-icon>
+
+      <div dragula='new-order-list'
            dragula-model='$ctrl.searchSettings.order.fields'
            layout="row">
         <md-chips ng-repeat='criteria in $ctrl.searchSettings.order.fields'>
           <md-chip>{{$ctrl.pendencyAttributes[criteria].translatedTitle}}</md-chip>
         </md-chips>
       </div>
-      <md-button class="md-icon-button" ng-click="$ctrl.chanceStateCriteria()">
-        <md-icon>cancel</md-icon>
-        <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}</md-tooltip>
-      </md-button>
-
+      <md-icon ng-click="$ctrl.chanceStateCriteria()" class="icon-cursor">
+      {{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}
+      <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}</md-tooltip>
+      </md-icon>
     </span>
   </div>
 
