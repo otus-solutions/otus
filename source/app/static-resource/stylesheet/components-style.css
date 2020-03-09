@@ -262,7 +262,9 @@ otus-sample-transportation-manager-list otus-sample-transportation-lot-info-side
 }
 
 otus-lot-info-manager-display .subtitle-table-container {
-  max-height: 200px;
+  max-height: 300px;
+  padding-top: 20px !important;
+
 }
 otus-lot-info-manager-display .dynamic-table-container {
   min-width: 850px;

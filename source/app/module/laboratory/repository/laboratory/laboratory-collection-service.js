@@ -47,6 +47,7 @@
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -341,16 +342,34 @@
       return request.promise;
     }
 
-    function getLots() {
+    function getLots(locationPointId) {
       var request = $q.defer();
 
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getLots()
+            .getLots(locationPointId)
             .then(function (lots) {
               request.resolve(lots);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getTube(locationPointId, tubeCode) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getTube(locationPointId, tubeCode)
+            .then(function (tube) {
+              request.resolve(tube);
+            }).catch(function (err) {
+              request.reject(err);
             });
         });
 

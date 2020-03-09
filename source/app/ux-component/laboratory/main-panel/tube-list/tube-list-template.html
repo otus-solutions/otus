@@ -5,9 +5,9 @@
         <md-subheader class="md-no-sticky" style="font-size: 18px;">{{moment}}</md-subheader>
         <div class="tube-list-view">
           <tube-item-view id="{{tube.code}}" tube=tube ng-repeat="tube in $ctrl.tubeList | orderBy:'order'" ng-show="$ctrl.state==='main'"
-            ng-if="::tube.momentLabel==moment" />
+                          ng-if="::tube.momentLabel==moment"></tube-item-view>
           <tube-item id="{{tube.code}}" tube=tube ng-repeat="tube in $ctrl.tubeList | orderBy:'order'" ng-show="$ctrl.state==='coleta'"
-            ng-if="::tube.momentLabel==moment" />
+                     ng-if="::tube.momentLabel==moment" ></tube-item>
         </div>
       </md-list>
     </div>

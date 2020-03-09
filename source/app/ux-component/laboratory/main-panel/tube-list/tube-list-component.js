@@ -24,13 +24,14 @@
 
     /* Public Interface */
     self.$onInit = onInit;
-    
+
     self.fillOriginalTubeList = fillOriginalTubeList;
     self.haveTubesChanged = haveTubesChanged;
     self.getChangedTubes = getChangedTubes;
 
 
     function onInit() {
+      console.log(self)
       _getMoments();
       self.fillOriginalTubeList();
 
@@ -46,7 +47,7 @@
 
     function fillOriginalTubeList(tubeList){
       var currentTubeList = self.tubeList;
-      
+
       if(tubeList && Object.prototype.toString.call(tubeList) === "[object Array]"){
         currentTubeList = tubeList;
       }
@@ -63,7 +64,7 @@
     function haveTubesChanged(callbackResult){
       var hasChanged = false;
       var changedTubes = [];
-      
+
       changedTubes =  getChangedTubes();
 
       if(changedTubes.length) hasChanged = true;
@@ -83,13 +84,13 @@
           || originalTube.tubeCollectionData.time !== originalTube.tube.tubeCollectionData.time
         );
       });
-      
+
       changedTubes = changedTubes.map(function(originalTube){ return originalTube.tube });
 
       if(callbackResult && typeof callbackResult === "function"){
         callbackResult(changedTubes);
       }
-      
+
       return changedTubes;
     }
 
