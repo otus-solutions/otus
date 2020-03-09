@@ -1,4 +1,43 @@
 <style>
+
+  @media screen and (min-width: 768px){
+    .pv-layout {
+      display: grid;
+      grid-gap: 0em;
+      height: 100vh;
+      width: 100vw;
+
+      grid-template-columns: repeat(3, 1fr) .7fr;
+      grid-template-rows: .03fr .1fr 1fr .05fr;
+      grid-template-areas:
+        "toolbar toolbar toolbar toolbar"
+        "control control control control"
+        "list    list    list      list"
+        ".       .       .         paginator"
+    }
+  }
+
+  @media screen and (min-width: 1280px){
+    .pv-layout {
+      display: grid;
+      grid-gap: 0em;
+      height: 100vh;
+      width: 100vw;
+
+      grid-template-columns: repeat(4, 1fr) .7fr;
+      grid-template-rows: .03fr .1fr 1fr .05fr;
+      grid-template-areas:
+        "toolbar toolbar toolbar toolbar toolbar"
+        "control control control control control"
+        "list    list    list      list  list"
+        ".       .       .         .     paginator"
+    }
+
+  }
+
+
+
+
   .pv-layout {
     display: grid;
     grid-gap: 0em;

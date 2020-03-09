@@ -1,11 +1,29 @@
 <style>
-  .plc-layout {
-    /*width: 98vw;*/
-    display: grid;
-    grid-template-columns: repeat(2, 1fr) .2fr;
-    grid-template-rows: .1fr .2fr .1fr;
-    grid-template-areas: "title  .      ordination" "filter filter filter" "submit submit submit"
+
+  @media screen and (min-width: 768px) {
+    .plc-layout {
+      /*width: 98vw;*/
+      display: grid;
+      grid-template-columns: 1fr .2fr;
+      grid-template-rows: .1fr .2fr .1fr;
+      grid-template-areas:
+        "title  ordination"
+        "filter filter"
+        "submit submit "
+    }
+
   }
+
+  @media screen and (min-width: 1280px) {
+    .plc-layout {
+      /*width: 98vw;*/
+      display: grid;
+      grid-template-columns: repeat(2, 1fr) .2fr;
+      grid-template-rows: .1fr .2fr .1fr;
+      grid-template-areas: "title  .      ordination" "filter filter filter" "submit submit submit"
+    }
+  }
+
 
   .title {
     grid-area: title
