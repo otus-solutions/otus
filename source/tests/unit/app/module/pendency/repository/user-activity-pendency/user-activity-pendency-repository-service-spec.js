@@ -16,12 +16,15 @@ describe('UserActivityPendencyRepositoryService_UnitTest_Suite', () => {
       spyOn(Injections.UserActivityPendencyCollectionService, 'getAllUserActivityPendenciesToReceiver');
       spyOn(Injections.UserActivityPendencyCollectionService, 'getOpenedUserActivityPendenciesToReceiver');
       spyOn(Injections.UserActivityPendencyCollectionService, 'getDoneUserActivityPendenciesToReceiver');
+      spyOn(Injections.UserActivityPendencyCollectionService, 'getAllPendencies');
 
       Mock.userActivityPendencyFactory = $injector.get('otusjs.model.pendency.UserActivityPendencyFactory');
       Mock.UserActivityPendencyDocument = JSON.stringify(Test.utils.data.userActivityPendency);
       Mock.userActivityPendency = Mock.userActivityPendencyFactory.fromJsonObject(Mock.UserActivityPendencyDocument);
       Mock._id = Mock.userActivityPendency.getID();
     });
+
+    mock();
   });
 
   it('serviceExistence_check', () => {
@@ -36,6 +39,7 @@ describe('UserActivityPendencyRepositoryService_UnitTest_Suite', () => {
     expect(service.getAllUserActivityPendenciesToReceiver).toBeDefined();
     expect(service.getOpenedUserActivityPendenciesToReceiver).toBeDefined();
     expect(service.getDoneUserActivityPendenciesToReceiver).toBeDefined();
+    expect(service.getAllPendencies).toBeDefined();
   });
 
   it('createUserActivityPendencyMethod_should_evoke_create_byUserActivityPendencyCollectionService', () => {
@@ -72,4 +76,23 @@ describe('UserActivityPendencyRepositoryService_UnitTest_Suite', () => {
     service.getDoneUserActivityPendenciesToReceiver()
     expect(Injections.UserActivityPendencyCollectionService.getDoneUserActivityPendenciesToReceiver).toHaveBeenCalledTimes(1)
   });
+
+  it('getAllPendenciesMethod_should_evoke_getAllPendency_byUserActivityPendencyCollectionService', () => {
+    service.getAllPendencies(Mock.searchSettings);
+    expect(Injections.UserActivityPendencyCollectionService.getAllPendencies).toHaveBeenCalledTimes(1)
+  });
+
+  function mock() {
+    Mock.searchSettings = {
+      "currentQuantity": 0,
+      "quantityToGet": 10,
+      "order": {
+        "fields": ["dueDate"],
+        "mode": 1
+      },
+      "filter": {
+        "status": "NOT_FINALIZED"
+      }
+    }
+  }
 });
