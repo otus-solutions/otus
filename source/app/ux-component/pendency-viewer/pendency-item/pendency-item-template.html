@@ -1,28 +1,30 @@
 <style>
 
-  @media screen and (min-width: 1024px) {
+
+
+  @media screen and (min-width: 768px) {
     .pi-layout {
       display: grid;
       /*width: 98vw;*/
-      grid-template-columns: .2fr .25fr .4fr .05fr repeat(2, .56fr) .05fr repeat(2, .28fr) .15fr;
-      grid-template-rows: 1fr;
-      grid-template-areas: "acronym rn  externalID .  requester receiver . creationDate  duoDate remainingDays ";
+      grid-template-columns: 2fr 3.8fr 4.2fr 2fr;
+      grid-template-rows: .1fr .1fr;
+      grid-template-areas:
+        "acronym   creationDate duoDate   remainingDays"
+        "rn        requester    receiver  externalID"
     }
-  }
 
-  /*@media screen and (min-width: 768px) {*/
-  /*  .pi-layout {*/
-  /*    display: grid;*/
-  /*    !*width: 98vw;*!*/
-  /*    grid-template-columns: .3fr .1fr .5fr .1fr .3fr;*/
-  /*    grid-template-rows: 1fr 1fr 1fr;*/
-  /*    grid-template-areas:*/
-  /*      "acronym    . receiver  .  remainingDays"*/
-  /*      "rn         . requester .  duoDate"*/
-  /*      "externalID . .         .  creationDate"*/
-  /*  }*/
+    @media screen and (min-width: 1280px) {
+      .pi-layout {
+        display: grid;
+        /*width: 98vw;*/
+        grid-template-columns: .2fr .25fr .4fr .01fr repeat(2, .56fr) .01fr repeat(2, .28fr) .2fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "acronym rn  externalID .  requester receiver . creationDate  duoDate remainingDays ";
+      }
+    }
 
-  /*}*/
+
+    /*}*/
 
   /*@media screen and (max-width: 768px) {*/
   /*  .pi-layout {*/
