@@ -27,6 +27,7 @@
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -87,8 +88,12 @@
       return LaboratoryCollectionService.getAliquots(lotAliquot, unique);
     }
 
-    function getLots() {
-      return LaboratoryCollectionService.getLots();
+    function getTube(locationPointId, tubeCode) {
+      return LaboratoryCollectionService.getTube(locationPointId, tubeCode);
+    }
+
+    function getLots(locationPointId) {
+      return LaboratoryCollectionService.getLots(locationPointId);
     }
 
     function createLot(lotStructure) {

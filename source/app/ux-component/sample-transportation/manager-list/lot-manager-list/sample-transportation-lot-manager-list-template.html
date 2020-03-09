@@ -3,20 +3,24 @@
     <md-subheader class="md-no-sticky moment-type-title" flex="20">
       Filtros de Pesquisa
     </md-subheader>
-    <div layout="row" layout-xs="column"  layout-align="start center" flex>
+    <div layout="row" layout-xs="column" layout-align="start center" flex>
       <md-input-container class="remove-errors-spacer">
         <label>Período Inicial</label>
-        <md-datepicker ng-model="$ctrl.shipmentBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
+        <md-datepicker ng-model="$ctrl.shipmentBeginFilter" ng-change="$ctrl.onFilter()"
+                       aria-label="Período Inicial"></md-datepicker>
       </md-input-container>
       <md-input-container class="remove-errors-spacer">
         <label>Período Fínal</label>
-        <md-datepicker ng-model="$ctrl.shipmentEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
+        <md-datepicker ng-model="$ctrl.shipmentEndFilter" ng-change="$ctrl.onFilter()"
+                       aria-label="Período Final"></md-datepicker>
       </md-input-container>
-      <md-input-container class="remove-errors-spacer" style="margin-left:15px">
-        <label>Centro</label>
-        <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
-          <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-selected="$index == $ctrl.centerFilterselectedIndex">
-            {{center}}
+      <md-input-container class="remove-errors-spacer" flex="" flex-gt-sm="25" flex-gt-md="15" style="margin-left:15px">
+        <label>Ponto de localização</label>
+        <md-select ng-model="$ctrl.locationFilter" ng-change="$ctrl.onFilter()"
+                   ng-disabled="$ctrl.centerFilterDisabled">
+          <md-option ng-repeat="locationPoint in $ctrl.userLocationsPoints track by $index"
+                     value="{{locationPoint._id}}" ng-selected="$index == 0">
+            {{locationPoint.name}}
           </md-option>
         </md-select>
       </md-input-container>
@@ -28,27 +32,35 @@
           </md-option>
         </md-select>
       </md-input-container>
+      <md-button class="md-accent md-raised md-icon-button" ng-click="$ctrl.getLots()">
+        <md-icon>search</md-icon>
+      </md-button>
+      <md-tooltip md-direction="up">Filtrar</md-tooltip>
     </div>
   </div>
   <md-divider></md-divider>
 </div>
-<md-content class="md-padding" layout="column" >
+<md-content class="md-padding" layout="column">
   <div class="mobile-filter">
     <div layout="row">
-      <div layout="row" layout-xs="column"  layout-align="center " flex>
+      <div layout="row" layout-xs="column" layout-align="center " flex>
         <md-input-container class="remove-errors-spacer">
           <label>Período Inicial</label>
-          <md-datepicker ng-model="$ctrl.shipmentBeginFilter" ng-change="$ctrl.onFilter()" aria-label="Período Inicial"></md-datepicker>
+          <md-datepicker ng-model="$ctrl.shipmentBeginFilter" ng-change="$ctrl.onFilter()"
+                         aria-label="Período Inicial"></md-datepicker>
         </md-input-container>
         <md-input-container class="remove-errors-spacer">
           <label>Período Fínal</label>
-          <md-datepicker ng-model="$ctrl.shipmentEndFilter" ng-change="$ctrl.onFilter()" aria-label="Período Final"></md-datepicker>
+          <md-datepicker ng-model="$ctrl.shipmentEndFilter" ng-change="$ctrl.onFilter()"
+                         aria-label="Período Final"></md-datepicker>
         </md-input-container>
         <md-input-container class="remove-errors-spacer" style="margin-left:15px">
-          <label>Centro</label>
-          <md-select ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()" ng-disabled="$ctrl.centerFilterDisabled">
-            <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center}}" ng-selected="$index == $ctrl.centerFilterselectedIndex">
-              {{center}}
+          <label>Ponto de localização</label>
+          <md-select ng-model="$ctrl.locationFilter" ng-change="$ctrl.onFilter()"
+                     ng-disabled="$ctrl.centerFilterDisabled">
+            <md-option ng-repeat="locationPoint in $ctrl.userLocationsPoints track by $index"
+                       value="{{locationPoint._id}}" ng-selected="$index == 0">
+              {{locationPoint.name}}
             </md-option>
           </md-select>
         </md-input-container>
@@ -60,6 +72,10 @@
             </md-option>
           </md-select>
         </md-input-container>
+        <md-button class="md-accent md-raised" hide-gt-xs ng-click="$ctrl.getLots()" flex>
+          <md-icon>search</md-icon>
+        </md-button>
+
       </div>
     </div>
     <md-divider></md-divider>
@@ -67,30 +83,37 @@
   <div ng-if="$ctrl.view=='Cards'">
     <div layout-align="center none" layout-wrap layout="row" flex>
       <div ng-repeat="lot in $ctrl.lotsList | limitTo:$ctrl.show track by lot.code">
-        <md-card layout-padding ng-click="$ctrl.selectLot(lot)" class="{{(lot.isSelected ? 'selectedState' : 'regularState') + ' aliquot-md-card card-tube' }}"
-              ng-class="{ 'selectedState': lot.isSelected, 'regularState': !lot.isSelected }">
+        <md-card layout-padding ng-click="$ctrl.selectLot(lot)"
+                 class="{{(lot.isSelected ? 'selectedState' : 'regularState') + ' aliquot-md-card card-tube' }}"
+                 ng-class="{ 'selectedState': lot.isSelected, 'regularState': !lot.isSelected }">
           <md-card-title flex>
             <div layout="row" flex>
-                <div layout="column" flex="75">
-                    <md-card-title-text flex="100">
-                      <span class="md-headline">{{lot.code}}</span>
-                      <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
-                      <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
-                      <span class="md-subhead">Responsável: {{lot.operator}}</span>
-                    </md-card-title-text>
-                    <md-card-actions layout="row" layout-align="end center"></md-card-actions>
-                  </div>
-                  <div layout="column" flex="">
-                    <otus-sample-transportation-lot-aliquots-chart lot-data-set="lot.chartDataSet"></otus-sample-transportation-lot-aliquots-chart>
-                  </div>
+              <div layout="column" flex="60">
+                <md-card-title-text flex="100">
+                  <span class="md-headline">{{lot.code}}</span>
+                  <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                  <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
+                  <span class="md-subhead">Responsável: {{lot.operator}}</span>
+                </md-card-title-text>
+                <md-card-actions layout="row" layout-align="end center"></md-card-actions>
+              </div>
+              <div layout="row" flex="">
+                <otus-sample-transportation-lot-aliquots-chart
+                  lot-data-set="lot.chartAliquotDataSet"></otus-sample-transportation-lot-aliquots-chart>
+                <otus-sample-transportation-lot-tubes-chart
+                  lot-data-set="lot.chartTubeDataSet"></otus-sample-transportation-lot-tubes-chart>
+              </div>
             </div>
           </md-card-title>
-          <md-card-content layout="column" style="height:180px;" ng-if="lot.chartDataSet.labels.length > 0">
+          <md-card-content layout="column" style="height:180px;">
             <md-content md-content class="no-background-color">
-              <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="lot.chartDataSet"></otus-sample-transportation-lot-chart-subtitle-table>
+              <otus-sample-transportation-lot-chart-subtitle-table ng-if="lot.chartAliquotDataSet.labels.length"
+                lot-data-set="lot.chartAliquotDataSet"></otus-sample-transportation-lot-chart-subtitle-table>
+              <otus-sample-transportation-lot-chart-subtitle-table ng-if="lot.chartTubeDataSet.labels.length"
+                lot-data-set="lot.chartTubeDataSet"></otus-sample-transportation-lot-chart-subtitle-table>
             </md-content>
           </md-card-content>
-          <md-card-content layout-align="center center" layout="column" ng-if="!lot.chartDataSet.labels.length">
+          <md-card-content layout-align="center center" layout="column" ng-if="!lot.chartAliquotDataSet.labels.length">
             <span class="md-subhead">Não há Alíquotas no lote</span>
           </md-card-content>
         </md-card>
@@ -101,7 +124,7 @@
     </div>
   </div>
   <div ng-if="$ctrl.view!='Cards'" layout="column">
-    <md-content >
+    <md-content>
       <div class="table-container">
         <md-list flex>
           <md-list-item class="md-1-line" style="margin-left:8px">
@@ -158,3 +181,17 @@
   </div>
 </md-content>
 
+
+<!--<div layout="row" layout-margin ng-if="$ctrl.lot.tubesInfo.length">-->
+<!--  <div layout="column" flex-gt-sm="40" flex-gt-md="25" flex="40">-->
+<!--    <otus-sample-transportation-lot-tubes-chart-->
+<!--      lot-data-set="$ctrl.lot.chartTubeDataSet"></otus-sample-transportation-lot-tubes-chart>-->
+<!--  </div>-->
+<!--  <div layout="column" flex class="subtitle-table-container" layout-fill="">-->
+<!--    <span class="md-title" layout-margin="">Tubos inseridos</span>-->
+<!--    <md-content class="no-background-color" flex layout-fill="">-->
+<!--      <otus-sample-transportation-lot-chart-subtitle-table lot-data-set="$ctrl.lot.chartTubeDataSet"-->
+<!--                                                           flex></otus-sample-transportation-lot-chart-subtitle-table>-->
+<!--    </md-content>-->
+<!--  </div>-->
+<!--</div>-->

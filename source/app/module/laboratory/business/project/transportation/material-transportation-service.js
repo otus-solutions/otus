@@ -4,7 +4,7 @@
   angular
     .module('otusjs.laboratory.business.project.transportation')
     .service(
-      'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+      'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
       service);
 
   service.$inject = [
@@ -25,6 +25,7 @@
     //Laboratory Project Methods
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -59,12 +60,25 @@
       return deferred.promise;
     }
 
-    function getLots() {
+    function getTube(locationPointId, tubeCode) {
+      var deferred = $q.defer();
+      LaboratoryRepositoryService.getTube(locationPointId, tubeCode)
+        .then(function(response) {
+          deferred.resolve(response);
+        })
+        .catch(function(err) {
+          deferred.reject(err);
+        });
+
+      return deferred.promise;
+    }
+
+    function getLots(locationPointId) {
       var deferred = $q.defer();
 
       LaboratoryConfigurationService.fetchAliquotsDescriptors()
         .then(function() {
-          LaboratoryRepositoryService.getLots()
+          LaboratoryRepositoryService.getLots(locationPointId)
             .then(function(response) {
               var lots = JSON.parse(response).map(function(lotJson) {
                 return TransportationService.buildAliquotLotFromJson(
@@ -76,6 +90,18 @@
             .catch(function(err) {
               deferred.reject(err);
             });
+        });
+
+      return deferred.promise;
+    }
+
+    self.fetchConfiguration = fetchConfiguration;
+    function fetchConfiguration() {
+      var deferred = $q.defer();
+
+      LaboratoryConfigurationService.fetchAliquotsDescriptors()
+        .then(function() {
+          deferred.resolve(true);
         });
 
       return deferred.promise;
