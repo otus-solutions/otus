@@ -1,9 +1,21 @@
 <style>
-  .paginationCard {
-    display: grid;
-    grid-template-columns: .1fr 1fr 1fr .1fr;
-    grid-template-rows: 1fr;
-    grid-template-areas: "inputLeft previousPage playPage nextPage inputRight"
+  @media screen and (min-width: 360px) {
+    .paginationCard {
+      display: grid;
+      grid-template-columns: .1fr .5fr .5fr .5fr .1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "inputLeft previousPage playPage nextPage inputRight"
+    }
+  }
+
+
+  @media screen and (min-width: 768px) {
+    .paginationCard {
+      display: grid;
+      grid-template-columns: .1fr 1fr 1fr 1fr .1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "inputLeft previousPage playPage nextPage inputRight"
+    }
   }
 
   .input-left {
@@ -27,7 +39,7 @@
   }
 
   .inputStuntmanSearchSettings {
-    width: 3.6vw;
+    width: 40px;
     border: none;
     margin-left: 2vw;
   }
@@ -36,7 +48,7 @@
 
 <md-card class="paginationCard" ng-if="$ctrl.paginatorActive">
   <input ng-model="$ctrl.stuntmanSearchSettings.currentQuantity"
-         type="number" min="0" class="input-left container inputStuntmanSearchSettings">
+         type="number" min="0" class="input-left inputStuntmanSearchSettings">
   <md-button layout-fill class="md-raised md-primary previous-page"
              ng-disabled="!$ctrl.activePreviousPage"
              ng-click="$ctrl.getPreviousPage($ctrl.stuntmanSearchSettings)">
@@ -55,5 +67,5 @@
     <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.NEXT_PAGE_BUTTON}}</md-tooltip>
   </md-button>
   <input ng-model="$ctrl.stuntmanSearchSettings.quantityToGet" type="number"
-         min="0" class="input-right container inputStuntmanSearchSettings">
+         min="0" class="input-right inputStuntmanSearchSettings">
 </md-card>
