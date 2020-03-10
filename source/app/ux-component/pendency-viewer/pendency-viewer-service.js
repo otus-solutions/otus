@@ -33,7 +33,7 @@
     function getSearchSettings() {
       return {
         "currentQuantity": 0,
-        "quantityToGet": 10,
+        "quantityToGet": 15,
         "order": {
           "fields": ["dueDate"],
           "mode": 1
