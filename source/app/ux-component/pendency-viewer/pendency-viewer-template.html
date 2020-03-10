@@ -1,5 +1,20 @@
 <style>
 
+  @media screen and (min-width: 360px){
+    .pv-layout {
+      display: grid;
+      height: 100vh;
+      width: 100vw;
+      grid-template-columns: repeat(1, 1fr);
+      grid-template-rows: .1fr .1fr 1fr .1fr;
+      grid-template-areas:
+        "toolbar"
+        "control"
+        "list"
+        "paginator"
+    }
+  }
+
   @media screen and (min-width: 768px){
     .pv-layout {
       display: grid;
