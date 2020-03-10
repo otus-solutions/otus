@@ -39,6 +39,7 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
       spyOn(Injections.ApplicationStateService, "laboratoryActivityFlagsReport");
       spyOn(Injections.ApplicationStateService, "activateExamSending");
       spyOn(Injections.ApplicationStateService, "activateLaboratoryMonitoring");
+      spyOn(Injections.ApplicationStateService, "activatePendencyViewer");
       spyOn(Injections.LoadingScreenService, "start");
     });
   });
@@ -58,6 +59,7 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
     expect(ctrl.managerParticipantsDashboard).toBeDefined();
     expect(ctrl.activateActivityFlagsReport).toBeDefined();
     expect(ctrl.laboratoryActivityFlagsReport).toBeDefined();
+    expect(ctrl.pendencyViewer).toBeDefined();
   });
 
   it('onInit_method_should_evoke_internalMethods', function () {
@@ -109,6 +111,11 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
     expect(Injections.ApplicationStateService.activateLaboratoryMonitoring).toHaveBeenCalledTimes(1);
   });
 
+  it('pendencyViewer_method_should_evoke_internalMethods', function () {
+    ctrl.pendencyViewer();
+    expect(Injections.ApplicationStateService.activatePendencyViewer).toHaveBeenCalledTimes(1);
+  });
+
   function mockInjections() {
     Mock.ApplicationStateService = {
       activateMonitoring: function () {
@@ -126,6 +133,8 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
       activateExamSending: function () {
       },
       activateLaboratoryMonitoring: function () {
+      },
+      activatePendencyViewer: function () {
       }
     };
     Mock.LoadingScreenService = {
