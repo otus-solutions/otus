@@ -31,7 +31,7 @@
     }
 
     function closeFilters() {
-      if (self.filtersViewEnable) self.filtersViewEnable = !self.filtersViewEnable;
+      self.filtersViewEnable = false;
     }
 
   }
