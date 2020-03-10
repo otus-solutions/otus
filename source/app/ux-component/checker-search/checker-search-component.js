@@ -4,7 +4,7 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusCheckerSearch', {
-      controller:  'userActivityPendencyCtrl as $ctrl',
+      controller: 'otusCheckerSearchCtrl as $ctrl',
       templateUrl: 'app/ux-component/checker-search/checker-search-template.html',
       bindings: {
         searchSettings: '=',

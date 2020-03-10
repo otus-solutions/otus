@@ -4,7 +4,7 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusParticipantSearch', {
-      controller: Controller,
+      controller: 'otusParticipantSearchCtrl as $ctrl',
       templateUrl: 'app/ux-component/participant-search/participant-search-template.html',
       bindings: {
         onSelect: '&',
@@ -15,7 +15,7 @@
         searchSettings: '=',
         changeWatcher: '&'
       }
-    });
+    }).controller('otusParticipantSearchCtrl', Controller);
 
   Controller.$inject = [
     'STATE',
@@ -29,9 +29,8 @@
   ];
 
   function Controller(STATE, $q, ParticipantManagerService, ApplicationStateService,
-                      dashboardContextService, $mdDialog, DialogService, PendencyViewerService) {
+                      DashboardContextService, $mdDialog, DialogService, PendencyViewerService) {
     var self = this;
-
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -73,16 +72,14 @@
       } else if (ApplicationStateService.getCurrentState() == STATE.DASHBOARD) {
         _setParticipant();
         ApplicationStateService.activateParticipantDashboard();
-      } else if (ApplicationStateService.getCurrentState() == STATE.LABORATORY && dashboardContextService.getChangedState()) {
+      } else if (ApplicationStateService.getCurrentState() == STATE.LABORATORY && DashboardContextService.getChangedState()) {
         DialogService.showDialog(confirmParticipantChange).then(function () {
           _setParticipant();
-          dashboardContextService.setChangedState();
+          DashboardContextService.setChangedState();
         });
       } else if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER) {
         PendencyViewerService.getSelectedParticipantRN(self.selectedParticipant,
           self.pendencyFilterItem, self.searchSettings);
-
-
       } else {
         _setParticipant();
       }
