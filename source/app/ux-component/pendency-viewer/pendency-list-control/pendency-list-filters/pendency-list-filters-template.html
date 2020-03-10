@@ -1,4 +1,27 @@
 <style>
+
+  @media screen and (min-width: 360px){
+    .plf-layout {
+      display: grid;
+      /*width: 90vw;*/
+      grid-template-columns:  1fr;
+      grid-template-rows: .01fr .1fr 1fr .1fr .1fr .1fr .1fr .1fr;
+      grid-template-areas:
+        "toolbar"
+        "status"
+        "sortingCriteria"
+        "item"
+        "item"
+        "item"
+        "item"
+        "item"
+        "item"
+    }
+
+  }
+
+
+
   @media screen and (min-width: 768px){
     .plf-layout {
       display: grid;
@@ -100,14 +123,15 @@
       </md-button>
     </span>
 
-    <span ng-if="$ctrl.inputViewState['sortingCriteria']" layout="row" layout-align="center center">
+    <span ng-if="$ctrl.inputViewState['sortingCriteria']" layout="row"
+          layout-align="center center">
       <md-icon ng-click="$ctrl.resetCriteriaOrderCustomization()" class="icon-cursor">refresh
       <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.REORDERING_ITEMS}}</md-tooltip>
       </md-icon>
 
       <div dragula='new-order-list'
            dragula-model='$ctrl.searchSettings.order.fields'
-           layout="row">
+           layout="row" layout-xs="column">
         <md-chips ng-repeat='criteria in $ctrl.searchSettings.order.fields'>
           <md-chip>{{$ctrl.pendencyAttributes[criteria].translatedTitle}}</md-chip>
         </md-chips>

@@ -1,15 +1,31 @@
 <style>
 
+  @media screen and (min-width: 360px) {
+    .pi-layout {
+      display: grid;
+      /*width: 98vw;*/
+      grid-template-columns: 2.9fr .6fr .1fr 6fr;
+      grid-template-rows: 1fr;
+      grid-template-areas:
+        "acronym acronym requester requester"
+        "rn rn receiver receiver"
+        "creationDate creationDate creationDate duoDate"
+        "remainingDays .           externalID externalID"
+
+    }
+  }
+
   @media screen and (min-width: 768px) {
     .pi-layout {
       display: grid;
       /*width: 98vw;*/
-      grid-template-columns: 2fr 3.8fr 4.2fr 2fr;
+      grid-template-columns: 1.8fr 3.8fr 4.2fr 2.2fr;
       grid-template-rows: .1fr .1fr;
       grid-template-areas:
         "acronym   creationDate duoDate   remainingDays"
         "rn        requester    receiver  externalID"
     }
+  }
 
     @media screen and (min-width: 1280px) {
       .pi-layout {
