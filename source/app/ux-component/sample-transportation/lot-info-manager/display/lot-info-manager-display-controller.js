@@ -74,11 +74,12 @@
 
     function onInit() {
       self.selectedOriginLocationPoint = "";
+      self.destinationLocationPoints = [];
       LocationPointRestService.getLocationPoints().then(function (response) {
         if (response.data) {
           var result = response.data;
           if (result.transportLocationPoints) {
-            self.destinationLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
+            self.destinationLocationPoints = angular.copy(LocationPointFactory.fromArray(response.data.transportLocationPoints));
           }
         }
       });
@@ -417,7 +418,8 @@
             return availableTube;
           }
         }).catch(function (err) {
-          MaterialTransportationMessagesService.messageError(err.data.MESSAGE);
+          var _msg = err.data ? err.data['MESSAGE'] : "Não foi possível localizar o material";
+          MaterialTransportationMessagesService.messageError(_msg);
           return;
         });
 
@@ -444,7 +446,8 @@
             return availableAliquot;
           }
         }).catch(function (err) {
-          MaterialTransportationMessagesService.messageError(err.data.MESSAGE);
+          var _msg = err.data ? err.data['MESSAGE'] : "Não foi possível localizar o material";
+          MaterialTransportationMessagesService.messageError(_msg);
           return;
         });
 
