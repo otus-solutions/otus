@@ -1,4 +1,4 @@
-describe('PendencyViewerService_UnitTest_Suite', () => {
+fdescribe('PendencyViewerService_UnitTest_Suite', () => {
   let service;
   let Injections = [];
   let Mock = {};
@@ -78,20 +78,20 @@ describe('PendencyViewerService_UnitTest_Suite', () => {
 
   });
 
-  it('callValidationPendenciesLimits_method_should_call_getAllPendencies_method', () => {
+  fit('callValidationPendenciesLimits_method_should_call_getAllPendencies_method', () => {
     const mode = '';
     const vm = {};
     spyOn(Injections.UserActivityPendencyRepositoryService, "getAllPendencies").and.returnValue(Mock.defer.promise);
     spyOn(service, "getAllPendencies").and.returnValue(Promise.resolve( Mock.defer.resolve(Mock.pendencies)));
     service.callValidationPendenciesLimits(vm, Mock.searchSettings, mode);
-    service.getAllPendencies(Mock.searchSettings)
-      .then(data => expect(data.length).toBe(Mock.pendencies.length));
     Mock.scope.$digest();
+    expect(vm.pendencies).toBeDefined();
+    expect(vm.pendencies.length).toBe(Mock.pendencies.length);
   });
 
   describe("callValidationPendenciesLimits_method_should_handle_getAllPendencies_fail_Suite", () => {
 
-    it('callValidationPendenciesLimits_method_should_handle_getAllPendencies_in_case_next_mode', () => {
+    fit('callValidationPendenciesLimits_method_should_handle_getAllPendencies_in_case_next_mode', () => {
       const mode = 'next';
       const vm = {};
       const rejectError = Promise.reject({
@@ -104,6 +104,7 @@ describe('PendencyViewerService_UnitTest_Suite', () => {
       service.getAllPendencies(Mock.searchSettings)
         .catch(e =>  expect(e.activePage).toBeTruthy());
       Mock.scope.$digest();
+      expect(vm.pendencies).not.toBeDefined()
     });
 
     it('callValidationPendenciesLimits_method_should_handle_getAllPendencies_in_case_previous_mode', () => {
