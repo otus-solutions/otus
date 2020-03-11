@@ -1,4 +1,4 @@
-fdescribe('PendencyViewerService_UnitTest_Suite', () => {
+describe('PendencyViewerService_UnitTest_Suite', () => {
   let service;
   let Injections = [];
   let Mock = {};
@@ -78,7 +78,7 @@ fdescribe('PendencyViewerService_UnitTest_Suite', () => {
 
   });
 
-  fit('callValidationPendenciesLimits_method_should_call_getAllPendencies_method', () => {
+  it('callValidationPendenciesLimits_method_should_call_getAllPendencies_method', () => {
     const mode = '';
     const vm = {};
     spyOn(Injections.UserActivityPendencyRepositoryService, "getAllPendencies").and.returnValue(Mock.defer.promise);
@@ -91,7 +91,7 @@ fdescribe('PendencyViewerService_UnitTest_Suite', () => {
 
   describe("callValidationPendenciesLimits_method_should_handle_getAllPendencies_fail_Suite", () => {
 
-    fit('callValidationPendenciesLimits_method_should_handle_getAllPendencies_in_case_next_mode', () => {
+    it('callValidationPendenciesLimits_method_should_handle_getAllPendencies_in_case_next_mode', () => {
       const mode = 'next';
       const vm = {};
       const rejectError = Promise.reject({
@@ -100,11 +100,12 @@ fdescribe('PendencyViewerService_UnitTest_Suite', () => {
       });
       spyOn(Injections.UserActivityPendencyRepositoryService, "getAllPendencies").and.returnValue(rejectError);
       spyOn(service, "getAllPendencies").and.returnValue(rejectError);
-      service.callValidationPendenciesLimits(vm, Mock.searchSettings, mode);
-      service.getAllPendencies(Mock.searchSettings)
-        .catch(e =>  expect(e.activePage).toBeTruthy());
-      Mock.scope.$digest();
-      expect(vm.pendencies).not.toBeDefined()
+
+      try{
+        service.callValidationPendenciesLimits(vm, Mock.searchSettings, mode);
+      } catch (e) {
+        expect(e.activePage).toBeTruthy()
+      }
     });
 
     it('callValidationPendenciesLimits_method_should_handle_getAllPendencies_in_case_previous_mode', () => {
@@ -116,10 +117,12 @@ fdescribe('PendencyViewerService_UnitTest_Suite', () => {
       });
       spyOn(Injections.UserActivityPendencyRepositoryService, "getAllPendencies").and.returnValue(rejectError);
       spyOn(service, "getAllPendencies").and.returnValue(rejectError);
-      service.callValidationPendenciesLimits(vm, Mock.searchSettings, mode);
-      service.getAllPendencies(Mock.searchSettings)
-        .catch(e =>  expect(e.activePage).toBeFalsy());
-      Mock.scope.$digest();
+
+      try{
+        service.callValidationPendenciesLimits(vm, Mock.searchSettings, mode);
+      } catch (e) {
+        expect(e.activePage).toBeFalsy();
+      }
     });
 
     it('callValidationPendenciesLimits_method_should_handle_getAllPendencies_in_case_refreshListByCurrentQuantity_mode', () => {
@@ -131,9 +134,13 @@ fdescribe('PendencyViewerService_UnitTest_Suite', () => {
       });
       spyOn(Injections.UserActivityPendencyRepositoryService, "getAllPendencies").and.returnValue(rejectError);
       spyOn(service, "getAllPendencies").and.returnValue(rejectError);
-      service.callValidationPendenciesLimits(vm, Mock.searchSettings, mode);
-      service.getAllPendencies(Mock.searchSettings)
-        .catch(e =>  expect(e).toBeDefined());
+
+      try{
+        service.callValidationPendenciesLimits(vm, Mock.searchSettings, mode);
+      } catch (e) {
+        expect(e.activePage).toBeDefined();
+        expect(e.msg).toEqual("something is wrong");
+      }
     });
   });
 
