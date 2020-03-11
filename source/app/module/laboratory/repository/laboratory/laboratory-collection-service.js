@@ -47,9 +47,18 @@
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
+
+    /* Unattached Laboratory Methods */
+    self.attacheLaboratory = attacheLaboratory;
+    self.listUnattached = listUnattached;
+    self.createUnattached = createUnattached;
+    self.getUnattachedById = getUnattachedById;
+    self.discardUnattached = discardUnattached;
+    self.getUnattachedByIdentification = getUnattachedByIdentification;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -333,16 +342,34 @@
       return request.promise;
     }
 
-    function getLots() {
+    function getLots(locationPointId) {
       var request = $q.defer();
 
       _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
-            .getLots()
+            .getLots(locationPointId)
             .then(function (lots) {
               request.resolve(lots);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getTube(locationPointId, tubeCode) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getTube(locationPointId, tubeCode)
+            .then(function (tube) {
+              request.resolve(tube);
+            }).catch(function (err) {
+              request.reject(err);
             });
         });
 
@@ -410,6 +437,120 @@
         .then(function (remoteStorage) {
           remoteStorage
             .deleteLot(lotCode)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function createUnattached(fieldCenterAcronym, collectGroupName) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .createUnattached(fieldCenterAcronym, collectGroupName)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .attacheLaboratory(recruitmentNumber, laboratoryIdentification)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function listUnattached(collectGroupName, center, page, quantity) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .listUnattached(collectGroupName, center, page, quantity)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getUnattachedById(laboratoryOid) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .getUnattachedById(laboratoryOid)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function discardUnattached(laboratoryOid) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .discardUnattached(laboratoryOid)
+            .then(function (data) {
+              request.resolve(data);
+            })
+            .catch(function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getUnattachedByIdentification(laboratoryIdentification) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .getUnattachedByIdentification(laboratoryIdentification)
             .then(function (data) {
               request.resolve(data);
             })

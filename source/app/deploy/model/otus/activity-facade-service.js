@@ -6,10 +6,11 @@
     .service('otusjs.deploy.model.ActivityFacadeService', Service);
 
   Service.$inject = [
+    'otusjs.model.participant.ParticipantFactory',
     'otusjs.model.activity.ActivityFacadeService'
   ];
 
-  function Service(ActivityFacadeService) {
+  function Service(ParticipantFactory, ActivityFacadeService) {
     var self = this;
     var _currentUser = null;
 
@@ -35,13 +36,18 @@
     }
 
     function createActivity(template, user, participant, paperActivityData, configuration, externalID) {
+      var _participant = _normalizeParticipant(participant);
       if (paperActivityData) {
-        ActivityFacadeService.createPaperActivity(template, user, participant, paperActivityData, configuration, externalID);
+        ActivityFacadeService.createPaperActivity(template, user, _participant, paperActivityData, configuration, externalID);
       } else {
-        ActivityFacadeService.createActivity(template, user, participant, configuration, externalID);
+        ActivityFacadeService.createActivity(template, user, _participant, configuration, externalID);
       }
 
       return getActivity();
+    }
+
+    function _normalizeParticipant(participant) {
+      return ParticipantFactory.fromJson(participant).toJSON()
     }
 
     function openSurveyActivity(user) {

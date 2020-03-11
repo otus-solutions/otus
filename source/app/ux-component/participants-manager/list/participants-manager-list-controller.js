@@ -44,7 +44,7 @@
 
     function _buildParticipants(){
       self.participants.map(function(participant) {
-        participant.birthday = new Date(participant.birthdate.value);
+        participant.birthday = participant.birthdate ? new Date(participant.birthdate.value) : "";
         participant.obito = participant.late ? 'Sim': 'Não';
       });
       self.selectedParticipant = null;
@@ -98,7 +98,7 @@
         .setTitle('Lista de Participantes')
         // .setCallbackAfterChange(self.dynamicDataTableChange)
         //Don't use with Service, in this case pass Service as attribute in the template
-        // .setTableUpdateFunction(AliquotTransportationService.dynamicDataTableFunction.updateDataTable)
+        // .setTableUpdateFunction(MaterialTransportationService.dynamicDataTableFunction.updateDataTable)
         /*
           //Optional Config's
 

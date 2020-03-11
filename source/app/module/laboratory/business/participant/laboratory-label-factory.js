@@ -12,9 +12,14 @@
 
     /* Public interface */
     self.create = create;
+    self.createForUnattached = createForUnattached;
 
     function create(participant, laboratory) {
       return new LaboratoryLabel(participant, laboratory);
+    }
+
+    function createForUnattached(laboratory) {
+      return new LaboratoryLabel(null, laboratory);
     }
 
     return self;
@@ -25,10 +30,21 @@
     var DEFAULT = 'DEFAULT';
     var self = this;
 
-    self.recruitment_number = participant.recruitmentNumber;
-    self.participant_name = participant.name;
-    self.gender = participant.sex;
-    self.birthday = _convertFormatDate(new Date(participant.birthdate.value));
+    if (participant){
+      self.recruitment_number = participant.recruitmentNumber;
+      self.participant_name = participant.name;
+      self.gender = participant.sex;
+      self.birthday = _convertFormatDate(new Date(participant.birthdate.value));
+    } else {
+      self.recruitment_number = "_______________";
+      self.participant_name = "_______________";
+      self.gender = "__";
+      self.birthday = "__/__/____";
+      self.laboratoryIdentification = laboratory.identification;
+      self.laboratoryFieldCenter = laboratory.fieldCenterAcronym;
+    }
+
+
     self.cq_group = (laboratory.collectGroupName !== undefined && laboratory.collectGroupName !== DEFAULT) ? laboratory.collectGroupName : NONE;
     self.tubes = laboratory.tubes;
     _buildTubeLabel(self.tubes);
@@ -41,6 +57,7 @@
     }
 
     function _buildTubeLabel(tubes) {
+
       tubes.forEach(function(tube) {
         tube.label = tube.label + ' ' + tube.momentLabel;
       });

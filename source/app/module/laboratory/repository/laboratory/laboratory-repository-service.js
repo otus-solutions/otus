@@ -27,10 +27,19 @@
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
     self.getLots = getLots;
+    self.getTube = getTube;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
     self.deleteAliquot = deleteAliquot;
+
+    /* Unattached Laboratory Methods */
+    self.attacheLaboratory = attacheLaboratory;
+    self.listUnattached = listUnattached;
+    self.createUnattached = createUnattached;
+    self.getUnattachedById = getUnattachedById;
+    self.discardUnattached = discardUnattached;
+    self.getUnattachedByIdentification = getUnattachedByIdentification;
 
 
     function initializeLaboratory(participant) {
@@ -79,8 +88,12 @@
       return LaboratoryCollectionService.getAliquots(lotAliquot, unique);
     }
 
-    function getLots() {
-      return LaboratoryCollectionService.getLots();
+    function getTube(locationPointId, tubeCode) {
+      return LaboratoryCollectionService.getTube(locationPointId, tubeCode);
+    }
+
+    function getLots(locationPointId) {
+      return LaboratoryCollectionService.getLots(locationPointId);
     }
 
     function createLot(lotStructure) {
@@ -97,6 +110,30 @@
 
     function deleteLot(lotCode) {
       return LaboratoryCollectionService.deleteLot(lotCode);
+    }
+
+    function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
+      return LaboratoryCollectionService.attacheLaboratory(recruitmentNumber,laboratoryIdentification);
+    }
+
+    function listUnattached(collectGroupName, center, page, quantity) {
+      return LaboratoryCollectionService.listUnattached(collectGroupName, center, page, quantity);
+    }
+
+    function createUnattached(fieldCenterAcronym, collectGroupName) {
+      return LaboratoryCollectionService.createUnattached(fieldCenterAcronym, collectGroupName);
+    }
+
+    function getUnattachedById(laboratoryOid) {
+      return LaboratoryCollectionService.getUnattachedById(laboratoryOid);
+    }
+
+    function discardUnattached(laboratoryOid) {
+      return LaboratoryCollectionService.discardUnattached(laboratoryOid);
+    }
+
+    function getUnattachedByIdentification(laboratoryIdentification) {
+      return LaboratoryCollectionService.getUnattachedByIdentification(laboratoryIdentification);
     }
   }
 }());

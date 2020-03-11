@@ -13,6 +13,7 @@
       'DASHBOARD': 'dashboard',
       'PARTICIPANT_DASHBOARD': 'participant-dashboard',
       'PARTICIPANT_CREATE': 'participant-create',
+      'PARTICIPANT_UPDATE': 'participant-update',
       'PARTICIPANTS_MANAGER': 'participants-manager',
       'PARTICIPANTS_LIST': 'participants-list',
       'INSTALLER': 'installer',
@@ -25,6 +26,7 @@
       'SIGNUP': 'signup',
       'SIGNUP_RESULT': 'signup-result',
       'LABORATORY': 'laboratory-participant',
+      'UNATTACHED_LABORATORY': 'unattached-laboratory',
       'SAMPLE_TRANSPORTATION_LOT_INFO_MANAGER': 'sample-transportation-lot-info-manager',
       'SAMPLE_TRANSPORTATION_MANAGER_LIST': 'sample-transportation-manager-list',
       'SAMPLE_TRANSPORTATION_DASHBOARD': 'sample-transportation-dashboard',
@@ -58,6 +60,7 @@
     'otusjs.deploy.ParticipantsManagerStateProvider',
     'otusjs.deploy.ParticipantsListStateProvider',
     'otusjs.deploy.ParticipantCreateStateProvider',
+    'otusjs.deploy.ParticipantUpdateStateProvider',
     'otusjs.deploy.ParticipantFollowUpStateProvider',
     'otusjs.deploy.InstallerStateProvider',
     'otusjs.deploy.LoginStateProvider',
@@ -66,6 +69,7 @@
     'otusjs.deploy.SignupResultStateProvider',
     'otusjs.deploy.SessionStateProvider',
     'otusjs.deploy.LaboratoryStateProvider',
+    'otusjs.deploy.UnattachedLaboratoryStateProvider',
     'otusjs.deploy.SampleTransportationLotAdderStateProvider',
     'otusjs.deploy.SampleTransportationManagerListStateProvider',
     'otusjs.deploy.SampleTransportationStateProvider',
@@ -85,40 +89,42 @@
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
-                         AccessStateProvider,
-                         ErrorStateProvider,
-                         ActivityStateProvider,
-                         ActivityAdderStateProvider,
-                         ActivityPlayerStateProvider,
-                         ActivityViewerStateProvider,
-                         DashboardProvider,
-                         ParticipantDashboardProvider,
-                         ParticipantsManagerStateProvider,
-                         ParticipantsListStateProvider,
-                         ParticipantCreateStateProvider,
-                         ParticipantFollowUpStateProvider,
-                         InstallerProvider,
-                         LoginStateProvider,
-                         ParticipantStateProvider,
-                         SignupStateProvider,
-                         SignupResultStateProvider,
-                         SessionStateProvider,
-                         LaboratoryStateProvider,
-                         SampleTransportationLotAdderProvider,
-                         SampleTransportationManagerListProvider,
-                         SampleTransportationProvider,
-                         ExamLotStateProvider,
-                         ExamLotManagerListState,
-                         ExamLotInfoManagerState,
-                         SendingExamState,
-                         ExamResultsVisualizer,
-                         MonitoringStateProvider,
-                         UserAccessRecoveryProvider,
-                         LaboratoryFlagReportStateProvider,
-                         ActivityFlagReportStateProvider,
-                         LaboratoryMonitoringStateProvider,
-                         ActivityImportStateProvider,
-                         PendencyViewerStateProvider
+    AccessStateProvider,
+    ErrorStateProvider,
+    ActivityStateProvider,
+    ActivityAdderStateProvider,
+    ActivityPlayerStateProvider,
+    ActivityViewerStateProvider,
+    DashboardProvider,
+    ParticipantDashboardProvider,
+    ParticipantsManagerStateProvider,
+    ParticipantsListStateProvider,
+    ParticipantCreateStateProvider,
+    ParticipantUpdateStateProvider,
+    ParticipantFollowUpStateProvider,
+    InstallerProvider,
+    LoginStateProvider,
+    ParticipantStateProvider,
+    SignupStateProvider,
+    SignupResultStateProvider,
+    SessionStateProvider,
+    LaboratoryStateProvider,
+    UnattachedLaboratoryStateProvider,
+    SampleTransportationLotAdderProvider,
+    SampleTransportationManagerListProvider,
+    SampleTransportationProvider,
+    ExamLotStateProvider,
+    ExamLotManagerListState,
+    ExamLotInfoManagerState,
+    SendingExamState,
+    ExamResultsVisualizer,
+    MonitoringStateProvider,
+    UserAccessRecoveryProvider,
+    LaboratoryFlagReportStateProvider,
+    ActivityFlagReportStateProvider,
+    LaboratoryMonitoringStateProvider,
+    ActivityImportStateProvider,
+    PendencyViewerStateProvider
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ErrorStateProvider.state);
@@ -134,10 +140,12 @@
     $stateProvider.state(ParticipantsManagerStateProvider.state);
     $stateProvider.state(ParticipantsListStateProvider.state);
     $stateProvider.state(ParticipantCreateStateProvider.state);
+    $stateProvider.state(ParticipantUpdateStateProvider.state);
     $stateProvider.state(InstallerProvider.state);
     $stateProvider.state(ParticipantStateProvider.state);
     $stateProvider.state(SessionStateProvider.state);
     $stateProvider.state(LaboratoryStateProvider.state);
+    $stateProvider.state(UnattachedLaboratoryStateProvider.state);
     $stateProvider.state(SampleTransportationLotAdderProvider.state);
     $stateProvider.state(SampleTransportationManagerListProvider.state);
     $stateProvider.state(SampleTransportationProvider.state);

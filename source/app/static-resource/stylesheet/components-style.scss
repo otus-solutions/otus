@@ -350,7 +350,7 @@ otus-sample-transportation-manager-list {
         display: none;
       }
       md-card {
-        width: 500px;
+        width: 600px;
       }
     }
   }
@@ -358,7 +358,7 @@ otus-sample-transportation-manager-list {
 
 otus-lot-info-manager-display {
   .subtitle-table-container {
-    max-height: 200px;
+    max-height: 350px;
   }
 
   .dynamic-table-container {
@@ -561,5 +561,23 @@ otus-follow-up-event {
     #event-description {
       font-size: 18px;
     }
+  }
+}
+
+unattached-laboratory {
+  md-grid-tile-header {
+    figcaption {
+      width: 100%;
+    }
+    background: rgba(19, 125, 108, 0.68) !important;
+  }
+  md-input-container {
+    margin-bottom: 0px;
+  }
+}
+
+unattached-laboratory-dashboard {
+  otus-panel {
+    min-width: 320px;
   }
 }

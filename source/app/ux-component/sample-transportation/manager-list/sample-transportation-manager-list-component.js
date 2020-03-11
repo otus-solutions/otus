@@ -5,27 +5,25 @@
     .module('otusjs.otus.uxComponent')
     .component('otusSampleTransportationManagerList', {
       controller: Controller,
-      templateUrl: 'app/ux-component/sample-transportation/manager-list/sample-transportation-manager-list-template.html',
-      bindings: {
-        lots: "<"
-      }
+      templateUrl: 'app/ux-component/sample-transportation/manager-list/sample-transportation-manager-list-template.html'
     });
 
   Controller.$inject = [
     '$mdToast',
     '$mdDialog',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.laboratory.business.project.transportation.AliquotTransportationService',
+    'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast, $mdDialog, laboratoryContextService, AliquotTransportationService, ApplicationStateService, DialogService) {
+  function Controller($mdToast, $mdDialog, laboratoryContextService, MaterialTransportationService, ApplicationStateService, DialogService) {
     var self = this;
     var _confirmDeleteSelectedLots;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
+    self.lots = [];
 
     /* Public methods */
     self.handleViewInfoAction = handleViewInfoAction;
@@ -53,7 +51,7 @@
     }
 
     function _removeLotRecursive(lotArray,callback){
-      AliquotTransportationService.deleteLot(lotArray[0].code).then(function(){
+      MaterialTransportationService.deleteLot(lotArray[0].code).then(function(){
         if(lotArray.length == 1){
           callback();
         } else {

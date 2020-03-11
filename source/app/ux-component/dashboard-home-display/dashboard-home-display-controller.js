@@ -33,6 +33,7 @@
     self.managerParticipantsDashboard = managerParticipantsDashboard;
     self.activateActivityFlagsReport = activateActivityFlagsReport;
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
+    self.unattachedLaboratory = unattachedLaboratory;
     self.pendencyViewer = pendencyViewer;
 
     function onInit() {
@@ -59,6 +60,10 @@
 
     function startMonitoring() {
       ApplicationStateService.activateMonitoring();
+    }
+
+    function unattachedLaboratory() {
+      ApplicationStateService.activateUnattachedLaboratory();
     }
 
     function setFocus() {

@@ -25,12 +25,14 @@
     self.activateDashboard = activateDashboard;
     self.activateParticipantDashboard = activateParticipantDashboard;
     self.activateCreateParticipant = activateCreateParticipant;
+    self.activateUpdateParticipant = activateUpdateParticipant;
     self.activateParticipantActivities = activateParticipantActivities;
     self.activateParticipantReports = activateParticipantReports;
     self.activateSignup = activateSignup;
     self.activateSignupResult = activateSignupResult;
     self.getCurrentState = getCurrentState;
     self.activateSampleTransportation = activateSampleTransportation;
+    self.activateUnattachedLaboratory = activateUnattachedLaboratory;
     self.activateSampleTransportationLotInfoManager = activateSampleTransportationLotInfoManager;
     self.activateSampleTransportationManagerList = activateSampleTransportationManagerList;
     self.activateActivityCategories = activateActivityCategories;
@@ -80,6 +82,10 @@
       $state.go(STATE.LABORATORY);
     }
 
+    function activateUnattachedLaboratory() {
+      $state.go(STATE.UNATTACHED_LABORATORY);
+    }
+
     function activateParticipantFollowUps() {
       $state.go(STATE.PARTICIPANT_FOLLOW_UPS);
     }
@@ -94,6 +100,10 @@
 
     function activateCreateParticipant() {
       $state.go(STATE.PARTICIPANT_CREATE);
+    }
+
+    function activateUpdateParticipant() {
+      $state.go(STATE.PARTICIPANT_UPDATE);
     }
 
     function activateManagerParticipants() {

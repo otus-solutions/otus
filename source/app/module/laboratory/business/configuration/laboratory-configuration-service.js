@@ -17,6 +17,7 @@
     self.getCheckingExist = getCheckingExist;
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.fetchAliquotsDescriptors = fetchAliquotsDescriptors;
+    self.getQualityControlGroupNames = getQualityControlGroupNames;
 
     /* Laboratory Configuration */
 
@@ -47,6 +48,25 @@
       return defer.promise;
     }
 
+    function getQualityControlGroupNames() {
+      var defer = $q.defer();
+
+      LaboratoryRepositoryService.getLaboratoryDescriptors()
+        .then(function (response) {
+          let names = [];
+          response.data.collectGroupConfiguration.groupDescriptors.forEach(function (descriptor) {
+            if (descriptor.type === "QUALITY_CONTROL" || descriptor.type === "DEFAULT"){
+              names.push(descriptor.name)
+            }
+          });
+          defer.resolve(names);
+        }, function (e) {
+          defer.reject(e);
+        });
+
+      return defer.promise;
+    }
+
     function _fetchLaboratoryConfiguration() {
       var defer = $q.defer();
       LaboratoryRepositoryService.getLaboratoryDescriptors()
@@ -63,23 +83,29 @@
 
     function fetchAliquotsDescriptors() {
       var defer = $q.defer();
-      var aliquotsInitialized = LaboratoryConfigurationService.checkAliquotsDescriptors();
-
-      if (aliquotsInitialized) {
-        defer.resolve(aliquotsInitialized);
-      } else {
-        _fetchAliquotsDescriptors()
-          .then(function (aliquotsDescriptors) {
-            LaboratoryConfigurationService.initializeAliquotsDescriptors(aliquotsDescriptors);
+        _fetchConfiguration()
+          .then(function (configuration) {
+            LaboratoryConfigurationService.initializeLaboratoryConfiguration(configuration);
             defer.resolve(LaboratoryConfigurationService.checkAliquotsDescriptors());
           });
-      }
       return defer.promise;
     }
 
-    function _fetchAliquotsDescriptors() {
+    function _fetchConfiguration() {
       var defer = $q.defer();
-      LaboratoryRepositoryService.getAliquotsDescriptors() // TODO: implement
+      LaboratoryRepositoryService.getLaboratoryDescriptors()
+        .then(function (response) {
+          defer.resolve(response.data);
+        }, function (e) {
+          defer.reject(e);
+        });
+
+      return defer.promise;
+    }
+
+    function _fetchTubesDescriptors() {
+      var defer = $q.defer();
+      LaboratoryRepositoryService.getAliquotsDescriptors()
         .then(function (response) {
           defer.resolve(response.data);
         }, function (e) {

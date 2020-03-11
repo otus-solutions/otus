@@ -2,15 +2,15 @@
   <md-toolbar>
     <div class="md-toolbar-tools" layout-align="center center">
       <md-icon md-font-library="material-icons" layout-margin>colorize</md-icon>
-      <span>Alíquotas</span>
+      <span>Materiais</span>
     </div>
   </md-toolbar>
   <md-list flex>
-    <md-list-item class="md-2-line" ng-repeat="aliquot in $ctrl.selectedLot.aliquotList"
+    <md-list-item class="md-2-line" ng-repeat="material in $ctrl.materialList"
       ng-click="null">
       <div class="md-list-item-text" layout="column">
-        <span flex class="md-title">{{aliquot.code}}</span>
-        <span class="md-subhead">{{aliquot.containerLabel + ' ' + aliquot.label}}</span>
+        <span flex class="md-title">{{material.code}}</span>
+        <span class="md-subhead">{{material.containerLabel + ' ' + material.label}}</span>
       </div>
       <md-divider></md-divider>
     </md-list-item>

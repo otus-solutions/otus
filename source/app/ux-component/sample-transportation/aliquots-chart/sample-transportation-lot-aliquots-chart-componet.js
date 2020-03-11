@@ -35,16 +35,14 @@
     }
 
     function _renderChart() {
-      self.ctx = document.getElementById(self.lotDataSet.chartId).getContext('2d');
-      _setFieldCenter();
-
+      self.ctx = document.getElementById('aliquot'.concat(self.lotDataSet.chartId)).getContext('2d');
       var chartBorderWidth = 0;
       if(self.lotDataSet.data.length>1){
         chartBorderWidth = 1;
       }
 
       self.myChart = new Chart(self.ctx, {
-        type: 'doughnut',
+        type: 'pie',
         data: {
           labels: self.lotDataSet.labels,
           datasets: [{
@@ -58,9 +56,9 @@
             display: false
           },
           tooltips: {
-            display: false,
+            display: true,
             custom: function (tooltipModel) {
-              var tooltipEl = document.getElementById('chartjs-tooltip'+self.lotDataSet.chartId);
+              var tooltipEl = document.getElementById('chartjs-tooltip'.concat(self.lotDataSet.chartId));
               if (tooltipModel.opacity === 0) {
                 tooltipEl.style.opacity = 0;
                 return;
@@ -76,7 +74,7 @@
                 bodyLines.forEach(function (body) {
                   innerHtml = body;
                 });
-                var tableRoot = tooltipEl.querySelector('span');
+                var tableRoot = tooltipEl.querySelector('.chartjs-tooltip-key'.concat(self.lotDataSet.chartId));
                 tableRoot.innerHTML = innerHtml;
               }
 
@@ -86,28 +84,6 @@
               tooltipEl.style.fontStyle = tooltipModel._fontStyle;
             }
           }
-        }
-      });
-    }
-
-    function _setFieldCenter(){
-      Chart.pluginService.register({
-        beforeDraw: function (chart) {
-          var width = chart.chart.width,
-            height = chart.chart.height,
-            ctx = self.ctx;
-
-          ctx.restore();
-          var fontSize = (height / 114).toFixed(2);
-          ctx.font = fontSize + "em sans-serif";
-          ctx.textBaseline = "middle";
-
-          var text = self.lotDataSet.fieldCenter.acronym,
-            textX = Math.round((width - ctx.measureText(text).width) / 2),
-            textY = height / 2;
-
-          ctx.fillText(text, textX, textY);
-          ctx.save();
         }
       });
     }

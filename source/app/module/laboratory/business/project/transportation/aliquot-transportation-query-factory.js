@@ -14,22 +14,22 @@
 
     self.create = create;
 
-    function create(code,initialDate,finalDate,fieldCenter, aliquotList, includeStorage) {
-      return new AliquotQuery(code,initialDate,finalDate,fieldCenter, aliquotList, includeStorage);
+    function create(code,initialDate,finalDate,locationPoint, aliquotList, includeStorage) {
+      return new AliquotQuery(code,initialDate,finalDate,locationPoint, aliquotList, includeStorage);
     }
 
 
     return self;
   }
 
-  function AliquotQuery(code,initialDate,finalDate,fieldCenter, aliquotList, includeStorage) {
+  function AliquotQuery(code,initialDate,finalDate,locationPoint, aliquotList, includeStorage) {
     var self = this;
 
     self.objectType = 'AliquotQuery';
     self.code = code || '';
     self.initialDate = initialDate || '';
     self.finalDate = finalDate || '';
-    self.fieldCenter = fieldCenter || '';
+    self.locationPoint = locationPoint || '';
     self.aliquotList = aliquotList || [];
     self.role = includeStorage ? 'STORAGE' : 'EXAM';
 
@@ -41,7 +41,7 @@
         code: self.code,
         initialDate: self.initialDate,
         finalDate: self.finalDate,
-        fieldCenter: self.fieldCenter,
+        locationPoint: self.locationPoint,
         aliquotList: self.aliquotList,
         role: self.role
       };
