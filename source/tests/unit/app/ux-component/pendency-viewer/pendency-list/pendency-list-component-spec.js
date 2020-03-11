@@ -1,4 +1,4 @@
-describe('otusPendencyListPaginator_UnitTest_Suite', () => {
+describe('otusPendencyList_UnitTest_Suite', () => {
   let ctrl;
   let Injections = [];
 
