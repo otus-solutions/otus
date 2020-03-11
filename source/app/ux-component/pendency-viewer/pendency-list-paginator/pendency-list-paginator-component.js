@@ -19,7 +19,6 @@
     self.PENDENCY_VIEWER_TITLES = PENDENCY_VIEWER_TITLES;
     self.activeNextPage = true;
     self.activePreviousPage = false;
-    //self.activePage = true;
 
     self.getNextPage = getNextPage;
     self.getPreviousPage = getPreviousPage;
