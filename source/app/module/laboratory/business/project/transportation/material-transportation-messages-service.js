@@ -79,6 +79,8 @@
         _show('O material não está na localização de origem.');
       } else if (_tubeNotCollected.test(message)) {
         _show('O material não foi coletado.');
+      } else {
+        _show(message);
       }
     };
 

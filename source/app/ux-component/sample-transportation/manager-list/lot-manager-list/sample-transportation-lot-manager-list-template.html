@@ -89,11 +89,12 @@
           <md-card-title flex>
             <div layout="row" flex>
               <div layout="column" flex="60">
-                <md-card-title-text flex="100">
+                <md-card-title-text flex="100" layout-wrap>
                   <span class="md-headline">{{lot.code}}</span>
                   <span class="md-subhead">Envio: {{lot.shipmentDate | date:'dd/MM/yyyy - h:mm'}}</span>
                   <span class="md-subhead">Processamento: {{lot.processingDate | date:'dd/MM/yyyy - h:mm'}}</span>
-                  <span class="md-subhead">Responsável: {{lot.operator}}</span>
+                  <span class="md-subhead">Responsável:</span>
+                  <span class="md-subhead">{{lot.operator}}</span>
                 </md-card-title-text>
                 <md-card-actions layout="row" layout-align="end center"></md-card-actions>
               </div>
@@ -112,9 +113,9 @@
               <otus-sample-transportation-lot-chart-subtitle-table ng-if="lot.chartTubeDataSet.labels.length"
                 lot-data-set="lot.chartTubeDataSet"></otus-sample-transportation-lot-chart-subtitle-table>
             </md-content>
-          </md-card-content>
-          <md-card-content layout-align="center center" layout="column" ng-if="!lot.chartAliquotDataSet.labels.length">
-            <span class="md-subhead">Não há Alíquotas no lote</span>
+            <div layout-align="center center" layout="column" ng-if="!lot.chartAliquotDataSet.labels.length && !lot.chartTubeDataSet.labels.length">
+              <span class="md-title" >Não há Alíquotas no lote</span>
+            </div>
           </md-card-content>
         </md-card>
       </div>
