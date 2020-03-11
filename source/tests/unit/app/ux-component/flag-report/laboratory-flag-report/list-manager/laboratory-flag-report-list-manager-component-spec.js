@@ -6,7 +6,7 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
   beforeEach(function () {
 
     _mockInjections();
-    
+
     angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
       $provide.value('otusjs.deploy.FieldCenterRestService', Mock.ProjectFieldCenterService);
       $provide.value('otusjs.monitoring.business.MonitoringService', Mock.MonitoringService);
@@ -56,7 +56,7 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
 
         Mock.MonitoringService.getExamsName().then(function () {
           expect(Mock.StatusHistoryService.listStatus).toHaveBeenCalledTimes(1);
-          expect(Mock.MonitoringService.getExamsProgressReport).toHaveBeenCalledTimes(1);
+          expect(Mock.MonitoringService.getExamsProgressReport).toHaveBeenCalledTimes(0);
 
           Mock.MonitoringService.getExamsProgressReport().then(function () {
             expect(controller.ready).toEqual(true);
@@ -76,12 +76,13 @@ describe('otusLaboratoryFlagReportListManagerCtrl Test', function () {
 
     it('should call getExamsProgressReport function', function () {
       controller.updateData(null, null, null, 'BA');
-      expect(Mock.MonitoringService.getExamsProgressReport).toHaveBeenCalledTimes(2);
+      expect(Mock.MonitoringService.getExamsProgressReport).toHaveBeenCalledTimes(1);
     });
 
     it('should update exams with other exam', function () {
+      controller.$onInit();
+      controller.filteredExams = {};
       controller.updateData(null, 'EXAM_1', null, 'RS');
-
       expect(controller.selectedExamName).toEqual('EXAM_1');
     });
 

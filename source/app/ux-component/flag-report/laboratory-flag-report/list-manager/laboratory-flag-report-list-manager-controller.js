@@ -32,8 +32,7 @@
     self.centers;
     self.message;
     self.rawExams;
-    self.examsData;
-    self.filteredExams;
+
     self.examsNameList;
     self.selectedStatus;
 
@@ -47,8 +46,10 @@
     function onInit() {
       self.ready = false;
       self.error = false;
-      self.examsData = [];
+      self.examsData = {};
       self.selectedStatus = null;
+      self.examsData = {};
+      self.filteredExams = {};
       self.colors = ExamStatusHistoryService.getColors();
       self.labels = ExamStatusHistoryService.getLabels();
       _loadData();
@@ -79,13 +80,14 @@
           _setStatus(status);
           if (self.selectedExamName) {
             self.newExamsData = FlagReportFilterService.filter(angular.copy(self.examsData), examName);
-            _setFilteredExams(self.newExamsData, examName, status);
+            _setFilteredExams(self.newExamsData);
           } else {
-            _setFilteredExams(self.examsData, examName, status);
+            _setFilteredExams(self.examsData);
+
           }
           _buildGraph(self.selectedStatus);
         } else if (exams && exams !== self.filteredExams) {
-          _setFilteredExams(exams, examName, status);
+          _setFilteredExams(exams);
         }
       }
     }
@@ -152,7 +154,6 @@
           self.error = true;
           self.message = GENERIC_ERROR;
           LoadingScreenService.finish();
-          throw e;
         });
       } else {
         _setExamsProgress(self.selectedCenter.acronym);
@@ -163,7 +164,7 @@
       DashboardContextService.getLoggedUser().then((userData) => {
         var { acronym } = userData.fieldCenter;
         if (!acronym) {
-          _setCenter(self.centers[0].acronym);
+          self.centers.length > 0 ? _setCenter(self.centers[0].acronym) : self.selectedCenter = {acronym: ""};
         } else {
           self.centers = [].concat(self.centers.find((center) => {
             return center.acronym === userData.fieldCenter.acronym;
@@ -177,7 +178,6 @@
         self.ready = false;
         self.error = true;
         self.message = GENERIC_ERROR;
-        throw e;
       });
     }
 
@@ -191,7 +191,6 @@
           });
         }).catch((e) => {
           LoadingScreenService.finish();
-          throw e;
         });
       }
     }
@@ -214,7 +213,6 @@
           self.error = true;
           self.message = DATA_NOT_FOUND;
           LoadingScreenService.finish();
-          throw e;
         });
       } else {
         _setFilteredExams(self.filteredExams);
@@ -224,13 +222,17 @@
     }
 
     function _buildGraph(status) {
-      if (self.filteredExams) {
-        _heatmap_display(angular.copy(self.filteredExams), status);
-      } else if (self.examsData) {
-        _heatmap_display(angular.copy(self.examsData), status);
+      if (typeof self.filteredExams === "object") {
+        self.filteredExams.hasOwnProperty('data') ? _heatmap_display(angular.copy(self.filteredExams), status): _notFoundMessage();
+      } else if (typeof self.examsData === "object") {
+        self.examsData.hasOwnProperty('data') ? _heatmap_display(angular.copy(self.examsData), status) : _notFoundMessage();
       } else {
-        $("#exam-heatmap").html("<div style=\"text-align: center;\" flex layout='row'> <h1 flex>Não foi possível apresentar o gráfico</h1></div>");
+        _notFoundMessage();
       }
+    }
+
+    function _notFoundMessage() {
+      $("#heatmap-not-found").html("<div style=\"text-align: center;\" flex layout-align='center center' layout='row'> <span class='md-display-1' flex>Não há dados para exibir o gráfico.</span></div>");
     }
 
     function _heatmap_display(exams, status) {

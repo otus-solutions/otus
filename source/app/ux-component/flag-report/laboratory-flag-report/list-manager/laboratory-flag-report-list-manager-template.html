@@ -51,6 +51,7 @@
         <md-divider></md-divider>
       </div>
       <md-content layout="row" class="exam-heatmap-container">
+        <div flex layout="row" id="heatmap-not-found" layout-align="center center"></div>
         <div layout="column" id="exam-heatmap" ng-show="$ctrl.examsData.data.length" ng-style={'height':$ctrl.viewerHeight} ng-if="$ctrl.ready" ></div>
         <div ng-if="$ctrl.error" layout="row" flex layout-align="center center"
              style="height: 400px; width: 400px; margin-left: auto; margin-right: auto;">
