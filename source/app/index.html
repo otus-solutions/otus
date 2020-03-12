@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
   <link href="node_modules/angular-material-badge/angular-material-badge.min.css" rel="stylesheet" />
+  <link href="node_modules/angularjs-dragula/dist/dragula.min.css" rel="stylesheet" />
   <!-- uncache(rename:true, append:hash) -->
   <!-- build:css css/otus.min.css -->
   <link href="app/static-resource/stylesheet/login-page.css" rel="stylesheet" />
@@ -47,6 +48,7 @@
 <script src="node_modules/angular-ui-mask/dist/mask.min.js"></script>
 <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
 <script src="node_modules/angular-resource/angular-resource.min.js"></script>
+<script src="node_modules/angularjs-dragula/dist/angularjs-dragula.min.js"></script>
 <!-- ************************************* Angular Material ************************************* -->
 <script src="node_modules/angular-material/angular-material.min.js"></script>
 <!-- ************************************* Angular Material Badge *********************************** -->
@@ -282,6 +284,7 @@
 <script src="app/deploy/state/flag/laboratory-flag-report-state-provider.js"></script>
 <script src="app/deploy/state/flag/activity-flag-report-state-provider.js"></script>
 <script src="app/deploy/state/monitoring/laboratory-monitoring-state-provider.js"></script>
+<script src="app/deploy/state/pendency/pendency-viewer-state-provider.js"></script>
 <!-- # Deploy > Storage -->
 <script src="app/deploy/storage/module.js"></script>
 <script src="app/deploy/storage/storage-loader-service.js"></script>
@@ -614,6 +617,19 @@
 <script src="app/ux-component/sample-transportation/lot-info-manager/display/lot-info-manager-display-controller.js"></script>
 <script src="app/ux-component/sample-transportation/lot-info-manager/display/lot-info-manager-display-component.js"></script>
 <script src="app/ux-component/installer/initial-config-controller.js"></script>
+
+<!--pendency-viewer-->
+<script src="app/ux-component/pendency-viewer/pendency-viewer-component.js"></script>
+<script src="app/ux-component/pendency-viewer/pendency-list/pendency-list-component.js"></script>
+<script src="app/ux-component/pendency-viewer/pendency-item/pendency-item-component.js"></script>
+<script src="app/ux-component/pendency-viewer/pendency-list-control/pendency-list-control-component.js"></script>
+<script src="app/ux-component/pendency-viewer/pendency-viewer-service.js"></script>
+<script src="app/ux-component/pendency-viewer/pendency-list-control/pendency-list-filters/pendency-list-filters-component.js"></script>
+<script src="app/ux-component/pendency-viewer/pendency-list-paginator/pendency-list-paginator-component.js"></script>
+<script src="app/ux-component/pendency-viewer/pendency-viewer-constant.js"></script>
+
+<!--checker-search-->
+<script src="app/ux-component/checker-search/checker-search-component.js"></script>
 
 <!--legend-color-->
 <script src="app/ux-component/commons/legend-color/legend-color-component.js"></script>

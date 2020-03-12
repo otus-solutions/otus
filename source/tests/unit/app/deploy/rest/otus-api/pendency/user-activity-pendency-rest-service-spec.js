@@ -18,11 +18,14 @@ describe('UserActivityPendencyRestService_UnitTest_Suite', () => {
       spyOn(Mock._rest, 'getByActivityId').and.callThrough();
       spyOn(Mock._rest, 'update').and.callThrough();
       spyOn(Mock._rest, 'delete').and.callThrough();
+      spyOn(Mock._rest, 'getAllPendencies').and.callThrough();
 
       Mock.userActivityPendencyFactory = $injector.get('otusjs.model.pendency.UserActivityPendencyFactory');
       Mock.UserActivityPendencyDocument = JSON.stringify(Test.utils.data.userActivityPendency);
       Mock.userActivityPendency = Mock.userActivityPendencyFactory.fromJsonObject(Mock.UserActivityPendencyDocument);
       Mock._id = Mock.userActivityPendency.getID();
+
+      mock();
     });
   });
 
@@ -36,6 +39,7 @@ describe('UserActivityPendencyRestService_UnitTest_Suite', () => {
     expect(service.getPendencyByActivityId).toBeDefined();
     expect(service.updateUserActivityPendency).toBeDefined();
     expect(service.deleteUserActivityPendency).toBeDefined();
+    expect(service.getAllPendencies).toBeDefined();
   });
 
   it('initializeMethod_should_evoke_getUserActivityPendencyResource_by_OtusRestResourceService', () => {
@@ -87,5 +91,31 @@ describe('UserActivityPendencyRestService_UnitTest_Suite', () => {
     expect(service.deleteUserActivityPendency(Mock._id)).toBePromise();
     expect(Mock._rest.delete).toHaveBeenCalledTimes(1)
   });
+
+  it('getAllPendenciesMethod_should_throw_error_if_resource_is_not_initialized', () => {
+    try{ service.getAllPendencies()}
+    catch(e) { expect(e.toString()).toBe(UNINITIALIZED_REST_ERROR_MESSAGE)}
+
+  });
+
+  it('getAllPendenciesMethod_should_evoke_create_by_resource_and_return_promise', () => {
+    service.initialize();
+    expect(service.getAllPendencies(Mock.searchSettings)).toBePromise();
+    expect(Mock._rest.getAllPendencies).toHaveBeenCalledTimes(1)
+  });
+
+  function mock() {
+    Mock.searchSettings = {
+      "currentQuantity": 0,
+      "quantityToGet": 10,
+      "order": {
+        "fields": ["dueDate"],
+        "mode": 1
+      },
+      "filter": {
+        "status": "NOT_FINALIZED"
+      }
+    }
+  }
 
 });
