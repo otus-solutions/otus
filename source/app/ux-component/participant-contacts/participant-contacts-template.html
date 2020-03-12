@@ -1,0 +1,26 @@
+<style>
+  .pc-layout{
+    display: grid;
+    width: 100vw;
+    grid-template-columns: 12fr;
+    grid-template-rows: .5fr .5fr;
+    grid-template-areas:
+      "participantUpdate"
+      "participantData"
+  }
+
+  .participant-data {
+    grid-area: participantData;
+  }
+
+  .participant-update {
+    grid-area: participantUpdate
+  }
+
+</style>
+
+<section class="pc-layout">
+  <md-card class="participant-data">Dados do Participante</md-card>
+  <otus-participant-update class="participant-update"></otus-participant-update>
+</section>
+

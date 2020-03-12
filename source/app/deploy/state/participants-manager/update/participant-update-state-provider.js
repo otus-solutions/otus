@@ -18,11 +18,14 @@
       return self;
     }
 
+    //template: '<otus-participant-update layout="column" flex></otus-participant-update>',
+
+
     self.state = {
       parent: STATE.PARTICIPANTS_MANAGER,
       name: STATE.PARTICIPANT_UPDATE,
       url: '/' + STATE.PARTICIPANT_UPDATE,
-      template: '<otus-participant-update layout="column" flex></otus-participant-update>',
+      template: '<otus-participant-contacts></otus-participant-contacts>',
       data: {
         redirect: _redirect
       }
