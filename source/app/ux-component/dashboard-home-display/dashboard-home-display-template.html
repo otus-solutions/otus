@@ -146,7 +146,8 @@
             <md-card class="card-button" layout-fill ng-init="showLaboratory=true" >
               <md-card-content layout="column" layout-align="start start" class="no-padding">
                 <md-button class="md-body-1 option" layout-margin="" layout-align="center"
-                           ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" ng-click="$ctrl.pendencyViewer()">
+                           ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"
+                           ng-click="$ctrl.activatePendencyViewer()">
                   <md-icon layout-margin>visibility</md-icon>Visualizador de Pendências
                 </md-button>
               </md-card-content>
@@ -247,8 +248,9 @@
       <br>
 
       <!--    Activity Pendency List-->
-      <otus-dashboard-pendency layout="column" layout-align="center center" layout-fill layout-padding flex ></otus-dashboard-pendency>
-
+      <otus-dashboard-pendency layout="column" layout-align="center center"
+                               layout-fill layout-padding flex >
+      </otus-dashboard-pendency>
     </div>
     <span flex flex-xs="0"></span>
   </div>

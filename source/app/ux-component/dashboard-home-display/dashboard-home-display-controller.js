@@ -34,7 +34,7 @@
     self.activateActivityFlagsReport = activateActivityFlagsReport;
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
     self.unattachedLaboratory = unattachedLaboratory;
-    self.pendencyViewer = pendencyViewer;
+    self.activatePendencyViewer = activatePendencyViewer;
 
     function onInit() {
       _loadLoggedUser();
@@ -125,7 +125,7 @@
       });
     }
 
-    function pendencyViewer() {
+    function activatePendencyViewer() {
       ApplicationStateService.activatePendencyViewer();
     }
   }

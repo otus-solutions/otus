@@ -59,7 +59,7 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
     expect(ctrl.managerParticipantsDashboard).toBeDefined();
     expect(ctrl.activateActivityFlagsReport).toBeDefined();
     expect(ctrl.laboratoryActivityFlagsReport).toBeDefined();
-    expect(ctrl.pendencyViewer).toBeDefined();
+    expect(ctrl.activatePendencyViewer).toBeDefined();
   });
 
   it('onInit_method_should_evoke_internalMethods', function () {
@@ -112,7 +112,7 @@ describe('otusDashboardHomeDisplayCtrl_UnitTest_Suite', function () {
   });
 
   it('pendencyViewer_method_should_evoke_internalMethods', function () {
-    ctrl.pendencyViewer();
+    ctrl.activatePendencyViewer();
     expect(Injections.ApplicationStateService.activatePendencyViewer).toHaveBeenCalledTimes(1);
   });
 
