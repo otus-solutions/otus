@@ -18,6 +18,9 @@
   function Service(UserActivityPendencyRepositoryService, UserActivityPendencyFactory,
                    PENDENCY_VIEWER_TITLES, $q, $mdDialog, $mdToast) {
     const self = this;
+    const INITIAL_CURRENT_QUANTITY = 0;
+    const INITIAL_QUANTITY_TO_GET = 15;
+
     self.getSearchSettings = getSearchSettings;
     self.getPendencyAttributes = getPendencyAttributes;
     self.getInputViewState = getInputViewState;
@@ -32,8 +35,8 @@
 
     function getSearchSettings() {
       return {
-        "currentQuantity": 0,
-        "quantityToGet": 15,
+        "currentQuantity": INITIAL_CURRENT_QUANTITY,
+        "quantityToGet": INITIAL_QUANTITY_TO_GET,
         "order": {
           "fields": ["dueDate"],
           "mode": 1
