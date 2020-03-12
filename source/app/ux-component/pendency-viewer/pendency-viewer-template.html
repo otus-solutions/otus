@@ -1,60 +1,6 @@
-<style>
+<link href="app/ux-component/pendency-viewer/pendency-viewer-component.css" rel="stylesheet" type="text/css">
 
-  @media screen and (min-width: 360px){
-    .pv-layout {
-      display: grid;
-      height: 100vh;
-      /*width: 100vw;*/
-      grid-template-columns: 1fr;
-      grid-template-rows: .1fr .1fr 1fr .05fr;
-      grid-template-areas:
-        "toolbar"
-        "control"
-        "list"
-        "paginator"
-    }
-  }
-
-  @media screen and (min-width: 768px){
-    .pv-layout {
-      display: grid;
-      height: 100vh;
-      width: 100vw;
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-rows: .03fr .1fr 1fr .05fr;
-      grid-template-areas:
-        "toolbar toolbar   toolbar   toolbar"
-        "control control   control   control"
-        "list    list      list      list"
-        ".       .         .         paginator"
-    }
-  }
-
-  @media screen and (min-width: 1280px){
-    .pv-layout {
-      display: grid;
-      height: 100vh;
-      width: 100vw;
-
-      grid-template-columns: repeat(4, 1fr) .7fr;
-      grid-template-rows: .03fr .1fr 1fr .05fr;
-      grid-template-areas:
-        "toolbar toolbar toolbar toolbar     toolbar"
-        "control control control control     control"
-        "list    list    list      list      list"
-        ".       .       .         .         paginator"
-    }
-  }
-
-
-  .pendency-viewer otus-dashboard-toolbar { grid-area: toolbar }
-  .pendency-viewer otus-pendency-list-control { grid-area: control }
-  .pendency-viewer otus-pendency-list { grid-area: list }
-  .pendency-viewer otus-pendency-list-paginator { grid-area: paginator}
-
-</style>
-
-<md-content class="pv-layout pendency-viewer" ng-cloak>
+<md-content class="pv-layout pendency-viewer" ng-cloak style="">
   <otus-dashboard-sidenav layout="row">
     <hide-participant-box></hide-participant-box>
   </otus-dashboard-sidenav>
