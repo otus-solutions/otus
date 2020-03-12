@@ -23,6 +23,14 @@
 
   function Controller(dragulaService, PendencyViewerService, PENDENCY_VIEWER_TITLES) {
     const self = this;
+    const PENDENCY_ORDER_FIELD = {
+      DUEDATE: 'dueDate',
+      RECRUITMENT_NUMBER: 'rn',
+      ACRONYM: 'acronym',
+      EXTERNAL_ID: 'externalID',
+      REQUESTER: 'requester',
+      RECEIVER: 'receiver'
+    };
     self.PENDENCY_VIEWER_TITLES = PENDENCY_VIEWER_TITLES;
 
     self.chanceInputViewState = chanceInputViewState;
@@ -70,7 +78,12 @@
 
     function _populateCriteriaOrder() {
       self.searchSettings.order.fields = [
-        "dueDate", "rn", "acronym", "externalID", "requester", "receiver"
+        PENDENCY_ORDER_FIELD.DUEDATE,
+        PENDENCY_ORDER_FIELD.RECRUITMENT_NUMBER,
+        PENDENCY_ORDER_FIELD.ACRONYM,
+        PENDENCY_ORDER_FIELD.EXTERNAL_ID,
+        PENDENCY_ORDER_FIELD.REQUESTER,
+        PENDENCY_ORDER_FIELD.RECEIVER
       ];
     }
 
