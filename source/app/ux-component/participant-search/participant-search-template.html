@@ -2,6 +2,7 @@
   md-selected-item="$ctrl.selectedParticipant"
   md-selected-item-change="$ctrl.selectParticipant($ctrl.selectedParticipant)"
   md-search-text="$ctrl.inputedText"
+  md-search-text-change="$ctrl.searchTextChange($ctrl.searchText)";
   md-items="participant in $ctrl.querySearch($ctrl.inputedText)"
   md-item-text="participant.name"
   md-min-length="1"

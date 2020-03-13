@@ -1,8 +1,8 @@
-describe('ActivityViewerStateProvider', function () {
+describe('PendencyViewerStateProvider', function () {
 
-  var UNIT_NAME = 'otusjs.deploy.ActivityViewerState';
-  var URL = '/activity-viewer';
-  var TEMPLATE_URL = '<otus-activity-viewer layout="row" flex></otus-activity-viewer>';
+  var UNIT_NAME = 'otusjs.deploy.PendencyViewerState';
+  var URL = '/pendency-viewer';
+  var TEMPLATE_URL = '<pendency-view-component></pendency-view-component>';
   var provider = {};
   var Injections = {};
 
@@ -20,7 +20,7 @@ describe('ActivityViewerStateProvider', function () {
   describe('state definition', function () {
 
     it('name should be equal to expected', function () {
-      expect(provider.state.name).toEqual(Injections.STATE.ACTIVITY_VIEWER);
+      expect(provider.state.name).toEqual(Injections.STATE.PENDENCY_VIEWER);
     });
 
     it('url should be equal to expected', function () {

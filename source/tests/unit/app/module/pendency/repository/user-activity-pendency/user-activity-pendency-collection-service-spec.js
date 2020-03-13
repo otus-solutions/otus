@@ -35,6 +35,7 @@ describe('UserActivityPendencyCollectionService_UnitTest_Suite', () => {
       getAllUserActivityPendenciesToReceiver: jasmine.anything(),
       getOpenedUserActivityPendenciesToReceiver: jasmine.anything(),
       getDoneUserActivityPendenciesToReceiver: jasmine.anything(),
+      getAllPendencies: jasmine.anything(),
     };
 
     /*Injection of a restServiceMock in context(boostrap action simulation)*/
@@ -50,6 +51,8 @@ describe('UserActivityPendencyCollectionService_UnitTest_Suite', () => {
     Mock.UserActivityPendencyDocument = JSON.stringify(Test.utils.data.userActivityPendency);
     Mock.userActivityPendency = Mock.userActivityPendencyFactory.fromJsonObject(Mock.UserActivityPendencyDocument);
     Mock._id = Mock.userActivityPendency.getID();
+
+    mock();
   }
 
   it('serviceExistence_check', () => {
@@ -64,6 +67,7 @@ describe('UserActivityPendencyCollectionService_UnitTest_Suite', () => {
     expect(service.getAllUserActivityPendenciesToReceiver).toBeDefined();
     expect(service.getOpenedUserActivityPendenciesToReceiver).toBeDefined();
     expect(service.getDoneUserActivityPendenciesToReceiver).toBeDefined();
+    expect(service.getAllPendencies).toBeDefined();
   });
 
   it('createUserActivityPendencyMethod_should_positiveAnswer_on_successfulPersistence', () => {
@@ -240,4 +244,43 @@ describe('UserActivityPendencyCollectionService_UnitTest_Suite', () => {
     service.getDoneUserActivityPendenciesToReceiver().catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
+
+  it('getAllPendenciesMethod_should_document_on_successfullFind', () => {
+    let response = {data: Mock.UserActivityPendencyDocument};
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.resolve(response);
+    spyOn(Mock.remoteStorage, "getAllPendencies").and.returnValue(Mock.deferredInternal.promise);
+
+    service.getAllPendencies(Mock.searchSettings).then(data => expect(data).toBe(Mock.UserActivityPendencyDocument));
+    Mock.scope.$digest();
+  });
+
+
+  it('getAllPendenciesMethod_should_handle_ error_coming_by_exception', () => {
+    let response = {error: false};
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.reject(response);
+    spyOn(Mock.remoteStorage, "getAllPendencies").and.returnValue(Mock.deferredInternal.promise);
+
+    service.getAllPendencies(Mock.searchSettings).catch(e => expect(e.error).toBeFalsy());
+    Mock.scope.$digest();
+  });
+
+  function mock() {
+    Mock.searchSettings = {
+      "currentQuantity": 0,
+      "quantityToGet": 10,
+      "order": {
+        "fields": ["dueDate"],
+        "mode": 1
+      },
+      "filter": {
+        "status": "NOT_FINALIZED"
+      }
+    }
+  }
 });
