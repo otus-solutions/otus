@@ -25,7 +25,7 @@
       parent: STATE.PARTICIPANTS_MANAGER,
       name: STATE.PARTICIPANT_UPDATE,
       url: '/' + STATE.PARTICIPANT_UPDATE,
-      template: '<otus-participant-contacts></otus-participant-contacts>',
+      template: '<otus-participant-contact></otus-participant-contact>',
       data: {
         redirect: _redirect
       }
