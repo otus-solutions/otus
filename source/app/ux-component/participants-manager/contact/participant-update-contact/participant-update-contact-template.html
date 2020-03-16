@@ -1,57 +1,34 @@
-<style>
-  .puc-layout {
-    display: grid;
-    grid-template-columns: 12fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    grid-template-areas:
-      "fones"
-      "emails"
-      "address"
-
-  }
-
-  .fones {
-    grid-area: fones;
-  }
-
-  .emails {
-    grid-area: emails;
-  }
-
-  .address {
-    grid-area: address;
-  }
-
-  .buttons {
-    grid-area: buttons
-  }
-
-</style>
-
+<link href="app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-style.css" rel="stylesheet" type="text/css">
   <div class="puc-layout">
-    <md-card class="fones">
-      <md-card-content>
-        <md-card-title>
-          <md-card-title-text>
-            <span class="md-subhead">Telefones</span>
-          </md-card-title-text>
-        </md-card-title>
-<!--        PARTICIPANT_CONTACT_TITLES[]-->
+    <md-card class="phones">
+      <md-card-content class="phone-card">
+        <div layout="row" layout-fill layout-align="space-between center" class="phone-title">
+          <span class="md-subhead">Telefones</span>
+          <span></span>
+          <md-button class="md-accent md-icon-button md-raised md-button add-phone" ng-click=""
+                     ng-disabled="ctrl.isValid">
+            <md-icon aria-label="Adicionar">add</md-icon>
+            <md-tooltip md-direction="down">Salvar</md-tooltip>
+          </md-button>
+        </div>
           <div ng-repeat="(key, phoneNumber) in $ctrl.contact.phoneNumbers" layout="row">
-            <md-input-container>
-<!--              {{phoneNumber}}-->
-              <label>{{$ctrl.PARTICIPANT_CONTACT_TITLES[key.toUpperCase()]}}</label>
-              <input ng-model="phoneNumber.number" ng-disabled=true>
-            </md-input-container>
-            <md-input-container>
-              <label>Contato</label>
-              <input ng-model="phoneNumber.contact" ng-disabled=true>
-            </md-input-container>
-            <md-button class="md-accent md-icon-button md-raised md-button" ng-click=""
-                       ng-disabled="!$ctrl.isValid">
-              <md-icon aria-label="Adicionar">save</md-icon>
-              <md-tooltip md-direction="down">Salvar</md-tooltip>
-            </md-button>
+            <div ng-if="phoneNumber != null" layout="row"
+                 layout-fill layout-align="space-between start">
+              <md-input-container class="phone-item">
+                <!--              {{phoneNumber}}-->
+                <label>{{$ctrl.PARTICIPANT_CONTACT_TITLES[key.toUpperCase()]}}</label>
+                <input ng-model="phoneNumber.number" ng-disabled=true>
+              </md-input-container>
+              <md-input-container>
+                <label>Contato</label>
+                <input ng-model="phoneNumber.contact" ng-disabled=true>
+              </md-input-container>
+              <md-button class="md-accent md-icon-button md-raised md-button" ng-click=""
+                         ng-disabled="!$ctrl.isValid">
+                <md-icon aria-label="Adicionar">create</md-icon>
+                <md-tooltip md-direction="down">Editar</md-tooltip>
+              </md-button>
+            </div>
           </div>
 
       </md-card-content>

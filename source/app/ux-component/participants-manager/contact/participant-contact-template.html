@@ -42,33 +42,28 @@
         preencha todos os campos para identificá-lo.</p>
     </div>
   </div>
-  <span flex="10" ng-if="$ctrl.isIdentified"></span>
-  <section class="main-update" flex layout-align="center start" layout="row" layout-fill="">
-    <div layout-align="center center" layout-fill="">
+<!--  <span flex="10" ng-if="$ctrl.isIdentified"></span>-->
+  <section class="main-update" layout="row" layout-margin>
       <otus-panel header-label="'Atualizar Participante'" flex="100"  layout-fill>
         <md-card flex>
           <md-card-content flex="100">
+            <span class="md-subhead">Dados</span>
             <form name="participantForm" layout="column" flex style="padding: 20px 0 10px 0">
               <div layout-gt-xs="row" layout-fill="">
-                <span flex="10"></span>
                 <md-input-container flex="100" layout-fill="">
                   <label>Número de Recrutamento</label>
                   <input ng-model="$ctrl.participant.recruitmentNumber"
                          ng-disabled="true">
                 </md-input-container>
-                <span flex="10"></span>
               </div>
               <div layout-gt-xs="row">
-                <span flex="10"></span>
                 <md-input-container flex layout-fill="">
                   <label>Nome Completo</label>
                   <input ng-model="$ctrl.participant.name" id="name" required="" ng-change="$ctrl.onFilter()">
                 </md-input-container>
-                <span flex="10"></span>
               </div>
               <div layout-gt-xs="row" layout-xs="column" layout-align="center center">
-                <span flex="10"></span>
-                <md-input-container flex="30" layout-fill="" flex-xs="100">
+                <md-input-container flex="40" layout-fill="" flex-xs="100">
                   <label>Sexo</label>
                   <md-select ng-model="$ctrl.participant.sex" id="sex" required="" ng-change="$ctrl.onFilter()">
                     <md-option value="M">Masculino</md-option>
@@ -76,7 +71,7 @@
                   </md-select>
                 </md-input-container>
                 <span flex="10"></span>
-                <md-input-container flex="65" style="margin-top: 25px" id="date" layout-fill="" flex-xs="100">
+                <md-input-container flex="50" style="margin-top: 25px" id="date" layout-fill="" flex-xs="100">
                   <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
                   <input mdc-datetime-picker="" show-icon="true" date="true" time="false" required
                          aria-label="Data de Nascimento" type="text" id="datetime"
@@ -84,11 +79,10 @@
                          max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
                          format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
                 </md-input-container>
-                <span flex="10"></span>
               </div>
               <div layout-gt-xs="row">
-                <span flex="10"></span>
-                <md-input-container flex="50" flex-xs="100" layout-fill="">
+
+                <md-input-container flex="40" flex-xs="100" layout-fill="">
                   <label>Centro</label>
                   <md-select required="" ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()"
                              id="centerIdentified">
@@ -119,6 +113,5 @@
         <otus-participant-update-contact contact="$ctrl.getParticipantContact()">
         </otus-participant-update-contact>
       </otus-panel>
-    </div>
   </section>
 </md-content>

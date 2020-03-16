@@ -28,24 +28,15 @@
       _id: "5e6a45dd2273ad0a40d4050b",
       objectType: 'ParticipantContacts',
       phoneNumbers: {
-        main: {
-          number: '+55 011-1406',
-          contact: 'fulano de tal'
-        },
-        second: {
-          number: '0800-0000',
-          contact: 'suport'
-        },
-        third: {
-          number: '0800-1000',
-          contact: 'teleMarketing'
-        },
+        main: { number: '+55 011-1406', contact: 'fulano de tal'},
+        second: { number: '0800-0000', contact: 'suport'},
+        third: { number: '0800-1000', contact: 'teleMarketing'},
         fourth: null,
         fifth: null
       },
       emails: {
-        main: 'new_1_@mail.com',
-        second: 'new_2_@mail.com',
+        main: {value:'owail@otussolutions.com', observation:'Trabalho'},
+        second: {value: 'medico@elsabrasil.com', observation:'Hospital'},
         third: null,
         fourth: null,
         fifth: null
