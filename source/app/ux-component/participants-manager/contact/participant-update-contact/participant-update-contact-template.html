@@ -49,6 +49,11 @@
               <label>Contato</label>
               <input ng-model="fone.contact" ng-disabled=true>
             </md-input-container>
+            <md-button class="md-accent md-icon-button md-raised md-button" ng-click=""
+                       ng-disabled="!$ctrl.isValid">
+              <md-icon aria-label="Adicionar">save</md-icon>
+              <md-tooltip md-direction="down">Salvar</md-tooltip>
+            </md-button>
           </div>
 
       </md-card-content>
@@ -81,16 +86,16 @@
       </md-card-content>
     </md-card>
 
-    <div class="buttons" layout="row" layout-align="end" layout-margin="">
-      <span flex></span>
-      <md-button class="md-raised md-icon-button md-button" ng-click="">
-        <md-icon aria-label="Limpar">clear</md-icon>
-        <md-tooltip md-direction="down">Limpar</md-tooltip>
-      </md-button>
-      <md-button class="md-accent md-icon-button md-raised md-button" ng-click=""
-                 ng-disabled="!$ctrl.isValid">
-        <md-icon aria-label="Adicionar">save</md-icon>
-        <md-tooltip md-direction="down">Salvar</md-tooltip>
-      </md-button>
-    </div>
+<!--    <div class="buttons" layout="row" layout-align="end" layout-margin="">-->
+<!--      <span flex></span>-->
+<!--      <md-button class="md-raised md-icon-button md-button" ng-click="">-->
+<!--        <md-icon aria-label="Limpar">clear</md-icon>-->
+<!--        <md-tooltip md-direction="down">Limpar</md-tooltip>-->
+<!--      </md-button>-->
+<!--      <md-button class="md-accent md-icon-button md-raised md-button" ng-click=""-->
+<!--                 ng-disabled="!$ctrl.isValid">-->
+<!--        <md-icon aria-label="Adicionar">save</md-icon>-->
+<!--        <md-tooltip md-direction="down">Salvar</md-tooltip>-->
+<!--      </md-button>-->
+<!--    </div>-->
   </div>

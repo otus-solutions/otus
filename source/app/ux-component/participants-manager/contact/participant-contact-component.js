@@ -10,16 +10,6 @@
       }
     }).controller('participantContactCtrl', Controller);
 
-  //Controller.$inject = ['otusjs.participantManager.contact.ParticipantContactService'];
-
-  // function Controller(ParticipantContactService) {
-  //   const self = this;
-  //   self.getParticipantContact = getParticipantContact;
-  //   function getParticipantContact() {
-  //     return ParticipantContactService.getParticipantContact();
-  //   }
-  // }
-
   Controller.$inject = [
     '$element',
     'otusjs.utils.ImmutableDate',
@@ -32,7 +22,8 @@
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.participant.business.ParticipantMessagesService',
     'otusjs.otus.dashboard.service.DashboardService',
-    '$scope'
+    '$scope',
+    'otusjs.participantManager.contact.ParticipantContactService'
   ];
 
   function Controller(
@@ -47,7 +38,8 @@
     ParticipantManagerService,
     ParticipantMessagesService,
     DashboardService,
-    $scope) {
+    $scope,
+    ParticipantContactService) {
     var self = this;
 
 
@@ -65,8 +57,9 @@
     self.saveParticipant = saveParticipant;
     self.dashboardParticipant = dashboardParticipant;
     self.onFilter = onFilter;
+    self.getParticipantContact = getParticipantContact;
 
-    $scope.$watch('$ctrl.birthdate',function (newValue) {
+    $scope.$watch('$ctrl.birthdate', function (newValue) {
       if (newValue) self.onFilter();
     });
 
@@ -75,7 +68,7 @@
       try {
         self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant);
         self.isIdentified = self.participant.toJSON().identified;
-        if(self.isIdentified){
+        if (self.isIdentified) {
           self.birthdate = new Date(self.participant.birthdate.value)
         } else {
           self.birthdate = null;
@@ -162,11 +155,12 @@
         setUserFieldCenter();
       });
     }
+
     self.isValid = false;
 
     self.validFields = function () {
       if (!self.birthdate) self.participant.birthdate.value = null;
-      if (self.participant.recruitmentNumber && self.participant.name && self.participant.sex && self.participant.birthdate.value && self.participant.fieldCenter){
+      if (self.participant.recruitmentNumber && self.participant.name && self.participant.sex && self.participant.birthdate.value && self.participant.fieldCenter) {
         self.isValid = true;
       } else {
         self.isValid = false;
@@ -231,13 +225,11 @@
         ParticipantMessagesService.showToast("Favor, preencha todos os campos!");
       }
     }
+
+    function getParticipantContact() {
+      return ParticipantContactService.getParticipantContact();
+    }
   }
-
-
-
-
-
-
 }());
 
 // if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER && item) {
