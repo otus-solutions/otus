@@ -2,14 +2,13 @@
   .pc-layout {
     display: grid;
     width: 100vw;
-    height: 100vh;
-    grid-template-columns: 12fr;
-    grid-template-rows: .5fr .5fr 7fr 10fr;
+    /*height: 100vh;*/
+    grid-template-columns: .5fr 11.5fr;
+    grid-template-rows: .5fr 7fr 10fr;
     grid-template-areas:
-      "returnButton"
-      "anonymousMsg"
-      "mainUpdate"
-      "contactUpdate"
+      "returnButton anonymousMsg"
+      "mainUpdate mainUpdate"
+      "contactUpdate contactUpdate"
   }
 
   .return-button {
@@ -38,7 +37,7 @@
     </md-button>
   </div>
   <md-divider></md-divider>
-  <div class="anonymous-msg" layout="column" ng-show="!$ctrl.isIdentified">
+  <div class="anonymous-msg" layout="column" ng-show="$ctrl.isIdentified">
     <div layout="row" layout-padding="" flex layout-align="center center" layout-wrap="">
       <p flex align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto,
         preencha todos os campos para identificá-lo.</p>
@@ -127,4 +126,3 @@
                                    contact="$ctrl.getParticipantContact()">
   </otus-participant-update-contact>
 </md-content>
-
