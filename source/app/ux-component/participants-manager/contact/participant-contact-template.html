@@ -2,13 +2,13 @@
   .pc-layout {
     display: grid;
     width: 100vw;
-    /*height: 100vh;*/
+    height: 100vh;
     grid-template-columns: .5fr 11.5fr;
     grid-template-rows: .1fr 3fr 13fr;
     grid-template-areas:
       "returnButton anonymousMsg"
       "mainUpdate mainUpdate"
-      "contactUpdate contactUpdate"
+
   }
 
   .return-button {
@@ -29,14 +29,13 @@
 
 </style>
 
-<md-content class="pc-layout">
+<md-content class="pc-layout" ng-cloak>
   <div class="return-button" layout="row" layout-align="start center" layout-margin="">
     <md-button class="md-button md-icon-button md-primary md-raised" ng-click="$ctrl.dashboardParticipant()">
       <md-icon aria-label="Limpar">keyboard_return</md-icon>
       <md-tooltip md-direction="down">Voltar</md-tooltip>
     </md-button>
   </div>
-  <md-divider></md-divider>
   <div class="anonymous-msg" layout="column" ng-show="$ctrl.isIdentified">
     <div layout="row" layout-padding="" flex layout-align="center center" layout-wrap="">
       <p flex align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto,
@@ -45,9 +44,8 @@
   </div>
   <span flex="10" ng-if="$ctrl.isIdentified"></span>
   <section class="main-update" flex layout-align="center start" layout="row" layout-fill="">
-    <div layout="row" layout-xs="column" flex="100" layout-align="center center" layout-fill="">
-      <otus-panel header-label="'Atualizar Participante'" flex="100" flex-gt-xs="70" flex-gt-sm="60"
-                  flex-gt-md="50" flex-gt-lg="40" layout-fill>
+    <div layout-align="center center" layout-fill="">
+      <otus-panel header-label="'Atualizar Participante'" flex="100"  layout-fill>
         <md-card flex>
           <md-card-content flex="100">
             <form name="participantForm" layout="column" flex style="padding: 20px 0 10px 0">
@@ -113,16 +111,14 @@
                            ng-disabled="!$ctrl.isValid">
                   <md-icon aria-label="Adicionar">save</md-icon>
                   <md-tooltip md-direction="down">Salvar</md-tooltip>
-
                 </md-button>
               </div>
             </form>
           </md-card-content>
         </md-card>
+        <otus-participant-update-contact contact="$ctrl.getParticipantContact()">
+        </otus-participant-update-contact>
       </otus-panel>
     </div>
   </section>
-  <otus-participant-update-contact class="contact-update"
-                                   contact="$ctrl.getParticipantContact()">
-  </otus-participant-update-contact>
 </md-content>
