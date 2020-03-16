@@ -1,0 +1,96 @@
+<style>
+  .puc-layout {
+    display: grid;
+    grid-template-columns: 2fr 6fr 2fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+      ".fones."
+      ".emails."
+      ".address."
+      ".buttons."
+
+  }
+
+  .fones {
+    grid-area: fones;
+  }
+
+  .emails {
+    grid-area: emails;
+  }
+
+  .address {
+    grid-area: address;
+  }
+
+  .buttons {
+    grid-area: buttons
+  }
+
+</style>
+
+<!--  <otus-panel header-label="'Contatos Participante'" class="puc-layout">-->
+  <div class="puc-layout">
+    <md-card class="fones">
+      <md-card-content>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-subhead">Telefones</span>
+          </md-card-title-text>
+        </md-card-title>
+<!--        PARTICIPANT_CONTACT_TITLES[]-->
+          <div ng-repeat="phoneNumber in $ctrl.contact" layout="row">
+            <md-input-container>
+<!--              {{phoneNumber}}-->
+              <label>{{$ctrl.PARTICIPANT_CONTACT_TITLES["main".toUpperCase()]}}</label>
+              <input ng-model="phoneNumber.number" ng-disabled=true>
+            </md-input-container>
+            <md-input-container>
+              <label>Contato</label>
+              <input ng-model="fone.contact" ng-disabled=true>
+            </md-input-container>
+          </div>
+
+      </md-card-content>
+    </md-card>
+
+    <md-card class="emails">
+      <md-card-content>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-subhead">Emails</span>
+          </md-card-title-text>
+        </md-card-title>
+        <div ng-repeat="email in $ctrl.contact.emails">
+          {{email}}
+        </div>
+      </md-card-content>
+    </md-card>
+
+
+    <md-card class="address">
+      <md-card-content>
+        <md-card-title>
+          <md-card-title-text>
+            <span class="md-subhead">Endereços</span>
+          </md-card-title-text>
+        </md-card-title>
+        <div ng-repeat="address in $ctrl.contact.address">
+          {{address}}
+        </div>
+      </md-card-content>
+    </md-card>
+
+    <div class="buttons" layout="row" layout-align="end" layout-margin="">
+      <span flex></span>
+      <md-button class="md-raised md-icon-button md-button" ng-click="">
+        <md-icon aria-label="Limpar">clear</md-icon>
+        <md-tooltip md-direction="down">Limpar</md-tooltip>
+      </md-button>
+      <md-button class="md-accent md-icon-button md-raised md-button" ng-click=""
+                 ng-disabled="!$ctrl.isValid">
+        <md-icon aria-label="Adicionar">save</md-icon>
+        <md-tooltip md-direction="down">Salvar</md-tooltip>
+      </md-button>
+    </div>
+  </div>
