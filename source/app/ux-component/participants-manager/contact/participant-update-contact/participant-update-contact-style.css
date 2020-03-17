@@ -1,31 +1,6 @@
-/*grid para mainComponent*/
-.puc-layout {
-  display: grid;
-  grid-template-columns: 12fr;
-  grid-template-rows: 1fr .5fr 1fr;
-  grid-template-areas:
-    "phones"
-    "emails"
-    "address"
-}
-
-.fones {
-  grid-area: phones;
-}
-
-.emails {
-  grid-area: emails;
-}
-
-.address {
-  grid-area: address;
-}
-/* end grid for mainComponent*/
-
-
-/*start grid for phoneNumberCard*/
 .info-card {
   display: grid;
+  width: 80vw;
   grid-template-columns: 4fr;
   grid-template-rows: .6fr .1fr .1fr .1fr .1fr .1fr;
   grid-template-areas:
@@ -38,6 +13,5 @@
 }
 
 .info-item {
-  grid-area: phoneItem
+  grid-area: infoItem
 }
-/*end grid for phoneNumberCard*/

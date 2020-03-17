@@ -6,14 +6,15 @@
       controller: 'participantUpdateContactCtrl as $ctrl',
       templateUrl: 'app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-template.html',
       bindings: {
-        contact: '='
+        contact: '=',
+        type: '<'
       }
     }).controller('participantUpdateContactCtrl', Controller);
 
-  Controller.$inject = ['PARTICIPANT_CONTACT_TITLES'];
+  Controller.$inject = ['ParticipantContactValues'];
 
-  function Controller(PARTICIPANT_CONTACT_TITLES) {
+  function Controller(ParticipantContactValues) {
     const self = this;
-    self.PARTICIPANT_CONTACT_TITLES = PARTICIPANT_CONTACT_TITLES;
+    self.ParticipantContactValues = ParticipantContactValues;
   }
 }());

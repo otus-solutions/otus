@@ -4,114 +4,130 @@
     width: 100vw;
     height: 100vh;
     grid-template-columns: .5fr 11.5fr;
-    grid-template-rows: .1fr 3fr 13fr;
-    grid-template-areas:
-      "returnButton anonymousMsg"
-      "mainUpdate mainUpdate"
-
+    grid-template-rows: .5fr 11.5fr;
+    grid-template-areas: "returnButton anonymousMsg" "mainUpdate mainUpdate"
   }
 
   .return-button {
     grid-area: returnButton;
   }
 
-  .anonymous-msg{
+  .anonymous-msg {
     grid-area: anonymousMsg;
   }
 
   .main-update {
-    grid-area: mainUpdate
+    grid-area: mainUpdate;
+  }
+
+  /*.op-layout{*/
+  /*  display: grid;*/
+  /*  width: 100vw;*/
+  /*  grid-template-columns: 1fr;*/
+  /*  grid-template-rows: 1fr 1fr 1fr 1fr;*/
+  /*  grid-template-areas: "phoneContactUpdate" "personalDataCard"*/
+  /*}*/
+
+  .personal-data-card {
+    /*grid-area: personalDataCard;*/
+    width: 80vw;
   }
 
   .contact-update {
-    grid-area: contactUpdate;
+    /*grid-area: phoneContactUpdate;*/
   }
 
 </style>
 
 <md-content class="pc-layout" ng-cloak>
-  <div class="return-button" layout="row" layout-align="start center" layout-margin="">
+  <div class="return-button" layout="row" layout-align="start center" layout-margin>
     <md-button class="md-button md-icon-button md-primary md-raised" ng-click="$ctrl.dashboardParticipant()">
       <md-icon aria-label="Limpar">keyboard_return</md-icon>
       <md-tooltip md-direction="down">Voltar</md-tooltip>
     </md-button>
   </div>
   <div class="anonymous-msg" layout="column" ng-show="$ctrl.isIdentified">
-    <div layout="row" layout-padding="" flex layout-align="center center" layout-wrap="">
-      <p flex align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto,
+    <div layout="row" layout-padding layout-align="center center">
+      <p align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto,
         preencha todos os campos para identificá-lo.</p>
     </div>
   </div>
-<!--  <span flex="10" ng-if="$ctrl.isIdentified"></span>-->
-  <section class="main-update" layout="row" layout-margin>
-      <otus-panel header-label="'Informações do Participante'" flex="100"  layout-fill>
-        <md-card flex>
-          <md-card-content flex="100">
-            <span class="md-subhead">Dados Pessoais</span>
-            <form name="participantForm" layout="column" flex style="padding: 20px 0 10px 0">
-              <div layout-gt-xs="row" layout-fill="">
-                <md-input-container flex="100" layout-fill="">
-                  <label>Número de Recrutamento</label>
-                  <input ng-model="$ctrl.participant.recruitmentNumber"
-                         ng-disabled="true">
-                </md-input-container>
-              </div>
-              <div layout-gt-xs="row">
-                <md-input-container flex layout-fill="">
-                  <label>Nome Completo</label>
-                  <input ng-model="$ctrl.participant.name" id="name" required="" ng-change="$ctrl.onFilter()">
-                </md-input-container>
-              </div>
-              <div layout-gt-xs="row" layout-xs="column" layout-align="center center">
-                <md-input-container flex="40" layout-fill="" flex-xs="100">
-                  <label>Sexo</label>
-                  <md-select ng-model="$ctrl.participant.sex" id="sex" required="" ng-change="$ctrl.onFilter()">
-                    <md-option value="M">Masculino</md-option>
-                    <md-option value="F">Feminino</md-option>
-                  </md-select>
-                </md-input-container>
-                <span flex="10"></span>
-                <md-input-container flex="50" style="margin-top: 25px" id="date" layout-fill="" flex-xs="100">
-                  <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
-                  <input mdc-datetime-picker="" show-icon="true" date="true" time="false" required
-                         aria-label="Data de Nascimento" type="text" id="datetime"
-                         placeholder="{{$ctrl.birthdate ? '': 'Data de Nascimento'}}"
-                         max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
-                         format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
-                </md-input-container>
-              </div>
-              <div layout-gt-xs="row">
+  <otus-panel header-label="'Informações do Participante'" class="main-update op-layout">
+    <md-card class="personal-data-card">
+      <md-card-content>
+        <span class="md-subhead">Dados Pessoais</span>
+        <form name="participantForm" layout="column" flex style="padding: 20px 0 10px 0">
+          <div layout-gt-xs="row" layout-fill="">
+            <md-input-container flex="100" layout-fill="">
+              <label>Número de Recrutamento</label>
+              <input ng-model="$ctrl.participant.recruitmentNumber"
+                     ng-disabled="true">
+            </md-input-container>
+          </div>
+          <div layout-gt-xs="row">
+            <md-input-container flex layout-fill="">
+              <label>Nome Completo</label>
+              <input ng-model="$ctrl.participant.name" id="name" required="" ng-change="$ctrl.onFilter()">
+            </md-input-container>
+          </div>
+          <div layout-gt-xs="row" layout-xs="column" layout-align="center center">
+            <md-input-container flex="40" layout-fill="" flex-xs="100">
+              <label>Sexo</label>
+              <md-select ng-model="$ctrl.participant.sex" id="sex" required="" ng-change="$ctrl.onFilter()">
+                <md-option value="M">Masculino</md-option>
+                <md-option value="F">Feminino</md-option>
+              </md-select>
+            </md-input-container>
+            <span flex="10"></span>
+            <md-input-container flex="50" style="margin-top: 25px" id="date" layout-fill="" flex-xs="100">
+              <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
+              <input mdc-datetime-picker="" show-icon="true" date="true" time="false" required
+                     aria-label="Data de Nascimento" type="text" id="datetime"
+                     placeholder="{{$ctrl.birthdate ? '': 'Data de Nascimento'}}"
+                     max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
+                     format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
+            </md-input-container>
+          </div>
+          <div layout-gt-xs="row">
 
-                <md-input-container flex="40" flex-xs="100" layout-fill="">
-                  <label>Centro</label>
-                  <md-select required="" ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()"
-                             id="centerIdentified">
-                    <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center.acronym}}"
-                               ng-selected="center.acronym == $ctrl.participant.fieldCenter.acronym">
-                      {{center.name}}
-                    </md-option>
-                  </md-select>
-                </md-input-container>
-                <span flex="10"></span>
-              </div>
-              <div layout="row" layout-align="end" layout-margin="">
-                <span flex></span>
-                <md-button class="md-raised md-icon-button md-button" ng-click="$ctrl.dashboardParticipant()">
-                  <md-icon aria-label="Limpar">clear</md-icon>
-                  <md-tooltip md-direction="down">Limpar</md-tooltip>
+            <md-input-container flex="40" flex-xs="100" layout-fill="">
+              <label>Centro</label>
+              <md-select required="" ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()"
+                         id="centerIdentified">
+                <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center.acronym}}"
+                           ng-selected="center.acronym == $ctrl.participant.fieldCenter.acronym">
+                  {{center.name}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <span flex="10"></span>
+          </div>
+          <div layout="row" layout-align="end" layout-margin="">
+            <span flex></span>
+            <md-button class="md-raised md-icon-button md-button" ng-click="$ctrl.dashboardParticipant()">
+              <md-icon aria-label="Limpar">clear</md-icon>
+              <md-tooltip md-direction="down">Limpar</md-tooltip>
 
-                </md-button>
-                <md-button class="md-accent md-icon-button md-raised md-button" ng-click="$ctrl.saveParticipant()"
-                           ng-disabled="!$ctrl.isValid">
-                  <md-icon aria-label="Adicionar">save</md-icon>
-                  <md-tooltip md-direction="down">Salvar</md-tooltip>
-                </md-button>
-              </div>
-            </form>
-          </md-card-content>
-        </md-card>
-        <otus-participant-update-contact contact="$ctrl.getParticipantContact()">
-        </otus-participant-update-contact>
-      </otus-panel>
-  </section>
+            </md-button>
+            <md-button class="md-accent md-icon-button md-raised md-button" ng-click="$ctrl.saveParticipant()"
+                       ng-disabled="!$ctrl.isValid">
+              <md-icon aria-label="Adicionar">save</md-icon>
+              <md-tooltip md-direction="down">Salvar</md-tooltip>
+            </md-button>
+          </div>
+        </form>
+      </md-card-content>
+    </md-card>
+<!--    <div ng-repeat="firstcontact in $ctrl.contact">-->
+<!--      <otus-participant-update-contact class="contact-update"-->
+<!--                                       contact="firstcontact">-->
+<!--      </otus-participant-update-contact>-->
+<!--    </div>-->
+
+    <otus-participant-update-contact class="contact-update"
+                                             contact="$ctrl.contact.phoneNumber">
+            </otus-participant-update-contact>
+
+  </otus-panel>
+
 </md-content>

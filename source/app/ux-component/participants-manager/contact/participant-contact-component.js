@@ -57,7 +57,6 @@
     self.saveParticipant = saveParticipant;
     self.dashboardParticipant = dashboardParticipant;
     self.onFilter = onFilter;
-    self.getParticipantContact = getParticipantContact;
 
     $scope.$watch('$ctrl.birthdate', function (newValue) {
       if (newValue) self.onFilter();
@@ -77,11 +76,12 @@
         self.maxDate = new Date();
         self.centers = {};
         _loadAllCenters();
+        _loadParticipantContact(self.participant.recruitmentNumber)
       } catch (e) {
         alert(66)
       }
-
     }
+
 
     self.$onDestroy = function () {
       delete self.participant;
@@ -226,10 +226,15 @@
       }
     }
 
-    function getParticipantContact() {
-      console.log(ParticipantContactService.getParticipantContact())
-      return ParticipantContactService.getParticipantContact();
+
+    function _loadParticipantContact(recruitmentNumber) {
+      //self.contact = {};
+      // ProjectFieldCenterService.loadCenters().then(function (result) {
+      //   self.contact = angular.copy(result);
+      // });
+      self.contact = ParticipantContactService.getParticipantContact();
     }
+
   }
 }());
 
