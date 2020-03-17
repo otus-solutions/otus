@@ -11,16 +11,16 @@
             <md-tooltip md-direction="left">Salvar</md-tooltip>
           </md-button>
         </div>
-          <div ng-repeat="(key, phoneNumber) in $ctrl.contact.phoneNumbers" layout="row">
+          <div ng-repeat="(key, phoneNumber) in $ctrl.contact.phoneNumber" layout="row">
             <div ng-if="phoneNumber != null" layout="row"
                  layout-fill layout-align="space-between center">
               <md-input-container class="info-item">
                 <label>{{$ctrl.PARTICIPANT_CONTACT_TITLES[key.toUpperCase()]}}</label>
-                <input ng-model="phoneNumber.number" ng-disabled=true>
+                <input ng-model="phoneNumber.value.content" ng-disabled=true>
               </md-input-container>
               <md-input-container>
                 <label>Observações</label>
-                <input ng-model="phoneNumber.contact" ng-disabled=true>
+                <input ng-model="phoneNumber.observation" ng-disabled=true>
               </md-input-container>
               <md-button class="md-accent md-icon-button md-button" ng-click=""
                          ng-disabled="$ctrl.isValid">
@@ -43,12 +43,12 @@
             <md-tooltip md-direction="left">Adicionar</md-tooltip>
           </md-button>
         </div>
-        <div ng-repeat="(key, email) in $ctrl.contact.emails" layout="row">
+        <div ng-repeat="(key, email) in $ctrl.contact.email" layout="row">
           <div ng-if="email != null" layout="row"
                layout-fill layout-align="space-between start">
             <md-input-container class="info-item">
               <label>{{$ctrl.PARTICIPANT_CONTACT_TITLES[key.toUpperCase()]}}</label>
-              <input ng-model="email.value" ng-disabled=true>
+              <input ng-model="email.value.content" ng-disabled=true>
             </md-input-container>
             <md-input-container>
               <label>Observações</label>
