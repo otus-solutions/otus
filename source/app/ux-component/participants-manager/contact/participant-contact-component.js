@@ -227,6 +227,7 @@
     }
 
     function getParticipantContact() {
+      console.log(ParticipantContactService.getParticipantContact())
       return ParticipantContactService.getParticipantContact();
     }
   }

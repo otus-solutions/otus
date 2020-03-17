@@ -4,24 +4,25 @@
   angular.module('otusjs.otus.uxComponent')
     .service('otusjs.participantManager.contact.ParticipantContactService', Service);
 
-  Service.$inject = [];
+  Service.$inject = [
+    'otusjs.model.participantContact.ParticipantContactFactory'
+  ];
 
 
-  function Service() {
+  function Service(ParticipantContactFactory) {
     const self = this;
     let Mock = {};
-
 
     self.getParticipantContact = getParticipantContact;
 
 
-    function getParticipantContact(RecruitNumber) {
+    function getParticipantContact(recruitmentNumber) {
       /*Tratar uma promisse solicitado do repository
       solicitando a factory do model
       */
-      return Mock.participantContacts;
+      return ParticipantContactFactory.fromJson("", Mock.participantContacts);
+      // return Mock.participantContacts;
     }
-
 
     Mock.participantContacts = {
       _id: "5e6a45dd2273ad0a40d4050b",
