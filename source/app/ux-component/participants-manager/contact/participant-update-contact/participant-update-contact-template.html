@@ -2,8 +2,7 @@
   href="app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-style.css"
   rel="stylesheet" type="text/css">
 
-
-<md-card>
+<md-card ng-if="$ctrl.type !== 'address'">
   <md-card-content class="info-card">
     <div layout="row" layout-align="space-between center" class="info-title">
       <span class="md-subhead">{{$ctrl.ParticipantContactValues.keys[$ctrl.type].translatedTitle}}</span>
@@ -23,7 +22,39 @@
           <input ng-model="contactItem.value.content" ng-disabled=true>
         </md-input-container>
         <md-input-container>
-          <label>Observações</label>
+          <label>{{$ctrl.ParticipantContactValues.fields.comments}}</label>
+          <input ng-model="contactItem.observation" ng-disabled=true>
+        </md-input-container>
+        <md-button class="md-accent md-icon-button md-button" ng-click=""
+                   ng-disabled="$ctrl.isValid">
+          <md-icon aria-label="Adicionar">{{$ctrl.ParticipantContactValues.icons.edit.icon}}</md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}</md-tooltip>
+        </md-button>
+      </div>
+    </div>
+  </md-card-content>
+</md-card>
+
+<md-card ng-if="$ctrl.type === 'address'">
+  <md-card-content class="info-card">
+    <div layout="row" layout-align="space-between center" class="info-title">
+      <span class="md-subhead">{{$ctrl.ParticipantContactValues.keys[$ctrl.type].translatedTitle}}</span>
+      <span></span>
+      <md-button class="md-accent md-icon-button md-button" ng-click=""
+                 ng-disabled="ctrl.isValid">
+        <md-icon aria-label="Adicionar">{{$ctrl.ParticipantContactValues.icons.addContact.icon}}</md-icon>
+        <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}</md-tooltip>
+      </md-button>
+    </div>
+    <div ng-repeat="(key, contactItem) in $ctrl.contact" layout="row">
+      <div ng-if="contactItem != null" layout="row"
+           layout-fill layout-align="space-between center">
+        <md-input-container class="info-item">
+          <label>{{$ctrl.ParticipantContactValues.fields[key]}}</label>
+          <input ng-model="contactItem.value.postalCode" ng-disabled=true>
+        </md-input-container>
+        <md-input-container>
+          <label>{{$ctrl.ParticipantContactValues.fields.comments}}</label>
           <input ng-model="contactItem.observation" ng-disabled=true>
         </md-input-container>
         <md-button class="md-accent md-icon-button md-button" ng-click=""

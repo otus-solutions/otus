@@ -47,7 +47,7 @@
             city: 'Cidade Cinco',
             country: 'Sexto país',
           },
-          observations: 'Ao lado do pórtico da cidade'
+          observation: 'Ao lado do pórtico da cidade'
         },
         second: {
           value:
@@ -63,14 +63,16 @@
           observation: 'Casa da vizinha da minha tia.'
         },
 
-        third: {
-          postalCode: "H3500COA",
-          street: 'Avenida Las Heras',
-          streetNumber: 727,
-          complements: 'Facultad de Ingeniería, segundo piso.',
-          neighbourhood: 'Centro',
-          city: 'Resistencia',
-          country: 'Argentina',
+        third:{
+          value:{
+            postalCode: "H3500COA",
+            street: 'Avenida Las Heras',
+            streetNumber: 727,
+            complements: 'Facultad de Ingeniería, segundo piso.',
+            neighbourhood: 'Centro',
+            city: 'Resistencia',
+            country: 'Argentina',
+          },
           observation: 'Universidad Nacional del Nordeste.'
         },
         fourth: null,

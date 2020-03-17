@@ -10,11 +10,11 @@
         third: 'Terceiro',
         fourth: 'Quarto',
         fifth: 'Quinto',
-        contact: 'Contato'
+        comments: 'Observações'
       },
       keys: {
         email: {translatedTitle: 'Emails'},
-        address:{},
+        address:{translatedTitle: 'Endereços'},
         phoneNumber:{translatedTitle: 'Telefones'}
       },
       icons:{
