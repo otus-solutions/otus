@@ -118,15 +118,16 @@
         </form>
       </md-card-content>
     </md-card>
-<!--    <div ng-repeat="firstcontact in $ctrl.contact">-->
-<!--      <otus-participant-update-contact class="contact-update"-->
-<!--                                       contact="firstcontact">-->
-<!--      </otus-participant-update-contact>-->
-<!--    </div>-->
 
     <otus-participant-update-contact class="contact-update"
-                                             contact="$ctrl.contact.phoneNumber">
-            </otus-participant-update-contact>
+                                     contact="$ctrl.contact.phoneNumber"
+                                     type="phoneNumber">
+    </otus-participant-update-contact>
+
+    <otus-participant-update-contact class="contact-update"
+                                     contact="$ctrl.contact.email"
+                                     type="email">
+    </otus-participant-update-contact>
 
   </otus-panel>
 

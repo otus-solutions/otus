@@ -7,7 +7,7 @@
       templateUrl: 'app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-template.html',
       bindings: {
         contact: '=',
-        type: '<'
+        type: '@'
       }
     }).controller('participantUpdateContactCtrl', Controller);
 

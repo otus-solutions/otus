@@ -6,113 +6,32 @@
 <md-card>
   <md-card-content class="info-card">
     <div layout="row" layout-align="space-between center" class="info-title">
-      <span class="md-subhead">Telefones</span>
+      <span class="md-subhead">{{$ctrl.ParticipantContactValues.keys[$ctrl.type].translatedTitle}}</span>
       <span></span>
       <md-button class="md-accent md-icon-button md-button" ng-click=""
                  ng-disabled="ctrl.isValid">
-        <md-icon aria-label="Adicionar">add_circle_outline</md-icon>
-        <md-tooltip md-direction="left">Salvar</md-tooltip>
+        <md-icon aria-label="Adicionar">{{$ctrl.ParticipantContactValues.icons.addContact.icon}}</md-icon>
+        <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}</md-tooltip>
       </md-button>
     </div>
-    <div ng-repeat="(key, phoneNumber) in $ctrl.contact" layout="row">
-<!
-      <div ng-if="phoneNumber != null" layout="row"
+    <div ng-repeat="(key, contactItem) in $ctrl.contact" layout="row">
+      <div ng-if="contactItem != null" layout="row"
            layout-fill layout-align="space-between center">
         <md-input-container class="info-item">
 
           <label>{{$ctrl.ParticipantContactValues.fields[key]}}</label>
-          <input ng-model="phoneNumber.value.content" ng-disabled=true>
+          <input ng-model="contactItem.value.content" ng-disabled=true>
         </md-input-container>
         <md-input-container>
           <label>Observações</label>
-          <input ng-model="phoneNumber.observation" ng-disabled=true>
+          <input ng-model="contactItem.observation" ng-disabled=true>
         </md-input-container>
         <md-button class="md-accent md-icon-button md-button" ng-click=""
                    ng-disabled="$ctrl.isValid">
-          <md-icon aria-label="Adicionar">create</md-icon>
-          <md-tooltip md-direction="down">Editar</md-tooltip>
+          <md-icon aria-label="Adicionar">{{$ctrl.ParticipantContactValues.icons.edit.icon}}</md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}</md-tooltip>
         </md-button>
       </div>
     </div>
   </md-card-content>
 </md-card>
-
-
-<!--  <div class="puc-layout">-->
-<!--    <md-card class="phone">-->
-<!--      <md-card-content class="info-card">-->
-<!--        <div layout="row" layout-align="space-between center" class="info-title">-->
-<!--          <span class="md-subhead">Telefones</span>-->
-<!--          <span></span>-->
-<!--          <md-button class="md-accent md-icon-button md-button" ng-click=""-->
-<!--                     ng-disabled="ctrl.isValid">-->
-<!--            <md-icon aria-label="Adicionar">add_circle_outline</md-icon>-->
-<!--            <md-tooltip md-direction="left">Salvar</md-tooltip>-->
-<!--          </md-button>-->
-<!--        </div>-->
-<!--          <div ng-repeat="(key, phoneNumber) in $ctrl.contact.phoneNumber" layout="row">-->
-<!--            <div ng-if="phoneNumber != null" layout="row"-->
-<!--                 layout-fill layout-align="space-between center">-->
-<!--              <md-input-container class="info-item">-->
-<!--                <label>{{$ctrl.PARTICIPANT_CONTACT_TITLES[key.toUpperCase()]}}</label>-->
-<!--                <input ng-model="phoneNumber.value.content" ng-disabled=true>-->
-<!--              </md-input-container>-->
-<!--              <md-input-container>-->
-<!--                <label>Observações</label>-->
-<!--                <input ng-model="phoneNumber.observation" ng-disabled=true>-->
-<!--              </md-input-container>-->
-<!--              <md-button class="md-accent md-icon-button md-button" ng-click=""-->
-<!--                         ng-disabled="$ctrl.isValid">-->
-<!--                <md-icon aria-label="Adicionar">create</md-icon>-->
-<!--                <md-tooltip md-direction="down">Editar</md-tooltip>-->
-<!--              </md-button>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--      </md-card-content>-->
-<!--    </md-card>-->
-
-<!--    <md-card class="emails">-->
-<!--      <md-card-content class="info-card">-->
-<!--        <div layout="row" layout-align="space-between center" class="info-title">-->
-<!--          <span class="md-subhead">Emails</span>-->
-<!--          <span></span>-->
-<!--          <md-button class="md-accent md-icon-button md-button" ng-click=""-->
-<!--                     ng-disabled="ctrl.isValid">-->
-<!--            <md-icon aria-label="Adicionar">add_circle_outline</md-icon>-->
-<!--            <md-tooltip md-direction="left">Adicionar</md-tooltip>-->
-<!--          </md-button>-->
-<!--        </div>-->
-<!--        <div ng-repeat="(key, email) in $ctrl.contact.email" layout="row">-->
-<!--          <div ng-if="email != null" layout="row"-->
-<!--               layout-fill layout-align="space-between start">-->
-<!--            <md-input-container class="info-item">-->
-<!--              <label>{{$ctrl.PARTICIPANT_CONTACT_TITLES[key.toUpperCase()]}}</label>-->
-<!--              <input ng-model="email.value.content" ng-disabled=true>-->
-<!--            </md-input-container>-->
-<!--            <md-input-container>-->
-<!--              <label>Observações</label>-->
-<!--              <input ng-model="email.observation" ng-disabled=true>-->
-<!--            </md-input-container>-->
-<!--            <md-button class="md-accent md-icon-button md-button" ng-click=""-->
-<!--                       ng-disabled="$ctrl.isValid">-->
-<!--              <md-icon aria-label="Adicionar">create</md-icon>-->
-<!--              <md-tooltip md-direction="down">Editar</md-tooltip>-->
-<!--            </md-button>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </md-card-content>-->
-<!--    </md-card>-->
-
-<!--    <md-card class="address">-->
-<!--      <md-card-content>-->
-<!--        <md-card-title>-->
-<!--          <md-card-title-text>-->
-<!--            <span class="md-subhead">Endereços</span>-->
-<!--          </md-card-title-text>-->
-<!--        </md-card-title>-->
-<!--        <div ng-repeat="address in $ctrl.contact">-->
-<!--          {{address}}-->
-<!--        </div>-->
-<!--      </md-card-content>-->
-<!--    </md-card>-->
-
