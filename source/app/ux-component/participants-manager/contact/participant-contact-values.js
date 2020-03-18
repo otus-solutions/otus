@@ -10,7 +10,16 @@
         third: 'Terceiro',
         fourth: 'Quarto',
         fifth: 'Quinto',
-        comments: 'Observações'
+        comments: 'Observações',
+        address: ' (Rua, Av, Rod...)',
+        streetNumber: 'Número',
+        postalCode: 'CEP',
+        neighbourhood: 'Bairro',
+        city: 'Cidade',
+        country: 'País',
+        complements: 'Complemento',
+        observation: 'Observação'
+
       },
       keys: {
         email: {translatedTitle: 'Emails'},

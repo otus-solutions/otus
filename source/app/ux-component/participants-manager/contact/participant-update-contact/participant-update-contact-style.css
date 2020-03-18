@@ -3,7 +3,8 @@
   display: grid;
   width: 80vw;
   grid-template-columns: 4fr;
-  grid-template-rows: .6fr .1fr .1fr .1fr .1fr .1fr;
+  grid-template-rows: .3fr 1fr;
+  grid-gap: 20px;
   grid-template-areas:
     "infoTitle"
     "infoItem"
@@ -14,19 +15,61 @@
 }
 
 .info-item {
+  background: #f5f7f9;
   grid-area: infoItem
 }
 /*end grid style for phoneNumber and emails in card*/
 
 /*start grid style for phoneNumber and emails in card*/
-.address-card{
+.address-item{
+  background: #f5f7f9;
   display: grid;
-  width: 80vw;
-  grid-template-columns: 4fr;
-  grid-template-rows: .6fr .1fr .1fr .1fr .1fr .1fr;
+  width: 77vw;
+  /*grid-template-columns: 5fr 2fr 2fr .5fr;*/
+  grid-auto-columns: 4fr 2fr 3fr .5fr;
+  grid-template-rows:  .1fr 1fr;
+  grid-gap: 10px;
   grid-template-areas:
-    "infoTitle"
-    "infoItem"
+    "street numberNumber cep edit "
+    "complements neighbourhood city ."
+    "observation observation country."
 }
+
+.street-input {
+  grid-area: street;
+}
+.cep-input {
+  grid-area: cep;
+}
+.street-number-input {
+  grid-area: streetNumber;
+}
+.edit-button{
+  grid-area: edit;
+}
+
+.neighbourhood-input{
+  grid-area: neighbourhood;
+}
+
+.city-input{
+  grid-area: city;
+}
+
+.complements-input{
+  grid-area: complements;
+}
+
+.observation-input{
+  grid-area: observation;
+}
+
+.country-input{
+  grid-area: country;
+}
+
+
+
+
 /*end grid style for phoneNumber and emails in card*/
 

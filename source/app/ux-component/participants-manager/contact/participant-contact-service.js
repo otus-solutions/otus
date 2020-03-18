@@ -45,7 +45,7 @@
             complements: 'Ap. 3',
             neighbourhood: 'Bairro Quatro',
             city: 'Cidade Cinco',
-            country: 'Sexto país',
+            country: 'Sexto país'
           },
           observation: 'Ao lado do pórtico da cidade'
         },
