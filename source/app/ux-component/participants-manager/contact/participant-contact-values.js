@@ -34,7 +34,12 @@
         edit:{
           icon:'create',
           translatedTitle: 'Editar'
+        },
+        save:{
+          icon:'save',
+          translatedTitle: 'Salvar Edição'
         }
+
       }
     });
 }());

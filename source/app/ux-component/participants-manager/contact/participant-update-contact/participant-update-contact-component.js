@@ -21,6 +21,7 @@
 
     self.addContactInput = addContactInput;
     self.enableEditMode = enableEditMode;
+    self.updateContact = updateContact;
 
     function addContactInput() {
       for (let key in self.contact){
@@ -32,8 +33,14 @@
     }
 
     function enableEditMode(type){
-      console.log(self.editMode[type]);
       self.editMode[type] = true;
+      console.log(self.editMode)
+    }
+
+    function updateContact(updatedContactItem, type) {
+      //promisse here!!!
+      console.log(updatedContactItem);
+      self.editMode[type] = false;
     }
   }
 }());
