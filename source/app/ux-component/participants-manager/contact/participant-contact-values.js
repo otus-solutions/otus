@@ -38,6 +38,10 @@
         save:{
           icon:'save',
           translatedTitle: 'Salvar Edição'
+        },
+        clear: {
+          icon: 'clear',
+          translatedTitle: 'Excluir'
         }
 
       }
