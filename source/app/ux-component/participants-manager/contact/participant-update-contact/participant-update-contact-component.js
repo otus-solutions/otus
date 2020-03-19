@@ -16,8 +16,11 @@
   function Controller(ParticipantContactValues) {
     const self = this;
     self.ParticipantContactValues = ParticipantContactValues;
+    self.editMode = {};
+
 
     self.addContactInput = addContactInput;
+    self.enableEditMode = enableEditMode;
 
     function addContactInput() {
       for (let key in self.contact){
@@ -26,6 +29,11 @@
          break;
         }
       }
+    }
+
+    function enableEditMode(type){
+      console.log(self.editMode[type]);
+      self.editMode[type] = true;
     }
   }
 }());

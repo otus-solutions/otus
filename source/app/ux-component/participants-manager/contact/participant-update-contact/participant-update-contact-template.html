@@ -20,13 +20,13 @@
            layout-fill layout-align="space-between center">
         <md-input-container>
           <label>{{$ctrl.ParticipantContactValues.fields[key]}}</label>
-          <input ng-model="contactItem.value.content" ng-disabled=true>
+          <input ng-model="contactItem.value.content" ng-disabled=!$ctrl.editMode[key]>
         </md-input-container>
         <md-input-container>
           <label>{{$ctrl.ParticipantContactValues.fields.comments}}</label>
-          <input ng-model="contactItem.observation" ng-disabled=true>
+          <input ng-model="contactItem.observation" ng-disabled=!$ctrl.editMode[key]>
         </md-input-container>
-        <md-button class="md-accent md-icon-button md-button" ng-click=""
+        <md-button class="md-accent md-icon-button md-button" ng-click="$ctrl.enableEditMode(key)"
                    ng-disabled="$ctrl.isValid">
           <md-icon aria-label="Adicionar">{{$ctrl.ParticipantContactValues.icons.edit.icon}}</md-icon>
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}</md-tooltip>
