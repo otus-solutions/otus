@@ -5,24 +5,15 @@
     .service('otusjs.participantManager.contact.ParticipantContactService', Service);
 
   Service.$inject = [
-    'otusjs.model.participantContact.ParticipantContactFactory'
+    'otusjs.model.participantContact.ParticipantContactFactory',
+    'otusjs.participant.business.ParticipantManagerService'
   ];
 
-
-  function Service(ParticipantContactFactory) {
+  function Service(ParticipantContactFactory, ParticipantManagerService) {
     const self = this;
     let Mock = {};
 
     self.getParticipantContact = getParticipantContact;
-
-
-    function getParticipantContact(recruitmentNumber) {
-      /*Tratar uma promisse solicitado do repository
-      solicitando a factory do model
-      */
-      return ParticipantContactFactory.fromJson("", Mock.participantContacts);
-      // return Mock.participantContacts;
-    }
 
     Mock.participantContacts = {
       _id: "5e6a45dd2273ad0a40d4050b",
@@ -87,7 +78,15 @@
         fifth: null
       },
     };
+    getParticipantContact()
+    function getParticipantContact(recruitmentNumber) {
+      /*Tratar uma promisse solicitado do repository
+      solicitando a factory do model
+      */
+      let test = ParticipantManagerService.getParticipantContact(Mock.participantContacts._id);
+      console.log(test)
+      return ParticipantContactFactory.fromJson("", Mock.participantContacts);
+    }
+
   }
-
-
 }());

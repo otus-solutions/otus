@@ -30,6 +30,16 @@
     self.getSelectedParticipant = getSelectedParticipant;
     self.getParticipantList = getParticipantList;
     self.getParticipant = getParticipant;
+    self.createParticipantContact = createPaticipantContact;
+    self.getParticipantContact = getParticipantContact;
+    self.getByRecruitmentNumber = getByRecruitmentNumber;
+    self.updateMainContact = updateMainContact;
+    self.addSecondaryContact = addSecondaryContact;
+    self.updateSecondaryContact = updateMainContact;
+    self.swapMainContactWithSecondary = swapMainContactWithSecondary;
+    self.deleteParticipantContact = deleteParticipantContact;
+    self.deleteSecondaryContact = deleteSecondaryContact;
+
     var _setupSuccess;
 
     function setup() {
@@ -137,6 +147,42 @@
         throw new Error('ParticipantList is not initialized.');
       }
       return participant;
+    }
+
+    function createPaticipantContact(partcipantContact) {
+      return ParticipantRepositoryService.createPaticipantContact(partcipantContact);
+    }
+
+    function getParticipantContact(id) {
+      return ParticipantRepositoryService.getParticipantContact(id);
+    }
+
+    function getByRecruitmentNumber(rn) {
+      return ParticipantRepositoryService.getByRecruitmentNumberPaticipantContact(rn);
+    }
+
+    function updateMainContact(partcipantContact) {
+      return ParticipantRepositoryService.updateMainContact(partcipantContact);
+    }
+
+    function addSecondaryContact(partcipantContact) {
+      return ParticipantRepositoryService.addSecondaryContact(partcipantContact);
+    }
+
+    function updateSecondaryContact(partcipantContact) {
+      return ParticipantRepositoryService.updateSecondaryContact(partcipantContact);
+    }
+
+    function swapMainContactWithSecondary(partcipantContact) {
+      return ParticipantRepositoryService.swapMainContactWithSecondary(partcipantContact);
+    }
+
+    function deleteParticipantContact(id) {
+      return ParticipantRepositoryService.deleteParticipantContact(id);
+    }
+
+    function deleteSecondaryContact(id) {
+      return ParticipantRepositoryService.deleteSecondaryContact(id);
     }
   }
 }());
