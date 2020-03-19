@@ -6,9 +6,12 @@
     <div layout="row" layout-align="space-between center" class="info-title">
       <span class="md-subhead">{{$ctrl.ParticipantContactValues.keys[$ctrl.type].translatedTitle}}</span>
       <span></span>
-      <md-button class="md-accent md-icon-button md-button" ng-click=""
+      <md-button class="md-accent md-icon-button md-button"
+                 ng-click="$ctrl.addContactInput()"
                  ng-disabled="ctrl.isValid">
-        <md-icon aria-label="Adicionar">{{$ctrl.ParticipantContactValues.icons.addContact.icon}}</md-icon>
+        <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}>
+          {{$ctrl.ParticipantContactValues.icons.addContact.icon}}
+        </md-icon>
         <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}</md-tooltip>
       </md-button>
     </div>
@@ -38,7 +41,7 @@
     <div layout="row" layout-align="space-between center" class="info-title">
       <span class="md-subhead">{{$ctrl.ParticipantContactValues.keys[$ctrl.type].translatedTitle}}</span>
       <span></span>
-      <md-button class="md-accent md-icon-button md-button" ng-click=""
+      <md-button class="md-accent md-icon-button md-button" ng-click="$ctrl.addContactInput()"
                  ng-disabled="ctrl.isValid">
         <md-icon aria-label="Adicionar">{{$ctrl.ParticipantContactValues.icons.addContact.icon}}</md-icon>
         <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}</md-tooltip>

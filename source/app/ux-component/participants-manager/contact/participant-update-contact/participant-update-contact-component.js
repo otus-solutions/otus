@@ -16,5 +16,16 @@
   function Controller(ParticipantContactValues) {
     const self = this;
     self.ParticipantContactValues = ParticipantContactValues;
+
+    self.addContactInput = addContactInput;
+
+    function addContactInput() {
+      for (let key in self.contact){
+        if(self.contact[key] === null){
+         self.contact[key]= {value: {}}
+         break;
+        }
+      }
+    }
   }
 }());
