@@ -89,19 +89,18 @@
         fifth: null
       },
     };
-    getParticipantContact()
 
     function createParticipantContact(participantContact) {
-      ParticipantManagerService.createParticipantContact(participantContact);
+      return ParticipantManagerService.createParticipantContact(participantContact);
     }
 
     function getParticipantContact(id) {
-      /*Tratar uma promisse solicitado do repository
-      solicitando a factory do model
-      */
-      let test = ParticipantManagerService.getParticipantContact(Mock.participantContacts._id);
-      console.log(test)
-      return ParticipantContactFactory.fromJson("", Mock.participantContacts);
+       ParticipantManagerService.getParticipantContact(Mock.participantContacts._id).then(data => {
+        console.log(ParticipantContactFactory.fromJson("",data));
+      });
+      console.log( ParticipantContactFactory.fromJson("", Mock.participantContacts));
+      return ParticipantManagerService.getParticipantContact(id);
+      // return ParticipantContactFactory.fromJson("", Mock.participantContacts);
     }
 
     function getByRecruitmentNumberPaticipantContact(recruitmentNumber) {
@@ -143,6 +142,5 @@
     function deleteNonMainContact(participantContact) {
       return ParticipantManagerService.deleteNonMainContact(participantContact);
     }
-
   }
 }());

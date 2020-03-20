@@ -23,7 +23,8 @@
     'otusjs.participant.business.ParticipantMessagesService',
     'otusjs.otus.dashboard.service.DashboardService',
     '$scope',
-    'otusjs.participantManager.contact.ParticipantContactService'
+    'otusjs.participantManager.contact.ParticipantContactService',
+    'otusjs.model.participantContact.ParticipantContactFactory'
   ];
 
   function Controller(
@@ -39,7 +40,8 @@
     ParticipantMessagesService,
     DashboardService,
     $scope,
-    ParticipantContactService) {
+    ParticipantContactService,
+    ParticipantContactFactory) {
     var self = this;
 
     mdcDefaultParams({
@@ -231,7 +233,10 @@
       // ProjectFieldCenterService.loadCenters().then(function (result) {
       //   self.contact = angular.copy(result);
       // });
-      self.contact = ParticipantContactService.getParticipantContact();
+
+        ParticipantContactService.getParticipantContact("5e74c4ac04978a757f79761c").then(data => {
+          self.contact = angular.copy(ParticipantContactFactory.fromJson("",data ))
+        });
     }
 
   }
