@@ -51,15 +51,25 @@
     }
 
     function findAddressByCep(addressContact) {
-      _getAddressByCep("91787-193")
+      console.log(addressContact);
+      _getAddressByCep(addressContact.value.postalCode)
+        .then(address => {
+          addressContact.value = {
+            postalCode: address.data.cep,
+            street: address.data.logradouro,
+            neighbourhood:address.data.bairro,
+            city: address.data.localidade,
+            country: address.data.uf
+          }
+        })
+        .catch(err => console.log(e))
     }
 
+    //enviar para service
     function _getAddressByCep(cep) {
       let formatedCep = cep.replace(/\D/g, '');
       let viaCepUrl = `https://viacep.com.br/ws/${formatedCep}/json/`;
-      $http.get(viaCepUrl)
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
+      return $http.get(viaCepUrl);
     }
   }
 }());
