@@ -13,12 +13,23 @@
     const self = this;
     let Mock = {};
 
+    self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
+    self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
+    self.addNonMainEmail = addNonMainEmail;
+    self.addNonMainAddress = addNonMainAddress;
+    self.addNonMainPhoneNumber = addNonMainPhoneNumber;
+    self.updateEmail = updateEmail;
+    self.updateAddress = updateAddress;
+    self.updatePhoneNumber = updatePhoneNumber;
+    self.swapMainContact = swapMainContact;
+    self.deleteParticipantContact = deleteParticipantContact;
+    self.deleteNonMainContact = deleteNonMainContact;
 
     Mock.participantContacts = {
-      _id: "5e6a45dd2273ad0a40d4050b",
+      _id: "5e74c4ac04978a757f79761c",
       objectType: 'ParticipantContacts',
-      recruitmentNumber: 1234567,
+      recruitmentNumber: 888,
       email: {
         main: {value: {content: 'owail@otussolutions.com'}, observation: 'Trabalho'},
         second: {value: {content: 'medico@elsabrasil.com'}, observation: 'Hospital'},
@@ -79,13 +90,58 @@
       },
     };
     getParticipantContact()
-    function getParticipantContact(recruitmentNumber) {
+
+    function createParticipantContact(participantContact) {
+      ParticipantManagerService.createParticipantContact(participantContact);
+    }
+
+    function getParticipantContact(id) {
       /*Tratar uma promisse solicitado do repository
       solicitando a factory do model
       */
       let test = ParticipantManagerService.getParticipantContact(Mock.participantContacts._id);
       console.log(test)
       return ParticipantContactFactory.fromJson("", Mock.participantContacts);
+    }
+
+    function getByRecruitmentNumberPaticipantContact(recruitmentNumber) {
+      return ParticipantManagerService.getByRecruitmentNumberPaticipantContact(recruitmentNumber);
+    }
+
+    function addNonMainEmail(participantContact) {
+      return ParticipantManagerService.addNonMainEmail(participantContact);
+    }
+
+    function addNonMainAddress(participantContact) {
+      return ParticipantManagerService.addNonMainAddress(participantContact);
+    }
+
+    function addNonMainPhoneNumber(participantContact) {
+      return ParticipantManagerService.addNonMainPhoneNumber(participantContact);
+    }
+
+    function updateEmail(participantContact) {
+      return ParticipantManagerService.updateEmail(participantContact);
+    }
+
+    function updateAddress(participantContact) {
+      return ParticipantManagerService.updateAddress(participantContact);
+    }
+
+    function updatePhoneNumber(participantContact) {
+      return ParticipantManagerService.updatePhoneNumber(participantContact);
+    }
+
+    function swapMainContact(participantContact) {
+      return ParticipantManagerService.swapMainContact(participantContact);
+    }
+
+    function deleteParticipantContact(id) {
+      return ParticipantManagerService.deleteParticipantContact(id);
+    }
+
+    function deleteNonMainContact(participantContact) {
+      return ParticipantManagerService.deleteNonMainContact(participantContact);
     }
 
   }

@@ -30,15 +30,18 @@
     self.getSelectedParticipant = getSelectedParticipant;
     self.getParticipantList = getParticipantList;
     self.getParticipant = getParticipant;
-    self.createParticipantContact = createPaticipantContact;
+    self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
-    self.getByRecruitmentNumber = getByRecruitmentNumber;
-    self.updateMainContact = updateMainContact;
-    self.addSecondaryContact = addSecondaryContact;
-    self.updateSecondaryContact = updateMainContact;
-    self.swapMainContactWithSecondary = swapMainContactWithSecondary;
+    self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
+    self.addNonMainEmail = addNonMainEmail;
+    self.addNonMainAddress = addNonMainAddress;
+    self.addNonMainPhoneNumber = addNonMainPhoneNumber;
+    self.updateEmail = updateEmail;
+    self.updateAddress = updateAddress;
+    self.updatePhoneNumber = updatePhoneNumber;
+    self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
-    self.deleteSecondaryContact = deleteSecondaryContact;
+    self.deleteNonMainContact = deleteNonMainContact;
 
     var _setupSuccess;
 
@@ -149,40 +152,52 @@
       return participant;
     }
 
-    function createPaticipantContact(partcipantContact) {
-      return ParticipantRepositoryService.createPaticipantContact(partcipantContact);
+    function createParticipantContact(participantContact) {
+      return ParticipantRepositoryService.createParticipantContact(participantContact);
     }
 
     function getParticipantContact(id) {
       return ParticipantRepositoryService.getParticipantContact(id);
     }
 
-    function getByRecruitmentNumber(rn) {
+    function getByRecruitmentNumberPaticipantContact(rn) {
       return ParticipantRepositoryService.getByRecruitmentNumberPaticipantContact(rn);
     }
 
-    function updateMainContact(partcipantContact) {
-      return ParticipantRepositoryService.updateMainContact(partcipantContact);
+    function addNonMainEmail(participantContact) {
+      return ParticipantRepositoryService.addNonMainEmail(participantContact);
     }
 
-    function addSecondaryContact(partcipantContact) {
-      return ParticipantRepositoryService.addSecondaryContact(partcipantContact);
+    function addNonMainAddress(participantContact) {
+      return ParticipantRepositoryService.addNonMainAddress(participantContact);
     }
 
-    function updateSecondaryContact(partcipantContact) {
-      return ParticipantRepositoryService.updateSecondaryContact(partcipantContact);
+    function addNonMainPhoneNumber(participantContact) {
+      return ParticipantRepositoryService.addNonMainPhoneNumber(participantContact);
     }
 
-    function swapMainContactWithSecondary(partcipantContact) {
-      return ParticipantRepositoryService.swapMainContactWithSecondary(partcipantContact);
+    function updateEmail(participantContact) {
+      return ParticipantRepositoryService.updateEmail(participantContact);
+    }
+
+    function updateAddress(participantContact) {
+      return ParticipantRepositoryService.updateAddress(participantContact);
+    }
+
+    function updatePhoneNumber(participantContact) {
+      return ParticipantRepositoryService.updatePhoneNumber(participantContact);
+    }
+
+    function swapMainContact(participantContact) {
+      return ParticipantRepositoryService.swapMainContact(participantContact);
     }
 
     function deleteParticipantContact(id) {
       return ParticipantRepositoryService.deleteParticipantContact(id);
     }
 
-    function deleteSecondaryContact(id) {
-      return ParticipantRepositoryService.deleteSecondaryContact(id);
+    function deleteNonMainContact(participantContact) {
+      return ParticipantRepositoryService.deleteNonMainContact(participantContact);
     }
   }
 }());

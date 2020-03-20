@@ -21,15 +21,18 @@
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
-    self.createParticipantContact = createPaticipantContact;
+    self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
     self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
-    self.updateMainContact = updateMainContact;
-    self.addSecondaryContact = addSecondaryContact;
-    self.updateSecondaryContact = updateMainContact;
-    self.swapMainContactWithSecondary = swapMainContactWithSecondary;
+    self.addNonMainEmail = addNonMainEmail;
+    self.addNonMainAddress = addNonMainAddress;
+    self.addNonMainPhoneNumber = addNonMainPhoneNumber;
+    self.updateEmail = updateEmail;
+    self.updateAddress = updateAddress;
+    self.updatePhoneNumber = updatePhoneNumber;
+    self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
-    self.deleteSecondaryContact = deleteSecondaryContact;
+    self.deleteNonMainContact = deleteNonMainContact;
 
     function create(participant) {
       var _dataSource = ModuleService.DataSource.Participant;
@@ -80,9 +83,9 @@
       }
     }
 
-    function createPaticipantContact(partcipantContact) {
+    function createParticipantContact(participantContact) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.createParticipantContact(partcipantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.createParticipantContact(participantContact.toJSON()))
         .then(response => response.data);
     }
 
@@ -98,27 +101,45 @@
         .then(response => response.data);
     }
 
-    function updateMainContact(partcipantContact) {
+    function addNonMainEmail(participantContact) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.updateMainContact(partcipantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.addNonMainEmail(participantContact.toJSON()))
         .then(response => response.data);
     }
 
-    function addSecondaryContact(partcipantContact) {
+    function addNonMainAddress(participantContact) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.addSecondaryContact(partcipantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.addNonMainAddress(participantContact.toJSON()))
         .then(response => response.data);
     }
 
-    function updateSecondaryContact(partcipantContact) {
+    function addNonMainPhoneNumber(participantContact) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.updateSecondaryContact(partcipantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.addNonMainPhoneNumber(participantContact.toJSON()))
         .then(response => response.data);
     }
 
-    function swapMainContactWithSecondary(partcipantContact) {
+    function updateEmail(participantContact) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.swapMainContactWithSecondary(partcipantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.updateEmail(participantContact.toJSON()))
+        .then(response => response.data);
+    }
+
+    function updateAddress(participantContact) {
+      return _remoteDataSource.whenReady()
+        .then(remoteDataSource => remoteDataSource.updateAddress(participantContact.toJSON()))
+        .then(response => response.data);
+    }
+
+    function updatePhoneNumber(participantContact) {
+      return _remoteDataSource.whenReady()
+        .then(remoteDataSource => remoteDataSource.updatePhoneNumber(participantContact.toJSON()))
+        .then(response => response.data);
+    }
+
+    function swapMainContact(participantContact) {
+      return _remoteDataSource.whenReady()
+        .then(remoteDataSource => remoteDataSource.swapMainContact(participantContact.toJSON()))
         .then(response => response.data);
     }
 
@@ -128,9 +149,9 @@
         .then(response => response.data);
     }
 
-    function deleteSecondaryContact(id) {
+    function deleteNonMainContact(participantContact) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.deleteSecondaryContact(id))
+        .then(remoteDataSource => remoteDataSource.deleteNonMainContact(participantContact))
         .then(response => response.data);
     }
   }

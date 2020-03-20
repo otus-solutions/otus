@@ -15,63 +15,81 @@
     let _rest = null;
 
     self.initialize = initialize;
-    self.createParticipantContact = createPaticipantContact;
+    self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
     self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
-    self.updateMainContact = updateMainContact;
-    self.addSecondaryContact = addSecondaryContact;
-    self.updateSecondaryContact = updateMainContact;
-    self.swapMainContactWithSecondary = swapMainContactWithSecondary;
+    self.addNonMainEmail = addNonMainEmail;
+    self.addNonMainAddress = addNonMainAddress;
+    self.addNonMainPhoneNumber = addNonMainPhoneNumber;
+    self.updateEmail = updateEmail;
+    self.updateAddress = updateAddress;
+    self.updatePhoneNumber = updatePhoneNumber;
+    self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
-    self.deleteSecondaryContact = deleteSecondaryContact;
+    self.deleteNonMainContact = deleteNonMainContact;
 
     function initialize() {
       _rest = OtusRestResourceService.getParticipantContactResource();
     }
 
-    function createPaticipantContact(jsonParticipant) {
+    function createParticipantContact(jsonParticipant) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.create(jsonParticipant).$promise;
     }
 
     function getParticipantContact(id) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.get(id).$promise;
+      return _rest.get({id: id}).$promise;
     }
 
     function getByRecruitmentNumberPaticipantContact(rn) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.getByRecruitmentNumber(rn).$promise;
+      return _rest.getByRecruitmentNumber({rn:rn}).$promise;
     }
 
-    function updateMainContact(jsonParticipant) {
+    function addNonMainEmail(jsonParticipant) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateMainContact(jsonParticipant).$promise;
+      return _rest.addNonMainEmail(jsonParticipant).$promise;
     }
 
-    function addSecondaryContact(jsonParticipant) {
+    function addNonMainAddress(jsonParticipant) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.addSecondaryContact(jsonParticipant).$promise;
+      return _rest.addNonMainAddress(jsonParticipant).$promise;
     }
 
-    function updateSecondaryContact(jsonParticipant) {
+    function addNonMainPhoneNumber(jsonParticipant) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateSecondaryContact(jsonParticipant).$promise;
+      return _rest.addNonMainPhoneNumber(jsonParticipant).$promise;
     }
 
-    function swapMainContactWithSecondary(jsonParticipant) {
+    function updateEmail(jsonParticipant) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.swapMainContactWithSecondary(jsonParticipant).$promise;
+      return _rest.updateEmail(jsonParticipant).$promise;
+    }
+
+    function updateAddress(jsonParticipant) {
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.updateAddress(jsonParticipant).$promise;
+    }
+
+    function updatePhoneNumber(jsonParticipant) {
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.updatePhoneNumber(jsonParticipant).$promise;
+    }
+
+    function swapMainContact(jsonParticipant) {
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.swapMainContact(jsonParticipant).$promise;
     }
 
     function deleteParticipantContact(id) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.delete(id).$promise;
+      return _rest.delete({id:id}).$promise;
     }
 
-    function deleteSecondaryContact(id) {
+    function deleteNonMainContact(jsonParticipant) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.deleteSecondaryContact(id).$promise;
+      return _rest.deleteNonMainContact(jsonParticipant).$promise;
     }
   }
 }());
