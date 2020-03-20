@@ -15,15 +15,24 @@
 
   function Controller(ParticipantContactValues, $q, $http) {
     const self = this;
-    self.ParticipantContactValues = ParticipantContactValues;
-    self.editMode = {};
-    self.editableContact = angular.copy(self.contact);
+
 
     self.addContactInput = addContactInput;
     self.enableEditMode = enableEditMode;
     self.updateContact = updateContact;
     self.restoreContact = restoreContact;
     self.findAddressByCep = findAddressByCep;
+
+    /* Lifecycle hooks */
+    self.$onInit = onInit;
+
+    /* Public methods */
+    function onInit() {
+      self.ParticipantContactValues = ParticipantContactValues;
+      self.editMode = {};
+      self.editableContact = angular.copy(self.contact);
+  }
+    
 
     function addContactInput() {
       for (let key in self.editableContact) {
@@ -51,7 +60,6 @@
     }
 
     function findAddressByCep(addressContact) {
-      console.log(addressContact);
       _getAddressByCep(addressContact.value.postalCode)
         .then(address => {
           addressContact.value = {
