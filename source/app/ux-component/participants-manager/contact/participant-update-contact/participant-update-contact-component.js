@@ -25,9 +25,9 @@
     self.restoreContact = restoreContact;
 
     function addContactInput() {
-      for (let key in self.contact){
-        if(self.contact[key] === null){
-         self.contact[key]= {value: {}}
+      for (let key in self.editableContact){
+        if(self.editableContact[key] === null){
+         self.editableContact[key]= {value: {}}
          break;
         }
       }
