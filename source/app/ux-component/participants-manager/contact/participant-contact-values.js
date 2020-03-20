@@ -46,6 +46,10 @@
         return: {
           icon:'undo',
           translatedTitle: 'retornar'
+        },
+        findPostalCode:{
+          icon:'search',
+          translatedTitle: 'Buscar Cep'
         }
 
 

@@ -89,6 +89,13 @@
           <label>{{$ctrl.ParticipantContactValues.fields.streetNumber}}</label>
           <input ng-model="contactItem.value.streetNumber" ng-disabled=!$ctrl.editMode[key]>
         </md-input-container>
+        <md-button class="md-accent md-icon-button find-cep" ng-click="$ctrl.findAddressByCep(contactItem.value.postalCode)"
+                   ng-disabled=!$ctrl.editMode[key]>
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.findPostalCode.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.findPostalCode.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.findPostalCode.translatedTitle}}</md-tooltip>
+        </md-button>
         <md-input-container class="cep-input">
           <label>{{$ctrl.ParticipantContactValues.fields.postalCode}}</label>
           <input ng-model="contactItem.value.postalCode" ng-disabled=!$ctrl.editMode[key]>

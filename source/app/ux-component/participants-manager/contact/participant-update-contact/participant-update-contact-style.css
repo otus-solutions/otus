@@ -44,9 +44,9 @@
   grid-template-rows:  .1fr .1fr .1fr;
   grid-gap: 10px;
   grid-template-areas:
-    "street numberNumber cep  edit "
-    "complements neighbourhood city restore"
-    "observation observation country."
+    "street numberNumber cep findCep"
+    "complements neighbourhood city edit"
+    "observation observation country restore"
 }
 
 .content-input{
@@ -93,6 +93,13 @@
 .country-input{
   grid-area: country;
 }
+
+.find-cep{
+  grid-area: findCep;
+}
+
+
+
 
 md-input-container{
   margin-bottom: 0px;
