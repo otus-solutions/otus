@@ -42,7 +42,12 @@
         clear: {
           icon: 'clear',
           translatedTitle: 'Excluir'
+        },
+        return: {
+          icon:'undo',
+          translatedTitle: 'retornar'
         }
+
 
       }
     });

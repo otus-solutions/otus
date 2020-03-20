@@ -17,11 +17,12 @@
     const self = this;
     self.ParticipantContactValues = ParticipantContactValues;
     self.editMode = {};
-
+    self.editableContact = angular.copy(self.contact);
 
     self.addContactInput = addContactInput;
     self.enableEditMode = enableEditMode;
     self.updateContact = updateContact;
+    self.restoreContact = restoreContact;
 
     function addContactInput() {
       for (let key in self.contact){
@@ -40,6 +41,11 @@
     function updateContact(updatedContactItem, type) {
       //promisse here!!!
       console.log(updatedContactItem);
+      self.editMode[type] = false;
+    }
+
+    function restoreContact(type){
+      self.editableContact = angular.copy(self.contact);
       self.editMode[type] = false;
     }
   }

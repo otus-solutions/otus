@@ -29,7 +29,7 @@
   grid-template-rows:  .1fr;
   grid-gap: 10px;
   grid-template-areas:
-    "content observation clear edit"
+    "content observation restore edit"
 }
 
 
@@ -45,7 +45,7 @@
   grid-gap: 10px;
   grid-template-areas:
     "street numberNumber cep  edit "
-    "complements neighbourhood city clear"
+    "complements neighbourhood city restore"
     "observation observation country."
 }
 
@@ -70,8 +70,8 @@
   grid-area: edit;
 }
 
-.clear-button{
-  grid-area: clear;
+.restore-button{
+  grid-area: restore;
 }
 
 .neighbourhood-input{

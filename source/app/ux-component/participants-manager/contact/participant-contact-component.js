@@ -42,7 +42,6 @@
     ParticipantContactService) {
     var self = this;
 
-
     mdcDefaultParams({
       lang: 'pt-br',
       cancelText: 'cancelar',
