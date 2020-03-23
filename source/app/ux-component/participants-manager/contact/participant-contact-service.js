@@ -75,7 +75,9 @@
     }
 
   //inicio  bloco Adonis
-    
+  //pra validar tenho que o getParticipantContactByRecruitmentNumber retorne o 404 e fazer um catch?
+  //o catch tem q ser criado no controle para criar o modelo do model
+
   //fim bloco Adonis
 
 
