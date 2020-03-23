@@ -11,9 +11,12 @@
       }
     }).controller('participantUpdateContactCtrl', Controller);
 
-  Controller.$inject = ['ParticipantContactValues', '$http'];
+  Controller.$inject = [
+    'ParticipantContactValues',
+    'otusjs.participantManager.contact.ParticipantContactService'
+  ];
 
-  function Controller(ParticipantContactValues, $http) {
+  function Controller(ParticipantContactValues, ParticipantContactService) {
     const self = this;
 
     self.addContactInput = addContactInput;
@@ -58,7 +61,7 @@
     }
 
     function findAddressByCep(addressContact) {
-      _getAddressByCep(addressContact.value.postalCode)
+      ParticipantContactService.getAddressByCep(addressContact.value.postalCode)
         .then(address => {
           addressContact.value = {
             postalCode: address.data.cep,
@@ -68,14 +71,7 @@
             country: address.data.uf
           }
         })
-        .catch(err => console.log(e))
-    }
-
-    //enviar para service
-    function _getAddressByCep(cep) {
-      let formatedCep = cep.replace(/\D/g, '');
-      let viaCepUrl = `https://viacep.com.br/ws/${formatedCep}/json/`;
-      return $http.get(viaCepUrl);
+        .catch(err => console.error(e))
     }
   }
 }());

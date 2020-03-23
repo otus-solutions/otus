@@ -5,11 +5,12 @@
     .service('otusjs.participantManager.contact.ParticipantContactService', Service);
 
   Service.$inject = [
+    '$http',
     'otusjs.model.participantContact.ParticipantContactFactory',
     'otusjs.participant.business.ParticipantManagerService'
   ];
 
-  function Service(ParticipantContactFactory, ParticipantManagerService) {
+  function Service($http, ParticipantContactFactory, ParticipantManagerService) {
     const self = this;
     const MessageError = 'Model factory is not initialized.';
     let Mock = {};
@@ -28,6 +29,7 @@
     self.deleteNonMainContact = deleteNonMainContact;
     self.participantContactFactoryJson = participantContactFactoryJson;
     self.participantContactFactoryCreate = participantContactFactoryCreate;
+    self.getAddressByCep = getAddressByCep;
 
     function createParticipantContact(participantContact) {
       return ParticipantManagerService.createParticipantContact(participantContact);
@@ -91,6 +93,12 @@
         } catch (e) {
           throw new Error(MessageError);
         }
+    }
+
+    function getAddressByCep(cep) {
+      let formatedCep = cep.replace(/\D/g, '');
+      let viaCepUrl = `https://viacep.com.br/ws/${formatedCep}/json/`;
+      return $http.get(viaCepUrl);
     }
 
 
