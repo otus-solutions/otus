@@ -11,6 +11,7 @@
 
   function Service(ParticipantContactFactory, ParticipantManagerService) {
     const self = this;
+    const MessageError = 'Model factory is not initialized.';
     let Mock = {};
 
     self.createParticipantContact = createParticipantContact;
@@ -25,6 +26,8 @@
     self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
+    self.participantContactFactoryJson = participantContactFactoryJson;
+    self.participantContactFactoryCreate = participantContactFactoryCreate;
 
     function createParticipantContact(participantContact) {
       return ParticipantManagerService.createParticipantContact(participantContact);
@@ -73,6 +76,23 @@
     function deleteNonMainContact(participantContact) {
       return ParticipantManagerService.deleteNonMainContact(participantContact);
     }
+
+    function participantContactFactoryCreate(participantContact) {
+        try {
+          return ParticipantContactFactory.create(participantContact)
+        } catch (e) {
+          throw new Error(MessageError);
+        }
+    }
+
+    function participantContactFactoryJson(participantContact) {
+        try {
+          return ParticipantContactFactory.fromJson("", participantContact);
+        } catch (e) {
+          throw new Error(MessageError);
+        }
+    }
+
 
   //inicio  bloco Adonis
   //pra validar tenho que o getParticipantContactByRecruitmentNumber retorne o 404 e fazer um catch?

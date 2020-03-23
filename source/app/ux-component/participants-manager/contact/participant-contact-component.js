@@ -12,6 +12,7 @@
 
   Controller.$inject = [
     '$element',
+    '$mdToast',
     'otusjs.utils.ImmutableDate',
     'mdcDateTimeDialog',
     'otusjs.application.state.ApplicationStateService',
@@ -23,12 +24,12 @@
     'otusjs.participant.business.ParticipantMessagesService',
     'otusjs.otus.dashboard.service.DashboardService',
     '$scope',
-    'otusjs.participantManager.contact.ParticipantContactService',
-    'otusjs.model.participantContact.ParticipantContactFactory'
+    'otusjs.participantManager.contact.ParticipantContactService'
   ];
 
   function Controller(
     $element,
+    $mdToast,
     ImmutableDate,
     mdcDateTimeDialog,
     ApplicationStateService,
@@ -40,9 +41,9 @@
     ParticipantMessagesService,
     DashboardService,
     $scope,
-    ParticipantContactService,
-    ParticipantContactFactory) {
+    ParticipantContactService) {
     var self = this;
+    const message = 'Não possui contatos do participante.';
 
     mdcDefaultParams({
       lang: 'pt-br',
@@ -66,6 +67,7 @@
 
     function onInit() {
       try {
+        self.messageError = "";
         self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant);
         self.isIdentified = self.participant.toJSON().identified;
         _loadParticipantContact(self.participant.recruitmentNumber);
@@ -234,9 +236,19 @@
 
       //Tem que passar a lógica do model para o service
       ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
-        .then(data => ParticipantContactFactory.fromJson("", data))
+        .then(data => ParticipantContactService.participantContactFactoryJson(data))
         .then(resultFactory => {
           self.contact = resultFactory;
+        })
+        .catch(e => {
+          console.error(e);
+          self.messageError = message;
+          $mdToast.show(
+            $mdToast.simple()
+              .position('bottom right')
+              .textContent(self.messageError)
+              .hideDelay(3000)
+          );
         });
     }
 
