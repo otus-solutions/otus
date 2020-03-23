@@ -234,9 +234,8 @@
       //   self.contact = angular.copy(result);
       // });
 
-      console.log(self.participant.recruitmentNumber)
-
-        ParticipantContactService.getParticipantContact(self.participant.recruitmentNumber)
+      console.log(self.participant.recruitmentNumber);
+        ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
           .then(data => {
             console.log(data)
 

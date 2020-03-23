@@ -15,7 +15,7 @@
 
     self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
-    self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
+    self.getParticipantContactByRecruitmentNumber = getParticipantContactByRecruitmentNumber;
     self.addNonMainEmail = addNonMainEmail;
     self.addNonMainAddress = addNonMainAddress;
     self.addNonMainPhoneNumber = addNonMainPhoneNumber;
@@ -103,7 +103,7 @@
       // return ParticipantContactFactory.fromJson("", Mock.participantContacts);
     }
 
-    function getByRecruitmentNumberPaticipantContact(recruitmentNumber) {
+    function getParticipantContactByRecruitmentNumber(recruitmentNumber) {
       return ParticipantManagerService.getByRecruitmentNumberPaticipantContact(recruitmentNumber);
     }
 
