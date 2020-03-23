@@ -39,7 +39,7 @@
 
 </style>
 
-<md-content class="pc-layout" ng-if="$ctrl.contact"  ng-cloak>
+<md-content class="pc-layout" ng-cloak>
   <div class="return-button" layout="row" layout-align="start center" layout-margin>
     <md-button class="md-button md-icon-button md-primary md-raised" ng-click="$ctrl.dashboardParticipant()">
       <md-icon aria-label="Limpar">keyboard_return</md-icon>
@@ -121,18 +121,25 @@
 
     <otus-participant-update-contact class="contact-update"
                                      contact="$ctrl.contact.phoneNumber"
-                                     type="phoneNumber">
+                                     type="phoneNumber"
+                                     ng-if="$ctrl.contact">
     </otus-participant-update-contact>
 
     <otus-participant-update-contact class="contact-update"
                                      contact="$ctrl.contact.email"
-                                     type="email">
+                                     type="email"
+                                     ng-if="$ctrl.contact">
     </otus-participant-update-contact>
 
     <otus-participant-update-contact class="contact-update"
                                      contact="$ctrl.contact.address"
-                                     type="address">
+                                     type="address"
+                                     ng-if="$ctrl.contact">
     </otus-participant-update-contact>
 
+    <md-button class="md-primary md-hue-1"
+               ng-click=""
+               ng-if="!$ctrl.contact">Editar Contatos
+    </md-button>
   </otus-panel>
 </md-content>

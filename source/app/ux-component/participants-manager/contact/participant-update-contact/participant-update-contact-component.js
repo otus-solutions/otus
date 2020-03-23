@@ -15,8 +15,6 @@
 
   function Controller(ParticipantContactValues, $http) {
     const self = this;
-    self.editableContact = angular.copy(self.contact);
-
 
     self.addContactInput = addContactInput;
     self.enableEditMode = enableEditMode;
