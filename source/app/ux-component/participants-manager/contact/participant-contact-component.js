@@ -229,13 +229,18 @@
 
 
     function _loadParticipantContact(recruitmentNumber) {
-      //self.contact = {};
+      self.contact = {};
       // ProjectFieldCenterService.loadCenters().then(function (result) {
       //   self.contact = angular.copy(result);
       // });
 
-        ParticipantContactService.getParticipantContact("5e74c4ac04978a757f79761c").then(data => {
-          self.contact = angular.copy(ParticipantContactFactory.fromJson("",data ))
+      console.log(self.participant.recruitmentNumber)
+
+        ParticipantContactService.getParticipantContact(self.participant.recruitmentNumber)
+          .then(data => {
+            console.log(data)
+
+          //self.contact = angular.copy(ParticipantContactFactory.fromJson("",data ))
         });
     }
 

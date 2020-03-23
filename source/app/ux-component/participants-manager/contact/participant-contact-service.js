@@ -95,10 +95,10 @@
     }
 
     function getParticipantContact(id) {
-       ParticipantManagerService.getParticipantContact(Mock.participantContacts._id).then(data => {
-        console.log(ParticipantContactFactory.fromJson("",data));
-      });
-      console.log( ParticipantContactFactory.fromJson("", Mock.participantContacts));
+      //  ParticipantManagerService.getParticipantContact(Mock.participantContacts._id).then(data => {
+      //   console.log(ParticipantContactFactory.fromJson("",data));
+      // });
+      //console.log( ParticipantContactFactory.fromJson("", Mock.participantContacts));
       return ParticipantManagerService.getParticipantContact(id);
       // return ParticipantContactFactory.fromJson("", Mock.participantContacts);
     }
