@@ -11,17 +11,18 @@
       }
     }).controller('participantUpdateContactCtrl', Controller);
 
-  Controller.$inject = ['ParticipantContactValues', '$q', '$http'];
+  Controller.$inject = ['ParticipantContactValues', '$http'];
 
-  function Controller(ParticipantContactValues, $q, $http) {
+  function Controller(ParticipantContactValues, $http) {
     const self = this;
+    self.editableContact = angular.copy(self.contact);
 
 
     self.addContactInput = addContactInput;
     self.enableEditMode = enableEditMode;
     self.updateContact = updateContact;
     self.restoreContact = restoreContact;
-    self.findAddressByCep = findAddressByCep;
+    //self.findAddressByCep = findAddressByCep;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -30,9 +31,11 @@
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
       self.editMode = {};
+      console.log(self.contact)
       self.editableContact = angular.copy(self.contact);
+      console.log(self.editableContact)
   }
-    
+
 
     function addContactInput() {
       for (let key in self.editableContact) {

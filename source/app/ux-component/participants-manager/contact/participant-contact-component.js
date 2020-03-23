@@ -234,12 +234,11 @@
       //   self.contact = angular.copy(result);
       // });
 
-      console.log(self.participant.recruitmentNumber);
-        ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
-          .then(data => {
-            console.log(data)
-
-          //self.contact = angular.copy(ParticipantContactFactory.fromJson("",data ))
+      //Tem que passar a lógica do model para o service
+      ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
+        .then(data => ParticipantContactFactory.fromJson("", data))
+        .then(resultFactory => {
+          self.contact = resultFactory;
         });
     }
 
