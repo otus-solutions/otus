@@ -32,7 +32,7 @@
     self.getParticipant = getParticipant;
     self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
-    self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
+    self.getParticipantContactByRecruitmentNumber = getParticipantContactByRecruitmentNumber;
     self.addNonMainEmail = addNonMainEmail;
     self.addNonMainAddress = addNonMainAddress;
     self.addNonMainPhoneNumber = addNonMainPhoneNumber;
@@ -160,8 +160,8 @@
       return ParticipantRepositoryService.getParticipantContact(id);
     }
 
-    function getByRecruitmentNumberPaticipantContact(rn) {
-      return ParticipantRepositoryService.getByRecruitmentNumberPaticipantContact(rn);
+    function getParticipantContactByRecruitmentNumber(rn) {
+      return ParticipantRepositoryService.getParticipantContactByRecruitmentNumber(rn);
     }
 
     function addNonMainEmail(participantContact) {

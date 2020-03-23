@@ -23,7 +23,7 @@
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
     self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
-    self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
+    self.getParticipantContactByRecruitmentNumber = getParticipantContactByRecruitmentNumber;
     self.addNonMainEmail = addNonMainEmail;
     self.addNonMainAddress = addNonMainAddress;
     self.addNonMainPhoneNumber = addNonMainPhoneNumber;
@@ -95,9 +95,9 @@
         .then(response => response.data);
     }
 
-    function getByRecruitmentNumberPaticipantContact(rn) {
+    function getParticipantContactByRecruitmentNumber(rn) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.getByRecruitmentNumberPaticipantContact(rn))
+        .then(remoteDataSource => remoteDataSource.getParticipantContactByRecruitmentNumber(rn))
         .then(response => response.data);
     }
 

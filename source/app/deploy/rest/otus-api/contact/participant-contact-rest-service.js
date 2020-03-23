@@ -17,7 +17,7 @@
     self.initialize = initialize;
     self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
-    self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
+    self.getParticipantContactByRecruitmentNumber = getParticipantContactByRecruitmentNumber;
     self.addNonMainEmail = addNonMainEmail;
     self.addNonMainAddress = addNonMainAddress;
     self.addNonMainPhoneNumber = addNonMainPhoneNumber;
@@ -42,7 +42,7 @@
       return _rest.get({id: id}).$promise;
     }
 
-    function getByRecruitmentNumberPaticipantContact(rn) {
+    function getParticipantContactByRecruitmentNumber(rn) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.getByRecruitmentNumber({rn:rn}).$promise;
     }

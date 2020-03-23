@@ -104,7 +104,7 @@
     }
 
     function getParticipantContactByRecruitmentNumber(recruitmentNumber) {
-      return ParticipantManagerService.getByRecruitmentNumberPaticipantContact(recruitmentNumber);
+      return ParticipantManagerService.getParticipantContactByRecruitmentNumber(recruitmentNumber);
     }
 
     function addNonMainEmail(participantContact) {
