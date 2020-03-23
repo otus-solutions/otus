@@ -68,6 +68,7 @@
       try {
         self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant);
         self.isIdentified = self.participant.toJSON().identified;
+        _loadParticipantContact(self.participant.recruitmentNumber);
         if (self.isIdentified) {
           self.birthdate = new Date(self.participant.birthdate.value)
         } else {
@@ -77,7 +78,6 @@
         self.maxDate = new Date();
         self.centers = {};
         _loadAllCenters();
-        _loadParticipantContact(self.participant.recruitmentNumber)
       } catch (e) {
         alert(66)
       }
@@ -197,7 +197,6 @@
       return _valid;
     }
 
-
     function dashboardParticipant() {
       ApplicationStateService.activateParticipantDashboard();
     }
@@ -215,21 +214,20 @@
                 ParticipantMessagesService.showUpdateParticipant(p).then(function () {
                   self.dashboardParticipant();
                 })
-
               })
               .catch(function (err) {
                 ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
               });
-
           });
-      } else {
+      }
+      else {
         ParticipantMessagesService.showToast("Favor, preencha todos os campos!");
       }
     }
 
 
     function _loadParticipantContact(recruitmentNumber) {
-      self.contact = {};
+      //self.contact = {};
       // ProjectFieldCenterService.loadCenters().then(function (result) {
       //   self.contact = angular.copy(result);
       // });

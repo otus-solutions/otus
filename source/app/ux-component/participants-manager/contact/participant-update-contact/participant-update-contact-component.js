@@ -22,7 +22,7 @@
     self.enableEditMode = enableEditMode;
     self.updateContact = updateContact;
     self.restoreContact = restoreContact;
-    //self.findAddressByCep = findAddressByCep;
+    self.findAddressByCep = findAddressByCep;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -31,11 +31,8 @@
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
       self.editMode = {};
-      console.log(self.contact)
       self.editableContact = angular.copy(self.contact);
-      console.log(self.editableContact)
-  }
-
+    }
 
     function addContactInput() {
       for (let key in self.editableContact) {
@@ -68,7 +65,7 @@
           addressContact.value = {
             postalCode: address.data.cep,
             street: address.data.logradouro,
-            neighbourhood:address.data.bairro,
+            neighbourhood: address.data.bairro,
             city: address.data.localidade,
             country: address.data.uf
           }
