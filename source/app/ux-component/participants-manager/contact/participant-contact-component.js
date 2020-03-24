@@ -221,37 +221,27 @@
                 ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
               });
           });
-      }
-      else {
+      } else {
         ParticipantMessagesService.showToast("Favor, preencha todos os campos!");
       }
     }
 
 
-    function _loadParticipantContact(recruitmentNumber) {
-      //self.contact = {};
-      // ProjectFieldCenterService.loadCenters().then(function (result) {
-      //   self.contact = angular.copy(result);
-      // });
-
-      //Tem que passar a lógica do model para o service
+    function _loadParticipantContact() {
       ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
         .then(data => ParticipantContactService.participantContactFactoryJson(data))
         .then(resultFactory => {
           self.contact = resultFactory;
         })
-        .catch(e => {
-          console.error(e);
+        .catch(() => {
           self.messageError = message;
-          $mdToast.show(
-            $mdToast.simple()
-              .position('bottom right')
-              .textContent(self.messageError)
-              .hideDelay(3000)
+          $mdToast.show($mdToast.simple()
+            .position('bottom left')
+            .textContent(self.messageError)
+            .hideDelay(3000)
           );
         });
     }
-
   }
 }());
 

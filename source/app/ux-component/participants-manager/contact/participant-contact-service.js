@@ -95,6 +95,7 @@
         }
     }
 
+
     function getAddressByCep(cep) {
       let formatedCep = cep.replace(/\D/g, '');
       let viaCepUrl = `https://viacep.com.br/ws/${formatedCep}/json/`;

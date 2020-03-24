@@ -13,10 +13,11 @@
 
   Controller.$inject = [
     'ParticipantContactValues',
-    'otusjs.participantManager.contact.ParticipantContactService'
+    'otusjs.participantManager.contact.ParticipantContactService',
+    '$mdToast'
   ];
 
-  function Controller(ParticipantContactValues, ParticipantContactService) {
+  function Controller(ParticipantContactValues, ParticipantContactService, $mdToast) {
     const self = this;
 
     self.addContactInput = addContactInput;
@@ -36,9 +37,10 @@
     }
 
     function addContactInput() {
+      console.log(self.editableContact)
       for (let key in self.editableContact) {
         if (self.editableContact[key] === null) {
-          self.editableContact[key] = {value: {}}
+          self.editableContact[key] = {value: {}};
           break;
         }
       }
@@ -70,8 +72,12 @@
             city: address.data.localidade,
             country: address.data.uf
           }
-        })
-        .catch(err => console.error(e))
+        }).catch((e) => {
+        $mdToast.show($mdToast.simple()
+          .position('bottom left')
+          .textContent(ParticipantContactValues.msg.postalCodeNotFound)
+          .hideDelay(4000));
+      })
     }
   }
 }());

@@ -19,7 +19,6 @@
         country: 'País',
         complements: 'Complemento',
         observation: 'Observação'
-
       },
       keys: {
         email: {translatedTitle: 'Emails'},
@@ -51,8 +50,9 @@
           icon:'search',
           translatedTitle: 'Buscar Cep'
         }
-
-
+      },
+      msg:{
+        postalCodeNotFound: 'CEP não encontrado'
       }
     });
 }());
