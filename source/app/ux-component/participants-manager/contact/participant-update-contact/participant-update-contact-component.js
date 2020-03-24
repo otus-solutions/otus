@@ -33,6 +33,7 @@
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
       self.editMode = {};
+      self.form = {};
       self.editableContact = angular.copy(self.contact);
     }
 
