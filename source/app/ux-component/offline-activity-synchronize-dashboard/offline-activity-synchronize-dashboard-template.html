@@ -1,0 +1,27 @@
+<div>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row">
+    <div flex layout-gt-md="row" layout="column" layout-align="center center" layout-margin>
+      <span layout-align="center center">Sincronismo de atividades offline</span>
+    </div>
+  </otus-dashboard-toolbar>
+</div>
+<md-content flex ng-if="!$ctrl.haveErrors" layout-padding="" layout-margin="">
+  <md-grid-list md-cols="3" md-cols-xs="1" md-cols-sm="2" md-cols-md="3" md-cols-lg="4" md-cols-xl="6" md-cols-gt-md="6"
+                md-row-height-xs="4:3" md-row-height-sm="8:4" md-row-height-md="6:4" md-row-height-lg="6:4"
+                md-row-height-xl="4:3"
+                md-gutter-gt-md="14px"
+                md-gutter="12px" md-gutter-sm="6px">
+    <md-grid-tile ng-repeat="offlineActivityCollection in $ctrl.offlineActivityCollections"
+                  name="offlineActivityCollection{{$index}}"
+                  id="offlineActivityCollection{{$index}}"
+                  aria-label="offlineActivityCollection{{$index}}"
+                  md-rowspan="1" md-colspan="1" md-colspan-xl="1" md-colspan-lg="1" md-colspan-md="1"
+                  md-colspan-sm="1" md-colspan-xs="1" md-whiteframe="3">
+      <offline-activity-collection offline-collection-data="offlineActivityCollection" show-info="$ctrl.showInfo"></offline-activity-collection>
+    </md-grid-tile>
+  </md-grid-list>
+</md-content>
+<offline-activity-collection-sidenav offline-collection-data="$ctrl.selectedCollection"></offline-activity-collection-sidenav>

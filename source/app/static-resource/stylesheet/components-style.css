@@ -680,4 +680,18 @@ unattached-laboratory md-input-container {
 unattached-laboratory-dashboard otus-panel {
   min-width: 320px;
 }
+
+offline-activity-collection md-grid-tile-header {
+  background: rgba(19, 125, 108, 0.68) !important;
+}
+offline-activity-collection md-grid-tile-header figcaption {
+  width: 100%;
+}
+offline-activity-collection md-input-container {
+  margin-bottom: 0px;
+}
+
+offline-activity-collection otus-panel {
+  min-width: 320px;
+}
 /*# sourceMappingURL=components-style.css.map */

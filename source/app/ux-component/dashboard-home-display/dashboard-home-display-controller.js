@@ -35,6 +35,7 @@
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
     self.unattachedLaboratory = unattachedLaboratory;
     self.activatePendencyViewer = activatePendencyViewer;
+    self.activateOfflineActivitySynchronize = activateOfflineActivitySynchronize;
 
     function onInit() {
       _loadLoggedUser();
@@ -56,6 +57,10 @@
         ])
         .then(LoadingScreenService.finish)
         .catch(LoadingScreenService.finish)
+    }
+
+    function activateOfflineActivitySynchronize() {
+      ApplicationStateService.activateOfflineActivitySynchronize();
     }
 
     function startMonitoring() {
