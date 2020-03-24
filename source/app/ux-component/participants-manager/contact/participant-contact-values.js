@@ -16,6 +16,7 @@
         postalCode: 'CEP',
         neighbourhood: 'Bairro',
         city: 'Cidade',
+        state: 'UF',
         country: 'País',
         complements: 'Complemento',
         observation: 'Observação'

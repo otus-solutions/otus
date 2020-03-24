@@ -115,6 +115,10 @@
           <label>{{$ctrl.ParticipantContactValues.fields.observation}}</label>
           <input ng-model="contactItem.observation" ng-disabled=!$ctrl.editMode[key]>
         </md-input-container>
+        <md-input-container class="state-input">
+          <label>{{$ctrl.ParticipantContactValues.fields.state}}</label>
+          <input ng-model="contactItem.value.state" ng-disabled=!$ctrl.editMode[key]>
+        </md-input-container>
         <md-input-container class="country-input">
           <label>{{$ctrl.ParticipantContactValues.fields.country}}</label>
           <input ng-model="contactItem.value.country" ng-disabled=!$ctrl.editMode[key]>

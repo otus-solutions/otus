@@ -46,7 +46,7 @@
   grid-template-areas:
     "street numberNumber cep findCep"
     "complements neighbourhood city edit"
-    "observation observation country restore"
+    "observation state country restore"
 }
 
 .content-input{
@@ -88,6 +88,10 @@
 
 .observation-input{
   grid-area: observation;
+}
+
+.state-input{
+  grid-area: state;
 }
 
 .country-input{
