@@ -66,12 +66,14 @@
     function findAddressByCep(addressContact) {
       ParticipantContactService.getAddressByCep(addressContact.value.postalCode)
         .then(address => {
+          console.log(address.data)
           addressContact.value = {
             postalCode: address.data.cep,
             street: address.data.logradouro,
             neighbourhood: address.data.bairro,
             city: address.data.localidade,
-            country: address.data.uf
+            state: address.data.uf,
+            country: ParticipantContactValues.msg.country
           }
         }).catch((e) => {
         $mdToast.show($mdToast.simple()

@@ -87,7 +87,7 @@
         </md-input-container>
         <md-input-container class="number-number-input">
           <label>{{$ctrl.ParticipantContactValues.fields.streetNumber}}</label>
-          <input ng-model="contactItem.value.streetNumber" ng-disabled=!$ctrl.editMode[key] required>
+          <input type="number" ng-model="contactItem.value.streetNumber" ng-disabled=!$ctrl.editMode[key] required>
         </md-input-container>
         {{form[key].$valid}}
         <md-button class="md-accent md-icon-button find-cep" ng-click="$ctrl.findAddressByCep(contactItem)"

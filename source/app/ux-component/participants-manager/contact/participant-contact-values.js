@@ -54,7 +54,9 @@
       },
       msg:{
         postalCodeNotFound: 'CEP não encontrado',
-        contactNotFound: 'Contatos não cadastrados'
+        contactNotFound: 'Contatos não cadastrados',
+        country: 'Brasil'
       }
+
     });
 }());
