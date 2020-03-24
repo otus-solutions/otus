@@ -13,7 +13,6 @@
   function Service($http, ParticipantContactFactory, ParticipantManagerService) {
     const self = this;
     const MessageError = 'Model factory is not initialized.';
-    let Mock = {};
 
     self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
@@ -80,37 +79,26 @@
     }
 
     function participantContactFactoryCreate(participantContact) {
-        try {
-          return ParticipantContactFactory.create(participantContact)
-        } catch (e) {
-          throw new Error(MessageError);
-        }
+      try {
+        return ParticipantContactFactory.create(participantContact)
+      } catch (e) {
+        throw new Error(MessageError);
+      }
     }
 
     function participantContactFactoryJson(participantContact) {
-        try {
-          return ParticipantContactFactory.fromJson("", participantContact);
-        } catch (e) {
-          throw new Error(MessageError);
-        }
+      try {
+        return ParticipantContactFactory.fromJson("", participantContact);
+      } catch (e) {
+        throw new Error(MessageError);
+      }
     }
-
 
     function getAddressByCep(cep) {
       let formatedCep = cep.replace(/\D/g, '');
       let viaCepUrl = `https://viacep.com.br/ws/${formatedCep}/json/`;
       return $http.get(viaCepUrl);
     }
-
-
-  //inicio  bloco Adonis
-  //pra validar tenho que o getParticipantContactByRecruitmentNumber retorne o 404 e fazer um catch?
-  //o catch tem q ser criado no controle para criar o modelo do model
-
-  //fim bloco Adonis
-
-
-
 
 
   }

@@ -52,7 +52,8 @@
         }
       },
       msg:{
-        postalCodeNotFound: 'CEP não encontrado'
+        postalCodeNotFound: 'CEP não encontrado',
+        contactNotFound: 'Contatos não cadastrados'
       }
     });
 }());

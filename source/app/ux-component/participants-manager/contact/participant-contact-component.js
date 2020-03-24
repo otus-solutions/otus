@@ -24,7 +24,8 @@
     'otusjs.participant.business.ParticipantMessagesService',
     'otusjs.otus.dashboard.service.DashboardService',
     '$scope',
-    'otusjs.participantManager.contact.ParticipantContactService'
+    'otusjs.participantManager.contact.ParticipantContactService',
+    'ParticipantContactValues'
   ];
 
   function Controller(
@@ -41,9 +42,9 @@
     ParticipantMessagesService,
     DashboardService,
     $scope,
-    ParticipantContactService) {
+    ParticipantContactService,
+    ParticipantContactValues) {
     var self = this;
-    const message = 'Não possui contatos do participante.';
 
     mdcDefaultParams({
       lang: 'pt-br',
@@ -226,7 +227,6 @@
       }
     }
 
-
     function _loadParticipantContact() {
       ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
         .then(data => ParticipantContactService.participantContactFactoryJson(data))
@@ -234,15 +234,12 @@
           self.contact = resultFactory;
         })
         .catch(() => {
-          self.messageError = message;
           $mdToast.show($mdToast.simple()
             .position('bottom left')
-            .textContent(self.messageError)
-            .hideDelay(3000)
+            .textContent(ParticipantContactValues.msg.contactNotFound)
+            .hideDelay(4000)
           );
         });
     }
   }
 }());
-
-// if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER && item) {
