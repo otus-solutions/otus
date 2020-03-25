@@ -121,19 +121,19 @@
 
     function updateEmail(participantContact) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.updateEmail(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.updateEmail(participantContact))
         .then(response => response.data);
     }
 
     function updateAddress(participantContact) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.updateAddress(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.updateAddress(participantContact))
         .then(response => response.data);
     }
 
     function updatePhoneNumber(participantContact) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.updatePhoneNumber(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.updatePhoneNumber(participantContact))
         .then(response => response.data);
     }
 

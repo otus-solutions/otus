@@ -7,6 +7,7 @@
       templateUrl: 'app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-template.html',
       bindings: {
         contact: '=',
+        contactId: '@',
         type: '@'
       }
     }).controller('participantUpdateContactCtrl', Controller);
@@ -51,15 +52,39 @@
       self.editMode[type] = true;
     }
 
-    function updateContact(updatedContactItem, type) {
-      //promisse here!!!
-      console.log(updatedContactItem);
-      self.editMode[type] = false;
+    function updateContact(updatedContactItem, position, type) {
+      let updateContactDto = {
+        "_id": self.contactId,
+        "position": position,
+        "contactItem": updatedContactItem
+      };
+      console.log(updateContactDto)
+
+      _simulateParticipantContactServiceDinamicUpdateContact(updateContactDto, type)
+        .then(() => _callMsgbyToast(ParticipantContactValues.msg.updateSuccess));
+
+
+      //self.editMode[position] = false;
     }
 
-    function restoreContact(type) {
+    function _simulateParticipantContactServiceDinamicUpdateContact(updateContactDto, type){
+
+      switch (type) {
+        // case "phoneNumber":
+        //   return ParticipantContactService.updatePhoneNumber(updateContactDto);
+        //   break;
+
+        case "email":
+          return ParticipantContactService.updateEmail(updateContactDto);
+          break;
+      }
+    }
+
+
+
+    function restoreContact(position) {
       self.editableContact = angular.copy(self.contact);
-      self.editMode[type] = false;
+      self.editMode[position] = false;
     }
 
     function findAddressByCep(addressContact) {
@@ -81,5 +106,15 @@
           .hideDelay(4000));
       })
     }
+
+    function _callMsgbyToast(msg) {
+      $mdToast.show($mdToast.simple()
+        .position('bottom left')
+        .textContent(msg)
+        .hideDelay(4000));
+
+
+    }
+
   }
 }());

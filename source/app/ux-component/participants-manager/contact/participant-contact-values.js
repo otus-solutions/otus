@@ -55,7 +55,8 @@
       msg:{
         postalCodeNotFound: 'CEP não encontrado',
         contactNotFound: 'Contatos não cadastrados',
-        country: 'Brasil'
+        country: 'Brasil',
+        updateSuccess: 'Atualização Realizada'
       }
 
     });
