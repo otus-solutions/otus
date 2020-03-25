@@ -88,7 +88,7 @@
 
     function participantContactFactoryJson(participantContact) {
       try {
-        return ParticipantContactFactory.fromJson("", participantContact);
+        return ParticipantContactFactory.fromJson(participantContact);
       } catch (e) {
         throw new Error(MessageError);
       }

@@ -15,6 +15,7 @@
     'ParticipantContactValues',
     'otusjs.participantManager.contact.ParticipantContactService',
     '$mdToast'
+
   ];
 
   function Controller(ParticipantContactValues, ParticipantContactService, $mdToast) {
@@ -38,7 +39,6 @@
     }
 
     function addContactInput() {
-      console.log(self.editableContact)
       for (let key in self.editableContact) {
         if (self.editableContact[key] === null) {
           self.editableContact[key] = {value: {}};
