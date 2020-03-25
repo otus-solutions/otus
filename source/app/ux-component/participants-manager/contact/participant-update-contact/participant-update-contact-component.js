@@ -49,7 +49,6 @@
 
     function enableEditMode(type) {
       self.editMode[type] = true;
-      console.log(self.editMode)
     }
 
     function updateContact(updatedContactItem, type) {
