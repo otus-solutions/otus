@@ -61,6 +61,7 @@
     self.dashboardParticipant = dashboardParticipant;
     self.onFilter = onFilter;
     self.loadParticipantContact =  loadParticipantContact;
+    self.createParticipantContact = createParticipantContact;
 
     $scope.$watch('$ctrl.birthdate', function (newValue) {
       if (newValue) self.onFilter();
@@ -239,6 +240,10 @@
             .hideDelay(4000)
           );
         });
+    }
+
+    function createParticipantContact() {
+      self.contact =  ParticipantContactService.participantContactFactoryCreate({recruitmentNumber: self.participant.recruitmentNumber});
     }
   }
 }());
