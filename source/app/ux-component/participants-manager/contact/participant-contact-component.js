@@ -60,6 +60,7 @@
     self.saveParticipant = saveParticipant;
     self.dashboardParticipant = dashboardParticipant;
     self.onFilter = onFilter;
+    self.loadParticipantContact =  loadParticipantContact;
 
     $scope.$watch('$ctrl.birthdate', function (newValue) {
       if (newValue) self.onFilter();
@@ -71,7 +72,7 @@
         self.messageError = "";
         self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant);
         self.isIdentified = self.participant.toJSON().identified;
-        _loadParticipantContact(self.participant.recruitmentNumber);
+        loadParticipantContact();
         if (self.isIdentified) {
           self.birthdate = new Date(self.participant.birthdate.value)
         } else {
@@ -227,12 +228,10 @@
       }
     }
 
-    function _loadParticipantContact() {
+    function loadParticipantContact() {
       ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
         .then(data => ParticipantContactService.participantContactFactoryJson(data))
-        .then(resultFactory => {
-          self.contact = resultFactory;
-        })
+        .then(resultFactory => self.contact = resultFactory)
         .catch(() => {
           $mdToast.show($mdToast.simple()
             .position('bottom left')

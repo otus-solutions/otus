@@ -123,12 +123,14 @@
                                      contact="$ctrl.contact.phoneNumber"
                                      contact-id="{{$ctrl.contact._id}}"
                                      type="phoneNumber"
+                                     load-participant-contact="$ctrl.loadParticipantContact"
                                      ng-if="$ctrl.contact">
     </otus-participant-update-contact>
 
     <otus-participant-update-contact class="contact-update"
                                      contact="$ctrl.contact.email"
                                      contact-id="{{$ctrl.contact._id}}"
+                                     load-participant-contact="$ctrl.loadParticipantContact"
                                      type="email"
                                      ng-if="$ctrl.contact">
     </otus-participant-update-contact>
@@ -136,6 +138,7 @@
     <otus-participant-update-contact class="contact-update"
                                      contact="$ctrl.contact.address"
                                      contact-id="{{$ctrl.contact._id}}"
+                                      load-participant-contact="$ctrl.loadParticipantContact"
                                      type="address"
                                      ng-if="$ctrl.contact">
     </otus-participant-update-contact>

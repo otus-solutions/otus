@@ -8,7 +8,8 @@
       bindings: {
         contact: '=',
         contactId: '@',
-        type: '@'
+        type: '@',
+        loadParticipantContact: '&'
       }
     }).controller('participantUpdateContactCtrl', Controller);
 
@@ -37,6 +38,7 @@
       self.editMode = {};
       self.form = {};
       self.editableContact = angular.copy(self.contact);
+
     }
 
     function addContactInput() {
@@ -61,18 +63,16 @@
       console.log(updateContactDto)
 
       _simulateParticipantContactServiceDinamicUpdateContact(updateContactDto, type)
-        .then(() => _callMsgbyToast(ParticipantContactValues.msg.updateSuccess));
-
-
-      //self.editMode[position] = false;
+        .then(self.editMode[position] = false)
+        .then(() => _callMsgbyToast(ParticipantContactValues.msg.updateSuccess))
+        .then(self.loadParticipantContact())
     }
 
     function _simulateParticipantContactServiceDinamicUpdateContact(updateContactDto, type){
-
       switch (type) {
-        // case "phoneNumber":
-        //   return ParticipantContactService.updatePhoneNumber(updateContactDto);
-        //   break;
+        case "phoneNumber":
+          return ParticipantContactService.updatePhoneNumber(updateContactDto);
+          break;
 
         case "email":
           return ParticipantContactService.updateEmail(updateContactDto);
@@ -80,17 +80,14 @@
       }
     }
 
-
-
     function restoreContact(position) {
-      self.editableContact = angular.copy(self.contact);
+      //self.editableContact = angular.copy(self.contact);
       self.editMode[position] = false;
     }
 
     function findAddressByCep(addressContact) {
       ParticipantContactService.getAddressByCep(addressContact.value.postalCode)
         .then(address => {
-          console.log(address.data)
           addressContact.value = {
             postalCode: address.data.cep,
             street: address.data.logradouro,
@@ -99,12 +96,7 @@
             state: address.data.uf,
             country: ParticipantContactValues.msg.country
           }
-        }).catch((e) => {
-        $mdToast.show($mdToast.simple()
-          .position('bottom left')
-          .textContent(ParticipantContactValues.msg.postalCodeNotFound)
-          .hideDelay(4000));
-      })
+        }).catch(() => _callMsgbyToast(ParticipantContactValues.msg.postalCodeNotFound));
     }
 
     function _callMsgbyToast(msg) {
@@ -112,9 +104,6 @@
         .position('bottom left')
         .textContent(msg)
         .hideDelay(4000));
-
-
     }
-
   }
 }());
