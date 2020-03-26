@@ -12,7 +12,6 @@
 
   Controller.$inject = [
     '$element',
-    '$mdToast',
     'otusjs.utils.ImmutableDate',
     'mdcDateTimeDialog',
     'otusjs.application.state.ApplicationStateService',
@@ -30,7 +29,6 @@
 
   function Controller(
     $element,
-    $mdToast,
     ImmutableDate,
     mdcDateTimeDialog,
     ApplicationStateService,
@@ -67,10 +65,8 @@
       if (newValue) self.onFilter();
     });
 
-
     function onInit() {
       try {
-        self.messageError = "";
         self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant);
         self.isIdentified = self.participant.toJSON().identified;
         loadParticipantContact();
@@ -87,7 +83,6 @@
         alert(66)
       }
     }
-
 
     self.$onDestroy = function () {
       delete self.participant;
@@ -225,25 +220,31 @@
               });
           });
       } else {
-        ParticipantMessagesService.showToast("Favor, preencha todos os campos!");
+        ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFound);
       }
     }
 
     function loadParticipantContact() {
       ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
         .then(data => ParticipantContactService.participantContactFactoryJson(data))
-        .then(resultFactory => self.contact = resultFactory)
+        .then(resultFactory =>  self.contact = resultFactory)
         .catch(() => {
-          $mdToast.show($mdToast.simple()
-            .position('bottom left')
-            .textContent(ParticipantContactValues.msg.contactNotFound)
-            .hideDelay(4000)
-          );
+          ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactNotFound);
         });
     }
 
     function createParticipantContact() {
-      self.contact =  ParticipantContactService.participantContactFactoryCreate({recruitmentNumber: self.participant.recruitmentNumber});
+     let contact =  ParticipantContactService.participantContactFactoryCreate({recruitmentNumber: self.participant.recruitmentNumber});
+      ParticipantContactService.createParticipantContact(contact)
+      .then(() => {
+        loadParticipantContact();
+      })
+      .then(() => {
+        ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFound);
+      })
+      .catch(() => {
+        ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail);
+      });
     }
   }
 }());

@@ -59,7 +59,9 @@
       },
       msg:{
         postalCodeNotFound: 'CEP não encontrado',
+        contactFound: 'Favor, preencha todos os campos!',
         contactNotFound: 'Contatos não cadastrados',
+        contactFail: 'Não foi possível adicionar contato!',
         country: 'Brasil',
         updateSuccess: 'Atualização Realizada',
         createSuccess: 'Novo contato criado'
