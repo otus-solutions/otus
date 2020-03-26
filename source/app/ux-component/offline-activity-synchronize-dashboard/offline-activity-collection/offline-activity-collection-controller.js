@@ -5,20 +5,24 @@
     .module('otusjs.otus.uxComponent')
     .controller('offlineActivityCollectionCtrl', Controller);
 
-  Controller.$inject = [];
+  Controller.$inject = [
+    'otusjs.activity.business.OfflineActivityCollectionService'
+  ];
 
-  function Controller() {
+  function Controller(OfflineActivityCollectionService) {
     var self = this;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
-    self.showInfo = showInfo;
+    self.synchronizeOfflineActivities = synchronizeOfflineActivities;
 
     function onInit() {
     }
 
-    function showInfo() {
-      self.showInfo(self.offlineCollectionData);
+    function synchronizeOfflineActivities() {
+      OfflineActivityCollectionService.synchronizeOfflineActivities(self.recruitmentNumber,self.offlineCollectionData._id).then(result => {
+      }).catch(error => {
+      });
     }
   }
 }());

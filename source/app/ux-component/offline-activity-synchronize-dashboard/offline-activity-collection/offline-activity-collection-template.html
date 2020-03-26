@@ -4,7 +4,7 @@
       <h4>Observação: {{$ctrl.offlineCollectionData.observation | limitTo : 15 : 0}}<span ng-if="$ctrl.offlineCollectionData.observation.length>15">...</span></h4>
     </div>
     <div layout-padding layout-align="center end" flex="10">
-      <md-button class="md-icon-button" ng-click="$ctrl.showInfo()" aria-label="More">
+      <md-button class="md-icon-button" ng-click="$ctrl.showCollectionInfo()" aria-label="More">
         <md-icon>info</md-icon>
       </md-button>
     </div>
@@ -18,7 +18,7 @@
         <label>Número de recrutamento</label>
         <input ng-model="$ctrl.recruitmentNumber" type="number" min="0" step="1">
       </md-input-container>
-      <md-button class="md-icon-button md-primary" ng-click="$ctrl.attacheLaboratory()" aria-label="More">
+      <md-button class="md-icon-button md-primary" ng-click="$ctrl.synchronizeOfflineActivities()" aria-label="More">
         <md-icon> compare_arrows</md-icon>
       </md-button>
     </div>
