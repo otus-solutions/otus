@@ -7,10 +7,12 @@
   Service.$inject = [
     '$http',
     'otusjs.model.participantContact.ParticipantContactFactory',
-    'otusjs.participant.business.ParticipantManagerService'
+    'otusjs.participant.business.ParticipantManagerService',
+    '$mdToast'
+
   ];
 
-  function Service($http, ParticipantContactFactory, ParticipantManagerService) {
+  function Service($http, ParticipantContactFactory, ParticipantManagerService,$mdToast ) {
     const self = this;
     const MessageError = 'Model factory is not initialized.';
 
@@ -20,15 +22,18 @@
     self.addNonMainEmail = addNonMainEmail;
     self.addNonMainAddress = addNonMainAddress;
     self.addNonMainPhoneNumber = addNonMainPhoneNumber;
-    self.updateEmail = updateEmail;
+    // self.updateEmail = updateEmail;
     self.updateAddress = updateAddress;
-    self.updatePhoneNumber = updatePhoneNumber;
+    // self.updatePhoneNumber = updatePhoneNumber;
     self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
     self.participantContactFactoryJson = participantContactFactoryJson;
     self.participantContactFactoryCreate = participantContactFactoryCreate;
     self.getAddressByCep = getAddressByCep;
+    self.createUpdateContactDto = createUpdateContactDto;
+    self.dinamicUpdateContact = dinamicUpdateContact;
+    self.callMsgbyToast = callMsgbyToast;
 
     function createParticipantContact(participantContact) {
       return ParticipantManagerService.createParticipantContact(participantContact);
@@ -54,17 +59,17 @@
       return ParticipantManagerService.addNonMainPhoneNumber(participantContact);
     }
 
-    function updateEmail(participantContact) {
-      return ParticipantManagerService.updateEmail(participantContact);
-    }
+    // function updateEmail(participantContact) {
+    //   return ParticipantManagerService.updateEmail(participantContact);
+    // }
 
     function updateAddress(participantContact) {
       return ParticipantManagerService.updateAddress(participantContact);
     }
 
-    function updatePhoneNumber(participantContact) {
-      return ParticipantManagerService.updatePhoneNumber(participantContact);
-    }
+    // function updatePhoneNumber(participantContact) {
+    //   return ParticipantManagerService.updatePhoneNumber(participantContact);
+    // }
 
     function swapMainContact(participantContact) {
       return ParticipantManagerService.swapMainContact(participantContact);
@@ -98,6 +103,32 @@
       let formatedCep = cep.replace(/\D/g, '');
       let viaCepUrl = `https://viacep.com.br/ws/${formatedCep}/json/`;
       return $http.get(viaCepUrl);
+    }
+
+    function createUpdateContactDto(contactId, position, updatedContactItem) {
+      return {"_id": contactId,
+           "position": position,
+           "contactItem": updatedContactItem
+      }
+    }
+
+    function dinamicUpdateContact(updateContactDto, type) {
+      switch (type) {
+        case "phoneNumber":
+          return ParticipantManagerService.updatePhoneNumber(updateContactDto);
+          break;
+
+        case "email":
+          return ParticipantManagerService.updateEmail(updateContactDto);
+          break;
+      }
+    }
+
+    function callMsgbyToast(msg) {
+      $mdToast.show($mdToast.simple()
+        .position('bottom left')
+        .textContent(msg)
+        .hideDelay(4000));
     }
 
 

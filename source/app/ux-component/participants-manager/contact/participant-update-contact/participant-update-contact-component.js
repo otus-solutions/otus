@@ -55,35 +55,19 @@
     }
 
     function updateContact(updatedContactItem, position, type) {
-      let updateContactDto = {
-        "_id": self.contactId,
-        "position": position,
-        "contactItem": updatedContactItem
-      };
-      console.log(updateContactDto)
+      let updateContactDto = ParticipantContactService.createUpdateContactDto(self.contactId, position, updatedContactItem);
 
-      _simulateParticipantContactServiceDinamicUpdateContact(updateContactDto, type)
+      ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
         .then(self.editMode[position] = false)
-        .then(() => _callMsgbyToast(ParticipantContactValues.msg.updateSuccess))
+        .then(() => ParticipantContactService.callMsgbyToast(ParticipantContactValues.msg.updateSuccess))
         .then(self.loadParticipantContact())
     }
 
-    function _simulateParticipantContactServiceDinamicUpdateContact(updateContactDto, type){
-      switch (type) {
-        case "phoneNumber":
-          return ParticipantContactService.updatePhoneNumber(updateContactDto);
-          break;
-
-        case "email":
-          return ParticipantContactService.updateEmail(updateContactDto);
-          break;
-      }
-    }
-
     function restoreContact(position) {
-      //self.editableContact = angular.copy(self.contact);
+      self.editableContact = angular.copy(self.contact);
       self.editMode[position] = false;
     }
+
 
     function findAddressByCep(addressContact) {
       ParticipantContactService.getAddressByCep(addressContact.value.postalCode)
@@ -96,14 +80,8 @@
             state: address.data.uf,
             country: ParticipantContactValues.msg.country
           }
-        }).catch(() => _callMsgbyToast(ParticipantContactValues.msg.postalCodeNotFound));
+        }).catch(() => ParticipantContactService.callMsgbyToast(ParticipantContactValues.msg.postalCodeNotFound));
     }
 
-    function _callMsgbyToast(msg) {
-      $mdToast.show($mdToast.simple()
-        .position('bottom left')
-        .textContent(msg)
-        .hideDelay(4000));
-    }
   }
 }());
