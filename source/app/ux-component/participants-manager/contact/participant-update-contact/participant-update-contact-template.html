@@ -46,7 +46,8 @@
 
         <md-button class="md-accent md-icon-button md-button edit-button"
                    ng-click="$ctrl.updateContact(contactItem, key, $ctrl.type)"
-                   ng-if="$ctrl.editMode[key] && !$ctrl.newContactMode[key]" ng-disabled="$ctrl.form[$ctrl.type][key].$invalid">
+                   ng-if="$ctrl.editMode[key] && !$ctrl.newContactMode[key]"
+                   ng-disabled="$ctrl.form[$ctrl.type][key].$invalid">
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.save.icon}}
           </md-icon>
@@ -55,13 +56,14 @@
 
         <md-button class="md-accent md-icon-button md-button edit-button"
                    ng-click="$ctrl.createNewContact(contactItem, key, $ctrl.type)"
-                   ng-if="$ctrl.editMode[key] && $ctrl.newContactMode[key]" ng-disabled="$ctrl.form[$ctrl.type][key].$invalid">
+                   ng-if="$ctrl.editMode[key] && $ctrl.newContactMode[key]"
+                   ng-disabled="$ctrl.form[$ctrl.type][key].$invalid">
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.saveNewContact.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.saveNewContact.icon}}
           </md-icon>
-          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.saveNewContact.translatedTitle}}</md-tooltip>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.saveNewContact.translatedTitle}}
+          </md-tooltip>
         </md-button>
-
 
         <md-button class="md-accent md-icon-button md-button restore-button"
                    ng-if="!$ctrl.editMode[key]"
@@ -155,12 +157,25 @@
 
         <md-button class="md-accent md-icon-button md-button edit-button"
                    ng-click="$ctrl.updateContact(contactItem, key, $ctrl.type)"
-                   ng-disabled="$ctrl.form.address[key].$invalid" ng-if="$ctrl.editMode[key]">
+                   ng-if="$ctrl.editMode[key] && !$ctrl.newContactMode[key]"
+                   ng-disabled="$ctrl.form[$ctrl.type][key].$invalid">
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.save.icon}}
           </md-icon>
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}</md-tooltip>
         </md-button>
+
+        <md-button class="md-accent md-icon-button md-button edit-button"
+                   ng-click="$ctrl.createNewContact(contactItem, key, $ctrl.type)"
+                   ng-if="$ctrl.editMode[key] && $ctrl.newContactMode[key]"
+                   ng-disabled="$ctrl.form[$ctrl.type][key].$invalid">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.saveNewContact.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.saveNewContact.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.saveNewContact.translatedTitle}}
+          </md-tooltip>
+        </md-button>
+
         <md-button class="md-accent md-icon-button md-button restore-button"
                    ng-click=""
                    ng-if="!$ctrl.editMode[key]">

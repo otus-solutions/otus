@@ -39,7 +39,6 @@
       self.newContactMode = {};
       self.form = {};
       self.editableContact = angular.copy(self.contact);
-
     }
 
     function addContactInput() {
@@ -47,9 +46,7 @@
         if (self.editableContact[key] === null) {
           self.editMode[key] = true;
           self.newContactMode[key] = true;
-          self.editableContact[key] = {
-            value: {}
-          };
+          self.editableContact[key] = {value: {}};
           break;
         }
       }
@@ -87,7 +84,6 @@
         }).catch(() => ParticipantContactService.callMsgbyToast(ParticipantContactValues.msg.postalCodeNotFound));
     }
 
-
     function createNewContact(newContactItem, position, type){
       let newContactDto = ParticipantContactService.createContactDto(self.contactId, position, newContactItem);
 
@@ -96,11 +92,6 @@
         .then(self.newContactMode[position] = false)
         .then(() => ParticipantContactService.callMsgbyToast(ParticipantContactValues.msg.createSuccess))
         .then(self.loadParticipantContact());
-
-      console.log(newContactItem);
-      console.log(position);
-      console.log(type);
-
     }
 
   }
