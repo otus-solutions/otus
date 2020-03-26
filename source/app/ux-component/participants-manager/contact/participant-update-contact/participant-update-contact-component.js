@@ -14,12 +14,14 @@
     }).controller('participantUpdateContactCtrl', Controller);
 
   Controller.$inject = [
+    '$mdDialog',
     'ParticipantContactValues',
     'otusjs.participantManager.contact.ParticipantContactService',
-    '$mdToast'
+    'otusjs.participant.business.ParticipantMessagesService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller(ParticipantContactValues, ParticipantContactService, $mdToast) {
+  function Controller($mdDialog, ParticipantContactValues, ParticipantContactService, ParticipantMessagesService, DialogShowService) {
     const self = this;
 
     self.addContactInput = addContactInput;
@@ -28,6 +30,7 @@
     self.restoreContact = restoreContact;
     self.findAddressByCep = findAddressByCep;
     self.createNewContact = createNewContact;
+    self.deleteParticipantContact = deleteParticipantContact;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -61,7 +64,7 @@
 
       ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
         .then(self.editMode[position] = false)
-        .then(() => ParticipantContactService.callMsgbyToast(ParticipantContactValues.msg.updateSuccess))
+        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
         .then(self.loadParticipantContact())
     }
 
@@ -81,7 +84,7 @@
             state: address.data.uf,
             country: ParticipantContactValues.msg.country
           }
-        }).catch(() => ParticipantContactService.callMsgbyToast(ParticipantContactValues.msg.postalCodeNotFound));
+        }).catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.postalCodeNotFound));
     }
 
     function createNewContact(newContactItem, position, type){
@@ -90,9 +93,47 @@
       ParticipantContactService.dinamicNewContactCreate(newContactDto, type)
         .then(self.editMode[position] = false)
         .then(self.newContactMode[position] = false)
-        .then(() => ParticipantContactService.callMsgbyToast(ParticipantContactValues.msg.createSuccess))
+        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.createSuccess))
         .then(self.loadParticipantContact());
     }
 
+    function _showDeleteDialog() {
+
+      let _deleteDialog = {
+        dialogToTitle: ParticipantContactValues.msg.delete,
+        titleToText: ParticipantContactValues.msg.massegeTextDelete,
+        textDialog: ParticipantContactValues.msg.massegeDialogDelete,
+        ariaLabel: ParticipantContactValues.msg.contactDelete,
+        buttons: [
+          {
+            message: ParticipantContactValues.msg.yes,
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message: ParticipantContactValues.msg.not,
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogShowService.showDialog(_deleteDialog);
+
+    }
+
+    function deleteParticipantContact() {
+      _showDeleteDialog()
+      .then(() =>
+        ParticipantContactService.deleteParticipantContact(self.contactId)
+        .then(self.loadParticipantContact())
+        .then(() => {
+          ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete);
+        })
+        .catch(() => {
+          ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail);
+        })
+      )
+    }
   }
 }());

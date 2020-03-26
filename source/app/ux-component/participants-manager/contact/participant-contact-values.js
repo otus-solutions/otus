@@ -54,17 +54,28 @@
         saveNewContact:{
           icon:'note_add',
           translatedTitle: 'Gravar novo contato'
+        },
+        deleteContact: {
+          icon:'delete',
+          translatedTitle: 'Excluir Contatos'
         }
-
       },
       msg:{
         postalCodeNotFound: 'CEP não encontrado',
         contactFound: 'Favor, preencha todos os campos!',
         contactNotFound: 'Contatos não cadastrados',
-        contactFail: 'Não foi possível adicionar contato!',
+        contactFail: 'Não foi possível executar!',
+        contactDelete: 'Excluido com sucesso.',
         country: 'Brasil',
-        updateSuccess: 'Atualização Realizada',
-        createSuccess: 'Novo contato criado'
+        updateSuccess: 'Atualizado com sucesso.',
+        createSuccess: 'Novo contato criado',
+        ok: 'Ok',
+        comeBack: 'Voltar',
+        yes: 'Sim',
+        not: 'Não',
+        delete: 'Excluir',
+        massegeTextDelete: 'Confirmar exclusão de contatos',
+        massegeDialogDelete: 'Deseja excluir os contatos?'
       }
 
     });

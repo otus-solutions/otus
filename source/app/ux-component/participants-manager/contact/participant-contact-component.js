@@ -229,6 +229,7 @@
         .then(data => ParticipantContactService.participantContactFactoryJson(data))
         .then(resultFactory =>  self.contact = resultFactory)
         .catch(() => {
+          self.contact = "";
           ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactNotFound);
         });
     }
@@ -246,5 +247,6 @@
         ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail);
       });
     }
+
   }
 }());

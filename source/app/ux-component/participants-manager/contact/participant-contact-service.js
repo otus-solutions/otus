@@ -7,12 +7,10 @@
   Service.$inject = [
     '$http',
     'otusjs.model.participantContact.ParticipantContactFactory',
-    'otusjs.participant.business.ParticipantManagerService',
-    '$mdToast'
-
+    'otusjs.participant.business.ParticipantManagerService'
   ];
 
-  function Service($http, ParticipantContactFactory, ParticipantManagerService,$mdToast ) {
+  function Service($http, ParticipantContactFactory, ParticipantManagerService) {
     const self = this;
     const MessageError = 'Model factory is not initialized.';
 
@@ -30,7 +28,6 @@
     self.getAddressByCep = getAddressByCep;
     self.createContactDto = createContactDto;
     self.dinamicUpdateContact = dinamicUpdateContact;
-    self.callMsgbyToast = callMsgbyToast;
     self.dinamicNewContactCreate = dinamicNewContactCreate;
 
     function createParticipantContact(participantContact) {
@@ -131,13 +128,6 @@
           return ParticipantManagerService.addNonMainAddress(newContactDto);
           break;
       }
-    }
-
-    function callMsgbyToast(msg) {
-      $mdToast.show($mdToast.simple()
-        .position('bottom left')
-        .textContent(msg)
-        .hideDelay(4000));
     }
   }
 }());

@@ -2,6 +2,15 @@
   href="app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-style.css"
   rel="stylesheet" type="text/css">
 <md-card ng-if="$ctrl.type !== 'address'" no-cloak>
+  <div layout="row" layout-align="end end" ng-if="$ctrl.type === 'phoneNumber'">
+    <md-button class="md-primary md-hue-1"
+    ng-click="$ctrl.deleteParticipantContact()">
+    <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}} style="color:red">
+      {{$ctrl.ParticipantContactValues.icons.deleteContact.icon}}
+    </md-icon>
+    <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}</md-tooltip>
+   </md-button>
+  </div>
   <md-card-content class="info-card">
     <div layout="row" layout-align="space-between center" class="info-title">
       <span class="md-subhead">{{$ctrl.ParticipantContactValues.keys[$ctrl.type].translatedTitle}}</span>
