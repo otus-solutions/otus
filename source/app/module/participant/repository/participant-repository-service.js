@@ -101,21 +101,21 @@
         .then(response => response.data);
     }
 
-    function addNonMainEmail(participantContact) {
+    function addNonMainEmail(newContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.addNonMainEmail(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.addNonMainEmail(newContactDto))
         .then(response => response.data);
     }
 
-    function addNonMainAddress(participantContact) {
+    function addNonMainAddress(newContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.addNonMainAddress(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.addNonMainAddress(newContactDto))
         .then(response => response.data);
     }
 
-    function addNonMainPhoneNumber(participantContact) {
+    function addNonMainPhoneNumber(newContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.addNonMainPhoneNumber(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.addNonMainPhoneNumber(newContactDto))
         .then(response => response.data);
     }
 

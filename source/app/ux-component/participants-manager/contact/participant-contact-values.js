@@ -45,18 +45,24 @@
         },
         return: {
           icon:'undo',
-          translatedTitle: 'retornar'
+          translatedTitle: 'Desfazer'
         },
         findPostalCode:{
           icon:'search',
           translatedTitle: 'Buscar Cep'
+        },
+        saveNewContact:{
+          icon:'note_add',
+          translatedTitle: 'Gravar novo contato'
         }
+
       },
       msg:{
         postalCodeNotFound: 'CEP não encontrado',
         contactNotFound: 'Contatos não cadastrados',
         country: 'Brasil',
-        updateSuccess: 'Atualização Realizada'
+        updateSuccess: 'Atualização Realizada',
+        createSuccess: 'Novo contato criado'
       }
 
     });

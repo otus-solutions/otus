@@ -19,18 +19,19 @@
     self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
     self.getParticipantContactByRecruitmentNumber = getParticipantContactByRecruitmentNumber;
-    self.addNonMainEmail = addNonMainEmail;
-    self.addNonMainAddress = addNonMainAddress;
-    self.addNonMainPhoneNumber = addNonMainPhoneNumber;
+    // self.addNonMainEmail = addNonMainEmail;
+    // self.addNonMainAddress = addNonMainAddress;
+    // self.addNonMainPhoneNumber = addNonMainPhoneNumber;
     self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
     self.participantContactFactoryJson = participantContactFactoryJson;
     self.participantContactFactoryCreate = participantContactFactoryCreate;
     self.getAddressByCep = getAddressByCep;
-    self.createUpdateContactDto = createUpdateContactDto;
+    self.createContactDto = createContactDto;
     self.dinamicUpdateContact = dinamicUpdateContact;
     self.callMsgbyToast = callMsgbyToast;
+    self.dinamicNewContactCreate = dinamicNewContactCreate;
 
     function createParticipantContact(participantContact) {
       return ParticipantManagerService.createParticipantContact(participantContact);
@@ -44,17 +45,17 @@
       return ParticipantManagerService.getParticipantContactByRecruitmentNumber(recruitmentNumber);
     }
 
-    function addNonMainEmail(participantContact) {
-      return ParticipantManagerService.addNonMainEmail(participantContact);
-    }
+    // function addNonMainEmail(participantContact) {
+    //   return ParticipantManagerService.addNonMainEmail(participantContact);
+    // }
 
-    function addNonMainAddress(participantContact) {
-      return ParticipantManagerService.addNonMainAddress(participantContact);
-    }
-
-    function addNonMainPhoneNumber(participantContact) {
-      return ParticipantManagerService.addNonMainPhoneNumber(participantContact);
-    }
+    // function addNonMainAddress(participantContact) {
+    //   return ParticipantManagerService.addNonMainAddress(participantContact);
+    // }
+    //
+    // function addNonMainPhoneNumber(participantContact) {
+    //   return ParticipantManagerService.addNonMainPhoneNumber(participantContact);
+    // }
 
 
     function swapMainContact(participantContact) {
@@ -91,11 +92,11 @@
       return $http.get(viaCepUrl);
     }
 
-    function createUpdateContactDto(contactId, position, updatedContactItem) {
+    function createContactDto(contactId, position, contactItem) {
       return {
         "_id": contactId,
         "position": position,
-        "contactItem": updatedContactItem
+        "contactItem": contactItem
       }
     }
 
@@ -111,6 +112,23 @@
 
         case "address":
           return ParticipantManagerService.updateAddress(updateContactDto);
+          break;
+      }
+    }
+
+
+    function dinamicNewContactCreate(newContactDto, type) {
+      switch (type) {
+        case "phoneNumber":
+          return ParticipantManagerService.addNonMainPhoneNumber(newContactDto);
+          break;
+
+        case "email":
+          return ParticipantManagerService.addNonMainEmail(newContactDto);
+          break;
+
+        case "address":
+          return ParticipantManagerService.addNonMainAddress(newContactDto);
           break;
       }
     }

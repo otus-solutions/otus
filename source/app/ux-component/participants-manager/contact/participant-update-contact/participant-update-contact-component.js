@@ -27,6 +27,7 @@
     self.updateContact = updateContact;
     self.restoreContact = restoreContact;
     self.findAddressByCep = findAddressByCep;
+    self.createNewContact = createNewContact;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -35,14 +36,20 @@
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
       self.editMode = {};
+      self.newContactMode = {};
       self.form = {};
       self.editableContact = angular.copy(self.contact);
+
     }
 
     function addContactInput() {
       for (let key in self.editableContact) {
         if (self.editableContact[key] === null) {
-          self.editableContact[key] = {value: {}};
+          self.editMode[key] = true;
+          self.newContactMode[key] = true;
+          self.editableContact[key] = {
+            value: {}
+          };
           break;
         }
       }
@@ -53,7 +60,7 @@
     }
 
     function updateContact(updatedContactItem, position, type) {
-      let updateContactDto = ParticipantContactService.createUpdateContactDto(self.contactId, position, updatedContactItem);
+      let updateContactDto = ParticipantContactService.createContactDto(self.contactId, position, updatedContactItem);
 
       ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
         .then(self.editMode[position] = false)
@@ -78,6 +85,22 @@
             country: ParticipantContactValues.msg.country
           }
         }).catch(() => ParticipantContactService.callMsgbyToast(ParticipantContactValues.msg.postalCodeNotFound));
+    }
+
+
+    function createNewContact(newContactItem, position, type){
+      let newContactDto = ParticipantContactService.createContactDto(self.contactId, position, newContactItem);
+
+      ParticipantContactService.dinamicNewContactCreate(newContactDto, type)
+        .then(self.editMode[position] = false)
+        .then(self.newContactMode[position] = false)
+        .then(() => ParticipantContactService.callMsgbyToast(ParticipantContactValues.msg.createSuccess))
+        .then(self.loadParticipantContact());
+
+      console.log(newContactItem);
+      console.log(position);
+      console.log(type);
+
     }
 
   }

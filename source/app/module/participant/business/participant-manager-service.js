@@ -164,16 +164,16 @@
       return ParticipantRepositoryService.getParticipantContactByRecruitmentNumber(rn);
     }
 
-    function addNonMainEmail(participantContact) {
-      return ParticipantRepositoryService.addNonMainEmail(participantContact);
+    function addNonMainEmail(newContactDto) {
+      return ParticipantRepositoryService.addNonMainEmail(newContactDto);
     }
 
-    function addNonMainAddress(participantContact) {
-      return ParticipantRepositoryService.addNonMainAddress(participantContact);
+    function addNonMainAddress(newContactDto) {
+      return ParticipantRepositoryService.addNonMainAddress(newContactDto);
     }
 
-    function addNonMainPhoneNumber(participantContact) {
-      return ParticipantRepositoryService.addNonMainPhoneNumber(participantContact);
+    function addNonMainPhoneNumber(newContactDto) {
+      return ParticipantRepositoryService.addNonMainPhoneNumber(newContactDto);
     }
 
     function updateEmail(updateContactDto) {
