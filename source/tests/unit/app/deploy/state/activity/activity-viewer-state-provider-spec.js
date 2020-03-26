@@ -1,4 +1,4 @@
-xdescribe('ActivityViewerStateProvider', function () {
+describe('ActivityViewerStateProvider', function () {
 
   var UNIT_NAME = 'otusjs.deploy.ActivityViewerState';
   var URL = '/activity-viewer';
@@ -7,7 +7,7 @@ xdescribe('ActivityViewerStateProvider', function () {
   var Injections = {};
 
   beforeEach(function () {
-    angular.mock.module('otusjs.deploy');
+    angular.mock.module('otusjs.otus');
   });
 
   beforeEach(function () {

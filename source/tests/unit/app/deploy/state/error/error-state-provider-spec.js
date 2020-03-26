@@ -1,9 +1,8 @@
-xdescribe('ErrorStateProvider', function() {
+describe('ErrorStateProvider', function() {
 
   var UNIT_NAME = 'otusjs.deploy.ErrorState';
   var URL = '/error';
   var TEMPLATE_URL = '<otus-error flex></otus-error>';
-  // var CONTROLLER = 'otusjs.otus.uxComponent.LoginController as $ctrl';
   var provider = {};
   var Injections = {};
   var Mock = {};

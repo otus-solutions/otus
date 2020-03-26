@@ -23,6 +23,7 @@
     self.getAllUserActivityPendenciesToReceiver = getAllUserActivityPendenciesToReceiver;
     self.getOpenedUserActivityPendenciesToReceiver = getOpenedUserActivityPendenciesToReceiver;
     self.getDoneUserActivityPendenciesToReceiver = getDoneUserActivityPendenciesToReceiver;
+    self.getAllPendencies = getAllPendencies;
 
     function initialize() {
       _rest = OtusRestResourceService.getUserActivityPendencyResource();
@@ -62,6 +63,12 @@
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.getDonePendenciesToReceiver().$promise;
     }
+
+    function getAllPendencies(searchSettings) {
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.getAllPendencies(searchSettings).$promise;
+    }
+
   }
 
 }());

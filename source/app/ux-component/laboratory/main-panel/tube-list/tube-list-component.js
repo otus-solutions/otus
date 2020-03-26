@@ -31,7 +31,6 @@
 
 
     function onInit() {
-      console.log(self)
       _getMoments();
       self.fillOriginalTubeList();
 

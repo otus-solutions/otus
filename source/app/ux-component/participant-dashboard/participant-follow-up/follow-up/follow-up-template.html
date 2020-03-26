@@ -11,8 +11,8 @@
     <div layout="column" layout-xs="row">
       <span class="md-subheader" ng-if="$ctrl.followUpData.isActivated && !$ctrl.isCanceled">Inicio {{$ctrl.followUpData.deadline.startDate | date : "d/M/yyyy" }} </span>
       <span class="md-subheader" ng-if="$ctrl.followUpData.isActivated > 0 && !$ctrl.isCanceled"><span hide-gt-xs>(</span>{{$ctrl.followUpData.deadline.remainingDays}} dias restantes<span hide-gt-xs>)</span></span>
-      <span class="md-subheader" ng-if="!$ctrl.followUpData.deadline.startDate && !$ctrl.isCanceled">Segmento não iniciado</span>
-      <span class="md-subheader" ng-if="$ctrl.isCanceled">Segmento cancelado</span>
+      <span class="md-subheader" ng-if="!$ctrl.followUpData.deadline.startDate && !$ctrl.isCanceled">Seguimento não iniciado</span>
+      <span class="md-subheader" ng-if="$ctrl.isCanceled">Seguimento cancelado</span>
       <span class="md-subheader" ng-if="$ctrl.followUpData.participantEvents[0].status == 'ACCOMPLISHED'">Finalizado em {{$ctrl.followUpData.deadline.finalDate | date : "d/M/yyyy"}}</span>
     </div>
     <md-button ng-if="$ctrl.followUpData.deadline.remainingDays > 0 && !$ctrl.isCanceled" class="md-icon-button" aria-label="More" ng-click="$ctrl.deactivateFollowUp()">

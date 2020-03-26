@@ -240,7 +240,7 @@
         if (_participantData.recruitmentNumber) {
           return {recruitmentNumber: _participantData.recruitmentNumber, fieldCenter: _participantData.fieldCenter, identified: false };
         } else {
-          return {fieldCenter: ParticipantFactory.fromJson(self.participant).fieldCenter, identified: false };
+          return {fieldCenter: _participantData.fieldCenter, identified: false };
         }
       }
     }

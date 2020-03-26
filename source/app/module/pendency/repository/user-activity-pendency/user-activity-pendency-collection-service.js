@@ -21,6 +21,7 @@
     self.getAllUserActivityPendenciesToReceiver = getAllUserActivityPendenciesToReceiver;
     self.getOpenedUserActivityPendenciesToReceiver = getOpenedUserActivityPendenciesToReceiver;
     self.getDoneUserActivityPendenciesToReceiver = getDoneUserActivityPendenciesToReceiver;
+    self.getAllPendencies = getAllPendencies;
 
     function createUserActivityPendency(userActivityPendency) {
       return _remoteStorage.whenReady()
@@ -61,6 +62,12 @@
     function getDoneUserActivityPendenciesToReceiver() {
       return _remoteStorage.whenReady()
         .then(remoteStorage => remoteStorage.getDoneUserActivityPendenciesToReceiver())
+        .then(response => response.data);
+    }
+
+    function getAllPendencies(searchSettings) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.getAllPendencies(searchSettings))
         .then(response => response.data);
     }
 
