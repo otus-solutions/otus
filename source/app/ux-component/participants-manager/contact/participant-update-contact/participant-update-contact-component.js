@@ -17,7 +17,6 @@
     'ParticipantContactValues',
     'otusjs.participantManager.contact.ParticipantContactService',
     '$mdToast'
-
   ];
 
   function Controller(ParticipantContactValues, ParticipantContactService, $mdToast) {
@@ -38,7 +37,6 @@
       self.editMode = {};
       self.form = {};
       self.editableContact = angular.copy(self.contact);
-
     }
 
     function addContactInput() {
@@ -67,7 +65,6 @@
       self.editableContact = angular.copy(self.contact);
       self.editMode[position] = false;
     }
-
 
     function findAddressByCep(addressContact) {
       ParticipantContactService.getAddressByCep(addressContact.value.postalCode)

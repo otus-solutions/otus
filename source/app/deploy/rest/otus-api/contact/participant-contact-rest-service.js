@@ -62,19 +62,19 @@
       return _rest.addNonMainPhoneNumber(jsonParticipant).$promise;
     }
 
-    function updateEmail(jsonParticipant) {
+    function updateEmail(updateContactDto) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateEmail(jsonParticipant).$promise;
+      return _rest.updateEmail(updateContactDto).$promise;
     }
 
-    function updateAddress(jsonParticipant) {
+    function updateAddress(updateContactDto) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateAddress(jsonParticipant).$promise;
+      return _rest.updateAddress(updateContactDto).$promise;
     }
 
-    function updatePhoneNumber(jsonParticipant) {
+    function updatePhoneNumber(updateContactDto) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updatePhoneNumber(jsonParticipant).$promise;
+      return _rest.updatePhoneNumber(updateContactDto).$promise;
     }
 
     function swapMainContact(jsonParticipant) {

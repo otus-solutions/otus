@@ -143,7 +143,7 @@
         </md-button>
 
         <md-button class="md-accent md-icon-button md-button edit-button"
-                   ng-click="$ctrl.updateContact(contactItem, key)"
+                   ng-click="$ctrl.updateContact(contactItem, key, $ctrl.type)"
                    ng-disabled="$ctrl.form.address[key].$invalid" ng-if="$ctrl.editMode[key]">
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.save.icon}}

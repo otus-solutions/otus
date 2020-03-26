@@ -176,16 +176,16 @@
       return ParticipantRepositoryService.addNonMainPhoneNumber(participantContact);
     }
 
-    function updateEmail(participantContact) {
-      return ParticipantRepositoryService.updateEmail(participantContact);
+    function updateEmail(updateContactDto) {
+      return ParticipantRepositoryService.updateEmail(updateContactDto);
     }
 
-    function updateAddress(participantContact) {
-      return ParticipantRepositoryService.updateAddress(participantContact);
+    function updateAddress(updateContactDto) {
+      return ParticipantRepositoryService.updateAddress(updateContactDto);
     }
 
-    function updatePhoneNumber(participantContact) {
-      return ParticipantRepositoryService.updatePhoneNumber(participantContact);
+    function updatePhoneNumber(updateContactDto) {
+      return ParticipantRepositoryService.updatePhoneNumber(updateContactDto);
     }
 
     function swapMainContact(participantContact) {
