@@ -196,8 +196,8 @@
       return ParticipantRepositoryService.deleteParticipantContact(id);
     }
 
-    function deleteNonMainContact(participantContact) {
-      return ParticipantRepositoryService.deleteNonMainContact(participantContact);
+    function deleteNonMainContact(deleteContactDto) {
+      return ParticipantRepositoryService.deleteNonMainContact(deleteContactDto);
     }
   }
 }());

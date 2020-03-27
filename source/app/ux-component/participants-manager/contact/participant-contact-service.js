@@ -10,16 +10,13 @@
     'otusjs.participant.business.ParticipantManagerService'
   ];
 
-  function Service($http, ParticipantContactFactory, ParticipantManagerService) {
+  function Service($http, ParticipantContactFactory, ParticipantManagerService ) {
     const self = this;
     const MessageError = 'Model factory is not initialized.';
 
     self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
     self.getParticipantContactByRecruitmentNumber = getParticipantContactByRecruitmentNumber;
-    // self.addNonMainEmail = addNonMainEmail;
-    // self.addNonMainAddress = addNonMainAddress;
-    // self.addNonMainPhoneNumber = addNonMainPhoneNumber;
     self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
@@ -29,6 +26,7 @@
     self.createContactDto = createContactDto;
     self.dinamicUpdateContact = dinamicUpdateContact;
     self.dinamicNewContactCreate = dinamicNewContactCreate;
+    self.createDeleteContactDto = createDeleteContactDto;
 
     function createParticipantContact(participantContact) {
       return ParticipantManagerService.createParticipantContact(participantContact);
@@ -41,19 +39,6 @@
     function getParticipantContactByRecruitmentNumber(recruitmentNumber) {
       return ParticipantManagerService.getParticipantContactByRecruitmentNumber(recruitmentNumber);
     }
-
-    // function addNonMainEmail(participantContact) {
-    //   return ParticipantManagerService.addNonMainEmail(participantContact);
-    // }
-
-    // function addNonMainAddress(participantContact) {
-    //   return ParticipantManagerService.addNonMainAddress(participantContact);
-    // }
-    //
-    // function addNonMainPhoneNumber(participantContact) {
-    //   return ParticipantManagerService.addNonMainPhoneNumber(participantContact);
-    // }
-
 
     function swapMainContact(participantContact) {
       return ParticipantManagerService.swapMainContact(participantContact);
@@ -129,5 +114,18 @@
           break;
       }
     }
+
+    function deleteNonMainContact(deleteContactDto){
+        return ParticipantManagerService.deleteNonMainContact(deleteContactDto);
+    }
+
+    function createDeleteContactDto(contactId, type, position) {
+      return {
+        "_id": contactId,
+        "type": type,
+        "position": position
+      }
+    }
+
   }
 }());

@@ -76,7 +76,7 @@
 
         <md-button class="md-accent md-icon-button md-button restore-button"
                    ng-if="!$ctrl.editMode[key]"
-                   ng-click="">
+                   ng-click="$ctrl.deleteNonMainContact($ctrl.type, key)">
           <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.clear.icon}}
           </md-icon>
@@ -186,7 +186,7 @@
         </md-button>
 
         <md-button class="md-accent md-icon-button md-button restore-button"
-                   ng-click=""
+                   ng-click="$ctrl.deleteContact($ctrl.type, key)"
                    ng-if="!$ctrl.editMode[key]">
           <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.clear.icon}}

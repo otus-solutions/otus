@@ -149,9 +149,9 @@
         .then(response => response.data);
     }
 
-    function deleteNonMainContact(participantContact) {
+    function deleteNonMainContact(deleteContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.deleteNonMainContact(participantContact))
+        .then(remoteDataSource => remoteDataSource.deleteNonMainContact(deleteContactDto))
         .then(response => response.data);
     }
   }

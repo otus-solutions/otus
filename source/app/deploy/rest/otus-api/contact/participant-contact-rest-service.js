@@ -87,9 +87,10 @@
       return _rest.delete({id:id}).$promise;
     }
 
-    function deleteNonMainContact(jsonParticipant) {
+    function deleteNonMainContact(deleteContactDto) {
+      console.log(deleteContactDto)
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.deleteNonMainContact(jsonParticipant).$promise;
+      return _rest.deleteNonMainContact(deleteContactDto).$promise;
     }
   }
 }());

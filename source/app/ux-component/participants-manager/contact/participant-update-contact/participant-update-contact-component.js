@@ -14,14 +14,13 @@
     }).controller('participantUpdateContactCtrl', Controller);
 
   Controller.$inject = [
-    '$mdDialog',
     'ParticipantContactValues',
     'otusjs.participantManager.contact.ParticipantContactService',
     'otusjs.participant.business.ParticipantMessagesService',
     'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdDialog, ParticipantContactValues, ParticipantContactService, ParticipantMessagesService, DialogShowService) {
+  function Controller(ParticipantContactValues, ParticipantContactService, ParticipantMessagesService) {
     const self = this;
 
     self.addContactInput = addContactInput;
@@ -30,7 +29,7 @@
     self.restoreContact = restoreContact;
     self.findAddressByCep = findAddressByCep;
     self.createNewContact = createNewContact;
-    self.deleteParticipantContact = deleteParticipantContact;
+    self.deleteNonMainContact = deleteNonMainContact;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -84,7 +83,7 @@
             state: address.data.uf,
             country: ParticipantContactValues.msg.country
           }
-        }).catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.postalCodeNotFound));
+        }).catch((e) => ParticipantMessagesService.showToast(ParticipantContactValues.msg.postalCodeNotFound));
     }
 
     function createNewContact(newContactItem, position, type){
@@ -96,8 +95,17 @@
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.createSuccess))
         .then(self.loadParticipantContact());
     }
+    //adicionar Dialog
+    function deleteNonMainContact(type, position){
+      let deleteContactDto = ParticipantContactService.createDeleteContactDto(self.contactId, type, position);
 
-    function _showDeleteDialog() {
+      if(deleteContactDto.position !== "main"){
+        ParticipantContactService.deleteNonMainContact(deleteContactDto)
+          .then(()=> ParticipantMessagesService.showToast(ParticipantContactValues.msg.deleteContactItemSuccess))
+      }
+    }
+
+function _showDeleteDialog() {
 
       let _deleteDialog = {
         dialogToTitle: ParticipantContactValues.msg.delete,
@@ -135,5 +143,6 @@
         })
       )
     }
+
   }
 }());
