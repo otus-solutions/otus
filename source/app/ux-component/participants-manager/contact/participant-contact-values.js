@@ -58,6 +58,11 @@
         deleteContact: {
           icon:'delete',
           translatedTitle: 'Excluir Contatos'
+        },
+        swapMainContact: {
+          icon:'swap_calls',
+          translatedTitle: 'trocar contato padrão'
+
         }
       },
       msg:{
