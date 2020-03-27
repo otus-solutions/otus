@@ -79,7 +79,7 @@
         <md-button class="md-accent md-icon-button md-button restore-button"
                    ng-if="(!$ctrl.editMode[key] || $ctrl.newContactMode[key]) && key !== 'main'"
                    ng-click="$ctrl.deleteNonMainContact($ctrl.type, key)">
-          <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.clear.icon}}
           </md-icon>
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}</md-tooltip>
@@ -87,8 +87,13 @@
 
         <md-button class="md-accent md-icon-button md-button restore-button"
                    ng-click="$ctrl.restoreContact(key)"
+<<<<<<< Updated upstream
                    ng-if="$ctrl.editMode[key] && !$ctrl.newContactMode[key]">
           <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.return.translatedTitle}}">
+=======
+                   ng-if="$ctrl.editMode[key]">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.return.translatedTitle}}">
+>>>>>>> Stashed changes
             {{$ctrl.ParticipantContactValues.icons.return.icon}}
           </md-icon>
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.return.translatedTitle}}</md-tooltip>
@@ -208,9 +213,23 @@
         </md-button>
 
         <md-button class="md-accent md-icon-button md-button restore-button"
+<<<<<<< Updated upstream
                    ng-click="$ctrl.restoreContact(key)"
                    ng-if="$ctrl.editMode[key] && !$ctrl.newContactMode[key]">
           <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.return.translatedTitle}}">
+=======
+                   ng-click="$ctrl.deleteContact($ctrl.type, key)"
+                   ng-if="!$ctrl.editMode[key]">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.clear.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}</md-tooltip>
+        </md-button>
+        <md-button class="md-accent md-icon-button md-button restore-button"
+                   ng-click="$ctrl.restoreContact(key)"
+                   ng-if="$ctrl.editMode[key]">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.return.translatedTitle}}">
+>>>>>>> Stashed changes
             {{$ctrl.ParticipantContactValues.icons.return.icon}}
           </md-icon>
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.return.translatedTitle}}</md-tooltip>

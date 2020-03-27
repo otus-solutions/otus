@@ -70,6 +70,7 @@
       try {
         self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant);
         self.isIdentified = self.participant.toJSON().identified;
+        self.ParticipantContactValues = ParticipantContactValues;
         loadParticipantContact();
         if (self.isIdentified) {
           self.birthdate = new Date(self.participant.birthdate.value)
@@ -226,7 +227,6 @@
     }
 
     function loadParticipantContact() {
-      console.log("chamou load")
       ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
         .then((data) => ParticipantContactService.participantContactFactoryJson(data))
         .then((resultFactory) => self.contact = resultFactory)
@@ -254,7 +254,7 @@
       ParticipantContactService.showDeleteDialog()
         .then(() => {
           ParticipantContactService.deleteParticipantContact(self.contact._id)
-            .then(self.loadParticipantContact())
+            .then(() => loadParticipantContact())
             .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
             .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
         });
