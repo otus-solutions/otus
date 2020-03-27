@@ -17,10 +17,11 @@
     'ParticipantContactValues',
     'otusjs.participantManager.contact.ParticipantContactService',
     'otusjs.participant.business.ParticipantMessagesService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    '$mdDialog'
   ];
 
-  function Controller(ParticipantContactValues, ParticipantContactService, ParticipantMessagesService) {
+  function Controller(ParticipantContactValues, ParticipantContactService, ParticipantMessagesService, DialogShowService, $mdDialog) {
     const self = this;
 
     self.addContactInput = addContactInput;
@@ -30,6 +31,7 @@
     self.findAddressByCep = findAddressByCep;
     self.createNewContact = createNewContact;
     self.deleteNonMainContact = deleteNonMainContact;
+    self.deleteParticipantContact = deleteParticipantContact;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -99,14 +101,16 @@
     function deleteNonMainContact(type, position){
       let deleteContactDto = ParticipantContactService.createDeleteContactDto(self.contactId, type, position);
 
-      if(deleteContactDto.position !== "main"){
-        ParticipantContactService.deleteNonMainContact(deleteContactDto)
-          .then(()=> ParticipantMessagesService.showToast(ParticipantContactValues.msg.deleteContactItemSuccess))
-      }
+      _showDeleteDialog().then(() =>{
+        if(deleteContactDto.position !== "main"){
+          ParticipantContactService.deleteNonMainContact(deleteContactDto)
+            .then(()=> ParticipantMessagesService.showToast(ParticipantContactValues.msg.deleteContactItemSuccess))
+            .then(self.loadParticipantContact());
+        }
+      });
     }
 
 function _showDeleteDialog() {
-
       let _deleteDialog = {
         dialogToTitle: ParticipantContactValues.msg.delete,
         titleToText: ParticipantContactValues.msg.massegeTextDelete,
