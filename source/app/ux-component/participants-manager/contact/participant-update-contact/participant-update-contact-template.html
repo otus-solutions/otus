@@ -22,7 +22,7 @@
         <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}</md-tooltip>
       </md-button>
     </div>
-    <div ng-repeat="(key, contactItem) in $ctrl.editableContact" layout="row">
+    <div ng-repeat="(key, contactItem) in $ctrl.contact" layout="row">
       <form ng-if="contactItem != null" layout="row" name="$ctrl.form[$ctrl.type][key]"
             class="info-item info-item-layout"
             layout-fill layout-align="space-between center">
@@ -107,7 +107,7 @@
         <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}</md-tooltip>
       </md-button>
     </div>
-    <div ng-repeat="(key, contactItem) in $ctrl.editableContact">
+    <div ng-repeat="(key, contactItem) in $ctrl.contact">
       <form ng-if="contactItem != null" class="address-item" name="$ctrl.form.address[key]">
         <md-input-container class="street-input">
           <label>{{$ctrl.ParticipantContactValues.fields[key]}}{{$ctrl.ParticipantContactValues.fields.address}}</label>

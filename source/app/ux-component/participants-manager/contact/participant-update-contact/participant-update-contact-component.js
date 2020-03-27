@@ -40,22 +40,31 @@
       self.editMode = {};
       self.newContactMode = {};
       self.form = {};
-      self.editableContact = angular.copy(self.contact);
+      self.backupContact = {};
+      // self.backupContact = {}angular.copy(self.contact);
     }
 
     function addContactInput() {
-      for (let key in self.editableContact) {
-        if (self.editableContact[key] === null) {
+      for (let key in self.contact) {
+        if (self.contact[key] === null) {
           self.editMode[key] = true;
           self.newContactMode[key] = true;
-          self.editableContact[key] = {value: {}};
+          self.contact[key] = {value: {}};
           break;
         }
       }
     }
 
-    function enableEditMode(type) {
-      self.editMode[type] = true;
+    function enableEditMode(position) {
+      self.backupContact[position] = angular.copy(self.contact[position]);
+      self.editMode[position] = true;
+    }
+
+    function restoreContact(position) {
+      self.contact[position] = angular.copy(self.backupContact[position]);
+      self.editMode[position] = false;
+      delete self.backupContact[position];
+
     }
 
     function updateContact(updatedContactItem, position, type) {
@@ -67,10 +76,7 @@
         .then(self.loadParticipantContact())
     }
 
-    function restoreContact(position) {
-      self.editableContact = angular.copy(self.contact);
-      self.editMode[position] = false;
-    }
+
 
     function findAddressByCep(addressContact) {
       ParticipantContactService.getAddressByCep(addressContact.value.postalCode)
@@ -107,17 +113,18 @@
     }
 
     function deleteNonMainContact(type, position) {
-        let deleteContactDto = ParticipantContactService.createDeleteContactDto(self.contactId, type, position);
+      let deleteContactDto = ParticipantContactService.createDeleteContactDto(self.contactId, type, position);
       if (deleteContactDto.position !== "main") {
         ParticipantContactService.showDeleteDialog()
           .then(() => {
             ParticipantContactService.deleteNonMainContact(deleteContactDto)
+              .then(self.contact[position] = null)
               .then(self.loadParticipantContact())
+              .then(onInit())
               .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
               .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
           })
       }
     }
-
   }
 }());
