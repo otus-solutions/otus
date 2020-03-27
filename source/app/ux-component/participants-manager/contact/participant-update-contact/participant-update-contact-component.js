@@ -86,37 +86,37 @@
         }).catch((e) => ParticipantMessagesService.showToast(ParticipantContactValues.msg.postalCodeNotFound));
     }
 
-    function createNewContact(newContactItem, position, type){
+    function createNewContact(newContactItem, position, type) {
       let newContactDto = ParticipantContactService.createContactDto(self.contactId, position, newContactItem);
 
       ParticipantContactService.dinamicNewContactCreate(newContactDto, type)
         .then(self.editMode[position] = false)
         .then(self.newContactMode[position] = false)
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.createSuccess))
-        .then(self.loadParticipantContact());
-    }
-
-
-    function deleteNonMainContact(type, position){
-      let deleteContactDto = ParticipantContactService.createDeleteContactDto(self.contactId, type, position);
-      if(deleteContactDto.position !== "main"){
-        ParticipantContactService.showDeleteDialog().then(() => {
-          ParticipantContactService.deleteNonMainContact(deleteContactDto)
-            .then(() => self.loadParticipantContact())
-            .then(()=> ParticipantMessagesService.showToast(ParticipantContactValues.msg.deleteContactItemSuccess))
-            .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
-        });
-      }
+        .then(() => self.loadParticipantContact());
     }
 
     function deleteParticipantContact() {
       ParticipantContactService.showDeleteDialog()
-      .then(() => {
-        ParticipantContactService.deleteParticipantContact(self.contactId)
-          .then(self.loadParticipantContact())
-          .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
-          .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
-      });
+        .then(() => {
+          ParticipantContactService.deleteParticipantContact(self.contactId)
+            .then(self.loadParticipantContact())
+            .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
+            .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
+        });
+    }
+
+    function deleteNonMainContact(type, position) {
+        let deleteContactDto = ParticipantContactService.createDeleteContactDto(self.contactId, type, position);
+      if (deleteContactDto.position !== "main") {
+        ParticipantContactService.showDeleteDialog()
+          .then(() => {
+            ParticipantContactService.deleteNonMainContact(deleteContactDto)
+              .then(self.loadParticipantContact())
+              .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
+              .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
+          })
+      }
     }
 
   }

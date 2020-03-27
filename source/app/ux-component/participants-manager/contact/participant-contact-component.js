@@ -58,7 +58,7 @@
     self.saveParticipant = saveParticipant;
     self.dashboardParticipant = dashboardParticipant;
     self.onFilter = onFilter;
-    self.loadParticipantContact =  loadParticipantContact;
+    self.loadParticipantContact = loadParticipantContact;
     self.createParticipantContact = createParticipantContact;
 
     $scope.$watch('$ctrl.birthdate', function (newValue) {
@@ -225,9 +225,10 @@
     }
 
     function loadParticipantContact() {
+      console.log("chamou load")
       ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
-        .then(data => ParticipantContactService.participantContactFactoryJson(data))
-        .then(resultFactory =>  self.contact = resultFactory)
+        .then((data) => ParticipantContactService.participantContactFactoryJson(data))
+        .then((resultFactory) => self.contact = resultFactory)
         .catch(() => {
           self.contact = "";
           ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactNotFound);
@@ -235,17 +236,17 @@
     }
 
     function createParticipantContact() {
-     let contact =  ParticipantContactService.participantContactFactoryCreate({recruitmentNumber: self.participant.recruitmentNumber});
+      let contact = ParticipantContactService.participantContactFactoryCreate({recruitmentNumber: self.participant.recruitmentNumber});
       ParticipantContactService.createParticipantContact(contact)
-      .then(() => {
-        loadParticipantContact();
-      })
-      .then(() => {
-        ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFound);
-      })
-      .catch(() => {
-        ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail);
-      });
+        .then(() => {
+          loadParticipantContact();
+        })
+        .then(() => {
+          ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFound);
+        })
+        .catch(() => {
+          ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail);
+        });
     }
 
   }
