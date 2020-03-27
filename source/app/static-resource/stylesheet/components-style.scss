@@ -583,6 +583,12 @@ unattached-laboratory-dashboard {
 }
 
 offline-activity-collection {
+  #md-content-container{
+    height: 500px !important;
+  }
+  md-content {
+    width: 100% !important;
+  }
   md-grid-tile-header {
     figcaption {
       width: 100%;

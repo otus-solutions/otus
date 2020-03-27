@@ -694,4 +694,12 @@ offline-activity-collection md-input-container {
 offline-activity-collection otus-panel {
   min-width: 320px;
 }
+
+offline-activity-collection #md-content-container{
+  height: 500px !important;
+}
+
+offline-activity-collection md-content{
+  width: 100% !important;
+}
 /*# sourceMappingURL=components-style.css.map */

@@ -16,12 +16,13 @@
     self.$onInit = onInit;
     self.synchronizeOfflineActivities = synchronizeOfflineActivities;
 
-    function onInit() {
-    }
+    function onInit() {}
 
     function synchronizeOfflineActivities() {
       OfflineActivityCollectionService.synchronizeOfflineActivities(self.recruitmentNumber,self.offlineCollectionData._id).then(result => {
+        self.reloadData();
       }).catch(error => {
+
       });
     }
   }

@@ -17,7 +17,7 @@
         $cookies) {
         // Configure Otus Rest Client to use the correct back-end server URL
         var __env = $window.__env;
-        OtusRestResourceService.setUrl($cookies.get('Backend-Address'));
+        OtusRestResourceService.setUrl("http://localhost:51005/otus-rest/v01");
 
         // InstallerProxyService.ready(function(response) {
         //   ApplicationStateService.activateInstaller();

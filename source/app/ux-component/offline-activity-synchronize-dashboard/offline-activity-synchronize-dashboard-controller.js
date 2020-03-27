@@ -16,11 +16,17 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
     self.showInfo = showInfo;
+    self.loadOfflineCollections = loadOfflineCollections;
 
     function onInit() {
+      loadOfflineCollections();
+    }
+
+    function loadOfflineCollections() {
       OfflineActivityCollectionService.getOfflineActivityCollections().then((result)=>{
         self.offlineActivityCollections = OfflineActivityCollectionFactory.fromArray(result);
       }).catch((error)=>{
+        self.offlineActivityCollections = [];
       });
     }
 
