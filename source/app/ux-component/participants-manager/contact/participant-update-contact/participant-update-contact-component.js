@@ -29,7 +29,6 @@
     self.findAddressByCep = findAddressByCep;
     self.createNewContact = createNewContact;
     self.deleteNonMainContact = deleteNonMainContact;
-    self.deleteParticipantContact = deleteParticipantContact;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -41,7 +40,6 @@
       self.newContactMode = {};
       self.form = {};
       self.backupContact = {};
-      // self.backupContact = {}angular.copy(self.contact);
     }
 
     function addContactInput() {
@@ -69,7 +67,6 @@
 
     function updateContact(updatedContactItem, position, type) {
       let updateContactDto = ParticipantContactService.createContactDto(self.contactId, position, updatedContactItem);
-
       ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
         .then(self.editMode[position] = false)
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
@@ -100,16 +97,6 @@
         .then(self.newContactMode[position] = false)
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.createSuccess))
         .then(() => self.loadParticipantContact());
-    }
-
-    function deleteParticipantContact() {
-      ParticipantContactService.showDeleteDialog()
-        .then(() => {
-          ParticipantContactService.deleteParticipantContact(self.contactId)
-            .then(self.loadParticipantContact())
-            .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
-            .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
-        });
     }
 
     function deleteNonMainContact(type, position) {

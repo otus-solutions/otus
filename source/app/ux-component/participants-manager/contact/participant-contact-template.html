@@ -103,6 +103,14 @@
             <span flex="10"></span>
           </div>
           <div layout="row" layout-align="end" layout-margin="">
+            <md-button class="md-primary md-hue-1"
+                       ng-click="$ctrl.createParticipantContact()"
+                       ng-if="!$ctrl.contact">Editar Contatos
+            </md-button>
+            <md-button class="md-warn md-hue-1"
+                       ng-click="$ctrl.deleteParticipantContact()"
+                       ng-if="$ctrl.contact">Excluir Contatos
+            </md-button>
             <span flex></span>
             <md-button class="md-raised md-icon-button md-button" ng-click="$ctrl.dashboardParticipant()">
               <md-icon aria-label="Limpar">clear</md-icon>
@@ -142,10 +150,5 @@
                                      type="address"
                                      ng-if="$ctrl.contact">
     </otus-participant-update-contact>
-
-    <md-button class="md-primary md-hue-1"
-               ng-click="$ctrl.createParticipantContact()"
-               ng-if="!$ctrl.contact">Editar Contatos
-    </md-button>
   </otus-panel>
 </md-content>

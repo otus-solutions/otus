@@ -60,6 +60,7 @@
     self.onFilter = onFilter;
     self.loadParticipantContact = loadParticipantContact;
     self.createParticipantContact = createParticipantContact;
+    self.deleteParticipantContact = deleteParticipantContact;
 
     $scope.$watch('$ctrl.birthdate', function (newValue) {
       if (newValue) self.onFilter();
@@ -246,6 +247,16 @@
         })
         .catch(() => {
           ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail);
+        });
+    }
+
+    function deleteParticipantContact() {
+      ParticipantContactService.showDeleteDialog()
+        .then(() => {
+          ParticipantContactService.deleteParticipantContact(self.contact._id)
+            .then(self.loadParticipantContact())
+            .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
+            .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
         });
     }
 
