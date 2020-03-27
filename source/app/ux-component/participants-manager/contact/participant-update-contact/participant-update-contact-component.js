@@ -62,7 +62,6 @@
       self.contact[position] = angular.copy(self.backupContact[position]);
       self.editMode[position] = false;
       delete self.backupContact[position];
-
     }
 
     function updateContact(updatedContactItem, position, type) {
@@ -72,7 +71,6 @@
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
         .then(self.loadParticipantContact())
     }
-
 
 
     function findAddressByCep(addressContact) {
