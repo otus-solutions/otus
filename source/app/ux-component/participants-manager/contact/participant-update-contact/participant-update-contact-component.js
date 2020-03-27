@@ -16,12 +16,10 @@
   Controller.$inject = [
     'ParticipantContactValues',
     'otusjs.participantManager.contact.ParticipantContactService',
-    'otusjs.participant.business.ParticipantMessagesService',
-    'otusjs.application.dialog.DialogShowService',
-    '$mdDialog'
+    'otusjs.participant.business.ParticipantMessagesService'
   ];
 
-  function Controller(ParticipantContactValues, ParticipantContactService, ParticipantMessagesService, DialogShowService, $mdDialog) {
+  function Controller(ParticipantContactValues, ParticipantContactService, ParticipantMessagesService) {
     const self = this;
 
     self.addContactInput = addContactInput;
@@ -97,55 +95,28 @@
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.createSuccess))
         .then(self.loadParticipantContact());
     }
-    //adicionar Dialog
+
+
     function deleteNonMainContact(type, position){
       let deleteContactDto = ParticipantContactService.createDeleteContactDto(self.contactId, type, position);
-
-      _showDeleteDialog().then(() =>{
-        if(deleteContactDto.position !== "main"){
+      if(deleteContactDto.position !== "main"){
+        ParticipantContactService.showDeleteDialog().then(() => {
           ParticipantContactService.deleteNonMainContact(deleteContactDto)
+            .then(() => self.loadParticipantContact())
             .then(()=> ParticipantMessagesService.showToast(ParticipantContactValues.msg.deleteContactItemSuccess))
-            .then(self.loadParticipantContact());
-        }
-      });
-    }
-
-function _showDeleteDialog() {
-      let _deleteDialog = {
-        dialogToTitle: ParticipantContactValues.msg.delete,
-        titleToText: ParticipantContactValues.msg.massegeTextDelete,
-        textDialog: ParticipantContactValues.msg.massegeDialogDelete,
-        ariaLabel: ParticipantContactValues.msg.contactDelete,
-        buttons: [
-          {
-            message: ParticipantContactValues.msg.yes,
-            action:function(){$mdDialog.hide()},
-            class:'md-raised md-primary'
-          },
-          {
-            message: ParticipantContactValues.msg.not,
-            action:function(){$mdDialog.cancel()},
-            class:'md-raised md-no-focus'
-          }
-        ]
-      };
-
-      return DialogShowService.showDialog(_deleteDialog);
-
+            .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
+        });
+      }
     }
 
     function deleteParticipantContact() {
-      _showDeleteDialog()
-      .then(() =>
+      ParticipantContactService.showDeleteDialog()
+      .then(() => {
         ParticipantContactService.deleteParticipantContact(self.contactId)
-        .then(self.loadParticipantContact())
-        .then(() => {
-          ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete);
-        })
-        .catch(() => {
-          ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail);
-        })
-      )
+          .then(self.loadParticipantContact())
+          .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
+          .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
+      });
     }
 
   }

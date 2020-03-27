@@ -64,8 +64,8 @@
         postalCodeNotFound: 'CEP não encontrado',
         contactFound: 'Favor, preencha todos os campos!',
         contactNotFound: 'Contatos não cadastrados',
-        contactFail: 'Não foi possível executar!',
-        contactDelete: 'Excluido com sucesso.',
+        contactFail: 'Erro: Não foi completar a solicitação!',
+        contactDelete: 'Excluído com sucesso.',
         country: 'Brasil',
         updateSuccess: 'Atualizado com sucesso.',
         createSuccess: 'Novo contato criado',
@@ -74,8 +74,8 @@
         yes: 'Sim',
         not: 'Não',
         delete: 'Excluir',
-        massegeTextDelete: 'Confirmar exclusão de contatos',
-        massegeDialogDelete: 'Deseja excluir os contatos?'
+        massegeTextDelete: 'Confirmar exclusão de contato(s)',
+        massegeDialogDelete: 'Deseja excluir o(s) contato(s)?'
       }
 
     });

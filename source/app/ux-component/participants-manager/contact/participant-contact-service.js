@@ -7,10 +7,14 @@
   Service.$inject = [
     '$http',
     'otusjs.model.participantContact.ParticipantContactFactory',
-    'otusjs.participant.business.ParticipantManagerService'
+    'otusjs.participant.business.ParticipantManagerService',
+    'otusjs.application.dialog.DialogShowService',
+    'ParticipantContactValues',
+    '$mdDialog'
+
   ];
 
-  function Service($http, ParticipantContactFactory, ParticipantManagerService ) {
+  function Service($http, ParticipantContactFactory, ParticipantManagerService, DialogShowService, ParticipantContactValues, $mdDialog ) {
     const self = this;
     const MessageError = 'Model factory is not initialized.';
 
@@ -27,6 +31,7 @@
     self.dinamicUpdateContact = dinamicUpdateContact;
     self.dinamicNewContactCreate = dinamicNewContactCreate;
     self.createDeleteContactDto = createDeleteContactDto;
+    self.showDeleteDialog = showDeleteDialog;
 
     function createParticipantContact(participantContact) {
       return ParticipantManagerService.createParticipantContact(participantContact);
@@ -125,6 +130,30 @@
         "type": type,
         "position": position
       }
+    }
+
+    function showDeleteDialog() {
+      let _deleteDialog = {
+        dialogToTitle: ParticipantContactValues.msg.delete,
+        titleToText: ParticipantContactValues.msg.massegeTextDelete,
+        textDialog: ParticipantContactValues.msg.massegeDialogDelete,
+        ariaLabel: ParticipantContactValues.msg.contactDelete,
+        buttons: [
+          {
+            message: ParticipantContactValues.msg.yes,
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message: ParticipantContactValues.msg.not,
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogShowService.showDialog(_deleteDialog);
+
     }
 
   }
