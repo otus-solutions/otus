@@ -583,8 +583,12 @@ unattached-laboratory-dashboard {
 }
 
 offline-activity-collection {
+  md-card {
+    min-width: 340px;
+  }
   #md-content-container{
     height: 500px !important;
+    width: 100%;
   }
   md-content {
     width: 100% !important;

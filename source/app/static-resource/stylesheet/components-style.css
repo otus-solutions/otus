@@ -697,9 +697,14 @@ offline-activity-collection otus-panel {
 
 offline-activity-collection #md-content-container{
   height: 500px !important;
+  width: 100%;
 }
 
 offline-activity-collection md-content{
   width: 100% !important;
+}
+
+offline-activity-collection md-card{
+   min-width: 340px;
 }
 /*# sourceMappingURL=components-style.css.map */
