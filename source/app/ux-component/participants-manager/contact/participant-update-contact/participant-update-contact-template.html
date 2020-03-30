@@ -85,7 +85,7 @@
         </md-button>
 
         <md-button class="md-accent md-icon-button md-button restore-button"
-                   ng-if="$ctrl.editMode[key]"
+                   ng-if="$ctrl.editMode[key] && !$ctrl.newContactMode[key]"
                    ng-click="$ctrl.restoreContact(key)">
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.return.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.return.icon}}
@@ -208,7 +208,7 @@
         </md-button>
 
         <md-button class="md-accent md-icon-button md-button restore-button"
-                   ng-if="$ctrl.editMode[key]"
+                   ng-if="$ctrl.editMode[key] && !$ctrl.newContactMode[key]"
                    ng-click="$ctrl.restoreContact(key)">
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.return.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.return.icon}}
