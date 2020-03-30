@@ -31,6 +31,7 @@
     self.deleteNonMainContact = deleteNonMainContact;
     self.enableSwapMainContactMode = enableSwapMainContactMode;
     self.swapMainContact = swapMainContact;
+    self.confirmedDisabled = confirmedDisabled;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -43,6 +44,18 @@
       self.form = {};
       self.backupContact = {};
       self.swapMainContactMode = {};
+    }
+
+ function confirmedDisabled(key) {
+      if(self.editMode[key]){
+        if(!self.form.address[key].postalCode.$modelValue){
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
     }
 
     function addContactInput() {
