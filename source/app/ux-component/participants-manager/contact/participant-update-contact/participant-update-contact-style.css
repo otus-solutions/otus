@@ -5,19 +5,20 @@
   width: 80vw;
   grid-template-columns: 12fr;
   grid-template-rows: .1fr .5fr;
-  grid-gap: 20px;
   grid-template-areas:
     "infoTitle"
     "infoItem"
 }
 
 .info-title {
-  grid-area: infoTitle
+  grid-area: infoTitle;
+
 }
 
 .info-item {
   background: #f5f7f9;
-  grid-area: infoItem
+  grid-area: infoItem;
+  margin-bottom: 20px;
 }
 /*end grid style for phoneNumber and emails in card*/
 
@@ -43,6 +44,7 @@
   grid-template-columns: 5fr 2fr 2fr .5fr;
   grid-template-rows:  .1fr .1fr .1fr;
   grid-gap: 10px;
+  margin-bottom: 20px;
   grid-template-areas:
     "street numberNumber cep findCep"
     "complements neighbourhood city edit"
