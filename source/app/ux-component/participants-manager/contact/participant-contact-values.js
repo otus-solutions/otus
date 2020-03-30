@@ -23,20 +23,20 @@
       },
       keys: {
         email: {translatedTitle: 'Emails'},
-        address:{translatedTitle: 'Endereços'},
-        phoneNumber:{translatedTitle: 'Telefones'}
+        address: {translatedTitle: 'Endereços'},
+        phoneNumber: {translatedTitle: 'Telefones'}
       },
-      icons:{
-        addContact:{
-          icon:'add_circle_outline',
+      icons: {
+        addContact: {
+          icon: 'add_circle_outline',
           translatedTitle: 'Adicionar Contato'
         },
-        edit:{
-          icon:'create',
+        edit: {
+          icon: 'create',
           translatedTitle: 'Editar'
         },
-        save:{
-          icon:'save',
+        save: {
+          icon: 'save',
           translatedTitle: 'Salvar Edição'
         },
         clear: {
@@ -44,44 +44,47 @@
           translatedTitle: 'Excluir'
         },
         return: {
-          icon:'undo',
+          icon: 'undo',
           translatedTitle: 'Desfazer'
         },
-        findPostalCode:{
-          icon:'search',
+        findPostalCode: {
+          icon: 'search',
           translatedTitle: 'Buscar Cep'
         },
-        saveNewContact:{
-          icon:'note_add',
+        saveNewContact: {
+          icon: 'note_add',
           translatedTitle: 'Gravar novo contato'
         },
         deleteContact: {
-          icon:'delete',
+          icon: 'delete',
           translatedTitle: 'Excluir Contatos'
         },
         swapMainContact: {
-          icon:'swap_calls',
-          translatedTitle: 'trocar contato padrão'
-
+          icon: 'swap_calls',
+          translatedTitle: 'Trocar contato padrão'
+        },
+          swapChoiceContact: {
+            icon: 'looks_one',
+            translatedTitle: 'Defina contato padrão'
+          }
+        },
+        msg: {
+          postalCodeNotFound: 'CEP não encontrado',
+          contactFound: 'Favor, preencha todos os campos!',
+          contactNotFound: 'Contatos não cadastrados',
+          contactFail: 'Erro: Não foi completar a solicitação!',
+          contactDelete: 'Excluído com sucesso.',
+          country: 'Brasil',
+          updateSuccess: 'Atualizado com sucesso.',
+          createSuccess: 'Novo contato criado',
+          ok: 'Ok',
+          comeBack: 'Voltar',
+          yes: 'Sim',
+          not: 'Não',
+          delete: 'Excluir',
+          massegeTextDelete: 'Confirmar exclusão de contato(s)',
+          massegeDialogDelete: 'Deseja excluir o(s) contato(s)?'
         }
-      },
-      msg:{
-        postalCodeNotFound: 'CEP não encontrado',
-        contactFound: 'Favor, preencha todos os campos!',
-        contactNotFound: 'Contatos não cadastrados',
-        contactFail: 'Erro: Não foi completar a solicitação!',
-        contactDelete: 'Excluído com sucesso.',
-        country: 'Brasil',
-        updateSuccess: 'Atualizado com sucesso.',
-        createSuccess: 'Novo contato criado',
-        ok: 'Ok',
-        comeBack: 'Voltar',
-        yes: 'Sim',
-        not: 'Não',
-        delete: 'Excluir',
-        massegeTextDelete: 'Confirmar exclusão de contato(s)',
-        massegeDialogDelete: 'Deseja excluir o(s) contato(s)?'
-      }
 
-    });
+      });
 }());

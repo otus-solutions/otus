@@ -29,6 +29,8 @@
     self.findAddressByCep = findAddressByCep;
     self.createNewContact = createNewContact;
     self.deleteNonMainContact = deleteNonMainContact;
+    self.enableSwapMainContactMode = enableSwapMainContactMode;
+    self.swapMainContact = swapMainContact;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -40,6 +42,7 @@
       self.newContactMode = {};
       self.form = {};
       self.backupContact = {};
+      self.swapMainContactMode = {};
     }
 
     function addContactInput() {
@@ -111,5 +114,15 @@
           })
       }
     }
+
+    function enableSwapMainContactMode(type){
+      self.swapMainContactMode[type] = true;
+    }
+
+    function swapMainContact(type){
+      console.log("trocou");
+      self.swapMainContactMode[type] = false;
+    }
+
   }
 }());
