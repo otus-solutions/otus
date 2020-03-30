@@ -1,13 +1,13 @@
-<md-card class="md-grid-tile-body" layout="row" flex="50" flex-xs="100">
+<md-card class="md-grid-tile-body" layout="row" flex="50" flex-sm="100" >
   <div layout="column" layout-align="center center" flex>
-    <span class="md-title">Vincular coleta ao participante</span>
-    <div layout="row" layout-align="end end">
+    <div layout="row" layout-xs="column" layout-align="center end" layout-align-xs="center center">
+      <span class="md-title" layout-padding>Vincular coleta ao participante<span hide-xs hide-sm>:</span></span>
       <md-input-container class="remove-errors-spacer">
         <label>Número de recrutamento</label>
         <input ng-model="$ctrl.recruitmentNumber" type="number" min="0" step="1">
       </md-input-container>
       <md-button class="md-icon-button md-primary" ng-click="$ctrl.synchronizeOfflineActivities()" aria-label="More">
-        <md-icon> compare_arrows</md-icon>
+        <md-icon>compare_arrows</md-icon>
       </md-button>
     </div>
     <div layout-margin layout="column" layout-align="center start" >
