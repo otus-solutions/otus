@@ -137,9 +137,9 @@
         .then(response => response.data);
     }
 
-    function swapMainContact(participantContact) {
+    function swapMainContact(swapMainContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.swapMainContact(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.swapMainContact(swapMainContactDto))
         .then(response => response.data);
     }
 

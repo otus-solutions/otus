@@ -188,8 +188,8 @@
       return ParticipantRepositoryService.updatePhoneNumber(updateContactDto);
     }
 
-    function swapMainContact(participantContact) {
-      return ParticipantRepositoryService.swapMainContact(participantContact);
+    function swapMainContact(swapMainContactDto) {
+      return ParticipantRepositoryService.swapMainContact(swapMainContactDto);
     }
 
     function deleteParticipantContact(id) {

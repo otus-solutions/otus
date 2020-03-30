@@ -30,7 +30,7 @@
     self.createContactDto = createContactDto;
     self.dinamicUpdateContact = dinamicUpdateContact;
     self.dinamicNewContactCreate = dinamicNewContactCreate;
-    self.createDeleteContactDto = createDeleteContactDto;
+    self.createPositionContactDto = createPositionContactDto;
     self.showDeleteDialog = showDeleteDialog;
 
     function createParticipantContact(participantContact) {
@@ -45,8 +45,8 @@
       return ParticipantManagerService.getParticipantContactByRecruitmentNumber(recruitmentNumber);
     }
 
-    function swapMainContact(participantContact) {
-      return ParticipantManagerService.swapMainContact(participantContact);
+    function swapMainContact(swapMainContactDto) {
+      return ParticipantManagerService.swapMainContact(swapMainContactDto);
     }
 
     function deleteParticipantContact(id) {
@@ -124,7 +124,7 @@
         return ParticipantManagerService.deleteNonMainContact(deleteContactDto);
     }
 
-    function createDeleteContactDto(contactId, type, position) {
+    function createPositionContactDto(contactId, type, position) {
       return {
         "_id": contactId,
         "type": type,
@@ -135,8 +135,8 @@
     function showDeleteDialog() {
       let _deleteDialog = {
         dialogToTitle: ParticipantContactValues.msg.delete,
-        titleToText: ParticipantContactValues.msg.massegeTextDelete,
-        textDialog: ParticipantContactValues.msg.massegeDialogDelete,
+        titleToText: ParticipantContactValues.msg.messageTextDelete,
+        textDialog: ParticipantContactValues.msg.messageDialogDelete,
         ariaLabel: ParticipantContactValues.msg.contactDelete,
         buttons: [
           {
@@ -153,7 +153,6 @@
       };
 
       return DialogShowService.showDialog(_deleteDialog);
-
     }
 
   }

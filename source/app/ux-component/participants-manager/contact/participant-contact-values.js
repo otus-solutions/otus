@@ -82,8 +82,10 @@
           yes: 'Sim',
           not: 'Não',
           delete: 'Excluir',
-          massegeTextDelete: 'Confirmar exclusão de contato(s)',
-          massegeDialogDelete: 'Deseja excluir o(s) contato(s)?'
+          messageTextDelete: 'Confirmar exclusão de contato(s)',
+          messageDialogDelete: 'Deseja excluir o(s) contato(s)?',
+          swapMainContactSucess:'Alterado para padrão com sucesso',
+          swapMainContactFail: 'Erro: Alteração não foi completada'
         }
 
       });

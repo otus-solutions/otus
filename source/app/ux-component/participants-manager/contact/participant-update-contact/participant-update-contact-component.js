@@ -101,27 +101,30 @@
     }
 
     function deleteNonMainContact(type, position) {
-      let deleteContactDto = ParticipantContactService.createDeleteContactDto(self.contactId, type, position);
+      let deleteContactDto = ParticipantContactService.createPositionContactDto(self.contactId, type, position);
       if (deleteContactDto.position !== "main") {
         ParticipantContactService.showDeleteDialog()
           .then(() => {
             ParticipantContactService.deleteNonMainContact(deleteContactDto)
               .then(self.contact[position] = null)
               .then(self.loadParticipantContact())
-              .then(onInit())
               .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
               .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
           })
       }
     }
 
-    function enableSwapMainContactMode(type){
+    function enableSwapMainContactMode(type) {
       self.swapMainContactMode[type] = true;
     }
 
-    function swapMainContact(type){
-      console.log("trocou");
-      self.swapMainContactMode[type] = false;
+    function swapMainContact(type, position) {
+      let swapMainContactDto = ParticipantContactService.createPositionContactDto(self.contactId, type, position);
+      ParticipantContactService.swapMainContact(swapMainContactDto)
+        .then(self.loadParticipantContact())
+        .then(self.swapMainContactMode[type] = false)
+        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.swapMainContactSucess))
+        .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.swapMainContactFail))
     }
 
   }

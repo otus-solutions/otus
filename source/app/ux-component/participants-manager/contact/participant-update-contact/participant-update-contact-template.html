@@ -96,7 +96,7 @@
 
         <md-button class="md-accent md-icon-button md-button restore-button"
                    ng-if="$ctrl.swapMainContactMode[$ctrl.type]"
-                   ng-click="$ctrl.swapMainContact($ctrl.type)">
+                   ng-click="$ctrl.swapMainContact($ctrl.type, key)">
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.swapChoiceContact.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.swapChoiceContact.icon}}
           </md-icon>
@@ -179,18 +179,9 @@
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}</md-tooltip>
         </md-button>
 
-        <md-button class="md-accent md-icon-button md-button restore-button"
-                   ng-if="key === 'main' && !$ctrl.editMode[key]" ng-click="">
-          <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.swapMainContact.translatedTitle}}">
-            {{$ctrl.ParticipantContactValues.icons.swapMainContact.icon}}
-          </md-icon>
-          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.swapMainContact.translatedTitle}}
-          </md-tooltip>
-        </md-button>
-
 
         <md-button class="md-accent md-icon-button md-button restore-button"
-                   ng-if="(!$ctrl.editMode[key] || $ctrl.newContactMode[key]) && key !== 'main'"
+                   ng-if="(!$ctrl.editMode[key] || $ctrl.newContactMode[key]) && key !== 'main' && !$ctrl.swapMainContactMode[$ctrl.type]"
                    ng-click="$ctrl.deleteNonMainContact($ctrl.type, key)">
           <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.clear.icon}}
@@ -227,6 +218,31 @@
           </md-icon>
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.return.translatedTitle}}</md-tooltip>
         </md-button>
+
+        <md-button class="md-accent md-icon-button md-button restore-button"
+                   ng-if="key === 'main' && !$ctrl.editMode[key] && !$ctrl.swapMainContactMode[$ctrl.type]"
+                   ng-click="$ctrl.enableSwapMainContactMode($ctrl.type)">
+          <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.swapMainContact.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.swapMainContact.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.swapMainContact.translatedTitle}}
+          </md-tooltip>
+        </md-button>
+
+        <md-button class="md-accent md-icon-button md-button restore-button"
+                   ng-if="$ctrl.swapMainContactMode[$ctrl.type]"
+                   ng-click="$ctrl.swapMainContact($ctrl.type, key)">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.swapChoiceContact.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.swapChoiceContact.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.swapChoiceContact.translatedTitle}}
+          </md-tooltip>
+        </md-button>
+
+
+
+
+
       </form>
     </div>
   </md-card-content>
