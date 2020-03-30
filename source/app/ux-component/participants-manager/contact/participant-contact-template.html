@@ -1,43 +1,6 @@
-<style>
-  .pc-layout {
-    display: grid;
-    width: 100vw;
-    height: 90vh;
-    grid-template-columns: .5fr 11.5fr;
-    grid-template-rows: .5fr 11.5fr;
-    grid-template-areas: "returnButton anonymousMsg" "mainUpdate mainUpdate"
-  }
-
-  .return-button {
-    grid-area: returnButton;
-  }
-
-  .anonymous-msg {
-    grid-area: anonymousMsg;
-  }
-
-  .main-update {
-    grid-area: mainUpdate;
-  }
-
-  /*.op-layout{*/
-  /*  display: grid;*/
-  /*  width: 100vw;*/
-  /*  grid-template-columns: 1fr;*/
-  /*  grid-template-rows: 1fr 1fr 1fr 1fr;*/
-  /*  grid-template-areas: "phoneContactUpdate" "personalDataCard"*/
-  /*}*/
-
-  .personal-data-card {
-    /*grid-area: personalDataCard;*/
-    width: 80vw;
-  }
-
-  .contact-update {
-    /*grid-area: phoneContactUpdate;*/
-  }
-
-</style>
+<link
+  href="app/ux-component/participants-manager/contact/participant-contact-styles.css"
+  rel="stylesheet" type="text/css">
 
 <md-content class="pc-layout" ng-cloak>
   <div class="return-button" layout="row" layout-align="start center" layout-margin>
