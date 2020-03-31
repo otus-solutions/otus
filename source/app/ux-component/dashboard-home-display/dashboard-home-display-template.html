@@ -58,6 +58,27 @@
              class="first-menu-margin">
 
           <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
+            <md-icon style="font-size:20px;color:#000000;">assignment</md-icon>
+            <span class="md-header" layout-padding ><h2>ATIVIDADES</h2></span>
+          </div>
+
+          <div layout="row" layout-sm="column" layout-md="column">
+            <md-card class="card-button" ng-init="showLaboratory=true" layout-fill >
+              <md-card-content class="no-padding" layout="column" layout-align="start start">
+                <md-button ng-click="$ctrl.activateOfflineActivitySynchronize()" layout-align="center" layout-margin="">
+                  <md-icon>wifi_off</md-icon>Sincronismo de atividades offline
+                </md-button>
+              </md-card-content>
+            </md-card>
+          </div>
+        </div>
+
+        <!--    Laboratory buttons-->
+        <div layout="column" layout-align="center center"
+             ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"
+             class="first-menu-margin">
+
+          <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
             <md-icon style="font-size:20px;color:#000000;">colorize</md-icon>
             <span class="md-header" layout-padding ><h2>LABORATÓRIO</h2></span>
           </div>
@@ -160,6 +181,27 @@
 
       <!--    Menu buttons Mobile-->
       <div hide-gt-xs layout="column" layout-align="start start" >
+        <md-card class="card-button" layout-fill >
+          <md-card-content layout="row" layout-align="center center">
+            <md-icon>assignment</md-icon>ATIVIDADES
+            <div class="md-menu-demo" ng-cloak>
+              <div class="menu-demo-container" layout-align="center center" layout="column">
+                <md-menu>
+                  <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
+                    <md-icon>more_vert</md-icon>
+                  </md-button>
+                  <md-menu-content width="3">
+                    <md-menu-item>
+                      <md-button ng-click="$ctrl.activateOfflineActivitySynchronize()">
+                        <md-icon>wifi_off</md-icon>Sincronismo de atividades offline
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </div>
+            </div>
+          </md-card-content>
+        </md-card>
         <!--      Laboratory-->
         <md-card class="card-button" layout-fill ng-init="showLaboratory=true">
           <md-card-content layout="row" layout-align="center center">

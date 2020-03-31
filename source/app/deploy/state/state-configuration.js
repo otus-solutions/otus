@@ -42,7 +42,8 @@
       'FLAG_MANAGER_LIST': 'manager-list',
       'LABORATORY_MONITORING_DASHBOARD': 'laboratory-monitoring',
       'ACTIVITY_IMPORT': 'activity-import',
-      'PENDENCY_VIEWER': 'pendency-viewer'
+      'PENDENCY_VIEWER': 'pendency-viewer',
+      'ACTIVITY_SYNCHRONIZE': 'activity-synchronize'
     })
     .config(Configuration);
 
@@ -84,7 +85,8 @@
     'otusjs.deploy.ActivityFlagReportStateProvider',
     'otusjs.deploy.LaboratoryMonitoringStateProvider',
     'otusjs.deploy.ActivityImportStateProvider',
-    'otusjs.deploy.PendencyViewerStateProvider'
+    'otusjs.deploy.PendencyViewerStateProvider',
+    'otusjs.deploy.OfflineActivitySynchronizeStateProvider'
 
   ];
 
@@ -124,7 +126,8 @@
     ActivityFlagReportStateProvider,
     LaboratoryMonitoringStateProvider,
     ActivityImportStateProvider,
-    PendencyViewerStateProvider
+    PendencyViewerStateProvider,
+    OfflineActivitySynchronizeStateProvider
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ErrorStateProvider.state);
@@ -161,7 +164,8 @@
     $stateProvider.state(LaboratoryMonitoringStateProvider.state);
     $stateProvider.state(ActivityImportStateProvider.state);
     $stateProvider.state(PendencyViewerStateProvider.state);
-
+    $stateProvider.state(OfflineActivitySynchronizeStateProvider.state);
+    
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
     // $locationProvider.html5Mode(false);
