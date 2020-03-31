@@ -154,6 +154,5 @@
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.swapMainContactSucess))
         .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.swapMainContactFail))
     }
-
   }
 }());
