@@ -7,7 +7,10 @@
     <div layout="row" layout-align="space-between center" class="info-title">
       <span class="md-subhead">{{$ctrl.ParticipantContactValues.keys[$ctrl.type].translatedTitle}}</span>
       <span></span>
-      <md-button class="md-accent md-icon-button md-button" ng-click="$ctrl.addContactInput()">
+      <md-button class="md-accent md-icon-button md-button"
+                 ng-click="$ctrl.addContactInput()"
+                 ng-disabled = !$ctrl.addContactMode[$ctrl.type]
+                 ng-if="$ctrl.contact['fifth'] === null">
         <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}>
           {{$ctrl.ParticipantContactValues.icons.addContact.icon}}
         </md-icon>
@@ -114,11 +117,14 @@
     <div layout="row" layout-align="space-between center" class="info-title">
       <span class="md-subhead">{{$ctrl.ParticipantContactValues.keys[$ctrl.type].translatedTitle}}</span>
       <span></span>
+
       <md-button class="md-accent md-icon-button md-button" ng-click="$ctrl.addContactInput()"
-                 ng-disabled="ctrl.isValid">
+                 ng-disabled = !$ctrl.addContactMode[$ctrl.type]
+                 ng-if="$ctrl.contact['fifth'] === null">
         <md-icon aria-label="Adicionar">{{$ctrl.ParticipantContactValues.icons.addContact.icon}}</md-icon>
         <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}</md-tooltip>
       </md-button>
+
     </div>
     <div ng-repeat="(key, contactItem) in $ctrl.contact">
       <form ng-if="contactItem != null" class="address-item" name="$ctrl.form.address[key]">

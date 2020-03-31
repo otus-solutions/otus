@@ -44,6 +44,11 @@
       self.form = {};
       self.backupContact = {};
       self.swapMainContactMode = {};
+      self.addContactMode = {
+        phoneNumber: true,
+        email:true,
+        address: true
+      }
     }
 
  function confirmedDisabled(key) {
@@ -64,6 +69,7 @@
           self.editMode[key] = true;
           self.newContactMode[key] = true;
           self.contact[key] = {value: {}};
+          self.addContactMode[self.type] = false;
           break;
         }
       }
@@ -86,6 +92,11 @@
         .then(self.editMode[position] = false)
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
         .then(self.loadParticipantContact())
+        .then(()=>{
+          if(self.contact["fifth"]) self.addContactMode[self.type] = false;
+          else self.addContactMode[self.type] = true;
+        }
+    )
     }
 
 
@@ -110,6 +121,9 @@
         .then(self.editMode[position] = false)
         .then(self.newContactMode[position] = false)
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.createSuccess))
+        .then(()=>{
+          if(position !== "fifth") self.addContactMode[self.type] = true;
+        })
         .then(() => self.loadParticipantContact());
     }
 
@@ -120,6 +134,7 @@
           .then(() => {
             ParticipantContactService.deleteNonMainContact(deleteContactDto)
               .then(self.contact[position] = null)
+              .then(self.addContactMode[self.type] = true)
               .then(self.loadParticipantContact())
               .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
               .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
