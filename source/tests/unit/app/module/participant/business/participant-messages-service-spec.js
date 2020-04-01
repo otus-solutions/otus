@@ -117,7 +117,7 @@ describe('participant-messages-service Test', function() {
     expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
     Mock.mdToast.show().then(function (result) {
       expect(result.simple().msg).toEqual(Mock.message);
-      expect(result.simple().time).toEqual(3000);
+      expect(result.simple().time).toEqual(4000);
       expect(result.simple().p).toEqual('right bottom');
       done();
     });

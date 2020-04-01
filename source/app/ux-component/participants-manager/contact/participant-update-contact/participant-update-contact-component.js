@@ -51,21 +51,9 @@
       }
     }
 
- function confirmedDisabled(key) {
-      if(self.editMode[key]){
-        if(!self.form.address[key].postalCode.$modelValue){
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return true;
-      }
-    }
-
     function addContactInput() {
       for (let key in self.contact) {
-        if (self.contact[key] === null) {
+        if (self.contact[key] == null) {
           self.editMode[key] = true;
           self.newContactMode[key] = true;
           self.contact[key] = {value: {}};
@@ -95,10 +83,8 @@
         .then(()=>{
           if(self.contact["fifth"]) self.addContactMode[self.type] = false;
           else self.addContactMode[self.type] = true;
-        }
-    )
+        })
     }
-
 
     function findAddressByCep(addressContact) {
       ParticipantContactService.getAddressByCep(addressContact.value.postalCode)
@@ -137,7 +123,6 @@
               .then(self.addContactMode[self.type] = true)
               .then(self.loadParticipantContact())
               .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
-              .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
           })
       }
     }
@@ -154,5 +139,18 @@
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.swapMainContactSucess))
         .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.swapMainContactFail))
     }
+
+    function confirmedDisabled(key) {
+      if(self.editMode[key]){
+        if(!self.form.address[key].postalCode.$modelValue){
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return true;
+      }
+    }
+
   }
 }());
