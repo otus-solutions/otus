@@ -41,15 +41,20 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
   });
 
 
-  // it('should ', () => {
-  //   //expect(ctrl).toBe('')
-  // });
-  //
-  // it('should ', () => {
-  //   //expect(ctrl).toBe('')
-  // });
-  //
-  //
+  it('enableEditModeMethod_should_build valueBackup_and_enable_editMode_of_a_position', () => {
+    ctrl.enableEditMode('main');
+    expect(ctrl.backupContact.main.observation).toBe("Whats");
+    expect(ctrl.editMode.main).toBeTruthy();
+  });
+
+  it('restoreContactMethod_should_restore_originalData_and_disable_editMode_for_a_contactPosition', () => {
+    ctrl.backupContact.main = "backupData";
+    ctrl.restoreContact('main');
+    expect(ctrl.contact.main).toBe("backupData");
+    expect(ctrl.editMode.main).toBeFalsy();
+  });
+
+
   // it('should ', () => {
   //   //expect(ctrl).toBe('')
   // });
