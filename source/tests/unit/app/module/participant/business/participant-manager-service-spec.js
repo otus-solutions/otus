@@ -20,8 +20,8 @@ describe('participant-manager-service Test', function() {
     });
     mock();
     spyOn(Injections.$q, "defer").and.callThrough();
-    spyOn(Injections.ParticipantRepositoryService, "create").and.returnValue(Promise.resolve({}));
-    spyOn(Injections.ParticipantRepositoryService, "update").and.returnValue(Promise.resolve({}));
+    spyOn(Injections.ParticipantRepositoryService, "create").and.returnValue(Promise.resolve(Mock.participant));
+    spyOn(Injections.ParticipantRepositoryService, "update").and.returnValue(Promise.resolve(Mock.participant));
     spyOn(Injections.ParticipantRepositoryService, "listIdexers").and.returnValue(Promise.resolve(mockParticipantList()));
     spyOn(Injections.ParticipantRepositoryService, "getAllowNewParticipants").and.returnValue(Promise.resolve(mockProjectConfiguration()));
     spyOn(Injections.ContextService, "getSelectedParticipant");
@@ -292,26 +292,26 @@ describe('participant-manager-service Test', function() {
         "main": {
           "value": {
             "postalCode": "90010-907",
-              "street": "Rua dos Bobos",
-              "streetNumber": 0,
-              "complements": "Feita com muito esmero!",
-              "neighbourhood": "Centro",
-              "city": "Porto Alegre",
-              "state": "RS",
-              "country": "Brasil"
+            "street": "Rua dos Bobos",
+            "streetNumber": 0,
+            "complements": "Feita com muito esmero!",
+            "neighbourhood": "Centro",
+            "city": "Porto Alegre",
+            "state": "RS",
+            "country": "Brasil"
           },
           "observation": "Casa"
         },
         "second": {
           "value": {
             "postalCode": "90010-907",
-              "street": "Av A",
-              "streetNumber": 7,
-              "complements": "somewhere over the rainbow",
-              "neighbourhood": "Zona Sul",
-              "city": "Porto Alegre",
-              "state": "RS",
-              "country": "Brasil"
+            "street": "Av A",
+            "streetNumber": 7,
+            "complements": "somewhere over the rainbow",
+            "neighbourhood": "Zona Sul",
+            "city": "Porto Alegre",
+            "state": "RS",
+            "country": "Brasil"
           },
           "observation": "Casa da vizinha da minha tia."
         }
