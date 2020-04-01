@@ -65,25 +65,25 @@
 
     function enableEditMode(position) {
       self.backupContact[position] = angular.copy(self.contact[position]);
+      self.addContactMode[self.type] = false;
       self.editMode[position] = true;
     }
 
     function restoreContact(position) {
       self.contact[position] = angular.copy(self.backupContact[position]);
       self.editMode[position] = false;
+      self.addContactMode[self.type] = true;
       delete self.backupContact[position];
     }
 
     function updateContact(updatedContactItem, position, type) {
       let updateContactDto = ParticipantContactService.createContactDto(self.contactId, position, updatedContactItem);
+
       ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
         .then(self.editMode[position] = false)
-        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
+        .then(ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
+        .then(ParticipantContactService.isLastContact(self, position, "updateContact"))
         .then(self.loadParticipantContact())
-        .then(()=>{
-          if(self.contact["fifth"]) self.addContactMode[self.type] = false;
-          else self.addContactMode[self.type] = true;
-        })
     }
 
     function findAddressByCep(addressContact) {
@@ -106,15 +106,14 @@
       ParticipantContactService.dinamicNewContactCreate(newContactDto, type)
         .then(self.editMode[position] = false)
         .then(self.newContactMode[position] = false)
-        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.createSuccess))
-        .then(()=>{
-          if(position !== "fifth") self.addContactMode[self.type] = true;
-        })
-        .then(() => self.loadParticipantContact());
+        .then(ParticipantMessagesService.showToast(ParticipantContactValues.msg.createSuccess))
+        .then(ParticipantContactService.isLastContact(self, position, "createNewContact"))
+        .then(self.loadParticipantContact());
     }
 
     function deleteNonMainContact(type, position) {
       let deleteContactDto = ParticipantContactService.createPositionContactDto(self.contactId, type, position);
+
       if (deleteContactDto.position !== "main") {
         ParticipantContactService.showDeleteDialog()
           .then(() => {
@@ -133,6 +132,7 @@
 
     function swapMainContact(type, position) {
       let swapMainContactDto = ParticipantContactService.createPositionContactDto(self.contactId, type, position);
+
       ParticipantContactService.swapMainContact(swapMainContactDto)
         .then(self.loadParticipantContact())
         .then(self.swapMainContactMode[type] = false)

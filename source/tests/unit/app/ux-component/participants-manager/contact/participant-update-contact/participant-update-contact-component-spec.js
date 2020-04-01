@@ -44,6 +44,7 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
   it('enableEditModeMethod_should_build valueBackup_and_enable_editMode_of_a_position', () => {
     ctrl.enableEditMode('main');
     expect(ctrl.backupContact.main.observation).toBe("Whats");
+    expect(ctrl.addContactMode[ctrl.type]).toBeFalsy();
     expect(ctrl.editMode.main).toBeTruthy();
   });
 
@@ -51,15 +52,17 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     ctrl.backupContact.main = "backupData";
     ctrl.restoreContact('main');
     expect(ctrl.contact.main).toBe("backupData");
+    expect(ctrl.addContactMode[ctrl.type]).toBeTruthy();
     expect(ctrl.editMode.main).toBeFalsy();
   });
 
 
-  // it('should ', () => {
+  // it('updateContactMethod_should', () => {
+  //   ctrl.updateContact(Mock.updatedContactItem, "main", ctrl.type)
   //   //expect(ctrl).toBe('')
   // });
-  //
-  //
+
+
   // it('should ', () => {
   //   //expect(ctrl).toBe('')
   // });
@@ -82,7 +85,7 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     Mock.contact = {
       main: {
         value: {
-          content: "51998578574"
+          content: "51987456321"
         },
         observation: "Whats"
       },
@@ -97,6 +100,13 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
       fifth: "null"
     };
     Mock.type = "phoneNumber";
+    Mock.updatedContactItem = {
+      "value": {
+        "content": "51321654987"
+      },
+      "observation": "Work"
+    }
+
   }
 
 

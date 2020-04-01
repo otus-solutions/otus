@@ -32,6 +32,7 @@
     self.dinamicNewContactCreate = dinamicNewContactCreate;
     self.createPositionContactDto = createPositionContactDto;
     self.showDeleteDialog = showDeleteDialog;
+    self.isLastContact = isLastContact;
 
     function createParticipantContact(participantContact) {
       return ParticipantManagerService.createParticipantContact(participantContact);
@@ -153,6 +154,21 @@
       };
 
       return DialogShowService.showDialog(_deleteDialog);
+    }
+
+    function isLastContact(vm, position, solicitation) {
+      switch (solicitation) {
+        case "updateContact":
+          if(vm.contact["fifth"]) vm.addContactMode[vm.type] = false;
+          else vm.addContactMode[vm.type] = true;
+          break;
+
+        case "createNewContact":
+          if(position !== "fifth") vm.addContactMode[vm.type] = true;
+          break
+
+      }
+
     }
 
   }
