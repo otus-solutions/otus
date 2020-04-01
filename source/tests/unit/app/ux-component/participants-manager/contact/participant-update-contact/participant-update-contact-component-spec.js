@@ -6,11 +6,19 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
     angular.mock.inject(($injector, $controller) => {
+      Injections.ParticipantContactService = $injector.get('otusjs.participantManager.contact.ParticipantContactService');
+      Injections.ParticipantMessagesService = $injector.get('otusjs.participant.business.ParticipantMessagesService');
       ctrl = $controller('participantUpdateContactCtrl', Injections);
       ctrl.$onInit();
       mockInitialize();
       ctrl.contact = Mock.contact;
       ctrl.type = Mock.type;
+      ctrl.loadParticipantContact = Mock.loadParticipantContact;
+      spyOn(Injections.ParticipantContactService,"createContactDto").and.callThrough();
+      spyOn(Injections.ParticipantContactService,"dinamicUpdateContact").and.callThrough();
+      spyOn(Injections.ParticipantMessagesService, "showToast").and.callThrough();
+      spyOn(Injections.ParticipantContactService, "isLastContact").and.callThrough();
+      //spyOn(Injections.ParticipantActivityService,"saveActivities").and.callThrough();
     });
   });
 
@@ -40,7 +48,6 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     expect(ctrl.addContactMode[ctrl.type]).toBeFalsy();
   });
 
-
   it('enableEditModeMethod_should_build valueBackup_and_enable_editMode_of_a_position', () => {
     ctrl.enableEditMode('main');
     expect(ctrl.backupContact.main.observation).toBe("Whats");
@@ -56,11 +63,15 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     expect(ctrl.editMode.main).toBeFalsy();
   });
 
-
-  // it('updateContactMethod_should', () => {
-  //   ctrl.updateContact(Mock.updatedContactItem, "main", ctrl.type)
-  //   //expect(ctrl).toBe('')
-  // });
+  it('updateContactMethod_should_make_pipelineOrderedCalls_after_promiseResolution', () => {
+    ctrl.updateContact(Mock.updatedContactItem, "main", ctrl.type);
+    expect(Injections.ParticipantContactService.createContactDto).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantContactService.dinamicUpdateContact).toHaveBeenCalledTimes(1);
+    expect(ctrl.editMode['main']).toBeFalsy();
+    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantContactService.isLastContact).toHaveBeenCalledTimes(1);
+    expect(ctrl.loadParticipantContact).toHaveBeenCalledTimes(1);
+  });
 
 
   // it('should ', () => {
@@ -106,6 +117,9 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
       },
       "observation": "Work"
     }
+
+    Mock.loadParticipantContact = jasmine.createSpy();
+
 
   }
 
