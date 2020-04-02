@@ -18,9 +18,6 @@
       return self;
     }
 
-    //template: '<otus-participant-update layout="column" flex></otus-participant-update>',
-
-
     self.state = {
       parent: STATE.PARTICIPANTS_MANAGER,
       name: STATE.PARTICIPANT_UPDATE,
