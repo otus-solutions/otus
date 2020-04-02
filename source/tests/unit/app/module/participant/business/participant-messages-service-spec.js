@@ -8,7 +8,7 @@ describe('participant-messages-service Test', function() {
   const ERROR_MESSAGE_WITH_NUMBER = 'Número de recrutamento 123 já existente.'
 
   beforeEach(function () {
-    angular.mock.module('otusjs.participant.business');
+    angular.mock.module('otusjs.otus');
   });
 
   beforeEach(function () {
@@ -52,7 +52,6 @@ describe('participant-messages-service Test', function() {
     };
     angular.mock.module(function ($provide) {
       $provide.value('otusjs.application.dialog.DialogShowService', Mock.DialogShowService);
-      $provide.value('$mdDialog', {});
       $provide.value('$mdToast', Mock.mdToast);
     });
   });
@@ -62,19 +61,20 @@ describe('participant-messages-service Test', function() {
 
       Injections = {
         $mdDialog: _$injector_.get('$mdDialog'),
+        $mdToast: _$injector_.get('$mdToast'),
         DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService')
       };
 
       service = _$injector_.get('otusjs.participant.business.ParticipantMessagesService',Injections);
     });
     mockMessages();
-    spyOn(Mock.DialogShowService, 'showDialog').and.callThrough();
-    spyOn(Mock.mdToast, 'show').and.callThrough();
+    spyOn(Injections.DialogShowService, 'showDialog').and.callThrough();
+    spyOn(Injections.$mdToast, 'show').and.callThrough();
   });
 
   it('should show a clear dialog with message', function (done) {
     service.showClearDialog(SHOW_CLEAR_DIALOG_MESSAGE).then(function (result) {
-      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
       expect(result.test.textDialog).toEqual(SHOW_CLEAR_DIALOG_MESSAGE);
       done();
     });
@@ -82,7 +82,7 @@ describe('participant-messages-service Test', function() {
 
   it('should show a save dialog with message', function (done) {
     service.showSaveDialog(SHOW_SAVE_DIALOG_MESSAGE).then(function (result) {
-      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
       expect(result.test.textDialog).toEqual(SHOW_SAVE_DIALOG_MESSAGE);
       done();
     });
@@ -90,7 +90,7 @@ describe('participant-messages-service Test', function() {
 
   it('should show a not save dialog without message', function (done) {
     service.showNotSave(ERROR_MESSAGE_WHEN_EMPTY).then(function (result) {
-      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
       expect(result.test.textDialog).toEqual(ERROR_MESSAGE_WHEN_EMPTY);
       done();
     });
@@ -98,7 +98,7 @@ describe('participant-messages-service Test', function() {
 
   it('should show a not save dialog erro message without recruitment number', function (done) {
     service.showNotSave(Mock.errorMessage).then(function (result) {
-      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
       expect(result.test.textDialog).toEqual(Mock.errorMessage);
       done();
     });
@@ -106,7 +106,7 @@ describe('participant-messages-service Test', function() {
 
   it('should show a not save dialog erro message with recruitment number', function (done) {
     service.showNotSave(Mock.errorMessageWithRN).then(function (result) {
-      expect(Mock.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
       expect(result.test.textDialog).toEqual(ERROR_MESSAGE_WITH_NUMBER);
       done();
     });
@@ -114,8 +114,8 @@ describe('participant-messages-service Test', function() {
 
   it('should show toast with message', function (done) {
     service.showToast(Mock.message);
-    expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
-    Mock.mdToast.show().then(function (result) {
+    expect(Injections.$mdToast.show).toHaveBeenCalledTimes(1);
+    Injections.$mdToast.show().then(function (result) {
       expect(result.simple().msg).toEqual(Mock.message);
       expect(result.simple().time).toEqual(4000);
       expect(result.simple().p).toEqual('right bottom');
