@@ -97,7 +97,8 @@
             state: address.data.uf,
             country: ParticipantContactValues.msg.country
           }
-        }).catch((e) => ParticipantMessagesService.showToast(ParticipantContactValues.msg.postalCodeNotFound));
+        }).catch((e) =>
+      {ParticipantMessagesService.showToast(ParticipantContactValues.msg.postalCodeNotFound)});
     }
 
     function createNewContact(newContactItem, position, type) {
@@ -118,10 +119,12 @@
         ParticipantContactService.showDeleteDialog()
           .then(() => {
             ParticipantContactService.deleteNonMainContact(deleteContactDto)
+              .then(console.log("delete_inicio"))
               .then(self.contact[position] = null)
               .then(self.addContactMode[self.type] = true)
               .then(self.loadParticipantContact())
-              .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
+              .then(ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
+              .then(console.log("delete_fim"))
           })
       }
     }
