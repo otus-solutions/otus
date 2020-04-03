@@ -28,10 +28,10 @@ describe('ParticipantContactRestService_UnitTest_Suite', () => {
       spyOn(Mock._rest, 'deleteNonMainContact').and.callThrough();
 
       Mock.ParticipantContactFactory = $injector.get('otusjs.model.participantContact.ParticipantContactFactory');
-      Mock.ParticipantContactDocument = JSON.stringify(Test.utils.data.participantContact);
+      Mock.ParticipantContactDocument = Test.utils.data.participantContact;
       Mock.id = Mock.ParticipantContactDocument._id;
       Mock.rn = Mock.ParticipantContactDocument.recruitmentNumber;
-      Mock.participantContact = Mock.ParticipantContactFactory.fromJson(Mock.ParticipantContactDocument);
+      Mock.participantContact = Mock.ParticipantContactFactory.fromJson(JSON.stringify(Mock.ParticipantContactDocument));
 
       mock();
     });

@@ -121,10 +121,6 @@
       }
     }
 
-    function deleteNonMainContact(deleteContactDto){
-        return ParticipantManagerService.deleteNonMainContact(deleteContactDto);
-    }
-
     function createPositionContactDto(contactId, type, position) {
       return {
         "_id": contactId,
