@@ -10,6 +10,7 @@
 
 .info-title {
   grid-area: infoTitle;
+  margin-bottom: 10px;
 
 }
 

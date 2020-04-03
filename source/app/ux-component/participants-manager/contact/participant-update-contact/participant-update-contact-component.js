@@ -80,10 +80,10 @@
       let updateContactDto = ParticipantContactService.createContactDto(self.contactId, position, updatedContactItem);
 
       ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
-        .then(self.editMode[position] = false)
-        .then(ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
-        .then(ParticipantContactService.isLastContact(self, position, "updateContact"))
-        .then(self.loadParticipantContact())
+        .then(() => self.editMode[position] = false)
+        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
+        .then(() => ParticipantContactService.isLastContact(self, position, "updateContact"))
+        .then(() => self.loadParticipantContact())
     }
 
     function findAddressByCep(addressContact) {
@@ -97,19 +97,18 @@
             state: address.data.uf,
             country: ParticipantContactValues.msg.country
           }
-        }).catch((e) =>
-      {ParticipantMessagesService.showToast(ParticipantContactValues.msg.postalCodeNotFound)});
+        }).catch((e) => ParticipantMessagesService.showToast(ParticipantContactValues.msg.postalCodeNotFound));
     }
 
     function createNewContact(newContactItem, position, type) {
       let newContactDto = ParticipantContactService.createContactDto(self.contactId, position, newContactItem);
 
       ParticipantContactService.dinamicNewContactCreate(newContactDto, type)
-        .then(self.editMode[position] = false)
-        .then(self.newContactMode[position] = false)
-        .then(ParticipantMessagesService.showToast(ParticipantContactValues.msg.createSuccess))
-        .then(ParticipantContactService.isLastContact(self, position, "createNewContact"))
-        .then(self.loadParticipantContact());
+        .then(() => self.editMode[position] = false)
+        .then(() => self.newContactMode[position] = false)
+        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.createSuccess))
+        .then(() => ParticipantContactService.isLastContact(self, position, "createNewContact"))
+        .then(() => self.loadParticipantContact());
     }
 
     function deleteNonMainContact(type, position) {
@@ -118,13 +117,14 @@
       if (deleteContactDto.position !== "main") {
         ParticipantContactService.showDeleteDialog()
           .then(() => {
-            ParticipantContactService.deleteNonMainContact(deleteContactDto)
-              .then(() => self.contact[position] = null)
-              .then(() => self.addContactMode[self.type] = true)
-              .then(() => self.loadParticipantContact())
-              .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
-
+              //purposely noCallback to reuse in the clear of a non-persistent contact
+              ParticipantContactService.deleteNonMainContact(deleteContactDto)
+              .then(self.contact[position] = null)
+              .then(self.addContactMode[self.type] = true)
+              .then(self.loadParticipantContact())
+              .then(ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
           })
+          .catch(() => console.log('aqui'))
       }
     }
 

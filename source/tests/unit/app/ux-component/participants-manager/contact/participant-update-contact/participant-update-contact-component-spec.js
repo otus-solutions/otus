@@ -13,37 +13,20 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
       ctrl = $controller('participantUpdateContactCtrl', Injections);
       ctrl.$onInit();
 
-
       ctrl.contact = angular.copy(Mock.contact);
       ctrl.type = Mock.type;
       ctrl.loadParticipantContact = Mock.loadParticipantContact;
       ctrl.contactId = Mock.contacts._id;
 
       spyOn(Injections.ParticipantContactService,"createContactDto").and.callThrough();
-      spyOn(Injections.ParticipantContactService,"dinamicUpdateContact").and.callThrough();
-      spyOn(Injections.ParticipantContactService,"dinamicNewContactCreate").and.callThrough();
       spyOn(Injections.ParticipantMessagesService, "showToast").and.callThrough();
       spyOn(Injections.ParticipantContactService, "isLastContact").and.callThrough();
       spyOn(Injections.ParticipantContactService, "createPositionContactDto").and.callThrough();
-
-
-      // spyOn(Injections.ParticipantContactService, "showDeleteDialog").and.returnValue(Mock.deferred.promise);
-      // spyOn(Injections.ParticipantContactService, "showDeleteDialog")
-      //   .and.callFake(() => Injections.ParticipantContactService.deleteNonMainContact);
-
-      spyOn(Injections.ParticipantContactService, "showDeleteDialog")
-        .and.returnValue(Mock.deferredDialog.promise);
-
-      spyOn(Injections.ParticipantContactService, "deleteNonMainContact")
-        .and.returnValue(Mock.deferredDelete.promise)
-
-
-      //Mock.httpBackend = $injector.get('$httpBackend');
-      //Mock.httpBackend.when('GET', "viacep.com.br/ws/91787140/json/").respond(Mock.address);
-      //spyOn(Injections.ParticipantContactService, "getAddressByCep").and.callThrough()
-     //spyOn(Injections.ParticipantContactService, "getAddressByCep").and.returnValue(Promise.resolve(Mock.address));
-     //  spyOn(Injections.ParticipantContactService, "getAddressByCep")
-     //    .and.callFake(function () { return Promise.resolve(Mock.address)});
+      spyOn(Injections.ParticipantContactService,"dinamicNewContactCreate").and.returnValue(Mock.deferred.promise);
+      spyOn(Injections.ParticipantContactService, "showDeleteDialog").and.returnValue(Mock.deferred.promise);
+      spyOn(Injections.ParticipantContactService, "deleteNonMainContact").and.returnValue(Mock.deferred.promise);
+      spyOn(Injections.ParticipantContactService, "getAddressByCep").and.returnValue(Mock.deferred.promise);
+      spyOn(Injections.ParticipantContactService, "dinamicUpdateContact").and.returnValue(Mock.deferred.promise);
     });
   });
 
@@ -90,6 +73,7 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
 
   it('updateContactMethod_should_make_pipelineOrderedCalls_after_promiseResolution', () => {
     ctrl.updateContact(Mock.updatedContactItem, "main", ctrl.type);
+    Mock.scope.$digest();
     expect(Injections.ParticipantContactService.createContactDto).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantContactService.dinamicUpdateContact).toHaveBeenCalledTimes(1);
     expect(ctrl.editMode[Mock.position]).toBeFalsy();
@@ -98,15 +82,16 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     expect(ctrl.loadParticipantContact).toHaveBeenCalledTimes(1);
   });
 
-  // it('findAddressByCepMethod_should ', () => {
-  //   let addressContact = {value: {postalCode:"91787-140", city: undefined}}
-  //   ctrl.findAddressByCep(addressContact);
-  //   expect(addressContact.value).toBe('')
-  //   expect(Mock.address).toBe("")
-  // });
+  it('findAddressByCepMethod_should_fit_data_coming_from_postOfficeApi_into_model_injected_by_parameter', () => {
+    let addressContact = {value: {postalCode:"91787-140", city: undefined}}
+    ctrl.findAddressByCep(addressContact);
+    Mock.scope.$digest();
+    expect(addressContact.value.city).toBe('Porto Alegre')
+  });
 
   it('createNewContactMethod_should_make_pipelineOrderedCalls_after_promiseResolution', () => {
     ctrl.createNewContact( Mock.updatedContactItem, Mock.position, Mock.type);
+     Mock.scope.$digest();
     expect(Injections.ParticipantContactService.createContactDto).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantContactService.dinamicNewContactCreate).toHaveBeenCalledTimes(1);
     expect(ctrl.editMode[Mock.position]).toBeFalsy();
@@ -116,8 +101,8 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     expect(ctrl.loadParticipantContact).toHaveBeenCalledTimes(1);
   });
 
-  it('deleteNonMainContactMethod', () => {
-    ctrl.deleteNonMainContact(Mock.type, "second")
+  it('deleteNonMainContactMethod_should_make_pipelineOrderedCalls_after_promiseResolution', () => {
+    ctrl.deleteNonMainContact(Mock.type, "second");
     Mock.scope.$digest();
     expect(Injections.ParticipantContactService.createPositionContactDto).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantContactService.showDeleteDialog).toHaveBeenCalledTimes(1);
@@ -172,10 +157,8 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     Mock.position = "main";
     Mock.loadParticipantContact = jasmine.createSpy();
     Mock.address = { data: { localidade: "Porto Alegre"}}
-    Mock.deferredDialog = $q.defer();
-    Mock.deferredDelete = $q.defer();
-    Mock.deferredDialog.resolve();
-    Mock.deferredDelete.resolve("fabiano");
+    Mock.deferred = $q.defer();
+    Mock.deferred.resolve(Mock.address);
     Mock.scope = $rootScope.$new();
   }
 });
