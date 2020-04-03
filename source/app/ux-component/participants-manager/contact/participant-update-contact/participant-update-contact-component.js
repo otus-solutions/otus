@@ -119,12 +119,11 @@
         ParticipantContactService.showDeleteDialog()
           .then(() => {
             ParticipantContactService.deleteNonMainContact(deleteContactDto)
-              .then(console.log("delete_inicio"))
-              .then(self.contact[position] = null)
-              .then(self.addContactMode[self.type] = true)
-              .then(self.loadParticipantContact())
-              .then(ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
-              .then(console.log("delete_fim"))
+              .then(() => self.contact[position] = null)
+              .then(() => self.addContactMode[self.type] = true)
+              .then(() => self.loadParticipantContact())
+              .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
+
           })
       }
     }

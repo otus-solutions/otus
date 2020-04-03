@@ -116,17 +116,16 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     expect(ctrl.loadParticipantContact).toHaveBeenCalledTimes(1);
   });
 
-  // it('deleteNonMainContactMethod', () => {
-  //   ctrl.deleteNonMainContact(Mock.type, "second")
-  //   expect(Injections.ParticipantContactService.createPositionContactDto).toHaveBeenCalledTimes(1);
-  //   expect(Injections.ParticipantContactService.showDeleteDialog).toHaveBeenCalledTimes(1);
-  //   expect(Injections.ParticipantContactService.deleteNonMainContact).toHaveBeenCalledTimes(1);
-  //   expect(ctrl.addContactMode[ctrl.type]).toBeTruthy();
-  //   expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
-  //   expect(ctrl.loadParticipantContact).toHaveBeenCalledTimes(1);
-  //   Mock.scope.$digest();
-  //   //Mock.scope.$apply();
-  // });
+  it('deleteNonMainContactMethod', () => {
+    ctrl.deleteNonMainContact(Mock.type, "second")
+    Mock.scope.$digest();
+    expect(Injections.ParticipantContactService.createPositionContactDto).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantContactService.showDeleteDialog).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantContactService.deleteNonMainContact).toHaveBeenCalledTimes(1);
+    expect(ctrl.addContactMode[ctrl.type]).toBeTruthy();
+    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
+    expect(ctrl.loadParticipantContact).toHaveBeenCalledTimes(1);
+  });
 
   //
   // it('should ', () => {
