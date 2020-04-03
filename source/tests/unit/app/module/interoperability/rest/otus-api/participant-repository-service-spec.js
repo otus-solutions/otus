@@ -1,77 +1,115 @@
-xdescribe('otusjs.otus.interoperability.rest.otusApi.ParticipantRepositoryService', function() {
+describe('ParticipantRepositoryService_UnitTest_Suite', function() {
+  let Mock = {};
+  let Injections = [];
+  let service = {};
 
-  var UNIT_NAME = 'otusjs.otus.interoperability.rest.otusApi.ParticipantRepositoryService';
-  var Mock = {};
-  var Injections = {};
-  var service = {};
+  beforeEach(function(){
+    angular.mock.module('otusjs.otus');
+    angular.mock.inject(($injector, $q, $rootScope) => {
+      Injections.$q = $injector.get('$q');
+      Injections.ModuleService = $injector.get('otusjs.participant.core.ModuleService');
 
-  beforeEach(function() {
-    module('otusjs.otus');
+      _mockInitialize($injector, $q, $rootScope);
 
-    inject(function(_$injector_) {
-      /* Injectable mocks */
-      mockOtusRestResourceService(_$injector_);
-      mockHttp();
-
-      service = _$injector_.get(UNIT_NAME, Injections);
+      //spyOn(Injections.ModuleService, "getParticipantContactRemoteStorage").and.callThrough();
+      service = $injector.get('otusjs.participant.repository.ParticipantRepositoryService', Injections);
     });
   });
 
-  describe('initialize method', function() {
+  function _mockInitialize($injector, $q, $rootScope) {
+    /* preparation for rotating the angular cycle (promise resolution with $ digest) */
+    Mock.scope = $rootScope.$new();
 
-    it('should request the REST resource for activity', function() {
-      service.initialize();
+    /*memory position association (pointer) for Spy*/
+    Mock._remoteStorage = Injections.ModuleService.getParticipantContactRemoteStorage();
 
-      expect(Mock.OtusRestResourceService.getParticipantResource).toHaveBeenCalledWith();
-    });
+    /*representation of the ParticipantRepositoryService prepared by the bootstrap
+    that accesses the client (ParticipantRepositoryServiceFactory)
+    result by resolvedPromise in _remoteStorage.whenReady */
+    Mock.remoteStorage = {
+      initialize: jasmine.anything(),
+      listIdexers: jasmine.anything(),
+      create: jasmine.anything(),
+      update: jasmine.anything(),
+      getAllowNewParticipants: jasmine.anything(),
+      getFollowUps: jasmine.anything(),
+      activateFollowUpEvent: jasmine.anything(),
+      deactivateFollowUpEvent: jasmine.anything(),
+      createParticipantContact: jasmine.anything(),
+      getParticipantContact: jasmine.anything(),
+      getParticipantContactByRecruitmentNumber: jasmine.anything(),
+      addNonMainEmail: jasmine.anything(),
+      addNonMainAddress: jasmine.anything(),
+      addNonMainPhoneNumber: jasmine.anything(),
+      updateEmail: jasmine.anything(),
+      updateAddress: jasmine.anything(),
+      updatePhoneNumber: jasmine.anything(),
+      swapMainContact: jasmine.anything(),
+      deleteParticipantContact: jasmine.anything(),
+      deleteNonMainContact: jasmine.anything(),
+    };
 
-  });
+    /*Injection of a restServiceMock in context(boostrap action simulation)*/
+    Injections.ModuleService.configureRemoteStorage(Mock.remoteStorage);
 
-  describe('listIdexers method', function() {
+    /*treatment to simulate the resolution of the promise(external) of _remoteStorage.whenReady*/
+    Mock.deferredExternal = Injections.$q.defer();
+    Mock.deferredExternal.resolve(Mock.remoteStorage);
+    spyOn(Mock._remoteStorage, "whenReady").and.returnValue(Mock.deferredExternal.promise);
 
-    describe('when rest resource is initialized', function() {
-
-      beforeEach(function() {
-        service.initialize();
-      });
-
-      it('should request the REST resource for activity', function() {
-        service.listIdexers();
-
-        expect(Mock.restResource.listIndexers).toHaveBeenCalledWith();
-      });
-
-    });
-
-    describe('when rest resource is not initialized', function() {
-
-      it('should throw an exception', function() {
-        expect(function() {
-          service.listIdexers({});
-        }).toThrowError('REST resource is not initialized.');
-      });
-
-    });
-
-  });
-
-  function mockOtusRestResourceService($injector) {
-    Mock.OtusRestResourceService = $injector.get('OtusRestResourceService');
-
-    Mock.promise = {};
-    Mock.request = {};
-    Mock.request.$promise = Mock.promise;
-    Mock.restResource = {};
-    Mock.restResource.listIndexers = jasmine.createSpy().and.returnValue(Mock.request);
-    spyOn(Mock.OtusRestResourceService, 'getParticipantResource').and.returnValue(Mock.restResource);
-
-    Injections.OtusRestResourceService = Mock.OtusRestResourceService;
+    Mock.participantContact = Test.utils.data.participantContact;
   }
 
-  function mockHttp() {
-    Mock.$http = {};
-    Mock.$http.get = jasmine.createSpy();
-    Injections.$http = Mock.$http;
-  }
+  it('serviceExistence_check', () => {
+    expect(service).toBeDefined();
+  });
+
+  it('serviceMethodsExistence_check', () => {
+    expect(service.listIdexers).toBeDefined();
+    expect(service.create).toBeDefined();
+    expect(service.update).toBeDefined();
+    expect(service.getAllowNewParticipants).toBeDefined();
+    expect(service.getFollowUps).toBeDefined();
+    expect(service.activateFollowUpEvent).toBeDefined();
+    expect(service.deactivateFollowUpEvent).toBeDefined();
+    expect(service.createParticipantContact).toBeDefined();
+    expect(service.getParticipantContact).toBeDefined();
+    expect(service.getParticipantContactByRecruitmentNumber).toBeDefined();
+    expect(service.addNonMainEmail).toBeDefined();
+    expect(service.addNonMainAddress).toBeDefined();
+    expect(service.addNonMainPhoneNumber).toBeDefined();
+    expect(service.updateEmail).toBeDefined();
+    expect(service.updateAddress).toBeDefined();
+    expect(service.updatePhoneNumber).toBeDefined();
+    expect(service.swapMainContact).toBeDefined();
+    expect(service.deleteParticipantContact).toBeDefined();
+    expect(service.deleteNonMainContact).toBeDefined();
+  });
+
+
+  xit('createParticipantContact_method_should_positiveAnswer_on_successfulPersistence', () => {
+    let response = {data: true};
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredCreate = Injections.$q.defer();
+    Mock.deferredCreate.resolve(response);
+    spyOn(Mock.remoteStorage, "createParticipantContact").and.returnValue(Mock.deferredCreate.promise);
+
+    console.log(service.createParticipantContact(Mock.participantContact));
+    service.createParticipantContact(Mock.participantContact).then(data => expect(data).toBeTruthy());
+    Mock.scope.$digest();
+  });
+
+  xit('createParticipantContact_method_should_handle_error_coming_by_exception', () => {
+    let response = {error: false};
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.reject(response);
+    spyOn(Mock.remoteStorage, "createParticipantContact").and.returnValue(Mock.deferredInternal.promise);
+
+    service.createParticipantContact(Mock.participantContact).catch(e => expect(e.error).toBeFalsy());
+    Mock.scope.$digest();
+  });
 
 });
