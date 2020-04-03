@@ -49,6 +49,8 @@ describe('ParticipantRepositoryService_UnitTest_Suite', function() {
     Mock.participantContactFactory = $injector.get('otusjs.model.participantContact.ParticipantContactFactory');
     Mock.participantContactDocument = JSON.stringify(Test.utils.data.participantContact);
     Mock.participantContact = Mock.participantContactFactory.fromJson(Mock.participantContactDocument);
+
+    Mock.dto = {};
   }
 
   it('serviceExistence_check', () => {
@@ -77,7 +79,7 @@ describe('ParticipantRepositoryService_UnitTest_Suite', function() {
     expect(service.deleteNonMainContact).toBeDefined();
   });
 
-  it('createParticipantContact_method_should_positiveAnswer_on_successfulPersistence', () => {
+  it('createParticipantContact_method_should_positiveAnswer_on_successfulPersistence_method_should_positiveAnswer_on_successfulPersistence', () => {
     _checkSuccess("createParticipantContact", service.createParticipantContact(Mock.participantContact));
   });
 
@@ -86,91 +88,91 @@ describe('ParticipantRepositoryService_UnitTest_Suite', function() {
   });
 
   it('getParticipantContact_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("getParticipantContact", service.getParticipantContact(Mock.participantContact));
+    _checkSuccess("getParticipantContact", service.getParticipantContact(""));
   });
 
   it('getParticipantContact_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("getParticipantContact", service.getParticipantContact(Mock.participantContact));
+    _checkHandleError("getParticipantContact", service.getParticipantContact(""));
   });
 
   it('getParticipantContactByRecruitmentNumber_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("getParticipantContactByRecruitmentNumber", service.getParticipantContactByRecruitmentNumber(Mock.participantContact));
+    _checkSuccess("getParticipantContactByRecruitmentNumber", service.getParticipantContactByRecruitmentNumber(1));
   });
 
   it('getParticipantContactByRecruitmentNumber_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("getParticipantContactByRecruitmentNumber", service.getParticipantContactByRecruitmentNumber(Mock.participantContact));
+    _checkHandleError("getParticipantContactByRecruitmentNumber", service.getParticipantContactByRecruitmentNumber(1));
   });
 
   it('addNonMainEmail_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("addNonMainEmail", service.addNonMainEmail(Mock.participantContact));
+    _checkSuccess("addNonMainEmail", service.addNonMainEmail(Mock.dto));
   });
 
   it('addNonMainEmail_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("addNonMainEmail", service.addNonMainEmail(Mock.participantContact));
+    _checkHandleError("addNonMainEmail", service.addNonMainEmail(Mock.dto));
   });
 
   it('addNonMainAddress_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("addNonMainAddress", service.addNonMainAddress(Mock.participantContact));
+    _checkSuccess("addNonMainAddress", service.addNonMainAddress(Mock.dto));
   });
 
   it('addNonMainAddress_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("addNonMainAddress", service.addNonMainAddress(Mock.participantContact));
+    _checkHandleError("addNonMainAddress", service.addNonMainAddress(Mock.dto));
   });
 
   it('addNonMainPhoneNumber_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("addNonMainPhoneNumber", service.addNonMainPhoneNumber(Mock.participantContact));
+    _checkSuccess("addNonMainPhoneNumber", service.addNonMainPhoneNumber(Mock.dto));
   });
 
   it('addNonMainPhoneNumber_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("addNonMainPhoneNumber", service.addNonMainPhoneNumber(Mock.participantContact));
+    _checkHandleError("addNonMainPhoneNumber", service.addNonMainPhoneNumber(Mock.dto));
   });
 
   it('updateEmail_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("updateEmail", service.updateEmail(Mock.participantContact));
+    _checkSuccess("updateEmail", service.updateEmail(Mock.dto));
   });
 
   it('updateEmail_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("updateEmail", service.updateEmail(Mock.participantContact));
+    _checkHandleError("updateEmail", service.updateEmail(Mock.dto));
   });
 
   it('updateAddress_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("updateAddress", service.updateAddress(Mock.participantContact));
+    _checkSuccess("updateAddress", service.updateAddress(Mock.dto));
   });
 
   it('updateAddress_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("updateAddress", service.updateAddress(Mock.participantContact));
+    _checkHandleError("updateAddress", service.updateAddress(Mock.dto));
   });
 
   it('updatePhoneNumber_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("updatePhoneNumber", service.updatePhoneNumber(Mock.participantContact));
+    _checkSuccess("updatePhoneNumber", service.updatePhoneNumber(Mock.dto));
   });
 
   it('updatePhoneNumber_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("updatePhoneNumber", service.updatePhoneNumber(Mock.participantContact));
+    _checkHandleError("updatePhoneNumber", service.updatePhoneNumber(Mock.dto));
   });
 
   it('swapMainContact_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("swapMainContact", service.swapMainContact(Mock.participantContact));
+    _checkSuccess("swapMainContact", service.swapMainContact(Mock.dto));
   });
 
   it('swapMainContact_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("swapMainContact", service.swapMainContact(Mock.participantContact));
+    _checkHandleError("swapMainContact", service.swapMainContact(Mock.dto));
   });
 
   it('deleteParticipantContact_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("deleteParticipantContact", service.deleteParticipantContact(Mock.participantContact));
+    _checkSuccess("deleteParticipantContact", service.deleteParticipantContact(""));
   });
 
   it('deleteParticipantContact_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("deleteParticipantContact", service.deleteParticipantContact(Mock.participantContact));
+    _checkHandleError("deleteParticipantContact", service.deleteParticipantContact(""));
   });
 
   it('deleteNonMainContact_method_should_positiveAnswer_on_successfulPersistence', () => {
-    _checkSuccess("deleteNonMainContact", service.deleteNonMainContact(Mock.participantContact));
+    _checkSuccess("deleteNonMainContact", service.deleteNonMainContact(Mock.dto));
   });
 
   it('deleteNonMainContact_method_should_handle_error_coming_by_exception', () => {
-    _checkHandleError("deleteNonMainContact", service.deleteNonMainContact(Mock.participantContact));
+    _checkHandleError("deleteNonMainContact", service.deleteNonMainContact(Mock.dto));
   });
 
   function _checkSuccess(methodName, methodPromise){
