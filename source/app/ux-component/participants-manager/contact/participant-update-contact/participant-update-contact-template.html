@@ -138,7 +138,7 @@
         </md-input-container>
         {{form[key].$valid}}
         <md-button class="md-accent md-icon-button find-cep" ng-click="$ctrl.findAddressByCep(contactItem)"
-                   ng-disabled=$ctrl.confirmedDisabled(key)>
+                   ng-disabled=$ctrl.confirmedDisabledButtomPostalCode(key)>
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.findPostalCode.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.findPostalCode.icon}}
           </md-icon>

@@ -31,7 +31,7 @@
     self.deleteNonMainContact = deleteNonMainContact;
     self.enableSwapMainContactMode = enableSwapMainContactMode;
     self.swapMainContact = swapMainContact;
-    self.confirmedDisabled = confirmedDisabled;
+    self.confirmedDisabledButtomPostalCode = confirmedDisabledButtomPostalCode;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -46,7 +46,7 @@
       self.swapMainContactMode = {};
       self.addContactMode = {
         phoneNumber: true,
-        email:true,
+        email: true,
         address: true
       }
     }
@@ -83,21 +83,24 @@
         .then(() => self.editMode[position] = false)
         .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
         .then(() => ParticipantContactService.isLastContact(self, position, "updateContact"))
-        .then(() => self.loadParticipantContact())
+        .then(() => self.loadParticipantContact());
     }
 
     function findAddressByCep(addressContact) {
       ParticipantContactService.getAddressByCep(addressContact.value.postalCode)
         .then(address => {
-          addressContact.value = {
-            postalCode: address.data.cep,
-            street: address.data.logradouro,
-            neighbourhood: address.data.bairro,
-            city: address.data.localidade,
-            state: address.data.uf,
-            country: ParticipantContactValues.msg.country
+          if (address.data.erro) ParticipantMessagesService.showToast(ParticipantContactValues.msg.postalCodeNotFound);
+          else {
+            addressContact.value = {
+              postalCode: address.data.cep,
+              street: address.data.logradouro,
+              neighbourhood: address.data.bairro,
+              city: address.data.localidade,
+              state: address.data.uf,
+              country: ParticipantContactValues.msg.country
+            }
           }
-        }).catch((e) => ParticipantMessagesService.showToast(ParticipantContactValues.msg.postalCodeNotFound));
+        });
     }
 
     function createNewContact(newContactItem, position, type) {
@@ -117,14 +120,13 @@
       if (deleteContactDto.position !== "main") {
         ParticipantContactService.showDeleteDialog()
           .then(() => {
-              //purposely noCallback to reuse in the clear of a non-persistent contact
-              ParticipantContactService.deleteNonMainContact(deleteContactDto)
+            //purposely noCallback to reuse in the clear of a non-persistent contact
+            ParticipantContactService.deleteNonMainContact(deleteContactDto)
               .then(self.contact[position] = null)
               .then(self.addContactMode[self.type] = true)
               .then(self.loadParticipantContact())
               .then(ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
           })
-          .catch(() => console.log('aqui'))
       }
     }
 
@@ -142,17 +144,11 @@
         .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.swapMainContactFail))
     }
 
-    function confirmedDisabled(key) {
-      if(self.editMode[key]){
-        if(!self.form.address[key].postalCode.$modelValue){
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return true;
-      }
+    function confirmedDisabledButtomPostalCode(key) {
+      if (self.editMode[key]) {
+        if (!self.form.address[key].postalCode.$modelValue) return true;
+        else return false;
+      } else return true;
     }
-
   }
 }());
