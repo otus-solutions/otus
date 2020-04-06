@@ -38,36 +38,6 @@
           <input ng-model="contactItem.observation" ng-disabled=!$ctrl.editMode[key] required>
         </md-input-container>
 
-        <md-button class="md-accent md-icon-button md-button edit-button"
-                   ng-click="$ctrl.enableEditMode(key)"
-                   ng-if="!$ctrl.editMode[key]">
-          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}">
-            {{$ctrl.ParticipantContactValues.icons.edit.icon}}
-          </md-icon>
-          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}</md-tooltip>
-        </md-button>
-
-        <md-button class="md-accent md-icon-button md-button edit-button"
-                   ng-click="$ctrl.updateContact(contactItem, key, $ctrl.type)"
-                   ng-if="$ctrl.editMode[key] && !$ctrl.newContactMode[key]"
-                   ng-disabled="$ctrl.form[$ctrl.type][key].$invalid">
-          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}">
-            {{$ctrl.ParticipantContactValues.icons.save.icon}}
-          </md-icon>
-          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}</md-tooltip>
-        </md-button>
-
-        <md-button class="md-accent md-icon-button md-button edit-button"
-                   ng-click="$ctrl.createNewContact(contactItem, key, $ctrl.type)"
-                   ng-if="$ctrl.editMode[key] && $ctrl.newContactMode[key]"
-                   ng-disabled="$ctrl.form[$ctrl.type][key].$invalid">
-          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.saveNewContact.translatedTitle}}">
-            {{$ctrl.ParticipantContactValues.icons.saveNewContact.icon}}
-          </md-icon>
-          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.saveNewContact.translatedTitle}}
-          </md-tooltip>
-        </md-button>
-
         <md-button class="md-accent md-icon-button md-button restore-button"
                    ng-if="(!$ctrl.editMode[key] || $ctrl.newContactMode[key]) && key !== 'main' && !$ctrl.swapMainContactMode[$ctrl.type]"
                    ng-click="$ctrl.deleteNonMainContact($ctrl.type, key)">
@@ -106,6 +76,36 @@
           </md-tooltip>
         </md-button>
 
+        <md-button class="md-accent md-icon-button md-button edit-button"
+                   ng-click="$ctrl.enableEditMode(key)"
+                   ng-if="!$ctrl.editMode[key]">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.edit.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}</md-tooltip>
+        </md-button>
+
+        <md-button class="md-accent md-icon-button md-button edit-button"
+                   ng-click="$ctrl.updateContact(contactItem, key, $ctrl.type)"
+                   ng-if="$ctrl.editMode[key] && !$ctrl.newContactMode[key]"
+                   ng-disabled="$ctrl.form[$ctrl.type][key].$invalid">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.save.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}</md-tooltip>
+        </md-button>
+
+        <md-button class="md-accent md-icon-button md-button edit-button"
+                   ng-click="$ctrl.createNewContact(contactItem, key, $ctrl.type)"
+                   ng-if="$ctrl.editMode[key] && $ctrl.newContactMode[key]"
+                   ng-disabled="$ctrl.form[$ctrl.type][key].$invalid">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.saveNewContact.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.saveNewContact.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.saveNewContact.translatedTitle}}
+          </md-tooltip>
+        </md-button>
+
       </form>
     </div>
   </md-card-content>
@@ -136,7 +136,11 @@
           <label>{{$ctrl.ParticipantContactValues.fields.streetNumber}}</label>
           <input type="number" ng-model="contactItem.value.streetNumber" ng-disabled=!$ctrl.editMode[key] required>
         </md-input-container>
-        {{form[key].$valid}}
+        <md-input-container class="cep-input">
+          <label>{{$ctrl.ParticipantContactValues.fields.postalCode}}</label>
+          <input ng-model="contactItem.value.postalCode" name="postalCode" ng-disabled=!$ctrl.editMode[key]
+                 ui-mask="99999-999" placeholder="" >
+        </md-input-container>
         <md-button class="md-accent md-icon-button find-cep" ng-click="$ctrl.findAddressByCep(contactItem)"
                    ng-disabled=$ctrl.confirmedDisabledButtomPostalCode(key)>
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.findPostalCode.translatedTitle}}">
@@ -145,11 +149,11 @@
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.findPostalCode.translatedTitle}}
           </md-tooltip>
         </md-button>
-        <md-input-container class="cep-input">
-          <label>{{$ctrl.ParticipantContactValues.fields.postalCode}}</label>
-          <input ng-model="contactItem.value.postalCode" name="postalCode" ng-disabled=!$ctrl.editMode[key]
-                 ui-mask="99999-999" placeholder="" >
+        <md-input-container class="complements-input">
+          <label>{{$ctrl.ParticipantContactValues.fields.complements}}</label>
+          <input ng-model="contactItem.value.complements" ng-disabled=!$ctrl.editMode[key]>
         </md-input-container>
+
         <md-input-container class="neighbourhood-input">
           <label>{{$ctrl.ParticipantContactValues.fields.neighbourhood}}</label>
           <input ng-model="contactItem.value.neighbourhood" ng-disabled=!$ctrl.editMode[key] required>
@@ -157,22 +161,6 @@
         <md-input-container class="city-input">
           <label>{{$ctrl.ParticipantContactValues.fields.city}}</label>
           <input ng-model="contactItem.value.city" ng-disabled=!$ctrl.editMode[key] required>
-        </md-input-container>
-        <md-input-container class="complements-input">
-          <label>{{$ctrl.ParticipantContactValues.fields.complements}}</label>
-          <input ng-model="contactItem.value.complements" ng-disabled=!$ctrl.editMode[key]>
-        </md-input-container>
-        <md-input-container class="observation-input">
-          <label>{{$ctrl.ParticipantContactValues.fields.observation}}</label>
-          <input ng-model="contactItem.observation" ng-disabled=!$ctrl.editMode[key]>
-        </md-input-container>
-        <md-input-container class="state-input">
-          <label>{{$ctrl.ParticipantContactValues.fields.state}}</label>
-          <input ng-model="contactItem.value.state" ng-disabled=!$ctrl.editMode[key] required>
-        </md-input-container>
-        <md-input-container class="country-input">
-          <label>{{$ctrl.ParticipantContactValues.fields.country}}</label>
-          <input ng-model="contactItem.value.country" ng-disabled=!$ctrl.editMode[key] required>
         </md-input-container>
 
         <md-button class="md-accent md-icon-button md-button edit-button"
@@ -182,16 +170,6 @@
             {{$ctrl.ParticipantContactValues.icons.edit.icon}}
           </md-icon>
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}</md-tooltip>
-        </md-button>
-
-
-        <md-button class="md-accent md-icon-button md-button restore-button"
-                   ng-if="(!$ctrl.editMode[key] || $ctrl.newContactMode[key]) && key !== 'main' && !$ctrl.swapMainContactMode[$ctrl.type]"
-                   ng-click="$ctrl.deleteNonMainContact($ctrl.type, key)">
-          <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}">
-            {{$ctrl.ParticipantContactValues.icons.clear.icon}}
-          </md-icon>
-          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}</md-tooltip>
         </md-button>
 
         <md-button class="md-accent md-icon-button md-button edit-button"
@@ -213,6 +191,30 @@
           </md-icon>
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.saveNewContact.translatedTitle}}
           </md-tooltip>
+        </md-button>
+
+
+        <md-input-container class="observation-input">
+          <label>{{$ctrl.ParticipantContactValues.fields.observation}}</label>
+          <input ng-model="contactItem.observation" ng-disabled=!$ctrl.editMode[key]>
+        </md-input-container>
+        <md-input-container class="state-input">
+          <label>{{$ctrl.ParticipantContactValues.fields.state}}</label>
+          <input ng-model="contactItem.value.state" ng-disabled=!$ctrl.editMode[key] required>
+        </md-input-container>
+        <md-input-container class="country-input">
+          <label>{{$ctrl.ParticipantContactValues.fields.country}}</label>
+          <input ng-model="contactItem.value.country" ng-disabled=!$ctrl.editMode[key] required>
+        </md-input-container>
+
+
+        <md-button class="md-accent md-icon-button md-button restore-button"
+                   ng-if="(!$ctrl.editMode[key] || $ctrl.newContactMode[key]) && key !== 'main' && !$ctrl.swapMainContactMode[$ctrl.type]"
+                   ng-click="$ctrl.deleteNonMainContact($ctrl.type, key)">
+          <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.clear.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}</md-tooltip>
         </md-button>
 
         <md-button class="md-accent md-icon-button md-button restore-button"
