@@ -1,4 +1,5 @@
-<link  href="app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-style.css"
+<link
+  href="app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-style.css"
   rel="stylesheet" type="text/css">
 <md-card ng-if="$ctrl.type !== 'address'" no-cloak>
   <div layout="row" layout-align="end end" ng-if="$ctrl.type === 'phoneNumber'">
@@ -9,7 +10,7 @@
       <span></span>
       <md-button class="md-accent md-icon-button md-button"
                  ng-click="$ctrl.addContactInput()"
-                 ng-disabled = !$ctrl.addContactMode[$ctrl.type]
+                 ng-disabled=!$ctrl.addContactMode[$ctrl.type]
                  ng-if="$ctrl.contact['fifth'] === null">
         <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}>
           {{$ctrl.ParticipantContactValues.icons.addContact.icon}}
@@ -119,7 +120,7 @@
       <span></span>
 
       <md-button class="md-accent md-icon-button md-button" ng-click="$ctrl.addContactInput()"
-                 ng-disabled = !$ctrl.addContactMode[$ctrl.type]
+                 ng-disabled=!$ctrl.addContactMode[$ctrl.type]
                  ng-if="$ctrl.contact['fifth'] === null">
         <md-icon aria-label="Adicionar">{{$ctrl.ParticipantContactValues.icons.addContact.icon}}</md-icon>
         <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.addContact.translatedTitle}}</md-tooltip>
@@ -139,10 +140,12 @@
         <md-input-container class="cep-input">
           <label>{{$ctrl.ParticipantContactValues.fields.postalCode}}</label>
           <input ng-model="contactItem.value.postalCode" name="postalCode" ng-disabled=!$ctrl.editMode[key]
-                 ui-mask="99999-999" placeholder="" >
+                 ui-mask="99999-999" placeholder="">
           <div class="md-caption" md-colors="{color: 'red'}"
-                ng-if="$ctrl.form[$ctrl.type][key].postalCode.$invalid || contactItem.value.postalCode == null ">
-            {{$ctrl.ParticipantContactValues.msg.postalCodeInstruction}}</div>
+               ng-if='$ctrl.form[$ctrl.type][key].postalCode.$invalid ||
+                contactItem.value.postalCode == "" || contactItem.value.postalCode == null'>
+            {{$ctrl.ParticipantContactValues.msg.postalCodeInstruction}}
+          </div>
         </md-input-container>
         <md-button class="md-accent md-icon-button find-cep" ng-click="$ctrl.findAddressByCep(contactItem)"
                    ng-disabled=$ctrl.confirmedDisabledButtomPostalCode(key)>
@@ -196,7 +199,6 @@
           </md-tooltip>
         </md-button>
 
-
         <md-input-container class="observation-input">
           <label>{{$ctrl.ParticipantContactValues.fields.observation}}</label>
           <input ng-model="contactItem.observation" ng-disabled=!$ctrl.editMode[key]>
@@ -209,7 +211,6 @@
           <label>{{$ctrl.ParticipantContactValues.fields.country}}</label>
           <input ng-model="contactItem.value.country" ng-disabled=!$ctrl.editMode[key] required>
         </md-input-container>
-
 
         <md-button class="md-accent md-icon-button md-button restore-button"
                    ng-if="(!$ctrl.editMode[key] || $ctrl.newContactMode[key]) && key !== 'main' && !$ctrl.swapMainContactMode[$ctrl.type]"
