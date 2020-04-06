@@ -140,6 +140,9 @@
           <label>{{$ctrl.ParticipantContactValues.fields.postalCode}}</label>
           <input ng-model="contactItem.value.postalCode" name="postalCode" ng-disabled=!$ctrl.editMode[key]
                  ui-mask="99999-999" placeholder="" >
+          <div class="md-caption" md-colors="{color: 'red'}"
+                ng-if="$ctrl.form[$ctrl.type][key].postalCode.$invalid || contactItem.value.postalCode == null ">
+            {{$ctrl.ParticipantContactValues.msg.postalCodeInstruction}}</div>
         </md-input-container>
         <md-button class="md-accent md-icon-button find-cep" ng-click="$ctrl.findAddressByCep(contactItem)"
                    ng-disabled=$ctrl.confirmedDisabledButtomPostalCode(key)>

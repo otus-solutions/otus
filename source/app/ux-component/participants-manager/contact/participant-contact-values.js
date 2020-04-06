@@ -50,6 +50,7 @@
         findPostalCode: {
           icon: 'search',
           translatedTitle: 'Buscar Cep'
+
         },
         saveNewContact: {
           icon: 'note_add',
@@ -70,6 +71,7 @@
         },
         msg: {
           postalCodeNotFound: 'CEP não encontrado',
+          postalCodeInstruction: '1º Informe o cep',
           contactFound: 'Favor, preencha todos os campos!',
           contactNotFound: 'Contatos não cadastrados',
           contactFail: 'Erro: Não foi completar a solicitação!',
