@@ -61,7 +61,7 @@
           translatedTitle: 'Excluir Contatos'
         },
         swapMainContact: {
-          icon: 'swap_calls',
+          icon: 'swap_vert',
           translatedTitle: 'Trocar contato padrão'
         },
           swapChoiceContact: {
