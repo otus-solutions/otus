@@ -16,7 +16,6 @@ describe('ParticipantContactService_UnitTest_Suite', () => {
       Injections.ParticipantContactValues = $injector.get('ParticipantContactValues');
       Injections.$mdDialog = $injector.get('$mdDialog');
       service = $injector.get('otusjs.participantManager.contact.ParticipantContactService', Injections);
-
       service.vm = {};
 
       spyOn(Injections.ParticipantManagerService, 'createParticipantContact').and.callThrough();
@@ -40,7 +39,6 @@ describe('ParticipantContactService_UnitTest_Suite', () => {
       Mock.id = Mock.ParticipantContactDocument._id;
       Mock.rn = Mock.ParticipantContactDocument.recruitmentNumber;
       Mock.participantContact = Mock.ParticipantContactFactory.fromJson(JSON.stringify(Mock.ParticipantContactDocument));
-
       mock();
     });
   });

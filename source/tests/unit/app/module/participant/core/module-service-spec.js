@@ -13,7 +13,6 @@ describe('ParticipantModuleService_UnitTest_Suite', () => {
       spyOn(Injections.ContextService, 'configureContext');
       spyOn(Injections.ContextService, 'configureStorage');
       spyOn(Injections.$q, 'defer').and.returnValue({resolve: function (data) {}});
-
     });
   });
 

@@ -11,7 +11,6 @@
     'otusjs.application.dialog.DialogShowService',
     'ParticipantContactValues',
     '$mdDialog'
-
   ];
 
   function Service($http, ParticipantContactFactory, ParticipantManagerService, DialogShowService, ParticipantContactValues, $mdDialog ) {
@@ -161,10 +160,8 @@
 
         case "createNewContact":
           if(position !== "fifth") vm.addContactMode[vm.type] = true;
-          break
-
+          break;
       }
-
     }
 
   }

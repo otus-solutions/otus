@@ -205,7 +205,6 @@ describe('participant-manager-service Test', function() {
     expect(Injections.ParticipantRepositoryService.deleteNonMainContact).toHaveBeenCalledTimes(1);
   });
 
-
   function mock() {
     Mock.selectedParticipant = {
       recruitmentNumber: 32056510,
