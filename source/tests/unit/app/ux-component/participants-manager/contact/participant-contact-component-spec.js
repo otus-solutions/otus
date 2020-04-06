@@ -9,17 +9,17 @@ describe('ParticipantComponent_UnitTest_Suite', () => {
       mockInitialize($q, $rootScope);
       Injections.$element = Mock.element;
       Injections.$scope = Mock.scope;
-      // Injections.ParticipantContactValues = $injector.get('ParticipantContactValues');
       Injections.ParticipantContactService = $injector.get('otusjs.participantManager.contact.ParticipantContactService');
       Injections.ParticipantMessagesService = $injector.get('otusjs.participant.business.ParticipantMessagesService');
+      Injections.ParticipantContactValues = $injector.get('ParticipantContactValues');
 
       ctrl = $controller('participantContactCtrl', Injections);
       ctrl.participant = {recruitmentNumber: Mock.contacts.recruitmentNumber};
 
-      spyOn(Injections.ParticipantContactService, "deleteParticipantContact").and.returnValue(Mock.deferred.promise);
       spyOn(Injections.ParticipantContactService, "participantContactFactoryJson").and.callThrough();
       spyOn(Injections.ParticipantContactService, "participantContactFactoryCreate").and.callThrough();
       spyOn(Injections.ParticipantMessagesService, "showToast").and.callThrough();
+      spyOn(Injections.ParticipantContactService, "showDeleteDialog").and.returnValue(Mock.deferred.promise);
     });
   });
 
@@ -51,7 +51,7 @@ describe('ParticipantComponent_UnitTest_Suite', () => {
     expect(ctrl.contact).toBeUndefined();
     ctrl.loadParticipantContact();
     Mock.scope.$digest();
-    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledWith(Injections.ParticipantContactValues.msg.contactNotFound);
     expect(ctrl.contact).toBe('');
   });
 
@@ -61,17 +61,32 @@ describe('ParticipantComponent_UnitTest_Suite', () => {
     expect(ctrl.contact).toBeUndefined();
     ctrl.createParticipantContact();
     Mock.scope.$digest();
+    expect(Injections.ParticipantContactService.participantContactFactoryCreate).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantContactService.createParticipantContact).toHaveBeenCalledTimes(1);
-    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledWith(Injections.ParticipantContactValues.msg.contactFound);
   });
 
   it('createParticipantContactMethod_should_handle_rejectionPromise', () => {
-    spyOn(Injections.ParticipantContactService, "getParticipantContactByRecruitmentNumber").and.returnValue(Mock.deferredFail.promise);
-    expect(ctrl.contact).toBeUndefined();
-    ctrl.loadParticipantContact();
+    spyOn(Injections.ParticipantContactService, "createParticipantContact").and.returnValue(Mock.deferredFail.promise);
+    ctrl.createParticipantContact();
     Mock.scope.$digest();
-    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
-    expect(ctrl.contact).toBe('');
+    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledWith(Injections.ParticipantContactValues.msg.contactFail);
+  });
+
+  it('deleteParticipantContactMethod_should_evoke_functions_in_pipeline', () => {
+    ctrl.contact = Mock.contacts;
+    spyOn(Injections.ParticipantContactService, "deleteParticipantContact").and.returnValue(Mock.deferred.promise);
+    ctrl.deleteParticipantContact();
+    Mock.scope.$digest();
+    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledWith(Injections.ParticipantContactValues.msg.contactDelete);
+  });
+
+  it('deleteParticipantContactMethod_should_handle_rejectionPromise', () => {
+    ctrl.contact = Mock.contacts;
+    spyOn(Injections.ParticipantContactService, "deleteParticipantContact").and.returnValue(Mock.deferredFail.promise);
+    ctrl.deleteParticipantContact();
+    Mock.scope.$digest();
+    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledWith(Injections.ParticipantContactValues.msg.contactFail);
   });
 
   function mockInitialize($q, $rootScope) {
