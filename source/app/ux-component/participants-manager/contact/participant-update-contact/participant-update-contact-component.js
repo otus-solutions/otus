@@ -146,9 +146,9 @@
 
     function confirmedDisabledButtomPostalCode(key) {
       if (self.editMode[key]) {
-        if (!self.form.address[key].postalCode.$modelValue) return true;
-        else return false;
-      } else return true;
+        return (!self.form.address[key].postalCode.$modelValue);
+      }
+       return true;
     }
   }
 }());
