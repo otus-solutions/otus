@@ -1,0 +1,145 @@
+/*start grid style for phoneNumber and emails in card*/
+
+.info-card {
+  display: grid;
+  width: 80vw;
+  grid-template-columns: 12fr;
+  grid-template-rows: .1fr .5fr;
+  grid-template-areas: "infoTitle" "infoItem"
+}
+
+.info-title {
+  grid-area: infoTitle;
+  margin-bottom: 10px;
+
+}
+
+.info-item {
+  background: #f5f7f9;
+  grid-area: infoItem;
+  margin-bottom: 20px;
+}
+
+@media screen and (min-width: 360px) {
+  .info-item-layout {
+    background: #f5f7f9;
+    display: grid;
+    width: 70vw;
+    grid-template-columns: 11.5fr .5fr;
+    grid-template-rows: .1fr .1fr;
+    grid-gap: 10px;
+    grid-template-areas: "content  edit" "observation restore"
+  }
+
+  /*end grid style for phoneNumber and emails in card*/
+  /*start grid style for address in card*/
+  .address-item {
+    background: #f5f7f9;
+    display: grid;
+    width: 77vw;
+    grid-template-columns: 6fr 4fr 1fr 1fr;
+    grid-template-rows: .1fr .1fr .1fr;
+    grid-gap: 10px;
+    margin-bottom: 20px;
+    grid-template-areas:
+
+      "street street street edit"
+      "cep cep cep findCep"
+      "neighbourhood  neighbourhood neighbourhood restore"
+      "number complements complements complements"
+      "city city city city "
+      "state country country country"
+      "observation observation observation observation"
+  }
+}
+
+
+@media screen and (min-width: 768px) {
+  .info-item-layout {
+    background: #f5f7f9;
+    display: grid;
+    width: 77vw;
+    grid-template-columns: 7fr 3fr .1fr .1fr;
+    grid-template-rows: .1fr;
+    grid-gap: 10px;
+    grid-template-areas: "content observation restore edit"
+  }
+
+  /*end grid style for phoneNumber and emails in card*/
+  /*start grid style for address in card*/
+  .address-item {
+    background: #f5f7f9;
+    display: grid;
+    width: 77vw;
+    grid-template-columns: 5fr 2fr 2fr .5fr;
+    grid-template-rows: .1fr .1fr .1fr;
+    grid-gap: 10px;
+    margin-bottom: 20px;
+    grid-template-areas: "street numberNumber cep findCep" "complements neighbourhood city edit" "observation state country restore"
+  }
+}
+
+.content-input {
+  grid-area: content;
+}
+
+.observation-input {
+  grid-area: observation;
+}
+
+.street-input {
+  grid-area: street;
+}
+
+.cep-input {
+  grid-area: cep;
+}
+
+.street-number-input {
+  grid-area: streetNumber;
+}
+
+.edit-button {
+  grid-area: edit;
+}
+
+.restore-button {
+  grid-area: restore;
+}
+
+.neighbourhood-input {
+  grid-area: neighbourhood;
+}
+
+.city-input {
+  grid-area: city;
+}
+
+.complements-input {
+  grid-area: complements;
+}
+
+.observation-input {
+  grid-area: observation;
+}
+
+.state-input {
+  grid-area: state;
+}
+
+.country-input {
+  grid-area: country;
+}
+
+.find-cep {
+  grid-area: findCep;
+}
+
+
+md-input-container {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+/*end grid style for phoneNumber and emails in card*/
+

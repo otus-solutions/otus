@@ -30,6 +30,19 @@
     self.getSelectedParticipant = getSelectedParticipant;
     self.getParticipantList = getParticipantList;
     self.getParticipant = getParticipant;
+    self.createParticipantContact = createParticipantContact;
+    self.getParticipantContact = getParticipantContact;
+    self.getParticipantContactByRecruitmentNumber = getParticipantContactByRecruitmentNumber;
+    self.addNonMainEmail = addNonMainEmail;
+    self.addNonMainAddress = addNonMainAddress;
+    self.addNonMainPhoneNumber = addNonMainPhoneNumber;
+    self.updateEmail = updateEmail;
+    self.updateAddress = updateAddress;
+    self.updatePhoneNumber = updatePhoneNumber;
+    self.swapMainContact = swapMainContact;
+    self.deleteParticipantContact = deleteParticipantContact;
+    self.deleteNonMainContact = deleteNonMainContact;
+
     var _setupSuccess;
 
     function setup() {
@@ -137,6 +150,54 @@
         throw new Error('ParticipantList is not initialized.');
       }
       return participant;
+    }
+
+    function createParticipantContact(participantContact) {
+      return ParticipantRepositoryService.createParticipantContact(participantContact);
+    }
+
+    function getParticipantContact(id) {
+      return ParticipantRepositoryService.getParticipantContact(id);
+    }
+
+    function getParticipantContactByRecruitmentNumber(rn) {
+      return ParticipantRepositoryService.getParticipantContactByRecruitmentNumber(rn);
+    }
+
+    function addNonMainEmail(newContactDto) {
+      return ParticipantRepositoryService.addNonMainEmail(newContactDto);
+    }
+
+    function addNonMainAddress(newContactDto) {
+      return ParticipantRepositoryService.addNonMainAddress(newContactDto);
+    }
+
+    function addNonMainPhoneNumber(newContactDto) {
+      return ParticipantRepositoryService.addNonMainPhoneNumber(newContactDto);
+    }
+
+    function updateEmail(updateContactDto) {
+      return ParticipantRepositoryService.updateEmail(updateContactDto);
+    }
+
+    function updateAddress(updateContactDto) {
+      return ParticipantRepositoryService.updateAddress(updateContactDto);
+    }
+
+    function updatePhoneNumber(updateContactDto) {
+      return ParticipantRepositoryService.updatePhoneNumber(updateContactDto);
+    }
+
+    function swapMainContact(swapMainContactDto) {
+      return ParticipantRepositoryService.swapMainContact(swapMainContactDto);
+    }
+
+    function deleteParticipantContact(id) {
+      return ParticipantRepositoryService.deleteParticipantContact(id);
+    }
+
+    function deleteNonMainContact(deleteContactDto) {
+      return ParticipantRepositoryService.deleteNonMainContact(deleteContactDto);
     }
   }
 }());
