@@ -8,7 +8,8 @@
       templateUrl: 'app/ux-component/activity-manager-grid-list/activity-manager-grid-list-template.html',
       bindings: {
         gridDataSettings: "=",
-        updateFunction: '=?'
+        updateFunction: '=?',
+        test: '=?'
       }
     }).controller('otusActivityGridListCtrl', Controller);
 
@@ -224,6 +225,7 @@
         activity.actions.fixedTextColor = { color: '#797985'};
         activity.actions.textColor = { color: 'black'};
         self.selectedItemCounter++;
+        self.test = self.selectedItemCounter;
         _runCallbackOnChange(activity, 'select');
       }
     }
@@ -237,6 +239,7 @@
         activity.actions.fixedTextColor = self.fixedTextColor;
         activity.actions.textColor = self.textColor;
         self.selectedItemCounter--;
+        self.test = self.selectedItemCounter;
         _runCallbackOnChange(activity, 'deselect');
       }
     }
@@ -248,6 +251,10 @@
         fixedTextColor: self.fixedTextColor,
         textColor: self.textColor,
       };
+    }
+
+    function _test() {
+      return self.selectedItemCounter;
     }
   }
 }());

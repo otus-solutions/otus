@@ -49,6 +49,8 @@
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       EventService.onActivitySelected(_updateComponent);
+      self.dataTwo1 = 32;
+      console.log(self.dataTwo)
     }
 
     function fillSelectedActivity() {
