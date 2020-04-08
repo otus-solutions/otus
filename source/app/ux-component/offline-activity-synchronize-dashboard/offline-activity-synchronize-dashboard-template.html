@@ -13,7 +13,7 @@
          id="offlineActivityCollection{{$index}}"
          aria-label="offlineActivityCollection{{$index}}"
          flex>
-      <offline-activity-collection offline-collection-data="offlineActivityCollection" reload-data="$ctrl.loadOfflineCollections()" layout="row" layout-align="center center" flex></offline-activity-collection>
+      <offline-activity-collection offline-collection-group-data="offlineActivityCollection" reload-data="$ctrl.loadOfflineCollections()" layout="row" layout-align="center center" flex></offline-activity-collection>
     </div>
   <div ng-if="$ctrl.offlineActivityCollections.length == 0" layout="row" layout-align="center center" flex="">
     <span class="md-title">
@@ -21,4 +21,3 @@
     </span>
   </div>
 </md-content>
-<offline-activity-collection-sidenav offline-collection-data="$ctrl.selectedCollection"></offline-activity-collection-sidenav>

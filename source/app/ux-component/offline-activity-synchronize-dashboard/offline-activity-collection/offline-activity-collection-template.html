@@ -25,10 +25,10 @@
     <div id="md-content-container" layout="column" flex>
       <md-content layout="row" flex>
         <md-list flex>
-          <md-list-item class="md-2-line" ng-repeat="activitie in $ctrl.offlineCollectionData.activities"
+          <md-list-item class="md-2-line" ng-repeat="collection in $ctrl.offlineCollectionGroupData.collections"
                         ng-click="null">
             <div class="md-list-item-text" layout="column">
-              <span flex class="md-title">{{activitie.surveyForm.acronym}} - {{activitie.surveyForm.name}}</span>
+              <span flex class="md-title">{{collection.observation}}</span>
             </div>
             <md-divider></md-divider>
           </md-list-item>

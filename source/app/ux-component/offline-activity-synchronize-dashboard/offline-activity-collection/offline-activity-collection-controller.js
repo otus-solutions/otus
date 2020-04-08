@@ -23,28 +23,36 @@
 
     function synchronizeOfflineActivities() {
       LoadingScreenService.start();
-      OfflineActivityCollectionService.synchronizeOfflineActivities(self.recruitmentNumber,self.offlineCollectionData._id).then(result => {
-        self.reloadData();
-        LoadingScreenService.finish();
-      }).catch(error => {
-        if (error.data) {
-          if (error.data.MESSAGE.match("Offline collection is already synchronized")) {
-            self.attacheError = "Esta coleta já foi sincronizada";
-          } else if (error.data.MESSAGE.match("Offline collection does not belong to you")) {
-            self.attacheError = "Esta coleta não pertence ao usuário logado";
-          } else if (error.data.MESSAGE.match("Participant with recruitment number {")) {
-            self.attacheError = "Participante não encontrado";
-          } else if (error.data.MESSAGE.match("Offline collection not found")) {
-            self.attacheError = "Coleta não encontrada";
+      if (self.offlineCollectionGroupData.collections[0]){
+        OfflineActivityCollectionService.synchronizeOfflineActivities(self.recruitmentNumber,self.offlineCollectionGroupData.collections[0]._id).then(result => {
+          self.offlineCollectionGroupData.removeCollection(0)
+          synchronizeOfflineActivities()
+        }).catch(error => {
+          if (error.data) {
+            if (error.data.MESSAGE.match("Offline collection is already synchronized")) {
+              self.reloadData();
+              self.attacheError = "Coleta já foi sincronizada";
+            } else if (error.data.MESSAGE.match("Offline collection does not belong to you")) {
+              self.reloadData();
+              self.attacheError = "Coleta não pertence ao usuário logado";
+            } else if (error.data.MESSAGE.match("Participant with recruitment number {")) {
+              self.attacheError = "Participante não encontrado";
+            } else if (error.data.MESSAGE.match("Offline collection not found")) {
+              self.attacheError = "Coleta não encontrada";
+            } else {
+              self.attacheError = UNEXPECTED_ERROR_MESSAGE;
+            }
           } else {
             self.attacheError = UNEXPECTED_ERROR_MESSAGE;
           }
-        } else {
-          self.attacheError = UNEXPECTED_ERROR_MESSAGE;
-        }
+          LoadingScreenService.finish();
+          _showToast(self.attacheError);
+        });
+      } else {
+        self.reloadData();
         LoadingScreenService.finish();
-        _showToast(self.attacheError);
-      });
+        _showToast("Coletas sincronizadas com sucesso")
+      }
     }
 
     function _showToast(msg) {

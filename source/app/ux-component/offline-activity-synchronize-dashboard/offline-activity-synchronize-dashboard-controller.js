@@ -6,12 +6,12 @@
     .controller('offlineActivitySynchronizeDashboardCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.model.activity.OfflineActivityCollection',
+    'otusjs.model.activity.GroupOfflineActivityCollection',
     'otusjs.activity.business.OfflineActivityCollectionService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(OfflineActivityCollectionFactory, OfflineActivityCollectionService, LoadingScreenService) {
+  function Controller(GroupOfflineActivityCollectionFactory, OfflineActivityCollectionService, LoadingScreenService) {
     var self = this;
     const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
 
@@ -26,7 +26,7 @@
     function loadOfflineCollections() {
       LoadingScreenService.start();
       OfflineActivityCollectionService.getOfflineActivityCollections().then((result)=>{
-        self.offlineActivityCollections = OfflineActivityCollectionFactory.fromArray(result);
+        self.offlineActivityCollections = GroupOfflineActivityCollectionFactory.fromArray(result);
         LoadingScreenService.finish();
       }).catch((error)=>{
         self.offlineActivityCollections = [];

@@ -7,7 +7,7 @@
       controller: "offlineActivityCollectionCtrl as $ctrl",
       templateUrl: 'app/ux-component/offline-activity-synchronize-dashboard/offline-activity-collection/offline-activity-collection-template.html',
       bindings: {
-        offlineCollectionData: '<',
+        offlineCollectionGroupData: '<',
         reloadData: '&'
       }
     });
