@@ -44,6 +44,7 @@
       self.elementsArray = [];
       self.filteredActiviteis = [];
       self.hoverGridHeaderWhiteframe = 'md-whiteframe-19dp';
+      self.backgroundColor = { 'background': 'rgb(202,226,220)'};
 
       if (self.gridDataSettings) {
         self.callbackAfterChange = self.gridDataSettings;
@@ -214,6 +215,7 @@
     function _select(activity) {
       if (!activity.actions.selected) {
         activity.actions.selected = true;
+        activity.actions.backgroundColor = self.backgroundColor;
         activity.actions.whiteframeGrid = self.hoverGridHeaderWhiteframe;
         self.selectedItemCounter++;
         _runCallbackOnChange(activity, 'select');
@@ -224,6 +226,7 @@
       if (activity.actions.selected) {
         activity.actions.selected = false;
         activity.actions.whiteframeGrid = null;
+        activity.actions.backgroundColor = null;
         activity.actions.colorGrid = _isAutoFillActivity(activity.mode.name);
         self.selectedItemCounter--;
         _runCallbackOnChange(activity, 'deselect');
