@@ -44,7 +44,8 @@
       self.elementsArray = [];
       self.filteredActiviteis = [];
       self.hoverGridHeaderWhiteframe = 'md-whiteframe-19dp';
-      self.backgroundColor = { 'background': 'rgb(202,226,220)'};
+      self.backgroundColor = { 'background': 'rgb(217,234,230)'};
+      self.gridTileHeaderColor =  { 'background': 'rgb(64,122,107)'}
 
       if (self.gridDataSettings) {
         self.callbackAfterChange = self.gridDataSettings;
@@ -217,6 +218,8 @@
         activity.actions.selected = true;
         activity.actions.backgroundColor = self.backgroundColor;
         activity.actions.whiteframeGrid = self.hoverGridHeaderWhiteframe;
+        console.log(Object.keys(activity.actions.colorGrid).length)
+        activity.actions.colorGrid = (Object.keys(activity.actions.colorGrid).length !== 0) ? activity.actions.colorGrid : self.gridTileHeaderColor;
         self.selectedItemCounter++;
         _runCallbackOnChange(activity, 'select');
       }
