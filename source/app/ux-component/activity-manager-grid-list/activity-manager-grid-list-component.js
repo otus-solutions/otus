@@ -44,8 +44,10 @@
       self.elementsArray = [];
       self.filteredActiviteis = [];
       self.hoverGridHeaderWhiteframe = 'md-whiteframe-19dp';
-      self.backgroundColor = { 'background': 'rgb(217,234,230)'};
-      self.gridTileHeaderColor =  { 'background': 'rgb(64,122,107)'}
+      self.backgroundColor = { 'background': '#f0fbec', 'border': '2px solid grey'};
+      self.gridTileHeaderColor =  { 'background': 'rgb(64,122,107)'};
+      self.fixedTextColor = { color: '#bcbcc2'};
+      self.textColor = { color: '#797985'};
 
       if (self.gridDataSettings) {
         self.callbackAfterChange = self.gridDataSettings;
@@ -58,7 +60,7 @@
     function _refreshGrid(newElementsArray) {
       if (self.elementsArray.length) {
         if (self.elementsArray.length != newElementsArray.length) {
-          _upadateSelectDeselect();
+          _updateSelectDeselect();
           self.filter = '';
           self.selectAll = false;
         }
@@ -140,7 +142,7 @@
       );
     }
 
-    function _upadateSelectDeselect() {
+    function _updateSelectDeselect() {
       self.elementsArray.forEach(function (activity) {
         _deselect(activity)
       });
@@ -148,7 +150,7 @@
 
     function filterGridTile() {
       if (self.filter.length) {
-        _upadateSelectDeselect();
+        _updateSelectDeselect();
         self.filteredActiviteis = $filter('filter')(self.elementsArray, self.filter);
 
         let count = self.filteredActiviteis.length;
@@ -218,8 +220,9 @@
         activity.actions.selected = true;
         activity.actions.backgroundColor = self.backgroundColor;
         activity.actions.whiteframeGrid = self.hoverGridHeaderWhiteframe;
-        console.log(Object.keys(activity.actions.colorGrid).length)
         activity.actions.colorGrid = (Object.keys(activity.actions.colorGrid).length !== 0) ? activity.actions.colorGrid : self.gridTileHeaderColor;
+        activity.actions.fixedTextColor = { color: '#797985'};
+        activity.actions.textColor = { color: 'black'};
         self.selectedItemCounter++;
         _runCallbackOnChange(activity, 'select');
       }
@@ -231,17 +234,20 @@
         activity.actions.whiteframeGrid = null;
         activity.actions.backgroundColor = null;
         activity.actions.colorGrid = _isAutoFillActivity(activity.mode.name);
+        activity.actions.fixedTextColor = self.fixedTextColor;
+        activity.actions.textColor = self.textColor;
         self.selectedItemCounter--;
         _runCallbackOnChange(activity, 'deselect');
       }
     }
 
     function _createActions() {
-      let actions = {
+      return {
         selected: false,
-        specialFieldClicked: false
+        specialFieldClicked: false,
+        fixedTextColor: self.fixedTextColor,
+        textColor: self.textColor,
       };
-      return actions;
     }
   }
 }());
