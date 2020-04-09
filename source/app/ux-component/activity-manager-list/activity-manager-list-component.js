@@ -8,9 +8,6 @@
       templateUrl: 'app/ux-component/activity-manager-list/activity-manager-list-template.html',
       require: {
         otusActivityManager: '^otusActivityManager'
-      },
-      bindings: {
-        testThree: '=?'
       }
     })
     .controller('otusActivityListCtrl', Controller);
@@ -119,8 +116,6 @@
       if (change.type === 'select' || change.type === 'deselect') {
         self.selectActivity(change.element);
       }
-      console.log(self.testOne);
-      self.testThree = self.testOne;
     }
 
     function _activitiesFilter() {
@@ -172,10 +167,6 @@
 
     function clearSearchTerm() {
       self.searchTerm = '';
-    }
-
-    function _testTwo() {
-      return self.testOne;
     }
   }
 }());
