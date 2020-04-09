@@ -113,12 +113,12 @@
     function _createConfiguration() {
       self.elementsArray.forEach(function (element) {
         element.actions = _createActions();
-        element.actions.colorGrid = _isAutoFillActivity(element.mode.name);
+        element.actions.colorGrid = _getGridColorByActivityMode(element.mode.name);
         element.activityStatus = _createStatus(element.status);
       }, this);
     }
 
-    function _isAutoFillActivity(mode) {
+    function _getGridColorByActivityMode(mode) {
       return mode === "Auto Preenchimento" ? { 'background-color': 'rgb(0,145,234)'} : {};
     }
 
@@ -240,7 +240,7 @@
         activity.actions.selected = false;
         activity.actions.whiteframeGrid = null;
         activity.actions.backgroundColor = null;
-        activity.actions.colorGrid = _isAutoFillActivity(activity.mode.name);
+        activity.actions.colorGrid = _getGridColorByActivityMode(activity.mode.name);
         activity.actions.fixedTextColor = self.fixedTextColor;
         activity.actions.textColor = self.textColor;
         self.selectedItemCounter--;
