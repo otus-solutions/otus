@@ -44,7 +44,12 @@
       self.elementsArray = [];
       self.filteredActiviteis = [];
       self.hoverGridHeaderWhiteframe = 'md-whiteframe-19dp';
-      self.backgroundColor = { 'background': '#f0fbec', 'border': '2px solid grey'};
+      self.backgroundColor = {
+        'background': '#f0fbec',
+        'border-left': '2px solid grey',
+        'border-right': '2px solid grey',
+        'border-bottom': '2px solid grey',
+      };
       self.gridTileHeaderColor =  { 'background': 'rgb(64,122,107)'};
       self.fixedTextColor = { color: '#bcbcc2'};
       self.textColor = { color: '#797985'};
