@@ -8,8 +8,7 @@
       templateUrl: 'app/ux-component/activity-manager-grid-list/activity-manager-grid-list-template.html',
       bindings: {
         gridDataSettings: "=",
-        updateFunction: '=?',
-        test: '=?'
+        updateFunction: '=?'
       }
     }).controller('otusActivityGridListCtrl', Controller);
 
@@ -54,8 +53,7 @@
         self.callbackAfterChange = self.gridDataSettings;
       }
 
-      if (!self.callbackAfterChange) self.callbackAfterChange = function () {
-      };
+      if (!self.callbackAfterChange) self.callbackAfterChange = function () {};
     }
 
     function _refreshGrid(newElementsArray) {

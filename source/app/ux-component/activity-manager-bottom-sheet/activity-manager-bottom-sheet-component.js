@@ -136,10 +136,7 @@
         self.selectedItemCounter = selectedActivities.length;
       }
 
-      console.log(selectedActivities)
-
        self.selectedActivity = angular.copy(selectedActivities[0]);
-       console.log( self.selectedActivity)
     }
 
     function _buildDialogs() {
