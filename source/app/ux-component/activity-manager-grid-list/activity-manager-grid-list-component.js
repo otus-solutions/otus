@@ -34,6 +34,20 @@
     self.selectDeselectAll = selectDeselectAll;
     self.filterGridTile = filterGridTile;
 
+    const colors = {
+      text:{
+        BLACK: { color: 'black' },
+        GRAY: { color: '#797985' },
+        LIGHT_GRAY: { color: '#bcbcc2' }
+      },
+      background: {
+        HEADER: { 'background': 'rgb(64,122,107)' },
+        AUTO_FILL_HEADER: { 'background-color': 'rgb(0,145,234)' },
+        SELECTED_TILE: '#f0fbec',
+        SELECTED_AUTO_FILL_TILE: '#e5f4fc'
+      }
+    };
+
     function onInit() {
       _initializeDefaultValues();
       _createItemsOrderBy();
@@ -45,14 +59,14 @@
       self.filteredActiviteis = [];
       self.hoverGridHeaderWhiteframe = 'md-whiteframe-19dp';
       self.backgroundColor = {
-        'background': '#f0fbec',
+        'background': colors.background.SELECTED_TILE,
         'border-left': '2px solid grey',
         'border-right': '2px solid grey',
         'border-bottom': '2px solid grey',
       };
-      self.gridTileHeaderColor =  { 'background': 'rgb(64,122,107)'};
-      self.fixedTextColor = { color: '#bcbcc2'};
-      self.textColor = { color: '#797985'};
+      self.gridTileHeaderColor = colors.background.HEADER;
+      self.fixedTextColor = colors.text.GRAY;
+      self.textColor = colors.text.BLACK;
 
       if (self.gridDataSettings) {
         self.callbackAfterChange = self.gridDataSettings;
@@ -118,8 +132,17 @@
       }, this);
     }
 
+    function _createActions() {
+      return {
+        selected: false,
+        specialFieldClicked: false,
+        fixedTextColor: self.fixedTextColor,
+        textColor: self.textColor,
+      };
+    }
+
     function _getGridColorByActivityMode(mode) {
-      return mode === "Auto Preenchimento" ? { 'background-color': 'rgb(0,145,234)'} : {};
+      return mode === "Auto Preenchimento" ? colors.background.AUTO_FILL_HEADER : {};
     }
 
     function _createStatus(status) {
@@ -225,12 +248,13 @@
         activity.actions.backgroundColor = self.backgroundColor;
         if(activity.mode.name==="Auto Preenchimento"){
           activity.actions.backgroundColor = angular.copy(self.backgroundColor);
-          activity.actions.backgroundColor['background'] = '#e5f4fc';
+          activity.actions.backgroundColor['background'] = colors.background.SELECTED_AUTO_FILL_TILE;
         }
         activity.actions.colorGrid = (Object.keys(activity.actions.colorGrid).length !== 0) ? activity.actions.colorGrid : self.gridTileHeaderColor;
-        activity.actions.fixedTextColor = { color: '#797985'};
-        activity.actions.textColor = { color: 'black'};
-        self.selectedItemCounter++;
+        _turnOnActivityTextColors(activity);
+        if(self.selectedItemCounter++ === 0){
+          _turnOffNotSelectedActivities();
+        }
         _runCallbackOnChange(activity, 'select');
       }
     }
@@ -241,20 +265,38 @@
         activity.actions.whiteframeGrid = null;
         activity.actions.backgroundColor = null;
         activity.actions.colorGrid = _getGridColorByActivityMode(activity.mode.name);
-        activity.actions.fixedTextColor = self.fixedTextColor;
-        activity.actions.textColor = self.textColor;
-        self.selectedItemCounter--;
+        _turnOffActivityTextColors(activity);
+        if(--self.selectedItemCounter === 0){
+          _turnOnNotSelectedActivities();
+        }
         _runCallbackOnChange(activity, 'deselect');
       }
     }
 
-    function _createActions() {
-      return {
-        selected: false,
-        specialFieldClicked: false,
-        fixedTextColor: self.fixedTextColor,
-        textColor: self.textColor,
-      };
+    function _turnOffNotSelectedActivities(){
+      self.elementsArray
+        .filter(activity => !activity.actions.selected)
+        .forEach(function (activity) {
+          _turnOffActivityTextColors(activity);
+        });
+    }
+
+    function _turnOnNotSelectedActivities(){
+      self.elementsArray
+        .filter(activity => !activity.actions.selected)
+        .forEach(function (activity) {
+          _turnOnActivityTextColors(activity);
+        });
+    }
+
+    function _turnOnActivityTextColors(activity){
+      activity.actions.fixedTextColor = colors.text.GRAY;
+      activity.actions.textColor = colors.text.BLACK;
+    }
+
+    function _turnOffActivityTextColors(activity){
+      activity.actions.fixedTextColor = colors.text.LIGHT_GRAY;
+      activity.actions.textColor = colors.text.GRAY;
     }
 
   }
