@@ -223,7 +223,10 @@
       if (!activity.actions.selected) {
         activity.actions.selected = true;
         activity.actions.backgroundColor = self.backgroundColor;
-        activity.actions.whiteframeGrid = self.hoverGridHeaderWhiteframe;
+        if(activity.mode.name==="Auto Preenchimento"){
+          activity.actions.backgroundColor = angular.copy(self.backgroundColor);
+          activity.actions.backgroundColor['background'] = '#e5f4fc';
+        }
         activity.actions.colorGrid = (Object.keys(activity.actions.colorGrid).length !== 0) ? activity.actions.colorGrid : self.gridTileHeaderColor;
         activity.actions.fixedTextColor = { color: '#797985'};
         activity.actions.textColor = { color: 'black'};
