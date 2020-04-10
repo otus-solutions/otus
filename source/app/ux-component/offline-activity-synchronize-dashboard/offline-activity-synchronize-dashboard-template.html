@@ -8,16 +8,16 @@
     </div>
   </otus-dashboard-toolbar>
 </div>
-<md-content flex ng-if="!$ctrl.haveErrors">
-  <div ng-if="$ctrl.offlineActivityCollectionGroups.length > 0"
+<md-content flex ng-if="$ctrl.offlineActivityCollectionGroups.length > 0">
+  <div
        ng-repeat="offlineActivityCollectionGroup in $ctrl.offlineActivityCollectionGroups"
        id="offlineActivityCollection{{$index}}"
        aria-label="offlineActivityCollection{{$index}}">
     <offline-activity-collection-group offline-collection-group-data="offlineActivityCollectionGroup" reload-data="$ctrl.loadOfflineCollections()" layout="row" layout-align="center center" flex=""></offline-activity-collection-group>
   </div>
-  <div ng-if="$ctrl.offlineActivityCollections.length == 0" layout="row" layout-align="center center" flex="">
+</md-content>
+<div ng-if="$ctrl.offlineActivityCollectionGroups.length == 0" layout="column" layout-align="center center" flex="">
     <span class="md-title">
       Você não tem coletas para sincronizar
     </span>
-  </div>
-</md-content>
+</div>

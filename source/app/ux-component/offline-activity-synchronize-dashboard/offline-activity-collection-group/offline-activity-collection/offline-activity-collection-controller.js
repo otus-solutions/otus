@@ -5,15 +5,10 @@
     .module('otusjs.otus.uxComponent')
     .controller('offlineActivityCollectionCtrl', Controller);
 
-  Controller.$inject = [
-    '$mdToast',
-    'otusjs.activity.business.OfflineActivityCollectionService',
-    'otusjs.deploy.LoadingScreenService'
-  ];
+  Controller.$inject = [];
 
-  function Controller($mdToast, OfflineActivityCollectionService, LoadingScreenService) {
+  function Controller() {
     var self = this;
-    const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
 
     /* Lifecycle hooks */
     self.$onInit = onInit;

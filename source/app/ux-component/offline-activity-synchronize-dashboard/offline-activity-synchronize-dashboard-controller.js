@@ -6,12 +6,13 @@
     .controller('offlineActivitySynchronizeDashboardCtrl', Controller);
 
   Controller.$inject = [
+    '$mdToast',
     'otusjs.model.activity.GroupOfflineActivityCollection',
     'otusjs.activity.business.OfflineActivityCollectionService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(GroupOfflineActivityCollectionFactory, OfflineActivityCollectionService, LoadingScreenService) {
+  function Controller($mdToast, GroupOfflineActivityCollectionFactory, OfflineActivityCollectionService, LoadingScreenService) {
     var self = this;
     const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
 
@@ -30,17 +31,16 @@
         LoadingScreenService.finish();
       }).catch((error)=>{
         self.offlineActivityCollectionGroups = [];
+        LoadingScreenService.finish();
         if (error.data) {
           if (error.data.MESSAGE.match("User do not have any offline collection")) {
-            self.attacheError = "Esta coleta já foi sincronizada";
+            self.offlineActivityCollectionGroups = [];
           } else {
-            self.attacheError = UNEXPECTED_ERROR_MESSAGE;
+            _showToast(UNEXPECTED_ERROR_MESSAGE);
           }
         } else {
-          self.attacheError = UNEXPECTED_ERROR_MESSAGE;
+          _showToast(UNEXPECTED_ERROR_MESSAGE);
         }
-        LoadingScreenService.finish();
-        _showToast(self.attacheError);
       });
     }
 
