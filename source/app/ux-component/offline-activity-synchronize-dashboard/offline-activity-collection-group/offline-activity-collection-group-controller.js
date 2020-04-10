@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .controller('offlineActivityCollectionCtrl', Controller);
+    .controller('offlineActivityCollectionGroupCtrl', Controller);
 
   Controller.$inject = [
     '$mdToast',

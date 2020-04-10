@@ -26,10 +26,10 @@
     function loadOfflineCollections() {
       LoadingScreenService.start();
       OfflineActivityCollectionService.getOfflineActivityCollections().then((result)=>{
-        self.offlineActivityCollections = GroupOfflineActivityCollectionFactory.fromArray(result);
+        self.offlineActivityCollectionGroups = GroupOfflineActivityCollectionFactory.fromArray(result);
         LoadingScreenService.finish();
       }).catch((error)=>{
-        self.offlineActivityCollections = [];
+        self.offlineActivityCollectionGroups = [];
         if (error.data) {
           if (error.data.MESSAGE.match("User do not have any offline collection")) {
             self.attacheError = "Esta coleta já foi sincronizada";

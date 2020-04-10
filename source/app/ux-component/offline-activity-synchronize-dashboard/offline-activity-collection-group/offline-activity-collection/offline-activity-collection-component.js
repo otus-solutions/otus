@@ -5,9 +5,9 @@
     .module('otusjs.otus.uxComponent')
     .component('offlineActivityCollection', {
       controller: "offlineActivityCollectionCtrl as $ctrl",
-      templateUrl: 'app/ux-component/offline-activity-synchronize-dashboard/offline-activity-collection/offline-activity-collection-template.html',
+      templateUrl: 'app/ux-component/offline-activity-synchronize-dashboard/offline-activity-collection-group/offline-activity-collection/offline-activity-collection-template.html',
       bindings: {
-        offlineCollectionGroupData: '<',
+        offlineCollectionData: '<',
         reloadData: '&'
       }
     });
