@@ -6,14 +6,16 @@
     .controller('offlineActivitySynchronizeDashboardCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.model.activity.OfflineActivityCollection',
+    '$mdToast',
+    'otusjs.model.activity.GroupOfflineActivityCollection',
     'otusjs.activity.business.OfflineActivityCollectionService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(OfflineActivityCollectionFactory, OfflineActivityCollectionService, LoadingScreenService) {
+  function Controller($mdToast, GroupOfflineActivityCollectionFactory, OfflineActivityCollectionService, LoadingScreenService) {
     var self = this;
     const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
+    const BACKEND_USER_DO_NOT_HAVE_COLLECTION_RESPONSE = "User do not have any offline collection";
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -26,21 +28,20 @@
     function loadOfflineCollections() {
       LoadingScreenService.start();
       OfflineActivityCollectionService.getOfflineActivityCollections().then((result)=>{
-        self.offlineActivityCollections = OfflineActivityCollectionFactory.fromArray(result);
+        self.offlineActivityCollectionGroups = GroupOfflineActivityCollectionFactory.fromArray(result);
         LoadingScreenService.finish();
       }).catch((error)=>{
-        self.offlineActivityCollections = [];
+        self.offlineActivityCollectionGroups = [];
+        LoadingScreenService.finish();
         if (error.data) {
-          if (error.data.MESSAGE.match("User do not have any offline collection")) {
-            self.attacheError = "Esta coleta já foi sincronizada";
+          if (error.data.MESSAGE.match(BACKEND_USER_DO_NOT_HAVE_COLLECTION_RESPONSE)) {
+            self.offlineActivityCollectionGroups = [];
           } else {
-            self.attacheError = UNEXPECTED_ERROR_MESSAGE;
+            _showToast(UNEXPECTED_ERROR_MESSAGE);
           }
         } else {
-          self.attacheError = UNEXPECTED_ERROR_MESSAGE;
+          _showToast(UNEXPECTED_ERROR_MESSAGE);
         }
-        LoadingScreenService.finish();
-        _showToast(self.attacheError);
       });
     }
 

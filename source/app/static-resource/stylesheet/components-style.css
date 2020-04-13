@@ -707,4 +707,8 @@ offline-activity-collection md-content{
 offline-activity-collection md-card{
    min-width: 340px;
 }
+
+offline-activity-synchronize-dashboard #groups-container{
+  min-width: 345px;
+}
 /*# sourceMappingURL=components-style.css.map */

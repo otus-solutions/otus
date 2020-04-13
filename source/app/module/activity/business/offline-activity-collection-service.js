@@ -20,7 +20,7 @@
       let request = $q.defer();
 
       OfflineActivityCollectionRestService.getOfflineActivityCollections().then(response => {
-        request.resolve(response.data.offlineActivityCollections);
+        request.resolve(response.data.offlineActivityCollectionGroups);
       }).catch(error=>{
         request.reject(error);
       });
