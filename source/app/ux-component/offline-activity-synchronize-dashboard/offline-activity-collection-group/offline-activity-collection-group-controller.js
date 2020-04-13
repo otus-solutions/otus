@@ -15,7 +15,18 @@
 
   function Controller($mdDialog, $mdToast, OfflineActivityCollectionService, LoadingScreenService, DialogShowService) {
     var self = this;
+
     const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
+    const BACKEND_ALREADY_SYNCHRONIZED_RESPONSE = "Offline collection is already synchronized";
+    const ALREADY_SYNCHRONIZED_MESSAGE = "Coleta já foi sincronizada";
+    const BACKEND_COLLECTION_DOES_NOT_BELONG_TO_USER_RESPONSE = "Offline collection does not belong to you";
+    const COLLECTION_DOES_NOT_BELONG_TO_USER_MESSAGE = "Coleta já foi sincronizada";
+    const BACKEND_PARTICIPANT_NOT_FOUND_RESPONSE = "Participant with recruitment number {";
+    const PARTICIPANT_NOT_FOUND_MESSAGE = "Participante não encontrado";
+    const BACKEND_COLLECTION_NOT_FOUND_RESPONSE = "Offline collection not found";
+    const COLLECTION_NOT_FOUND_MESSAGE = "Coleta não encontrada";
+    const SYNCHRONIZED_MESSAGE = "Coletas sincronizadas com sucesso";
+
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -62,16 +73,16 @@
           _recursiveSynchronizer()
         }).catch(error => {
           if (error.data) {
-            if (error.data.MESSAGE.match("Offline collection is already synchronized")) {
+            if (error.data.MESSAGE.match(BACKEND_ALREADY_SYNCHRONIZED_RESPONSE)) {
               self.reloadData();
-              self.attacheError = "Coleta já foi sincronizada";
-            } else if (error.data.MESSAGE.match("Offline collection does not belong to you")) {
+              self.attacheError = ALREADY_SYNCHRONIZED_MESSAGE;
+            } else if (error.data.MESSAGE.match(BACKEND_COLLECTION_DOES_NOT_BELONG_TO_USER_RESPONSE)) {
               self.reloadData();
-              self.attacheError = "Coleta não pertence ao usuário logado";
-            } else if (error.data.MESSAGE.match("Participant with recruitment number {")) {
-              self.attacheError = "Participante não encontrado";
-            } else if (error.data.MESSAGE.match("Offline collection not found")) {
-              self.attacheError = "Coleta não encontrada";
+              self.attacheError = COLLECTION_DOES_NOT_BELONG_TO_USER_MESSAGE;
+            } else if (error.data.MESSAGE.match(BACKEND_PARTICIPANT_NOT_FOUND_RESPONSE)) {
+              self.attacheError = PARTICIPANT_NOT_FOUND_MESSAGE;
+            } else if (error.data.MESSAGE.match(BACKEND_COLLECTION_NOT_FOUND_RESPONSE)) {
+              self.attacheError = COLLECTION_NOT_FOUND_MESSAGE;
             } else {
               self.attacheError = UNEXPECTED_ERROR_MESSAGE;
             }
@@ -84,7 +95,7 @@
       } else {
         self.reloadData();
         LoadingScreenService.finish();
-        _showToast("Coletas sincronizadas com sucesso")
+        _showToast(SYNCHRONIZED_MESSAGE)
       }
     }
 
