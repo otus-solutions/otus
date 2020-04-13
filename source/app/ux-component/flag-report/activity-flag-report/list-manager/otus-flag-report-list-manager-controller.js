@@ -26,7 +26,7 @@
     $timeout) {
 
     var self = this;
-    self.centers;
+    self.centers = [];
     self.error;
     self.activitiesData;
 
@@ -107,14 +107,13 @@
     }
 
     function _loadAllCenters() {
-      if (!self.centers) {
+      if (!self.centers.length) {
         ProjectFieldCenterService.loadCenters().then((result) => {
           self.centers = angular.copy(result);
           setUserFieldCenter();
         }).catch(function (e) {
           self.error = "Não foi possível carregar os dados do centro.";
           LoadingScreenService.finish();
-          throw e;
         });
       } else {
         _loadActivitiesProgress(self.selectedCenter.acronym);
@@ -125,7 +124,8 @@
       DashboardContextService.getLoggedUser().then((userData) => {
         var { acronym } = userData.fieldCenter;
         if (!acronym) {
-          _setCenter(self.centers[0].acronym);
+          self.centers.length > 0 ? _setCenter(self.centers[0].acronym) : self.selectedCenter = {acronym: ""};
+
         } else {
           self.centers = [].concat(self.centers.find((center) => {
             return center.acronym === userData.fieldCenter.acronym;
@@ -135,7 +135,6 @@
         _loadAllAcronyms();
       }).catch(function (e) {
         LoadingScreenService.finish();
-        throw e;
       });
     }
 
@@ -152,7 +151,6 @@
           }).catch((e) => {
             self.error = "Não foi possível carregar os dados de acrônimos no sistema.";
             LoadingScreenService.finish();
-            throw e;
           });
       }
     }
@@ -180,7 +178,6 @@
           }).catch((e) => {
             self.error = "Não foi possível carregar os dados de atividades no sistema.";
             LoadingScreenService.finish();
-            throw e;
           });
       } else {
         self.setActivities(self.activities, self.selectedAcronym, self.selectedStatus);
