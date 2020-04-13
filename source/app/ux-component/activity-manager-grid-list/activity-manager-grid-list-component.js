@@ -291,7 +291,6 @@
         });
     }
 
-<<<<<<< Updated upstream
     function _turnOnActivityTextColors(activity){
       activity.actions.fixedTextColor = colors.text.GRAY;
       activity.actions.textColor = colors.text.BLACK;
@@ -302,7 +301,6 @@
       activity.actions.textColor = colors.text.GRAY;
     }
 
-=======
     function displayGridLarge() {
       if (window.innerWidth < 1400) {
         return '1:0.9';
@@ -315,6 +313,5 @@
       }
       return '2.7:2';
     }
->>>>>>> Stashed changes
   }
 }());
