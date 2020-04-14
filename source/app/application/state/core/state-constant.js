@@ -17,7 +17,7 @@
       'LOGIN': 'login',
       'LABORATORY': 'laboratory-participant',
       'UNATTACHED_LABORATORY': 'unattached-laboratory',
-      'PARTICIPANT_FOLLOW_UPS': 'participant-followup',
+      'PARTICIPANT_FOLLOW_UPS': 'participant-follow-up',
       'PARTICIPANT': 'participant',
       'PARTICIPANT_ACTIVITY': 'activity',
       'PARTICIPANT_REPORT': 'report',
