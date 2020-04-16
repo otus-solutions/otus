@@ -97,9 +97,12 @@
         self.reloadData();
         LoadingScreenService.finish();
       }).catch(function (error) {
-        if (error.data) {
+        LoadingScreenService.finish();
+        if (error.data && typeof error.data === "object") {
           if (error.data.MESSAGE.match("Participant with recruitment number")) {
             self.attacheError = "Numero de recrutamento " + self.recruitmentNumber + " não encontrado";
+          } else if (error.data.MESSAGE.match("Participant already have a laboratory")) {
+            self.attacheError = "Participante já possui laboratório";
           } else if (error.data.MESSAGE.match("Laboratory is already attached")) {
             self.attacheError = "Laboratório já foi vinculado a um participante";
           } else if (error.data.MESSAGE.match("Participant not identified")) {
@@ -121,7 +124,6 @@
         } else {
           self.attacheError = UNEXPECTED_ERROR_MESSAGE;
         }
-        LoadingScreenService.finish();
         _showToast(self.attacheError);
 
       });
