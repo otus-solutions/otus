@@ -91,7 +91,9 @@
     }
 
     function _showAttacheDialog(msg) {
-      var message = msg || 'Deseja realmente vincular este laboratório ao participante? O vínculo não poderá ser desfeito.';
+      var message = msg || 'Deseja realmente vincular o laboratório do kit <b>'.concat(self.laboratoryData.identification).concat('</b> ao participante <b>')
+        .concat(self.recruitmentNumber)
+        .concat('</b>? O vínculo não poderá ser desfeito.');
 
       var _attacheDialog = {
         dialogToTitle:'Vincular Laboratório',

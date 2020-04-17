@@ -43,7 +43,7 @@
 
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
-        self.selectedParticipant = ParticipantFactory.fromJson(participantData);;
+        self.selectedParticipant = ParticipantFactory.fromJson(participantData);
       } else {
         ParticipantLaboratoryService
           .getSelectedParticipant()
@@ -101,7 +101,9 @@
     }
 
     function _showAttacheDialog(msg) {
-      var message = msg || 'Deseja realmente vincular este laboratório ao participante? O vínculo não poderá ser desfeito.';
+      var message = msg || 'Deseja realmente vincular o laboratório do kit <b>'.concat(self.laboratoryIdentification).concat('</b> ao participante <b>')
+        .concat(self.selectedParticipant.recruitmentNumber)
+        .concat('</b>? O vínculo não poderá ser desfeito.');
 
       var _attacheDialog = {
         dialogToTitle:'Vincular Laboratório',
