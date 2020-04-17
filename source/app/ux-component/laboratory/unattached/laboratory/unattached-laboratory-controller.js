@@ -90,43 +90,73 @@
       LoadingScreenService.finish();
     }
 
+    function _showAttacheDialog(msg) {
+      var message = msg || 'Deseja realmente vincular este laboratório ao participante? O vínculo não poderá ser desfeito.';
+
+      var _attacheDialog = {
+        dialogToTitle:'Vincular Laboratório',
+        titleToText:'Confirmação de Vínculo',
+        textDialog: message,
+        ariaLabel:'Confirmação de vínculo',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Voltar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogShowService.showDialog(_attacheDialog);
+
+    }
+
     function attacheLaboratory() {
       self.attacheError = null;
-      LoadingScreenService.start();
-      UnattachedLaboratoryService.attacheLaboratoryToParticipant(self.laboratoryData.identification, self.recruitmentNumber).then(function () {
-        self.reloadData();
-        LoadingScreenService.finish();
-      }).catch(function (error) {
-        LoadingScreenService.finish();
-        if (error.data && typeof error.data === "object") {
-          if (error.data.MESSAGE.match("Participant with recruitment number")) {
-            self.attacheError = "Numero de recrutamento " + self.recruitmentNumber + " não encontrado";
-          } else if (error.data.MESSAGE.match("Participant already have a laboratory")) {
-            self.attacheError = "Participante já possui laboratório";
-          } else if (error.data.MESSAGE.match("Laboratory is already attached")) {
-            self.attacheError = "Laboratório já foi vinculado a um participante";
-          } else if (error.data.MESSAGE.match("Participant not identified")) {
-            self.attacheError = "Participante não identificado";
-          } else if (error.data.MESSAGE.match("Invalid configuration")) {
-            if (error.data.CONTENT.laboratoryCollectGroup !== error.data.CONTENT.participantCollectGroup) {
-              self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
-            }
-            if (error.data.CONTENT.laboratoryFieldCenter !== error.data.CONTENT.participantFieldCenter) {
-              if (self.attacheError) {
-                self.attacheError += " e " + "ao mesmo centro"
-              } else {
-                self.attacheError = "O laboratório e o participante devem pertencer ao mesmo centro";
+      _showAttacheDialog().then(function () {
+        LoadingScreenService.start();
+        UnattachedLaboratoryService.attacheLaboratoryToParticipant(self.laboratoryData.identification, self.recruitmentNumber).then(function () {
+          self.reloadData();
+          LoadingScreenService.finish();
+        }).catch(function (error) {
+          LoadingScreenService.finish();
+          if (error.data && typeof error.data === "object") {
+            if (error.data.MESSAGE.match("Participant with recruitment number")) {
+              self.attacheError = "Numero de recrutamento " + self.recruitmentNumber + " não encontrado";
+            } else if (error.data.MESSAGE.match("Participant already have a laboratory")) {
+              self.attacheError = "Participante já possui laboratório";
+            } else if (error.data.MESSAGE.match("Laboratory is already attached")) {
+              self.attacheError = "Laboratório já foi vinculado a um participante";
+            } else if (error.data.MESSAGE.match("Participant not identified")) {
+              self.attacheError = "Participante não identificado";
+            } else if (error.data.MESSAGE.match("Invalid configuration")) {
+              if (error.data.CONTENT.laboratoryCollectGroup !== error.data.CONTENT.participantCollectGroup) {
+                self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
               }
+              if (error.data.CONTENT.laboratoryFieldCenter !== error.data.CONTENT.participantFieldCenter) {
+                if (self.attacheError) {
+                  self.attacheError += " e " + "ao mesmo centro"
+                } else {
+                  self.attacheError = "O laboratório e o participante devem pertencer ao mesmo centro";
+                }
+              }
+            } else {
+              self.attacheError = UNEXPECTED_ERROR_MESSAGE;
             }
           } else {
             self.attacheError = UNEXPECTED_ERROR_MESSAGE;
           }
-        } else {
-          self.attacheError = UNEXPECTED_ERROR_MESSAGE;
-        }
-        _showToast(self.attacheError);
+          _showToast(self.attacheError);
 
+        });
+      }).catch(function () {
       });
+
     }
 
 

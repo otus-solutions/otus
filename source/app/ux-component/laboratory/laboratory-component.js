@@ -100,38 +100,68 @@
         });
     }
 
+    function _showAttacheDialog(msg) {
+      var message = msg || 'Deseja realmente vincular este laboratório ao participante? O vínculo não poderá ser desfeito.';
+
+      var _attacheDialog = {
+        dialogToTitle:'Vincular Laboratório',
+        titleToText:'Confirmação de Vínculo',
+        textDialog: message,
+        ariaLabel:'Confirmação de vínculo',
+        buttons: [
+          {
+            message:'Ok',
+            action:function(){$mdDialog.hide()},
+            class:'md-raised md-primary'
+          },
+          {
+            message:'Voltar',
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogShowService.showDialog(_attacheDialog);
+
+    }
+
     function attacheLaboratory() {
       self.attacheError = null;
-      LoadingScreenService.start();
-      UnattachedLaboratoryService.attacheLaboratory(self.laboratoryIdentification).then(function () {
-        _refreshLaboratory();
-        LoadingScreenService.finish();
-      }).catch(function (error) {
-        self.attacheHaveErrors = true;
-        if (error.data) {
-          if (error.data.MESSAGE.match("Laboratory not found")){
-            self.attacheError = "Laboratório não encontrado";
-          } else if (error.data.MESSAGE.match("Laboratory is already attached")) {
-            self.attacheError = "Laboratório já foi vinculado a um participante";
-          } else if (error.data.MESSAGE.match("Invalid configuration")) {
-            if (error.data.CONTENT.laboratoryCollectGroup !== error.data.CONTENT.participantCollectGroup){
-              self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
-            }
-            if (error.data.CONTENT.laboratoryFieldCenter !== error.data.CONTENT.participantFieldCenter){
-              if (self.attacheError) {
-                self.attacheError += " e " + "ao mesmo centro"
-              } else {
-                self.attacheError = "O laboratório e o participante devem pertencer ao mesmo centro";
+      _showAttacheDialog().then(function () {
+        LoadingScreenService.start();
+        UnattachedLaboratoryService.attacheLaboratory(self.laboratoryIdentification).then(function () {
+          _refreshLaboratory();
+          LoadingScreenService.finish();
+        }).catch(function (error) {
+          self.attacheHaveErrors = true;
+          if (error.data) {
+            if (error.data.MESSAGE.match("Laboratory not found")){
+              self.attacheError = "Laboratório não encontrado";
+            } else if (error.data.MESSAGE.match("Laboratory is already attached")) {
+              self.attacheError = "Laboratório já foi vinculado a um participante";
+            } else if (error.data.MESSAGE.match("Invalid configuration")) {
+              if (error.data.CONTENT.laboratoryCollectGroup !== error.data.CONTENT.participantCollectGroup){
+                self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
               }
+              if (error.data.CONTENT.laboratoryFieldCenter !== error.data.CONTENT.participantFieldCenter){
+                if (self.attacheError) {
+                  self.attacheError += " e " + "ao mesmo centro"
+                } else {
+                  self.attacheError = "O laboratório e o participante devem pertencer ao mesmo centro";
+                }
+              }
+            } else {
+              self.attacheError = "Ocorreu um erro, entre em contato com o administrador do sistema";
             }
           } else {
             self.attacheError = "Ocorreu um erro, entre em contato com o administrador do sistema";
           }
-        } else {
-          self.attacheError = "Ocorreu um erro, entre em contato com o administrador do sistema";
-        }
-        LoadingScreenService.finish();
+          LoadingScreenService.finish();
+        });
+      }).catch(function () {
       });
+
     }
 
     function _fetchLaboratory(currentState) {
