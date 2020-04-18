@@ -100,26 +100,34 @@
         });
     }
 
-    function _showAttacheDialog(msg) {
-      var message = msg || 'Deseja realmente vincular o laboratório do kit <b>'.concat(self.laboratoryIdentification).concat('</b> ao participante <b>')
-        .concat(self.selectedParticipant.recruitmentNumber)
-        .concat('</b>? O vínculo não poderá ser desfeito.');
+    function _buildConfirmMessage(labCode, recruitmentNumber) {
+      return 'Deseja realmente vincular o laboratório código <b>'.concat(labCode)
+        .concat('</b> ao participante <b>')
+        .concat(recruitmentNumber)
+        .concat('</b><br />')
+        .concat('<b>O vínculo não poderá ser desfeito.</b>');
+    }
 
+    function _showAttacheDialog(msg) {
+      var message = _buildConfirmMessage(self.laboratoryIdentification, self.selectedParticipant.recruitmentNumber)
       var _attacheDialog = {
-        dialogToTitle:'Vincular Laboratório',
-        titleToText:'Confirmação de Vínculo',
+        dialogToTitle: 'Vincular Laboratório',
+        titleToText: 'Confirmação de Vínculo',
         textDialog: message,
-        ariaLabel:'Confirmação de vínculo',
-        buttons: [
-          {
-            message:'Ok',
-            action:function(){$mdDialog.hide()},
-            class:'md-raised md-primary'
+        ariaLabel: 'Confirmação de vínculo',
+        buttons: [{
+          message: 'Ok',
+          action: function () {
+            $mdDialog.hide()
           },
+          class: 'md-raised md-primary'
+        },
           {
-            message:'Voltar',
-            action:function(){$mdDialog.cancel()},
-            class:'md-raised md-no-focus'
+            message: 'Voltar',
+            action: function () {
+              $mdDialog.cancel()
+            },
+            class: 'md-raised md-no-focus'
           }
         ]
       };
@@ -138,15 +146,15 @@
         }).catch(function (error) {
           self.attacheHaveErrors = true;
           if (error.data) {
-            if (error.data.MESSAGE.match("Laboratory not found")){
+            if (error.data.MESSAGE.match("Laboratory not found")) {
               self.attacheError = "Laboratório não encontrado";
             } else if (error.data.MESSAGE.match("Laboratory is already attached")) {
               self.attacheError = "Laboratório já foi vinculado a um participante";
             } else if (error.data.MESSAGE.match("Invalid configuration")) {
-              if (error.data.CONTENT.laboratoryCollectGroup !== error.data.CONTENT.participantCollectGroup){
+              if (error.data.CONTENT.laboratoryCollectGroup !== error.data.CONTENT.participantCollectGroup) {
                 self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
               }
-              if (error.data.CONTENT.laboratoryFieldCenter !== error.data.CONTENT.participantFieldCenter){
+              if (error.data.CONTENT.laboratoryFieldCenter !== error.data.CONTENT.participantFieldCenter) {
                 if (self.attacheError) {
                   self.attacheError += " e " + "ao mesmo centro"
                 } else {
@@ -185,9 +193,7 @@
     }
 
     function _sortByTubeLabel(a, b) {
-      // if label are equals
       if (a.label.toLowerCase() === b.label.toLowerCase()) {
-        // sort by code
         return a.code > b.code;
       }
       return a.label.toLowerCase() > b.label.toLowerCase();

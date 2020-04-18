@@ -90,11 +90,16 @@
       LoadingScreenService.finish();
     }
 
-    function _showAttacheDialog(msg) {
-      var message = msg || 'Deseja realmente vincular o laboratório do kit <b>'.concat(self.laboratoryData.identification).concat('</b> ao participante <b>')
-        .concat(self.recruitmentNumber)
-        .concat('</b>? O vínculo não poderá ser desfeito.');
+    function _buildConfirmMessage(labCode, recruitmentNumber) {
+      return 'Deseja realmente vincular o laboratório código <b>'.concat(labCode)
+        .concat('</b> ao participante <b>')
+        .concat(recruitmentNumber)
+        .concat('</b><br />')
+        .concat('<b>O vínculo não poderá ser desfeito.</b>');
+    }
 
+    function _showAttacheDialog(msg) {
+      var message = _buildConfirmMessage(self.laboratoryData.identification, self.recruitmentNumber);
       var _attacheDialog = {
         dialogToTitle:'Vincular Laboratório',
         titleToText:'Confirmação de Vínculo',
