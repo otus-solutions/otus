@@ -76,6 +76,7 @@
           contactNotFound: 'Contatos não cadastrados',
           contactFail: 'Erro: Não foi completar a solicitação!',
           contactDelete: 'Excluído com sucesso.',
+          errorContactDelete: 'Erro Interno: Solicitação recusada.',
           country: 'Brasil',
           updateSuccess: 'Atualizado com sucesso.',
           createSuccess: 'Novo contato criado',
@@ -89,6 +90,5 @@
           swapMainContactSucess:'Alterado para padrão com sucesso',
           swapMainContactFail: 'Erro: Alteração não foi completada'
         }
-
       });
 }());

@@ -24,7 +24,7 @@
   .info-item-layout {
     background: #f5f7f9;
     display: grid;
-    width: 70vw;
+    /*width: 73vw;*/
     grid-template-columns: 11.5fr .5fr;
     grid-template-rows: .1fr .1fr;
     grid-gap: 10px;
@@ -36,7 +36,7 @@
   .address-item {
     background: #f5f7f9;
     display: grid;
-    width: 77vw;
+    width: 70vw;
     grid-template-columns: 6fr 4fr 1fr 1fr;
     grid-template-rows: .1fr .1fr .1fr;
     grid-gap: 10px;
