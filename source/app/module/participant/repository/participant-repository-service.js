@@ -23,7 +23,7 @@
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
     self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
-    self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
+    self.getParticipantContactByRecruitmentNumber = getParticipantContactByRecruitmentNumber;
     self.addNonMainEmail = addNonMainEmail;
     self.addNonMainAddress = addNonMainAddress;
     self.addNonMainPhoneNumber = addNonMainPhoneNumber;
@@ -95,51 +95,51 @@
         .then(response => response.data);
     }
 
-    function getByRecruitmentNumberPaticipantContact(rn) {
+    function getParticipantContactByRecruitmentNumber(rn) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.getByRecruitmentNumberPaticipantContact(rn))
+        .then(remoteDataSource => remoteDataSource.getParticipantContactByRecruitmentNumber(rn))
         .then(response => response.data);
     }
 
-    function addNonMainEmail(participantContact) {
+    function addNonMainEmail(newContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.addNonMainEmail(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.addNonMainEmail(newContactDto))
         .then(response => response.data);
     }
 
-    function addNonMainAddress(participantContact) {
+    function addNonMainAddress(newContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.addNonMainAddress(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.addNonMainAddress(newContactDto))
         .then(response => response.data);
     }
 
-    function addNonMainPhoneNumber(participantContact) {
+    function addNonMainPhoneNumber(newContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.addNonMainPhoneNumber(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.addNonMainPhoneNumber(newContactDto))
         .then(response => response.data);
     }
 
-    function updateEmail(participantContact) {
+    function updateEmail(updateContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.updateEmail(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.updateEmail(updateContactDto))
         .then(response => response.data);
     }
 
-    function updateAddress(participantContact) {
+    function updateAddress(updateContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.updateAddress(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.updateAddress(updateContactDto))
         .then(response => response.data);
     }
 
-    function updatePhoneNumber(participantContact) {
+    function updatePhoneNumber(updateContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.updatePhoneNumber(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.updatePhoneNumber(updateContactDto))
         .then(response => response.data);
     }
 
-    function swapMainContact(participantContact) {
+    function swapMainContact(swapMainContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.swapMainContact(participantContact.toJSON()))
+        .then(remoteDataSource => remoteDataSource.swapMainContact(swapMainContactDto))
         .then(response => response.data);
     }
 
@@ -149,9 +149,9 @@
         .then(response => response.data);
     }
 
-    function deleteNonMainContact(participantContact) {
+    function deleteNonMainContact(deleteContactDto) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.deleteNonMainContact(participantContact))
+        .then(remoteDataSource => remoteDataSource.deleteNonMainContact(deleteContactDto))
         .then(response => response.data);
     }
   }

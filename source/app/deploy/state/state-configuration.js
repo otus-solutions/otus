@@ -141,6 +141,7 @@
     $stateProvider.state(ParticipantsListStateProvider.state);
     $stateProvider.state(ParticipantCreateStateProvider.state);
     $stateProvider.state(ParticipantUpdateStateProvider.state);
+    $stateProvider.state(ParticipantFollowUpStateProvider.state);
     $stateProvider.state(InstallerProvider.state);
     $stateProvider.state(ParticipantStateProvider.state);
     $stateProvider.state(SessionStateProvider.state);

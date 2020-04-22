@@ -23,7 +23,8 @@
     'otusjs.participant.business.ParticipantMessagesService',
     'otusjs.otus.dashboard.service.DashboardService',
     '$scope',
-    'otusjs.participantManager.contact.ParticipantContactService'
+    'otusjs.participantManager.contact.ParticipantContactService',
+    'ParticipantContactValues'
   ];
 
   function Controller(
@@ -39,7 +40,8 @@
     ParticipantMessagesService,
     DashboardService,
     $scope,
-    ParticipantContactService) {
+    ParticipantContactService,
+    ParticipantContactValues) {
     var self = this;
 
     mdcDefaultParams({
@@ -56,16 +58,20 @@
     self.saveParticipant = saveParticipant;
     self.dashboardParticipant = dashboardParticipant;
     self.onFilter = onFilter;
+    self.loadParticipantContact = loadParticipantContact;
+    self.createParticipantContact = createParticipantContact;
+    self.deleteParticipantContact = deleteParticipantContact;
 
     $scope.$watch('$ctrl.birthdate', function (newValue) {
       if (newValue) self.onFilter();
     });
 
-
     function onInit() {
       try {
         self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant);
         self.isIdentified = self.participant.toJSON().identified;
+        self.ParticipantContactValues = ParticipantContactValues;
+        loadParticipantContact();
         if (self.isIdentified) {
           self.birthdate = new Date(self.participant.birthdate.value)
         } else {
@@ -75,12 +81,10 @@
         self.maxDate = new Date();
         self.centers = {};
         _loadAllCenters();
-        _loadParticipantContact(self.participant.recruitmentNumber)
       } catch (e) {
         alert(66)
       }
     }
-
 
     self.$onDestroy = function () {
       delete self.participant;
@@ -195,7 +199,6 @@
       return _valid;
     }
 
-
     function dashboardParticipant() {
       ApplicationStateService.activateParticipantDashboard();
     }
@@ -213,28 +216,43 @@
                 ParticipantMessagesService.showUpdateParticipant(p).then(function () {
                   self.dashboardParticipant();
                 })
-
               })
               .catch(function (err) {
                 ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
               });
-
           });
       } else {
-        ParticipantMessagesService.showToast("Favor, preencha todos os campos!");
+        ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFound);
       }
     }
 
+    function loadParticipantContact() {
+      ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
+        .then((data) => ParticipantContactService.participantContactFactoryJson(data))
+        .then((resultFactory) => self.contact = resultFactory)
+        .catch(() => {
+          self.contact = "";
+          ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactNotFound);
+        });
+    }
 
-    function _loadParticipantContact(recruitmentNumber) {
-      //self.contact = {};
-      // ProjectFieldCenterService.loadCenters().then(function (result) {
-      //   self.contact = angular.copy(result);
-      // });
-      self.contact = ParticipantContactService.getParticipantContact();
+    function createParticipantContact() {
+      let contact = ParticipantContactService.participantContactFactoryCreate({recruitmentNumber: self.participant.recruitmentNumber});
+      ParticipantContactService.createParticipantContact(contact)
+        .then(() => loadParticipantContact())
+        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFound))
+        .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail));
+    }
+
+    function deleteParticipantContact() {
+      ParticipantContactService.showDeleteDialog()
+        .then(() => {
+          ParticipantContactService.deleteParticipantContact(self.contact._id)
+            .then(() => loadParticipantContact())
+            .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
+            .catch(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFail))
+        });
     }
 
   }
 }());
-
-// if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER && item) {

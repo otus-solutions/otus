@@ -10,14 +10,12 @@
     'otusjs.deploy.ParticipantRestService',
     'otusjs.model.participant.ParticipantFactory',
     'otusjs.deploy.ProjectConfigurationRestService',
-    'otusjs.participant.storage.ParticipantStorageService',
-    'otusjs.deploy.ParticipantContactRestService'
+    'otusjs.participant.storage.ParticipantStorageService'
   ];
 
-  function Service($q, ParticipantRestService, ParticipantFactory, ProjectConfigurationRestService, ParticipantStorageService, ParticipantContactRestService) {
+  function Service($q, ParticipantRestService, ParticipantFactory, ProjectConfigurationRestService, ParticipantStorageService) {
     var self = this;
     var _loadingDefer = $q.defer();
-    let _genericParticipantContactStorageDefer = $q.defer();
 
     /* Public methods */
     self.up = up;
@@ -28,18 +26,6 @@
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
-    self.createParticipantContact = createParticipantContact;
-    self.getParticipantContact = getParticipantContact;
-    self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
-    self.addNonMainEmail = addNonMainEmail;
-    self.addNonMainAddress = addNonMainAddress;
-    self.addNonMainPhoneNumber = addNonMainPhoneNumber;
-    self.updateEmail = updateEmail;
-    self.updateAddress = updateAddress;
-    self.updatePhoneNumber = updatePhoneNumber;
-    self.swapMainContact = swapMainContact;
-    self.deleteParticipantContact = deleteParticipantContact;
-    self.deleteNonMainContact = deleteNonMainContact;
 
     function up() {
       _loadingDefer = $q.defer();
@@ -60,7 +46,6 @@
     function _initializeSources() {
       ParticipantRestService.initialize();
       ProjectConfigurationRestService.initialize();
-      ParticipantContactRestService.initialize();
     }
 
     function create(participant) {
@@ -149,141 +134,5 @@
           _loadingDefer.resolve();
         });
     }
-
-    function createParticipantContact(jsonParticipant) {
-      ParticipantContactRestService.createParticipantContact(jsonParticipant)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-      return {
-        whenReady() {
-          return _genericParticipantContactStorageDefer.promise;
-        }
-      }
-    }
-
-    function getParticipantContact(id) {
-      ParticipantContactRestService.getParticipantContact(id)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
-    function getByRecruitmentNumberPaticipantContact(rn) {
-      ParticipantContactRestService.getByRecruitmentNumberPaticipantContac(rn)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
-    function addNonMainEmail(jsonParticipant) {
-      ParticipantContactRestService.addNonMainEmail(jsonParticipant)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
-    function addNonMainAddress(jsonParticipant) {
-      ParticipantContactRestService.addNonMainAddress(jsonParticipant)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
-    function addNonMainPhoneNumber(jsonParticipant) {
-      ParticipantContactRestService.addNonMainPhoneNumber(jsonParticipant)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
-    function updateEmail(jsonParticipant) {
-      ParticipantContactRestService.updateEmail(jsonParticipant)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
-    function updateAddress(jsonParticipant) {
-      ParticipantContactRestService.updateAddress(jsonParticipant)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
-    function updatePhoneNumber(jsonParticipant) {
-      ParticipantContactRestService.updatePhoneNumber(jsonParticipant)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
-    function swapMainContact(jsonParticipant) {
-      ParticipantContactRestService.swapMainContact(jsonParticipant)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
-    function deleteParticipantContact(id) {
-      ParticipantContactRestService.deleteParticipantContact(id)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
-    function deleteNonMainContact(id) {
-      ParticipantContactRestService.deleteNonMainContact(id)
-        .then(function (response) {
-          _genericParticipantContactStorageDefer.resolve(response.data);
-        }).catch(function (err) {
-        _genericParticipantContactStorageDefer.reject(err);
-      });
-
-      return _genericParticipantContactStorageDefer.promise;
-    }
-
   }
 }());

@@ -17,7 +17,7 @@
     self.initialize = initialize;
     self.createParticipantContact = createParticipantContact;
     self.getParticipantContact = getParticipantContact;
-    self.getByRecruitmentNumberPaticipantContact = getByRecruitmentNumberPaticipantContact;
+    self.getParticipantContactByRecruitmentNumber = getParticipantContactByRecruitmentNumber;
     self.addNonMainEmail = addNonMainEmail;
     self.addNonMainAddress = addNonMainAddress;
     self.addNonMainPhoneNumber = addNonMainPhoneNumber;
@@ -42,7 +42,7 @@
       return _rest.get({id: id}).$promise;
     }
 
-    function getByRecruitmentNumberPaticipantContact(rn) {
+    function getParticipantContactByRecruitmentNumber(rn) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.getByRecruitmentNumber({rn:rn}).$promise;
     }
@@ -62,19 +62,19 @@
       return _rest.addNonMainPhoneNumber(jsonParticipant).$promise;
     }
 
-    function updateEmail(jsonParticipant) {
+    function updateEmail(updateContactDto) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateEmail(jsonParticipant).$promise;
+      return _rest.updateEmail(updateContactDto).$promise;
     }
 
-    function updateAddress(jsonParticipant) {
+    function updateAddress(updateContactDto) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateAddress(jsonParticipant).$promise;
+      return _rest.updateAddress(updateContactDto).$promise;
     }
 
-    function updatePhoneNumber(jsonParticipant) {
+    function updatePhoneNumber(updateContactDto) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updatePhoneNumber(jsonParticipant).$promise;
+      return _rest.updatePhoneNumber(updateContactDto).$promise;
     }
 
     function swapMainContact(jsonParticipant) {
@@ -87,9 +87,9 @@
       return _rest.delete({id:id}).$promise;
     }
 
-    function deleteNonMainContact(jsonParticipant) {
+    function deleteNonMainContact(deleteContactDto) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.deleteNonMainContact(jsonParticipant).$promise;
+      return _rest.deleteNonMainContact(deleteContactDto).$promise;
     }
   }
 }());

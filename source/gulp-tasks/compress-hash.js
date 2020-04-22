@@ -10,11 +10,11 @@ var gulp_if = require('gulp-if');
 
 gulp.task('compress-hash', function () {
     return gulp.src('dist/otus/index.html')
-        .pipe(uncache({
-            append: 'hash',
-            rename: true,
-	    srcDir:'dist/otus',
-	    distDir:'dist/otus'
-        }))
+     //   .pipe(uncache({
+     //       append: 'hash',
+     //       rename: true,
+	 //   srcDir:'dist/otus',
+	 //   distDir:'dist/otus'
+     //   }))
         .pipe(gulp.dest('dist/otus'));
 });

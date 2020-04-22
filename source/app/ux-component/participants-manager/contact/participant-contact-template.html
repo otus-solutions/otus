@@ -1,43 +1,6 @@
-<style>
-  .pc-layout {
-    display: grid;
-    width: 100vw;
-    height: 90vh;
-    grid-template-columns: .5fr 11.5fr;
-    grid-template-rows: .5fr 11.5fr;
-    grid-template-areas: "returnButton anonymousMsg" "mainUpdate mainUpdate"
-  }
-
-  .return-button {
-    grid-area: returnButton;
-  }
-
-  .anonymous-msg {
-    grid-area: anonymousMsg;
-  }
-
-  .main-update {
-    grid-area: mainUpdate;
-  }
-
-  /*.op-layout{*/
-  /*  display: grid;*/
-  /*  width: 100vw;*/
-  /*  grid-template-columns: 1fr;*/
-  /*  grid-template-rows: 1fr 1fr 1fr 1fr;*/
-  /*  grid-template-areas: "phoneContactUpdate" "personalDataCard"*/
-  /*}*/
-
-  .personal-data-card {
-    /*grid-area: personalDataCard;*/
-    width: 80vw;
-  }
-
-  .contact-update {
-    /*grid-area: phoneContactUpdate;*/
-  }
-
-</style>
+<link
+  href="app/ux-component/participants-manager/contact/participant-contact-styles.css"
+  rel="stylesheet" type="text/css">
 
 <md-content class="pc-layout" ng-cloak>
   <div class="return-button" layout="row" layout-align="start center" layout-margin>
@@ -46,7 +9,7 @@
       <md-tooltip md-direction="down">Voltar</md-tooltip>
     </md-button>
   </div>
-  <div class="anonymous-msg" layout="column" ng-show="$ctrl.isIdentified">
+  <div class="anonymous-msg" layout="column" ng-show="!$ctrl.isIdentified">
     <div layout="row" layout-padding layout-align="center center">
       <p align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto,
         preencha todos os campos para identificá-lo.</p>
@@ -121,21 +84,45 @@
 
     <otus-participant-update-contact class="contact-update"
                                      contact="$ctrl.contact.phoneNumber"
-                                     type="phoneNumber">
+                                     contact-id="{{$ctrl.contact._id}}"
+                                     type="phoneNumber"
+                                     load-participant-contact="$ctrl.loadParticipantContact"
+                                     ng-if="$ctrl.contact">
     </otus-participant-update-contact>
 
     <otus-participant-update-contact class="contact-update"
                                      contact="$ctrl.contact.email"
-                                     type="email">
+                                     contact-id="{{$ctrl.contact._id}}"
+                                     load-participant-contact="$ctrl.loadParticipantContact"
+                                     type="email"
+                                     ng-if="$ctrl.contact">
     </otus-participant-update-contact>
 
     <otus-participant-update-contact class="contact-update"
                                      contact="$ctrl.contact.address"
-                                     type="address">
+                                     contact-id="{{$ctrl.contact._id}}"
+                                     load-participant-contact="$ctrl.loadParticipantContact"
+                                     type="address"
+                                     ng-if="$ctrl.contact">
     </otus-participant-update-contact>
-
-
-
+    <div ng-if= "$ctrl.isIdentified">
+       <md-button class="md-primary md-hue-1 btn-action" layout-align="center center" layout="column" md-whiteframe="1"
+                  ng-click="$ctrl.createParticipantContact()"
+                  ng-if="!$ctrl.contact">
+                  <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}>
+                    {{$ctrl.ParticipantContactValues.icons.edit.icon}}
+                  </md-icon>
+                  Editar Contatos
+        </md-button>
+        <md-button class="md-warn md-hue-1 btn-action" layout-align="center center" layout="column" md-whiteframe="1"
+                   ng-click="$ctrl.deleteParticipantContact()"
+                   ng-if="$ctrl.contact">
+                   <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}>
+                    {{$ctrl.ParticipantContactValues.icons.deleteContact.icon}}
+                   </md-icon>
+                   Excluir Contatos
+        </md-button>
+      <small class="md-caption">{{$ctrl.ParticipantContactValues.msg.captionAboutRequiredFields}}</small>
+    </div>
   </otus-panel>
-
 </md-content>
