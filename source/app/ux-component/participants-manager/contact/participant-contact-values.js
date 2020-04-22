@@ -72,10 +72,11 @@
         msg: {
           postalCodeNotFound: 'CEP não encontrado',
           postalCodeInstruction: '1º Informe o cep',
-          contactFound: 'Favor, preencha todos os campos!',
+          contactFound: 'Favor, preencha todos os campos obrigatórios *',
           contactNotFound: 'Contatos não cadastrados',
           contactFail: 'Erro: Não foi completar a solicitação!',
           contactDelete: 'Excluído com sucesso.',
+          errorContactDelete: 'Erro Interno: Solicitação recusada.',
           country: 'Brasil',
           updateSuccess: 'Atualizado com sucesso.',
           createSuccess: 'Novo contato criado',
@@ -87,8 +88,8 @@
           messageTextDelete: 'Confirmar exclusão de contato(s)',
           messageDialogDelete: 'Deseja excluir o(s) contato(s)?',
           swapMainContactSucess:'Alterado para padrão com sucesso',
-          swapMainContactFail: 'Erro: Alteração não foi completada'
+          swapMainContactFail: 'Erro: Alteração não foi completada',
+          captionAboutRequiredFields: '* campos obrigatórios'
         }
-
       });
 }());

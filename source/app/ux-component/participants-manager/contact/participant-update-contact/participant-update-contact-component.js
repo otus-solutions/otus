@@ -116,17 +116,17 @@
 
     function deleteNonMainContact(type, position) {
       let deleteContactDto = ParticipantContactService.createPositionContactDto(self.contactId, type, position);
-
       if (deleteContactDto.position !== "main") {
-        ParticipantContactService.showDeleteDialog()
-          .then(() => {
-            //purposely noCallback to reuse in the clear of a non-persistent contact
-            ParticipantContactService.deleteNonMainContact(deleteContactDto)
-              .then(self.contact[position] = null)
-              .then(self.addContactMode[self.type] = true)
-              .then(self.loadParticipantContact())
-              .then(ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete))
-          })
+        try {
+          ParticipantContactService.showDeleteDialog()
+            .then(() => ParticipantContactService.deleteNonMainContact(deleteContactDto).then(() => self.contact[position] = null)
+              .then(() => self.addContactMode[self.type] = true)
+              .then(() => self.loadParticipantContact())
+              .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete)))
+            .catch( self.loadParticipantContact())
+        } catch {
+          ParticipantMessagesService.showToast(ParticipantContactValues.msg.errorContactDelete)
+        }
       }
     }
 
@@ -148,7 +148,7 @@
       if (self.editMode[key]) {
         return (!self.form.address[key].postalCode.$modelValue);
       }
-       return true;
+      return true;
     }
   }
 }());
