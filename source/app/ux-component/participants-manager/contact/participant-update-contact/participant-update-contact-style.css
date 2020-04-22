@@ -24,7 +24,6 @@
   .info-item-layout {
     background: #f5f7f9;
     display: grid;
-    /*width: 73vw;*/
     grid-template-columns: 11.5fr .5fr;
     grid-template-rows: .1fr .1fr;
     grid-gap: 10px;

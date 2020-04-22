@@ -115,8 +115,6 @@
     }
 
     function deleteNonMainContact(type, position) {
-      console.log(position)
-      console.log(type)
       let deleteContactDto = ParticipantContactService.createPositionContactDto(self.contactId, type, position);
       if (deleteContactDto.position !== "main") {
         try {
