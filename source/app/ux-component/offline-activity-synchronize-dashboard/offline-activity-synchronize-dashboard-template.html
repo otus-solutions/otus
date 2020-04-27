@@ -1,0 +1,23 @@
+<div>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row">
+    <div flex layout-gt-md="row" layout="column" layout-align="center center" layout-margin>
+      <span layout-align="center center">Sincronismo de atividades offline</span>
+    </div>
+  </otus-dashboard-toolbar>
+</div>
+<md-content flex ng-if="$ctrl.offlineActivityCollectionGroups.length > 0">
+  <div
+       ng-repeat="offlineActivityCollectionGroup in $ctrl.offlineActivityCollectionGroups"
+       id="offlineActivityCollection{{$index}}"
+       aria-label="offlineActivityCollection{{$index}}">
+    <offline-activity-collection-group offline-collection-group-data="offlineActivityCollectionGroup" reload-data="$ctrl.loadOfflineCollections()" layout="row" layout-align="center center" flex=""></offline-activity-collection-group>
+  </div>
+</md-content>
+<div ng-if="$ctrl.offlineActivityCollectionGroups.length == 0" layout="column" layout-align="center center" flex="">
+    <span class="md-title">
+      Você não tem coletas para sincronizar
+    </span>
+</div>
