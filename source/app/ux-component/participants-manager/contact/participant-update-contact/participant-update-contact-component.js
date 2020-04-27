@@ -124,7 +124,7 @@
               .then(() => self.loadParticipantContact())
               .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete)))
             .catch( self.loadParticipantContact())
-        } catch {
+        } catch(e) {
           ParticipantMessagesService.showToast(ParticipantContactValues.msg.errorContactDelete)
         }
       }
