@@ -94,8 +94,8 @@
         .then(function (response) {
           deferred.resolve(response.data);
         }).catch(function (err) {
-          deferred.reject(err);
-        });
+        deferred.reject(err);
+      });
       return deferred.promise;
     }
 
@@ -106,8 +106,8 @@
         .then(function (response) {
           deferred.resolve(response.data);
         }).catch(function (err) {
-          deferred.reject(err);
-        });
+        deferred.reject(err);
+      });
       return deferred.promise;
     }
 
@@ -118,8 +118,8 @@
         .then(function (response) {
           deferred.resolve(response.data);
         }).catch(function (err) {
-          deferred.reject(err);
-        });
+        deferred.reject(err);
+      });
       return deferred.promise;
     }
 

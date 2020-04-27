@@ -25,6 +25,8 @@ describe('otusActivityManagerGridList Test', function() {
         expect(controller.selectDeselect).toBeDefined();
         expect(controller.selectDeselectAll).toBeDefined();
         expect(controller.filterGridTile).toBeDefined();
+        expect(controller.displayGridLarge).toBeDefined();
+        expect(controller.displayGridSmall).toBeDefined();
     });
 
     it('onInitMethod should inicialized the controller variables', function () {
@@ -97,6 +99,21 @@ describe('otusActivityManagerGridList Test', function() {
         expect(controller.selectedItemCounter).toEqual(0);
 
      });
+
+
+    it('should call displayGridLarge method', function () {
+      window.innerWidth = 1300;
+      expect(controller.displayGridLarge()).toEqual('1:0.9');
+      window.innerWidth = 1900;
+      expect(controller.displayGridLarge()).toEqual('6:4');
+    });
+
+    it('should call displayGridSmall method', function () {
+      window.innerWidth = 600;
+      expect(controller.displayGridSmall()).toEqual('1:1');
+      window.innerWidth = 800;
+      expect(controller.displayGridSmall()).toEqual('2.7:2');
+    });
 
     function mocks() {
         ELEMENTS_ARRAY = Test.utils.data.activity[0].activities;

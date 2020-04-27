@@ -28,7 +28,7 @@
 </head>
 
 <body layout="row" md-theme="default">
-  <div flex layout="row" class="md-body-2" ui-view></div>
+<div flex layout="row" class="md-body-2" ui-view></div>
 </body>
 
 <!-- ************************************* Force Refresh Page ************************************* -->
@@ -248,6 +248,7 @@
 <script src="app/deploy/rest/otus-api/static-variable/static-variable-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/pendency/user-activity-pendency-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/transport-location-point/location-point-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/contact/participant-contact-rest-service.js"></script>
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
 <script src="app/deploy/state/error/error-state-provider.js"></script>
@@ -576,11 +577,15 @@
 <script src="app/ux-component/activity-import/activity-import-component.js"></script>
 <script src="app/ux-component/offline-activity-synchronize-dashboard/offline-activity-synchronize-dashboard-component.js"></script>
 <script src="app/ux-component/offline-activity-synchronize-dashboard/offline-activity-synchronize-dashboard-controller.js"></script>
-<script src="ux-component/offline-activity-synchronize-dashboard/offline-activity-collection-group/offline-activity-collection/offline-activity-collection-component.js"></script>
-<script src="ux-component/offline-activity-synchronize-dashboard/offline-activity-collection-group/offline-activity-collection/offline-activity-collection-controller.js"></script>
-<script src="ux-component/offline-activity-synchronize-dashboard/offline-activity-collection-group/offline-activity-collection-group-controller.js"></script>
-<script src="ux-component/offline-activity-synchronize-dashboard/offline-activity-collection-group/offline-activity-collection-group-component.js"></script>
+<script src="app/ux-component/offline-activity-synchronize-dashboard/offline-activity-collection-group/offline-activity-collection/offline-activity-collection-component.js"></script>
+<script src="app/ux-component/offline-activity-synchronize-dashboard/offline-activity-collection-group/offline-activity-collection/offline-activity-collection-controller.js"></script>
+<script src="app/ux-component/offline-activity-synchronize-dashboard/offline-activity-collection-group/offline-activity-collection-group-controller.js"></script>
+<script src="app/ux-component/offline-activity-synchronize-dashboard/offline-activity-collection-group/offline-activity-collection-group-component.js"></script>
 <script src="app/ux-component/participant-dashboard/participant-dashboard-component.js"></script>
+<script src="app/ux-component/participants-manager/contact/participant-contact-component.js"></script>
+<script src="app/ux-component/participants-manager/contact/participant-contact-service.js"></script>
+<script src="app/ux-component/participants-manager/contact/participant-contact-values.js"></script>
+<script src="app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-component.js"></script>
 <script src="app/ux-component/participants-manager/create/participant-create-controller.js"></script>
 <script src="app/ux-component/participants-manager/create/participant-create-component.js"></script>
 <script src="app/ux-component/participants-manager/update/participant-update-controller.js"></script>
@@ -689,8 +694,8 @@
 <script src="app/ux-component/laboratory/main-panel/aliquots-view/aliquots-view-component.js"></script>
 <script src="app/ux-component/laboratory/unattached/unattached-laboratory-dashboard-controller.js"></script>
 <script src="app/ux-component/laboratory/unattached/unattached-laboratory-dashboard-component.js"></script>
-<script src="ux-component/laboratory/unattached/laboratory/unattached-laboratory-controller.js"></script>
-<script src="ux-component/laboratory/unattached/laboratory/unattached-laboratory-component.js"></script>
+<script src="app/ux-component/laboratory/unattached/laboratory/unattached-laboratory-controller.js"></script>
+<script src="app/ux-component/laboratory/unattached/laboratory/unattached-laboratory-component.js"></script>
 
 <!-- monitoring-ux -->
 <script src="app/ux-component/otus-monitoring/otus-monitoring-parse-data-factory.js"></script>
