@@ -33,6 +33,8 @@
     self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
+    self.requestPasswordReset = requestPasswordReset;
+
 
     function create(participant) {
       var _dataSource = ModuleService.DataSource.Participant;
@@ -154,5 +156,11 @@
         .then(remoteDataSource => remoteDataSource.deleteNonMainContact(deleteContactDto))
         .then(response => response.data);
     }
+
+
+    function requestPasswordReset() {
+
+    }
+
   }
 }());

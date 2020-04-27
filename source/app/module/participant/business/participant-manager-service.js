@@ -42,6 +42,7 @@
     self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
+    self.requestPasswordReset = requestPasswordReset;
 
     var _setupSuccess;
 
@@ -199,5 +200,12 @@
     function deleteNonMainContact(deleteContactDto) {
       return ParticipantRepositoryService.deleteNonMainContact(deleteContactDto);
     }
+
+    function requestPasswordReset() {
+      let participant = getSelectedParticipant();
+      console.log(participant);
+      return ParticipantRepositoryService.requestPasswordReset(participant.recruitmentNumber);
+    }
+
   }
 }());

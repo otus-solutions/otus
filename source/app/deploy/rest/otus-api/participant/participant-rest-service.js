@@ -22,6 +22,7 @@
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
+    self.requestPasswordReset = requestPasswordReset;
 
     function initialize() {
       _rest = OtusRestResourceService.getParticipantResource();
@@ -73,6 +74,10 @@
       return _followUpRest.deactivateFollowUpEvent({
         followUpId: followUpId
       }).$promise;
+    }
+
+    function requestPasswordReset() {
+
     }
   }
 }());

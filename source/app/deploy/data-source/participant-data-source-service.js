@@ -20,12 +20,14 @@
     /* Public methods */
     self.up = up;
     self.listIndexers = listIndexers;
+    self.requestPasswordReset = requestPasswordReset;
     self.create = create;
     self.update = update;
     self.getAllowNewParticipants = getAllowNewParticipants;
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
+    self.requestPasswordReset = requestPasswordReset;
 
     function up() {
       _loadingDefer = $q.defer();
@@ -133,6 +135,10 @@
           ParticipantStorageService.save();
           _loadingDefer.resolve();
         });
+    }
+
+    function requestPasswordReset() {
+      // ParticipantStorageService.requestPasswordReset()
     }
   }
 }());
