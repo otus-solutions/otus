@@ -33,7 +33,8 @@
     self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
-    self.requestPasswordReset = requestPasswordReset;
+    //Todo: Revisar
+    //self.requestPasswordReset = requestPasswordReset;
 
 
     function create(participant) {
@@ -157,10 +158,10 @@
         .then(response => response.data);
     }
 
-
-    function requestPasswordReset() {
-
-    }
+    //ToDo: Revisar
+    // function requestPasswordReset() {
+    //
+    // }
 
   }
 }());

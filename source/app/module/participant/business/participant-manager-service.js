@@ -42,7 +42,8 @@
     self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
-    self.requestPasswordReset = requestPasswordReset;
+    //ToDo: Revisar
+    //self.requestPasswordReset = requestPasswordReset;
 
     var _setupSuccess;
 
@@ -201,11 +202,12 @@
       return ParticipantRepositoryService.deleteNonMainContact(deleteContactDto);
     }
 
-    function requestPasswordReset() {
-      let participant = getSelectedParticipant();
-      console.log(participant);
-      return ParticipantRepositoryService.requestPasswordReset(participant.recruitmentNumber);
-    }
+    //ToDo: Revisar
+    //function requestPasswordReset() {
+    //   let participant = getSelectedParticipant();
+    //   console.log(participant);
+    //   return ParticipantRepositoryService.requestPasswordReset(participant.recruitmentNumber);
+    // }
 
   }
 }());
