@@ -8,21 +8,16 @@
                 </div>
                 <div class="card-width-layout-sm" layout="row" layout-xs="column" layout-sm="row" layout-align="space-between center" flex="70" flex-xs="100" flex-sm="100" flex-md="60">
                     <div layout="row" layout-align-xs="space-between center">
-                        <div layout="row" layout-align="space-between start" layout-margin
-                             md-swipe-left="onSwipeLeft($event, $target)">
-                            <div>
-                                <md-icon md-font-library="material-icons" md-svg-icon="signal">
-                                    <md-tooltip md-direction="bottom">Online</md-tooltip>
-                                </md-icon>
-                            </div>
-                            <md-switch aria-label="ActivityType" class="md-primary" ng-false-value="'ONLINE'"
-                                       ng-model="$ctrl.mode" ng-true-value="'PAPER'">
-                            </md-switch>
-                            <md-tooltip md-direction="top">Tipo de Atividade</md-tooltip>
-                            <div>
-                                <md-icon md-font-library="material-icons" md-svg-icon="file-document"></md-icon>
-                                <md-tooltip md-direction="bottom">Em papel</md-tooltip>
-                            </div>
+                        <div layout="row" layout-align="space-between start" layout-margin>
+                             <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30" layout-align="space-between start">
+                              <md-select aria-label="Atividades"
+                                         ng-model="$ctrl.mode">
+                                  <md-option ng-repeat="activity in $ctrl.optionModes track by $index"
+                                             ng-value="activity.mode">{{activity.label | uppercase}}
+                                  </md-option>
+                              </md-select>
+                              <md-tooltip md-direction="top">Tipo de Atividades</md-tooltip>
+                          </md-input-container>
                         </div>
                         <div layout="row" layout-align="space-between start" layout-margin
                              md-swipe-right="onSwipeRight($event, $target)">

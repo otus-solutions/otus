@@ -39,6 +39,7 @@
     self.mode = "ONLINE";
     self.selectType = "activityList";
     self.iconMode = "";
+    self.optionModes = [];
     self.configuration = {};
     self.paperActivityCheckerData = null;
     self.preActivities = [];
@@ -65,6 +66,7 @@
       LoadingScreenService.start();
       _buildDialogs();
       _loadCategories();
+      _loadOptionModes();
       _loadSurveys();
       _loadSurveysGroup();
       $element.find('#search').on('keydown', function (ev) {
@@ -175,6 +177,20 @@
       self.searchText = '';
       self.btnAddPreActivitiesDisable = true;
 
+    }
+
+    function _loadOptionModes() {
+      self.optionModes = [
+        { mode: 'ONLINE',
+          label: 'Online'
+        },
+        { mode: 'PAPER',
+        label: 'Em papel'
+        },
+        { mode: 'AUTOFILL',
+        label: 'Auto Preenchimento'
+        }
+      ]
     }
 
     function _loadCategories() {
