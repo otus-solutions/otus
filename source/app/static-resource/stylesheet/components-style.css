@@ -478,10 +478,6 @@ otus-activity-adder .button-hover :hover {
   height: auto;
 }
 
-otus-activity-adder .card-width {
-  width: 100%;
-}
-
 otus-activity-adder md-grid-tile figure {
   justify-content: normal;
   flex-direction: column;
@@ -524,17 +520,6 @@ otus-activity-adder-card md-input-container {
    margin: 0;
    height: 40px;
    border: none;
-}
-
-@media screen and (max-width: 799px) {
-  otus-activity-adder .card-width-category {
-    width: 100%;
-    padding-left: 20px;
-  }
-
-  otus-activity-adder .card-width-layout-sm {
-    width: 100%;
-  }
 }
 
  .scrollbar {

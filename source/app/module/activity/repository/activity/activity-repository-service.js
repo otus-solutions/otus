@@ -195,7 +195,7 @@
           return ModuleService
               .whenActivityFacadeServiceReady()
               .then(function (ActivityFacadeService) {
-                  return ActivityFacadeService.createActivity(survey, loggedUser, participant, null, configuration, externalID);
+                  return ActivityFacadeService.createAutoFillActivity(survey, loggedUser, participant, configuration, externalID);
               });
       }
 

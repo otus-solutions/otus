@@ -294,18 +294,18 @@
       function _prepareButtons() {
         return [
           {
-            message: 'Voltar',
-            action: function () {
-              $mdDialog.cancel()
-            },
-            class: 'md-raised md-no-focus'
-          },
-          {
             message: 'Ok',
             action: function () {
               $mdDialog.hide()
             },
             class: 'md-raised md-primary'
+          },
+          {
+            message: 'Voltar',
+            action: function () {
+              $mdDialog.cancel()
+            },
+            class: 'md-raised md-no-focus'
           }
         ]
       }
