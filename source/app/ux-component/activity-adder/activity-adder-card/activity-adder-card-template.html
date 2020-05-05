@@ -72,6 +72,12 @@
     <span class="md-caption" md-truncate ng-style="{color:'#797985'}">Email: <small class="md-body-2" ng-style="{color:'black'}">
       {{::$ctrl.preActivity.user.email}}</small></span>
   </div>
+  <div layout="column" ng-if="$ctrl.preActivity.mode === 'AUTOFILL'">
+    <small class="md-caption" ng-style="{color:'#797985', 'margin-top': '10px'}">Informações do Usuário:</small>
+    <span class="md-caption" ng-style="{color:'#797985'}">Nome: <small class="md-body-2" ng-style="{color:'black'}">{{::$ctrl.preActivity.user.name}} {{::$ctrl.preActivity.user.surname}}</small></span>
+    <span class="md-caption" md-truncate ng-style="{color:'#797985'}">Email: <small class="md-body-2" ng-style="{color:'black'}">
+      {{::$ctrl.preActivity.user.email}}</small></span>
+  </div>
   <form name="$ctrl.externalIdForm" style="height: 40px" novalidate>
     <md-input-container ng-if="$ctrl.preActivity.surveyForm.isRequiredExternalID()" md-no-float class="md-block" style="padding-top: 10px">
       <input name="externalid" ng-model="$ctrl.externalID" ng-change="$ctrl.updateExternalID($ctrl.externalID)"

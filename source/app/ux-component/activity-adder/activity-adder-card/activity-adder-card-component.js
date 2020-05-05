@@ -60,6 +60,7 @@
 		}
 
 		function getModeIcon() {
+      if(self.preActivity.mode === "AUTOFILL") return;
 			return self.preActivity.mode === "ONLINE" ? "signal" : "file-document"
 		}
 
