@@ -581,3 +581,31 @@ unattached-laboratory-dashboard {
     min-width: 320px;
   }
 }
+
+offline-activity-collection {
+  md-card {
+    min-width: 340px;
+  }
+  #md-content-container{
+    height: 400px !important;
+    width: 100%;
+  }
+  md-content {
+    width: 100% !important;
+  }
+  md-grid-tile-header {
+    figcaption {
+      width: 100%;
+    }
+    background: rgba(19, 125, 108, 0.68) !important;
+  }
+  md-input-container {
+    margin-bottom: 0px;
+  }
+}
+
+offline-activity-synchronize-dashboard {
+  #groups-container {
+    min-width: 345px;
+  }
+}

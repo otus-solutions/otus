@@ -49,6 +49,7 @@
     self.activateActivityFlagsReport = activateActivityFlagsReport;
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
     self.activatePendencyViewer = activatePendencyViewer;
+    self.activateOfflineActivitySynchronize = activateOfflineActivitySynchronize;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -64,6 +65,10 @@
 
     function activateActivityViewer() {
       $state.go(STATE.ACTIVITY_VIEWER);
+    }
+
+    function activateOfflineActivitySynchronize() {
+      $state.go(STATE.ACTIVITY_SYNCHRONIZE);
     }
 
     function activateInstaller() {

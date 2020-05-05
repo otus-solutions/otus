@@ -33,6 +33,22 @@
     self.selectDeselect = selectDeselect;
     self.selectDeselectAll = selectDeselectAll;
     self.filterGridTile = filterGridTile;
+    self.displayGridLarge = displayGridLarge;
+    self.displayGridSmall = displayGridSmall;
+
+    const colors = {
+      text:{
+        BLACK: { color: 'black' },
+        GRAY: { color: '#797985' },
+        LIGHT_GRAY: { color: '#bcbcc2' }
+      },
+      background: {
+        HEADER: { 'background': 'rgb(64,122,107)' },
+        AUTO_FILL_HEADER: { 'background-color': 'rgb(0,145,234)' },
+        SELECTED_TILE: '#f0fbec',
+        SELECTED_AUTO_FILL_TILE: '#e5f4fc'
+      }
+    };
 
     function onInit() {
       _initializeDefaultValues();
@@ -44,19 +60,27 @@
       self.elementsArray = [];
       self.filteredActiviteis = [];
       self.hoverGridHeaderWhiteframe = 'md-whiteframe-19dp';
+      self.backgroundColor = {
+        'background': colors.background.SELECTED_TILE,
+        'border-left': '2px solid grey',
+        'border-right': '2px solid grey',
+        'border-bottom': '2px solid grey',
+      };
+      self.gridTileHeaderColor = colors.background.HEADER;
+      self.fixedTextColor = colors.text.GRAY;
+      self.textColor = colors.text.BLACK;
 
       if (self.gridDataSettings) {
         self.callbackAfterChange = self.gridDataSettings;
       }
 
-      if (!self.callbackAfterChange) self.callbackAfterChange = function () {
-      };
+      if (!self.callbackAfterChange) self.callbackAfterChange = function () {};
     }
 
     function _refreshGrid(newElementsArray) {
       if (self.elementsArray.length) {
         if (self.elementsArray.length != newElementsArray.length) {
-          _upadateSelectDeselect();
+          _updateSelectDeselect();
           self.filter = '';
           self.selectAll = false;
         }
@@ -105,13 +129,22 @@
     function _createConfiguration() {
       self.elementsArray.forEach(function (element) {
         element.actions = _createActions();
-        element.actions.colorGrid = _isAutoFillActivity(element.mode.name);
+        element.actions.colorGrid = _getGridColorByActivityMode(element.mode.name);
         element.activityStatus = _createStatus(element.status);
       }, this);
     }
 
-    function _isAutoFillActivity(mode) {
-      return mode === "Auto Preenchimento" ? { 'background-color': 'rgb(0,145,234)'} : {};
+    function _createActions() {
+      return {
+        selected: false,
+        specialFieldClicked: false,
+        fixedTextColor: self.fixedTextColor,
+        textColor: self.textColor,
+      };
+    }
+
+    function _getGridColorByActivityMode(mode) {
+      return mode === "Auto Preenchimento" ? colors.background.AUTO_FILL_HEADER : {};
     }
 
     function _createStatus(status) {
@@ -138,7 +171,7 @@
       );
     }
 
-    function _upadateSelectDeselect() {
+    function _updateSelectDeselect() {
       self.elementsArray.forEach(function (activity) {
         _deselect(activity)
       });
@@ -146,7 +179,7 @@
 
     function filterGridTile() {
       if (self.filter.length) {
-        _upadateSelectDeselect();
+        _updateSelectDeselect();
         self.filteredActiviteis = $filter('filter')(self.elementsArray, self.filter);
 
         let count = self.filteredActiviteis.length;
@@ -214,8 +247,16 @@
     function _select(activity) {
       if (!activity.actions.selected) {
         activity.actions.selected = true;
-        activity.actions.whiteframeGrid = self.hoverGridHeaderWhiteframe;
-        self.selectedItemCounter++;
+        activity.actions.backgroundColor = self.backgroundColor;
+        if(activity.mode.name==="Auto Preenchimento"){
+          activity.actions.backgroundColor = angular.copy(self.backgroundColor);
+          activity.actions.backgroundColor['background'] = colors.background.SELECTED_AUTO_FILL_TILE;
+        }
+        activity.actions.colorGrid = (Object.keys(activity.actions.colorGrid).length !== 0) ? activity.actions.colorGrid : self.gridTileHeaderColor;
+        _turnOnActivityTextColors(activity);
+        if(self.selectedItemCounter++ === 0){
+          _turnOffNotSelectedActivities();
+        }
         _runCallbackOnChange(activity, 'select');
       }
     }
@@ -224,18 +265,53 @@
       if (activity.actions.selected) {
         activity.actions.selected = false;
         activity.actions.whiteframeGrid = null;
-        activity.actions.colorGrid = _isAutoFillActivity(activity.mode.name);
-        self.selectedItemCounter--;
+        activity.actions.backgroundColor = null;
+        activity.actions.colorGrid = _getGridColorByActivityMode(activity.mode.name);
+        _turnOffActivityTextColors(activity);
+        if(--self.selectedItemCounter === 0){
+          _turnOnNotSelectedActivities();
+        }
         _runCallbackOnChange(activity, 'deselect');
       }
     }
 
-    function _createActions() {
-      let actions = {
-        selected: false,
-        specialFieldClicked: false
-      };
-      return actions;
+    function _turnOffNotSelectedActivities(){
+      self.elementsArray
+        .filter(activity => !activity.actions.selected)
+        .forEach(function (activity) {
+          _turnOffActivityTextColors(activity);
+        });
+    }
+
+    function _turnOnNotSelectedActivities(){
+      self.elementsArray
+        .filter(activity => !activity.actions.selected)
+        .forEach(function (activity) {
+          _turnOnActivityTextColors(activity);
+        });
+    }
+
+    function _turnOnActivityTextColors(activity){
+      activity.actions.fixedTextColor = colors.text.GRAY;
+      activity.actions.textColor = colors.text.BLACK;
+    }
+
+    function _turnOffActivityTextColors(activity){
+      activity.actions.fixedTextColor = colors.text.LIGHT_GRAY;
+      activity.actions.textColor = colors.text.GRAY;
+    }
+
+    function displayGridLarge() {
+      if (window.innerWidth < 1400) {
+        return '1:0.9';
+      }
+      return '6:4';
+    }
+    function displayGridSmall() {
+      if (window.innerWidth < 680) {
+        return '1:1';
+      }
+      return '2.7:2';
     }
   }
 }());

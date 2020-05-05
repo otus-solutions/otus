@@ -7368,3 +7368,105 @@ Test.utils.data.userActivityPendency = {
     "recruitmentNumber" : 1166657
   }
 }
+Test.utils.data.participantContact = {
+  "_id": "5e833fdfc24cae6884d69194",
+  "objectType": "ParticipantContact",
+  "recruitmentNumber": 2000735,
+  "email": {
+    "main": {
+      "value": {
+        "content": "otus@gmail.com"
+      },
+      "observation": "pessoal"
+    },
+    "second": {
+      "value": {
+        "content": "a@hotmal.com"
+      },
+      "observation": "trabalho"
+    },
+    "third": {
+      "value": {
+        "content": "jose.silva.albuquerque@bol.com.br"
+      },
+      "observation": "email como nome grande"
+    },
+    "fourth": {
+      "value": {
+        "content": "a@b"
+      },
+      "observation": "gdf"
+    }
+  },
+  "address": {
+    "main": {
+      "value": {
+        "postalCode": "91787193",
+        "street": "Rua Elvira Dendena",
+        "streetNumber": 436,
+        "neighbourhood": "Hípica",
+        "city": "Cachoeirinha",
+        "state": "RS",
+        "country": "Brasil"
+      },
+      "observation": ""
+    },
+    "second": {
+      "value": {
+        "postalCode": "91787-140",
+        "street": "Rua Maurílio Ferreira",
+        "streetNumber": 634,
+        "complements": "ap1",
+        "neighbourhood": "Campo Novo",
+        "city": "Porto Alegre",
+        "state": "RS",
+        "country": "Brasil"
+      },
+      "observation": "Casa da Mãe (Maria)"
+    },
+    "third": {
+      "value": {
+        "postalCode": "91787-193",
+        "street": "Rua Elvira Dendena",
+        "streetNumber": 123,
+        "neighbourhood": "Hípica",
+        "city": "Porto Alegre",
+        "state": "RS",
+        "country": "Brasil"
+      }
+    }
+  },
+  "phoneNumber": {
+    "main": {
+      "value": {
+        "content": "51998579999"
+      },
+      "observation": "Whats"
+    },
+    "second": {
+      "value": {
+        "content": "5132646985"
+      },
+      "observation": "Casa"
+    },
+    "third": {
+      "value": {
+        "content": "11223336545"
+      },
+      "observation": "testess"
+    },
+    "fourth": {
+      "value": {
+        "content": "12345697456"
+      },
+      "observation": "fcd"
+    },
+    "fifth": {
+      "value": {
+        "content": "23610365413"
+      },
+      "observation": "abc"
+    }
+  }
+}
+

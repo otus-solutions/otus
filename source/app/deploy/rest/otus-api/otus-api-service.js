@@ -9,6 +9,7 @@
     'otusjs.deploy.user.AuthenticationRestService',
     'otusjs.deploy.InstallerRestService',
     'otusjs.deploy.ActivityRestService',
+    'otusjs.deploy.OfflineActivityCollectionRestService',
     'otusjs.deploy.ActivityImportRestService',
     'otusjs.deploy.SurveyRestService',
     'otusjs.deploy.SurveyGroupRestService',
@@ -25,6 +26,7 @@
     'otusjs.deploy.user.UserAccessRecoveryRestService',
     'otusjs.deploy.monitoring.LaboratoryMonitoringRestService',
     'otusjs.deploy.UserActivityPendencyRestService',
+    'otusjs.deploy.ParticipantContactRestService',
     'otusjs.deploy.LocationPointRestService'
   ];
 
@@ -32,6 +34,7 @@
     AuthenticationRestService,
     InstallerRestService,
     ActivityRestService,
+    OfflineActivityCollectionRestService,
     ActivityImportRestService,
     SurveyRestService,
     SurveyGroupRestService,
@@ -48,6 +51,7 @@
     UserAccessRecoveryRestService,
     LaboratoryMonitoringRestService,
     UserActivityPendencyRestService,
+    ParticipantContactRestService,
     LocationPointRestService
   ) {
     var self = this;
@@ -68,6 +72,7 @@
     }
 
     function initializeRestrictResources() {
+      OfflineActivityCollectionRestService.initialize();
       ActivityRestService.initialize();
       ActivityImportRestService.initialize();
       SurveyRestService.initialize();
@@ -83,6 +88,7 @@
       MonitoringRestService.initialize();
       LaboratoryMonitoringRestService.initialize();
       UserActivityPendencyRestService.initialize();
+      ParticipantContactRestService.initialize();
       LocationPointRestService.initialize();
     }
   }

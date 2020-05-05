@@ -1,6 +1,6 @@
 {
   "name": "otus",
-  "version": "1.31.1",
+  "version": "1.32.0",
   "description": "Tool for data entry in a research environment.",
   "keywords": [
     "otus",
@@ -62,9 +62,9 @@
     "ng-material-datetimepicker": "^1.13.0",
     "require-dir": "^1.0.0",
     "xlsx-core": "^1.0.3",
-    "otus-client-js": "1.24.0",
+    "otus-client-js": "1.25.0",
     "otus-domain-client": "1.1.0",
-    "otus-model-js": "1.30.0",
+    "otus-model-js": "1.31.0",
     "otus-preview-js": "1.15.3",
     "otus-validation-js": "1.1.0",
     "please-wait": "0.0.5"
@@ -92,7 +92,7 @@
     "gulp-replace-task": "^0.11.0",
     "gulp-sonar": "^2.1.0",
     "gulp-uglify": "^1.5.1",
-    "gulp-uncache": "^0.4.0-beta1",
+    "gulp-uncache": "0.4.0-beta1",
     "gulp-useref": "^3.0.4",
     "jasmine-core": "^2.8.0",
     "jasmine-promise-matchers": "^2.6.0",
