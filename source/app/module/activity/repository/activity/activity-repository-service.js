@@ -191,11 +191,11 @@
                 });
         }
 
-        function createAutoFillActivity(survey, loggedUser, participant, configuration, externalID) {
+        function createAutoFillActivity(survey, loggedUser, participant, configuration) {
           return ModuleService
               .whenActivityFacadeServiceReady()
               .then(function (ActivityFacadeService) {
-                  return ActivityFacadeService.createAutoFillActivity(survey, loggedUser, participant, configuration, externalID);
+                  return ActivityFacadeService.createAutoFillActivity(survey, loggedUser, participant, configuration);
               });
       }
 

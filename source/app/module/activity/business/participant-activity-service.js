@@ -102,7 +102,7 @@
     }
 
     function _createAutoFillActivity(preActivity, selectedParticipant) {
-			ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID)
+			ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration)
 				.then(autoFillActivity => self.activities.push(autoFillActivity));
 		}
 

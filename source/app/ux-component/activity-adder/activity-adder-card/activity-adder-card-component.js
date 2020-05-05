@@ -30,8 +30,12 @@
 		self.getAcronym = getAcronym;
 		self.updateExternalID = updateExternalID;
 		self.updateRealizationDate = updateRealizationDate;
-		self.monitoringCheckerFormSearchTextChange = monitoringCheckerFormSearchTextChange;
+    self.monitoringCheckerFormSearchTextChange = monitoringCheckerFormSearchTextChange;
+    self.styleHeader = styleHeader;
 
+    function styleHeader() {
+			return self.preActivity.mode === "AUTOFILL" ? "{background: '#2d91ea'}" : "{background: '#5ba499'}";
+    }
 
 		function checkerQuerySearch(query) {
 			let results = query ? self.checkers.filter(_checkerCreateFilterFor(query)) : self.checkers;
