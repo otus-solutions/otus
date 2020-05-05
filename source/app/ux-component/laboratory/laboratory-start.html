@@ -26,11 +26,11 @@
         <div layout="row" layout-align="center start">
           <md-input-container class="md-icon-float md-icon-right md-block">
             <label>Id do Laboratório</label>
-            <input ng-model="$ctrl.laboratoryIdentification" type="number" min="0" step="1"
+            <input ng-model="$ctrl.laboratoryIdentification" type="number" numbers-only min="0" step="1"
                    ng-disabled="!$ctrl.selectedParticipant.identified">
           </md-input-container>
           <md-button class="md-fab md-mini md-primary" ng-click="$ctrl.attacheLaboratory()" aria-label="More"
-                     ng-disabled="!$ctrl.selectedParticipant.identified">
+                     ng-disabled="!$ctrl.laboratoryIdentification">
             <md-icon> compare_arrows</md-icon>
           </md-button>
         </div>

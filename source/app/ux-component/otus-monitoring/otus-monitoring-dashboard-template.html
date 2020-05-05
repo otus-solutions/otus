@@ -22,7 +22,7 @@
         </div>
       </div>
     </md-content>
-    <div layout="row" flex>
+    <div layout="row" flex ng-show="$ctrl.monitoringData.length">
       <md-content layout="column" flex>
         <monitoring-filter-view-component ng-if="$ctrl.ready" centers="$ctrl.centers" parse-data="$ctrl.parseData"
                                           questionnaires-list="$ctrl.questionnairesList"

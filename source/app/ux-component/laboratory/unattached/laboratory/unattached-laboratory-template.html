@@ -16,9 +16,9 @@
     <div layout="row" layout-align="end end">
       <md-input-container class="remove-errors-spacer">
         <label>Número de recrutamento</label>
-        <input ng-model="$ctrl.recruitmentNumber" type="number" min="0" step="1">
+        <input ng-model="$ctrl.recruitmentNumber" type="number" numbers-only min="0" step="1">
       </md-input-container>
-      <md-button class="md-icon-button md-primary" ng-click="$ctrl.attacheLaboratory()" aria-label="More">
+      <md-button class="md-icon-button md-primary" ng-click="$ctrl.attacheLaboratory()" ng-disabled="!$ctrl.recruitmentNumber" aria-label="More">
         <md-icon> compare_arrows</md-icon>
       </md-button>
     </div>

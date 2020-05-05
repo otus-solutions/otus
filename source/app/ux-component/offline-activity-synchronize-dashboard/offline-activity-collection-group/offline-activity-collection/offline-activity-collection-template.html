@@ -1,0 +1,35 @@
+<md-card  class="md-grid-tile-body" layout="row" flex="100">
+  <div layout="column" layout-align="center center" flex>
+    <div layout="row" layout-margin layout-align="start center" style="width: 100%" ng-if="$ctrl.offlineCollectionData.observation && $ctrl.offlineCollectionData.observation != ''">
+      <div layout="column" flex>
+        <div layout="row" flex>
+          <span class="md-subhead" layout="row" layout-align="start center" flex="50">Observações: </span>
+          <span class="md-subhead" layout="row" layout-align="end center" flex="50">{{$ctrl.offlineCollectionData.date | date:'dd/MM/yyyy - h:mm'}}</span>
+        </div>
+        <p>{{$ctrl.offlineCollectionData.observation}}</p>
+      </div>
+    </div>
+    <div layout="row" layout-margin layout-align="start center" style="width: 100%" ng-if="!$ctrl.offlineCollectionData.observation || $ctrl.offlineCollectionData.observation == ''">
+      <div layout="column" flex>
+        <div layout="row" flex>
+          <span class="md-subhead" layout="row" layout-align="start center" flex="50">Sem observações</span>
+          <span class="md-subhead" layout="row" layout-align="end center" flex="50">{{$ctrl.offlineCollectionData.date | date:'dd/MM/yyyy - h:mm'}}</span>
+        </div>
+      </div>
+    </div>
+    <md-divider></md-divider>
+    <div id="md-content-container" layout="column" flex>
+      <md-content layout="row" flex>
+        <md-list flex>
+          <md-list-item class="md-2-line" ng-repeat="activity in $ctrl.offlineCollectionData.activities"
+                        ng-click="null">
+            <div class="md-list-item-text" layout="column">
+              <span flex class="md-title">{{activity.surveyForm.acronym}} - {{activity.surveyForm.name}}</span>
+            </div>
+            <md-divider></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-content>
+    </div>
+  </div>
+</md-card>
