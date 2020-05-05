@@ -6,7 +6,6 @@
 		.service('otusjs.activity.business.ParticipantActivityService', Service);
 
 	Service.$inject = [
-		'otusjs.activity.core.ModuleService',
 		'otusjs.activity.core.ContextService',
 		'otusjs.activity.repository.ActivityRepositoryService',
 		'otusjs.activity.repository.UserRepositoryService',
@@ -15,7 +14,7 @@
 		'SurveyFormFactory'
 	];
 
-	function Service(ModuleService, ContextService, ActivityRepositoryService, UserRepositoryService,
+	function Service(ContextService, ActivityRepositoryService, UserRepositoryService,
                    PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
 		var self = this;
 		var _paperActivityCheckerData = null;
@@ -82,6 +81,7 @@
 				  switch (preActivity.mode) {
             case "ONLINE": _createOnLineActivity(preActivity, selectedParticipant); break;
             case "PAPER":  _createPaperActivity(preActivity, selectedParticipant); break;
+            case "AUTOFILL":  _createAutoFillActivity(preActivity, selectedParticipant); break;
           }
 				});
 			});
@@ -99,6 +99,11 @@
 				preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID)
 				.then(paperActivity => self.activities.push(paperActivity));
       }
+    }
+
+    function _createAutoFillActivity(preActivity, selectedParticipant) {
+			ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID)
+				.then(autoFillActivity => self.activities.push(autoFillActivity));
 		}
 
 		function setActivitiesSelection(surveys) {
