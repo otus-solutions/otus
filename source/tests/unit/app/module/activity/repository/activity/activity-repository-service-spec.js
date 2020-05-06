@@ -27,15 +27,14 @@ describe('activity-repository-service Test', function () {
     mocks();
   });
 
-
   it('should create service', function () {
     expect(service).toBeDefined();
     expect(service.addActivityRevision).toBeDefined();
     expect(service.getActivityRevisions).toBeDefined();
     expect(service.importActivities).toBeDefined();
     expect(service.getById).toBeDefined();
+    expect(service.createFollowUpActivity).toBeDefined();
   });
-
 
   describe("activity revisions test", function () {
     beforeEach(function () {
@@ -74,12 +73,19 @@ describe('activity-repository-service Test', function () {
   describe("activity test", function () {
     beforeEach(function () {
       spyOn(Injections.ActivityCollectionService, "getById").and.callThrough();
+      spyOn(Injections.ActivityCollectionService, "createFollowUpActivity").and.callThrough();
     });
 
     it('should call getById method', function () {
       service.getById(DATA_ACTIVITY, DATA_RN);
       expect(Injections.ActivityCollectionService.getById).toHaveBeenCalledTimes(1);
       expect(Injections.ActivityCollectionService.getById).toHaveBeenCalledWith(DATA_ACTIVITY, DATA_RN);
+    });
+
+    it('should call createFollowUpActivity method', function () {
+      service.createFollowUpActivity(Mock.survey);
+      expect(Injections.ActivityCollectionService.createFollowUpActivity).toHaveBeenCalledTimes(1);
+      expect(Injections.ActivityCollectionService.createFollowUpActivity).toHaveBeenCalledWith([Mock.survey]);
     });
 
   });
@@ -99,7 +105,6 @@ describe('activity-repository-service Test', function () {
       service.createOnLineActivity(Mock.survey, Mock.user, Mock.participant, Mock.configuration, null);
       expect(Injections.ModuleService.whenActivityFacadeServiceReady).toHaveBeenCalledTimes(1);
     });
-
 
     it('should call createPaperActivity method', function () {
       Mock.survey.mode = "PAPER";

@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -24,6 +24,7 @@
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
     self.getById = getById;
+    self.createFollowUpActivity = createFollowUpActivity;
 
     function initialize() {
       _rest = OtusRestResourceService.getActivityResource();
@@ -40,7 +41,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.updateCheckerActivity({rn}, checkerUpdated).$promise;
+      return _rest.updateCheckerActivity({ rn }, checkerUpdated).$promise;
     }
 
     function save(data) {
@@ -60,7 +61,7 @@
       _rest
         .listAll({ rn: recruitmentNumber })
         .$promise
-        .then(function(response) {
+        .then(function (response) {
           if (response.data && response.data.length) {
             request.resolve(response.data);
           } else {
@@ -82,7 +83,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.addActivityRevision({ rn: activity.participantData.recruitmentNumber}, activityRevision).$promise;
+      return _rest.addActivityRevision({ rn: activity.participantData.recruitmentNumber }, activityRevision).$promise;
     }
 
     function getActivityRevisions(activityID, activity) {
@@ -92,7 +93,7 @@
       var request = $q.defer();
       _rest.getActivityRevisions({ id: activityID, rn: activity.participantData.recruitmentNumber })
         .$promise
-        .then(function(response) {
+        .then(function (response) {
           if (response.data && response.data.length) {
             request.resolve(response.data);
           } else {
@@ -109,9 +110,9 @@
       }
 
       var request = $q.defer();
-      _rest.getById({rn : rn, id: ActivityId})
+      _rest.getById({ rn: rn, id: ActivityId })
         .$promise
-        .then(function(response) {
+        .then(function (response) {
           if (response.data) {
             request.resolve([response.data]);
           } else {
@@ -120,6 +121,13 @@
         });
 
       return request.promise;
+    }
+
+    function createFollowUpActivity(activity) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.createFollowUpActivity({ rn: activity.participantData.recruitmentNumber }, activity).$promise;
     }
 
   }

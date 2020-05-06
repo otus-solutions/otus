@@ -36,6 +36,7 @@
         self.saveActivities = saveActivities;
 
         self.createActivity = createActivity;
+        self.createFollowUpActivity= createFollowUpActivity;
 
         function listAll(participant) {
             if (!participant) {
@@ -206,6 +207,10 @@
 
         function createActivity(activity) {
           return ActivityCollectionService.insert([activity]);
+        }
+
+        function createFollowUpActivity(activity) {
+          return ActivityCollectionService.createFollowUpActivity([activity]);
         }
     }
 
