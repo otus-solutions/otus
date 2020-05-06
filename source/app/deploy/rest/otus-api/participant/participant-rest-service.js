@@ -58,9 +58,6 @@
     }
 
     function getFollowUps(recruitmentNumber) {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
       return _followUpRest.listParticipantsFollowUps({rn: recruitmentNumber}).$promise;
     }
 
@@ -76,8 +73,12 @@
       }).$promise;
     }
 
-    function requestPasswordReset() {
-
+    function requestPasswordReset(email) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.requestPasswordReset({email}).$promise;
     }
+
   }
 }());

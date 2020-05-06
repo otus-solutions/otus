@@ -42,8 +42,7 @@
     self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
-    //ToDo: Revisar
-    //self.requestPasswordReset = requestPasswordReset;
+    self.requestPasswordReset = requestPasswordReset;
 
     var _setupSuccess;
 
@@ -148,7 +147,7 @@
 
     function getParticipant(rn) {
       let participant = participantList.find(element => element.recruitmentNumber === rn);
-      if(!participant){
+      if (!participant) {
         throw new Error('ParticipantList is not initialized.');
       }
       return participant;
@@ -203,11 +202,9 @@
     }
 
     //ToDo: Revisar
-    //function requestPasswordReset() {
-    //   let participant = getSelectedParticipant();
-    //   console.log(participant);
-    //   return ParticipantRepositoryService.requestPasswordReset(participant.recruitmentNumber);
-    // }
+    function requestPasswordReset(email) {
+      return ParticipantRepositoryService.requestPasswordReset(email);
+    }
 
   }
 }());

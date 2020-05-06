@@ -4,21 +4,23 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusParticipantPasswordResetButton', {
+      templateUrl: 'app/ux-component/participant-password-reset-button/participant-password-reset-button-template.html',
+      bindings: {email: '<'},
       controller: Controller,
-      templateUrl: 'app/ux-component/participant-password-reset-button/participant-password-reset-button-template.html'
     });
 
   Controller.$inject = [
-    'otusjs.participantPasswordResetButton.ParticipantPasswordResetButtonService'
+    'otusjs.participant.business.ParticipantManagerService'
+    // 'otusjs.participantPasswordResetButton.ParticipantPasswordResetButtonService'
   ];
 
-  function Controller(ParticipantPasswordResetButtonService) {
+  function Controller(ParticipantManagerService) {
     var self = this;
 
-    self.callFunction = callFunction;
+    self.resetPassword = resetPassword;
 
-    function callFunction() {
-      ParticipantPasswordResetButtonService.sayHello();
+    function resetPassword() {
+      ParticipantManagerService.requestPasswordReset(self.email);
     }
 
   }

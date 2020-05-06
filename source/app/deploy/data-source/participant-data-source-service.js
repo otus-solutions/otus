@@ -26,8 +26,7 @@
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
-    // ToDo: Revisar
-    // self.requestPasswordReset = requestPasswordReset;
+    self.requestPasswordReset = requestPasswordReset;
 
     function up() {
       _loadingDefer = $q.defer();
@@ -137,9 +136,8 @@
         });
     }
 
-    // ToDo: Revisar
-    // function requestPasswordReset() {
-    //  // ParticipantStorageService.requestPasswordReset()
-    // }
+    function requestPasswordReset(email) {
+     return ParticipantRestService.requestPasswordReset(email);
+    }
   }
 }());

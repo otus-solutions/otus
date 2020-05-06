@@ -33,8 +33,7 @@
     self.swapMainContact = swapMainContact;
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
-    //Todo: Revisar
-    //self.requestPasswordReset = requestPasswordReset;
+    self.requestPasswordReset = requestPasswordReset;
 
 
     function create(participant) {
@@ -158,10 +157,12 @@
         .then(response => response.data);
     }
 
-    //ToDo: Revisar
-    // function requestPasswordReset() {
-    //
-    // }
+    function requestPasswordReset(email) {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.requestPasswordReset(email);
+      }
+    }
 
   }
 }());
