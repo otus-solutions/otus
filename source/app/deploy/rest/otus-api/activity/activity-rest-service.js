@@ -13,6 +13,7 @@
   function Service($q, OtusRestResourceService) {
     var self = this;
     var _rest = null;
+    let _followUpRest;
 
     /* Public methods */
     self.initialize = initialize;
@@ -28,6 +29,7 @@
 
     function initialize() {
       _rest = OtusRestResourceService.getActivityResource();
+      _followUpRest = OtusRestResourceService.getFollowUpResourceFactory();
     }
 
     function update(data) {
@@ -124,10 +126,10 @@
     }
 
     function createFollowUpActivity(activity) {
-      if (!_rest) {
+      if (!_followUpRest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.createFollowUpActivity({ rn: activity.participantData.recruitmentNumber }, activity).$promise;
+      return _followUpRest.createFollowUpActivity({ rn: activity.participantData.recruitmentNumber }, activity).$promise;
     }
 
   }

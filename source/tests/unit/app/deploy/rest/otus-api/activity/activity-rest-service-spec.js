@@ -114,6 +114,9 @@ describe('activity-rest-service Test', function () {
     Mock.OtusRestResourceService = {
       getActivityResource: function () {
         return Mock.rest;
+      },
+      getFollowUpResourceFactory: function () {
+        return Mock.rest;
       }
     }
   }
