@@ -210,7 +210,7 @@
         }
 
         function createFollowUpActivity(activity) {
-          return ActivityCollectionService.createFollowUpActivity([activity]);
+          return ActivityCollectionService.createFollowUpActivity(activity);
         }
     }
 

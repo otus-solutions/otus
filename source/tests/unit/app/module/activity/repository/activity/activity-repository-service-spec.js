@@ -85,7 +85,7 @@ describe('activity-repository-service Test', function () {
     it('should call createFollowUpActivity method', function () {
       service.createFollowUpActivity(Mock.survey);
       expect(Injections.ActivityCollectionService.createFollowUpActivity).toHaveBeenCalledTimes(1);
-      expect(Injections.ActivityCollectionService.createFollowUpActivity).toHaveBeenCalledWith([Mock.survey]);
+      expect(Injections.ActivityCollectionService.createFollowUpActivity).toHaveBeenCalledWith(Mock.survey);
     });
 
   });
