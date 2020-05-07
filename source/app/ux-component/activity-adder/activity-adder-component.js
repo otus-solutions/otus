@@ -247,9 +247,7 @@
     }
 
     function _checkFilledInput(preActivity) {
-      if (preActivity.mode === "ONLINE" && !preActivity.surveyForm.isRequiredExternalID()) preActivity.preActivityValid = true;
-      if (preActivity.mode === "AUTOFILL") preActivity.preActivityValid = true;
-      return preActivity.preActivityValid === true;
+      return preActivity.preActivityValid = preActivity.preActivityValid || preActivity.mode === "AUTOFILL" || (preActivity.mode === "ONLINE" && !preActivity.surveyForm.isRequiredExternalID());
     }
 
     function monitoringSearchTextChange(state) {
