@@ -11,7 +11,6 @@
 
   Controller.$inject = [
     'otusjs.participant.business.ParticipantManagerService'
-    // 'otusjs.participantPasswordResetButton.ParticipantPasswordResetButtonService'
   ];
 
   function Controller(ParticipantManagerService) {

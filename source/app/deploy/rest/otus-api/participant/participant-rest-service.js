@@ -11,7 +11,7 @@
 
   function Service(OtusRestResourceService) {
     var self = this;
-    var _rest, _followUpRest = null;
+    var _rest, _followUpRest, _passwordRecoveryRest = null;
 
     /* Public methods */
     self.initialize = initialize;
@@ -27,6 +27,7 @@
     function initialize() {
       _rest = OtusRestResourceService.getParticipantResource();
       _followUpRest = OtusRestResourceService.getFollowUpResourceFactory();
+      _passwordRecoveryRest = OtusRestResourceService.getParticipantPasswordResetResource();
     }
 
     function getByRecruitmentNumber(rn) {
@@ -77,7 +78,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.requestPasswordReset({email}).$promise;
+      return _passwordRecoveryRest.requestRecovery({email}).$promise;
     }
 
   }
