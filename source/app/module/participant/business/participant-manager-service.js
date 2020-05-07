@@ -201,7 +201,6 @@
       return ParticipantRepositoryService.deleteNonMainContact(deleteContactDto);
     }
 
-    //ToDo: Revisar
     function requestPasswordReset(email) {
       return ParticipantRepositoryService.requestPasswordReset(email);
     }
