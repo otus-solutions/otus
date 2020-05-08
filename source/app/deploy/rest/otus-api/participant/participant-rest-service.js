@@ -75,10 +75,10 @@
     }
 
     function requestPasswordReset(email) {
-      if (!_rest) {
+      if (!_passwordRecoveryRest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _passwordRecoveryRest.requestRecovery({email}).$promise;
+      return _passwordRecoveryRest.requestRecovery({userEmail:email}).$promise;
     }
 
   }
