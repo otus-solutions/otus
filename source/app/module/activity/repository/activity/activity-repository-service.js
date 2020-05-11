@@ -8,12 +8,11 @@
     Service.$inject = [
         '$q',
         'otusjs.activity.core.ModuleService',
-        'otusjs.activity.core.ContextService',
         'otusjs.activity.repository.ActivityCollectionService',
         'otusjs.activity.repository.SurveyCollectionService'
     ];
 
-    function Service($q, ModuleService, ContextService, ActivityCollectionService, SurveyCollectionService) {
+    function Service($q, ModuleService, ActivityCollectionService, SurveyCollectionService) {
         var self = this;
         var _existsWorkingInProgress = null;
 
@@ -33,9 +32,11 @@
 
         self.createOnLineActivity = createOnLineActivity;
         self.createPaperActivity = createPaperActivity;
+        self.createAutoFillActivity = createAutoFillActivity;
         self.saveActivities = saveActivities;
 
         self.createActivity = createActivity;
+        self.createFollowUpActivity= createFollowUpActivity;
 
         function listAll(participant) {
             if (!participant) {
@@ -191,6 +192,14 @@
                 });
         }
 
+        function createAutoFillActivity(survey, loggedUser, participant, configuration) {
+          return ModuleService
+              .whenActivityFacadeServiceReady()
+              .then(function (ActivityFacadeService) {
+                  return ActivityFacadeService.createAutoFillActivity(survey, loggedUser, participant, configuration);
+              });
+      }
+
         function saveActivities(activities) {
           var work = _setupWorkProgress();
           ActivityCollectionService.insert(activities).then(work.finish);
@@ -198,6 +207,10 @@
 
         function createActivity(activity) {
           return ActivityCollectionService.insert([activity]);
+        }
+
+        function createFollowUpActivity(activity) {
+          return ActivityCollectionService.createFollowUpActivity(activity);
         }
     }
 

@@ -33,13 +33,14 @@ describe('activity-collection-service Test', function() {
     expect(service.getActivityRevisions).toBeDefined();
   });
 
-  describe("activity revisions", function () {
+  describe("activity", function () {
     beforeEach(function () {
       spyOn(Injections.$q, "defer").and.returnValue({resolve:()=>{},reject:()=>{}});
       spyOn(Mock.remoteStorage, "addActivityRevision").and.callThrough();
       spyOn(Mock.remoteStorage, "getActivityRevisions").and.callThrough();
       spyOn(Mock.remoteStorage, "importActivities").and.callThrough();
       spyOn(Mock.remoteStorage, "getById").and.callThrough();
+      spyOn(Mock.remoteStorage, "createFollowUpActivity").and.callThrough();
     });
 
     it('should create activity revision', function (done) {
@@ -94,10 +95,22 @@ describe('activity-collection-service Test', function() {
       done();
     });
 
+    it('should createFollowUpActivity by Activity', function (done) {
+      service.createFollowUpActivity({});
+      Injections.ModuleService.getActivityRemoteStorage().whenReady().then(function (remoteStorage) {
+        expect(Mock.remoteStorage.createFollowUpActivity).toHaveBeenCalledTimes(1);
+        expect(Mock.remoteStorage.createFollowUpActivity).toHaveBeenCalledWith({});
+        remoteStorage.createFollowUpActivity().then(function () {
+          done();
+        });
+        done();
+      });
+      done();
+    });
+
   });
 
   function mockData() {
-
 
     Mock.remoteStorage = {
       addActivityRevision: function () {
@@ -110,6 +123,9 @@ describe('activity-collection-service Test', function() {
         return Promise.resolve();
       },
       getById: function () {
+        return Promise.resolve();
+      },
+      createFollowUpActivity: function () {
         return Promise.resolve();
       }
     };

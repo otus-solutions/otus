@@ -8,8 +8,6 @@
   Controller.$inject = [
     '$mdDialog',
     '$mdToast',
-    '$compile',
-    '$scope',
     'SurveyFormFactory',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.participant.business.ParticipantFollowUpService',
@@ -20,7 +18,7 @@
     'otusjs.application.session.core.ContextService'
   ];
 
-  function Controller($mdDialog, $mdToast, $compile, $scope, SurveyFormFactory, DialogShowService, ParticipantFollowUpService, ActivityFactory, ParticipantActivityService, ConfigurationRestService, ActivityRepositoryService, SessionContextService) {
+  function Controller($mdDialog, $mdToast, SurveyFormFactory, DialogShowService, ParticipantFollowUpService, ActivityFactory, ParticipantActivityService, ConfigurationRestService, ActivityRepositoryService, SessionContextService) {
     var self = this;
 
     self.$onInit = onInit;
@@ -31,7 +29,7 @@
     }
 
     function activateEvent() {
-      _showDialog(self.eventData.description).then(()=>{
+      _showDialog(self.eventData.description).then(() => {
         SessionContextService.getLoggedUser().then((user) => {
           ConfigurationRestService.getSurveyByAcronym(self.eventData.acronym).then((surveyForm) => {
             if (surveyForm.data.length > 0) {
@@ -42,13 +40,13 @@
                     let activityConfiguration = {};
                     activityConfiguration.category = response[0];
                     let activity = ActivityFactory.createAutoFillActivity(SurveyFormFactory.fromJsonObject(surveyForm.data[surveyForm.data.length - 1]), user, self.eventComponent.selectedParticipant, activityConfiguration);
-                    ActivityRepositoryService.createActivity(activity).then((result) => {
+                    ActivityRepositoryService.createFollowUpActivity(activity).then((result) => {
                       self.eventData.activityId = result._id;
                       ParticipantFollowUpService.activateFollowUpEvent(self.eventComponent.selectedParticipant.recruitmentNumber, self.eventData).then(function (result) {
                         self.eventComponent.eventData.participantEvents.push(result);
                         self.eventComponent.eventData.status = "PENDING"
                       });
-                    }).catch(()=>{
+                    }).catch(() => {
                       _showToast(5000, "Ocorreu um erro, entre em contato com o administrador do sistema");
                     });
                   } else {
