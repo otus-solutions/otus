@@ -19,11 +19,11 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
       ctrl.contactId = Mock.contacts._id;
       ctrl.form = Mock.form;
 
-      spyOn(Injections.ParticipantContactService,"createContactDto").and.callThrough();
+      spyOn(Injections.ParticipantContactService, "createContactDto").and.callThrough();
       spyOn(Injections.ParticipantMessagesService, "showToast").and.callThrough();
       spyOn(Injections.ParticipantContactService, "isLastContact").and.callThrough();
       spyOn(Injections.ParticipantContactService, "createPositionContactDto").and.callThrough();
-      spyOn(Injections.ParticipantContactService,"dinamicNewContactCreate").and.returnValue(Mock.deferred.promise);
+      spyOn(Injections.ParticipantContactService, "dinamicNewContactCreate").and.returnValue(Mock.deferred.promise);
       spyOn(Injections.ParticipantContactService, "showDeleteDialog").and.returnValue(Mock.deferred.promise);
       spyOn(Injections.ParticipantContactService, "deleteNonMainContact").and.returnValue(Mock.deferred.promise);
       spyOn(Injections.ParticipantContactService, "dinamicUpdateContact").and.returnValue(Mock.deferred.promise);
@@ -84,7 +84,7 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
 
   it('findAddressByCepMethod_should_fit_data_coming_from_postOfficeApi_into_model_injected_by_parameter', () => {
     spyOn(Injections.ParticipantContactService, "getAddressByCep").and.returnValue(Mock.deferred.promise);
-    let addressContact = {value: {postalCode:"91787-140", city: undefined}};
+    let addressContact = { value: { postalCode: "91787-140", city: undefined } };
     ctrl.findAddressByCep(addressContact);
     Mock.scope.$digest();
     expect(addressContact.value.city).toBe('Porto Alegre')
@@ -92,15 +92,15 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
 
   it('findAddressByCepMethod_with_invalidPostalCode_should_invoke_fail_message', () => {
     spyOn(Injections.ParticipantContactService, "getAddressByCep").and.returnValue(Mock.deferredPostaCodeFail.promise);
-    let addressContact = {value: {postalCode:"88888-888"}}
+    let addressContact = { value: { postalCode: "88888-888" } }
     ctrl.findAddressByCep(addressContact);
     Mock.scope.$digest();
     expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
   });
 
   it('createNewContactMethod_should_make_pipelineOrderedCalls_after_promiseResolution', () => {
-    ctrl.createNewContact( Mock.updatedContactItem, Mock.position, Mock.type);
-     Mock.scope.$digest();
+    ctrl.createNewContact(Mock.updatedContactItem, Mock.position, Mock.type);
+    Mock.scope.$digest();
     expect(Injections.ParticipantContactService.createContactDto).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantContactService.dinamicNewContactCreate).toHaveBeenCalledTimes(1);
     expect(ctrl.editMode[Mock.position]).toBeFalsy();
@@ -118,7 +118,7 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     expect(Injections.ParticipantContactService.deleteNonMainContact).toHaveBeenCalledTimes(1);
     expect(ctrl.addContactMode[ctrl.type]).toBeTruthy();
     expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
-    expect(ctrl.loadParticipantContact).toHaveBeenCalledTimes(1);
+    expect(ctrl.loadParticipantContact).toHaveBeenCalledTimes(2);
   });
 
   it('enableSwapMainContactMode_should_enable_mainContactSwapMode', () => {
@@ -133,7 +133,7 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     Mock.scope.$digest();
     expect(ctrl.loadParticipantContact).toHaveBeenCalledTimes(1);
     expect(ctrl.swapMainContactMode[Mock.type]).toBeFalsy();
-   expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledTimes(1);
   });
 
   it('swapMainContactMethod_should_invoke_fail_message', () => {
@@ -149,7 +149,7 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
   });
 
   it('confirmedDisabledButtomPostalCode_in_editMode_and_inputInvalid_should_enable_buttonDisable', () => {
-   ctrl.editMode[Mock.position] = true;
+    ctrl.editMode[Mock.position] = true;
     expect(ctrl.confirmedDisabledButtomPostalCode(Mock.position)).toBeTruthy();
   });
 
@@ -201,8 +201,8 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
     };
     Mock.position = "main";
     Mock.loadParticipantContact = jasmine.createSpy();
-    Mock.address = { data: { localidade: "Porto Alegre"}};
-    Mock.addressInvalid = { data: { erro: true}};
+    Mock.address = { data: { localidade: "Porto Alegre" } };
+    Mock.addressInvalid = { data: { erro: true } };
     Mock.deferred = $q.defer();
     Mock.deferred.resolve(Mock.address);
     Mock.deferredPostaCodeFail = $q.defer();
