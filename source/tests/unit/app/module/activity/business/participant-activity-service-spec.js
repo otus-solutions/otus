@@ -106,6 +106,14 @@ describe('participant-activity-service Test', function() {
       expect(Injections.ContextService.getSelectedParticipant).toHaveBeenCalledTimes(1);
     });
 
+    it('should call saveActivities autoFill activity method', function () {
+      Mock.preActivity.mode = "AUTOFILL";
+      spyOn(Injections.ActivityRepositoryService,"createPaperActivity").and.returnValue(Promise.resolve(Mock.participant));
+      spyOn(Injections.ContextService,"getSelectedParticipant").and.returnValue(Promise.resolve(Mock.participant));
+      service.saveActivities([Mock.preActivity]);
+      expect(Injections.ContextService.getSelectedParticipant).toHaveBeenCalledTimes(1);
+    });
+
     it('should call getSurveyFromJson method', function () {
       service.getSurveyFromJson(Mock.preActivity);
       expect(Injections.SurveyFormFactory.fromJsonObject).toHaveBeenCalledTimes(1);
@@ -117,15 +125,6 @@ describe('participant-activity-service Test', function() {
     Mock.DATA_ACTIVITY_INFO = {getID: function () { return "54321"},participantData: {recruitmentNumber:"0000000"}};
     Mock.survey = Test.utils.data.activityPASC.surveyForm;
     Mock.mode = Test.utils.data.activityPASC.mode;
-    Mock.configuration = {
-      category: {
-        disabled: false,
-        isDefault: true,
-        label: "Normal",
-        name: "C0",
-        objectType: "ActivityCategory"
-      }
-    };
     Mock.participant = Test.utils.data.activityPASC.participantData;
     Mock.configuration = {
       category: {
@@ -140,10 +139,10 @@ describe('participant-activity-service Test', function() {
     Mock.user = {
       email: "fulano@gmail.com",
       fieldCenter: {},
-      name: "Adonis",
+      name: "Fulano",
       phone: "5199999999",
-      surname: "Garcia",
-      token: "eyJhbGciOiJIUzI1NiJ9AOFIMALEM"
+      surname: "Sobrenome",
+      token: "eyJhbGciOiJIUzI1NiJ9AOFIMAXXX"
     };
     Mock.preActivity = {
       configuration: Mock.configuration,

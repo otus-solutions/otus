@@ -11,7 +11,7 @@
 
   function Service(OtusRestResourceService) {
     var self = this;
-    var _rest, _followUpRest = null;
+    var _rest, _followUpRest, _passwordRecoveryRest = null;
 
     /* Public methods */
     self.initialize = initialize;
@@ -22,10 +22,12 @@
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
+    self.requestPasswordReset = requestPasswordReset;
 
     function initialize() {
       _rest = OtusRestResourceService.getParticipantResource();
       _followUpRest = OtusRestResourceService.getFollowUpResourceFactory();
+      _passwordRecoveryRest = OtusRestResourceService.getParticipantPasswordResetResource();
     }
 
     function getByRecruitmentNumber(rn) {
@@ -57,9 +59,6 @@
     }
 
     function getFollowUps(recruitmentNumber) {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
       return _followUpRest.listParticipantsFollowUps({rn: recruitmentNumber}).$promise;
     }
 
@@ -74,5 +73,13 @@
         followUpId: followUpId
       }).$promise;
     }
+
+    function requestPasswordReset(email) {
+      if (!_passwordRecoveryRest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _passwordRecoveryRest.requestRecovery({userEmail:email}).$promise;
+    }
+
   }
 }());
