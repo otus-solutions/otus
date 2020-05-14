@@ -33,6 +33,7 @@
     self.swapMainContact = swapMainContact;
     self.confirmedDisabledButtomPostalCode = confirmedDisabledButtomPostalCode;
 
+
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -49,6 +50,7 @@
         email: true,
         address: true
       }
+      _isNewContact(angular.copy(self.contact));
     }
 
     function addContactInput() {
@@ -123,8 +125,8 @@
               .then(() => self.addContactMode[self.type] = true)
               .then(() => self.loadParticipantContact())
               .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactDelete)))
-            .catch( self.loadParticipantContact())
-        } catch(e) {
+            .catch(self.loadParticipantContact())
+        } catch (e) {
           ParticipantMessagesService.showToast(ParticipantContactValues.msg.errorContactDelete)
         }
       }
@@ -149,6 +151,10 @@
         return (!self.form.address[key].postalCode.$modelValue);
       }
       return true;
+    }
+
+    function _isNewContact(contact) {
+      if (contact.main.value.content === "" || contact.main.value.street === "") enableEditMode("main");
     }
   }
 }());
