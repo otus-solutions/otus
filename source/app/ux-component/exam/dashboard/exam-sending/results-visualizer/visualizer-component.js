@@ -22,6 +22,7 @@
   function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService, LoadingScreenService, DialogService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_DOES_MATCH_EXAM = "Aliquot does not match exam"
+    const TUBE_DOES_MATCH_EXAM = "Tube does not match exam"
     const ALIQUOT_NOT_FOUND = "Aliquot not found";
 
     var self = this;
@@ -110,9 +111,9 @@
           } else if (self.action === 'upload') {
             if (self.errorAliquots.length) {
              var error = self.errorAliquots.find(function (error) {
-                if (error.aliquot === element.aliquotCode) {
-                  if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM)) {
-                    structureIcon = {icon: "error", class: "md-warn", tooltip: "Alíquota não corresponde ao exame", orderValue: "error"};
+                if (error.material === element.code) {
+                  if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM) || error.message.includes(TUBE_DOES_MATCH_EXAM)) {
+                    structureIcon = {icon: "error", class: "md-warn", tooltip: "Material não corresponde ao exame", orderValue: "error"};
                   } else {
                     structureIcon = warningStructure;
                   }
