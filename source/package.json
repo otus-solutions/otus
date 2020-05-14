@@ -62,9 +62,9 @@
     "ng-material-datetimepicker": "^1.13.0",
     "require-dir": "^1.0.0",
     "xlsx-core": "^1.0.3",
-    "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#dev",
+    "otus-client-js": "1.26.0",
     "otus-domain-client": "1.1.0",
-    "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#dev",
+    "otus-model-js": "1.32.0",
     "otus-preview-js": "1.15.3",
     "otus-validation-js": "1.1.0",
     "please-wait": "0.0.5"
