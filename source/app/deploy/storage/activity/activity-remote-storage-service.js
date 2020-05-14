@@ -2,7 +2,7 @@
  * ActivityRemoteStorageService
  * @namespace Services
  */
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -41,6 +41,7 @@
     self.addActivityRevision = addActivityRevision;
     self.getActivityRevisions = getActivityRevisions;
     self.importActivities = importActivities;
+    self.createFollowUpActivity = createFollowUpActivity;
 
     /**
      * Adds activities to collection.
@@ -54,7 +55,7 @@
     function insert(activitiesToInsert) {
       var deferred = $q.defer();
 
-      _insertArray(activitiesToInsert, function(insertedActivities) {
+      _insertArray(activitiesToInsert, function (insertedActivities) {
         deferred.resolve(insertedActivities);
       });
 
@@ -71,7 +72,7 @@
     function update(activityToUpdate) {
       var deferred = $q.defer();
 
-      _updateArray(activityToUpdate, function(updatedActivities) {
+      _updateArray(activityToUpdate, function (updatedActivities) {
         deferred.resolve(updatedActivities);
       });
 
@@ -91,11 +92,11 @@
 
       ActivityRestService
         .updateCheckerActivity(recruitmentNumber, checkerUpdated)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
         }).catch(function () {
           deferred.reject();
-      });
+        });
 
       return deferred.promise;
     }
@@ -124,11 +125,11 @@
 
       ActivityRestService
         .getById(activityId, rn)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
         }).catch(function () {
-        deferred.reject();
-      });
+          deferred.reject();
+        });
 
       return deferred.promise;
     }
@@ -172,7 +173,7 @@
 
       ActivityRestService
         .save(activity)
-        .then(function(response) {
+        .then(function (response) {
           activity._id = response.data;
           deferred.resolve(activity);
         });
@@ -207,7 +208,7 @@
 
       ActivityRestService
         .update(activity)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(activity);
         });
 
@@ -220,7 +221,7 @@
         var data = dataArray[currentIndex];
 
         procedure(data)
-          .then(function() {
+          .then(function () {
             ++currentIndex;
             if (currentIndex < dataArray.length) {
               process(dataArray, callback, currentIndex);
@@ -242,11 +243,11 @@
 
       ActivityRestService
         .addActivityRevision(activityRevision, activity)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
         }).catch(function () {
-        deferred.reject();
-      });
+          deferred.reject();
+        });
 
       return deferred.promise;
     }
@@ -256,33 +257,53 @@
 
       ActivityRestService
         .getActivityRevisions(activityID, activity)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
         }).catch(function () {
-        deferred.reject();
-      });
+          deferred.reject();
+        });
 
       return deferred.promise;
     }
 
-     /**
-     * Import activities in collection.
-     * @param {(object)} surveyActivities - the Activities answered to be insered
-     * @param {(string)} acronym - the acronym of survey to be insered
-     * @param {(integer)} version - the version of survey to be insered
-     * @returns {Promise} promise with activities not inserted inserted when resolved
-     * @memberof ActivityRemoteStorageService
-     */
+    /**
+    * Import activities in collection.
+    * @param {(object)} surveyActivities - the Activities answered to be insered
+    * @param {(string)} acronym - the acronym of survey to be insered
+    * @param {(integer)} version - the version of survey to be insered
+    * @returns {Promise} promise with activities not inserted inserted when resolved
+    * @memberof ActivityRemoteStorageService
+    */
     function importActivities(surveyActivities, acronym, version) {
       var deferred = $q.defer();
 
       ActivityImportRestService
         .importActivities(surveyActivities, acronym, version)
-        .then(function(response) {
+        .then(function (response) {
           deferred.resolve(response);
         }).catch(function () {
-        deferred.reject();
-      });
+          deferred.reject();
+        });
+
+      return deferred.promise;
+    }
+
+    /**
+    * Create FollowUp in collection.
+    * @param {(object)} createFollowUp - the createFollowUp to be insered
+    * @returns {Promise} promise with createFollowUp inserted when resolved
+    * @memberof ActivityRemoteStorageService
+    */
+    function createFollowUpActivity(activity) {
+      var deferred = $q.defer();
+
+      ActivityRestService
+        .createFollowUpActivity(activity)
+        .then(function (response) {
+          deferred.resolve(response);
+        }).catch(function () {
+          deferred.reject();
+        });
 
       return deferred.promise;
     }
