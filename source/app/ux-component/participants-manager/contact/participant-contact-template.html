@@ -88,12 +88,10 @@
       </div>
 
       <div ng-if="$ctrl.isIdentified">
-        <md-button class="md-accent md-icon-button md-button"
+        <md-button class="md-accent"
                    ng-click="$ctrl.createParticipantContact()"
                    ng-if="!$ctrl.contact">
-          <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}>
-            {{$ctrl.ParticipantContactValues.icons.edit.icon}}
-          </md-icon>
+          <small>{{$ctrl.ParticipantContactValues.icons.createNewContacts.translatedTitle}}</small>
         </md-button>
         <md-button class="md-warn md-icon-button md-button"
                    ng-click="$ctrl.deleteParticipantContact()"
@@ -101,6 +99,9 @@
           <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}>
             {{$ctrl.ParticipantContactValues.icons.deleteContact.icon}}
           </md-icon>
+          <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}
+          </md-tooltip>
+
         </md-button>
       </div>
     </div>

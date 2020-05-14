@@ -31,6 +31,11 @@
           icon: 'add_circle_outline',
           translatedTitle: 'Adicionar Contato'
         },
+
+        createNewContacts: {
+          translatedTitle: ' + Adicionar formas de contatos'
+        },
+
         edit: {
           icon: 'create',
           translatedTitle: 'Editar'
