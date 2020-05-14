@@ -232,7 +232,6 @@
         .then((resultFactory) => self.contact = resultFactory)
         .catch(() => {
           self.contact = "";
-          ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactNotFound);
         });
     }
 

@@ -51,7 +51,6 @@ describe('ParticipantComponent_UnitTest_Suite', () => {
     expect(ctrl.contact).toBeUndefined();
     ctrl.loadParticipantContact();
     Mock.scope.$digest();
-    expect(Injections.ParticipantMessagesService.showToast).toHaveBeenCalledWith(Injections.ParticipantContactValues.msg.contactNotFound);
     expect(ctrl.contact).toBe('');
   });
 
