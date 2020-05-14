@@ -92,16 +92,13 @@
                    ng-click="$ctrl.createParticipantContact()"
                    ng-if="!$ctrl.contact">
           <small>{{$ctrl.ParticipantContactValues.icons.createNewContacts.translatedTitle}}</small>
+          <md-icon>{{$ctrl.ParticipantContactValues.icons.createNewContacts.icon}}</md-icon>
         </md-button>
-        <md-button class="md-warn md-icon-button md-button"
+        <md-button class="md-warn"
                    ng-click="$ctrl.deleteParticipantContact()"
                    ng-if="$ctrl.contact">
-          <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}>
-            {{$ctrl.ParticipantContactValues.icons.deleteContact.icon}}
-          </md-icon>
-          <md-tooltip md-direction="left">{{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}
-          </md-tooltip>
-
+          <small>{{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}</small>
+          <md-icon>{{$ctrl.ParticipantContactValues.icons.deleteContact.icon}}</md-icon>
         </md-button>
       </div>
     </div>

@@ -33,7 +33,8 @@
         },
 
         createNewContacts: {
-          translatedTitle: ' + Adicionar formas de contatos'
+          icon: 'add_circle',
+          translatedTitle: 'Adicionar formas de contatos'
         },
 
         edit: {
@@ -63,7 +64,7 @@
         },
         deleteContact: {
           icon: 'delete',
-          translatedTitle: 'Excluir Contatos'
+          translatedTitle: 'Excluir Todos Contatos'
         },
         swapMainContact: {
           icon: 'swap_vert',
