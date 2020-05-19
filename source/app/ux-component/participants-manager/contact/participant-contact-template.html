@@ -1,0 +1,130 @@
+<link
+  href="app/ux-component/participants-manager/contact/participant-contact-styles.css"
+  rel="stylesheet" type="text/css">
+
+<md-content class="pc-layout" ng-cloak>
+  <div class="return-button" layout="row" layout-align="start center" layout-margin>
+    <md-button class="md-button md-icon-button md-primary md-raised" ng-click="$ctrl.dashboardParticipant()">
+      <md-icon aria-label="Limpar">keyboard_return</md-icon>
+      <md-tooltip md-direction="down">Voltar</md-tooltip>
+    </md-button>
+  </div>
+  <div class="anonymous-msg" layout="column" ng-show="!$ctrl.isIdentified">
+    <div layout="row" layout-padding layout-align="center center">
+      <p align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto,
+        preencha todos os campos para identificá-lo.</p>
+    </div>
+  </div>
+  <otus-panel header-label="'Informações do Participante'" class="main-update">
+    <md-card class="personal-data-card">
+      <md-card-content>
+        <span class="md-subhead">Dados Pessoais</span>
+        <form name="participantForm" layout="column" flex style="padding: 20px 0 10px 0">
+          <div layout-gt-xs="row" layout-fill="">
+            <md-input-container flex="100" layout-fill="">
+              <label>Número de Recrutamento</label>
+              <input ng-model="$ctrl.participant.recruitmentNumber"
+                     ng-disabled="true">
+            </md-input-container>
+          </div>
+          <div layout-gt-xs="row">
+            <md-input-container flex layout-fill="">
+              <label>Nome Completo</label>
+              <input ng-model="$ctrl.participant.name" id="name" required="" ng-change="$ctrl.onFilter()">
+            </md-input-container>
+          </div>
+          <div layout-gt-xs="row" layout-xs="column" layout-align="center center">
+            <md-input-container flex="40" layout-fill="" flex-xs="100">
+              <label>Sexo</label>
+              <md-select ng-model="$ctrl.participant.sex" id="sex" required="" ng-change="$ctrl.onFilter()">
+                <md-option value="M">Masculino</md-option>
+                <md-option value="F">Feminino</md-option>
+              </md-select>
+            </md-input-container>
+            <span flex="10"></span>
+            <md-input-container flex="50" style="margin-top: 25px" id="date" layout-fill="" flex-xs="100">
+              <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
+              <input mdc-datetime-picker="" show-icon="true" date="true" time="false" required
+                     aria-label="Data de Nascimento" type="text" id="datetime"
+                     placeholder="{{$ctrl.birthdate ? '': 'Data de Nascimento'}}"
+                     max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
+                     format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
+            </md-input-container>
+          </div>
+          <div layout-gt-xs="row">
+
+            <md-input-container flex="40" flex-xs="100" layout-fill="">
+              <label>Centro</label>
+              <md-select required="" ng-model="$ctrl.centerFilter" ng-change="$ctrl.onFilter()"
+                         id="centerIdentified">
+                <md-option ng-repeat="center in $ctrl.centers track by $index" value="{{center.acronym}}"
+                           ng-selected="center.acronym == $ctrl.participant.fieldCenter.acronym">
+                  {{center.name}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+            <span flex="10"></span>
+          </div>
+          <div layout="row" layout-align="end" layout-margin="">
+            <span flex></span>
+            <md-button class="md-raised md-icon-button md-button" ng-click="$ctrl.dashboardParticipant()">
+              <md-icon aria-label="Limpar">clear</md-icon>
+              <md-tooltip md-direction="down">Limpar</md-tooltip>
+
+            </md-button>
+            <md-button class="md-accent md-icon-button md-raised md-button" ng-click="$ctrl.saveParticipant()"
+                       ng-disabled="!$ctrl.isValid">
+              <md-icon aria-label="Adicionar">save</md-icon>
+              <md-tooltip md-direction="down">Salvar</md-tooltip>
+            </md-button>
+          </div>
+        </form>
+      </md-card-content>
+    </md-card>
+
+    <div class="contact-label" layout="row" layout-align="space-between center" layout-margin>
+      <div>
+        <small class="md-caption">{{$ctrl.ParticipantContactValues.msg.captionAboutRequiredFields}}</small>
+      </div>
+
+      <div ng-if="$ctrl.isIdentified">
+        <md-button class="md-accent"
+                   ng-click="$ctrl.createParticipantContact()"
+                   ng-if="!$ctrl.contact">
+          <small>{{$ctrl.ParticipantContactValues.icons.createNewContacts.translatedTitle}}</small>
+          <md-icon>{{$ctrl.ParticipantContactValues.icons.createNewContacts.icon}}</md-icon>
+        </md-button>
+        <md-button class="md-warn"
+                   ng-click="$ctrl.deleteParticipantContact()"
+                   ng-if="$ctrl.contact">
+          <small>{{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}</small>
+          <md-icon>{{$ctrl.ParticipantContactValues.icons.deleteContact.icon}}</md-icon>
+        </md-button>
+      </div>
+    </div>
+
+    <otus-participant-update-contact class="contact-update"
+                                     contact="$ctrl.contact.phoneNumber"
+                                     contact-id="{{$ctrl.contact._id}}"
+                                     type="phoneNumber"
+                                     load-participant-contact="$ctrl.loadParticipantContact"
+                                     ng-if="$ctrl.contact">
+    </otus-participant-update-contact>
+
+    <otus-participant-update-contact class="contact-update"
+                                     contact="$ctrl.contact.email"
+                                     contact-id="{{$ctrl.contact._id}}"
+                                     load-participant-contact="$ctrl.loadParticipantContact"
+                                     type="email"
+                                     ng-if="$ctrl.contact">
+    </otus-participant-update-contact>
+
+    <otus-participant-update-contact class="contact-update"
+                                     contact="$ctrl.contact.address"
+                                     contact-id="{{$ctrl.contact._id}}"
+                                     load-participant-contact="$ctrl.loadParticipantContact"
+                                     type="address"
+                                     ng-if="$ctrl.contact">
+    </otus-participant-update-contact>
+  </otus-panel>
+</md-content>

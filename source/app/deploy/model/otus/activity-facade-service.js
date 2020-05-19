@@ -18,6 +18,7 @@
     self.getActivity = getActivity;
     self.useActivity = useActivity;
     self.createActivity = createActivity;
+    self.createAutoFillActivity = createAutoFillActivity;
     self.createQuestionFill = createQuestionFill;
     self.fillQuestion = fillQuestion;
     self.openSurveyActivity = openSurveyActivity;
@@ -42,6 +43,14 @@
       } else {
         ActivityFacadeService.createActivity(template, user, _participant, configuration, externalID);
       }
+
+      return getActivity();
+    }
+
+    function createAutoFillActivity(survey, loggedUser, participant, configuration) {
+      var _participant = _normalizeParticipant(participant);
+
+      ActivityFacadeService.createAutoFillActivity(survey, loggedUser, _participant, configuration);
 
       return getActivity();
     }

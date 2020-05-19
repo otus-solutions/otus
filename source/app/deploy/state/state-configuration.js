@@ -144,6 +144,7 @@
     $stateProvider.state(ParticipantsListStateProvider.state);
     $stateProvider.state(ParticipantCreateStateProvider.state);
     $stateProvider.state(ParticipantUpdateStateProvider.state);
+    $stateProvider.state(ParticipantFollowUpStateProvider.state);
     $stateProvider.state(InstallerProvider.state);
     $stateProvider.state(ParticipantStateProvider.state);
     $stateProvider.state(SessionStateProvider.state);
@@ -165,7 +166,7 @@
     $stateProvider.state(ActivityImportStateProvider.state);
     $stateProvider.state(PendencyViewerStateProvider.state);
     $stateProvider.state(OfflineActivitySynchronizeStateProvider.state);
-    
+
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);
     // $locationProvider.html5Mode(false);

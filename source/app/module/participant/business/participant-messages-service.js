@@ -14,7 +14,7 @@
   function Service($mdDialog, $mdToast, DialogShowService) {
     var self = this;
 
-    const DELAY = 3000;
+    const DELAY = 4000;
     self.showClearDialog = showClearDialog;
     self.showRecruitmentNumberGenerated = showRecruitmentNumberGenerated;
     self.showUpdateParticipant = showUpdateParticipant;

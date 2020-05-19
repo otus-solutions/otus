@@ -40,6 +40,7 @@
     self.getActivityRevisions = getActivityRevisions;
     self.importActivities = importActivities;
     self.getById = getById;
+    self.createFollowUpActivity = createFollowUpActivity;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -123,8 +124,8 @@
             .then(function (response) {
               request.resolve(response);
             }).catch(function () {
-            request.reject();
-          });
+              request.reject();
+            });
         });
 
       return request.promise;
@@ -188,8 +189,8 @@
             .then(function (response) {
               request.resolve(response);
             }).catch(function () {
-            request.reject();
-          });
+              request.reject();
+            });
         });
 
       return request.promise;
@@ -205,8 +206,8 @@
             .then(function (response) {
               request.resolve(response);
             }).catch(function () {
-            request.reject();
-          });
+              request.reject();
+            });
         });
 
       return request.promise;
@@ -222,8 +223,8 @@
             .then(function (response) {
               request.resolve(response);
             }).catch(function () {
-            request.reject();
-          });
+              request.reject();
+            });
         });
 
       return request.promise;
@@ -239,11 +240,35 @@
             .then(function (response) {
               request.resolve(response);
             }).catch(function () {
-            request.reject();
-          });
+              request.reject();
+            });
         });
 
       return request.promise;
     }
+
+  /**
+  * Adds activities to collection.
+  * @param {(object|array)} activities - the activity (or array of activities) to be inserted
+  * @returns {Promise} promise with activity or activities inserted when resolved
+  * @memberof ActivityCollectionService
+  */
+    function createFollowUpActivity(activities) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .createFollowUpActivity(activities)
+            .then(function (remoteActivities) {
+              var localActivities = ActivityStorageService.insert(remoteActivities);
+              request.resolve(localActivities);
+            });
+        });
+
+      return request.promise;
+    }
+
   }
 }());

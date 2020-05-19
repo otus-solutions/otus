@@ -43,6 +43,7 @@ describe('activity-facade-service Test', function() {
     beforeEach(function () {
       spyOn(Injections.ActivityFacadeService, "createActivity");
       spyOn(Injections.ActivityFacadeService, "createPaperActivity");
+      spyOn(Injections.ActivityFacadeService, "createAutoFillActivity");
     });
 
     it('should create activity online', function () {
@@ -53,6 +54,11 @@ describe('activity-facade-service Test', function() {
     it('should create activity paper', function () {
       service.createActivity(Mock.template,Mock.user,Mock.participant,true,Mock.configuration,Mock.externalID);
       expect(Injections.ActivityFacadeService.createPaperActivity).toHaveBeenCalledTimes(1);
+    });
+
+    it('should create activity autofill', function () {
+      service.createAutoFillActivity(Mock.template,Mock.user,Mock.participant,Mock.configuration);
+      expect(Injections.ActivityFacadeService.createAutoFillActivity).toHaveBeenCalledTimes(1);
     });
   });
 

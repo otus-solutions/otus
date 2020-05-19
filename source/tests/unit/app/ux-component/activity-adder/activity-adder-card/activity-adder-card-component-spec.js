@@ -36,6 +36,10 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
     expect(ctrl.updateExternalID).toBeDefined();
     expect(ctrl.updateRealizationDate).toBeDefined();
     expect(ctrl.monitoringCheckerFormSearchTextChange).toBeDefined();
+    expect(ctrl.styleHeader).toBeDefined();
+    expect(ctrl.validExternalIdTruthyAndAutoFill).toBeDefined();
+    expect(ctrl.validExternalIdFalsyAndAutoFill).toBeDefined();
+    expect(ctrl.validTypeActivity).toBeDefined();
   });
 
   it('checkerQuerySearch_method_should_return_list_of_checkers_when_nullQuery', () => {
@@ -64,6 +68,8 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
     expect(ctrl.getModeIcon()).toBe("signal");
     ctrl.preActivity.mode = 'PAPER';
     expect(ctrl.getModeIcon()).toBe("file-document");
+    ctrl.preActivity.mode = 'AUTOFILL';
+    expect(ctrl.getModeIcon()).toBe(undefined);
   });
 
   it('getAcronym_method_should_return_with_acronymName', () => {
@@ -95,14 +101,44 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
     expect(ctrl.realizationDate).toBe('Wed Dec 04 2019 15:43:24');
   });
 
+  it('styleHeader_method_should_update_style_header', () => {
+    ctrl.preActivity.mode = 'AUTOFILL';
+    expect(ctrl.styleHeader()).toBe("{background: '#2d91ea'}")
+  });
+
+  it('validExternalIdTruthyAndAutoFill_method_should_valid_attribute_externalID_and_autofill', () => {
+    ctrl.preActivity.mode = 'ONLINE';
+    expect(ctrl.validExternalIdTruthyAndAutoFill()).toBeTruthy();
+    ctrl.preActivity.mode = 'AUTOFILL';
+    expect(ctrl.validExternalIdTruthyAndAutoFill()).toBeFalsy();
+  });
+
+  it('validExternalIdFalsyAndAutoFill_method_should_valid_attribute_externalID_and_autofill', () => {
+    ctrl.preActivity.mode = 'ONLINE';
+    expect(ctrl.validExternalIdFalsyAndAutoFill()).toBeFalsy();
+    ctrl.preActivity.mode = 'AUTOFILL';
+    expect(ctrl.validExternalIdFalsyAndAutoFill()).toBeTruthy();
+  });
+
+  it('validTypeActivity_method_should_valid_attribute_type_activity', () => {
+    ctrl.preActivity.mode = 'ONLINE';
+    expect(ctrl.validTypeActivity()).toBeTruthy();
+    ctrl.preActivity.mode = 'AUTOFILL';
+    expect(ctrl.validTypeActivity()).toBeTruthy();
+    ctrl.preActivity.mode = 'PAPER';
+    expect(ctrl.validTypeActivity()).toBeFalsy();
+  });
 
   Mock.createMockPreActivity = () => {
     ctrl.preActivity = Test.utils.data.preActivity;
     ctrl.preActivity.updatePreActivityValid = jasmine.createSpy();
+    ctrl.preActivity.surveyForm.isRequiredExternalID = function () {
+      return true;
+    };
     ctrl.preActivity.updatePaperActivityData =
       (checkerData, realizationDate) => {
-        if(!checkerData) Mock.preActivity.preActivityValid = false;
-        else{
+        if (!checkerData) Mock.preActivity.preActivityValid = false;
+        else {
           ctrl.preActivity.paperActivityData = {};
           ctrl.preActivity.paperActivityData.checker = checkerData.checker;
           ctrl.preActivity.paperActivityData.realizationDate = realizationDate;

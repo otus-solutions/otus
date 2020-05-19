@@ -39,6 +39,7 @@
     self.mode = "ONLINE";
     self.selectType = "activityList";
     self.iconMode = "";
+    self.optionModes = [];
     self.configuration = {};
     self.paperActivityCheckerData = null;
     self.preActivities = [];
@@ -65,6 +66,7 @@
       LoadingScreenService.start();
       _buildDialogs();
       _loadCategories();
+      _loadOptionModes();
       _loadSurveys();
       _loadSurveysGroup();
       $element.find('#search').on('keydown', function (ev) {
@@ -177,6 +179,20 @@
 
     }
 
+    function _loadOptionModes() {
+      self.optionModes = [
+        { mode: 'ONLINE',
+          label: 'Online'
+        },
+        { mode: 'PAPER',
+        label: 'Em papel'
+        },
+        { mode: 'AUTOFILL',
+        label: 'Auto Preenchimento'
+        }
+      ]
+    }
+
     function _loadCategories() {
       ParticipantActivityService
         .listAllCategories()
@@ -231,8 +247,7 @@
     }
 
     function _checkFilledInput(preActivity) {
-      if (preActivity.mode === "ONLINE" && !preActivity.surveyForm.isRequiredExternalID()) preActivity.preActivityValid = true;
-      return preActivity.preActivityValid === true;
+      return preActivity.preActivityValid = preActivity.preActivityValid || preActivity.mode === "AUTOFILL" || (preActivity.mode === "ONLINE" && !preActivity.surveyForm.isRequiredExternalID());
     }
 
     function monitoringSearchTextChange(state) {
@@ -278,18 +293,18 @@
       function _prepareButtons() {
         return [
           {
-            message: 'Voltar',
-            action: function () {
-              $mdDialog.cancel()
-            },
-            class: 'md-raised md-no-focus'
-          },
-          {
             message: 'Ok',
             action: function () {
               $mdDialog.hide()
             },
             class: 'md-raised md-primary'
+          },
+          {
+            message: 'Voltar',
+            action: function () {
+              $mdDialog.cancel()
+            },
+            class: 'md-raised md-no-focus'
           }
         ]
       }

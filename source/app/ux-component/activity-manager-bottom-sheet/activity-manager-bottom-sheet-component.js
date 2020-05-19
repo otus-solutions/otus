@@ -111,6 +111,7 @@
         self.showInfoButton = false;
         self.showPendenciesButton = false;
         self.isPaperActivity = false;
+        self.selectedItemCounter = null;
       } else if (selectedActivities.length === 1) {
         var isAutoFill = selectedActivities[0].mode === "AUTOFILL" ? true : false;
         self.showBottomSheet = true;
@@ -121,7 +122,8 @@
         self.showPendenciesButton = !isAutoFill;
         self.showInfoButton = true;
         self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() != undefined ? true : false;
-        self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name
+        self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name;
+        self.selectedItemCounter = null;
       } else {
         self.showBottomSheet = true;
         self.showVisualizationButton = false;
@@ -131,6 +133,7 @@
         self.showInfoButton = false;
         self.showPendenciesButton = false;
         self.isPaperActivity = false;
+        self.selectedItemCounter = selectedActivities.length;
       }
 
        self.selectedActivity = angular.copy(selectedActivities[0]);

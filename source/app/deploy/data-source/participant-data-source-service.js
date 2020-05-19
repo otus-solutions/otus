@@ -26,6 +26,7 @@
     self.getFollowUps = getFollowUps;
     self.activateFollowUpEvent = activateFollowUpEvent;
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
+    self.requestPasswordReset = requestPasswordReset;
 
     function up() {
       _loadingDefer = $q.defer();
@@ -94,8 +95,8 @@
         .then(function (response) {
           deferred.resolve(response.data);
         }).catch(function (err) {
-          deferred.reject(err);
-        });
+        deferred.reject(err);
+      });
       return deferred.promise;
     }
 
@@ -106,8 +107,8 @@
         .then(function (response) {
           deferred.resolve(response.data);
         }).catch(function (err) {
-          deferred.reject(err);
-        });
+        deferred.reject(err);
+      });
       return deferred.promise;
     }
 
@@ -118,8 +119,8 @@
         .then(function (response) {
           deferred.resolve(response.data);
         }).catch(function (err) {
-          deferred.reject(err);
-        });
+        deferred.reject(err);
+      });
       return deferred.promise;
     }
 
@@ -133,6 +134,10 @@
           ParticipantStorageService.save();
           _loadingDefer.resolve();
         });
+    }
+
+    function requestPasswordReset(email) {
+     return ParticipantRestService.requestPasswordReset(email);
     }
   }
 }());

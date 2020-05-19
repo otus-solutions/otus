@@ -1,0 +1,35 @@
+.pc-layout {
+  display: grid;
+  width: 100vw;
+  height: 90vh;
+  grid-template-columns: .5fr 11.5fr;
+  grid-template-rows: .5fr 11.5fr;
+  grid-template-areas:
+    "returnButton anonymousMsg"
+    "mainUpdate   mainUpdate"
+}
+
+.return-button {
+  grid-area: returnButton;
+}
+
+.anonymous-msg {
+  grid-area: anonymousMsg;
+}
+
+.main-update {
+  grid-area: mainUpdate;
+}
+
+.personal-data-card {
+  width: 80vw;
+}
+
+.contact-label{
+  width: 80vw;
+  margin-bottom: 0px;
+  margin-top: 0px;
+
+}
+
+
