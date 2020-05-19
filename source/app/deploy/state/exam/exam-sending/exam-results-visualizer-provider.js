@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -25,6 +25,9 @@
       template: '<otus-result-visualizer layout="column" flex></otus-result-visualizer>',
       data: {
         redirect: _redirect
+      },
+      resolve: {
+        laboratory: _laboratory
       }
     };
 
@@ -33,7 +36,7 @@
 
       Application
         .isDeployed()
-        .then(function() {
+        .then(function () {
           try {
             deferred.resolve();
           } catch (e) {
@@ -43,6 +46,26 @@
 
       return deferred.promise;
     }
+
+    function _laboratory($q, LaboratoryConfigurationService) {
+      var deferred = $q.defer();
+
+      try {
+        LaboratoryConfigurationService.getLaboratoryDescriptors().then(() => {
+          deferred.resolve();
+        });
+      } catch (e) {
+        deferred.resolve({});
+      }
+
+
+      return deferred.promise;
+    }
+
+    _laboratory.$inject = [
+      '$q',
+      'otusjs.laboratory.business.configuration.LaboratoryConfigurationService'
+    ];
 
     _redirect.$inject = [
       '$q',
