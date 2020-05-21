@@ -124,7 +124,7 @@
     }
 
     function _updatesScreenArtifacts(vm, checkedData) {
-      vm.pendencies = checkedData.items;
+      vm.items = checkedData.items;
       vm.activePreviousPage = checkedData.activePreviousPage;
       vm.activeNextPage = checkedData.activeNextPage;
     }

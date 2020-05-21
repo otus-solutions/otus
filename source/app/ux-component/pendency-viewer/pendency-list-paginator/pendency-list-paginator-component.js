@@ -8,7 +8,7 @@
       bindings: {
         callValidationItemsLimits: '=',
         stuntmanSearchSettings: '=',
-        pendencies: '=',
+        items: '=',
         paginatorActive: '<',
       }
     }).controller('pendencyListPaginatorCtrl', Controller);
