@@ -46,6 +46,10 @@
   grid-area: list
 }
 
+.pendency-viewer otus-generic-list {
+  grid-area: list
+}
+
 .pendency-viewer otus-generic-list-paginator {
   grid-area: paginator
 }

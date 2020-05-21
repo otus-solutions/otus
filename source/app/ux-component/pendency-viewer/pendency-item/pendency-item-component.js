@@ -8,7 +8,7 @@
       templateUrl: 'app/ux-component/pendency-viewer/pendency-item/pendency-item-template.html',
       bindings: {
         item: '<',
-        pendencyAttributes: '<'
+        itemAttributes: '<'
       }
     }).controller('pendencyItemCtrl', Controller);
 
@@ -16,7 +16,6 @@
 
   function Controller(PendencyViewerService) {
     const self = this;
-
     self.dueDate = PendencyViewerService.formatDate(new Date(self.item.dueDate));
     self.creationDate = PendencyViewerService.formatDate(new Date(self.item.creationDate));
     self.remainingDays = PendencyViewerService.calculateRemainingDays(self.item.dueDate);

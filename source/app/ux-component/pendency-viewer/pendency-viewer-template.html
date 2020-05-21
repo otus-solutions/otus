@@ -14,9 +14,12 @@
                               pendency-attributes="$ctrl.pendencyAttributes"
                               paginator-active="$ctrl.paginatorActive">
   </otus-pendency-list-control>
-  <otus-pendency-list pendencies="$ctrl.pendencies"
-                      pendency-attributes="$ctrl.pendencyAttributes">
-  </otus-pendency-list>
+
+  <otus-generic-list item-component-name="$ctrl.itemComponentName"
+                     items="$ctrl.pendencies"
+                     item-attributes="$ctrl.pendencyAttributes">
+  </otus-generic-list>
+
 
   <otus-generic-list-paginator call-validation-items-limits="$ctrl.callValidationItemsLimits"
                                stuntman-search-settings="$ctrl.stuntmanSearchSettings"

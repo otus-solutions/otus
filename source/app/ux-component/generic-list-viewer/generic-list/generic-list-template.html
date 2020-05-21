@@ -4,8 +4,8 @@
   }
 </style>
 
-<md-list ng-repeat="generic in $ctrl.items" ng-cloak ng-if="$ctrl.items.length">
-  <otus-generic-item item="generic" item-attributes="$ctrl.itemAttributes"></otus-generic-item>
+<md-list ng-repeat="item in $ctrl.items" ng-cloak ng-if="$ctrl.items.length">
+  <div bind-html-compile="$ctrl.itemTemplate"></div>
 </md-list>
 <md-card ng-if="!$ctrl.items.length"
          layout layout-align="center center"

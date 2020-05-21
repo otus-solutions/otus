@@ -20,8 +20,8 @@
     self.pendencies = [];
     self.paginatorActive = false;
     self.PENDENCY_VIEWER_TITLES = PENDENCY_VIEWER_TITLES;
+    self.itemComponentName = 'otusPendencyItem';
 
-    // self.callValidationItemsLimits = PendencyViewerService.callValidationPendenciesLimits;
     self.callValidationItemsLimits = PendencyViewerService.callValidationItemsLimits;
 
     function onInit() {
