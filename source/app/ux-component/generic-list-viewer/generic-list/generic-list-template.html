@@ -1,0 +1,14 @@
+<style>
+  md-list{
+    padding: 0px;
+  }
+</style>
+
+<md-list ng-repeat="generic in $ctrl.items" ng-cloak ng-if="$ctrl.items.length">
+  <otus-generic-item item="generic" item-attributes="$ctrl.itemAttributes"></otus-generic-item>
+</md-list>
+<md-card ng-if="!$ctrl.items.length"
+         layout layout-align="center center"
+         layout-padding layout-margin>
+  <span class="md-title" style="color: #777777">{{$ctrl.GENERIC_LIST_VIEWER_LABELS.EMPTY_PENDENCY_INFO}}</span>
+</md-card>

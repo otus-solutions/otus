@@ -1,0 +1,45 @@
+<md-card class="plc-layout generic-list-control" style="background-color: #f5f5f5" layout-margin ng-cloak>
+  <div layout="row" class="title" layout-align="start center">
+    <span class="md-title">{{$ctrl.GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL}}</span>
+    <md-button class="md-button md-icon-button" ng-click="$ctrl.openFilters()" ng-hide="$ctrl.filtersViewEnable">
+      <md-icon md-font-set="material-icons">visibility_off</md-icon>
+      <md-tooltip md-direction="right">{{$ctrl.GENERIC_LIST_VIEWER_LABELS.HIDDEN_FILTERS}}</md-tooltip>
+    </md-button>
+    <md-button class="md-button md-icon-button" ng-click="$ctrl.closeFilters()" ng-hide="!$ctrl.filtersViewEnable">
+      <md-icon md-font-set="material-icons">visibility</md-icon>
+      <md-tooltip md-direction="right">{{$ctrl.GENERIC_LIST_VIEWER_LABELS.ENABLED_FILTERS}}</md-tooltip>
+    </md-button>
+  </div>
+
+  <div class="ordination" layout="row" layout-align="space-between start" layout-margin
+       md-swipe-left="onSwipeLeft($event, $target)">
+    <div>
+      <md-icon md-font-set="material-icons">arrow_upward
+        <md-tooltip md-direction="bottom">{{$ctrl.GENERIC_LIST_VIEWER_LABELS.ASCENDING_SORTING}}</md-tooltip>
+      </md-icon>
+    </div>
+    <md-switch aria-label="ActivityType" class="md-primary" ng-false-value=1
+               ng-model="$ctrl.searchSettings.order.mode" ng-true-value=-1>
+    </md-switch>
+    <md-tooltip md-direction="top">{{$ctrl.GENERIC_LIST_VIEWER_LABELS.ORDERING}}</md-tooltip>
+    <div>
+      <md-icon md-font-set="material-icons">arrow_downward
+        <md-tooltip md-direction="bottom">{{$ctrl.GENERIC_LIST_VIEWER_LABELS.DESCENDING_SORTING}}</md-tooltip>
+      </md-icon>
+    </div>
+  </div>
+
+  <otus-generic-list-filters ng-hide="!$ctrl.filtersViewEnable"
+                             class="filter"
+                             search-settings="$ctrl.searchSettings"
+                             item-attributes="$ctrl.itemAttributes"
+                             paginator-active="$ctrl.paginatorActive">
+  </otus-generic-list-filters>
+
+  <div class="submit">
+    <md-button layout-fill class="md-raised md-primary"
+               ng-click="$ctrl.getItems($ctrl.searchSettings)">
+      {{$ctrl.GENERIC_LIST_VIEWER_LABELS.LIST_BUTTON}}
+    </md-button>
+  </div>
+</md-card>
