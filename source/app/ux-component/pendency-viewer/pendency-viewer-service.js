@@ -6,20 +6,25 @@
     .service('otusjs.pendencyViewer.PendencyViewerService', Service);
 
   Service.$inject = [
+    'otusjs.genericListViewer.GenericListViewerService',
     'otusjs.pendency.repository.UserActivityPendencyRepositoryService',
     'otusjs.model.pendency.UserActivityPendencyFactory',
     'PENDENCY_VIEWER_TITLES',
     '$q',
     '$mdDialog',
     '$mdToast'
-
   ];
 
-  function Service(UserActivityPendencyRepositoryService, UserActivityPendencyFactory,
+  function Service(GenericListViewerService,
+                   UserActivityPendencyRepositoryService, UserActivityPendencyFactory,
                    PENDENCY_VIEWER_TITLES, $q, $mdDialog, $mdToast) {
     const self = this;
     const INITIAL_CURRENT_QUANTITY = 0;
-    const INITIAL_QUANTITY_TO_GET = 15;
+    const INITIAL_QUANTITY_TO_GET = 5;
+
+    angular.extend(self, self, GenericListViewerService);
+    self.init(INITIAL_CURRENT_QUANTITY, INITIAL_QUANTITY_TO_GET,
+      UserActivityPendencyRepositoryService.getAllPendencies, UserActivityPendencyFactory);
 
     self.getSearchSettings = getSearchSettings;
     self.getPendencyAttributes = getPendencyAttributes;
