@@ -50,6 +50,10 @@
   grid-area: paginator
 }
 
+.pendency-viewer otus-generic-list-paginator {
+  grid-area: paginator
+}
+
 /*end style for pendency-viewer-component*/
 
 /*start style for pendency-item*/
