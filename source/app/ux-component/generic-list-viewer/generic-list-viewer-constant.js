@@ -35,6 +35,12 @@
       'OPENED_STATE':'Em Aberto',
 
       'STANDARD_DATE_FORMAT':'DD/MM/AAAA',
-      'EMPTY_PENDENCY_INFO':'Nenhuma Pendência Encontrada'
+      'EMPTY_PENDENCY_INFO':'Nenhuma Pendência Encontrada',
+
+      PAGINATOR: {
+        PREVIOUS_PAGE_BUTTON:'Página Anterior',
+        CUSTOM_PAGE_BUTTON:'Nova Consulta',
+        NEXT_PAGE_BUTTON:'Próxima Página'
+      }
     });
 }());

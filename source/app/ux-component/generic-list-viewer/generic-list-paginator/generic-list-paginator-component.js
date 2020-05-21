@@ -14,19 +14,12 @@
     }).controller('genericListPaginatorCtrl', Controller);
 
   Controller.$inject = [
-    // 'otusjs.genericListViewer.self.viewerService',
-    // 'GENERIC_LIST_VIEWER_LABELS'
+    'GENERIC_LIST_VIEWER_LABELS'
   ];
 
-  function Controller() {
+  function Controller(GENERIC_LIST_VIEWER_LABELS) {
     const self = this;
-
-    self.LABELS = {
-      PREVIOUS_PAGE_BUTTON:'Página Anterior',
-      CUSTOM_PAGE_BUTTON:'Nova Consulta',
-      NEXT_PAGE_BUTTON:'Próxima Página'
-    };
-
+    self.LABELS = GENERIC_LIST_VIEWER_LABELS.PAGINATOR;
     self.activeNextPage = true;
     self.activePreviousPage = false;
 
