@@ -20,6 +20,7 @@
     self.pendencies = [];
     self.paginatorActive = false;
     self.PENDENCY_VIEWER_TITLES = PENDENCY_VIEWER_TITLES;
+    self.callValidationItemsLimits = PendencyViewerService.callValidationPendenciesLimits;
 
     function onInit() {
       self.searchSettings = PendencyViewerService.getSearchSettings();

@@ -6,6 +6,7 @@
       controller: 'pendencyListPaginatorCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-paginator/pendency-list-paginator.html',
       bindings: {
+        callValidationItemsLimits: '=',
         stuntmanSearchSettings: '=',
         pendencies: '=',
         paginatorActive: '<',
@@ -27,18 +28,23 @@
 
     function getNextPage(stuntmanSearchSettings) {
       stuntmanSearchSettings.currentQuantity += stuntmanSearchSettings.quantityToGet;
-      PendencyViewerService.callValidationPendenciesLimits(self, stuntmanSearchSettings, "next");
+
+      // PendencyViewerService.callValidationPendenciesLimits(self, stuntmanSearchSettings, "next");
+      self.callValidationItemsLimits(self, stuntmanSearchSettings, "next");
     }
 
     function getPreviousPage(stuntmanSearchSettings) {
       stuntmanSearchSettings.quantityToGet > stuntmanSearchSettings.currentQuantity ?
         stuntmanSearchSettings.currentQuantity = 0 :
         stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet;
-      PendencyViewerService.callValidationPendenciesLimits(self, stuntmanSearchSettings, "previous");
+
+      // PendencyViewerService.callValidationPendenciesLimits(self, stuntmanSearchSettings, "previous");
+      self.callValidationItemsLimits(self, stuntmanSearchSettings, "previous");
     }
 
     function runCustomPagination(stuntmanSearchSettings) {
-      PendencyViewerService.callValidationPendenciesLimits(self, stuntmanSearchSettings, "refreshListByCurrentQuantity");
+      // PendencyViewerService.callValidationPendenciesLimits(self, stuntmanSearchSettings, "refreshListByCurrentQuantity");
+      self.callValidationItemsLimits(self, stuntmanSearchSettings, "refreshListByCurrentQuantity");
     }
   }
 }());
