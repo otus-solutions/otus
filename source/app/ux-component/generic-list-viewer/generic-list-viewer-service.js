@@ -15,7 +15,8 @@
   function Service(GENERIC_LIST_VIEWER_LABELS, $q, $mdDialog, $mdToast) {
     const self = this;
     self.initialCurrentQuantity = 0;
-    self.initialQuantityToGet = 15;
+    self.initialQuantityToGet = 5;
+    self.getAllItemsFromRepositoryService = null;
     self.GenericListFactory = null;
 
     self.init = init;
@@ -30,9 +31,10 @@
 
     const deferred = $q.defer();
 
-    function init(initialCurrentQuantity, initialQuantityToGet, GenericListFactory){
+    function init(initialCurrentQuantity, initialQuantityToGet, getAllItemsFromRepositoryService, GenericListFactory){
       self.initialCurrentQuantity = initialCurrentQuantity;
       self.initialQuantityToGet = initialQuantityToGet;
+      self.getAllItemsFromRepositoryService = getAllItemsFromRepositoryService;
       self.GenericListFactory = GenericListFactory;
     }
 
@@ -58,8 +60,8 @@
       return {};
     }
 
-    function getAllItems(GenericListRepositoryServiceGetAllItemsFunction, searchSettings) {
-      return GenericListRepositoryServiceGetAllItemsFunction(searchSettings)
+    function getAllItems(searchSettings) {
+      return self.getAllItemsFromRepositoryService(searchSettings)
         .then(data => _parseItems(data))
         .catch(err => console.log("error:" + err))
     }
