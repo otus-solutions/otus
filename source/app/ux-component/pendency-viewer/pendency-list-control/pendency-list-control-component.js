@@ -7,7 +7,7 @@
       controller: 'pendencyListControlCtrl as $ctrl',
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-control/pendency-list-control-template.html',
       bindings: {
-        getPendencies: '&',
+        getItems: '&',
         searchSettings: '=',
         itemAttributes: '<',
         paginatorActive: '='

@@ -12,25 +12,25 @@
 
 
   <otus-pendency-list-control search-settings="$ctrl.searchSettings"
-                              get-pendencies="$ctrl.getAllPendencies($ctrl.searchSettings)"
-                              item-attributes="$ctrl.pendencyAttributes"
+                              get-items="$ctrl.getAllItems($ctrl.searchSettings)"
+                              item-attributes="$ctrl.itemAttributes"
                               paginator-active="$ctrl.paginatorActive">
   </otus-pendency-list-control>
 <!-- <otus-generic-list-control filters-component-name="$ctrl.filtersComponentName"-->
 <!--                            search-settings="$ctrl.searchSettings"-->
-<!--                            get-pendencies="$ctrl.getAllPendencies($ctrl.searchSettings)"-->
-<!--                            item-attributes="$ctrl.pendencyAttributes"-->
+<!--                            get-items="$ctrl.getAllItems($ctrl.searchSettings)"-->
+<!--                            item-attributes="$ctrl.itemAttributes"-->
 <!--                            paginator-active="$ctrl.paginatorActive">-->
 <!--  </otus-generic-list-control>-->
 
 
   <otus-generic-list item-component-name="$ctrl.itemComponentName"
-                     items="$ctrl.pendencies"
-                     item-attributes="$ctrl.pendencyAttributes">
+                     items="$ctrl.items"
+                     item-attributes="$ctrl.itemAttributes">
   </otus-generic-list>
   <otus-generic-list-paginator call-validation-items-limits="$ctrl.callValidationItemsLimits"
                                stuntman-search-settings="$ctrl.stuntmanSearchSettings"
-                               items="$ctrl.pendencies"
+                               items="$ctrl.items"
                                paginator-active="$ctrl.paginatorActive">
   </otus-generic-list-paginator>
 </md-content>
