@@ -30,7 +30,7 @@
            dragula-model='$ctrl.searchSettings.order.fields'
            layout="row" layout-xs="column">
         <md-chips ng-repeat='criteria in $ctrl.searchSettings.order.fields'>
-          <md-chip>{{$ctrl.pendencyAttributes[criteria].translatedTitle}}</md-chip>
+          <md-chip>{{$ctrl.itemAttributes[criteria].translatedTitle}}</md-chip>
         </md-chips>
       </div>
       <md-icon ng-click="$ctrl.chanceStateCriteria()" class="icon-cursor">
@@ -48,7 +48,7 @@
     <md-radio-button value="NOT_FINALIZED" class="md-primary">{{$ctrl.PENDENCY_VIEWER_TITLES.OPENED_STATE}}</md-radio-button>
   </md-radio-group>
 
-  <div ng-repeat="item in $ctrl.pendencyAttributes" layout-align="start center">
+  <div ng-repeat="item in $ctrl.itemAttributes" layout-align="start center">
     <div class="item-filter" ng-if="item.title !== 'creationDate' && item.title !== 'remainingDays'">
       <span ng-if="!$ctrl.inputViewState[item.title]">
         <md-button layout-fill class="md-raised padding-layout-fill"

@@ -9,7 +9,7 @@
       bindings: {
         getPendencies: '&',
         searchSettings: '=',
-        pendencyAttributes: '<',
+        itemAttributes: '<',
         paginatorActive: '='
 
       }

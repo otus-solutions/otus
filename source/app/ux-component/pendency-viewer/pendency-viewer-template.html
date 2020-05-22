@@ -9,18 +9,25 @@
       <span layout-align="center center">{{$ctrl.PENDENCY_VIEWER_TITLES.TO_DO_VIEWER}}</span>
     </div>
   </otus-dashboard-toolbar>
+
+
   <otus-pendency-list-control search-settings="$ctrl.searchSettings"
                               get-pendencies="$ctrl.getAllPendencies($ctrl.searchSettings)"
-                              pendency-attributes="$ctrl.pendencyAttributes"
+                              item-attributes="$ctrl.pendencyAttributes"
                               paginator-active="$ctrl.paginatorActive">
   </otus-pendency-list-control>
+<!-- <otus-generic-list-control filters-component-name="$ctrl.filtersComponentName"-->
+<!--                            search-settings="$ctrl.searchSettings"-->
+<!--                            get-pendencies="$ctrl.getAllPendencies($ctrl.searchSettings)"-->
+<!--                            item-attributes="$ctrl.pendencyAttributes"-->
+<!--                            paginator-active="$ctrl.paginatorActive">-->
+<!--  </otus-generic-list-control>-->
+
 
   <otus-generic-list item-component-name="$ctrl.itemComponentName"
                      items="$ctrl.pendencies"
                      item-attributes="$ctrl.pendencyAttributes">
   </otus-generic-list>
-
-
   <otus-generic-list-paginator call-validation-items-limits="$ctrl.callValidationItemsLimits"
                                stuntman-search-settings="$ctrl.stuntmanSearchSettings"
                                items="$ctrl.pendencies"

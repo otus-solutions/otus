@@ -8,9 +8,8 @@
       templateUrl: 'app/ux-component/pendency-viewer/pendency-list-control/pendency-list-filters/pendency-list-filters-template.html',
       bindings: {
         searchSettings: '=',
-        pendencyAttributes: '<',
+        itemAttributes: '<',
         paginatorActive: '='
-
       }
     }).controller('pendencyListFiltersCtrl', Controller);
 
