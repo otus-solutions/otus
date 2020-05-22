@@ -50,20 +50,8 @@
   grid-area: control
 }
 
-.pendency-viewer otus-generic-list-control {
-  grid-area: control
-}
-
 .pendency-viewer otus-pendency-list {
   grid-area: list
-}
-
-.pendency-viewer otus-generic-list {
-  grid-area: list
-}
-
-.pendency-viewer otus-generic-list-paginator {
-  grid-area: paginator
 }
 
 /*end style for pendency-viewer-component*/
@@ -239,7 +227,6 @@ icon-move {
       "filter filter"
       "submit submit "
   }
-
 }
 
 @media screen and (min-width: 1280px) {
@@ -284,20 +271,5 @@ icon-move {
 .pendency-list-control md-chips.md-default-theme .md-chips {
   box-shadow: none;
 }
-
-
-.generic-list-control md-input-container {
-  padding: 0px;
-  margin: 0px;
-}
-
-.generic-list-control otus-participant-search {
-  background-color: #ffffff;
-}
-
-.generic-list-control md-chips.md-default-theme .md-chips {
-  box-shadow: none;
-}
-
 
 /*end style for pendency-list-control*/
