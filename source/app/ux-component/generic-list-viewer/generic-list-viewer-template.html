@@ -1,25 +1,31 @@
-<link href="app/ux-component/generic-list-viewer/generic-list-viewer-component.css" rel="stylesheet" type="text/css">
+<link href="app/ux-component/generic-list-viewer/generic-list-viewer-styles.css" rel="stylesheet" type="text/css">
 
-<md-content class="pv-layout generic-list-viewer" ng-cloak style="">
+<md-content class="list-viewer-layout generic-list-viewer" ng-cloak style="">
   <otus-dashboard-sidenav layout="row">
     <hide-participant-box></hide-participant-box>
   </otus-dashboard-sidenav>
+
   <otus-dashboard-toolbar>
     <div flex layout="row" layout-align="center center" layout-margin>
       <span layout-align="center center">{{$ctrl.GENERIC_LIST_VIEWER_LABELS.TO_DO_VIEWER}}</span>
     </div>
   </otus-dashboard-toolbar>
-  <otus-generic-list-control search-settings="$ctrl.searchSettings"
-                             get-items="$ctrl.getAllItems($ctrl.searchSettings)"
-                             item-attributes="$ctrl.itemAttributes"
-                             paginator-active="$ctrl.paginatorActive">
+
+  <otus-generic-list-control filters-component-name="$ctrl.filtersComponentName"
+                            search-settings="$ctrl.searchSettings"
+                            get-items="$ctrl.getAllItems($ctrl.searchSettings)"
+                            item-attributes="$ctrl.itemAttributes"
+                            paginator-active="$ctrl.paginatorActive">
   </otus-generic-list-control>
-  <otus-generic-list items="$ctrl.items"
+
+  <otus-generic-list item-component-name="$ctrl.itemComponentName"
+                     items="$ctrl.items"
                      item-attributes="$ctrl.itemAttributes">
   </otus-generic-list>
-  <otus-generic-list-paginator stuntman-search-settings="$ctrl.stuntmanSearchSettings"
+
+  <otus-generic-list-paginator call-validation-items-limits="$ctrl.callValidationItemsLimits"
+                               stuntman-search-settings="$ctrl.stuntmanSearchSettings"
                                items="$ctrl.items"
-                               paginator-active="$ctrl.paginatorActive"
-                               viewer-service="$ctrl.service">
+                               paginator-active="$ctrl.paginatorActive">
   </otus-generic-list-paginator>
 </md-content>
