@@ -14,6 +14,7 @@
 
   function Service(GENERIC_LIST_VIEWER_LABELS, $q, $mdDialog, $mdToast) {
     const self = this;
+    self.LABELS = {};
     self.initialCurrentQuantity = 0;
     self.initialQuantityToGet = 5;
     self.getAllItemsFromRepositoryService = null;
@@ -31,7 +32,8 @@
 
     const deferred = $q.defer();
 
-    function init(initialCurrentQuantity, initialQuantityToGet, getAllItemsFromRepositoryService, GenericListFactory){
+    function init(CHILD_VIEWER_LABELS, initialCurrentQuantity, initialQuantityToGet, getAllItemsFromRepositoryService, GenericListFactory){
+      angular.extend(self.LABELS, GENERIC_LIST_VIEWER_LABELS, CHILD_VIEWER_LABELS);
       self.initialCurrentQuantity = initialCurrentQuantity;
       self.initialQuantityToGet = initialQuantityToGet;
       self.getAllItemsFromRepositoryService = getAllItemsFromRepositoryService;

@@ -1,10 +1,10 @@
-<md-card class="plf-layout pendency-list-filters" layout-margin>
+<md-card class="pendency-list-filters" layout-margin>
   <md-toolbar-filler layout="row" layout-align="space-between center" layout-margin>
-    <span>{{$ctrl.PENDENCY_VIEWER_TITLES.FILTERS}}</span>
-    <md-button aria-label={{$ctrl.PENDENCY_VIEWER_TITLES.RESET_FILTERS}} class="md-fab md-mini"
+    <span>{{$ctrl.LABELS.FILTERS}}</span>
+    <md-button aria-label={{$ctrl.LABELS.RESET_FILTERS}} class="md-fab md-mini"
                ng-click="$ctrl.clearAll($ctrl.searchSettings)">
       <md-icon>autorenew
-        <md-tooltip md-direction="left">{{$ctrl.PENDENCY_VIEWER_TITLES.RESET_FILTERS}}</md-tooltip>
+        <md-tooltip md-direction="left">{{$ctrl.LABELS.RESET_FILTERS}}</md-tooltip>
       </md-icon>
     </md-button>
   </md-toolbar-filler>
@@ -12,10 +12,10 @@
   <div class='sorting-criteria'>
     <span ng-if="!$ctrl.inputViewState['sortingCriteria']">
       <md-button layout-fill class="md-raised padding-layout-fill"
-                 aria-label={{$ctrl.PENDENCY_VIEWER_TITLES.SORTING_CRITERIA}}
+                 aria-label={{$ctrl.LABELS.SORTING_CRITERIA}}
                  ng-click="$ctrl.chanceStateCriteria()">
         <md-icon>swap_calls
-          <md-tooltip md-direction="right">{{$ctrl.PENDENCY_VIEWER_TITLES.SORTING_CRITERIA}}</md-tooltip>
+          <md-tooltip md-direction="right">{{$ctrl.LABELS.SORTING_CRITERIA}}</md-tooltip>
         </md-icon>
       </md-button>
     </span>
@@ -23,7 +23,7 @@
     <span ng-if="$ctrl.inputViewState['sortingCriteria']" layout="row"
           layout-align="center center">
       <md-icon ng-click="$ctrl.resetCriteriaOrderCustomization()" class="icon-cursor">refresh
-      <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.REORDERING_ITEMS}}</md-tooltip>
+      <md-tooltip md-direction="top">{{$ctrl.LABELS.REORDERING_ITEMS}}</md-tooltip>
       </md-icon>
 
       <div dragula='new-order-list'
@@ -34,8 +34,8 @@
         </md-chips>
       </div>
       <md-icon ng-click="$ctrl.chanceStateCriteria()" class="icon-cursor">
-      {{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}
-      <md-tooltip md-direction="top">{{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}</md-tooltip>
+      {{$ctrl.LABELS.CANCEL_BUTTON}}
+      <md-tooltip md-direction="top">{{$ctrl.LABELS.CANCEL_BUTTON}}</md-tooltip>
       </md-icon>
     </span>
   </div>
@@ -43,9 +43,9 @@
 
   <md-radio-group class="status" ng-model="$ctrl.searchSettings.filter.status" layout="row"
                   layout-align="space-around center" ng-change="$ctrl.changePaginationViewState()">
-    <md-radio-button value="ALL" class="md-primary">{{$ctrl.PENDENCY_VIEWER_TITLES.ALL_STATE}}</md-radio-button>
-    <md-radio-button value="FINALIZED" class="md-primary">{{$ctrl.PENDENCY_VIEWER_TITLES.ALL_STATE_STATE}}</md-radio-button>
-    <md-radio-button value="NOT_FINALIZED" class="md-primary">{{$ctrl.PENDENCY_VIEWER_TITLES.OPENED_STATE}}</md-radio-button>
+    <md-radio-button value="ALL" class="md-primary">{{$ctrl.LABELS.FILTER_STATUS.ALL}}</md-radio-button>
+    <md-radio-button value="FINALIZED" class="md-primary">{{$ctrl.LABELS.FILTER_STATUS.FINALIZED}}</md-radio-button>
+    <md-radio-button value="NOT_FINALIZED" class="md-primary">{{$ctrl.LABELS.FILTER_STATUS.NOT_FINALIZED}}</md-radio-button>
   </md-radio-group>
 
   <div ng-repeat="item in $ctrl.itemAttributes" layout-align="start center">
@@ -72,7 +72,7 @@
                                  change-watcher="$ctrl.changePaginationViewState()"
                                  on-ready="true">
         </otus-participant-search>
-        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CANCEL_BUTTON}}</md-icon>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'requester'" layout="row">
@@ -84,7 +84,7 @@
                              change-watcher="$ctrl.changePaginationViewState()"
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
-        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CANCEL_BUTTON}}</md-icon>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'receiver'" layout="row">
@@ -96,7 +96,7 @@
                              change-watcher="$ctrl.changePaginationViewState()"
                              placeholder-title="{{item.translatedTitle}}">
         </otus-checker-search>
-        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CANCEL_BUTTON}}</md-icon>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')" layout="row">
@@ -107,7 +107,7 @@
           <input ng-model="$ctrl.searchSettings.filter[item.title]"
                  ng-change="$ctrl.changePaginationViewState(); $ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
                  aria-label={{item.translatedTitle}} required>
-          <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}</md-icon>
+          <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CANCEL_BUTTON}}</md-icon>
         </md-input-container>
       </span>
 
@@ -119,7 +119,7 @@
           <input ng-model="$ctrl.searchSettings.filter[item.title]"
                  ng-change="$ctrl.changePaginationViewState()"
                  aria-label={{item.translatedTitle}} required>
-          <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}</md-icon>
+          <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CANCEL_BUTTON}}</md-icon>
         </md-input-container>
       </span>
 
@@ -129,11 +129,11 @@
         </md-icon>
         <md-datepicker ng-model="$ctrl.searchSettings.filter[item.title]"
                        ng-change="$ctrl.changePaginationViewState()"
-                       md-placeholder={{$ctrl.PENDENCY_VIEWER_TITLES.STANDARD_DATE_FORMAT}}
+                       md-placeholder={{$ctrl.LABELS.STANDARD_DATE_FORMAT}}
                        md-hide-icons="calendar"
                        aria-label={{item.translatedTitle}}>
         </md-datepicker>
-        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.PENDENCY_VIEWER_TITLES.CANCEL_BUTTON}}</md-icon>
+        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CANCEL_BUTTON}}</md-icon>
       </span>
 
     </div>
