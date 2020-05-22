@@ -18,7 +18,11 @@
     width: 100vw;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: .03fr .1fr 1fr .05fr;
-    grid-template-areas: "toolbar toolbar   toolbar   toolbar" "control control   control   control" "list    list      list      list" ".       .         .         paginator"
+    grid-template-areas:
+      "toolbar toolbar   toolbar   toolbar"
+      "control control   control   control"
+      "list    list      list      list"
+      ".       .         .         paginator"
   }
 }
 
@@ -30,7 +34,11 @@
 
     grid-template-columns: repeat(4, 1fr) .7fr;
     grid-template-rows: .03fr .1fr 1fr .05fr;
-    grid-template-areas: "toolbar toolbar toolbar toolbar     toolbar" "control control control control     control" "list    list    list      list      list" ".       .       .         .         paginator"
+    grid-template-areas:
+      "toolbar toolbar toolbar toolbar     toolbar"
+      "control control control control     control"
+      "list    list    list      list      list"
+      ".       .       .         .         paginator"
   }
 }
 
@@ -39,6 +47,10 @@
 }
 
 .pendency-viewer otus-pendency-list-control {
+  grid-area: control
+}
+
+.pendency-viewer otus-generic-list-control {
   grid-area: control
 }
 
@@ -142,7 +154,13 @@
     /*width: 90vw;*/
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: .01fr .1fr 1fr .5fr .5fr .5fr;
-    grid-template-areas: "toolbar         toolbar" "status          status" "sortingCriteria sortingCriteria" "item            item" "item            item" "item            item"
+    grid-template-areas:
+      "toolbar         toolbar"
+      "status          status"
+      "sortingCriteria sortingCriteria"
+      "item            item"
+      "item            item"
+      "item            item"
   }
 }
 
@@ -151,7 +169,11 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: .01fr .1fr .5fr .5fr;
-    grid-template-areas: "toolbar         toolbar         toolbar" "status          sortingCriteria sortingCriteria" "item            item            item" "item            item            item"
+    grid-template-areas:
+      "toolbar         toolbar         toolbar"
+      "status          sortingCriteria sortingCriteria"
+      "item            item            item"
+      "item            item            item"
   }
 }
 
@@ -212,7 +234,10 @@ icon-move {
     display: grid;
     grid-template-columns: 1fr .2fr;
     grid-template-rows: .1fr .2fr .1fr;
-    grid-template-areas: "title  ordination" "filter filter" "submit submit "
+    grid-template-areas:
+      "title  ordination"
+      "filter filter"
+      "submit submit "
   }
 
 }
@@ -223,7 +248,10 @@ icon-move {
     display: grid;
     grid-template-columns: repeat(2, 1fr) .2fr;
     grid-template-rows: .1fr .2fr .1fr;
-    grid-template-areas: "title  .      ordination" "filter filter filter" "submit submit submit"
+    grid-template-areas:
+      "title  .      ordination"
+      "filter filter filter"
+      "submit submit submit"
   }
 }
 
@@ -256,5 +284,20 @@ icon-move {
 .pendency-list-control md-chips.md-default-theme .md-chips {
   box-shadow: none;
 }
+
+
+.generic-list-control md-input-container {
+  padding: 0px;
+  margin: 0px;
+}
+
+.generic-list-control otus-participant-search {
+  background-color: #ffffff;
+}
+
+.generic-list-control md-chips.md-default-theme .md-chips {
+  box-shadow: none;
+}
+
 
 /*end style for pendency-list-control*/
