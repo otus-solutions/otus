@@ -3,16 +3,18 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('otusGenericListViewComponent', {
-      controller: 'genericListViewCtrl as $ctrl',
+    .component('otusGenericListViewer', {
+      controller: 'genericListViewerCtrl as $ctrl',
       templateUrl: 'app/ux-component/generic-list-viewer/generic-list-viewer-template.html',
       bindings: {
-        viewerService: "="
+        viewerService: "=",
+        viewerTitle: '<',
+        itemComponentName: '<',
+        filtersComponentName: '<'
       }
-    }).controller('genericListViewCtrl', Controller);
+    }).controller('genericListViewerCtrl', Controller);
 
   Controller.$inject = [
-    // 'otusjs.genericListViewer.GenericListViewerService',
     'GENERIC_LIST_VIEWER_LABELS'
   ];
 
@@ -21,20 +23,19 @@
     self.items = [];
     self.paginatorActive = false;
     self.GENERIC_LIST_VIEWER_LABELS = GENERIC_LIST_VIEWER_LABELS;
+    self.callValidationItemsLimits = self.viewerService.callValidationItemsLimits;
 
     self.$onInit = onInit;
     self.getAllItems = getAllItems;
 
-    let GenericListViewerService = self.viewerService;// TODO replace GenericListViewerService by self.viewerService
-
     function onInit() {
-      self.searchSettings = GenericListViewerService.getSearchSettings();
-      self.itemAttributes = GenericListViewerService.getGenericListAttributes();
+      self.searchSettings = self.viewerService.getSearchSettings();
+      self.itemAttributes = self.viewerService.getItemAttributes();
       getAllItems(self.searchSettings);
     }
 
     function getAllItems(searchSettings) {
-      GenericListViewerService.getAllItems(searchSettings)
+      self.viewerService.getAllItems(searchSettings)
         .then(data => {
           self.items = data;
           self.paginatorActive = (self.items.length > 0);
