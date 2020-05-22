@@ -132,9 +132,9 @@
     function _restorePaginator(vm) {
       let confirm = $mdDialog.confirm()
         .title(GENERIC_LIST_VIEWER_LABELS.INVALID_CRITERION)
-        .textContent(GENERIC_LIST_VIEWER_LABELS.CONTEXT_INVALID_CRITERION)
+        .textContent(GENERIC_LIST_VIEWER_LABELS.PAGINATOR.CONTEXT_INVALID_CRITERION)
         .ariaLabel(GENERIC_LIST_VIEWER_LABELS.INVALID_CRITERION)
-        .ok(GENERIC_LIST_VIEWER_LABELS.BOTTON_RESTORE_PAGINATOR);
+        .ok(GENERIC_LIST_VIEWER_LABELS.PAGINATOR.RESTORE_BUTTON);
 
       $mdDialog.show(confirm).then(function () {
         vm.stuntmanSearchSettings.currentQuantity = 0;
