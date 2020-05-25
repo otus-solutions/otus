@@ -1,69 +1,15 @@
-/*start style for pendency-viewer-component*/
-@media screen and (min-width: 360px) {
-  .pv-layout {
-    background: #0d3349;
-    display: grid;
-    height: 100vh;
-    /*width: 100vw;*/
-    grid-template-columns: 1fr;
-    grid-template-rows: .1fr .1fr 1fr .05fr;
-    grid-template-areas: "toolbar" "control" "list" "paginator"
-  }
-}
-
-@media screen and (min-width: 768px) {
-  .pv-layout {
-    display: grid;
-    height: 100vh;
-    width: 100vw;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: .03fr .1fr 1fr .05fr;
-    grid-template-areas:
-      "toolbar toolbar   toolbar   toolbar"
-      "control control   control   control"
-      "list    list      list      list"
-      ".       .         .         paginator"
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .pv-layout {
-    display: grid;
-    height: 100vh;
-    width: 100vw;
-
-    grid-template-columns: repeat(4, 1fr) .7fr;
-    grid-template-rows: .03fr .1fr 1fr .05fr;
-    grid-template-areas:
-      "toolbar toolbar toolbar toolbar     toolbar"
-      "control control control control     control"
-      "list    list    list      list      list"
-      ".       .       .         .         paginator"
-  }
-}
-
-.pendency-viewer otus-dashboard-toolbar {
-  grid-area: toolbar
-}
-
-.pendency-viewer otus-pendency-list-control {
-  grid-area: control
-}
-
-.pendency-viewer otus-pendency-list {
-  grid-area: list
-}
-
-/*end style for pendency-viewer-component*/
-
-/*start style for pendency-item*/
+/*begin style for pendency-item*/
 @media screen and (min-width: 360px) {
   .pi-layout {
     display: grid;
     /*width: 98vw;*/
     grid-template-columns: 2.9fr .6fr .1fr 6fr;
     grid-template-rows: 1fr;
-    grid-template-areas: "acronym acronym requester requester" "rn rn receiver receiver" "creationDate creationDate creationDate duoDate" "remainingDays .           externalID externalID"
+    grid-template-areas:
+      "acronym      acronym      requester    requester"
+      "rn           rn           receiver     receiver"
+      "creationDate creationDate creationDate duoDate"
+      "remainingDays .           externalID   externalID"
   }
 }
 
@@ -73,7 +19,9 @@
     /*width: 98vw;*/
     grid-template-columns: 1.8fr 3.8fr 4.2fr 2.2fr;
     grid-template-rows: .1fr .1fr;
-    grid-template-areas: "acronym   creationDate duoDate   remainingDays" "rn        requester    receiver  externalID"
+    grid-template-areas:
+      "acronym   creationDate duoDate   remainingDays"
+      "rn        requester    receiver  externalID"
   }
 }
 
@@ -125,9 +73,9 @@
 
 /*end style for pendency-item*/
 
-/*start style for pendency-list-filters*/
+/*begin style for pendency-list-filters*/
 @media screen and (min-width: 360px) {
-  .plf-layout {
+  .pendency-list-filters {
     display: grid;
     /*width: 90vw;*/
     grid-template-columns: 1fr;
@@ -137,7 +85,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  .plf-layout {
+  .pendency-list-filters {
     display: grid;
     /*width: 90vw;*/
     grid-template-columns: repeat(2, 1fr);
@@ -153,7 +101,7 @@
 }
 
 @media screen and (min-width: 1280px) {
-  .plf-layout {
+  .pendency-list-filters {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: .01fr .1fr .5fr .5fr;
@@ -213,63 +161,4 @@ icon-move {
   cursor: move;
 }
 
-/* start style for pendency-list-filters*/
-
-/*start style for pendency-list-control*/
-@media screen and (min-width: 768px) {
-  .plc-layout {
-    width: 98vw;
-    display: grid;
-    grid-template-columns: 1fr .2fr;
-    grid-template-rows: .1fr .2fr .1fr;
-    grid-template-areas:
-      "title  ordination"
-      "filter filter"
-      "submit submit "
-  }
-}
-
-@media screen and (min-width: 1280px) {
-  .plc-layout {
-    /*width: 98vw;*/
-    display: grid;
-    grid-template-columns: repeat(2, 1fr) .2fr;
-    grid-template-rows: .1fr .2fr .1fr;
-    grid-template-areas:
-      "title  .      ordination"
-      "filter filter filter"
-      "submit submit submit"
-  }
-}
-
-.title {
-  grid-area: title
-}
-
-.ordination {
-  grid-area: ordination;
-}
-
-.filter {
-  grid-area: filter
-}
-
-.submit {
-  grid-area: submit;
-  /*width: 80vw;*/
-}
-
-.pendency-list-control md-input-container {
-  padding: 0px;
-  margin: 0px;
-}
-
-.pendency-list-control otus-participant-search {
-  background-color: #ffffff;
-}
-
-.pendency-list-control md-chips.md-default-theme .md-chips {
-  box-shadow: none;
-}
-
-/*end style for pendency-list-control*/
+/* end style for pendency-list-filters*/
