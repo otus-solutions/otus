@@ -15,11 +15,10 @@
 
   Controller.$inject = [
     'dragulaService',
-    'otusjs.pendencyViewer.PendencyViewerService',
-    'PENDENCY_VIEWER_LABELS'
+    'otusjs.pendencyViewer.PendencyViewerService'
   ];
 
-  function Controller(dragulaService, PendencyViewerService, PENDENCY_VIEWER_LABELS) {
+  function Controller(dragulaService, PendencyViewerService) {
     const self = this;
     const PENDENCY_ORDER_FIELD = {
       DUEDATE: 'dueDate',
