@@ -1,36 +1,7 @@
-<link href="app/ux-component/pendency-viewer/pendency-viewer-component.css" rel="stylesheet" type="text/css">
+<link href="app/ux-component/pendency-viewer/pendency-viewer-styles.css" rel="stylesheet" type="text/css">
 
-<md-content class="pv-layout pendency-viewer" ng-cloak style="">
-  <otus-dashboard-sidenav layout="row">
-    <hide-participant-box></hide-participant-box>
-  </otus-dashboard-sidenav>
-  <otus-dashboard-toolbar>
-    <div flex layout="row" layout-align="center center" layout-margin>
-      <span layout-align="center center">{{$ctrl.PENDENCY_VIEWER_TITLES.TO_DO_VIEWER}}</span>
-    </div>
-  </otus-dashboard-toolbar>
-
-
-  <otus-pendency-list-control search-settings="$ctrl.searchSettings"
-                              get-items="$ctrl.getAllItems($ctrl.searchSettings)"
-                              item-attributes="$ctrl.itemAttributes"
-                              paginator-active="$ctrl.paginatorActive">
-  </otus-pendency-list-control>
-<!-- <otus-generic-list-control filters-component-name="$ctrl.filtersComponentName"-->
-<!--                            search-settings="$ctrl.searchSettings"-->
-<!--                            get-items="$ctrl.getAllItems($ctrl.searchSettings)"-->
-<!--                            item-attributes="$ctrl.itemAttributes"-->
-<!--                            paginator-active="$ctrl.paginatorActive">-->
-<!--  </otus-generic-list-control>-->
-
-
-  <otus-generic-list item-component-name="$ctrl.itemComponentName"
-                     items="$ctrl.items"
-                     item-attributes="$ctrl.itemAttributes">
-  </otus-generic-list>
-  <otus-generic-list-paginator call-validation-items-limits="$ctrl.callValidationItemsLimits"
-                               stuntman-search-settings="$ctrl.stuntmanSearchSettings"
-                               items="$ctrl.items"
-                               paginator-active="$ctrl.paginatorActive">
-  </otus-generic-list-paginator>
-</md-content>
+<otus-generic-list-viewer viewer-service="$ctrl.viewerService"
+                          viewer-title="$ctrl.viewerTitle"
+                          item-component-name="$ctrl.itemComponentName"
+                          filters-component-name="$ctrl.filtersComponentName">
+</otus-generic-list-viewer>
