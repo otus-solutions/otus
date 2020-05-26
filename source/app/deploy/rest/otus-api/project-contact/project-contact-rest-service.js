@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .service('otusjs.deploy.ProjectCommunicationRestService', Service);
+    .service('otusjs.deploy.ProjectContactRestService', Service);
 
   Service.$inject = [
     'OtusRestResourceService'
@@ -18,8 +18,8 @@
     self.initialize = initialize;
     self.createMessage = createMessage;
     self.createIssue = createIssue;
-    self.getProjectCommunicationById = getProjectCommunicationById;
-    self.getProjectCommunicationByIdLimit = getProjectCommunicationByIdLimit;
+    self.getProjectContactById = getProjectContactById;
+    self.getProjectContactByIdLimit = getProjectContactByIdLimit;
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
     self.listIssue = listIssue;
@@ -28,34 +28,34 @@
       _rest = OtusRestResourceService.getProjectCommunicationResourceFactory();
     }
 
-    function createMessage(foundProjectCommunicationId, jsonProjectCommunication){
+    function createMessage(foundProjectContactId, jsonProjectContact){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.createMessage({id: foundProjectCommunicationId}, jsonProjectCommunication).$promise;
+      return _rest.createMessage({id: foundProjectContactId}, jsonProjectContact).$promise;
     }
 
-    function createIssue(jsonProjectCommunication){
+    function createIssue(jsonProjectContact){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.createIssue(jsonProjectCommunication).$promise;
+      return _rest.createIssue(jsonProjectContact).$promise;
     }
 
-    function getProjectCommunicationById(id) {
+    function getProjectContactById(id) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.getProjectCommunicationById({id: id}).$promise;
+      return _rest.getMessageById({id: id}).$promise;
     }
 
-    function getProjectCommunicationByIdLimit(id, limit) {
+    function getProjectContactByIdLimit(id, limit) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.getProjectCommunicationByIdLimit({id: id, limit: limit}).$promise;
+      return _rest.getMessageByIdLimit({id: id, limit: limit}).$promise;
     }
 
-    function updateReopen(foundProjectCommunicationId){
+    function updateReopen(foundProjectContactId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateReopen({id: foundProjectCommunicationId}).$promise;
+      return _rest.updateReopen({id: foundProjectContactId}).$promise;
     }
 
-    function updateClose(foundProjectCommunicationId){
+    function updateClose(foundProjectContactId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateClose({id: foundProjectCommunicationId}).$promise;
+      return _rest.updateClose({id: foundProjectContactId}).$promise;
     }
 
     function listIssue(){

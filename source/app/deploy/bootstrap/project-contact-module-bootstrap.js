@@ -2,16 +2,16 @@
   'use strict';
 
   angular.module('otusjs.deploy')
-    .service('otus.deploy.ProjectCommunicationModuleBootstrap', Service);
+    .service('otus.deploy.ProjectContactModuleBootstrap', Service);
 
   Service.$inject = [
-    'otusjs.projectCommunication.core.ModuleService',
+    'otusjs.project.contact.core.ModuleService',
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
-    'otusjs.deploy.ProjectCommunicationRestService'
+    'otusjs.deploy.ProjectContactnRestService'
   ];
 
-  function Service( ModuleService, ContextFactory, StorageService, ProjectCommunicationRestService) {
+  function Service( ModuleService, ContextFactory, StorageService, ProjectContactRestService) {
     const self = this;
     /* Public methods */
 
@@ -22,7 +22,7 @@
     function bootstrap() {
       configureContext(ContextFactory);
       configureStorage(StorageService.session);
-      ModuleService.configureRemoteStorage(ProjectCommunicationRestService);
+      ModuleService.configureRemoteStorage(ProjectContactRestService);
     }
 
     function configureContext(context) {

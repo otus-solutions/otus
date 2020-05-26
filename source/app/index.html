@@ -198,7 +198,7 @@
 <script src="app/deploy/bootstrap/report-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/monitoring-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/pendency-module-bootstrap.js"></script>
-<script src="app/deploy/bootstrap/project-communication-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/project-contact-module-bootstrap.js"></script>
 <!-- # Deploy > Data Source -->
 <script src="app/deploy/data-source/data-source-loader-service.js"></script>
 <script src="app/deploy/data-source/activity-data-source-service.js"></script>
@@ -250,7 +250,7 @@
 <script src="app/deploy/rest/otus-api/pendency/user-activity-pendency-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/transport-location-point/location-point-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/contact/participant-contact-rest-service.js"></script>
-<script src="app/deploy/rest/otus-api/project-communication/project-communication-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/project-contact/project-contact-rest-service.js"></script>
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
 <script src="app/deploy/state/error/error-state-provider.js"></script>
@@ -530,11 +530,8 @@
 <!-- # monitoring > storage -->
 <script src="app/module/monitoring/storage/module.js"></script>
 <script src="app/module/monitoring/storage/monitoring-local-storage-service.js"></script>
-
-
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
-
 <!-- build:js scripts/pendency-module.min.js -->
 <!-- # Module > Pendency -->
 <script src="app/module/pendency/module.js"></script>
@@ -552,6 +549,23 @@
 <script src="app/module/pendency/repository/user-activity-pendency/user-activity-pendency-collection-service.js"></script>
 <!-- # Pendency > Storage -->
 <script src="app/module/pendency/storage/module.js"></script>
+<!-- endbuild -->
+<!------------------------------------------------------------------------------------------------>
+<!-- build:js scripts/projectContact-module.min.js -->
+<!-- # Module > Pendency -->
+<script src="app/module/project-contact/module.js"></script>
+
+<!-- # Pendency > Business -->
+<script src="app/module/project-contact/business/module.js"></script>
+<script src="app/module/project-contact/business/project-contact-service.js"></script>
+<!-- # Pendency > Core -->
+<script src="app/module/project-contact/core/module.js"></script>
+<script src="app/module/project-contact/core/module-service.js"></script>
+<script src="app/module/project-contacty/core/context-service.js"></script>
+<!-- # Pendency > Repository -->
+<script src="app/module/project-contact/repository/module.js"></script>
+<script src="app/module/project-contact/repository/project-contact/project-contact-repository-service.js"></script>
+<script src="app/module/project-contact/repository/project-contact/project-contact-collection-service.js"></script>
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/ux-component-module.min.js -->
