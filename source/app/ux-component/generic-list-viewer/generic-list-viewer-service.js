@@ -32,7 +32,8 @@
 
     const deferred = $q.defer();
 
-    function init(CHILD_VIEWER_LABELS, initialCurrentQuantity, initialQuantityToGet, getAllItemsFromRepositoryService, GenericListFactory){
+    function init(CHILD_VIEWER_LABELS, initialCurrentQuantity, initialQuantityToGet,
+                  getAllItemsFromRepositoryService, GenericListFactory){
       angular.extend(self.LABELS, GENERIC_LIST_VIEWER_LABELS, CHILD_VIEWER_LABELS);
       self.initialCurrentQuantity = initialCurrentQuantity;
       self.initialQuantityToGet = initialQuantityToGet;
@@ -45,11 +46,11 @@
         "currentQuantity": self.initialCurrentQuantity,
         "quantityToGet": self.initialQuantityToGet,
         "order": {
-          "fields": ["dueDate"],
+          "fields": [""],
           "mode": 1
         },
         "filter": {
-          "status": "NOT_FINALIZED"
+          "status": ""
         }
       };
     }
