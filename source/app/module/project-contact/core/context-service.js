@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusjs.project,contact.core')
+    .module('otusjs.project.contact.core')
     .service('otusjs.project.contact.core.ContextService', Service);
 
   function Service() {
