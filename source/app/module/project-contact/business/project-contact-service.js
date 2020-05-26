@@ -6,7 +6,7 @@
     .service('otusjs.project.contact.business.ProjectContactService', Service);
 
   Service.$inject = [
-    'otusjs.project.communication.repository.ProjectContactRepositoryService'
+    'otusjs.project.contact.repository.ProjectContactRepositoryService'
   ];
 
   function Service (ProjectContactRepositoryService){
@@ -23,6 +23,10 @@
 
     function createMessage(projectContact) {
       return ProjectContactRepositoryService.createMessage(projectContact)
+    }
+
+    function createIssue(id, projectContact) {
+      return ProjectContactRepositoryService.createIssue(id, projectContact)
     }
 
     function getProjectContactById(id) {
