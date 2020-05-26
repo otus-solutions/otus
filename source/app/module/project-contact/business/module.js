@@ -2,6 +2,6 @@
   'use strict';
 
   angular
-    .module('otusjs.project.communication.business', []);
+    .module('otusjs.project.contact.business', []);
 
 }());
