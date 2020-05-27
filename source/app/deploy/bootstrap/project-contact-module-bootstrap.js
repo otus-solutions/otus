@@ -8,7 +8,7 @@
     'otusjs.project.contact.core.ModuleService',
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
-    'otusjs.deploy.ProjectContactnRestService'
+    'otusjs.deploy.ProjectContactRestService'
   ];
 
   function Service( ModuleService, ContextFactory, StorageService, ProjectContactRestService) {
