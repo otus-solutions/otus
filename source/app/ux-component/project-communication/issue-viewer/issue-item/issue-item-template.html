@@ -1,0 +1,29 @@
+<md-card class="issue-item-layout" layout-margin ng-cloak>
+  <div class="rn">
+    <md-icon>{{$ctrl.itemAttributes.rn.icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.rn.translatedTitle}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.item.recruitmentNumber}}</span>
+  </div>
+
+  <div class="creation-date">
+    <md-icon>{{$ctrl.itemAttributes.creationDate.icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.creationDate.translatedTitle}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.creationDate}}</span>
+  </div>
+
+  <div class="center-name">
+    <md-icon>{{$ctrl.itemAttributes.center.icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.center.translatedTitle}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.item.center}}</span>
+  </div>
+
+  <div class="status">
+    <md-icon>{{$ctrl.itemAttributes.status.icon}}
+      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.status.translatedTitle}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.remainingDays}}</span>
+  </div>
+</md-card>
