@@ -41,7 +41,7 @@
       self.GenericListFactory = GenericListFactory;
     }
 
-    function getSearchSettings() { // TODO defined at child?
+    function getSearchSettings() {
       return {
         "currentQuantity": self.initialCurrentQuantity,
         "quantityToGet": self.initialQuantityToGet,
