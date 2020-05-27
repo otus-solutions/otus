@@ -50,6 +50,7 @@
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
     self.activatePendencyViewer = activatePendencyViewer;
     self.activateOfflineActivitySynchronize = activateOfflineActivitySynchronize;
+    self.activateIssueViewer = activateIssueViewer;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -196,6 +197,10 @@
 
     function activatePendencyViewer(){
       $state.go(STATE.PENDENCY_VIEWER);
+    }
+
+    function activateIssueViewer(){
+      $state.go(STATE.ISSUE_VIEWER);
     }
   }
 }());
