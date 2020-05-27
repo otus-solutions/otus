@@ -1,19 +1,31 @@
-describe('pendencyViewComponent_UnitTest_Suite', () => {
+describe('genericViewComponent_UnitTest_Suite', () => {
   let ctrl;
   let Injections = [];
-  const searchSettings = {
-    currentQuantity: 0,
-    quantityToGet: 10
-  };
+  let Mock = {};
+
+  const searchSettings = {};
 
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
-    angular.mock.inject(($injector,$controller) => {
-      Injections.PendencyViewerService = $injector.get('otusjs.pendencyViewer.PendencyViewerService');
-      Injections.PENDENCY_VIEWER_TITLES = $injector.get('PENDENCY_VIEWER_TITLES');
-      ctrl = $controller('pendencyViewCtrl', Injections);
+    angular.mock.inject(($injector, $q, $rootScope, $controller) => {
+      const viewerService = $injector.get('otusjs.genericListViewer.GenericListViewerService');
+      Injections.GENERIC_LIST_VIEWER_LABELS = $injector.get('GENERIC_LIST_VIEWER_LABELS');
+      ctrl = $controller('genericListViewerCtrl', Injections, {
+        viewerService: viewerService
+      });
+
+      mockInitialize($rootScope);
+      Mock.defer = $q.defer();
+      Mock.defer.resolve(Mock.items);
     });
   });
+
+  function mockInitialize($rootScope) {
+    Mock = {
+      searchSettings: {},
+      scope: $rootScope.$new(),
+    }
+  }
 
   it('ctrl_existence_check', () => {
     expect(ctrl).toBeDefined();
@@ -21,29 +33,33 @@ describe('pendencyViewComponent_UnitTest_Suite', () => {
 
   it('ctrl_methods_existence_check', () => {
     expect(ctrl.$onInit).toBeDefined();
-    expect(ctrl.getAllPendencies).toBeDefined();
+    expect(ctrl.getAllItems).toBeDefined();
   });
 
-  it('onInit_method_should_evoke_getAllPendencies_from_PendencyViewerService', () => {
-    spyOn(Injections.PendencyViewerService, "getSearchSettings");
-    spyOn(Injections.PendencyViewerService, "getPendencyAttributes");
+  it('onInit_method_should_evoke_getAllItems_from_viewerService_passed_by_bind', () => {
+    spyOn(ctrl.viewerService, "getAllItems").and.returnValue(Promise.resolve([{}]));
+    spyOn(ctrl.viewerService, "getSearchSettings");
+    spyOn(ctrl.viewerService, "getItemAttributes");
     ctrl.$onInit();
-    expect(Injections.PendencyViewerService.getSearchSettings).toHaveBeenCalledTimes(1);
-    expect(Injections.PendencyViewerService.getPendencyAttributes).toHaveBeenCalledTimes(1);
+    Mock.scope.$digest();
+    expect(ctrl.viewerService.getSearchSettings).toHaveBeenCalledTimes(1);
+    expect(ctrl.viewerService.getItemAttributes).toHaveBeenCalledTimes(1);
   });
 
-  it('getAllPendencies_method_should_evoke_getAllPendencies_from_PendencyViewerService', () => {
-    spyOn(Injections.PendencyViewerService, "getAllPendencies").and.returnValue(Promise.resolve());
+  it('getAllItems_method_should_evoke_getAllItems_from_viewerService_passed_by_bind', () => {
+    spyOn(ctrl.viewerService, "getAllItems").and.returnValue(Promise.resolve([{}]));
     ctrl.$onInit();
-    ctrl.getAllPendencies(searchSettings);
-    expect(Injections.PendencyViewerService.getAllPendencies).toHaveBeenCalledTimes(2);
+    ctrl.getAllItems(searchSettings);
+    Mock.scope.$digest();
+    expect(ctrl.viewerService.getAllItems).toHaveBeenCalledTimes(2);
   });
 
-  it('getAllPendencies_with_no_data_method_should_evoke_getAllPendencies_from_PendencyViewerService', () => {
-    spyOn(Injections.PendencyViewerService, "getAllPendencies").and.returnValue(Promise.resolve([{}]));
+  it('getAllItems_with_no_data_method_should_evoke_getAllItems_from_viewerService_passed_by_bind', () => {
+    spyOn(ctrl.viewerService, "getAllItems").and.returnValue(Promise.resolve([{}]));
     ctrl.$onInit();
-    ctrl.getAllPendencies(searchSettings);
-    expect(Injections.PendencyViewerService.getAllPendencies).toHaveBeenCalledTimes(2);
+    ctrl.getAllItems(searchSettings);
+    Mock.scope.$digest();
+    expect(ctrl.viewerService.getAllItems).toHaveBeenCalledTimes(2);
   });
 
 });
