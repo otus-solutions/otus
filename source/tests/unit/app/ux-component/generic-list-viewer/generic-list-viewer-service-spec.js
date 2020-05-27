@@ -72,7 +72,6 @@ describe('GenericListViewerService_UnitTest_Suite', () => {
     expect(service.callValidationItemsLimits).toBeDefined();
     expect(service.formatDate).toBeDefined();
     expect(service.getSelectedParticipantRN).toBeDefined();
-    expect(service.getChecker).toBeDefined();
   });
 
   it('getSearchSettingsMethod_should_returns_searchSettingsInitial', () => {

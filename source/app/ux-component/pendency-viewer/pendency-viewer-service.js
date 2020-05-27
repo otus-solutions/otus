@@ -23,6 +23,7 @@
 
     self.initialize = initialize;
     self.calculateRemainingDays = calculateRemainingDays;
+    self.getChecker = getChecker;
 
     function initialize(){
       angular.extend(self, self, GenericListViewerService);
@@ -33,7 +34,6 @@
       self.getItemAttributes = getItemAttributes;
       self.getInputViewState = getInputViewState;
       self.getSelectedParticipantRN = getSelectedParticipantRN;
-      self.getChecker = getChecker;
     }
 
     function getSearchSettings() {

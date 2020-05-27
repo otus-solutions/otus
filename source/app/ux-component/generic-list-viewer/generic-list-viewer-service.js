@@ -28,7 +28,6 @@
     self.callValidationItemsLimits = callValidationItemsLimits;
     self.formatDate = formatDate;
     self.getSelectedParticipantRN = getSelectedParticipantRN;
-    self.getChecker = getChecker;
 
     const deferred = $q.defer();
 
@@ -83,10 +82,6 @@
 
     function getSelectedParticipantRN(participant, genericListFilterItem, searchSettings) {
       searchSettings.filter[genericListFilterItem.title] = participant.recruitmentNumber;
-    }
-
-    function getChecker(user, genericListFilterItem, searchSettings) {
-      searchSettings.filter[genericListFilterItem.title] = [user.checker.email];
     }
 
     function callValidationItemsLimits(vm, stuntmanSearchSettings, mode) {
