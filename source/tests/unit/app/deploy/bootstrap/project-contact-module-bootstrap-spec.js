@@ -1,4 +1,4 @@
-fdescribe('ProjectContactModuleBootstrap_UnitTest_Suite', () => {
+describe('ProjectContactModuleBootstrap_UnitTest_Suite', () => {
   let service;
   let Injections = [];
 
