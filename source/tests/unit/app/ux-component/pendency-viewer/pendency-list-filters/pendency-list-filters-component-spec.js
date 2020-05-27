@@ -8,7 +8,6 @@ describe('otusPendecyListFiltersComponent_UnitTest_Suite', () => {
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
     angular.mock.inject(($injector,$controller) => {
-      Injections.PENDENCY_VIEWER_TITLES = $injector.get('PENDENCY_VIEWER_TITLES');
       Injections.dragulaService = $injector.get('dragulaService');
       Injections.PendencyViewerService = $injector.get('otusjs.pendencyViewer.PendencyViewerService');
       ctrl = $controller('pendencyListFiltersCtrl', Injections);
