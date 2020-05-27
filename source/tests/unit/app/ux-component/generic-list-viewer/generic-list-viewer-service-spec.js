@@ -1,44 +1,62 @@
-describe('PendencyViewerService_UnitTest_Suite', () => {
+describe('GenericListViewerService_UnitTest_Suite', () => {
   let service;
   let Injections = [];
   let Mock = {};
+
+  const RECRUITMENT_NUMBER = 1234567;
+  const DATE = new Date("Sat Mar 07 2020 00:00:00");
+  const FORMATTED_DATE = "7/3/2020";
 
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
     angular.mock.inject(($injector, $q, $rootScope) => {
       Injections.$q = $injector.get('$q');
-      Injections.GenericListViewerService = $injector.get('otusjs.genericListViewer.GenericListViewerService');
-      Injections.UserActivityPendencyRepositoryService = $injector.get('otusjs.pendency.repository.UserActivityPendencyRepositoryService');
-      service = $injector.get('otusjs.pendencyViewer.PendencyViewerService', Injections);
-      service.initialize();
+      Injections.$mdDialog = $injector.get('$mdDialog');
+      Injections.$mdToast = $injector.get('$mdToast');
+      service = $injector.get('otusjs.genericListViewer.GenericListViewerService', Injections);
 
       mockInitialize($rootScope);
+      initializeService();
       Mock.defer = Injections.$q.defer();
       Mock.defer.resolve(Mock.items);
     });
   });
 
   function mockInitialize($rootScope) {
+    const initialCurrentQuantity = 0, initialQuantityToGet = 5;
     Mock = {
+      CHILD_VIEWER_LABELS: {},
+      initialCurrentQuantity: initialCurrentQuantity,
+      initialQuantityToGet: initialQuantityToGet,
+      getAllItemsFromRepositoryService: function(searchSettings){ return {};},
+      GenericListFactory: {
+        fromJsonObject: function(item){return {}}
+        },
       searchSettings: {
-        "currentQuantity": 0,
-        "quantityToGet": 15,
+        "currentQuantity": initialCurrentQuantity,
+        "quantityToGet": initialQuantityToGet,
         "order": {
-          "fields": ["dueDate"],
+          "fields": [""],
           "mode": 1
         },
         "filter": {
-          "status": "NOT_FINALIZED"
+          "status": ""
         }
       },
-      itemAttributes: service.getItemAttributes(),
-      inputViewState: service.getInputViewState(),
+      itemAttributes: {},
+      inputViewState: {},
       items: [Test.utils.data.userActivityPendency],
       scope: $rootScope.$new(),
-      date: new Date("Sat Mar 07 2020 00:00:00"),
-      participant: { recruitmentNumber: 1234567 },
-      pendencyFilterItem: {title: "rn"}
+      date: DATE,
+      participant: { recruitmentNumber: RECRUITMENT_NUMBER },
+      filterItem: {title: "rn"}
     }
+  }
+
+  function initializeService(){
+    service.init(Mock.CHILD_VIEWER_LABELS,
+      Mock.initialCurrentQuantity, Mock.initialQuantityToGet,
+      Mock.getAllItemsFromRepositoryService, Mock.GenericListFactory);
   }
 
   it('serviceExistence_check', () => {
@@ -46,13 +64,13 @@ describe('PendencyViewerService_UnitTest_Suite', () => {
   });
 
   it('serviceMethodsExistence_check', () => {
+    expect(service.init).toBeDefined();
     expect(service.getSearchSettings).toBeDefined();
     expect(service.getItemAttributes).toBeDefined();
     expect(service.getInputViewState).toBeDefined();
     expect(service.getAllItems).toBeDefined();
     expect(service.callValidationItemsLimits).toBeDefined();
     expect(service.formatDate).toBeDefined();
-    expect(service.calculateRemainingDays).toBeDefined();
     expect(service.getSelectedParticipantRN).toBeDefined();
     expect(service.getChecker).toBeDefined();
   });
@@ -65,36 +83,38 @@ describe('PendencyViewerService_UnitTest_Suite', () => {
     expect(searchSettings.filter.status).toBe(Mock.searchSettings.filter.status);
   });
 
-  it('getItemAttributes_method_should_returns_initialPendencyAttributes', () => {
-    expect(Mock.itemAttributes.receiver.icon).toBe("assignment_ind");
+  it('getItemAttributes_method_should_returns_itemAttributesInitial', () => {
+    expect(service.getItemAttributes()).toEqual(Mock.itemAttributes);
   });
 
   it('getInputViewState_method_should_returns_inputViewStateInitial', () => {
-    expect(Mock.inputViewState.receiver).toBeFalsy();
+    expect(service.getInputViewState()).toEqual(Mock.inputViewState);
   });
 
-  it('calculateRemainingDays_should_RemainingDays_between dates', () => {
-    expect(service.calculateRemainingDays(new Date())).toBe(0);
+  it('formatDate_method_should_returns_customDate', () => {
+    expect(service.formatDate(Mock.date)).toBe(FORMATTED_DATE);
   });
 
-  //TODO passa pra qualquer valor em toBe
-  it('getAllItems_method_should_pendencyInstance_in_List_of_promiseResolve', () => {
-    spyOn(Injections.UserActivityPendencyRepositoryService, "getAllPendencies").and.returnValue(Promise.resolve(Mock.items));
+  it('getSelectedParticipantRN_method_should_', () => {
+    service.getSelectedParticipantRN(Mock.participant, Mock.filterItem, Mock.searchSettings);
+    expect(Mock.searchSettings.filter.rn).toBe(RECRUITMENT_NUMBER);
+  });
+
+  it('getAllItems_method_should_itemInstance_in_List_of_promiseResolve', () => {
+    spyOn(service.GenericListFactory, "fromJsonObject").and.returnValue(Mock.items[0]);
+    spyOn(service, "getAllItemsFromRepositoryService").and.returnValue(Promise.resolve(Mock.items));
     service.getAllItems(Mock.searchSettings)
       .then(data => expect(data[0].objectType).toBe("userActivityPendency"));
     Mock.scope.$digest();
   });
 
   it('callValidationItemsLimits_method_should_call_getAllItems_method', () => {
-    console.log('test:', service.getAllItemsFromRepositoryService);
     const mode = '';
     const vm = {};
-    // spyOn(Injections.UserActivityPendencyRepositoryService, "getAllPendencies").and.returnValue(Promise.resolve(Mock.items));
     spyOn(service, "getAllItemsFromRepositoryService").and.returnValue(Mock.defer.promise);
-    spyOn(service, "getAllItems").and.returnValue(Promise.resolve( Mock.defer.resolve(Mock.items)));
+    spyOn(service, "getAllItems").and.returnValue(Promise.resolve((Mock.items)));
     service.callValidationItemsLimits(vm, Mock.searchSettings, mode);
     Mock.scope.$digest();
-    console.log('test result\n' + JSON.stringify(vm, null, 4));//.
     expect(vm.items).toBeDefined();
     expect(vm.items.length).toBe(Mock.items.length);
   });
@@ -108,7 +128,7 @@ describe('PendencyViewerService_UnitTest_Suite', () => {
         msg: "something is wrong"
       });
 
-      spyOn(Injections.UserActivityPendencyRepositoryService, "getAllPendencies").and.returnValue(rejectError);
+      spyOn(service, "getAllItemsFromRepositoryService").and.returnValue(rejectError);
       spyOn(service, "getAllItems").and.returnValue(rejectError);
 
       try{

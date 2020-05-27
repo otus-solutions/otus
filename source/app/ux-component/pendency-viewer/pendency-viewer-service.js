@@ -19,15 +19,21 @@
     const INITIAL_CURRENT_QUANTITY = 0;
     const INITIAL_QUANTITY_TO_GET = 15;
 
-    angular.extend(self, self, GenericListViewerService);
-    self.init(PENDENCY_VIEWER_LABELS, INITIAL_CURRENT_QUANTITY, INITIAL_QUANTITY_TO_GET,
-      UserActivityPendencyRepositoryService.getAllPendencies, UserActivityPendencyFactory);
+    initialize();
 
+    self.initialize = initialize;
     self.getSearchSettings = getSearchSettings;
-    self.getItemAttributes = getPendencyAttributes;
+    self.getItemAttributes = getItemAttributes;
     self.getInputViewState = getInputViewState;
     self.calculateRemainingDays = calculateRemainingDays;
     self.getSelectedParticipantRN = getSelectedParticipantRN;
+
+    function initialize(){
+      angular.extend(self, self, GenericListViewerService);
+      self.init(PENDENCY_VIEWER_LABELS, INITIAL_CURRENT_QUANTITY, INITIAL_QUANTITY_TO_GET,
+        UserActivityPendencyRepositoryService.getAllPendencies, UserActivityPendencyFactory);
+    }
+
     self.getChecker = getChecker;
 
     function getSearchSettings() {
@@ -44,7 +50,7 @@
       };
     }
 
-    function getPendencyAttributes() {
+    function getItemAttributes() {
       return {
         rn: {title: 'rn', translatedTitle: PENDENCY_VIEWER_LABELS.RN, icon: 'account_circle'},
         requester: {title: 'requester', translatedTitle: PENDENCY_VIEWER_LABELS.REQUESTER, icon: 'record_voice_over'},
