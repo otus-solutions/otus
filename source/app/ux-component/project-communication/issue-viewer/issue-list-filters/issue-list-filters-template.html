@@ -1,0 +1,105 @@
+<md-card class="issue-list-filters" layout-margin>
+  <md-toolbar-filler layout="row" layout-align="space-between center" layout-margin>
+    <span>{{$ctrl.LABELS.CONTROL_PANEL.FILTERS}}</span>
+    <md-button aria-label={{$ctrl.LABELS.CONTROL_PANEL.RESET_FILTERS}} class="md-fab md-mini"
+               ng-click="$ctrl.clearAll($ctrl.searchSettings)">
+      <md-icon>autorenew
+        <md-tooltip md-direction="left">{{$ctrl.LABELS.CONTROL_PANEL.RESET_FILTERS}}</md-tooltip>
+      </md-icon>
+    </md-button>
+  </md-toolbar-filler>
+
+  <div class='sorting-criteria'>
+    <span ng-if="!$ctrl.inputViewState['sortingCriteria']">
+      <md-button layout-fill class="md-raised padding-layout-fill"
+                 aria-label={{$ctrl.LABELS.CONTROL_PANEL.SORTING_CRITERIA}}
+                 ng-click="$ctrl.chanceStateCriteria()">
+        <md-icon>swap_calls
+          <md-tooltip md-direction="right">{{$ctrl.LABELS.CONTROL_PANEL.SORTING_CRITERIA}}</md-tooltip>
+        </md-icon>
+      </md-button>
+    </span>
+
+    <span ng-if="$ctrl.inputViewState['sortingCriteria']" layout="row"
+          layout-align="center center">
+      <md-icon ng-click="$ctrl.resetCriteriaOrderCustomization()" class="icon-cursor">refresh
+      <md-tooltip md-direction="top">{{$ctrl.LABELS.REORDERING_ITEMS}}</md-tooltip>
+      </md-icon>
+
+      <div dragula='new-order-list'
+           dragula-model='$ctrl.searchSettings.order.fields'
+           layout="row" layout-xs="column">
+        <md-chips ng-repeat='criteria in $ctrl.searchSettings.order.fields'>
+          <md-chip>{{$ctrl.itemAttributes[criteria].translatedTitle}}</md-chip>
+        </md-chips>
+      </div>
+      <md-icon ng-click="$ctrl.chanceStateCriteria()" class="icon-cursor">
+      {{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}
+      <md-tooltip md-direction="top">{{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}</md-tooltip>
+      </md-icon>
+    </span>
+  </div>
+
+  <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'creationDate')" layout="row" layout-align="space-between center">
+    <md-icon>{{item.icon}}
+      <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+    </md-icon>
+    <md-datepicker ng-model="$ctrl.searchSettings.filter[item.title]"
+                   ng-change="$ctrl.changePaginationViewState()"
+                   md-placeholder={{$ctrl.LABELS.STANDARD_DATE_FORMAT}}
+                   md-hide-icons="calendar"
+                   aria-label={{item.translatedTitle}}>
+    </md-datepicker>
+    <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}</md-icon>
+  </span>
+
+
+  <md-radio-group class="status" ng-model="$ctrl.searchSettings.filter.status" layout="row"
+                  layout-align="space-around center" ng-change="$ctrl.changePaginationViewState()">
+    <md-radio-button value="OPENED" class="md-primary">{{$ctrl.LABELS.FILTER.STATUS.OPENED}}</md-radio-button>
+    <md-radio-button value="CLOSED" class="md-primary">{{$ctrl.LABELS.FILTER.STATUS.CLOSED}}</md-radio-button>
+    <md-radio-button value="FINALIZED" class="md-primary">{{$ctrl.LABELS.FILTER.STATUS.FINALIZED}}</md-radio-button>
+  </md-radio-group>
+
+  <div ng-repeat="item in $ctrl.itemAttributes" layout-align="start center">
+    <div class="item-filter" ng-if="item.title !== 'creationDate' && item.title !== 'remainingDays'">
+      <span ng-if="!$ctrl.inputViewState[item.title]">
+        <md-button layout-fill class="md-raised padding-layout-fill"
+                   aria-label={{item.translatedTitle}}
+                   ng-click="$ctrl.chanceInputViewState(item)">
+          <md-icon>{{item.icon}}
+            <md-tooltip md-direction="right">{{item.translatedTitle}}</md-tooltip>
+          </md-icon>
+        </md-button>
+      </span>
+
+      <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'rn'" layout="row">
+        <md-icon>{{item.icon}}
+          <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+        </md-icon>
+        <otus-participant-search layout-fill class="padding-layout-fill"
+                                 on-select="$ctrl.selectParticipant(participant)"
+                                 pendency-filter-item="item"
+                                 search-settings="$ctrl.searchSettings"
+                                 show-participants-button="false"
+                                 change-watcher="$ctrl.changePaginationViewState()"
+                                 on-ready="true">
+        </otus-participant-search>
+        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}</md-icon>
+      </span>
+
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'center')" layout="row">
+        <md-input-container layout-fill class="padding-layout-fill">
+          <md-icon>{{item.icon}}
+            <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+          </md-icon>
+          <input ng-model="$ctrl.searchSettings.filter[item.title]"
+                 ng-change="$ctrl.changePaginationViewState(); $ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
+                 aria-label={{item.translatedTitle}} required>
+          <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}</md-icon>
+        </md-input-container>
+      </span>
+
+    </div>
+  </div>
+</md-card>
