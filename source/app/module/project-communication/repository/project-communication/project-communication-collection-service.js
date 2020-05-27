@@ -3,14 +3,13 @@
 
   angular
     .module('otusjs.project.communication.repository')
-    .service('otusjs.project.communication.ProjectCommunicationCollectionService', Service);
+    .service('otusjs.project.communication.repository.ProjectCommunicationCollectionService', Service);
 
   Service.$inject = [
-    '$q',
-    'otusjs.project.communication.ModuleService'
+    'otusjs.project.communication.core.ModuleService'
   ];
 
-  function Service($q, ModuleService) {
+  function Service(ModuleService) {
     const self = this;
     let _remoteStorage = ModuleService.getProjectCommunicationRemoteStorage();
 

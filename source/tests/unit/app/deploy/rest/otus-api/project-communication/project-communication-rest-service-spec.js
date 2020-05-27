@@ -48,24 +48,24 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
   });
 
   it('createMessageMethod_should_throw_error_if_resource_is_not_initialized', () => {
-    try{ service.createMessage(Mock) }
+    try{ service.createMessage(ID, Mock) }
     catch(e) { expect(e.toString()).toBe(UNINITIALIZED_REST_ERROR_MESSAGE)}
   });
 
   it('createMessageMethod_should_evoke_create_by_resource_and_return_promise', () => {
     service.initialize();
-    expect(service.createMessage(Mock)).toBePromise();
+    expect(service.createMessage(ID, Mock)).toBePromise();
     expect(Mock._rest.createMessage).toHaveBeenCalledTimes(1)
   });
 
   it('createIssueMethod_should_throw_error_if_resource_is_not_initialized', () => {
-    try{ service.createIssue(ID, Mock) }
+    try{ service.createIssue(Mock) }
     catch(e) { expect(e.toString()).toBe(UNINITIALIZED_REST_ERROR_MESSAGE)}
   });
 
   it('createIssueMethod_should_evoke_createIssue_by_resource_and_return_promise', () => {
     service.initialize();
-    expect(service.createIssue(ID, Mock)).toBePromise();
+    expect(service.createIssue(Mock)).toBePromise();
     expect(Mock._rest.createIssue).toHaveBeenCalledTimes(1)
   });
 
