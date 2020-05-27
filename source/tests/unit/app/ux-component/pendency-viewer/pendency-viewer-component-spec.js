@@ -1,4 +1,4 @@
-fdescribe('pendencyViewComponent_UnitTest_Suite', () => {
+describe('pendencyViewComponent_UnitTest_Suite', () => {
   let ctrl;
   let Injections = [];
 
