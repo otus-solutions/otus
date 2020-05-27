@@ -22,19 +22,19 @@
     initialize();
 
     self.initialize = initialize;
-    self.getSearchSettings = getSearchSettings;
-    self.getItemAttributes = getItemAttributes;
-    self.getInputViewState = getInputViewState;
     self.calculateRemainingDays = calculateRemainingDays;
-    self.getSelectedParticipantRN = getSelectedParticipantRN;
 
     function initialize(){
       angular.extend(self, self, GenericListViewerService);
       self.init(PENDENCY_VIEWER_LABELS, INITIAL_CURRENT_QUANTITY, INITIAL_QUANTITY_TO_GET,
         UserActivityPendencyRepositoryService.getAllPendencies, UserActivityPendencyFactory);
-    }
 
-    self.getChecker = getChecker;
+      self.getSearchSettings = getSearchSettings;
+      self.getItemAttributes = getItemAttributes;
+      self.getInputViewState = getInputViewState;
+      self.getSelectedParticipantRN = getSelectedParticipantRN;
+      self.getChecker = getChecker;
+    }
 
     function getSearchSettings() {
       return {
