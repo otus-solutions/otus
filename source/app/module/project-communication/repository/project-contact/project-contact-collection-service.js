@@ -2,48 +2,48 @@
   'use strict';
 
   angular
-    .module('otusjs.project.contact.repository')
-    .service('otusjs.project.contact.repository.ProjectContactCollectionService', Service);
+    .module('otusjs.project.communication.repository')
+    .service('otusjs.project.communication.ProjectCommunicationCollectionService', Service);
 
   Service.$inject = [
     '$q',
-    'otusjs.project.contact.ModuleService'
+    'otusjs.project.communication.ModuleService'
   ];
 
   function Service($q, ModuleService) {
     const self = this;
-    let _remoteStorage = ModuleService.getProjectContactRemoteStorage();
+    let _remoteStorage = ModuleService.getProjectCommunicationRemoteStorage();
 
     /* Public methods */
     self.createMessage = createMessage;
     self.createIssue = createIssue;
-    self.getProjectContactById = getProjectContactById;
-    self.getProjectContactByIdLimit = getProjectContactByIdLimit;
+    self.getProjectCommunicationById = getProjectCommunicationById;
+    self.getProjectCommunicationByIdLimit = getProjectCommunicationByIdLimit;
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
     self.listIssue = listIssue;
 
-    function createMessage(projectContact) {
+    function createMessage(ProjectCommunication) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.createMessage(projectContact))
+        .then(remoteStorage => remoteStorage.createMessage(ProjectCommunication))
         .then(response => response.data);
     }
 
-    function createIssue(id, projectContact) {
+    function createIssue(id, ProjectCommunication) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.createIssue(id, projectContact))
+        .then(remoteStorage => remoteStorage.createIssue(id, ProjectCommunication))
         .then(response => response.data);
     }
 
-    function getProjectContactById(id) {
+    function getProjectCommunicationById(id) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.getProjectContactById(id))
+        .then(remoteStorage => remoteStorage.getProjectCommunicationById(id))
         .then(response => response.data);
     }
 
-    function getProjectContactByIdLimit(id, projectContact) {
+    function getProjectCommunicationByIdLimit(id, ProjectCommunication) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.getProjectContactByIdLimit(id, projectContact))
+        .then(remoteStorage => remoteStorage.getProjectCommunicationByIdLimit(id, ProjectCommunication))
         .then(response => response.data);
     }
 

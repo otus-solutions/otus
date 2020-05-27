@@ -14,7 +14,7 @@
       'otusjs.otus.dashboard',
       'otusjs.otus.uxComponent',
       'otusjs.otus.pendency',
-      'otusjs.otus.project.contact',
+      'otusjs.otus.project.communication',
       'otusjs.application',
       'otusjs.deploy',
       'ngSanitize'

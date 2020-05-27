@@ -2,15 +2,15 @@
   'use strict';
 
   angular
-    .module('otusjs.project.contact.core')
-    .service('otusjs.project.contact.core.ContextService', Service);
+    .module('otusjs.project.communication.core')
+    .service('otusjs.project.communication.core.ContextService', Service);
 
   function Service() {
     const self = this;
     let _context = null;
     let _storage = null;
 
-    const PROJECT_CONTACT_CONTEXT = 'project-contact';
+    const PROJECT_COMMUNICATION_CONTEXT = 'project-communication';
 
     //* Public methods */
     self.begin = begin;
@@ -24,14 +24,14 @@
 
     function save() {
       _testInternalState();
-      _storage.setItem(PROJECT_CONTACT_CONTEXT, _context.toJson());
+      _storage.setItem(PROJECT_COMMUNICATION_CONTEXT, _context.toJson());
     }
 
     //--------------------------------------------------------------------------------------------
     // Methods for application integration
     //--------------------------------------------------------------------------------------------
     function configureContext(contextFactory) {
-      _context = contextFactory.create(PROJECT_CONTACT_CONTEXT);
+      _context = contextFactory.create(PROJECT_COMMUNICATION_CONTEXT);
     }
 
     function configureStorage(storage) {
@@ -43,7 +43,7 @@
     //--------------------------------------------------------------------------------------------
     function _restoreContextData() {
       isValid();
-      _context.fromJson(_storage.getItem(PROJECT_CONTACT_CONTEXT));
+      _context.fromJson(_storage.getItem(PROJECT_COMMUNICATION_CONTEXT));
     }
 
     function _testInternalState() {
