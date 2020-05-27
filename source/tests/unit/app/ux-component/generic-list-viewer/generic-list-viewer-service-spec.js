@@ -112,7 +112,7 @@ describe('GenericListViewerService_UnitTest_Suite', () => {
     const mode = '';
     const vm = {};
     spyOn(service, "getAllItemsFromRepositoryService").and.returnValue(Mock.defer.promise);
-    spyOn(service, "getAllItems").and.returnValue(Promise.resolve((Mock.items)));
+    spyOn(service, "getAllItems").and.returnValue(Promise.resolve(Mock.items));
     service.callValidationItemsLimits(vm, Mock.searchSettings, mode);
     Mock.scope.$digest();
     expect(vm.items).toBeDefined();
