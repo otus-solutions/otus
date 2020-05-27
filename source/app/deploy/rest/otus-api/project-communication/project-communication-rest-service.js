@@ -28,14 +28,14 @@
       _rest = OtusRestResourceService.getProjectCommunicationResourceFactory();
     }
 
-    function createMessage(foundProjectCommunicationId, jsonProjectCommunication){
+    function createMessage(jsonProjectCommunication){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.createMessage({id: foundProjectCommunicationId}, jsonProjectCommunication).$promise;
+      return _rest.createMessage(jsonProjectCommunication).$promise;
     }
 
-    function createIssue(jsonProjectCommunication){
+    function createIssue(foundProjectCommunicationId, jsonProjectCommunication){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.createIssue(jsonProjectCommunication).$promise;
+      return _rest.createIssue({id: foundProjectCommunicationId}, jsonProjectCommunication).$promise;
     }
 
     function getProjectCommunicationById(id) {
