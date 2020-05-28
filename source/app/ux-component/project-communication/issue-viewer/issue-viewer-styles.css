@@ -20,8 +20,8 @@
     grid-template-columns: 1fr 4fr 2fr;
     grid-template-rows: .1fr .1fr;
     grid-template-areas:
-      "centerName   senderName    creationDate"
-      "rn           title         status"
+      "centerName   senderName    status"
+      "rn           title         creationDate"
     ;
   }
 }
