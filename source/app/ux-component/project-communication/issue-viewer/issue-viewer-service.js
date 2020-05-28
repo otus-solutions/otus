@@ -68,12 +68,6 @@
         creationDate: ISSUE_VIEWER_LABELS.ISSUE_ATTRIBUTES.CREATION_DATE,
         title:        ISSUE_VIEWER_LABELS.ISSUE_ATTRIBUTES.TITLE,
         status:       ISSUE_VIEWER_LABELS.ISSUE_ATTRIBUTES.STATUS
-        // rn:           {title: 'rn',           translatedTitle: ISSUE_VIEWER_LABELS.FILTER.RN,             icon: 'account_circle'},
-        // name:         {title: 'name',         translatedTitle: ISSUE_VIEWER_LABELS.FILTER.NAME,           icon: 'person'},
-        // center:       {title: 'center',       translatedTitle: ISSUE_VIEWER_LABELS.FILTER.CENTER,         icon: 'location_on'},
-        // creationDate: {title: 'creationDate', translatedTitle: ISSUE_VIEWER_LABELS.FILTER.CREATION_DATE,  icon: 'schedule'},
-        // title:        {title: 'title',        translatedTitle: ISSUE_VIEWER_LABELS.FILTER.TITLE,          icon: 'insert_comment'},
-        // status:       {title: 'status',       translatedTitle: ISSUE_VIEWER_LABELS.FILTER.STATUS,         icon: 'assignment_ind'}
       };
     }
 
