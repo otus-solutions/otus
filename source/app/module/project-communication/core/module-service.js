@@ -19,7 +19,7 @@
     self.configureContext = configureContext;
     self.configureStorage = configureStorage;
     self.configureRemoteStorage = configureRemoteStorage;
-    self.getProjectConactRemoteStorage = getProjectCommunicationRemoteStorage;
+    self.getProjectCommunicationRemoteStorage = getProjectCommunicationRemoteStorage;
 
     function configureContext(context) {
       ContextService.configureContext(context);

@@ -10,7 +10,7 @@
     let _context = null;
     let _storage = null;
 
-    const PROJECT_COMMUNICATION_CONTEXT = 'project-communication';
+    const PROJECT_COMMUNICATION_CONTEXT = 'project_communication';
 
     //* Public methods */
     self.begin = begin;
