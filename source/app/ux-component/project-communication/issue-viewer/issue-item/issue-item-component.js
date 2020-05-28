@@ -12,7 +12,7 @@
       }
     }).controller('issueItemCtrl', Controller);
 
-  Controller.$inject = ['otusjs.IssueViewerService'];
+  Controller.$inject = ['otusjs.issueViewer.IssueViewerService'];
 
   function Controller(IssueViewerService) {
     const self = this;
