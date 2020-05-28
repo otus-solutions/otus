@@ -20,6 +20,7 @@
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
     self.listIssue = listIssue;
+    self.filter = filter;
 
     function createMessage(ProjectCommunication) {
       return ProjectCommunicationCollectionService.createMessage(ProjectCommunication);
@@ -47,6 +48,10 @@
 
     function listIssue() {
       return ProjectCommunicationCollectionService.listIssue();
+    }
+
+    function filter() {
+      return ProjectCommunicationCollectionService.filter();
     }
 
   }

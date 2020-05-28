@@ -21,6 +21,7 @@
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
     self.listIssue = listIssue;
+    self.filter = filter;
 
     function createMessage(ProjectCommunication) {
       return _remoteStorage.whenReady()
@@ -61,6 +62,12 @@
     function listIssue() {
       return _remoteStorage.whenReady()
         .then(remoteStorage => remoteStorage.listIssue())
+        .then(response => response.data);
+    }
+
+    function filter() {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.filter())
         .then(response => response.data);
     }
 

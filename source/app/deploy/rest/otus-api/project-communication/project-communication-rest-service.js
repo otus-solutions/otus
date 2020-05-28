@@ -23,6 +23,7 @@
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
     self.listIssue = listIssue;
+    self.filter = filter;
 
     function initialize() {
       _rest = OtusRestResourceService.getProjectCommunicationResourceFactory();
@@ -61,6 +62,11 @@
     function listIssue(){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.listIssue().$promise;
+    }
+
+    function filter(){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.fliter().$promise;
     }
 
   }
