@@ -1,0 +1,33 @@
+<md-dialog aria-label="Mango (Fruit)">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Legenda</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="vm.cancel()">
+          <md-icon>cancel</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+
+        <md-list ng-repeat="item in vm.data" ng-cloak>
+          <div style="margin-bottom: 8px">
+            <md-icon>{{item.ICON}}</md-icon>
+            {{item.TRANSLATED_TITLE}}
+          </div>
+        </md-list>
+
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="vm.cancel()">
+        Entendi!
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

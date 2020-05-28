@@ -10,7 +10,8 @@
         viewerService: "=",
         viewerTitle: '<',
         itemComponentName: '<',
-        filtersComponentName: '<'
+        filtersComponentName: '<',
+        showHelper: '='
       }
     }).controller('genericListViewerCtrl', Controller);
 
