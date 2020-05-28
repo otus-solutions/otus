@@ -16,8 +16,13 @@
 
   function Controller(IssueViewerService) {
     const self = this;
-    self.rn = IssueViewerService.findRecruitmentNumberFromEmail(self.item.sender);
+    const participantData = IssueViewerService.findParticipantFromEmail(self.item.sender);
+    self.rn = participantData.rn;
+    self.name = participantData.name;
+    self.center = participantData.center;
     self.creationDate = IssueViewerService.formatDate(new Date(self.item.creationDate));
+    self.status = IssueViewerService.translateStatus(self.item.status);
+    self.statusClass = `issue-status status-${self.item.status.toLowerCase()}`;
   }
 
 }());

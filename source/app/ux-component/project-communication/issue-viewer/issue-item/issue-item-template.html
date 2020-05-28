@@ -1,29 +1,47 @@
 <md-card class="issue-item-layout" layout-margin ng-cloak>
   <div class="rn">
-    <md-icon>{{$ctrl.itemAttributes.rn.icon}}
-      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.rn.translatedTitle}}</md-tooltip>
+    <md-icon>{{$ctrl.itemAttributes.rn.ICON}}
+      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.rn.TRANSLATED_TITLE}}</md-tooltip>
     </md-icon>
-    <span class="padding">{{$ctrl.item.recruitmentNumber}}</span>
+    <span class="padding">{{$ctrl.rn}}</span>
+  </div>
+
+  <div class="sender-name">
+    <md-icon>{{$ctrl.itemAttributes.name.ICON}}
+      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.name.TRANSLATED_TITLE}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.name}}</span>
+  </div>
+
+  <div class="center-name">
+    <md-icon>{{$ctrl.itemAttributes.center.ICON}}
+      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.center.TRANSLATED_TITLE}}</md-tooltip>
+    </md-icon>
+    <span class="padding">{{$ctrl.center}}</span>
   </div>
 
   <div class="creation-date">
-    <md-icon>{{$ctrl.itemAttributes.creationDate.icon}}
-      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.creationDate.translatedTitle}}</md-tooltip>
+    <md-icon>{{$ctrl.itemAttributes.creationDate.ICON}}
+      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.creationDate.TRANSLATED_TITLE}}</md-tooltip>
     </md-icon>
     <span class="padding">{{$ctrl.creationDate}}</span>
   </div>
 
-  <div class="center-name">
-    <md-icon>{{$ctrl.itemAttributes.center.icon}}
-      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.center.translatedTitle}}</md-tooltip>
+  <div class="msg-title">
+    <md-icon>{{$ctrl.itemAttributes.title.ICON}}
+      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.title.TRANSLATED_TITLE}}</md-tooltip>
     </md-icon>
-    <span class="padding">{{$ctrl.item.center}}</span>
+    <span class="padding">{{$ctrl.item.title}}</span>
   </div>
 
-  <div class="status">
-    <md-icon>{{$ctrl.itemAttributes.status.icon}}
-      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.status.translatedTitle}}</md-tooltip>
-    </md-icon>
-    <span class="padding">{{$ctrl.remainingDays}}</span>
+  <div layout="row" layout-align-xs="end center" layout-align-gt-md="end center">
+<!--    <md-chips ng-class="$ctrl.statusClass">-->
+<!--      <md-chip- class="no-margin">{{$ctrl.item.status}}</md-chip->-->
+<!--    </md-chips>-->
+
+    <md-button ng-class="$ctrl.statusClass">
+      {{$ctrl.status}}
+    </md-button>
+
   </div>
 </md-card>
