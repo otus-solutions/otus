@@ -48,19 +48,6 @@
             VALUE: 'FINALIZED'
           }
         }
-      },
-
-      FILTER: {
-        RN: 'Recrutamento',
-        NAME: 'Nome',
-        CREATION_DATE: 'Criação',
-        TITLE: 'Título',
-        CENTER: 'Centro',
-        STATUS: {
-          OPENED:'Abertos',
-          CLOSED:'Fechados',
-          FINALIZED:'Finalizados'
-        }
       }
 
     });
