@@ -65,9 +65,9 @@
         .then(response => response.data);
     }
 
-    function filter() {
+    function filter(searchSettings) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.filter())
+        .then(remoteStorage => remoteStorage.filter(searchSettings))
         .then(response => response.data);
     }
 

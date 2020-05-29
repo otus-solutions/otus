@@ -50,8 +50,8 @@
       return ProjectCommunicationRepositoryService.listIssue();
     }
 
-    function filter(){
-      return ProjectCommunicationRepositoryService.filter();
+    function filter(searchSettings){
+      return ProjectCommunicationRepositoryService.filter(searchSettings);
     }
 
   }
