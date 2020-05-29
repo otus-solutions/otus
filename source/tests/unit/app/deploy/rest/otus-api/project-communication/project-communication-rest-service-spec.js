@@ -1,4 +1,4 @@
-describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
+fdescribe('ProjectCommunicationRestService_UnitTest_Suite', () => {
 
   const UNINITIALIZED_REST_ERROR_MESSAGE = 'Error: REST resource is not initialized.';
   let service;
@@ -23,6 +23,7 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
       spyOn(Mock._rest, 'updateReopen').and.callThrough();
       spyOn(Mock._rest, 'updateClose').and.callThrough();
       spyOn(Mock._rest, 'listIssue').and.callThrough();
+      spyOn(Mock._rest, 'filter').and.callThrough();
 
     });
   });
@@ -40,6 +41,7 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
     expect(service.updateReopen).toBeDefined();
     expect(service.updateClose).toBeDefined();
     expect(service.listIssue).toBeDefined();
+    expect(service.filter).toBeDefined();
   });
 
   it('initializeMethod_should_evoke_getProjectCommunicationResourceFactory_by_OtusRestResourceService', () => {
@@ -122,6 +124,12 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
     service.initialize();
     expect(service.listIssue()).toBePromise();
     expect(Mock._rest.listIssue).toHaveBeenCalledTimes(1)
+  });
+
+  it('filterMethod_should_evoke_filter_by_resource_and_return_promise', () => {
+    service.initialize();
+    expect(service.filter()).toBePromise();
+    expect(Mock._rest.filter).toHaveBeenCalledTimes(1)
   });
 
 });

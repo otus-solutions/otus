@@ -66,7 +66,7 @@
 
     function filter(){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.fliter().$promise;
+      return _rest.filter().$promise;
     }
 
   }
