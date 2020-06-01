@@ -32,7 +32,7 @@
 
     const deferred = $q.defer();
 
-    function init(childService, CHILD_VIEWER_LABELS, initialCurrentQuantity, initialQuantityToGet,
+    function init(CHILD_VIEWER_LABELS, initialCurrentQuantity, initialQuantityToGet,
                   getAllItemsFromRepositoryService, GenericListFactory,
                   childParseItemsMethod=null){
       angular.extend(self.LABELS, GENERIC_LIST_VIEWER_LABELS, CHILD_VIEWER_LABELS);
