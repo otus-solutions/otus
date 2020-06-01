@@ -60,19 +60,12 @@
         </md-button>
       </span>
 
-      <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'rn'" layout="row">
-        <md-icon>{{item.icon}}
-          <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-        </md-icon>
-        <otus-participant-search layout-fill class="padding-layout-fill"
-                                 on-select="$ctrl.selectParticipant(participant)"
-                                 attribute-filter-item="item"
+      <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'rn'">
+        <otus-participant-filter item="item"
                                  search-settings="$ctrl.searchSettings"
-                                 show-participants-button="false"
-                                 change-watcher="$ctrl.changePaginationViewState()"
-                                 on-ready="true">
-        </otus-participant-search>
-        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}</md-icon>
+                                 clear="$ctrl.clear"
+                                 change-pagination-view-state="$ctrl.changePaginationViewState">
+        </otus-participant-filter>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'requester'" layout="row">
