@@ -36,7 +36,8 @@ describe('ProjectCommunicationCollectionService_UnitTest_Suite', () => {
       getProjectCommunicationByIdLimit: jasmine.anything(),
       updateReopen: jasmine.anything(),
       updateClose: jasmine.anything(),
-      listIssue: jasmine.anything()
+      listIssue: jasmine.anything(),
+      filter: jasmine.anything()
     };
 
     /*Injection of a restServiceMock in context(boostrap action simulation)*/
@@ -61,6 +62,7 @@ describe('ProjectCommunicationCollectionService_UnitTest_Suite', () => {
     expect(service.updateReopen).toBeDefined();
     expect(service.updateClose).toBeDefined();
     expect(service.listIssue).toBeDefined();
+    expect(service.filter).toBeDefined();
   });
 
   it('createMessageMethod_should_positiveAnswer_on_successfulPersistence', () => {
@@ -203,7 +205,31 @@ describe('ProjectCommunicationCollectionService_UnitTest_Suite', () => {
     Mock.deferredInternal.reject(response);
     spyOn(Mock.remoteStorage, "listIssue").and.returnValue(Mock.deferredInternal.promise);
 
-    service.listIssue(ID, LIMIT).catch(e => expect(e.error).toBeFalsy());
+    service.listIssue().catch(e => expect(e.error).toBeFalsy());
+    Mock.scope.$digest();
+  });
+
+  it('filterMethod_should_positiveAnswer_on_successfulPersistence', () => {
+    let response = {data: true};
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.resolve(response);
+    spyOn(Mock.remoteStorage, "filter").and.returnValue(Mock.deferredInternal.promise);
+
+    service.filter(Mock).then(data => expect(data).toBeTruthy());
+    Mock.scope.$digest();
+  });
+
+  it('filtereMethod_should_handle_error_coming_by_exception', () => {
+    let response = {error: false};
+
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.reject(response);
+    spyOn(Mock.remoteStorage, "filter").and.returnValue(Mock.deferredInternal.promise);
+
+    service.listIssue(Mock).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 

@@ -128,7 +128,7 @@ fdescribe('ProjectCommunicationRestService_UnitTest_Suite', () => {
 
   it('filterMethod_should_evoke_filter_by_resource_and_return_promise', () => {
     service.initialize();
-    expect(service.filter()).toBePromise();
+    expect(service.filter(Mock)).toBePromise();
     expect(Mock._rest.filter).toHaveBeenCalledTimes(1)
   });
 

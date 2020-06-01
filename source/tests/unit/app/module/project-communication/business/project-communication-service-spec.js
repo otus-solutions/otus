@@ -16,6 +16,7 @@ describe('ProjectCommunicationService_UnitTest_Suite', () => {
       spyOn(Injections.ProjectCommunicationRepositoryService, 'updateReopen');
       spyOn(Injections.ProjectCommunicationRepositoryService, 'updateClose');
       spyOn(Injections.ProjectCommunicationRepositoryService, 'listIssue');
+      spyOn(Injections.ProjectCommunicationRepositoryService, 'filter');
 
     });
   });
@@ -32,6 +33,7 @@ describe('ProjectCommunicationService_UnitTest_Suite', () => {
     expect(service.updateReopen).toBeDefined();
     expect(service.updateClose).toBeDefined();
     expect(service.listIssue).toBeDefined();
+    expect(service.filter).toBeDefined();
   });
 
   it('createMessageMethod_should_evoke_createMessage_by_repositoryService', () => {
@@ -67,6 +69,11 @@ describe('ProjectCommunicationService_UnitTest_Suite', () => {
   it('listIssueMethod_should_evoke_listIssue_by_repositoryService', () => {
     service.listIssue();
     expect(Injections.ProjectCommunicationRepositoryService.listIssue).toHaveBeenCalledTimes(1)
+  });
+
+  it('filterMethod_should_evoke_filter_by_repositoryService', () => {
+    service.filter(Mock);
+    expect(Injections.ProjectCommunicationRepositoryService.filter).toHaveBeenCalledTimes(1)
   });
 
 });
