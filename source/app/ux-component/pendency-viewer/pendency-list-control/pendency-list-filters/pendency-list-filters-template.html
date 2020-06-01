@@ -68,28 +68,13 @@
         </otus-participant-filter>
       </span>
 
-      <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'requester'" layout="row">
-        <md-icon>{{item.icon}}
-          <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-        </md-icon>
-        <otus-checker-search layout-fill class="padding-layout-fill" pendency-filter-item="item"
-                             search-settings="$ctrl.searchSettings"
-                             change-watcher="$ctrl.changePaginationViewState()"
-                             placeholder-title="{{item.translatedTitle}}">
-        </otus-checker-search>
-        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}</md-icon>
-      </span>
-
-      <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'receiver'" layout="row">
-        <md-icon>{{item.icon}}
-          <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-        </md-icon>
-        <otus-checker-search layout-fill class="padding-layout-fill" pendency-filter-item="item"
-                             search-settings="$ctrl.searchSettings"
-                             change-watcher="$ctrl.changePaginationViewState()"
-                             placeholder-title="{{item.translatedTitle}}">
-        </otus-checker-search>
-        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}</md-icon>
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'requester' || item.title === 'receiver')">
+        <otus-user-filter filter-item="item"
+                          search-settings="$ctrl.searchSettings"
+                          clear="$ctrl.clear"
+                          change-pagination-view-state="$ctrl.changePaginationViewState"
+                          viewer-service-get-checker="$ctrl.viewerServiceGetChecker">
+        </otus-user-filter>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')" layout="row">
