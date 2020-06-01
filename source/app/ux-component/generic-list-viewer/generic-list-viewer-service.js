@@ -19,6 +19,7 @@
     self.initialQuantityToGet = 5;
     self.getAllItemsFromRepositoryService = null;
     self.GenericListFactory = null;
+    self.childParseItemsMethod = null;
 
     self.init = init;
     self.getSearchSettings = getSearchSettings;
@@ -31,13 +32,15 @@
 
     const deferred = $q.defer();
 
-    function init(CHILD_VIEWER_LABELS, initialCurrentQuantity, initialQuantityToGet,
-                  getAllItemsFromRepositoryService, GenericListFactory){
+    function init(childService, CHILD_VIEWER_LABELS, initialCurrentQuantity, initialQuantityToGet,
+                  getAllItemsFromRepositoryService, GenericListFactory,
+                  childParseItemsMethod=null){
       angular.extend(self.LABELS, GENERIC_LIST_VIEWER_LABELS, CHILD_VIEWER_LABELS);
       self.initialCurrentQuantity = initialCurrentQuantity;
       self.initialQuantityToGet = initialQuantityToGet;
       self.getAllItemsFromRepositoryService = getAllItemsFromRepositoryService;
       self.GenericListFactory = GenericListFactory;
+      self.childParseItemsMethod = childParseItemsMethod ? childParseItemsMethod : _parseItems;
     }
 
     function getSearchSettings() {
@@ -64,8 +67,8 @@
 
     function getAllItems(searchSettings) {
       return self.getAllItemsFromRepositoryService(searchSettings)
-        .then(data => _parseItems(data))
-        .catch(err => console.log("error:" + err))
+        .then(data => self.childParseItemsMethod(data))
+        .catch(err => console.log("error:" + JSON.stringify(err)))
     }
 
     function _parseItems(genericListJsonArray) {
