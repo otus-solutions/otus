@@ -9,12 +9,13 @@
     '$q',
     'otusjs.genericListViewer.GenericListViewerService',
     'ISSUE_VIEWER_LABELS',
-    // 'otusjs.pendency.repository.UserActivityPendencyRepositoryService',
+    'otusjs.project.communication.repository.ProjectCommunicationRepositoryService'
     // 'otusjs.model.pendency.UserActivityPendencyFactory',
   ];
 
   function Service($q, GenericListViewerService, ISSUE_VIEWER_LABELS,
-                   // UserActivityPendencyRepositoryService, UserActivityPendencyFactory
+                   ProjectCommunicationRepositoryService
+                   // UserActivityPendencyFactory
                    ) {
 
     const self = this;
@@ -35,15 +36,13 @@
     function initialize(){
       angular.extend(self, self, GenericListViewerService);
       self.init(ISSUE_VIEWER_LABELS, INITIAL_CURRENT_QUANTITY, INITIAL_QUANTITY_TO_GET,
-        fake_getAllItems, fake_genericListFactory //todo temp
+        ProjectCommunicationRepositoryService.filter, fake_genericListFactory //todo temp
       );
 
       self.getSearchSettings = getSearchSettings;
       self.getItemAttributes = getItemAttributes;
       self.getInputViewState = getInputViewState;
       self.getSelectedParticipantRN = getSelectedParticipantRN;
-
-      self.getAllItemsFromRepositoryService = fake_getAllItems;//todo temp
     }
 
     function getSearchSettings() {
@@ -99,31 +98,6 @@
         name: 'Fulano de Tal',
         center: 'RS'
       };
-    }
-
-    //todo temp
-    function fake_getAllItems(searchSettings){
-
-      function getFakeIssue(id, sender, creationDate, status) {
-        return {
-          "_id": id,
-          "objectType": "Issue",
-          "sender": sender,
-          "title": "Não consigo preencher a atividade TCLEC " + id,
-          // "message": "Quando tento responder uma pergunta, não consigo inserir a resposta",
-          "creationDate": creationDate.toJSON(),
-          "status": status
-        }
-      }
-
-      const defer = $q.defer();
-      defer.resolve([
-        getFakeIssue('1111111', 'aaa@otus.com', new Date(2020,5, 5), "CLOSED"),
-        getFakeIssue('2222222', 'ccc@otus.com', new Date(2020,4, 5), "OPENED"),
-        getFakeIssue('3333333', 'bbb@otus.com', new Date(2020,4, 25), "FINALIZED"),
-      ]);
-
-      return defer.promise;
     }
 
   }

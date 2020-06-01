@@ -65,10 +65,10 @@
         .then(response => response.data);
     }
 
-    function filter() {
+    function filter(searchSettings) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.filter())
-        .then(response => response.data);
+        .then(remoteStorage => remoteStorage.filter(searchSettings))
+        .then(response => JSON.parse(response.data.data));//todo check if will be data.data and a string?
     }
 
   }

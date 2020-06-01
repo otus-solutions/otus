@@ -3,10 +3,10 @@
   .issue-item-layout {
     display: grid;
     /*width: 98vw;*/
-    grid-template-columns: 1fr 1fr 1fr 2fr;
+    grid-template-columns: 0.8fr 1fr 1.4fr 1.8fr;
     grid-template-rows: 1fr;
     grid-template-areas:
-      "rn           creationDate    centerName    status"
+      "centerName   rn              creationDate  status"
       "senderName   senderName      senderName    senderName"
       "title        title           title         title"
     ;

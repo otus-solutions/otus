@@ -58,7 +58,8 @@
 }
 
 .generic-list-viewer-layout otus-generic-list-paginator {
-  grid-area: paginator
+  grid-area: paginator;
+  max-height: 36px;
 }
 
 /*end style for generic-viewer-component*/
