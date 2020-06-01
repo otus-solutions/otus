@@ -9,40 +9,68 @@
     '$q',
     'otusjs.genericListViewer.GenericListViewerService',
     'ISSUE_VIEWER_LABELS',
-    'otusjs.project.communication.repository.ProjectCommunicationRepositoryService'
-    // 'otusjs.model.pendency.UserActivityPendencyFactory',
+    'otusjs.project.communication.repository.ProjectCommunicationRepositoryService',
+    'otusjs.otus.uxComponent.IssueFactory',
+    'otusjs.participant.business.ParticipantManagerService'
   ];
 
   function Service($q, GenericListViewerService, ISSUE_VIEWER_LABELS,
-                   ProjectCommunicationRepositoryService
-                   // UserActivityPendencyFactory
+                   ProjectCommunicationRepositoryService, IssueFactory,
+                   ParticipantManagerService
                    ) {
 
     const self = this;
     const INITIAL_CURRENT_QUANTITY = 0;
     const INITIAL_QUANTITY_TO_GET = 15;
 
-    const fake_genericListFactory = {
-      fromJsonObject: function(item) { return item; }
-    };
-
-    initialize();
+    self.dataReady = false;
+    self.currParticipants = {};
 
     self.initialize = initialize;
     self.getChecker = getChecker;
     self.findParticipantFromEmail = findParticipantFromEmail;
     self.translateStatus = translateStatus;
+    self.setupParticipantList = setupParticipantList;
+
+    initialize();
 
     function initialize(){
       angular.extend(self, self, GenericListViewerService);
-      self.init(ISSUE_VIEWER_LABELS, INITIAL_CURRENT_QUANTITY, INITIAL_QUANTITY_TO_GET,
-        ProjectCommunicationRepositoryService.filter, fake_genericListFactory //todo temp
+      self.init(self, ISSUE_VIEWER_LABELS, INITIAL_CURRENT_QUANTITY, INITIAL_QUANTITY_TO_GET,
+        ProjectCommunicationRepositoryService.filter, IssueFactory,
+        childParseItemsMethod
       );
 
       self.getSearchSettings = getSearchSettings;
       self.getItemAttributes = getItemAttributes;
       self.getInputViewState = getInputViewState;
       self.getSelectedParticipantRN = getSelectedParticipantRN;
+
+      ParticipantManagerService.setup()
+        .then(response => { self.dataReady = true; });
+    }
+
+    function setupParticipantList(){
+      return ParticipantManagerService.getParticipantList()
+    }
+
+    function childParseItemsMethod(genericListJsonArray) {
+      console.log(genericListJsonArray)
+      let emails = genericListJsonArray.map(item => item.sender);
+
+      return ParticipantManagerService.setup()
+        .then(response => {
+          ParticipantManagerService.getParticipantList()
+            .filter(participant => emails.includes(participant.email)
+            .forEach(participant => self.currParticipants[participant.email] = participant);
+
+          let parsedItems = [];
+          genericListJsonArray.forEach(item => {
+            // parsedItems.push(IssueFactory.fromJsonObject(self.currParticipants[item.sender]));
+            parsedItems.push(IssueFactory.fromJsonObject(item));
+          });
+          return parsedItems;
+        });
     }
 
     function getSearchSettings() {
@@ -93,6 +121,7 @@
 
     //todo
     function findParticipantFromEmail(email){
+      //return self.currParticipants[email];
       return {
         rn: 1234567,
         name: 'Fulano de Tal',
