@@ -61,7 +61,7 @@
       return ParticipantManagerService.setup()
         .then(response => {
           ParticipantManagerService.getParticipantList()
-            .filter(participant => emails.includes(participant.email)
+            .filter(participant => emails.includes(participant.email))
             .forEach(participant => self.currParticipants[participant.email] = participant);
 
           let parsedItems = [];
