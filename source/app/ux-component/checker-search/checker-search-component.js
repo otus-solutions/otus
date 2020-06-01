@@ -7,8 +7,9 @@
       controller: 'otusCheckerSearchCtrl as $ctrl',
       templateUrl: 'app/ux-component/checker-search/checker-search-template.html',
       bindings: {
+        viewerServiceGetChecker: '=',
         searchSettings: '=',
-        pendencyFilterItem: '=',
+        filterItem: '=',
         placeholderTitle: '@',
         changeWatcher: '&'
       }
@@ -20,12 +21,11 @@
     '$timeout',
     'otusjs.otus.uxComponent.CheckerItemFactory',
     'otusjs.activity.business.ParticipantActivityService',
-    'otusjs.pendencyViewer.PendencyViewerService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
   function Controller(STATE, $q, $timeout, CheckerItemFactory, ParticipantActivityService,
-                      PendencyViewerService, ApplicationStateService) {
+                      ApplicationStateService) {
     const self = this;
 
     self.$onInit = onInit;
@@ -38,8 +38,8 @@
     }
 
     function querySearch(query) {
-      var results = query ? self.checkers.filter(_createFilterFor(query)) : self.checkers;
-      var deferred = $q.defer();
+      let results = query ? self.checkers.filter(_createFilterFor(query)) : self.checkers;
+      let deferred = $q.defer();
 
       $timeout(function () {
         deferred.resolve(results);
@@ -49,27 +49,28 @@
     }
 
     function _createFilterFor(query) {
-      var lowercaseQuery = angular.lowercase(query);
+      let lowerCaseQuery = angular.lowercase(query);
 
       return function filterFn(checker) {
-        return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1
-          || checker.checker.email.toLowerCase().indexOf(lowercaseQuery) > -1;
+        return checker.text.toLowerCase().indexOf(lowerCaseQuery) > -1
+          || checker.checker.email.toLowerCase().indexOf(lowerCaseQuery) > -1;
       };
     }
 
     function selectedItemChange(item) {
-      if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER && item) {
-        PendencyViewerService.getChecker(item, self.pendencyFilterItem, self.searchSettings);
+      if (item && ApplicationStateService.currentStateIsListViewer()) {
+        self.viewerServiceGetChecker(item, self.filterItem, self.searchSettings);
       }
     }
 
     function searchTextChange() {
-      switch (ApplicationStateService.getCurrentState()) {
-        case STATE.PENDENCY_VIEWER:
-          if(self.inputedText === "") delete self.searchSettings.filter[self.pendencyFilterItem.title];
-          else self.searchSettings.filter[self.pendencyFilterItem.title] = self.inputedText;
-          self.changeWatcher();
-      }
+        if(self.inputedText === "") {
+          delete self.searchSettings.filter[self.filterItem.title];
+        }
+        else {
+          self.searchSettings.filter[self.filterItem.title] = self.inputedText;
+        }
+        self.changeWatcher();
     }
   }
 }());
