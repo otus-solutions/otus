@@ -66,7 +66,8 @@
 
     function filter(searchSettings){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.fliter(searchSettings).$promise;
+      //return _rest.fliter(searchSettings).$promise;//todo descomentar
+      return _rest.listIssue().$promise;//todo temp
     }
 
   }
