@@ -30,6 +30,7 @@
     };
     self.LABELS = PendencyViewerService.LABELS;
 
+    self.$onInit = onInit;
     self.chanceInputViewState = chanceInputViewState;
     self.clear = clear;
     self.clearAll = clearAll;
@@ -38,7 +39,11 @@
     self.resetCriteriaOrderCustomization = resetCriteriaOrderCustomization;
     self.changePaginationViewState = changePaginationViewState;
 
-    clearAll(self.searchSettings);
+    self.viewerServiceGetChecker = PendencyViewerService.getChecker;
+
+    function onInit(){
+      clearAll(self.searchSettings);
+    }
 
     function clear(item) {
       delete self.searchSettings.filter[item.title];
