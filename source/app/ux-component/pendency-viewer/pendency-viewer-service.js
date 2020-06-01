@@ -23,7 +23,6 @@
 
     self.initialize = initialize;
     self.calculateRemainingDays = calculateRemainingDays;
-    self.getChecker = getChecker;
 
     function initialize(){
       angular.extend(self, self, GenericListViewerService);
@@ -33,7 +32,6 @@
       self.getSearchSettings = getSearchSettings;
       self.getItemAttributes = getItemAttributes;
       self.getInputViewState = getInputViewState;
-      self.getSelectedParticipantRN = getSelectedParticipantRN;
     }
 
     function getSearchSettings() {
@@ -85,14 +83,6 @@
     function _extractDateZeroTime(date) {
       date.setHours(0, 0, 0, 0);
       return date;
-    }
-
-    function getSelectedParticipantRN(participant, pendencyFilterItem, searchSettings) {
-      searchSettings.filter[pendencyFilterItem.title] = participant.recruitmentNumber;
-    }
-
-    function getChecker(user, pendencyFilterItem, searchSettings) {
-      searchSettings.filter[pendencyFilterItem.title] = [user.checker.email];
     }
 
   }
