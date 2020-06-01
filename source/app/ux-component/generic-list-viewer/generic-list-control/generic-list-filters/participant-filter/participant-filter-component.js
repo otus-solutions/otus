@@ -14,13 +14,11 @@
       }
     }).controller('participantFilterCtrl', Controller);
 
-  Controller.$inject = [
-    'otusjs.pendencyViewer.PendencyViewerService'
-  ];
+  Controller.$inject = ['GENERIC_LIST_VIEWER_LABELS'];
 
-  function Controller(PendencyViewerService) {
+  function Controller(GENERIC_LIST_VIEWER_LABELS) {
     const self = this;
-    self.CANCEL_BUTTON_LABEL = PendencyViewerService.LABELS.CONTROL_PANEL.CANCEL_BUTTON;
-
+    self.CANCEL_BUTTON_ICON = GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL.CANCEL_BUTTON;
   }
+
 }());
