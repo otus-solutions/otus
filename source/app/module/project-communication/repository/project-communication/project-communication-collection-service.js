@@ -68,7 +68,7 @@
     function filter(searchSettings) {
       return _remoteStorage.whenReady()
         .then(remoteStorage => remoteStorage.filter(searchSettings))
-        .then(response => response.data);
+        .then(response => JSON.parse(response.data.data));//todo check if will be data.data and a string?
     }
 
   }
