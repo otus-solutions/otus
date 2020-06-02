@@ -20,12 +20,17 @@
 
     function onInit(){
       self.rn = self.item.rn;
-      self.name = self.item.name;
+      self.name = _capitalizeName(self.item.name);
       self.center = self.item.center;
       self.creationDate = IssueViewerService.formatDate(new Date(self.item.creationDate));
       self.status = IssueViewerService.translateStatus(self.item.status);
       self.statusClass = `issue-status status-${self.item.status.toLowerCase()}`;
     }
+
+    function _capitalizeName(name) {
+      return name.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+
   }
 
 }());
