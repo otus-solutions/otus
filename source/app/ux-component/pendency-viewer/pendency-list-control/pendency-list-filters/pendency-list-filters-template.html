@@ -77,28 +77,21 @@
         </otus-user-filter>
       </span>
 
-      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')" layout="row">
-        <md-input-container layout-fill class="padding-layout-fill">
-          <md-icon>{{item.icon}}
-            <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-          </md-icon>
-          <input ng-model="$ctrl.searchSettings.filter[item.title]"
-                 ng-change="$ctrl.changePaginationViewState(); $ctrl.searchSettings.filter[item.title] = $ctrl.searchSettings.filter[item.title].toUpperCase()"
-                 aria-label={{item.translatedTitle}} required>
-          <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}</md-icon>
-        </md-input-container>
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'acronym')">
+        <otus-input-text-filter filter-item="item"
+                                search-settings="$ctrl.searchSettings"
+                                clear="$ctrl.clear"
+                                change-pagination-view-state="$ctrl.changePaginationViewState"
+                                upper-case="true">
+        </otus-input-text-filter>
       </span>
 
-      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'externalID')" layout="row">
-        <md-input-container layout-fill class="padding-layout-fill">
-          <md-icon>{{item.icon}}
-          <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-        </md-icon>
-          <input ng-model="$ctrl.searchSettings.filter[item.title]"
-                 ng-change="$ctrl.changePaginationViewState()"
-                 aria-label={{item.translatedTitle}} required>
-          <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}</md-icon>
-        </md-input-container>
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'externalID')">
+        <otus-input-text-filter filter-item="item"
+                                search-settings="$ctrl.searchSettings"
+                                clear="$ctrl.clear"
+                                change-pagination-view-state="$ctrl.changePaginationViewState">
+        </otus-input-text-filter>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'dueDate')">
