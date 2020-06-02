@@ -28,21 +28,25 @@
       REQUESTER: 'requester',
       RECEIVER: 'receiver'
     };
+
     self.LABELS = PendencyViewerService.LABELS;
 
     self.$onInit = onInit;
+    self.getDefaultOrderFields = getDefaultOrderFields;
     self.chanceInputViewState = chanceInputViewState;
     self.clear = clear;
     self.clearAll = clearAll;
     self.allStatus = allStatus;
-    self.chanceStateCriteria = chanceStateCriteria;
-    self.resetCriteriaOrderCustomization = resetCriteriaOrderCustomization;
     self.changePaginationViewState = changePaginationViewState;
 
     self.viewerServiceGetChecker = PendencyViewerService.getChecker;
 
     function onInit(){
-      clearAll(self.searchSettings);
+      clearAll();
+    }
+
+    function getDefaultOrderFields(){
+      return Object.values(PENDENCY_ORDER_FIELD);
     }
 
     function clear(item) {
@@ -50,8 +54,7 @@
       self.inputViewState[item.title] = false;
     }
 
-    function clearAll(searchSettings) {
-      if (searchSettings) searchSettings = null;
+    function clearAll() {
       self.inputViewState = PendencyViewerService.getInputViewState();
       self.searchSettings = PendencyViewerService.getSearchSettings();
     }
@@ -62,31 +65,6 @@
 
     function allStatus() {
       delete self.searchSettings.filter.status;
-    }
-
-    function chanceStateCriteria() {
-      if (self.inputViewState['sortingCriteria']) {
-        self.inputViewState['sortingCriteria'] = !self.inputViewState['sortingCriteria'];
-        self.searchSettings.order.fields = ["dueDate"];
-      } else {
-        self.inputViewState['sortingCriteria'] = true;
-        _populateCriteriaOrder();
-      }
-    }
-
-    function resetCriteriaOrderCustomization() {
-      _populateCriteriaOrder();
-    }
-
-    function _populateCriteriaOrder() {
-      self.searchSettings.order.fields = [
-        PENDENCY_ORDER_FIELD.DUEDATE,
-        PENDENCY_ORDER_FIELD.RECRUITMENT_NUMBER,
-        PENDENCY_ORDER_FIELD.ACRONYM,
-        PENDENCY_ORDER_FIELD.EXTERNAL_ID,
-        PENDENCY_ORDER_FIELD.REQUESTER,
-        PENDENCY_ORDER_FIELD.RECEIVER
-      ];
     }
 
     function changePaginationViewState() {
