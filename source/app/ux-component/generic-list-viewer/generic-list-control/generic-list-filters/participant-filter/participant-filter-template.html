@@ -1,14 +1,14 @@
 <span layout="row">
-  <md-icon>{{$ctrl.item.icon}}
-    <md-tooltip md-direction="bottom">{{$ctrl.item.translatedTitle}}</md-tooltip>
+  <md-icon>{{$ctrl.filterItem.icon}}
+    <md-tooltip md-direction="bottom">{{$ctrl.filterItem.translatedTitle}}</md-tooltip>
   </md-icon>
   <otus-participant-search layout-fill class="padding-layout-fill"
                            on-select="$ctrl.selectParticipant(participant)"
-                           attribute-filter-item="$ctrl.item"
+                           attribute-filter-item="$ctrl.filterItem"
                            search-settings="$ctrl.searchSettings"
                            show-participants-button="false"
                            change-watcher="$ctrl.changePaginationViewState()"
                            on-ready="true">
   </otus-participant-search>
-  <md-icon ng-click="$ctrl.clear($ctrl.item)" class="icon-cursor">{{$ctrl.CANCEL_BUTTON_ICON}}</md-icon>
+  <md-icon ng-click="$ctrl.clear($ctrl.filterItem)" class="icon-cursor">{{$ctrl.CANCEL_BUTTON_ICON}}</md-icon>
 </span>
