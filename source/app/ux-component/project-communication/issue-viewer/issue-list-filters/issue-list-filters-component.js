@@ -28,59 +28,45 @@
 
     self.LABELS = IssueViewerService.LABELS;
 
+    self.$onInit = onInit;
+    self.getDefaultOrderFields = getDefaultOrderFields;
     self.chanceInputViewState = chanceInputViewState;
     self.clear = clear;
     self.clearAll = clearAll;
     self.allStatus = allStatus;
-    self.chanceStateCriteria = chanceStateCriteria;
-    self.resetCriteriaOrderCustomization = resetCriteriaOrderCustomization;
     self.changePaginationViewState = changePaginationViewState;
 
-    clearAll(self.searchSettings);
+    self.viewerServiceGetChecker = IssueViewerService.getChecker;
 
-    function clear(item) {
-      delete self.searchSettings.filter[item.title];
-      self.inputViewState[item.title] = false;
+    function onInit(){
+      clearAll();
     }
 
-    function clearAll(searchSettings) {
-      if (searchSettings) searchSettings = null;
+    function getDefaultOrderFields(){
+      return Object.values(ISSUE_ORDER_FIELD);
+    }
+
+    function clear(item) {
+      delete self.searchSettings.filter[item.TITLE];
+      self.inputViewState[item.TITLE] = false;
+    }
+
+    function clearAll() {
       self.inputViewState = IssueViewerService.getInputViewState();
       self.searchSettings = IssueViewerService.getSearchSettings();
     }
 
     function chanceInputViewState(item) {
-      self.inputViewState[item.title] = true;
+      self.inputViewState[item.TITLE] = true;
     }
 
     function allStatus() {
       delete self.searchSettings.filter.status;
     }
 
-    function chanceStateCriteria() {
-      if (self.inputViewState['sortingCriteria']) {
-        self.inputViewState['sortingCriteria'] = !self.inputViewState['sortingCriteria'];
-        self.searchSettings.order.fields = [ISSUE_ORDER_FIELD.CREATION_DATE];
-      } else {
-        self.inputViewState['sortingCriteria'] = true;
-        _populateCriteriaOrder();
-      }
-    }
-
-    function resetCriteriaOrderCustomization() {
-      _populateCriteriaOrder();
-    }
-
-    function _populateCriteriaOrder() {
-      self.searchSettings.order.fields = [
-        ISSUE_ORDER_FIELD.CREATION_DATE,
-        ISSUE_ORDER_FIELD.RECRUITMENT_NUMBER,
-        ISSUE_ORDER_FIELD.CENTER
-      ];
-    }
-
     function changePaginationViewState() {
       self.paginatorActive = false;
     }
+
   }
 }());
