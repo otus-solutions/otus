@@ -8,7 +8,6 @@
       templateUrl: 'app/ux-component/generic-list-viewer/generic-list-control/generic-list-filters/date-filter/date-filter-template.html',
       bindings: {
         filterItem: '<',
-        viewerServiceGetChecker: '=',
         searchSettings: '=',
         clear: '=',
         changePaginationViewState: '='
@@ -20,6 +19,11 @@
   function Controller(GENERIC_LIST_VIEWER_LABELS) {
     const self = this;
     self.CANCEL_BUTTON_ICON = GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL.CANCEL_BUTTON;
+    self.STANDARD_DATE_FORMAT = GENERIC_LIST_VIEWER_LABELS.STANDARD_DATE_FORMAT;
+
+    self.$onInit = function(){
+      console.log(self.filterItem);
+    }
   }
 
 }());
