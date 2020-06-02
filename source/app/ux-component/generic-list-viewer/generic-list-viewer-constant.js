@@ -22,6 +22,9 @@
         CANCEL_BUTTON:'cancelar',
         LIST_BUTTON: 'Listar',
       },
+      INPUT_VIEW_STATE_NAMES:{
+        SORTING_CRITERIA: 'sortingCriteria',
+      },
       PAGINATOR: {
         PREVIOUS_PAGE_BUTTON:'Página Anterior',
         CUSTOM_PAGE_BUTTON:'Nova Consulta',
