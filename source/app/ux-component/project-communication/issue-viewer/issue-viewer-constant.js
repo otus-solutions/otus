@@ -12,7 +12,7 @@
           TRANSLATED_TITLE: 'Recrutamento',
           ICON: 'account_circle'
         },
-        SENDER_NAME: {
+        SENDER: {
           TITLE: 'name',
           TRANSLATED_TITLE: 'Nome',
           ICON: 'person'
@@ -34,20 +34,14 @@
         },
         STATUS: {
           TITLE: 'status',
-          ICON: 'assignment_ind',
-          OPENED: {
-            TRANSLATED_TITLE: 'Abertos',
-            VALUE: 'OPENED'
-          },
-          CLOSED: {
-            TRANSLATED_TITLE: 'Fechados',
-            VALUE: 'CLOSED'
-          },
-          FINALIZED: {
-            TRANSLATED_TITLE: 'Finalizados',
-            VALUE: 'FINALIZED'
-          }
+          ICON: 'assignment_ind'
         }
+      },
+
+      FILTER_STATUS: {
+        CLOSED:'Fechados',
+        FINALIZED:'Finalizados',
+        OPENED:'Abertos'
       }
 
     });
