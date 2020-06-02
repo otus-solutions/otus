@@ -11,17 +11,23 @@
 
   Controller.$inject = [
     '$mdDialog',
-    'otusjs.issueViewer.IssueViewerService'
+    'otusjs.issueViewer.IssueViewerService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdDialog, IssueViewerService) {
+  function Controller($mdDialog, IssueViewerService, LoadingScreenService) {
     const self = this;
+    self.$onInit = onInit;
     self.paginatorActive = false;
     self.viewerTitle = IssueViewerService.LABELS.PAGE_TITLE;
     self.viewerService = IssueViewerService;
     self.itemComponentName = 'otusIssueItem';
-    self.filtersComponentName = 'otusIssueListFilters';
+    self.filtersComponentName = 'otusIssuesListFilters';
     self.HelperDialogController = HelperDialogController;
+
+    function onInit(){
+
+    }
 
     self.showHelper = function() {
       $mdDialog.show({
