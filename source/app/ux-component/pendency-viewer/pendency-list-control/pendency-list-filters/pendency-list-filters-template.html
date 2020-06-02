@@ -101,17 +101,12 @@
         </md-input-container>
       </span>
 
-      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'dueDate')" layout="row" layout-align="space-between center">
-        <md-icon>{{item.icon}}
-          <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
-        </md-icon>
-        <md-datepicker ng-model="$ctrl.searchSettings.filter[item.title]"
-                       ng-change="$ctrl.changePaginationViewState()"
-                       md-placeholder={{$ctrl.LABELS.STANDARD_DATE_FORMAT}}
-                       md-hide-icons="calendar"
-                       aria-label={{item.translatedTitle}}>
-        </md-datepicker>
-        <md-icon ng-click="$ctrl.clear(item)" class="icon-cursor">{{$ctrl.LABELS.CONTROL_PANEL.CANCEL_BUTTON}}</md-icon>
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === 'dueDate')">
+        <otus-date-filter filter-item="item"
+                          search-settings="$ctrl.searchSettings"
+                          clear="$ctrl.clear"
+                          change-pagination-view-state="$ctrl.changePaginationViewState">
+        </otus-date-filter>
       </span>
 
     </div>
