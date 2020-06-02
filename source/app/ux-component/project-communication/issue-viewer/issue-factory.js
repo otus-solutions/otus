@@ -19,12 +19,8 @@
 
     }
 
-    function fromJsonObject(participant){
-      return {
-        rn: participant.recruitmentNumber,
-        name: participant.name,
-        center: participant.fieldCenter.acronym
-      };
+    function fromJsonObject(item){
+      return item;
     }
 
     return self;
