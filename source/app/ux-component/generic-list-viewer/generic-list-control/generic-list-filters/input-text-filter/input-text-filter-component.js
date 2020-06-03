@@ -11,7 +11,8 @@
         searchSettings: '=',
         clear: '=',
         changePaginationViewState: '=',
-        upperCase: '<'
+        upperCase: '<',
+        placeholder: '<'
       }
     }).controller('inputTextFilterCtrl', Controller);
 
@@ -21,15 +22,13 @@
     const self = this;
     self.CANCEL_BUTTON_ICON = GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL.CANCEL_BUTTON;
 
-    self.onChangeText = onChangeText;
     self.$onInit = onInit;
+    self.onChangeText = onChangeText;
 
     function onInit(){
-      self.filterItem = angular.copy(self.filterItem);
-      Object.keys(self.filterItem).forEach(KEY => {
-        let key = KEY.toLowerCase();
-        self.filterItem[key] = self.filterItem[KEY];
-      });
+      if(!self.placeholder){
+        self.placeholder = '';
+      }
     }
 
     function onChangeText(){

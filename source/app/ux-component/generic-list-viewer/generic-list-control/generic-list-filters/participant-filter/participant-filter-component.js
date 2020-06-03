@@ -19,16 +19,6 @@
   function Controller(GENERIC_LIST_VIEWER_LABELS) {
     const self = this;
     self.CANCEL_BUTTON_ICON = GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL.CANCEL_BUTTON;
-
-    self.$onInit = onInit;
-
-    function onInit(){
-      self.filterItem = angular.copy(self.filterItem);
-      Object.keys(self.filterItem).forEach(KEY => {
-        let key = KEY.toLowerCase();
-        self.filterItem[key] = self.filterItem[KEY];
-      });
-    }
   }
 
 }());
