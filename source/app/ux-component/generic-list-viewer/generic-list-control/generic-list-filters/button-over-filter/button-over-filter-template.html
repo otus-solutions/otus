@@ -1,0 +1,7 @@
+<md-button layout-fill class="md-raised padding-layout-fill"
+           aria-label={{$ctrl.filterItem.translatedTitle}}
+           ng-click="$ctrl.changeInputViewState($ctrl.filterItem)">
+  <md-icon>{{$ctrl.filterItem.icon}}
+    <md-tooltip md-direction="right">{{$ctrl.filterItem.translatedTitle}}</md-tooltip>
+  </md-icon>
+</md-button>
