@@ -1,13 +1,5 @@
 <md-card class="issue-list-filters" layout-margin>
-  <md-toolbar-filler layout="row" layout-align="space-between center" layout-margin>
-    <span>{{$ctrl.LABELS.CONTROL_PANEL.FILTERS}}</span>
-    <md-button aria-label={{$ctrl.LABELS.CONTROL_PANEL.RESET_FILTERS}} class="md-fab md-mini"
-               ng-click="$ctrl.clearAll()">
-      <md-icon>autorenew
-        <md-tooltip md-direction="left">{{$ctrl.LABELS.CONTROL_PANEL.RESET_FILTERS}}</md-tooltip>
-      </md-icon>
-    </md-button>
-  </md-toolbar-filler>
+  <otus-list-filter-toolbar class="filter-toolbar" clear-all="$ctrl.clearAll"></otus-list-filter-toolbar>
 
   <div class='sorting-criteria'>
     <otus-list-sorting-criteria search-settings="$ctrl.searchSettings"
