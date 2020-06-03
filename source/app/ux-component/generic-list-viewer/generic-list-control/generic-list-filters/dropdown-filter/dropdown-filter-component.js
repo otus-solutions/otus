@@ -30,7 +30,7 @@
     }
 
     function changeSelectedOption(){
-      self.searchSettings.filter[self.filterItem.title] = self.choosedCenter;
+      self.searchSettings.filter[self.filterItem.title] = self.selectedOption;
     }
 
   }
