@@ -41,14 +41,7 @@
 
     function onInit(){
       clearAll();
-
-      self.itemAttributes = angular.copy(self.itemAttributes);
-      delete self.itemAttributes['name'];
-      delete self.itemAttributes['status'];
-      delete self.itemAttributes['title'];
-      // self.itemAttributes[self.LABELS.ISSUE_ATTRIBUTES.TITLE.TITLE]['placeholder'] = "Insira parte ou todo o título";
-      // self.centersPlaceholder = "Insira parte ou todo o título";
-
+      
       ProjectFieldCenterService.loadCenters().then(function (result) {
         self.centers = angular.copy(result).map(center => center.acronym).sort();
       });

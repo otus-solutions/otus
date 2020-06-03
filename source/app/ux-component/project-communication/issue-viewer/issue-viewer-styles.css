@@ -98,8 +98,8 @@
     display: grid;
     /*width: 90vw;*/
     grid-template-columns: 1fr;
-    grid-template-rows: .01fr .1fr 1fr .1fr .1fr .1fr .1fr .1fr;
-    grid-template-areas: "toolbar" "status" "sortingCriteria" "item" "item" "item" "item" "item" "item"
+    grid-template-rows: .01fr .1fr 1fr .1fr .1fr;
+    grid-template-areas: "toolbar" "status" "sortingCriteria" "centerNameFilter" "rnFilter" "creationDateFilter"
   }
 }
 
@@ -108,37 +108,31 @@
     display: grid;
     /*width: 90vw;*/
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: .01fr .1fr 1fr .5fr .5fr .5fr;
+    grid-template-rows: .01fr .1fr 1fr .5fr .5fr;
     grid-template-areas:
-      "toolbar         toolbar"
-      "status          status"
-      "sortingCriteria sortingCriteria"
-      "item            item"
-      "item            item"
-      "item            item"
+      "toolbar            toolbar"
+      "status             status"
+      "sortingCriteria    sortingCriteria"
+      "centerNameFilter   centerNameFilter"
+      "rnFilter           creationDateFilter"
   }
 }
 
 @media screen and (min-width: 1280px) {
   .issue-list-filters {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: .01fr .1fr .5fr .5fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: .01fr .1fr .5fr;
     grid-template-areas:
-      "toolbar         toolbar         toolbar"
-      "status          sortingCriteria sortingCriteria"
-      "item            item            item"
-      "item            item            item"
+      "toolbar         toolbar              toolbar "
+      "status          sortingCriteria      sortingCriteria"
+      "rnFilter        creationDateFilter   centerNameFilter"
   }
 }
 
 
 .padding-layout-fill {
   padding: 0 10px 0 10px;
-}
-
-.item-filter {
-  grid-area: item;
 }
 
 md-toolbar-filler {
@@ -149,6 +143,22 @@ md-toolbar-filler {
 
 .status {
   grid-area: status;
+}
+
+.filter-item {
+  grid-area: filterItem;
+}
+
+.rn-filter {
+  grid-area: rnFilter;
+}
+
+.creation-date-filter {
+  grid-area: creationDateFilter;
+}
+
+.center-name-filter {
+  grid-area: centerNameFilter;
 }
 
 .sorting-criteria {
