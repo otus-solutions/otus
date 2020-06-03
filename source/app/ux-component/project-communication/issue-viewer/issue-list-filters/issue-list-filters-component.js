@@ -15,10 +15,11 @@
 
   Controller.$inject = [
     'dragulaService',
-    'otusjs.issueViewer.IssueViewerService'
+    'otusjs.issueViewer.IssueViewerService',
+    'otusjs.deploy.FieldCenterRestService',
   ];
 
-  function Controller(dragulaService, IssueViewerService) {
+  function Controller(dragulaService, IssueViewerService, ProjectFieldCenterService) {
     const self = this;
     const ISSUE_ORDER_FIELD = {
       CREATION_DATE: 'creationDate',
@@ -30,7 +31,7 @@
 
     self.$onInit = onInit;
     self.getDefaultOrderFields = getDefaultOrderFields;
-    self.chanceInputViewState = chanceInputViewState;
+    self.changeInputViewState = changeInputViewState;
     self.clear = clear;
     self.clearAll = clearAll;
     self.allStatus = allStatus;
@@ -40,6 +41,17 @@
 
     function onInit(){
       clearAll();
+
+      self.itemAttributes = angular.copy(self.itemAttributes);
+      delete self.itemAttributes['name'];
+      delete self.itemAttributes['status'];
+      delete self.itemAttributes['title'];
+      // self.itemAttributes[self.LABELS.ISSUE_ATTRIBUTES.TITLE.TITLE]['placeholder'] = "Insira parte ou todo o título";
+      // self.centersPlaceholder = "Insira parte ou todo o título";
+
+      ProjectFieldCenterService.loadCenters().then(function (result) {
+        self.centers = angular.copy(result).map(center => center.acronym).sort();
+      });
     }
 
     function getDefaultOrderFields(){
@@ -47,8 +59,8 @@
     }
 
     function clear(item) {
-      delete self.searchSettings.filter[item.TITLE];
-      self.inputViewState[item.TITLE] = false;
+      delete self.searchSettings.filter[item.title];
+      self.inputViewState[item.title] = false;
     }
 
     function clearAll() {
@@ -56,8 +68,9 @@
       self.searchSettings = IssueViewerService.getSearchSettings();
     }
 
-    function chanceInputViewState(item) {
-      self.inputViewState[item.TITLE] = true;
+    function changeInputViewState(item) {
+      let key = (item.title === 'name' ? 'rn' : item.title);
+      self.inputViewState[key] = true;
     }
 
     function allStatus() {

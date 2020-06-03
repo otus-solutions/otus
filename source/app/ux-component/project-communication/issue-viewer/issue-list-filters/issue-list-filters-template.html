@@ -27,17 +27,30 @@
 
   <div ng-repeat="item in $ctrl.itemAttributes" layout-align="start center">
     <div class="item-filter">
-      <span ng-if="!$ctrl.inputViewState[item.TITLE] && (item.TITLE !== 'status')">
+      <span ng-if="!$ctrl.inputViewState[item.title] && item.title === $ctrl.LABELS.ISSUE_ATTRIBUTES.RN.TITLE">
         <md-button layout-fill class="md-raised padding-layout-fill"
-                   aria-label={{item.TRANSLATED_TITLE}}
-                   ng-click="$ctrl.chanceInputViewState(item)">
-          <md-icon>{{item.ICON}}
-            <md-tooltip md-direction="right">{{item.TRANSLATED_TITLE}}</md-tooltip>
+                   aria-label={{item.translatedTitle}}
+                   ng-click="$ctrl.changeInputViewState(item)">
+          <md-icon>{{item.icon}}
+            <md-tooltip md-direction="right">{{item.translatedTitle}}</md-tooltip>
+          </md-icon>
+          <md-icon>{{$ctrl.LABELS.ISSUE_ATTRIBUTES.SENDER.ICON}}
+            <md-tooltip md-direction="right">{{item.translatedTitle}}</md-tooltip>
           </md-icon>
         </md-button>
       </span>
 
-      <span ng-if="$ctrl.inputViewState[item.TITLE] && (item.TITLE === 'rn')">
+      <span ng-if="!$ctrl.inputViewState[item.title] && (item.title !== $ctrl.LABELS.ISSUE_ATTRIBUTES.RN.TITLE)">
+        <md-button layout-fill class="md-raised padding-layout-fill"
+                   aria-label={{item.translatedTitle}}
+                   ng-click="$ctrl.changeInputViewState(item)">
+          <md-icon>{{item.icon}}
+            <md-tooltip md-direction="right">{{item.translatedTitle}}</md-tooltip>
+          </md-icon>
+        </md-button>
+      </span>
+
+      <span ng-if="$ctrl.inputViewState[item.title] && (item.title === $ctrl.LABELS.ISSUE_ATTRIBUTES.RN.TITLE)">
         <otus-participant-filter filter-item="item"
                                  search-settings="$ctrl.searchSettings"
                                  clear="$ctrl.clear"
@@ -45,13 +58,32 @@
         </otus-participant-filter>
       </span>
 
-      <span ng-if="$ctrl.inputViewState[item.TITLE] && item.TITLE === 'creationDate'">
+      <span ng-if="$ctrl.inputViewState[item.title] && item.title === $ctrl.LABELS.ISSUE_ATTRIBUTES.CREATION_DATE.TITLE">
         <otus-date-filter filter-item="item"
                           search-settings="$ctrl.searchSettings"
                           clear="$ctrl.clear"
                           change-pagination-view-state="$ctrl.changePaginationViewState">
         </otus-date-filter>
       </span>
+
+      <span ng-if="$ctrl.inputViewState[item.title] && item.title === $ctrl.LABELS.ISSUE_ATTRIBUTES.CENTER.TITLE">
+        <otus-single-selection-filter filter-item="item"
+                                      search-settings="$ctrl.searchSettings"
+                                      clear="$ctrl.clear"
+                                      change-pagination-view-state="$ctrl.changePaginationViewState"
+                                      options="$ctrl.centers">
+      </otus-single-selection-filter>
+      </span>
+
+<!--      TODO descomment when active filter by issue title-->
+<!--      <span ng-if="$ctrl.inputViewState[item.title] && item.title === $ctrl.LABELS.ISSUE_ATTRIBUTES.TITLE.TITLE">-->
+<!--        <otus-input-text-filter filter-item="item"-->
+<!--                                search-settings="$ctrl.searchSettings"-->
+<!--                                clear="$ctrl.clear"-->
+<!--                                change-pagination-view-state="$ctrl.changePaginationViewState"-->
+<!--                                placeholder="item.placeholder">-->
+<!--        </otus-input-text-filter>-->
+<!--      </span>-->
 
     </div>
   </div>
