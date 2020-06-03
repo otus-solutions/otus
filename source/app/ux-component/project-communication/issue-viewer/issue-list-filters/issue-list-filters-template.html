@@ -25,11 +25,12 @@
   </md-radio-group>
 
   <div class="rn-filter">
-    <div ng-if="!$ctrl.inputViewState[$ctrl.itemAttributes.rn.title]" >
+    <span ng-if="!$ctrl.inputViewState[$ctrl.itemAttributes.rn.title]" >
       <otus-button-over-filter filter-item="$ctrl.itemAttributes.rn"
-                               change-input-view-state="$ctrl.changeInputViewState">
+                               change-input-view-state="$ctrl.changeInputViewState"
+                               extra-icons="[$ctrl.itemAttributes.name]">
       </otus-button-over-filter>
-    </div>
+    </span>
     <span ng-if="$ctrl.inputViewState[$ctrl.itemAttributes.rn.title]">
       <otus-participant-filter filter-item="$ctrl.itemAttributes.rn"
                                search-settings="$ctrl.searchSettings"
