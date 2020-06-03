@@ -8,7 +8,8 @@
       templateUrl: 'app/ux-component/generic-list-viewer/generic-list-control/generic-list-filters/button-over-filter/button-over-filter-template.html',
       bindings: {
         filterItem: '<',
-        changeInputViewState: '='
+        changeInputViewState: '=',
+        extraIcons: '<'
       }
     }).controller('buttonOverFilterCtrl', Controller);
 
