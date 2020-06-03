@@ -1,13 +1,5 @@
 <md-card class="pendency-list-filters" layout-margin>
-  <md-toolbar-filler layout="row" layout-align="space-between center" layout-margin>
-    <span>{{$ctrl.LABELS.CONTROL_PANEL.FILTERS}}</span>
-    <md-button aria-label={{$ctrl.LABELS.CONTROL_PANEL.RESET_FILTERS}} class="md-fab md-mini"
-               ng-click="$ctrl.clearAll()">
-      <md-icon>autorenew
-        <md-tooltip md-direction="left">{{$ctrl.LABELS.CONTROL_PANEL.RESET_FILTERS}}</md-tooltip>
-      </md-icon>
-    </md-button>
-  </md-toolbar-filler>
+  <otus-list-filter-toolbar class="filter-toolbar" clear-all="$ctrl.clearAll"></otus-list-filter-toolbar>
 
   <div class='sorting-criteria'>
     <otus-list-sorting-criteria search-settings="$ctrl.searchSettings"
@@ -29,13 +21,9 @@
   <div ng-repeat="item in $ctrl.itemAttributes" layout-align="start center">
     <div class="item-filter" ng-if="item.title !== 'creationDate' && item.title !== 'remainingDays'">
       <span ng-if="!$ctrl.inputViewState[item.title]">
-        <md-button layout-fill class="md-raised padding-layout-fill"
-                   aria-label={{item.translatedTitle}}
-                   ng-click="$ctrl.changeInputViewState(item)">
-          <md-icon>{{item.icon}}
-            <md-tooltip md-direction="right">{{item.translatedTitle}}</md-tooltip>
-          </md-icon>
-        </md-button>
+        <otus-button-over-filter filter-item="item"
+                                 change-input-view-state="$ctrl.changeInputViewState">
+        </otus-button-over-filter>
       </span>
 
       <span ng-if="$ctrl.inputViewState[item.title] && item.title === 'rn'">
