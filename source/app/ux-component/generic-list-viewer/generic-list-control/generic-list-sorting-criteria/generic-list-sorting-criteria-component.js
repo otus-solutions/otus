@@ -26,15 +26,6 @@
     self.chanceStateCriteria = chanceStateCriteria;
     self.resetCriteriaOrderCustomization = resetCriteriaOrderCustomization;
 
-    self.$onInit = onInit;
-    function onInit(){
-      self.itemAttributes = JSON.parse(
-        JSON.stringify(angular.copy(self.itemAttributes))
-          .replace(/TRANSLATED_TITLE/g, 'translatedTitle')
-          .replace(/TITLE/g, 'title')
-          .replace(/ICON/g, 'icon')
-      );
-    }
 
     function isVisible(){
       return !!self.inputViewState[SORTING_CRITERIA_KEY_NAME];
