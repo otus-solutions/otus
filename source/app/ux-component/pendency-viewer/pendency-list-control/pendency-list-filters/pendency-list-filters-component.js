@@ -33,7 +33,7 @@
 
     self.$onInit = onInit;
     self.getDefaultOrderFields = getDefaultOrderFields;
-    self.chanceInputViewState = chanceInputViewState;
+    self.changeInputViewState = changeInputViewState;
     self.clear = clear;
     self.clearAll = clearAll;
     self.allStatus = allStatus;
@@ -59,7 +59,7 @@
       self.searchSettings = PendencyViewerService.getSearchSettings();
     }
 
-    function chanceInputViewState(item) {
+    function changeInputViewState(item) {
       self.inputViewState[item.title] = true;
     }
 
