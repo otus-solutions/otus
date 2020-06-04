@@ -2,7 +2,6 @@
 @media screen and (min-width: 360px) {
   .issue-item-layout {
     display: grid;
-    /*width: 98vw;*/
     grid-template-columns: 0.8fr 1fr 1.4fr 1.8fr;
     grid-template-rows: 1fr;
     grid-template-areas:
@@ -16,20 +15,18 @@
 @media screen and (min-width: 768px) {
   .issue-item-layout {
     display: grid;
-    /*width: 98vw;*/
-    grid-template-columns: 1fr 4fr 2fr;
+    grid-template-columns: 1fr 3.8fr 1.2fr 1fr;
     grid-template-rows: .1fr .1fr;
     grid-template-areas:
-      "centerName   senderName    status"
-      "rn           title         creationDate"
-    ;
+      "centerName   senderName    creationDate    status"
+      "rn           title         .               ."
+  ;
   }
 }
 
 @media screen and (min-width: 1280px) {
   .issue-item-layout {
     display: grid;
-    /*width: 98vw;*/
     grid-template-columns: .3fr .4fr 1fr 1.6fr .5fr .6fr;
     grid-template-rows: 1fr;
     grid-template-areas:
@@ -64,26 +61,12 @@
   text-transform: capitalize;
 }
 
-.status md-chips-wrap{
+.issue-status md-chips-wrap{
   padding: 0px;
 }
 
-.status md-chip{
+.issue-status md-chip{
   margin: 0px;
-}
-
-.status-opened {
-  background-color: yellow;
-}
-
-.status-closed {
-  background-color: red;
-  color: white;
-}
-
-.status-finalized {
-  background-color: green;
-  color: white;
 }
 
 .padding {
@@ -96,7 +79,6 @@
 @media screen and (min-width: 360px) {
   .issue-list-filters {
     display: grid;
-    /*width: 90vw;*/
     grid-template-columns: 1fr;
     grid-template-rows: .01fr .1fr 1fr .1fr .1fr;
     grid-template-areas: "toolbar" "status" "sortingCriteria" "centerNameFilter" "rnFilter" "creationDateFilter"
@@ -106,7 +88,6 @@
 @media screen and (min-width: 768px) {
   .issue-list-filters {
     display: grid;
-    /*width: 90vw;*/
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: .01fr .1fr 1fr .5fr .5fr;
     grid-template-areas:
