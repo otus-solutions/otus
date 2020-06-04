@@ -30,12 +30,24 @@
     self.getAllItems = getAllItems;
 
     function onInit() {
+      console.log('GenericListViewer.onInit')
+
       self.searchSettings = self.viewerService.getSearchSettings();
       self.itemAttributes = self.viewerService.getItemAttributes();
-      getAllItems(self.searchSettings);
+
+      if(self.viewerService.needPreparations){
+        self.viewerService.prepareData().then(() => {
+          getAllItems(self.searchSettings);
+        });
+      }
+      else{
+        getAllItems(self.searchSettings);
+      }
     }
 
     function getAllItems(searchSettings) {
+      console.log('GenericListViewer.getAllItems: searchSetting\n', JSON.stringify(searchSettings, null, 2))
+
       self.viewerService.getAllItems(searchSettings)
         .then(data => {
           self.items = data;
@@ -43,6 +55,7 @@
           if(self.paginatorActive){
             _prepareParametersForPagination(searchSettings);
           }
+          self.viewerService.items = self.items;
         });
     }
 
