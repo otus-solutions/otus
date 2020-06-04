@@ -22,10 +22,12 @@
     const INITIAL_CURRENT_QUANTITY = 0;
     const INITIAL_QUANTITY_TO_GET = 15;
 
-    self.dataReady = false;
+    self.participantDataReady = false;
     self.participants = {};
+    self.needPreparations = true;
 
     self.initialize = initialize;
+    self.prepareData = prepareData;
     self.translateStatus = translateStatus;
 
     initialize();
@@ -40,16 +42,17 @@
       self.getSearchSettings = getSearchSettings;
       self.getItemAttributes = getItemAttributes;
       self.getInputViewState = getInputViewState;
+    }
 
-      ParticipantManagerService.setup()
-        .then(response => { self.dataReady = true; });
+    function prepareData(){
+      return ParticipantManagerService.setup();
     }
 
     function childParseItemsMethod(genericListJsonArray) {
       let parsedItems = [];
       genericListJsonArray.forEach(item => {
-        // parsedItems.push(IssueFactory.fromJsonObject(self.currParticipants[item.sender]));
-        parsedItems.push(IssueFactory.fromJsonObject(item, ParticipantManagerService));
+        let participant = ParticipantManagerService.getParticipantById(item.participantId);
+        parsedItems.push(IssueFactory.fromJsonObject(item, participant));
       });
       return parsedItems;
     }
