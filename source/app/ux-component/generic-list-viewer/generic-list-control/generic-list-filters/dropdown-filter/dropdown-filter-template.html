@@ -4,7 +4,7 @@
   </md-icon>
   <md-input-container class="remove-errors-spacer md-block" flex="20" ng-if="!$ctrl.userHaveCenter">
     <label class="md-subhead">{{$ctrl.placeholder}}</label>
-    <md-select ng-model="$ctrl.selectedOption" ng-change="$ctrl.changeSelectedOption()" ng-disabled="">
+    <md-select ng-model="$ctrl.selectedOption" ng-change="$ctrl.changeSelectedOption()" ng-disabled="" aria-label="dropdown filter">
       <md-option ng-repeat="option in $ctrl.options track by $index" ng-selected="{{$index === 0}}"
                  value="{{option}}" ng-click="">
         {{option}}
