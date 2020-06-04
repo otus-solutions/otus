@@ -21,6 +21,8 @@
     self.updateClose = updateClose;
     self.listIssue = listIssue;
     self.filter = filter;
+    self.getLastIssueMessage = getLastIssueMessage;
+    self.getAllIssueMessages = getAllIssueMessages;
 
     function createMessage(ProjectCommunication) {
       return ProjectCommunicationCollectionService.createMessage(ProjectCommunication);
@@ -52,6 +54,14 @@
 
     function filter(searchSettings) {
       return ProjectCommunicationCollectionService.filter(searchSettings);
+    }
+
+    function getLastIssueMessage(issueId) {
+      return ProjectCommunicationCollectionService.getLastIssueMessage(issueId);
+    }
+
+    function getAllIssueMessages(issueId, limit) {
+      return ProjectCommunicationCollectionService.getAllIssueMessages(issueId, limit);
     }
 
   }

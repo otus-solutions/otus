@@ -22,6 +22,8 @@
     self.updateClose = updateClose;
     self.listIssue = listIssue;
     self.filter = filter;
+    self.getLastIssueMessage = getLastIssueMessage;
+    self.getAllIssueMessages = getAllIssueMessages;
 
     function createMessage(ProjectCommunication) {
       return _remoteStorage.whenReady()
@@ -68,7 +70,20 @@
     function filter(searchSettings) {
       return _remoteStorage.whenReady()
         .then(remoteStorage => remoteStorage.filter(searchSettings))
-        .then(response => JSON.parse(response.data.data));//todo check if will be data.data and a string?
+        // .then(response => JSON.parse(response.data.data));//todo check if will be data.data and a string?
+        .then(response => response.data);//todo temp
+    }
+
+    function getLastIssueMessage(issueId) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.getLastIssueMessage(issueId))
+        .then(response => response.data[0]);
+    }
+
+    function getAllIssueMessages(issueId, limit) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.getLastIssueMessage(issueId, limit))
+        .then(response => response.data);
     }
 
   }
