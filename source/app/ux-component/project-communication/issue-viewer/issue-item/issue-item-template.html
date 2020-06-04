@@ -21,7 +21,7 @@
   </div>
 
   <div class="creation-date">
-    <md-icon>{{$ctrl.itemAttributes.creationDate.icon}}
+    <md-icon >{{$ctrl.itemAttributes.creationDate.icon}}
       <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.creationDate.translatedTitle}}</md-tooltip>
     </md-icon>
     <span class="padding">{{$ctrl.creationDate}}</span>
@@ -34,14 +34,12 @@
     <span class="padding">{{$ctrl.item.title}}</span>
   </div>
 
-  <div layout="row" layout-align-xs="end center" layout-align-gt-md="end center">
-<!--    <md-chips ng-class="$ctrl.statusClass">-->
-<!--      <md-chip- class="no-margin">{{$ctrl.item.status}}</md-chip->-->
-<!--    </md-chips>-->
+  <div layout="row" layout-align="end center">
+    <md-chips class="issue-status">
+      <md-chip ng-style={{$ctrl.statusColor}}>{{$ctrl.status}}</md-chip>
+    </md-chips>
 
-    <md-button ng-class="$ctrl.statusClass">
-      {{$ctrl.status}}
-    </md-button>
+<!--    <md-button ng-class="$ctrl.statusClass">{{$ctrl.status}}</md-button>-->
 
   </div>
 </md-card>

@@ -16,15 +16,31 @@
 
   function Controller(IssueViewerService) {
     const self = this;
+
+    const STATUS_COLOR = {
+      CLOSED: {
+        'background-color': 'red',
+        'color': 'white'
+      },
+      FINALIZED: {
+        'background-color': 'green',
+        'color': 'white'
+      },
+      OPENED: {
+        'background-color': 'blue',
+        'color': 'white'
+      }
+    };
+
     self.$onInit = onInit;
 
-    function onInit(){
+    function onInit() {
       self.rn = self.item.rn;
       self.name = _capitalizeName(self.item.name);
       self.center = self.item.center;
       self.creationDate = IssueViewerService.formatDate(new Date(self.item.creationDate));
       self.status = IssueViewerService.translateStatus(self.item.status);
-      self.statusClass = `issue-status status-${self.item.status.toLowerCase()}`;
+      self.statusColor = STATUS_COLOR[self.item.status];
     }
 
     function _capitalizeName(name) {
