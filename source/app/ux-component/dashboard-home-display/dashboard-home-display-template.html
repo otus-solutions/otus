@@ -61,7 +61,7 @@
             <span class="md-header" layout-padding ><h2>ATIVIDADES</h2></span>
           </div>
 
-          <div layout="row" layout-sm="column" layout-md="column">
+          <div layout="row" layout-sm="column" layout-md="column" ng-show="$ctrl.userAccessToActivity.offlineActivitySincAccess">
             <md-card class="card-button" ng-init="showLaboratory=true" layout-fill >
               <md-card-content class="no-padding" layout="column" layout-align="start start">
                 <md-button ng-click="$ctrl.activateOfflineActivitySynchronize()" layout-align="center" layout-margin="">
@@ -77,7 +77,8 @@
              ng-show="$ctrl.userAccessToLaboratory.sampleTransportationAccess ||
                       $ctrl.userAccessToLaboratory.examLotsAccess ||
                       $ctrl.userAccessToLaboratory.examSendingAccess ||
-                      $ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess
+                      $ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess ||
+                      $ctrl.userAccessToLaboratory.participantLaboratoryAccess
                      "
              class="first-menu-margin">
 
@@ -122,7 +123,14 @@
                 </md-button>
               </md-card-content>
             </md-card>
-
+            <!--<md-card class="card-button" ng-init="showLaboratory=true" layout-fill
+                     ng-show="$ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess">
+              <md-card-content class="no-padding" layout="column" layout-align="start start" >
+                <md-button ng-click="$ctrl.unattachedLaboratory()" layout-align="center" layout-margin="">
+                  <md-icon>people_outline</md-icon>Acesso ao laboratório por participante
+                </md-button>
+              </md-card-content>
+            </md-card>-->
           </div>
         </div>
 
@@ -317,7 +325,7 @@
       <br>
 
       <!--    Activity Pendency List-->
-      <otus-dashboard-pendency layout="column" layout-align="center center"
+      <otus-dashboard-pendency layout="column"  layout-align="center center"
                                layout-fill layout-padding flex >
       </otus-dashboard-pendency>
     </div>

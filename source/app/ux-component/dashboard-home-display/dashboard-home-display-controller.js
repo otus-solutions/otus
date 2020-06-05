@@ -134,7 +134,6 @@
     function _checkingLaboratoryPermission() {
       return UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
         self.userAccessToLaboratory = response;
-        console.info(self.userAccessToLaboratory)
 
       });
     }
@@ -142,19 +141,16 @@
     function _checkingMonitoringPermission() {
       return UserAccessPermissionService.getCheckingMonitoringPermission().then(response => {
         self.userAccessToMonitoring = response;
-        console.info(self.userAccessToMonitoring)
       });
     }
     function _checkingParticipantPermission() {
       return UserAccessPermissionService.getCheckingParticipantPermission().then(response => {
         self.userAccessToParticipant = response;
-        console.info( self.userAccessToParticipant)
       });
     }
     function _checkingActivityPermission() {
       return UserAccessPermissionService.getCheckingActivityPermission().then(response => {
         self.userAccessToActivity = response;
-        console.info(self.userAccessToActivity)
       });
     }
 
