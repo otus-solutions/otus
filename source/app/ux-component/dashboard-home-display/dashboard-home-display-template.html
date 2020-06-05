@@ -53,8 +53,10 @@
       <!--    Menu buttons-->
       <div hide-xs layout="column" layout-sm="row" layout-md="row" layout-align="center center" layout-align-sm="center start" layout-align-md="center start">
         <!--    Laboratory buttons-->
-        <div layout="column" layout-align="center center"
-             class="first-menu-margin">
+        <div layout="column" layout-align="center center" class="first-menu-margin"
+             ng-show="$ctrl.userAccessToActivity.offlineActivitySincAccess ||
+                      $ctrl.userAccessToActivity.participantActivityAccess"
+        >
 
           <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
             <md-icon style="font-size:20px;color:#000000;">assignment</md-icon>
@@ -201,8 +203,9 @@
 
       <!--    Menu buttons Mobile-->
       <div hide-gt-xs layout="column" layout-align="start start" >
-        <md-card class="card-button" layout-fill >
-          <md-card-content layout="row" layout-align="center center">
+        <md-card ng-show="$ctrl.userAccessToActivity.offlineActivitySincAccess ||
+                      $ctrl.userAccessToActivity.participantActivityAccess" class="card-button" layout-fill >
+          <md-card-content  layout="row" layout-align="center center">
             <md-icon>assignment</md-icon>ATIVIDADES
             <div class="md-menu-demo" ng-cloak>
               <div class="menu-demo-container" layout-align="center center" layout="column">
@@ -210,7 +213,8 @@
                   <md-button ng-click="$mdMenu.open($event)" class="md-icon-button">
                     <md-icon>more_vert</md-icon>
                   </md-button>
-                  <md-menu-content width="3">
+                  <md-menu-content ng-show="$ctrl.userAccessToActivity.offlineActivitySincAccess"
+                                   width="3">
                     <md-menu-item>
                       <md-button ng-click="$ctrl.activateOfflineActivitySynchronize()">
                         <md-icon>wifi_off</md-icon>Sincronismo de atividades offline
