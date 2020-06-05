@@ -27,28 +27,28 @@
     function getCheckingLaboratoryPermission() {
       return ContextService.getUserPermissions().then(permissions => permissions.find(function (permission) {
         if (permission.objectType === LABORATORY_PERMISSION) {
-          return permission.access;
+          return permission;
         }
       }));
     }
     function getCheckingMonitoringPermission() {
       return ContextService.getUserPermissions().then(permissions => permissions.find(function (permission) {
         if (permission.objectType === MONITORING_PERMISSION) {
-          return permission.access;
+          return permission;
         }
       }));
     }
     function getCheckingMonitoringPermission() {
       return ContextService.getUserPermissions().then(permissions => permissions.find(function (permission) {
         if (permission.objectType === PARTICIPANT_PERMISSION) {
-          return permission.access;
+          return permission;
         }
       }));
     }
     function getCheckingActivityPermission() {
       return ContextService.getUserPermissions().then(permissions => permissions.find(function (permission) {
         if (permission.objectType === ACTIVITY_PERMISSION) {
-          return permission.access;
+          return permission;
         }
       }));
     }

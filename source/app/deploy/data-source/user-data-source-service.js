@@ -93,8 +93,7 @@
                     "examLotsAccess": false,
                     "examSendingAccess": false,
                     "unattachedLaboratoriesAccess": false
-                  }
-                ]);
+                  }]);
               }
             }).catch(e => {
               LogoutService.forceLogout("Erro ao carregar permissões de usuário", "Você será redirecionado à tela de login.");

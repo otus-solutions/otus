@@ -18,6 +18,7 @@
   function Controller($q, EventService, ContextService, ApplicationStateService, UserAccessPermissionService, ParticipantLaboratoryService, LoadingScreenService) {
     var self = this;
     self.participantsReady = false;
+
     self.laboratoryChecking;
     self.userAccessToLaboratory;
 
@@ -127,6 +128,7 @@
     function _checkingLaboratoryPermission() {
       return UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
         self.userAccessToLaboratory = response;
+        console.info(self.userAccessToLaboratory)
       });
     }
 
