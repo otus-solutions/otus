@@ -21,7 +21,7 @@
     /* Public methods */
     self.getCheckingLaboratoryPermission = getCheckingLaboratoryPermission;
     self.getCheckingMonitoringPermission = getCheckingMonitoringPermission;
-    self.getCheckingParticipantPermission = getCheckingActivityPermission;
+    self.getCheckingParticipantPermission = getCheckingParticipantPermission;
     self.getCheckingActivityPermission = getCheckingActivityPermission;
 
     function getCheckingLaboratoryPermission() {
@@ -38,7 +38,7 @@
         }
       }));
     }
-    function getCheckingMonitoringPermission() {
+    function getCheckingParticipantPermission() {
       return ContextService.getUserPermissions().then(permissions => permissions.find(function (permission) {
         if (permission.objectType === PARTICIPANT_PERMISSION) {
           return permission;

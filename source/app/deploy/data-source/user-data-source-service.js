@@ -64,7 +64,36 @@
             .then(response => {
               // TODO: better check permissions format (model?)
               if ('data' in response) {
-                UserContextService.setUserPermissions(response.data.permissions);
+                UserContextService.setUserPermissions([
+                  {
+                    "objectType": "ActivityPermission",
+                    "participantActivityAccess": false
+                  },
+                  {
+                    "objectType": "ParticipantPermission",
+                    "participantListAccess": false,
+                    "participantCreateAccess": false,
+                    "anonymousParticipantAccess": false
+                  },
+                  {
+                    "objectType": "MonitoringPermission",
+                    "centerActivitiesAccess": true,
+                    "activityFlagsAccess": true,
+                    "laboratoryFlagsAccess": false,
+                    "laboratoryControlAccess": false,
+                    "pendencyVisualizerAccess": false
+                  },
+                  {
+                    "objectType": "SurveyGroupPermission",
+                    "groups": []
+                  },
+                  {
+                    "objectType": "LaboratoryPermission",
+                    "sampleTransportationAccess": true,
+                    "examLotsAccess": false,
+                    "examSendingAccess": true,
+                    "unattachedLaboratoriesAccess": false
+                  }]);
               }
             }).catch(e => {
               LogoutService.forceLogout("Erro ao carregar permissões de usuário", "Você será redirecionado à tela de login.");
