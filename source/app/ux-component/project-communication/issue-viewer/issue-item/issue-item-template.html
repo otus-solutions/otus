@@ -1,45 +1,54 @@
-<md-card class="issue-item-layout" layout-margin ng-cloak>
-  <div class="rn">
-    <md-icon>{{$ctrl.itemAttributes.rn.icon}}
-      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.rn.translatedTitle}}</md-tooltip>
-    </md-icon>
-    <span class="padding">{{$ctrl.rn}}</span>
-  </div>
+<div class="md-accordion">
 
-  <div class="sender-name">
-    <md-icon>{{$ctrl.itemAttributes.name.icon}}
-      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.name.translatedTitle}}</md-tooltip>
-    </md-icon>
-    <span class="padding">{{$ctrl.name}}</span>
-  </div>
+  <md-card class="issue-item-layout" layout-margin ng-cloak
+           ng-init="$ctrl.expanded = false" ng-click="$ctrl.expanded = !$ctrl.expanded">
 
-  <div class="center-name">
-    <md-icon>{{$ctrl.itemAttributes.center.icon}}
-      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.center.translatedTitle}}</md-tooltip>
-    </md-icon>
-    <span class="padding">{{$ctrl.center}}</span>
-  </div>
+    <div class="rn">
+      <md-icon>{{$ctrl.itemAttributes.rn.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.rn.translatedTitle}}</md-tooltip>
+      </md-icon>
+      <span class="padding">{{$ctrl.rn}}</span>
+    </div>
 
-  <div class="creation-date">
-    <md-icon >{{$ctrl.itemAttributes.creationDate.icon}}
-      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.creationDate.translatedTitle}}</md-tooltip>
-    </md-icon>
-    <span class="padding">{{$ctrl.creationDate}}</span>
-  </div>
+    <div class="sender-name">
+      <md-icon>{{$ctrl.itemAttributes.name.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.name.translatedTitle}}</md-tooltip>
+      </md-icon>
+      <span class="padding">{{$ctrl.name}}</span>
+    </div>
 
-  <div class="msg-title">
-    <md-icon>{{$ctrl.itemAttributes.title.icon}}
-      <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.title.translatedTitle}}</md-tooltip>
-    </md-icon>
-    <span class="padding">{{$ctrl.item.title}}</span>
-  </div>
+    <div class="center-name">
+      <md-icon>{{$ctrl.itemAttributes.center.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.center.translatedTitle}}</md-tooltip>
+      </md-icon>
+      <span class="padding">{{$ctrl.center}}</span>
+    </div>
 
-  <div layout="row" layout-align="end center">
-    <md-chips class="issue-status">
-      <md-chip ng-style={{$ctrl.statusColor}}>{{$ctrl.status}}</md-chip>
-    </md-chips>
+    <div class="creation-date">
+      <md-icon >{{$ctrl.itemAttributes.creationDate.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.creationDate.translatedTitle}}</md-tooltip>
+      </md-icon>
+      <span class="padding">{{$ctrl.creationDate}}</span>
+    </div>
 
-<!--    <md-button ng-class="$ctrl.statusClass">{{$ctrl.status}}</md-button>-->
+    <div class="msg-title">
+      <md-icon>{{$ctrl.itemAttributes.title.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.title.translatedTitle}}</md-tooltip>
+      </md-icon>
+      <span class="padding">{{$ctrl.item.title}}</span>
+    </div>
 
-  </div>
-</md-card>
+    <div layout="row" layout-align="end center">
+      <md-chips class="issue-status">
+        <md-chip ng-style={{$ctrl.statusColor}}>{{$ctrl.status}}</md-chip>
+      </md-chips>
+    </div>
+
+    <div class="see-last-msg" layout="row" layout-align="end center">
+      <md-button>+</md-button>
+    </div>
+  </md-card>
+
+  <div ng-if="$ctrl.expanded">{{$ctrl.item.message}}</div>
+
+</div>

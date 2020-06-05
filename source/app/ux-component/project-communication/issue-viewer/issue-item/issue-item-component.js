@@ -35,6 +35,7 @@
     self.$onInit = onInit;
 
     function onInit() {
+      self.expanded = false;
       self.rn = self.item.rn;
       self.name = _capitalizeName(self.item.name);
       self.center = self.item.center;
