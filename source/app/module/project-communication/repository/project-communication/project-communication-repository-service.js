@@ -23,6 +23,7 @@
     self.filter = filter;
     self.getLastIssueMessage = getLastIssueMessage;
     self.getAllIssueMessages = getAllIssueMessages;
+    self.getIssueSenderInfo = getIssueSenderInfo;
 
     function createMessage(ProjectCommunication) {
       return ProjectCommunicationCollectionService.createMessage(ProjectCommunication);
@@ -62,6 +63,10 @@
 
     function getAllIssueMessages(issueId, limit) {
       return ProjectCommunicationCollectionService.getAllIssueMessages(issueId, limit);
+    }
+
+    function getIssueSenderInfo(senderId) {
+      return ProjectCommunicationCollectionService.getIssueSenderInfo(senderId);
     }
 
   }

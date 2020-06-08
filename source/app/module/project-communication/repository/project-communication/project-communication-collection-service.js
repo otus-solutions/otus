@@ -24,6 +24,7 @@
     self.filter = filter;
     self.getLastIssueMessage = getLastIssueMessage;
     self.getAllIssueMessages = getAllIssueMessages;
+    self.getIssueSenderInfo = getIssueSenderInfo;
 
     function createMessage(ProjectCommunication) {
       return _remoteStorage.whenReady()
@@ -83,6 +84,12 @@
     function getAllIssueMessages(issueId, limit) {
       return _remoteStorage.whenReady()
         .then(remoteStorage => remoteStorage.getLastIssueMessage(issueId, limit))
+        .then(response => response.data);
+    }
+
+    function getIssueSenderInfo(senderId) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.getIssueSenderInfo(senderId))
         .then(response => response.data);
     }
 
