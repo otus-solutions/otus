@@ -6,10 +6,12 @@
     .service('otusjs.deploy.ProjectCommunicationRestService', Service);
 
   Service.$inject = [
+    '$http',//todo temp
     'OtusRestResourceService'
   ];
 
-  function Service(OtusRestResourceService){
+  function Service($http,
+                   OtusRestResourceService){
     const UNINITIALIZED_REST_ERROR_MESSAGE = 'REST resource is not initialized.';
     const self = this;
     let _rest = null;
@@ -24,6 +26,9 @@
     self.updateClose = updateClose;
     self.listIssue = listIssue;
     self.filter = filter;
+    self.getLastIssueMessage = getLastIssueMessage;
+    self.getAllIssueMessages = getAllIssueMessages;
+    self.getIssueSenderInfo = getIssueSenderInfo;
 
     function initialize() {
       _rest = OtusRestResourceService.getProjectCommunicationResourceFactory();
@@ -67,8 +72,37 @@
     function filter(searchSettings){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       //return _rest.filter(searchSettings).$promise;//todo descomentar
-      return _rest.listIssue().$promise;//todo temp
+
+      //return _rest.listIssue().$promise;//todo temp
+
+      let url = `http://localhost:3037/project-communication/issues`;
+      return $http.get(url);
     }
+
+    //todo
+    function getLastIssueMessage(issueId){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+
+      let url = `http://localhost:3037/project-communication/issues/${issueId}/last-message`;
+      return $http.get(url);
+    }
+
+    //todo
+    function getAllIssueMessages(issueId, limit){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+
+      let url = `http://localhost:3037/project-communication/issues/${issueId}/messages`;
+      return $http.get(url);
+    }
+
+    //todo
+    function getIssueSenderInfo(senderId){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+
+      let url = `http://localhost:3037/project-communication/senders/${senderId}`;
+      return $http.get(url);
+    }
+
 
   }
 
