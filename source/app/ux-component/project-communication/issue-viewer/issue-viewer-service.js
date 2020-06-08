@@ -51,8 +51,10 @@
     function childParseItemsMethod(genericListJsonArray) {
       let parsedItems = [];
       genericListJsonArray.forEach(item => {
-        let participant = ParticipantManagerService.getParticipantById(item.participantId);
-        parsedItems.push(IssueFactory.fromJsonObject(item, participant));
+        ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender)
+          .then(participant => {
+            parsedItems.push(IssueFactory.fromJsonObject(item, participant));
+          })
       });
       return parsedItems;
     }
@@ -66,7 +68,7 @@
           "mode": 1
         },
         "filter": {
-          "status": "OPENED"
+          "status": "OPEN"
         }
       };
     }

@@ -26,7 +26,7 @@
         'background-color': 'green',
         'color': 'white'
       },
-      OPENED: {
+      OPEN: {
         'background-color': 'blue',
         'color': 'white'
       }

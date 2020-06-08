@@ -41,7 +41,7 @@
       FILTER_STATUS: {
         CLOSED:'Fechados',
         FINALIZED:'Finalizados',
-        OPENED:'Abertos'
+        OPEN:'Abertos'
       }
 
     });
