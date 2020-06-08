@@ -4,7 +4,7 @@
       <div class="md-toolbar-tools">
         <h2>Legenda</h2>
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="vm.cancel()">
+        <md-button class="md-icon-button" ng-click="$ctrl.cancel()">
           <md-icon>cancel</md-icon>
         </md-button>
       </div>
@@ -13,7 +13,7 @@
     <md-dialog-content>
       <div class="md-dialog-content">
 
-        <md-list ng-repeat="item in vm.data" ng-cloak>
+        <md-list ng-repeat="item in $ctrl.data" ng-cloak>
           <div style="margin-bottom: 8px">
             <md-icon>{{item.ICON}}</md-icon>
             {{item.TRANSLATED_TITLE}}
@@ -25,7 +25,7 @@
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="vm.cancel()">
+      <md-button ng-click="$ctrl.cancel()">
         Entendi!
       </md-button>
     </md-dialog-actions>
