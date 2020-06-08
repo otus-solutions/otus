@@ -37,7 +37,7 @@
       Application.isDeployed().then(function () {
         UserAccessPermissionService.getCheckingLaboratoryPermission().then(permission => {
           try {
-            if (!permission) {
+            if (!permission.participantLaboratoryAccess) {
               deferred.resolve(STATE.DASHBOARD);
               return;
             }

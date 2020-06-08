@@ -31,11 +31,7 @@
           <md-button id="surveyforms-menu"  ng-click="$ctrl.loadParticipantActivities()">Atividades</md-button>
         </div>
       </md-list-item>
-      <md-list-item ng-show="$ctrl.userAccessToLaboratory.sampleTransportationAccess ||
-                             $ctrl.userAccessToLaboratory.examLotsAccess ||
-                             $ctrl.userAccessToLaboratory.examSendingAccess ||
-                             $ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess ||
-                             $ctrl.userAccessToLaboratory.participantLaboratoryAccess
+      <md-list-item ng-show="$ctrl.userAccessToLaboratory.participantLaboratoryAccess
                             " class="md-2-line">
         <div layout-align="start center">
           <md-icon md-svg-icon="eyedropper-variant" aria-label="Laboratório" class="md-accent"></md-icon>

@@ -37,7 +37,6 @@
         .then(function () {
           UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
             try {
-
               deferred.resolve();
             } catch (e) {
               deferred.resolve(STATE.LOGIN);
