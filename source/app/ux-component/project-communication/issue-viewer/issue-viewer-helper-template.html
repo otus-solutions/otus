@@ -1,4 +1,4 @@
-<md-dialog aria-label="Mango (Fruit)">
+<md-dialog aria-label="helper">
   <form ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -12,14 +12,12 @@
 
     <md-dialog-content>
       <div class="md-dialog-content">
-
         <md-list ng-repeat="item in $ctrl.data" ng-cloak>
           <div style="margin-bottom: 8px">
             <md-icon>{{item.ICON}}</md-icon>
             {{item.TRANSLATED_TITLE}}
           </div>
         </md-list>
-
       </div>
     </md-dialog-content>
 
