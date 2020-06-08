@@ -16,10 +16,11 @@
     }).controller('genericListViewerCtrl', Controller);
 
   Controller.$inject = [
-    'GENERIC_LIST_VIEWER_LABELS'
+    'GENERIC_LIST_VIEWER_LABELS',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(GENERIC_LIST_VIEWER_LABELS) {
+  function Controller(GENERIC_LIST_VIEWER_LABELS, LoadingScreenService) {
     const self = this;
     self.items = [];
     self.paginatorActive = false;
@@ -36,9 +37,16 @@
       self.itemAttributes = self.viewerService.getItemAttributes();
 
       if(self.viewerService.needPreparations){
-        self.viewerService.prepareData().then(() => {
-          getAllItems(self.searchSettings);
-        });
+        LoadingScreenService.start();
+        self.viewerService.prepareData()
+          .then(() => {
+            getAllItems(self.searchSettings);
+            LoadingScreenService.finish();
+          })
+          .catch((error) => {
+            console.log(error);
+            LoadingScreenService.finish();
+          });
       }
       else{
         getAllItems(self.searchSettings);
