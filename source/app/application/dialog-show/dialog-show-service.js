@@ -13,6 +13,7 @@
     var self = this;
 
     self.showDialog = showDialog;
+    self.showCustomizedDialog = showCustomizedDialog;
 
     function showDialog(data) {
       self.data = data;
@@ -25,6 +26,21 @@
         parent: angular.element(document.body),
         controllerAs:"$ctrl",
         clickOutsideToClose: true
+      });
+    }
+
+    function showCustomizedDialog(data, templateUrl, fullscreen=true) {
+      self.data = data;
+      self.data.cancel = cancel;
+
+      return $mdDialog.show({
+        controller: 'customizedDialogShowController',
+        controllerAs: "$ctrl",
+        locals: { data: self.data },
+        templateUrl: templateUrl,
+        parent: angular.element(document.body),
+        clickOutsideToClose:true,
+        fullscreen: fullscreen
       });
     }
 

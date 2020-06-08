@@ -12,39 +12,26 @@
   Controller.$inject = [
     '$mdDialog',
     'otusjs.issueViewer.IssueViewerService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdDialog, IssueViewerService, LoadingScreenService) {
+  function Controller($mdDialog, IssueViewerService, DialogService) {
     const self = this;
-    self.$onInit = onInit;
+
     self.paginatorActive = false;
     self.viewerTitle = IssueViewerService.LABELS.PAGE_TITLE;
     self.viewerService = IssueViewerService;
     self.itemComponentName = 'otusIssueItem';
     self.filtersComponentName = 'otusIssuesListFilters';
-    self.HelperDialogController = HelperDialogController;
+    self.showHelper = showHelper;
 
-    function onInit(){
 
-    }
-
-    self.showHelper = function() {
-      $mdDialog.show({
-        controller: self.HelperDialogController,
-        controllerAs: "vm",
-        templateUrl: 'app/ux-component/project-communication/issue-viewer/issue-viewer-helper-template.html',
-        parent: angular.element(document.body),
-        clickOutsideToClose:true,
-        fullscreen: true
-      })
-    };
-
-    function HelperDialogController() {
-      const self = this;
-      self.cancel = $mdDialog.cancel;
-      self.data = Object.values(IssueViewerService.LABELS.ISSUE_ATTRIBUTES)
+    function showHelper(){
+      const data = Object.values(IssueViewerService.LABELS.ISSUE_ATTRIBUTES)
         .filter(obj => obj.TITLE !== IssueViewerService.LABELS.ISSUE_ATTRIBUTES.STATUS.TITLE);
+
+      DialogService.showCustomizedDialog(data,
+        'app/ux-component/project-communication/issue-viewer/issue-viewer-helper-template.html')
     }
   }
 
