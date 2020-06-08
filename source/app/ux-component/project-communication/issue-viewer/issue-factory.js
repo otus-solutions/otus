@@ -5,9 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .factory('otusjs.otus.uxComponent.IssueFactory', Factory);
 
-  Factory.$inject = [
-    'otusjs.participant.business.ParticipantManagerService'
-  ];
+  Factory.$inject = [ ];
 
   function Factory() {
     let self = this;
@@ -19,8 +17,14 @@
 
     }
 
-    function fromJsonObject(item){
-      return item;
+    function fromJsonObject(item, participant){
+      return angular.extend(item, item, participant);
+
+      // return angular.extend(item, item, {
+      //     rn: participant.recruitmentNumber,
+      //     name: participant.name,
+      //     center: participant.fieldCenter.acronym
+      // });
     }
 
     return self;
