@@ -137,20 +137,20 @@
         </div>
 
         <!--      Monitoring buttons-->
-        <div layout="column" layout-align="center center">
-
-          <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center"
-               ng-show="$ctrl.userAccessToMonitoring.centerActivitiesAccess ||
+        <div layout="column" layout-align="center center"
+             ng-show="  $ctrl.userAccessToMonitoring.centerActivitiesAccess ||
                         $ctrl.userAccessToMonitoring.activityFlagsAccess ||
                         $ctrl.userAccessToMonitoring.laboratoryFlagsAccess ||
                         $ctrl.userAccessToMonitoring.laboratoryControlAccess ||
                         $ctrl.userAccessToMonitoring.pendencyVisualizerAccess
                         ">
+
+          <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
             <md-icon style="font-size:30px;color:#000000;">assessment</md-icon>
             <span class="md-header" layout-padding><h2>MONITORAMENTO</h2></span>
           </div>
 
-          <div layout="row" layout-sm="column" layout-md="column" ng-show="$ctrl.userAccessToMonitoring.centerActivitiesAccess">
+          <div layout="row" layout-sm="column" layout-md="column">
             <md-card class="card-button" layout-fill ng-show="$ctrl.userAccessToMonitoring.centerActivitiesAccess" >
               <md-card-content class="no-padding" layout="column" layout-align="start start">
                 <md-button class="md-body-1 option" ng-click="$ctrl.startMonitoring()" layout-margin="">
