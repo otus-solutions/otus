@@ -12,9 +12,12 @@
       }
     }).controller('issueItemCtrl', Controller);
 
-  Controller.$inject = [ 'otusjs.issueViewer.IssueViewerService' ];
+  Controller.$inject = [
+    'otusjs.issueViewer.IssueViewerService',
+    'otusjs.application.state.ApplicationStateService'
+  ];
 
-  function Controller(IssueViewerService) {
+  function Controller(IssueViewerService, ApplicationStateService) {
     const self = this;
 
     const STATUS_COLOR = {
@@ -33,6 +36,7 @@
     };
 
     self.$onInit = onInit;
+    self.openIssueMessages = openIssueMessages;
 
     function onInit() {
       self.expanded = false;
@@ -46,6 +50,11 @@
 
     function _capitalizeName(name) {
       return name.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+    }
+
+    function openIssueMessages(){
+      IssueViewerService.storageCurrentIssues();
+      ApplicationStateService.activateIssueMessagesViewer();
     }
 
   }

@@ -7,6 +7,7 @@
 
   Service.$inject = [
     '$q',
+    '$window',
     'otusjs.genericListViewer.GenericListViewerService',
     'ISSUE_VIEWER_LABELS',
     'otusjs.project.communication.repository.ProjectCommunicationRepositoryService',
@@ -14,21 +15,23 @@
     'otusjs.participant.business.ParticipantManagerService'
   ];
 
-  function Service($q, GenericListViewerService, ISSUE_VIEWER_LABELS,
+  function Service($q, $window, GenericListViewerService, ISSUE_VIEWER_LABELS,
                    ProjectCommunicationRepositoryService, IssueFactory,
                    ParticipantManagerService) {
 
     const self = this;
     const INITIAL_CURRENT_QUANTITY = 0;
     const INITIAL_QUANTITY_TO_GET = 15;
+    const ISSUE_LIST_STORAGE_KEY = 'currentIssueList';
 
     self.participantDataReady = false;
     self.participants = {};
-    self.needPreparations = true;
+    self.needPreparations = self.storageItems = true;
 
     self.initialize = initialize;
     self.prepareData = prepareData;
     self.translateStatus = translateStatus;
+    self.storageCurrentIssues = storageCurrentIssues;
 
     initialize();
 
@@ -39,6 +42,7 @@
         childParseItemsMethod
       );
 
+      self.getAllItems = getAllItems;
       self.getSearchSettings = getSearchSettings;
       self.getItemAttributes = getItemAttributes;
       self.getInputViewState = getInputViewState;
@@ -46,6 +50,20 @@
 
     function prepareData(){
       return ParticipantManagerService.setup();
+    }
+
+    function getAllItems(searchSettings) {
+      const items = JSON.parse($window.sessionStorage.getItem(ISSUE_LIST_STORAGE_KEY));
+      if(items){
+        const defer = $q.defer();
+        defer.resolve(angular.copy(items));
+        $window.sessionStorage.removeItem(ISSUE_LIST_STORAGE_KEY);
+        return defer.promise;
+      }
+
+      return ProjectCommunicationRepositoryService.filter(searchSettings)
+        .then(data => childParseItemsMethod(data))
+        .catch(err => console.log("error:" + JSON.stringify(err)))
     }
 
     function childParseItemsMethod(genericListJsonArray) {
@@ -96,6 +114,10 @@
     function translateStatus(status){
       const translation = ISSUE_VIEWER_LABELS.FILTER_STATUS[status];
       return translation.substring(0, translation.length-1);
+    }
+
+    function storageCurrentIssues(){
+      $window.sessionStorage.setItem(ISSUE_LIST_STORAGE_KEY, JSON.stringify(self.items));
     }
 
   }

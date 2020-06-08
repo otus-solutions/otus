@@ -57,7 +57,7 @@
   <div ng-class="{dataContent:true, activeContent:$ctrl.expanded}">
     <div class="issue-item-text-layout">
       <span class="issue-text-layout">{{$ctrl.item.text}}</span>
-      <md-button class="see-issue">Ver mensagens</md-button>
+      <md-button class="see-issue" ng-click="$ctrl.openIssueMessages()">Ver mensagens</md-button>
     </div>
   </div>
 
