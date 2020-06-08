@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.IssueViewerState', Provider);
+    .provider('otusjs.deploy.IssueMessagesViewerState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -20,9 +20,9 @@
 
     self.state = {
       parent: STATE.SESSION,
-      name: STATE.ISSUE_VIEWER,
-      url: '/' + STATE.ISSUE_VIEWER,
-      template: '<otus-issue-viewer-component></otus-issue-viewer-component>',
+      name: STATE.ISSUE_MESSAGES_VIEWER,
+      url: '/' + STATE.ISSUE_MESSAGES_VIEWER,
+      template: '<otus-issue-messages-viewer-component></otus-issue-messages-viewer-component>',
       resolve: {
         resolve: _resolve
       },

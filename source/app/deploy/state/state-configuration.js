@@ -44,7 +44,8 @@
       'ACTIVITY_IMPORT': 'activity-import',
       'PENDENCY_VIEWER': 'pendency-viewer',
       'ACTIVITY_SYNCHRONIZE': 'activity-synchronize',
-      'ISSUE_VIEWER': 'issue-viewer'
+      'ISSUE_VIEWER': 'issue-viewer',
+      'ISSUE_MESSAGES_VIEWER': 'issue-messages-viewer'
     })
     .config(Configuration);
 
@@ -88,7 +89,8 @@
     'otusjs.deploy.ActivityImportStateProvider',
     'otusjs.deploy.PendencyViewerStateProvider',
     'otusjs.deploy.OfflineActivitySynchronizeStateProvider',
-    'otusjs.deploy.IssueViewerStateProvider'
+    'otusjs.deploy.IssueViewerStateProvider',
+    'otusjs.deploy.IssueMessagesViewerStateProvider'
   ];
 
   function Configuration($urlRouterProvider, $stateProvider,
@@ -129,7 +131,8 @@
     ActivityImportStateProvider,
     PendencyViewerStateProvider,
     OfflineActivitySynchronizeStateProvider,
-    IssueViewerStateProvider
+    IssueViewerStateProvider,
+    IssueMessagesViewerState
   ) {
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ErrorStateProvider.state);
@@ -169,6 +172,7 @@
     $stateProvider.state(PendencyViewerStateProvider.state);
     $stateProvider.state(OfflineActivitySynchronizeStateProvider.state);
     $stateProvider.state(IssueViewerStateProvider.state);
+    $stateProvider.state(IssueMessagesViewerState.state);
 
     /* Default state (route) */
     $urlRouterProvider.otherwise(LoginStateProvider.state.url);

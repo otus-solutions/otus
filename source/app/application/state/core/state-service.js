@@ -52,6 +52,7 @@
     self.currentStateIsListViewer = currentStateIsListViewer;
     self.activatePendencyViewer = activatePendencyViewer;
     self.activateIssueViewer = activateIssueViewer;
+    self.activateIssueMessagesViewer = activateIssueMessagesViewer;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -206,6 +207,10 @@
 
     function activateIssueViewer(){
       $state.go(STATE.ISSUE_VIEWER);
+    }
+
+    function activateIssueMessagesViewer(){
+      $state.go(STATE.ISSUE_MESSAGES_VIEWER);
     }
   }
 }());
