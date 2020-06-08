@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('issueViewerComponent', {
+    .component('otusIssueViewerComponent', {
       controller: 'issueViewerCtrl as $ctrl',
       templateUrl: 'app/ux-component/project-communication/issue-viewer/issue-viewer-template.html',
       bindings: {}
