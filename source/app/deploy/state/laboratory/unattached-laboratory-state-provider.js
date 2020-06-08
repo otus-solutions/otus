@@ -39,7 +39,7 @@
         .then(function () {
           UserAccessPermissionService.getCheckingLaboratoryPermission().then(permission => {
             try {
-              if (!permission) {
+              if (!permission.unattachedLaboratoriesAccess) {
                 deferred.resolve(STATE.DASHBOARD);
                 return;
               }

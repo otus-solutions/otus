@@ -48,22 +48,6 @@
       return deferred.promise;
     }
 
-    function _redirect($q, Application) {
-      var deferred = $q.defer();
-
-      Application
-        .isDeployed()
-        .then(function () {
-          try {
-            deferred.resolve();
-          } catch (e) {
-            deferred.resolve(STATE.LOGIN);
-          }
-        });
-
-      return deferred.promise;
-    }
-
     _resolve.$inject = [
       '$q',
       'otusjs.application.core.ModuleService',
@@ -71,9 +55,33 @@
       'otusjs.otus.dashboard.core.ContextService'
     ]
 
+    function _redirect($q, Application, UserAccessPermissionService) {
+      var deferred = $q.defer();
+
+      Application
+        .isDeployed()
+        .then(function () {
+          UserAccessPermissionService.getCheckingMonitoringPermission().then(permission => {
+            try {
+              if (!permission.laboratoryControlAccess) {
+                deferred.resolve(STATE.DASHBOARD);
+                return;
+              }
+              deferred.resolve();
+            } catch (e) {
+              deferred.resolve(STATE.LOGIN);
+            }
+          });
+        });
+
+      return deferred.promise;
+    }
+
     _redirect.$inject = [
       '$q',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.user.business.UserAccessPermissionService'
     ];
+
   }
 }());

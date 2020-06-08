@@ -34,29 +34,41 @@
       }
     };
 
-    function _redirect($q, SessionContextService, DashboardContextService, Application) {
+    function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
-        .then(function() {
-          try {
-            SessionContextService.restore();
-            DashboardContextService.isValid();
-            deferred.resolve();
-          } catch (e) {
-            deferred.resolve(STATE.LOGIN);
-          }
+        .then(function () {
+          UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
+            try {
+              if (!permission.participantCreateAccess) {
+                deferred.resolve(STATE.DASHBOARD);
+                return;
+              }
+              deferred.resolve();
+            } catch (e) {
+              deferred.resolve(STATE.LOGIN);
+            }
+          });
         });
 
       return deferred.promise;
     }
+
+    _redirect.$inject = [
+      '$q',
+      'otusjs.application.core.ModuleService',
+      'otusjs.user.business.UserAccessPermissionService'
+
+    ];
 
     function _loadParticipantRegistration(ProjectConfiguration, SessionContextService, Application) {
       return Application
         .isDeployed()
         .then(function() {
           try {
+
             SessionContextService.restore();
             return ProjectConfiguration.getProjectConfiguration()
               .then(function(response) {
@@ -74,14 +86,10 @@
     _loadParticipantRegistration.$inject = [
       'otusjs.deploy.ProjectConfigurationRestService',
       'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.application.core.ModuleService',
+      'otusjs.user.business.UserAccessPermissionService'
     ];
 
-    _redirect.$inject = [
-      '$q',
-      'otusjs.application.session.core.ContextService',
-      'otusjs.otus.dashboard.core.ContextService',
-      'otusjs.application.core.ModuleService'
-    ];
   }
 }());

@@ -31,23 +31,33 @@
       }
     };
 
-    function _redirect($q, DashboardContextService, ParticipantContextService, Application) {
+    function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
-
       Application
         .isDeployed()
-        .then(function() {
-          try {
-            ParticipantContextService.restore();
-            DashboardContextService.isValid();
-            deferred.resolve();
-          } catch (e) {
-            deferred.resolve(STATE.LOGIN);
-          }
+        .then(function () {
+          UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
+            try {
+              if (!permission.participantListAccess) {
+                deferred.resolve(STATE.DASHBOARD);
+                return;
+              }
+              deferred.resolve();
+            } catch (e) {
+              deferred.resolve(STATE.LOGIN);
+            }
+          });
         });
 
       return deferred.promise;
     }
+
+    _redirect.$inject = [
+      '$q',
+      'otusjs.application.core.ModuleService',
+      'otusjs.user.business.UserAccessPermissionService'
+
+    ];
 
     function _loadParticipantContext(ParticipantContextService, SessionContextService, Application) {
       Application
@@ -62,12 +72,6 @@
         });
     }
 
-    _redirect.$inject = [
-      '$q',
-      'otusjs.otus.dashboard.core.ContextService',
-      'otusjs.participant.core.ContextService',
-      'otusjs.application.core.ModuleService'
-    ];
     _loadParticipantContext.$inject = [
       'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',

@@ -44,17 +44,29 @@
         });
     }
 
-    function _redirect($q, Application) {
+    _loadStateData.$inject = [
+      'otusjs.application.session.core.ContextService',
+      'otusjs.laboratory.core.project.ContextService',
+      'otusjs.application.core.ModuleService'
+    ];
+
+    function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
         .then(function () {
-          try {
-            deferred.resolve();
-          } catch (e) {
-            deferred.resolve(STATE.LOGIN);
-          }
+          UserAccessPermissionService.getCheckingLaboratoryPermission().then(permission => {
+            try {
+              if (!permission.examSendingAccess) {
+                deferred.resolve(STATE.DASHBOARD);
+                return;
+              }
+              deferred.resolve();
+            } catch (e) {
+              deferred.resolve(STATE.LOGIN);
+            }
+          });
         });
 
       return deferred.promise;
@@ -62,13 +74,8 @@
 
     _redirect.$inject = [
       '$q',
-      'otusjs.application.core.ModuleService'
-    ];
-
-    _loadStateData.$inject = [
-      'otusjs.application.session.core.ContextService',
-      'otusjs.laboratory.core.project.ContextService',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.user.business.UserAccessPermissionService'
     ];
   }
-}());  
+}());
