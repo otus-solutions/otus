@@ -20,32 +20,17 @@
   function Controller(IssueViewerService, ApplicationStateService) {
     const self = this;
 
-    const STATUS_COLOR = {
-      CLOSED: {
-        'background-color': 'red',
-        'color': 'white'
-      },
-      FINALIZED: {
-        'background-color': 'green',
-        'color': 'white'
-      },
-      OPEN: {
-        'background-color': 'blue',
-        'color': 'white'
-      }
-    };
-
     self.$onInit = onInit;
     self.openIssueMessages = openIssueMessages;
 
     function onInit() {
       self.expanded = false;
-      self.rn = self.item.rn;
-      self.name = _capitalizeName(self.item.name);
-      self.center = self.item.center;
+      self.rn = self.item.participant.rn;
+      self.name = _capitalizeName(self.item.participant.name);
+      self.center = self.item.participant.center;
       self.creationDate = IssueViewerService.formatDate(new Date(self.item.creationDate));
       self.status = IssueViewerService.translateStatus(self.item.status);
-      self.statusColor = STATUS_COLOR[self.item.status];
+      self.statusColor = IssueViewerService.LABELS.STATUS_COLOR[self.item.status];
     }
 
     function _capitalizeName(name) {

@@ -42,6 +42,21 @@
         CLOSED:'Fechados',
         FINALIZED:'Finalizados',
         OPEN:'Abertos'
+      },
+
+      STATUS_COLOR: {
+        CLOSED: {
+          'background-color': 'red',
+          'color': 'white'
+        },
+        FINALIZED: {
+          'background-color': 'green',
+          'color': 'white'
+        },
+        OPEN: {
+          'background-color': 'blue',
+          'color': 'white'
+        }
       }
 
     });
