@@ -1,31 +1,9 @@
-<link href="app/ux-component/project-communication/issue-messages-viewer/issue-messages-viewer-styles.css" rel="stylesheet" type="text/css">
+<link href="app/ux-component/project-communication/issue-messages-viewer/issue-messages-viewer-styles.css"
+      rel="stylesheet" type="text/css">
 
-<!--issue header-->
-
-<!--<otus-no-filter-generic-list-viewer viewer-title="$ctrl.viewerTitle"-->
-<!--                                    items="$ctrl.items"-->
-<!--                                    item-component-name="$ctrl.itemComponentName"-->
-<!--                                    item-attributes="$ctrl.itemAttributes">-->
-<!--</otus-no-filter-generic-list-viewer>-->
-
-<link href="app/ux-component/generic-list-viewer/no-filter-generic-list/no-filter-generic-list-viewer-styles.css" rel="stylesheet" type="text/css">
-
-<md-content class="generic-list-viewer-layout" ng-cloak style="">
-  <otus-dashboard-sidenav layout="row">
-    <hide-participant-box></hide-participant-box>
-  </otus-dashboard-sidenav>
-
-  <otus-dashboard-toolbar>
-    <div flex layout="row" layout-align="center center" layout-margin>
-      <span layout-align="center center">{{$ctrl.viewerTitle}}</span>
-    </div>
-  </otus-dashboard-toolbar>
-
-  <otus-issue-info-header class="list-header"></otus-issue-info-header>
-
-  <otus-generic-list items="$ctrl.items"
-                     item-component-name="$ctrl.itemComponentName"
-                     item-attributes="$ctrl.itemAttributes">
-  </otus-generic-list>
-
-</md-content>
+<otus-no-filter-generic-list-viewer viewer-title="$ctrl.viewerTitle"
+                                    header-component-name="$ctrl.headerComponentName"
+                                    items="$ctrl.items"
+                                    item-component-name="$ctrl.itemComponentName"
+                                    item-attributes="$ctrl.itemAttributes">
+</otus-no-filter-generic-list-viewer>

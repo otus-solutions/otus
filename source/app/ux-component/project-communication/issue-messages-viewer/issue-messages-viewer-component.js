@@ -23,6 +23,7 @@
 
     self.viewerTitle = ISSUE_MESSAGES_VIEWER_CONSTANTS.PAGE_TITLE;
     self.itemComponentName = 'otusIssueMessageItem';
+    self.headerComponentName = 'otusIssueInfoHeader';
 
     self.$onInit = onInit;
 
