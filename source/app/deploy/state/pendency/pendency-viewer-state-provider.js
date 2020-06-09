@@ -63,7 +63,7 @@
         .then(function () {
           UserAccessPermissionService.getCheckingMonitoringPermission().then(permission => {
             try {
-              if (!permission.activityFlagsAccess) {
+              if (!permission.pendencyVisualizerAccess) {
                 deferred.resolve(STATE.DASHBOARD);
                 return;
               }

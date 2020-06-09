@@ -100,8 +100,8 @@
         </div>
       </md-content>
     </md-tab>
-    <md-tab label="Anônimo" ng-click="$ctrl.updateMode()">
-      <md-content flex layout-align="center center" layout="row" layout-fill="">
+    <md-tab label="Anônimo" ng-click="$ctrl.updateMode()" ng-if="$ctrl.userAccessToParticipant.anonymousParticipantAccess">
+      <md-content ng-show="$ctrl.userAccessToParticipant.anonymousParticipantAccess" flex layout-align="center center" layout="row" layout-fill="">
         <div layout="row" layout-xs="column" flex="100" layout-align="center center">
           <otus-panel header-label="'Novo Participante Anônimo'" flex="100" flex-gt-xs="70" flex-gt-sm="60"
                       flex-gt-md="50" flex-gt-lg="40" layout-fill>

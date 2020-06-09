@@ -68,7 +68,6 @@
         .isDeployed()
         .then(function() {
           try {
-
             SessionContextService.restore();
             return ProjectConfiguration.getProjectConfiguration()
               .then(function(response) {
@@ -86,7 +85,6 @@
     _loadParticipantRegistration.$inject = [
       'otusjs.deploy.ProjectConfigurationRestService',
       'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService',
       'otusjs.application.core.ModuleService',
       'otusjs.user.business.UserAccessPermissionService'
     ];
