@@ -22,7 +22,8 @@
   function Controller($element, ImmutableDate, mdcDateTimeDialog, ApplicationStateService,
                       mdcDefaultParams, ParticipantFactory, ProjectFieldCenterService,
                       dashboardContextService, ParticipantManagerService, ParticipantMessagesService,
-                      UserAccessPermissionService) {
+                      UserAccessPermissionService
+ ) {
     var self = this;
 
     mdcDefaultParams({
@@ -32,7 +33,7 @@
       okText: 'ok'
     });
 
-    self.userAccessToParticipant = "";
+    self.userAccessToParticipant;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -41,7 +42,6 @@
     self.saveParticipant = saveParticipant;
     self.clearParticipant = clearParticipant;
     self.listParticipants = listParticipants;
-    self._checkingParticipantPermission = _checkingParticipantPermission;
     self.onFilter = onFilter;
 
 
@@ -70,6 +70,14 @@
       }
       self.participant = _restoreParticipant;
     }
+
+    self.$onChanges = function () {
+      if (self.permissions.participantRegistration && self.userAccessToParticipant.participantCreateAccess) {
+        return;
+      }
+      ApplicationStateService.activateParticipantsList();
+    };
+
     self.$onDestroy = function () {
       localStorage.removeItem("newParticipant");
     };
@@ -206,7 +214,7 @@
         ParticipantMessagesService.showSaveDialog()
           .then(function () {
             self.onFilter();
-            if (self.userAccessToParticipant.participantCreateAccess) {
+            if (self.permissions.participantRegistration && self.userAccessToParticipant.participantCreateAccess) {
               var _participant = _getParticipantData();
               if (self.permissions.autoGenerateRecruitmentNumber) delete _participant.recruitmentNumber;
               ParticipantManagerService.create(_participant)

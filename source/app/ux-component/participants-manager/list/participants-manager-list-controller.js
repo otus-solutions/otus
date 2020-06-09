@@ -25,8 +25,6 @@
     self.addParticipant = addParticipant;
     const MESSAGE = "Carregando todos os participantes! Favor aguarde."
 
-    self._checkingParticipantPermission = _checkingParticipantPermission;
-
     /* Lifecycle methods */
     function onInit() {
       LoadingScreenService.changeMessage(MESSAGE);

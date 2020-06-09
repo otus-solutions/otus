@@ -42,10 +42,6 @@
         .then(function () {
           UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
             try {
-              if (!permission.participantCreateAccess) {
-                deferred.resolve(STATE.DASHBOARD);
-                return;
-              }
               deferred.resolve();
             } catch (e) {
               deferred.resolve(STATE.LOGIN);
