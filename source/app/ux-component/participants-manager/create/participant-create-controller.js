@@ -23,7 +23,7 @@
                       mdcDefaultParams, ParticipantFactory, ProjectFieldCenterService,
                       dashboardContextService, ParticipantManagerService, ParticipantMessagesService,
                       UserAccessPermissionService
- ) {
+  ) {
     var self = this;
 
     mdcDefaultParams({
@@ -258,13 +258,9 @@
         }
       }
     }
-
-
     self.updateMode = function () {
       self.identified = !self.identified;
       _setClear();
     }
-
-
   }
 }());
