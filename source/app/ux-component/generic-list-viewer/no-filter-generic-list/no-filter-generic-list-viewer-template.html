@@ -1,4 +1,4 @@
-<link href="source/app/ux-component/generic-list-viewer/no-filter-generic-list/no-filter-generic-list-viewer-styles.css" rel="stylesheet" type="text/css">
+<link href="app/ux-component/generic-list-viewer/no-filter-generic-list/no-filter-generic-list-viewer-styles.css" rel="stylesheet" type="text/css">
 
 <md-content class="generic-list-viewer-layout" ng-cloak style="">
   <otus-dashboard-sidenav layout="row">
@@ -10,6 +10,10 @@
       <span layout-align="center center">{{$ctrl.viewerTitle}}</span>
     </div>
   </otus-dashboard-toolbar>
+
+  <div class="list-header">
+    <div bind-html-compile="$ctrl.headerTemplate"></div>
+  </div>
 
   <otus-generic-list items="$ctrl.items"
                      item-component-name="$ctrl.itemComponentName"

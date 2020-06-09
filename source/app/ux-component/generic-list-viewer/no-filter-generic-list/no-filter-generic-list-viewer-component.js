@@ -10,20 +10,24 @@
         viewerTitle: '<',
         items: '<',
         itemComponentName: '<',
-        itemAttributes: '<'
+        itemAttributes: '<',
+        headerComponentName: '<'
       }
     }).controller('noFilterGenericListViewerCtrl', Controller);
 
-  Controller.$inject = [];
+  Controller.$inject = [
+    'otusjs.utils.HtmlBuilderService'
+  ];
 
-  function Controller() {
+  function Controller(HtmlBuilderService) {
     const self = this;
 
-    // self.$onInit = onInit;
-    //
-    // function onInit() {
-    //
-    // }
+    self.$onInit = onInit;
+
+    function onInit(){
+      const tag = HtmlBuilderService.generateTagName(self.headerComponentName);
+      self.headerTemplate = '<'+ tag +'/>';
+    }
 
   }
 
