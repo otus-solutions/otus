@@ -28,6 +28,7 @@
     self.getAllItems = getAllItems;
     self.callValidationItemsLimits = callValidationItemsLimits;
     self.formatDate = formatDate;
+    self.capitalizeName = capitalizeName;
     self.getSelectedParticipantRN = getSelectedParticipantRN;
     self.getChecker = getChecker;
 
@@ -81,7 +82,13 @@
     }
 
     function formatDate(date) {
-      return date.getUTCDate() + "/" + (date.getUTCMonth() + 1) + "/" + date.getUTCFullYear();
+      return date.getUTCDate().toString(10).padStart(2, '0') + "/" +
+        (date.getUTCMonth() + 1).toString(10).padStart(2, '0') + "/" +
+        date.getUTCFullYear();
+    }
+
+    function capitalizeName(name) {
+      return name.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
     }
 
     function getSelectedParticipantRN(participant, genericListFilterItem, searchSettings) {
