@@ -53,7 +53,7 @@
     }
 
     function openIssueMessages(){
-      IssueViewerService.storageCurrentIssues();
+      IssueViewerService.storageCurrentIssues(self.item);
       ApplicationStateService.activateIssueMessagesViewer();
     }
 

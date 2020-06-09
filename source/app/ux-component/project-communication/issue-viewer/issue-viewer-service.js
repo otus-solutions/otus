@@ -22,7 +22,8 @@
     const self = this;
     const INITIAL_CURRENT_QUANTITY = 0;
     const INITIAL_QUANTITY_TO_GET = 15;
-    const ISSUE_LIST_STORAGE_KEY = 'currentIssueList';
+    const ISSUE_LIST_STORAGE_KEY = 'currentIssuesList';
+    const CURR_ISSUE_STORAGE_KEY = 'currentIssue';
 
     self.participantDataReady = false;
     self.participants = {};
@@ -32,6 +33,7 @@
     self.prepareData = prepareData;
     self.translateStatus = translateStatus;
     self.storageCurrentIssues = storageCurrentIssues;
+    self.getCurrStoragedIssue = getCurrStoragedIssue;
 
     initialize();
 
@@ -58,6 +60,7 @@
         const defer = $q.defer();
         defer.resolve(angular.copy(items));
         $window.sessionStorage.removeItem(ISSUE_LIST_STORAGE_KEY);
+        $window.sessionStorage.removeItem(CURR_ISSUE_STORAGE_KEY);
         return defer.promise;
       }
 
@@ -116,8 +119,13 @@
       return translation.substring(0, translation.length-1);
     }
 
-    function storageCurrentIssues(){
+    function storageCurrentIssues(issue){
       $window.sessionStorage.setItem(ISSUE_LIST_STORAGE_KEY, JSON.stringify(self.items));
+      $window.sessionStorage.setItem(CURR_ISSUE_STORAGE_KEY, JSON.stringify(issue));
+    }
+
+    function getCurrStoragedIssue(){
+      return $window.sessionStorage.getItem(CURR_ISSUE_STORAGE_KEY);
     }
 
   }
