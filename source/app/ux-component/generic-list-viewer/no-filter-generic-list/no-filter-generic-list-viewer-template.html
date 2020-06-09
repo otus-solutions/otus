@@ -1,0 +1,19 @@
+<link href="source/app/ux-component/generic-list-viewer/no-filter-generic-list/no-filter-generic-list-viewer-styles.css" rel="stylesheet" type="text/css">
+
+<md-content class="generic-list-viewer-layout" ng-cloak style="">
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+
+  <otus-dashboard-toolbar>
+    <div flex layout="row" layout-align="center center" layout-margin>
+      <span layout-align="center center">{{$ctrl.viewerTitle}}</span>
+    </div>
+  </otus-dashboard-toolbar>
+
+  <otus-generic-list items="$ctrl.items"
+                     item-component-name="$ctrl.itemComponentName"
+                     item-attributes="$ctrl.itemAttributes">
+  </otus-generic-list>
+
+</md-content>

@@ -1,0 +1,56 @@
+/*begin style for generic-viewer-component*/
+@media screen and (min-width: 360px) {
+  .generic-list-viewer-layout {
+    background: #0d3349;
+    display: grid;
+    height: 100vh;
+    /*width: 100vw;*/
+    grid-template-columns: 1fr;
+    grid-template-rows: .1fr .1fr 1fr;
+    grid-template-areas:
+      "toolbar"
+      "listHeader"
+      "list"
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .generic-list-viewer-layout {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 1fr;
+    grid-template-rows: .03fr .1fr 1fr;
+    grid-template-areas:
+      "toolbar"
+      "listHeader"
+      "list"
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .generic-list-viewer-layout {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 1fr;
+    grid-template-rows: .03fr .1fr 1fr;
+    grid-template-areas:
+      "toolbar"
+      "listHeader"
+      "list"
+  }
+}
+
+.generic-list-viewer-layout otus-dashboard-toolbar {
+  grid-area: toolbar
+}
+
+.generic-list-viewer-layout otus-generic-list {
+  grid-area: list
+}
+
+.list-header{
+  grid-area: listHeader
+}
+/*end style for generic-viewer-component*/
