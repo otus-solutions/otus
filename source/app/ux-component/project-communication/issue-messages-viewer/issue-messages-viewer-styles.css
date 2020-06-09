@@ -1,0 +1,83 @@
+/*begin style for list-header*/
+
+@media screen and (min-width: 360px) {
+  .issue-messages-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr .5fr .5fr;
+    grid-template-areas:
+      "status     dateTime    goBackButton"
+      "title      title       title"
+      "issueText  issueText   issueText"
+    ;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .issue-messages-header {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-template-rows: 1fr .5fr .5fr;
+    grid-template-areas:
+      "status     dateTime    goBackButton"
+      "title      title       title"
+      "issueText  issueText   issueText"
+  ;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .issue-messages-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: 1fr .5fr .5fr;
+    grid-template-areas:
+      "status     dateTime    goBackButton"
+      "title      title       title"
+      "issueText  issueText   issueText"
+  ;
+  }
+}
+
+.issue-messages-datetime {
+  grid-area: dateTime;
+}
+
+.issue-messages-status {
+  grid-area: status;
+}
+
+.issue-messages-status md-chips-wrap{
+  padding: 0px;
+}
+
+.issue-messages-status md-chip{
+  margin: 0px;
+}
+
+.issue-messages-title {
+  grid-area: title;
+}
+
+.issue-messages-text {
+  grid-area: issueText;
+}
+
+.goback-button {
+  grid-area: goBackButton;
+}
+
+/*end style for issue-messages-header*/
+
+/*begin style for issue-message-item*/
+
+.message-info {
+  color: #a6a6a6;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.message-text {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/*end style for issue-message-item*/
