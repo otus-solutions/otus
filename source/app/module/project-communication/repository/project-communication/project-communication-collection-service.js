@@ -83,7 +83,7 @@
 
     function getAllIssueMessages(issueId, limit) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.getLastIssueMessage(issueId, limit))
+        .then(remoteStorage => remoteStorage.getAllIssueMessages(issueId, limit))
         .then(response => response.data);
     }
 
