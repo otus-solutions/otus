@@ -18,13 +18,12 @@
     }
 
     function fromJsonObject(item, participant){
-      return angular.extend(item, item, participant);
-
-      // return angular.extend(item, item, {
-      //     rn: participant.recruitmentNumber,
-      //     name: participant.name,
-      //     center: participant.fieldCenter.acronym
-      // });
+      item.participant = {
+          rn: participant.rn,
+          name: participant.name,
+          center: participant.center
+      };
+      return item;
     }
 
     return self;
