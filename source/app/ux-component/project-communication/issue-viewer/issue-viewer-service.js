@@ -34,6 +34,7 @@
     self.translateStatus = translateStatus;
     self.storageCurrentIssues = storageCurrentIssues;
     self.getCurrStoragedIssue = getCurrStoragedIssue;
+    self.getCurrIssueMessages = getCurrIssueMessages;
 
     initialize();
 
@@ -73,9 +74,7 @@
       let parsedItems = [];
       genericListJsonArray.forEach(item => {
         ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender)
-          .then(participant => {
-            parsedItems.push(IssueFactory.fromJsonObject(item, participant));
-          })
+          .then(participant => parsedItems.push(IssueFactory.fromJsonObject(item, participant)))
       });
       return parsedItems;
     }
@@ -125,7 +124,11 @@
     }
 
     function getCurrStoragedIssue(){
-      return $window.sessionStorage.getItem(CURR_ISSUE_STORAGE_KEY);
+      return JSON.parse($window.sessionStorage.getItem(CURR_ISSUE_STORAGE_KEY));
+    }
+
+    function getCurrIssueMessages(){
+      return ProjectCommunicationRepositoryService.getAllIssueMessages(getCurrStoragedIssue().id);
     }
 
   }
