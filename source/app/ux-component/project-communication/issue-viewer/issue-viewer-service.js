@@ -12,12 +12,13 @@
     'ISSUE_VIEWER_LABELS',
     'otusjs.project.communication.repository.ProjectCommunicationRepositoryService',
     'otusjs.otus.uxComponent.IssueFactory',
-    'otusjs.participant.business.ParticipantManagerService'
+    'otusjs.participant.business.ParticipantManagerService',
+    'otusjs.otus.dashboard.core.ContextService'
   ];
 
   function Service($q, $window, GenericListViewerService, ISSUE_VIEWER_LABELS,
                    ProjectCommunicationRepositoryService, IssueFactory,
-                   ParticipantManagerService) {
+                   ParticipantManagerService, ContextService) {
 
     const self = this;
     const INITIAL_CURRENT_QUANTITY = 0;
@@ -28,6 +29,7 @@
     self.participantDataReady = false;
     self.participants = {};
     self.needPreparations = self.storageItems = true;
+    self.center = undefined;
 
     self.initialize = initialize;
     self.prepareData = prepareData;
@@ -52,6 +54,8 @@
     }
 
     function prepareData(){
+      ContextService.getLoggedUser()
+        .then(user => self.center = user.fieldCenter.acronym);
       return ParticipantManagerService.setup();
     }
 
@@ -88,7 +92,8 @@
           "mode": 1
         },
         "filter": {
-          "status": "OPEN"
+          status: "OPEN",
+          center: self.center
         }
       };
     }
