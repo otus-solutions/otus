@@ -23,6 +23,7 @@
     self.formatDate = formatDate;
     self.capitalizeName = IssueViewerService.capitalizeName;
     self.getCurrIssueInfo = getCurrIssueInfo;
+    self.getStatusActions = getStatusActions;
 
     function getAllItems(){
       return IssueViewerService.getCurrIssueMessages()
@@ -59,11 +60,27 @@
     function getCurrIssueInfo(){
       const issue = IssueViewerService.getCurrStoragedIssue();
       issue.status = {
+        value: issue.status,
         translatedStatus: IssueViewerService.translateStatus(issue.status),
         color: IssueViewerService.LABELS.STATUS_COLOR[issue.status]
       };
       issue.creationDate = formatDate(new Date(issue.creationDate));
       return issue;
+    }
+
+    function getStatusActions(currStatusValue){
+      let allStatus =  {};
+      for(let [value, label] of Object.entries(ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS)){
+        if(currStatusValue === value){
+          continue;
+        }
+
+        allStatus[value] = {
+          value: value,
+          translated: label
+        }
+      }
+      return allStatus;
     }
 
   }
