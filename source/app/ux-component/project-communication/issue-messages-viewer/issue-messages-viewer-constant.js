@@ -34,5 +34,11 @@
         }
       },
 
+      STATUS_ACTIONS:{
+        CLOSED:'Fechar',
+        FINALIZED:'Finalizar',
+        OPEN:'Reabrir'
+      }
+
     });
 }());
