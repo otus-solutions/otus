@@ -1,9 +1,75 @@
 <link href="app/ux-component/project-communication/issue-messages-viewer/issue-messages-viewer-styles.css"
       rel="stylesheet" type="text/css">
 
-<otus-no-filter-generic-list-viewer viewer-title="$ctrl.viewerTitle"
-                                    header-component-name="$ctrl.headerComponentName"
-                                    items="$ctrl.items"
-                                    item-component-name="$ctrl.itemComponentName"
-                                    item-attributes="$ctrl.itemAttributes">
-</otus-no-filter-generic-list-viewer>
+<!--<otus-no-filter-generic-list-viewer viewer-title="$ctrl.viewerTitle"-->
+<!--                                    header-component-name="$ctrl.headerComponentName"-->
+<!--                                    items="$ctrl.items"-->
+<!--                                    item-component-name="$ctrl.itemComponentName"-->
+<!--                                    item-attributes="$ctrl.itemAttributes">-->
+<!--</otus-no-filter-generic-list-viewer>-->
+
+<style>
+  .send-reply-button{
+    max-height: 36px;
+  }
+
+  .status-options {
+    min-width: 130px;
+  }
+</style>
+
+<md-content class="issue-messages-viewer" layout="column" flex>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+
+  <otus-dashboard-toolbar>
+    <div flex layout="row" layout-align="center center" layout-margin>
+      <span layout-align="center center">{{$ctrl.viewerTitle}}</span>
+    </div>
+  </otus-dashboard-toolbar>
+
+  <otus-issue-info-header></otus-issue-info-header>
+
+  <otus-generic-list items="$ctrl.items"
+                     item-component-name="$ctrl.itemComponentName"
+                     item-attributes="$ctrl.itemAttributes">
+  </otus-generic-list>
+
+  <div class="action-buttons" layout="row" layout-align="end center"
+       ng-if="!$ctrl.replying && !$ctrl.changingStatus">
+    <md-button class="md-primary" ng-click="$ctrl.openStatusOptions()">TROCAR STATUS</md-button>
+    <md-button class="md-accent md-raised" ng-click="$ctrl.openReplyInput()">RESPONDER</md-button>
+  </div>
+
+  <div class="action-inputs" layout="column" layout-align="center center" layout-padding
+       ng-if="$ctrl.replying">
+    <textarea class="reply-box" id="replyBox"
+              rows="5" max-rows="20" cols="50"
+              ng-model="$ctrl.replyContent"
+              placeholder="Insira sua resposta aqui"></textarea>
+
+    <div layout="row" layout-align="center end">
+      <md-button class="send-reply-button md-primary md-raised" id="sendReply"
+                 ng-click="$ctrl.sendReply()">ENVIAR</md-button>
+    </div>
+  </div>
+
+  <div class="action-inputs" layout="row" layout-align="center center" layout-padding
+       ng-if="$ctrl.changingStatus">
+    <md-input-container>
+      <md-select aria-label="Status" ng-model="$ctrl.currStatus" class="status-options">
+        <md-option ng-repeat="status in $ctrl.statusOptions" ng-value="status.value">
+          {{status.translated}}
+        </md-option>
+      </md-select>
+      <md-tooltip md-direction="top">Opções de status</md-tooltip>
+    </md-input-container>
+
+    <div layout="row" layout-align="center end">
+      <md-button class="send-reply-button md-primary" id="changeStatus"
+                 ng-click="$ctrl.changeStatus()">TROCAR</md-button>
+    </div>
+  </div>
+
+</md-content>

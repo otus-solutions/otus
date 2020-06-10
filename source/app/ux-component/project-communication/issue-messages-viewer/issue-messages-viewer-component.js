@@ -24,17 +24,29 @@
     self.viewerTitle = ISSUE_MESSAGES_VIEWER_CONSTANTS.PAGE_TITLE;
     self.itemComponentName = 'otusIssueMessageItem';
     self.headerComponentName = 'otusIssueInfoHeader';
+    self.replyContent = null;
+    self.currStatus = null;
 
     self.$onInit = onInit;
+    self.openReplyInput = openReplyInput;
+    self.sendReply = sendReply;
+    self.openStatusOptions = openStatusOptions;
+    self.changeStatus = changeStatus;
+
 
     function onInit(){
+      self.replying = self.changingStatus = false;
       self.items = [];
       self.itemAttributes = {};//todo
 
       LoadingScreenService.start();
 
       self.issue = IssueMessagesViewerService.getCurrIssueInfo();
-      // console.log(self.issue);
+      self.currStatus = self.issue.status;
+      console.log(self.issue);
+      console.log(self.currStatus);
+
+      self.statusOptions = IssueMessagesViewerService.getStatusActions(self.currStatus.value);
 
       IssueMessagesViewerService.getAllItems()
         .then(response => {
@@ -45,6 +57,24 @@
           console.log(error);
           LoadingScreenService.finish();
         });
+    }
+
+    function openReplyInput(){
+      self.replying = true;
+    }
+
+    function sendReply(){
+      self.replying = false;
+      console.log(self.replyContent)
+    }
+
+    function openStatusOptions(){
+      self.changingStatus = true;
+    }
+
+    function changeStatus(){
+      self.changingStatus = false;
+      console.log(self.currStatus)
     }
 
   }
