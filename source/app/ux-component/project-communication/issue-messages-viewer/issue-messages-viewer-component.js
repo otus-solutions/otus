@@ -43,7 +43,6 @@
 
       self.issue = IssueMessagesViewerService.getCurrIssueInfo();
       self.currStatus = self.issue.status;
-      console.log(self.issue);
       console.log(self.currStatus);
 
       self.statusOptions = IssueMessagesViewerService.getStatusActions(self.currStatus.value);
@@ -64,8 +63,16 @@
     }
 
     function sendReply(){
-      self.replying = false;
-      console.log(self.replyContent)
+      IssueMessagesViewerService.createMessage(self.issue.id, self.replyContent)
+        .then(data => {
+          console.log(data)
+          //update messages list
+          self.replying = false;
+        })
+        .catch(e => {
+          console.log(e);
+          self.replying = false;
+        });
     }
 
     function openStatusOptions(){
@@ -73,8 +80,13 @@
     }
 
     function changeStatus(){
-      self.changingStatus = false;
       console.log(self.currStatus)
+
+      IssueMessagesViewerService.updateIssueStatus(self.issue, self.currStatus)
+        .then(() => {
+          self.changingStatus = false;
+        })
+        .catch(e => console.log(e));
     }
 
   }
