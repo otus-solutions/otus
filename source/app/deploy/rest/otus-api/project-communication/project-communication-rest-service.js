@@ -22,8 +22,9 @@
     self.createIssue = createIssue;
     self.getProjectCommunicationById = getProjectCommunicationById;
     self.getProjectCommunicationByIdLimit = getProjectCommunicationByIdLimit;
-    self.updateReopen = updateReopen;
-    self.updateClose = updateClose;
+    self.updateReopen = updateStatus;//updateReopen;
+    self.updateClose = updateStatus;//updateClose;
+    self.updateFinalized = updateStatus;//todo
     self.listIssue = listIssue;
     self.filter = filter;
     self.getLastIssueMessage = getLastIssueMessage;
@@ -34,10 +35,14 @@
       _rest = OtusRestResourceService.getProjectCommunicationResourceFactory();
     }
 
-    function createMessage(foundProjectCommunicationId, jsonProjectCommunication){
+    function createMessage(issueId, messageObject){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.createMessage({id: foundProjectCommunicationId}, jsonProjectCommunication).$promise;
+      // return _rest.createMessage({id: issueId}, messageObject).$promise;
+
+      let url = `http://localhost:3037/project-communication/issues/${issueId}/messages`;
+      return $http.post(url, messageObject);
     }
+
 
     function createIssue(jsonProjectCommunication){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
@@ -62,6 +67,11 @@
     function updateClose(foundProjectCommunicationId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.updateClose({id: foundProjectCommunicationId}).$promise;
+    }
+
+    function updateFinalized(foundProjectCommunicationId){
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.updateFinalized({id: foundProjectCommunicationId}).$promise;
     }
 
     function listIssue(){
@@ -101,6 +111,12 @@
 
       let url = `http://localhost:3037/project-communication/senders/${senderId}`;
       return $http.get(url);
+    }
+
+    //todo temp
+    function updateStatus(updatedIssue){
+      let url = `http://localhost:3037/project-communication/issues/${updatedIssue.id}`;
+      return $http.post(url, updatedIssue);
     }
 
 

@@ -19,14 +19,15 @@
     self.getProjectCommunicationByIdLimit = getProjectCommunicationByIdLimit;
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
+    self.updateFinalized = updateFinalized;
     self.listIssue = listIssue;
     self.filter = filter;
     self.getLastIssueMessage = getLastIssueMessage;
     self.getAllIssueMessages = getAllIssueMessages;
     self.getIssueSenderInfo = getIssueSenderInfo;
 
-    function createMessage(ProjectCommunication) {
-      return ProjectCommunicationCollectionService.createMessage(ProjectCommunication);
+    function createMessage(issueId, messageObject) {
+      return ProjectCommunicationCollectionService.createMessage(issueId, messageObject);
     }
 
     function createIssue(id, ProjectCommunication) {
@@ -47,6 +48,10 @@
 
     function updateClose(id) {
       return ProjectCommunicationCollectionService.updateClose(id);
+    }
+
+    function updateFinalized(id) {
+      return ProjectCommunicationCollectionService.updateFinalized(id);
     }
 
     function listIssue() {

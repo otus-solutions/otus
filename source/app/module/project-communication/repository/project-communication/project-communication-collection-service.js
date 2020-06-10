@@ -20,15 +20,16 @@
     self.getProjectCommunicationByIdLimit = getProjectCommunicationByIdLimit;
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
+    self.updateFinalized = updateFinalized;
     self.listIssue = listIssue;
     self.filter = filter;
     self.getLastIssueMessage = getLastIssueMessage;
     self.getAllIssueMessages = getAllIssueMessages;
     self.getIssueSenderInfo = getIssueSenderInfo;
 
-    function createMessage(ProjectCommunication) {
+    function createMessage(issueId, messageObject) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.createMessage(ProjectCommunication))
+        .then(remoteStorage => remoteStorage.createMessage(issueId, messageObject))
         .then(response => response.data);
     }
 
@@ -59,6 +60,12 @@
     function updateClose(id) {
       return _remoteStorage.whenReady()
         .then(remoteStorage => remoteStorage.updateClose(id))
+        .then(response => response.data);
+    }
+
+    function updateFinalized(id) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.updateFinalized(id))
         .then(response => response.data);
     }
 
