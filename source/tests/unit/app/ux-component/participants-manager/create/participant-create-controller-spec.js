@@ -77,6 +77,12 @@ describe('participant-create-controller Test', function() {
           return Promise.resolve();
         }
       });
+
+      $provide.value("otusjs.user.business.UserAccessPermissionService", {
+        getCheckingParticipantPermission: function() {
+          return Promise.resolve();
+        }
+      });
     });
 
   });
@@ -93,7 +99,8 @@ describe('participant-create-controller Test', function() {
         "ProjectFieldCenterService": _$injector_.get('otusjs.deploy.FieldCenterRestService'),
         "dashboardContextService": _$injector_.get('otusjs.otus.dashboard.core.ContextService'),
         "ParticipantManagerService": _$injector_.get('otusjs.participant.business.ParticipantManagerService'),
-        "ParticipantMessagesService": _$injector_.get('otusjs.participant.business.ParticipantMessagesService')
+        "ParticipantMessagesService": _$injector_.get('otusjs.participant.business.ParticipantMessagesService'),
+        "UserAccessPermissionService": _$injector_.get('otusjs.user.business.UserAccessPermissionService')
       };
 
 

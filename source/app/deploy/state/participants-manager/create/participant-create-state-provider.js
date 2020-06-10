@@ -42,10 +42,6 @@
         .then(function () {
           UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
             try {
-              if (!permission.participantCreateAccess) {
-                deferred.resolve(STATE.DASHBOARD);
-                return;
-              }
               deferred.resolve();
             } catch (e) {
               deferred.resolve(STATE.LOGIN);
@@ -68,7 +64,6 @@
         .isDeployed()
         .then(function() {
           try {
-
             SessionContextService.restore();
             return ProjectConfiguration.getProjectConfiguration()
               .then(function(response) {
@@ -86,7 +81,6 @@
     _loadParticipantRegistration.$inject = [
       'otusjs.deploy.ProjectConfigurationRestService',
       'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService',
       'otusjs.application.core.ModuleService',
       'otusjs.user.business.UserAccessPermissionService'
     ];

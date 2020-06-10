@@ -29,28 +29,28 @@
       }
     };
 
-    function _redirect($q, Application, UserAccessPermissionService) {
+    function _redirect($q, SessionContextService, Application) {
       var deferred = $q.defer();
 
       Application
         .isDeployed()
-        .then(function () {
-          UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
-            try {
-              deferred.resolve();
-            } catch (e) {
-              deferred.resolve(STATE.LOGIN);
-            }
-          });
+        .then(function() {
+          try {
+            SessionContextService.restore();
+            deferred.resolve();
+          } catch (e) {
+            deferred.resolve(STATE.LOGIN);
+          }
         });
 
       return deferred.promise;
     }
 
+
     _redirect.$inject = [
       '$q',
-      'otusjs.application.core.ModuleService',
-      'otusjs.user.business.UserAccessPermissionService'
+      'otusjs.application.session.core.ContextService',
+      'otusjs.application.core.ModuleService'
     ];
 
   }

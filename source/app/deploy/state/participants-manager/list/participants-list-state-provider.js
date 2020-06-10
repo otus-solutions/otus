@@ -64,11 +64,8 @@
     function _loadParticipantsList(ParticipantStorageService) {
       return ParticipantStorageService.getCollection().data;
     }
-
-    _loadParticipantRegistration.$inject = [
-      'otusjs.deploy.ProjectConfigurationRestService',
-      'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService'
+    _loadParticipantsList.$inject = [
+      'otusjs.participant.storage.ParticipantStorageService'
     ];
 
     function _loadParticipantRegistration(ProjectConfiguration, SessionContextService, Application) {
@@ -87,9 +84,11 @@
           }
         });
     }
-
-    _loadParticipantsList.$inject = [
-      'otusjs.participant.storage.ParticipantStorageService'
+    _loadParticipantRegistration.$inject = [
+      'otusjs.deploy.ProjectConfigurationRestService',
+      'otusjs.application.session.core.ContextService',
+      'otusjs.application.core.ModuleService'
     ];
+
   }
 }());

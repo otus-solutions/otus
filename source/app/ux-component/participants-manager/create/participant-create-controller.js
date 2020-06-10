@@ -15,12 +15,16 @@
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.participant.business.ParticipantManagerService',
-    'otusjs.participant.business.ParticipantMessagesService'
+    'otusjs.participant.business.ParticipantMessagesService',
+    'otusjs.user.business.UserAccessPermissionService'
   ];
 
-  function Controller($element, ImmutableDate, mdcDateTimeDialog, ApplicationStateService, mdcDefaultParams, ParticipantFactory, ProjectFieldCenterService, dashboardContextService, ParticipantManagerService, ParticipantMessagesService) {
+  function Controller($element, ImmutableDate, mdcDateTimeDialog, ApplicationStateService,
+                      mdcDefaultParams, ParticipantFactory, ProjectFieldCenterService,
+                      dashboardContextService, ParticipantManagerService, ParticipantMessagesService,
+                      UserAccessPermissionService
+  ) {
     var self = this;
-
 
     mdcDefaultParams({
       lang: 'pt-br',
@@ -28,6 +32,8 @@
       todayText: 'hoje',
       okText: 'ok'
     });
+
+    self.userAccessToParticipant;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -41,6 +47,7 @@
 
     function onInit() {
       self.participant = ParticipantFactory.create();
+      _checkingParticipantPermission();
       self.identified = true;
       self.maxDate = new Date();
       self.centers = {};
@@ -65,14 +72,21 @@
     }
 
     self.$onChanges = function () {
-      if (!self.permissions.participantRegistration) {
-        ApplicationStateService.activateParticipantsList();
+      if (self.permissions.participantRegistration && self.userAccessToParticipant.participantCreateAccess) {
+        return;
       }
+      ApplicationStateService.activateParticipantsList();
     };
 
     self.$onDestroy = function () {
       localStorage.removeItem("newParticipant");
     };
+
+    function _checkingParticipantPermission() {
+      return UserAccessPermissionService.getCheckingParticipantPermission().then(response => {
+        self.userAccessToParticipant = response;
+      });
+    }
 
     function _getCenterCode(acronym) {
       var center = self.centers.filter(function (center) {
@@ -200,7 +214,7 @@
         ParticipantMessagesService.showSaveDialog()
           .then(function () {
             self.onFilter();
-            if (self.permissions.participantRegistration) {
+            if (self.permissions.participantRegistration && self.userAccessToParticipant.participantCreateAccess) {
               var _participant = _getParticipantData();
               if (self.permissions.autoGenerateRecruitmentNumber) delete _participant.recruitmentNumber;
               ParticipantManagerService.create(_participant)
@@ -244,13 +258,9 @@
         }
       }
     }
-
-
     self.updateMode = function () {
       self.identified = !self.identified;
       _setClear();
     }
-
-
   }
 }());
