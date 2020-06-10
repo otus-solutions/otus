@@ -35,9 +35,18 @@
       },
 
       STATUS_ACTIONS:{
-        CLOSED:'Fechar',
-        FINALIZED:'Finalizar',
-        OPEN:'Reabrir'
+        CLOSED:{
+          value: 'CLOSED',
+          label: 'Fechar'
+        },
+        FINALIZED: {
+          value: 'FINALIZED',
+          label: 'Finalizar'
+        },
+        OPEN:{
+          value: 'OPEN',
+          label: 'Reabrir'
+        }
       }
 
     });

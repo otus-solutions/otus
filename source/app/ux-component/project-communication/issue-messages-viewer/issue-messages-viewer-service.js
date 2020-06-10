@@ -10,7 +10,7 @@
     'ISSUE_MESSAGES_VIEWER_CONSTANTS',
     'otusjs.issueViewer.IssueViewerService',
     'otusjs.project.communication.repository.ProjectCommunicationRepositoryService',
-    'otusjs.otus.uxComponent.IssueMessageFactory',
+    'otusjs.otus.uxComponent.IssueMessageFactory'
   ];
 
   function Service($q, ISSUE_MESSAGES_VIEWER_CONSTANTS, IssueViewerService,
@@ -24,6 +24,8 @@
     self.capitalizeName = IssueViewerService.capitalizeName;
     self.getCurrIssueInfo = getCurrIssueInfo;
     self.getStatusActions = getStatusActions;
+    self.updateIssueStatus = updateIssueStatus;
+    self.createMessage = createMessage;
 
     function getAllItems(){
       return IssueViewerService.getCurrIssueMessages()
@@ -69,18 +71,33 @@
     }
 
     function getStatusActions(currStatusValue){
-      let allStatus =  {};
-      for(let [value, label] of Object.entries(ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS)){
-        if(currStatusValue === value){
-          continue;
-        }
-
-        allStatus[value] = {
-          value: value,
-          translated: label
-        }
-      }
+      let allStatus =  angular.copy(ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS);
+      delete allStatus[currStatusValue];
       return allStatus;
+    }
+
+    function updateIssueStatus(issue, newStatusValue){
+      console.log('service.updateStatus', issue.id)
+      issue.status = newStatusValue;
+
+      switch (newStatusValue) {
+        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.OPEN.value:
+          return ProjectCommunicationRepositoryService.updateReopen(issue);
+
+        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.CLOSED.value:
+          return ProjectCommunicationRepositoryService.updateClose(issue);
+
+        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.FINALIZED.value:
+          return ProjectCommunicationRepositoryService.updateFinalized(issue);
+      }
+    }
+
+    function createMessage(issueId, messageText){
+      return ProjectCommunicationRepositoryService.createMessage(issueId, {
+        "text": messageText,
+        "creationDate": (new Date()).toJSON(),
+        "issueID": issueId
+      });
     }
 
   }

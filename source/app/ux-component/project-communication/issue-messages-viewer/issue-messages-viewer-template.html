@@ -1,23 +1,6 @@
 <link href="app/ux-component/project-communication/issue-messages-viewer/issue-messages-viewer-styles.css"
       rel="stylesheet" type="text/css">
 
-<!--<otus-no-filter-generic-list-viewer viewer-title="$ctrl.viewerTitle"-->
-<!--                                    header-component-name="$ctrl.headerComponentName"-->
-<!--                                    items="$ctrl.items"-->
-<!--                                    item-component-name="$ctrl.itemComponentName"-->
-<!--                                    item-attributes="$ctrl.itemAttributes">-->
-<!--</otus-no-filter-generic-list-viewer>-->
-
-<style>
-  .send-reply-button{
-    max-height: 36px;
-  }
-
-  .status-options {
-    min-width: 130px;
-  }
-</style>
-
 <md-content class="issue-messages-viewer" layout="column" flex>
   <otus-dashboard-sidenav layout="row">
     <hide-participant-box></hide-participant-box>
@@ -60,7 +43,7 @@
     <md-input-container>
       <md-select aria-label="Status" ng-model="$ctrl.currStatus" class="status-options">
         <md-option ng-repeat="status in $ctrl.statusOptions" ng-value="status.value">
-          {{status.translated}}
+          {{status.label}}
         </md-option>
       </md-select>
       <md-tooltip md-direction="top">Opções de status</md-tooltip>
