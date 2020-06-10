@@ -1,11 +1,17 @@
 <div class="issue-messages-header" layout-margin flex>
-  <md-chips class="issue-messages-status">
-    <md-chip ng-style={{$ctrl.issue.status.color}}>{{$ctrl.issue.status.translatedStatus}}</md-chip>
-  </md-chips>
-  <span class="issue-messages-datetime">{{$ctrl.issue.creationDate}}</span>
-  <md-button class="goback-button">
-    <md-icon>reply</md-icon>
-  </md-button>
+  <div layout="row" layout-align="start center">
+    <md-chips class="issue-messages-status">
+      <md-chip ng-style={{$ctrl.issue.status.color}}>{{$ctrl.issue.status.translatedStatus}}</md-chip>
+    </md-chips>
+  </div>
+  <span class="issue-messages-datetime datetime-font-text" layout="row" layout-align="center center">
+    {{$ctrl.issue.creationDate}}
+  </span>
+  <div layout="row" layout-align="end center">
+    <md-button class="goback-button no-margin no-padding md-fab md-mini md-raised">
+      <md-icon>reply</md-icon>
+    </md-button>
+  </div>
   <span class="issue-messages-title">{{$ctrl.issue.title}}</span>
   <span class="issue-messages-text">{{$ctrl.issue.text}}</span>
 </div>
