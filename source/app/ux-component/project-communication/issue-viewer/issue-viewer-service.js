@@ -36,6 +36,7 @@
     self.translateStatus = translateStatus;
     self.storageCurrentIssues = storageCurrentIssues;
     self.getCurrStoragedIssue = getCurrStoragedIssue;
+    self.updateCurrStoragedIssueStatus = updateCurrStoragedIssueStatus;
     self.getCurrIssueMessages = getCurrIssueMessages;
 
     initialize();
@@ -123,13 +124,28 @@
       return translation.substring(0, translation.length-1);
     }
 
-    function storageCurrentIssues(issue){
+    function storageCurrentIssues(currIssue){
       $window.sessionStorage.setItem(ISSUE_LIST_STORAGE_KEY, JSON.stringify(self.items));
-      $window.sessionStorage.setItem(CURR_ISSUE_STORAGE_KEY, JSON.stringify(issue));
+      $window.sessionStorage.setItem(CURR_ISSUE_STORAGE_KEY, JSON.stringify(currIssue));
     }
 
     function getCurrStoragedIssue(){
       return JSON.parse($window.sessionStorage.getItem(CURR_ISSUE_STORAGE_KEY));
+    }
+
+    function updateCurrStoragedIssueStatus(newStatus){
+      let currIssue = getCurrStoragedIssue();
+      currIssue.status = newStatus;
+
+      self.items = JSON.parse($window.sessionStorage.getItem(ISSUE_LIST_STORAGE_KEY))
+        .map(issue => {
+          if(issue.id === currIssue.id){
+            issue.status = newStatus;
+          }
+          return issue;
+        });
+
+      storageCurrentIssues(currIssue);
     }
 
     function getCurrIssueMessages(){
