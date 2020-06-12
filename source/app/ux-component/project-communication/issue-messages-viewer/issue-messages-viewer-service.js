@@ -36,11 +36,17 @@
 
     function _parseItems(genericListJsonArray) {
       let parsedItems = [];
-      genericListJsonArray.forEach(item => {
-        ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender)
-          .then(sender => parsedItems.push(IssueMessageFactory.fromJsonObject(item, sender)));
-      });
+      genericListJsonArray
+        .sort(compareIssueMessages)
+        .forEach(item => {
+          ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender)
+            .then(sender => parsedItems.push(IssueMessageFactory.fromJsonObject(item, sender)));
+        });
       return parsedItems;
+    }
+
+    function compareIssueMessages(a, b){
+      return (a.creationData === b.creationData ? 0 : (a.creationData < b.creationData ? -1 : 1));
     }
 
     function getItemAttributes() {
