@@ -84,23 +84,6 @@
       return allStatus;
     }
 
-    function updateIssueStatus(issue, newStatusValue){
-      console.log('service.updateStatus', issue.id)
-      issue.status = newStatusValue;
-      let arg = issue; //todo issue.id
-
-      switch (newStatusValue) {
-        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.OPEN.value:
-          return ProjectCommunicationRepositoryService.updateReopen(arg);
-
-        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.CLOSED.value:
-          return ProjectCommunicationRepositoryService.updateClose(arg);
-
-        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.FINALIZED.value:
-          return ProjectCommunicationRepositoryService.updateFinalized(arg);
-      }
-    }
-
     function createMessage(issueId, messageText){
       return ProjectCommunicationRepositoryService.createMessage(issueId, {
         "text": messageText,
@@ -108,6 +91,44 @@
         "issueID": issueId
       });
     }
+
+    function updateIssueStatus(issue, newStatusValue){
+      console.log('service.updateStatus', issue.id)
+
+      let updateMethod = null;
+
+      switch (newStatusValue) {
+        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.OPEN.value:
+          updateMethod = ProjectCommunicationRepositoryService.updateReopen;
+          break;
+
+        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.CLOSED.value:
+          updateMethod = ProjectCommunicationRepositoryService.updateClose;
+          break;
+
+        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.FINALIZED.value:
+          updateMethod = ProjectCommunicationRepositoryService.updateFinalized;
+      }
+
+      let arg = issue; //todo issue.id
+
+      let defer = $q.defer();
+      try{
+        updateMethod(arg).then(() => {
+          IssueViewerService.updateCurrStoragedIssueStatus(newStatusValue);
+          issue.status = newStatusValue;
+          defer.resolve();
+        })
+      }
+      catch (e) {
+        console.log(error);
+        defer.reject();
+      }
+
+      return defer.promise;
+    }
+
+
 
   }
 
