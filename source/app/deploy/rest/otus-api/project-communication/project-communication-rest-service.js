@@ -22,9 +22,9 @@
     self.createIssue = createIssue;
     self.getProjectCommunicationById = getProjectCommunicationById;
     self.getProjectCommunicationByIdLimit = getProjectCommunicationByIdLimit;
-    self.updateReopen = updateStatus;//updateReopen;
-    self.updateClose = updateStatus;//updateClose;
-    self.updateFinalized = updateStatus;//todo
+    self.updateReopen = updateReopen;
+    self.updateClose = updateClose;
+    self.updateFinalized = updateFinalized;
     self.listIssue = listIssue;
     self.filter = filter;
     self.getLastIssueMessage = getLastIssueMessage;
@@ -39,6 +39,7 @@
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       // return _rest.createMessage({id: issueId}, messageObject).$promise;
 
+      messageObject.sender = "5d1bbabe995e20d290d94e49";
       let url = `http://localhost:3037/project-communication/issues/${issueId}/messages`;
       return $http.post(url, messageObject);
     }
@@ -61,17 +62,31 @@
 
     function updateReopen(foundProjectCommunicationId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateReopen({id: foundProjectCommunicationId}).$promise;
+      // return _rest.updateReopen({id: foundProjectCommunicationId}).$promise;//todo descomentar
+
+      return updateStatus(foundProjectCommunicationId);
     }
 
     function updateClose(foundProjectCommunicationId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateClose({id: foundProjectCommunicationId}).$promise;
+      // return _rest.updateClose({id: foundProjectCommunicationId}).$promise;//todo descomentar
+
+      return updateStatus(foundProjectCommunicationId);
     }
 
     function updateFinalized(foundProjectCommunicationId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.updateFinalized({id: foundProjectCommunicationId}).$promise;
+      // return _rest.updateFinalized({id: foundProjectCommunicationId}).$promise;//todo descomentar
+
+      return updateStatus(foundProjectCommunicationId);
+    }
+
+    //todo temp
+    function updateStatus(issue){
+      const updatedIssue = angular.copy(issue);
+      delete updatedIssue.participant;
+      let url = `http://localhost:3037/project-communication/issues/${issue.id}`;
+      return $http.put(url, updatedIssue);
     }
 
     function listIssue(){
@@ -82,8 +97,6 @@
     function filter(searchSettings){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       //return _rest.filter(searchSettings).$promise;//todo descomentar
-
-      //return _rest.listIssue().$promise;//todo temp
 
       let url = `http://localhost:3037/project-communication/issues`;
       return $http.get(url);
@@ -112,13 +125,6 @@
       let url = `http://localhost:3037/project-communication/senders/${senderId}`;
       return $http.get(url);
     }
-
-    //todo temp
-    function updateStatus(updatedIssue){
-      let url = `http://localhost:3037/project-communication/issues/${updatedIssue.id}`;
-      return $http.post(url, updatedIssue);
-    }
-
 
   }
 
