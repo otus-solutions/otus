@@ -37,16 +37,19 @@
     function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
 
-      Application
-        .isDeployed()
-        .then(function () {
-          UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
-            try {
-              deferred.resolve();
-            } catch (e) {
-              deferred.resolve(STATE.LOGIN);
-            }
-          });
+      UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
+        Application
+          .isDeployed()
+          .then(function () {
+              try {
+                if (!permission.examSendingAccess) {
+                  deferred.resolve(STATE.DASHBOARD);
+                }
+                deferred.resolve();
+              } catch (e) {
+                deferred.resolve(STATE.LOGIN);
+              }
+            });
         });
 
       return deferred.promise;
