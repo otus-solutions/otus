@@ -18,7 +18,7 @@
     self.$onInit = onInit;
 
     function onInit(){
-      self.issue = IssueMessagesViewerService.getCurrIssueInfo();
+      self.issue = IssueMessagesViewerService.getCurrIssue();
       self.creationDate = IssueMessagesViewerService.formatDate(new Date(self.issue.creationDate));
       self.status = IssueMessagesViewerService.formatStatus(self.issue.status);
     }

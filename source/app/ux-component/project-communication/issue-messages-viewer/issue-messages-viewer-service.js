@@ -21,8 +21,9 @@
     self.getItemAttributes = getItemAttributes;
     self.getAllItems = getAllItems;
     self.formatDate = formatDate;
+    self.formatStatus = formatStatus;
     self.capitalizeName = IssueViewerService.capitalizeName;
-    self.getCurrIssueInfo = getCurrIssueInfo;
+    self.getCurrIssue = getCurrIssue;
     self.getStatusActions = getStatusActions;
     self.updateIssueStatus = updateIssueStatus;
     self.createMessage = createMessage;
@@ -59,15 +60,16 @@
         date.getHours().toString(10).padStart(2, '0') + ':' + date.getMinutes().toString(10).padStart(2, '0');
     }
 
-    function getCurrIssueInfo(){
-      const issue = IssueViewerService.getCurrStoragedIssue();
-      issue.status = {
-        value: issue.status,
-        translatedStatus: IssueViewerService.translateStatus(issue.status),
-        color: IssueViewerService.LABELS.STATUS_COLOR[issue.status]
-      };
-      issue.creationDate = formatDate(new Date(issue.creationDate));
-      return issue;
+    function formatStatus(issueStatus){
+      return {
+        value: issueStatus,
+        translatedStatus: IssueViewerService.translateStatus(issueStatus),
+        color: IssueViewerService.LABELS.STATUS_COLOR[issueStatus]
+      }
+    }
+
+    function getCurrIssue(){
+      return IssueViewerService.getCurrStoragedIssue();
     }
 
     function getStatusActions(currStatusValue){
@@ -79,16 +81,17 @@
     function updateIssueStatus(issue, newStatusValue){
       console.log('service.updateStatus', issue.id)
       issue.status = newStatusValue;
+      let arg = issue; //todo issue.id
 
       switch (newStatusValue) {
         case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.OPEN.value:
-          return ProjectCommunicationRepositoryService.updateReopen(issue);
+          return ProjectCommunicationRepositoryService.updateReopen(arg);
 
         case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.CLOSED.value:
-          return ProjectCommunicationRepositoryService.updateClose(issue);
+          return ProjectCommunicationRepositoryService.updateClose(arg);
 
         case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.FINALIZED.value:
-          return ProjectCommunicationRepositoryService.updateFinalized(issue);
+          return ProjectCommunicationRepositoryService.updateFinalized(arg);
       }
     }
 
