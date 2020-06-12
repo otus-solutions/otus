@@ -27,12 +27,15 @@
 
   <div class="action-inputs" layout="column" layout-align="center center" layout-padding
        ng-if="$ctrl.replying">
-    <textarea class="reply-box" id="replyBox"
+    <textarea class="reply-box" id="replyInputBox"
               rows="5" max-rows="20" cols="50"
               ng-model="$ctrl.replyContent"
               placeholder="Insira sua resposta aqui"></textarea>
 
     <div layout="row" layout-align="center end">
+      <md-button class="send-reply-button md-warn md-raised" id="cancelReply"
+                 ng-click="$ctrl.cancelReply()">CANCELAR</md-button>
+
       <md-button class="send-reply-button md-primary md-raised" id="sendReply"
                  ng-click="$ctrl.sendReply()">ENVIAR</md-button>
     </div>

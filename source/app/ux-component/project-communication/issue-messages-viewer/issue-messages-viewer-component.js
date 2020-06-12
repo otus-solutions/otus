@@ -30,6 +30,7 @@
     self.$onInit = onInit;
     self.openReplyInput = openReplyInput;
     self.sendReply = sendReply;
+    self.cancelReply = cancelReply;
     self.openStatusOptions = openStatusOptions;
     self.changeStatus = changeStatus;
 
@@ -41,7 +42,7 @@
 
       LoadingScreenService.start();
 
-      self.issue = IssueMessagesViewerService.getCurrIssueInfo();
+      self.issue = IssueMessagesViewerService.getCurrIssue();
       self.currStatus = self.issue.status;
       console.log(self.currStatus);
 
@@ -66,13 +67,17 @@
       IssueMessagesViewerService.createMessage(self.issue.id, self.replyContent)
         .then(data => {
           console.log(data)
-          //update messages list
-          self.replying = false;
+          onInit();
         })
         .catch(e => {
           console.log(e);
           self.replying = false;
         });
+    }
+
+    function cancelReply(){
+      angular.element(document.getElementById('replyInputBox')).value = "";//todo
+      self.replying = false;
     }
 
     function openStatusOptions(){
