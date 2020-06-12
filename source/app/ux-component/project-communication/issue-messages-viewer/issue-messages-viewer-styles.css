@@ -6,12 +6,11 @@
     height: 100vh;
     /*width: 100vw;*/
     grid-template-columns: 1fr;
-    grid-template-rows: .1fr .5fr 1.5fr .05fr .1fr;
+    grid-template-rows: .1fr .3fr 1.7fr .1fr;
     grid-template-areas:
       "toolbar"
       "issueInfo"
       "list"
-      "actionButtons"
       "actionInputs"
   }
 
@@ -32,12 +31,12 @@
     height: 100vh;
     width: 100vw;
     grid-template-columns: 1fr;
-    grid-template-rows: .03fr .5fr 1fr .05fr .1fr;
+    /*grid-template-rows: .03fr minmax(100px, .5fr) 1fr .1fr;*/
+    grid-template-rows: .03fr auto auto auto;
     grid-template-areas:
       "toolbar"
       "issueInfo"
       "list"
-      "actionButtons"
       "actionInputs"
   }
 
@@ -56,17 +55,16 @@
   grid-area: list;
 }
 
+.action-inputs {
+  grid-area: actionInputs;
+}
+
 .action-buttons{
-  grid-area: actionButtons;
   padding-right: 16px;
 }
 
 .action-buttons md-button {
   max-width: 100px;
-}
-
-.action-inputs {
-  grid-area: actionInputs;
 }
 
 /*end style for issue-messages-viewer*/
