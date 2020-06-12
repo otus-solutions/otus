@@ -21,7 +21,7 @@
 
   function Controller($mdDialog, DialogService, ISSUE_MESSAGES_VIEWER_CONSTANTS, IssueMessagesViewerService, LoadingScreenService) {
     const self = this;
-    let confirmCancelPreActivities;
+    let confirmChangeStatusData;
     let confirmSendReply;
     let invalidPreActivities;
 
@@ -37,6 +37,7 @@
     self.cancelReply = cancelReply;
     self.openStatusOptions = openStatusOptions;
     self.changeStatus = changeStatus;
+    self.cancelChangeStatus = cancelChangeStatus;
 
 
     function onInit(){
@@ -51,7 +52,7 @@
       self.currStatus = self.issue.status;
       console.log(self.currStatus);
 
-      self.statusOptions = IssueMessagesViewerService.getStatusActions(self.currStatus.value);
+      self.statusOptions = IssueMessagesViewerService.getStatusActions(self.currStatus);
 
       IssueMessagesViewerService.getAllItems()
         .then(response => {
@@ -91,19 +92,27 @@
     function changeStatus(){
       console.log(self.currStatus)
 
-      IssueMessagesViewerService.updateIssueStatus(self.issue, self.currStatus)
+      DialogService.showDialog(confirmChangeStatusData)
         .then(() => {
-          self.changingStatus = false;
-        })
-        .catch(e => console.log(e));
+          IssueMessagesViewerService.updateIssueStatus(self.issue, self.currStatus)
+            .then(() => onInit())
+            .catch(e => {
+              console.log(e);
+              self.changingStatus = false;
+            });
+        });
+    }
+
+    function cancelChangeStatus(){
+      self.changingStatus = false;
     }
 
     function _buildDialogs() {
-      confirmCancelPreActivities = {
+      confirmChangeStatusData = {
         dialogToTitle: 'Confirmação',
-        titleToText: 'Cancelamento da Lista de Formulários',
-        textDialog: 'Deseja sair do Gerenciador de Atividades ?',
-        ariaLabel: 'Confirmação de cancelamento',
+        titleToText: 'Atualização de status',
+        textDialog: 'Confirma a troca de status?',
+        ariaLabel: 'Confirmação de troca de status',
         buttons: _prepareButtons()
       };
 
