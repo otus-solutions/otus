@@ -1,11 +1,11 @@
 <div class="issue-messages-header" layout-margin flex>
   <div layout="row" layout-align="start center">
     <md-chips class="issue-messages-status">
-      <md-chip ng-style={{$ctrl.issue.status.color}}>{{$ctrl.issue.status.translatedStatus}}</md-chip>
+      <md-chip ng-style={{$ctrl.status.color}}>{{$ctrl.status.translatedStatus}}</md-chip>
     </md-chips>
   </div>
   <span class="issue-messages-datetime datetime-font-text" layout="row" layout-align="center center">
-    {{$ctrl.issue.creationDate}}
+    {{$ctrl.creationDate}}
   </span>
   <div layout="row" layout-align="end center">
     <md-button class="goback-button no-margin no-padding md-fab md-mini md-raised">
