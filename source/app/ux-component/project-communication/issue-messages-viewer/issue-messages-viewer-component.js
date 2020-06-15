@@ -39,10 +39,9 @@
     function onInit(){
       self.replying = false;
       self.items = [];
-      self.itemAttributes = {};//todo
+      self.itemAttributes = {};
 
       LoadingScreenService.start();
-      _buildDialogs();
 
       self.issue = IssueMessagesViewerService.getCurrIssue();
       self.currStatus = self.issue.status;
@@ -63,7 +62,11 @@
     }
 
     function sendReply(){
-      DialogService.showDialog(confirmSendReply).then(() => {
+      DialogService.showConfirmationDialog(
+        'Envio de resposta',
+        'Confirma o envio de mensagem?',
+        'Confirmação de envio')
+      .then(() => {
         IssueMessagesViewerService.createMessage(self.issue.id, self.replyContent)
           .then(() => onInit())
           .catch(e => {
@@ -81,36 +84,6 @@
     function changeStatus(statusValue){
       self.currStatus = statusValue;
       return IssueMessagesViewerService.updateIssueStatus(self.issue, self.currStatus);
-    }
-
-
-    function _buildDialogs() {
-      confirmSendReply = {
-        dialogToTitle: 'Confirmação',
-        titleToText: 'Envio de resposta',
-        textDialog: 'Confirma o envio de mensagem?',
-        ariaLabel: 'Confirmação de envio',
-        buttons: _prepareButtons()
-      };
-    }
-
-    function _prepareButtons() {
-      return [
-        {
-          message: 'Ok',
-          action: function () {
-            $mdDialog.hide()
-          },
-          class: 'md-raised md-primary'
-        },
-        {
-          message: 'Voltar',
-          action: function () {
-            $mdDialog.cancel()
-          },
-          class: 'md-raised md-no-focus'
-        }
-      ]
     }
 
   }
