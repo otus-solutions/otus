@@ -15,11 +15,10 @@
 
   Controller.$inject = [
     'dragulaService',
-    'otusjs.issueViewer.IssueViewerService',
-    'otusjs.deploy.FieldCenterRestService',
+    'otusjs.issueViewer.IssueViewerService'
   ];
 
-  function Controller(dragulaService, IssueViewerService, ProjectFieldCenterService) {
+  function Controller(dragulaService, IssueViewerService) {
     const self = this;
     const ISSUE_ORDER_FIELD = {
       CREATION_DATE: 'creationDate',
@@ -42,7 +41,7 @@
       clearAll();
       self.showCenterFilter = !IssueViewerService.center;
       if(self.showCenterFilter){
-        ProjectFieldCenterService.loadCenters().then(function (result) {
+        IssueViewerService.loadCenters().then(function (result) {
           self.centers = angular.copy(result).map(center => center.acronym).sort();
         });
       }
