@@ -7,30 +7,33 @@
       controller: 'issueInfoHeaderCtrl as $ctrl',
       templateUrl: 'app/ux-component/project-communication/issue-messages-viewer/issue-info-header/issue-info-header-template.html',
       bindings: {
-        changeStatus: '=',
-        statusOptions: '<'
+        changeStatus: '='
       }
     }).controller('issueInfoHeaderCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.issueMessagesViewer.IssueMessagesViewerService'
+    'otusjs.issueMessagesViewer.IssueMessagesViewerService',
+    'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(IssueMessagesViewerService) {
+  function Controller(IssueMessagesViewerService, ApplicationStateService) {
     const self = this;
 
     self.$onInit = onInit;
+    self.goBack = goBack;
     self.changeStatusTo = changeStatusTo;
     self.refresh = refresh;
+
 
     function onInit(){
       self.issue = IssueMessagesViewerService.getCurrIssue();
       self.creationDate = IssueMessagesViewerService.formatDate(new Date(self.issue.creationDate));
       self.status = IssueMessagesViewerService.formatStatus(self.issue.status);
+      self.statusOptions = IssueMessagesViewerService.getStatusActions(self.issue.status);
+    }
 
-      console.log('issueInfoHeaderCtrl.onInit')
-      console.log(JSON.stringify(self.status, null, 4))
-      console.log(JSON.stringify(self.statusOptions, null, 4))
+    function goBack(){
+      ApplicationStateService.activateIssueViewer();
     }
 
     function refresh(){

@@ -1,6 +1,5 @@
 <div class="issue-messages-header" layout-margin flex>
   <div layout="row" layout-align="start center">
-
     <div class="issue-messages-status" ng-model="$ctrl.status" ng-change="$ctrl.refresh()">
       <md-menu md-position-mode="target-right target">
         <md-chips ng-click="$mdMenu.open()">
@@ -8,7 +7,6 @@
             {{$ctrl.status.translatedStatus}}
           </md-chip>
         </md-chips>
-
         <md-menu-content>
           <md-menu-item ng-repeat="status in $ctrl.statusOptions" layout="column">
             <md-button  id="{{status.label}}" ng-click="$ctrl.changeStatusTo(status.value)">
@@ -19,13 +17,15 @@
         </md-menu-content>
       </md-menu>
     </div>
-
   </div>
+
   <span class="issue-messages-datetime datetime-font-text" layout="row" layout-align="center center">
     {{$ctrl.creationDate}}
   </span>
+
   <div layout="row" layout-align="end center">
-    <md-button class="goback-button no-margin no-padding md-fab md-mini md-raised">
+    <md-button class="goback-button no-margin no-padding md-fab md-mini md-raised"
+               ng-click="$ctrl.goBack()">
       <md-icon>reply</md-icon>
     </md-button>
   </div>
