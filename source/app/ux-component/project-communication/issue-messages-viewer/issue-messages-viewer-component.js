@@ -21,7 +21,6 @@
 
   function Controller($mdDialog, DialogService, ISSUE_MESSAGES_VIEWER_CONSTANTS, IssueMessagesViewerService, LoadingScreenService) {
     const self = this;
-    let confirmChangeStatusData;
     let confirmSendReply;
 
     self.viewerTitle = ISSUE_MESSAGES_VIEWER_CONSTANTS.PAGE_TITLE;
@@ -48,8 +47,6 @@
       self.issue = IssueMessagesViewerService.getCurrIssue();
       self.currStatus = self.issue.status;
 
-      _loadStatusOptions();
-
       IssueMessagesViewerService.getAllItems()
         .then(response => {
           self.items = response;
@@ -59,10 +56,6 @@
           console.log(error);
           LoadingScreenService.finish();
         });
-    }
-
-    function _loadStatusOptions(){
-      self.statusOptions = IssueMessagesViewerService.getStatusActions(self.currStatus);
     }
 
     function openReplyInput(){
@@ -87,20 +80,11 @@
 
     function changeStatus(statusValue){
       self.currStatus = statusValue;
-      console.log('changeStatus', self.currStatus)
-      _loadStatusOptions();
       return IssueMessagesViewerService.updateIssueStatus(self.issue, self.currStatus);
     }
 
-    function _buildDialogs() {
-      confirmChangeStatusData = {
-        dialogToTitle: 'Confirmação',
-        titleToText: 'Atualização de status',
-        textDialog: 'Confirma a troca de status?',
-        ariaLabel: 'Confirmação de troca de status',
-        buttons: _prepareButtons()
-      };
 
+    function _buildDialogs() {
       confirmSendReply = {
         dialogToTitle: 'Confirmação',
         titleToText: 'Envio de resposta',
@@ -108,7 +92,6 @@
         ariaLabel: 'Confirmação de envio',
         buttons: _prepareButtons()
       };
-
     }
 
     function _prepareButtons() {
