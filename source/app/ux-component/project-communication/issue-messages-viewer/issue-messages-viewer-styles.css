@@ -121,7 +121,6 @@
 
 .issue-messages-status md-chips-wrap{
   padding: 0px;
-  max-width: 90px;
 }
 
 .issue-messages-status md-chip{
@@ -152,7 +151,6 @@
 .status-options {
   min-width: 130px;
 }
-
 
 /*end style for issue-messages-header*/
 

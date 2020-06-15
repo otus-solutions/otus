@@ -23,7 +23,6 @@
     const self = this;
     let confirmChangeStatusData;
     let confirmSendReply;
-    let invalidPreActivities;
 
     self.viewerTitle = ISSUE_MESSAGES_VIEWER_CONSTANTS.PAGE_TITLE;
     self.itemComponentName = 'otusIssueMessageItem';
@@ -35,13 +34,11 @@
     self.openReplyInput = openReplyInput;
     self.sendReply = sendReply;
     self.cancelReply = cancelReply;
-    self.openStatusOptions = openStatusOptions;
     self.changeStatus = changeStatus;
-    self.cancelChangeStatus = cancelChangeStatus;
 
 
     function onInit(){
-      self.replying = self.changingStatus = false;
+      self.replying = false;
       self.items = [];
       self.itemAttributes = {};//todo
 
@@ -50,9 +47,8 @@
 
       self.issue = IssueMessagesViewerService.getCurrIssue();
       self.currStatus = self.issue.status;
-      console.log(self.currStatus);
 
-      self.statusOptions = IssueMessagesViewerService.getStatusActions(self.currStatus);
+      _loadStatusOptions();
 
       IssueMessagesViewerService.getAllItems()
         .then(response => {
@@ -63,6 +59,10 @@
           console.log(error);
           LoadingScreenService.finish();
         });
+    }
+
+    function _loadStatusOptions(){
+      self.statusOptions = IssueMessagesViewerService.getStatusActions(self.currStatus);
     }
 
     function openReplyInput(){
@@ -85,26 +85,11 @@
       self.replying = false;
     }
 
-    function openStatusOptions(){
-      self.changingStatus = true;
-    }
-
-    function changeStatus(){
-      console.log(self.currStatus)
-
-      DialogService.showDialog(confirmChangeStatusData)
-        .then(() => {
-          IssueMessagesViewerService.updateIssueStatus(self.issue, self.currStatus)
-            .then(() => onInit())
-            .catch(e => {
-              console.log(e);
-              self.changingStatus = false;
-            });
-        });
-    }
-
-    function cancelChangeStatus(){
-      self.changingStatus = false;
+    function changeStatus(statusValue){
+      self.currStatus = statusValue;
+      console.log('changeStatus', self.currStatus)
+      _loadStatusOptions();
+      return IssueMessagesViewerService.updateIssueStatus(self.issue, self.currStatus);
     }
 
     function _buildDialogs() {
@@ -124,19 +109,6 @@
         buttons: _prepareButtons()
       };
 
-      invalidPreActivities = {
-        dialogToTitle: 'Pendência de Informações',
-        titleToText: 'Detecção de Formulários Incompletos',
-        textDialog: 'Retorne para lista e preencha os campos obrigatórios',
-        ariaLabel: 'Aviso de formulários inválidos',
-        buttons: [{
-          message: 'Voltar',
-          action: function () {
-            $mdDialog.cancel()
-          },
-          class: 'md-raised md-no-focus'
-        }]
-      };
     }
 
     function _prepareButtons() {

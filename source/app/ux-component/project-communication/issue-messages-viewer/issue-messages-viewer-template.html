@@ -12,7 +12,9 @@
     </div>
   </otus-dashboard-toolbar>
 
-  <otus-issue-info-header></otus-issue-info-header>
+  <otus-issue-info-header change-status="$ctrl.changeStatus"
+                          status-options="$ctrl.statusOptions">
+  </otus-issue-info-header>
 
   <otus-generic-list items="$ctrl.items"
                      item-component-name="$ctrl.itemComponentName"
@@ -22,8 +24,7 @@
   <div class="action-inputs">
 
     <div class="action-buttons" layout="row" layout-align="end center"
-         ng-if="!$ctrl.replying && !$ctrl.changingStatus">
-      <md-button class="md-primary" ng-click="$ctrl.openStatusOptions()">TROCAR STATUS</md-button>
+         ng-if="!$ctrl.replying">
       <md-button class="md-accent md-raised" ng-click="$ctrl.openReplyInput()">RESPONDER</md-button>
     </div>
 
@@ -41,27 +42,6 @@
         <md-button class="send-reply-button md-primary md-raised" id="sendReplyButton"
                    ng-click="$ctrl.sendReply()">ENVIAR</md-button>
       </div>
-    </div>
-
-    <div layout="row" layout-align="center center" layout-padding
-         ng-if="$ctrl.changingStatus">
-      <md-input-container>
-        <md-select aria-label="Status" ng-model="$ctrl.currStatus" class="status-options">
-          <md-option ng-repeat="status in $ctrl.statusOptions" ng-value="status.value">
-            {{status.label}}
-          </md-option>
-        </md-select>
-        <md-tooltip md-direction="top">Opções de status</md-tooltip>
-      </md-input-container>
-
-      <div layout="column" layout-align="center end">
-        <md-button class="send-reply-button md-warn" id="cancelChangeStatusButton"
-                   ng-click="$ctrl.cancelChangeStatus()">CANCELAR</md-button>
-
-        <md-button class="send-reply-button md-primary" id="changeStatusButton"
-                   ng-click="$ctrl.changeStatus()">TROCAR</md-button>
-      </div>
-    </div>
 
   </div>
 
