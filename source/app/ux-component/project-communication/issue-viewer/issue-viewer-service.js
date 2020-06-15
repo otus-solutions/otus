@@ -13,12 +13,13 @@
     'otusjs.project.communication.repository.ProjectCommunicationRepositoryService',
     'otusjs.otus.uxComponent.IssueFactory',
     'otusjs.participant.business.ParticipantManagerService',
-    'otusjs.otus.dashboard.core.ContextService'
+    'otusjs.otus.dashboard.core.ContextService',
+    'otusjs.deploy.FieldCenterRestService',
   ];
 
   function Service($q, $window, GenericListViewerService, ISSUE_VIEWER_LABELS,
                    ProjectCommunicationRepositoryService, IssueFactory,
-                   ParticipantManagerService, ContextService) {
+                   ParticipantManagerService, ContextService, ProjectFieldCenterService) {
 
     const self = this;
     const INITIAL_CURRENT_QUANTITY = 0;
@@ -33,6 +34,7 @@
 
     self.initialize = initialize;
     self.prepareData = prepareData;
+    self.loadCenters = loadCenters;
     self.translateStatus = translateStatus;
     self.storageCurrentIssues = storageCurrentIssues;
     self.getCurrStoragedIssue = getCurrStoragedIssue;
@@ -66,6 +68,8 @@
     }
 
     function getAllItems(searchSettings) {
+      console.log('IssuesListViewer.getAllItems: searchSetting\n', JSON.stringify(searchSettings, null, 2))
+
       const items = JSON.parse($window.sessionStorage.getItem(ISSUE_LIST_STORAGE_KEY));
       if(items){
         const defer = $q.defer();
@@ -75,9 +79,48 @@
         return defer.promise;
       }
 
+      _parseFilterObject(searchSettings);
+
       return ProjectCommunicationRepositoryService.filter(searchSettings)
         .then(data => childParseItemsMethod(data))
         .catch(err => console.log("error:" + JSON.stringify(err)))
+    }
+
+    function _parseFilterObject(searchSettings){
+      searchSettings.filter.rn = 1092092;//todo temp
+
+      let promises = [];
+      if(searchSettings.filter.rn){
+        promises.push(ParticipantManagerService.getParticipant(searchSettings.filter.rn));
+      }
+      if(self.center){
+        promises.push(ProjectFieldCenterService.loadCenters());
+      }
+
+      let defer = $q.defer();
+      let searchSettingsParsed = angular.copy(searchSettings);
+
+      $q.all(promises).then(response => {
+        let index = 0;
+        if(searchSettings.filter.rn){
+          delete searchSettingsParsed.filter.rn;
+          searchSettingsParsed.filter.sender = response[index++].id;
+        }
+        if(self.center){
+          let centerId = response[index].find(center => center.acronym === searchSettings.filter.center)._id;
+          delete searchSettingsParsed.filter.center;
+          searchSettingsParsed.filter.group = centerId;
+        }
+
+        console.log(response)
+        console.log(searchSettingsParsed);
+
+        defer.resolve(searchSettingsParsed)
+      })
+    }
+
+    function loadCenters(){
+      return ProjectFieldCenterService.loadCenters();
     }
 
     function childParseItemsMethod(genericListJsonArray) {
