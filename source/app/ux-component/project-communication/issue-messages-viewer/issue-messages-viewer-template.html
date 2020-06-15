@@ -12,8 +12,7 @@
     </div>
   </otus-dashboard-toolbar>
 
-  <otus-issue-info-header change-status="$ctrl.changeStatus"
-                          status-options="$ctrl.statusOptions">
+  <otus-issue-info-header change-status="$ctrl.changeStatus">
   </otus-issue-info-header>
 
   <otus-generic-list items="$ctrl.items"
@@ -22,7 +21,6 @@
   </otus-generic-list>
 
   <div class="action-inputs">
-
     <div class="action-buttons" layout="row" layout-align="end center"
          ng-if="!$ctrl.replying">
       <md-button class="md-accent md-raised" ng-click="$ctrl.openReplyInput()">RESPONDER</md-button>
@@ -30,8 +28,12 @@
 
     <div layout="column" layout-align="center center" layout-padding
          ng-if="$ctrl.replying">
-      <textarea class="reply-box" id="replyInputBox"
-                rows="5" max-rows="20" cols="50"
+      <textarea class="reply-box anchor" id="replyInputBoxXS" hide-gt-xs
+                rows="5" max-rows="20" cols="30"
+                ng-model="$ctrl.replyContent"
+                placeholder="Insira sua resposta aqui"></textarea>
+      <textarea class="reply-box anchor" id="replyInputBox" hide-xs
+                rows="8" max-rows="20" cols="80"
                 ng-model="$ctrl.replyContent"
                 placeholder="Insira sua resposta aqui"></textarea>
 
@@ -42,7 +44,6 @@
         <md-button class="send-reply-button md-primary md-raised" id="sendReplyButton"
                    ng-click="$ctrl.sendReply()">ENVIAR</md-button>
       </div>
-
   </div>
 
 </md-content>
