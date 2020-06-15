@@ -85,6 +85,7 @@
     function updateStatus(issue){
       const updatedIssue = angular.copy(issue);
       delete updatedIssue.participant;
+      console.log(`http://localhost:3037/project-communication/issues/${issue.id}\n`, JSON.stringify(updatedIssue, null, 2))
       let url = `http://localhost:3037/project-communication/issues/${issue.id}`;
       return $http.put(url, updatedIssue);
     }

@@ -36,8 +36,7 @@
 
     function _parseItems(genericListJsonArray) {
       let parsedItems = [];
-      genericListJsonArray
-        .sort(compareIssueMessages)
+      genericListJsonArray.sort(compareIssueMessages)
         .forEach(item => {
           ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender)
             .then(sender => parsedItems.push(IssueMessageFactory.fromJsonObject(item, sender)));
@@ -93,8 +92,6 @@
     }
 
     function updateIssueStatus(issue, newStatusValue){
-      console.log('service.updateStatus', issue.id)
-
       let updateMethod = null;
 
       switch (newStatusValue) {
@@ -110,6 +107,8 @@
           updateMethod = ProjectCommunicationRepositoryService.updateFinalized;
       }
 
+      let oldStatus = issue.status;
+      issue.status = newStatusValue;
       let arg = issue; //todo issue.id
 
       let defer = $q.defer();
@@ -120,15 +119,13 @@
           defer.resolve();
         })
       }
-      catch (e) {
-        console.log(error);
-        defer.reject();
+      catch (error) {
+        issue.status = oldStatus;
+        defer.reject(error);
       }
 
       return defer.promise;
     }
-
-
 
   }
 
