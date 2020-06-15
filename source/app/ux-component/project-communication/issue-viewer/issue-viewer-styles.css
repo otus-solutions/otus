@@ -100,12 +100,11 @@ icon-move {
 @media screen and (min-width: 360px) {
   .issue-item-layout {
     display: grid;
-    grid-template-columns: 0.8fr 1fr 1.4fr 1.8fr;
+    grid-template-columns: auto auto auto auto;
     grid-template-rows: 1fr;
     grid-template-areas:
       "centerName   rn              creationDate  status"
-      "centerName   rn              creationDate  seeLastMsg"
-      "senderName   senderName      senderName    senderName"
+      "senderName   senderName      senderName    seeLastMsg"
       "title        title           title         title"
     ;
   }
@@ -118,7 +117,7 @@ icon-move {
     grid-template-rows: .1fr .1fr;
     grid-template-areas:
       "centerName   senderName    creationDate    status"
-      "rn           title         .               seeLastMsg"
+      "rn           title         title           seeLastMsg"
   ;
   }
 }
@@ -168,9 +167,12 @@ icon-move {
   margin: 0px;
 }
 
-/*.see-last-msg {*/
-/*  grid-area: seeLastMsg;*/
-/*}*/
+.see-last-msg {
+  grid-area: seeLastMsg;
+  padding: 0px;
+  margin: 0px;
+  min-width: 44px;
+}
 
 .issue-item-layout md-button {
   grid-area: seeLastMsg;
@@ -237,7 +239,7 @@ icon-move {
 }
 .md-accordion .activeContent {
   height:auto;
-  padding:20px;
+  padding: 0px 12px 20px 12px;
   display:block;
 }
 
@@ -249,14 +251,12 @@ icon-move {
 @media screen and (min-width: 360px) {
   .issue-item-text-layout {
     display: grid;
-    grid-template-columns: 0.4fr 0.4fr 1fr 1.4fr 1.8fr;
-    grid-template-rows: 1fr;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
     grid-template-areas:
-      "centerName   rn              creationDate  status"
-      "centerName   rn              creationDate  seeLastMsg"
-      "senderName   senderName      senderName    senderName"
-      "title        title           title         title"
-  ;
+      "text"
+      "seeMoreButton"
+    ;
   }
 }
 
@@ -288,6 +288,7 @@ icon-move {
 
 .see-issue {
   grid-area: seeMoreButton;
+  min-width: 130px;
 }
 
 /*end style for issue-item*/

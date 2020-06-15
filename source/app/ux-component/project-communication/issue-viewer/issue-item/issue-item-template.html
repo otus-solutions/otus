@@ -44,9 +44,11 @@
       </md-chips>
     </div>
 
-    <div class="see-last-msg md-mini" layout="row" layout-align="end center">
-        <md-button ng-click="$ctrl.expanded = !$ctrl.expanded">
-          <md-icon>launch</md-icon>
+    <div layout="row" layout-align="end center">
+        <md-button class="see-last-msg md-mini" ng-click="$ctrl.showLastMessage()">
+          <md-icon>{{$ctrl.showingLastMessageIcon.icon}}
+            <md-tooltip md-direction="left">{{$ctrl.showingLastMessageIcon.tooltip}}</md-tooltip>
+          </md-icon>
         </md-button>
     </div>
 
@@ -56,8 +58,10 @@
 
   <div ng-class="{dataContent:true, activeContent:$ctrl.expanded}">
     <div class="issue-item-text-layout">
-      <span class="issue-text-layout">{{$ctrl.item.text}}</span>
-      <md-button class="see-issue" ng-click="$ctrl.openIssueMessages()">Ver mensagens</md-button>
+      <span class="issue-text-layout" layout-gt-xs="row" layout-align-gt-xs="start center">
+        {{$ctrl.item.text}}
+      </span>
+      <md-button class="md-primary see-issue" ng-click="$ctrl.openIssueMessages()">Ver mensagens</md-button>
     </div>
   </div>
 

@@ -20,11 +20,25 @@
   function Controller(IssueViewerService, ApplicationStateService) {
     const self = this;
 
+    const visibilityIcon = {
+      'true': {
+        icon: 'visibility',
+        tooltip: 'Ocultar'
+      },
+      'false': {
+        icon: 'visibility_off',
+        tooltip: 'Mostrar'
+      }
+    };
+
     self.$onInit = onInit;
     self.openIssueMessages = openIssueMessages;
+    self.showLastMessage = showLastMessage;
 
     function onInit() {
       self.expanded = false;
+      self.showingLastMessageIcon = visibilityIcon['false'];
+
       self.rn = self.item.participant.rn;
       self.name = _capitalizeName(self.item.participant.name);
       self.center = self.item.participant.center;
@@ -40,6 +54,11 @@
     function openIssueMessages(){
       IssueViewerService.storageCurrentIssues(self.item);
       ApplicationStateService.activateIssueMessagesViewer();
+    }
+
+    function showLastMessage(){
+      self.expanded = !self.expanded;
+      self.showingLastMessageIcon = visibilityIcon[self.expanded.toString()];
     }
 
   }
