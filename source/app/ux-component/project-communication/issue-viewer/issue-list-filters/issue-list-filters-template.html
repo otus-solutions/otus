@@ -47,7 +47,8 @@
     </span>
   </div>
 
-  <div class="center-name-filter">
+
+  <div class="center-name-filter" ng-if="$ctrl.showCenterFilter">
     <span ng-if="!$ctrl.inputViewState[$ctrl.itemAttributes.center.title]">
       <otus-button-over-filter filter-item="$ctrl.itemAttributes.center"
                                change-input-view-state="$ctrl.changeInputViewState">
@@ -71,4 +72,5 @@
       </otus-dropdown-filter>
     </span>
   </div>
+
 </md-card>

@@ -55,9 +55,15 @@
     }
 
     function prepareData(){
+      let defer = $q.defer();
       ContextService.getLoggedUser()
-        .then(user => self.center = user.fieldCenter.acronym);
-      return ParticipantManagerService.setup();
+        .then(user => {
+          self.center = user.fieldCenter.acronym;
+          console.log(user.fieldCenter)
+          defer.resolve(ParticipantManagerService.setup())
+        })
+        .catch(err => defer.reject(err));
+      return defer.promise;
     }
 
     function getAllItems(searchSettings) {
@@ -69,6 +75,8 @@
         $window.sessionStorage.removeItem(CURR_ISSUE_STORAGE_KEY);
         return defer.promise;
       }
+
+      console.log(self.center)
 
       return ProjectCommunicationRepositoryService.filter(searchSettings)
         .then(data => childParseItemsMethod(data))

@@ -36,15 +36,16 @@
     self.clearAll = clearAll;
     self.allStatus = allStatus;
     self.changePaginationViewState = changePaginationViewState;
-
     self.viewerServiceGetChecker = IssueViewerService.getChecker;
 
     function onInit(){
       clearAll();
-      
-      ProjectFieldCenterService.loadCenters().then(function (result) {
-        self.centers = angular.copy(result).map(center => center.acronym).sort();
-      });
+      self.showCenterFilter = !IssueViewerService.center;
+      if(self.showCenterFilter){
+        ProjectFieldCenterService.loadCenters().then(function (result) {
+          self.centers = angular.copy(result).map(center => center.acronym).sort();
+        });
+      }
     }
 
     function getDefaultOrderFields(){
