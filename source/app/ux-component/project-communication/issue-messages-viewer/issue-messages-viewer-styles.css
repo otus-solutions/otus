@@ -4,7 +4,6 @@
     background: #0d3349;
     display: grid;
     height: 100vh;
-    /*width: 100vw;*/
     grid-template-columns: 1fr;
     grid-template-rows: .1fr .3fr 1.7fr .1fr;
     grid-template-areas:
@@ -31,7 +30,6 @@
     height: 100vh;
     width: 100vw;
     grid-template-columns: 1fr;
-    /*grid-template-rows: .03fr minmax(100px, .5fr) 1fr .1fr;*/
     grid-template-rows: .03fr auto auto auto;
     grid-template-areas:
       "toolbar"
@@ -141,7 +139,6 @@
 
 .goback-button {
   grid-area: goBackButton;
-  /*max-width: 30px;*/
 }
 
 .send-reply-button{
