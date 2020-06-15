@@ -59,7 +59,6 @@
       ContextService.getLoggedUser()
         .then(user => {
           self.center = user.fieldCenter.acronym;
-          console.log(user.fieldCenter)
           defer.resolve(ParticipantManagerService.setup())
         })
         .catch(err => defer.reject(err));
@@ -75,8 +74,6 @@
         $window.sessionStorage.removeItem(CURR_ISSUE_STORAGE_KEY);
         return defer.promise;
       }
-
-      console.log(self.center)
 
       return ProjectCommunicationRepositoryService.filter(searchSettings)
         .then(data => childParseItemsMethod(data))
