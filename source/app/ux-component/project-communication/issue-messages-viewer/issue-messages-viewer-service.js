@@ -109,11 +109,10 @@
 
       let oldStatus = issue.status;
       issue.status = newStatusValue;
-      let arg = issue; //todo issue.id
 
       let defer = $q.defer();
       try{
-        updateMethod(arg).then(() => {
+        updateMethod(issue.id).then(() => {
           IssueViewerService.updateCurrStoragedIssueStatus(newStatusValue);
           issue.status = newStatusValue;
           defer.resolve();
