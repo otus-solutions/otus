@@ -57,10 +57,10 @@
     function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
 
-      Application
-        .isDeployed()
-        .then(function () {
-          UserAccessPermissionService.getCheckingMonitoringPermission().then(permission => {
+      UserAccessPermissionService.getCheckingMonitoringPermission().then(permission => {
+        Application
+          .isDeployed()
+          .then(function () {
             try {
               if (!permission.activityFlagsAccess) {
                 deferred.resolve(STATE.DASHBOARD);
@@ -71,7 +71,7 @@
               deferred.resolve(STATE.LOGIN);
             }
           });
-        });
+      });
 
       return deferred.promise;
     }

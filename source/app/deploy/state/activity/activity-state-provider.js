@@ -33,20 +33,20 @@
 
     function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
-      Application
-        .isDeployed()
-        .then(function () {
-          UserAccessPermissionService.getCheckingActivityPermission().then(permission => {
-            try {
-              if (!permission.participantActivityAccess) {
-                deferred.resolve(STATE.DASHBOARD);
-                return;
+      UserAccessPermissionService.getCheckingActivityPermission().then(permission => {
+        Application
+          .isDeployed()
+          .then(function () {
+              try {
+                if (!permission.participantActivityAccess) {
+                  deferred.resolve(STATE.DASHBOARD);
+                  return;
+                }
+                deferred.resolve();
+              } catch (e) {
+                deferred.resolve(STATE.LOGIN);
               }
-              deferred.resolve();
-            } catch (e) {
-              deferred.resolve(STATE.LOGIN);
-            }
-          });
+            });
         });
 
       return deferred.promise;

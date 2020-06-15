@@ -31,20 +31,20 @@
       function _redirect($q, Application, UserAccessPermissionService) {
         var deferred = $q.defer();
 
-        Application
-          .isDeployed()
-          .then(function () {
-            UserAccessPermissionService.getCheckingMonitoringPermission().then(permission => {
-              try {
-                if (!permission.centerActivitiesAccess) {
-                  deferred.resolve(STATE.DASHBOARD);
-                  return;
+        UserAccessPermissionService.getCheckingMonitoringPermission().then(permission => {
+          Application
+            .isDeployed()
+            .then(function () {
+                try {
+                  if (!permission.centerActivitiesAccess) {
+                    deferred.resolve(STATE.DASHBOARD);
+                    return;
+                  }
+                  deferred.resolve();
+                } catch (e) {
+                  deferred.resolve(STATE.LOGIN);
                 }
-                deferred.resolve();
-              } catch (e) {
-                deferred.resolve(STATE.LOGIN);
-              }
-            });
+              });
           });
 
         return deferred.promise;
