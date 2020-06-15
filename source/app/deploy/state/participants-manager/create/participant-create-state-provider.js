@@ -42,7 +42,7 @@
           .isDeployed()
           .then(function () {
               try {
-                if (!permission.examSendingAccess) {
+                if (!permission.participantCreateAccess) {
                   deferred.resolve(STATE.DASHBOARD);
                 }
                 deferred.resolve();
