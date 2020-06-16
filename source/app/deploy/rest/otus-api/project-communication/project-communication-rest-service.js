@@ -25,9 +25,7 @@
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
     self.updateFinalized = updateFinalized;
-    self.listIssue = listIssue;
     self.filter = filter;
-    self.getLastIssueMessage = getLastIssueMessage;
     self.getAllIssueMessages = getAllIssueMessages;
     self.getIssueSenderInfo = getIssueSenderInfo;
 
@@ -39,11 +37,10 @@
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       // return _rest.createMessage({id: issueId}, messageObject).$promise;
 
-      messageObject.sender = "5d1bbabe995e20d290d94e49";
+      messageObject.sender = "";
       let url = `http://localhost:3037/project-communication/issues/${issueId}/messages`;
       return $http.post(url, messageObject);
     }
-
 
     function createIssue(jsonProjectCommunication){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
@@ -76,7 +73,7 @@
 
     function updateFinalized(foundProjectCommunicationId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      // return _rest.updateFinalized({id: foundProjectCommunicationId}).$promise;//todo descomentar
+      // return _rest.updateFinalize({id: foundProjectCommunicationId}).$promise;//todo descomentar
 
       return updateStatus(foundProjectCommunicationId);
     }
@@ -90,11 +87,6 @@
       return $http.put(url, updatedIssue);
     }
 
-    function listIssue(){
-      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.listIssue().$promise;
-    }
-
     function filter(searchSettings){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       //return _rest.filter(searchSettings).$promise;//todo descomentar
@@ -104,16 +96,9 @@
     }
 
     //todo
-    function getLastIssueMessage(issueId){
-      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-
-      let url = `http://localhost:3037/project-communication/issues/${issueId}/last-message`;
-      return $http.get(url);
-    }
-
-    //todo
     function getAllIssueMessages(issueId, limit){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      // return _rest.getMessageByIdLimit({id: issueId, limit: limit});
 
       let url = `http://localhost:3037/project-communication/issues/${issueId}/messages`;
       return $http.get(url);
@@ -122,6 +107,7 @@
     //todo
     function getIssueSenderInfo(senderId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      // return _rest.getSenderById({id: senderId});
 
       let url = `http://localhost:3037/project-communication/senders/${senderId}`;
       return $http.get(url);

@@ -20,9 +20,7 @@
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
     self.updateFinalized = updateFinalized;
-    self.listIssue = listIssue;
     self.filter = filter;
-    self.getLastIssueMessage = getLastIssueMessage;
     self.getAllIssueMessages = getAllIssueMessages;
     self.getIssueSenderInfo = getIssueSenderInfo;
 
@@ -54,16 +52,8 @@
       return ProjectCommunicationCollectionService.updateFinalized(id);
     }
 
-    function listIssue() {
-      return ProjectCommunicationCollectionService.listIssue();
-    }
-
     function filter(searchSettings) {
       return ProjectCommunicationCollectionService.filter(searchSettings);
-    }
-
-    function getLastIssueMessage(issueId) {
-      return ProjectCommunicationCollectionService.getLastIssueMessage(issueId);
     }
 
     function getAllIssueMessages(issueId, limit) {

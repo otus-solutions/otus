@@ -21,9 +21,7 @@
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
     self.updateFinalized = updateFinalized;
-    self.listIssue = listIssue;
     self.filter = filter;
-    self.getLastIssueMessage = getLastIssueMessage;
     self.getAllIssueMessages = getAllIssueMessages;
     self.getIssueSenderInfo = getIssueSenderInfo;
 
@@ -69,23 +67,11 @@
         .then(response => response.data);
     }
 
-    function listIssue() {
-      return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.listIssue())
-        .then(response => response.data);
-    }
-
     function filter(searchSettings) {
       return _remoteStorage.whenReady()
         .then(remoteStorage => remoteStorage.filter(searchSettings))
         // .then(response => JSON.parse(response.data.data));//todo check if will be data.data and a string?
         .then(response => response.data);//todo temp
-    }
-
-    function getLastIssueMessage(issueId) {
-      return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.getLastIssueMessage(issueId))
-        .then(response => response.data[0]);
     }
 
     function getAllIssueMessages(issueId, limit) {

@@ -19,7 +19,6 @@
     self.getProjectCommunicationByIdLimit = getProjectCommunicationByIdLimit;
     self.updateReopen = updateReopen;
     self.updateClose = updateClose;
-    self.listIssue = listIssue;
     self.filter = filter;
 
     function createMessage(ProjectCommunication) {
@@ -44,10 +43,6 @@
 
     function updateClose(foundProjectCommunicationId){
       return ProjectCommunicationRepositoryService.updateClose(foundProjectCommunicationId);
-    }
-
-    function listIssue(){
-      return ProjectCommunicationRepositoryService.listIssue();
     }
 
     function filter(searchSettings){
