@@ -11,7 +11,7 @@
         viewerTitle: '<',
         itemComponentName: '<',
         filtersComponentName: '<',
-        showHelper: '='
+        helpData: '<'
       }
     }).controller('genericListViewerCtrl', Controller);
 
@@ -22,6 +22,17 @@
 
   function Controller(GENERIC_LIST_VIEWER_LABELS, LoadingScreenService) {
     const self = this;
+    const HELP_BUTTON = {
+      'true': {
+        icon: 'help',
+        tooltip: 'Ocultar Ajuda'
+      },
+      'false': {
+        icon: 'help_outline',
+        tooltip: 'Mostrar Ajuda'
+      }
+    };
+
     self.items = [];
     self.paginatorActive = false;
     self.GENERIC_LIST_VIEWER_LABELS = GENERIC_LIST_VIEWER_LABELS;
@@ -29,10 +40,13 @@
 
     self.$onInit = onInit;
     self.getAllItems = getAllItems;
+    self.showHelp = showHelp;
 
     function onInit() {
       self.searchSettings = self.viewerService.getSearchSettings();
       self.itemAttributes = self.viewerService.getItemAttributes();
+      self.showingHelp = false;
+      self.helpButton = HELP_BUTTON[self.showingHelp.toString()];
 
       if(self.viewerService.needPreparations){
         LoadingScreenService.start();
@@ -68,6 +82,11 @@
         self.stuntmanSearchSettings = null;
       }
       self.stuntmanSearchSettings = angular.copy(searchSettings);
+    }
+
+    function showHelp(){
+      self.showingHelp = !self.showingHelp;
+      self.helpButton = HELP_BUTTON[self.showingHelp.toString()];
     }
   }
 

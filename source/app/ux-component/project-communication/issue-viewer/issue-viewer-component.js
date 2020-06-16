@@ -11,11 +11,10 @@
 
   Controller.$inject = [
     '$mdDialog',
-    'otusjs.issueViewer.IssueViewerService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.issueViewer.IssueViewerService'
   ];
 
-  function Controller($mdDialog, IssueViewerService, DialogService) {
+  function Controller($mdDialog, IssueViewerService) {
     const self = this;
 
     self.paginatorActive = false;
@@ -23,15 +22,12 @@
     self.viewerService = IssueViewerService;
     self.itemComponentName = 'otusIssueItem';
     self.filtersComponentName = 'otusIssuesListFilters';
-    self.showHelper = showHelper;
 
+    self.$onInit = onInit;
 
-    function showHelper(){
-      const data = Object.values(IssueViewerService.LABELS.ISSUE_ATTRIBUTES)
+    function onInit(){
+      self.helpData = Object.values(IssueViewerService.LABELS.ISSUE_ATTRIBUTES)
         .filter(obj => obj.TITLE !== IssueViewerService.LABELS.ISSUE_ATTRIBUTES.STATUS.TITLE);
-
-      DialogService.showCustomizedDialog(data,
-        'app/ux-component/project-communication/issue-viewer/issue-viewer-helper-template.html')
     }
   }
 

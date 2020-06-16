@@ -4,11 +4,11 @@
     background: #0d3349;
     display: grid;
     height: 100vh;
-    /*width: 100vw;*/
     grid-template-columns: 1fr;
-    grid-template-rows: .1fr .1fr 1fr .05fr;
+    grid-template-rows: .1fr .5fr .1fr 1fr .05fr;
     grid-template-areas:
       "toolbar"
+      "help"
       "control"
       "list"
       "paginator"
@@ -21,9 +21,10 @@
     height: 100vh;
     width: 100vw;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: .03fr .1fr 1fr .05fr;
+    grid-template-rows: .03fr .03fr .1fr 1fr .05fr;
     grid-template-areas:
       "toolbar toolbar   toolbar   toolbar"
+      "help    help      help      help"
       "control control   control   control"
       "list    list      list      list"
       ".       .         .         paginator"
@@ -36,12 +37,13 @@
     height: 100vh;
     width: 100vw;
     grid-template-columns: repeat(4, 1fr) .7fr;
-    grid-template-rows: .03fr .1fr 1fr .05fr;
+    grid-template-rows: .03fr .03fr .1fr 1fr .05fr;
     grid-template-areas:
-      "toolbar toolbar toolbar toolbar     toolbar"
-      "control control control control     control"
-      "list    list    list      list      list"
-      ".       .       .         .         paginator"
+      "toolbar toolbar toolbar toolbar  toolbar"
+      "help    help    help    help     help"
+      "control control control control  control"
+      "list    list    list      list   list"
+      ".       .       .         .      paginator"
   }
 }
 
@@ -62,6 +64,15 @@
   max-height: 36px;
 }
 
+.generic-list-help {
+  grid-area: help;
+  padding: 8px;
+}
+
+.generic-list-help-item {
+  padding: 0px;
+  margin-right: 16px;
+}
 /*end style for generic-viewer-component*/
 
 
