@@ -35,13 +35,19 @@
     }
 
     function _parseItems(genericListJsonArray) {
-      let parsedItems = [];
-      genericListJsonArray.sort(compareIssueMessages)
-        .forEach(item => {
-          ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender)
-            .then(sender => parsedItems.push(IssueMessageFactory.fromJsonObject(item, sender)));
-        });
-      return parsedItems;
+      let defer = $q.defer();
+      let promises = genericListJsonArray.sort(compareIssueMessages)
+        .map(item => ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender));
+
+      $q.all(promises).then(senders => {
+        let parsedItems = [];
+        for (let i = 0; i < genericListJsonArray.length; i++) {
+          parsedItems.push(IssueMessageFactory.fromJsonObject(genericListJsonArray[i], senders[i]))
+        }
+        defer.resolve(parsedItems);
+      }).catch(err => defer.reject(err));
+
+      return defer.promise;
     }
 
     function compareIssueMessages(a, b){
