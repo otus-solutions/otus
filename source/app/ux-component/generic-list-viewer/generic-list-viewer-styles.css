@@ -77,7 +77,7 @@
 
 
 /*begin style for generic-list-control*/
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 360px) {
   .generic-list-control-layout {
     width: 98vw;
     display: grid;
