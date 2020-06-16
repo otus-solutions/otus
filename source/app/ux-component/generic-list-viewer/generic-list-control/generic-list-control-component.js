@@ -22,12 +22,23 @@
 
   function Controller(GENERIC_LIST_VIEWER_LABELS, HtmlBuilderService) {
     const self = this;
-    self.GENERIC_LIST_VIEWER_LABELS = GENERIC_LIST_VIEWER_LABELS;
+    self.LABELS = GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL;
+
+    const showHideFilterIcon = {
+      'true': {
+        icon: 'visibility',
+        tooltip: GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL.HIDDEN_FILTERS
+      },
+      'false': {
+        icon: 'visibility_off',
+        tooltip: GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL.ENABLED_FILTERS
+      }
+    };
+
     self.filtersViewEnable = false;
 
     self.$onInit = onInit;
-    self.openFilters = openFilters;
-    self.closeFilters = closeFilters;
+    self.showOrHideFilters = showOrHideFilters;
 
 
     function onInit(){
@@ -37,14 +48,13 @@
         '                             search-settings="$ctrl.searchSettings"' +
         '                             item-attributes="$ctrl.itemAttributes"' +
         '                             paginator-active="$ctrl.paginatorActive"/>';
+
+      self.filtersIcon = showHideFilterIcon[self.filtersViewEnable];
     }
 
-    function openFilters() {
-      self.filtersViewEnable = true;
-    }
-
-    function closeFilters() {
-      self.filtersViewEnable = false;
+    function showOrHideFilters(){
+      self.filtersViewEnable = !self.filtersViewEnable;
+      self.filtersIcon = showHideFilterIcon[self.filtersViewEnable];
     }
 
   }
