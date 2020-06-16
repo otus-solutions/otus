@@ -34,6 +34,7 @@ describe('genericViewComponent_UnitTest_Suite', () => {
   it('ctrl_methods_existence_check', () => {
     expect(ctrl.$onInit).toBeDefined();
     expect(ctrl.getAllItems).toBeDefined();
+    expect(ctrl.showHelp).toBeDefined();
   });
 
   it('onInit_method_should_evoke_getAllItems_from_viewerService_passed_by_bind', () => {
@@ -60,6 +61,12 @@ describe('genericViewComponent_UnitTest_Suite', () => {
     ctrl.getAllItems(searchSettings);
     Mock.scope.$digest();
     expect(ctrl.viewerService.getAllItems).toHaveBeenCalledTimes(2);
+  });
+
+  it('showHelp_method_should_change_showingHelp_flag_and_helpButtom_object', () => {
+    ctrl.showingHelp = false;
+    ctrl.showHelp();
+    expect(ctrl.showingHelp).toBeTruthy();
   });
 
 });
