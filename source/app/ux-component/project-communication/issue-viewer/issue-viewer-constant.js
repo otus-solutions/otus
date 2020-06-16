@@ -46,15 +46,15 @@
 
       STATUS_COLOR: {
         CLOSED: {
-          'background-color': 'red',
+          'background-color': '#e45454',
           'color': 'white'
         },
         FINALIZED: {
-          'background-color': 'green',
+          'background-color': '#7fbf7f',
           'color': 'white'
         },
         OPEN: {
-          'background-color': 'blue',
+          'background-color': '#64aff1',
           'color': 'white'
         }
       }
