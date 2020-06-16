@@ -24,21 +24,34 @@
     const self = this;
     self.LABELS = GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL;
 
-    const showHideFilterIcon = {
+    const SHOW_HIDE_FILTER_ICON = {
       'true': {
         icon: 'visibility',
-        tooltip: GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL.HIDDEN_FILTERS
+        tooltip: self.LABELS.HIDDEN_FILTERS
       },
       'false': {
         icon: 'visibility_off',
-        tooltip: GENERIC_LIST_VIEWER_LABELS.CONTROL_PANEL.ENABLED_FILTERS
+        tooltip: self.LABELS.ENABLED_FILTERS
       }
     };
+
+    const ORDER_MODE_ICON = {
+      '1': {
+        icon: 'arrow_upward',
+        tooltip: self.LABELS.ASCENDING_SORTING
+      },
+      '-1': {
+        icon: 'arrow_downward',
+        tooltip: self.LABELS.DESCENDING_SORTING
+      }
+    };
+
 
     self.filtersViewEnable = false;
 
     self.$onInit = onInit;
     self.showOrHideFilters = showOrHideFilters;
+    self.updateOrderModeArrow = updateOrderModeArrow;
 
 
     function onInit(){
@@ -49,12 +62,17 @@
         '                             item-attributes="$ctrl.itemAttributes"' +
         '                             paginator-active="$ctrl.paginatorActive"/>';
 
-      self.filtersIcon = showHideFilterIcon[self.filtersViewEnable];
+      self.filtersIcon = SHOW_HIDE_FILTER_ICON[self.filtersViewEnable];
+      self.orderModeIcon = ORDER_MODE_ICON['1'];
     }
 
     function showOrHideFilters(){
       self.filtersViewEnable = !self.filtersViewEnable;
-      self.filtersIcon = showHideFilterIcon[self.filtersViewEnable];
+      self.filtersIcon = SHOW_HIDE_FILTER_ICON[self.filtersViewEnable];
+    }
+
+    function updateOrderModeArrow(){
+      self.orderModeIcon = ORDER_MODE_ICON[self.searchSettings.order.mode.toString()];
     }
 
   }

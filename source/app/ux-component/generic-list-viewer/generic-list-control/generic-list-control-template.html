@@ -10,19 +10,14 @@
   <div class="ordination" layout="row" layout-align="space-between start" layout-margin
        md-swipe-left="onSwipeLeft($event, $target)">
     <div>
-      <md-icon md-font-set="material-icons">arrow_upward
-        <md-tooltip md-direction="bottom">{{$ctrl.LABELS.ASCENDING_SORTING}}</md-tooltip>
+      <md-icon md-font-set="material-icons">{{$ctrl.orderModeIcon.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.orderModeIcon.tooltip}}</md-tooltip>
       </md-icon>
     </div>
-    <md-switch aria-label="ActivityType" class="md-primary" ng-false-value=1
-               ng-model="$ctrl.searchSettings.order.mode" ng-true-value=-1>
+    <md-switch aria-label="ActivityType" class="md-primary" ng-false-value=1 ng-true-value=-1
+               ng-model="$ctrl.searchSettings.order.mode" ng-change="$ctrl.updateOrderModeArrow()">
     </md-switch>
     <md-tooltip md-direction="top">{{$ctrl.LABELS.ORDERING}}</md-tooltip>
-    <div>
-      <md-icon md-font-set="material-icons">arrow_downward
-        <md-tooltip md-direction="bottom">{{$ctrl.LABELS.DESCENDING_SORTING}}</md-tooltip>
-      </md-icon>
-    </div>
   </div>
 
   <div class="filter" bind-html-compile="$ctrl.filtersTemplate"></div>
