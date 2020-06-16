@@ -31,8 +31,6 @@
     self.getAllItems = getAllItems;
 
     function onInit() {
-      console.log('GenericListViewer.onInit')
-
       self.searchSettings = self.viewerService.getSearchSettings();
       self.itemAttributes = self.viewerService.getItemAttributes();
 
@@ -54,8 +52,6 @@
     }
 
     function getAllItems(searchSettings) {
-      console.log('GenericListViewer.getAllItems: searchSetting\n', JSON.stringify(searchSettings, null, 2))
-
       self.viewerService.getAllItems(searchSettings)
         .then(data => {
           self.items = data;

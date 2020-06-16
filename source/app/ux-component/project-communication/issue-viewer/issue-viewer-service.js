@@ -68,8 +68,6 @@
     }
 
     function getAllItems(searchSettings) {
-      console.log('IssuesListViewer.getAllItems: searchSetting\n', JSON.stringify(searchSettings, null, 2))
-
       const items = JSON.parse($window.sessionStorage.getItem(ISSUE_LIST_STORAGE_KEY));
       if(items){
         const defer = $q.defer();
@@ -80,8 +78,6 @@
       }
 
       return _parseFilterObject(searchSettings).then(searchSettingsParsed => {
-        console.log('searchSettingsParsed\n', JSON.stringify(searchSettingsParsed, null, 2))
-
         return ProjectCommunicationRepositoryService.filter(searchSettingsParsed)
           .then(data => childParseItemsMethod(data))
           .catch(err => console.log("error:" + JSON.stringify(err)))
