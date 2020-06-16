@@ -41,8 +41,12 @@
     <div layout="column" layout-align="start center" layout-align-xs="center center" layout-padding layout-fill flex="100">
       <div layout="row" layout-padding style="width: 100%;" layout-align="center center" >
         <div layout="column" layout-padding layout-align="center center">
-          <otus-participant-search class="full-width" on-select="$ctrl.selectParticipant(participant)" show-all-participants="$ctrl.managerParticipantsDashboard()"
-                                   show-all-participants-button="true" ng-disabled="!$ctrl.participantsReady" layout-fill on-ready="$ctrl.participantsReady">
+          <otus-participant-search class="full-width" layout-fill
+                                   on-select="$ctrl.selectParticipant(participant)"
+                                   show-all-participants="$ctrl.managerParticipantsDashboard()"
+                                   show-all-participants-button="true"
+                                   ng-disabled="!$ctrl.participantsReady"
+                                   on-ready="$ctrl.participantsReady">
           </otus-participant-search>
           <div ng-if="!$ctrl.showAllParticipantsButtoninsideSearch">
             <button class="md-accent md-raised md-button" ng-click="$ctrl.managerParticipantsDashboard()">EXIBIR TODOS PARTICIPANTES</button>
