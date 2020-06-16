@@ -79,16 +79,16 @@
         return defer.promise;
       }
 
-      _parseFilterObject(searchSettings);
+      return _parseFilterObject(searchSettings).then(searchSettingsParsed => {
+        console.log('searchSettingsParsed\n', JSON.stringify(searchSettingsParsed, null, 2))
 
-      return ProjectCommunicationRepositoryService.filter(searchSettings)
-        .then(data => childParseItemsMethod(data))
-        .catch(err => console.log("error:" + JSON.stringify(err)))
+        return ProjectCommunicationRepositoryService.filter(searchSettingsParsed)
+          .then(data => childParseItemsMethod(data))
+          .catch(err => console.log("error:" + JSON.stringify(err)))
+      });
     }
 
     function _parseFilterObject(searchSettings){
-      searchSettings.filter.rn = 1092092;//todo temp
-
       let promises = [];
       if(searchSettings.filter.rn){
         promises.push(ParticipantManagerService.getParticipant(searchSettings.filter.rn));
@@ -99,24 +99,29 @@
 
       let defer = $q.defer();
       let searchSettingsParsed = angular.copy(searchSettings);
+      let fieldMap = {
+        creationDate: 'creationDate',
+        rn: 'sender',
+        center: 'group'
+      };
+
+      searchSettingsParsed.order.fields = searchSettingsParsed.order.fields.map(field => fieldMap[field]);
 
       $q.all(promises).then(response => {
         let index = 0;
         if(searchSettings.filter.rn){
           delete searchSettingsParsed.filter.rn;
-          searchSettingsParsed.filter.sender = response[index++].id;
+          searchSettingsParsed.filter[fieldMap.rn] = response[index++]._id;
         }
         if(self.center){
           let centerId = response[index].find(center => center.acronym === searchSettings.filter.center)._id;
           delete searchSettingsParsed.filter.center;
-          searchSettingsParsed.filter.group = centerId;
+          searchSettingsParsed.filter[fieldMap.center] = centerId;
         }
+        defer.resolve(searchSettingsParsed);
+      }).catch(err => defer.reject(err));
 
-        console.log(response)
-        console.log(searchSettingsParsed);
-
-        defer.resolve(searchSettingsParsed)
-      })
+      return defer.promise;
     }
 
     function loadCenters(){
