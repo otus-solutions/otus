@@ -120,17 +120,19 @@
       return defer.promise;
     }
 
-    function loadCenters(){
-      return ProjectFieldCenterService.loadCenters();
-    }
-
     function childParseItemsMethod(genericListJsonArray) {
-      let parsedItems = [];
-      genericListJsonArray.forEach(item => {
-        ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender)
-          .then(participant => parsedItems.push(IssueFactory.fromJsonObject(item, participant)))
-      });
-      return parsedItems;
+      let defer = $q.defer();
+      let promises = genericListJsonArray.map(item => ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender));
+
+      $q.all(promises).then(participants => {
+        let parsedItems = [];
+        for (let i = 0; i < genericListJsonArray.length; i++) {
+          parsedItems.push(IssueFactory.fromJsonObject(genericListJsonArray[i], participants[i]))
+        }
+        defer.resolve(parsedItems);
+      }).catch(err => defer.reject(err));
+
+      return defer.promise;
     }
 
     function getSearchSettings() {
@@ -166,6 +168,10 @@
         creationDate: false,
         center: false
       };
+    }
+
+    function loadCenters(){
+      return ProjectFieldCenterService.loadCenters();
     }
 
     function translateStatus(status){
