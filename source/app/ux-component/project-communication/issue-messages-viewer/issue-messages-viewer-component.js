@@ -77,7 +77,8 @@
     }
 
     function cancelReply(){
-      angular.element(document.getElementById('replyInputBox')).value = "";//todo
+      angular.element(document.getElementById('replyInputBox')).value = "";
+      self.replyContent = "";
       self.replying = false;
     }
 
