@@ -5,7 +5,9 @@ describe('GenericListViewerService_UnitTest_Suite', () => {
 
   const RECRUITMENT_NUMBER = 1234567;
   const DATE = new Date("Sat Mar 07 2020 00:00:00");
-  const FORMATTED_DATE = "7/3/2020";
+  const FORMATTED_DATE = "07/03/2020";
+  const NAME = "FULANO DA SILVA";
+  const CAPITALIZED_NAME = "Fulano Da Silva";
 
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
@@ -48,6 +50,7 @@ describe('GenericListViewerService_UnitTest_Suite', () => {
       items: [Test.utils.data.userActivityPendency],
       scope: $rootScope.$new(),
       date: DATE,
+      name: NAME,
       participant: { recruitmentNumber: RECRUITMENT_NUMBER },
       filterItem: {title: "rn"}
     }
@@ -71,7 +74,9 @@ describe('GenericListViewerService_UnitTest_Suite', () => {
     expect(service.getAllItems).toBeDefined();
     expect(service.callValidationItemsLimits).toBeDefined();
     expect(service.formatDate).toBeDefined();
+    expect(service.capitalizeName).toBeDefined();
     expect(service.getSelectedParticipantRN).toBeDefined();
+    expect(service.getChecker).toBeDefined();
   });
 
   it('getSearchSettingsMethod_should_returns_searchSettingsInitial', () => {
@@ -92,6 +97,10 @@ describe('GenericListViewerService_UnitTest_Suite', () => {
 
   it('formatDate_method_should_returns_customDate', () => {
     expect(service.formatDate(Mock.date)).toBe(FORMATTED_DATE);
+  });
+
+  it('capitalizeName_method_should_returns_customDate', () => {
+    expect(service.capitalizeName(Mock.name)).toBe(CAPITALIZED_NAME);
   });
 
   it('getSelectedParticipantRN_method_should_', () => {
