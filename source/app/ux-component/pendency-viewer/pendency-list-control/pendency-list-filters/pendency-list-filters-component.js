@@ -32,26 +32,17 @@
     self.LABELS = PendencyViewerService.LABELS;
 
     self.$onInit = onInit;
+    self.clearAll = clearAll;
+    self.clear = clear;
+    self.allStatus = allStatus;
     self.getDefaultOrderFields = getDefaultOrderFields;
     self.changeInputViewState = changeInputViewState;
-    self.clear = clear;
-    self.clearAll = clearAll;
-    self.allStatus = allStatus;
     self.changePaginationViewState = changePaginationViewState;
 
     self.viewerServiceGetChecker = PendencyViewerService.getChecker;
 
     function onInit(){
-      clearAll();
-    }
-
-    function getDefaultOrderFields(){
-      return Object.values(PENDENCY_ORDER_FIELD);
-    }
-
-    function clear(item) {
-      delete self.searchSettings.filter[item.title];
-      self.inputViewState[item.title] = false;
+      self.clearAll();
     }
 
     function clearAll() {
@@ -59,12 +50,21 @@
       self.searchSettings = PendencyViewerService.getSearchSettings();
     }
 
-    function changeInputViewState(item) {
-      self.inputViewState[item.title] = true;
+    function clear(item) {
+      delete self.searchSettings.filter[item.title];
+      self.inputViewState[item.title] = false;
     }
 
     function allStatus() {
       delete self.searchSettings.filter.status;
+    }
+
+    function getDefaultOrderFields(){
+      return Object.values(PENDENCY_ORDER_FIELD);
+    }
+
+    function changeInputViewState(item) {
+      self.inputViewState[item.title] = true;
     }
 
     function changePaginationViewState() {
