@@ -7,7 +7,6 @@
       controller: 'otusCheckerSearchCtrl as $ctrl',
       templateUrl: 'app/ux-component/checker-search/checker-search-template.html',
       bindings: {
-        viewerServiceGetChecker: '=',
         searchSettings: '=',
         filterItem: '=',
         placeholderTitle: '@',
@@ -21,11 +20,12 @@
     '$timeout',
     'otusjs.otus.uxComponent.CheckerItemFactory',
     'otusjs.activity.business.ParticipantActivityService',
+    'otusjs.genericListViewer.GenericListViewerService',
     'otusjs.application.state.ApplicationStateService'
   ];
 
   function Controller(STATE, $q, $timeout, CheckerItemFactory, ParticipantActivityService,
-                      ApplicationStateService) {
+                      GenericListViewerService, ApplicationStateService) {
     const self = this;
 
     self.$onInit = onInit;
@@ -59,11 +59,12 @@
 
     function selectedItemChange(item) {
       if (item && ApplicationStateService.currentStateIsListViewer()) {
-        self.viewerServiceGetChecker(item, self.filterItem, self.searchSettings);
+        GenericListViewerService.getChecker(item, self.filterItem, self.searchSettings);
       }
     }
 
     function searchTextChange() {
+      if (ApplicationStateService.currentStateIsListViewer()) {
         if(self.inputedText === "") {
           delete self.searchSettings.filter[self.filterItem.title];
         }
@@ -71,6 +72,7 @@
           self.searchSettings.filter[self.filterItem.title] = self.inputedText;
         }
         self.changeWatcher();
+      }
     }
   }
 }());

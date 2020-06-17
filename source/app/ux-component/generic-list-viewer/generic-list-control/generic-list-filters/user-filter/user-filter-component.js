@@ -8,7 +8,6 @@
       templateUrl: 'app/ux-component/generic-list-viewer/generic-list-control/generic-list-filters/user-filter/user-filter-template.html',
       bindings: {
         filterItem: '<',
-        viewerServiceGetChecker: '=',
         searchSettings: '=',
         clear: '=',
         changePaginationViewState: '='
