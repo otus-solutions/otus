@@ -88,7 +88,6 @@ describe('PendencyViewerService_UnitTest_Suite', () => {
     console.log('test:', service.getAllItemsFromRepositoryService);
     const mode = '';
     const vm = {};
-    // spyOn(Injections.UserActivityPendencyRepositoryService, "getAllPendencies").and.returnValue(Promise.resolve(Mock.items));
     spyOn(service, "getAllItemsFromRepositoryService").and.returnValue(Mock.defer.promise);
     spyOn(service, "getAllItems").and.returnValue(Promise.resolve(Mock.items));
     service.callValidationItemsLimits(vm, Mock.searchSettings, mode);
@@ -98,7 +97,7 @@ describe('PendencyViewerService_UnitTest_Suite', () => {
     expect(vm.items.length).toBe(Mock.items.length);
   });
 
-  xdescribe("callValidationItemsLimits_method_should_handle_getAllItems_fail_Suite", () => {
+  describe("callValidationItemsLimits_method_should_handle_getAllItems_fail_Suite", () => {
 
     function callMethodAndGetError(mode, activePage, expectFunction){
       const vm = {};

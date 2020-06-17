@@ -1,70 +1,81 @@
 describe('otusPendecyListFiltersComponent_UnitTest_Suite', () => {
   let ctrl;
-  let VIEW_TEXT = "rn";
-  let VIEW_TEXT_CRITERIA = "sortingCriteria";
   let Injections = [];
   let Mock = {};
 
+  const VIEW_TEXT = "rn";
+
   beforeEach(() => {
+    _mockInitialize();
+
     angular.mock.module('otusjs.otus');
     angular.mock.inject(($injector,$controller) => {
       Injections.dragulaService = $injector.get('dragulaService');
       Injections.PendencyViewerService = $injector.get('otusjs.pendencyViewer.PendencyViewerService');
-      ctrl = $controller('pendencyListFiltersCtrl', Injections);
-
-      mock();
-
-      Mock.CHECKERS = Test.utils.data.checker;
-      ctrl.searchSettings = Mock.searchSettings;
-
-      spyOn(Injections.PendencyViewerService, "getInputViewState").and.callThrough();
-      spyOn(Injections.PendencyViewerService, "getSearchSettings").and.callThrough();
+      ctrl = $controller('pendencyListFiltersCtrl', Injections, {
+        itemAttributes: [],
+        paginatorActive: true
+      });
     });
   });
+
+  function _mockInitialize() {
+    Mock.searchSettings = Test.utils.data.searchSettingsForGenericList;
+    Mock.item = {
+      title: VIEW_TEXT
+    };
+  }
+
 
   it('ctrlExistence_check', () => {
     expect(ctrl).toBeDefined();
   });
 
   it('ctrlMethodsExistence_check', () => {
-    expect(ctrl.chanceInputViewState).toBeDefined();
-    expect(ctrl.clear).toBeDefined();
+    expect(ctrl.$onInit).toBeDefined();
     expect(ctrl.clearAll).toBeDefined();
+    expect(ctrl.clear).toBeDefined();
     expect(ctrl.allStatus).toBeDefined();
-    expect(ctrl.chanceStateCriteria).toBeDefined();
-    expect(ctrl.resetCriteriaOrderCustomization).toBeDefined();
+    expect(ctrl.getDefaultOrderFields).toBeDefined();
+    expect(ctrl.changeInputViewState).toBeDefined();
     expect(ctrl.changePaginationViewState).toBeDefined();
   });
 
+  it('$onInit_should_evoke_clearAll', () => {
+    spyOn(ctrl, 'clearAll');
+    ctrl.$onInit();
+    expect(ctrl.clearAll).toHaveBeenCalledTimes(1);
+  });
+
   it('clearMethod_should_delete_searchSettings_and_attribute_inputViewState', () => {
+    ctrl.$onInit();
     ctrl.clear(Mock.item);
     expect(ctrl.inputViewState[Mock.item.title]).toBeFalsy();
+    expect(ctrl.searchSettings.filter[Mock.item.title]).toBeUndefined();
   });
 
   it('clearAllMethod_should_evoke_PendencyViewerService', () => {
-    ctrl.clearAll(Mock.searchSettings);
+    spyOn(Injections.PendencyViewerService, "getInputViewState").and.callThrough();
+    spyOn(Injections.PendencyViewerService, "getSearchSettings").and.callThrough();
+    ctrl.clearAll();
     expect(Injections.PendencyViewerService.getInputViewState).toHaveBeenCalledTimes(1);
     expect(Injections.PendencyViewerService.getSearchSettings).toHaveBeenCalledTimes(1);
   });
 
-  it('chanceInputViewStateMethod_should_attribute_inputViewState', () => {
-    ctrl.chanceInputViewState(Mock.item);
+  it('changeInputViewStateMethod_should_attribute_inputViewState', () => {
+    ctrl.clearAll();
+    ctrl.changeInputViewState(Mock.item);
     expect(ctrl.inputViewState[Mock.item.title]).toBeTruthy();
   });
 
   it('allStatusMethod_should_delete_attribute', () => {
+    ctrl.$onInit();
     ctrl.allStatus();
-    expect(ctrl.searchSettings.filter.status).toBeUndefined()
+    expect(ctrl.searchSettings.filter.status).toBeUndefined();
   });
 
-  it('chanceStateCriteriaMethod_should_inputViewState', () => {
-    ctrl.chanceStateCriteria();
-    expect(ctrl.inputViewState[VIEW_TEXT_CRITERIA]).toBeTruthy();
-  });
-
-  it('resetCriteriaOrderCustomizationMethod_should_evoke_populateCriteriaOrder', () => {
-    ctrl.resetCriteriaOrderCustomization();
-    expect(ctrl.searchSettings.order.fields).toEqual(Mock.searchSettings.order.fields);
+  it('getDefaultOrderFields_method_should_return_array_values', () => {
+    expect(ctrl.getDefaultOrderFields().length).toBeGreaterThan(0);
   });
 
   it('changePaginationViewStateMethod_should_attribute', () => {
@@ -72,20 +83,5 @@ describe('otusPendecyListFiltersComponent_UnitTest_Suite', () => {
     expect(ctrl.paginatorActive).toBeFalsy();
   });
 
-  function mock() {
-    Mock.searchSettings = {
-      "currentQuantity": 0,
-      "quantityToGet": 10,
-      "order": {
-        "fields": ["dueDate"],
-        "mode": 1
-      },
-      "filter": {
-        "status": "NOT_FINALIZED"
-      }
-    };
-    Mock.item = {
-        title: VIEW_TEXT
-      }
-  }
+
 });
