@@ -1,14 +1,12 @@
 describe('participant-manager-service Test', function() {
-  var Mock = {};
-  var service;
-  var Injections = {};
-  var ERROR_MESSAGE = "ParticipantList is not initialized.";
+  let service;
+  let Injections = {};
+  let Mock = {};
+
+  const PARTICIPANT_NOT_FOUND_ERROR_MSG = "Participant was not found.";
 
   beforeEach(function() {
     angular.mock.module('otusjs.otus');
-  });
-
-  beforeEach(function() {
     inject(function(_$injector_) {
       Injections.ContextService = _$injector_.get('otusjs.participant.core.ContextService');
       Injections.EventService = _$injector_.get('otusjs.participant.core.EventService');
@@ -22,7 +20,6 @@ describe('participant-manager-service Test', function() {
     spyOn(Injections.$q, "defer").and.callThrough();
     spyOn(Injections.ParticipantRepositoryService, "create").and.returnValue(Promise.resolve(Mock.participant));
     spyOn(Injections.ParticipantRepositoryService, "update").and.returnValue(Promise.resolve(Mock.participant));
-
     spyOn(Injections.ParticipantRepositoryService, "getAllowNewParticipants").and.returnValue(Promise.resolve(Mock.projectConfiguration));
     spyOn(Injections.ContextService, "getSelectedParticipant");
     spyOn(Injections.ContextService, "selectParticipant");
@@ -119,7 +116,7 @@ describe('participant-manager-service Test', function() {
   });
 
   it('getParticipantMethod should return error', function () {
-    expect(service.getParticipant).toThrowError(ERROR_MESSAGE);
+    expect(service.getParticipant).toThrowError(PARTICIPANT_NOT_FOUND_ERROR_MSG);
   });
 
   it('createParticipantContact method should called method createParticipantContact', function() {
