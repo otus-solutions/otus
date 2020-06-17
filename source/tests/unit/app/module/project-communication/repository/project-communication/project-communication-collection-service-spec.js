@@ -36,8 +36,10 @@ describe('ProjectCommunicationCollectionService_UnitTest_Suite', () => {
       getProjectCommunicationByIdLimit: jasmine.anything(),
       updateReopen: jasmine.anything(),
       updateClose: jasmine.anything(),
-      listIssue: jasmine.anything(),
-      filter: jasmine.anything()
+      updateFinalized: jasmine.anything(),
+      filter: jasmine.anything(),
+      getAllIssueMessages: jasmine.anything(),
+      getIssueSenderInfo: jasmine.anything()
     };
 
     /*Injection of a restServiceMock in context(boostrap action simulation)*/
@@ -47,7 +49,22 @@ describe('ProjectCommunicationCollectionService_UnitTest_Suite', () => {
     Mock.deferredExternal = Injections.$q.defer();
     Mock.deferredExternal.resolve(Mock.remoteStorage);
     spyOn(Mock._remoteStorage, "whenReady").and.returnValue(Mock.deferredExternal.promise);
+  }
 
+  function _prepareRemoteStorageSuccess(methodName){
+    let response = {data: true};
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.resolve(response);
+    spyOn(Mock.remoteStorage, methodName).and.returnValue(Mock.deferredInternal.promise);
+  }
+
+  function _prepareRemoteStorageError(methodName){
+    let response = {error: false};
+    //treatment to simulate the resolution of the promise(internal) of remoteStorage
+    Mock.deferredInternal = Injections.$q.defer();
+    Mock.deferredInternal.reject(response);
+    spyOn(Mock.remoteStorage, methodName).and.returnValue(Mock.deferredInternal.promise);
   }
 
   it('serviceExistence_check', () => {
@@ -61,175 +78,105 @@ describe('ProjectCommunicationCollectionService_UnitTest_Suite', () => {
     expect(service.getProjectCommunicationByIdLimit).toBeDefined();
     expect(service.updateReopen).toBeDefined();
     expect(service.updateClose).toBeDefined();
-    expect(service.listIssue).toBeDefined();
+    expect(service.updateFinalized).toBeDefined();
     expect(service.filter).toBeDefined();
+    expect(service.getAllIssueMessages).toBeDefined();
+    expect(service.getIssueSenderInfo).toBeDefined();
   });
 
   it('createMessageMethod_should_positiveAnswer_on_successfulPersistence', () => {
-    let response = {data: true};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.resolve(response);
-    spyOn(Mock.remoteStorage, "createMessage").and.returnValue(Mock.deferredInternal.promise);
-
+    _prepareRemoteStorageSuccess("createMessage");
     service.createMessage(ID, Mock).then(data => expect(data).toBeTruthy());
     Mock.scope.$digest();
   });
 
   it('createMessageMethod_should_handle_error_coming_by_exception', () => {
-    let response = {error: false};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.reject(response);
-    spyOn(Mock.remoteStorage, "createMessage").and.returnValue(Mock.deferredInternal.promise);
-
+    _prepareRemoteStorageError("createMessage");
     service.createMessage(ID, Mock).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 
   it('createIssueMethod_should_positiveAnswer_on_successfulPersistence', () => {
-    let response = {data: true};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.resolve(response);
-    spyOn(Mock.remoteStorage, "createIssue").and.returnValue(Mock.deferredInternal.promise);
-
+    _prepareRemoteStorageSuccess("createIssue");
     service.createIssue(Mock).then(data => expect(data).toBeTruthy());
     Mock.scope.$digest();
   });
 
   it('createIssueMethod_should_handle_error_coming_by_exception', () => {
-    let response = {error: false};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.reject(response);
-    spyOn(Mock.remoteStorage, "createIssue").and.returnValue(Mock.deferredInternal.promise);
-
+    _prepareRemoteStorageError("createIssue");
     service.createIssue(Mock).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 
   it('getProjectCommunicationByIdMethod_should_positiveAnswer_on_successfulPersistence', () => {
-    let response = {data: true};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.resolve(response);
-    spyOn(Mock.remoteStorage, "getProjectCommunicationById").and.returnValue(Mock.deferredInternal.promise);
-
+    _prepareRemoteStorageSuccess("getProjectCommunicationById");
     service.getProjectCommunicationById(ID).then(data => expect(data).toBeTruthy());
     Mock.scope.$digest();
   });
 
   it('getProjectCommunicationByIdMethod_should_handle_error_coming_by_exception', () => {
-    let response = {error: false};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.reject(response);
-    spyOn(Mock.remoteStorage, "getProjectCommunicationById").and.returnValue(Mock.deferredInternal.promise);
-
+    _prepareRemoteStorageError("getProjectCommunicationById");
     service.getProjectCommunicationById(ID).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 
   it('getProjectCommunicationByIdLimitMethod_should_positiveAnswer_on_successfulPersistence', () => {
-    let response = {data: true};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.resolve(response);
-    spyOn(Mock.remoteStorage, "getProjectCommunicationByIdLimit").and.returnValue(Mock.deferredInternal.promise);
-
+    _prepareRemoteStorageSuccess("getProjectCommunicationByIdLimit");
     service.getProjectCommunicationByIdLimit(ID, LIMIT).then(data => expect(data).toBeTruthy());
     Mock.scope.$digest();
   });
 
   it('getProjectCommunicationByIdLimitMethod_should_handle_error_coming_by_exception', () => {
-    let response = {error: false};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.reject(response);
-    spyOn(Mock.remoteStorage, "getProjectCommunicationByIdLimit").and.returnValue(Mock.deferredInternal.promise);
-
+    _prepareRemoteStorageError("getProjectCommunicationByIdLimit");
     service.getProjectCommunicationByIdLimit(ID, LIMIT).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 
   it('updateReopenMethod_should_positiveAnswer_on_successfulPersistence', () => {
-    let response = {data: true};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.resolve(response);
-    spyOn(Mock.remoteStorage, "updateReopen").and.returnValue(Mock.deferredInternal.promise);
-
+    _prepareRemoteStorageSuccess("updateReopen");
     service.updateReopen(ID, LIMIT).then(data => expect(data).toBeTruthy());
     Mock.scope.$digest();
   });
 
   it('updateReopenMethod_should_handle_error_coming_by_exception', () => {
-    let response = {error: false};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.reject(response);
-    spyOn(Mock.remoteStorage, "getProjectCommunicationByIdLimit").and.returnValue(Mock.deferredInternal.promise);
-
-    service.getProjectCommunicationByIdLimit(ID, LIMIT).catch(e => expect(e.error).toBeFalsy());
+    _prepareRemoteStorageError("updateReopen");
+    service.updateReopen(ID).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 
-  it('listIssueMethod_should_positiveAnswer_on_successfulPersistence', () => {
-    let response = {data: true};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.resolve(response);
-    spyOn(Mock.remoteStorage, "listIssue").and.returnValue(Mock.deferredInternal.promise);
-
-    service.listIssue().then(data => expect(data).toBeTruthy());
+  it('updateCloseMethod_should_positiveAnswer_on_successfulPersistence', () => {
+    _prepareRemoteStorageSuccess("updateClose");
+    service.updateClose(ID).then(data => expect(data).toBeTruthy());
     Mock.scope.$digest();
   });
 
-  it('listIssueMethod_should_handle_error_coming_by_exception', () => {
-    let response = {error: false};
+  it('updateCloseMethod_should_handle_error_coming_by_exception', () => {
+    _prepareRemoteStorageError("updateClose");
+    service.updateClose(ID).catch(e => expect(e.error).toBeFalsy());
+    Mock.scope.$digest();
+  });
 
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.reject(response);
-    spyOn(Mock.remoteStorage, "listIssue").and.returnValue(Mock.deferredInternal.promise);
+  it('updateFinalizedMethod_should_positiveAnswer_on_successfulPersistence', () => {
+    _prepareRemoteStorageSuccess("updateFinalized");
+    service.updateFinalized(ID).then(data => expect(data).toBeTruthy());
+    Mock.scope.$digest();
+  });
 
-    service.listIssue().catch(e => expect(e.error).toBeFalsy());
+  it('updateFinalizedMethod_should_handle_error_coming_by_exception', () => {
+    _prepareRemoteStorageError("updateFinalized");
+    service.updateFinalized(ID).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 
   it('filterMethod_should_positiveAnswer_on_successfulPersistence', () => {
-    let response = {data: true};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.resolve(response);
-    spyOn(Mock.remoteStorage, "filter").and.returnValue(Mock.deferredInternal.promise);
-
+    _prepareRemoteStorageSuccess("filter");
     service.filter(Mock).then(data => expect(data).toBeTruthy());
     Mock.scope.$digest();
   });
 
   it('filtereMethod_should_handle_error_coming_by_exception', () => {
-    let response = {error: false};
-
-    //treatment to simulate the resolution of the promise(internal) of remoteStorage
-    Mock.deferredInternal = Injections.$q.defer();
-    Mock.deferredInternal.reject(response);
-    spyOn(Mock.remoteStorage, "filter").and.returnValue(Mock.deferredInternal.promise);
-
-    service.listIssue(Mock).catch(e => expect(e.error).toBeFalsy());
+    _prepareRemoteStorageError("filter");
+    service.filter(Mock).catch(e => expect(e.error).toBeFalsy());
     Mock.scope.$digest();
   });
 
