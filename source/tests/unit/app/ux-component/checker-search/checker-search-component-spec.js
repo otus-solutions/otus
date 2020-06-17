@@ -1,12 +1,15 @@
 describe('otusCheckerSearchComponent_UnitTest_Suite', () => {
   let ctrl;
-  let CHECKERS_TEXT = "Otus Coruja";
-  let CHECKERS_EMAIL = "otus.coruja@gmail.com";
-  let PENDENCY_VIEWER = 'pendency-viewer';
   let Injections = [];
   let Mock = {};
 
+  const CHECKERS_TEXT = "Otus Coruja";
+  const CHECKERS_EMAIL = "otus.coruja@gmail.com";
+  const VIEWER_NAME = 'some-viewer';
+
   beforeEach(() => {
+    _mockInitialize();
+
     angular.mock.module('otusjs.otus');
     angular.mock.inject(($injector,$controller) => {
       Injections.STATE = $injector.get('STATE');
@@ -14,13 +17,13 @@ describe('otusCheckerSearchComponent_UnitTest_Suite', () => {
       Injections.$timeout = $injector.get('$timeout');
       Injections.CheckerItemFactory = $injector.get('otusjs.otus.uxComponent.CheckerItemFactory');
       Injections.ParticipantActivityService = $injector.get('otusjs.activity.business.ParticipantActivityService');
-      Injections.PendencyViewerService = $injector.get('otusjs.pendencyViewer.PendencyViewerService');
+      Injections.GenericListViewerService = $injector.get('otusjs.genericListViewer.GenericListViewerService');
       Injections.ApplicationStateService = $injector.get('otusjs.application.state.ApplicationStateService');
-      ctrl = $controller('otusCheckerSearchCtrl', Injections);
+      ctrl = $controller('otusCheckerSearchCtrl', Injections, {
+        searchSettings: Mock.searchSettings,
+        filterItem: Mock.filterItem
+      });
 
-      mock();
-
-      Mock.CHECKERS = Test.utils.data.checker;
       ctrl.searchSettings = Mock.searchSettings;
       ctrl.changeWatcher = jasmine.createSpy();
       ctrl.pendencyFilterItem = {};
@@ -29,12 +32,28 @@ describe('otusCheckerSearchComponent_UnitTest_Suite', () => {
 
       spyOn(Injections.ParticipantActivityService, "listActivityCheckers").and.returnValue([{}]);
       spyOn(Injections.CheckerItemFactory, "create").and.returnValue(Mock.CHECKERS);
-      spyOn(Injections.ApplicationStateService, "getCurrentState").and.returnValue(PENDENCY_VIEWER);
-      spyOn(Injections.PendencyViewerService, "getChecker").and.callThrough();
+      spyOn(Injections.ApplicationStateService, "getCurrentState").and.returnValue(VIEWER_NAME);
+      spyOn(Injections.ApplicationStateService, "currentStateIsListViewer").and.returnValue(true);
+      spyOn(Injections.GenericListViewerService, "getChecker").and.callThrough();
 
       ctrl.$onInit();
     });
   });
+
+  function _mockInitialize() {
+    Mock.searchSettings = Test.utils.data.searchSettingsForGenericList;
+    Mock.item = {
+      checker : {
+        title: CHECKERS_TEXT,
+        email: CHECKERS_EMAIL
+      }
+    };
+    Mock.filterItem = {
+      item: 'x'
+    };
+    Mock.CHECKERS = Test.utils.data.checker;
+  }
+
 
   it('ctrlExistence_check', () => {
     expect(ctrl).toBeDefined();
@@ -56,34 +75,15 @@ describe('otusCheckerSearchComponent_UnitTest_Suite', () => {
     expect(ctrl.querySearch(CHECKERS_TEXT)).toBePromise();
   });
 
-  it('selectedItemChangeMethod_should_verify_state_and_evoke_PendencyViewerService', () => {
+  it('selectedItemChangeMethod_should_verify_state_and_evoke_GenericListViewerService', () => {
     ctrl.selectedItemChange(Mock.item);
-    expect(Injections.ApplicationStateService.getCurrentState).toHaveBeenCalledTimes(1);
+    expect(Injections.ApplicationStateService.currentStateIsListViewer).toHaveBeenCalledTimes(1);
     expect(Injections.CheckerItemFactory.create).toHaveBeenCalledTimes(1);
   });
 
   it('searchTextChangeMethod_should_verify_state_and_filter_searchSettings', () => {
     ctrl.searchTextChange();
-    expect(Injections.ApplicationStateService.getCurrentState).toHaveBeenCalledTimes(1);
+    expect(Injections.ApplicationStateService.currentStateIsListViewer).toHaveBeenCalledTimes(1);
   });
 
-  function mock() {
-    Mock.searchSettings = {
-      "currentQuantity": 0,
-      "quantityToGet": 10,
-      "order": {
-        "fields": ["dueDate"],
-        "mode": 1
-      },
-      "filter": {
-        "status": "NOT_FINALIZED"
-      }
-    };
-    Mock.item = {
-      checker : {
-        title: CHECKERS_TEXT,
-        email: CHECKERS_EMAIL
-      }
-    }
-  }
 });
