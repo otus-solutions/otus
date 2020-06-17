@@ -16,9 +16,14 @@
 
   function Controller(PendencyViewerService) {
     const self = this;
-    self.dueDate = PendencyViewerService.formatDate(new Date(self.item.dueDate));
-    self.creationDate = PendencyViewerService.formatDate(new Date(self.item.creationDate));
-    self.remainingDays = PendencyViewerService.calculateRemainingDays(self.item.dueDate);
+
+    self.$onInit = onInit;
+
+    function onInit() {
+      self.dueDate = PendencyViewerService.formatDate(new Date(self.item.dueDate));
+      self.creationDate = PendencyViewerService.formatDate(new Date(self.item.creationDate));
+      self.remainingDays = PendencyViewerService.calculateRemainingDays(self.item.dueDate);
+    }
   }
 
 }());
