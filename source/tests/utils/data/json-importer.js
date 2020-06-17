@@ -7469,4 +7469,14 @@ Test.utils.data.participantContact = {
     }
   }
 }
-
+Test.utils.data.searchSettingsForGenericList = {
+  "currentQuantity": 0,
+  "quantityToGet": 15,
+  "order": {
+    "fields": ["a"],
+    "mode": 1
+  },
+  "filter": {
+    "status": "initialStatus"
+  }
+};
