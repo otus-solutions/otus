@@ -33,12 +33,12 @@
 
     function chanceStateCriteria() {
       if (self.inputViewState[SORTING_CRITERIA_KEY_NAME]) {
-        self.inputViewState[SORTING_CRITERIA_KEY_NAME] = !self.inputViewState[SORTING_CRITERIA_KEY_NAME];
+        self.inputViewState[SORTING_CRITERIA_KEY_NAME] = false;
         self.searchSettings.order.fields = [ self.getDefaultOrderFields()[0] ];
       }
       else {
         self.inputViewState[SORTING_CRITERIA_KEY_NAME] = true;
-        resetCriteriaOrderCustomization();
+        self.resetCriteriaOrderCustomization();
       }
     }
 
