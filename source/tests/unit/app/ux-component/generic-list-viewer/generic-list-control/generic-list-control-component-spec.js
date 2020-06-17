@@ -21,7 +21,7 @@ describe('otusGenericListControlComponent_UnitTest_Suite', () => {
   });
 
   function _mockInitialize(){
-    Mock.searchSettings = { order: {mode: -1 }};
+    Mock.searchSettings = Test.utils.data.searchSettingsForGenericList;
     Mock.filtersComponentName = FILTERS_COMPONENT_NAME;
   }
 
@@ -54,9 +54,13 @@ describe('otusGenericListControlComponent_UnitTest_Suite', () => {
   it('updateOrderModeArrow_method_should_change_orderModeIcon_object', () => {
     ctrl.$onInit();
     expect(ctrl.orderModeIcon).toBeDefined();
+
     let prevOrderModeIcon = {};
     prevOrderModeIcon = Object.assign(prevOrderModeIcon, ctrl.orderModeIcon);
+
+    ctrl.searchSettings.order.mode = -1;
     ctrl.updateOrderModeArrow();
+
     expect(ctrl.orderModeIcon).not.toEqual(prevOrderModeIcon);
   });
 
