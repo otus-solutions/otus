@@ -43,6 +43,7 @@
       self.getAllItemsFromRepositoryService = getAllItemsFromRepositoryService;
       self.GenericListFactory = GenericListFactory;
       self.childParseItemsMethod = childParseItemsMethod ? childParseItemsMethod : _parseItems;
+      self.initialized = true;
     }
 
     function getSearchSettings() {
