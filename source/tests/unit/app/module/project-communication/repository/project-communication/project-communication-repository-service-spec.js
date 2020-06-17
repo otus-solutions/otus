@@ -16,8 +16,10 @@ describe('ProjectCommunicationRepositoryService_UnitTest_Suite', () => {
       spyOn(Injections.ProjectCommunicationCollectionService, 'getProjectCommunicationByIdLimit');
       spyOn(Injections.ProjectCommunicationCollectionService, 'updateReopen');
       spyOn(Injections.ProjectCommunicationCollectionService, 'updateClose');
-      spyOn(Injections.ProjectCommunicationCollectionService, 'listIssue');
+      spyOn(Injections.ProjectCommunicationCollectionService, 'updateFinalized');
       spyOn(Injections.ProjectCommunicationCollectionService, 'filter');
+      spyOn(Injections.ProjectCommunicationCollectionService, 'getAllIssueMessages');
+      spyOn(Injections.ProjectCommunicationCollectionService, 'getIssueSenderInfo');
 
     });
   });
@@ -33,47 +35,49 @@ describe('ProjectCommunicationRepositoryService_UnitTest_Suite', () => {
     expect(service.getProjectCommunicationByIdLimit).toBeDefined();
     expect(service.updateReopen).toBeDefined();
     expect(service.updateClose).toBeDefined();
-    expect(service.listIssue).toBeDefined();
+    expect(service.updateFinalized).toBeDefined();
     expect(service.filter).toBeDefined();
+    expect(service.getAllIssueMessages).toBeDefined();
+    expect(service.getIssueSenderInfo).toBeDefined();
   });
 
   it('createMessageMethod_should_evoke_createMessage_by_ProjectCommunicationCollectionService', () => {
-    service.createMessage(Mock)
+    service.createMessage(Mock);
     expect(Injections.ProjectCommunicationCollectionService.createMessage).toHaveBeenCalledTimes(1)
   });
 
   it('createIssueMethod_should_evoke_createIssue_by_ProjectCommunicationCollectionService', () => {
-    service.createIssue(Mock)
+    service.createIssue(Mock);
     expect(Injections.ProjectCommunicationCollectionService.createIssue).toHaveBeenCalledTimes(1)
   });
 
   it('getProjectCommunicationByIdMethod_should_evoke_getProjectCommunicationById_by_ProjectCommunicationCollectionService', () => {
-    service.getProjectCommunicationById(Mock)
+    service.getProjectCommunicationById(Mock);
     expect(Injections.ProjectCommunicationCollectionService.getProjectCommunicationById).toHaveBeenCalledTimes(1)
   });
 
   it('getProjectCommunicationByIdLimitMethod_should_evoke_getProjectCommunicationByIdLimit_by_ProjectCommunicationCollectionService', () => {
-    service.getProjectCommunicationByIdLimit(Mock, LIMIT)
+    service.getProjectCommunicationByIdLimit(Mock, LIMIT);
     expect(Injections.ProjectCommunicationCollectionService.getProjectCommunicationByIdLimit).toHaveBeenCalledTimes(1)
   });
 
   it('updateReopenMethod_should_evoke_updateReopen_by_ProjectCommunicationCollectionService', () => {
-    service.updateReopen(Mock)
+    service.updateReopen(Mock);
     expect(Injections.ProjectCommunicationCollectionService.updateReopen).toHaveBeenCalledTimes(1)
   });
 
   it('updateCloseMethod_should_evoke_updateClose_by_ProjectCommunicationCollectionService', () => {
-    service.updateClose(Mock)
+    service.updateClose(Mock);
     expect(Injections.ProjectCommunicationCollectionService.updateClose).toHaveBeenCalledTimes(1)
   });
 
-  it('listIssueMethod_should_evoke_listIssue_by_ProjectCommunicationCollectionService', () => {
-    service.listIssue()
-    expect(Injections.ProjectCommunicationCollectionService.listIssue).toHaveBeenCalledTimes(1)
+  it('updateFinalizedMethod_should_evoke_updateClose_by_ProjectCommunicationCollectionService', () => {
+    service.updateFinalized(Mock);
+    expect(Injections.ProjectCommunicationCollectionService.updateFinalized).toHaveBeenCalledTimes(1)
   });
 
   it('filterMethod_should_evoke_filter_by_ProjectCommunicationCollectionService', () => {
-    service.filter(Mock)
+    service.filter(Mock);
     expect(Injections.ProjectCommunicationCollectionService.filter).toHaveBeenCalledTimes(1)
   });
 
