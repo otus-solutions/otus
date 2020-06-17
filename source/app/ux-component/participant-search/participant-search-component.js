@@ -25,11 +25,11 @@
     'otusjs.otus.dashboard.core.ContextService',
     '$mdDialog',
     'otusjs.application.dialog.DialogShowService',
-    'otusjs.pendencyViewer.PendencyViewerService'
+    'otusjs.genericListViewer.GenericListViewerService'
   ];
 
   function Controller(STATE, $q, ParticipantManagerService, ApplicationStateService,
-                      DashboardContextService, $mdDialog, DialogService, PendencyViewerService) {
+                      DashboardContextService, $mdDialog, DialogService, GenericListViewerService) {
     var self = this;
 
     /* Lifecycle hooks */
@@ -69,16 +69,16 @@
         return;
       }
 
-      if (ApplicationStateService.getCurrentState() === STATE.DASHBOARD) {
+      if (ApplicationStateService.getCurrentState() == STATE.DASHBOARD) {
         _setParticipant();
         ApplicationStateService.activateParticipantDashboard();
-      } else if (ApplicationStateService.getCurrentState() === STATE.LABORATORY && DashboardContextService.getChangedState()) {
+      } else if (ApplicationStateService.getCurrentState() == STATE.LABORATORY && DashboardContextService.getChangedState()) {
         DialogService.showDialog(confirmParticipantChange).then(function () {
           _setParticipant();
           DashboardContextService.setChangedState();
         });
       } else if (ApplicationStateService.currentStateIsListViewer()) {
-        PendencyViewerService.getSelectedParticipantRN(self.selectedParticipant,
+        GenericListViewerService.getSelectedParticipantRN(self.selectedParticipant,
           self.attributeFilterItem, self.searchSettings);
       } else {
         _setParticipant();
@@ -94,11 +94,10 @@
     }
 
     function searchTextChange() {
-      switch (ApplicationStateService.getCurrentState()) {
-        case STATE.PENDENCY_VIEWER:
-          if(self.inputedText === "") delete self.searchSettings.filter["rn"];
-          else self.searchSettings.filter["rn"] = self.inputedText;
-          self.changeWatcher();
+      if (ApplicationStateService.currentStateIsListViewer()) {
+        if(self.inputedText === "") delete self.searchSettings.filter["rn"];
+        else self.searchSettings.filter["rn"] = self.inputedText;
+        self.changeWatcher();
       }
     }
 
