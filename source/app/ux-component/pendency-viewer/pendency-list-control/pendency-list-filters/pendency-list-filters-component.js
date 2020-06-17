@@ -39,10 +39,12 @@
     self.changeInputViewState = changeInputViewState;
     self.changePaginationViewState = changePaginationViewState;
 
-    self.viewerServiceGetChecker = PendencyViewerService.getChecker;
-
     function onInit(){
       self.clearAll();
+      if(!PendencyViewerService.self.initialized){
+        PendencyViewerService.initialize();
+      }
+      self.viewerServiceGetChecker = PendencyViewerService.getChecker;
     }
 
     function clearAll() {
