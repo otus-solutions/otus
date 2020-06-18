@@ -1,24 +1,7 @@
-<link href="app/ux-component/pendency-viewer/pendency-viewer-component.css" rel="stylesheet" type="text/css">
+<link href="app/ux-component/pendency-viewer/pendency-viewer-styles.css" rel="stylesheet" type="text/css">
 
-<md-content class="pv-layout pendency-viewer" ng-cloak style="">
-  <otus-dashboard-sidenav layout="row">
-    <hide-participant-box></hide-participant-box>
-  </otus-dashboard-sidenav>
-  <otus-dashboard-toolbar>
-    <div flex layout="row" layout-align="center center" layout-margin>
-      <span layout-align="center center">{{$ctrl.PENDENCY_VIEWER_TITLES.TO_DO_VIEWER}}</span>
-    </div>
-  </otus-dashboard-toolbar>
-  <otus-pendency-list-control search-settings="$ctrl.searchSettings"
-                              get-pendencies="$ctrl.getAllPendencies($ctrl.searchSettings)"
-                              pendency-attributes="$ctrl.pendencyAttributes"
-                              paginator-active="$ctrl.paginatorActive">
-  </otus-pendency-list-control>
-  <otus-pendency-list pendencies="$ctrl.pendencies"
-                      pendency-attributes="$ctrl.pendencyAttributes">
-  </otus-pendency-list>
-  <otus-pendency-list-paginator stuntman-search-settings="$ctrl.stuntmanSearchSettings"
-                                pendencies="$ctrl.pendencies"
-                                paginator-active="$ctrl.paginatorActive">
-  </otus-pendency-list-paginator>
-</md-content>
+<otus-generic-list-viewer viewer-service="$ctrl.viewerService"
+                          viewer-title="$ctrl.viewerTitle"
+                          item-component-name="$ctrl.itemComponentName"
+                          filters-component-name="$ctrl.filtersComponentName">
+</otus-generic-list-viewer>

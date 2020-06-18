@@ -1,0 +1,29 @@
+<span>
+  <span ng-if="!$ctrl.isVisible()">
+    <md-button layout-fill class="md-raised padding-layout-fill"
+               aria-label={{$ctrl.LABELS.SORTING_CRITERIA}}
+               ng-click="$ctrl.chanceStateCriteria()">
+      <md-icon>swap_calls
+        <md-tooltip md-direction="right">{{$ctrl.LABELS.SORTING_CRITERIA}}</md-tooltip>
+      </md-icon>
+    </md-button>
+  </span>
+
+  <span ng-if="$ctrl.isVisible()" layout="row" layout-align="center center">
+    <md-icon ng-click="$ctrl.resetCriteriaOrderCustomization()" class="icon-cursor">refresh
+      <md-tooltip md-direction="top">{{$ctrl.LABELS.REORDERING_ITEMS}}</md-tooltip>
+    </md-icon>
+
+    <div dragula='new-order-list'
+         dragula-model='$ctrl.searchSettings.order.fields'
+         layout="row" layout-xs="column">
+      <md-chips ng-repeat='criteria in $ctrl.searchSettings.order.fields'>
+        <md-chip>{{$ctrl.itemAttributes[criteria].translatedTitle}}</md-chip>
+      </md-chips>
+    </div>
+    <md-icon ng-click="$ctrl.chanceStateCriteria()" class="icon-cursor">
+      {{$ctrl.LABELS.CANCEL_BUTTON}}
+    <md-tooltip md-direction="top">{{$ctrl.LABELS.CANCEL_BUTTON}}</md-tooltip>
+    </md-icon>
+  </span>
+</span>

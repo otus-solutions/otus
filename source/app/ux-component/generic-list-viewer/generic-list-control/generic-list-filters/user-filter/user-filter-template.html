@@ -1,0 +1,12 @@
+<span layout="row">
+  <md-icon>{{$ctrl.filterItem.icon}}
+    <md-tooltip md-direction="bottom">{{item.translatedTitle}}</md-tooltip>
+  </md-icon>
+  <otus-checker-search layout-fill class="padding-layout-fill"
+                       filter-item="$ctrl.filterItem"
+                       search-settings="$ctrl.searchSettings"
+                       change-watcher="$ctrl.changePaginationViewState()"
+                       placeholder-title="{{item.translatedTitle}}">
+  </otus-checker-search>
+  <md-icon ng-click="$ctrl.clear($ctrl.filterItem)" class="icon-cursor">{{$ctrl.CANCEL_BUTTON_ICON}}</md-icon>
+</span>

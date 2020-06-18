@@ -1,0 +1,12 @@
+<span layout="row" layout-align="space-between center">
+  <md-icon>{{$ctrl.filterItem.icon}}
+    <md-tooltip md-direction="bottom">{{$ctrl.filterItem.translatedTitle}}</md-tooltip>
+  </md-icon>
+  <md-datepicker ng-model="$ctrl.searchSettings.filter[$ctrl.filterItem.title]"
+                 ng-change="$ctrl.changePaginationViewState()"
+                 md-placeholder={{$ctrl.STANDARD_DATE_FORMAT}}
+                 md-hide-icons="calendar"
+                 aria-label={{$ctrl.filterItem.translatedTitle}}>
+  </md-datepicker>
+  <md-icon ng-click="$ctrl.clear($ctrl.filterItem)" class="icon-cursor">{{$ctrl.CANCEL_BUTTON_ICON}}</md-icon>
+</span>

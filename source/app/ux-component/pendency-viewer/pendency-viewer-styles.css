@@ -1,0 +1,163 @@
+/*begin style for pendency-item*/
+@media screen and (min-width: 360px) {
+  .pi-layout {
+    display: grid;
+    /*width: 98vw;*/
+    grid-template-columns: 2.9fr .6fr .1fr 6fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+      "acronym      acronym      requester    requester"
+      "rn           rn           receiver     receiver"
+      "creationDate creationDate creationDate duoDate"
+      "remainingDays .           externalID   externalID"
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .pi-layout {
+    display: grid;
+    /*width: 98vw;*/
+    grid-template-columns: 1.8fr 3.8fr 4.2fr 2.2fr;
+    grid-template-rows: .1fr .1fr;
+    grid-template-areas:
+      "acronym   creationDate duoDate   remainingDays"
+      "rn        requester    receiver  externalID"
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .pi-layout {
+    display: grid;
+    /*width: 98vw;*/
+    grid-template-columns: .2fr .25fr .4fr .01fr repeat(2, .56fr) .01fr repeat(2, .28fr) .2fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "acronym rn  externalID .  requester receiver . creationDate  duoDate remainingDays ";
+  }
+}
+
+.rn {
+  grid-area: rn;
+}
+
+.acronym {
+  grid-area: acronym;
+}
+
+.due-date {
+  grid-area: duoDate;
+}
+
+.creation-date {
+  grid-area: creationDate;
+}
+
+.requester {
+  grid-area: requester;
+}
+
+.receiver {
+  grid-area: receiver;
+}
+
+.external-id {
+  grid-area: externalID;
+}
+
+.remaining-days {
+  grid-area: remainingDays;
+}
+
+.padding {
+  padding: 0 3px 0 3px;
+}
+
+/*end style for pendency-item*/
+
+/*begin style for pendency-list-filters*/
+@media screen and (min-width: 360px) {
+  .pendency-list-filters {
+    display: grid;
+    /*width: 90vw;*/
+    grid-template-columns: 1fr;
+    grid-template-rows: .01fr .1fr 1fr .1fr .1fr .1fr .1fr .1fr;
+    grid-template-areas: "toolbar" "status" "sortingCriteria" "item" "item" "item" "item" "item" "item"
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .pendency-list-filters {
+    display: grid;
+    /*width: 90vw;*/
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: .01fr .1fr 1fr .5fr .5fr .5fr;
+    grid-template-areas:
+      "toolbar         toolbar"
+      "status          status"
+      "sortingCriteria sortingCriteria"
+      "item            item"
+      "item            item"
+      "item            item"
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .pendency-list-filters {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: .01fr .1fr .5fr .5fr;
+    grid-template-areas:
+      "toolbar         toolbar         toolbar"
+      "status          sortingCriteria sortingCriteria"
+      "item            item            item"
+      "item            item            item"
+  }
+}
+
+.padding-layout-fill {
+  padding: 0 10px 0 10px;
+}
+
+.item-filter {
+  grid-area: item;
+}
+
+.filter-toolbar {
+  grid-area: toolbar;
+  background: #00907e;
+  color: #ffffff;
+}
+
+.status {
+  grid-area: status;
+}
+
+.sorting-criteria {
+  grid-area: sortingCriteria;
+}
+
+#participantSearchAutoCompleteId {
+  background-color: #ffffff;
+}
+
+.pendency-list-filters .md-button.md-default-theme.md-raised:not([disabled]) md-icon, .md-button.md-raised:not([disabled]) md-icon {
+  color: rgb(119, 119, 119);
+}
+
+.pendency-list-filters md-input-container.md-default-theme {
+  color: black;
+  opacity: 0.54;
+}
+
+.pendency-list-filters .md-autocomplete-participant {
+  background-color: #ffffff !important;
+}
+
+.icon-cursor {
+  cursor: pointer;
+}
+
+icon-move {
+  cursor: move;
+}
+
+/* end style for pendency-list-filters*/

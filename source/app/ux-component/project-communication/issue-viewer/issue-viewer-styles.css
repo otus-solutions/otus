@@ -1,0 +1,294 @@
+/*begin style for issue-list-filters*/
+@media screen and (min-width: 360px) {
+  .issue-list-filters {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: .01fr .1fr 1fr .1fr .1fr;
+    grid-template-areas: "toolbar" "status" "sortingCriteria" "centerNameFilter" "rnFilter" "creationDateFilter"
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .issue-list-filters {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: .01fr .1fr 1fr auto .5fr;
+    grid-template-areas:
+      "toolbar            toolbar"
+      "status             status"
+      "sortingCriteria    sortingCriteria"
+      "centerNameFilter   centerNameFilter"
+      "rnFilter           creationDateFilter"
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .issue-list-filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: .01fr .1fr .5fr;
+    grid-template-areas:
+      "toolbar         toolbar              toolbar "
+      "status          sortingCriteria      sortingCriteria"
+      "rnFilter        creationDateFilter   centerNameFilter"
+  }
+}
+
+.padding-layout-fill {
+  padding: 0 10px 0 10px;
+}
+
+.filter-toolbar {
+  grid-area: toolbar;
+  background: #00907e;
+  color: #ffffff;
+}
+
+.status {
+  grid-area: status;
+}
+
+.filter-item {
+  grid-area: filterItem;
+}
+
+.rn-filter {
+  grid-area: rnFilter;
+}
+
+.creation-date-filter {
+  grid-area: creationDateFilter;
+}
+
+.center-name-filter {
+  grid-area: centerNameFilter;
+}
+
+.sorting-criteria {
+  grid-area: sortingCriteria;
+}
+
+#participantSearchAutoCompleteId {
+  background-color: #ffffff;
+}
+
+.issue-list-filters .md-button.md-default-theme.md-raised:not([disabled]) md-icon, .md-button.md-raised:not([disabled]) md-icon {
+  color: rgb(119, 119, 119);
+}
+
+.issue-list-filters md-input-container.md-default-theme {
+  color: black;
+  opacity: 0.54;
+}
+
+.issue-list-filters .md-autocomplete-participant {
+  background-color: #ffffff !important;
+}
+
+.icon-cursor {
+  cursor: pointer;
+}
+
+icon-move {
+  cursor: move;
+}
+
+/* end style for issue-list-filters*/
+
+
+/*begin style for issue-item*/
+@media screen and (min-width: 360px) {
+  .issue-item-layout {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+      "centerName   rn              creationDate  status"
+      "senderName   senderName      senderName    seeLastMsg"
+      "title        title           title         title"
+    ;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .issue-item-layout {
+    display: grid;
+    grid-template-columns: 1fr 3.8fr 1.2fr 1fr;
+    grid-template-rows: .1fr .1fr;
+    grid-template-areas:
+      "centerName   senderName    creationDate    status"
+      "rn           title         title           seeLastMsg"
+  ;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .issue-item-layout {
+    display: grid;
+    grid-template-columns: .3fr .4fr 1fr 1.6fr .5fr .5fr .1fr;
+    grid-template-rows: 50px 1px;
+    grid-template-areas:
+      "centerName   rn    senderName   title  creationDate  status seeLastMsg";
+  }
+}
+
+.rn {
+  grid-area: rn;
+}
+
+.sender-name {
+  grid-area: senderName;
+}
+
+.center-name {
+  grid-area: centerName;
+}
+
+.creation-date {
+  grid-area: creationDate;
+}
+
+.msg-title {
+  grid-area: title;
+}
+
+.issue-status {
+  grid-area: status;
+  margin: 0px;
+  padding: 0px;
+  text-transform: capitalize;
+}
+
+.issue-status md-chips-wrap{
+  padding: 0px;
+}
+
+.issue-status md-chip{
+  margin: 0px;
+}
+
+.see-last-msg {
+  grid-area: seeLastMsg;
+  padding: 0px;
+  margin: 0px;
+  min-width: 44px;
+}
+
+.issue-item-layout md-button {
+  grid-area: seeLastMsg;
+}
+
+.padding {
+  padding: 0 3px 0 3px;
+}
+
+.md-accordion .expandCollapse {
+  width:30px;
+  height:30px;
+  position:relative;
+  font-size:20px;
+  font-weight:bold;
+  cursor:pointer;
+  color:#fff;
+  display:block;
+  margin-top: -2px;
+  margin-left: -2px;
+  overflow:hidden;
+}
+.md-accordion .expandCollapse:active {
+  border:0px;
+}
+.md-accordion .expandCollapse:before, .md-accordion .expandCollapse:after {
+  width:30px;
+  height:30px;
+  display:block;
+  position:absolute;
+  top:0; left:0;
+  line-height:32px;
+  text-align:center;
+  -webkit-transition: .3s all ease-out;
+  transition: .3s all ease-out;
+}
+.md-accordion .expandCollapse:before {
+  opacity:1;
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+  content: "|";
+  margin-top:-3px;
+}
+.md-accordion .expandCollapse:after {
+  opacity:1;
+  -webkit-transform: rotate(-90deg);
+  transform: rotate(-90deg);
+  content: "|";
+  margin-left:-3px;
+}
+.md-accordion .active:before {
+  opacity:1;
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  margin-left:3px;
+  margin-top:0px;
+}
+.md-accordion .dataContent {
+  background: #F2F2F2;
+  height:0px;
+  overflow:hidden;
+  -webkit-transition: .3s all ease-out;
+  transition: .3s all ease-out;
+}
+.md-accordion .activeContent {
+  height:auto;
+  padding: 0px 12px 20px 12px;
+  display:block;
+}
+
+/*end style for issue-item*/
+
+
+/*begin style for issue-last-message*/
+
+@media screen and (min-width: 360px) {
+  .issue-item-text-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "text"
+      "seeMoreButton"
+    ;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .issue-item-text-layout {
+    display: grid;
+    grid-template-columns: 4fr .1fr;
+    grid-template-rows: .1fr;
+    grid-template-areas:
+      "text seeMoreButton"
+    ;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .issue-item-text-layout {
+    display: grid;
+    grid-template-columns: 4fr .5fr;
+    grid-template-rows: .1fr;
+    grid-template-areas:
+      "text seeMoreButton"
+    ;
+  }
+}
+
+.issue-text-layout {
+  grid-area: text;
+}
+
+.see-issue {
+  grid-area: seeMoreButton;
+  min-width: 130px;
+}
+
+/*end style for issue-item*/

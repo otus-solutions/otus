@@ -1,0 +1,68 @@
+<div class="md-accordion">
+
+  <md-card class="issue-item-layout" layout-margin ng-cloak ng-init="$ctrl.expanded = false">
+
+    <div class="rn">
+      <md-icon>{{$ctrl.itemAttributes.rn.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.rn.translatedTitle}}</md-tooltip>
+      </md-icon>
+      <span class="padding">{{$ctrl.rn}}</span>
+    </div>
+
+    <div class="sender-name">
+      <md-icon>{{$ctrl.itemAttributes.name.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.name.translatedTitle}}</md-tooltip>
+      </md-icon>
+      <span class="padding">{{$ctrl.name}}</span>
+    </div>
+
+    <div class="center-name">
+      <md-icon>{{$ctrl.itemAttributes.center.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.center.translatedTitle}}</md-tooltip>
+      </md-icon>
+      <span class="padding">{{$ctrl.center}}</span>
+    </div>
+
+    <div class="creation-date">
+      <md-icon >{{$ctrl.itemAttributes.creationDate.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.creationDate.translatedTitle}}</md-tooltip>
+      </md-icon>
+      <span class="padding">{{$ctrl.creationDate}}</span>
+    </div>
+
+
+    <div class="msg-title">
+      <md-icon>{{$ctrl.itemAttributes.title.icon}}
+        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.title.translatedTitle}}</md-tooltip>
+      </md-icon>
+      <span class="padding">{{$ctrl.item.title}}</span>
+    </div>
+
+    <div layout="row" layout-align="end center">
+      <md-chips class="issue-status">
+        <md-chip ng-style={{$ctrl.statusColor}}>{{$ctrl.status}}</md-chip>
+      </md-chips>
+    </div>
+
+    <div layout="row" layout-align="end center">
+        <md-button class="see-last-msg md-mini" ng-click="$ctrl.showLastMessage()">
+          <md-icon>{{$ctrl.showingLastMessageIcon.icon}}
+            <md-tooltip md-direction="left">{{$ctrl.showingLastMessageIcon.tooltip}}</md-tooltip>
+          </md-icon>
+        </md-button>
+    </div>
+
+    <div ng-if="$ctrl.expanded" ng-class="{expandCollapse:true, active:$ctrl.expanded}" style="margin: 0;padding: 0"></div>
+
+  </md-card>
+
+  <div ng-class="{dataContent:true, activeContent:$ctrl.expanded}">
+    <div class="issue-item-text-layout">
+      <span class="issue-text-layout" layout-gt-xs="row" layout-align-gt-xs="start center">
+        {{$ctrl.item.text}}
+      </span>
+      <md-button class="md-primary see-issue" ng-click="$ctrl.openIssueMessages()">Ver mensagens</md-button>
+    </div>
+  </div>
+
+</div>
