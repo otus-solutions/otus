@@ -172,7 +172,7 @@
               <md-card-content layout="column" layout-align="start start" class="no-padding">
                 <md-button class="md-body-1 option" layout-margin="" layout-align="center"
                            ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"
-                           ng-click="$ctrl.activatePendencyViewer()">
+                           ng-click="$ctrl.activatePendencyViewer()" id="pendencyViewer">
                   <md-icon layout-margin>visibility</md-icon>Visualizador de Pendências
                 </md-button>
               </md-card-content>
@@ -182,8 +182,8 @@
             <md-card class="card-button" layout-fill ng-init="showLaboratory=true" >
               <md-card-content layout="column" layout-align="start start" class="no-padding">
                 <md-button class="md-body-1 option" layout-margin="" layout-align="center"
-                           ng-click="$ctrl.activateIssueViewer()">
-                  <md-icon layout-margin>mail</md-icon>Visualizador de Issues
+                           ng-click="$ctrl.activateIssueViewer()" id="issueViewer">
+                  <md-icon layout-margin>mail</md-icon>Visualizador de Chamados
                 </md-button>
               </md-card-content>
             </md-card>
@@ -291,6 +291,23 @@
                       <md-button ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" ng-click="$ctrl.laboratoryMonitoring()"
                                  class="md-body-1 option" layout-margin="" layout-align="center">
                         <md-icon layout-margin>assignment_turned_in</md-icon>Controle laboratorial
+                      </md-button>
+                    </md-menu-item>
+
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item ng-init="showLaboratory=true">
+                      <md-button class="md-body-1 option" layout-margin="" layout-align="center"
+                                 ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"
+                                 ng-click="$ctrl.activatePendencyViewer()" id="pendencyViewer-xs">
+                        <md-icon layout-margin>visibility</md-icon>Visualizador de Pendências
+                      </md-button>
+                    </md-menu-item>
+
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item ng-init="showLaboratory=true">
+                      <md-button class="md-body-1 option" layout-margin="" layout-align="center"
+                                 ng-click="$ctrl.activateIssueViewer()" id="issueViewer-xs">
+                        <md-icon layout-margin>mail</md-icon>Visualizador de Chamados
                       </md-button>
                     </md-menu-item>
                   </md-menu-content>
