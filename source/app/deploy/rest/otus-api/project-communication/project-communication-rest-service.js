@@ -6,12 +6,10 @@
     .service('otusjs.deploy.ProjectCommunicationRestService', Service);
 
   Service.$inject = [
-    '$http',//todo temp
     'OtusRestResourceService'
   ];
 
-  function Service($http,
-                   OtusRestResourceService){
+  function Service(OtusRestResourceService){
     const UNINITIALIZED_REST_ERROR_MESSAGE = 'REST resource is not initialized.';
     const self = this;
     let _rest = null;
