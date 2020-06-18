@@ -37,7 +37,7 @@
     function _parseItems(genericListJsonArray) {
       let defer = $q.defer();
       let promises = genericListJsonArray.sort(compareIssueMessages)
-        .map(item => ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender));
+        .map(item => ProjectCommunicationRepositoryService.getSenderById(item.sender));
 
       $q.all(promises).then(senders => {
         let parsedItems = [];

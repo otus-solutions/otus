@@ -23,7 +23,7 @@
     self.updateFinalized = updateFinalized;
     self.filter = filter;
     self.getAllIssueMessages = getAllIssueMessages;
-    self.getIssueSenderInfo = getIssueSenderInfo;
+    self.getSenderById = getSenderById;
 
     function createMessage(issueId, messageObject) {
       return _remoteStorage.whenReady()
@@ -80,9 +80,9 @@
         .then(response => response.data);
     }
 
-    function getIssueSenderInfo(senderId) {
+    function getSenderById(senderId) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.getIssueSenderInfo(senderId))
+        .then(remoteStorage => remoteStorage.getSenderById(senderId))
         .then(response => response.data);
     }
 

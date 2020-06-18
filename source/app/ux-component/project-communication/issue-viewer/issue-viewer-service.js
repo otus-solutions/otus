@@ -122,7 +122,7 @@
 
     function childParseItemsMethod(genericListJsonArray) {
       let defer = $q.defer();
-      let promises = genericListJsonArray.map(item => ProjectCommunicationRepositoryService.getIssueSenderInfo(item.sender));
+      let promises = genericListJsonArray.map(item => ProjectCommunicationRepositoryService.getSenderById(item.sender));
 
       $q.all(promises).then(participants => {
         let parsedItems = [];

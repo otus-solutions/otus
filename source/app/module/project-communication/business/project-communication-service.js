@@ -22,7 +22,7 @@
     self.updateFinalized = updateFinalized;
     self.filter = filter;
     self.getAllIssueMessages = getAllIssueMessages;
-    self.getIssueSenderInfo = getIssueSenderInfo;
+    self.getSenderById = getSenderById;
 
     function createMessage(ProjectCommunication) {
       return ProjectCommunicationRepositoryService.createMessage(ProjectCommunication)
@@ -60,8 +60,8 @@
       return ProjectCommunicationRepositoryService.getAllIssueMessages(searchSettings);
     }
 
-    function getIssueSenderInfo(searchSettings){
-      return ProjectCommunicationRepositoryService.getIssueSenderInfo(searchSettings);
+    function getSenderById(searchSettings){
+      return ProjectCommunicationRepositoryService.getSenderById(searchSettings);
     }
 
   }

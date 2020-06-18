@@ -27,7 +27,7 @@
     self.updateFinalized = updateFinalized;
     self.filter = filter;
     self.getAllIssueMessages = getAllIssueMessages;
-    self.getIssueSenderInfo = getIssueSenderInfo;
+    self.getSenderById = getSenderById;
 
     function initialize() {
       _rest = OtusRestResourceService.getProjectCommunicationResourceFactory();
@@ -105,7 +105,7 @@
     }
 
     //todo
-    function getIssueSenderInfo(senderId){
+    function getSenderById(senderId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       // return _rest.getSenderById({id: senderId});
 

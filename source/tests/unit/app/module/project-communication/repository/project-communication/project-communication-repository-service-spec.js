@@ -19,7 +19,7 @@ describe('ProjectCommunicationRepositoryService_UnitTest_Suite', () => {
       spyOn(Injections.ProjectCommunicationCollectionService, 'updateFinalized');
       spyOn(Injections.ProjectCommunicationCollectionService, 'filter');
       spyOn(Injections.ProjectCommunicationCollectionService, 'getAllIssueMessages');
-      spyOn(Injections.ProjectCommunicationCollectionService, 'getIssueSenderInfo');
+      spyOn(Injections.ProjectCommunicationCollectionService, 'getSenderById');
 
     });
   });
@@ -38,7 +38,7 @@ describe('ProjectCommunicationRepositoryService_UnitTest_Suite', () => {
     expect(service.updateFinalized).toBeDefined();
     expect(service.filter).toBeDefined();
     expect(service.getAllIssueMessages).toBeDefined();
-    expect(service.getIssueSenderInfo).toBeDefined();
+    expect(service.getSenderById).toBeDefined();
   });
 
   it('createMessageMethod_should_evoke_createMessage_by_ProjectCommunicationCollectionService', () => {

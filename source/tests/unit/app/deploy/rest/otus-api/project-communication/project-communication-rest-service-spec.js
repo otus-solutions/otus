@@ -25,7 +25,7 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
       // spyOn(Mock._rest, 'updateFinalized').and.callThrough();
       spyOn(Mock._rest, 'filter').and.callThrough();
       // spyOn(Mock._rest, 'getAllIssueMessages').and.callThrough();
-      // spyOn(Mock._rest, 'getIssueSenderInfo').and.callThrough();
+      // spyOn(Mock._rest, 'getSenderById').and.callThrough();
     });
   });
 
@@ -44,7 +44,7 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
     expect(service.updateFinalized).toBeDefined();
     expect(service.filter).toBeDefined();
     expect(service.getAllIssueMessages).toBeDefined();
-    expect(service.getIssueSenderInfo).toBeDefined();
+    expect(service.getSenderById).toBeDefined();
   });
 
   it('initializeMethod_should_evoke_getProjectCommunicationResourceFactory_by_OtusRestResourceService', () => {

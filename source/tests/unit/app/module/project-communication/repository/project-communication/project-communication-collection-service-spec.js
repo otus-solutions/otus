@@ -39,7 +39,7 @@ describe('ProjectCommunicationCollectionService_UnitTest_Suite', () => {
       updateFinalized: jasmine.anything(),
       filter: jasmine.anything(),
       getAllIssueMessages: jasmine.anything(),
-      getIssueSenderInfo: jasmine.anything()
+      getSenderById: jasmine.anything()
     };
 
     /*Injection of a restServiceMock in context(boostrap action simulation)*/
@@ -81,7 +81,7 @@ describe('ProjectCommunicationCollectionService_UnitTest_Suite', () => {
     expect(service.updateFinalized).toBeDefined();
     expect(service.filter).toBeDefined();
     expect(service.getAllIssueMessages).toBeDefined();
-    expect(service.getIssueSenderInfo).toBeDefined();
+    expect(service.getSenderById).toBeDefined();
   });
 
   it('createMessageMethod_should_positiveAnswer_on_successfulPersistence', () => {
