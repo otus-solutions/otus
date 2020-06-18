@@ -35,11 +35,7 @@
 
     function createMessage(issueId, messageObject){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      // return _rest.createMessage({id: issueId}, messageObject).$promise;
-
-      messageObject.sender = "";
-      let url = `http://localhost:3037/project-communication/issues/${issueId}/messages`;
-      return $http.post(url, messageObject);
+      return _rest.createMessage({id: issueId}, messageObject).$promise;
     }
 
     function createIssue(jsonProjectCommunication){
@@ -59,58 +55,32 @@
 
     function updateReopen(foundProjectCommunicationId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      // return _rest.updateReopen({id: foundProjectCommunicationId}).$promise;//todo descomentar
-
-      return updateStatus(foundProjectCommunicationId);
+      return _rest.updateReopen({id: foundProjectCommunicationId}).$promise;
     }
 
     function updateClose(foundProjectCommunicationId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      // return _rest.updateClose({id: foundProjectCommunicationId}).$promise;//todo descomentar
-
-      return updateStatus(foundProjectCommunicationId);
+      return _rest.updateClose({id: foundProjectCommunicationId}).$promise;
     }
 
     function updateFinalized(foundProjectCommunicationId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      // return _rest.updateFinalize({id: foundProjectCommunicationId}).$promise;//todo descomentar
-
-      return updateStatus(foundProjectCommunicationId);
-    }
-
-    //todo temp
-    function updateStatus(issue){
-      const updatedIssue = angular.copy(issue);
-      delete updatedIssue.participant;
-      console.log(`http://localhost:3037/project-communication/issues/${issue.id}\n`, JSON.stringify(updatedIssue, null, 2))
-      let url = `http://localhost:3037/project-communication/issues/${issue.id}`;
-      return $http.put(url, updatedIssue);
+      return _rest.updateFinalize({id: foundProjectCommunicationId}).$promise;
     }
 
     function filter(searchSettings){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      //return _rest.filter(searchSettings).$promise;//todo descomentar
-
-      let url = `http://localhost:3037/project-communication/issues`;
-      return $http.get(url);
+      return _rest.filter(searchSettings).$promise;
     }
 
-    //todo
     function getAllIssueMessages(issueId, limit){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      // return _rest.getMessageByIdLimit({id: issueId, limit: limit});
-
-      let url = `http://localhost:3037/project-communication/issues/${issueId}/messages`;
-      return $http.get(url);
+      return _rest.getMessageByIdLimit({id: issueId, limit: limit});
     }
 
-    //todo
     function getSenderById(senderId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      // return _rest.getSenderById({id: senderId});
-
-      let url = `http://localhost:3037/project-communication/senders/${senderId}`;
-      return $http.get(url);
+      return _rest.getSenderById({id: senderId});
     }
 
   }
