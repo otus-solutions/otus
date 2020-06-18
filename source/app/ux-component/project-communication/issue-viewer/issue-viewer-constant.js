@@ -4,7 +4,7 @@
   angular
     .module('otusjs.otus.uxComponent')
     .constant('ISSUE_VIEWER_LABELS', {
-      PAGE_TITLE:'Visualizador de Issues',
+      PAGE_TITLE:'Visualizador de Chamados',
 
       ISSUE_ATTRIBUTES: {
         RN: {
