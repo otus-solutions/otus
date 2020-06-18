@@ -22,10 +22,9 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
       spyOn(Mock._rest, 'getMessageByIdLimit').and.callThrough();
       spyOn(Mock._rest, 'updateReopen').and.callThrough();
       spyOn(Mock._rest, 'updateClose').and.callThrough();
-      // spyOn(Mock._rest, 'updateFinalized').and.callThrough();
+      spyOn(Mock._rest, 'updateFinalize').and.callThrough();
       spyOn(Mock._rest, 'filter').and.callThrough();
-      // spyOn(Mock._rest, 'getAllIssueMessages').and.callThrough();
-      // spyOn(Mock._rest, 'getSenderById').and.callThrough();
+      spyOn(Mock._rest, 'getSenderById').and.callThrough();
     });
   });
 
@@ -57,7 +56,7 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
     catch(e) { expect(e.toString()).toBe(UNINITIALIZED_REST_ERROR_MESSAGE)}
   });
 
-  xit('createMessageMethod_should_evoke_create_by_resource_and_return_promise', () => {
+  it('createMessageMethod_should_evoke_create_by_resource_and_return_promise', () => {
     service.initialize();
     expect(service.createMessage(ID, Mock)).toBePromise();
     expect(Mock._rest.createMessage).toHaveBeenCalledTimes(1)
@@ -101,7 +100,7 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
     catch(e) { expect(e.toString()).toBe(UNINITIALIZED_REST_ERROR_MESSAGE)}
   });
 
-  xit('updateReopenMethod_should_evoke_updateReopen_by_resource_and_return_promise', () => {
+  it('updateReopenMethod_should_evoke_updateReopen_by_resource_and_return_promise', () => {
     service.initialize();
     expect(service.updateReopen(ID)).toBePromise();
     expect(Mock._rest.updateReopen).toHaveBeenCalledTimes(1)
@@ -112,13 +111,13 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
     catch(e) { expect(e.toString()).toBe(UNINITIALIZED_REST_ERROR_MESSAGE)}
   });
 
-  xit('updateCloseMethod_should_evoke_updateClose_by_resource_and_return_promise', () => {
+  it('updateCloseMethod_should_evoke_updateClose_by_resource_and_return_promise', () => {
     service.initialize();
     expect(service.updateClose(ID)).toBePromise();
     expect(Mock._rest.updateClose).toHaveBeenCalledTimes(1)
   });
 
-  xit('filterMethod_should_evoke_filter_by_resource_and_return_promise', () => {
+  it('filterMethod_should_evoke_filter_by_resource_and_return_promise', () => {
     service.initialize();
     expect(service.filter(Mock)).toBePromise();
     expect(Mock._rest.filter).toHaveBeenCalledTimes(1)
