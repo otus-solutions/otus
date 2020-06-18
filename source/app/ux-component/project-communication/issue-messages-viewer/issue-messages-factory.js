@@ -21,11 +21,10 @@
       item.sender = {
         id: item.sender,
         name: sender.name,
-        rn: sender.rn, //recruitmentNumber,
-        center: sender.center // (sender.fieldCenter ? sender.fieldCenter.acronym : undefined)
+        rn: sender.rn,
+        center: sender.center
       };
       return item;
-
     }
 
     return self;
