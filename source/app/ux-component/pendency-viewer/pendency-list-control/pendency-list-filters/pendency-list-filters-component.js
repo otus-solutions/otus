@@ -41,7 +41,7 @@
 
     function onInit(){
       self.clearAll();
-      if(!PendencyViewerService.self.initialized){
+      if(!PendencyViewerService.initialized){
         PendencyViewerService.initialize();
       }
       self.viewerServiceGetChecker = PendencyViewerService.getChecker;
