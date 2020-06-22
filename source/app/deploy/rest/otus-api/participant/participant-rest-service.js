@@ -86,9 +86,7 @@
       if (!_passwordRecoveryRest) {
         throw new Error('REST resource is not initialized.');
       }
-      // return _passwordRecoveryRest.requestRecoveryLink({userEmail:email}).$promise;
-
-      return Promise.resolve("https://ccem-dev.atlassian.net/secure/RapidBoard.jspa?rapidView=49&projectKey=OTUS&modal=detail&selectedIssue=OTUS-755");
+      return _passwordRecoveryRest.requestRecoveryLink({userEmail:email}).$promise;
     }
 
   }
