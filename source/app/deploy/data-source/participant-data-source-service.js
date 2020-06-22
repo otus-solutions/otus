@@ -27,6 +27,7 @@
     self.activateFollowUpEvent = activateFollowUpEvent;
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
     self.requestPasswordReset = requestPasswordReset;
+    self.requestPasswordResetLink = requestPasswordResetLink;
 
     function up() {
       _loadingDefer = $q.defer();
@@ -138,6 +139,10 @@
 
     function requestPasswordReset(email) {
      return ParticipantRestService.requestPasswordReset(email);
+    }
+
+    function requestPasswordResetLink(email) {
+     return ParticipantRestService.requestPasswordResetLink(email);
     }
   }
 }());
