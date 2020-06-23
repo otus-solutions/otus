@@ -142,7 +142,15 @@
     }
 
     function requestPasswordResetLink(email) {
-     return ParticipantRestService.requestPasswordResetLink(email);
+      let deferred = $q.defer();
+      ParticipantRestService.requestPasswordResetLink(email)
+        .then(function(response){
+          deferred.resolve(response.data);
+        })
+        .catch(function(err){
+          deferred.reject(err);
+        });
+      return deferred.promise;
     }
   }
 }());
