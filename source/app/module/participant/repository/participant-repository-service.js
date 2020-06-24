@@ -34,6 +34,7 @@
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
     self.requestPasswordReset = requestPasswordReset;
+    self.requestPasswordResetLink = requestPasswordResetLink;
 
 
     function create(participant) {
@@ -161,6 +162,13 @@
       var _dataSource = ModuleService.DataSource.Participant;
       if (_dataSource) {
         return _dataSource.requestPasswordReset(email);
+      }
+    }
+
+    function requestPasswordResetLink(email) {
+      var _dataSource = ModuleService.DataSource.Participant;
+      if (_dataSource) {
+        return _dataSource.requestPasswordResetLink(email);
       }
     }
 
