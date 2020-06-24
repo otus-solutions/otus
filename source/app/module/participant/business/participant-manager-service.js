@@ -44,6 +44,8 @@
     self.deleteNonMainContact = deleteNonMainContact;
     self.requestPasswordReset = requestPasswordReset;
     self.requestPasswordResetLink = requestPasswordResetLink;
+    self.getParticipantById = getParticipantById;
+
 
     var _setupSuccess;
 
@@ -54,6 +56,7 @@
         promise.then(function (participants) {
           if (participants) {
             query = SearchQueryFactory.newParticipantFilter(participants);
+
             _stringfyRNs(participants);
             participantList = participants;
             _setupSuccess = true;
@@ -147,9 +150,13 @@
     }
 
     function getParticipant(rn) {
+      if (!participantList) {
+        throw new Error('ParticipantList is not initialized.');
+      }
+
       let participant = participantList.find(element => element.recruitmentNumber === rn);
       if (!participant) {
-        throw new Error('ParticipantList is not initialized.');
+        throw new Error('Participant was not found.');
       }
       return participant;
     }
@@ -208,6 +215,17 @@
 
     function requestPasswordResetLink(email) {
       return ParticipantRepositoryService.requestPasswordResetLink(email);
+
+    function getParticipantById(id) {
+      if (!participantList) {
+        throw new Error('ParticipantList is not initialized.');
+      }
+
+      let participant = participantList.find(element => element._id === id);
+      if (!participant) {
+        throw new Error('Participant was not found.');
+      }
+      return participant;
     }
 
   }

@@ -22,6 +22,7 @@
   function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService, LoadingScreenService, DialogService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_DOES_MATCH_EXAM = "Aliquot does not match exam"
+    const TUBE_DOES_MATCH_EXAM = "Tube does not match exam"
     const ALIQUOT_NOT_FOUND = "Aliquot not found";
 
     var self = this;
@@ -91,18 +92,18 @@
           var warningStructure = {
             icon: "warning",
             class: "md-warn",
-            tooltip: "Alíquota não identificada no sistema",
+            tooltip: "Material não identificado no sistema",
             orderValue: "warning"
           };
           var doneStructure = {
             icon: "done",
             class: "md-primary",
-            tooltip: "Alíquota identificada no sistema",
+            tooltip: "Material identificado no sistema",
             orderValue: "done"
           };
 
           if (self.action === 'view') {
-            if (element.aliquotValid){
+            if (element.isValid){
               structureIcon = doneStructure;
             } else {
               structureIcon = warningStructure;
@@ -110,9 +111,9 @@
           } else if (self.action === 'upload') {
             if (self.errorAliquots.length) {
              var error = self.errorAliquots.find(function (error) {
-                if (error.aliquot === element.aliquotCode) {
-                  if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM)) {
-                    structureIcon = {icon: "error", class: "md-warn", tooltip: "Alíquota não corresponde ao exame", orderValue: "error"};
+                if (error.material === element.code) {
+                  if (error.message.includes(ALIQUOT_DOES_MATCH_EXAM) || error.message.includes(TUBE_DOES_MATCH_EXAM)) {
+                    structureIcon = {icon: "error", class: "md-warn", tooltip: "Material não corresponde ao exame", orderValue: "error"};
                   } else {
                     structureIcon = warningStructure;
                   }
@@ -129,19 +130,19 @@
         });
 
       //header, flex, align, ordinationPriorityIndex
-      self.dynamicTableSettings.addHeader('Código da alíquota', '20', 'left', 1)
+      self.dynamicTableSettings.addHeader('Código', '10', 'left', 1)
         .setElementsArray(self.examList)
 
         //property, formatType
-        .addColumnProperty('aliquotCode')
+        .addColumnProperty('code')
 
         //header, flex, align, ordinationPriorityIndex
-        .addHeader('Nome do exame', '20', 'left', 2)
+        .addHeader('Nome do exame', '25', 'left', 2)
         //property, formatType
         .addColumnProperty('examName')
 
         //header, flex, align, ordinationPriorityIndex
-        .addHeader('Nome do resultado', '20', 'left', 3)
+        .addHeader('Nome do resultado', '25', 'left', 3)
         //property, formatType
         .addColumnProperty('resultName')
 

@@ -1,0 +1,14 @@
+<span layout="row" layout-align="center center">
+  <md-icon>{{$ctrl.filterItem.icon}}
+    <md-tooltip md-direction="bottom">{{$ctrl.filterItem.translatedTitle}}</md-tooltip>
+  </md-icon>
+
+  <md-radio-group ng-model="$ctrl.selectedOption" ng-change="$ctrl.changeSelectedOption()"
+                  layout="row" layout-align="space-around center">
+    <md-radio-button ng-repeat="option in $ctrl.options" ng-value="option">
+      {{option}}
+    </md-radio-button>
+  </md-radio-group>
+
+  <md-icon ng-click="$ctrl.clear($ctrl.filterItem)" class="icon-cursor">{{$ctrl.CANCEL_BUTTON_ICON}}</md-icon>
+</span>

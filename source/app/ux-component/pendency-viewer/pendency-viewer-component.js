@@ -9,38 +9,16 @@
       bindings: {}
     }).controller('pendencyViewCtrl', Controller);
 
-  Controller.$inject = ['otusjs.pendencyViewer.PendencyViewerService', 'PENDENCY_VIEWER_TITLES'];
+  Controller.$inject = ['otusjs.pendencyViewer.PendencyViewerService'];
 
-  function Controller(PendencyViewerService, PENDENCY_VIEWER_TITLES) {
+  function Controller(PendencyViewerService) {
     const self = this;
-
-    self.getAllPendencies = getAllPendencies;
-    self.$onInit = onInit;
-
-    self.pendencies = [];
+    self.items = [];
     self.paginatorActive = false;
-    self.PENDENCY_VIEWER_TITLES = PENDENCY_VIEWER_TITLES;
-
-    function onInit() {
-      self.searchSettings = PendencyViewerService.getSearchSettings();
-      self.pendencyAttributes = PendencyViewerService.getPendencyAttributes();
-      getAllPendencies(self.searchSettings);
-    }
-
-    function getAllPendencies(searchSettings) {
-      PendencyViewerService.getAllPendencies(searchSettings)
-        .then(data => {
-          self.pendencies = data;
-          if(!self.pendencies.length) self.paginatorActive = false;
-          else _prepareParametersForPagination(searchSettings);
-        });
-    }
-
-    function _prepareParametersForPagination(searchSettings) {
-      if (self.stuntmanSearchSettings) self.stuntmanSearchSettings = null;
-      self.paginatorActive = true;
-      self.stuntmanSearchSettings = angular.copy(searchSettings);
-    }
+    self.viewerTitle = PendencyViewerService.LABELS.PAGE_TITLE;
+    self.viewerService = PendencyViewerService;
+    self.itemComponentName = 'otusPendencyItem';
+    self.filtersComponentName = 'otusPendecyListFilters';
   }
 
 }());

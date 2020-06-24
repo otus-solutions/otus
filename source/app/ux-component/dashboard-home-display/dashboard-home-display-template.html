@@ -41,8 +41,12 @@
     <div layout="column" layout-align="start center" layout-align-xs="center center" layout-padding layout-fill flex="100">
       <div layout="row" layout-padding style="width: 100%;" layout-align="center center" >
         <div layout="column" layout-padding layout-align="center center">
-          <otus-participant-search class="full-width" on-select="$ctrl.selectParticipant(participant)" show-all-participants="$ctrl.managerParticipantsDashboard()"
-                                   show-all-participants-button="true" ng-disabled="!$ctrl.participantsReady" layout-fill on-ready="$ctrl.participantsReady">
+          <otus-participant-search class="full-width" layout-fill
+                                   on-select="$ctrl.selectParticipant(participant)"
+                                   show-all-participants="$ctrl.managerParticipantsDashboard()"
+                                   show-all-participants-button="true"
+                                   ng-disabled="!$ctrl.participantsReady"
+                                   on-ready="$ctrl.participantsReady">
           </otus-participant-search>
           <div ng-if="!$ctrl.showAllParticipantsButtoninsideSearch">
             <button class="md-accent md-raised md-button" ng-click="$ctrl.managerParticipantsDashboard()">EXIBIR TODOS PARTICIPANTES</button>
@@ -168,12 +172,21 @@
               <md-card-content layout="column" layout-align="start start" class="no-padding">
                 <md-button class="md-body-1 option" layout-margin="" layout-align="center"
                            ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"
-                           ng-click="$ctrl.activatePendencyViewer()">
+                           ng-click="$ctrl.activatePendencyViewer()" id="pendencyViewer">
                   <md-icon layout-margin>visibility</md-icon>Visualizador de Pendências
                 </md-button>
               </md-card-content>
             </md-card>
 
+<!--            TODO temporiario-->
+            <md-card class="card-button" layout-fill ng-init="showLaboratory=true" >
+              <md-card-content layout="column" layout-align="start start" class="no-padding">
+                <md-button class="md-body-1 option" layout-margin="" layout-align="center"
+                           ng-click="$ctrl.activateIssueViewer()" id="issueViewer">
+                  <md-icon layout-margin>mail</md-icon>Visualizador de Chamados
+                </md-button>
+              </md-card-content>
+            </md-card>
 
           </div>
         </div>
@@ -277,6 +290,21 @@
                       <md-button ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking" ng-click="$ctrl.laboratoryMonitoring()"
                                  class="md-body-1 option" layout-margin="" layout-align="center">
                         <md-icon layout-margin>assignment_turned_in</md-icon>Controle laboratorial
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item ng-init="showLaboratory=true">
+                      <md-button class="md-body-1 option" layout-margin="" layout-align="center"
+                                 ng-show="$ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking"
+                                 ng-click="$ctrl.activatePendencyViewer()" id="pendencyViewer-xs">
+                        <md-icon layout-margin>visibility</md-icon>Visualizador de Pendências
+                      </md-button>
+                    </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
+                    <md-menu-item ng-init="showLaboratory=true">
+                      <md-button class="md-body-1 option" layout-margin="" layout-align="center"
+                                 ng-click="$ctrl.activateIssueViewer()" id="issueViewer-xs">
+                        <md-icon layout-margin>mail</md-icon>Visualizador de Chamados
                       </md-button>
                     </md-menu-item>
                   </md-menu-content>

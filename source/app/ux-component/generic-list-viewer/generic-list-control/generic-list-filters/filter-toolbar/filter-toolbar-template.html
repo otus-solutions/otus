@@ -1,0 +1,9 @@
+<md-toolbar-filler layout="row" layout-align="space-between center" >
+  <span layout-margin>{{$ctrl.LABELS.FILTERS}}</span>
+  <md-button aria-label={{$ctrl.LABELS.RESET_FILTERS}} class="md-fab md-mini"
+             ng-click="$ctrl.clearAll()">
+    <md-icon>autorenew
+      <md-tooltip md-direction="left">{{$ctrl.LABELS.RESET_FILTERS}}</md-tooltip>
+    </md-icon>
+  </md-button>
+</md-toolbar-filler>

@@ -1,0 +1,35 @@
+<div class="issue-messages-header" layout-margin flex>
+  <div layout="row" layout-align="end center">
+    <div class="issue-messages-status" ng-model="$ctrl.status" ng-change="$ctrl.refresh()">
+      <md-menu md-position-mode="target-right target">
+        <md-chips ng-click="$mdMenu.open()">
+          <md-chip ng-style=$ctrl.status.color>
+            {{$ctrl.status.translatedStatus}}
+          </md-chip>
+        </md-chips>
+        <md-menu-content>
+          <md-menu-item ng-repeat="status in $ctrl.statusOptions" layout="column">
+            <md-button  id="{{status.label}}" ng-click="$ctrl.changeStatusTo(status.value)">
+              {{status.label}}
+            </md-button>
+            <md-divider></md-divider>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
+    </div>
+  </div>
+
+  <span class="issue-messages-datetime datetime-font-text" layout="row" layout-align="center center">
+    {{$ctrl.creationDate}}
+  </span>
+
+  <div class="goback-button" layout="row" layout-align="start center">
+    <md-button class="no-margin no-padding md-fab md-mini md-raised"
+               ng-click="$ctrl.goBack()">
+      <md-icon>reply</md-icon>
+    </md-button>
+  </div>
+
+  <span class="issue-messages-title">{{$ctrl.issue.title}}</span>
+  <span class="issue-messages-text">{{$ctrl.issue.text}}</span>
+</div>

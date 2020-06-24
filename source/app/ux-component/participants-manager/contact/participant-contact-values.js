@@ -31,6 +31,12 @@
           icon: 'add_circle_outline',
           translatedTitle: 'Adicionar Contato'
         },
+
+        createNewContacts: {
+          icon: 'add_circle',
+          translatedTitle: 'Adicionar formas de contatos'
+        },
+
         edit: {
           icon: 'create',
           translatedTitle: 'Editar'
@@ -58,7 +64,7 @@
         },
         deleteContact: {
           icon: 'delete',
-          translatedTitle: 'Excluir Contatos'
+          translatedTitle: 'Excluir Todos Contatos'
         },
         swapMainContact: {
           icon: 'swap_vert',

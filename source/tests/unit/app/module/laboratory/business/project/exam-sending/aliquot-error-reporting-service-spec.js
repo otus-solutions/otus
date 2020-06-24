@@ -32,14 +32,14 @@ describe('AliquotErrorReportingService', function () {
 
     it('should return information translated', function () {
       expect(report[0]).toEqual(jasmine.objectContaining({
-        ALIQUOTA: '363036448',
+        MATERIAL: '363036448',
         PROBLEMA: 'Alíquota não corresponde ao exame',
         EXAME_RECEBIDO: 'URÉIA - SANGUE',
         EXAMES_POSSIVEIS: 'ELSA B12, CREATININA - SANGUE, ÁCIDO ÚRICO - SANGUE'
       }));
 
       expect(report[1]).toEqual(jasmine.objectContaining({
-        ALIQUOTA: '363036999',
+        MATERIAL: '363036999',
         PROBLEMA: 'Alíquota não encontrada',
         EXAME_RECEBIDO: 'ELSA B12',
         EXAMES_POSSIVEIS: 'URÉIA - SANGUE, CREATININA - SANGUE, ÁCIDO ÚRICO - SANGUE'
@@ -66,13 +66,13 @@ describe('AliquotErrorReportingService', function () {
 
   function mockStruture() {
     Mock.aliquotsWithProblems = [{
-      "aliquot": "363036448",
+      "material": "363036448",
       "message": "Aliquot does not match exam",
       "possibleExams": "ELSA B12, CREATININA - SANGUE, ÁCIDO ÚRICO - SANGUE",
       "receivedExam": "URÉIA - SANGUE"
     },
     {
-      "aliquot": "363036999",
+      "material": "363036999",
       "message": "Aliquot not found",
       "possibleExams": "URÉIA - SANGUE, CREATININA - SANGUE, ÁCIDO ÚRICO - SANGUE",
       "receivedExam": "ELSA B12"
@@ -80,13 +80,13 @@ describe('AliquotErrorReportingService', function () {
 
     Mock.returnExpected = [
       {
-        ALIQUOTA: '363036448',
+        MATERIAL: '363036448',
         PROBLEMA: 'Alíquota não corresponde ao exame',
         EXAME_RECEBIDO: 'URÉIA - SANGUE',
         EXAMES_POSSIVEIS: 'ELSA B12, CREATININA - SANGUE, ÁCIDO ÚRICO - SANGUE'
       },
       {
-        ALIQUOTA: '363036999',
+        MATERIAL: '363036999',
         PROBLEMA: 'Alíquota não encontrada',
         EXAME_RECEBIDO: 'ELSA B12',
         EXAMES_POSSIVEIS: 'URÉIA - SANGUE, CREATININA - SANGUE, ÁCIDO ÚRICO - SANGUE'
@@ -97,18 +97,18 @@ describe('AliquotErrorReportingService', function () {
         {
           examResults: [
             {
-              aliquotCode: '363036448',
-              aliquotValid: true,
+              code: '363036448',
+              isValid: true,
               examName: "URÉIA - SANGUE"
             },
             {
-              aliquotCode: '363036999',
-              aliquotValid: true,
+              code: '363036999',
+              isValid: true,
               examName: "URÉIA - SANGUE"
             },
             {
-              aliquotCode: '300000000',
-              aliquotValid: true,
+              code: '300000000',
+              isValid: true,
               examName: "URÉIA - SANGUE"
             },
           ]
