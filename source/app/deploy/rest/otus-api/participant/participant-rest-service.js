@@ -23,6 +23,7 @@
     self.activateFollowUpEvent = activateFollowUpEvent;
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
     self.requestPasswordReset = requestPasswordReset;
+    self.requestPasswordResetLink = requestPasswordResetLink;
 
     function initialize() {
       _rest = OtusRestResourceService.getParticipantResource();
@@ -79,6 +80,13 @@
         throw new Error('REST resource is not initialized.');
       }
       return _passwordRecoveryRest.requestRecovery({userEmail:email}).$promise;
+    }
+
+    function requestPasswordResetLink(email) {
+      if (!_passwordRecoveryRest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _passwordRecoveryRest.requestRecoveryLink({userEmail:email}).$promise;
     }
 
   }

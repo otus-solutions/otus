@@ -43,7 +43,9 @@
     self.deleteParticipantContact = deleteParticipantContact;
     self.deleteNonMainContact = deleteNonMainContact;
     self.requestPasswordReset = requestPasswordReset;
+    self.requestPasswordResetLink = requestPasswordResetLink;
     self.getParticipantById = getParticipantById;
+
 
     var _setupSuccess;
 
@@ -210,6 +212,9 @@
     function requestPasswordReset(email) {
       return ParticipantRepositoryService.requestPasswordReset(email);
     }
+
+    function requestPasswordResetLink(email) {
+      return ParticipantRepositoryService.requestPasswordResetLink(email);
 
     function getParticipantById(id) {
       if (!participantList) {
