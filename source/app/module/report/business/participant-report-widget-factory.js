@@ -48,7 +48,7 @@
     var self = this;
     var _participantInfo = participant;
     const _loadingMessage = `
-    Aguardando o fim da impressão, ou fechamento da visualização do relatório. 
+    Aguardando o fim da impressão, ou fechamento da visualização do relatório.
     <br/>
     <br/>
     `;
@@ -56,6 +56,7 @@
     self.objectType = 'ParticipantReport';
     self.id = report._id;
     self.label = report.label;
+    self.isInApp = report.isInApp;
     self.dirty = false;
 
     self.template = '';
