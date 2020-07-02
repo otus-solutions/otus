@@ -215,6 +215,7 @@
 
     function requestPasswordResetLink(email) {
       return ParticipantRepositoryService.requestPasswordResetLink(email);
+    }
 
     function getParticipantById(id) {
       if (!participantList) {
