@@ -48,7 +48,7 @@
     var self = this;
     var _participantInfo = participant;
     const _loadingMessage = `
-    Aguardando o fim da impressão, ou fechamento do relatório.
+    Aguardando fim da impressão, ou fechamento do relatório.
     <br/>
     <br/>
     `;
