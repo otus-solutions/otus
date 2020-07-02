@@ -1,4 +1,4 @@
-<otus-panel header-label="'Relatórios'" layout-align="'center center'" flex>
+<otus-panel header-label="'Resultados'" layout-align="'center center'" flex>
   <div layout-wrap layout-align="center center" layout="row"  ng-if="$ctrl.ready" class="report-list" >
     <md-card ng-repeat="report in $ctrl.reports" class="report-item md-whiteframe-3dp" ng-if="$ctrl.ready" flex-xs="100" flex-sm="45" flex="30">
       <md-card-header class="md-toolbar-tools">
@@ -7,6 +7,12 @@
           <span class="md-body-1 truncate" layout-margin ng-style="{color:report.status.color}">{{report.label}}</span>
           <md-tooltip>{{report.label}}</md-tooltip>
         </md-card-header-text>
+        <div ng-if="report.isInApp">
+          <span>
+            <span class="md-body-1 truncate">PAPP</span>
+            <md-tooltip>Disponível</md-tooltip>
+          </span>
+        </div>
         <md-card-title-media>
           <md-button class="md-icon-button" ng-click="report.expandAndCollapse()" ng-show="!$ctrl.loading">
             <md-icon>{{report.status.expandAndCollapseIcon}}</md-icon>
@@ -56,7 +62,7 @@
           <md-tooltip md-direction="down">Recarregar Relatório</md-tooltip>
           <md-icon aria-label="Alterar Lote" ng-class="rotateClass">autorenew</md-icon>
         </md-button>
-        <md-button class="md-icon-button" ng-click="$ctrl.generateReport(report)" ng-disabled="!report.status.buttonEnabled">
+        <md-button class="md-icon-button" ng-click="$ctrl.generateReport(report)" ng-disabled="report.status.buttonEnabled">
           <md-icon ng-class="report.status.bottomIconClass">{{report.status.bottomIcon}}</md-icon>
           <md-tooltip md-direction="bottom">{{report.status.tooltip}}</md-tooltip>
         </md-button>
