@@ -89,7 +89,7 @@
       if(searchSettings.filter.rn){
         promises.push(ParticipantManagerService.getParticipant(searchSettings.filter.rn));
       }
-      if(self.center){
+      if(searchSettings.filter.center){
         promises.push(ProjectFieldCenterService.loadCenters());
       }
 
@@ -109,7 +109,7 @@
           delete searchSettingsParsed.filter.rn;
           searchSettingsParsed.filter[fieldMap.rn] = response[index++]._id;
         }
-        if(self.center){
+        if(searchSettings.filter.center){
           let centerId = response[index].find(center => center.acronym === searchSettings.filter.center)._id;
           delete searchSettingsParsed.filter.center;
           searchSettingsParsed.filter[fieldMap.center] = centerId;
