@@ -73,12 +73,12 @@
 
     function getAllIssueMessages(issueId, limit){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.getMessageByIdLimit({id: issueId, limit: limit});
+      return _rest.getMessageByIdLimit({id: issueId, limit: limit}).$promise;
     }
 
     function getSenderById(senderId){
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.getSenderById({id: senderId});
+      return _rest.getSenderById({id: senderId}).$promise;
     }
 
   }
