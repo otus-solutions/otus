@@ -25,7 +25,7 @@
     const INITIAL_CURRENT_QUANTITY = 0;
     const INITIAL_QUANTITY_TO_GET = 15;
     const CURR_ISSUE_STORAGE_KEY = 'currentIssue';
-    const CURR_SEARCH_SETTINGS_STORAGE_KEY = 'issueSearchSettings';
+
 
     self.participantDataReady = false;
     self.participants = {};
@@ -71,7 +71,7 @@
     }
 
     function getSearchSettings() {
-      return {
+      self.currSearchSettings = {
         "currentQuantity": INITIAL_CURRENT_QUANTITY,
         "quantityToGet": INITIAL_QUANTITY_TO_GET,
         "order": {
@@ -83,6 +83,7 @@
           center: self.center
         }
       };
+      return self.currSearchSettings;
     }
 
     function getInputViewState() {
@@ -94,9 +95,6 @@
     }
 
     function getAllItems(searchSettings) {
-      if(self.currSearchSettings){
-        searchSettings = angular.copy(self.currSearchSettings);
-      }
 
       return parseFilterObject(searchSettings).then(searchSettingsParsed => {
         return ProjectCommunicationRepositoryService.filter(searchSettingsParsed)
@@ -106,6 +104,8 @@
     }
 
     function parseFilterObject(searchSettings){
+      searchSettings = self.checkStorageAndUpdateCurrSearchSettings(searchSettings);
+
       let promises = [];
       if(searchSettings.filter.rn){
         promises.push(ParticipantManagerService.getParticipant(searchSettings.filter.rn));
@@ -135,7 +135,6 @@
           delete searchSettingsParsed.filter.center;
           searchSettingsParsed.filter[fieldMap.center] = centerId;
         }
-        self.currSearchSettings = searchSettings;
         defer.resolve(searchSettingsParsed);
       })
         .catch(err => defer.reject(err));
@@ -181,14 +180,11 @@
 
     function storageCurrentIssue(currIssue){
       $window.sessionStorage.setItem(CURR_ISSUE_STORAGE_KEY, JSON.stringify(currIssue));
-      $window.sessionStorage.setItem(CURR_SEARCH_SETTINGS_STORAGE_KEY, JSON.stringify(self.currSearchSettings));
+      self.storageCurrentSearchSettings();
     }
 
     function removeStoragedCurrentIssue(){
       $window.sessionStorage.removeItem(CURR_ISSUE_STORAGE_KEY);
-
-      self.currSearchSettings = JSON.parse($window.sessionStorage.getItem(CURR_SEARCH_SETTINGS_STORAGE_KEY));
-      $window.sessionStorage.removeItem(CURR_SEARCH_SETTINGS_STORAGE_KEY);
     }
 
     function getCurrStoragedIssue(){

@@ -7,12 +7,15 @@
 
   Service.$inject = [
     'GENERIC_LIST_VIEWER_LABELS',
+    '$window',
     '$q',
     '$mdDialog',
     '$mdToast'
   ];
 
-  function Service(GENERIC_LIST_VIEWER_LABELS, $q, $mdDialog, $mdToast) {
+  function Service(GENERIC_LIST_VIEWER_LABELS, $window, $q, $mdDialog, $mdToast) {
+    const CURR_SEARCH_SETTINGS_STORAGE_KEY = 'genericLisSearchSettings';
+
     const self = this;
     self.LABELS = {};
     self.initialCurrentQuantity = 0;
@@ -20,12 +23,15 @@
     self.getAllItemsFromRepositoryService = null;
     self.GenericListFactory = null;
     self.childParseItemsMethod = null;
+    self.currSearchSettings = null;
 
     self.init = init;
     self.getSearchSettings = getSearchSettings;
     self.getItemAttributes = getItemAttributes;
     self.getInputViewState = getInputViewState;
     self.getAllItems = getAllItems;
+    self.checkStorageAndUpdateCurrSearchSettings = checkStorageAndUpdateCurrSearchSettings;
+    self.storageCurrentSearchSettings = storageCurrentSearchSettings;
     self.callValidationItemsLimits = callValidationItemsLimits;
     self.formatDate = formatDate;
     self.capitalizeName = capitalizeName;
@@ -82,6 +88,23 @@
       return parsedItems;
     }
 
+    function checkStorageAndUpdateCurrSearchSettings(searchSettings){
+      const storageSearchSettings = JSON.parse($window.sessionStorage.getItem(CURR_SEARCH_SETTINGS_STORAGE_KEY));
+      if(storageSearchSettings){
+        const storageSearchSettings = angular.copy(storageSearchSettings);
+        $window.sessionStorage.removeItem(CURR_SEARCH_SETTINGS_STORAGE_KEY);
+        self.currSearchSettings = storageSearchSettings;
+        return storageSearchSettings;
+      }
+
+      self.currSearchSettings = searchSettings;
+      return searchSettings;
+    }
+
+    function storageCurrentSearchSettings(){
+      $window.sessionStorage.setItem(CURR_SEARCH_SETTINGS_STORAGE_KEY, JSON.stringify(self.currSearchSettings));
+    }
+
     function formatDate(date) {
       return date.getUTCDate().toString(10).padStart(2, '0') + "/" +
         (date.getUTCMonth() + 1).toString(10).padStart(2, '0') + "/" +
@@ -127,14 +150,10 @@
       const activeNextPage = true;
       const activePreviousPage = true;
       if (searchSettings.currentQuantity < 0 || items.length === 0) {
-        _callRejectionPromise(activePreviousPage);
+        deferred.reject({msg: GENERIC_LIST_VIEWER_LABELS.NO_NEW_ITEMS, activePage: false});
         return deferred.promise;
       }
       return {items, activePreviousPage, activeNextPage};
-    }
-
-    function _callRejectionPromise() {
-      deferred.reject({msg: GENERIC_LIST_VIEWER_LABELS.NO_NEW_ITEMS, activePage: false});
     }
 
     function _updatesScreenArtifacts(vm, checkedData) {
