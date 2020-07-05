@@ -24,7 +24,6 @@
     const self = this;
     const INITIAL_CURRENT_QUANTITY = 0;
     const INITIAL_QUANTITY_TO_GET = 15;
-    const ISSUE_LIST_STORAGE_KEY = 'currentIssuesList';
     const CURR_ISSUE_STORAGE_KEY = 'currentIssue';
 
     self.participantDataReady = false;
@@ -36,8 +35,10 @@
     self.prepareData = prepareData;
     self.loadCenters = loadCenters;
     self.translateStatus = translateStatus;
-    self.storageCurrentIssues = storageCurrentIssues;
+    self.storageCurrentIssue = storageCurrentIssue;
     self.getCurrStoragedIssue = getCurrStoragedIssue;
+    self.removeStoragedCurrentIssue = removeStoragedCurrentIssue;
+    self.updateIssueStatus = updateIssueStatus;
     self.updateCurrStoragedIssueStatus = updateCurrStoragedIssueStatus;
     self.getCurrIssueMessages = getCurrIssueMessages;
     self.parseFilterObject = parseFilterObject;
@@ -92,15 +93,6 @@
     }
 
     function getAllItems(searchSettings) {
-      const items = JSON.parse($window.sessionStorage.getItem(ISSUE_LIST_STORAGE_KEY));
-      if(items){
-        const defer = $q.defer();
-        defer.resolve(angular.copy(items));
-        $window.sessionStorage.removeItem(ISSUE_LIST_STORAGE_KEY);
-        $window.sessionStorage.removeItem(CURR_ISSUE_STORAGE_KEY);
-        return defer.promise;
-      }
-
       return parseFilterObject(searchSettings).then(searchSettingsParsed => {
         return ProjectCommunicationRepositoryService.filter(searchSettingsParsed)
           .then(data => childParseItemsMethod(data))
@@ -177,32 +169,61 @@
     }
 
     function translateStatus(status){
-      const translation = ISSUE_VIEWER_LABELS.FILTER_STATUS[status];
+      const translation = ISSUE_VIEWER_LABELS.STATUS[status].filterLabel;
       return translation.substring(0, translation.length-1);
     }
 
-    function storageCurrentIssues(currIssue){
-      $window.sessionStorage.setItem(ISSUE_LIST_STORAGE_KEY, JSON.stringify(self.items));
+    function storageCurrentIssue(currIssue){
       $window.sessionStorage.setItem(CURR_ISSUE_STORAGE_KEY, JSON.stringify(currIssue));
+    }
+
+    function removeStoragedCurrentIssue(){
+      $window.sessionStorage.removeItem(CURR_ISSUE_STORAGE_KEY);
     }
 
     function getCurrStoragedIssue(){
       return JSON.parse($window.sessionStorage.getItem(CURR_ISSUE_STORAGE_KEY));
     }
 
+    function updateIssueStatus(issue, newStatusValue){
+      let updateMethod = null;
+
+      switch (newStatusValue) {
+        case ISSUE_VIEWER_LABELS.STATUS.OPEN.value:
+          updateMethod = ProjectCommunicationRepositoryService.updateReopen;
+          break;
+
+        case ISSUE_VIEWER_LABELS.STATUS.CLOSED.value:
+          updateMethod = ProjectCommunicationRepositoryService.updateClose;
+          break;
+
+        case ISSUE_VIEWER_LABELS.STATUS.FINALIZED.value:
+          updateMethod = ProjectCommunicationRepositoryService.updateFinalized;
+      }
+
+      let oldStatus = issue.status;
+      issue.status = newStatusValue;
+
+      let defer = $q.defer();
+      try{
+        updateMethod(issue._id).then(() => {
+          updateCurrStoragedIssueStatus(newStatusValue);
+          issue.status = newStatusValue;
+          defer.resolve();
+        })
+      }
+      catch (error) {
+        issue.status = oldStatus;
+        defer.reject(error);
+      }
+
+      return defer.promise;
+    }
+
     function updateCurrStoragedIssueStatus(newStatus){
       let currIssue = getCurrStoragedIssue();
       currIssue.status = newStatus;
-
-      self.items = JSON.parse($window.sessionStorage.getItem(ISSUE_LIST_STORAGE_KEY))
-        .map(issue => {
-          if(issue.id === currIssue.id){
-            issue.status = newStatus;
-          }
-          return issue;
-        });
-
-      storageCurrentIssues(currIssue);
+      storageCurrentIssue(currIssue);
     }
 
     function getCurrIssueMessages(){

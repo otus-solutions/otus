@@ -32,21 +32,6 @@
           TRANSLATED_TITLE: 'Título',
           ICON: 'insert_comment'
         }
-      },
-
-      STATUS_ACTIONS:{
-        CLOSED:{
-          value: 'CLOSED',
-          label: 'Fechar'
-        },
-        FINALIZED: {
-          value: 'FINALIZED',
-          label: 'Finalizar'
-        },
-        OPEN:{
-          value: 'OPEN',
-          label: 'Reabrir'
-        }
       }
 
     });

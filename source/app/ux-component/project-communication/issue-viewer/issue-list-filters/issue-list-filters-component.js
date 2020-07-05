@@ -40,6 +40,9 @@
     function onInit(){
       clearAll();
       self.showCenterFilter = !IssueViewerService.center;
+      self.statusLabels = {};
+      Object.entries(self.LABELS.STATUS).forEach( ([key,status]) => self.statusLabels[key] = status.filterLabel);
+
       if(self.showCenterFilter){
         IssueViewerService.loadCenters().then(function (result) {
           self.centers = angular.copy(result).map(center => center.acronym).sort();

@@ -38,24 +38,33 @@
         }
       },
 
-      FILTER_STATUS: {
-        CLOSED:'Fechados',
-        FINALIZED:'Finalizados',
-        OPEN:'Abertos'
-      },
-
-      STATUS_COLOR: {
-        CLOSED: {
-          'background-color': '#e45454',
-          'color': 'white'
+      STATUS:{
+        CLOSED:{
+          value: 'CLOSED',
+          filterLabel: 'Fechados',
+          actionLabel: 'Fechar',
+          color: {
+            'background-color': '#e45454',
+            'color': 'white'
+          }
         },
         FINALIZED: {
-          'background-color': '#7fbf7f',
-          'color': 'white'
+          value: 'FINALIZED',
+          filterLabel: 'Finalizados',
+          actionLabel: 'Finalizar',
+          color: {
+            'background-color': '#7fbf7f',
+            'color': 'white'
+          }
         },
-        OPEN: {
-          'background-color': '#64aff1',
-          'color': 'white'
+        OPEN:{
+          value: 'OPEN',
+          filterLabel: 'Abertos',
+          actionLabel: 'Reabrir',
+          color: {
+            'background-color': '#64aff1',
+            'color': 'white'
+          }
         }
       }
 

@@ -29,10 +29,11 @@
       self.issue = IssueMessagesViewerService.getCurrIssue();
       self.creationDate = IssueMessagesViewerService.formatDate(new Date(self.issue.creationDate));
       self.status = IssueMessagesViewerService.formatStatus(self.issue.status);
-      self.statusOptions = IssueMessagesViewerService.getStatusActions(self.issue.status);
+      self.statusOptions = IssueMessagesViewerService.getStatusInfo(self.issue.status);
     }
 
     function goBack(){
+      IssueMessagesViewerService.removeStoragedCurrentIssue();
       ApplicationStateService.activateIssueViewer();
     }
 
