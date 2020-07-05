@@ -206,7 +206,8 @@
     }
 
     function getCurrIssueMessages(){
-      return ProjectCommunicationRepositoryService.getAllIssueMessages(getCurrStoragedIssue().id);
+      const skip = 0, limit=10000;//todo
+      return ProjectCommunicationRepositoryService.getAllIssueMessages(getCurrStoragedIssue()._id, skip, limit);
     }
 
   }
