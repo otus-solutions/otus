@@ -25,6 +25,7 @@
     const INITIAL_CURRENT_QUANTITY = 0;
     const INITIAL_QUANTITY_TO_GET = 15;
     const CURR_ISSUE_STORAGE_KEY = 'currentIssue';
+    const CURR_SEARCH_SETTINGS_STORAGE_KEY = 'issueSearchSettings';
 
     self.participantDataReady = false;
     self.participants = {};
@@ -93,6 +94,10 @@
     }
 
     function getAllItems(searchSettings) {
+      if(self.currSearchSettings){
+        searchSettings = angular.copy(self.currSearchSettings);
+      }
+
       return parseFilterObject(searchSettings).then(searchSettingsParsed => {
         return ProjectCommunicationRepositoryService.filter(searchSettingsParsed)
           .then(data => childParseItemsMethod(data))
@@ -111,7 +116,7 @@
 
       let defer = $q.defer();
       let searchSettingsParsed = angular.copy(searchSettings);
-      let fieldMap = {
+      const fieldMap = {
         creationDate: 'creationDate',
         rn: 'sender',
         center: 'group'
@@ -130,6 +135,7 @@
           delete searchSettingsParsed.filter.center;
           searchSettingsParsed.filter[fieldMap.center] = centerId;
         }
+        self.currSearchSettings = searchSettings;
         defer.resolve(searchSettingsParsed);
       })
         .catch(err => defer.reject(err));
@@ -175,10 +181,14 @@
 
     function storageCurrentIssue(currIssue){
       $window.sessionStorage.setItem(CURR_ISSUE_STORAGE_KEY, JSON.stringify(currIssue));
+      $window.sessionStorage.setItem(CURR_SEARCH_SETTINGS_STORAGE_KEY, JSON.stringify(self.currSearchSettings));
     }
 
     function removeStoragedCurrentIssue(){
       $window.sessionStorage.removeItem(CURR_ISSUE_STORAGE_KEY);
+
+      self.currSearchSettings = JSON.parse($window.sessionStorage.getItem(CURR_SEARCH_SETTINGS_STORAGE_KEY));
+      $window.sessionStorage.removeItem(CURR_SEARCH_SETTINGS_STORAGE_KEY);
     }
 
     function getCurrStoragedIssue(){
@@ -223,7 +233,7 @@
     function updateCurrStoragedIssueStatus(newStatus){
       let currIssue = getCurrStoragedIssue();
       currIssue.status = newStatus;
-      storageCurrentIssue(currIssue);
+      $window.sessionStorage.setItem(CURR_ISSUE_STORAGE_KEY, JSON.stringify(currIssue));
     }
 
     function getCurrIssueMessages(){
