@@ -40,6 +40,7 @@
     self.getCurrStoragedIssue = getCurrStoragedIssue;
     self.updateCurrStoragedIssueStatus = updateCurrStoragedIssueStatus;
     self.getCurrIssueMessages = getCurrIssueMessages;
+    self.parseFilterObject = parseFilterObject;
 
     initialize();
 
@@ -67,6 +68,29 @@
       return defer.promise;
     }
 
+    function getSearchSettings() {
+      return {
+        "currentQuantity": INITIAL_CURRENT_QUANTITY,
+        "quantityToGet": INITIAL_QUANTITY_TO_GET,
+        "order": {
+          "fields": ["creationDate"],
+          "mode": 1
+        },
+        "filter": {
+          status: "OPEN",
+          center: self.center
+        }
+      };
+    }
+
+    function getInputViewState() {
+      return {
+        rn: false,
+        creationDate: false,
+        center: false
+      };
+    }
+
     function getAllItems(searchSettings) {
       const items = JSON.parse($window.sessionStorage.getItem(ISSUE_LIST_STORAGE_KEY));
       if(items){
@@ -77,14 +101,14 @@
         return defer.promise;
       }
 
-      return _parseFilterObject(searchSettings).then(searchSettingsParsed => {
+      return parseFilterObject(searchSettings).then(searchSettingsParsed => {
         return ProjectCommunicationRepositoryService.filter(searchSettingsParsed)
           .then(data => childParseItemsMethod(data))
           .catch(err => console.log("error:" + JSON.stringify(err)))
       });
     }
 
-    function _parseFilterObject(searchSettings){
+    function parseFilterObject(searchSettings){
       let promises = [];
       if(searchSettings.filter.rn){
         promises.push(ParticipantManagerService.getParticipant(searchSettings.filter.rn));
@@ -115,7 +139,8 @@
           searchSettingsParsed.filter[fieldMap.center] = centerId;
         }
         defer.resolve(searchSettingsParsed);
-      }).catch(err => defer.reject(err));
+      })
+        .catch(err => defer.reject(err));
 
       return defer.promise;
     }
@@ -135,21 +160,6 @@
       return defer.promise;
     }
 
-    function getSearchSettings() {
-      return {
-        "currentQuantity": INITIAL_CURRENT_QUANTITY,
-        "quantityToGet": INITIAL_QUANTITY_TO_GET,
-        "order": {
-          "fields": ["creationDate"],
-          "mode": 1
-        },
-        "filter": {
-          status: "OPEN",
-          center: self.center
-        }
-      };
-    }
-
     function getItemAttributes() {
       let itemAttributes = {};
       Object.values(ISSUE_VIEWER_LABELS.ISSUE_ATTRIBUTES).forEach(attribute => {
@@ -160,14 +170,6 @@
         }
       });
       return itemAttributes;
-    }
-
-    function getInputViewState() {
-      return {
-        rn: false,
-        creationDate: false,
-        center: false
-      };
     }
 
     function loadCenters(){
