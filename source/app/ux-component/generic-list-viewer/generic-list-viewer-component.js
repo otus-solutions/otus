@@ -11,7 +11,8 @@
         viewerTitle: '<',
         itemComponentName: '<',
         filtersComponentName: '<',
-        helpData: '<'
+        helpData: '<',
+        searchSettingsParser: '='
       }
     }).controller('genericListViewerCtrl', Controller);
 
