@@ -36,7 +36,6 @@
     }
 
     function _parseItems(genericListJsonArray) {
-      console.log(JSON.stringify(genericListJsonArray, null, 4))
       let defer = $q.defer();
       let promises = genericListJsonArray.sort(compareIssueMessages)
         .map(item => ProjectCommunicationRepositoryService.getSenderById(item.sender));
