@@ -91,9 +91,8 @@
     function checkStorageAndUpdateCurrSearchSettings(searchSettings){
       const storageSearchSettings = JSON.parse($window.sessionStorage.getItem(CURR_SEARCH_SETTINGS_STORAGE_KEY));
       if(storageSearchSettings){
-        const storageSearchSettings = angular.copy(storageSearchSettings);
+        self.currSearchSettings = angular.copy(storageSearchSettings);
         $window.sessionStorage.removeItem(CURR_SEARCH_SETTINGS_STORAGE_KEY);
-        self.currSearchSettings = storageSearchSettings;
         return storageSearchSettings;
       }
 
