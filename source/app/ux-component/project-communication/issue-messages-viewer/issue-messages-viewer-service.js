@@ -95,7 +95,7 @@
       return ProjectCommunicationRepositoryService.createMessage(issueId, {
         "text": messageText,
         "creationDate": (new Date()).toJSON(),
-        "issueID": issueId
+        "issueId": issueId
       });
     }
 
