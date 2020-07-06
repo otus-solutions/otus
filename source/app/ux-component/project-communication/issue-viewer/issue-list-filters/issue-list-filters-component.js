@@ -22,8 +22,8 @@
     const self = this;
     const ISSUE_ORDER_FIELD = {
       CREATION_DATE: 'creationDate',
-      RECRUITMENT_NUMBER: 'rn',
-      CENTER: 'center'
+      CENTER: 'center',
+      RECRUITMENT_NUMBER: 'rn'
     };
 
     self.LABELS = IssueViewerService.LABELS;
