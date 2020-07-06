@@ -75,7 +75,7 @@
         "currentQuantity": INITIAL_CURRENT_QUANTITY,
         "quantityToGet": INITIAL_QUANTITY_TO_GET,
         "order": {
-          "fields": ["creationDate"],
+          "fields": ["creationDate", "center", "rn"],
           "mode": 1
         },
         "filter": {
@@ -95,7 +95,6 @@
     }
 
     function getAllItems(searchSettings) {
-
       return parseFilterObject(searchSettings).then(searchSettingsParsed => {
         return ProjectCommunicationRepositoryService.filter(searchSettingsParsed)
           .then(data => childParseItemsMethod(data))
