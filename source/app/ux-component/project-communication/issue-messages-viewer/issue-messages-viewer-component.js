@@ -67,7 +67,7 @@
         'Confirma o envio de mensagem?',
         'Confirmação de envio')
       .then(() => {
-        IssueMessagesViewerService.createMessage(self.issue.id, self.replyContent)
+        IssueMessagesViewerService.createMessage(self.issue._id, self.replyContent)
           .then(() => onInit())
           .catch(e => {
             console.log(e);

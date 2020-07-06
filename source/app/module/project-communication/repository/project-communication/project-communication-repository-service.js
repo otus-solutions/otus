@@ -56,8 +56,8 @@
       return ProjectCommunicationCollectionService.filter(searchSettings);
     }
 
-    function getAllIssueMessages(issueId, limit) {
-      return ProjectCommunicationCollectionService.getAllIssueMessages(issueId, limit);
+    function getAllIssueMessages(issueId, skip, limit) {
+      return ProjectCommunicationCollectionService.getAllIssueMessages(issueId, skip, limit);
     }
 
     function getSenderById(senderId) {

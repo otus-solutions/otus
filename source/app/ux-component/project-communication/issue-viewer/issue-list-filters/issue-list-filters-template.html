@@ -11,7 +11,7 @@
 
   <md-radio-group class="status" ng-model="$ctrl.searchSettings.filter.status" layout="row"
                   layout-align="space-around center" ng-change="$ctrl.changePaginationViewState()">
-    <md-radio-button ng-repeat="(status,label) in $ctrl.LABELS.FILTER_STATUS" ng-value="status">
+    <md-radio-button ng-repeat="(status,label) in $ctrl.statusLabels" ng-value="status">
       {{label}}
     </md-radio-button>
   </md-radio-group>

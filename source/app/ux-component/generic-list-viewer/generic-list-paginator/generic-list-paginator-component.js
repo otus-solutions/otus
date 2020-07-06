@@ -10,14 +10,16 @@
         stuntmanSearchSettings: '=',
         items: '=',
         paginatorActive: '<',
+        searchSettingsParser: '='
       }
     }).controller('genericListPaginatorCtrl', Controller);
 
   Controller.$inject = [
-    'GENERIC_LIST_VIEWER_LABELS'
+    'GENERIC_LIST_VIEWER_LABELS',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(GENERIC_LIST_VIEWER_LABELS) {
+  function Controller(GENERIC_LIST_VIEWER_LABELS, LoadingScreenService) {
     const self = this;
     self.LABELS = GENERIC_LIST_VIEWER_LABELS.PAGINATOR;
     self.activeNextPage = true;
@@ -30,18 +32,38 @@
 
     function getNextPage(stuntmanSearchSettings) {
       stuntmanSearchSettings.currentQuantity += stuntmanSearchSettings.quantityToGet;
-      self.callValidationItemsLimits(self, stuntmanSearchSettings, "next");
+      _getPage(stuntmanSearchSettings, 'next');
     }
 
     function getPreviousPage(stuntmanSearchSettings) {
       stuntmanSearchSettings.quantityToGet > stuntmanSearchSettings.currentQuantity ?
         stuntmanSearchSettings.currentQuantity = 0 :
         stuntmanSearchSettings.currentQuantity -= stuntmanSearchSettings.quantityToGet;
-      self.callValidationItemsLimits(self, stuntmanSearchSettings, "previous");
+
+      _getPage(stuntmanSearchSettings, 'previous');
     }
 
     function runCustomPagination(stuntmanSearchSettings) {
-      self.callValidationItemsLimits(self, stuntmanSearchSettings, "refreshListByCurrentQuantity");
+      _getPage(stuntmanSearchSettings, 'refreshListByCurrentQuantity');
     }
+
+    function _getPage(stuntmanSearchSettings, mode){
+      if(self.searchSettingsParser){
+        LoadingScreenService.start();
+        self.searchSettingsParser(stuntmanSearchSettings)
+          .then(searchSettingsParsed => {
+            self.callValidationItemsLimits(self, searchSettingsParsed, mode);
+            LoadingScreenService.finish();
+          })
+          .catch((error) => {
+            console.log(error);
+            LoadingScreenService.finish();
+          });
+      }
+      else{
+        self.callValidationItemsLimits(self, stuntmanSearchSettings, mode);
+      }
+    }
+
   }
 }());

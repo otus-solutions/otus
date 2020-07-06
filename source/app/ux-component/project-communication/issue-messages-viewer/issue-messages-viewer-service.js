@@ -24,7 +24,8 @@
     self.formatStatus = formatStatus;
     self.capitalizeName = IssueViewerService.capitalizeName;
     self.getCurrIssue = getCurrIssue;
-    self.getStatusActions = getStatusActions;
+    self.getStatusInfo = getStatusInfo;
+    self.removeStoragedCurrentIssue = removeStoragedCurrentIssue;
     self.updateIssueStatus = updateIssueStatus;
     self.createMessage = createMessage;
 
@@ -75,7 +76,7 @@
       return {
         value: issueStatus,
         translatedStatus: IssueViewerService.translateStatus(issueStatus),
-        color: IssueViewerService.LABELS.STATUS_COLOR[issueStatus]
+        color: IssueViewerService.LABELS.STATUS[issueStatus].color
       }
     }
 
@@ -83,8 +84,8 @@
       return IssueViewerService.getCurrStoragedIssue();
     }
 
-    function getStatusActions(currStatusValue){
-      let allStatus =  angular.copy(ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS);
+    function getStatusInfo(currStatusValue){
+      let allStatus =  angular.copy(IssueViewerService.LABELS.STATUS);
       delete allStatus[currStatusValue];
       return allStatus;
     }
@@ -93,43 +94,16 @@
       return ProjectCommunicationRepositoryService.createMessage(issueId, {
         "text": messageText,
         "creationDate": (new Date()).toJSON(),
-        "issueID": issueId
+        "issueId": issueId
       });
     }
 
+    function removeStoragedCurrentIssue(){
+      IssueViewerService.removeStoragedCurrentIssue();
+    }
+
     function updateIssueStatus(issue, newStatusValue){
-      let updateMethod = null;
-
-      switch (newStatusValue) {
-        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.OPEN.value:
-          updateMethod = ProjectCommunicationRepositoryService.updateReopen;
-          break;
-
-        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.CLOSED.value:
-          updateMethod = ProjectCommunicationRepositoryService.updateClose;
-          break;
-
-        case ISSUE_MESSAGES_VIEWER_CONSTANTS.STATUS_ACTIONS.FINALIZED.value:
-          updateMethod = ProjectCommunicationRepositoryService.updateFinalized;
-      }
-
-      let oldStatus = issue.status;
-      issue.status = newStatusValue;
-
-      let defer = $q.defer();
-      try{
-        updateMethod(issue.id).then(() => {
-          IssueViewerService.updateCurrStoragedIssueStatus(newStatusValue);
-          issue.status = newStatusValue;
-          defer.resolve();
-        })
-      }
-      catch (error) {
-        issue.status = oldStatus;
-        defer.reject(error);
-      }
-
-      return defer.promise;
+      return IssueViewerService.updateIssueStatus(issue, newStatusValue);
     }
 
   }

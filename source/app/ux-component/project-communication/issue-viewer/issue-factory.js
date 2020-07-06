@@ -19,9 +19,9 @@
 
     function fromJsonObject(item, participant){
       item.participant = {
-          rn: participant.rn,
+          rn: participant.recruitmentNumber,
           name: participant.name,
-          center: participant.center
+          center: participant.fieldCenter.acronym
       };
       return item;
     }

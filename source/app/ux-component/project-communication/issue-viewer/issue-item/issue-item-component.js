@@ -43,11 +43,11 @@
       self.center = self.item.participant.center;
       self.creationDate = IssueViewerService.formatDate(new Date(self.item.creationDate));
       self.status = IssueViewerService.translateStatus(self.item.status);
-      self.statusColor = IssueViewerService.LABELS.STATUS_COLOR[self.item.status];
+      self.statusColor = IssueViewerService.LABELS.STATUS[self.item.status].color;
     }
 
     function openIssueMessages(){
-      IssueViewerService.storageCurrentIssues(self.item);
+      IssueViewerService.storageCurrentIssue(self.item);
       ApplicationStateService.activateIssueMessagesViewer();
     }
 

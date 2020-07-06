@@ -70,13 +70,12 @@
     function filter(searchSettings) {
       return _remoteStorage.whenReady()
         .then(remoteStorage => remoteStorage.filter(searchSettings))
-        // .then(response => JSON.parse(response.data.data));//todo check if will be data.data and a string?
-        .then(response => response.data);//todo temp
+        .then(response => response.data);
     }
 
-    function getAllIssueMessages(issueId, limit) {
+    function getAllIssueMessages(issueId, skip, limit) {
       return _remoteStorage.whenReady()
-        .then(remoteStorage => remoteStorage.getAllIssueMessages(issueId, limit))
+        .then(remoteStorage => remoteStorage.getAllIssueMessages(issueId, skip, limit))
         .then(response => response.data);
     }
 

@@ -9,8 +9,8 @@
         </md-chips>
         <md-menu-content>
           <md-menu-item ng-repeat="status in $ctrl.statusOptions" layout="column">
-            <md-button  id="{{status.label}}" ng-click="$ctrl.changeStatusTo(status.value)">
-              {{status.label}}
+            <md-button  id="{{status.actionLabel}}" ng-click="$ctrl.changeStatusTo(status.value)">
+              {{status.actionLabel}}
             </md-button>
             <md-divider></md-divider>
           </md-menu-item>

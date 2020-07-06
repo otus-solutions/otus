@@ -22,6 +22,7 @@
     self.viewerService = IssueViewerService;
     self.itemComponentName = 'otusIssueItem';
     self.filtersComponentName = 'otusIssuesListFilters';
+    self.searchSettingsParser = IssueViewerService.parseFilterObject;
 
     self.$onInit = onInit;
 

@@ -24,8 +24,8 @@
     const self = this;
     const INITIAL_CURRENT_QUANTITY = 0;
     const INITIAL_QUANTITY_TO_GET = 15;
-    const ISSUE_LIST_STORAGE_KEY = 'currentIssuesList';
     const CURR_ISSUE_STORAGE_KEY = 'currentIssue';
+
 
     self.participantDataReady = false;
     self.participants = {};
@@ -36,10 +36,13 @@
     self.prepareData = prepareData;
     self.loadCenters = loadCenters;
     self.translateStatus = translateStatus;
-    self.storageCurrentIssues = storageCurrentIssues;
+    self.storageCurrentIssue = storageCurrentIssue;
     self.getCurrStoragedIssue = getCurrStoragedIssue;
+    self.removeStoragedCurrentIssue = removeStoragedCurrentIssue;
+    self.updateIssueStatus = updateIssueStatus;
     self.updateCurrStoragedIssueStatus = updateCurrStoragedIssueStatus;
     self.getCurrIssueMessages = getCurrIssueMessages;
+    self.parseFilterObject = parseFilterObject;
 
     initialize();
 
@@ -67,35 +70,52 @@
       return defer.promise;
     }
 
-    function getAllItems(searchSettings) {
-      const items = JSON.parse($window.sessionStorage.getItem(ISSUE_LIST_STORAGE_KEY));
-      if(items){
-        const defer = $q.defer();
-        defer.resolve(angular.copy(items));
-        $window.sessionStorage.removeItem(ISSUE_LIST_STORAGE_KEY);
-        $window.sessionStorage.removeItem(CURR_ISSUE_STORAGE_KEY);
-        return defer.promise;
-      }
+    function getSearchSettings() {
+      self.currSearchSettings = {
+        "currentQuantity": INITIAL_CURRENT_QUANTITY,
+        "quantityToGet": INITIAL_QUANTITY_TO_GET,
+        "order": {
+          "fields": ["creationDate", "center", "rn"],
+          "mode": 1
+        },
+        "filter": {
+          status: "OPEN",
+          center: self.center
+        }
+      };
+      return self.currSearchSettings;
+    }
 
-      return _parseFilterObject(searchSettings).then(searchSettingsParsed => {
+    function getInputViewState() {
+      return {
+        rn: false,
+        creationDate: false,
+        center: false
+      };
+    }
+
+    function getAllItems(searchSettings) {
+      return parseFilterObject(searchSettings).then(searchSettingsParsed => {
         return ProjectCommunicationRepositoryService.filter(searchSettingsParsed)
           .then(data => childParseItemsMethod(data))
           .catch(err => console.log("error:" + JSON.stringify(err)))
       });
     }
 
-    function _parseFilterObject(searchSettings){
+    function parseFilterObject(searchSettings){
+      searchSettings = self.checkStorageAndUpdateCurrSearchSettings(searchSettings);
+
       let promises = [];
       if(searchSettings.filter.rn){
         promises.push(ParticipantManagerService.getParticipant(searchSettings.filter.rn));
       }
-      if(self.center){
+      if(searchSettings.filter.center){
         promises.push(ProjectFieldCenterService.loadCenters());
       }
 
       let defer = $q.defer();
       let searchSettingsParsed = angular.copy(searchSettings);
-      let fieldMap = {
+      const fieldMap = {
         creationDate: 'creationDate',
         rn: 'sender',
         center: 'group'
@@ -109,13 +129,14 @@
           delete searchSettingsParsed.filter.rn;
           searchSettingsParsed.filter[fieldMap.rn] = response[index++]._id;
         }
-        if(self.center){
+        if(searchSettings.filter.center){
           let centerId = response[index].find(center => center.acronym === searchSettings.filter.center)._id;
           delete searchSettingsParsed.filter.center;
           searchSettingsParsed.filter[fieldMap.center] = centerId;
         }
         defer.resolve(searchSettingsParsed);
-      }).catch(err => defer.reject(err));
+      })
+        .catch(err => defer.reject(err));
 
       return defer.promise;
     }
@@ -135,21 +156,6 @@
       return defer.promise;
     }
 
-    function getSearchSettings() {
-      return {
-        "currentQuantity": INITIAL_CURRENT_QUANTITY,
-        "quantityToGet": INITIAL_QUANTITY_TO_GET,
-        "order": {
-          "fields": ["creationDate"],
-          "mode": 1
-        },
-        "filter": {
-          status: "OPEN",
-          center: self.center
-        }
-      };
-    }
-
     function getItemAttributes() {
       let itemAttributes = {};
       Object.values(ISSUE_VIEWER_LABELS.ISSUE_ATTRIBUTES).forEach(attribute => {
@@ -162,49 +168,72 @@
       return itemAttributes;
     }
 
-    function getInputViewState() {
-      return {
-        rn: false,
-        creationDate: false,
-        center: false
-      };
-    }
-
     function loadCenters(){
       return ProjectFieldCenterService.loadCenters();
     }
 
     function translateStatus(status){
-      const translation = ISSUE_VIEWER_LABELS.FILTER_STATUS[status];
+      const translation = ISSUE_VIEWER_LABELS.STATUS[status].filterLabel;
       return translation.substring(0, translation.length-1);
     }
 
-    function storageCurrentIssues(currIssue){
-      $window.sessionStorage.setItem(ISSUE_LIST_STORAGE_KEY, JSON.stringify(self.items));
+    function storageCurrentIssue(currIssue){
       $window.sessionStorage.setItem(CURR_ISSUE_STORAGE_KEY, JSON.stringify(currIssue));
+      self.storageCurrentSearchSettings();
+    }
+
+    function removeStoragedCurrentIssue(){
+      $window.sessionStorage.removeItem(CURR_ISSUE_STORAGE_KEY);
     }
 
     function getCurrStoragedIssue(){
       return JSON.parse($window.sessionStorage.getItem(CURR_ISSUE_STORAGE_KEY));
     }
 
+    function updateIssueStatus(issue, newStatusValue){
+      let updateMethod = null;
+
+      switch (newStatusValue) {
+        case ISSUE_VIEWER_LABELS.STATUS.OPEN.value:
+          updateMethod = ProjectCommunicationRepositoryService.updateReopen;
+          break;
+
+        case ISSUE_VIEWER_LABELS.STATUS.CLOSED.value:
+          updateMethod = ProjectCommunicationRepositoryService.updateClose;
+          break;
+
+        case ISSUE_VIEWER_LABELS.STATUS.FINALIZED.value:
+          updateMethod = ProjectCommunicationRepositoryService.updateFinalized;
+      }
+
+      let oldStatus = issue.status;
+      issue.status = newStatusValue;
+
+      let defer = $q.defer();
+      try{
+        updateMethod(issue._id).then(() => {
+          updateCurrStoragedIssueStatus(newStatusValue);
+          issue.status = newStatusValue;
+          defer.resolve();
+        })
+      }
+      catch (error) {
+        issue.status = oldStatus;
+        defer.reject(error);
+      }
+
+      return defer.promise;
+    }
+
     function updateCurrStoragedIssueStatus(newStatus){
       let currIssue = getCurrStoragedIssue();
       currIssue.status = newStatus;
-
-      self.items = JSON.parse($window.sessionStorage.getItem(ISSUE_LIST_STORAGE_KEY))
-        .map(issue => {
-          if(issue.id === currIssue.id){
-            issue.status = newStatus;
-          }
-          return issue;
-        });
-
-      storageCurrentIssues(currIssue);
+      $window.sessionStorage.setItem(CURR_ISSUE_STORAGE_KEY, JSON.stringify(currIssue));
     }
 
     function getCurrIssueMessages(){
-      return ProjectCommunicationRepositoryService.getAllIssueMessages(getCurrStoragedIssue().id);
+      const skip = 0, limit=10000;//todo
+      return ProjectCommunicationRepositoryService.getAllIssueMessages(getCurrStoragedIssue()._id, skip, limit);
     }
 
   }

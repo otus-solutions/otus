@@ -11,16 +11,18 @@
         viewerTitle: '<',
         itemComponentName: '<',
         filtersComponentName: '<',
-        helpData: '<'
+        helpData: '<',
+        searchSettingsParser: '='
       }
     }).controller('genericListViewerCtrl', Controller);
 
   Controller.$inject = [
     'GENERIC_LIST_VIEWER_LABELS',
+    'otusjs.genericListViewer.GenericListViewerService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(GENERIC_LIST_VIEWER_LABELS, LoadingScreenService) {
+  function Controller(GENERIC_LIST_VIEWER_LABELS, GenericListViewerService, LoadingScreenService) {
     const self = this;
     const HELP_BUTTON = {
       'true': {
@@ -66,6 +68,7 @@
     }
 
     function getAllItems(searchSettings) {
+      searchSettings = GenericListViewerService.checkStorageAndUpdateCurrSearchSettings(searchSettings);
       self.viewerService.getAllItems(searchSettings)
         .then(data => {
           self.items = data;
