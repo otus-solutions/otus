@@ -20,9 +20,7 @@
     function fromJsonObject(item, sender){
       item.sender = {
         id: item.sender,
-        name: sender.name,
-        rn: sender.rn,
-        center: sender.center
+        name: sender.name + (sender.surname? ' ' + sender.surname : '')
       };
       return item;
     }

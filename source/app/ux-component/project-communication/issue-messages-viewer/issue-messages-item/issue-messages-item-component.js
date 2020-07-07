@@ -23,9 +23,7 @@
     self.$onInit = onInit;
 
     function onInit() {
-      self.rn = self.item.sender.rn;
       self.name = IssueMessagesViewerService.capitalizeName(self.item.sender.name);
-      self.center = self.item.sender.center;
       self.creationDate = IssueMessagesViewerService.formatDate(new Date(self.item.creationDate));
     }
 
