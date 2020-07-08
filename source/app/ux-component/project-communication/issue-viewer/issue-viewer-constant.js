@@ -44,7 +44,7 @@
           filterLabel: 'Fechados',
           actionLabel: 'Fechar',
           color: {
-            'background-color': '#e45454',
+            'background-color': '#dedede',
             'color': 'white'
           }
         },
@@ -53,7 +53,7 @@
           filterLabel: 'Finalizados',
           actionLabel: 'Finalizar',
           color: {
-            'background-color': '#7fbf7f',
+            'background-color': '#006600',
             'color': 'white'
           }
         },
@@ -62,7 +62,7 @@
           filterLabel: 'Abertos',
           actionLabel: 'Reabrir',
           color: {
-            'background-color': '#64aff1',
+            'background-color': '#3a51af',
             'color': 'white'
           }
         }
