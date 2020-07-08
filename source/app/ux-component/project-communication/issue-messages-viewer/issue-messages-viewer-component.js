@@ -33,7 +33,6 @@
     self.openReplyInput = openReplyInput;
     self.sendReply = sendReply;
     self.cancelReply = cancelReply;
-    self.changeStatus = changeStatus;
 
 
     function onInit(){
@@ -80,11 +79,6 @@
       angular.element(document.getElementById('replyInputBox')).value = "";
       self.replyContent = "";
       self.replying = false;
-    }
-
-    function changeStatus(statusValue){
-      self.currStatus = statusValue;
-      return IssueMessagesViewerService.updateIssueStatus(self.issue, self.currStatus);
     }
 
   }

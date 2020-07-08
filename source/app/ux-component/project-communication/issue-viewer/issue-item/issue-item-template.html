@@ -1,4 +1,4 @@
-<md-card class="md-accordion">
+<md-card class="md-accordion" id="{{$ctrl.elementID}}">
 
   <div class="issue-item-layout" layout-margin ng-cloak ng-init="$ctrl.expanded = false">
 
@@ -39,15 +39,29 @@
     </div>
 
     <div layout="row" layout-align="end center">
-      <md-chips class="issue-status">
-        <md-chip ng-style={{$ctrl.statusColor}}>{{$ctrl.status}}</md-chip>
-      </md-chips>
+      <div class="issue-messages-status" ng-model="$ctrl.status" ng-change="$ctrl.refresh()">
+        <md-menu md-position-mode="target-right target">
+          <md-chips ng-click="$mdMenu.open()">
+            <md-chip ng-style=$ctrl.status.color>
+              {{$ctrl.status.translatedStatus}}
+            </md-chip>
+          </md-chips>
+          <md-menu-content>
+            <md-menu-item ng-repeat="status in $ctrl.statusOptions" layout="column">
+              <md-button  id="{{status.actionLabel}}" ng-click="$ctrl.changeStatusTo(status.value)">
+                {{status.actionLabel}}
+              </md-button>
+              <md-divider></md-divider>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
     </div>
 
     <div layout="row" layout-align="end center">
-        <md-button class="see-last-msg md-mini" ng-click="$ctrl.showLastMessage()">
-          <md-icon>{{$ctrl.showingLastMessageIcon.icon}}
-            <md-tooltip md-direction="top">{{$ctrl.showingLastMessageIcon.tooltip}}</md-tooltip>
+        <md-button class="see-last-msg md-mini" ng-click="$ctrl.showMore()">
+          <md-icon>{{$ctrl.showMoreIcon.icon}}
+            <md-tooltip md-direction="top">{{$ctrl.showMoreIcon.tooltip}}</md-tooltip>
           </md-icon>
         </md-button>
     </div>

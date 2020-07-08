@@ -43,6 +43,9 @@
     self.updateCurrStoragedIssueStatus = updateCurrStoragedIssueStatus;
     self.getCurrIssueMessages = getCurrIssueMessages;
     self.parseFilterObject = parseFilterObject;
+    self.formatStatus = formatStatus;
+    self.getStatusInfo = getStatusInfo;
+    self.getIssueStatusColor = getIssueStatusColor;
 
     initialize();
 
@@ -212,7 +215,6 @@
       let defer = $q.defer();
       try{
         updateMethod(issue._id).then(() => {
-          updateCurrStoragedIssueStatus(newStatusValue);
           issue.status = newStatusValue;
           defer.resolve();
         })
@@ -234,6 +236,24 @@
     function getCurrIssueMessages(){
       const skip = 0, limit=10000;//todo
       return ProjectCommunicationRepositoryService.getAllIssueMessages(getCurrStoragedIssue()._id, skip, limit);
+    }
+
+    function formatStatus(issueStatus){
+      return {
+        value: issueStatus,
+        translatedStatus: self.translateStatus(issueStatus),
+        color: self.LABELS.STATUS[issueStatus].color
+      }
+    }
+
+    function getStatusInfo(currStatusValue){
+      let allStatus =  angular.copy(self.LABELS.STATUS);
+      delete allStatus[currStatusValue];
+      return allStatus;
+    }
+
+    function getIssueStatusColor(issue){
+      return self.LABELS.STATUS[self.item.status].color;
     }
 
   }

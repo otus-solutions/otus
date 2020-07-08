@@ -12,23 +12,9 @@
   </span>
 
   <div layout="row" layout-align="start center">
-    <div class="issue-messages-status" ng-model="$ctrl.status" ng-change="$ctrl.refresh()">
-      <md-menu md-position-mode="target-right target">
-        <md-chips ng-click="$mdMenu.open()">
-          <md-chip ng-style=$ctrl.status.color>
-            {{$ctrl.status.translatedStatus}}
-          </md-chip>
-        </md-chips>
-        <md-menu-content>
-          <md-menu-item ng-repeat="status in $ctrl.statusOptions" layout="column">
-            <md-button  id="{{status.actionLabel}}" ng-click="$ctrl.changeStatusTo(status.value)">
-              {{status.actionLabel}}
-            </md-button>
-            <md-divider></md-divider>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
-    </div>
+    <md-chips class="issue-status">
+      <md-chip ng-style={{$ctrl.status.color}}>{{$ctrl.status.translatedStatus}}</md-chip>
+    </md-chips>
   </div>
 
   <span class="issue-messages-title">{{$ctrl.issue.title}}</span>
