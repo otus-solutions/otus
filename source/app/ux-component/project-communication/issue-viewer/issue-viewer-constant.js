@@ -50,7 +50,7 @@
           actionLabel: 'Fechar',
           color: {
             'background-color': '#dedede',
-            'color': 'white'
+            'color': 'black'
           }
         },
         FINALIZED: {
