@@ -75,9 +75,9 @@
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 1fr .5fr .5fr;
   grid-template-areas:
-    "goBackButton     dateTime    status"
-    "title            title       title"
-    "issueText        issueText   issueText"
+    "status       dateTime    goBackButton"
+    "title        title       title"
+    "issueText    issueText   issueText"
 ;
 }
 
@@ -113,7 +113,7 @@
   grid-area: goBackButton;
 }
 
-.send-reply-button{
+.reply-action-button{
   max-height: 36px;
 }
 

@@ -23,11 +23,11 @@
     const visibilityIcon = {
       'true': {
         icon: 'visibility',
-        tooltip: 'Ocultar'
+        tooltip: 'Ocultar Detalhes'
       },
       'false': {
         icon: 'visibility_off',
-        tooltip: 'Mostrar'
+        tooltip: 'Mostrar Detalhes'
       }
     };
 
