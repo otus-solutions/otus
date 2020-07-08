@@ -35,7 +35,12 @@
         STATUS: {
           TITLE: 'status',
           ICON: 'assignment_ind'
-        }
+        },
+        TEXT: {
+          TITLE: 'text',
+          TRANSLATED_TITLE: 'Texto',
+          ICON: 'textsms'
+        },
       },
 
       STATUS:{
