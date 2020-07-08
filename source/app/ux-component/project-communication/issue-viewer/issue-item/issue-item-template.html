@@ -4,28 +4,28 @@
 
     <div class="rn">
       <md-icon>{{$ctrl.itemAttributes.rn.icon}}
-        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.rn.translatedTitle}}</md-tooltip>
+        <md-tooltip md-direction="top">{{$ctrl.itemAttributes.rn.translatedTitle}}</md-tooltip>
       </md-icon>
       <span class="padding">{{$ctrl.rn}}</span>
     </div>
 
     <div class="sender-name">
       <md-icon>{{$ctrl.itemAttributes.name.icon}}
-        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.name.translatedTitle}}</md-tooltip>
+        <md-tooltip md-direction="top">{{$ctrl.itemAttributes.name.translatedTitle}}</md-tooltip>
       </md-icon>
       <span class="padding">{{$ctrl.name}}</span>
     </div>
 
     <div class="center-name">
       <md-icon>{{$ctrl.itemAttributes.center.icon}}
-        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.center.translatedTitle}}</md-tooltip>
+        <md-tooltip md-direction="top">{{$ctrl.itemAttributes.center.translatedTitle}}</md-tooltip>
       </md-icon>
       <span class="padding">{{$ctrl.center}}</span>
     </div>
 
     <div class="creation-date">
       <md-icon >{{$ctrl.itemAttributes.creationDate.icon}}
-        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.creationDate.translatedTitle}}</md-tooltip>
+        <md-tooltip md-direction="top">{{$ctrl.itemAttributes.creationDate.translatedTitle}}</md-tooltip>
       </md-icon>
       <span class="padding">{{$ctrl.creationDate}}</span>
     </div>
@@ -33,7 +33,7 @@
 
     <div class="msg-title">
       <md-icon>{{$ctrl.itemAttributes.title.icon}}
-        <md-tooltip md-direction="bottom">{{$ctrl.itemAttributes.title.translatedTitle}}</md-tooltip>
+        <md-tooltip md-direction="top">{{$ctrl.itemAttributes.title.translatedTitle}}</md-tooltip>
       </md-icon>
       <span class="padding">{{$ctrl.item.title}}</span>
     </div>
@@ -47,7 +47,7 @@
     <div layout="row" layout-align="end center">
         <md-button class="see-last-msg md-mini" ng-click="$ctrl.showLastMessage()">
           <md-icon>{{$ctrl.showingLastMessageIcon.icon}}
-            <md-tooltip md-direction="left">{{$ctrl.showingLastMessageIcon.tooltip}}</md-tooltip>
+            <md-tooltip md-direction="top">{{$ctrl.showingLastMessageIcon.tooltip}}</md-tooltip>
           </md-icon>
         </md-button>
     </div>
