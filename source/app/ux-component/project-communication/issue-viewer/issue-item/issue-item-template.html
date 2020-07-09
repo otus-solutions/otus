@@ -1,6 +1,7 @@
 <md-card class="md-accordion" id="{{$ctrl.elementID}}">
 
-  <div class="issue-item-layout" layout-margin ng-cloak ng-init="$ctrl.expanded = false">
+  <div class="issue-item-layout" ng-cloak ng-init="$ctrl.expanded = false"
+       layout="row" layout-align="start center"  layout-margin >
 
     <div class="rn">
       <md-icon>{{$ctrl.itemAttributes.rn.icon}}
