@@ -18,6 +18,7 @@
 @media screen and (min-width: 768px) {
   .generic-list-viewer-layout {
     display: grid;
+    width: 100vw;
     height: 100vh;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: .03fr .03fr .1fr 1fr .05fr;
@@ -33,6 +34,7 @@
 @media screen and (min-width: 1280px) {
   .generic-list-viewer-layout {
     display: grid;
+    width: 100vw;
     height: 100vh;
     grid-template-columns: repeat(4, 1fr) .7fr;
     grid-template-rows: .03fr .03fr .1fr 1fr .05fr;
