@@ -67,7 +67,7 @@
           filterLabel: 'Abertos',
           actionLabel: 'Reabrir',
           color: {
-            'background-color': '#3a51af',
+            'background-color': '#0091EA',
             'color': 'white'
           }
         }
