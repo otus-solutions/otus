@@ -31,18 +31,21 @@
                              search-settings="$ctrl.searchSettings"
                              get-items="$ctrl.getAllItems($ctrl.searchSettings)"
                              item-attributes="$ctrl.itemAttributes"
-                             paginator-active="$ctrl.paginatorActive">
+                             paginator-active="$ctrl.paginatorActive"
+                             class="list-control">
   </otus-generic-list-control>
 
   <otus-generic-list item-component-name="$ctrl.itemComponentName"
                      items="$ctrl.items"
-                     item-attributes="$ctrl.itemAttributes">
+                     item-attributes="$ctrl.itemAttributes"
+                     class="list">
   </otus-generic-list>
 
   <otus-generic-list-paginator call-validation-items-limits="$ctrl.callValidationItemsLimits"
                                stuntman-search-settings="$ctrl.stuntmanSearchSettings"
                                search-settings-parser="$ctrl.searchSettingsParser"
                                items="$ctrl.items"
-                               paginator-active="$ctrl.paginatorActive">
+                               paginator-active="$ctrl.paginatorActive"
+                               class="paginator">
   </otus-generic-list-paginator>
 </md-content>
