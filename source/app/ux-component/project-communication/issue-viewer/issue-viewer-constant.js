@@ -30,7 +30,7 @@
         TITLE: {
           TITLE: 'title',
           TRANSLATED_TITLE: 'Título',
-          ICON: 'insert_comment'
+          ICON: 'message'
         },
         STATUS: {
           TITLE: 'status',
