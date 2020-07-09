@@ -29,7 +29,7 @@
     height: 100vh;
     width: 100vw;
     grid-template-columns: 1fr;
-    grid-template-rows: .1fr .3fr 1.7fr .1fr;
+    grid-template-rows: .15fr .3fr 1.7fr .1fr;
     grid-template-areas:
       "toolbar"
       "issueInfo"
@@ -39,7 +39,7 @@
 
   .issue-messages-viewer otus-dashboard-toolbar{
     grid-area: toolbar;
-    max-height: 64px;
+    max-height: 128px;
   }
 }
 
