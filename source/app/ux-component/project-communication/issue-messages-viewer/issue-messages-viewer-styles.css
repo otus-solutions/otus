@@ -134,4 +134,8 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+  box-shadow: none;
+}
+
 /*end style for issue-message-item*/
