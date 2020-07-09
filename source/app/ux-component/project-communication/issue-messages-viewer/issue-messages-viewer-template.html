@@ -28,13 +28,16 @@
     <div layout="column" layout-align="center center" layout-padding
          ng-if="$ctrl.replying">
 
-      <md-input-container>
+      <md-input-container hide-xs>
         <label>Resposta:</label>
-        <textarea class="reply-box anchor" id="replyInputBox" hide-xs
+        <textarea class="reply-box anchor" id="replyInputBox"
                   max-rows="20" cols="80"
                   ng-model="$ctrl.replyContent"
                   placeholder="Insira sua resposta aqui"></textarea>
-        <textarea class="reply-box anchor" id="replyInputBoxXS" hide-gt-xs
+      </md-input-container>
+      <md-input-container hide-gt-xs>
+        <label>Resposta:</label>
+        <textarea class="reply-box anchor" id="replyInputBoxXS"
                   max-rows="20" cols="30"
                   ng-model="$ctrl.replyContent"
                   placeholder="Insira sua resposta aqui"></textarea>
@@ -47,6 +50,7 @@
         <md-button class="reply-action-button md-primary md-raised" id="sendReplyButton"
                    ng-click="$ctrl.sendReply()">ENVIAR</md-button>
       </div>
+
   </div>
 
 </md-content>
