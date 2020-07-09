@@ -21,9 +21,9 @@
 
   <div class="action-inputs">
 
-    <div layout-xs="column" layout-gt-xs="row" layout-align="start start">
+    <div layout="row" layout-align="space-between center">
 
-      <md-input-container hide-xs class="no-padding" layout-padding style="margin: 0px">
+      <md-input-container hide-xs layout-padding style="margin: 0px">
         <label style="margin-left: 8px">Resposta:</label>
         <textarea class="reply-box anchor" id="replyInputBox"
                   max-rows="20" cols="80"
@@ -32,7 +32,7 @@
       </md-input-container>
 
       <md-input-container hide-gt-xs layout-padding style="margin: 0px">
-        <label>Resposta:</label>
+        <label style="margin-left: 8px">Resposta:</label>
         <textarea class="reply-box anchor" id="replyInputBoxXS"
                   max-rows="20" cols="30"
                   ng-model="$ctrl.replyContent"
