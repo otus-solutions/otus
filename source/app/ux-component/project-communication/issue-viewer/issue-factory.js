@@ -21,7 +21,7 @@
       item.participant = {
           rn: participant.recruitmentNumber,
           name: participant.name,
-          center: participant.fieldCenter.acronym
+          center: (participant.fieldCenter? participant.fieldCenter.acronym : null)
       };
       return item;
     }
