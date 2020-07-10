@@ -5,10 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusIssueInfoHeader', {
       controller: 'issueInfoHeaderCtrl as $ctrl',
-      templateUrl: 'app/ux-component/project-communication/issue-messages-viewer/issue-info-header/issue-info-header-template.html',
-      bindings: {
-        changeStatus: '='
-      }
+      templateUrl: 'app/ux-component/project-communication/issue-messages-viewer/issue-info-header/issue-info-header-template.html'
     }).controller('issueInfoHeaderCtrl', Controller);
 
   Controller.$inject = [
@@ -21,7 +18,6 @@
 
     self.$onInit = onInit;
     self.goBack = goBack;
-    self.changeStatusTo = changeStatusTo;
     self.refresh = refresh;
 
 
@@ -29,7 +25,6 @@
       self.issue = IssueMessagesViewerService.getCurrIssue();
       self.creationDate = IssueMessagesViewerService.formatDate(new Date(self.issue.creationDate));
       self.status = IssueMessagesViewerService.formatStatus(self.issue.status);
-      self.statusOptions = IssueMessagesViewerService.getStatusInfo(self.issue.status);
     }
 
     function goBack(){
@@ -39,14 +34,6 @@
 
     function refresh(){
       self.onInit();
-    }
-
-    function changeStatusTo(statusValue){
-      self.changeStatus(statusValue)
-        .then(() => onInit())
-        .catch(e => {
-          console.log(e);
-        });
     }
 
   }

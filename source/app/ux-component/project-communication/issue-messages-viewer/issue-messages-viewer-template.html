@@ -12,8 +12,7 @@
     </div>
   </otus-dashboard-toolbar>
 
-  <otus-issue-info-header change-status="$ctrl.changeStatus">
-  </otus-issue-info-header>
+  <otus-issue-info-header></otus-issue-info-header>
 
   <otus-generic-list items="$ctrl.items"
                      item-component-name="$ctrl.itemComponentName"
@@ -21,29 +20,30 @@
   </otus-generic-list>
 
   <div class="action-inputs">
-    <div class="action-buttons" layout="row" layout-align="end center"
-         ng-if="!$ctrl.replying">
-      <md-button class="md-accent md-raised" ng-click="$ctrl.openReplyInput()">RESPONDER</md-button>
-    </div>
 
-    <div layout="column" layout-align="center center" layout-padding
-         ng-if="$ctrl.replying">
-      <textarea class="reply-box anchor" id="replyInputBoxXS" hide-gt-xs
-                rows="5" max-rows="20" cols="30"
-                ng-model="$ctrl.replyContent"
-                placeholder="Insira sua resposta aqui"></textarea>
-      <textarea class="reply-box anchor" id="replyInputBox" hide-xs
-                rows="8" max-rows="20" cols="80"
-                ng-model="$ctrl.replyContent"
-                placeholder="Insira sua resposta aqui"></textarea>
+    <div layout="row" layout-align="space-between center">
+
+      <md-input-container hide-xs layout-padding style="margin: 0px">
+        <label style="margin-left: 8px">Resposta:</label>
+        <textarea class="reply-box anchor" id="replyInputBox"
+                  max-rows="20" cols="80"
+                  ng-model="$ctrl.replyContent"
+                  placeholder="Insira sua resposta aqui"></textarea>
+      </md-input-container>
+
+      <md-input-container hide-gt-xs layout-padding style="margin: 0px">
+        <label style="margin-left: 8px">Resposta:</label>
+        <textarea class="reply-box anchor" id="replyInputBoxXS"
+                  max-rows="20" cols="30"
+                  ng-model="$ctrl.replyContent"
+                  placeholder="Insira sua resposta aqui"></textarea>
+      </md-input-container>
 
       <div layout="row" layout-align="center end">
-        <md-button class="send-reply-button md-warn md-raised" id="cancelReplyButton"
-                   ng-click="$ctrl.cancelReply()">CANCELAR</md-button>
-
-        <md-button class="send-reply-button md-primary md-raised" id="sendReplyButton"
+        <md-button class="reply-action-button md-primary md-raised" id="sendReplyButton"
                    ng-click="$ctrl.sendReply()">ENVIAR</md-button>
       </div>
+
   </div>
 
 </md-content>

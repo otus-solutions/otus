@@ -13,37 +13,40 @@
     }).controller('issueItemCtrl', Controller);
 
   Controller.$inject = [
+    '$mdToast',
     'otusjs.issueViewer.IssueViewerService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(IssueViewerService, ApplicationStateService) {
+  function Controller($mdToast, IssueViewerService, ApplicationStateService, LoadingScreenService) {
     const self = this;
-
-    const visibilityIcon = {
+    const VISIBILITY_ICON = {
       'true': {
         icon: 'visibility',
-        tooltip: 'Ocultar'
+        tooltip: 'Ocultar Detalhes'
       },
       'false': {
         icon: 'visibility_off',
-        tooltip: 'Mostrar'
+        tooltip: 'Mostrar Detalhes'
       }
     };
 
     self.$onInit = onInit;
     self.openIssueMessages = openIssueMessages;
-    self.showLastMessage = showLastMessage;
+    self.showMore = showMore;
+    self.changeStatusTo = changeStatusTo;
 
     function onInit() {
       self.expanded = false;
-      self.showingLastMessageIcon = visibilityIcon['false'];
+      self.showMoreIcon = VISIBILITY_ICON['false'];
       self.rn = self.item.participant.rn;
       self.name = IssueViewerService.capitalizeName(self.item.participant.name);
       self.center = self.item.participant.center;
       self.creationDate = IssueViewerService.formatDate(new Date(self.item.creationDate));
-      self.status = IssueViewerService.translateStatus(self.item.status);
-      self.statusColor = IssueViewerService.LABELS.STATUS[self.item.status].color;
+      self.status = IssueViewerService.formatStatus(self.item.status);
+      self.statusOptions = IssueViewerService.getStatusInfo(self.item.status);
+      self.elementID = `${self.rn.toString()}_${self.item.creationDate}`;
     }
 
     function openIssueMessages(){
@@ -51,9 +54,35 @@
       ApplicationStateService.activateIssueMessagesViewer();
     }
 
-    function showLastMessage(){
+    function showMore(){
       self.expanded = !self.expanded;
-      self.showingLastMessageIcon = visibilityIcon[self.expanded.toString()];
+      self.showMoreIcon = VISIBILITY_ICON[self.expanded.toString()];
+    }
+
+    function changeStatusTo(statusValue){
+      LoadingScreenService.start();
+      IssueViewerService.updateIssueStatus(self.item, statusValue)
+        .then(() => {
+          angular.element(document.getElementById(self.elementID)).remove();
+          LoadingScreenService.finish();
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Status alterado com sucesso.')
+              .position('bottom right')
+              .hideDelay(3000)
+          );
+        })
+        .catch(error => {
+          console.log(error);
+          LoadingScreenService.finish();
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent('Erro ao alterar status.')
+              .position('bottom right')
+              .theme('error-toast')
+              .hideDelay(3000)
+          );
+        });
     }
 
   }

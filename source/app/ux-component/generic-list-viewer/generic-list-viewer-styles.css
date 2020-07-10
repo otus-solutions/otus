@@ -18,8 +18,8 @@
 @media screen and (min-width: 768px) {
   .generic-list-viewer-layout {
     display: grid;
-    height: 100vh;
     width: 100vw;
+    height: 100vh;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: .03fr .03fr .1fr 1fr .05fr;
     grid-template-areas:
@@ -34,8 +34,8 @@
 @media screen and (min-width: 1280px) {
   .generic-list-viewer-layout {
     display: grid;
-    height: 100vh;
     width: 100vw;
+    height: 100vh;
     grid-template-columns: repeat(4, 1fr) .7fr;
     grid-template-rows: .03fr .03fr .1fr 1fr .05fr;
     grid-template-areas:
@@ -51,15 +51,15 @@
   grid-area: toolbar
 }
 
-.generic-list-viewer-layout otus-generic-list-control {
+.list-control{
   grid-area: control
 }
 
-.generic-list-viewer-layout otus-generic-list {
+.list {
   grid-area: list
 }
 
-.generic-list-viewer-layout otus-generic-list-paginator {
+.paginator {
   grid-area: paginator;
   max-height: 36px;
 }
@@ -79,7 +79,6 @@
 /*begin style for generic-list-control*/
 @media screen and (min-width: 360px) {
   .generic-list-control-layout {
-    width: 98vw;
     display: grid;
     grid-template-columns: 1fr .2fr;
     grid-template-rows: .1fr .2fr .1fr;
@@ -90,9 +89,8 @@
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 768px) {
   .generic-list-control-layout {
-    /*width: 98vw;*/
     display: grid;
     grid-template-columns: repeat(2, 1fr) .2fr;
     grid-template-rows: .1fr .2fr .1fr;

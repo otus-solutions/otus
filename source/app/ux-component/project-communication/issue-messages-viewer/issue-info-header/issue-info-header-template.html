@@ -1,35 +1,31 @@
-<div class="issue-messages-header" layout-margin flex>
-  <div layout="row" layout-align="end center">
-    <div class="issue-messages-status" ng-model="$ctrl.status" ng-change="$ctrl.refresh()">
-      <md-menu md-position-mode="target-right target">
-        <md-chips ng-click="$mdMenu.open()">
-          <md-chip ng-style=$ctrl.status.color>
-            {{$ctrl.status.translatedStatus}}
-          </md-chip>
-        </md-chips>
-        <md-menu-content>
-          <md-menu-item ng-repeat="status in $ctrl.statusOptions" layout="column">
-            <md-button  id="{{status.actionLabel}}" ng-click="$ctrl.changeStatusTo(status.value)">
-              {{status.actionLabel}}
-            </md-button>
-            <md-divider></md-divider>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
+<div class="issue-messages-header" layout-padding flex>
+  <md-card class="issue-messages-info" md-whiteframe="4" style="background: #f5f5f5">
+    <div class="goback-button" layout="row" layout-align="end center">
+      <md-button class="no-margin no-padding md-fab md-mini md-raised"
+                 ng-click="$ctrl.goBack()">
+        <md-icon>close</md-icon>
+      </md-button>
     </div>
-  </div>
 
-  <span class="issue-messages-datetime datetime-font-text" layout="row" layout-align="center center">
-    {{$ctrl.creationDate}}
-  </span>
+    <span class="issue-messages-datetime datetime-font-text" layout="row" layout-align="center center">
+      {{$ctrl.creationDate}}
+    </span>
 
-  <div class="goback-button" layout="row" layout-align="start center">
-    <md-button class="no-margin no-padding md-fab md-mini md-raised"
-               ng-click="$ctrl.goBack()">
-      <md-icon>reply</md-icon>
-    </md-button>
-  </div>
+    <div layout="row" layout-align="start center">
+      <md-chips class="issue-status">
+        <md-chip ng-style={{$ctrl.status.color}}>{{$ctrl.status.translatedStatus}}</md-chip>
+      </md-chips>
+    </div>
 
-  <span class="issue-messages-title">{{$ctrl.issue.title}}</span>
-  <span class="issue-messages-text">{{$ctrl.issue.text}}</span>
+    <div class="issue-messages-title" layout="column">
+      <span class="issue-attribute-label">Título</span>
+      <span class="issue-messages-title-value">{{$ctrl.issue.title}}</span>
+    </div>
+
+    <div class="issue-messages-text" layout="column">
+      <span class="issue-attribute-label">Descrição</span>
+      <span>{{$ctrl.issue.text}}</span>
+    </div>
+
+  </md-card>
 </div>

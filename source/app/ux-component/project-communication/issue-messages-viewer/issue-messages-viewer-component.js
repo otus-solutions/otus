@@ -12,16 +12,15 @@
     }).controller('issueMessagesViewerCtrl', Controller);
 
   Controller.$inject = [
-    '$mdDialog',
+    '$mdDialog', '$mdToast',
     'otusjs.application.dialog.DialogShowService',
     'ISSUE_MESSAGES_VIEWER_CONSTANTS',
     'otusjs.issueMessagesViewer.IssueMessagesViewerService',
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdDialog, DialogService, ISSUE_MESSAGES_VIEWER_CONSTANTS, IssueMessagesViewerService, LoadingScreenService) {
+  function Controller($mdDialog, $mdToast, DialogService, ISSUE_MESSAGES_VIEWER_CONSTANTS, IssueMessagesViewerService, LoadingScreenService) {
     const self = this;
-    let confirmSendReply;
 
     self.viewerTitle = ISSUE_MESSAGES_VIEWER_CONSTANTS.PAGE_TITLE;
     self.itemComponentName = 'otusIssueMessageItem';
@@ -33,7 +32,6 @@
     self.openReplyInput = openReplyInput;
     self.sendReply = sendReply;
     self.cancelReply = cancelReply;
-    self.changeStatus = changeStatus;
 
 
     function onInit(){
@@ -62,6 +60,17 @@
     }
 
     function sendReply(){
+      if(!self.replyContent || self.replyContent.length === 0){
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Resposta vazia ou inválida.')
+            .position('bottom right')
+            .theme('error-toast')
+            .hideDelay(3000)
+        );
+        return;
+      }
+
       DialogService.showConfirmationDialog(
         'Envio de resposta',
         'Confirma o envio de mensagem?',
@@ -80,11 +89,6 @@
       angular.element(document.getElementById('replyInputBox')).value = "";
       self.replyContent = "";
       self.replying = false;
-    }
-
-    function changeStatus(statusValue){
-      self.currStatus = statusValue;
-      return IssueMessagesViewerService.updateIssueStatus(self.issue, self.currStatus);
     }
 
   }

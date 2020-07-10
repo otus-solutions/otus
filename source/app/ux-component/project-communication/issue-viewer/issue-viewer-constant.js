@@ -30,12 +30,17 @@
         TITLE: {
           TITLE: 'title',
           TRANSLATED_TITLE: 'Título',
-          ICON: 'insert_comment'
+          ICON: 'message'
         },
         STATUS: {
           TITLE: 'status',
           ICON: 'assignment_ind'
-        }
+        },
+        TEXT: {
+          TITLE: 'text',
+          TRANSLATED_TITLE: 'Texto',
+          ICON: 'textsms'
+        },
       },
 
       STATUS:{
@@ -44,8 +49,8 @@
           filterLabel: 'Fechados',
           actionLabel: 'Fechar',
           color: {
-            'background-color': '#e45454',
-            'color': 'white'
+            'background-color': '#dedede',
+            'color': 'black'
           }
         },
         FINALIZED: {
@@ -53,7 +58,7 @@
           filterLabel: 'Finalizados',
           actionLabel: 'Finalizar',
           color: {
-            'background-color': '#7fbf7f',
+            'background-color': '#006600',
             'color': 'white'
           }
         },
@@ -62,7 +67,7 @@
           filterLabel: 'Abertos',
           actionLabel: 'Reabrir',
           color: {
-            'background-color': '#64aff1',
+            'background-color': '#0091EA',
             'color': 'white'
           }
         }

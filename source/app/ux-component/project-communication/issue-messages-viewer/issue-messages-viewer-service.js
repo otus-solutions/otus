@@ -24,9 +24,7 @@
     self.formatStatus = formatStatus;
     self.capitalizeName = IssueViewerService.capitalizeName;
     self.getCurrIssue = getCurrIssue;
-    self.getStatusInfo = getStatusInfo;
     self.removeStoragedCurrentIssue = removeStoragedCurrentIssue;
-    self.updateIssueStatus = updateIssueStatus;
     self.createMessage = createMessage;
 
     function getAllItems(){
@@ -72,22 +70,12 @@
         date.getHours().toString(10).padStart(2, '0') + ':' + date.getMinutes().toString(10).padStart(2, '0');
     }
 
-    function formatStatus(issueStatus){
-      return {
-        value: issueStatus,
-        translatedStatus: IssueViewerService.translateStatus(issueStatus),
-        color: IssueViewerService.LABELS.STATUS[issueStatus].color
-      }
-    }
-
     function getCurrIssue(){
       return IssueViewerService.getCurrStoragedIssue();
     }
 
-    function getStatusInfo(currStatusValue){
-      let allStatus =  angular.copy(IssueViewerService.LABELS.STATUS);
-      delete allStatus[currStatusValue];
-      return allStatus;
+    function formatStatus(issueStatus){
+      return IssueViewerService.formatStatus(issueStatus);
     }
 
     function createMessage(issueId, messageText){
@@ -100,10 +88,6 @@
 
     function removeStoragedCurrentIssue(){
       IssueViewerService.removeStoragedCurrentIssue();
-    }
-
-    function updateIssueStatus(issue, newStatusValue){
-      return IssueViewerService.updateIssueStatus(issue, newStatusValue);
     }
 
   }
