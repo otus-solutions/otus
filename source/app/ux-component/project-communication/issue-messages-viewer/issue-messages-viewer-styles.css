@@ -1,0 +1,186 @@
+/*begin style for issue-messages-viewer*/
+@media screen and (min-width: 360px) {
+  .issue-messages-viewer {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 1fr;
+    grid-template-rows: .1fr .3fr 1.7fr .1fr;
+    grid-template-areas:
+      "toolbar"
+      "issueInfo"
+      "list"
+      "actionInputs"
+  }
+
+  .issue-messages-viewer otus-dashboard-toolbar{
+    grid-area: toolbar;
+    max-height: 128px;
+  }
+
+  .issue-messages-viewer otus-issue-info-header{
+    grid-area: issueInfo;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .issue-messages-viewer {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 1fr;
+    grid-template-rows: .15fr .3fr 1.7fr .1fr;
+    grid-template-areas:
+      "toolbar"
+      "issueInfo"
+      "list"
+      "actionInputs"
+  }
+
+  .issue-messages-viewer otus-dashboard-toolbar{
+    grid-area: toolbar;
+    max-height: 128px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .issue-messages-viewer {
+    display: grid;
+    height: 100vh;
+    width: 100vw;
+    grid-template-columns: 1fr;
+    grid-template-rows: .1fr .5fr 2fr .1fr;
+    grid-template-areas:
+      "toolbar"
+      "issueInfo"
+      "list"
+      "actionInputs"
+  }
+
+  .issue-messages-viewer otus-dashboard-toolbar{
+    grid-area: toolbar;
+    max-height: 128px;
+  }
+}
+
+.issue-messages-viewer otus-generic-list{
+  grid-area: list;
+}
+
+.issue-messages-header {
+  grid-area: issueInfo;
+}
+
+.action-inputs {
+  grid-area: actionInputs;
+}
+
+.action-buttons{
+  padding-right: 16px;
+}
+
+.action-buttons md-button {
+  max-width: 100px;
+}
+
+/*end style for issue-messages-viewer*/
+
+
+/*begin style for list-header*/
+
+@media screen and (min-width: 360px) {
+  .issue-messages-info {
+    display: grid;
+    margin: 0px;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: .5fr .5fr .5fr;
+    grid-template-areas:
+      "status       dateTime    goBackButton"
+      "title        title       title"
+      "issueText    issueText   issueText"
+  ;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .issue-messages-info {
+    display: grid;
+    margin: 0px;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr .5fr .5fr;
+    grid-template-areas:
+      "status       dateTime    goBackButton"
+      "title        title       title"
+      "issueText    issueText   issueText"
+  ;
+  }
+}
+
+.issue-messages-datetime {
+  grid-area: dateTime;
+}
+
+.issue-messages-status {
+  grid-area: status;
+}
+
+.issue-messages-status md-chips-wrap{
+  padding: 0px;
+}
+
+.issue-messages-status md-chip{
+  margin: 0px;
+}
+
+.goback-button {
+  grid-area: goBackButton;
+}
+
+.issue-attribute-label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-style: italic;
+  font-size: 10px;
+}
+
+.issue-messages-title {
+  grid-area: title;
+  padding: 8px 0px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.issue-messages-title-value {
+  font-weight: bold;
+}
+
+.issue-messages-text {
+  grid-area: issueText;
+  padding: 8px 0px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.reply-action-button{
+  max-height: 36px;
+}
+
+.reply-box {
+  margin-bottom: 0px;
+}
+
+/*end style for issue-messages-header*/
+
+/*begin style for issue-message-item*/
+
+.datetime-font-text {
+  color: #999999;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.message-text {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+  box-shadow: none;
+}
+
+/*end style for issue-message-item*/

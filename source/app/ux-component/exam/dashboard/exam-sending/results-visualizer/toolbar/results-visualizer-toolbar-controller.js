@@ -18,8 +18,8 @@
 
   function Controller($scope, $mdDialog, SendingExamService, AliquotErrorReportingService, ProjectContextService, ApplicationStateService, LoadingScreenService, DialogService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
-    const ALIQUOT_DOES_MATCH_EXAM = "Data Validation Fail: Aliquot does not match exam"
-    const ALIQUOT_NOT_FOUND = "Data Validation Fail: Aliquot not found";
+    const ALIQUOT_DOES_MATCH_EXAM = "Data Validation Fail: Material does not match exam"
+    const ALIQUOT_NOT_FOUND = "Data Validation Fail: Material not found";
     const EMPTY_LOT = "Data Validation Fail: Empty Lot";
 
     var aliquotError;
@@ -105,7 +105,7 @@
       self.disabledSave = true;
       _reportAliquotsWithProblems(reason);
       aliquotError
-        .dialogToTitle ='Aliquota(s) não correspondente(s) ao(s) exame(s)';
+        .dialogToTitle ='Materiais não correspondentes aos exames';
       aliquotError
         .textDialog ='O envio será impossibilitado. Clique em exportar relatório de erros para obter mais detalhes';
     }
@@ -114,7 +114,7 @@
       self.sendingExam.examSendingLot.forcedSave = true;
       _reportAliquotsWithProblems(reason);
       aliquotError
-        .dialogToTitle ='Aliquota(s) não encontrada(s)';
+        .dialogToTitle ='Materiais não encontrados';
       aliquotError
         .textDialog ='Se desejar você pode forçar o envio, clicando novamente em salvar.';
     }
@@ -127,9 +127,9 @@
 
     function _buildMessageForceSendOfAliquots() {
        _confirmForceSendOfAliquots = {
-         dialogToTitle:'Atenção! Aliquota(s) não encontrada(s)',
+         dialogToTitle:'Atenção! Materiais não encontrados',
          textDialog:'Você deseja forçar o sistema a salvar?',
-         ariaLabel:'Confirmar o desejo de forçar o sistema a salvar aliquota(s) não encontrada(s)',
+         ariaLabel:'Confirmar o desejo de forçar o sistema a salvar materiais não encontrados',
          buttons: [
            {
              message:'Sim',

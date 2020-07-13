@@ -1,0 +1,70 @@
+<style>
+  @media screen and (min-width: 360px) {
+    .paginationCard {
+      display: grid;
+      grid-template-columns: .1fr .5fr .5fr .5fr .1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "inputLeft previousPage playPage nextPage inputRight"
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .paginationCard {
+      display: grid;
+      grid-template-columns: .1fr 1fr 1fr 1fr .1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "inputLeft previousPage playPage nextPage inputRight"
+    }
+  }
+
+  .input-left {
+    grid-area: inputLeft;
+  }
+
+  .input-right {
+    grid-area: inputRight;
+  }
+
+  .next-page {
+    grid-area: nextPage;
+  }
+
+  .play-page {
+    grid-area: playPage;
+  }
+
+  .previous-page {
+    grid-area: previousPage;
+  }
+
+  .inputStuntmanSearchSettings {
+    width: 40px;
+    border: none;
+    margin-left: 2vw;
+  }
+
+</style>
+
+<md-card class="paginationCard" ng-if="$ctrl.paginatorActive">
+  <input ng-model="$ctrl.stuntmanSearchSettings.currentQuantity"
+         type="number" min="0" class="input-left inputStuntmanSearchSettings">
+  <md-button layout-fill class="md-raised md-primary previous-page"
+             ng-disabled="!$ctrl.activePreviousPage"
+             ng-click="$ctrl.getPreviousPage($ctrl.stuntmanSearchSettings)">
+    <md-icon md-font-set="material-icons">fast_rewind</md-icon>
+    <md-tooltip md-direction="top">{{$ctrl.LABELS.PREVIOUS_PAGE_BUTTON}}</md-tooltip>
+  </md-button>
+  <md-button layout-fill class="md-raised md-primary play-page"
+             ng-click="$ctrl.runCustomPagination($ctrl.stuntmanSearchSettings)">
+    <md-icon md-font-set="material-icons">play_arrow</md-icon>
+    <md-tooltip md-direction="top">{{$ctrl.LABELS.CUSTOM_PAGE_BUTTON}}</md-tooltip>
+  </md-button>
+  <md-button layout-fill class="md-raised md-primary next-page"
+             ng-disabled="!$ctrl.activeNextPage"
+             ng-click="$ctrl.getNextPage($ctrl.stuntmanSearchSettings)">
+    <md-icon md-font-set="material-icons">fast_forward</md-icon>
+    <md-tooltip md-direction="top">{{$ctrl.LABELS.NEXT_PAGE_BUTTON}}</md-tooltip>
+  </md-button>
+  <input ng-model="$ctrl.stuntmanSearchSettings.quantityToGet" type="number"
+         min="0" class="input-right inputStuntmanSearchSettings">
+</md-card>

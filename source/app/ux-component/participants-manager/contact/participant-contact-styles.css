@@ -3,11 +3,10 @@
   width: 100vw;
   height: 90vh;
   grid-template-columns: .5fr 11.5fr;
-  grid-template-rows: .5fr 11.5fr .5fr;
+  grid-template-rows: .5fr 11.5fr;
   grid-template-areas:
     "returnButton anonymousMsg"
     "mainUpdate   mainUpdate"
-    "btnAction  btnAction"
 }
 
 .return-button {
@@ -26,9 +25,11 @@
   width: 80vw;
 }
 
-.btn-action{
-  grid-area: btnAction;
+.contact-label{
   width: 80vw;
+  margin-bottom: 0px;
+  margin-top: 0px;
+
 }
 
 

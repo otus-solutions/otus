@@ -1,0 +1,12 @@
+<span layout="row">
+  <md-input-container layout-fill class="padding-layout-fill">
+    <md-icon>{{$ctrl.filterItem.icon}}
+    <md-tooltip md-direction="bottom">{{$ctrl.filterItem.translatedTitle}}</md-tooltip>
+  </md-icon>
+    <input ng-model="$ctrl.searchSettings.filter[$ctrl.filterItem.title]"
+           ng-change="$ctrl.onChangeText()"
+           placeholder="{{$ctrl.placeholder}}"
+           aria-label={{$ctrl.filterItem.translatedTitle}} required>
+    <md-icon ng-click="$ctrl.clear($ctrl.filterItem)" class="icon-cursor">{{$ctrl.CANCEL_BUTTON_ICON}}</md-icon>
+  </md-input-container>
+</span>

@@ -48,8 +48,11 @@
     self.activateLaboratoryMonitoring = activateLaboratoryMonitoring;
     self.activateActivityFlagsReport = activateActivityFlagsReport;
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
-    self.activatePendencyViewer = activatePendencyViewer;
     self.activateOfflineActivitySynchronize = activateOfflineActivitySynchronize;
+    self.currentStateIsListViewer = currentStateIsListViewer;
+    self.activatePendencyViewer = activatePendencyViewer;
+    self.activateIssueViewer = activateIssueViewer;
+    self.activateIssueMessagesViewer = activateIssueMessagesViewer;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -194,8 +197,20 @@
       return $state.current.name;
     }
 
+    function currentStateIsListViewer(){
+      return [STATE.PENDENCY_VIEWER, STATE.ISSUE_VIEWER].includes(getCurrentState());
+    }
+
     function activatePendencyViewer(){
       $state.go(STATE.PENDENCY_VIEWER);
+    }
+
+    function activateIssueViewer(){
+      $state.go(STATE.ISSUE_VIEWER);
+    }
+
+    function activateIssueMessagesViewer(){
+      $state.go(STATE.ISSUE_MESSAGES_VIEWER);
     }
   }
 }());

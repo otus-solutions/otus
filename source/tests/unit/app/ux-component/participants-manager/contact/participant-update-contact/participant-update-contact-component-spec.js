@@ -11,9 +11,9 @@ describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
       Injections.ParticipantMessagesService = $injector.get('otusjs.participant.business.ParticipantMessagesService');
       mockInitialize($q, $rootScope);
       ctrl = $controller('participantUpdateContactCtrl', Injections);
-      ctrl.$onInit();
-
       ctrl.contact = angular.copy(Mock.contact);
+
+      ctrl.$onInit();
       ctrl.type = Mock.type;
       ctrl.loadParticipantContact = Mock.loadParticipantContact;
       ctrl.contactId = Mock.contacts._id;

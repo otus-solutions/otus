@@ -36,6 +36,7 @@
     self.unattachedLaboratory = unattachedLaboratory;
     self.activatePendencyViewer = activatePendencyViewer;
     self.activateOfflineActivitySynchronize = activateOfflineActivitySynchronize;
+    self.activateIssueViewer = activateIssueViewer;
 
     function onInit() {
       _loadLoggedUser();
@@ -132,6 +133,10 @@
 
     function activatePendencyViewer() {
       ApplicationStateService.activatePendencyViewer();
+    }
+
+    function activateIssueViewer() {
+      ApplicationStateService.activateIssueViewer();
     }
   }
 }());

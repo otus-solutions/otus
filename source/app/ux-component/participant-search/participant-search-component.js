@@ -11,7 +11,7 @@
         showAllParticipantsButton: "<",
         showAllParticipants: '&',
         onReady: '=',
-        pendencyFilterItem: '=',
+        attributeFilterItem: '=',
         searchSettings: '=',
         changeWatcher: '&'
       }
@@ -25,11 +25,11 @@
     'otusjs.otus.dashboard.core.ContextService',
     '$mdDialog',
     'otusjs.application.dialog.DialogShowService',
-    'otusjs.pendencyViewer.PendencyViewerService'
+    'otusjs.genericListViewer.GenericListViewerService'
   ];
 
   function Controller(STATE, $q, ParticipantManagerService, ApplicationStateService,
-                      DashboardContextService, $mdDialog, DialogService, PendencyViewerService) {
+                      DashboardContextService, $mdDialog, DialogService, GenericListViewerService) {
     var self = this;
 
     /* Lifecycle hooks */
@@ -45,15 +45,13 @@
 
     function onInit() {
       self.inputedText = '';
-      if (ApplicationStateService.getCurrentState() != STATE.DASHBOARD) {
-        self.autoCompleteClass = 'md-autocomplete-participant';
-      } else {
-        self.autoCompleteClass = 'md-dashboard-autocomplete';
-      }
+      self.autoCompleteClass = (ApplicationStateService.getCurrentState() === STATE.DASHBOARD ?
+        'md-dashboard-autocomplete' :
+        'md-autocomplete-participant');
+
       ParticipantManagerService.setup().then(function (response) {
         self.onReady = true;
       });
-
     }
 
     function querySearch() {
@@ -69,7 +67,9 @@
       _buildDialogs();
       if (!self.selectedParticipant) {
         return;
-      } else if (ApplicationStateService.getCurrentState() == STATE.DASHBOARD) {
+      }
+
+      if (ApplicationStateService.getCurrentState() == STATE.DASHBOARD) {
         _setParticipant();
         ApplicationStateService.activateParticipantDashboard();
       } else if (ApplicationStateService.getCurrentState() == STATE.LABORATORY && DashboardContextService.getChangedState()) {
@@ -77,9 +77,9 @@
           _setParticipant();
           DashboardContextService.setChangedState();
         });
-      } else if (ApplicationStateService.getCurrentState() == STATE.PENDENCY_VIEWER) {
-        PendencyViewerService.getSelectedParticipantRN(self.selectedParticipant,
-          self.pendencyFilterItem, self.searchSettings);
+      } else if (ApplicationStateService.currentStateIsListViewer()) {
+        GenericListViewerService.getSelectedParticipantRN(self.selectedParticipant,
+          self.attributeFilterItem, self.searchSettings);
       } else {
         _setParticipant();
       }
@@ -94,11 +94,10 @@
     }
 
     function searchTextChange() {
-      switch (ApplicationStateService.getCurrentState()) {
-        case STATE.PENDENCY_VIEWER:
-          if(self.inputedText === "") delete self.searchSettings.filter["rn"];
-          else self.searchSettings.filter["rn"] = self.inputedText;
-          self.changeWatcher();
+      if (ApplicationStateService.currentStateIsListViewer()) {
+        if(self.inputedText === "") delete self.searchSettings.filter["rn"];
+        else self.searchSettings.filter["rn"] = self.inputedText;
+        self.changeWatcher();
       }
     }
 

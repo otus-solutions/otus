@@ -1,0 +1,49 @@
+<link href="app/ux-component/project-communication/issue-messages-viewer/issue-messages-viewer-styles.css"
+      rel="stylesheet" type="text/css">
+
+<md-content class="issue-messages-viewer" layout="column" flex>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+
+  <otus-dashboard-toolbar>
+    <div flex layout="row" layout-align="center center" layout-margin>
+      <span layout-align="center center">{{$ctrl.viewerTitle}}</span>
+    </div>
+  </otus-dashboard-toolbar>
+
+  <otus-issue-info-header></otus-issue-info-header>
+
+  <otus-generic-list items="$ctrl.items"
+                     item-component-name="$ctrl.itemComponentName"
+                     item-attributes="$ctrl.itemAttributes">
+  </otus-generic-list>
+
+  <div class="action-inputs">
+
+    <div layout="row" layout-align="space-between center">
+
+      <md-input-container hide-xs layout-padding style="margin: 0px">
+        <label style="margin-left: 8px">Resposta:</label>
+        <textarea class="reply-box anchor" id="replyInputBox"
+                  max-rows="20" cols="80"
+                  ng-model="$ctrl.replyContent"
+                  placeholder="Insira sua resposta aqui"></textarea>
+      </md-input-container>
+
+      <md-input-container hide-gt-xs layout-padding style="margin: 0px">
+        <label style="margin-left: 8px">Resposta:</label>
+        <textarea class="reply-box anchor" id="replyInputBoxXS"
+                  max-rows="20" cols="30"
+                  ng-model="$ctrl.replyContent"
+                  placeholder="Insira sua resposta aqui"></textarea>
+      </md-input-container>
+
+      <div layout="row" layout-align="center end">
+        <md-button class="reply-action-button md-primary md-raised" id="sendReplyButton"
+                   ng-click="$ctrl.sendReply()">ENVIAR</md-button>
+      </div>
+
+  </div>
+
+</md-content>

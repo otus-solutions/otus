@@ -1,12 +1,13 @@
 describe('otusParticipantSearchComponent_UnitTest_Suite', () => {
   let ctrl;
-  let CHECKERS_TEXT = "Otus Coruja";
-  let CHECKERS_EMAIL = "otus.coruja@gmail.com";
-  let DASHBOARD = 'dashboard';
-  let PENDENCY_VIEWER = 'pendency-viewer';
-  let LABORATORY = 'laboratory-participant';
   let Injections = [];
   let Mock = {};
+
+  const CHECKERS_TEXT = "Otus Coruja";
+  const CHECKERS_EMAIL = "otus.coruja@gmail.com";
+  const DASHBOARD = 'dashboard';
+  const VIEWER_NAME = 'some-viewer';
+  const LABORATORY = 'laboratory-participant';
 
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
@@ -18,12 +19,11 @@ describe('otusParticipantSearchComponent_UnitTest_Suite', () => {
       Injections.DashboardContextService = $injector.get('otusjs.otus.dashboard.core.ContextService');
       Injections.DialogService = $injector.get('otusjs.application.dialog.DialogShowService');
       Injections.ApplicationStateService = $injector.get('otusjs.application.state.ApplicationStateService');
-      Injections.PendencyViewerService = $injector.get('otusjs.pendencyViewer.PendencyViewerService');
+      Injections.GenericListViewerService = $injector.get('otusjs.genericListViewer.GenericListViewerService');
       ctrl = $controller('otusParticipantSearchCtrl', Injections);
 
-      mock();
+      _mockInitialize();
 
-      Mock.CHECKERS = Test.utils.data.checker;
       ctrl.searchSettings = Mock.searchSettings;
       ctrl.showParticipants = jasmine.createSpy();
       ctrl.showParticipantsButton = jasmine.createSpy();
@@ -35,9 +35,19 @@ describe('otusParticipantSearchComponent_UnitTest_Suite', () => {
 
       spyOn(Injections.ParticipantManagerService, "setup").and.returnValue(Promise.resolve());
       spyOn(Injections.ParticipantManagerService, "filter").and.returnValue(Promise.resolve());
-
     });
   });
+
+  function _mockInitialize() {
+    Mock.searchSettings = Test.utils.data.searchSettingsForGenericList;
+    Mock.item = {
+      checker : {
+        title: CHECKERS_TEXT,
+        email: CHECKERS_EMAIL
+      }
+    };
+    Mock.CHECKERS = Test.utils.data.checker;
+  }
 
   it('ctrlExistence_check', () => {
     expect(ctrl).toBeDefined();
@@ -64,7 +74,7 @@ describe('otusParticipantSearchComponent_UnitTest_Suite', () => {
     expect(ctrl.querySearch()).toBePromise();
   });
 
-  it('selectParticipantMethod_should_verify_state_and_evoke_DialogService_and_evoke_PendencyViewerService_return_DASHBOARD', () => {
+  it('selectParticipantMethod_should_verify_state_and_evoke_DialogService_and_evoke_GenericListViewerService_return_DASHBOARD', () => {
     spyOn(Injections.ApplicationStateService, "getCurrentState").and.returnValue(DASHBOARD);
     spyOn(Injections.ParticipantManagerService, "selectParticipant");
     spyOn(Injections.ApplicationStateService, "activateParticipantDashboard");
@@ -77,7 +87,7 @@ describe('otusParticipantSearchComponent_UnitTest_Suite', () => {
     expect(Injections.ApplicationStateService.getCurrentState()).toEqual(DASHBOARD)
   });
 
-  it('selectParticipantMethod_should_verify_state_and_evoke_DialogService_and_evoke_PendencyViewerService_return_LABORATORY', () => {
+  it('selectParticipantMethod_should_verify_state_and_evoke_DialogService_and_evoke_GenericListViewerService_return_LABORATORY', () => {
     spyOn(Injections.ApplicationStateService, "getCurrentState").and.returnValue(LABORATORY);
     spyOn(Injections.ParticipantManagerService, "selectParticipant");
     spyOn(Injections.DashboardContextService, "getChangedState").and.returnValue(true);
@@ -92,42 +102,24 @@ describe('otusParticipantSearchComponent_UnitTest_Suite', () => {
     expect(Injections.ApplicationStateService.getCurrentState()).toEqual(LABORATORY)
   });
 
-  it('selectParticipantMethod_should_verify_state_and_evoke_DialogService_and_evoke_PendencyViewerService_return_PENDENCY_VIEWER', () => {
-    spyOn(Injections.ApplicationStateService, "getCurrentState").and.returnValue(PENDENCY_VIEWER);
+  it('selectParticipantMethod_should_verify_state_and_evoke_DialogService_and_evoke_GenericListViewerService_return_VIEWER_NAME', () => {
+    spyOn(Injections.ApplicationStateService, "getCurrentState").and.returnValue(VIEWER_NAME);
+    spyOn(Injections.ApplicationStateService, "currentStateIsListViewer").and.returnValue(true);
     spyOn(Injections.ParticipantManagerService, "selectParticipant");
-    spyOn(Injections.PendencyViewerService, "getSelectedParticipantRN").and.callThrough();
+    spyOn(Injections.GenericListViewerService, "getSelectedParticipantRN").and.returnValue(Promise.resolve({}));
 
     ctrl.$onInit();
     ctrl.selectedParticipant = true;
     ctrl.selectParticipant();
-    expect(Injections.ApplicationStateService.getCurrentState).toHaveBeenCalledTimes(4);
-    expect(Injections.PendencyViewerService.getSelectedParticipantRN).toHaveBeenCalledTimes(1);
-    expect(Injections.ApplicationStateService.getCurrentState()).toEqual(PENDENCY_VIEWER)
+    expect(Injections.ApplicationStateService.getCurrentState).toHaveBeenCalledTimes(3);
+    expect(Injections.GenericListViewerService.getSelectedParticipantRN).toHaveBeenCalledTimes(1);
+    expect(Injections.ApplicationStateService.getCurrentState()).toBe(VIEWER_NAME);
   });
 
   it('searchTextChangeMethod_should_verify_state_and_filter_our_delete', () => {
-    spyOn(Injections.ApplicationStateService, "getCurrentState").and.returnValue(PENDENCY_VIEWER);
+    spyOn(Injections.ApplicationStateService, "currentStateIsListViewer").and.returnValue(true);
     ctrl.searchTextChange();
-    expect(Injections.ApplicationStateService.getCurrentState).toHaveBeenCalledTimes(1);
+    expect(Injections.ApplicationStateService.currentStateIsListViewer).toHaveBeenCalledTimes(1);
   });
 
-  function mock() {
-    Mock.searchSettings = {
-      "currentQuantity": 0,
-      "quantityToGet": 10,
-      "order": {
-        "fields": ["dueDate"],
-        "mode": 1
-      },
-      "filter": {
-        "status": "NOT_FINALIZED"
-      }
-    };
-    Mock.item = {
-      checker : {
-        title: CHECKERS_TEXT,
-        email: CHECKERS_EMAIL
-      }
-    }
-  }
 });

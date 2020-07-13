@@ -1,0 +1,76 @@
+<md-card class="issue-list-filters" layout-margin>
+  <otus-list-filter-toolbar class="filter-toolbar" clear-all="$ctrl.clearAll"></otus-list-filter-toolbar>
+
+  <div class='sorting-criteria'>
+    <otus-list-sorting-criteria search-settings="$ctrl.searchSettings"
+                                item-attributes="$ctrl.itemAttributes"
+                                input-view-state="$ctrl.inputViewState"
+                                get-default-order-fields="$ctrl.getDefaultOrderFields">
+    </otus-list-sorting-criteria>
+  </div>
+
+  <md-radio-group class="status" ng-model="$ctrl.searchSettings.filter.status" layout="row"
+                  layout-align="space-around center" ng-change="$ctrl.changePaginationViewState()">
+    <md-radio-button ng-repeat="(status,label) in $ctrl.statusLabels" ng-value="status">
+      {{label}}
+    </md-radio-button>
+  </md-radio-group>
+
+  <div class="rn-filter">
+    <span ng-if="!$ctrl.inputViewState[$ctrl.itemAttributes.rn.title]" >
+      <otus-button-over-filter filter-item="$ctrl.itemAttributes.rn"
+                               change-input-view-state="$ctrl.changeInputViewState"
+                               extra-icons="[$ctrl.itemAttributes.name]">
+      </otus-button-over-filter>
+    </span>
+    <span ng-if="$ctrl.inputViewState[$ctrl.itemAttributes.rn.title]">
+      <otus-participant-filter filter-item="$ctrl.itemAttributes.rn"
+                               search-settings="$ctrl.searchSettings"
+                               clear="$ctrl.clear"
+                               change-pagination-view-state="$ctrl.changePaginationViewState">
+      </otus-participant-filter>
+    </span>
+  </div>
+
+  <div class="creation-date-filter">
+    <span ng-if="!$ctrl.inputViewState[$ctrl.itemAttributes.creationDate.title]">
+      <otus-button-over-filter filter-item="$ctrl.itemAttributes.creationDate"
+                               change-input-view-state="$ctrl.changeInputViewState">
+      </otus-button-over-filter>
+    </span>
+    <span ng-if="$ctrl.inputViewState[$ctrl.itemAttributes.creationDate.title]">
+      <otus-date-filter filter-item="$ctrl.itemAttributes.creationDate"
+                        search-settings="$ctrl.searchSettings"
+                        clear="$ctrl.clear"
+                        change-pagination-view-state="$ctrl.changePaginationViewState">
+      </otus-date-filter>
+    </span>
+  </div>
+
+
+  <div class="center-name-filter" ng-if="$ctrl.showCenterFilter">
+    <span ng-if="!$ctrl.inputViewState[$ctrl.itemAttributes.center.title]">
+      <otus-button-over-filter filter-item="$ctrl.itemAttributes.center"
+                               change-input-view-state="$ctrl.changeInputViewState">
+      </otus-button-over-filter>
+    </span>
+    <span ng-if="$ctrl.inputViewState[$ctrl.itemAttributes.center.title]">
+        <otus-single-selection-filter hide-xs
+                                      filter-item="$ctrl.itemAttributes.center"
+                                      search-settings="$ctrl.searchSettings"
+                                      clear="$ctrl.clear"
+                                      change-pagination-view-state="$ctrl.changePaginationViewState"
+                                      options="$ctrl.centers">
+      </otus-single-selection-filter>
+
+      <otus-dropdown-filter hide-gt-xs
+                            filter-item="$ctrl.itemAttributes.center"
+                            search-settings="$ctrl.searchSettings"
+                            clear="$ctrl.clear"
+                            change-pagination-view-state="$ctrl.changePaginationViewState"
+                            options="$ctrl.centers">
+      </otus-dropdown-filter>
+    </span>
+  </div>
+
+</md-card>
