@@ -23,6 +23,7 @@
       name: STATE.SAMPLE_TRANSPORTATION_MANAGER_LIST,
       url: '/' + STATE.SAMPLE_TRANSPORTATION_MANAGER_LIST,
       template: '<otus-sample-transportation-manager-list layout="column" flex></otus-sample-transportation-manager-list>',
+
     };
 
   }

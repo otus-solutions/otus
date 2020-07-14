@@ -9,12 +9,13 @@
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.application.state.ApplicationStateService',
+    'otusjs.user.business.UserAccessPermissionService',
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory'
   ];
 
-  function Controller(ParticipantManagerService, LoadingScreenService, ApplicationStateService, DynamicTableSettingsFactory) {
+  function Controller(ParticipantManagerService, LoadingScreenService, ApplicationStateService,  UserAccessPermissionService, DynamicTableSettingsFactory) {
     var self = this;
-
+    self.userAccessToParticipant = "";
     /* Public methods */
     self.selectParticipant = selectParticipant;
     /* Lifecycle hooks */
@@ -28,11 +29,12 @@
     function onInit() {
       LoadingScreenService.changeMessage(MESSAGE);
       self.participants = angular.copy(self.participantsList);
+      _checkingParticipantPermission();
       if(!self.participants){
         LoadingScreenService.start();
         ParticipantManagerService.listIdexers().then(function(response) {
           self.participants = angular.copy(response);
-          _buildParticipants()
+          _buildParticipants();
           LoadingScreenService.finish();
         }).catch(function(err) {
           ApplicationStateService.activateDashboard();
@@ -53,6 +55,11 @@
 
     function addParticipant() {
       ApplicationStateService.activateCreateParticipant();
+    }
+    function _checkingParticipantPermission() {
+      return UserAccessPermissionService.getCheckingParticipantPermission().then(response => {
+        self.userAccessToParticipant = response;
+      });
     }
 
     function selectParticipant(participant) {

@@ -17,7 +17,7 @@
         $cookies) {
         // Configure Otus Rest Client to use the correct back-end server URL
         var __env = $window.__env;
-        OtusRestResourceService.setUrl($cookies.get('Backend-Address'));
+        OtusRestResourceService.setUrl($cookies.get('Backend-Address'))
 
         // InstallerProxyService.ready(function(response) {
         //   ApplicationStateService.activateInstaller();

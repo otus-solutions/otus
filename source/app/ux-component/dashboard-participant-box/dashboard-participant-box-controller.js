@@ -17,6 +17,7 @@
     var self = this;
     self.laboratoryChecking;
     self.userAccessToLaboratory;
+    self.userAccessToActivity;
 
     /* Public methods */
     self.loadParticipantActivities = loadParticipantActivities;
@@ -33,6 +34,7 @@
       EventService.onParticipantSelected(_loadSelectedParticipant);
       _getCheckingExist();
       _checkingLaboratoryPermission();
+      _checkingActivityPermission();
     }
 
     function home() {
@@ -83,6 +85,12 @@
     function _checkingLaboratoryPermission() {
       UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
         self.userAccessToLaboratory = response;
+      });
+    }
+
+    function _checkingActivityPermission() {
+      return UserAccessPermissionService.getCheckingActivityPermission().then(response => {
+        self.userAccessToActivity = response;
       });
     }
   }

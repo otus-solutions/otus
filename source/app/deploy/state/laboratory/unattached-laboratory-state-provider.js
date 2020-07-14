@@ -34,12 +34,12 @@
     function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
 
-      Application
+      UserAccessPermissionService.getCheckingLaboratoryPermission().then(permission => {
+        Application
         .isDeployed()
         .then(function () {
-          UserAccessPermissionService.getCheckingLaboratoryPermission().then(permission => {
             try {
-              if (!permission) {
+              if (!permission.unattachedLaboratoriesAccess) {
                 deferred.resolve(STATE.DASHBOARD);
                 return;
               }
