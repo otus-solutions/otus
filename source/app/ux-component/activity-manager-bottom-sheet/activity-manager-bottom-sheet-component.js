@@ -113,13 +113,12 @@
         self.isPaperActivity = false;
         self.selectedItemCounter = null;
       } else if (selectedActivities.length === 1) {
-        var isAutoFill = selectedActivities[0].mode === "AUTOFILL" ? true : false;
         self.showBottomSheet = true;
         self.showVisualizationButton = true;
-        self.showFillingButton = !isAutoFill;
+        self.showFillingButton = true;
         self.showViewerButton = true;
-        self.showDeleteButton = !isAutoFill;
-        self.showPendenciesButton = !isAutoFill;
+        self.showDeleteButton = true;
+        self.showPendenciesButton = true;
         self.showInfoButton = true;
         self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() != undefined ? true : false;
         self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name;
