@@ -81,7 +81,10 @@
         </form>
       </md-card-content>
     </md-card>
-    <otus-participant-login-email></otus-participant-login-email>
+    <otus-participant-login-email class="contact-update"
+                                  contact-id="{{$ctrl.contact._id}}"
+                                  participant-login-email="{{$ctrl.participant.email}}">
+    </otus-participant-login-email>
 
     <div class="contact-label" layout="row" layout-align="space-between center" layout-margin>
       <div>

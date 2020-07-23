@@ -19,13 +19,14 @@
         state: 'UF',
         country: 'País',
         complements: 'Complemento',
-        observation: 'Observação'
+        observation: 'Observação',
+        login: 'Email'
       },
       keys: {
         email: {translatedTitle: 'Emails'},
         address: {translatedTitle: 'Endereços'},
         phoneNumber: {translatedTitle: 'Telefones'},
-        login: {translatedTitle: 'Email de Acesso (Login)'}
+        login: {translatedTitle: 'Login de Acesso'}
       },
       icons: {
         addContact: {
@@ -66,6 +67,11 @@
         deleteContact: {
           icon: 'delete',
           translatedTitle: 'Excluir Todos Contatos'
+        },
+
+        delete: {
+          icon: 'delete',
+          translatedTitle: 'Deletar'
         },
         swapMainContact: {
           icon: 'swap_vert',
