@@ -24,7 +24,8 @@
       keys: {
         email: {translatedTitle: 'Emails'},
         address: {translatedTitle: 'Endereços'},
-        phoneNumber: {translatedTitle: 'Telefones'}
+        phoneNumber: {translatedTitle: 'Telefones'},
+        login: {translatedTitle: 'Email de Acesso (Login)'}
       },
       icons: {
         addContact: {
