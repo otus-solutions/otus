@@ -6,18 +6,18 @@
       controller: 'participantLoginEmailCtrl as $ctrl',
       templateUrl: 'app/ux-component/participants-manager/contact/participant-login-email/participant-login-email-template.html',
       bindings: {
-        originalParticipantLoginEmail: '@',
-        contactId: '@',
+        participant: '=',
       }
   }).controller('participantLoginEmailCtrl', Controller);
 
   Controller.$inject = [
     'ParticipantContactValues',
     'otusjs.participant.business.ParticipantManagerService',
+    '$window'
 
   ];
 
-  function Controller(ParticipantContactValues, ParticipantManagerService ) {
+  function Controller(ParticipantContactValues, ParticipantManagerService, $window ) {
     const self = this;
 
     self.enableEditMode = enableEditMode;
@@ -30,7 +30,7 @@
     /* Public methods */
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
-      self.updatedParticipantLoginEmail = angular.copy(self.originalParticipantLoginEmail);
+      self.updatedLoginEmail = angular.copy(self.participant.email);
       self.form = { name: "loginEmailForm" };
       self.editMode = false;
     }
@@ -39,10 +39,15 @@
       self.editMode = true;
     }
 
-    function editLoginEmail(updatedLoginEmail){
-      alert("update-component: "+ self.contactId);
-      ParticipantManagerService.editLoginEmail(self.contactId, updatedLoginEmail)
-        .then(data => console.log(data))
+    function editLoginEmail(){
+      alert("update-component: "+ self.participant);
+      ParticipantManagerService.editLoginEmail(self.participant._id, self.updatedLoginEmail)
+      // ParticipantManagerService.editLoginEmail("5ea343bdb174c405c9bba6cc", updatedLoginEmail)
+        .then(() => alert("antes: " +self.participant.email))
+        .then(() => { self.participant.email = self.updatedLoginEmail})
+        // .then(() => { $window.sessionStorage.setItem('participant_context', self.updatedLoginEmail)})
+        .then(() => alert("depois: "+self.participant.email))
+        .then(() => self.editMode = false);
     }
 
     function cancelEditLoginEmail(){

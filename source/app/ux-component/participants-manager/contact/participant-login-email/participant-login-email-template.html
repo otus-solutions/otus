@@ -14,7 +14,7 @@
 
         <md-input-container class="content-input">
           <label>{{$ctrl.ParticipantContactValues.fields.login}}</label>
-          <input type="email" ng-model="$ctrl.updatedParticipantLoginEmail" ng-disabled=!$ctrl.editMode required>
+          <input type="email" ng-model="$ctrl.updatedLoginEmail" ng-disabled=!$ctrl.editMode required>
         </md-input-container>
 
         <md-button class="md-accent md-icon-button md-button restore-button"
@@ -46,7 +46,7 @@
         </md-button>
 
         <md-button class="md-accent md-icon-button md-button edit-button"
-                   ng-click="$ctrl.editLoginEmail($ctrl.updatedParticipantLoginEmail)"
+                   ng-click="$ctrl.editLoginEmail()"
                    ng-if="$ctrl.editMode"
                    ng-disabled="$ctrl.form.name.$invalid">
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}">

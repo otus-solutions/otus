@@ -49,7 +49,6 @@
     self.getParticipantById = getParticipantById;
     self.editLoginEmail = editLoginEmail;
 
-
     var _setupSuccess;
 
     function setup() {
