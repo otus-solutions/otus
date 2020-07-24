@@ -6,19 +6,23 @@
       controller: 'participantLoginEmailCtrl as $ctrl',
       templateUrl: 'app/ux-component/participants-manager/contact/participant-login-email/participant-login-email-template.html',
       bindings: {
-        participantLoginEmail: '@',
+        originalParticipantLoginEmail: '@',
         contactId: '@',
       }
   }).controller('participantLoginEmailCtrl', Controller);
 
   Controller.$inject = [
-    'ParticipantContactValues'
+    'ParticipantContactValues',
+    'otusjs.participant.business.ParticipantManagerService',
+
   ];
 
   function Controller(ParticipantContactValues) {
     const self = this;
 
     self.enableEditMode = enableEditMode;
+    self.editLoginEmail = editLoginEmail;
+    self.cancelEditLoginEmail = cancelEditLoginEmail;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -26,9 +30,9 @@
     /* Public methods */
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
+      self.updatedParticipantLoginEmail = angular.copy(self.originalParticipantLoginEmail);
       self.form = { name: "loginEmailForm" };
       self.editMode = false;
-      console.log(self.participantLoginEmail)
     }
 
     function enableEditMode(position) {
@@ -36,6 +40,18 @@
       // self.addContactMode[self.type] = false;
       self.editMode = true;
     }
+
+    function editLoginEmail(updatedLoginEmail){
+      alert("update-component: "+ self.updatedParticipantLoginEmail);
+    }
+
+    function cancelEditLoginEmail(){
+      alert("cancel-component: "+ self.originalParticipantLoginEmail);
+      self.updatedParticipantLoginEmail = angular.copy(self.originalParticipantLoginEmail);
+      self.editMode = false;
+    }
+
+
 
   }
 
