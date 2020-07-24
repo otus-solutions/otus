@@ -17,7 +17,7 @@
 
   ];
 
-  function Controller(ParticipantContactValues) {
+  function Controller(ParticipantContactValues, ParticipantManagerService ) {
     const self = this;
 
     self.enableEditMode = enableEditMode;
@@ -35,18 +35,17 @@
       self.editMode = false;
     }
 
-    function enableEditMode(position) {
-      // self.backupContact[position] = angular.copy(self.contact[position]);
-      // self.addContactMode[self.type] = false;
+    function enableEditMode() {
       self.editMode = true;
     }
 
     function editLoginEmail(updatedLoginEmail){
-      alert("update-component: "+ self.updatedParticipantLoginEmail);
+      alert("update-component: "+ self.contactId);
+      ParticipantManagerService.editLoginEmail(self.contactId, updatedLoginEmail)
+        .then(data => console.log(data))
     }
 
     function cancelEditLoginEmail(){
-      alert("cancel-component: "+ self.originalParticipantLoginEmail);
       self.updatedParticipantLoginEmail = angular.copy(self.originalParticipantLoginEmail);
       self.editMode = false;
     }

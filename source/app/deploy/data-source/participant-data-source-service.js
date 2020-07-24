@@ -28,6 +28,7 @@
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
     self.requestPasswordReset = requestPasswordReset;
     self.requestPasswordResetLink = requestPasswordResetLink;
+    self.editLoginEmail = editLoginEmail;
 
     function up() {
       _loadingDefer = $q.defer();
@@ -151,6 +152,10 @@
           deferred.reject(err);
         });
       return deferred.promise;
+    }
+
+    function editLoginEmail(participantId, updatedLoginEmail) {
+      return ParticipantRestService.editLoginEmail(participantId, updatedLoginEmail);
     }
   }
 }());

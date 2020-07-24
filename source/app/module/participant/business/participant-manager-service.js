@@ -10,10 +10,12 @@
     'otusjs.participant.core.EventService',
     'otusjs.participant.repository.ParticipantRepositoryService',
     'otusjs.utils.SearchQueryFactory',
-    '$q'
+    '$q',
+    'otusjs.deploy.ParticipantDataSourceService'
   ];
 
-  function Service(ContextService, EventService, ParticipantRepositoryService, SearchQueryFactory, $q) {
+  function Service(ContextService, EventService, ParticipantRepositoryService, SearchQueryFactory,
+                   $q, ParticipantDataSourceService) {
     var self = this;
     var _filteredParticipants = [];
     var query;
@@ -45,6 +47,7 @@
     self.requestPasswordReset = requestPasswordReset;
     self.requestPasswordResetLink = requestPasswordResetLink;
     self.getParticipantById = getParticipantById;
+    self.editLoginEmail = editLoginEmail;
 
 
     var _setupSuccess;
@@ -227,6 +230,10 @@
         throw new Error('Participant was not found.');
       }
       return participant;
+    }
+
+    function editLoginEmail(participantId, updatedLoginEmail){
+      return ParticipantDataSourceService.editLoginEmail(participantId, updatedLoginEmail);
     }
 
   }
