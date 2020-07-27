@@ -48,8 +48,8 @@
     self.requestPasswordReset = requestPasswordReset;
     self.requestPasswordResetLink = requestPasswordResetLink;
     self.getParticipantById = getParticipantById;
-    self.editLoginEmail = editLoginEmail;
-    self.updatedEmailParticipantSessionStorage = updatedEmailParticipantSessionStorage;
+    self.updateLoginEmail = updateLoginEmail;
+    self.updateEmailParticipantSessionStorage = updateEmailParticipantSessionStorage;
 
     var _setupSuccess;
 
@@ -233,11 +233,11 @@
       return participant;
     }
 
-    function editLoginEmail(participantId, updatedLoginEmail){
+    function updateLoginEmail(participantId, updatedLoginEmail){
       return ParticipantDataSourceService.editLoginEmail(participantId, updatedLoginEmail);
     }
 
-    function updatedEmailParticipantSessionStorage(participant, updatedEmail){
+    function updateEmailParticipantSessionStorage(participant, updatedEmail){
       participant.email = updatedEmail;
       var sessionStorageParticipant = JSON.parse($window.sessionStorage.getItem('participant_context'))
       sessionStorageParticipant.selectedParticipant.email = updatedEmail;

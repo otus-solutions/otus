@@ -28,7 +28,7 @@
 
         <md-button class="md-warn md-icon-button md-button restore-button"
                    ng-if="!$ctrl.editMode"
-                   ng-click="">
+                   ng-click="$ctrl.loginEmailConfirmation('delete')">
           <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.delete.translatedTitle}}">
             {{$ctrl.ParticipantContactValues.icons.delete.icon}}
           </md-icon>
@@ -46,7 +46,7 @@
         </md-button>
 
         <md-button class="md-accent md-icon-button md-button edit-button"
-                   ng-click="$ctrl.editLoginEmailConfirmation()"
+                   ng-click="$ctrl.loginEmailConfirmation('update')"
                    ng-if="$ctrl.editMode"
                    ng-disabled="$ctrl.form.name.$invalid">
           <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}">

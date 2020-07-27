@@ -22,7 +22,7 @@
     self.showUpdateDialog = showUpdateDialog;
     self.showNotSave = showNotSave;
     self.showToast = showToast;
-    self.showUpdateLoginEmailDialog = showUpdateLoginEmailDialog;
+    self.showLoginEmailDialog = showLoginEmailDialog;
 
     function showClearDialog() {
 
@@ -99,27 +99,57 @@
     }
 
 
-    function showUpdateLoginEmailDialog() {
-      var _updateLoginDialog = {
-        dialogToTitle:'Email de Login',
-        titleToText:'Confirmar alteração no login do Participante',
-        textDialog:'Esta ação vai impactar na autenticação do aplicativo. Deseja realmente fazer a alteração?',
-        ariaLabel:'Confirmação de finalização',
+    function showLoginEmailDialog(sceneValues) {
+      var _loginDialog = {
+        dialogToTitle: sceneValues.dialogToTitle,
+        titleToText:sceneValues.titleToText,
+        textDialog:sceneValues.textDialog,
+        ariaLabel:sceneValues.ariaLabel,
         buttons: [
           {
-            message:'Ok',
+            message:sceneValues.button.confirm,
             action:function(){$mdDialog.hide()},
             class:'md-raised md-primary'
           },
           {
-            message:'Cancelar',
+            message:sceneValues.button.cancel,
             action:function(){$mdDialog.cancel()},
             class:'md-raised md-no-focus'
           }
         ]
       };
 
-      return DialogShowService.showDialog(_updateLoginDialog);
+
+      function _getSceneValues(scene) {
+        let sceneValues;
+        switch (scene){
+          case "update" : sceneValues = ParticipantContactValues.dialogScene.update; break;
+          case "delete" : sceneValues = ParticipantContactValues.dialogScene.delete; break;
+        }
+        return sceneValues;
+      }
+
+
+      // var _loginDialog = {
+      //   dialogToTitle:'Email de Login',
+      //   titleToText:'Confirmar alteração no login do Participante',
+      //   textDialog:'Esta ação vai impactar na autenticação do aplicativo. Deseja realmente fazer a alteração?',
+      //   ariaLabel:'Confirmação de finalização',
+      //   buttons: [
+      //     {
+      //       message:'Ok',
+      //       action:function(){$mdDialog.hide()},
+      //       class:'md-raised md-primary'
+      //     },
+      //     {
+      //       message:'Cancelar',
+      //       action:function(){$mdDialog.cancel()},
+      //       class:'md-raised md-no-focus'
+      //     }
+      //   ]
+      // };
+
+      return DialogShowService.showDialog(_loginDialog);
     }
 
     function showRecruitmentNumberGenerated(participantData) {

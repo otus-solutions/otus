@@ -77,32 +77,48 @@
           icon: 'swap_vert',
           translatedTitle: 'Trocar contato padrão'
         },
-          swapChoiceContact: {
-            icon: 'looks_one',
-            translatedTitle: 'Defina contato padrão'
-          }
-        },
-        msg: {
-          postalCodeNotFound: 'CEP não encontrado',
-          postalCodeInstruction: '1º Informe o cep',
-          contactFound: 'Favor, preencha todos os campos obrigatórios *',
-          contactNotFound: 'Contatos não cadastrados',
-          contactFail: 'Erro: Não foi completar a solicitação!',
-          contactDelete: 'Excluído com sucesso.',
-          errorContactDelete: 'Erro Interno: Solicitação recusada.',
-          country: 'Brasil',
-          updateSuccess: 'Atualizado com sucesso.',
-          createSuccess: 'Novo contato criado',
-          ok: 'Ok',
-          comeBack: 'Voltar',
-          yes: 'Sim',
-          not: 'Não',
-          delete: 'Excluir',
-          messageTextDelete: 'Confirmar exclusão de contato(s)',
-          messageDialogDelete: 'Deseja excluir o(s) contato(s)?',
-          swapMainContactSucess:'Alterado para padrão com sucesso',
-          swapMainContactFail: 'Erro: Alteração não foi completada',
-          captionAboutRequiredFields: '* campos obrigatórios'
+        swapChoiceContact: {
+          icon: 'looks_one',
+          translatedTitle: 'Defina contato padrão'
         }
-      });
+      },
+      msg: {
+        postalCodeNotFound: 'CEP não encontrado',
+        postalCodeInstruction: '1º Informe o cep',
+        contactFound: 'Favor, preencha todos os campos obrigatórios *',
+        contactNotFound: 'Contatos não cadastrados',
+        contactFail: 'Erro: Não foi completar a solicitação!',
+        contactDelete: 'Excluído com sucesso.',
+        errorContactDelete: 'Erro Interno: Solicitação recusada.',
+        country: 'Brasil',
+        updateSuccess: 'Atualizado com sucesso.',
+        createSuccess: 'Novo contato criado',
+        ok: 'Ok',
+        comeBack: 'Voltar',
+        yes: 'Sim',
+        not: 'Não',
+        delete: 'Excluir',
+        messageTextDelete: 'Confirmar exclusão de contato(s)',
+        messageDialogDelete: 'Deseja excluir o(s) contato(s)?',
+        swapMainContactSucess: 'Alterado para padrão com sucesso',
+        swapMainContactFail: 'Erro: Alteração não foi completada',
+        captionAboutRequiredFields: '* campos obrigatórios'
+      },
+      dialogScene: {
+        update: {
+          dialogToTitle: 'Atualização do Email de Login',
+          titleToText: 'Esta ação vai impactar na autenticação do aplicativo móvel',
+          textDialog: 'Deseja realmente alterar o email do Participante?',
+          ariaLabel: 'Confirmação de finalização',
+          button: { confirm: 'Ok', cancel: 'Cancelar' }
+        },
+        delete: {
+          dialogToTitle: 'Exclusão do Email de Login',
+          titleToText: 'Esta ação bloqueará o login do participante no aplicativo móvel',
+          textDialog: 'Deseja realmente deletar o email de login?',
+          ariaLabel: 'Confirmação de finalização',
+          button: { confirm: 'Ok', cancel: 'Cancelar' }
+        }
+      }
+    });
 }());
