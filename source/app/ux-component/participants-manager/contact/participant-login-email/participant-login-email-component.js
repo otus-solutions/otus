@@ -44,19 +44,22 @@
       ParticipantManagerService.editLoginEmail(self.participant._id, self.updatedLoginEmail)
       // ParticipantManagerService.editLoginEmail("5ea343bdb174c405c9bba6cc", updatedLoginEmail)
         .then(() => alert("antes: " +self.participant.email))
-        .then(() => { self.participant.email = self.updatedLoginEmail})
-        // .then(() => { $window.sessionStorage.setItem('participant_context', self.updatedLoginEmail)})
+        .then(() => updatedParticipantSessionStorage(self.participant, self.updatedLoginEmail))
         .then(() => alert("depois: "+self.participant.email))
         .then(() => self.editMode = false);
+    }
+
+    function updatedParticipantSessionStorage(participant, updatedEmail){
+      participant.email = updatedEmail;
+      var sessionStorageParticipant = JSON.parse($window.sessionStorage.getItem('participant_context'))
+      sessionStorageParticipant.selectedParticipant.email = updatedEmail;
+      $window.sessionStorage.setItem('participant_context', JSON.stringify(sessionStorageParticipant));
     }
 
     function cancelEditLoginEmail(){
       self.updatedParticipantLoginEmail = angular.copy(self.originalParticipantLoginEmail);
       self.editMode = false;
     }
-
-
-
   }
 
 
