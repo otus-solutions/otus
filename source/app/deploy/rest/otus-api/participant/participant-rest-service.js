@@ -70,7 +70,6 @@
     }
 
     function removeEmailByParticipantId(id) {
-      alert("delete rest")
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }

@@ -108,7 +108,7 @@
           {
             message:sceneValues.button.confirm,
             action:function(){$mdDialog.hide()},
-            class: sceneValues.button.confirm == "Ok"? 'md-raised md-primary': 'md-raised md-warn'},
+            class: sceneValues.button.confirm == "Salvar"? 'md-raised md-primary': 'md-raised md-warn'},
           {
             message:sceneValues.button.cancel,
             action:function(){$mdDialog.cancel()},

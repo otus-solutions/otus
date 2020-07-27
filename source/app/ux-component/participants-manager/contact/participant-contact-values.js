@@ -106,19 +106,22 @@
       },
       dialogScene: {
         update: {
-          dialogToTitle: 'Atualização do Email de Login',
-          titleToText: 'Esta ação vai impactar na autenticação do aplicativo móvel',
-          textDialog: 'Deseja realmente alterar o email do Participante?',
-          ariaLabel: 'Confirmação de finalização',
-          button: { confirm: 'Ok', cancel: 'Cancelar' }
+          dialogToTitle: 'Atualização de Dados',
+          titleToText: 'Alteração do Email de Acesso',
+          textDialog: '<p>Caso confirmada a alteração, o participante somente poderá acessar seu portal através do novo email.</p>'+
+            '<p>Você deseja salvar a alteração?</p>',
+          ariaLabel: 'Confirmação de alteração em email de acesso',
+          button: { confirm: 'Salvar', cancel: 'Cancelar' }
         },
         delete: {
-          dialogToTitle: 'Exclusão do Email de Login',
-          titleToText: 'Esta ação bloqueará o login do participante no aplicativo móvel',
-          textDialog: 'Deseja realmente deletar o email de login?',
-          ariaLabel: 'Confirmação de finalização',
-          button: { confirm: 'Deletar', cancel: 'Cancelar' }
+          dialogToTitle: 'Atualização de Dados',
+          titleToText: 'Remoção de Email de Acesso',
+          textDialog: '<p>Caso confirmada a alteração, o participante não poderá mais acessar seu portal.</p>' +
+            '<p>Você deseja <strong>remover o email de acesso</strong>?</p>',
+          ariaLabel: 'Confirmação de remoção de email de acesso',
+          button: { confirm: 'Remover', cancel: 'Cancelar' }
         }
       }
     });
 }());
+

@@ -69,7 +69,8 @@
     function _removeEmailByParticipantId() {
       ParticipantManagerService.removeEmailByParticipantId(self.participant._id)
         //ParticipantManagerService.removeEmailByParticipantId("5ea343bdb174c405c9bba6cd")
-        .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, ""))
+        .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, undefined))
+        .then(() => self.updatedLoginEmail = undefined)
         .then(() => self.editMode = false)
         .catch((e) => alert(e));
     }
