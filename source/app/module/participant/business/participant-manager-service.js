@@ -11,11 +11,12 @@
     'otusjs.participant.repository.ParticipantRepositoryService',
     'otusjs.utils.SearchQueryFactory',
     '$q',
-    'otusjs.deploy.ParticipantDataSourceService'
+    'otusjs.deploy.ParticipantDataSourceService',
+    '$window'
   ];
 
   function Service(ContextService, EventService, ParticipantRepositoryService, SearchQueryFactory,
-                   $q, ParticipantDataSourceService) {
+                   $q, ParticipantDataSourceService, $window) {
     var self = this;
     var _filteredParticipants = [];
     var query;
@@ -48,6 +49,7 @@
     self.requestPasswordResetLink = requestPasswordResetLink;
     self.getParticipantById = getParticipantById;
     self.editLoginEmail = editLoginEmail;
+    self.updatedEmailParticipantSessionStorage = updatedEmailParticipantSessionStorage;
 
     var _setupSuccess;
 
@@ -233,6 +235,13 @@
 
     function editLoginEmail(participantId, updatedLoginEmail){
       return ParticipantDataSourceService.editLoginEmail(participantId, updatedLoginEmail);
+    }
+
+    function updatedEmailParticipantSessionStorage(participant, updatedEmail){
+      participant.email = updatedEmail;
+      var sessionStorageParticipant = JSON.parse($window.sessionStorage.getItem('participant_context'))
+      sessionStorageParticipant.selectedParticipant.email = updatedEmail;
+      $window.sessionStorage.setItem('participant_context', JSON.stringify(sessionStorageParticipant));
     }
 
   }
