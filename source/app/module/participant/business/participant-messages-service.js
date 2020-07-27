@@ -95,7 +95,6 @@
       };
 
       return DialogShowService.showDialog(_saveDialog);
-
     }
 
 
@@ -109,8 +108,7 @@
           {
             message:sceneValues.button.confirm,
             action:function(){$mdDialog.hide()},
-            class:'md-raised md-primary'
-          },
+            class: sceneValues.button.confirm == "Ok"? 'md-raised md-primary': 'md-raised md-warn'},
           {
             message:sceneValues.button.cancel,
             action:function(){$mdDialog.cancel()},
@@ -118,36 +116,6 @@
           }
         ]
       };
-
-
-      function _getSceneValues(scene) {
-        let sceneValues;
-        switch (scene){
-          case "update" : sceneValues = ParticipantContactValues.dialogScene.update; break;
-          case "delete" : sceneValues = ParticipantContactValues.dialogScene.delete; break;
-        }
-        return sceneValues;
-      }
-
-
-      // var _loginDialog = {
-      //   dialogToTitle:'Email de Login',
-      //   titleToText:'Confirmar alteração no login do Participante',
-      //   textDialog:'Esta ação vai impactar na autenticação do aplicativo. Deseja realmente fazer a alteração?',
-      //   ariaLabel:'Confirmação de finalização',
-      //   buttons: [
-      //     {
-      //       message:'Ok',
-      //       action:function(){$mdDialog.hide()},
-      //       class:'md-raised md-primary'
-      //     },
-      //     {
-      //       message:'Cancelar',
-      //       action:function(){$mdDialog.cancel()},
-      //       class:'md-raised md-no-focus'
-      //     }
-      //   ]
-      // };
 
       return DialogShowService.showDialog(_loginDialog);
     }

@@ -50,6 +50,7 @@
     self.getParticipantById = getParticipantById;
     self.updateLoginEmail = updateLoginEmail;
     self.updateEmailParticipantSessionStorage = updateEmailParticipantSessionStorage;
+    self.removeEmailByParticipantId = removeEmailByParticipantId;
 
     var _setupSuccess;
 
@@ -234,7 +235,7 @@
     }
 
     function updateLoginEmail(participantId, updatedLoginEmail){
-      return ParticipantDataSourceService.editLoginEmail(participantId, updatedLoginEmail);
+      return ParticipantDataSourceService.updateLoginEmail(participantId, updatedLoginEmail);
     }
 
     function updateEmailParticipantSessionStorage(participant, updatedEmail){
@@ -244,5 +245,8 @@
       $window.sessionStorage.setItem('participant_context', JSON.stringify(sessionStorageParticipant));
     }
 
+    function removeEmailByParticipantId(participantId){
+      return ParticipantDataSourceService.removeEmailByParticipantId(participantId);
+    }
   }
 }());

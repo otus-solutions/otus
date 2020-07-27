@@ -24,7 +24,7 @@
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
     self.requestPasswordReset = requestPasswordReset;
     self.requestPasswordResetLink = requestPasswordResetLink;
-    self.editLoginEmail = editLoginEmail;
+    self.updateLoginEmail = updateLoginEmail;
     self.removeEmailByParticipantId = removeEmailByParticipantId;
     self.getEmailByParticipantId = getEmailByParticipantId;
 
@@ -62,14 +62,15 @@
       return _rest.update({}, participant).$promise;
     }
 
-    function editLoginEmail(id, email) {
+    function updateLoginEmail(id, email) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
       return _rest.editEmail({id}, {email}).$promise;
     }
 
-    function removeEmailByParticipantId (id) {
+    function removeEmailByParticipantId(id) {
+      alert("delete rest")
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }

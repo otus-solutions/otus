@@ -117,7 +117,7 @@
           titleToText: 'Esta ação bloqueará o login do participante no aplicativo móvel',
           textDialog: 'Deseja realmente deletar o email de login?',
           ariaLabel: 'Confirmação de finalização',
-          button: { confirm: 'Ok', cancel: 'Cancelar' }
+          button: { confirm: 'Deletar', cancel: 'Cancelar' }
         }
       }
     });

@@ -28,7 +28,8 @@
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
     self.requestPasswordReset = requestPasswordReset;
     self.requestPasswordResetLink = requestPasswordResetLink;
-    self.editLoginEmail = editLoginEmail;
+    self.updateLoginEmail = updateLoginEmail;
+    self.removeEmailByParticipantId = removeEmailByParticipantId;
 
     function up() {
       _loadingDefer = $q.defer();
@@ -154,8 +155,12 @@
       return deferred.promise;
     }
 
-    function editLoginEmail(participantId, updatedLoginEmail) {
-      return ParticipantRestService.editLoginEmail(participantId, updatedLoginEmail);
+    function updateLoginEmail(participantId, updatedLoginEmail) {
+      return ParticipantRestService.updateLoginEmail(participantId, updatedLoginEmail);
+    }
+
+    function removeEmailByParticipantId(participantId){
+      return ParticipantRestService.removeEmailByParticipantId(participantId);
     }
   }
 }());

@@ -8,7 +8,7 @@
       bindings: {
         participant: '=',
       }
-  }).controller('participantLoginEmailCtrl', Controller);
+    }).controller('participantLoginEmailCtrl', Controller);
 
   Controller.$inject = [
     'ParticipantContactValues',
@@ -31,7 +31,7 @@
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
       self.updatedLoginEmail = angular.copy(self.participant.email);
-      self.form = { name: "loginEmailForm" };
+      self.form = {name: "loginEmailForm"};
       self.editMode = false;
     }
 
@@ -39,7 +39,7 @@
       self.editMode = true;
     }
 
-    function loginEmailConfirmation(scenario){
+    function loginEmailConfirmation(scenario) {
       ParticipantMessagesService.showLoginEmailDialog(ParticipantContactValues.dialogScene[scenario])
         .then(() => _selectServiceMethodByScenario(scenario))
         .catch(() => {
@@ -47,27 +47,34 @@
         });
     }
 
-    function _selectServiceMethodByScenario(scenario){
-      switch (scenario){
-        case 'update': _updateLoginEmail(); break;
-        case 'delete': _deleteLoginEmail(); break;
+    function _selectServiceMethodByScenario(scenario) {
+      switch (scenario) {
+        case 'update':
+          _updateLoginEmail();
+          break;
+        case 'delete':
+          _removeEmailByParticipantId();
+          break;
       }
     }
 
-    function _updateLoginEmail(){
-      alert("update-component: "+ self.participant);
+    function _updateLoginEmail() {
       ParticipantManagerService.updateLoginEmail(self.participant._id, self.updatedLoginEmail)
-      //ParticipantManagerService.editLoginEmail("5ea343bdb174c405c9bba6cd", self.updatedLoginEmail)
+        //ParticipantManagerService.editLoginEmail("5ea343bdb174c405c9bba6cd", self.updatedLoginEmail)
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, self.updatedLoginEmail))
         .then(() => self.editMode = false)
         .catch((e) => alert(e));
     }
 
-    function _deleteLoginEmail(){
-      alert('delete')
+    function _removeEmailByParticipantId() {
+      ParticipantManagerService.removeEmailByParticipantId(self.participant._id)
+        //ParticipantManagerService.removeEmailByParticipantId("5ea343bdb174c405c9bba6cd")
+        .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, ""))
+        .then(() => self.editMode = false)
+        .catch((e) => alert(e));
     }
 
-    function cancelEditLoginEmail(){
+    function cancelEditLoginEmail() {
       self.updatedLoginEmail = angular.copy(self.participant.email);
       self.editMode = false;
     }
