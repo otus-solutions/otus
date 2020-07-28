@@ -22,6 +22,7 @@
     self.enableEditMode = enableEditMode;
     self.loginEmailConfirmation = loginEmailConfirmation;
     self.cancelEditLoginEmail = cancelEditLoginEmail;
+    self.querySearch = querySearch;
 
 
     /* Lifecycle hooks */
@@ -33,6 +34,13 @@
       self.updatedLoginEmail = angular.copy(self.participant.email);
       self.form = {name: "loginEmailForm"};
       self.editMode = false;
+      self.mockEmails = [
+        'alexandre.severino@hotmail.com',
+        'barbara.silva@bol.com.br',
+        'carlos.augusto2020@yahoo.com.br',
+        'daniela.suricato@gmail.com',
+        'emerson.maclaren@ferrari.com'
+      ]
     }
 
     function enableEditMode() {
@@ -79,6 +87,26 @@
       self.updatedLoginEmail = angular.copy(self.participant.email);
       self.editMode = false;
     }
+
+    //Suggestive implementation of material design for autocompleteInput behavior(loginEmail)
+    function querySearch(query){
+      let result = query ? self.mockEmails.filter(_candidateLoginEmailFilter(query)): self.mockEmails
+      return result;
+    }
+
+    function _candidateLoginEmailFilter(query){
+      let lowercaseQuery = query.toLowerCase().trim();
+
+      return function filterFn(item) {
+        return(item.value.indexOf(lowercaseQuery) === 0);
+      }
+    }
+    function selectedItemChange(item){
+      self.updatedLoginEmail = item;
+    }
+  //end
+
+
   }
 
 }());

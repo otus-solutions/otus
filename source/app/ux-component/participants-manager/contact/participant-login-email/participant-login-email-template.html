@@ -12,10 +12,26 @@
             class="info-item info-item-layout"
             layout-fill layout-align="space-between center">
 
-        <md-input-container class="content-input">
-          <label>{{$ctrl.ParticipantContactValues.fields.login}}</label>
-          <input type="email" ng-model="$ctrl.updatedLoginEmail" ng-disabled=!$ctrl.editMode required>
-        </md-input-container>
+          <md-autocomplete required flex
+                           md-floating-label="{{$ctrl.ParticipantContactValues.fields.login}}"
+                           placeholder="{{$ctrl.ParticipantContactValues.fields.login}}"
+                           ng-disabled=!$ctrl.editMode
+                           md-selected-item="$ctrl.updatedLoginEmail"
+                           md-selected-item-change="$ctrl.selectedItemChange(item)"
+                           md-items="item in $ctrl.querySearch( $ctrl.searchText)"
+                           md-dropdown-position="top"
+                           input-aria-label="falta injetar titulo via participantaContactValues">
+            <md-item-template>
+          <span>
+            <md-icon>email</md-icon><span>{{ item }}</span>
+          </span>
+            </md-item-template>
+          </md-autocomplete>
+
+        <!--        <md-input-container class="content-input">-->
+        <!--          <label>{{$ctrl.ParticipantContactValues.fields.login}}</label>-->
+        <!--          <input type="email" ng-model="$ctrl.updatedLoginEmail" ng-disabled=!$ctrl.editMode required>-->
+        <!--        </md-input-container>-->
 
         <md-button class="md-accent md-icon-button md-button restore-button"
                    ng-if="$ctrl.editMode"
