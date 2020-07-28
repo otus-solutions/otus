@@ -22,7 +22,9 @@
     self.enableEditMode = enableEditMode;
     self.loginEmailConfirmation = loginEmailConfirmation;
     self.cancelEditLoginEmail = cancelEditLoginEmail;
-    self.querySearch = querySearch;
+    // self.querySearch = querySearch;
+    self.selectedItemChange = selectedItemChange
+
 
 
     /* Lifecycle hooks */
@@ -32,7 +34,6 @@
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
       self.updatedLoginEmail = angular.copy(self.participant.email);
-      self.form = {name: "loginEmailForm"};
       self.editMode = false;
       self.mockEmails = [
         'alexandre.severino@hotmail.com',
@@ -71,7 +72,7 @@
         //ParticipantManagerService.editLoginEmail("5ea343bdb174c405c9bba6cd", self.updatedLoginEmail)
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, self.updatedLoginEmail))
         .then(() => self.editMode = false)
-        .catch((e) => alert(e));
+        .catch((e) => alert("catch_update:"+e));
     }
 
     function _removeEmailByParticipantId() {
@@ -80,7 +81,7 @@
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, undefined))
         .then(() => self.updatedLoginEmail = undefined)
         .then(() => self.editMode = false)
-        .catch((e) => alert(e));
+        .catch((e) => alert("catch_remove:"+e));
     }
 
     function cancelEditLoginEmail() {
@@ -89,24 +90,23 @@
     }
 
     //Suggestive implementation of material design for autocompleteInput behavior(loginEmail)
-    function querySearch(query){
-      let result = query ? self.mockEmails.filter(_candidateLoginEmailFilter(query)): self.mockEmails
-      return result;
-    }
+    // function querySearch(query){
+    //   let result = query ? self.mockEmails.filter(_candidateLoginEmailFilter(query)): self.mockEmails
+    //   return result;
+    // }
 
     function _candidateLoginEmailFilter(query){
-      let lowercaseQuery = query.toLowerCase().trim();
-
-      return function filterFn(item) {
-        return(item.value.indexOf(lowercaseQuery) === 0);
-      }
+      // let lowercaseQuery = query.toLowerCase().trim();
+      //
+      // return function filterFn(item) {
+      //   return(item.value.indexOf(lowercaseQuery) === 0);
+      // }
     }
     function selectedItemChange(item){
+      console.log("chamou FN")
       self.updatedLoginEmail = item;
     }
   //end
-
-
   }
 
 }());
