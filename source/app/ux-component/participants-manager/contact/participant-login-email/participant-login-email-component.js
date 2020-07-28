@@ -64,6 +64,7 @@
       //   ParticipantManagerService.updateLoginEmail("5ea343bdb174c405c9bba6cd", self.updatedLoginEmail)
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, self.updatedLoginEmail))
         .then(() => self.editMode = false)
+        .then(() => ParticipantMessagesService.showToast('Login alterado com sucesso!'))
         .catch((e) => ParticipantMessagesService.showToast(`Erro: ${e.status} - ${e.data.MESSAGE}`));
     }
 
@@ -73,7 +74,8 @@
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, undefined))
         .then(() => self.updatedLoginEmail = undefined)
         .then(() => self.editMode = false)
-        .catch((e) => alert("catch_remove:"+e.getMessage()));
+        .then(() => ParticipantMessagesService.showToast('Login removido com sucesso!'))
+        .catch((e) => ParticipantMessagesService.showToast(`Erro: ${e.status} - ${e.data.MESSAGE}`));
     }
 
     function cancelEditLoginEmail() {
