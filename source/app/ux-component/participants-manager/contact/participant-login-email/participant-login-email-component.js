@@ -7,6 +7,7 @@
       templateUrl: 'app/ux-component/participants-manager/contact/participant-login-email/participant-login-email-template.html',
       bindings: {
         participant: '=',
+        contactEmails: '<'
       }
     }).controller('participantLoginEmailCtrl', Controller);
 
@@ -22,8 +23,8 @@
     self.enableEditMode = enableEditMode;
     self.loginEmailConfirmation = loginEmailConfirmation;
     self.cancelEditLoginEmail = cancelEditLoginEmail;
-    // self.querySearch = querySearch;
-    self.selectedItemChange = selectedItemChange
+    self.selectedItemChange = selectedItemChange;
+    self.getEmailCandidates = getEmailCandidates;
 
 
 
@@ -42,10 +43,16 @@
         'daniela.suricato@gmail.com',
         'emerson.maclaren@ferrari.com'
       ]
+
+
+
     }
 
     function enableEditMode() {
       self.editMode = true;
+      //console.log(self.contactEmails)
+      // self.getEmailCandidates(self.contactEmails)
+
     }
 
     function loginEmailConfirmation(scenario) {
@@ -103,10 +110,16 @@
       // }
     }
     function selectedItemChange(item){
-      console.log("chamou FN")
       self.updatedLoginEmail = item;
     }
   //end
   }
 
+  function getEmailCandidates(contacts){
+    let emailCandidates = [];
+    for (var key in contacts) {
+      if(contacts[key] !== null) emailCandidates.push(contacts[key].value.content)
+    }
+    return emailCandidates;
+  }
 }());
