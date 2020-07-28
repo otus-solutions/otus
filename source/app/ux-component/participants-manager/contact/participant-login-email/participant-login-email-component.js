@@ -26,8 +26,6 @@
     self.selectedItemChange = selectedItemChange;
     self.getEmailCandidates = getEmailCandidates;
 
-
-
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -36,23 +34,10 @@
       self.ParticipantContactValues = ParticipantContactValues;
       self.updatedLoginEmail = angular.copy(self.participant.email);
       self.editMode = false;
-      self.mockEmails = [
-        'alexandre.severino@hotmail.com',
-        'barbara.silva@bol.com.br',
-        'carlos.augusto2020@yahoo.com.br',
-        'daniela.suricato@gmail.com',
-        'emerson.maclaren@ferrari.com'
-      ]
-
-
-
     }
 
     function enableEditMode() {
       self.editMode = true;
-      //console.log(self.contactEmails)
-      // self.getEmailCandidates(self.contactEmails)
-
     }
 
     function loginEmailConfirmation(scenario) {
@@ -76,10 +61,10 @@
 
     function _updateLoginEmail() {
       ParticipantManagerService.updateLoginEmail(self.participant._id, self.updatedLoginEmail)
-        //ParticipantManagerService.editLoginEmail("5ea343bdb174c405c9bba6cd", self.updatedLoginEmail)
+      //   ParticipantManagerService.updateLoginEmail("5ea343bdb174c405c9bba6cd", self.updatedLoginEmail)
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, self.updatedLoginEmail))
         .then(() => self.editMode = false)
-        .catch((e) => alert("catch_update:"+e));
+        .catch((e) => ParticipantMessagesService.showToast(`Erro: ${e.status} - ${e.data.MESSAGE}`));
     }
 
     function _removeEmailByParticipantId() {
@@ -88,7 +73,7 @@
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, undefined))
         .then(() => self.updatedLoginEmail = undefined)
         .then(() => self.editMode = false)
-        .catch((e) => alert("catch_remove:"+e));
+        .catch((e) => alert("catch_remove:"+e.getMessage()));
     }
 
     function cancelEditLoginEmail() {
@@ -96,23 +81,9 @@
       self.editMode = false;
     }
 
-    //Suggestive implementation of material design for autocompleteInput behavior(loginEmail)
-    // function querySearch(query){
-    //   let result = query ? self.mockEmails.filter(_candidateLoginEmailFilter(query)): self.mockEmails
-    //   return result;
-    // }
-
-    function _candidateLoginEmailFilter(query){
-      // let lowercaseQuery = query.toLowerCase().trim();
-      //
-      // return function filterFn(item) {
-      //   return(item.value.indexOf(lowercaseQuery) === 0);
-      // }
-    }
     function selectedItemChange(item){
       self.updatedLoginEmail = item;
     }
-  //end
   }
 
   function getEmailCandidates(contacts){
