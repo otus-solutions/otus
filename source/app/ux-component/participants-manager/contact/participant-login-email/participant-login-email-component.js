@@ -7,7 +7,7 @@
       templateUrl: 'app/ux-component/participants-manager/contact/participant-login-email/participant-login-email-template.html',
       bindings: {
         participant: '=',
-        contactEmails: '<'
+        contactEmails: '<',
       }
     }).controller('participantLoginEmailCtrl', Controller);
 
@@ -22,7 +22,7 @@
 
     self.enableEditMode = enableEditMode;
     self.loginEmailConfirmation = loginEmailConfirmation;
-    self.cancelEditLoginEmail = cancelEditLoginEmail;
+    self.resetLoginEmailForm = resetLoginEmailForm;
     self.selectedItemChange = selectedItemChange;
     self.getEmailCandidates = getEmailCandidates;
 
@@ -34,6 +34,7 @@
       self.ParticipantContactValues = ParticipantContactValues;
       self.updatedLoginEmail = angular.copy(self.participant.email);
       self.editMode = false;
+      self.emailPattern = ""
     }
 
     function enableEditMode() {
@@ -41,10 +42,15 @@
     }
 
     function loginEmailConfirmation(scenario) {
+      self.loginEmailForm.$setDirty();
+      if(self.loginEmailForm.$invalid){
+        return;
+      }
+
       ParticipantMessagesService.showLoginEmailDialog(ParticipantContactValues.dialogScene[scenario])
         .then(() => _selectServiceMethodByScenario(scenario))
         .catch(() => {
-          cancelEditLoginEmail();
+          resetLoginEmailForm();
         });
     }
 
@@ -61,7 +67,7 @@
 
     function _updateLoginEmail() {
       ParticipantManagerService.updateLoginEmail(self.participant._id, self.updatedLoginEmail)
-      //   ParticipantManagerService.updateLoginEmail("5ea343bdb174c405c9bba6cd", self.updatedLoginEmail)
+        //   ParticipantManagerService.updateLoginEmail("5ea343bdb174c405c9bba6cd", self.updatedLoginEmail)
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, self.updatedLoginEmail))
         .then(() => self.editMode = false)
         .then(() => ParticipantMessagesService.showToast('Login alterado com sucesso!'))
@@ -74,24 +80,29 @@
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, undefined))
         .then(() => self.updatedLoginEmail = undefined)
         .then(() => self.editMode = false)
+        .then(() => resetLoginEmailForm())
         .then(() => ParticipantMessagesService.showToast('Login removido com sucesso!'))
         .catch((e) => ParticipantMessagesService.showToast(`Erro: ${e.status} - ${e.data.MESSAGE}`));
     }
 
-    function cancelEditLoginEmail() {
+    function resetLoginEmailForm() {
       self.updatedLoginEmail = angular.copy(self.participant.email);
+      self.loginEmailForm.$error = {};
+      self.loginEmailForm.input.$error = {};
+      self.loginEmailForm.$setPristine();
+      self.loginEmailForm.$setUntouched();
       self.editMode = false;
     }
 
-    function selectedItemChange(item){
+    function selectedItemChange(item) {
       self.updatedLoginEmail = item;
     }
   }
 
-  function getEmailCandidates(contacts){
+  function getEmailCandidates(contacts) {
     let emailCandidates = [];
     for (var key in contacts) {
-      if(contacts[key] !== null) emailCandidates.push(contacts[key].value.content)
+      if (contacts[key] !== null) emailCandidates.push(contacts[key].value.content)
     }
     return emailCandidates;
   }
