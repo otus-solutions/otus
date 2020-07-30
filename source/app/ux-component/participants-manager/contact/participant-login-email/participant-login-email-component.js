@@ -94,13 +94,9 @@
     function selectedItemChange(item) {
       self.updatedLoginEmail = item;
     }
-  }
 
-  function getEmailCandidates(contacts) {
-    let emailCandidates = [];
-    for (var key in contacts) {
-      if (contacts[key] !== null) emailCandidates.push(contacts[key].value.content)
+    function getEmailCandidates(contacts) {
+      return ParticipantManagerService.extractEmailValuesFromContacts(contacts);
     }
-    return emailCandidates;
   }
 }());

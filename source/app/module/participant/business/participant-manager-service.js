@@ -51,6 +51,7 @@
     self.updateLoginEmail = updateLoginEmail;
     self.updateEmailParticipantSessionStorage = updateEmailParticipantSessionStorage;
     self.removeEmailByParticipantId = removeEmailByParticipantId;
+    self.extractEmailValuesFromContacts = extractEmailValuesFromContacts;
 
     var _setupSuccess;
 
@@ -247,6 +248,14 @@
 
     function removeEmailByParticipantId(participantId){
       return ParticipantDataSourceService.removeEmailByParticipantId(participantId);
+    }
+
+    function extractEmailValuesFromContacts(contacts){
+      let emailCandidates = [];
+      for (let key in contacts) {
+        if (contacts[key] !== null) emailCandidates.push(contacts[key].value.content)
+      }
+      return emailCandidates;
     }
   }
 }());
