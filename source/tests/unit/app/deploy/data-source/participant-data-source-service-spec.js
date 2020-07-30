@@ -113,7 +113,7 @@ describe('ParticipantDataSourceService_UnitTest_Suite', () => {
     expect(Injections.ParticipantRestService.updateLoginEmail).toHaveBeenCalledTimes(1);
   });
 
-  fit('removeEmailByParticipantIdMethod_should_evoke_defer_by_$q_and_return_promise', () => {
+  it('removeEmailByParticipantIdMethod_should_evoke_defer_by_$q_and_return_promise', () => {
     service.up()
     expect(service.removeEmailByParticipantId(ID)).toBePromise();
     expect(Injections.$q.defer).toHaveBeenCalledTimes(1);
