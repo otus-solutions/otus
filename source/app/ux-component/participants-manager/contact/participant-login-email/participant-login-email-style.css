@@ -17,14 +17,3 @@
   grid-area: infoItem;
   margin-bottom: 20px;
 }
-
-@media screen and (min-width: 360px) {
-  .info-item-layout {
-    background: #f5f7f9;
-    display: grid;
-    grid-template-columns: 11.5fr .5fr;
-    grid-template-rows: .1fr .1fr;
-    grid-gap: 10px;
-    grid-template-areas: "content edit observation restore"
-  }
-}

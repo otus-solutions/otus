@@ -42,15 +42,11 @@
 
     function loginEmailConfirmation(scenario) {
       self.loginEmailForm.$setDirty();
-      if(self.loginEmailForm.$invalid){
-        return;
-      }
+      if (self.loginEmailForm.$invalid) return;
 
       ParticipantMessagesService.showLoginEmailDialog(ParticipantContactValues.dialogScene[scenario])
         .then(() => _selectServiceMethodByScenario(scenario))
-        .catch(() => {
-          resetLoginEmailForm();
-        });
+        .catch(() => resetLoginEmailForm());
     }
 
     function _selectServiceMethodByScenario(scenario) {
@@ -69,7 +65,7 @@
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, self.updatedLoginEmail))
         .then(() => self.editMode = false)
         .then(() => ParticipantMessagesService.showToast('Login alterado com sucesso!'))
-        .catch((e) => ParticipantMessagesService.showToast(`Erro: ${e.status} - ${e.data.MESSAGE}`));
+        .catch((e) => ParticipantMessagesService.showToast(`Error: ${e.status} - ${e.data.MESSAGE}`));
     }
 
     function _removeEmailByParticipantId() {
@@ -79,7 +75,7 @@
         .then(() => self.editMode = false)
         .then(() => resetLoginEmailForm())
         .then(() => ParticipantMessagesService.showToast('Login removido com sucesso!'))
-        .catch((e) => ParticipantMessagesService.showToast(`Erro: ${e.status} - ${e.data.MESSAGE}`));
+        .catch((e) => ParticipantMessagesService.showToast(`Error: ${e.status} - ${e.data.MESSAGE}`));
     }
 
     function resetLoginEmailForm() {
