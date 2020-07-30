@@ -121,6 +121,10 @@
           ariaLabel: 'Confirmação de remoção de email de acesso',
           button: { confirm: 'Remover', cancel: 'Cancelar' }
         }
+      },
+      errorMessage: {
+        required: 'Campo obrigatório.',
+        emailPattern: 'Insira um email válido'
       }
     });
 }());
