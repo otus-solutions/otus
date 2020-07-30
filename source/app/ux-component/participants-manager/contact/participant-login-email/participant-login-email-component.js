@@ -34,7 +34,6 @@
       self.ParticipantContactValues = ParticipantContactValues;
       self.updatedLoginEmail = angular.copy(self.participant.email);
       self.editMode = false;
-      self.emailPattern = ""
     }
 
     function enableEditMode() {
