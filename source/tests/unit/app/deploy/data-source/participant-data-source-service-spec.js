@@ -2,6 +2,8 @@ describe('ParticipantDataSourceService_UnitTest_Suite', () => {
 
   let service;
   let Injections = [];
+  let ID = "5ebffb13ebd7a536225224e8";
+  let MAIL = "mail@mail.com";
 
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
@@ -25,6 +27,8 @@ describe('ParticipantDataSourceService_UnitTest_Suite', () => {
       spyOn(Injections.ParticipantRestService,'deactivateFollowUpEvent').and.callThrough();
       spyOn(Injections.ProjectConfigurationRestService, 'initialize').and.callThrough();
       spyOn(Injections.ProjectConfigurationRestService, 'getProjectConfiguration').and.callThrough();
+      spyOn(Injections.ParticipantRestService, 'updateLoginEmail').and.returnValue(Promise.resolve());
+      spyOn(Injections.ParticipantRestService, 'removeEmailByParticipantId').and.returnValue(Promise.resolve());
 
     });
   });
@@ -42,6 +46,8 @@ describe('ParticipantDataSourceService_UnitTest_Suite', () => {
     expect(service.getFollowUps).toBeDefined();
     expect(service.activateFollowUpEvent).toBeDefined();
     expect(service.deactivateFollowUpEvent).toBeDefined();
+    expect(service.updateLoginEmail).toBeDefined();
+    expect(service.removeEmailByParticipantId).toBeDefined();
   });
 
   it('upMethod_should_evoke_defer_by_$q_and_return_promise', () => {
@@ -97,6 +103,21 @@ describe('ParticipantDataSourceService_UnitTest_Suite', () => {
     expect(service.deactivateFollowUpEvent()).toBePromise();
     expect(Injections.$q.defer).toHaveBeenCalledTimes(2);
     expect(Injections.ParticipantRestService.deactivateFollowUpEvent).toHaveBeenCalledTimes(1);
+  });
+
+
+  it('updateLoginEmailMethod_should_evoke_defer_by_$q_and_return_promise', () => {
+    service.up()
+    expect(service.updateLoginEmail(ID, MAIL)).toBePromise();
+    expect(Injections.$q.defer).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantRestService.updateLoginEmail).toHaveBeenCalledTimes(1);
+  });
+
+  fit('removeEmailByParticipantIdMethod_should_evoke_defer_by_$q_and_return_promise', () => {
+    service.up()
+    expect(service.removeEmailByParticipantId(ID)).toBePromise();
+    expect(Injections.$q.defer).toHaveBeenCalledTimes(1);
+    expect(Injections.ParticipantRestService.removeEmailByParticipantId).toHaveBeenCalledTimes(1);
   });
 
 });
