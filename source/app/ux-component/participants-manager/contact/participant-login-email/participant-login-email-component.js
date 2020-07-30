@@ -66,7 +66,6 @@
 
     function _updateLoginEmail() {
       ParticipantManagerService.updateLoginEmail(self.participant._id, self.updatedLoginEmail)
-        //   ParticipantManagerService.updateLoginEmail("5ea343bdb174c405c9bba6cd", self.updatedLoginEmail)
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, self.updatedLoginEmail))
         .then(() => self.editMode = false)
         .then(() => ParticipantMessagesService.showToast('Login alterado com sucesso!'))
@@ -75,7 +74,6 @@
 
     function _removeEmailByParticipantId() {
       ParticipantManagerService.removeEmailByParticipantId(self.participant._id)
-        //ParticipantManagerService.removeEmailByParticipantId("5ea343bdb174c405c9bba6cd")
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, undefined))
         .then(() => self.updatedLoginEmail = undefined)
         .then(() => self.editMode = false)

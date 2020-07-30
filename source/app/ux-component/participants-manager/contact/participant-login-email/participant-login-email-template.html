@@ -24,6 +24,7 @@
                          md-items="item in $ctrl.getEmailCandidates($ctrl.contactEmails)"
                          md-dropdown-position="top"
                          md-escape-options="blur"
+                         ng-trim="false"
                          input-aria-label="{{$ctrl.ParticipantContactValues.keys.login.translatedTitle}}"
                          ng-required="true">
           <md-item-template>

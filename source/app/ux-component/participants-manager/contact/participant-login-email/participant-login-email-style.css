@@ -25,6 +25,6 @@
     grid-template-columns: 11.5fr .5fr;
     grid-template-rows: .1fr .1fr;
     grid-gap: 10px;
-    grid-template-areas: "content  edit" "observation restore"
+    grid-template-areas: "content edit observation restore"
   }
 }
