@@ -69,13 +69,12 @@
     }
 
     function _removeEmailByParticipantId() {
-      console.log("t2")
       ParticipantManagerService.removeEmailByParticipantId(self.participant._id)
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, undefined))
         .then(() => self.updatedLoginEmail = undefined)
         .then(() => self.editMode = false)
         .then(() => resetLoginEmailForm())
-        .then(() => ParticipantMessagesService.showToast('Login removido com sucesso!'))
+        .then(() => ParticipantMessagesService.showToast(self.ParticipantContactValues.msg.loginDeleteSuccess))
         .catch((e) => ParticipantMessagesService.showToast(`Error: ${e.status} - ${e.data.MESSAGE}`));
     }
 
