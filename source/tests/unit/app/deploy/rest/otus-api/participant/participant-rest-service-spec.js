@@ -1,5 +1,5 @@
 describe("ParticipantRestService_UnitTest_Suite", () => {
-  const UNINITIALIZED_REST_ERROR_MESSAGE = 'Error: REST resource is not initialized.';
+  const UNINITIALIZED_REST_ERROR_MESSAGE = 'REST resource is not initialized.';
   let service;
   let Injections = [];
   let Mock = {};
@@ -42,9 +42,8 @@ describe("ParticipantRestService_UnitTest_Suite", () => {
     expect(service.updateLoginEmail(ID, MAIL)).toBePromise();
   });
 
-  it('createUserActivityPendencyMethod_should_throw_error_if_resource_is_not_initialized', () => {
-    try { service.updateLoginEmail() }
-    catch (e) { expect(e.toString()).toBe(UNINITIALIZED_REST_ERROR_MESSAGE) }
+  it('updateLoginEmailMethod_should_throw_error_if_resource_is_not_initialized', () => {
+    expect(service.updateLoginEmail).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE);
   });
 
   it('getEmailByParticipantIdMethod_should_evoke_defer_by_getEmailByParticipantId_and_return_promise', () => {
@@ -53,8 +52,7 @@ describe("ParticipantRestService_UnitTest_Suite", () => {
   });
 
   it('getEmailByParticipantIdMethod_should_throw_error_if_resource_is_not_initialized', () => {
-    try { service.getEmailByParticipantId() }
-    catch (e) { expect(e.toString()).toBe(UNINITIALIZED_REST_ERROR_MESSAGE) }
+    expect(service.getEmailByParticipantId).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE);
   });
 
   it('removeEmailByParticipantIdMethod_should_evoke_defer_by_removeEmailByParticipantId_and_return_promise', () => {
@@ -63,7 +61,6 @@ describe("ParticipantRestService_UnitTest_Suite", () => {
   });
 
   it('removeEmailByParticipantIdMethod_should_throw_error_if_resource_is_not_initialized', () => {
-    try { service.removeEmailByParticipantId() }
-    catch (e) { expect(e.toString()).toBe(UNINITIALIZED_REST_ERROR_MESSAGE) }
+    expect(service.removeEmailByParticipantId).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE);
   });
 })

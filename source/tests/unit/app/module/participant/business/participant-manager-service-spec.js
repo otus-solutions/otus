@@ -4,17 +4,21 @@ describe('participant-manager-service Test', function() {
   let Mock = {};
 
   const PARTICIPANT_NOT_FOUND_ERROR_MSG = "Participant was not found.";
+  const RN = 1234567;
+  const ID = "123";
+  const MAIL = "mail@mail.com";
 
   beforeEach(function() {
     angular.mock.module('otusjs.otus');
-    inject(function(_$injector_) {
-      Injections.ContextService = _$injector_.get('otusjs.participant.core.ContextService');
-      Injections.EventService = _$injector_.get('otusjs.participant.core.EventService');
-      Injections.ParticipantRepositoryService =  _$injector_.get('otusjs.participant.repository.ParticipantRepositoryService');
-      Injections.SearchQueryFactory = _$injector_.get('otusjs.utils.SearchQueryFactory');
-      Injections.$q = _$injector_.get('$q');
+    inject(function($injector) {
+      Injections.ContextService = $injector.get('otusjs.participant.core.ContextService');
+      Injections.EventService = $injector.get('otusjs.participant.core.EventService');
+      Injections.ParticipantRepositoryService =  $injector.get('otusjs.participant.repository.ParticipantRepositoryService');
+      Injections.SearchQueryFactory = $injector.get('otusjs.utils.SearchQueryFactory');
+      Injections.$q = $injector.get('$q');
+      Injections.ParticipantDataSourceService = $injector.get('otusjs.deploy.ParticipantDataSourceService');
 
-      service = _$injector_.get('otusjs.participant.business.ParticipantManagerService', Injections);
+      service = $injector.get('otusjs.participant.business.ParticipantManagerService', Injections);
     });
     mock();
     spyOn(Injections.$q, "defer").and.callThrough();
@@ -36,6 +40,8 @@ describe('participant-manager-service Test', function() {
     spyOn(Injections.ParticipantRepositoryService, "swapMainContact").and.callThrough();
     spyOn(Injections.ParticipantRepositoryService, "deleteParticipantContact").and.callThrough();
     spyOn(Injections.ParticipantRepositoryService, "deleteNonMainContact").and.callThrough();
+    spyOn(Injections.ParticipantDataSourceService, "updateLoginEmail").and.returnValue(Promise.resolve());
+    spyOn(Injections.ParticipantDataSourceService, "removeEmailByParticipantId").and.returnValue(Promise.resolve());
   });
 
   it('serviceExistence check ', function () {
@@ -64,6 +70,11 @@ describe('participant-manager-service Test', function() {
     expect(service.swapMainContact).toBeDefined();
     expect(service.deleteParticipantContact).toBeDefined();
     expect(service.deleteNonMainContact).toBeDefined();
+    expect(service.getParticipantById).toBeDefined();
+    expect(service.updateLoginEmail).toBeDefined();
+    expect(service.updateEmailParticipantSessionStorage).toBeDefined();
+    expect(service.removeEmailByParticipantId).toBeDefined();
+    expect(service.extractEmailValuesFromContacts).toBeDefined();
   });
 
   it('should called method create', function() {
@@ -126,16 +137,15 @@ describe('participant-manager-service Test', function() {
   });
 
   it('getParticipantContact method should called method getParticipantContact', function() {
-    const id = "123";
-    service.getParticipantContact(id);
-    expect(Injections.ParticipantRepositoryService.getParticipantContact).toHaveBeenCalledWith(id);
+    service.getParticipantContact(ID);
+    expect(Injections.ParticipantRepositoryService.getParticipantContact).toHaveBeenCalledWith(ID);
     expect(Injections.ParticipantRepositoryService.getParticipantContact).toHaveBeenCalledTimes(1);
   });
 
   it('getParticipantContactByRecruitmentNumber method should called method getParticipantContactByRecruitmentNumber', function() {
-    const rn = 1234567;
-    service.getParticipantContactByRecruitmentNumber(rn);
-    expect(Injections.ParticipantRepositoryService.getParticipantContactByRecruitmentNumber).toHaveBeenCalledWith(rn);
+
+    service.getParticipantContactByRecruitmentNumber(RN);
+    expect(Injections.ParticipantRepositoryService.getParticipantContactByRecruitmentNumber).toHaveBeenCalledWith(RN);
     expect(Injections.ParticipantRepositoryService.getParticipantContactByRecruitmentNumber).toHaveBeenCalledTimes(1);
   });
 
@@ -189,9 +199,8 @@ describe('participant-manager-service Test', function() {
   });
 
   it('deleteParticipantContact method should called method deleteParticipantContact', function() {
-    const id = "123";
-    service.deleteParticipantContact(id);
-    expect(Injections.ParticipantRepositoryService.deleteParticipantContact).toHaveBeenCalledWith(id);
+    service.deleteParticipantContact(ID);
+    expect(Injections.ParticipantRepositoryService.deleteParticipantContact).toHaveBeenCalledWith(ID);
     expect(Injections.ParticipantRepositoryService.deleteParticipantContact).toHaveBeenCalledTimes(1);
   });
 
@@ -200,6 +209,32 @@ describe('participant-manager-service Test', function() {
     service.deleteNonMainContact(dto);
     expect(Injections.ParticipantRepositoryService.deleteNonMainContact).toHaveBeenCalledWith(dto);
     expect(Injections.ParticipantRepositoryService.deleteNonMainContact).toHaveBeenCalledTimes(1);
+  });
+
+  xit('getParticipantById method should called method participantList', function () {
+    service.setup()
+    expect(service.getParticipantById(ID)).toEqual();
+  });
+
+  it('getParticipantByIdMethod_should_throw_error_if_resource_is_not_initialized', () => {
+    expect(service.getParticipantById).toThrowError(PARTICIPANT_NOT_FOUND_ERROR_MSG);
+  });
+
+  it('updateLoginEmail method should called method updateLoginEmail', function () {
+    service.updateLoginEmail(ID, MAIL);
+    expect(Injections.ParticipantDataSourceService.updateLoginEmail).toHaveBeenCalledWith(ID, MAIL);
+    expect(Injections.ParticipantDataSourceService.updateLoginEmail).toHaveBeenCalledTimes(1);
+  });
+
+  it('removeEmailByParticipantId method should called method removeEmailByParticipantId', function () {
+    service.removeEmailByParticipantId(ID);
+    expect(Injections.ParticipantDataSourceService.removeEmailByParticipantId).toHaveBeenCalledWith(ID);
+    expect(Injections.ParticipantDataSourceService.removeEmailByParticipantId).toHaveBeenCalledTimes(1);
+  });
+
+  it('extractEmailValuesFromContacts method should called parameter', function () {
+    let contacts = { test: { value: { content: 1 } } };
+    expect(service.extractEmailValuesFromContacts(contacts)).toEqual([1]);
   });
 
   function mock() {
