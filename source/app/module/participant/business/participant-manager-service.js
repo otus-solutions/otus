@@ -236,6 +236,7 @@
     }
 
     function updateLoginEmail(participantId, updatedLoginEmail){
+      console.log("t3")
       return ParticipantDataSourceService.updateLoginEmail(participantId, updatedLoginEmail);
     }
 

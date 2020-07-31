@@ -64,11 +64,12 @@
       ParticipantManagerService.updateLoginEmail(self.participant._id, self.updatedLoginEmail)
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, self.updatedLoginEmail))
         .then(() => self.editMode = false)
-        .then(() => ParticipantMessagesService.showToast('Login alterado com sucesso!'))
+        .then(() => ParticipantMessagesService.showToast(self.ParticipantContactValues.msg.loginUpdateSuccess))
         .catch((e) => ParticipantMessagesService.showToast(`Error: ${e.status} - ${e.data.MESSAGE}`));
     }
 
     function _removeEmailByParticipantId() {
+      console.log("t2")
       ParticipantManagerService.removeEmailByParticipantId(self.participant._id)
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, undefined))
         .then(() => self.updatedLoginEmail = undefined)

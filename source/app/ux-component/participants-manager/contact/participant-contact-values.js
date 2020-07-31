@@ -33,12 +33,10 @@
           icon: 'add_circle_outline',
           translatedTitle: 'Adicionar Contato'
         },
-
         createNewContacts: {
           icon: 'add_circle',
           translatedTitle: 'Adicionar formas de contatos'
         },
-
         edit: {
           icon: 'create',
           translatedTitle: 'Editar'
@@ -58,7 +56,6 @@
         findPostalCode: {
           icon: 'search',
           translatedTitle: 'Buscar Cep'
-
         },
         saveNewContact: {
           icon: 'note_add',
@@ -68,7 +65,6 @@
           icon: 'delete',
           translatedTitle: 'Excluir Todos Contatos'
         },
-
         delete: {
           icon: 'delete',
           translatedTitle: 'Deletar'
@@ -102,7 +98,9 @@
         messageDialogDelete: 'Deseja excluir o(s) contato(s)?',
         swapMainContactSucess: 'Alterado para padrão com sucesso',
         swapMainContactFail: 'Erro: Alteração não foi completada',
-        captionAboutRequiredFields: '* campos obrigatórios'
+        captionAboutRequiredFields: '* campos obrigatórios',
+        loginUpdateSuccess: 'Login alterado com sucesso!',
+        loginDeleteSuccess: 'Login removido com sucesso!'
       },
       dialogScene: {
         update: {
