@@ -11,7 +11,6 @@
 .info-title {
   grid-area: infoTitle;
   margin-bottom: 10px;
-
 }
 
 .info-item {
@@ -141,7 +140,3 @@ md-input-container {
 }
 
 /*end grid style for phoneNumber and emails in card*/
-
-
-
-
