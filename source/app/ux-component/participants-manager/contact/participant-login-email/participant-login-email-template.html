@@ -1,0 +1,83 @@
+<link
+  href="app/ux-component/participants-manager/contact/participant-login-email/participant-login-email-style.css"
+  rel="stylesheet" type="text/css">
+<md-card no-cloak>
+  <div layout="row" layout-align="end end"></div>
+  <md-card-content class="info-card">
+    <div layout="row" layout-align="space-between center" class="info-title">
+      <span class="md-subhead">{{$ctrl.ParticipantContactValues.keys.login.translatedTitle}}</span>
+      <span></span>
+      <otus-participant-password-reset-button email=$ctrl.updatedLoginEmail>
+      </otus-participant-password-reset-button>
+    </div>
+    <div layout="row">
+      <form ng-if="true" layout="row" name="$ctrl.loginEmailForm"
+            ng-submit="$ctrl.loginEmailConfirmation('update')"
+            class="info-item info-item-layout"
+            layout-fill layout-align="space-between center" novalidate>
+        <md-autocomplete flex
+                         name="input"
+                         md-floating-label="{{$ctrl.ParticipantContactValues.fields.login}}"
+                         placeholder="{{$ctrl.ParticipantContactValues.fields.login}}"
+                         ng-disabled=!$ctrl.editMode
+                         md-search-text="$ctrl.updatedLoginEmail"
+                         ng-model="$ctrl.updatedLoginEmail"
+                         ng-pattern='/^(([^<>()\[\]\.,:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i'
+                         md-selected-item-change="$ctrl.selectedItemChange(item)"
+                         md-items="item in $ctrl.getEmailCandidates($ctrl.contactEmails)"
+                         md-dropdown-position="top"
+                         md-escape-options="blur"
+                         ng-trim="false"
+                         input-aria-label="{{$ctrl.ParticipantContactValues.keys.login.translatedTitle}}"
+                         ng-required="true">
+          <md-item-template>
+            <span>
+            <md-icon>email</md-icon><span> {{ item }}</span>
+          </span>
+          </md-item-template>
+          <div ng-messages="$ctrl.loginEmailForm.input.$error" ng-messages-multiple>
+            <div ng-message="required">{{$ctrl.ParticipantContactValues.errorMessage.required}}</div>
+            <div ng-message="pattern">{{$ctrl.ParticipantContactValues.errorMessage.emailPattern}}</div>
+          </div>
+        </md-autocomplete>
+
+        <md-button class="md-accent md-icon-button md-button restore-button"
+                   ng-if="$ctrl.editMode"
+                   ng-click="$ctrl.resetLoginEmailForm()">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.clear.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}</md-tooltip>
+        </md-button>
+
+        <md-button class="md-warn md-icon-button md-button restore-button"
+                   ng-if="!$ctrl.editMode"
+                   ng-click="$ctrl.loginEmailConfirmation('delete')">
+          <md-icon aria-label={{$ctrl.ParticipantContactValues.icons.delete.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.delete.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.delete.translatedTitle}}
+          </md-tooltip>
+        </md-button>
+
+        <md-button class="md-accent md-icon-button md-button edit-button"
+                   ng-click="$ctrl.enableEditMode()"
+                   ng-if="!$ctrl.editMode">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.edit.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.edit.translatedTitle}}</md-tooltip>
+        </md-button>
+
+        <md-button class="md-accent md-icon-button md-button edit-button"
+                   type="submit"
+                   ng-if="$ctrl.editMode">
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.save.icon}}
+          </md-icon>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.save.translatedTitle}}</md-tooltip>
+        </md-button>
+      </form>
+    </div>
+  </md-card-content>
+</md-card>

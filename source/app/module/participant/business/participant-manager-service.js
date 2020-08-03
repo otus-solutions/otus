@@ -10,10 +10,13 @@
     'otusjs.participant.core.EventService',
     'otusjs.participant.repository.ParticipantRepositoryService',
     'otusjs.utils.SearchQueryFactory',
-    '$q'
+    '$q',
+    'otusjs.deploy.ParticipantDataSourceService',
+    '$window'
   ];
 
-  function Service(ContextService, EventService, ParticipantRepositoryService, SearchQueryFactory, $q) {
+  function Service(ContextService, EventService, ParticipantRepositoryService, SearchQueryFactory,
+                   $q, ParticipantDataSourceService, $window) {
     var self = this;
     var _filteredParticipants = [];
     var query;
@@ -45,7 +48,10 @@
     self.requestPasswordReset = requestPasswordReset;
     self.requestPasswordResetLink = requestPasswordResetLink;
     self.getParticipantById = getParticipantById;
-
+    self.updateLoginEmail = updateLoginEmail;
+    self.updateEmailParticipantSessionStorage = updateEmailParticipantSessionStorage;
+    self.removeEmailByParticipantId = removeEmailByParticipantId;
+    self.extractEmailValuesFromContacts = extractEmailValuesFromContacts;
 
     var _setupSuccess;
 
@@ -229,5 +235,27 @@
       return participant;
     }
 
+    function updateLoginEmail(participantId, updatedLoginEmail){
+      return ParticipantDataSourceService.updateLoginEmail(participantId, updatedLoginEmail);
+    }
+
+    function updateEmailParticipantSessionStorage(participant, updatedEmail){
+      participant.email = updatedEmail;
+      var sessionStorageParticipant = JSON.parse($window.sessionStorage.getItem('participant_context'))
+      sessionStorageParticipant.selectedParticipant.email = updatedEmail;
+      $window.sessionStorage.setItem('participant_context', JSON.stringify(sessionStorageParticipant));
+    }
+
+    function removeEmailByParticipantId(participantId){
+      return ParticipantDataSourceService.removeEmailByParticipantId(participantId);
+    }
+
+    function extractEmailValuesFromContacts(contacts){
+      let emailCandidates = [];
+      for (let key in contacts) {
+        if (contacts[key] !== null) emailCandidates.push(contacts[key].value.content)
+      }
+      return emailCandidates;
+    }
   }
 }());

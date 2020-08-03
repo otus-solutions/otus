@@ -57,15 +57,15 @@ describe('participant-messages-service Test', function() {
   });
 
   beforeEach(function () {
-    inject(function (_$injector_) {
+    inject(function ($injector) {
 
       Injections = {
-        $mdDialog: _$injector_.get('$mdDialog'),
-        $mdToast: _$injector_.get('$mdToast'),
-        DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService')
+        $mdDialog: $injector.get('$mdDialog'),
+        $mdToast: $injector.get('$mdToast'),
+        DialogShowService: $injector.get('otusjs.application.dialog.DialogShowService')
       };
 
-      service = _$injector_.get('otusjs.participant.business.ParticipantMessagesService',Injections);
+      service = $injector.get('otusjs.participant.business.ParticipantMessagesService',Injections);
     });
     mockMessages();
     spyOn(Injections.DialogShowService, 'showDialog').and.callThrough();
@@ -96,7 +96,7 @@ describe('participant-messages-service Test', function() {
     });
   });
 
-  it('should show a not save dialog erro message without recruitment number', function (done) {
+  it('should show a not save dialog error message without recruitment number', function (done) {
     service.showNotSave(Mock.errorMessage).then(function (result) {
       expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
       expect(result.test.textDialog).toEqual(Mock.errorMessage);
@@ -104,7 +104,7 @@ describe('participant-messages-service Test', function() {
     });
   });
 
-  it('should show a not save dialog erro message with recruitment number', function (done) {
+  it('should show a not save dialog error message with recruitment number', function (done) {
     service.showNotSave(Mock.errorMessageWithRN).then(function (result) {
       expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
       expect(result.test.textDialog).toEqual(ERROR_MESSAGE_WITH_NUMBER);
@@ -123,9 +123,28 @@ describe('participant-messages-service Test', function() {
     });
   });
 
+  it('should showLoginEmailDialog a save dialog with message', function (done) {
+    service.showLoginEmailDialog(Mock.sceneValues).then(function (result) {
+      expect(Injections.DialogShowService.showDialog).toHaveBeenCalledTimes(1);
+      expect(result.test.textDialog).toEqual(Mock.sceneValues.textDialog);
+      done();
+    });
+  });
+
+
   function mockMessages() {
     Mock.message = "Message";
     Mock.errorMessageWithRN = "Erro 123 participant";
     Mock.errorMessage = "Erro";
+    Mock.sceneValues = {
+      dialogToTitle: "title",
+      titleToText: "title",
+      textDialog: "text",
+      ariaLabel: "arial",
+      button: {
+        confirm: "OK",
+        cancel: "cancel"
+      }
+    }
   }
 });

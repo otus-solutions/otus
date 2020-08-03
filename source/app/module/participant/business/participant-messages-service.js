@@ -22,6 +22,7 @@
     self.showUpdateDialog = showUpdateDialog;
     self.showNotSave = showNotSave;
     self.showToast = showToast;
+    self.showLoginEmailDialog = showLoginEmailDialog;
 
     function showClearDialog() {
 
@@ -94,7 +95,29 @@
       };
 
       return DialogShowService.showDialog(_saveDialog);
+    }
 
+
+    function showLoginEmailDialog(sceneValues) {
+      var _loginDialog = {
+        dialogToTitle: sceneValues.dialogToTitle,
+        titleToText:sceneValues.titleToText,
+        textDialog:sceneValues.textDialog,
+        ariaLabel:sceneValues.ariaLabel,
+        buttons: [
+          {
+            message:sceneValues.button.confirm,
+            action:function(){$mdDialog.hide()},
+            class: sceneValues.button.confirm == "Salvar"? 'md-raised md-primary': 'md-raised md-warn'},
+          {
+            message:sceneValues.button.cancel,
+            action:function(){$mdDialog.cancel()},
+            class:'md-raised md-no-focus'
+          }
+        ]
+      };
+
+      return DialogShowService.showDialog(_loginDialog);
     }
 
     function showRecruitmentNumberGenerated(participantData) {
