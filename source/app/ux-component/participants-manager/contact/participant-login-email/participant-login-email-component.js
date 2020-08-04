@@ -15,9 +15,11 @@
     'ParticipantContactValues',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.participant.business.ParticipantMessagesService',
+    'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(ParticipantContactValues, ParticipantManagerService, ParticipantMessagesService) {
+  function Controller(ParticipantContactValues, ParticipantManagerService,
+                      ParticipantMessagesService, ApplicationStateService) {
     const self = this;
 
     self.enableEditMode = enableEditMode;
@@ -65,6 +67,7 @@
         .then(() => ParticipantManagerService.updateEmailParticipantSessionStorage(self.participant, self.updatedLoginEmail))
         .then(() => self.editMode = false)
         .then(() => ParticipantMessagesService.showToast(self.ParticipantContactValues.msg.loginUpdateSuccess))
+        .then(() => ApplicationStateService.activateUpdateParticipant())
         .catch((e) => ParticipantMessagesService.showToast(`Error: ${e.status} - ${e.data.MESSAGE}`));
     }
 
