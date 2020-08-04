@@ -234,15 +234,16 @@
     }
 
     function resetPreActivities() {
-      DialogService.showDialog(confirmCancelPreActivities).then(() => {
-        self.preActivities = [];
-        ApplicationStateService.activateParticipantActivities();
-      });
+      DialogService.showDialog(confirmCancelPreActivities)
+        .then(() => self.preActivities = [])
+        .then(() => ApplicationStateService.activateParticipantActivities());
     }
 
     function saveActivities() {
       self.preActivities.every(_checkFilledInput) ?
-        DialogService.showDialog(confirmSavePreActivities).then(() => ParticipantActivityService.saveActivities(self.preActivities)) :
+        DialogService.showDialog(confirmSavePreActivities)
+          .then(() => ParticipantActivityService.saveActivities(self.preActivities))
+          .then(() => ApplicationStateService.activateActivityAdder()) :
         DialogService.showDialog(invalidPreActivities);
     }
 

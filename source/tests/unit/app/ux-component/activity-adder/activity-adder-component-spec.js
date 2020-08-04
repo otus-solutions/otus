@@ -1,4 +1,4 @@
-describe('otusActivityAdder Test', function() {
+describe('otusActivityAdder Test', function () {
   const ACRONYM = 'PASC';
   const ITEM = ['Todos'];
 
@@ -8,12 +8,12 @@ describe('otusActivityAdder Test', function() {
   var Mock = {};
 
 
-  beforeEach(function() {
+  beforeEach(function () {
     mocks();
 
     angular.mock.module('otusjs.otus');
 
-    inject(function($injector, $controller, $rootScope, $compile) {
+    inject(function ($injector, $controller, $rootScope, $compile) {
       Mock.scope = $rootScope.$new();
       Mock.element = angular.element('<input>');
       Mock.element = $compile(Mock.element)(Mock.scope);
@@ -35,7 +35,7 @@ describe('otusActivityAdder Test', function() {
     });
   });
 
-  it('should controller defined', function() {
+  it('should controller defined', function () {
     expect(controller).toBeDefined();
     expect(controller.addPreActivities).toBeDefined();
     expect(controller.saveActivities).toBeDefined();
@@ -53,7 +53,7 @@ describe('otusActivityAdder Test', function() {
   });
 
   it('should call addPreActivities method', function () {
-    spyOn(Injections.ParticipantActivityService,"createPreActivity").and.returnValue(Mock.preActivity);
+    spyOn(Injections.ParticipantActivityService, "createPreActivity").and.returnValue(Mock.preActivity);
 
     controller.addPreActivities(Mock.survey);
 
@@ -65,7 +65,7 @@ describe('otusActivityAdder Test', function() {
 
   it('should call saveActivities method', function (done) {
     spyOn(Injections.DialogShowService, "showDialog").and.returnValue(Promise.resolve());
-    spyOn(Injections.ParticipantActivityService,"saveActivities").and.callThrough();
+    spyOn(Injections.ParticipantActivityService, "saveActivities").and.callThrough();
     controller.preActivities.push(Mock.preActivity);
     controller.saveActivities();
 
@@ -84,16 +84,17 @@ describe('otusActivityAdder Test', function() {
     expect(controller.surveyQuerySearch(ACRONYM)).toBePromise();
   });
 
-  it('should call resetPreActivities method', function (done) {
-    spyOn(Injections.ApplicationStateService,"activateParticipantActivities").and.callThrough();
-    spyOn(Injections.DialogShowService, "showDialog").and.returnValue(Promise.resolve());
+  it('should call resetPreActivities method', function () {
+
+    spyOn(Injections.ApplicationStateService, "activateParticipantActivities").and.callThrough();
+    spyOn(Injections.DialogShowService, "showDialog").and.returnValue(Mock.deferred.promise);
 
     controller.resetPreActivities();
-    Injections.DialogShowService.showDialog().then(function () {
-      expect(Injections.ApplicationStateService.activateParticipantActivities).toHaveBeenCalledTimes(1);
-      done();
-    });
-    done();
+    Injections.DialogShowService.showDialog()
+      .then(() => {
+        Mock.scope.$digest()
+        expect(Injections.ApplicationStateService.activateParticipantActivities).toHaveBeenCalledTimes(1);
+      });
   });
 
   it('should call selectAction method', function () {
@@ -156,10 +157,10 @@ describe('otusActivityAdder Test', function() {
   });
 
   it('should call onInit method', function () {
-    spyOn(Injections.LoadingScreenService,"start").and.callThrough();
+    spyOn(Injections.LoadingScreenService, "start").and.callThrough();
     spyOn(Injections.ParticipantActivityService, "listAllCategories").and.callThrough();
     spyOn(Injections.ParticipantActivityService, "listAvailables").and.callThrough();
-    spyOn(Injections.LoadingScreenService,"finish").and.callThrough();
+    spyOn(Injections.LoadingScreenService, "finish").and.callThrough();
     spyOn(Injections.GroupActivityService, "getSurveyGroupsByUser").and.returnValue(Mock.deferred.promise);
 
     controller.$onInit();
@@ -175,7 +176,7 @@ describe('otusActivityAdder Test', function() {
   });
 
   function mocks() {
-    Mock.group = ["Desfechos","Laboratório","Clínica"];
+    Mock.group = ["Desfechos", "Laboratório", "Clínica"];
     Mock.surveysGroups = {
       getGroupSurveys: function () {
         return [Mock.survey];
@@ -185,7 +186,7 @@ describe('otusActivityAdder Test', function() {
       }
     };
     Mock.survey = Test.utils.data.activityPASC.surveyForm;
-    Mock.survey.isRequiredExternalID = function(){
+    Mock.survey.isRequiredExternalID = function () {
       return false;
     };
     Mock.mode = Test.utils.data.activityPASC.mode;
