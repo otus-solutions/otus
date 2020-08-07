@@ -33,6 +33,7 @@
 
     function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
+
       UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
         Application
           .isDeployed()
@@ -48,7 +49,6 @@
               }
             });
         });
-
       return deferred.promise;
     }
 

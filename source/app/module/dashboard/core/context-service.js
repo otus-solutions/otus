@@ -45,6 +45,7 @@
     function begin() {
       _removeParticipantFromMemory();
       _isLogged = true
+
     }
 
     function restore() {

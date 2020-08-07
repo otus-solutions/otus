@@ -8,10 +8,12 @@
   Service.$inject = [
     '$q',
     '$window',
-    'otusjs.application.session.core.EventService'
+    'otusjs.application.session.core.EventService',
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Service($q, $window, EventService) {
+  function Service($q, $window,EventService, LoadingScreenService, DialogShowService) {
     var self = this;
 
     var _context = null;
@@ -71,6 +73,11 @@
     function isValid() {
       _testInternalState();
       if (!hasContextActive()) {
+        LoadingScreenService.finish();
+        $window.location.href = '/#/login'
+        DialogShowService.showConfirmationDialog("A sessão expirou",
+          "Você foi redirecionado para pagina de login",
+          "login")
         throw new Error('There is no active session context.', 'session/context-service.js', 58);
       }
     }
@@ -116,7 +123,7 @@
     }
 
     function getLoggedUser() {
-      return loggedUserPromise.promise;
+      return loggedUserPromise.promise
     }
 
     //--------------------------------------------------------------------------------------------

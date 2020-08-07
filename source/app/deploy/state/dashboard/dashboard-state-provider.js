@@ -34,8 +34,8 @@
         .isDeployed()
         .then(function () {
           try {
-            DashboardContextService.isValid();
-            deferred.resolve();
+              DashboardContextService.isValid();
+              deferred.resolve();
           } catch (e) {
             deferred.resolve(STATE.LOGIN);
           }

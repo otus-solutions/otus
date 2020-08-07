@@ -47,7 +47,6 @@
               }
             });
         });
-
       return deferred.promise;
     }
 
