@@ -77,7 +77,6 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
 /** participant-search **/
 
 .md-autocomplete-participant {
-  /*background-color: #299288 !important;*/
   border-radius: 4px !important;
   border: none !important;
   box-shadow: none !important;
