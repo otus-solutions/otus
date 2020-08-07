@@ -39,10 +39,17 @@ describe('participants-manager-list-controller Test', function () {
       }
     }
 
+    Mock.UserAccessPermissionService = {
+      getCheckingParticipantPermission: function() {
+        return Promise.resolve();
+      }
+    }
+
     angular.mock.module(function ($provide) {
       $provide.value('otusjs.participant.business.ParticipantManagerService', Mock.ParticipantManagerService);
       $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
       $provide.value('otusjs.application.state.ApplicationStateService', Mock.ApplicationStateService);
+      $provide.value('otusjs.user.business.UserAccessPermissionService', Mock.UserAccessPermissionService);
     });
   });
 
@@ -52,6 +59,7 @@ describe('participants-manager-list-controller Test', function () {
         ParticipantManagerService: Mock.ParticipantManagerService,
         LoadingScreenService: Mock.LoadingScreenService,
         ApplicationStateService: Mock.ApplicationStateService,
+        UserAccessPermissionService: Mock.UserAccessPermissionService,
         DynamicTableSettingsFactory: _$injector_.get('otusjs.otus.uxComponent.DynamicTableSettingsFactory')
       };
 

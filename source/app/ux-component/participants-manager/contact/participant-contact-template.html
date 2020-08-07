@@ -81,6 +81,10 @@
         </form>
       </md-card-content>
     </md-card>
+    <otus-participant-login-email class="contact-update"
+                                  contact-emails="$ctrl.contact.email"
+                                  participant = $ctrl.participant>
+    </otus-participant-login-email>
 
     <div class="contact-label" layout="row" layout-align="space-between center" layout-margin>
       <div>
@@ -98,7 +102,6 @@
                    ng-click="$ctrl.deleteParticipantContact()"
                    ng-if="$ctrl.contact">
           <small>{{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}</small>
-          <md-icon>{{$ctrl.ParticipantContactValues.icons.deleteContact.icon}}</md-icon>
         </md-button>
       </div>
     </div>

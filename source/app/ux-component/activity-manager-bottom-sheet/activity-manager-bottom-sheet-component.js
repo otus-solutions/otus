@@ -118,7 +118,7 @@
         self.showVisualizationButton = true;
         self.showFillingButton = !isAutoFill;
         self.showViewerButton = true;
-        self.showDeleteButton = !isAutoFill;
+        self.showDeleteButton = true;
         self.showPendenciesButton = !isAutoFill;
         self.showInfoButton = true;
         self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() != undefined ? true : false;

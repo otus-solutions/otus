@@ -24,6 +24,9 @@
     self.deactivateFollowUpEvent = deactivateFollowUpEvent;
     self.requestPasswordReset = requestPasswordReset;
     self.requestPasswordResetLink = requestPasswordResetLink;
+    self.updateLoginEmail = updateLoginEmail;
+    self.removeEmailByParticipantId = removeEmailByParticipantId;
+    self.getEmailByParticipantId = getEmailByParticipantId;
 
     function initialize() {
       _rest = OtusRestResourceService.getParticipantResource();
@@ -59,6 +62,27 @@
       return _rest.update({}, participant).$promise;
     }
 
+    function updateLoginEmail(id, email) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.editEmail({id}, {email}).$promise;
+    }
+
+    function removeEmailByParticipantId(id) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.removeEmailByParticipantId({id}).$promise;
+    }
+
+     function getEmailByParticipantId(id) {
+       if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+       }
+       return _rest.getEmailByParticipantId(id).$promise;
+   }
+
     function getFollowUps(recruitmentNumber) {
       return _followUpRest.listParticipantsFollowUps({rn: recruitmentNumber}).$promise;
     }
@@ -88,6 +112,5 @@
       }
       return _passwordRecoveryRest.requestRecoveryLink({userEmail:email}).$promise;
     }
-
   }
 }());

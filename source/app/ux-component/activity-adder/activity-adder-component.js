@@ -181,14 +181,17 @@
 
     function _loadOptionModes() {
       self.optionModes = [
-        { mode: 'ONLINE',
+        {
+          mode: 'ONLINE',
           label: 'Online'
         },
-        { mode: 'PAPER',
-        label: 'Em papel'
+        {
+          mode: 'PAPER',
+          label: 'Em papel'
         },
-        { mode: 'AUTOFILL',
-        label: 'Auto Preenchimento'
+        {
+          mode: 'AUTOFILL',
+          label: 'Auto Preenchimento'
         }
       ]
     }
@@ -234,16 +237,23 @@
     }
 
     function resetPreActivities() {
-      DialogService.showDialog(confirmCancelPreActivities).then(() => {
-        self.preActivities = [];
-        ApplicationStateService.activateParticipantActivities();
-      });
+      DialogService.showDialog(confirmCancelPreActivities)
+        .then(() => self.preActivities = [])
+        .then(() => ApplicationStateService.activateParticipantActivities());
     }
 
     function saveActivities() {
-      self.preActivities.every(_checkFilledInput) ?
-        DialogService.showDialog(confirmSavePreActivities).then(() => ParticipantActivityService.saveActivities(self.preActivities)) :
+      if (allActivitiesAreValid()) {
+        DialogService.showDialog(confirmSavePreActivities)
+          .then(() => ParticipantActivityService.saveActivities(self.preActivities))
+          .then(() => ApplicationStateService.activateActivityAdder())
+      } else {
         DialogService.showDialog(invalidPreActivities);
+      }
+    }
+
+    function allActivitiesAreValid() {
+      return self.preActivities.every(_checkFilledInput);
     }
 
     function _checkFilledInput(preActivity) {

@@ -69,20 +69,17 @@
      * @memberof ActivityCollectionService
      */
     function insert(activities) {
-      var request = $q.defer();
-
-      _remoteStorage
+      return _remoteStorage
         .whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
             .insert(activities)
             .then(function (remoteActivities) {
               var localActivities = ActivityStorageService.insert(remoteActivities);
-              request.resolve(localActivities);
+              return localActivities;
             });
         });
 
-      return request.promise;
     }
 
     /**

@@ -32,27 +32,41 @@
       }
     };
 
-    function _redirect($q, SessionContextService, DashboardContextService, Application) {
+    function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
 
-      Application
-        .isDeployed()
-        .then(function() {
-          try {
-            SessionContextService.restore();
-            DashboardContextService.isValid();
-            deferred.resolve();
-          } catch (e) {
-            deferred.resolve(STATE.LOGIN);
-          }
+      UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
+        Application
+          .isDeployed()
+          .then(function () {
+              try {
+                if (!permission.participantListAccess) {
+                  deferred.resolve(STATE.DASHBOARD);
+                  return;
+                }
+                deferred.resolve();
+              } catch (e) {
+                deferred.resolve(STATE.LOGIN);
+              }
+            });
         });
 
       return deferred.promise;
     }
 
+    _redirect.$inject = [
+      '$q',
+      'otusjs.application.core.ModuleService',
+      'otusjs.user.business.UserAccessPermissionService'
+
+    ];
+
     function _loadParticipantsList(ParticipantStorageService) {
       return ParticipantStorageService.getCollection().data;
     }
+    _loadParticipantsList.$inject = [
+      'otusjs.participant.storage.ParticipantStorageService'
+    ];
 
     function _loadParticipantRegistration(ProjectConfiguration, SessionContextService, Application) {
       return Application
@@ -70,21 +84,11 @@
           }
         });
     }
-
     _loadParticipantRegistration.$inject = [
       'otusjs.deploy.ProjectConfigurationRestService',
       'otusjs.application.session.core.ContextService',
       'otusjs.application.core.ModuleService'
     ];
 
-    _redirect.$inject = [
-      '$q',
-      'otusjs.application.session.core.ContextService',
-      'otusjs.otus.dashboard.core.ContextService',
-      'otusjs.application.core.ModuleService'
-    ];
-    _loadParticipantsList.$inject = [
-      'otusjs.participant.storage.ParticipantStorageService'
-    ];
   }
 }());
