@@ -27,29 +27,26 @@
 
     fetch("app/static-resource/visual-identity/data.json")
       .then(response => {
-        console.log(response)
+        //console.log(response)
         if(response.ok){
           console.log('TEM');
           response.json()
             .then(data => {
+              console.log(JSON.stringify(data, null, 2))//.
               _setTheme('default', data)
             })
             .catch(error => console.log('ops 1', error));
         }
         else{
           console.log('NAO TEM');
-          _setTheme('default', THEME_CONSTANTS.DEFAULT_THEME);
         }
       })
       .catch(error => {
-        console.log('ops', error);
-        _setTheme('default', THEME_CONSTANTS.DEFAULT_THEME);
+        console.log('ops 2', error);
       });
 
 
     function _setTheme(themeName, theme){
-      console.log(JSON.stringify(theme, null, 2))//.
-
       $mdThemingProvider.theme(themeName)
         .primaryPalette(theme.primary.main, theme.primary.pallete)
         .accentPalette(theme.accent.main, theme.accent.pallete)
