@@ -186,7 +186,7 @@
               </md-card-content>
             </md-card>
 
-            <md-card class="card-button" layout-fill ng-init="showLaboratory=true" >
+            <md-card class="card-button" layout-fill ng-init="showLaboratory=true" ng-hide=true>
               <md-card-content layout="column" layout-align="start start" class="no-padding">
                 <md-button class="md-body-1 option" layout-margin="" layout-align="center"
                            ng-click="$ctrl.activateIssueViewer()" id="issueViewer">
@@ -310,6 +310,7 @@
                         <md-icon layout-margin>assignment_turned_in</md-icon>Controle laboratorial
                       </md-button>
                     </md-menu-item>
+                    <md-menu-divider></md-menu-divider>
                     <md-menu-item ng-show="$ctrl.userAccessToMonitoring.pendencyVisualizerAccess">
                       <md-button ng-click="$ctrl.activatePendencyViewer()"
                                  class="md-body-1 option" layout-margin="" layout-align="center">
@@ -317,8 +318,8 @@
                       </md-button>
                     </md-menu-item>
                     <md-menu-divider></md-menu-divider>
-                    <md-menu-item ng-init="showLaboratory=true">
-                      <md-button class="md-body-1 option" layout-margin="" layout-align="center"
+                    <md-menu-item ng-hide=true >
+                      <md-button  class="md-body-1 option" layout-margin="" layout-align="center"
                                  ng-click="$ctrl.activateIssueViewer()" id="issueViewer-xs">
                         <md-icon layout-margin>mail</md-icon>Visualizador de Chamados
                       </md-button>
