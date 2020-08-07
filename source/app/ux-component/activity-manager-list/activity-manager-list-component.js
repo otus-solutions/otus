@@ -102,8 +102,8 @@
           self.isListEmpty = !self.activities.length;
           _selectedActivities = [];
           ActivityService.selectActivities(_selectedActivities);
-          LoadingScreenService.finish();
           self.ready = true;
+          LoadingScreenService.finish();
         });
     }
 

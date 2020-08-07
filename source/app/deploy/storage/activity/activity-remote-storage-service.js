@@ -53,13 +53,8 @@
      * @memberof ActivityRemoteStorageService
      */
     function insert(activitiesToInsert) {
-      var deferred = $q.defer();
-
-      _insertArray(activitiesToInsert, function (insertedActivities) {
-        deferred.resolve(insertedActivities);
-      });
-
-      return deferred.promise;
+      let insertions = activitiesToInsert.map(_insertOne);
+      return $q.all(insertions);
     }
 
     /**
@@ -169,16 +164,13 @@
      * @memberof ActivityRemoteStorageService
      */
     function _insertOne(activity) {
-      var deferred = $q.defer();
-
-      ActivityRestService
+      return ActivityRestService
         .save(activity)
         .then(function (response) {
           activity._id = response.data;
-          deferred.resolve(activity);
+          return activity;
         });
 
-      return deferred.promise;
     }
 
     /**

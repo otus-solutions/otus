@@ -6,16 +6,18 @@
 		.service('otusjs.activity.business.ParticipantActivityService', Service);
 
 	Service.$inject = [
+	  '$mdToast',
 		'otusjs.activity.core.ContextService',
 		'otusjs.activity.repository.ActivityRepositoryService',
 		'otusjs.activity.repository.UserRepositoryService',
 		'otusjs.activity.business.PreActivityFactory',
 		'otusjs.application.state.ApplicationStateService',
-		'SurveyFormFactory'
-	];
+		'SurveyFormFactory',
+    'otusjs.deploy.LoadingScreenService'
+  ];
 
-	function Service(ContextService, ActivityRepositoryService, UserRepositoryService,
-                   PreActivityFactory, ApplicationStateService, SurveyFormFactory) {
+	function Service($mdToast, ContextService, ActivityRepositoryService, UserRepositoryService,
+                   PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService) {
 		var self = this;
 		var _paperActivityCheckerData = null;
 
@@ -69,10 +71,23 @@
 		}
 
 		function saveActivities(preActivities) {
+      LoadingScreenService.start();
 			_prepareActivities(preActivities)
 				.then(() => ActivityRepositoryService.saveActivities(self.activities))
-				.then(() => ApplicationStateService.activateParticipantActivities())
-				.then(() => self.activities = []);
+        //esse catch garante que ocorrerá a troca de state mesmo que ocorra erro no backend
+        //todo: remove
+        .catch(() => {
+          console.log('veio aqui')
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent("Ocorreu um erro ao adicionar a(s) atividade(s)")
+              .position("bottom")
+              .hideDelay(5000));
+          LoadingScreenService.finish();
+        })
+        .then(() => ApplicationStateService.activateParticipantActivities())
+        .then(() => self.activities = [])
+        .then(() => LoadingScreenService.finish);
 		}
 
 		function _prepareActivities(preActivities) {
