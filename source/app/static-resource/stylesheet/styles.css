@@ -77,7 +77,7 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
 /** participant-search **/
 
 .md-autocomplete-participant {
-  background-color: #299288 !important;
+  /*background-color: #299288 !important;*/
   border-radius: 4px !important;
   border: none !important;
   box-shadow: none !important;
@@ -308,10 +308,6 @@ md-content.no-background-color {
   white-space: nowrap;
   text-overflow: ellipsis;
   width: auto;
-}
-
-.toolbarInfo {
-  background-color: rgb(0, 145, 234) !important;
 }
 
 .otus-panel{
