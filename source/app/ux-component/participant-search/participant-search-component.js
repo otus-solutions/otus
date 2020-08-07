@@ -45,9 +45,14 @@
 
     function onInit() {
       self.inputedText = '';
-      self.autoCompleteClass = (ApplicationStateService.getCurrentState() === STATE.DASHBOARD ?
-        'md-dashboard-autocomplete' :
-        'md-autocomplete-participant');
+      if(ApplicationStateService.getCurrentState() === STATE.DASHBOARD){
+        self.autoCompleteClass = 'md-dashboard-autocomplete';
+        self.backgroundColor = {};
+      }
+      else{
+        self.autoCompleteClass = 'md-autocomplete-participant';
+        self.backgroundColor = {backgroundColor: 'default-primary'};
+      }
 
       ParticipantManagerService.setup().then(function (response) {
         self.onReady = true;
