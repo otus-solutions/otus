@@ -49,6 +49,7 @@
       self.participant = ParticipantFactory.create();
       _checkingParticipantPermission();
       self.identified = true;
+      self.minDate = new Date('01/01/1930')
       self.maxDate = new Date();
       self.centers = {};
       _loadAllCenters();

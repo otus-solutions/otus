@@ -29,7 +29,7 @@ describe('ProjectCommunicationRestService_UnitTest_Suite', () => {
   });
 
   it('serviceExistence_check', () => {
-    expect(service).toBeDefined();
+
   });
 
   it('serviceMethodsExistence_check', () => {
