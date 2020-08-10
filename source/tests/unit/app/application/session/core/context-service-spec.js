@@ -12,12 +12,20 @@ describe('ContextService ApplicationSession test', function () {
     angular.mock.module('otusjs.application.context');
     angular.mock.module('otusjs.application.core');
     angular.mock.module('otusjs.application.storage');
+    angular.mock.module('otusjs.application.dialog')
+
+    angular.mock.module(function ($provide) {
+      $provide.value('$mdDialog', Mock.mdDialog);
+      $provide.value('otusjs.deploy.LoadingScreenService', Mock.LoadingScreenService);
+    });
 
     angular.mock.inject(function (_$injector_) {
       mockData(_$injector_);
       Injections.$q = _$injector_.get('$q');
       Injections.$window = _$injector_.get('$window');
       Injections.EventService = _$injector_.get('otusjs.application.session.core.EventService');
+      Injections.LoadingScreenService = _$injector_.get('otusjs.deploy.LoadingScreenService');
+      Injections.DialogShowService = _$injector_.get('otusjs.application.dialog.DialogShowService');
 
       service =  _$injector_.get('otusjs.application.session.core.ContextService', Injections);
 
@@ -30,7 +38,6 @@ describe('ContextService ApplicationSession test', function () {
     spyOn(Injections.$window.sessionStorage, 'removeItem').and.callThrough();
     spyOn(Injections.$q, 'defer').and.callThrough();
     spyOn(Injections.EventService, 'fireLogin').and.callThrough();
-
   });
 
   it('serviceExistence_check', function () {
@@ -83,13 +90,6 @@ describe('ContextService ApplicationSession test', function () {
   it('isValid_method_should_throw_error_with_message_if_storage_is_not_initialized', function () {
     service.configureContext(Mock.contextFactory);
     expect(service.isValid).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE_STORAGE);
-  });
-
-  it('isValid_method_should_throw_error_with_message_if_hasContextActive_is_not_initialized', function () {
-    service.configureContext(Mock.contextFactory);
-    service.configureStorage(Mock.storageService);
-    spyOn(Mock.storageService,'getItem').and.returnValue(null);
-    expect(service.isValid).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE_HAS_CONTEXT);
   });
 
   it('removeData_method_should_execute', function () {

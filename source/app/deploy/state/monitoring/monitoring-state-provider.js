@@ -35,18 +35,17 @@
           Application
             .isDeployed()
             .then(function () {
-                try {
-                  if (!permission.centerActivitiesAccess) {
-                    deferred.resolve(STATE.DASHBOARD);
-                    return;
-                  }
-                  deferred.resolve();
-                } catch (e) {
-                  deferred.resolve(STATE.LOGIN);
+              try {
+                if (!permission.centerActivitiesAccess) {
+                  deferred.resolve(STATE.DASHBOARD);
+                  return;
                 }
-              });
-          });
-
+                deferred.resolve();
+              } catch (e) {
+                deferred.resolve(STATE.LOGIN);
+              }
+            });
+        });
         return deferred.promise;
       }
 
