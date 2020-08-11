@@ -45,10 +45,6 @@
         "background" : "grey"
       },
 
-      "styles": [
-        ".primary-header { color: {{accent-hue-1}}; background: {{primary-default}}; }"
-      ],
-
       "bannerURL": "app/static-resource/visual-identity/banner.png",
       "toolbarIconURL": "app/static-resource/visual-identity/toolbar.png",
       "projectName":"OTUS"
