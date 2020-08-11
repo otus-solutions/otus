@@ -14,10 +14,11 @@
 
   Controller.$inject = [
     '$filter',
-    '$mdToast'
+    '$mdToast',
+    '$mdColors'
   ];
 
-  function Controller($filter, $mdToast) {
+  function Controller($filter, $mdToast, $mdColors) {
     var self = this;
 
     self.selectedItemCounter = 0;
@@ -43,8 +44,8 @@
         LIGHT_GRAY: { color: '#bcbcc2' }
       },
       background: {
-        HEADER: { 'background': 'rgb(64,122,107)' },
-        AUTO_FILL_HEADER: { 'background-color': 'rgb(0,145,234)' },
+        HEADER: { 'background': $mdColors.getThemeColor('default-primary') },
+        AUTO_FILL_HEADER: { 'background': $mdColors.getThemeColor('default-accent') },
         SELECTED_TILE: '#f0fbec',
         SELECTED_AUTO_FILL_TILE: '#e5f4fc'
       }
@@ -144,7 +145,7 @@
     }
 
     function _getGridColorByActivityMode(mode) {
-      return mode === "Auto Preenchimento" ? colors.background.AUTO_FILL_HEADER : {};
+      return mode === "Auto Preenchimento" ? colors.background.AUTO_FILL_HEADER : colors.background.HEADER;
     }
 
     function _createStatus(status) {

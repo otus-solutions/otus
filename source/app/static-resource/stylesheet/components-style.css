@@ -409,7 +409,6 @@ activity-grid-list .gridListDynamicTiles md-grid-list {
 }
 
 activity-grid-list .gridListDynamicTiles md-grid-tile md-grid-tile-header {
-  background: rgba(19, 125, 108, 0.68);
   position: relative;
   width: 100%;
   overflow: inherit;
