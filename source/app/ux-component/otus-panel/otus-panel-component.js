@@ -7,24 +7,26 @@
       templateUrl: 'app/ux-component/otus-panel/otus-panel-template.html',
       bindings: {
         headerLabel: '<',
-        colorLeft: '<',
-        colorRight: '<',
         align: '<'
       },
       transclude: true,
       controller: Controller
     });
 
-  function Controller() {
-    var self = this;
+  Controller.$inject = [
+    '$mdColors'
+  ];
 
+  function Controller($mdColors) {
+    const self = this;
     self.$onInit = onInit;
 
     function onInit(){
       self.title = self.title || '';
       self.align = self.align || 'center start';
-      self.colorLeft = self.colorLeft || '#299288';
-      self.colorRight = self.colorRight || '#24baaa';
+      self.colorLeft = $mdColors.getThemeColor('primary-hue-3');
+      self.colorRight= $mdColors.getThemeColor('primary-hue-1');
     }
+
   }
 }());
