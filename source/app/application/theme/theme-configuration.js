@@ -33,9 +33,10 @@
     function _setTheme(paletteThemeObj) {
       console.log(JSON.stringify(paletteThemeObj, null, 2))//.
 
-      const palette = paletteThemeObj.palette;
-      const newMap = $mdThemingProvider.extendPalette(palette.baseName, palette.map);
-      $mdThemingProvider.definePalette(palette.newName, newMap);
+      for(let [paletteName, palette] of Object.entries(paletteThemeObj.palette)){
+        const newMap = $mdThemingProvider.extendPalette(palette.baseName, palette.map);
+        $mdThemingProvider.definePalette(paletteName, newMap);
+      }
 
       const theme = paletteThemeObj.theme;
       $mdThemingProvider.theme('default')

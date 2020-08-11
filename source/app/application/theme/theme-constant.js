@@ -6,13 +6,15 @@
     .constant('THEME_CONSTANTS', {
 
       "palette": {
-        "baseName": "light-blue",
-        "map": {
-          "500": "#ffffff",
-          "contrastDarkColors": ["500", "A100", "A400"]
-        },
-        "newName": "new-light-blue"
+        "new-light-blue" : {
+          "baseName": "light-blue",
+          "map": {
+            "500": "#ffffff",
+            "contrastDarkColors": ["500", "A100", "A400"]
+          }
+        }
       },
+
       "theme": {
         "primary": {
           "main": "teal",
