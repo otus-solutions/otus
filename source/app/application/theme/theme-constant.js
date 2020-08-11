@@ -46,7 +46,7 @@
       },
 
       "styles": [
-        "md-card-header { color: {{accent-hue-1}}; background: {{primary-default}}; }"
+        ".primary-header { color: {{accent-hue-1}}; background: {{primary-default}}; }"
       ],
 
       "bannerURL": "app/static-resource/visual-identity/banner.png",
