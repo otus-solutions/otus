@@ -44,6 +44,12 @@
         .accentPalette(theme.accent.main, theme.accent.pallete)
         .warnPalette(theme.warn.main, theme.warn.pallete)
         .backgroundPalette(theme.background);
+
+      if(paletteThemeObj.styles){
+        paletteThemeObj.styles.forEach(style => {
+          $mdThemingProvider.registerStyles(style);
+        })
+      }
     }
 
   }
