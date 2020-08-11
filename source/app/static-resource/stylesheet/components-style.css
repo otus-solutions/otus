@@ -616,9 +616,7 @@ otus-dashboard-pendency  md-input-container {
 }
 
 otus-dashboard-pendency .header-list {
-  background-color: #009588;
   font-weight: bold;
-  color: #FFFFFF !important;
   min-height: 70px !important;
   max-height: 70px !important;
   border-top-left-radius: 5px;
