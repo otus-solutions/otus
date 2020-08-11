@@ -5,7 +5,15 @@
     .module('otusjs.application.theme')
     .constant('THEME_CONSTANTS', {
 
-      DEFAULT_THEME: {
+      "palette": {
+        "baseName": "light-blue",
+        "map": {
+          "500": "#ffffff",
+          "contrastDarkColors": ["500", "A100", "A400"]
+        },
+        "newName": "new-light-blue"
+      },
+      "theme": {
         "primary": {
           "main": "teal",
           "pallete": {
