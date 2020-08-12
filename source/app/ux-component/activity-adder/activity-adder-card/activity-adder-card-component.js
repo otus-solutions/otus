@@ -15,10 +15,11 @@
 
   Controller.$inject = [
     '$q',
-    '$timeout'
+    '$timeout',
+    '$mdColors'
   ];
 
-  function Controller($q, $timeout) {
+  function Controller($q, $timeout, $mdColors) {
     var self = this;
     self.realizationDate = new Date();
 
@@ -49,7 +50,9 @@
     }
 
     function styleHeader() {
-      return self.preActivity.mode === "AUTOFILL" ? "{background: '#2d91ea'}" : "{background: '#5ba499'}";
+      return self.preActivity.mode === "AUTOFILL" ?
+        { 'background': $mdColors.getThemeColor('default-accent') } :
+        { 'background': $mdColors.getThemeColor('default-primary') };
     }
 
     function checkerQuerySearch(query) {
