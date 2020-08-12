@@ -10,33 +10,25 @@
 
   Controller.$inject = [
     '$mdComponentRegistry',
-    '$mdSidenav'
+    '$mdSidenav',
+    'THEME_CONSTANTS'
   ];
 
-  function Controller($mdComponentRegistry, $mdSidenav) {
-    var self = this;
-    var _sideNav = null;
-
-    var SIDENAV_ORIGIN = 'left';
+  function Controller($mdComponentRegistry, $mdSidenav, THEME_CONSTANTS) {
+    const self = this;
+    const SIDENAV_ORIGIN = 'left';
 
     /* Public methods */
-    self.launchSidenav = launchSidenav;
-    /* Lifecycle hooks */
     self.$onInit = onInit;
-
-    function launchSidenav() {
-      // if (_sideNav) {
-      $mdSidenav(SIDENAV_ORIGIN).toggle();
-      // }
-    }
+    self.launchSidenav = launchSidenav;
 
     function onInit() {
-      // $mdComponentRegistry
-      //   .when(SIDENAV_ORIGIN)
-      //   .then(function(sidenav) {
-      //     console.log('');
-      //     _sideNav = sidenav;
-      //   });
+      self.projectName = THEME_CONSTANTS.projectName;
     }
+
+    function launchSidenav() {
+      $mdSidenav(SIDENAV_ORIGIN).toggle();
+    }
+
   }
 }());
