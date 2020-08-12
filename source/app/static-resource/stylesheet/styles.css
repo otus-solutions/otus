@@ -387,10 +387,6 @@ md-sidenav.md-closed.md-locked-open-add-active {
   max-width: 360px !important;
 }
 
-md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
-  color: rgb(0,121,107);
-  background: rgb(0,121,107);
-}
 md-tab-content{
   margin-top: 10px !important;
 }
