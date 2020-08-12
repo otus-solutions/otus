@@ -14,26 +14,28 @@
 
   Controller.$inject = [
     'otusjs.otus.dashboard.core.ContextService',
-    'otusjs.otus.dashboard.core.EventService'
+    'otusjs.otus.dashboard.core.EventService',
+    'THEME_CONSTANTS'
   ];
 
-  function Controller(ContextService, EventService) {
+  function Controller(ContextService, EventService, THEME_CONSTANTS) {
     var self = this;
 
     /* Public methods */
+    self.$onInit = onInit;
     self.selectParticipant = selectParticipant;
 
-    self.$onInit = onInit;
+    function onInit() {
+      self.imageIconURL = THEME_CONSTANTS.favoriconURL;
+
+      _loadLoggedUser();
+      EventService.onLogin(_loadLoggedUser);
+    }
 
     function selectParticipant(selectedParticipant) {
       self.onParticipantSelect({
         participant: selectedParticipant
       });
-    }
-
-    function onInit() {
-      _loadLoggedUser();
-      EventService.onLogin(_loadLoggedUser);
     }
 
     function _loadLoggedUser(userData) {

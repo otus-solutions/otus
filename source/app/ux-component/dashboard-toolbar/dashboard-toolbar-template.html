@@ -1,7 +1,7 @@
 <div flex>
   <md-toolbar class="md-primary md-whiteframe-1dp">
     <div class="md-toolbar-tools md-padding">
-      <img src="static-resource/image/coruja_pesquisadora.png" class="toolbar-icon"></img>
+      <img ng-src="{{$ctrl.imageIconURL}}" class="toolbar-icon"/>
       <otus-dashboard-sidenav-launcher></otus-dashboard-sidenav-launcher>
       <div ng-transclude flex class="not-mobile"></div>
       <div class="mobile" flex></div>
@@ -18,3 +18,4 @@
     </div>
   </md-toolbar>
 </div>
+
