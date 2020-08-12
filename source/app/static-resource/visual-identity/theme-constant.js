@@ -45,9 +45,10 @@
         "background" : "grey"
       },
 
-      "bannerURL": "app/static-resource/visual-identity/banner.png",
-      "toolbarIconURL": "app/static-resource/visual-identity/toolbar.png",
-      "projectName":"OTUS"
+      "bannerURL": "static-resource/visual-identity/images/banner.png",
+      "favoriconURL": "static-resource/visual-identity/images/favicon-32x32.png",
+      "iconLogoURL": "static-resource/visual-identity/images/logo-200x69.png",
+      "projectName": "ELSA"
 
     });
 }());
