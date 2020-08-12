@@ -20,6 +20,7 @@
     '$mdToast',
     '$timeout',
     '$mdDialog',
+    '$mdColors',
     'otusjs.activity.core.EventService',
     'otusjs.otus.uxComponent.CheckerItemFactory',
     'otusjs.application.dialog.DialogShowService',
@@ -29,7 +30,8 @@
     'otusjs.activity.business.ParticipantActivityService'
   ];
 
-  function Controller($q, $mdToast, $timeout, $mdDialog, EventService, CheckerItemFactory, DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService, ParticipantActivityService) {
+  function Controller($q, $mdToast, $timeout, $mdDialog, $mdColors,
+                      EventService, CheckerItemFactory, DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService, ParticipantActivityService) {
     var self = this;
     var confirmDeleteSelectedActivity;
 
@@ -45,6 +47,7 @@
     self.$onInit = onInit;
 
     function onInit() {
+      self.selectedItemCounterBackgroundColor = $mdColors.getThemeColor('default-primary');
       _buildDialogs();
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
