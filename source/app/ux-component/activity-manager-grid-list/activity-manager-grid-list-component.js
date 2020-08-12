@@ -46,8 +46,8 @@
       background: {
         HEADER: { 'background': $mdColors.getThemeColor('default-primary') },
         AUTO_FILL_HEADER: { 'background': $mdColors.getThemeColor('default-accent') },
-        SELECTED_TILE: '#f0fbec',
-        SELECTED_AUTO_FILL_TILE: '#e5f4fc'
+        SELECTED_TILE: $mdColors.getThemeColor('primary-hue-2-0.2'),
+        SELECTED_AUTO_FILL_TILE: $mdColors.getThemeColor('accent-hue-2-0.2'),
       }
     };
 
