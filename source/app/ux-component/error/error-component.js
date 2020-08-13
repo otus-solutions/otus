@@ -17,8 +17,8 @@
     self.$onInit = onInit;
 
     function onInit(){
-      self.title = THEME_CONSTANTS.projectName;;
-      self.imageURL = THEME_CONSTANTS.iconLogoURL;
+      self.title = THEME_CONSTANTS.projectName;
+      self.imageURL = THEME_CONSTANTS.imageURLs.icon;
     }
 
   }

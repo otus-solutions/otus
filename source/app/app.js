@@ -39,7 +39,7 @@
 
     function onInit() {
       $scope.title = THEME_CONSTANTS.projectName;
-      $scope.faviconURL = THEME_CONSTANTS.faviconURL;
+      $scope.faviconURL = THEME_CONSTANTS.imageURLs.favicon;
     }
 
   }

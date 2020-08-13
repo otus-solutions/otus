@@ -25,7 +25,7 @@
     self.resetEmailValidation = resetEmailValidation;
 
     function onInit() {
-      self.bannerURL = THEME_CONSTANTS.bannerURL;
+      self.bannerURL = THEME_CONSTANTS.imageURLs.banner;
     }
 
     function signup(user) {

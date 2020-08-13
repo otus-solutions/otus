@@ -18,7 +18,7 @@
 
     function onInit(){
       self.title = THEME_CONSTANTS.projectName;
-      self.crashImageURL = THEME_CONSTANTS.iconLogoURL;
+      self.crashImageURL = THEME_CONSTANTS.imageURLs.icon;
       self.titleStyle = {
         backgroundColor: $mdColors.getThemeColor('default-primary'),
         color: $mdColors.getThemeColor('accent-hue-1')

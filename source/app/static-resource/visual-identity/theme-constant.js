@@ -4,13 +4,15 @@
   angular
     .module('otusjs.application.theme')
     .constant('THEME_CONSTANTS', {
-
       "projectName": "ELSA",
 
-      "bannerURL": "static-resource/visual-identity/images/banner.png",
-      "faviconURL": "static-resource/visual-identity/images/favicon-32x32.png",
-      "iconLogoURL": "static-resource/visual-identity/images/logo-2352x811.png",
-      "crashLogoURL": "static-resource/visual-identity/images/logo-2352x811.png",
+      "imageURLs": {
+        "banner": "static-resource/visual-identity/images/banner.png",
+        "crash": "static-resource/visual-identity/images/logo-2352x811.png",
+        "favicon": "static-resource/visual-identity/images/favicon.ico",
+        "icon": "static-resource/visual-identity/images/logo-2352x811.png",
+        "loading": "static-resource/visual-identity/images/apple-touch-icon.png",//ok
+      },
 
       "palette": {
         "new-light-blue" : {

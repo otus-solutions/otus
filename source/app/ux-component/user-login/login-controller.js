@@ -37,7 +37,7 @@
     self.goBack = goBack;
 
     function onInit() {
-      self.bannerURL = THEME_CONSTANTS.bannerURL;
+      self.bannerURL = THEME_CONSTANTS.imageURLs.banner;
       VerifyBrowserService.verify();
     }
 
