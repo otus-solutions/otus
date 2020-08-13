@@ -26,7 +26,7 @@
     self.selectParticipant = selectParticipant;
 
     function onInit() {
-      self.imageIconURL = THEME_CONSTANTS.favoriconURL;
+      self.imageIconURL = THEME_CONSTANTS.faviconURL;
 
       _loadLoggedUser();
       EventService.onLogin(_loadLoggedUser);

@@ -5,6 +5,13 @@
     .module('otusjs.application.theme')
     .constant('THEME_CONSTANTS', {
 
+      "projectName": "ELSA",
+
+      "bannerURL": "static-resource/visual-identity/images/banner.png",
+      "faviconURL": "static-resource/visual-identity/images/favicon-32x32.png",
+      "iconLogoURL": "static-resource/visual-identity/images/logo-2352x811.png",
+      "crashLogoURL": "static-resource/visual-identity/images/logo-2352x811.png",
+
       "palette": {
         "new-light-blue" : {
           "baseName": "light-blue",
@@ -44,11 +51,6 @@
         },
         "background" : "grey"
       },
-
-      "bannerURL": "static-resource/visual-identity/images/banner.png",
-      "favoriconURL": "static-resource/visual-identity/images/favicon-32x32.png",
-      "iconLogoURL": "static-resource/visual-identity/images/logo-200x69.png",
-      "projectName": "ELSA"
 
     });
 }());
