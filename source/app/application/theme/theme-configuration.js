@@ -13,10 +13,9 @@
   ];
 
   function Configuration($mdThemingProvider, $mdIconProvider, THEME_CONSTANTS, THEME_STYLES_REGISTER) {
-    // console.log(JSON.stringify(THEME_CONSTANTS, null, 2))//.
 
     /* Configuration icons - 24 is the size default of icons */
-    $mdIconProvider.defaultIconSet('static-resource/image/icons/mdi.svg', 24);
+    $mdIconProvider.defaultIconSet(THEME_CONSTANTS.imageURLs.icons.mdi, 24);
 
     if(THEME_CONSTANTS.palette){
       for(let [paletteName, palette] of Object.entries(THEME_CONSTANTS.palette)){
