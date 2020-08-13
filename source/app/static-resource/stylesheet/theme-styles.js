@@ -11,12 +11,6 @@
 
         // styles.css
         "md-toolbar { color: {{accent-hue-1}}; }",
-        "otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input { color: {{accent-hue-1}} !important; }",
-        "otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button { color: {{accent-hue-1}}; !important }",
-        "otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder { color: {{accent-hue-1}}; !important }",
-        "otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path { fill: {{accent-hue-1}}; !important }",
-        "otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete { color: {{accent-hue-1}}; !important }",
-
         ".selectedState { border-color : {{primary-default}}; }",
 
         ".dtp>.dtp-content>.dtp-date-view>header.dtp-header { background: {{primary-default}} !important; } ",
@@ -33,19 +27,19 @@
         "  background: {{accent-hue-1}}; " +
         "}",
 
-        "unattached-laboratory md-grid-tile-header {\n" +
-        "  background: {{primary-default-0.68}} !important;\n" +
+        "unattached-laboratory md-grid-tile-header {" +
+        "  background: {{primary-default-0.68}} !important;" +
         "}",
 
-        "offline-activity-collection md-grid-tile-header {\n" +
-        "  background: {{primary-default-0.68}} !important;\n" +
+        "offline-activity-collection md-grid-tile-header {" +
+        "  background: {{primary-default-0.68}} !important;" +
         "}",
 
         // initial-config.css
-        "#installer #separatorLine {\n" +
-        "  font-size: 11px;\n" +
-        "  background-color: {{primary-default}};\n" +
-        "  color: {{accent-hue-1}};\n" +
+        "#installer #separatorLine {" +
+        "  font-size: 11px;" +
+        "  background-color: {{primary-default}};" +
+        "  color: {{accent-hue-1}};" +
         "}"
       ]
 
