@@ -10,9 +10,10 @@
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.participant.business.ParticipantFollowUpService',
     'otusjs.model.outcome.FollowUpFactory',
+    'THEME_CONSTANTS'
   ];
 
-  function Controller(EventService, DashboardService, ParticipantFollowupService, FollowUpFactory) {
+  function Controller(EventService, DashboardService, ParticipantFollowupService, FollowUpFactory, THEME_CONSTANTS) {
     var self = this;
 
     self.$onInit = onInit;
@@ -23,6 +24,7 @@
 
 
     function onInit() {
+      self.iconImage = THEME_CONSTANTS.imageURLs.favicon;
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
     }
