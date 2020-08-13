@@ -40,6 +40,7 @@
 
     function onInit() {
       self.projectName = THEME_CONSTANTS.projectName;
+      self.iconImage = THEME_CONSTANTS.imageURLs.favicon;
     }
 
     function close() {
