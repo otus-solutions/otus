@@ -13,11 +13,6 @@
   left: 40%;
 }
 
-#installer #separatorLine {
-  font-size: 11px;
-  background-color: #006064;
-  color: #ECEFF1;
-}
 #installer #logo_otus {
     content: url(static-resource/image/OtusImg.png);
     top: 1%;

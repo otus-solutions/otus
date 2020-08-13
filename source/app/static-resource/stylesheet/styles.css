@@ -28,7 +28,7 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
 .selectedState {
   border-style: solid;
   border-width: 0px 0px 0px 8px;
-  border-color: #009688;
+  /*border-color: #009688; defined at theme-styles.js*/
   background: rgba(68, 68, 68, 0.04);
 }
 
@@ -122,16 +122,6 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
   padding-bottom: 8px;
   white-space: normal;
 }
-
-
-/*otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button {*/
-/*  color: rgb(255, 255, 255) !important;*/
-/*}*/
-
-/*otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {*/
-/*  fill: rgb(255, 254, 254) !important;*/
-/*}*/
-
 
 .autocomplete-custom-participant-template li:last-child {
   border-bottom-width: 0;
@@ -242,34 +232,6 @@ md-content.no-background-color {
   color: #292828;
   font-weight: bold;
   font-family: arial;
-}
-
-.dtp>.dtp-content>.dtp-date-view>header.dtp-header {
-  background: rgb(0, 121, 107) !important;
-}
-
-.dtp div.dtp-date, .dtp div.dtp-time {
-  background: rgb(0, 150, 136) !important;
-}
-
-.dtp table.dtp-picker-days tr>td>a.selected {
-  background: rgb(0, 121, 107) !important;
-}
-
-.dtp table.dtp-picker-days tr>td>a.hilite:not(.selected) {
-  color: rgb(0, 150, 136) !important;
-}
-
-.dtp .dtp-picker-time>a.dtp-select-hour.selected {
-  background: rgb(0, 121, 107) !important;
-}
-
-.dtp .dtp-hand.on {
-  background: rgb(0, 150, 136) !important;
-}
-
-.dtp .dtp-actual-meridien a.selected {
-  background: rgb(0, 150, 136) !important;
 }
 
 .iconInverted {
