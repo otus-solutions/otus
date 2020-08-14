@@ -14,7 +14,7 @@
         "crash": "static-resource/visual-identity/images/logo-2352x811.png",
         "favicon": "static-resource/visual-identity/images/favicon.ico",
         "icon": "static-resource/visual-identity/images/logo-2352x811.png",
-        "loading": "static-resource/visual-identity/images/apple-touch-icon.png",
+        "loading": "static-resource/visual-identity/images/apple-touch-icon.png"
       },
 
       "palette": {
