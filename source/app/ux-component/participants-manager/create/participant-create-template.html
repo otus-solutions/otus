@@ -63,7 +63,7 @@
                       <label ng-show="$ctrl.birthdate">Data de Nascimento</label>
                       <input mdc-datetime-picker="" show-icon="true" date="true" time="false"
                              aria-label="Data de Nascimento" type="text" id="datetime" placeholder="Data de Nascimento"
-                             max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
+                             min-date="$ctrl.minDate" max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
                              format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
                     </md-input-container>
                     <span flex="10"></span>
