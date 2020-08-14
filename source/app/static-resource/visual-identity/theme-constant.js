@@ -11,7 +11,7 @@
           "mdi": 'static-resource/visual-identity/images/icons/mdi.svg'
         },
         "banner": "static-resource/visual-identity/images/banner.png",
-        "crash": "static-resource/visual-identity/images/logo-2352x811.png",
+        "crash": "static-resource/visual-identity/images/otus-crash.png",
         "favicon": "static-resource/visual-identity/images/favicon.ico",
         "icon": "static-resource/visual-identity/images/logo-2352x811.png",
         "loading": "static-resource/visual-identity/images/apple-touch-icon.png"
