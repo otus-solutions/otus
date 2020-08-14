@@ -19,7 +19,7 @@
   function Controller($stateParams, $scope, $mdDialog,
                       UserAccessRecoveryService, LoadingScreenService, ApplicationStateService, DialogService,
                       THEME_CONSTANTS) {
-    var self = this;
+    const self = this;
     var successMessage;
     var errorMessage;
     self.token;
@@ -31,7 +31,9 @@
     self.enable = enable;
 
     function onInit() {
+      self.bannerImage = THEME_CONSTANTS.imageURLs.banner;
       self.crashImage = THEME_CONSTANTS.imageURLs.crash;
+
       self.password = '';
       self.passwordConfirmation = '';
       UserAccessRecoveryService.validateToken($stateParams.token)
