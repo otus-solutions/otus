@@ -13,11 +13,6 @@
   left: 40%;
 }
 
-#installer #logo_otus {
-    content: url(static-resource/image/OtusImg.png);
-    top: 1%;
-}
-
 #installer #installerLayout {
     background-color: white;
 }
