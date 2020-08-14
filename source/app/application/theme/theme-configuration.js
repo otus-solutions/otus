@@ -12,6 +12,7 @@
     'THEME_STYLES_REGISTER'
   ];
 
+      "icon": "static-resource/visual-identity/images/logo-2352x811.png",
   function Configuration($mdThemingProvider, $mdIconProvider, THEME_CONSTANTS, THEME_STYLES_REGISTER) {
 
     /* Configuration icons - 24 is the size default of icons */
