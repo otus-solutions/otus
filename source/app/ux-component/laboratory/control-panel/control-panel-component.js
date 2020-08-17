@@ -34,6 +34,9 @@
     var hideDelayTime = 3000;
     var changedTubes = false;
 
+    self.selectedTubes = []
+    self.newLabels = {}
+
     self.$onInit = onInit;
     self.changeState = changeState;
     self.saveChangedTubes = saveChangedTubes;
@@ -42,6 +45,29 @@
     self.verifyDate = verifyDate;
     self.saveAliquots = saveAliquots;
     self.cancelAliquots = cancelAliquots;
+    self.removeDuplicatedMoments = removeDuplicatedMoments;
+    self.filterTubesByMoment = filterTubesByMoment;
+
+    function filterTubesByMoment() {
+      if(self.selectedTubes.includes("TODOS")){
+        self.selectedTubes = self.moments
+        return self.newLabels = angular.copy(self.labels)
+      }
+      if(self.selectedTubes.length > 0) {
+        const filteredTubes = self.labels.tubes.filter(tube => {
+          return self.selectedTubes.includes(tube.momentLabel);
+        })
+        self.newLabels = angular.copy(self.labels)
+        self.newLabels.tubes = filteredTubes
+      }
+    }
+
+    function removeDuplicatedMoments(){
+      const tubesMoments = self.labels.tubes.map((tube)=>
+        tube.momentLabel
+      )
+      self.moments = ["TODOS", ...new Set(tubesMoments)]
+    }
 
     function saveAliquots() {
       Publisher.publish('save-changed-aliquots');
@@ -65,7 +91,7 @@
 
     function onInit() {
       _buildDialogs();
-
+      removeDuplicatedMoments();
       self.processingDate = new Date();
       self.now = new Date();
       verifyDate();
