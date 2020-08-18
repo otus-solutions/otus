@@ -16,13 +16,16 @@
     'otusjs.otus.uxComponent.DynamicTableSettingsFactory',
     'otusjs.laboratory.business.project.sending.SendingExamService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'THEME_CONSTANTS'
   ];
 
-  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService, DynamicTableSettingsFactory, SendingExamService, LoadingScreenService, DialogService) {
+  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService,
+                      DynamicTableSettingsFactory, SendingExamService, LoadingScreenService, DialogService,
+                      THEME_CONSTANTS) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
-    const ALIQUOT_DOES_MATCH_EXAM = "Aliquot does not match exam"
-    const TUBE_DOES_MATCH_EXAM = "Tube does not match exam"
+    const ALIQUOT_DOES_MATCH_EXAM = "Aliquot does not match exam";
+    const TUBE_DOES_MATCH_EXAM = "Tube does not match exam";
     const ALIQUOT_NOT_FOUND = "Aliquot not found";
 
     var self = this;
@@ -33,6 +36,7 @@
     self.changeResults = changeResults;
 
     function onInit() {
+      self.crashImage = THEME_CONSTANTS.imageURLs.crash;
       _buildDialogs();
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();

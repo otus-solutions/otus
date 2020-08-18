@@ -9,19 +9,24 @@
     'otusjs.application.state.ApplicationStateService',
     'otusjs.user.access.service.SignupService',
     'otusjs.deploy.LoadingScreenService',
-    '$mdToast'
+    '$mdToast',
+    'THEME_CONSTANTS'
   ];
 
-  function Controller(ApplicationStateService, SignupService, LoadingScreenService, $mdToast) {
-    var INTERNAL_ERROR_MESSAGE = "Houve um erro ao realizar o cadastro. Informe a equipe de desenvolvimento";
-    var self = this;
+  function Controller(ApplicationStateService, SignupService, LoadingScreenService, $mdToast, THEME_CONSTANTS) {
+    const INTERNAL_ERROR_MESSAGE = "Houve um erro ao realizar o cadastro. Informe a equipe de desenvolvimento";
+    const self = this;
 
     /* Public methods */
+    self.$onInit = onInit;
     self.signup = signup;
     self.back = back;
     self.agree = agree;
     self.resetEmailValidation = resetEmailValidation;
 
+    function onInit() {
+      self.bannerURL = THEME_CONSTANTS.imageURLs.banner;
+    }
 
     function signup(user) {
       // self.isWaiting = true;
@@ -45,13 +50,10 @@
     }
 
     function _showErrorMessage(response) {
-      switch (response.statusText) {
-        case 'Conflict':
-          _showAlreadyExistError();
-          break;
-        default:
-          _showInternalError();
-          break;
+      if (response.statusText === 'Conflict') {
+        _showAlreadyExistError();
+      } else {
+        _showInternalError();
       }
     }
 

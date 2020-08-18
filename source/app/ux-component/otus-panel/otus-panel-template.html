@@ -1,9 +1,10 @@
 <div>
   <div class="otus-panel md-whiteframe-1dp" flex="90" flex-offset="5" layout="column">
     <div layout-padding layout-margin layout="column">
-      <div class="otus-panel-subheader" ng-style="{'background':'linear-gradient(to right, {{$ctrl.colorLeft}}, {{$ctrl.colorRight}})'}">
+      <md-toolbar class="otus-panel-subheader"
+                  ng-style="{'background':'linear-gradient(to right, {{$ctrl.colorLeft}}, {{$ctrl.colorRight}})'}">
         {{$ctrl.headerLabel}}
-      </div>
+      </md-toolbar>
     </div>
     <div layout-align="{{$ctrl.align}}" layout-wrap layout="row" flex style="margin:10px" ng-transclude>
     </div>

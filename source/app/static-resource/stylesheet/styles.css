@@ -28,7 +28,7 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
 .selectedState {
   border-style: solid;
   border-width: 0px 0px 0px 8px;
-  border-color: #009688;
+  /*border-color: #009688; defined at theme-styles.js*/
   background: rgba(68, 68, 68, 0.04);
 }
 
@@ -77,7 +77,6 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
 /** participant-search **/
 
 .md-autocomplete-participant {
-  background-color: #299288 !important;
   border-radius: 4px !important;
   border: none !important;
   box-shadow: none !important;
@@ -122,25 +121,6 @@ md-input-container.hide-error-msg .md-errors-spacer:empty {
   padding-top: 8px;
   padding-bottom: 8px;
   white-space: normal;
-}
-
-otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
-  color: rgb(255, 255, 255) !important;
-}
-otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button {
-  color: rgb(255, 255, 255) !important;
-}
-
-otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
-  color: rgb(255, 255, 255) !important;
-}
-
-otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {
-  fill: rgb(255, 254, 254) !important;
-}
-
-otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete {
-  color: rgb(255, 255, 255) !important;
 }
 
 .autocomplete-custom-participant-template li:last-child {
@@ -254,34 +234,6 @@ md-content.no-background-color {
   font-family: arial;
 }
 
-.dtp>.dtp-content>.dtp-date-view>header.dtp-header {
-  background: rgb(0, 121, 107) !important;
-}
-
-.dtp div.dtp-date, .dtp div.dtp-time {
-  background: rgb(0, 150, 136) !important;
-}
-
-.dtp table.dtp-picker-days tr>td>a.selected {
-  background: rgb(0, 121, 107) !important;
-}
-
-.dtp table.dtp-picker-days tr>td>a.hilite:not(.selected) {
-  color: rgb(0, 150, 136) !important;
-}
-
-.dtp .dtp-picker-time>a.dtp-select-hour.selected {
-  background: rgb(0, 121, 107) !important;
-}
-
-.dtp .dtp-hand.on {
-  background: rgb(0, 150, 136) !important;
-}
-
-.dtp .dtp-actual-meridien a.selected {
-  background: rgb(0, 150, 136) !important;
-}
-
 .iconInverted {
   -moz-transform: scaleX(-1);
   -o-transform: scaleX(-1);
@@ -310,19 +262,13 @@ md-content.no-background-color {
   width: auto;
 }
 
-.toolbarInfo {
-  background-color: rgb(0, 145, 234) !important;
-}
-
 .otus-panel{
   margin-top: 20px;
   margin-bottom: 20px;
-  background-color: #f5f7f9;
   padding: 10px;
 }
 
 .otus-panel-subheader{
-  color:white;
   font-size: 1.2em;
   border-radius: 3px;
   position: relative;
@@ -403,10 +349,6 @@ md-sidenav.md-closed.md-locked-open-add-active {
   max-width: 360px !important;
 }
 
-md-tabs.md-default-theme md-ink-bar, md-tabs md-ink-bar {
-  color: rgb(0,121,107);
-  background: rgb(0,121,107);
-}
 md-tab-content{
   margin-top: 10px !important;
 }
@@ -447,3 +389,4 @@ max-width: 100% !important;
   word-break: break-all !important;
   overflow: hidden !important;
 }
+

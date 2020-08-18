@@ -1,5 +1,6 @@
 <div id="user-login-page" layout="column" flex>
-  <img src="static-resource/image/banner.png" style="width: 100%;">
+  <img ng-src="{{$ctrl.bannerURL}}" style="width: 100%;">
+
   <div flex layout="row" layout-align="center start" ng-if="!$ctrl.recovery" style="background-color: #FFFFFF">
     <md-card class="card" layout-padding flex-gt-sm="45" flex="80">
       <form name="$ctrl.signupForm" class="content" novalidate flex="" layout-fill layout-align="start start" layout="row">

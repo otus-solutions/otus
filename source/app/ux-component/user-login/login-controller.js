@@ -13,16 +13,19 @@
     'otusjs.application.state.ApplicationStateService',
     'otusjs.user.access.service.UserAccessRecoveryService',
     'otusjs.application.verifyBrowser.VerifyBrowserService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'THEME_CONSTANTS'
   ];
 
-  function Controller($scope, $mdDialog, $mdToast, LoginService, ApplicationStateService, UserAccessRecoveryService, VerifyBrowserService, DialogService) {
-    const LOGIN_ERROR_MESSAGE = 'Login Inválido! Verifique os dados informados.';
-    const SERVER_ERROR_MESSAGE = 'Erro interno do servidor.';
-    const PATH = '/access-recovery'
-    var _errorMessage = $mdToast.simple().textContent(LOGIN_ERROR_MESSAGE);
-    var self = this;
-    var successMessage;
+  function Controller($scope, $mdDialog, $mdToast,
+                      LoginService, ApplicationStateService, UserAccessRecoveryService, VerifyBrowserService, DialogService, THEME_CONSTANTS) {
+
+    const self = this;
+
+    const PATH = '/access-recovery';
+    const ERROR_MESSAGE = $mdToast.simple().textContent('Login Inválido! Verifique os dados informados.');
+
+    let successMessage;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -34,6 +37,7 @@
     self.goBack = goBack;
 
     function onInit() {
+      self.bannerURL = THEME_CONSTANTS.imageURLs.banner;
       VerifyBrowserService.verify();
     }
 
@@ -103,7 +107,7 @@
     }
 
     function _onLoginError() {
-      $mdToast.show(_errorMessage);
+      $mdToast.show(ERROR_MESSAGE);
     }
   }
 }());

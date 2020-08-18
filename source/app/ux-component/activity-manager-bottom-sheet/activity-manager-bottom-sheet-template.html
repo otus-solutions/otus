@@ -40,7 +40,11 @@
       <md-tooltip md-direction="top">Excluir</md-tooltip>
       <md-icon md-font-set="material-icons"  style="color: white" aria-label="Excluir">delete</md-icon>
     </md-button>
-    <md-badge ng-if="$ctrl.selectedItemCounter" style="position: absolute; left: 50.5%; top: 10px;">{{$ctrl.selectedItemCounter}}</md-badge>
+    <md-badge ng-if="$ctrl.selectedItemCounter"
+              ng-style="{position: 'absolute', left: '50.5%', top: '10px', backgroundColor: $ctrl.selectedItemCounterBackgroundColor}">
+      {{$ctrl.selectedItemCounter}}
+    </md-badge>
+
     <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Detalhes"
                ng-click="$ctrl.visualizeSelectedActivityInfo()"
                ng-show="$ctrl.showInfoButton">

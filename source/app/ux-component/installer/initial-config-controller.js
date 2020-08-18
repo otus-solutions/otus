@@ -13,15 +13,17 @@
     '$scope',
     '$mdToast',
     '$q',
-    '$mdDialog'
+    '$mdDialog',
+    'THEME_CONSTANTS'
   ];
 
-  function Controller(ApplicationStateService, DialogService, OtusRestResourceService, RestResourceService, $scope, $mdToast, $q, $mdDialog) {
-    var MESSAGE_CONFIGURATIONS_ERROR = 'Erro ao adicionar novas configurações. Contate a equipe de desenvolvimento';
-    var MESSAGE_SUCCESS = 'Suas configurações foram realizadas com sucesso! Você vai ser redirecionado para a tela de login.';
-    var installerResource;
+  function Controller(ApplicationStateService, DialogService, OtusRestResourceService, RestResourceService,
+                      $scope, $mdToast, $q, $mdDialog, THEME_CONSTANTS) {
+    const MESSAGE_CONFIGURATIONS_ERROR = 'Erro ao adicionar novas configurações. Contate a equipe de desenvolvimento';
+    const MESSAGE_SUCCESS = 'Suas configurações foram realizadas com sucesso! Você vai ser redirecionado para a tela de login.';
+    let installerResource;
 
-    var self = this;
+    const self = this;
     self.register = register;
     self.validateDomain = validateDomain;
     self.resetValidationEmail = resetValidationEmail;
@@ -34,6 +36,8 @@
     init();
 
     function init() {
+      self.bannerImage = THEME_CONSTANTS.imageURLs.banner;
+      console.log(self.bannerImage)
       installerResource = OtusRestResourceService.getOtusInstallerResource();
       $scope.step = 1;
       $scope.invalidDomain = true;

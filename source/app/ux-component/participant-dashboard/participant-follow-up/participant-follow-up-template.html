@@ -7,6 +7,6 @@
                   is-first-follow-up="$index == 0" layout="row" layout-align="center center"></otus-follow-up>
 </md-content>
 <div ng-if="$ctrl.hasError" layout="column" layout-align="center center" flex>
-  <img src="static-resource/image/coruja_pesquisadora.png">
+  <img ng-src="{{$ctrl.iconImage}}">
   <p class="md-title">{{$ctrl.errorMessage}}</p>
 </div>

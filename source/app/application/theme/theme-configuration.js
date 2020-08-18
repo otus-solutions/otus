@@ -7,38 +7,35 @@
 
   Configuration.$inject = [
     '$mdThemingProvider',
-    '$mdIconProvider'
+    '$mdIconProvider',
+    'THEME_CONSTANTS',
+    'THEME_STYLES_REGISTER'
   ];
 
-  function Configuration($mdThemingProvider, $mdIconProvider) {
-    var newLightBlueMap = $mdThemingProvider.extendPalette('light-blue', {
-      '500': '#ffffff',
-      'contrastDarkColors': ['500','A100','A400']
-    });
-    $mdThemingProvider.definePalette('new-light-blue', newLightBlueMap);
+  function Configuration($mdThemingProvider, $mdIconProvider, THEME_CONSTANTS, THEME_STYLES_REGISTER) {
 
+    /* Configuration icons - 24 is the size default of icons */
+    $mdIconProvider.defaultIconSet(THEME_CONSTANTS.imageURLs.icons.mdi, 24);
+
+    if(THEME_CONSTANTS.palette){
+      for(let [paletteName, palette] of Object.entries(THEME_CONSTANTS.palette)){
+        const newMap = $mdThemingProvider.extendPalette(palette.baseName, palette.map);
+        $mdThemingProvider.definePalette(paletteName, newMap);
+      }
+    }
+
+    const theme = THEME_CONSTANTS.theme;
     $mdThemingProvider.theme('default')
-      .primaryPalette('teal', {
-        'default': '700',
-        'hue-1': '500',
-        'hue-2': '600',
-        'hue-3': '800'
-      })
-      .accentPalette('new-light-blue', {
-        'default': 'A700',
-        'hue-1': '500',
-        'hue-2': 'A100',
-        'hue-3': 'A400'
-      })
-      .warnPalette('red', {
-        'default': 'A200',
-        'hue-2': 'A100',
-        'hue-3': 'A400'
-      })
-      .backgroundPalette('grey');
+      .primaryPalette(theme.primary.main, theme.primary.pallete)
+      .accentPalette(theme.accent.main, theme.accent.pallete)
+      .warnPalette(theme.warn.main, theme.warn.pallete)
+      .backgroundPalette(theme.background);
 
-    /*Configuration icons*/
-    /* 24 is the size default of icons */
-    $mdIconProvider.defaultIconSet('static-resource/image/icons/mdi.svg', 24);
+    $mdThemingProvider.alwaysWatchTheme(true);
+
+    THEME_STYLES_REGISTER.REGISTERED_STYLES.forEach(style => {
+      $mdThemingProvider.registerStyles(style);
+    });
   }
+
 }());

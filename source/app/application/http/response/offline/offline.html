@@ -1,21 +1,18 @@
 <div layout="row" flex>
     <div layout="column" flex>
-        <div layout="row" layout-align="center center" style="background-color:#006064"
-        flex="20">
-            <span class="md-display-3 project-name">
-                Otus
+        <div layout="row" layout-align="center center" ng-style="$ctrl.titleStyle" flex="20">
+            <span class="md-display-3" >
+                {{$ctrl.title}}
             </span>
         </div>
         <div layout-padding layout-margin layout-sm="column" layout="row" layout-align="center center">
             <div>
-                <img src="static-resource/image/otus-crash.png" />
+                <img ng-src="{{$ctrl.crashImageURL}}" />
             </div>
             <div layout-padding>
                 <div>
                     <p class="md-display-2">OFFLINE !</p>
-                    <p class="md-body-1">
-                        Nosso sistema esta temporariamente fora do ar.
-                    </p>
+                    <p class="md-body-1">Nosso sistema esta temporariamente fora do ar.</p>
                     <p class="md-body-1">Isso pode ter ocorrido devido alguma manutenção preventiva
                         ou dificuldade tecnica.</p>
                 </div>

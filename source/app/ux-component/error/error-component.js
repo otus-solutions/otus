@@ -8,8 +8,19 @@
       templateUrl: 'app/ux-component/error/error-template.html'
     });
 
-  Controller.$inject = [];
+  Controller.$inject = [
+    'THEME_CONSTANTS'
+  ];
 
-  function Controller() {
+  function Controller(THEME_CONSTANTS) {
+    const self = this;
+    self.$onInit = onInit;
+
+    function onInit(){
+      self.title = THEME_CONSTANTS.projectName;
+      self.imageURL = THEME_CONSTANTS.imageURLs.icon;
+    }
+
   }
+
 })();
