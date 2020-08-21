@@ -89,20 +89,24 @@
       $mdDialog.cancel();
     }
 
-    function showActivitySharingDialog(data) {
-      self.data = data;
-      self.data.cancel = cancel;
+    function showActivitySharingDialog() {
+      let data = {
+        dialogToTitle: 'Compartilhamento',
+        titleToText: 'Informações',
+        textDialog: 'Link',
+        ariaLabel: 'compartilhamento',
+        cancel: cancel
+      };
 
       return $mdDialog.show({
         controller: 'activititySharingDialogShowController',
-        locals: { data: self.data },
+        controllerAs:"$ctrl",
+        locals: { data: data },
         templateUrl: 'app/ux-component/dialog-show/activity-sharing/activity-sharing-dialog-show-template.html',
         parent: angular.element(document.body),
-        controllerAs:"$ctrl",
         clickOutsideToClose: true
       });
     }
-
 
   }
 }());

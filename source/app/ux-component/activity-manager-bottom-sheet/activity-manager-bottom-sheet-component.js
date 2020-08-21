@@ -252,14 +252,7 @@
     }
 
     function activitySharingDialog() {
-      let data = {
-        dialogToTitle: 'Compartilhamento',
-        titleToText: 'Informações',
-        textDialog: 'Link',
-        ariaLabel: 'compartilhamento'
-      };
-
-      DialogService.showActivitySharingDialog(data);
+      DialogService.showActivitySharingDialog();
     }
 
   }
