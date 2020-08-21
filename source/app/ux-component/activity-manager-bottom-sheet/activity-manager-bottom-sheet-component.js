@@ -128,6 +128,7 @@
         self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() != undefined ? true : false;
         self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name;
         self.selectedItemCounter = null;
+        self.showActivitySharing = isAutoFill;
       } else {
         self.showBottomSheet = true;
         self.showVisualizationButton = false;
@@ -138,6 +139,7 @@
         self.showPendenciesButton = false;
         self.isPaperActivity = false;
         self.selectedItemCounter = selectedActivities.length;
+        self.showActivitySharing = false;
       }
 
        self.selectedActivity = angular.copy(selectedActivities[0]);
@@ -250,7 +252,8 @@
     }
 
     function activitySharingDialog() {
-      alert("Activity sharing")
+      console.log(self.selectedActivity)
+      alert(self.selectedActivity.mode)
     }
 
   }

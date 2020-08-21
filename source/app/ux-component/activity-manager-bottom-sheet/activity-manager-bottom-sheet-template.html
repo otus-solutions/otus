@@ -22,12 +22,21 @@
                                  ng-show="$ctrl.showPendenciesButton">
     </otus-user-activity-pendency>
 
+    <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="compartilhamento de atividade"
+               ng-click="$ctrl.activitySharingDialog()"
+               ng-show="$ctrl.showActivitySharing">
+      <md-tooltip md-direction="top">Compartilhamento</md-tooltip>
+      <md-icon aria-label="Compartilhamento de atividade">connect_without_contact</md-icon>
+    </md-button>
+
+
     <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"
                ng-click="$ctrl.viewSelectedActivity()"
                ng-show="$ctrl.showViewerButton">
       <md-tooltip md-direction="top">Visualizar Atividade</md-tooltip>
       <md-icon aria-label="Visualizar Atividade">playlist_add_check</md-icon>
     </md-button>
+
     <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Alterar Aferidor"
                ng-click="$ctrl.updateChecker()"
                ng-show="$ctrl.isPaperActivity">
@@ -52,12 +61,8 @@
       <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>
     </md-button>
 
-    <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="compartilhamento de atividade"
-               ng-click="$ctrl.activitySharingDialog()"
-               ng-show="$ctrl.showInfoButton">
-      <md-tooltip md-direction="top">Compartilhamento</md-tooltip>
-      <md-icon aria-label="Compartilhamento de atividade">connect_without_contact</md-icon>
-    </md-button>
+
+
 
   </div>
 </md-bottom-sheet>
