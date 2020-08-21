@@ -15,6 +15,7 @@
     self.showDialog = showDialog;
     self.showConfirmationDialog = showConfirmationDialog;
     self.showCustomizedDialog = showCustomizedDialog;
+    self.showActivitySharingDialog = showActivitySharingDialog;
 
     function showDialog(data) {
       self.data = data;
@@ -87,6 +88,21 @@
     function cancel() {
       $mdDialog.cancel();
     }
+
+    function showActivitySharingDialog(data) {
+      self.data = data;
+      self.data.cancel = cancel;
+
+      return $mdDialog.show({
+        controller: 'activititySharingDialogShowController',
+        locals: { data: self.data },
+        templateUrl: 'app/ux-component/dialog-show/activity-sharing/activity-sharing-dialog-show-template.html',
+        parent: angular.element(document.body),
+        controllerAs:"$ctrl",
+        clickOutsideToClose: true
+      });
+    }
+
 
   }
 }());

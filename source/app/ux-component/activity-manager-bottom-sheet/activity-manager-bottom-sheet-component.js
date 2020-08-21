@@ -252,8 +252,14 @@
     }
 
     function activitySharingDialog() {
-      console.log(self.selectedActivity)
-      alert(self.selectedActivity.mode)
+      let data = {
+        dialogToTitle: 'Compartilhamento',
+        titleToText: 'Informações',
+        textDialog: 'Link',
+        ariaLabel: 'compartilhamento'
+      };
+
+      DialogService.showActivitySharingDialog(data);
     }
 
   }
