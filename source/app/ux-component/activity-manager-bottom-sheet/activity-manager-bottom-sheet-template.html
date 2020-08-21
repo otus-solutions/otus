@@ -51,5 +51,13 @@
       <md-tooltip md-direction="top">Detalhes</md-tooltip>
       <md-icon md-svg-icon="information" aria-label="Detalhes"></md-icon>
     </md-button>
+
+    <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="compartilhamento de atividade"
+               ng-click="$ctrl.activitySharingDialog()"
+               ng-show="$ctrl.showInfoButton">
+      <md-tooltip md-direction="top">Compartilhamento</md-tooltip>
+      <md-icon aria-label="Compartilhamento de atividade">connect_without_contact</md-icon>
+    </md-button>
+
   </div>
 </md-bottom-sheet>

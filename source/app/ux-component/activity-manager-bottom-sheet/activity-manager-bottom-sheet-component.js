@@ -42,6 +42,7 @@
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
     self.updateChecker = updateChecker;
     self.DialogController = DialogController;
+    self.activitySharingDialog = activitySharingDialog;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -246,6 +247,10 @@
         self.selectedActivity = null;
       }
 
+    }
+
+    function activitySharingDialog() {
+      alert("Activity sharing")
     }
 
   }
