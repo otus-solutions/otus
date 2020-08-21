@@ -64,12 +64,12 @@
       if ('PAPER' === activity.mode) {
         return {
           name: 'Em papel',
-          icon: 'file-document'
+          icon: 'description'
         };
       } else if ('ONLINE' === activity.mode) {
         return {
           name: 'Online',
-          icon: 'signal'
+          icon: 'signal_cellular_alt'
         };
       } else if ('AUTOFILL' === activity.mode){
         return {
