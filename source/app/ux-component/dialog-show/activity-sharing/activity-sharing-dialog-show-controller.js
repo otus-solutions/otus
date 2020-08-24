@@ -6,34 +6,39 @@
     .controller('activititySharingDialogShowController', Controller);
 
   function Controller(data) {
-    var vm = this;
+    let self = this;
     var DEFAULT_DIMENSIONS = {'min-height':'200px', 'min-width':'300px'};
 
-    vm.titleToDialog = data.dialogToTitle;
-    vm.title =  data.titleToText;
-    vm.text = data.textDialog;
+    self.titleToDialog = data.dialogToTitle;
+    self.title =  data.titleToText;
+    self.text = data.textDialog;
 
-    // vm.showTextInput = !!data.textInputConfig;
-    // if (vm.showTextInput){
-    //   vm.textInputLabel = data.textInputConfig ? data.textInputConfig.label : "";
-    //   vm.textInputAriaLabel = data.textInputConfig ? data.textInputConfig.ariaLabel : "";
+    self.linkTypes = [
+      {title: "Somente link", action: "link"},
+      {title: "Identificação + link", action: "fullLink"}
+    ];
+
+    // self.showTextInput = !!data.textInputConfig;
+    // if (self.showTextInput){
+    //   self.textInputLabel = data.textInputConfig ? data.textInputConfig.label : "";
+    //   self.textInputAriaLabel = data.textInputConfig ? data.textInputConfig.ariaLabel : "";
     // }
     //
-    // vm.showDropDown = !!data.dropDownConfig;
-    // if(vm.showDropDown){
-    //   vm.dropDownValues = data.dropDownConfig.values ? data.dropDownConfig.values : [];
-    //   vm.dropDownIsRequired = data.dropDownConfig.isRequired ? data.dropDownConfig.isRequired : false;
-    //   vm.dropDownLabel = data.dropDownConfig.label ? data.dropDownConfig.label : "";
-    //   vm.dropDownAriaLabel = data.dropDownConfig.ariaLabel ? data.dropDownConfig.ariaLabel : "";
+    // self.showDropDown = !!data.dropDownConfig;
+    // if(self.showDropDown){
+    //   self.dropDownValues = data.dropDownConfig.values ? data.dropDownConfig.values : [];
+    //   self.dropDownIsRequired = data.dropDownConfig.isRequired ? data.dropDownConfig.isRequired : false;
+    //   self.dropDownLabel = data.dropDownConfig.label ? data.dropDownConfig.label : "";
+    //   self.dropDownAriaLabel = data.dropDownConfig.ariaLabel ? data.dropDownConfig.ariaLabel : "";
     // }
-    // vm.labelAria = data.ariaLabel;
-    // vm.img = data.imgSrc;
-    // vm.style = data.imgStyle;
-    // vm.buttons = data.buttons;
-    // vm.cancel = data.cancel;
+    // self.labelAria = data.ariaLabel;
+    // self.img = data.imgSrc;
+    // self.style = data.imgStyle;
+    // self.buttons = data.buttons;
+    // self.cancel = data.cancel;
     //
     // /* Public methods */
-    // vm.isAvailableImage = isAvailableImage;
+    // self.isAvailableImage = isAvailableImage;
     //
     // _useDefaultDimensions();
     //
@@ -43,9 +48,9 @@
     //
     // function _useDefaultDimensions() {
     //   if(!data.dimensionsDialog){
-    //     vm.dialogDimensions = DEFAULT_DIMENSIONS;
+    //     self.dialogDimensions = DEFAULT_DIMENSIONS;
     //   } else {
-    //     vm.dialogDimensions = data.dimensionsDialog;
+    //     self.dialogDimensions = data.dimensionsDialog;
     //   }
     // }
   }

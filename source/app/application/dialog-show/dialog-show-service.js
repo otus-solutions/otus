@@ -85,15 +85,12 @@
       });
     }
 
-    function cancel() {
-      $mdDialog.cancel();
-    }
 
     function showActivitySharingDialog() {
       let data = {
         dialogToTitle: 'Compartilhamento',
-        titleToText: 'Informações',
-        textDialog: 'Link',
+        // titleToText: 'Informações',
+        // textDialog: 'Link',
         ariaLabel: 'compartilhamento',
         cancel: cancel
       };
@@ -106,6 +103,10 @@
         parent: angular.element(document.body),
         clickOutsideToClose: true
       });
+    }
+
+    function cancel() {
+      $mdDialog.cancel();
     }
 
   }
