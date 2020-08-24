@@ -1,50 +1,35 @@
-<style>
-  .linkDataCard{
-    background: #dedede;
-    /*padding-right: 70px;*/
+<md-dialog>
+  <form>
+    <md-toolbar class="md-primary md-toolbar-tools">
+        <h2><span>Compartilhamento atividade</span></h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="$ctrl.cancel() " aria-label="Fechar">
+          <md-icon aria-label="Fechar">close</md-icon>
+          <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+        </md-button>
+    </md-toolbar>
 
-  }
-</style>
+    <div layout="row" layout-align="space-between center" ng-if="true">
+      <md-button class="md-icon md-mini md-primary"><md-icon>link</md-icon></md-button>
+      <span class="md-title label-light-gray">Geração de Link</span>
 
-<md-toolbar style="z-index: 1" class="md-primary md-hue-1">
-  <div class="md-toolbar-tools">
-    <h2><span>Compartilhamento</span></h2>
-    <span flex></span>
-    <md-button class="md-icon-button" ng-click="$ctrl.cancel() "aria-label="Fechar">
-      <md-icon aria-label="Fechar">close</md-icon>
-      <md-tooltip md-direction="bottom">Fechar</md-tooltip>
-    </md-button>
-  </div>
-</md-toolbar>
-
-<div layout="row" flex layout-align="start center">
-  <div layout-margin layout="row" layout-align="space-between center" layout-xs="column" layout-fill>
-    <div layout-margin layout="column" class="label-light-gray">
-      <span class="md-title">Link da atividade</span>
-      <span class="md-body-1">Escolha o tipo de dado:</span>
-
-      <md-radio-group ng-model="$ctrl.linkTypes.action" aria-labelledby="selectedAvatar">
-        <md-radio-button ng-repeat="choice in $ctrl.linkTypes"
-                         ng-value="choice.title"
-                         aria-label="{{choice.title}}">
-          <span class="md-body-1">{{choice.title}}</span>
-        </md-radio-button>
-      </md-radio-group>
+      <md-button class="md-icon md-mini md-warn"><md-icon>delete</md-icon></md-button>
     </div>
-    <md-card class="linkDataCard" layout-padding flex>
-      <span class="md-body-2">Dados</span>
-      <span class="md-caption">Atividade: TESTE</span>
-      <span class="md-caption">Participante:</span>
-      <span class="md-caption">Teste do nome</span>
 
-    </md-card>
-  </div>
-</div>
-<md-dialog-actions layout="row" layout-xs="column">
-  <md-button ng-click="" class="md-raised md-primary" aria-label="Salvar" ng-disabled=false>
-    copiar para área de transferência
-  </md-button>
-  <md-button ng-click="vm.cancel()" class="md-raised md-no-focus" aria-label="Cancelar">
-    Cancelar
-  </md-button>
-</md-dialog-actions>
+  <md-dialog-content layout-margin>
+    <div layout="column" class="label-light-gray" layout-align="center start" layout-padding>
+      <span class="md-subhead">Participante: Maria Lúcia Camargo Ribeiro Silva da costa</span>
+      <span class="md-subhead">Atividade: TCLE</span>
+    </div>
+    <div layout="column">
+      <md-button ng-click="" class="md-raised md-primary" aria-label="Salvar" ng-disabled=false layout-fill >
+        link
+      </md-button>
+      <md-button ng-click="vm.cancel()" class="md-raised md-no-focus" aria-label="Cancelar" layout-fill>
+        mensagem
+      </md-button>
+    </div>
+  </md-dialog-content>
+
+  </form>
+</md-dialog>
