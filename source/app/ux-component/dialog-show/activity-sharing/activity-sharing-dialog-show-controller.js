@@ -5,18 +5,38 @@
     .module('otusjs.otus.uxComponent')
     .controller('activititySharingDialogShowController', Controller);
 
-  function Controller(data) {
+  Controller.$inject = [
+    'otusjs.activity.business.ActivitySharingService'
+
+
+    // 'otusjs.application.state.ApplicationStateService'
+  ];
+
+  function Controller(activitySharingService) {
     let self = this;
     var DEFAULT_DIMENSIONS = {'min-height':'200px', 'min-width':'300px'};
 
-    self.titleToDialog = data.dialogToTitle;
-    self.title =  data.titleToText;
-    self.text = data.textDialog;
+    self.$onInit = onInit;
+    self.getSharedLink = getSharedLink;
 
-    self.linkTypes = [
-      {title: "Somente link", action: "link"},
-      {title: "Identificação + link", action: "fullLink"}
-    ];
+    function onInit() {
+      getSharedLink("teste")
+    }
+
+
+    function getSharedLink(activityId){
+      alert(activitySharingService.getSharedLink(activityId));
+      return;
+    }
+
+    // self.titleToDialog = data.dialogToTitle;
+    // self.title =  data.titleToText;
+    // self.text = data.textDialog;
+
+    // self.linkTypes = [
+    //   {title: "Somente link", action: "link"},
+    //   {title: "Identificação + link", action: "fullLink"}
+    // ];
 
     // self.showTextInput = !!data.textInputConfig;
     // if (self.showTextInput){
