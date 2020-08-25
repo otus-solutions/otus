@@ -1,35 +1,73 @@
+<style>
+  .content-share {
+    background-color: #dedede;
+    padding: 0.5em;
+  }
+
+  .md-whiteframe-1dp {
+    background-color: #FFFFFF;
+    padding-left: 0.5em;
+  }
+
+  md-chips.md-default-theme .md-chips, md-chips .md-chips {
+    box-shadow: none;
+  }
+
+
+</style>
+
 <md-dialog>
   <form>
     <md-toolbar class="md-primary md-toolbar-tools">
-        <h2><span>Compartilhamento atividade</span></h2>
-        <span flex></span>
-        <md-button class="md-icon-button" ng-click="$ctrl.cancel() " aria-label="Fechar">
-          <md-icon aria-label="Fechar">close</md-icon>
-          <md-tooltip md-direction="bottom">Fechar</md-tooltip>
-        </md-button>
+      <span class="md-subhead">COMPARTILHAMENTO DE ATIVIDADE</span>
+      <span flex></span>
+      <md-button class="md-icon-button" ng-click="$ctrl.cancel() " aria-label="Fechar">
+        <md-icon aria-label="Fechar">close</md-icon>
+        <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+      </md-button>
     </md-toolbar>
 
-    <div layout="row" layout-align="space-between center" ng-if="true">
-      <md-button class="md-icon md-mini md-primary"><md-icon>link</md-icon></md-button>
-      <span class="md-title label-light-gray">Geração de Link</span>
+    <!--    <div layout="row" layout-align="space-between center" ng-if="true">-->
+    <!--      <md-button class="md-icon md-mini md-primary"><md-icon>link</md-icon></md-button>-->
+    <!--      <span class="md-title label-light-gray">Geração de Link</span>-->
 
-      <md-button class="md-icon md-mini md-warn"><md-icon>delete</md-icon></md-button>
-    </div>
+    <!--    </div>-->
 
-  <md-dialog-content layout-margin>
-    <div layout="column" class="label-light-gray" layout-align="center start" layout-padding>
-      <span class="md-subhead">Participante: Maria Lúcia Camargo Ribeiro Silva da costa</span>
-      <span class="md-subhead">Atividade: TCLE</span>
-    </div>
-    <div layout="column">
-      <md-button ng-click="" class="md-raised md-primary" aria-label="Salvar" ng-disabled=false layout-fill >
-        link
-      </md-button>
-      <md-button ng-click="vm.cancel()" class="md-raised md-no-focus" aria-label="Cancelar" layout-fill>
-        mensagem
-      </md-button>
-    </div>
-  </md-dialog-content>
+    <md-dialog-content class="content-share">
+      <div layout="column" layout-margin>
+        <div layout="row" layout-align="space-between center">
+          <md-chips class="md-primary md-body-1">
+            <md-chip md-colors="{background: 'primary'}">TCLE</md-chip>
+          </md-chips>
+          <span>TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO</span>
+          <md-button class="md-icon-button" ng-click="">
+            <md-icon class="md-warn">delete</md-icon>
+          </md-button>
+        </div>
+        <div layout="row" layout-align="center">
+          <span class="md-body-2">Maria Lúcia Camargo Ribeiro Silva da costa</span>
+        </div>
+        <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
+          <span aria-label="Cancelar">Válido até: 25/08/2020</span>
+          <md-button class="md-icon-button" ng-click="" aria-label="atualizar link">
+            <md-icon class="">autorenew</md-icon>
+          </md-button>
+        </div>
+
+        <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
+          <span aria-label="Cancelar">http://otus.hmg.ccem.ufgrs.br/..</span>
+          <md-button class="md-icon-button" ng-click="" aria-label="copiar link">
+            <md-icon class="">content_copy</md-icon>
+          </md-button>
+        </div>
+
+        <div>
+          <md-button ng-click="" class="md-raised md-primary" aria-label="Salvar" ng-disabled=false layout-fill>
+            copiar informações de compartilhamento
+          </md-button>
+        </div>
+      </div>
+    </md-dialog-content>
 
   </form>
 </md-dialog>
