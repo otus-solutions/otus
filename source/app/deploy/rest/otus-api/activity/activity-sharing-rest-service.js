@@ -17,11 +17,11 @@
     self.getSharedLink = getSharedLink;
 
     function initialize() {
-      _rest = OtusRestResourceService.ActivitySharingResourceFactory();
+      _rest = OtusRestResourceService.getActivitySharingResourceFactory();
     }
 
     function getSharedLink(activityId){
-      return _rest.getSharedLink({ id: activityId }).$promise;
+      return _rest.getSharedURL({ id: activityId }).$promise;
     }
   }
 
