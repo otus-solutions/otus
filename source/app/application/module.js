@@ -16,7 +16,6 @@
       'otusjs.application.state',
       'otusjs.application.http',
       'otusjs.application.locale',
-      'otusjs.application.theme',
       'otusjs.application.verifyBrowser',
       'otusjs.application.exam'
     ])
