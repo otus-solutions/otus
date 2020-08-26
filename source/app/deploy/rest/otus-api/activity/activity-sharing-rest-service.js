@@ -14,9 +14,14 @@
     let _rest = null;
 
     self.initialize = initialize;
+    self.getSharedLink = getSharedLink;
 
     function initialize() {
-      // _rest = OtusRestResourceService.get.ActivitySharingResource();
+      _rest = OtusRestResourceService.ActivitySharingResourceFactory();
+    }
+
+    function getSharedLink(activityID){
+      return _rest.getSharedLink(activityID);
     }
   }
 

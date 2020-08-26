@@ -24,8 +24,8 @@
     }
 
 
-    function getSharedLink(activityId){
-      alert(activitySharingService.getSharedLink(activityId));
+    function getSharedLink(activityID){
+      console.log(activitySharingService.getSharedLink(activityID));
       return;
     }
 
