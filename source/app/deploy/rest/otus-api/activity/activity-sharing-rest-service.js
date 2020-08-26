@@ -14,13 +14,13 @@
     let _rest = null;
 
     self.initialize = initialize;
-    self.getSharedLink = getSharedLink;
+    self.getSharedURL = getSharedURL;
 
     function initialize() {
       _rest = OtusRestResourceService.getActivitySharingResourceFactory();
     }
 
-    function getSharedLink(activityId){
+    function getSharedURL(activityId){
       return _rest.getSharedURL({ id: activityId }).$promise;
     }
   }

@@ -11,19 +11,19 @@
   function Service(ActivitySharingCollectionService) {
     const self = this;
 
-    self.getSharedLink = getSharedLink;
-    self.renovateSharedLink = renovateSharedLink;
-    self.deleteSharedLink = deleteSharedLink;
+    self.getSharedURL = getSharedURL;
+    self.renovateSharedURL = renovateSharedURL;
+    self.deleteSharedURL = deleteSharedURL;
 
-    function getSharedLink(activityId) {
-      return ActivitySharingCollectionService.getSharedLink(activityId);
+    function getSharedURL(activityId) {
+      return ActivitySharingCollectionService.getSharedURL(activityId);
     }
 
-    function renovateSharedLink(sharedLinkId) {
+    function renovateSharedURL(sharedLinkId) {
       return "renovate sharedLink";
     }
 
-    function deleteSharedLink(sharedLinkId) {
+    function deleteSharedURL(sharedLinkId) {
       return sharedLinkId;
     }
 

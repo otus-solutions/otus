@@ -44,7 +44,7 @@
     self.getActivityRevisions = getActivityRevisions;
     self.importActivities = importActivities;
     self.createFollowUpActivity = createFollowUpActivity;
-    self.getSharedLink = getSharedLink;
+    self.getSharedURL = getSharedURL;
 
     /**
      * Adds activities to collection.
@@ -303,8 +303,8 @@
       return deferred.promise;
     }
 
-    function getSharedLink(activityId) {
-      return ActivitySharingRestService.getSharedLink(activityId);
+    function getSharedURL(activityId) {
+      return ActivitySharingRestService.getSharedURL(activityId);
     }
   }
 }());

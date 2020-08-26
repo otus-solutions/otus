@@ -12,10 +12,10 @@
   function Service(ActivityRemoteStorageService){
     const self = this;
 
-    self.getSharedLink = getSharedLink;
+    self.getSharedURL = getSharedURL;
 
-    function getSharedLink(activityId){
-      return ActivityRemoteStorageService.getSharedLink(activityId);
+    function getSharedURL(activityId){
+      return ActivityRemoteStorageService.getSharedURL(activityId);
     }
   }
 
