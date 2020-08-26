@@ -14,8 +14,8 @@
 
     self.getSharedLink = getSharedLink;
 
-    function getSharedLink(activityID){
-      return ActivityRemoteStorageService.getSharedLink(activityID);
+    function getSharedLink(activityId){
+      return ActivityRemoteStorageService.getSharedLink(activityId);
     }
   }
 

@@ -303,8 +303,8 @@
       return deferred.promise;
     }
 
-    function getSharedLink(activityID) {
-      return ActivitySharingRestService.getSharedLink(activityID);
+    function getSharedLink(activityId) {
+      return ActivitySharingRestService.getSharedLink(activityId);
     }
   }
 }());

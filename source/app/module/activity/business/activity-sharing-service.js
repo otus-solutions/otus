@@ -15,8 +15,8 @@
     self.renovateSharedLink = renovateSharedLink;
     self.deleteSharedLink = deleteSharedLink;
 
-    function getSharedLink(activityID) {
-      return ActivitySharingCollectionService.getSharedLink(activityID);
+    function getSharedLink(activityId) {
+      return ActivitySharingCollectionService.getSharedLink(activityId);
     }
 
     function renovateSharedLink(sharedLinkId) {

@@ -20,8 +20,8 @@
       _rest = OtusRestResourceService.ActivitySharingResourceFactory();
     }
 
-    function getSharedLink(activityID){
-      return _rest.getSharedLink(activityID);
+    function getSharedLink(activityId){
+      return _rest.getSharedLink({ id: activityId }).$promise;
     }
   }
 
