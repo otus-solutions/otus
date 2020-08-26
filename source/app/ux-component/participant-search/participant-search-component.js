@@ -20,6 +20,7 @@
   Controller.$inject = [
     'STATE',
     '$q',
+    '$mdColors',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.otus.dashboard.core.ContextService',
@@ -28,7 +29,7 @@
     'otusjs.genericListViewer.GenericListViewerService'
   ];
 
-  function Controller(STATE, $q, ParticipantManagerService, ApplicationStateService,
+  function Controller(STATE, $q, $mdColors, ParticipantManagerService, ApplicationStateService,
                       DashboardContextService, $mdDialog, DialogService, GenericListViewerService) {
     var self = this;
 
@@ -45,9 +46,14 @@
 
     function onInit() {
       self.inputedText = '';
-      self.autoCompleteClass = (ApplicationStateService.getCurrentState() === STATE.DASHBOARD ?
-        'md-dashboard-autocomplete' :
-        'md-autocomplete-participant');
+      if(ApplicationStateService.getCurrentState() === STATE.DASHBOARD){
+        self.autoCompleteClass = 'md-dashboard-autocomplete';
+        self.style = {};
+      }
+      else{
+        self.autoCompleteClass = 'md-autocomplete-participant';
+        self.style = { backgroundColor: $mdColors.getThemeColor('default-primary') };
+      }
 
       ParticipantManagerService.setup().then(function (response) {
         self.onReady = true;

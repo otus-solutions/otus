@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br" ng-app="otusjs.otus">
+<html lang="pt-br" ng-app="otusjs.otus" ng-controller="mainCtrl">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-  <link href="static-resource/image/coruja_pesquisadora.png" rel="icon" />
+  <link ng-href="{{faviconURL}}" rel="icon" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <link href="node_modules/angular-material/angular-material.min.css" rel="stylesheet" />
@@ -24,7 +24,7 @@
   <link href="node_modules/ng-material-datetimepicker/dist/material-datetimepicker.min.css" rel="stylesheet" type="text/css">
   <!-- endbuild -->
   <!-- enduncache -->
-  <title>Otus</title>
+  <title ng-bind-html="title"></title>
 </head>
 
 <body layout="row" md-theme="default">
@@ -179,8 +179,10 @@
 <script src="app/application/storage/service/storage-service.js"></script>
 <!------------------------------------------------------------------------------------------------>
 <!-- # Application > Theme -->
-<script src="app/application/theme/module.js"></script>
-<script src="app/application/theme/theme-configuration.js"></script>
+<script src="app/static-resource/module.js"></script>
+<script src="app/static-resource/theme-configuration.js"></script>
+<script src="app/static-resource/visual-identity/theme-constant.js"></script>
+<script src="app/static-resource/stylesheet/theme-styles.js"></script>
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/deploy-module.min.js -->

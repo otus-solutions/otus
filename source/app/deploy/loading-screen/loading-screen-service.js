@@ -5,11 +5,14 @@
     .module('otusjs.deploy')
     .service('otusjs.deploy.LoadingScreenService', Service);
 
-  Service.$inject = [];
+  Service.$inject = [
+    '$mdColors',
+    'THEME_CONSTANTS'
+  ];
 
-  function Service() {
-    const LOGO_SOURCE = "static-resource/image/coruja_pesquisadora.png";
-    const BACKGROUND_COLOR = "#009688";
+  function Service($mdColors, THEME_CONSTANTS) {
+    const LOGO_SOURCE = THEME_CONSTANTS.imageURLs.loading;
+    const BACKGROUND_COLOR = $mdColors.getThemeColor('default-primary');
     const MESSAGE = "Por favor, aguarde o carregamento.";
     const LOCKED_MESSAGE = "Loading bloqueado pela chave: ";
     const NEW_KEY_NOT_ADDED = "Não foi possível atribuir a nova chave: ";

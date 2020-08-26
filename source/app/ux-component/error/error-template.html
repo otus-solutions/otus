@@ -1,14 +1,14 @@
 <div layout="column" flex id="divtop">
   <div class="md-toolbar-tools md-padding" style="background-color:#006064">
     <div class="md-title" style="color:#fff">
-      <span>OTUS</span>
+      <span>{{$ctrl.title}}</span>
     </div>
   </div>
 </div>
 
 <div layout-padding layout-margin layout="column"  layout-gt-md="row" layout-align="center center">
   <div flex-gt-md="30" layout-align="center center" layout-padding="" flex="100">
-    <img src="static-resource/image/otus-crash.png"/>
+    <img ng-src="{{$ctrl.imageURL}}" />
   </div>
   <div layout-padding flex>
     <div>

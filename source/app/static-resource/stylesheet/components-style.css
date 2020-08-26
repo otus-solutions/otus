@@ -409,7 +409,6 @@ activity-grid-list .gridListDynamicTiles md-grid-list {
 }
 
 activity-grid-list .gridListDynamicTiles md-grid-tile md-grid-tile-header {
-  background: rgba(19, 125, 108, 0.68);
   position: relative;
   width: 100%;
   overflow: inherit;
@@ -616,9 +615,7 @@ otus-dashboard-pendency  md-input-container {
 }
 
 otus-dashboard-pendency .header-list {
-  background-color: #009588;
   font-weight: bold;
-  color: #FFFFFF !important;
   min-height: 70px !important;
   max-height: 70px !important;
   border-top-left-radius: 5px;
@@ -652,9 +649,6 @@ otus-follow-up-event #event-container {
   }
 }
 
-unattached-laboratory md-grid-tile-header {
-  background: rgba(19, 125, 108, 0.68) !important;
-}
 unattached-laboratory md-grid-tile-header figcaption {
   width: 100%;
 }
@@ -666,9 +660,7 @@ unattached-laboratory-dashboard otus-panel {
   min-width: 320px;
 }
 
-offline-activity-collection md-grid-tile-header {
-  background: rgba(19, 125, 108, 0.68) !important;
-}
+
 offline-activity-collection md-grid-tile-header figcaption {
   width: 100%;
 }
@@ -695,5 +687,21 @@ offline-activity-collection md-card{
 
 offline-activity-synchronize-dashboard #groups-container{
   min-width: 345px;
+}
+
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
+  color: rgb(255, 255, 255) !important;
+}
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button {
+  color: rgb(255, 255, 255) !important;
+}
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
+  color: rgb(255, 255, 255) !important;
+}
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {
+  fill: rgb(255, 254, 254) !important;
+}
+otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete {
+  color: rgb(255, 255, 255) !important;
 }
 /*# sourceMappingURL=components-style.css.map */

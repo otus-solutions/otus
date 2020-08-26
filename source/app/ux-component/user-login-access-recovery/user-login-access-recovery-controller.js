@@ -12,11 +12,14 @@
     'otusjs.user.access.service.UserAccessRecoveryService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'THEME_CONSTANTS'
   ];
 
-  function Controller($stateParams, $scope, $mdDialog, UserAccessRecoveryService, LoadingScreenService, ApplicationStateService, DialogService) {
-    var self = this;
+  function Controller($stateParams, $scope, $mdDialog,
+                      UserAccessRecoveryService, LoadingScreenService, ApplicationStateService, DialogService,
+                      THEME_CONSTANTS) {
+    const self = this;
     var successMessage;
     var errorMessage;
     self.token;
@@ -28,6 +31,9 @@
     self.enable = enable;
 
     function onInit() {
+      self.bannerImage = THEME_CONSTANTS.imageURLs.banner;
+      self.crashImage = THEME_CONSTANTS.imageURLs.crash;
+
       self.password = '';
       self.passwordConfirmation = '';
       UserAccessRecoveryService.validateToken($stateParams.token)

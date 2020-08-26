@@ -1,21 +1,12 @@
 <md-content layout="column" flex id="installer">
-    <div layout="row" id="headerSize">
-        <div layout="column" layout-align="center center" flex="20" flex-xs="25">
-            <img src="static-resource/image/OtusImg.png" flex>
-        </div>
+  <div layout="row" layout-align="center center" flex="20" flex-xs="25">
+    <img ng-src="{{controller.bannerImage}}" flex>
+  </div>
 
-        <div layout="column" layout-align="center center" hide-gt-xs flex-xs="80">
-            <span class="md-display-1">Bem-vindo!</span>
-        </div>
-
-        <div layout="column" layout-align="center center" hide-xs id="welcome" flex="">
-            <span class="md-display-2">Bem-vindo!</span>
-        </div>
-    </div>
-    <div layout="row" id="separatorLine" layout-align="center center">
-        <h3 hide-gt-xs>Bem-vindo! Vamos iniciar a Instalação do Projeto.</h3>
-        <h2 hide-xs>Vamos iniciar a Instalação do Projeto.</h2>
-    </div>
+  <div layout="row" id="separatorLine" layout-align="center center">
+    <h3 hide-gt-xs>Bem-vindo! Vamos iniciar a Instalação do Projeto.</h3>
+    <h2 hide-xs>Vamos iniciar a Instalação do Projeto.</h2>
+  </div>
     <form name="initialConfigForm" novalidate layout="column" flex layout-align="center center">
         <div layout="row" flex="80" style="padding: 20px; width: 70%">
             <div layout="row" flex>

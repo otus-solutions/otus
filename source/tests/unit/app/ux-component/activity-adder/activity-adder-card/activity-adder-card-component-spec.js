@@ -9,6 +9,7 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
     angular.mock.inject(($injector, $controller, $rootScope) => {
       Injections.$q = $injector.get('$q');
       Injections.$timeout = $injector.get('$timeout');
+      Injections.$mdColors = $injector.get('$mdColors');
       ctrl = $controller('otusActivityAdderCardCtrl', Injections);
 
       Mock.scope = $rootScope.$new();
@@ -103,7 +104,8 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
 
   it('styleHeader_method_should_update_style_header', () => {
     ctrl.preActivity.mode = 'AUTOFILL';
-    expect(ctrl.styleHeader()).toBe("{background: '#2d91ea'}")
+    const expectedColor = Injections.$mdColors.getThemeColor('default-accent');
+    expect(ctrl.styleHeader().background).toBe(expectedColor);
   });
 
   it('validExternalIdTruthyAndAutoFill_method_should_valid_attribute_externalID_and_autofill', () => {
