@@ -92,13 +92,6 @@
         cancel: cancel
       }
 
-      // let data = {
-      //   dialogToTitle: 'Compartilhamento',
-      //   ariaLabel: 'compartilhamento',
-      //   cancel: cancel,
-      //   selectedActivity: selectedActivity
-      // };
-
       return $mdDialog.show({
         controller: 'activititySharingDialogShowController',
         bindToController: true,

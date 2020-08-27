@@ -12,18 +12,22 @@
   md-chips.md-default-theme .md-chips, md-chips .md-chips {
     box-shadow: none;
   }
-
-
 </style>
 
 <md-dialog>
   <form>
+
     <md-toolbar class="md-primary md-toolbar-tools">
-      <span class="md-subhead">COMPARTILHAMENTO DE ATIVIDADE</span>
+      <span class="md-subhead">{{ $ctrl.ActivitySharingDialogValues.titles.dialogToTitle }}</span>
       <span flex></span>
-      <md-button class="md-icon-button" ng-click="$ctrl.data.cancel() " aria-label="Fechar">
-        <md-icon aria-label="Fechar">close</md-icon>
-        <md-tooltip md-direction="bottom">Fechar</md-tooltip>
+      <md-button class="md-icon-button" ng-click="$ctrl.data.cancel() "
+                 aria-label={{$ctrl.ActivitySharingDialogValues.buttons.closeSharingDialog.ariaLabel}}>
+        <md-icon aria-label={{$ctrl.ActivitySharingDialogValues.buttons.closeSharingDialog.ariaLabel}}>
+          {{$ctrl.ActivitySharingDialogValues.buttons.closeSharingDialog.icon}}
+        </md-icon>
+        <md-tooltip md-direction="bottom">
+          {{$ctrl.ActivitySharingDialogValues.buttons.closeSharingDialog.tooltip}}
+        </md-tooltip>
       </md-button>
     </md-toolbar>
 
@@ -31,15 +35,23 @@
       <div layout="column" layout-margin>
         <div layout="row" layout-align="space-between center">
           <md-chips class="md-primary md-body-1">
-            <md-chip md-colors="{background: 'primary'}">TCLE</md-chip>
+            <md-chip md-colors="{background: 'primary'}">{{ $ctrl.data.activity.surveyForm.acronym }}</md-chip>
           </md-chips>
-          <span>TERMO DE CONSENTIMENTO LIVRE E ESCLARECIDO</span>
-          <md-button class="md-icon-button" ng-click="">
-            <md-icon class="md-warn">delete</md-icon>
+          <span>{{ $ctrl.data.activity.surveyForm.name }}</span>
+
+          <md-button class="md-icon-button" ng-click="$ctrl.deleteSharedURL()"
+                     {{$ctrl.ActivitySharingDialogValues.buttons.deleteActivitySharing.ariaLabel}}>
+            <md-icon class="md-warn">
+              {{$ctrl.ActivitySharingDialogValues.buttons.deleteActivitySharing.icon}}
+            </md-icon>
+            <md-tooltip md-direction="bottom">
+              {{$ctrl.ActivitySharingDialogValues.buttons.deleteActivitySharing.tooltip}}
+            </md-tooltip>
           </md-button>
+
         </div>
         <div layout="row" layout-align="center">
-          <span class="md-body-2">Maria Lúcia Camargo Ribeiro Silva da costa</span>
+          <span class="md-body-2">{{ $ctrl.data.activity.participantData.name}}</span>
         </div>
         <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
           <span aria-label="Cancelar">Válido até: 25/08/2020</span>

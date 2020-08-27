@@ -6,26 +6,35 @@
     .controller('activititySharingDialogShowController', Controller);
 
   Controller.$inject = [
-    'otusjs.activity.business.ActivitySharingService'
+    'otusjs.activity.business.ActivitySharingService',
+    'otusjs.otus.uxComponent.ActivitySharingDialogValues'
     // 'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(activitySharingService) {
+  function Controller(activitySharingService, ActivitySharingDialogValues) {
     const self = this;
-    var DEFAULT_DIMENSIONS = {'min-height':'200px', 'min-width':'300px'};
 
+    self.ActivitySharingDialogValues = ActivitySharingDialogValues;
     self.$onInit = onInit;
     self.getSharedURL = getSharedURL;
+    self.deleteSharedURL = deleteSharedURL;
+    self.activitySharing = {};
 
     function onInit() {
       getSharedURL();
+      console.log(self.data)
     }
 
     function getSharedURL(activityId){
       activitySharingService.getSharedURL("5f3fde8dce3da4498f369d73")
-        .then((link) => console.info(link))
+        .then((activitySharing) => self.activitySharing = activitySharing)
+        .then(console.info(self.activitySharing))
         .catch((e) => console.error(e))
       return;
+    }
+
+    function deleteSharedURL(activitySharingId){
+      alert("delete button")
     }
   }
 }());
