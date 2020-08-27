@@ -7,30 +7,32 @@
 
   Controller.$inject = [
     'otusjs.activity.business.ActivitySharingService',
-    'otusjs.otus.uxComponent.ActivitySharingDialogValues'
+    'otusjs.otus.uxComponent.ActivitySharingDialogValues',
+    'otusjs.deploy.LoadingScreenService',
     // 'otusjs.application.state.ApplicationStateService'
   ];
 
-  function Controller(activitySharingService, ActivitySharingDialogValues) {
+  function Controller(ActivitySharingService, ActivitySharingDialogValues, LoadingScreenService) {
     const self = this;
 
     self.ActivitySharingDialogValues = ActivitySharingDialogValues;
     self.$onInit = onInit;
     self.getSharedURL = getSharedURL;
     self.deleteSharedURL = deleteSharedURL;
-    self.activitySharing = {};
+    // self.activitySharing = null;
 
     function onInit() {
+      LoadingScreenService.start();
       getSharedURL();
-      console.log(self.data)
     }
 
-    function getSharedURL(activityId){
-      activitySharingService.getSharedURL("5f3fde8dce3da4498f369d73")
-        .then((activitySharing) => self.activitySharing = activitySharing)
-        .then(console.info(self.activitySharing))
-        .catch((e) => console.error(e))
-      return;
+    function getSharedURL(){
+      ActivitySharingService.getSharedURL(self.data.activity.getID())
+        .then(res => ActivitySharingService.parseActivitySharing(res.data.activitySharing))
+        .then( activitySharing => self.activitySharing = activitySharing )
+        .then(() =>  LoadingScreenService.finish())
+        .then(() => console.log(self.activitySharing))
+        .catch((e) => console.error(e));
     }
 
     function deleteSharedURL(activitySharingId){
