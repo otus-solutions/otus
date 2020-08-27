@@ -57,6 +57,7 @@
           <span>Válido até: {{ $ctrl.activitySharing.getExpirationDate() | date:'dd/MM/yyyy'}}</span>
           <md-button class="md-icon-button md-primary"
                      ng-click="$ctrl.renovateSharedURL()"
+                     ng-disabled="$ctrl.liveLink"
                      aria-label={{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.ariaLabel}}>
             <md-icon>
               {{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.icon}}
