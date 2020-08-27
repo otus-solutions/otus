@@ -11,7 +11,7 @@
   ];
 
   function Controller(activitySharingService) {
-    let self = this;
+    const self = this;
     var DEFAULT_DIMENSIONS = {'min-height':'200px', 'min-width':'300px'};
 
     self.$onInit = onInit;

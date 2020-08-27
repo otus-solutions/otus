@@ -27,6 +27,7 @@
         templateUrl: 'app/ux-component/dialog-show/dialog-show-template.html',
         parent: angular.element(document.body),
         controllerAs:"$ctrl",
+        bindToController: true,
         clickOutsideToClose: true
       });
     }
@@ -85,22 +86,26 @@
       });
     }
 
-
-    function showActivitySharingDialog() {
-      let data = {
-        dialogToTitle: 'Compartilhamento',
-        // titleToText: 'Informações',
-        // textDialog: 'Link',
-        ariaLabel: 'compartilhamento',
+    function showActivitySharingDialog(selectedActivity) {
+      self.data = {
+        activity: selectedActivity,
         cancel: cancel
-      };
+      }
+
+      // let data = {
+      //   dialogToTitle: 'Compartilhamento',
+      //   ariaLabel: 'compartilhamento',
+      //   cancel: cancel,
+      //   selectedActivity: selectedActivity
+      // };
 
       return $mdDialog.show({
         controller: 'activititySharingDialogShowController',
-        controllerAs:"$ctrl",
-        locals: { data: data },
+        bindToController: true,
+        locals: { data: self.data },
         templateUrl: 'app/ux-component/dialog-show/activity-sharing/activity-sharing-dialog-show-template.html',
         parent: angular.element(document.body),
+        controllerAs:"$ctrl",
         clickOutsideToClose: true
       });
     }

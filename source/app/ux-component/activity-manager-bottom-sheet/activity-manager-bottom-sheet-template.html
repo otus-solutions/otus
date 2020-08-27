@@ -22,7 +22,7 @@
                                  ng-show="$ctrl.showPendenciesButton">
     </otus-user-activity-pendency>
     <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="compartilhamento de atividade"
-               ng-click="$ctrl.activitySharingDialog()"
+               ng-click="$ctrl.activitySharingDialog($ctrl.selectedActivity)"
                ng-show="$ctrl.showActivitySharing">
       <md-tooltip md-direction="top">Compartilhamento</md-tooltip>
       <md-icon aria-label="Compartilhamento de atividade">share</md-icon>

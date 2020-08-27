@@ -251,8 +251,12 @@
 
     }
 
-    function activitySharingDialog() {
-      DialogService.showActivitySharingDialog();
+    function activitySharingDialog(selectedActivity) {
+      // console.info(self.selectedActivity)
+      // console.info(self.selectedActivity.participantData)
+      // console.info(self.selectedActivity.getID());
+
+      DialogService.showActivitySharingDialog(selectedActivity);
     }
 
   }
