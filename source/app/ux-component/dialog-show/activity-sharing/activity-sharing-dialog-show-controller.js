@@ -20,6 +20,7 @@
     self.getSharedURL = getSharedURL;
     self.renovateSharedURL = renovateSharedURL;
     self.deleteSharedURL = deleteSharedURL;
+    self.liveLink = false;
     // self.activitySharing = null;
 
     function onInit() {
@@ -30,7 +31,8 @@
     function getSharedURL(){
       ActivitySharingService.getSharedURL(self.data.activity.getID())
         .then(res => ActivitySharingService.parseActivitySharing(res.data.activitySharing))
-        .then( activitySharing => self.activitySharing = activitySharing )
+        .then( activitySharing => self.activitySharing = activitySharing)
+        .then(() => self.liveLink = self.activitySharing.isValid())
         .then(() =>  LoadingScreenService.finish())
         .then(() => console.log(self.activitySharing))
         .catch((e) => console.error(e));

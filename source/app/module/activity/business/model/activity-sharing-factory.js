@@ -28,16 +28,17 @@
     self.userId = activitySharingJson.userId;
 
     self.getId = getId;
-    self.checkDateExpiration = checkDateExpiration;
+    self.isValid = isValid;
     self.getExpirationDate = getExpirationDate;
 
     function getId() {
       return self._id;
     }
 
-    function checkDateExpiration() {
-      console.log(new Date(self.expirationDate));
-      return false;
+    function isValid() {
+      const nowDate = new Date().getTime();
+      const expirationDate = new Date(self.expirationDate).getTime();
+      return (expirationDate > nowDate) ? true : false;
     }
 
     function getExpirationDate() {

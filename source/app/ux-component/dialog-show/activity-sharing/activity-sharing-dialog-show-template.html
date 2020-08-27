@@ -55,7 +55,7 @@
         </div>
         <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
           <span>Válido até: {{ $ctrl.activitySharing.getExpirationDate() | date:'dd/MM/yyyy'}}</span>
-          <md-button class="md-icon-button"
+          <md-button class="md-icon-button md-primary"
                      ng-click="$ctrl.renovateSharedURL()"
                      aria-label={{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.ariaLabel}}>
             <md-icon>
@@ -69,13 +69,16 @@
 
         <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
           <span aria-label="Cancelar">http://otus.hmg.ccem.ufgrs.br/..</span>
-          <md-button class="md-icon-button" ng-click="" aria-label="copiar link">
+          <md-button class="md-icon-button md-primary"
+                     ng-click="" aria-label="copiar link"
+                     ng-disabled="!$ctrl.liveLink" >
             <md-icon class="">content_copy</md-icon>
           </md-button>
         </div>
 
         <div>
-          <md-button ng-click="" class="md-raised md-primary" aria-label="Salvar" ng-disabled=false layout-fill>
+          <md-button ng-click="" class="md-raised md-primary" aria-label="Salvar"
+                     ng-disabled="!$ctrl.liveLink" layout-fill>
             copiar informações de compartilhamento
           </md-button>
         </div>
