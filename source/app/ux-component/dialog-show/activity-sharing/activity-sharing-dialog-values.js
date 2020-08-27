@@ -1,4 +1,4 @@
-(function(){
+(function () {
   'use strict';
 
   angular
@@ -7,7 +7,6 @@
       titles: {
         dialogToTitle: 'COMPARTILHAMENTO DE ATIVIDADE',
       },
-
       buttons: {
         closeSharingDialog: {
           icon: 'close',
@@ -16,8 +15,13 @@
         },
         deleteActivitySharing: {
           icon: 'delete',
-          ariaLabel:'Deletar',
+          ariaLabel: 'Deletar',
           tooltip: 'Deletar'
+        },
+        renovateActivitySharing: {
+          icon: 'autorenew',
+          ariaLabel: 'Renovar Link',
+          tooltip: 'Renovar link'
         }
 
       }

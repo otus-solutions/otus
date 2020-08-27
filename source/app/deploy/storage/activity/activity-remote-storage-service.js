@@ -45,6 +45,8 @@
     self.importActivities = importActivities;
     self.createFollowUpActivity = createFollowUpActivity;
     self.getSharedURL = getSharedURL;
+    self.renovateSharedURL = renovateSharedURL;
+    self.deleteSharedURL = deleteSharedURL;
 
     /**
      * Adds activities to collection.
@@ -303,8 +305,19 @@
       return deferred.promise;
     }
 
+    /** activity-sharing in collection */
     function getSharedURL(activityId) {
       return ActivitySharingRestService.getSharedURL(activityId);
     }
+
+    function renovateSharedURL(activitySharingId) {
+      return ActivitySharingRestService.renovateSharedURL(activitySharingId);
+    }
+
+    function deleteSharedURL(activitySharingId) {
+      return ActivitySharingRestService.deleteSharedURL(activitySharingId);
+    }
+
+
   }
 }());

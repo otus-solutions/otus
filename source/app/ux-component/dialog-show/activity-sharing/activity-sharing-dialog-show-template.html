@@ -54,9 +54,16 @@
           <span class="md-body-2">{{ $ctrl.data.activity.participantData.name}}</span>
         </div>
         <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
-          <span aria-label="Cancelar">Válido até: 25/08/2020</span>
-          <md-button class="md-icon-button" ng-click="" aria-label="atualizar link">
-            <md-icon class="">autorenew</md-icon>
+          <span>Válido até: {{ $ctrl.activitySharing.getExpirationDate() | date:'dd/MM/yyyy'}}</span>
+          <md-button class="md-icon-button"
+                     ng-click="$ctrl.renovateSharedURL()"
+                     aria-label={{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.ariaLabel}}>
+            <md-icon>
+              {{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.icon}}
+            </md-icon>
+            <md-tooltip md-direction="bottom">
+              {{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.tooltip}}
+            </md-tooltip>
           </md-button>
         </div>
 

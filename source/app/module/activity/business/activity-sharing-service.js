@@ -21,13 +21,12 @@
       return ActivitySharingCollectionService.getSharedURL(activityId);
     }
 
-
-    function renovateSharedURL(sharedLinkId) {
-      return "renovate sharedLink";
+    function renovateSharedURL(activitySharingId) {
+      return ActivitySharingCollectionService.renovateSharedURL(activitySharingId);
     }
 
-    function deleteSharedURL(sharedLinkId) {
-      return sharedLinkId;
+    function deleteSharedURL(activitySharingId) {
+      ActivitySharingCollectionService.deleteSharedURL(activitySharingId);
     }
 
     function parseActivitySharing(activitySharingJson) {

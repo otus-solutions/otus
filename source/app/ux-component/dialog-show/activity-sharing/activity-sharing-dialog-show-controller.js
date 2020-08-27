@@ -18,6 +18,7 @@
     self.ActivitySharingDialogValues = ActivitySharingDialogValues;
     self.$onInit = onInit;
     self.getSharedURL = getSharedURL;
+    self.renovateSharedURL = renovateSharedURL;
     self.deleteSharedURL = deleteSharedURL;
     // self.activitySharing = null;
 
@@ -33,6 +34,13 @@
         .then(() =>  LoadingScreenService.finish())
         .then(() => console.log(self.activitySharing))
         .catch((e) => console.error(e));
+    }
+
+    function renovateSharedURL(){
+      console.log(self.activitySharing.getExpirationDate())
+      ActivitySharingService.renovateSharedURL(self.activitySharing.getId())
+        .then(res => console.log(res))
+        .catch(e => console.error(e))
     }
 
     function deleteSharedURL(activitySharingId){
