@@ -21,7 +21,6 @@
     self.renovateSharedURL = renovateSharedURL;
     self.deleteSharedURL = deleteSharedURL;
     self.liveLink = false;
-    // self.activitySharing = null;
 
     function onInit() {
       LoadingScreenService.start();
@@ -31,7 +30,7 @@
     function getSharedURL(){
       ActivitySharingService.getSharedURL(self.data.activity.getID())
         .then(res => ActivitySharingService.parseActivitySharing(res.data.activitySharing))
-        .then( activitySharing => self.activitySharing = activitySharing)
+        .then(activitySharing => self.activitySharing = activitySharing)
         .then(() => self.liveLink = self.activitySharing.isValid())
         .then(() =>  LoadingScreenService.finish())
         .then(() => console.log(self.activitySharing))
@@ -39,13 +38,17 @@
     }
 
     function renovateSharedURL(){
-      console.log(self.activitySharing.getExpirationDate())
+      LoadingScreenService.start();
       ActivitySharingService.renovateSharedURL(self.activitySharing.getId())
-        .then(res => console.log(res))
+        .then(res => ActivitySharingService.parseActivitySharing(res.data.activitySharing))
+        .then(activitySharing => self.activitySharing = activitySharing)
+        .then(() => self.liveLink = self.activitySharing.isValid())
+        .then(() =>  LoadingScreenService.finish())
         .catch(e => console.error(e))
     }
 
-    function deleteSharedURL(activitySharingId){
+    function deleteSharedURL(){
+      // ActivitySharingService.deleteSharedURL(self.activitySharing.getId())
       alert("delete button")
     }
   }

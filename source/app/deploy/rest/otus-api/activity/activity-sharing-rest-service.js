@@ -27,7 +27,6 @@
     }
 
     function renovateSharedURL(activitySharingId){
-      alert('rest sharing')
       return _rest.renovateSharedURL({ id: activitySharingId }).$promise;
     }
 
