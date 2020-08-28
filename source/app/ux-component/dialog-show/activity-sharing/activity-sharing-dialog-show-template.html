@@ -53,7 +53,7 @@
 
       </div>
       <div layout="row" layout-align="center">
-        <span class="md-body-2">{{ $ctrl.data.activity.participantData.name}}</span>
+        <span class="md-subhead">{{ $ctrl.data.activity.participantData.name}}</span>
       </div>
       <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
         <span>Válido até: {{ $ctrl.activitySharing.getExpirationDate() | date:'dd/MM/yyyy'}}</span>
@@ -87,7 +87,8 @@
         <md-button ng-click="$ctrl.copyLinkToClipboard($ctrl.activitySharing.url,'msg')"
                    class="md-raised md-primary" aria-label="Salvar"
                    ng-disabled="!$ctrl.liveLink" layout-fill>
-          copiar informações de compartilhamento
+          <span ng-show="$ctrl.liveLink"> {{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleActivity}}</span>
+          <span ng-show="!$ctrl.liveLink">{{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleInactivity}}</span>
         </md-button>
       </div>
     </div>

@@ -67,9 +67,9 @@
           break;
         case 'msg':
           let msgLink =
-            `<p>Atividade TCLE</p>
-             Participante Fulano de tal
-             link ${link}`;
+            `Atividade: ${self.data.activity.surveyForm.acronym} - ${self.data.activity.surveyForm.name}
+Participante: ${self.data.activity.participantData.name}
+URL: ${link}`;
           ActivitySharingService.copyLinkToClipboard(msgLink);
           ActivitySharingService.callToast("Link copiado!", 4000);
           break;

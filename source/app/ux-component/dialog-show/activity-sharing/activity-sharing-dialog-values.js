@@ -27,6 +27,10 @@
           icon: "content_copy",
           ariaLabel: 'Copiar Link',
           tooltip: 'Copiar Link'
+        },
+        copyMessageWithLink: {
+          titleActivity: "copiar informações de compartilhamento",
+          titleInactivity: "Link expirado",
         }
       },
       toaster: {

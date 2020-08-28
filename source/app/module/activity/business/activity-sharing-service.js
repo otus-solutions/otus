@@ -42,12 +42,13 @@
       }
     }
 
-    function copyLinkToClipboard(item) {
-      let $temp = $("<input>");
-      $("body").append($temp);
-      $temp.val(item).select();
-      document.execCommand("copy");
-      $temp.remove();
+    function copyLinkToClipboard(text) {
+      const elem = document.createElement('textarea');
+      elem.value = text;
+      document.body.appendChild(elem);
+      elem.select();
+      document.execCommand('copy');
+      document.body.removeChild(elem);
     }
 
     function callToast(msg, time, theme = "default") {
