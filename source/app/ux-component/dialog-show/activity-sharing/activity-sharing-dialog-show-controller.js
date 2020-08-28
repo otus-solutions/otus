@@ -8,12 +8,11 @@
   Controller.$inject = [
     'otusjs.activity.business.ActivitySharingService',
     'otusjs.otus.uxComponent.ActivitySharingDialogValues',
-    'otusjs.deploy.LoadingScreenService',
-    '$mdToast'
+    'otusjs.deploy.LoadingScreenService'
   ];
 
   function Controller(ActivitySharingService, ActivitySharingDialogValues,
-                      LoadingScreenService, $mdToast) {
+                      LoadingScreenService) {
     const self = this;
 
     self.ActivitySharingDialogValues = ActivitySharingDialogValues;
@@ -21,6 +20,7 @@
     self.getSharedURL = getSharedURL;
     self.renovateSharedURL = renovateSharedURL;
     self.deleteSharedURL = deleteSharedURL;
+    self.copyLinkToClipboard = copyLinkToClipboard;
     self.liveLink = false;
 
     function onInit() {
@@ -28,45 +28,52 @@
       getSharedURL();
     }
 
-    function getSharedURL(){
+    function getSharedURL() {
       ActivitySharingService.getSharedURL(self.data.activity.getID())
         .then(res => ActivitySharingService.parseActivitySharing(res.data))
         .then(activitySharing => self.activitySharing = activitySharing)
         .then(() => self.liveLink = self.activitySharing.isValid())
-        .then(() =>  LoadingScreenService.finish())
+        .then(() => LoadingScreenService.finish())
         .then(() => console.log(self.activitySharing))
         .catch((e) => console.error(e));
     }
 
-    function renovateSharedURL(){
+    function renovateSharedURL() {
       LoadingScreenService.start();
       ActivitySharingService.renovateSharedURL(self.activitySharing.getId())
         .then(res => ActivitySharingService.parseActivitySharing(res.data))
         .then(activitySharing => self.activitySharing = activitySharing)
         .then(() => self.liveLink = self.activitySharing.isValid())
-        .then(() =>  LoadingScreenService.finish())
+        .then(() => LoadingScreenService.finish())
         .catch(e => console.error(e));
     }
 
-    function deleteSharedURL(){
+    function deleteSharedURL() {
       LoadingScreenService.start();
       ActivitySharingService.deleteSharedURL(self.activitySharing.getId())
         .then(() => self.activitySharing = null)
         .then(() => self.data.cancel())
-        .then(() =>  LoadingScreenService.finish())
-        .then(() => _callToast(ActivitySharingDialogValues.toaster.delete))
-        .catch((e) => _callToast(`${ActivitySharingDialogValues.toaster.fail} ${e}`, "error-toast"));
+        .then(() => LoadingScreenService.finish())
+        .then(() => ActivitySharingService.callToast(ActivitySharingDialogValues.toaster.delete, 5000))
+        .catch((e) =>
+          ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.fail} ${e}`, 5000, "error-toast"));
     }
 
-    function _callToast(msg, theme="default"){
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent(msg)
-            .position('bottom right')
-            .theme(theme)
-            .hideDelay(5000)
-        );
+    function copyLinkToClipboard(link, mode) {
+      switch (mode) {
+        case 'link':
+          ActivitySharingService.copyLinkToClipboard(link)
+          ActivitySharingService.callToast("Link copiado!", 4000)
+          break;
+        case 'msg':
+          let msgLink =
+            `<p>Atividade TCLE</p>
+             Participante Fulano de tal
+             link ${link}`;
+          ActivitySharingService.copyLinkToClipboard(msgLink);
+          ActivitySharingService.callToast("Link copiado!", 4000);
+          break;
       }
-
+    }
   }
 }());

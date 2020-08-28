@@ -30,8 +30,9 @@
     'otusjs.activity.business.ParticipantActivityService'
   ];
 
-  function Controller($q, $mdToast, $timeout, $mdDialog, $mdColors,
-                      EventService, CheckerItemFactory, DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService, ParticipantActivityService) {
+  function Controller($q, $mdToast, $timeout, $mdDialog, $mdColors, EventService, CheckerItemFactory,
+                      DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService,
+                      ParticipantActivityService) {
     var self = this;
     var confirmDeleteSelectedActivity;
 
@@ -248,14 +249,9 @@
       function _cleanSelectedActivity(){
         self.selectedActivity = null;
       }
-
     }
 
     function activitySharingDialog(selectedActivity) {
-      // console.info(self.selectedActivity)
-      // console.info(self.selectedActivity.participantData)
-      // console.info(self.selectedActivity.getID());
-
       DialogService.showActivitySharingDialog(selectedActivity);
     }
 

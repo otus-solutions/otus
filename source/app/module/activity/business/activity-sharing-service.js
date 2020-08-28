@@ -6,16 +6,19 @@
 
   Service.$inject = [
     'otusjs.activity.repository.ActivitySharingCollectionService',
-    'otusjs.activity.business.model.ActivitySharingFactory'
+    'otusjs.activity.business.model.ActivitySharingFactory',
+    '$mdToast'
   ];
 
-  function Service(ActivitySharingCollectionService, ActivitySharingFactory) {
+  function Service(ActivitySharingCollectionService, ActivitySharingFactory, $mdToast) {
     const self = this;
 
     self.getSharedURL = getSharedURL;
     self.renovateSharedURL = renovateSharedURL;
     self.deleteSharedURL = deleteSharedURL;
     self.parseActivitySharing = parseActivitySharing;
+    self.copyLinkToClipboard = copyLinkToClipboard;
+    self.callToast = callToast;
 
     function getSharedURL(activityId) {
       return ActivitySharingCollectionService.getSharedURL(activityId);
@@ -37,6 +40,24 @@
       } catch (e) {
         throw new Error("Error Parse: an error occurred with shared link information")
       }
+    }
+
+    function copyLinkToClipboard(item) {
+      let $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val(item).select();
+      document.execCommand("copy");
+      $temp.remove();
+    }
+
+    function callToast(msg, time, theme = "default") {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msg)
+          .position('bottom right')
+          .theme(theme)
+          .hideDelay(time)
+      );
     }
 
 

@@ -99,7 +99,7 @@
         templateUrl: 'app/ux-component/dialog-show/activity-sharing/activity-sharing-dialog-show-template.html',
         parent: angular.element(document.body),
         controllerAs:"$ctrl",
-        clickOutsideToClose: true
+        // clickOutsideToClose: true
       });
     }
 
