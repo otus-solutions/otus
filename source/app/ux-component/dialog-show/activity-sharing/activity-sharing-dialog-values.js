@@ -22,7 +22,17 @@
           icon: 'autorenew',
           ariaLabel: 'Renovar Link',
           tooltip: 'Renovar link'
+        },
+        copyLink: {
+          icon: "content_copy",
+          ariaLabel: 'Copiar Link',
+          tooltip: 'Copiar Link'
         }
+      },
+      toaster: {
+        delete: 'Link Removido com sucesso',
+        fail: 'Ocorreu um erro:'
+
 
       }
     })

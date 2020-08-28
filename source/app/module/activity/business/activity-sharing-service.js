@@ -26,12 +26,14 @@
     }
 
     function deleteSharedURL(activitySharingId) {
-      ActivitySharingCollectionService.deleteSharedURL(activitySharingId);
+      return ActivitySharingCollectionService.deleteSharedURL(activitySharingId);
     }
 
-    function parseActivitySharing(activitySharingJson) {
+    function parseActivitySharing(dataSharingJson) {
       try {
-        return ActivitySharingFactory.create(activitySharingJson);
+        let activitySharing = ActivitySharingFactory.create(dataSharingJson.activitySharing);
+        activitySharing.url = dataSharingJson.url;
+        return activitySharing;
       } catch (e) {
         throw new Error("Error Parse: an error occurred with shared link information")
       }

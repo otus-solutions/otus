@@ -1,4 +1,8 @@
 <style>
+  .activity-sharing-dialog{
+    width: 40vw;
+  }
+
   .content-share {
     background-color: #dedede;
     padding: 0.5em;
@@ -14,10 +18,8 @@
   }
 </style>
 
-<md-dialog>
-  <form>
-
-    <md-toolbar class="md-primary md-toolbar-tools">
+<md-dialog class="activity-sharing-dialog">
+  <md-toolbar class="md-primary md-toolbar-tools">
       <span class="md-subhead">{{ $ctrl.ActivitySharingDialogValues.titles.dialogToTitle }}</span>
       <span flex></span>
       <md-button class="md-icon-button" ng-click="$ctrl.data.cancel() "
@@ -62,18 +64,21 @@
             <md-icon>
               {{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.icon}}
             </md-icon>
-            <md-tooltip md-direction="bottom">
+            <md-tooltip md-direction="right">
               {{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.tooltip}}
             </md-tooltip>
           </md-button>
         </div>
 
         <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
-          <span aria-label="Cancelar">http://otus.hmg.ccem.ufgrs.br/..</span>
+          <span md-truncate flex="90">{{$ctrl.activitySharing.url}}</span>
           <md-button class="md-icon-button md-primary"
-                     ng-click="" aria-label="copiar link"
+                     ng-click="" aria-label={{$ctrl.ActivitySharingDialogValues.buttons.arialLabel}}
                      ng-disabled="!$ctrl.liveLink" >
             <md-icon class="">content_copy</md-icon>
+            <md-tooltip md-direction="right">
+              {{$ctrl.ActivitySharingDialogValues.buttons.copyLink.tooltip}}
+            </md-tooltip>
           </md-button>
         </div>
 
@@ -85,6 +90,4 @@
         </div>
       </div>
     </md-dialog-content>
-
-  </form>
 </md-dialog>

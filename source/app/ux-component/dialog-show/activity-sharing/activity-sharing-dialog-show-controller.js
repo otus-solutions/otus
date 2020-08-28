@@ -9,10 +9,11 @@
     'otusjs.activity.business.ActivitySharingService',
     'otusjs.otus.uxComponent.ActivitySharingDialogValues',
     'otusjs.deploy.LoadingScreenService',
-    // 'otusjs.application.state.ApplicationStateService'
+    '$mdToast'
   ];
 
-  function Controller(ActivitySharingService, ActivitySharingDialogValues, LoadingScreenService) {
+  function Controller(ActivitySharingService, ActivitySharingDialogValues,
+                      LoadingScreenService, $mdToast) {
     const self = this;
 
     self.ActivitySharingDialogValues = ActivitySharingDialogValues;
@@ -29,7 +30,7 @@
 
     function getSharedURL(){
       ActivitySharingService.getSharedURL(self.data.activity.getID())
-        .then(res => ActivitySharingService.parseActivitySharing(res.data.activitySharing))
+        .then(res => ActivitySharingService.parseActivitySharing(res.data))
         .then(activitySharing => self.activitySharing = activitySharing)
         .then(() => self.liveLink = self.activitySharing.isValid())
         .then(() =>  LoadingScreenService.finish())
@@ -40,16 +41,32 @@
     function renovateSharedURL(){
       LoadingScreenService.start();
       ActivitySharingService.renovateSharedURL(self.activitySharing.getId())
-        .then(res => ActivitySharingService.parseActivitySharing(res.data.activitySharing))
+        .then(res => ActivitySharingService.parseActivitySharing(res.data))
         .then(activitySharing => self.activitySharing = activitySharing)
         .then(() => self.liveLink = self.activitySharing.isValid())
         .then(() =>  LoadingScreenService.finish())
-        .catch(e => console.error(e))
+        .catch(e => console.error(e));
     }
 
     function deleteSharedURL(){
-      // ActivitySharingService.deleteSharedURL(self.activitySharing.getId())
-      alert("delete button")
+      LoadingScreenService.start();
+      ActivitySharingService.deleteSharedURL(self.activitySharing.getId())
+        .then(() => self.activitySharing = null)
+        .then(() => self.data.cancel())
+        .then(() =>  LoadingScreenService.finish())
+        .then(() => _callToast(ActivitySharingDialogValues.toaster.delete))
+        .catch((e) => _callToast(`${ActivitySharingDialogValues.toaster.fail} ${e}`, "error-toast"));
     }
+
+    function _callToast(msg, theme="default"){
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(msg)
+            .position('bottom right')
+            .theme(theme)
+            .hideDelay(5000)
+        );
+      }
+
   }
 }());
