@@ -67,15 +67,15 @@ Test.utils.data.activity = [
         "surveyForm": {
           "surveyTemplate": {
             "identity":
-                {
-                  "extents": "StudioObject",
-                  "objectType": "SurveyIdentity",
-                  "name": "CISE",
-                  "acronym": "CIS-R",
-                  "recommendedTo": "",
-                  "description": "",
-                  "keywords": []
-                }
+              {
+                "extents": "StudioObject",
+                "objectType": "SurveyIdentity",
+                "name": "CISE",
+                "acronym": "CIS-R",
+                "recommendedTo": "",
+                "description": "",
+                "keywords": []
+              }
           }
         },
         "statusHistory": {
@@ -360,43 +360,43 @@ Test.utils.data.ExamWithDoesNotAppliesData = {
   recruitmentNumber: 7000312
 };
 Test.utils.data.aliquot = {
-  "_id" : "5ce2daad99e0c90065f4050a",
-  "tubeCode" : "351286198",
-  "transportationLotId" : null,
-  "examLotId" : null,
-  "examLotData" : null,
-  "recruitmentNumber" : 50000501,
-  "sex" : "M",
-  "fieldCenter" : {
-    "name" : "Rio Grande do Sul",
-    "code" : 5,
-    "acronym" : "RS",
-    "country" : null,
-    "state" : null,
-    "address" : null,
-    "complement" : null,
-    "zip" : null,
-    "phone" : null,
-    "backgroundColor" : "rgba(75, 192, 192, 0.2)",
-    "borderColor" : "rgba(75, 192, 192, 1)"
+  "_id": "5ce2daad99e0c90065f4050a",
+  "tubeCode": "351286198",
+  "transportationLotId": null,
+  "examLotId": null,
+  "examLotData": null,
+  "recruitmentNumber": 50000501,
+  "sex": "M",
+  "fieldCenter": {
+    "name": "Rio Grande do Sul",
+    "code": 5,
+    "acronym": "RS",
+    "country": null,
+    "state": null,
+    "address": null,
+    "complement": null,
+    "zip": null,
+    "phone": null,
+    "backgroundColor": "rgba(75, 192, 192, 0.2)",
+    "borderColor": "rgba(75, 192, 192, 1)"
   },
-  "birthdate" : {
-    "objectType" : "ImmutableDate",
-    "value" : "1990-01-05 00:00:00.000"
+  "birthdate": {
+    "objectType": "ImmutableDate",
+    "value": "1990-01-05 00:00:00.000"
   },
-  "objectType" : "Aliquot",
-  "code" : "353686297",
-  "name" : "FASTING_SERUM",
-  "container" : "CRYOTUBE",
-  "role" : "STORAGE",
-  "aliquotCollectionData" : {
-    "objectType" : "AliquotCollectionData",
-    "metadata" : "",
-    "operator" : "adonis.garcia.adg@gmail.com",
-    "time" : "2019-05-20T16:49:49.879Z",
-    "processing" : "2019-05-20T16:43:47.701Z"
+  "objectType": "Aliquot",
+  "code": "353686297",
+  "name": "FASTING_SERUM",
+  "container": "CRYOTUBE",
+  "role": "STORAGE",
+  "aliquotCollectionData": {
+    "objectType": "AliquotCollectionData",
+    "metadata": "",
+    "operator": "adonis.garcia.adg@gmail.com",
+    "time": "2019-05-20T16:49:49.879Z",
+    "processing": "2019-05-20T16:43:47.701Z"
   },
-  "aliquotHistory" : [
+  "aliquotHistory": [
     {
       "objectType": "AliquotEvent",
       "type": "CONVERTED_STORAGE",
@@ -430,27 +430,27 @@ Test.utils.data.activityPASC = {
         "keywords": []
       },
       "dataSources": [],
-      "NavigationManager":{
-        "getNavigationList" : function () {
+      "NavigationManager": {
+        "getNavigationList": function () {
           return [{
-              "extents": "SurveyTemplateObject",
-              "objectType": "Navigation",
-              "origin": "BEGIN NODE",
-              "index": 0,
-              "inNavigations": [],
-              "isDefault": false,
-              "routes": [
-                {
-                  "extents": "SurveyTemplateObject",
-                  "objectType": "Route",
-                  "origin": "BEGIN NODE",
-                  "destination": "PASC1",
-                  "name": "BEGIN NODE_PASC1",
-                  "isDefault": true,
-                  "conditions": []
-                }
-              ]
-            },
+            "extents": "SurveyTemplateObject",
+            "objectType": "Navigation",
+            "origin": "BEGIN NODE",
+            "index": 0,
+            "inNavigations": [],
+            "isDefault": false,
+            "routes": [
+              {
+                "extents": "SurveyTemplateObject",
+                "objectType": "Route",
+                "origin": "BEGIN NODE",
+                "destination": "PASC1",
+                "name": "BEGIN NODE_PASC1",
+                "isDefault": true,
+                "conditions": []
+              }
+            ]
+          },
             {
               "extents": "SurveyTemplateObject",
               "objectType": "Navigation",
@@ -4015,7 +4015,7 @@ Test.utils.data.activityPASC = {
     "version": 1,
     "name": "PRESSÃO ARTERIAL",
     "acronym": "PASC",
-    "requiredExternalID" : true
+    "requiredExternalID": true
   },
   "mode": "ONLINE",
   "participantData": {
@@ -4624,13 +4624,14 @@ Test.utils.data.anwserFilling = {
       "dataSource": "AnswerFilling",
       "label": "Questões de RETCLQ",
       "filters": {
-        "acronym":"RETCQL",
+        "acronym": "RETCQL",
         "version": 2,
         "category": 0,
-        "statusHistory" : {
-          "name" : "FINALIZED",
-          "position" : -1
-        }      },
+        "statusHistory": {
+          "name": "FINALIZED",
+          "position": -1
+        }
+      },
       "result": [
         {
           "objectType": "QuestionFill",
@@ -4654,12 +4655,12 @@ Test.utils.data.anwserFilling = {
       "dataSource": "AnswerFilling",
       "label": "Questões de CSJ",
       "filters": {
-        "acronym":"CSJ",
+        "acronym": "CSJ",
         "version": 1,
         "category": 0,
-        "statusHistory" : {
-          "name" : "FINALIZED",
-          "position" : -1
+        "statusHistory": {
+          "name": "FINALIZED",
+          "position": -1
         }
       },
       "result": [
@@ -7356,16 +7357,16 @@ Test.utils.data.preActivity = {
   "preActivityValid": false
 }
 Test.utils.data.userActivityPendency = {
-  "_id" : "5e137acf6f34296229baf794",
-  "objectType" : "userActivityPendency",
-  "creationDate" : "2020-01-06T18:22:07.716Z",
-  "dueDate" : "2020-01-14T03:00:00.000Z",
-  "requester" : "fdrtec@gmail.com",
-  "receiver" : "fagnerschwalm@gmail.com",
-  "activityInfo" : {
-    "id" : "5dfd1bd807ef686e9ad1399b",
-    "acronym" : "CSJ",
-    "recruitmentNumber" : 1166657
+  "_id": "5e137acf6f34296229baf794",
+  "objectType": "userActivityPendency",
+  "creationDate": "2020-01-06T18:22:07.716Z",
+  "dueDate": "2020-01-14T03:00:00.000Z",
+  "requester": "fdrtec@gmail.com",
+  "receiver": "fagnerschwalm@gmail.com",
+  "activityInfo": {
+    "id": "5dfd1bd807ef686e9ad1399b",
+    "acronym": "CSJ",
+    "recruitmentNumber": 1166657
   }
 }
 Test.utils.data.participantContact = {
@@ -7478,5 +7479,400 @@ Test.utils.data.searchSettingsForGenericList = {
   },
   "filter": {
     "status": "initialStatus"
+  }
+};
+Test.utils.data.activitySharingArtfacts = {
+  "data": {
+    "activity": {
+      "objectType": "Activity",
+      "_id": "5f49059e5b1291413d340190",
+      "surveyForm": {
+        "extents": "StudioObject",
+        "objectType": "SurveyForm",
+        "sender": "nando.souza97@hotmail.com",
+        "sendingDate": "2017-11-07T15:14:16.587Z",
+        "surveyFormType": "FORM_INTERVIEW",
+        "surveyTemplate": null,
+        "version": 2,
+        "acronym": "RCPC",
+        "name": "RECEPÇÃO",
+        "isDiscarded": false,
+        "requiredExternalID": false
+      },
+      "participantData": {
+        "_id": "5ea343bdb174c405c9bba6cc",
+        "recruitmentNumber": 555555,
+        "name": "Fulano Detal Bezerra Pereira Menezes Rodrigues Gomes",
+        "sex": "M",
+        "birthdate": {
+          "objectType": "ImmutableDate",
+          "value": "1949-04-22 00:00:00.000"
+        },
+        "fieldCenter": {
+          "_id": "587d366a7b65e477dc410ab9",
+          "name": "Rio Grande do Sul",
+          "code": 5,
+          "acronym": "RS",
+          "country": null,
+          "state": null,
+          "address": null,
+          "complement": null,
+          "zip": null,
+          "phone": null,
+          "backgroundColor": "rgba(75, 192, 192, 0.2)",
+          "borderColor": "rgba(75, 192, 192, 1)",
+          "locationPoint": null
+        },
+        "late": false,
+        "email": "fdrtec@gmail.com",
+        "password": null,
+        "tokenList": null,
+        "registeredBy": null,
+        "identified": true
+      },
+      "category": {
+        "name": "C0",
+        "objectType": "ActivityCategory",
+        "label": "Normal",
+        "disabled": false,
+        "isDefault": true
+      },
+      "mode": "AUTOFILL",
+      "fillContainer": {
+        "fillingList": []
+      },
+      "statusHistory": [
+        {
+          "objectType": "ActivityStatus",
+          "name": "CREATED",
+          "date": "2020-08-28T13:24:46.910Z",
+          "user": {
+            "name": "Fabiano",
+            "surname": "Dias Ramires",
+            "phone": "51998577574",
+            "email": "fdrtec@gmail.com"
+          }
+        }
+      ],
+      "interviews": [],
+      "isDiscarded": false,
+      "navigationTracker": {
+        "objectType": "NavigationTracker",
+        "lastVisitedIndex": null,
+        "items": [
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC1",
+            "index": 0,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [],
+            "outputs": [
+              "RCPC4",
+              "RCPC2"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC2",
+            "index": 1,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC1"
+            ],
+            "outputs": [
+              "RCPC4",
+              "RCPC3",
+              "RCPC22"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC3",
+            "index": 2,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC2"
+            ],
+            "outputs": [
+              "RCPC4"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC4",
+            "index": 3,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC3",
+              "RCPC1",
+              "RCPC2"
+            ],
+            "outputs": [
+              "RCPC5"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC5",
+            "index": 4,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC4"
+            ],
+            "outputs": [
+              "RCPC6"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC6",
+            "index": 5,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC5"
+            ],
+            "outputs": [
+              "RCPC7"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC7",
+            "index": 6,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC6"
+            ],
+            "outputs": [
+              "RCPC8",
+              "RCPC22"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC8",
+            "index": 7,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC7"
+            ],
+            "outputs": [
+              "RCPC13",
+              "RCPC9"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC9",
+            "index": 8,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC8"
+            ],
+            "outputs": [
+              "RCPC10"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC10",
+            "index": 9,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC9"
+            ],
+            "outputs": [
+              "RCPC11"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC11",
+            "index": 10,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC10"
+            ],
+            "outputs": [
+              "RCPC12"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC12",
+            "index": 11,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC11"
+            ],
+            "outputs": [
+              "RCPC13",
+              "RCPC22"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC13",
+            "index": 12,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC12",
+              "RCPC8"
+            ],
+            "outputs": [
+              "RCPC17",
+              "RCPC14"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC14",
+            "index": 13,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC13"
+            ],
+            "outputs": [
+              "RCPC17",
+              "RCPC15"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC15",
+            "index": 14,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC14"
+            ],
+            "outputs": [
+              "RCPC16"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC16",
+            "index": 15,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC15"
+            ],
+            "outputs": [
+              "RCPC17"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC17",
+            "index": 16,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC16",
+              "RCPC13",
+              "RCPC14"
+            ],
+            "outputs": [
+              "RCPC18"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC18",
+            "index": 17,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC17"
+            ],
+            "outputs": [
+              "RCPC19"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC19",
+            "index": 18,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC18"
+            ],
+            "outputs": [
+              "RCPC20"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC20",
+            "index": 19,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC19"
+            ],
+            "outputs": [
+              "RCPC21"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC21",
+            "index": 20,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC20"
+            ],
+            "outputs": [
+              "RCPC22"
+            ]
+          },
+          {
+            "objectType": "NavigationTrackingItem",
+            "id": "RCPC22",
+            "index": 21,
+            "state": "NOT_VISITED",
+            "previous": null,
+            "inputs": [
+              "RCPC21",
+              "RCPC2",
+              "RCPC7",
+              "RCPC12"
+            ],
+            "outputs": []
+          }
+        ]
+      },
+      "externalID": null
+    },
+    "dataSharingJson": {"data": {
+      "activitySharing": {
+        "objectType": "ActivitySharing",
+        "_id": "5f4d0a3950d1ae36cd85bb8c",
+        "activityId": "5f49059e5b1291413d340190",
+        "userId": "5a3a5383918a3a27dd5d94c8",
+        "participantToken": "eyJhbGciOiJIUzI1NiJ9.eyJtb2RlIjoic2hhcmluZyJ9.LF49U2dH0TOxFMhigjKP8Q2YESWItwIlkHT3PEWqK1Q",
+        "creationDate": "2020-08-31T14:33:29.471Z",
+        "expirationDate": "2020-09-07T16:28:45.885Z"
+      },
+      "url": "https://localhost:51008/otus/survey-player/#/?activity=5f49059e5b1291413d340190&token=eyJhbGciOiJIUzI1NiJ9.eyJtb2RlIjoic2hhcmluZyJ9.LF49U2dH0TOxFMhigjKP8Q2YESWItwIlkHT3PEWqK1Q"
+    }}
   }
 };

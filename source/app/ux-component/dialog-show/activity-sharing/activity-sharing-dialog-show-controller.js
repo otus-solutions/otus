@@ -11,17 +11,16 @@
     'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller(ActivitySharingService, ActivitySharingDialogValues,
-                      LoadingScreenService) {
+  function Controller(ActivitySharingService, ActivitySharingDialogValues, LoadingScreenService) {
     const self = this;
-
     self.ActivitySharingDialogValues = ActivitySharingDialogValues;
+    self.liveLink = false;
+
     self.$onInit = onInit;
     self.getSharedURL = getSharedURL;
     self.renovateSharedURL = renovateSharedURL;
     self.deleteSharedURL = deleteSharedURL;
     self.copyLinkToClipboard = copyLinkToClipboard;
-    self.liveLink = false;
 
     function onInit() {
       LoadingScreenService.start();
