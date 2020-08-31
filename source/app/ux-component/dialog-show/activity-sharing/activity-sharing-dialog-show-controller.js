@@ -51,7 +51,6 @@
           self.data.cancel();
           ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.failMsgRenovate}`, 3000, "error-toast");
         });
-
     }
 
     function deleteSharedURL() {
@@ -80,7 +79,7 @@
       }
     }
 
-    /*Do not format the message text, you will lose the copy to clipboard formatting*/
+    /*Do not format the message text below, otherwise you will lose the Clipboard Tab*/
     function _getMsgLinkFormated(link) {
       return `${ActivitySharingDialogValues.titles.ativitity}: ${self.data.activity.surveyForm.acronym} - ${self.data.activity.surveyForm.name}
 ${ActivitySharingDialogValues.titles.participant}: ${self.data.activity.participantData.name}

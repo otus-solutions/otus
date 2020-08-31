@@ -84,7 +84,7 @@
       </div>
 
       <div>
-        <md-button flex ng-click="$ctrl.copyLinkToClipboard($ctrl.activitySharing.url,'msg')"
+        <md-button ng-click="$ctrl.copyLinkToClipboard($ctrl.activitySharing.url,'msg')"
                    class="md-raised md-primary" aria-label={{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.arialLabel}}
                    ng-disabled="!$ctrl.liveLink" layout-fill>
           <span class="md-caption" ng-show="$ctrl.liveLink"> {{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleActivity}}</span>

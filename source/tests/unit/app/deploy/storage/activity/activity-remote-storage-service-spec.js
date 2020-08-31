@@ -13,7 +13,7 @@ describe('activity-remote-storage-service Test', function() {
 
   beforeEach(function() {
     mockInjections();
-    angular.mock.module('otusjs.deploy.storage', function ($provide) {
+    angular.mock.module('otusjs.otus', function ($provide) {
       $provide.value('otusjs.deploy.ActivityRestService', Mock.ActivityRestService);
       $provide.value('otusjs.deploy.ActivityImportRestService', Mock.ActivityImportRestService);
       $provide.value('otusjs.deploy.ActivityConfigurationRestService', {});
