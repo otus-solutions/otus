@@ -25,7 +25,7 @@ describe('ActivititySharingDialogShowController_UnitTest_Suite', () => {
     Mock.$q = $q;
     Mock.getSharedURLDefered = Mock.$q.defer();
     Mock.getSharedURLDefered.resolve(Mock.responseActivityShared);
-    Mock.scope.$digest();
+    // Mock.scope.$digest();
   }
 
   it('ctrlExistence_check', () => {
@@ -40,9 +40,12 @@ describe('ActivititySharingDialogShowController_UnitTest_Suite', () => {
   });
 
   it('getSharedURLMethod_should', () => {
-    console.log(ctrl.activitySharing)
+    expect(ctrl.activitySharing).toBeUndefined();
+    expect(ctrl.liveLink).toBeFalsy();
     ctrl.getSharedURL();
-   console.log(ctrl.activitySharing)
+    Mock.scope.$digest();
+    expect(ctrl.liveLink).toBeTruthy();
+    expect(ctrl.activitySharing.objectType).toBe('ActivitySharing')
 
 
 
