@@ -1,10 +1,10 @@
 <style>
   .activity-sharing-dialog {
     width: 40vw;
+    background-color: #dedede;
   }
 
   .content-share {
-    background-color: #dedede;
     padding: 0.5em;
   }
 
@@ -36,10 +36,10 @@
   <md-dialog-content class="content-share">
     <div layout="column" layout-margin>
       <div layout="row" layout-align="space-between center">
-        <md-chips class="md-primary md-body-1">
-          <md-chip md-colors="{background: 'primary'}">{{ $ctrl.data.activity.surveyForm.acronym }}</md-chip>
+        <md-chips>
+          <md-chip  class="md-caption" md-colors="{background: 'primary'}">{{ $ctrl.data.activity.surveyForm.acronym }}</md-chip>
         </md-chips>
-        <span>{{ $ctrl.data.activity.surveyForm.name }}</span>
+        <span class="md-body-1">{{ $ctrl.data.activity.surveyForm.name }}</span>
 
         <md-button class="md-icon-button" ng-click="$ctrl.deleteSharedURL()"
                    {{$ctrl.ActivitySharingDialogValues.buttons.deleteActivitySharing.ariaLabel}}>
@@ -53,7 +53,7 @@
 
       </div>
       <div layout="row" layout-align="center">
-        <span class="md-subhead">{{ $ctrl.data.activity.participantData.name}}</span>
+        <span class="md-body-2">{{ $ctrl.data.activity.participantData.name}}</span>
       </div>
       <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
         <span>Válido até: {{ $ctrl.activitySharing.getExpirationDate() | date:'dd/MM/yyyy'}}</span>
@@ -84,11 +84,11 @@
       </div>
 
       <div>
-        <md-button ng-click="$ctrl.copyLinkToClipboard($ctrl.activitySharing.url,'msg')"
+        <md-button flex ng-click="$ctrl.copyLinkToClipboard($ctrl.activitySharing.url,'msg')"
                    class="md-raised md-primary" aria-label={{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.arialLabel}}
                    ng-disabled="!$ctrl.liveLink" layout-fill>
-          <span ng-show="$ctrl.liveLink"> {{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleActivity}}</span>
-          <span ng-show="!$ctrl.liveLink">{{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleInactivity}}</span>
+          <span class="md-caption" ng-show="$ctrl.liveLink"> {{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleActivity}}</span>
+          <span class="md-caption" ng-show="!$ctrl.liveLink">{{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleInactivity}}</span>
         </md-button>
       </div>
     </div>

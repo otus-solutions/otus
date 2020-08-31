@@ -86,7 +86,7 @@
       });
     }
 
-    function showActivitySharingDialog(selectedActivity) {
+    function showActivitySharingDialog(selectedActivity, fullscreen = true) {
       self.data = {
         activity: selectedActivity,
         cancel: cancel
@@ -98,7 +98,8 @@
         locals: { data: self.data },
         templateUrl: 'app/ux-component/dialog-show/activity-sharing/activity-sharing-dialog-show-template.html',
         parent: angular.element(document.body),
-        controllerAs:"$ctrl"
+        controllerAs:"$ctrl",
+        fullscreen: fullscreen
       });
     }
 
