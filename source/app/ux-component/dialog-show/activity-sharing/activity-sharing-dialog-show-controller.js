@@ -34,8 +34,10 @@
         .then(activitySharing => self.activitySharing = activitySharing)
         .then(() => self.liveLink = self.activitySharing.isValid())
         .then(() => LoadingScreenService.finish())
-        .then(() => console.log(self.activitySharing))
-        .catch((e) => console.error(e));
+        .catch((e) => {
+          self.data.cancel();
+          ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.failMsgGetLink} ${e}`, 3000, "error-toast");
+        });
     }
 
     function renovateSharedURL() {
@@ -45,7 +47,11 @@
         .then(activitySharing => self.activitySharing = activitySharing)
         .then(() => self.liveLink = self.activitySharing.isValid())
         .then(() => LoadingScreenService.finish())
-        .catch(e => console.error(e));
+        .catch((e) => {
+          self.data.cancel();
+          ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.failMsgRenovate}`, 3000, "error-toast");
+        });
+
     }
 
     function deleteSharedURL() {
@@ -54,9 +60,11 @@
         .then(() => self.activitySharing = null)
         .then(() => self.data.cancel())
         .then(() => LoadingScreenService.finish())
-        .then(() => ActivitySharingService.callToast(ActivitySharingDialogValues.toaster.delete, 5000))
-        .catch((e) =>
-          ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.fail} ${e}`, 5000, "error-toast"));
+        .then(() => ActivitySharingService.callToast(ActivitySharingDialogValues.toaster.successDelete, 3000))
+        .catch((e) => {
+          self.data.cancel();
+          ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.failMsgDelete}`, 3000, "error-toast");
+        });
     }
 
     function copyLinkToClipboard(link, mode) {
@@ -66,14 +74,19 @@
           ActivitySharingService.callToast("Link copiado!", 4000)
           break;
         case 'msg':
-          let msgLink =
-            `Atividade: ${self.data.activity.surveyForm.acronym} - ${self.data.activity.surveyForm.name}
-Participante: ${self.data.activity.participantData.name}
-URL: ${link}`;
-          ActivitySharingService.copyLinkToClipboard(msgLink);
+          ActivitySharingService.copyLinkToClipboard(_getMsgLinkFormated(link));
           ActivitySharingService.callToast("Link copiado!", 4000);
           break;
       }
     }
+
+    /*Do not format the message text, you will lose the copy to clipboard formatting*/
+    function _getMsgLinkFormated(link) {
+      return `${ActivitySharingDialogValues.titles.ativitity}: ${self.data.activity.surveyForm.acronym} - ${self.data.activity.surveyForm.name}
+${ActivitySharingDialogValues.titles.participant}: ${self.data.activity.participantData.name}
+
+${link}`;
+    }
+
   }
 }());

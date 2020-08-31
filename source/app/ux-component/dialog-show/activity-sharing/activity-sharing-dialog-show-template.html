@@ -85,7 +85,7 @@
 
       <div>
         <md-button ng-click="$ctrl.copyLinkToClipboard($ctrl.activitySharing.url,'msg')"
-                   class="md-raised md-primary" aria-label="Salvar"
+                   class="md-raised md-primary" aria-label={{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.arialLabel}}
                    ng-disabled="!$ctrl.liveLink" layout-fill>
           <span ng-show="$ctrl.liveLink"> {{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleActivity}}</span>
           <span ng-show="!$ctrl.liveLink">{{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleInactivity}}</span>

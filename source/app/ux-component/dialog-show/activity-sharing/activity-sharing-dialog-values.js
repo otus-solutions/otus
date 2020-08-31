@@ -6,6 +6,8 @@
     .value('otusjs.otus.uxComponent.ActivitySharingDialogValues', {
       titles: {
         dialogToTitle: 'COMPARTILHAMENTO DE ATIVIDADE',
+        ativitity: 'Atividade',
+        participant: 'Participante',
       },
       buttons: {
         closeSharingDialog: {
@@ -31,13 +33,14 @@
         copyMessageWithLink: {
           titleActivity: "copiar informações de compartilhamento",
           titleInactivity: "Link expirado",
+          arialLabel: "copiar mensagem com link"
         }
       },
       toaster: {
-        delete: 'Link Removido com sucesso',
-        fail: 'Ocorreu um erro:'
-
-
+        successDelete: 'Link Removido com sucesso',
+        failMsgDelete: 'Erro: Não foi possível deletar link',
+        failMsgGetLink: 'Erro: Não foi possível requisitar link',
+        failMsgRenovate: 'Erro: Não foi renovar link'
       }
     })
 }());
