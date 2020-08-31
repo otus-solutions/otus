@@ -16,6 +16,7 @@
       'otusjs.otus.pendency',
       'otusjs.otus.project.communication',
       'otusjs.application',
+      'otusjs.application.theme',
       'otusjs.deploy',
       'ngSanitize'
     ])
