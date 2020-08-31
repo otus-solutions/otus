@@ -129,7 +129,7 @@
         self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() != undefined ? true : false;
         self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name;
         self.selectedItemCounter = null;
-        self.showActivitySharing = isAutoFill;
+        self.showActivitySharing = isAutoFill && ( selectedActivities[0].statusHistory.getLastStatus().name !== 'FINALIZED');
       } else {
         self.showBottomSheet = true;
         self.showVisualizationButton = false;

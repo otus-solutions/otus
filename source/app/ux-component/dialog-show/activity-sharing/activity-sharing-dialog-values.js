@@ -40,7 +40,9 @@
         successDelete: 'Link Removido com sucesso',
         failMsgDelete: 'Erro: Não foi possível deletar link',
         failMsgGetLink: 'Erro: Não foi possível requisitar link',
-        failMsgRenovate: 'Erro: Não foi renovar link'
+        failMsgRenovate: 'Erro: Não foi renovar link',
+        copyLink: 'Link copiado!',
+        copyMsg: 'Mensagem copiada!'
       }
     })
 }());

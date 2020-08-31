@@ -71,11 +71,11 @@
       switch (mode) {
         case 'link':
           ActivitySharingService.copyLinkToClipboard(link)
-          ActivitySharingService.callToast("Link copiado!", 4000)
+          ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.copyLink}`, 3000)
           break;
         case 'msg':
           ActivitySharingService.copyLinkToClipboard(_getMsgLinkFormated(link));
-          ActivitySharingService.callToast("Link copiado!", 4000);
+          ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.copyMsg}`, 3000);
           break;
       }
     }
