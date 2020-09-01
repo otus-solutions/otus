@@ -1,4 +1,4 @@
-fdescribe('dialogShowService', function () {
+describe('dialogShowService', function () {
   var service;
   var Mock = {};
   var Injections;
