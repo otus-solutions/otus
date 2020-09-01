@@ -1,4 +1,4 @@
-fdescribe('ActivitySharingRestService_UnitTest_Suite', () => {
+describe('ActivitySharingRestService_UnitTest_Suite', () => {
   let service;
   let Injections = [];
   let Mock = {};
