@@ -34,6 +34,7 @@
         .then(() => self.liveLink = self.activitySharing.isValid())
         .then(() => LoadingScreenService.finish())
         .catch((e) => {
+          LoadingScreenService.finish();
           self.data.cancel();
           ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.failMsgGetLink} ${e}`, 3000, "error-toast");
         });
@@ -47,6 +48,7 @@
         .then(() => self.liveLink = self.activitySharing.isValid())
         .then(() => LoadingScreenService.finish())
         .catch((e) => {
+          LoadingScreenService.finish()
           self.data.cancel();
           ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.failMsgRenovate}`, 3000, "error-toast");
         });
@@ -60,6 +62,7 @@
         .then(() => LoadingScreenService.finish())
         .then(() => ActivitySharingService.callToast(ActivitySharingDialogValues.toaster.successDelete, 3000))
         .catch((e) => {
+          LoadingScreenService.finish()
           self.data.cancel();
           ActivitySharingService.callToast(`${ActivitySharingDialogValues.toaster.failMsgDelete}`, 3000, "error-toast");
         });
