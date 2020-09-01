@@ -38,7 +38,7 @@
         activitySharing.url = dataSharingJson.url;
         return activitySharing;
       } catch (e) {
-        throw new Error("Error Parse: an error occurred with shared link information")
+        throw new Error("an error occurred while trying to parse ativitySharingJson")
       }
     }
 
