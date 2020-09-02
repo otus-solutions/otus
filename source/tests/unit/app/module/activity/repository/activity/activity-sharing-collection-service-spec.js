@@ -15,7 +15,7 @@ describe('ActivitySharingCollectionService_UnitTest_Suite', () => {
     });
   });
 
-  function mockInitialize($injector, $q){
+  function mockInitialize($injector, $q) {
     Mock.ActivitySharingService = $injector.get('otusjs.activity.business.ActivitySharingService');
     Mock.responseActivityShared = Test.utils.data.activitySharingArtfacts.data.dataSharingJson;
     Mock.activityId = Mock.responseActivityShared.data.activitySharing.activityId;
@@ -24,7 +24,7 @@ describe('ActivitySharingCollectionService_UnitTest_Suite', () => {
   }
 
   it('serviceExistence_check', () => {
-      expect(service).toBeDefined();
+    expect(service).toBeDefined();
   });
 
   it('serviceMethodsExistence_check', () => {
@@ -35,18 +35,16 @@ describe('ActivitySharingCollectionService_UnitTest_Suite', () => {
 
   it('getSharedURL method should return promise by ActivityRemoteStorageService', () => {
     expect(service.getSharedURL(Mock.activityId)).toBePromise();
-    expect(Injections.ActivityRemoteStorageService.getSharedURL).toHaveBeenCalledTimes(1)
+    expect(Injections.ActivityRemoteStorageService.getSharedURL).toHaveBeenCalledTimes(1);
   });
 
   it('renovateSharedURL method should return promise by ActivityRemoteStorageService', () => {
     expect(service.renovateSharedURL(Mock.activitySharing.getId())).toBePromise();
-    expect(Injections.ActivityRemoteStorageService.renovateSharedURL).toHaveBeenCalledTimes(1)
-
+    expect(Injections.ActivityRemoteStorageService.renovateSharedURL).toHaveBeenCalledTimes(1);
   });
 
   it('deleteSharedURL method should return promise by ActivityRemoteStorageService', () => {
     expect(service.deleteSharedURL(Mock.activitySharing.getId())).toBePromise();
-    expect(Injections.ActivityRemoteStorageService.deleteSharedURL).toHaveBeenCalledTimes(1)
-
+    expect(Injections.ActivityRemoteStorageService.deleteSharedURL).toHaveBeenCalledTimes(1);
   });
 });

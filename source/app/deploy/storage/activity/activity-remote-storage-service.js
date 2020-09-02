@@ -175,7 +175,6 @@
           activity._id = response.data;
           return activity;
         });
-
     }
 
     /**
@@ -317,7 +316,6 @@
     function deleteSharedURL(activitySharingId) {
       return ActivitySharingRestService.deleteSharedURL(activitySharingId);
     }
-
 
   }
 }());
