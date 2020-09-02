@@ -13,7 +13,8 @@
     '$q',
     'otusjs.deploy.ActivityRestService',
     'otusjs.deploy.ActivityImportRestService',
-    'otusjs.deploy.ActivityConfigurationRestService'
+    'otusjs.deploy.ActivityConfigurationRestService',
+    'otusjs.deploy.ActivitySharingRestService'
   ];
 
   /**
@@ -28,7 +29,8 @@
    * @namespace ActivityRemoteStorage
    * @memberof Services
    */
-  function Service($q, ActivityRestService, ActivityImportRestService, ActivityConfigurationRestService) {
+  function Service($q, ActivityRestService, ActivityImportRestService,
+                   ActivityConfigurationRestService, ActivitySharingRestService) {
     var self = this;
 
     /* Public methods */
@@ -42,6 +44,9 @@
     self.getActivityRevisions = getActivityRevisions;
     self.importActivities = importActivities;
     self.createFollowUpActivity = createFollowUpActivity;
+    self.getSharedURL = getSharedURL;
+    self.renovateSharedURL = renovateSharedURL;
+    self.deleteSharedURL = deleteSharedURL;
 
     /**
      * Adds activities to collection.
@@ -170,7 +175,6 @@
           activity._id = response.data;
           return activity;
         });
-
     }
 
     /**
@@ -299,5 +303,19 @@
 
       return deferred.promise;
     }
+
+    /** activity-sharing in collection */
+    function getSharedURL(activityId) {
+      return ActivitySharingRestService.getSharedURL(activityId);
+    }
+
+    function renovateSharedURL(activitySharingId) {
+      return ActivitySharingRestService.renovateSharedURL(activitySharingId);
+    }
+
+    function deleteSharedURL(activitySharingId) {
+      return ActivitySharingRestService.deleteSharedURL(activitySharingId);
+    }
+
   }
 }());

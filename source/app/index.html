@@ -223,6 +223,7 @@
 <script src="app/deploy/rest/otus-api/otus-api-service.js"></script>
 <script src="app/deploy/rest/otus-api/activity/activity-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/activity/offline-activity-collection-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/activity/activity-sharing-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/import/activity-import-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/activity/configuration/activity-configuration-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/configuration/configuration-rest-service.js"></script>
@@ -316,7 +317,9 @@
 <script src="app/module/activity/business/group-activity-service.js"></script>
 <script src="app/module/activity/business/activity-import-service.js"></script>
 <script src="app/module/activity/business/pre-activity-factory.js"></script>
+<script src="app/module/activity/business/model/activity-sharing-factory.js"></script>
 <script src="app/module/activity/business/offline-activity-collection-service.js"></script>
+<script src="app/module/activity/business/activity-sharing-service.js"></script>
 <!-- # Activity > Core -->
 <script src="app/module/activity/core/module.js"></script>
 <script src="app/module/activity/core/context-service.js"></script>
@@ -329,11 +332,13 @@
 <script src="app/module/activity/repository/activity/activity-repository-service.js"></script>
 <script src="app/module/activity/repository/activity/survey-repository-service.js"></script>
 <script src="app/module/activity/repository/activity/survey-collection-service.js"></script>
+<script src="module/activity/repository/activity/activity-sharing-collection-service.js"></script>
 <script src="app/module/activity/repository/user/user-repository-service.js"></script>
 <!-- # Activity > Storage -->
 <script src="app/module/activity/storage/module.js"></script>
 <script src="app/module/activity/storage/activity-local-storage-service.js"></script>
 <script src="app/module/activity/storage/survey-storage-service.js"></script>
+
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/dashboard-module.min.js -->
@@ -810,6 +815,8 @@
 <!--  dialog  -->
 <script src="app/ux-component/dialog-show/dialog-show-controller.js"></script>
 <script src="app/ux-component/dialog-show/customized-dialog-show-controller.js"></script>
+<script src="app/ux-component/dialog-show/activity-sharing/activity-sharing-dialog-values.js"></script>
+<script src="app/ux-component/dialog-show/activity-sharing/activity-sharing-dialog-show-controller.js"></script>
 
 <!-- user access recovery -->
 <script src="app/ux-component/user-login-access-recovery/user-login-access-recovery-controller.js"></script>
@@ -818,6 +825,8 @@
 
 <!--utils-->
 <script src="app/ux-component/utils/html-builder-service.js"></script>
+
+
 
 <!-- endbuild -->
 <!-- enduncache -->

@@ -15,6 +15,7 @@
     self.showDialog = showDialog;
     self.showConfirmationDialog = showConfirmationDialog;
     self.showCustomizedDialog = showCustomizedDialog;
+    self.showActivitySharingDialog = showActivitySharingDialog;
 
     function showDialog(data) {
       self.data = data;
@@ -26,6 +27,7 @@
         templateUrl: 'app/ux-component/dialog-show/dialog-show-template.html',
         parent: angular.element(document.body),
         controllerAs:"$ctrl",
+        bindToController: true,
         clickOutsideToClose: true
       });
     }
@@ -80,6 +82,23 @@
         templateUrl: templateUrl,
         parent: angular.element(document.body),
         clickOutsideToClose:true,
+        fullscreen: fullscreen
+      });
+    }
+
+    function showActivitySharingDialog(selectedActivity, fullscreen = true) {
+      self.data = {
+        activity: selectedActivity,
+        cancel: cancel
+      }
+
+      return $mdDialog.show({
+        controller: 'activititySharingDialogShowController',
+        bindToController: true,
+        locals: { data: self.data },
+        templateUrl: 'app/ux-component/dialog-show/activity-sharing/activity-sharing-dialog-show-template.html',
+        parent: angular.element(document.body),
+        controllerAs:"$ctrl",
         fullscreen: fullscreen
       });
     }
