@@ -62,7 +62,7 @@ describe('ActivititySharingDialogShowController_UnitTest_Suite', () => {
     Mock.scope.$digest();
     expect(Injections.ActivitySharingService.parseActivitySharing).toHaveBeenCalledTimes(1);
     expect(ctrl.activitySharing.objectType).toBe('ActivitySharing')
-    expect(ctrl.liveLink).toBeTruthy();
+    expect(ctrl.liveLink).toBeFalsy();
     expect(Injections.LoadingScreenService.finish).toHaveBeenCalledTimes(1);
   });
 
@@ -82,7 +82,7 @@ describe('ActivititySharingDialogShowController_UnitTest_Suite', () => {
     Mock.scope.$digest();
     expect(Injections.ActivitySharingService.parseActivitySharing).toHaveBeenCalledTimes(1);
     expect(ctrl.activitySharing.objectType).toBe('ActivitySharing')
-    expect(ctrl.liveLink).toBeTruthy();
+    expect(ctrl.liveLink).toBeFalsy();
     expect(Injections.LoadingScreenService.finish).toHaveBeenCalledTimes(1);
   });
 

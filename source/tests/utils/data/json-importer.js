@@ -7870,7 +7870,7 @@ Test.utils.data.activitySharingArtfacts = {
         "userId": "5a3a5383918a3a27dd5d94c8",
         "participantToken": "eyJhbGciOiJIUzI1NiJ9.eyJtb2RlIjoic2hhcmluZyJ9.LF49U2dH0TOxFMhigjKP8Q2YESWItwIlkHT3PEWqK1Q",
         "creationDate": "2020-08-31T14:33:29.471Z",
-        "expirationDate": "2020-09-07T16:28:45.885Z"
+        "expirationDate": "2020-09-01T16:28:45.885Z"
       },
       "url": "https://localhost:51008/otus/survey-player/#/?activity=5f49059e5b1291413d340190&token=eyJhbGciOiJIUzI1NiJ9.eyJtb2RlIjoic2hhcmluZyJ9.LF49U2dH0TOxFMhigjKP8Q2YESWItwIlkHT3PEWqK1Q"
     }}
