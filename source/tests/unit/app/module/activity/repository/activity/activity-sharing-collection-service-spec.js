@@ -35,13 +35,18 @@ describe('ActivitySharingCollectionService_UnitTest_Suite', () => {
 
   it('getSharedURL method should return promise by ActivityRemoteStorageService', () => {
     expect(service.getSharedURL(Mock.activityId)).toBePromise();
+    expect(Injections.ActivityRemoteStorageService.getSharedURL).toHaveBeenCalledTimes(1)
   });
 
   it('renovateSharedURL method should return promise by ActivityRemoteStorageService', () => {
     expect(service.renovateSharedURL(Mock.activitySharing.getId())).toBePromise();
+    expect(Injections.ActivityRemoteStorageService.renovateSharedURL).toHaveBeenCalledTimes(1)
+
   });
 
   it('deleteSharedURL method should return promise by ActivityRemoteStorageService', () => {
     expect(service.deleteSharedURL(Mock.activitySharing.getId())).toBePromise();
+    expect(Injections.ActivityRemoteStorageService.deleteSharedURL).toHaveBeenCalledTimes(1)
+
   });
 });
