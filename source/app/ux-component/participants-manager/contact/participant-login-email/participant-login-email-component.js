@@ -91,11 +91,12 @@
     }
 
     function selectedItemChange(item) {
-      self.updatedLoginEmail = item;
+      self.updatedLoginEmail = angular.copy(item);
     }
 
     function getEmailCandidates(contacts) {
       return ParticipantManagerService.extractEmailValuesFromContacts(contacts);
+
     }
   }
 }());

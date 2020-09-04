@@ -241,9 +241,11 @@
 
     function updateEmailParticipantSessionStorage(participant, updatedEmail){
       participant.email = updatedEmail;
-      var sessionStorageParticipant = JSON.parse($window.sessionStorage.getItem('participant_context'))
-      sessionStorageParticipant.selectedParticipant.email = updatedEmail;
-      $window.sessionStorage.setItem('participant_context', JSON.stringify(sessionStorageParticipant));
+      selectParticipant(participant);
+
+      // var sessionStorageParticipant = JSON.parse($window.sessionStorage.getItem('participant_context'))
+      // sessionStorageParticipant.selectedParticipant.email = updatedEmail;
+      // $window.sessionStorage.setItem('participant_context', JSON.stringify(sessionStorageParticipant));
     }
 
     function removeEmailByParticipantId(participantId){
