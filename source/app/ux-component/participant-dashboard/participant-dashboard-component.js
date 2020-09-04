@@ -4,9 +4,9 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusParticipantDashboard', {
-      controller: Controller,
+      controller: 'participantDashboardCtrl as $ctrl',
       templateUrl: 'app/ux-component/participant-dashboard/participant-dashboard-template.html'
-    });
+    }).controller('participantDashboardCtrl', Controller);
 
   Controller.$inject = [
     'STATE',
