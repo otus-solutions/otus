@@ -23,6 +23,7 @@
     /* Lifecycle hooks */
     self.$onInit = onInit;
     self.getCurrentState = getCurrentState;
+    self.getSelectedState = getSelectedState;
     self.STATE = STATE;
 
     function selectParticipant(selectedParticipant) {
@@ -40,6 +41,10 @@
 
     function getCurrentState() {
       return ApplicationStateService.getCurrentState();
+    }
+
+    function getSelectedState() {
+      return self.getCurrentState() == self.STATE.PARTICIPANT_DASHBOARD || self.getCurrentState() == self.STATE.PARTICIPANT_UPDATE;
     }
 
     function _loadSelectedParticipant(participantData) {
