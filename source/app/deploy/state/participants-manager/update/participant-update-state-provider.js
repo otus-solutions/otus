@@ -19,7 +19,7 @@
     }
 
     self.state = {
-      parent: STATE.PARTICIPANTS_MANAGER,
+      parent: STATE.PARTICIPANT_DASHBOARD,
       name: STATE.PARTICIPANT_UPDATE,
       url: '/' + STATE.PARTICIPANT_UPDATE,
       template: '<otus-participant-contact></otus-participant-contact>',
