@@ -96,7 +96,6 @@
 
     function getEmailCandidates(contacts) {
       return ParticipantManagerService.extractEmailValuesFromContacts(contacts);
-
     }
   }
 }());
