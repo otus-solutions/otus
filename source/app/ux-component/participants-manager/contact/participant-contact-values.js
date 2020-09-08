@@ -49,7 +49,6 @@
           icon: 'clear',
           translatedTitle: 'Excluir'
         },
-
         cancel:  {
           icon: 'clear',
           translatedTitle: 'Cancelar'
