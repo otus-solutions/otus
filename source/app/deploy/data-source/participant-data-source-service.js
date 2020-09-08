@@ -156,11 +156,13 @@
     }
 
     function updateLoginEmail(participantId, updatedLoginEmail) {
-      return ParticipantRestService.updateLoginEmail(participantId, updatedLoginEmail);
+      return ParticipantRestService.updateLoginEmail(participantId, updatedLoginEmail)
+        .then(() => _loadData());
     }
 
     function removeEmailByParticipantId(participantId){
-      return ParticipantRestService.removeEmailByParticipantId(participantId);
+      return ParticipantRestService.removeEmailByParticipantId(participantId)
+        .then(() => _loadData());
     }
   }
 }());

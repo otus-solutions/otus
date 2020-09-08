@@ -25,6 +25,7 @@
                          ng-pattern='/^(([^<>()\[\]\.,:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i'
                          md-selected-item-change="$ctrl.selectedItemChange(item)"
                          md-items="item in $ctrl.getEmailCandidates($ctrl.contactEmails)"
+                         md-item-text="$ctrl.updatedLoginEmail"
                          md-dropdown-position="top"
                          md-escape-options="blur"
                          md-autofocus="false"
@@ -45,10 +46,10 @@
         <md-button class="md-accent md-icon-button md-button restore-button"
                    ng-if="$ctrl.editMode"
                    ng-click="$ctrl.resetLoginEmailForm()">
-          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}">
-            {{$ctrl.ParticipantContactValues.icons.clear.icon}}
+          <md-icon aria-label="{{$ctrl.ParticipantContactValues.icons.cancel.translatedTitle}}">
+            {{$ctrl.ParticipantContactValues.icons.cancel.icon}}
           </md-icon>
-          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.clear.translatedTitle}}</md-tooltip>
+          <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.cancel.translatedTitle}}</md-tooltip>
         </md-button>
 
         <md-button class="md-warn md-icon-button md-button restore-button"
