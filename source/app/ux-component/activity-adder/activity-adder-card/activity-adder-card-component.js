@@ -33,16 +33,16 @@
     self.updateRealizationDate = updateRealizationDate;
     self.monitoringCheckerFormSearchTextChange = monitoringCheckerFormSearchTextChange;
     self.styleHeader = styleHeader;
-    self.validExternalIdTruthyAndAutoFill = validExternalIdTruthyAndAutoFill;
-    self.validExternalIdFalsyAndAutoFill = validExternalIdFalsyAndAutoFill;
+    self.validExternalIdTruthy = validExternalIdTruthy;
+    self.validExternalIdFalsy = validExternalIdFalsy;
     self.validTypeActivity = validTypeActivity;
 
-    function validExternalIdTruthyAndAutoFill() {
-      return self.preActivity.surveyForm.isRequiredExternalID() && self.preActivity.mode !== 'AUTOFILL';
+    function validExternalIdTruthy() {
+      return self.preActivity.surveyForm.isRequiredExternalID();
     }
 
-    function validExternalIdFalsyAndAutoFill() {
-      return !self.preActivity.surveyForm.isRequiredExternalID() || self.preActivity.mode === 'AUTOFILL';
+    function validExternalIdFalsy() {
+      return !self.preActivity.surveyForm.isRequiredExternalID();
     }
 
     function validTypeActivity() {
@@ -82,8 +82,8 @@
     }
 
     function getModeIcon() {
-      if (self.preActivity.mode === "AUTOFILL") return;
-      return self.preActivity.mode === "ONLINE" ? "signal" : "file-document"
+      if (self.preActivity.mode === "AUTOFILL") return "home_work";
+      return self.preActivity.mode === "ONLINE" ? "signal_cellular_alt" : "description"
     }
 
     function getAcronym() {
