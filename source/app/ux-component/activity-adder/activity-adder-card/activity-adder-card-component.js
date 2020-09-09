@@ -16,10 +16,11 @@
   Controller.$inject = [
     '$q',
     '$timeout',
-    '$mdColors'
+    '$mdColors',
+    'ACTIVITY_MANAGER_LABELS'
   ];
 
-  function Controller($q, $timeout, $mdColors) {
+  function Controller($q, $timeout, $mdColors, ACTIVITY_MANAGER_LABELS) {
     var self = this;
     self.realizationDate = new Date();
 
@@ -36,6 +37,7 @@
     self.validExternalIdTruthy = validExternalIdTruthy;
     self.validExternalIdFalsy = validExternalIdFalsy;
     self.validTypeActivity = validTypeActivity;
+    self.validTypeActivityPaper = validTypeActivityPaper;
 
     function validExternalIdTruthy() {
       return self.preActivity.surveyForm.isRequiredExternalID();
@@ -46,11 +48,15 @@
     }
 
     function validTypeActivity() {
-      return self.preActivity.mode === 'ONLINE' || self.preActivity.mode === 'AUTOFILL';
+      return self.preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name || self.preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name;
+    }
+
+    function validTypeActivityPaper() {
+      return self.preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.PAPER.name;
     }
 
     function styleHeader() {
-      return self.preActivity.mode === "AUTOFILL" ?
+      return self.preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name ?
         { 'background': $mdColors.getThemeColor('default-accent') } :
         { 'background': $mdColors.getThemeColor('default-primary') };
     }
@@ -82,8 +88,8 @@
     }
 
     function getModeIcon() {
-      if (self.preActivity.mode === "AUTOFILL") return "home_work";
-      return self.preActivity.mode === "ONLINE" ? "signal_cellular_alt" : "description"
+      if (self.preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name) return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.icon;
+      return self.preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name ? ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.icon : ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.PAPER.icon;
     }
 
     function getAcronym() {
@@ -101,7 +107,7 @@
 
     function updateExternalID(externalID) {
       self.preActivity.externalID = externalID;
-      if (self.preActivity.mode === "PAPER") self.preActivity.updatePreActivityValid(self.checkerForm.$valid, self.externalIdForm.$valid);
+      if (self.preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.PAPER.name) self.preActivity.updatePreActivityValid(self.checkerForm.$valid, self.externalIdForm.$valid);
       else self.preActivity.updatePreActivityValid(null, self.externalIdForm.$valid);
     }
 

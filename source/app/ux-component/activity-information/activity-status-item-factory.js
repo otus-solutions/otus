@@ -5,20 +5,24 @@
     .module('otusjs.otus.uxComponent')
     .factory('otusjs.otus.uxComponent.ActivityStatusItemFactory', Factory);
 
-  function Factory() {
+  Factory.$inject = [
+    'ACTIVITY_MANAGER_LABELS'
+  ]
+
+  function Factory(ACTIVITY_MANAGER_LABELS) {
     var self = this;
 
     /* Public methods */
     self.create = create;
 
     function create(data) {
-      return new ActivityStatusItem(data);
+      return new ActivityStatusItem(ACTIVITY_MANAGER_LABELS, data);
     }
 
     return self;
   }
 
-  function ActivityStatusItem(data) {
+  function ActivityStatusItem(ACTIVITY_MANAGER_LABELS, data) {
     var self = this;
 
     self.date = _getFormattedDate(data);
@@ -27,38 +31,7 @@
     self.status = _buildStatus(data);
 
     function _buildStatus(status) {
-      var map = {
-        CREATED: {
-          label: 'Criado',
-          color: '#595959',
-          icon: 'fiber_new'
-        },
-        OPENED: {
-          label: 'Aberto',
-          color: '#0091ea',
-          icon: 'visibility'
-        },
-        FINALIZED: {
-          label: 'Finalizado',
-          color: '#009688',
-          icon: 'check_circle'
-        },
-        SAVED: {
-          label: 'Salvo',
-          color: '#ae8323',
-          icon: 'save'
-        },
-        INITIALIZED_OFFLINE: {
-          label: 'Realizado em Papel',
-          color: '#886430',
-          icon: 'edit'
-        },
-        INITIALIZED_ONLINE: {
-          label: 'Iniciado Online',
-          color: '#513c1c',
-          icon: 'edit'
-        }
-      };
+      var map = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS;
 
       return map[status.name];
     }

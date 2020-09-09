@@ -22,7 +22,7 @@
         {{::$ctrl.preActivity.configuration.category.label}}</small></span>
     </div>
   </div>
-  <div layout="column" layout-align="start start" ng-if="$ctrl.preActivity.mode === 'PAPER'">
+  <div layout="column" layout-align="start start" ng-if="$ctrl.validTypeActivityPaper()">
     <form name="$ctrl.checkerForm" style="margin-top: 10px">
       <small class="md-caption" ng-style="{color:'#797985'}">Informações do Aferidor:</small>
       <md-input-container style="margin-top: 12px; margin-bottom: 12px" id="date">
