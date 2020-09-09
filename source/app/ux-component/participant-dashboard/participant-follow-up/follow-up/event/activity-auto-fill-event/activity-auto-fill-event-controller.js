@@ -39,7 +39,7 @@
                   if (response.length > 0) {
                     let activityConfiguration = {};
                     activityConfiguration.category = response[0];
-                    let activity = ActivityFactory.createAutoFillActivity(SurveyFormFactory.fromJsonObject(surveyForm.data[surveyForm.data.length - 1]), user, self.eventComponent.selectedParticipant, activityConfiguration);
+                    let activity = ActivityFactory.createAutoFillActivity(SurveyFormFactory.fromJsonObject(surveyForm.data[surveyForm.data.length - 1]), user, self.eventComponent.selectedParticipant, activityConfiguration, "");
                     ActivityRepositoryService.createFollowUpActivity(activity).then((result) => {
                       self.eventData.activityId = result._id;
                       ParticipantFollowUpService.activateFollowUpEvent(self.eventComponent.selectedParticipant.recruitmentNumber, self.eventData).then(function (result) {

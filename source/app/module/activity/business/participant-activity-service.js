@@ -77,7 +77,6 @@
         //esse catch garante que ocorrerá a troca de state mesmo que ocorra erro no backend
         //todo: remove
         .catch(() => {
-          console.log('veio aqui')
           $mdToast.show(
             $mdToast.simple()
               .textContent("Ocorreu um erro ao adicionar a(s) atividade(s)")
@@ -117,7 +116,7 @@
     }
 
     function _createAutoFillActivity(preActivity, selectedParticipant) {
-			ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration)
+      ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID)
 				.then(autoFillActivity => self.activities.push(autoFillActivity));
 		}
 
