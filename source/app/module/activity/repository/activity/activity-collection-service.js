@@ -41,6 +41,7 @@
     self.importActivities = importActivities;
     self.getById = getById;
     self.createFollowUpActivity = createFollowUpActivity;
+    self.reopenActivity = reopenActivity;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -75,8 +76,7 @@
           return remoteStorage
             .insert(activities)
             .then(function (remoteActivities) {
-              var localActivities = ActivityStorageService.insert(remoteActivities);
-              return localActivities;
+              return ActivityStorageService.insert(remoteActivities);
             });
         });
 
@@ -264,6 +264,19 @@
             });
         });
 
+      return request.promise;
+    }
+
+
+    function reopenActivity(activity) {
+      let request = $q.defer();
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage.reopenActivity(activity)
+            .then(() => request.resolve())
+            .catch(err => request.reject(err));
+        });
       return request.promise;
     }
 
