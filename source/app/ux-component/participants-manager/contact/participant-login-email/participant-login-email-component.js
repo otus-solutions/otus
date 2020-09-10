@@ -7,7 +7,7 @@
       templateUrl: 'app/ux-component/participants-manager/contact/participant-login-email/participant-login-email-template.html',
       bindings: {
         participant: '=',
-        contactEmails: '<',
+        loadParticipantFunction: '=?'
       }
     }).controller('participantLoginEmailCtrl', Controller);
 
@@ -19,7 +19,7 @@
   ];
 
   function Controller(ParticipantContactValues, ParticipantManagerService,
-                      ParticipantMessagesService, ApplicationStateService) {
+    ParticipantMessagesService, ApplicationStateService) {
     const self = this;
 
     self.enableEditMode = enableEditMode;
@@ -34,7 +34,18 @@
     /* Public methods */
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
+      self.loadParticipantFunction = _loadParticipant;
+      _loadParticipant();
+    }
+
+    function _loadParticipant(selectedParticipant) {
+
+      if (selectedParticipant) {
+        self.participant = selectedParticipant;
+      }
+
       self.updatedLoginEmail = angular.copy(self.participant.email);
+
       self.editMode = false;
     }
 

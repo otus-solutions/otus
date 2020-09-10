@@ -3,12 +3,6 @@
   rel="stylesheet" type="text/css">
 
 <md-content class="pc-layout" ng-cloak>
-  <div class="return-button" layout="row" layout-align="start center" layout-margin>
-    <md-button class="md-button md-icon-button md-primary md-raised" ng-click="$ctrl.dashboardParticipant()">
-      <md-icon aria-label="Limpar">keyboard_return</md-icon>
-      <md-tooltip md-direction="down">Voltar</md-tooltip>
-    </md-button>
-  </div>
   <div class="anonymous-msg" layout="column" ng-show="!$ctrl.isIdentified">
     <div layout="row" layout-padding layout-align="center center">
       <p align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto,
@@ -82,7 +76,7 @@
       </md-card-content>
     </md-card>
     <otus-participant-login-email class="contact-update"
-                                  contact-emails="$ctrl.contact.email"
+                                  load-participant-function="$ctrl.loadParticipantData"
                                   participant = $ctrl.participant>
     </otus-participant-login-email>
 
