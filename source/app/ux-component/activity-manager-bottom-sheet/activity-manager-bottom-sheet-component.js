@@ -44,6 +44,7 @@
     self.updateChecker = updateChecker;
     self.DialogController = DialogController;
     self.activitySharingDialog = activitySharingDialog;
+    self.reopenActivityDialog = reopenActivityDialog;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -118,7 +119,7 @@
         self.isPaperActivity = false;
         self.selectedItemCounter = null;
       } else if (selectedActivities.length === 1) {
-        var isAutoFill = selectedActivities[0].mode === "AUTOFILL" ? true : false;
+        const isAutoFill = (selectedActivities[0].mode === "AUTOFILL");
         self.showBottomSheet = true;
         self.showVisualizationButton = true;
         self.showFillingButton = !isAutoFill;
@@ -126,10 +127,11 @@
         self.showDeleteButton = true;
         self.showPendenciesButton = !isAutoFill;
         self.showInfoButton = true;
-        self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() != undefined ? true : false;
+        self.isPaperActivity = (selectedActivities[0].statusHistory.getInitializedOfflineRegistry() !== undefined);
         self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name;
         self.selectedItemCounter = null;
-        self.showActivitySharing = isAutoFill && ( selectedActivities[0].statusHistory.getLastStatus().name !== 'FINALIZED');
+        self.showActivitySharing = isAutoFill && (self.statusSelectedActivity !== 'FINALIZED');
+        self.showReopenActivity = isAutoFill && (self.statusSelectedActivity === 'FINALIZED');
       } else {
         self.showBottomSheet = true;
         self.showVisualizationButton = false;
@@ -141,6 +143,7 @@
         self.isPaperActivity = false;
         self.selectedItemCounter = selectedActivities.length;
         self.showActivitySharing = false;
+        self.showReopenActivity = false;
       }
 
        self.selectedActivity = angular.copy(selectedActivities[0]);
@@ -187,7 +190,6 @@
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
         self.selectedItem = CheckerItemFactory.create(self.user);
         self.maxDate = new Date();
-
       }
 
       function querySearch(query) {
@@ -217,17 +219,17 @@
             } else {
               _showMessage("Aferidor não alterado.")
             }
-          }).catch(function (e) {
-          self.cancel();
-          _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
-        })
+          })
+          .catch(function (e) {
+            self.cancel();
+            _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
+          })
           .then(_cleanSelectedActivity());
       }
 
       function cancel() {
         _cleanSelectedActivity();
         $mdDialog.cancel();
-
       }
 
       function _showMessage(msg) {
@@ -253,6 +255,16 @@
 
     function activitySharingDialog(selectedActivity) {
       DialogService.showActivitySharingDialog(selectedActivity);
+    }
+
+    function reopenActivityDialog(selectedActivity){
+      DialogService.showConfirmationDialog(
+        'Reabertura de atividade',
+        'Confirma a rebertura da atividade?',
+        'Confirmação de reabertura'
+      ).then(() => {
+        console.log('reabrir atividade') // todo
+      });
     }
 
   }
