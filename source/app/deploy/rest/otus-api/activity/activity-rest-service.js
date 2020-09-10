@@ -26,6 +26,7 @@
     self.getActivityRevisions = getActivityRevisions;
     self.getById = getById;
     self.createFollowUpActivity = createFollowUpActivity;
+    self.reopen = reopen;
 
     function initialize() {
       _rest = OtusRestResourceService.getActivityResource();
@@ -130,6 +131,21 @@
         throw new Error('REST resource is not initialized.');
       }
       return _followUpRest.createFollowUpActivity({ rn: activity.participantData.recruitmentNumber }, activity).$promise;
+    }
+
+    function reopen(activityId, activity) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      // return _rest.reopen({ id: activityId }, activity).$promise;
+
+      //todo
+      const request = $q.defer();
+      console.log('activity rest service: reopen');
+      console.log(activity)
+      console.log(activity.statusHistory.getHistory())
+      request.resolve();
+      return request.promise;
     }
 
   }
