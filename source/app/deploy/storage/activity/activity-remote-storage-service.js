@@ -47,6 +47,7 @@
     self.getSharedURL = getSharedURL;
     self.renovateSharedURL = renovateSharedURL;
     self.deleteSharedURL = deleteSharedURL;
+    self.reopenActivity = reopenActivity;
 
     /**
      * Adds activities to collection.
@@ -315,6 +316,11 @@
 
     function deleteSharedURL(activitySharingId) {
       return ActivitySharingRestService.deleteSharedURL(activitySharingId);
+    }
+
+
+    function reopenActivity(activity){
+      return ActivityRestService.reopen(activity.getID(), activity);
     }
 
   }
