@@ -37,6 +37,7 @@
 
     self.createActivity = createActivity;
     self.createFollowUpActivity = createFollowUpActivity;
+    self.reopenActivity = reopenActivity;
 
     function listAll(participant) {
       if (!participant) {
@@ -113,10 +114,8 @@
     function _update(toUpdate) {
       if (!toUpdate || !toUpdate.length) {
         throw new Error('No activity to update.', 'activity-repository-service.js', 50);
-      } else {
-        var work = _setupWorkProgress();
-        return ActivityCollectionService.update(toUpdate).then(work.finish);
       }
+      return ActivityCollectionService.update(toUpdate).then(_setupWorkProgress().finish);
     }
 
     function _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService, configuration) {
@@ -148,9 +147,9 @@
         return dbObjects.map(function (dbObject) {
           return _restoreEntity(dbObject);
         });
-      } else {
-        return [_restoreEntity(dbObjects)];
       }
+
+      return [_restoreEntity(dbObjects)];
     }
 
     function _restoreEntity(dbObject) {
@@ -222,6 +221,12 @@
     function createFollowUpActivity(activity) {
       return ActivityCollectionService.createFollowUpActivity(activity);
     }
+
+    function reopenActivity(activity){
+      return ActivityCollectionService.reopenActivity(activity)
+        .then(_setupWorkProgress().finish);
+    }
+
   }
 
 }());
