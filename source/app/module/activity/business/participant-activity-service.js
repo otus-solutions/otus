@@ -45,6 +45,7 @@
 		self.getSurveyFromJson = getSurveyFromJson;
 		self.getActivity = getActivity;
 		self.clearSelectedActivities = clearSelectedActivities;
+		self.reopenActivity = reopenActivity;
 
 		 function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -66,8 +67,7 @@
 
 		function createPreActivity(survey, configuration, mode) {
 			let loggedUser = ContextService.getLoggedUser();
-			let preActivity = PreActivityFactory.create(survey, configuration, mode, loggedUser);
-			return preActivity;
+			return PreActivityFactory.create(survey, configuration, mode, loggedUser);
 		}
 
 		function saveActivities(preActivities) {
@@ -77,7 +77,6 @@
         //esse catch garante que ocorrerá a troca de state mesmo que ocorra erro no backend
         //todo: remove
         .catch(() => {
-          console.log('veio aqui')
           $mdToast.show(
             $mdToast.simple()
               .textContent("Ocorreu um erro ao adicionar a(s) atividade(s)")
@@ -211,5 +210,9 @@
 		function clearSelectedActivities() {
       ContextService.clearSelectedActivities();
     }
+
+    function reopenActivity(activity){
+		  return ActivityRepositoryService.reopenActivity(activity);
+		}
 	}
 }());
