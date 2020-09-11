@@ -133,7 +133,7 @@
       return _followUpRest.createFollowUpActivity({ rn: activity.participantData.recruitmentNumber }, activity).$promise;
     }
 
-    function reopen(activityId, activity) {
+    function reopen(activity) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }

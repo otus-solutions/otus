@@ -320,7 +320,7 @@
 
 
     function reopenActivity(activity){
-      return ActivityRestService.reopen(activity.getID(), activity);
+      return ActivityRestService.reopen(activity);
     }
 
   }
