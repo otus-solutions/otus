@@ -30,8 +30,9 @@
     'otusjs.activity.business.ParticipantActivityService'
   ];
 
-  function Controller($q, $mdToast, $timeout, $mdDialog, $mdColors,
-                      EventService, CheckerItemFactory, DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService, ParticipantActivityService) {
+  function Controller($q, $mdToast, $timeout, $mdDialog, $mdColors, EventService, CheckerItemFactory,
+                      DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService,
+                      ParticipantActivityService) {
     var self = this;
     var confirmDeleteSelectedActivity;
 
@@ -42,6 +43,7 @@
     self.visualizeSelectedActivityInfo = visualizeSelectedActivityInfo;
     self.updateChecker = updateChecker;
     self.DialogController = DialogController;
+    self.activitySharingDialog = activitySharingDialog;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -127,6 +129,7 @@
         self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() != undefined ? true : false;
         self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name;
         self.selectedItemCounter = null;
+        self.showActivitySharing = isAutoFill && ( selectedActivities[0].statusHistory.getLastStatus().name !== 'FINALIZED');
       } else {
         self.showBottomSheet = true;
         self.showVisualizationButton = false;
@@ -137,6 +140,7 @@
         self.showPendenciesButton = false;
         self.isPaperActivity = false;
         self.selectedItemCounter = selectedActivities.length;
+        self.showActivitySharing = false;
       }
 
        self.selectedActivity = angular.copy(selectedActivities[0]);
@@ -245,7 +249,10 @@
       function _cleanSelectedActivity(){
         self.selectedActivity = null;
       }
+    }
 
+    function activitySharingDialog(selectedActivity) {
+      DialogService.showActivitySharingDialog(selectedActivity);
     }
 
   }

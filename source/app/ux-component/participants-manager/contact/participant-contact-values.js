@@ -49,6 +49,10 @@
           icon: 'clear',
           translatedTitle: 'Excluir'
         },
+        cancel:  {
+          icon: 'clear',
+          translatedTitle: 'Cancelar'
+        },
         return: {
           icon: 'undo',
           translatedTitle: 'Desfazer'

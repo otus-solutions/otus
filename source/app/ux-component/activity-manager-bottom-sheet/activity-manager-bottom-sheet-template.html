@@ -21,7 +21,12 @@
                                  loggedUser=$ctrl.ParticipantActivity.loggedUser()
                                  ng-show="$ctrl.showPendenciesButton">
     </otus-user-activity-pendency>
-
+    <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="compartilhamento de atividade"
+               ng-click="$ctrl.activitySharingDialog($ctrl.selectedActivity)"
+               ng-show="$ctrl.showActivitySharing">
+      <md-tooltip md-direction="top">Compartilhamento</md-tooltip>
+      <md-icon aria-label="Compartilhamento de atividade">share</md-icon>
+    </md-button>
     <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Visualizar Atividade"
                ng-click="$ctrl.viewSelectedActivity()"
                ng-show="$ctrl.showViewerButton">
@@ -44,7 +49,6 @@
               ng-style="{position: 'absolute', left: '50.5%', top: '10px', backgroundColor: $ctrl.selectedItemCounterBackgroundColor}">
       {{$ctrl.selectedItemCounter}}
     </md-badge>
-
     <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="Detalhes"
                ng-click="$ctrl.visualizeSelectedActivityInfo()"
                ng-show="$ctrl.showInfoButton">
