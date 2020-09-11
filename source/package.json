@@ -63,7 +63,7 @@
     "require-dir": "^1.0.0",
     "xlsx-core": "^1.0.3",
     "please-wait": "0.0.5",
-    "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#dev",
+    "otus-client-js": "1.29.0",
     "otus-domain-client": "1.1.0",
     "otus-model-js": "1.34.0",
     "otus-preview-js": "1.15.3",
