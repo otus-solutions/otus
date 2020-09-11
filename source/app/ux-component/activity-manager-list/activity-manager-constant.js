@@ -61,6 +61,12 @@
             label: 'Iniciado Online',
             color: '#513c1c',
             icon: 'edit'
+          },
+          REOPENED: {
+            name:'REOPENED',
+            label: 'Reaberto',
+            color: '#595959',
+            icon: 'cached'
           }
         }
       }
