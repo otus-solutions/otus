@@ -23,13 +23,13 @@
     </otus-user-activity-pendency>
     <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="compartilhamento de atividade"
                ng-click="$ctrl.activitySharingDialog($ctrl.selectedActivity)"
-               ng-show="$ctrl.showActivitySharing">
+               ng-if="$ctrl.showActivitySharing">
       <md-tooltip md-direction="top">Compartilhamento</md-tooltip>
       <md-icon aria-label="Compartilhamento de atividade">share</md-icon>
     </md-button>
     <md-button class="md-grid-item-content md-raised md-accent md-icon-button" aria-label="reabertura de atividade"
                ng-click="$ctrl.reopenActivityDialog($ctrl.selectedActivity)"
-               ng-show="$ctrl.showReopenActivity">
+               ng-if="$ctrl.showReopenActivity">
       <md-tooltip md-direction="top">Reabrir</md-tooltip>
       <md-icon aria-label="Reabertura de atividade">cached</md-icon>
     </md-button>
