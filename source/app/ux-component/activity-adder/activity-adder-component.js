@@ -20,10 +20,11 @@
     'otusjs.deploy.LoadingScreenService',
     '$q',
     '$timeout',
-    '$element'
+    '$element',
+    'ACTIVITY_MANAGER_LABELS'
   ];
 
-  function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout, $element) {
+  function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout, $element, ACTIVITY_MANAGER_LABELS) {
     const option = "Todos";
 
     let self = this;
@@ -36,7 +37,7 @@
     self.selectedSurveys = [];
     self.statePreview = false;
     self.processing = true;
-    self.mode = "ONLINE";
+    self.mode = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name;
     self.selectType = "activityList";
     self.iconMode = "";
     self.optionModes = [];
@@ -182,16 +183,16 @@
     function _loadOptionModes() {
       self.optionModes = [
         {
-          mode: 'ONLINE',
-          label: 'Online'
+          mode: ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name,
+          label: ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.label
         },
         {
-          mode: 'PAPER',
-          label: 'Em papel'
+          mode: ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.PAPER.name,
+          label: ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.PAPER.label
         },
         {
-          mode: 'AUTOFILL',
-          label: 'Auto Preenchimento'
+          mode: ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name,
+          label: ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.label
         }
       ]
     }
@@ -257,7 +258,7 @@
     }
 
     function _checkFilledInput(preActivity) {
-      return preActivity.preActivityValid = preActivity.preActivityValid || preActivity.mode === "AUTOFILL" || (preActivity.mode === "ONLINE" && !preActivity.surveyForm.isRequiredExternalID());
+      return preActivity.preActivityValid = preActivity.preActivityValid || preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name || (preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name && !preActivity.surveyForm.isRequiredExternalID());
     }
 
     function monitoringSearchTextChange(state) {

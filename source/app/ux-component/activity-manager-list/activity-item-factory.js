@@ -5,20 +5,22 @@
     .module('otusjs.otus.uxComponent')
     .factory('otusjs.otus.uxComponent.ActivityItemFactory', Factory);
 
-  function Factory() {
+  Factory.$inject = ['ACTIVITY_MANAGER_LABELS']
+
+  function Factory(ACTIVITY_MANAGER_LABELS) {
     var self = this;
 
     /* Public methods */
     self.create = create;
 
     function create(activity) {
-      return new ActivityItem(activity);
+      return new ActivityItem(ACTIVITY_MANAGER_LABELS, activity);
     }
 
     return self;
   }
 
-  function ActivityItem(activity) {
+  function ActivityItem(ACTIVITY_MANAGER_LABELS, activity) {
     var self = this;
 
     if (activity.surveyForm.surveyTemplate){
@@ -49,33 +51,24 @@
     function _getStatus() {
       var status = activity.statusHistory.getLastStatus();
 
-      if ('INITIALIZED_OFFLINE' === status.name) {
-        return 'Realizado em papel';
-      } else if ('SAVED' === status.name) {
-        return 'Salvo';
-      } else if ('FINALIZED' === status.name) {
-        return 'Finalizado';
+      if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.INITIALIZED_OFFLINE.name === status.name) {
+        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.INITIALIZED_OFFLINE.label;
+      } else if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.SAVED.name === status.name) {
+        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.SAVED.label;
+      } else if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.name === status.name) {
+        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.label;
       } else {
-        return 'Criado';
+        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.CREATED.label;
       }
     }
 
     function _getMode() {
-      if ('PAPER' === activity.mode) {
-        return {
-          name: 'Em papel',
-          icon: 'description'
-        };
-      } else if ('ONLINE' === activity.mode) {
-        return {
-          name: 'Online',
-          icon: 'signal_cellular_alt'
-        };
-      } else if ('AUTOFILL' === activity.mode){
-        return {
-          name: 'Auto Preenchimento',
-          icon: 'home_work'
-        }
+      if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.PAPER.name === activity.mode) {
+        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.PAPER;
+      } else if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name === activity.mode) {
+        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE;
+      } else if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name === activity.mode){
+        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL;
       } else {
         return {
           name: '',

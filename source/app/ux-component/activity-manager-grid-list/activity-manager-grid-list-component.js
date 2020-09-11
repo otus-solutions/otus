@@ -15,10 +15,11 @@
   Controller.$inject = [
     '$filter',
     '$mdToast',
-    '$mdColors'
+    '$mdColors',
+    'ACTIVITY_MANAGER_LABELS'
   ];
 
-  function Controller($filter, $mdToast, $mdColors) {
+  function Controller($filter, $mdToast, $mdColors, ACTIVITY_MANAGER_LABELS) {
     var self = this;
 
     self.selectedItemCounter = 0;
@@ -145,18 +146,18 @@
     }
 
     function _getGridColorByActivityMode(mode) {
-      return mode === "Auto Preenchimento" ? colors.background.AUTO_FILL_HEADER : colors.background.HEADER;
+      return mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name ? colors.background.AUTO_FILL_HEADER : colors.background.HEADER;
     }
 
     function _createStatus(status) {
-      let icon = 'fiber_new';
-      let statusFinalized = 'Finalizado';
-      let statusTooltip = 'Criado';
+      let icon = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.CREATED.icon;
+      let statusFinalized = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.label;
+      let statusTooltip = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.CREATED.label;
       let activityStatus = [];
 
       if (status !== statusTooltip) {
-        icon = (status === statusFinalized) ? 'check_circle' : 'save';
-        statusTooltip = (status === statusFinalized) ? statusFinalized : 'Salvo';
+        icon = (status === statusFinalized) ? ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.icon : ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.SAVED.icon;
+        statusTooltip = (status === statusFinalized) ? statusFinalized : ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.SAVED.label;
       }
       activityStatus.icon = icon;
       activityStatus.statusTooltip = statusTooltip;
@@ -249,7 +250,7 @@
       if (!activity.actions.selected) {
         activity.actions.selected = true;
         activity.actions.backgroundColor = self.backgroundColor;
-        if(activity.mode.name==="Auto Preenchimento"){
+        if (activity.mode.name === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name){
           activity.actions.backgroundColor = angular.copy(self.backgroundColor);
           activity.actions.backgroundColor['background'] = colors.background.SELECTED_AUTO_FILL_TILE;
         }

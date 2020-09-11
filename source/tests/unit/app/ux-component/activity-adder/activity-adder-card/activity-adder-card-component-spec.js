@@ -38,8 +38,8 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
     expect(ctrl.updateRealizationDate).toBeDefined();
     expect(ctrl.monitoringCheckerFormSearchTextChange).toBeDefined();
     expect(ctrl.styleHeader).toBeDefined();
-    expect(ctrl.validExternalIdTruthyAndAutoFill).toBeDefined();
-    expect(ctrl.validExternalIdFalsyAndAutoFill).toBeDefined();
+    expect(ctrl.validExternalIdTruthy).toBeDefined();
+    expect(ctrl.validExternalIdFalsy).toBeDefined();
     expect(ctrl.validTypeActivity).toBeDefined();
   });
 
@@ -66,11 +66,11 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
 
   it('getModeIcon_method_should_select_icon_mode_of_preActivity', () => {
     ctrl.preActivity.mode = 'ONLINE';
-    expect(ctrl.getModeIcon()).toBe("signal");
+    expect(ctrl.getModeIcon()).toBe("signal_cellular_alt");
     ctrl.preActivity.mode = 'PAPER';
-    expect(ctrl.getModeIcon()).toBe("file-document");
+    expect(ctrl.getModeIcon()).toBe("description");
     ctrl.preActivity.mode = 'AUTOFILL';
-    expect(ctrl.getModeIcon()).toBe(undefined);
+    expect(ctrl.getModeIcon()).toBe("home_work");
   });
 
   it('getAcronym_method_should_return_with_acronymName', () => {
@@ -108,18 +108,14 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
     expect(ctrl.styleHeader().background).toBe(expectedColor);
   });
 
-  it('validExternalIdTruthyAndAutoFill_method_should_valid_attribute_externalID_and_autofill', () => {
+  it('validExternalIdTruthyAndAutoFill_method_should_valid_attribute_externalID', () => {
     ctrl.preActivity.mode = 'ONLINE';
-    expect(ctrl.validExternalIdTruthyAndAutoFill()).toBeTruthy();
-    ctrl.preActivity.mode = 'AUTOFILL';
-    expect(ctrl.validExternalIdTruthyAndAutoFill()).toBeFalsy();
+    expect(ctrl.validExternalIdTruthy()).toBeTruthy();
   });
 
-  it('validExternalIdFalsyAndAutoFill_method_should_valid_attribute_externalID_and_autofill', () => {
+  it('validExternalIdFalsyAndAutoFill_method_should_valid_attribute_externalID', () => {
     ctrl.preActivity.mode = 'ONLINE';
-    expect(ctrl.validExternalIdFalsyAndAutoFill()).toBeFalsy();
-    ctrl.preActivity.mode = 'AUTOFILL';
-    expect(ctrl.validExternalIdFalsyAndAutoFill()).toBeTruthy();
+    expect(ctrl.validExternalIdFalsy()).toBeFalsy();
   });
 
   it('validTypeActivity_method_should_valid_attribute_type_activity', () => {
