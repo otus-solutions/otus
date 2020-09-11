@@ -278,6 +278,7 @@
 
               ParticipantActivityService.reopenActivity(selectedActivity)
                 .then(() => {
+                  self.updateList();
                   LoadingScreenService.finish();
                 })
                 .catch(err => {
