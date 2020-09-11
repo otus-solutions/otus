@@ -27,14 +27,18 @@
     'otusjs.activity.business.ActivityViewService',
     'otusjs.activity.business.ActivityPlayerService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.activity.business.ParticipantActivityService'
+    'otusjs.activity.business.ParticipantActivityService',
+
+    'otusjs.model.activity.ActivityStatusFactory',
+    'otusjs.otus.dashboard.core.ContextService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
   function Controller($q, $mdToast, $timeout, $mdDialog, $mdColors, EventService, CheckerItemFactory,
                       DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService,
-                      ParticipantActivityService) {
-    var self = this;
-    var confirmDeleteSelectedActivity;
+                      ParticipantActivityService, ActivityStatusFactory, ContextService, LoadingScreenService) {
+    let self = this;
+    let confirmDeleteSelectedActivity;
 
     /* Public methods */
     self.fillSelectedActivity = fillSelectedActivity;
@@ -118,6 +122,8 @@
         self.showPendenciesButton = false;
         self.isPaperActivity = false;
         self.selectedItemCounter = null;
+        self.showActivitySharing = false;
+        self.showReopenActivity = false;
       } else if (selectedActivities.length === 1) {
         const isAutoFill = (selectedActivities[0].mode === "AUTOFILL");
         self.showBottomSheet = true;
@@ -193,8 +199,8 @@
       }
 
       function querySearch(query) {
-        var results = query ? self.checkers.filter(_createFilterFor(query)) : self.checkers;
-        var deferred = $q.defer();
+        let results = query ? self.checkers.filter(_createFilterFor(query)) : self.checkers;
+        let deferred = $q.defer();
 
         $timeout(function () {
           deferred.resolve(results);
@@ -204,7 +210,7 @@
       }
 
       function updateCheckerActivity() {
-        var activityStatus = angular.copy(self.selectedActivity.statusHistory.getInitializedOfflineRegistry());
+        let activityStatus = angular.copy(self.selectedActivity.statusHistory.getInitializedOfflineRegistry());
         activityStatus.setUser(self.selectedItem.checker);
         activityStatus.setDate(self.date);
         ParticipantActivityService.updateCheckerActivity(
@@ -241,7 +247,7 @@
       }
 
       function _createFilterFor(query) {
-        var lowercaseQuery = angular.lowercase(query);
+        let lowercaseQuery = angular.lowercase(query);
 
         return function filterFn(checker) {
           return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
@@ -262,9 +268,36 @@
         'Reabertura de atividade',
         'Confirma a rebertura da atividade?',
         'Confirmação de reabertura'
-      ).then(() => {
-        console.log('reabrir atividade') // todo
-      });
+      )
+        .then(() => {
+          LoadingScreenService.start();
+
+          _createReopenStatus()
+            .then(status => {
+              selectedActivity.statusHistory.getHistory().push(status);
+
+              ParticipantActivityService.reopenActivity(selectedActivity)
+                .then(() => {
+                  LoadingScreenService.finish();
+                })
+                .catch(err => {
+                  console.error(err);
+                  LoadingScreenService.finish();
+                })
+            })
+            .catch(err => {
+              console.error(err);
+              LoadingScreenService.finish();
+            });
+        });
+    }
+
+    function _createReopenStatus(){
+      let defer = $q.defer();
+      ContextService.getLoggedUser()
+        .then(user => defer.resolve(ActivityStatusFactory.createReopenedStatus(user)))
+        .catch(err => defer.reject(err));
+      return defer.promise;
     }
 
   }
