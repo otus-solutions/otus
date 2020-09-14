@@ -12,13 +12,13 @@
     var self = this;
 
     /* Public methods */
-    self.handleDeleteAction = handleDeleteAction;
+    self.updateList = updateList;
     self.handleViewInfoAction = handleViewInfoAction;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
-    function handleDeleteAction() {
+    function updateList() {
       self.listComponent.update();
     }
 
