@@ -122,6 +122,7 @@
         self.showPendenciesButton = false;
         self.isPaperActivity = false;
         self.selectedItemCounter = null;
+        self.statusSelectedActivity = null;
         self.showActivitySharing = false;
         self.showReopenActivity = false;
       } else if (selectedActivities.length === 1) {
@@ -148,6 +149,7 @@
         self.showPendenciesButton = false;
         self.isPaperActivity = false;
         self.selectedItemCounter = selectedActivities.length;
+        self.statusSelectedActivity = null;
         self.showActivitySharing = false;
         self.showReopenActivity = false;
       }
