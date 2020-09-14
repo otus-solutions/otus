@@ -33,11 +33,11 @@
       _followUpRest = OtusRestResourceService.getFollowUpResourceFactory();
     }
 
-    function update(data) {
+    function update(activity) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      return _rest.update({ id: data._id, rn: data.participantData.recruitmentNumber }, data).$promise;
+      return _rest.update({ id: activity.getID(), rn: activity.participantData.recruitmentNumber }, activity).$promise;
     }
 
     function updateCheckerActivity(rn, checkerUpdated) {
@@ -134,18 +134,7 @@
     }
 
     function reopen(activity) {
-      if (!_rest) {
-        throw new Error('REST resource is not initialized.');
-      }
-      // return _rest.reopen({ id: activityId }, activity).$promise;
-
-      //todo
-      const request = $q.defer();
-      console.log('activity rest service: reopen');
-      console.log(activity)
-      console.log(activity.statusHistory.getHistory())
-      request.resolve();
-      return request.promise;
+      return self.update(activity);
     }
 
   }
