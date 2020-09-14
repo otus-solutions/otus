@@ -80,10 +80,12 @@
     }
 
     function _refreshGrid(newElementsArray) {
-      if (self.elementsArray.length && self.elementsArray.length !== newElementsArray.length) {
-        _updateSelectDeselect();
-        self.filter = '';
-        self.selectAll = false;
+      if (self.elementsArray.length) {
+        if (self.elementsArray.length != newElementsArray.length) {
+          _updateSelectDeselect();
+          self.filter = '';
+          self.selectAll = false;
+        }
       }
 
       self.elementsArray = newElementsArray || self.elementsArray;
