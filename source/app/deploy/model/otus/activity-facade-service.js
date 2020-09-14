@@ -47,10 +47,10 @@
       return getActivity();
     }
 
-    function createAutoFillActivity(survey, loggedUser, participant, configuration) {
+    function createAutoFillActivity(survey, loggedUser, participant, configuration, externalID) {
       var _participant = _normalizeParticipant(participant);
 
-      ActivityFacadeService.createAutoFillActivity(survey, loggedUser, _participant, configuration);
+      ActivityFacadeService.createAutoFillActivity(survey, loggedUser, _participant, configuration, externalID);
 
       return getActivity();
     }
