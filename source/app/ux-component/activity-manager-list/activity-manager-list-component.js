@@ -94,8 +94,7 @@
       ActivityService
         .listAll()
         .then(function(activities) {
-          self.activities = activities
-            .map(ActivityItemFactory.create);
+          self.activities = activities.map(ActivityItemFactory.create);
           self.AllActivities = angular.copy(self.activities);
           _groupsFilter();
           self.updateData(self.activities);
@@ -159,7 +158,7 @@
     function toggleAllGroups() {
       if (self.selectedGroups.length === self.groupList.length) {
         self.selectedGroups = [];
-      } else if (self.selectedGroups.length === 0 || self.selectedGroups.length > 0) {
+      } else if (self.selectedGroups.length >= 0) {
         self.selectedGroups = self.groupList.slice(0);
       }
       _groupsFilter();
