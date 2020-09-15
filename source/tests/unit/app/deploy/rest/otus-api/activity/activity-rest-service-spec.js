@@ -5,6 +5,8 @@ describe('ActivityRestService Suite Test', function () {
   let originalTimeout;
 
   const UNINITIALIZED_REST_ERROR_MESSAGE = 'REST resource is not initialized.';
+  const RN = 123;
+  const ACTIVITY_ID = "1234567890";
 
   beforeEach(function () {
     mockInjections();
@@ -216,13 +218,15 @@ describe('ActivityRestService Suite Test', function () {
     }
   }
 
+
   function mockData() {
     Mock.data = {
       participantData: {
-        recruitmentNumber: 123
+        recruitmentNumber: RN
       },
+      _id: ACTIVITY_ID,
       getID: function () {
-        return "1234567890";
+        return ACTIVITY_ID;
       }
     }
   }

@@ -11,8 +11,8 @@
   ];
 
   function Service($q, OtusRestResourceService) {
-    var self = this;
-    var _rest = null;
+    let self = this;
+    let _rest = null;
     let _followUpRest;
 
     /* Public methods */
@@ -34,6 +34,13 @@
     }
 
     function update(activity) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+      return _rest.update({ id: activity._id, rn: activity.participantData.recruitmentNumber }, activity).$promise;
+    }
+
+    function reopen(activity) {
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
@@ -59,7 +66,7 @@
         throw new Error('REST resource is not initialized.');
       }
 
-      var request = $q.defer();
+      let request = $q.defer();
 
       _rest
         .listAll({ rn: recruitmentNumber })
@@ -93,7 +100,7 @@
       if (!_rest) {
         throw new Error('REST resource is not initialized.');
       }
-      var request = $q.defer();
+      let request = $q.defer();
       _rest.getActivityRevisions({ id: activityID, rn: activity.participantData.recruitmentNumber })
         .$promise
         .then(function (response) {
@@ -112,7 +119,7 @@
         throw new Error('REST resource is not initialized.');
       }
 
-      var request = $q.defer();
+      let request = $q.defer();
       _rest.getById({ rn: rn, id: ActivityId })
         .$promise
         .then(function (response) {
@@ -131,10 +138,6 @@
         throw new Error('REST resource is not initialized.');
       }
       return _followUpRest.createFollowUpActivity({ rn: activity.participantData.recruitmentNumber }, activity).$promise;
-    }
-
-    function reopen(activity) {
-      return self.update(activity);
     }
 
   }
