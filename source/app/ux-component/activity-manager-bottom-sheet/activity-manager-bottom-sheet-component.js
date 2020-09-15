@@ -28,7 +28,6 @@
     'otusjs.activity.business.ActivityPlayerService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.activity.business.ParticipantActivityService',
-
     'otusjs.model.activity.ActivityStatusFactory',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService'
@@ -38,7 +37,6 @@
                       DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService,
                       ParticipantActivityService, ActivityStatusFactory, ContextService, LoadingScreenService) {
     let self = this;
-    let confirmDeleteSelectedActivity;
 
     /* Public methods */
     self.fillSelectedActivity = fillSelectedActivity;
@@ -104,7 +102,6 @@
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = participantData;
-
       } else {
         ParticipantActivityService
           .getSelectedParticipant()
