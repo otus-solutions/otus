@@ -55,7 +55,6 @@
 
     function onInit() {
       self.selectedItemCounterBackgroundColor = $mdColors.getThemeColor('default-primary');
-      _buildDialogs();
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       EventService.onActivitySelected(_updateComponent);
@@ -74,7 +73,11 @@
     }
 
     function deleteSelectedActivity() {
-      DialogService.showDialog(confirmDeleteSelectedActivity).then(function () {
+      DialogService.showConfirmationDialog(
+        'Confirmar exclusão de atividade:',
+        'A atividade será excluida.',
+        'Confirmação de exclusão'
+      ).then(function () {
         ParticipantActivityService.getSelectedActivities().discard();
         self.updateList();
       });
@@ -157,30 +160,6 @@
        self.selectedActivity = angular.copy(selectedActivities[0]);
     }
 
-    function _buildDialogs() {
-      confirmDeleteSelectedActivity = {
-        dialogToTitle: 'Confirmação',
-        titleToText: 'Confirmar exclusão de atividade:',
-        textDialog: 'A atividade será excluida.',
-        ariaLabel: 'Confirmação de exclusão',
-        buttons: [
-          {
-            message: 'Ok',
-            action: function () {
-              $mdDialog.hide()
-            },
-            class: 'md-raised md-primary'
-          },
-          {
-            message: 'Voltar',
-            action: function () {
-              $mdDialog.cancel()
-            },
-            class: 'md-raised md-no-focus'
-          }
-        ]
-      };
-    }
 
     function DialogController(selectedActivity, updateList) {
       var self = this;
