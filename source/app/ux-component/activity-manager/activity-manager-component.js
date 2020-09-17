@@ -4,19 +4,23 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusActivityManager', {
-      controller: Controller,
+      controller: 'otusActivityManagerCtrl as $ctrl',
       templateUrl: 'app/ux-component/activity-manager/activity-manager-template.html'
-    });
+    })
+    .controller('otusActivityManagerCtrl', Controller);
 
   function Controller() {
     var self = this;
 
-    /* Public methods */
+    self.$onInit = onInit;
     self.updateList = updateList;
     self.handleViewInfoAction = handleViewInfoAction;
 
-    /* Lifecycle hooks */
-    self.$onInit = onInit;
+    
+    function onInit() {
+      self.listComponent = {};
+      self.activityInfoComponent = {};
+    }
 
     function updateList() {
       self.listComponent.update();
@@ -26,9 +30,5 @@
       self.activityInfoComponent.show();
     }
 
-    function onInit() {
-      self.listComponent = {};
-      self.activityInfoComponent = {};
-    }
   }
 }());
