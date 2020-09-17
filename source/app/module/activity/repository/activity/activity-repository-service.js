@@ -42,18 +42,17 @@
     function listAll(participant) {
       if (!participant) {
         throw new Error('No participant selected to list activities.', 'activity-repository-service.js', 63);
-      } else {
-        ActivityCollectionService.useParticipant(participant);
       }
+
+      ActivityCollectionService.useParticipant(participant);
 
       if (_existsWorkingInProgress) {
         return _existsWorkingInProgress
           .then(function () {
             return _listAll();
           });
-      } else {
-        return _listAll();
       }
+      return _listAll();
     }
 
     function listAvailables() {
@@ -64,9 +63,6 @@
       return ActivityCollectionService.getById(activityId, rn).then(_toEntity);
     }
 
-    function listAllSurveys() {
-      return SurveyCollectionService.listAcronyms().then(_toEntity);
-    }
 
     function createFromSurvey(surveys, loggedUser, participant, configuration) {
       return _createActivity(surveys, loggedUser, participant, null, configuration);
