@@ -61,7 +61,7 @@
       if(_currentPage<$scope.rangePages.length - 1){
         _currentPage++;
         $scope.range = $scope.rangePages[_currentPage];
-        $scope.disabledForward = (currentPage == $scope.rangePages.length - 1);
+        $scope.disabledForward = (_currentPage == $scope.rangePages.length - 1);
         $scope.disabledPrevious = false;
         self.onUpdate($scope.pages[_currentPage], _getStartPage() , _getFinalPage());
       }
