@@ -48,36 +48,36 @@
     }
 
     function getStatusValue(name) {
-      if (name) {
-        let search = STATUS.find(function (status) {
-          return status.name == name;
-        });
-        return search.value;
-      } else {
+      if(!name){
         return null;
       }
+
+      let search = STATUS.find(function (status) {
+        return status.name == name;
+      });
+      return search.value;
     }
 
     function getStatusLabel(value = null) {
-      if (value != null) {
-        let search = STATUS.find(function (status) {
-          return status.value == value;
-        });
-        return search.label;
-      } else {
+      if(value == null){
         return "";
       }
+
+      let search = STATUS.find(function (status) {
+        return status.value == value;
+      });
+      return search.label;
     }
 
     function getStatusColor(value = null) {
-      if (value != null) {
-        let search = STATUS.find(function (status) {
-          return status.value == value;
-        });
-        return search.color;
-      } else {
+      if(value == null){
         return "";
       }
+
+      let search = STATUS.find(function (status) {
+        return status.value == value;
+      });
+      return search.color;
     }
 
     function getLabels() {

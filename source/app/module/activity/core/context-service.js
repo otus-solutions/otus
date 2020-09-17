@@ -182,19 +182,11 @@
     }
 
     function existsActivityToPlay() {
-      if (getData('activityToPlay')) {
-        return true;
-      } else {
-        return false;
-      }
+      return !!getData('activityToPlay');
     }
 
     function existsActivityToView() {
-      if (getData('activityToView')) {
-        return true;
-      } else {
-        return false;
-      }
+      return !!getData('activityToView');
     }
   }
 }());

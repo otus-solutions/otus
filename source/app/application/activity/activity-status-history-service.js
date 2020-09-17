@@ -53,39 +53,39 @@
     }
 
     function getStatusValue(name) {
-      if(name){
-        let search = STATUS.find(function (status) {
-          return status.name == name;
-        });
-        let {value} = search;
-        return value;
-      } else {
+      if(!name){
         return null;
       }
+
+      let search = STATUS.find(function (status) {
+        return status.name == name;
+      });
+      let {value} = search;
+      return value;
     }
 
     function getStatusLabel(value = null) {
-      if(value!=null){
-        let search = STATUS.find(function (status) {
-          return status.value == value;
-        });
-        let {label} = search;
-        return label;
-      } else {
+      if(value == null){
         return "";
       }
+
+      let search = STATUS.find(function (status) {
+        return status.value == value;
+      });
+      let {label} = search;
+      return label;
     }
 
     function getStatusColor(value = null) {
-      if(value!=null){
-        let search = STATUS.find(function (status) {
-          return status.value == value;
-        });
-        let {color} = search;
-        return color;
-      } else {
+      if(value == null){
         return "";
       }
+
+      let search = STATUS.find(function (status) {
+        return status.value == value;
+      });
+      let {color} = search;
+      return color;
     }
 
     function getLabels() {

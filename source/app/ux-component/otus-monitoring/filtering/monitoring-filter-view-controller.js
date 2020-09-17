@@ -79,7 +79,8 @@
       if ((firstPeriod[1] - finalPeriod[1] == 0) && (firstPeriod[0] - finalPeriod[0] > 0)) {
         showInvalidDateMessage();
         return false;
-      } else if (firstPeriod[1] - finalPeriod[1] > 0) {
+      }
+      if (firstPeriod[1] - finalPeriod[1] > 0) {
         showInvalidDateMessage();
         return false;
       }

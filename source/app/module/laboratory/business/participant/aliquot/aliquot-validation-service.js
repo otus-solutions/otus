@@ -199,10 +199,10 @@
 
       if (newArray.length) {
         return false;
-      } else {
-        self.repeatedAliquots.push(aliquot);
-        return true;
       }
+
+      self.repeatedAliquots.push(aliquot);
+      return true;
     }
 
     function _removeRepeatedAliquots(aliquot) {

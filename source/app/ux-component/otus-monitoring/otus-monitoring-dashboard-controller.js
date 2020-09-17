@@ -82,35 +82,31 @@
     }
 
     function preProcessingData() {
-      if (self.monitoringData) {
-        var rawData = self.monitoringData || [];
-        self.uniqueDatesList = rawData.map(function (e) {
-          return e.year + "-" + e.month + "-1";
-        }).filter(function (elem, index, self) {
-          return index == self.indexOf(elem);
-        });
-
-        self.uniqueDatesList = _sortDateList();
-
-        self.fieldCentersList = rawData.map(function (e) {
-          return e.fieldCenter;
-        }).filter(function (elem, index, self) {
-          return index == self.indexOf(elem);
-        });
-        MonitorParseData.init(
-          self.uniqueDatesList,
-          self.monitoringData,
-          self.createQuestionnaireLineChart,
-          self.monitoringCenters);
-
-        if (self.uniqueDatesList && self.fieldCentersList) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
+      if(!self.monitoringData){
         return false;
       }
+
+      var rawData = self.monitoringData || [];
+      self.uniqueDatesList = rawData.map(function (e) {
+        return e.year + "-" + e.month + "-1";
+      }).filter(function (elem, index, self) {
+        return index == self.indexOf(elem);
+      });
+
+      self.uniqueDatesList = _sortDateList();
+
+      self.fieldCentersList = rawData.map(function (e) {
+        return e.fieldCenter;
+      }).filter(function (elem, index, self) {
+        return index == self.indexOf(elem);
+      });
+      MonitorParseData.init(
+        self.uniqueDatesList,
+        self.monitoringData,
+        self.createQuestionnaireLineChart,
+        self.monitoringCenters);
+
+      return !!(self.uniqueDatesList && self.fieldCentersList);
     }
 
     function update(acronym, selectedCenters, startDate, endDate) {

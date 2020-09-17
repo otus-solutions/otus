@@ -222,8 +222,8 @@
             ++currentIndex;
             if (currentIndex < dataArray.length) {
               process(dataArray, callback, currentIndex);
-            } else {
-              if (callback) callback(dataArray);
+            } else if (callback){
+              callback(dataArray);
             }
           });
       };
