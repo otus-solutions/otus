@@ -74,7 +74,7 @@
     }
 
     function hasContextActive() {
-      return _storage.getItem(ACTIVITY_CONTEXT) ? true : false;
+      return !!_storage.getItem(ACTIVITY_CONTEXT);
     }
 
     function save() {
@@ -182,19 +182,11 @@
     }
 
     function existsActivityToPlay() {
-      if (getData('activityToPlay')) {
-        return true;
-      } else {
-        return false;
-      }
+      return !!getData('activityToPlay');
     }
 
     function existsActivityToView() {
-      if (getData('activityToView')) {
-        return true;
-      } else {
-        return false;
-      }
+      return !!getData('activityToView');
     }
   }
 }());

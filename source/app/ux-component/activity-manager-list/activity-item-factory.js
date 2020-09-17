@@ -5,10 +5,11 @@
     .module('otusjs.otus.uxComponent')
     .factory('otusjs.otus.uxComponent.ActivityItemFactory', Factory);
 
-  Factory.$inject = ['ACTIVITY_MANAGER_LABELS']
+
+  Factory.$inject = ['ACTIVITY_MANAGER_LABELS'];
 
   function Factory(ACTIVITY_MANAGER_LABELS) {
-    var self = this;
+    let self = this;
 
     /* Public methods */
     self.create = create;
@@ -21,7 +22,7 @@
   }
 
   function ActivityItem(ACTIVITY_MANAGER_LABELS, activity) {
-    var self = this;
+    let self = this;
 
     if (activity.surveyForm.surveyTemplate){
       self.name = activity.surveyForm.surveyTemplate.identity.name;
@@ -30,7 +31,14 @@
       self.name = activity.surveyForm.name;
       self.acronym = activity.surveyForm.acronym;
     }
-    self.category = activity.category && activity.category.label ? activity.category.label : ''; //TODO: remove ternary
+
+    try{
+      self.category = activity.category.label;
+    }
+    catch (e) {
+      self.category = '';
+    }
+
     self.mode = _getMode();
     self.realizationDate = _getFormattedDate();
     self.status = _getStatus();
@@ -41,7 +49,7 @@
 
     function _getFormattedDate() {
       try {
-        var formattedDate = new Date(activity.getRealizationDate());
+        let formattedDate = new Date(activity.getRealizationDate());
         return formattedDate.getDate() + '/' + (formattedDate.getMonth() + 1) + '/' + formattedDate.getFullYear();
       } catch (e) {
         return null;
@@ -49,32 +57,40 @@
     }
 
     function _getStatus() {
-      var status = activity.statusHistory.getLastStatus();
+      const STATUS = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS;
+      const SELECTED_STATUS = [
+        STATUS.INITIALIZED_OFFLINE,
+        STATUS.SAVED,
+        STATUS.FINALIZED,
+        STATUS.REOPENED
+      ];
 
-      if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.INITIALIZED_OFFLINE.name === status.name) {
-        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.INITIALIZED_OFFLINE.label;
-      } else if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.SAVED.name === status.name) {
-        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.SAVED.label;
-      } else if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.name === status.name) {
-        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.label;
-      } else {
-        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.CREATED.label;
+      let lastStatus = activity.statusHistory.getLastStatus();
+      let status = SELECTED_STATUS.find(status => status.name === lastStatus.name);
+      try{
+        return status.label;
+      }
+      catch (e) {
+        return STATUS.CREATED.label;
       }
     }
 
     function _getMode() {
-      if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.PAPER.name === activity.mode) {
-        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.PAPER;
-      } else if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name === activity.mode) {
-        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE;
-      } else if (ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name === activity.mode){
-        return ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL;
-      } else {
+      const MODE = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE;
+      const SELECTED_MODES = [
+        MODE.PAPER,
+        MODE.ONLINE,
+        MODE.AUTOFILL
+      ];
+
+      let mode = SELECTED_MODES.find(mode => mode.name === activity.mode);
+      if(!mode){
         return {
           name: '',
           icon: ''
         };
       }
+      return mode;
     }
   }
 }());

@@ -242,31 +242,31 @@
     }
 
     function setCheckbox(showCheckbox) {
-      showCheckbox = showCheckbox ? true : false;
+      showCheckbox = !!showCheckbox;
       self.settings.disableCheckbox = !showCheckbox;
       return self;
     }
 
     function setFilter(showFilter) {
-      showFilter = showFilter ? true : false;
+      showFilter = !!showFilter;
       self.settings.disableFilter = !showFilter;
       return self;
     }
 
     function setShowAll(showAllButton) {
-      showAllButton = showAllButton ? true : false;
+      showAllButton = !!showAllButton;
       self.settings.disableShowAll = !showAllButton;
       return self;
     }
 
     function setReorder(showReorder) {
-      showReorder = showReorder ? true : false;
+      showReorder = !!showReorder;
       self.settings.disableReorder = !showReorder;
       return self;
     }
 
     function setPagination(showPagination) {
-      showPagination = showPagination ? true : false;
+      showPagination = !!showPagination;
       self.settings.disablePagination = !showPagination;
       return self;
     }

@@ -16,6 +16,7 @@
     self.showConfirmationDialog = showConfirmationDialog;
     self.showCustomizedDialog = showCustomizedDialog;
     self.showActivitySharingDialog = showActivitySharingDialog;
+    self.cancel = cancel;
 
     function showDialog(data) {
       self.data = data;
@@ -71,26 +72,33 @@
       ]
     }
 
-    function showCustomizedDialog(data, templateUrl, fullscreen=true) {
+    function showCustomizedDialog(data, controller, templateUrl, clickOutsideToClose,
+                                  controllerAs = '$ctrl',
+                                  additionalOptions = {},
+                                  fullscreen = true) {
       self.data = data;
       self.data.cancel = cancel;
 
-      return $mdDialog.show({
-        controller: 'customizedDialogShowController',
-        controllerAs: "$ctrl",
+      let dialogObject = {
+        controller: controller,
+        controllerAs: controllerAs,
         locals: { data: self.data },
         templateUrl: templateUrl,
         parent: angular.element(document.body),
-        clickOutsideToClose:true,
+        clickOutsideToClose: clickOutsideToClose,
         fullscreen: fullscreen
-      });
+      };
+
+      angular.extend(dialogObject, dialogObject, additionalOptions);
+
+      return $mdDialog.show();
     }
 
     function showActivitySharingDialog(selectedActivity, fullscreen = true) {
       self.data = {
         activity: selectedActivity,
         cancel: cancel
-      }
+      };
 
       return $mdDialog.show({
         controller: 'activititySharingDialogShowController',

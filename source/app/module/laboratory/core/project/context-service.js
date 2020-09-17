@@ -64,7 +64,7 @@
     }
 
     function hasContextActive() {
-      return _storage.getItem(LABORATORY_CONTEXT) ? true : false;
+      return !!_storage.getItem(LABORATORY_CONTEXT);
     }
 
     function save() {

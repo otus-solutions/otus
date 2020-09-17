@@ -40,7 +40,7 @@
       self.legend = self.title ? self.title : "";
       self.legend = self.legend ? self.legend.concat(":") : "";
       self.params = [];
-      self.column = self.orientation === "column" ? true : false;
+      self.column = (self.orientation === "column");
       self.row = !self.column;
     }
 

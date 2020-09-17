@@ -80,7 +80,7 @@
     }
 
     function selectAction() {
-      return (self.selectType === 'activityUnit') ? false : true;
+      return (self.selectType !== 'activityUnit');
     }
 
     function _loadSurveysGroup() {
@@ -141,10 +141,8 @@
         disabledResult = false;
       } else if (self.selectedGroups.includes(option) && index > 0) {
         disabledResult = true
-      } else if (!self.selectedGroups.includes(option) && index == 0 && !self.searchTerm) {
-        disabledResult = true;
       } else {
-        disabledResult = false;
+        disabledResult = (!self.selectedGroups.includes(option) && index === 0 && !self.searchTerm);
       }
       return disabledResult;
     }

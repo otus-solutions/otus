@@ -86,7 +86,7 @@
     self.validateAliquotLength = validateAliquotLength;
     self.isValidAliquotLength = isValidAliquotLength;
     self.transcribeErrorMessage = transcribeErrorMessage;
-    
+
 
     function initialize(validations
                         , tubeLength
@@ -98,13 +98,13 @@
                         , exams
                         , stores
                        ) {
-                         
+
       self.validations = validations;
       self.tubeLength = tubeLength;
       self.aliquotLengths = aliquotLengths;
       self.aliquotMaxLength = Math.max.apply(null,self.aliquotLengths);
       self.validationMsg.invalidAliquotLength = _fillMsgInvalidAliquotLength(self.aliquotLengths);
-      
+
       self.clearAliquotError = clearAliquotError;
       self.clearTubeError = clearTubeError;
       self.setAliquotError = setAliquotError;
@@ -134,24 +134,24 @@
           }
         }
       }, this);
-      
+
       return text;
     }
 
     function _isValidCode(validation, code){
       var isValid = false;
-      
+
       if(code.toString().length >= validation.position + 1) {
         isValid =  (code.toString().substr(validation.position, 1) == validation.value);
       }
-      
+
       return isValid;
     }
 
     function isValidWave(code){
       return _isValidCode(self.validations.wave,code);
     }
-    
+
     function isValidCenter(code){
       return _isValidCode(self.validations.center,code);
     }
@@ -159,7 +159,7 @@
     function isValidTube(code){
       return _isValidCode(self.validations.tube,code);
     }
-    
+
     function isValidCryotube(code){
       return _isValidCode(self.validations.cryotube,code);
     }
@@ -178,12 +178,12 @@
 
     function fieldsAreEquals(field, otherField){
       var ret = false;
-      
+
       if(field && otherField) ret = (field.toUpperCase() == otherField.toUpperCase());
 
       return ret;
     }
-    
+
     function fieldIsTube(field){
       return self.fieldsAreEquals(field, self.tubeIdentifier);
     }
@@ -199,10 +199,10 @@
 
       if (newArray.length) {
         return false;
-      } else {
-        self.repeatedAliquots.push(aliquot);
-        return true;
       }
+
+      self.repeatedAliquots.push(aliquot);
+      return true;
     }
 
     function _removeRepeatedAliquots(aliquot) {
@@ -226,7 +226,7 @@
           }
         }
       }
-      
+
       if(validateRepeatedList){
         if(alreadyUsed){
           _addAliquotInRepeatedAliquots(aliquot);
@@ -268,7 +268,7 @@
 
       return isNumber;
     }
-    
+
 
     function validateWave(aliquot, tubeOrAliquot) {
       var isTube = self.fieldIsTube(tubeOrAliquot);
@@ -305,7 +305,7 @@
     function validateTubeRequired(aliquot) {
       var isValid = true;
       var msg = self.validationMsg.requiredTube;
-      
+
       if (aliquot.aliquotCode) {
         if (aliquot.tubeCode.length === 0 && aliquot.placeholder.length === 0) isValid = false;
       }
@@ -346,7 +346,7 @@
         return value === currentLength;
       });
 
-      return lengthArray.length ? true : false;
+      return !!lengthArray.length;
     }
 
     function validateAliquotLength(aliquot) {

@@ -45,6 +45,7 @@
 		self.getSurveyFromJson = getSurveyFromJson;
 		self.getActivity = getActivity;
 		self.clearSelectedActivities = clearSelectedActivities;
+		self.reopenActivity = reopenActivity;
 
 		 function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -66,8 +67,7 @@
 
 		function createPreActivity(survey, configuration, mode) {
 			let loggedUser = ContextService.getLoggedUser();
-			let preActivity = PreActivityFactory.create(survey, configuration, mode, loggedUser);
-			return preActivity;
+			return PreActivityFactory.create(survey, configuration, mode, loggedUser);
 		}
 
 		function saveActivities(preActivities) {
@@ -210,5 +210,9 @@
 		function clearSelectedActivities() {
       ContextService.clearSelectedActivities();
     }
+
+    function reopenActivity(activity){
+		  return ActivityRepositoryService.reopenActivity(activity);
+		}
 	}
 }());

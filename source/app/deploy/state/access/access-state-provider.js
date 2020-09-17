@@ -51,9 +51,8 @@
       InstallerRestService.ready(function(response) {
         if (!response.data) {
           return STATE.INSTALLER;
-        } else {
-          return STATE.LOGIN;
         }
+        return STATE.LOGIN;
       });
     }
 

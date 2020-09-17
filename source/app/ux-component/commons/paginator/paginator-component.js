@@ -61,7 +61,7 @@
       if(_currentPage<$scope.rangePages.length - 1){
         _currentPage++;
         $scope.range = $scope.rangePages[_currentPage];
-        $scope.disabledForward = _currentPage == $scope.rangePages.length - 1 ? true : false;
+        $scope.disabledForward = (_currentPage == $scope.rangePages.length - 1);
         $scope.disabledPrevious = false;
         self.onUpdate($scope.pages[_currentPage], _getStartPage() , _getFinalPage());
       }
@@ -72,7 +72,7 @@
         _currentPage--;
         $scope.range = $scope.rangePages[_currentPage];
         $scope.disabledForward = false;
-        $scope.disabledPrevious = _currentPage == 0 ? true : false;
+        $scope.disabledPrevious = (_currentPage == 0);
         self.onUpdate($scope.pages[_currentPage], _getStartPage() , _getFinalPage());
       }
     }

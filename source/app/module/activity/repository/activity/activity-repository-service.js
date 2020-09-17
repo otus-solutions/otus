@@ -37,22 +37,22 @@
 
     self.createActivity = createActivity;
     self.createFollowUpActivity = createFollowUpActivity;
+    self.reopenActivity = reopenActivity;
 
     function listAll(participant) {
       if (!participant) {
         throw new Error('No participant selected to list activities.', 'activity-repository-service.js', 63);
-      } else {
-        ActivityCollectionService.useParticipant(participant);
       }
+
+      ActivityCollectionService.useParticipant(participant);
 
       if (_existsWorkingInProgress) {
         return _existsWorkingInProgress
           .then(function () {
             return _listAll();
           });
-      } else {
-        return _listAll();
       }
+      return _listAll();
     }
 
     function listAvailables() {
@@ -63,9 +63,6 @@
       return ActivityCollectionService.getById(activityId, rn).then(_toEntity);
     }
 
-    function listAllSurveys() {
-      return SurveyCollectionService.listAcronyms().then(_toEntity);
-    }
 
     function createFromSurvey(surveys, loggedUser, participant, configuration) {
       return _createActivity(surveys, loggedUser, participant, null, configuration);
@@ -113,10 +110,8 @@
     function _update(toUpdate) {
       if (!toUpdate || !toUpdate.length) {
         throw new Error('No activity to update.', 'activity-repository-service.js', 50);
-      } else {
-        var work = _setupWorkProgress();
-        return ActivityCollectionService.update(toUpdate).then(work.finish);
       }
+      return ActivityCollectionService.update(toUpdate).then(_setupWorkProgress().finish);
     }
 
     function _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService, configuration) {
@@ -148,9 +143,9 @@
         return dbObjects.map(function (dbObject) {
           return _restoreEntity(dbObject);
         });
-      } else {
-        return [_restoreEntity(dbObjects)];
       }
+
+      return [_restoreEntity(dbObjects)];
     }
 
     function _restoreEntity(dbObject) {
@@ -222,6 +217,12 @@
     function createFollowUpActivity(activity) {
       return ActivityCollectionService.createFollowUpActivity(activity);
     }
+
+    function reopenActivity(activity){
+      return ActivityCollectionService.reopenActivity(activity)
+        .then(_setupWorkProgress().finish);
+    }
+
   }
 
 }());

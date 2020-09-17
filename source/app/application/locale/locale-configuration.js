@@ -23,12 +23,12 @@
       var date = new Date(dateString);
       if (Object.prototype.toString.call(date) !== '[object Date]') {
         return date;
-      } else {
-        var newDateString = dateString.split('/');
-        if (newDateString.length === 3) {
-          date = new Date(newDateString[2], newDateString[1] - 1, newDateString[0]);
-          return date;
-        }
+      }
+
+      var newDateString = dateString.split('/');
+      if (newDateString.length === 3) {
+        date = new Date(newDateString[2], newDateString[1] - 1, newDateString[0]);
+        return date;
       }
     };
   }

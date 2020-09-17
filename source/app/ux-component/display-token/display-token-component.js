@@ -35,7 +35,7 @@
     }
 
     function _hasToken() {
-      return self.token ? true : false;
+      return !!self.token;
     }
 
     function copyToClipboard() {

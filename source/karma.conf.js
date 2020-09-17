@@ -54,7 +54,7 @@ module.exports = function (config) {
       NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/st-utils.min.js',
       NODE_MODULES_ROOT_PATH + 'label-maker-js/dist/label-maker-js/scripts/otusjs-label-maker.min.js',
       NODE_MODULES_ROOT_PATH + 'otus-validation-js/dist/otus-validation-min.js',
-      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model.min.js',
+      NODE_MODULES_ROOT_PATH + 'otus-model-js/dist/otus-model.js',
       NODE_MODULES_ROOT_PATH + 'otus-preview-js/dist/otus-preview-js/scripts/otusjs-player-min.js',
 
       /* Static resources files */

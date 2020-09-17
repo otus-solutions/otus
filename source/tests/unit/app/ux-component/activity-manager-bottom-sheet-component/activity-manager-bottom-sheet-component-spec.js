@@ -1,218 +1,287 @@
 describe('otusActivityManagerBottomSheet', function () {
 
-  var UNIT_NAME = 'otusActivityManagerBottomSheetCtrl';
-  var Mock = {};
-  var Bindings = {};
-  var Injections = {};
-  var controller;
-
+  let Mock = {};
+  let Bindings = {};
+  let Injections = {};
+  let controller;
 
   beforeEach(function () {
-    angular.mock.module('otusjs.otus.uxComponent', function ($provide) {
+    angular.mock.module('otusjs.otus');
+    angular.mock.inject(($injector, $rootScope, $q, $controller) => {
+      Injections.$q = $injector.get('$q');
+      Injections.$mdToast = $injector.get('$mdToast');
+      Injections.$timeout = $injector.get('$timeout');
+      Injections.$mdDialog = $injector.get('$mdDialog');
+      Injections.$mdColors = $injector.get('$mdColors');
+      Injections.EventService = $injector.get('otusjs.activity.core.EventService');
+      Injections.CheckerItemFactory = $injector.get('otusjs.otus.uxComponent.CheckerItemFactory');
+      Injections.DialogService = $injector.get('otusjs.application.dialog.DialogShowService');
+      Injections.ActivityPlayerService = $injector.get('otusjs.activity.business.ActivityPlayerService');
+      Injections.ActivityViewService = $injector.get('otusjs.activity.business.ActivityViewService');
+      Injections.ActivityPlayerService = $injector.get('otusjs.activity.business.ActivityPlayerService');
+      Injections.ApplicationStateService = $injector.get('otusjs.application.state.ApplicationStateService');
+      Injections.ParticipantActivityService = $injector.get('otusjs.activity.business.ParticipantActivityService');
+      Injections.ActivityStatusFactory = $injector.get('otusjs.model.activity.ActivityStatusFactory');
+      Injections.ContextService = $injector.get('otusjs.otus.dashboard.core.ContextService');
+      Injections.LoadingScreenService = $injector.get('otusjs.deploy.LoadingScreenService');
 
-      Mock.ActivityViewService = {
-        load: function () {
-          return Promise.resolve();
-        }
-      };
+      Bindings.updateList = function() {};
+      Bindings.onViewInfo = function() {};
 
-      Mock.ApplicationStateService = {
-        activateActivityViewer: function () {
-          return Promise.resolve();
-        }
-      };
+      controller = $controller('otusActivityManagerBottomSheetCtrl', Injections, Bindings);
 
-      mockInjections();
-
-      $provide.value('$q', {});
-      $provide.value('$mdToast', Mock.mdToast);
-      $provide.value('$timeout', {});
-      $provide.value('$mdDialog', Mock.mdDialog);
-      $provide.value('otusjs.activity.core.EventService', {});
-      $provide.value('otusjs.otus.uxComponent.CheckerItemFactory', Mock.CheckerItemFactory);
-      $provide.value('otusjs.application.dialog.DialogShowService', {});
-      $provide.value('otusjs.activity.business.ActivityPlayerService', {});
-      $provide.value('otusjs.activity.business.ActivityViewService', Mock.ActivityViewService);
-      $provide.value('otusjs.activity.business.ActivityPlayerService', {});
-      $provide.value('otusjs.application.state.ApplicationStateService', Mock.ApplicationStateService);
-      $provide.value('otusjs.activity.business.ParticipantActivityService', Mock.ParticipantActivityService);
-    });
-
-    inject(function (_$injector_, _$controller_) {
-      controller = _$controller_(UNIT_NAME);
+      _mockInitialize($rootScope, $q);
     });
   });
 
-  describe('updateChecker method', function () {
-    beforeEach(function () {
-      spyOn(Mock.mdDialog, "cancel").and.callThrough();
-      spyOn(Mock.mdDialog, "show").and.callThrough();
-    });
-    it('should call dialog', function () {
-      expect(controller.cancel).toBeUndefined();
-      controller.updateChecker();
-      expect(controller.cancel).toBeDefined();
-      expect(Mock.mdDialog.cancel).toEqual(controller.cancel);
-      expect(Mock.mdDialog.show).toHaveBeenCalledTimes(1);
 
+  it('controller_existence_check', function () {
+    expect(controller).toBeDefined();
+  });
+
+  it('controller_methods_existence_check', () => {
+    expect(controller.$onInit).toBeDefined();
+    expect(controller.fillSelectedActivity).toBeDefined();
+    expect(controller.viewSelectedActivity).toBeDefined();
+    expect(controller.deleteSelectedActivity).toBeDefined();
+    expect(controller.visualizeSelectedActivityInfo).toBeDefined();
+    expect(controller.updateChecker).toBeDefined();
+    expect(controller.DialogController).toBeDefined();
+    expect(controller.activitySharingDialog).toBeDefined();
+    expect(controller.reopenActivityDialog).toBeDefined();
+  });
+
+
+  it('onInit method should set selectedItemCounterBackgroundColor and call EventService methods', function(){
+    const BACKGROUND_COLOR = 'gray';
+    spyOn(Injections.$mdColors, 'getThemeColor').and.returnValue(BACKGROUND_COLOR);
+    spyOn(Injections.EventService, "onParticipantSelected");
+    spyOn(Injections.EventService, "onActivitySelected");
+    controller.$onInit();
+    expect(controller.selectedItemCounterBackgroundColor).toBe(BACKGROUND_COLOR);
+    expect(Injections.EventService.onParticipantSelected).toHaveBeenCalledTimes(1);
+    expect(Injections.EventService.onActivitySelected).toHaveBeenCalledTimes(1);
+  });
+
+  it('fillSelectedActivity method should call some services methods', function(){
+    spyOn(Injections.ActivityPlayerService, "load").and.returnValue(Mock.resolve);
+    spyOn(Injections.ApplicationStateService, "activateActivityPlayer");
+    controller.fillSelectedActivity();
+    Mock.$scope.$digest();
+    expect(Injections.ActivityPlayerService.load).toHaveBeenCalledTimes(1);
+    expect(Injections.ApplicationStateService.activateActivityPlayer).toHaveBeenCalledTimes(1);
+  });
+
+  it('viewSelectedActivity method should call some services methods', function(){
+    spyOn(Injections.ActivityViewService, "load").and.returnValue(Mock.resolve);
+    spyOn(Injections.ApplicationStateService, "activateActivityViewer");
+    controller.viewSelectedActivity();
+    Mock.$scope.$digest();
+    expect(Injections.ActivityViewService.load).toHaveBeenCalledTimes(1);
+    expect(Injections.ApplicationStateService.activateActivityViewer).toHaveBeenCalledTimes(1);
+  });
+
+  it('deleteSelectedActivity method should call updateList method', function(){
+    spyOn(Injections.DialogService, "showConfirmationDialog").and.returnValue(Mock.resolve);
+    spyOn(Injections.ParticipantActivityService, "getSelectedActivities").and.returnValue({
+      discard: function(){}
+    });
+    spyOn(controller, 'updateList');
+    controller.deleteSelectedActivity();
+    Mock.$scope.$digest();
+    expect(controller.updateList).toHaveBeenCalledTimes(1);
+  });
+
+
+  it('updateChecker method should call dialog', function () {
+    spyOn(Injections.$mdDialog, "cancel");
+    spyOn(Injections.$mdDialog, "show");
+    controller.updateChecker();
+    expect(controller.cancel).toBeDefined();
+    expect(controller.cancel).toEqual(Injections.$mdDialog.cancel);
+    expect(Injections.$mdDialog.show).toHaveBeenCalledTimes(1);
+  });
+
+  it('visualizeSelectedActivityInfo method should call onViewInfo method', function(){
+    spyOn(controller, "onViewInfo");
+    controller.visualizeSelectedActivityInfo();
+    expect(controller.onViewInfo).toHaveBeenCalledTimes(1);
+  });
+
+
+  describe('DialogController Suite Test', function () {
+
+    let DialogController;
+
+    beforeEach(function(){
+      spyOn(Injections.CheckerItemFactory, 'create').and.returnValue(Mock.checker);
+      spyOn(Injections.ParticipantActivityService, 'listActivityCheckers').and.returnValue([Mock.checker]);
+      spyOn(Mock, 'updateList').and.callThrough();
+      spyOn(Injections.$mdToast, "show");
+      DialogController = new controller.DialogController(Mock.selectedActivity, Mock.updateList);
+      spyOn(DialogController.selectedActivity.statusHistory, "getInitializedOfflineRegistry").and.callThrough();
+    });
+
+    it('DialogController methods existence check', function() {
+      expect(DialogController.selectedActivity).toBeDefined();
+      expect(DialogController.user).toBeDefined();
+      expect(DialogController.querySearch).toBeDefined();
+      expect(DialogController.updateCheckerActivity).toBeDefined();
+      expect(DialogController.cancel).toBeDefined();
+      expect(DialogController.checkers).toBeDefined();
+      expect(DialogController.selectedItem).toBeDefined();
+      expect(DialogController.maxDate).toBeDefined();
+    });
+
+    it('should update checker activity', function () {
+      spyOn(Injections.ParticipantActivityService, "updateCheckerActivity").and.returnValue(Mock.resolveObj);
+
+      DialogController.updateCheckerActivity();
+      Mock.$scope.$digest();
+
+      expect(Injections.ParticipantActivityService.updateCheckerActivity).toHaveBeenCalledTimes(1);
+      expect(Injections.$mdToast.show).toHaveBeenCalledTimes(1);
+      expect(Mock.updateList).toHaveBeenCalledTimes(1);
+    });
+
+    it('should not update checker activity in case no response from ParticipantActivityService.updateCheckerActivity', function () {
+      spyOn(Injections.ParticipantActivityService, "updateCheckerActivity").and.returnValue(Mock.resolve);
+
+      DialogController.updateCheckerActivity();
+      Mock.$scope.$digest();
+
+      expect(Injections.ParticipantActivityService.updateCheckerActivity).toHaveBeenCalledTimes(1);
+      expect(Injections.$mdToast.show).toHaveBeenCalledTimes(1);
+      expect(Mock.updateList).not.toHaveBeenCalled();
+    });
+
+    it('should not update checker activity in case ParticipantActivityService.updateCheckerActivity reject', function () {
+      spyOn(Injections.ParticipantActivityService, "updateCheckerActivity").and.returnValue(Mock.reject);
+      spyOn(DialogController, "cancel");
+
+      DialogController.updateCheckerActivity();
+      Mock.$scope.$digest();
+
+      expect(Injections.ParticipantActivityService.updateCheckerActivity).toHaveBeenCalledTimes(1);
+      expect(Injections.$mdToast.show).toHaveBeenCalledTimes(1);
+      expect(Mock.updateList).not.toHaveBeenCalled();
+      expect(DialogController.cancel).toHaveBeenCalledTimes(1);
     });
   });
 
-  xdescribe('DialogController not update checker ', function () {
-    beforeEach(function () {
-      spyOn(Mock.ParticipantActivityService, "listActivityCheckers").and.callThrough();
-      spyOn(Mock.ParticipantActivityService, "updateCheckerActivity").and.callThrough();
-      spyOn(Mock.mdToast, "show").and.callThrough();
 
-    });
 
-    it('should not update checker activity', function (done) {
-      controller.DialogController(Test.utils.data.activity[0].activities[0]);
-      spyOn(controller.selectedActivity.statusHistory, "getInitializedOfflineRegistry").and.callThrough();
-      expect(controller.selectedActivity).toBeDefined();
-      expect(controller.user).toBeDefined();
-      expect(controller.querySearch).toBeDefined();
-      expect(controller.updateCheckerActivity).toBeDefined();
-      expect(controller.cancel).toBeDefined();
-      expect(controller.checkers).toBeDefined();
-      expect(controller.selectedItem).toBeDefined();
-      expect(controller.maxDate).toBeDefined();
-
-      controller.updateCheckerActivity();
-      expect(Mock.ParticipantActivityService.listActivityCheckers).toHaveBeenCalledTimes(1);
-      expect(Mock.ParticipantActivityService.updateCheckerActivity).toHaveBeenCalledTimes(1);
-      Mock.ParticipantActivityService.updateCheckerActivity().then(function () {
-        expect(controller.selectedActivity.statusHistory.getInitializedOfflineRegistry).toHaveBeenCalledTimes(1);
-        done();
-      }).catch(function () {
-        expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
-        done();
-      });
-    });
+  it('activitySharingDialog method should call onViewInfo method', function(){
+    const selectedActivity = {};
+    spyOn(Injections.DialogService, "showActivitySharingDialog");
+    controller.activitySharingDialog(selectedActivity);
+    expect(Injections.DialogService.showActivitySharingDialog).toHaveBeenCalledTimes(1);
+    expect(Injections.DialogService.showActivitySharingDialog).toHaveBeenCalledWith(selectedActivity);
   });
 
-  xdescribe('DialogController update checker ', function () {
-    beforeEach(function () {
-      spyOn(Mock.ParticipantActivityService, "listActivityCheckers").and.callThrough();
-      spyOn(Mock.ParticipantActivityService, "updateCheckerActivity").and.returnValue(Promise.resolve(true));
-      spyOn(Mock.mdToast, "show").and.callThrough();
+  describe('reopenActivityDialog method Suite Test', function(){
 
+    beforeEach(function(){
+      spyOn(Injections.LoadingScreenService, 'start');
+      spyOn(Injections.LoadingScreenService, 'finish');
+      spyOn(Mock.selectedActivity.statusHistory, 'getHistory').and.callThrough();
     });
 
-    it('should update checker activity', function (done) {
-      controller.DialogController(Test.utils.data.activity[0].activities[0], Mock.updateList);
-      spyOn(controller.selectedActivity.statusHistory, "getInitializedOfflineRegistry").and.callThrough();
-      expect(controller.selectedActivity).toBeDefined();
-      expect(controller.user).toBeDefined();
-      expect(controller.querySearch).toBeDefined();
-      expect(controller.updateCheckerActivity).toBeDefined();
-      expect(controller.cancel).toBeDefined();
-      expect(controller.checkers).toBeDefined();
-      expect(controller.selectedItem).toBeDefined();
+    it('at showConfirmationDialog dont press ok', function(){
+      spyOn(Injections.DialogService, 'showConfirmationDialog').and.returnValue(Mock.reject);
 
-      controller.updateCheckerActivity();
-      expect(Mock.ParticipantActivityService.listActivityCheckers).toHaveBeenCalledTimes(1);
-      expect(Mock.ParticipantActivityService.updateCheckerActivity).toHaveBeenCalledTimes(1);
-      Mock.ParticipantActivityService.updateCheckerActivity().then(function () {
-        expect(controller.updateList).toHaveBeenCalledTimes(2);
-        expect(Mock.mdToast.show).toHaveBeenCalledTimes(1);
-        done();
-      }).catch(function () {
-        done();
-      });
+      controller.reopenActivityDialog(Mock.selectedActivity);
+      Mock.$scope.$digest();
+
+      expect(Mock.selectedActivity.statusHistory.getHistory).not.toHaveBeenCalled();
     });
+
+    it('getLoggedUser fail', function(){
+      spyOn(Injections.DialogService, 'showConfirmationDialog').and.returnValue(Mock.resolve);
+      spyOn(Injections.ContextService, 'getLoggedUser').and.returnValue(Mock.reject);
+      spyOn(Injections.ParticipantActivityService, 'reopenActivity');
+
+      controller.reopenActivityDialog(Mock.selectedActivity);
+      Mock.$scope.$digest();
+
+      expect(Mock.selectedActivity.statusHistory.getHistory).not.toHaveBeenCalled();
+      expect(Injections.LoadingScreenService.finish).toHaveBeenCalled();
+    });
+
+    it('reopenActivity fail', function(){
+      spyOn(Injections.DialogService, 'showConfirmationDialog').and.returnValue(Mock.resolve);
+      spyOn(Injections.ContextService, 'getLoggedUser').and.returnValue(Mock.resolveObj);
+      spyOn(Injections.ActivityStatusFactory, 'createReopenedStatus').and.returnValue({});
+      spyOn(Injections.ParticipantActivityService, 'reopenActivity').and.returnValue(Mock.reject);
+      spyOn(controller, 'updateList');
+
+      controller.reopenActivityDialog(Mock.selectedActivity);
+      Mock.$scope.$digest();
+
+      expect(Mock.selectedActivity.statusHistory.getHistory).toHaveBeenCalledTimes(1);
+      expect(controller.updateList).not.toHaveBeenCalled();
+      expect(Injections.LoadingScreenService.finish).toHaveBeenCalledTimes(1);
+    });
+
+    it('reopenActivity should push new status and call updateList method', function(){
+      spyOn(Injections.DialogService, 'showConfirmationDialog').and.returnValue(Mock.resolve);
+      spyOn(Injections.ContextService, 'getLoggedUser').and.returnValue(Mock.resolveObj);
+      spyOn(Injections.ActivityStatusFactory, 'createReopenedStatus').and.returnValue({});
+      spyOn(Injections.ParticipantActivityService, 'reopenActivity').and.returnValue(Mock.resolve);
+      spyOn(controller, 'updateList');
+
+      controller.reopenActivityDialog(Mock.selectedActivity);
+      Mock.$scope.$digest();
+
+      expect(Mock.selectedActivity.statusHistory.getHistory).toHaveBeenCalledTimes(1);
+      expect(controller.updateList).toHaveBeenCalledTimes(1);
+      expect(Injections.LoadingScreenService.finish).toHaveBeenCalledTimes(1);
+    });
+
   });
 
-  describe('viewSelectedActivity method', function () {
-    beforeEach(function () {
-      spyOn(Mock.ActivityViewService, "load").and.callThrough();
-      spyOn(Mock.ApplicationStateService, "activateActivityViewer").and.callThrough();
-    });
+  function _mockInitialize($rootScope, $q){
+    Mock.$scope = $rootScope.$new();
 
-    it('should method to be defined', function () {
-      expect(controller.viewSelectedActivity).toBeDefined();
-    });
+    const deferredResolve = $q.defer();
+    deferredResolve.resolve();
+    Mock.resolve = deferredResolve.promise;
 
-    it('should call methods expected', function () {
-      controller.viewSelectedActivity();
+    const deferredResolveObj = $q.defer();
+    deferredResolveObj.resolve({});
+    Mock.resolveObj = deferredResolveObj.promise;
 
-      expect(Mock.ActivityViewService.load).toHaveBeenCalled();
-    });
-  });
+    const deferredReject = $q.defer();
+    deferredReject.reject('some error');
+    Mock.reject = deferredReject.promise;
 
-  function mockInjections() {
-    Mock.mdDialog = {
-      cancel: function () { },
-      show: function () {
-        return Promise.resolve();
+    Mock.selectedActivity = {
+      participantData: {
+        recruitmentNumber: 123
       },
-    };
-
-    Mock.mdToast = {
-      show: function (confirm) {
-        var self = this;
-        self.test = confirm;
-        return Promise.resolve(self);
-      },
-      simple: function () {
-        var self = this;
-
-        self.textContent = function (msg) {
-          var vm = this;
-          vm.msg = msg;
-          return vm;
-        };
-
-        self.position = function (p) {
-          var vm = this;
-          vm.p = p;
-          return vm;
-        };
-
-        self.hideDelay = function (time) {
-          var vm = this;
-          vm.time = time;
-          return vm;
-        };
-
-        return self;
+      getID: function() { return '123457890'},
+      statusHistory: {
+        getHistory: function () { return []; },
+        getInitializedOfflineRegistry: function() {
+          return {
+            user: {}, date: {},
+            setUser: function(user){},
+            setDate: function(date){},
+          };
+        }
       }
     };
 
-    Mock.CheckerItemFactory = {
-      create: function (item) {
-        return item;
-      }
-    }
+    Mock.updateList = function() {};
 
-    Mock.updateList = function () {
-
-    };
-
-    Mock.ParticipantActivityService = {
-      listActivityCheckers: function () {
-        return [{
-          checker: {
-            "name": "Emanoel",
-            "surname": "Vianna",
-            "phone": "51999999999",
-            "email": "otus@otus.com"
-          }
-        },
-        {
-          checker: {
-            "name": "Emanoel",
-            "surname": "Vianna",
-            "phone": "51999999999",
-            "email": "otus@otus.com"
-          }
-        }
-        ];
-      },
-      updateCheckerActivity: function () {
-        return Promise.resolve();
+    Mock.checker = {
+      checker: {
+        "name": "Joao",
+        "surname": "Silva",
+        "phone": "51999999999",
+        "email": "otus@otus.com"
       }
     };
-  };
+  }
 
 });

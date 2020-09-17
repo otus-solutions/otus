@@ -33,7 +33,7 @@
                   <md-tooltip>
                     Sigla da atividade a ser visualizada
                   </md-tooltip>
-                  <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{questionnaire}}" ng-click="">
+                  <md-option ng-repeat="questionnaire in $ctrl.questionnairesList track by $index" ng-selected="{{$index == 0}}" value="{{questionnaire}}" ng-click="">
                     {{questionnaire}}
                   </md-option>
                 </md-select>

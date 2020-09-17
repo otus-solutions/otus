@@ -1,104 +1,113 @@
 describe('otusActivityManagerGridList Test', function() {
 
-    var UNIT_NAME = 'otusActivityGridListCtrl';
-    var Injections = [];
-    var controller = {};
-    var ELEMENTS_ARRAY;
+  let Mock = {};
+  let Injections = [];
+  let controller = {};
+
+  beforeEach(function() {
+    angular.mock.module('otusjs.otus');
+
+    angular.mock.inject(function($injector, $controller) {
+      Injections.$filter = $injector.get('$filter');
+      Injections.$mdToast = $injector.get('$mdToast');
+      Injections.$mdColors = $injector.get('$mdColors');
+      Injections.ACTIVITY_MANAGER_LABELS = $injector.get('ACTIVITY_MANAGER_LABELS');
+
+      controller = $controller('otusActivityGridListCtrl', Injections);
+    });
+  });
+
+  it('controller existence check', function () {
+    expect(controller).toBeDefined();
+  });
+
+  it('should verify properties definition', function () {
+    expect(controller.$onInit).toBeDefined();
+    expect(controller.orderByIndex).toBeDefined();
+    expect(controller.selectDeselect).toBeDefined();
+    expect(controller.selectDeselectAll).toBeDefined();
+    expect(controller.filterGridTile).toBeDefined();
+    expect(controller.displayGridLarge).toBeDefined();
+    expect(controller.displayGridSmall).toBeDefined();
+  });
+
+  describe('Methods Suite Test', function(){
 
     beforeEach(function() {
-        mocks();
-        angular.mock.module('otusjs.otus');
-
-        angular.mock.inject(function(_$injector_, _$controller_) {
-            Injections.$filter = _$injector_.get('$filter');
-            Injections.$mdToast = _$injector_.get('$mdToast');
-
-            controller = _$controller_(UNIT_NAME, Injections);
-        });
-        controller.$onInit();
-        controller.updateFunction(ELEMENTS_ARRAY);
+      _mockInitialize();
+      controller.$onInit();
+      controller.updateFunction(Mock.elementsArray);
     });
 
-    it('should verify properties definition', function () {
-        expect(controller.$onInit).toBeDefined();
-        expect(controller.orderByIndex).toBeDefined();
-        expect(controller.selectDeselect).toBeDefined();
-        expect(controller.selectDeselectAll).toBeDefined();
-        expect(controller.filterGridTile).toBeDefined();
-        expect(controller.displayGridLarge).toBeDefined();
-        expect(controller.displayGridSmall).toBeDefined();
-    });
-
-    it('onInitMethod should inicialized the controller variables', function () {
-        expect(controller.elementsArray).toEqual(ELEMENTS_ARRAY);
-        expect(controller.hoverGridHeaderWhiteframe).toEqual('md-whiteframe-19dp');
-        expect(controller.gridDataSettings).toBeUndefined();
-        expect(controller.callbackAfterChange).toBeDefined();
+    it('onInitMethod should initialized the controller variables', function () {
+      expect(controller.elementsArray).toEqual(Mock.elementsArray);
+      expect(controller.hoverGridHeaderWhiteframe).toEqual('md-whiteframe-19dp');
+      expect(controller.gridDataSettings).toBeUndefined();
+      expect(controller.callbackAfterChange).toBeDefined();
     });
 
     it('filterGridTileMethod should filter the activities', function () {
-        expect(controller.filter).toEqual("");
-        controller.filter = "ACTDC";
-        controller.filterGridTile();
-        expect(controller.filteredActiviteis.length).toEqual(2);
-        controller.filter = "diário";
-        controller.filterGridTile();
-        expect(controller.filteredActiviteis.length).toEqual(0);
-        controller.filter = "CISE";
-        controller.filterGridTile();
-        expect(controller.filteredActiviteis.length).toEqual(1);
+      expect(controller.filter).toEqual("");
+      controller.filter = "ACTDC";
+      controller.filterGridTile();
+      expect(controller.filteredActiviteis.length).toEqual(2);
+      controller.filter = "diário";
+      controller.filterGridTile();
+      expect(controller.filteredActiviteis.length).toEqual(0);
+      controller.filter = "CISE";
+      controller.filterGridTile();
+      expect(controller.filteredActiviteis.length).toEqual(1);
     });
 
     it('orderByIndexMethod should order the activities', function () {
-        expect(controller.orderReverse).toBeFalsy();
-        expect(controller.iconsDropUpDown).toEqual('arrow_drop_up');
-        expect(controller.orderQuery).toBeUndefined();
+      expect(controller.orderReverse).toBeFalsy();
+      expect(controller.iconsDropUpDown).toEqual('arrow_drop_up');
+      expect(controller.orderQuery).toBeUndefined();
 
-        controller.orderByIndex('name');
-        expect(controller.orderReverse).toBeFalsy();
-        expect(controller.iconsDropUpDown).toEqual('arrow_drop_down');
-        expect(controller.orderQuery).toEqual('name');
+      controller.orderByIndex('name');
+      expect(controller.orderReverse).toBeFalsy();
+      expect(controller.iconsDropUpDown).toEqual('arrow_drop_down');
+      expect(controller.orderQuery).toEqual('name');
 
-        controller.orderByIndex('name');
-        expect(controller.orderReverse).toBeTruthy();
-        expect(controller.iconsDropUpDown).toEqual('arrow_drop_up');
-        expect(controller.orderQuery).toEqual('name');
+      controller.orderByIndex('name');
+      expect(controller.orderReverse).toBeTruthy();
+      expect(controller.iconsDropUpDown).toEqual('arrow_drop_up');
+      expect(controller.orderQuery).toEqual('name');
 
-        controller.orderByIndex('acronym');
-        expect(controller.orderReverse).toBeFalsy();
-        expect(controller.iconsDropUpDown).toEqual('arrow_drop_down');
-        expect(controller.orderQuery).toEqual('acronym');
+      controller.orderByIndex('acronym');
+      expect(controller.orderReverse).toBeFalsy();
+      expect(controller.iconsDropUpDown).toEqual('arrow_drop_down');
+      expect(controller.orderQuery).toEqual('acronym');
     });
 
     it('selectDeselectAllMethod should select all the activities and deselect all the activities', function () {
-        expect(controller.selectedItemCounter).toEqual(0);
-        expect(controller.selectAll).toBeFalsy();
+      expect(controller.selectedItemCounter).toEqual(0);
+      expect(controller.selectAll).toBeFalsy();
 
-        controller.selectDeselectAll();
-        expect(controller.selectedItemCounter).toEqual(3);
-        expect(controller.selectAll).toBeTruthy();
+      controller.selectDeselectAll();
+      expect(controller.selectedItemCounter).toEqual(3);
+      expect(controller.selectAll).toBeTruthy();
 
-        controller.selectDeselectAll();
-        expect(controller.selectedItemCounter).toEqual(0);
-        expect(controller.selectAll).toBeFalsy();
+      controller.selectDeselectAll();
+      expect(controller.selectedItemCounter).toEqual(0);
+      expect(controller.selectAll).toBeFalsy();
     });
 
-     it('selectDeselectMethod should select the activity and deselect the activity', function () {
-        expect(controller.selectedItemCounter).toEqual(0);
+    it('selectDeselectMethod should (de)select the activity', function () {
+      expect(controller.selectedItemCounter).toEqual(0);
 
-        controller.selectDeselect(ELEMENTS_ARRAY[0]);
-        expect(controller.selectedItemCounter).toEqual(1);
+      controller.selectDeselect(Mock.elementsArray[0]);
+      expect(controller.selectedItemCounter).toEqual(1);
 
-        controller.selectDeselect(ELEMENTS_ARRAY[1]);
-        expect(controller.selectedItemCounter).toEqual(2);
+      controller.selectDeselect(Mock.elementsArray[1]);
+      expect(controller.selectedItemCounter).toEqual(2);
 
-        controller.selectDeselect(ELEMENTS_ARRAY[1]);
-        expect(controller.selectedItemCounter).toEqual(1);
+      controller.selectDeselect(Mock.elementsArray[1]);
+      expect(controller.selectedItemCounter).toEqual(1);
 
-        controller.selectDeselect(ELEMENTS_ARRAY[0]);
-        expect(controller.selectedItemCounter).toEqual(0);
-
-     });
+      controller.selectDeselect(Mock.elementsArray[0]);
+      expect(controller.selectedItemCounter).toEqual(0);
+    });
 
 
     it('should call displayGridLarge method', function () {
@@ -114,9 +123,14 @@ describe('otusActivityManagerGridList Test', function() {
       window.innerWidth = 800;
       expect(controller.displayGridSmall()).toEqual('2.7:2');
     });
+  });
 
-    function mocks() {
-        ELEMENTS_ARRAY = Test.utils.data.activity[0].activities;
-    }
+
+  function _mockInitialize() {
+    Mock.elementsArray = Test.utils.data.activity[0].activities;
+
+    const STATUS = Injections.ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.label;
+    Mock.elementsArray.forEach(element => element.status = STATUS);
+  }
 
 });
