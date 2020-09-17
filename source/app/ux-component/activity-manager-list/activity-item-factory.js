@@ -5,6 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .factory('otusjs.otus.uxComponent.ActivityItemFactory', Factory);
 
+
   Factory.$inject = ['ACTIVITY_MANAGER_LABELS'];
 
   function Factory(ACTIVITY_MANAGER_LABELS) {
