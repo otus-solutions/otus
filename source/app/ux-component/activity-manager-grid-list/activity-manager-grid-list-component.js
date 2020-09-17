@@ -149,19 +149,14 @@
       return mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name ? colors.background.AUTO_FILL_HEADER : colors.background.HEADER;
     }
 
-    function _createStatus(status) {
-      let icon = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.CREATED.icon;
-      let statusFinalized = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.label;
-      let statusTooltip = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.CREATED.label;
+
+    function _createStatus(statusLabel) {
+      let status = Object.values(ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS)
+        .find(status => status.label === statusLabel);
+
       let activityStatus = [];
-
-      if (status !== statusTooltip) {
-        icon = (status === statusFinalized) ? ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.icon : ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.SAVED.icon;
-        statusTooltip = (status === statusFinalized) ? statusFinalized : ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.SAVED.label;
-      }
-      activityStatus.icon = icon;
-      activityStatus.statusTooltip = statusTooltip;
-
+      activityStatus.icon = status.icon;
+      activityStatus.statusTooltip = status.label;
       return activityStatus;
     }
 
