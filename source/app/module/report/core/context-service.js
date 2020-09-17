@@ -56,7 +56,7 @@
     }
 
     function hasContextActive() {
-      return _storage.getItem(REPORT_CONTEXT) ? true : false;
+      return !!_storage.getItem(REPORT_CONTEXT);
     }
 
     function save() {

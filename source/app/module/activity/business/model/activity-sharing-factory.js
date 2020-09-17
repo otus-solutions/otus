@@ -38,7 +38,7 @@
     function isValid() {
       const nowDate = new Date().getTime();
       const expirationDate = new Date(self.expirationDate).getTime();
-      return (expirationDate > nowDate) ? true : false;
+      return (expirationDate > nowDate);
     }
 
     function getExpirationDate() {

@@ -74,7 +74,7 @@
     }
 
     function hasContextActive() {
-      return _storage.getItem(ACTIVITY_CONTEXT) ? true : false;
+      return !!_storage.getItem(ACTIVITY_CONTEXT);
     }
 
     function save() {

@@ -51,7 +51,7 @@
     }
 
     function dbExists(dbName) {
-      return (!$window.localStorage.getItem(dbName)) ? false : true;
+      return (!!$window.localStorage.getItem(dbName));
     }
 
     function _newDbLoadHandler(dbName) {

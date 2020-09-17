@@ -108,7 +108,7 @@
               return center.acronym == self.userCenter;
             });
             self.centerFilterselectedIndex = self.centers.indexOf(self.centerFilter) >= 0 ? self.centers.indexOf(self.centerFilter) : -1;
-            self.centerFilterDisabled = userData.fieldCenter.acronym ? true : false;
+            self.centerFilterDisabled = !!userData.fieldCenter.acronym;
             self.centerFilter = angular.copy(self.centerFilter.acronym);
           } else {
             self.centerFilter = "";

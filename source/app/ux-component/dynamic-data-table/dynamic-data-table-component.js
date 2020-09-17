@@ -427,7 +427,7 @@
     }
 
     function getIsPreviousPage() {
-      return self.table.currentPage > 1 ? true : false;
+      return self.table.currentPage > 1;
     }
 
     function _haveThisPage(page) {

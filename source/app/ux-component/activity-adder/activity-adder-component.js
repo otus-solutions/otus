@@ -80,7 +80,7 @@
     }
 
     function selectAction() {
-      return (self.selectType === 'activityUnit') ? false : true;
+      return (self.selectType !== 'activityUnit');
     }
 
     function _loadSurveysGroup() {

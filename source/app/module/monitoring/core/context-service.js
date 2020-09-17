@@ -51,7 +51,7 @@
     }
 
     function hasContextActive() {
-      return _storage.getItem(MONITORING_CONTEXT) ? true : false;
+      return !!_storage.getItem(MONITORING_CONTEXT);
     }
 
     function save() {

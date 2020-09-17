@@ -12,7 +12,7 @@
                     <md-tooltip>
                       Centros
                     </md-tooltip>
-                    <md-option ng-repeat="center in $ctrl.centers track by $index" ng-selected="{{$index == 0 ? true : false}}" value="{{center.acronym}}" ng-click="">
+                    <md-option ng-repeat="center in $ctrl.centers track by $index" ng-selected="{{$index == 0}}" value="{{center.acronym}}" ng-click="">
                       {{center.acronym}}
                     </md-option>
                   </md-select>

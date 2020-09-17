@@ -83,7 +83,7 @@
     }
 
     function hasContextActive() {
-      return _storage.getItem(SESSION_CONTEXT) ? true : false;
+      return !!_storage.getItem(SESSION_CONTEXT);
     }
 
     function save() {

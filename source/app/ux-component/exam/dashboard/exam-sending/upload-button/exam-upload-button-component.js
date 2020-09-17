@@ -75,7 +75,7 @@
     }
 
     function isCompatibleFieldCenter(acronym) {
-      return acronym == ProjectContextService.getFieldCenterInSendingExam() ? true : false;
+      return acronym == ProjectContextService.getFieldCenterInSendingExam();
     }
 
     function _validateFileToUpload(file) {
@@ -92,7 +92,7 @@
 
     function _fileIsEmpty(file) {
       try {
-        file ? false : true;
+        return !file;
       } catch (e) {
         return true;
       }
