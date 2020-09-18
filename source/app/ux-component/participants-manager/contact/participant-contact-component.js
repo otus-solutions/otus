@@ -53,8 +53,11 @@
       okText: 'ok'
     });
 
+    self.isValid = false;
+
     /* Lifecycle hooks */
     self.$onInit = onInit;
+    self.$onDestroy = onDestroy;
 
     /* Public methods */
     self.saveParticipant = saveParticipant;
@@ -63,9 +66,12 @@
     self.loadParticipantContact = loadParticipantContact;
     self.createParticipantContact = createParticipantContact;
     self.deleteParticipantContact = deleteParticipantContact;
+    self.validFields = validFields;
 
     $scope.$watch('$ctrl.birthdate', function (newValue) {
-      if (newValue) self.onFilter();
+      if (newValue) {
+        self.onFilter();
+      }
     });
 
     function onInit() {
@@ -79,22 +85,23 @@
           self.birthdate = new Date(self.participant.birthdate.value)
         } else {
           self.birthdate = null;
+          self.participant.birthdate = { value: null };
         }
-        if (!self.birthdate) self.participant.birthdate = { value: null };
+
         self.maxDate = new Date();
         self.centers = {};
         _loadAllCenters();
       } catch (e) {
-        alert(66)
+        console.error(e);
       }
     }
 
-    self.$onDestroy = function () {
+    function onDestroy() {
       delete self.participant;
-    };
+    }
 
     function _loadSelectedParticipant() {
-      var participantData = JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant
+      var participantData = JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant;
       if (participantData) {
         self.participant = ParticipantFactory.fromJson(participantData);
       } else {
@@ -183,22 +190,20 @@
       });
     }
 
-    self.isValid = false;
-
-    self.validFields = function () {
-      if (!self.birthdate) self.participant.birthdate.value = null;
-      if (self.participant.recruitmentNumber && self.participant.name && self.participant.sex && self.participant.birthdate.value && self.participant.fieldCenter) {
-        self.isValid = true;
-      } else {
-        self.isValid = false;
+    function validFields() {
+      if (!self.birthdate) {
+        self.participant.birthdate.value = null;
       }
-    };
+      self.isValid = !!(self.participant.recruitmentNumber && self.participant.name && self.participant.sex &&
+        self.participant.birthdate.value && self.participant.fieldCenter);
+    }
 
     function _fieldsValidate() {
       var _valid = true;
       if (!self.participant) {
         self.participant = ParticipantFactory.fromJson(JSON.parse(sessionStorage.getItem("participant_context")));
       }
+
       if (!self.participant.recruitmentNumber && !self.permissions.autoGenerateRecruitmentNumber) {
         $element.find('#rn').focus();
         _valid = false;
