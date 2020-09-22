@@ -58,8 +58,10 @@
         >
 
           <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
-            <md-icon style="font-size:20px;color:#000000;">assignment</md-icon>
-            <span class="md-header" layout-padding ><h2>ATIVIDADES</h2></span>
+            <md-button md-no-ink layout="row" disabled>
+              <md-icon style="font-size:30px;color:#000000;">assignment</md-icon>
+              <span class="md-header" layout-padding ><h2>ATIVIDADES</h2></span>
+            </md-button>
           </div>
 
           <div layout="row" layout-sm="column" layout-md="column" ng-show="$ctrl.userAccessToActivity.offlineActivitySincAccess">
@@ -78,13 +80,21 @@
              ng-show="$ctrl.userAccessToLaboratory.sampleTransportationAccess ||
                       $ctrl.userAccessToLaboratory.examLotsAccess ||
                       $ctrl.userAccessToLaboratory.examSendingAccess ||
-                      $ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess
+                      $ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess ||
+                      $ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess
                      "
              class="first-menu-margin">
 
           <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
-            <md-icon style="font-size:20px;color:#000000;">colorize</md-icon>
-            <span class="md-header" layout-padding ><h2>LABORATÓRIO</h2></span>
+            <md-button md-no-ink class="md-primary" layout="row" ng-show="$ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess" ng-click="$ctrl.activateLaboratoryMaterialManager()">
+              <md-icon style="font-size:30px;" class="md-primary">colorize</md-icon>
+              <span class="md-header" layout-padding><h2>LABORATÓRIO</h2></span>
+            </md-button>
+
+            <md-button md-no-ink disabled layout="row" ng-show="!$ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess" >
+              <md-icon style="font-size:30px;color:#000000;" >colorize</md-icon>
+              <span class="md-header" layout-padding><h2>LABORATÓRIO</h2></span>
+            </md-button>
           </div>
 
           <div layout="row" layout-sm="column" layout-md="column">
@@ -136,8 +146,10 @@
                         ">
 
           <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
-            <md-icon style="font-size:30px;color:#000000;">assessment</md-icon>
-            <span class="md-header" layout-padding><h2>MONITORAMENTO</h2></span>
+            <md-button md-no-ink layout="row" disabled>
+              <md-icon style="font-size:30px;color:#000000;">assessment</md-icon>
+              <span class="md-header" layout-padding><h2>MONITORAMENTO</h2></span>
+            </md-button>
           </div>
 
           <div layout="row" layout-sm="column" layout-md="column">
@@ -228,9 +240,12 @@
         <md-card class="card-button" layout-fill ng-show="$ctrl.userAccessToLaboratory.sampleTransportationAccess ||
                  $ctrl.userAccessToLaboratory.examLotsAccess ||
                  $ctrl.userAccessToLaboratory.examSendingAccess ||
-                 $ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess">
+                 $ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess ||">
           <md-card-content layout="row" layout-align="center center">
-            <md-icon>colorize</md-icon>LABORATÓRIO
+            <md-icon class="md-primary" ng-show="$ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess">colorize</md-icon>
+            <md-button ng-show="$ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess" md-no-ink class="md-primary" ng-click="$ctrl.activateLaboratoryMaterialManager()">LABORATÓRIO</md-button>
+            <md-icon  ng-show="!$ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess">colorize</md-icon>
+            <md-button ng-show="!$ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess" md-no-ink class="md-primary" disabled>LABORATÓRIO</md-button>
             <div class="md-menu-demo" ng-cloak>
               <div class="menu-demo-container" layout-align="center center" layout="column">
                 <md-menu>

@@ -41,6 +41,7 @@
     self.activatePendencyViewer = activatePendencyViewer;
     self.activateOfflineActivitySynchronize = activateOfflineActivitySynchronize;
     self.activateIssueViewer = activateIssueViewer;
+    self.activateLaboratoryMaterialManager = activateLaboratoryMaterialManager;
 
     function onInit() {
       _loadLoggedUser();
@@ -113,6 +114,10 @@
       ApplicationStateService.activateLaboratoryMonitoring();
     }
 
+    function activateLaboratoryMaterialManager() {
+      ApplicationStateService.activateLaboratoryMaterialManager();
+    }
+
     function _loadLoggedUser(userData) {
       if (userData) {
         self.loggedUser = userData;
@@ -135,7 +140,6 @@
     function _checkingLaboratoryPermission() {
       return UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
         self.userAccessToLaboratory = response;
-
       });
     }
 
