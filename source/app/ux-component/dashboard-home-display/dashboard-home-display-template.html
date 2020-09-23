@@ -240,7 +240,8 @@
         <md-card class="card-button" layout-fill ng-show="$ctrl.userAccessToLaboratory.sampleTransportationAccess ||
                  $ctrl.userAccessToLaboratory.examLotsAccess ||
                  $ctrl.userAccessToLaboratory.examSendingAccess ||
-                 $ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess ||">
+                 $ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess ||
+                 $ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess">
           <md-card-content layout="row" layout-align="center center">
             <md-icon class="md-primary" ng-show="$ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess">colorize</md-icon>
             <md-button ng-show="$ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess" md-no-ink class="md-primary" ng-click="$ctrl.activateLaboratoryMaterialManager()">LABORATÓRIO</md-button>
