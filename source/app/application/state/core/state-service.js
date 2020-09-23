@@ -46,6 +46,7 @@
     self.activateParticipantsList = activateParticipantsList;
     self.activateActivityImport = activateActivityImport;
     self.activateLaboratoryMonitoring = activateLaboratoryMonitoring;
+    self.activateLaboratoryMaterialManager = activateLaboratoryMaterialManager;
     self.activateActivityFlagsReport = activateActivityFlagsReport;
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
     self.activateOfflineActivitySynchronize = activateOfflineActivitySynchronize;
@@ -187,6 +188,10 @@
 
     function activateLaboratoryMonitoring() {
       $state.go(STATE.LABORATORY_MONITORING_DASHBOARD);
+    }
+
+    function activateLaboratoryMaterialManager() {
+      $state.go(STATE.LABORATORY_MATERIAL_MANAGER);
     }
 
     function activateActivityImport() {
