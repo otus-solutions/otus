@@ -21,10 +21,13 @@
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.otus.uxComponent.Publisher',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.deploy.LocationPointRestService',
+    'otusjs.model.locationPoint.LocationPointFactory'
   ];
 
-  function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService, Publisher, DialogService) {
+  function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService,
+                      Publisher, DialogService, LocationPointRestService, LocationPointFactory) {
     var self = this;
     var confirmCancel;
     var confirmAliquotingExitDialog;
@@ -35,7 +38,10 @@
     var changedTubes = false;
 
     self.selectedTubes = []
+    self.selectedLocationPoint = {}
     self.newLabels = {}
+
+    self.userLocationPoints = []
 
     self.$onInit = onInit;
     self.changeState = changeState;
@@ -47,6 +53,41 @@
     self.cancelAliquots = cancelAliquots;
     self.removeDuplicatedMoments = removeDuplicatedMoments;
     self.filterTubesByMoment = filterTubesByMoment;
+    self.fetchLocationPoints = fetchLocationPoints;
+    self.saveLocationPoint = saveLocationPoint;
+
+    function onInit() {
+      _buildDialogs();
+      removeDuplicatedMoments();
+      fetchLocationPoints();
+      self.processingDate = new Date();
+      self.now = new Date();
+      verifyDate();
+    }
+
+    function _getSelectedLocationPoint(callback) {
+      callback(
+        self.selectedLocationPoint
+      )
+    }
+    function _getUserLocationPoints(callback){
+      callback(
+        self.userLocationPoints
+      )
+    }
+
+    function saveLocationPoint() {
+      Publisher.unsubscribe('selected-location-point')
+      Publisher.subscribe('selected-location-point', _getSelectedLocationPoint)
+    }
+
+    function fetchLocationPoints() {
+      LocationPointRestService.getUserLocationPoint().then(function (response) {
+        self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
+        Publisher.unsubscribe('user-location-points');
+        Publisher.subscribe('user-location-points', _getUserLocationPoints);
+      });
+    }
 
     function filterTubesByMoment() {
       if(self.selectedTubes.includes("TODOS")){
@@ -87,14 +128,6 @@
       } else {
         _returnMain();
       }
-    }
-
-    function onInit() {
-      _buildDialogs();
-      removeDuplicatedMoments();
-      self.processingDate = new Date();
-      self.now = new Date();
-      verifyDate();
     }
 
     function _getDateTimeProcessing(callback) {

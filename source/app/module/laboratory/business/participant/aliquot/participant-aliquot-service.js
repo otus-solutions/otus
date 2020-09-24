@@ -165,6 +165,7 @@
               aliquot.processing = collectedAliquot.processing;
               aliquot.date = collectedAliquot.date;
               endLoop = true;
+              aliquot.locationPoint = true
             }
           }
         }

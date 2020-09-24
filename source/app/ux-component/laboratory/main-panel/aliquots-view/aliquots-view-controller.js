@@ -33,13 +33,13 @@
 
     const timeShowMsg = 3000;
 
+    self.selectedLocationPoint = {}
     self.tubeLength = 9;
     self.aliquotLengths;
     self.aliquotMaxLength;
     self.validations;
     self.deleteAliquot = deleteAliquot;
     self.tubeList = self.participantLaboratory.tubes;
-
     self.$onInit = onInit;
     self.selectMomentType = selectMomentType;
     self.selectedMomentType = undefined;
@@ -86,13 +86,23 @@
       };
 
       selectMomentType(self.momentTypeList[0]);
-
+      _getUserLocationPoints();
       Publisher.unsubscribe('have-aliquots-changed');
       Publisher.subscribe('have-aliquots-changed', _haveAliquotsChanged);
-
       Publisher.unsubscribe('save-changed-aliquots');
       Publisher.subscribe('save-changed-aliquots', _saveAliquots);
+    }
 
+    function _getUserLocationPoints() {
+      Publisher.publish('user-location-points', (userLocationPoints) => {
+        self.userLocationPoints = userLocationPoints
+      })
+    }
+
+    function _getSelectedLocationPoint(aliquot) {
+      Publisher.publish('selected-location-point', (locationPoint) => {
+        aliquot.locationPoint = locationPoint
+      })
     }
 
     function _buildMomentTypeList() {
@@ -163,7 +173,6 @@
 
     function selectMomentType(momentType) {
       var toChange = false;
-
       if (self.selectedMomentType) {
         if (momentType != self.selectedMomentType) {
           if (AliquotTubeService.areFieldsChanged(self.selectedMomentType)) {
@@ -371,7 +380,7 @@
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
       if (!aliquot.processing) _getDateTimeProcessing(aliquot);
-
+      if(!aliquot.locationPoint) _getSelectedLocationPoint(aliquot);
       if (self.aliquotLengths.length === 1) {
         var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
         var runCompletePlaceholder = false;

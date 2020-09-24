@@ -65,7 +65,7 @@
     "please-wait": "0.0.5",
     "otus-client-js": "1.29.0",
     "otus-domain-client": "1.1.0",
-    "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#dev",
+    "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#feature-OTUS-11",
     "otus-preview-js": "1.15.3",
     "otus-validation-js": "1.1.0"
   },

@@ -20,7 +20,7 @@
       <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('coleta')">Coleta de
         Tubos
       </md-button>
-      <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('aliquots')">
+      <md-button class="md-raised md-primary" aria-label="coletar" ng-click="[$ctrl.changeState('aliquots')]">
         Aliquotagem
       </md-button>
     </div>
@@ -120,7 +120,8 @@
   </div>
 
 
-  <div class="control-panel aliquots-control-toolbar" layout="row" layout-padding layout-align="start start" ng-if="$ctrl.state === 'aliquots'">
+  <div class="control-panel aliquots-control-toolbar" layout="row" layout-padding layout-align="start start"
+       ng-if="$ctrl.state === 'aliquots'">
     <div layout="row" layout-align="center center">
       <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAliquots()">Voltar</md-button>
       <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-disabled="$ctrl.fetchChanges()"
@@ -129,7 +130,7 @@
     </div>
 
     <div layout="column" layout-align="center center" flex>
-      <div layout="row" style="height:50px">
+      <div layout="row" layout-align="center none" style="height:50px">
         <label style="position:relative;top:13px">Processamento:</label>
         <md-input-container class="md-input-has-placeholder md-input-has-value" style="position: relative; top: -10px;">
           <input mdc-datetime-picker="" ng-change="$ctrl.verifyDate()"
@@ -138,6 +139,16 @@
                  max-date="$ctrl.now" ng-model="$ctrl.processingDate"
                  class="md-input" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A"
                  disable-parent-scroll="true">
+        </md-input-container>
+        <span flex="5px"></span>
+        <label ng-if="$ctrl.userLocationPoints" style="position:relative;top:13px;margin-left: 5px;">Ponto de localização:</label>
+        <md-input-container style="position: relative; top: -10px;margin-left: 5px;">
+          <label>Ponto de localização</label>
+          <md-select ng-change="$ctrl.saveLocationPoint()" ng-model="$ctrl.selectedLocationPoint">
+              <md-option ng-select ng-selected='true' ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPoints">
+                {{userLocationPoints.name}}
+              </md-option>
+          </md-select>
         </md-input-container>
       </div>
     </div>
@@ -159,6 +170,14 @@
         <md-tooltip>
           Processamento
         </md-tooltip>
+      </md-input-container>
+      <label ng-if="$ctrl.userLocationPoints" style="position:relative;top:13px;margin-left: 5px;">Ponto de localização:</label>
+      <md-input-container style="position: relative; top: -10px;margin-left: 5px;">
+        <md-select ng-change="$ctrl.saveLocationPoint()" ng-model="$ctrl.selectedLocationPoint">
+          <md-option ng-select ng-selected='true' ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPoints">
+            {{userLocationPoints.name}}
+          </md-option>
+        </md-select>
       </md-input-container>
     </div>
     <md-fab-speed-dial md-direction="down" class="md-scale" flex>
