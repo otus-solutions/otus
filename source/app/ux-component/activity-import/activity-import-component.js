@@ -99,7 +99,7 @@
 
     function _fileIsEmpty(file) {
       try {
-        return file ? false : true;
+        return !file;
       } catch (e) {
         return true;
       }

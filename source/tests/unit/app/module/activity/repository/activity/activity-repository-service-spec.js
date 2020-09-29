@@ -1,29 +1,31 @@
 describe('activity-repository-service Test', function () {
-  var Mock = {};
-  var service;
-  var Injections = {};
-  var ID = "12345";
-  var ACRONYM = "PASC";
-  var VERSION = 1;
-  var SURVEY_ACTIVITIES = [{}, {}];
-  var DATA = { activityID: "54321" };
-  var DATA_ACTIVITY = "54321";
-  var DATA_RN = "0000000";
-  var ACTIVITY_REVISION = { revision: DATA };
+  let Mock = {};
+  let Injections = {};
+  let service;
+
+  const ID = "12345";
+  const ACRONYM = "PASC";
+  const VERSION = 1;
+  const SURVEY_ACTIVITIES = [{}, {}];
+  const DATA = { activityID: "54321" };
+  const DATA_ACTIVITY = "54321";
+  const DATA_RN = "0000000";
+  const ACTIVITY_REVISION = { revision: DATA };
 
   beforeEach(function () {
     angular.mock.module('otusjs.otus');
 
-    inject(function (_$injector_) {
+    inject(function ($injector) {
       Injections = {
-        "$q": _$injector_.get('$q'),
-        ModuleService: _$injector_.get('otusjs.activity.core.ModuleService'),
-        ActivityCollectionService: _$injector_.get('otusjs.activity.repository.ActivityCollectionService'),
+        "$q": $injector.get('$q'),
+        ModuleService: $injector.get('otusjs.activity.core.ModuleService'),
+        ActivityCollectionService: $injector.get('otusjs.activity.repository.ActivityCollectionService'),
         SurveyCollectionService: {}
       };
 
-      service = _$injector_.get('otusjs.activity.repository.ActivityRepositoryService', Injections);
+      service = $injector.get('otusjs.activity.repository.ActivityRepositoryService', Injections);
     });
+
     mocks();
   });
 
@@ -36,7 +38,42 @@ describe('activity-repository-service Test', function () {
     expect(service.createFollowUpActivity).toBeDefined();
   });
 
-  describe("activity revisions test", function () {
+  describe('listAll method Suit Test', function () {
+
+    it('should throw error in case falsy participant parameter', function(){
+      try{
+        service.listAll();
+        expect(false).toBeTruthy();
+      }
+      catch (e) {
+        expect(true).toBeTruthy();
+      }
+    });
+
+    it('should list all in case truthy participant parameter', function(){
+      spyOn(Injections.ActivityCollectionService, 'useParticipant');
+      spyOn(Injections.ActivityCollectionService, 'listAll').and.returnValue(Mock.resolve);
+      service.listAll(Mock.participant);
+      expect(Injections.ActivityCollectionService.useParticipant).toHaveBeenCalledTimes(1);
+    });
+
+  });
+
+  it('listAllCategories should return ActivityCollectionService result', function(){
+    const LIST = {};
+    spyOn(Injections.ActivityCollectionService, 'listAllCategories').and.returnValue(LIST);
+    expect(service.listAllCategories()).toEqual(LIST);
+    expect(Injections.ActivityCollectionService.listAllCategories).toHaveBeenCalledTimes(1);
+  });
+
+  it('updateCheckerActivity should return ActivityCollectionService result', function(){
+    const PROMISE = {};
+    spyOn(Injections.ActivityCollectionService, 'updateCheckerActivity').and.returnValue(PROMISE);
+    expect(service.updateCheckerActivity(DATA_RN, {})).toEqual(PROMISE);
+    expect(Injections.ActivityCollectionService.updateCheckerActivity).toHaveBeenCalledTimes(1);
+  });
+
+  describe("activity revisions Suite Test", function () {
     beforeEach(function () {
       spyOn(Injections.ActivityCollectionService, "addActivityRevision").and.callThrough();
       spyOn(Injections.ActivityCollectionService, "getActivityRevisions").and.callThrough();
@@ -55,9 +92,9 @@ describe('activity-repository-service Test', function () {
       expect(Injections.ActivityCollectionService.getActivityRevisions).toHaveBeenCalledTimes(1);
       expect(Injections.ActivityCollectionService.getActivityRevisions).toHaveBeenCalledWith(ACTIVITY_REVISION, DATA);
     });
-  })
+  });
 
-  describe("activity import test", function () {
+  describe("importActivities Suite Test", function () {
     beforeEach(function () {
       spyOn(Injections.ActivityCollectionService, "importActivities").and.callThrough();
     });
@@ -70,7 +107,7 @@ describe('activity-repository-service Test', function () {
 
   });
 
-  describe("activity test", function () {
+  describe("createFollowUpActivity Suite Test", function () {
     beforeEach(function () {
       spyOn(Injections.ActivityCollectionService, "getById").and.callThrough();
       spyOn(Injections.ActivityCollectionService, "createFollowUpActivity").and.callThrough();
@@ -90,7 +127,7 @@ describe('activity-repository-service Test', function () {
 
   });
 
-  describe("activiteis create test", function () {
+  describe("createAutoFillActivity Suite Test", function () {
     beforeEach(function () {
       spyOn(Injections.ModuleService, "whenActivityFacadeServiceReady").and.callThrough();
     });
@@ -112,9 +149,25 @@ describe('activity-repository-service Test', function () {
       expect(Injections.ModuleService.whenActivityFacadeServiceReady).toHaveBeenCalledTimes(1);
     });
 
-  })
+  });
+  it('reopenActivity should call ActivityCollectionService reopenActivity method', function () {
+    const ACTIVITY = {};
+    spyOn(Injections.ActivityCollectionService, 'reopenActivity').and.returnValue(Mock.resolve);
+    service.reopenActivity(ACTIVITY);
+    expect(Injections.ActivityCollectionService.reopenActivity).toHaveBeenCalledTimes(1);
+    expect(Injections.ActivityCollectionService.reopenActivity).toHaveBeenCalledWith(ACTIVITY);
+  });
+
 
   function mocks() {
+    const deferredResolve = Injections.$q.defer();
+    deferredResolve.resolve();
+    Mock.resolve = deferredResolve.promise;
+
+    const deferredReject = Injections.$q.defer();
+    deferredReject.reject('some error');
+    Mock.reject = deferredReject.promise;
+
     Mock.survey = Test.utils.data.activityPASC.surveyForm;
     Mock.configuration = {
       category: {

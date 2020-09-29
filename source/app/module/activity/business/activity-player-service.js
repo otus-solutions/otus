@@ -36,9 +36,8 @@
       if (!url) return $window.location.href;
       if (_isValidUrl(url)){
         return url.concat("#/").concat("?activity=").concat(id).concat('&').concat('token=').concat(token).concat('&').concat('callback=').concat(callback);
-      } else {
-        return url.concat('/#/').concat("?activity=").concat(id).concat('&').concat('token=').concat(token).concat('&').concat('callback=').concat(callback);
       }
+      return url.concat('/#/').concat("?activity=").concat(id).concat('&').concat('token=').concat(token).concat('&').concat('callback=').concat(callback);
     }
 
     function _isValidUrl(url) {

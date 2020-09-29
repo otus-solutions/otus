@@ -41,6 +41,7 @@
       'LABORATORY_FLAG_REPORT': 'laboratory-flag-report',
       'FLAG_MANAGER_LIST': 'manager-list',
       'LABORATORY_MONITORING_DASHBOARD': 'laboratory-monitoring',
+      'LABORATORY_MATERIAL_MANAGER': 'laboratory-material-manager',
       'ACTIVITY_IMPORT': 'activity-import',
       'PENDENCY_VIEWER': 'pendency-viewer',
       'ACTIVITY_SYNCHRONIZE': 'activity-synchronize',
@@ -84,6 +85,7 @@
     'otusjs.deploy.MonitoringStateProvider',
     'otusjs.deploy.UserAccessRecoveryProvider',
     'otusjs.deploy.LaboratoryFlagReportStateProvider',
+    'otusjs.deploy.LaboratoryMaterialManagerStateProvider',
     'otusjs.deploy.ActivityFlagReportStateProvider',
     'otusjs.deploy.LaboratoryMonitoringStateProvider',
     'otusjs.deploy.ActivityImportStateProvider',
@@ -126,6 +128,7 @@
     MonitoringStateProvider,
     UserAccessRecoveryProvider,
     LaboratoryFlagReportStateProvider,
+    LaboratoryMaterialManagerStateProvider,
     ActivityFlagReportStateProvider,
     LaboratoryMonitoringStateProvider,
     ActivityImportStateProvider,
@@ -166,6 +169,7 @@
     $stateProvider.state(MonitoringStateProvider.state);
     $stateProvider.state(UserAccessRecoveryProvider.state);
     $stateProvider.state(LaboratoryFlagReportStateProvider.state);
+    $stateProvider.state(LaboratoryMaterialManagerStateProvider.state);
     $stateProvider.state(ActivityFlagReportStateProvider.state);
     $stateProvider.state(LaboratoryMonitoringStateProvider.state);
     $stateProvider.state(ActivityImportStateProvider.state);

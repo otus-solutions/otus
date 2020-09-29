@@ -37,9 +37,8 @@
       }
       if (unique) {
         return _rest.getAliquot({locationPointId: lotAliquot.locationPoint}, lotAliquot).$promise;
-      } else {
-        return _rest.getAliquotsByPeriod({locationPointId: lotAliquot.locationPoint}, lotAliquot).$promise;
       }
+      return _rest.getAliquotsByPeriod({locationPointId: lotAliquot.locationPoint}, lotAliquot).$promise;
     }
 
     function getLots(locationPointId) {

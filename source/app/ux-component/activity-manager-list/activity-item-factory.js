@@ -5,21 +5,24 @@
     .module('otusjs.otus.uxComponent')
     .factory('otusjs.otus.uxComponent.ActivityItemFactory', Factory);
 
-  function Factory() {
-    var self = this;
+
+  Factory.$inject = ['ACTIVITY_MANAGER_LABELS'];
+
+  function Factory(ACTIVITY_MANAGER_LABELS) {
+    let self = this;
 
     /* Public methods */
     self.create = create;
 
     function create(activity) {
-      return new ActivityItem(activity);
+      return new ActivityItem(ACTIVITY_MANAGER_LABELS, activity);
     }
 
     return self;
   }
 
-  function ActivityItem(activity) {
-    var self = this;
+  function ActivityItem(ACTIVITY_MANAGER_LABELS, activity) {
+    let self = this;
 
     if (activity.surveyForm.surveyTemplate){
       self.name = activity.surveyForm.surveyTemplate.identity.name;
@@ -28,7 +31,14 @@
       self.name = activity.surveyForm.name;
       self.acronym = activity.surveyForm.acronym;
     }
-    self.category = activity.category && activity.category.label ? activity.category.label : ''; //TODO: remove ternary
+
+    try{
+      self.category = activity.category.label;
+    }
+    catch (e) {
+      self.category = '';
+    }
+
     self.mode = _getMode();
     self.realizationDate = _getFormattedDate();
     self.status = _getStatus();
@@ -39,7 +49,7 @@
 
     function _getFormattedDate() {
       try {
-        var formattedDate = new Date(activity.getRealizationDate());
+        let formattedDate = new Date(activity.getRealizationDate());
         return formattedDate.getDate() + '/' + (formattedDate.getMonth() + 1) + '/' + formattedDate.getFullYear();
       } catch (e) {
         return null;
@@ -47,41 +57,40 @@
     }
 
     function _getStatus() {
-      var status = activity.statusHistory.getLastStatus();
+      const STATUS = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS;
+      const SELECTED_STATUS = [
+        STATUS.INITIALIZED_OFFLINE,
+        STATUS.SAVED,
+        STATUS.FINALIZED,
+        STATUS.REOPENED
+      ];
 
-      if ('INITIALIZED_OFFLINE' === status.name) {
-        return 'Realizado em papel';
-      } else if ('SAVED' === status.name) {
-        return 'Salvo';
-      } else if ('FINALIZED' === status.name) {
-        return 'Finalizado';
-      } else {
-        return 'Criado';
+      let lastStatus = activity.statusHistory.getLastStatus();
+      let status = SELECTED_STATUS.find(status => status.name === lastStatus.name);
+      try{
+        return status.label;
+      }
+      catch (e) {
+        return STATUS.CREATED.label;
       }
     }
 
     function _getMode() {
-      if ('PAPER' === activity.mode) {
-        return {
-          name: 'Em papel',
-          icon: 'description'
-        };
-      } else if ('ONLINE' === activity.mode) {
-        return {
-          name: 'Online',
-          icon: 'signal_cellular_alt'
-        };
-      } else if ('AUTOFILL' === activity.mode){
-        return {
-          name: 'Auto Preenchimento',
-          icon: 'home_work'
-        }
-      } else {
+      const MODE = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE;
+      const SELECTED_MODES = [
+        MODE.PAPER,
+        MODE.ONLINE,
+        MODE.AUTOFILL
+      ];
+
+      let mode = SELECTED_MODES.find(mode => mode.name === activity.mode);
+      if(!mode){
         return {
           name: '',
           icon: ''
         };
       }
+      return mode;
     }
   }
 }());

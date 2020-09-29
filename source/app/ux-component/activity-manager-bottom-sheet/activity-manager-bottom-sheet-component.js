@@ -27,14 +27,16 @@
     'otusjs.activity.business.ActivityViewService',
     'otusjs.activity.business.ActivityPlayerService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.activity.business.ParticipantActivityService'
+    'otusjs.activity.business.ParticipantActivityService',
+    'otusjs.model.activity.ActivityStatusFactory',
+    'otusjs.otus.dashboard.core.ContextService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
   function Controller($q, $mdToast, $timeout, $mdDialog, $mdColors, EventService, CheckerItemFactory,
                       DialogService, ActivityViewService, ActivityPlayerService, ApplicationStateService,
-                      ParticipantActivityService) {
-    var self = this;
-    var confirmDeleteSelectedActivity;
+                      ParticipantActivityService, ActivityStatusFactory, ContextService, LoadingScreenService) {
+    let self = this;
 
     /* Public methods */
     self.fillSelectedActivity = fillSelectedActivity;
@@ -44,13 +46,13 @@
     self.updateChecker = updateChecker;
     self.DialogController = DialogController;
     self.activitySharingDialog = activitySharingDialog;
+    self.reopenActivityDialog = reopenActivityDialog;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function onInit() {
       self.selectedItemCounterBackgroundColor = $mdColors.getThemeColor('default-primary');
-      _buildDialogs();
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       EventService.onActivitySelected(_updateComponent);
@@ -69,7 +71,11 @@
     }
 
     function deleteSelectedActivity() {
-      DialogService.showDialog(confirmDeleteSelectedActivity).then(function () {
+      DialogService.showConfirmationDialog(
+        'Confirmar exclusão de atividade:',
+        'A atividade será excluida.',
+        'Confirmação de exclusão'
+      ).then(function () {
         ParticipantActivityService.getSelectedActivities().discard();
         self.updateList();
       });
@@ -96,7 +102,6 @@
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = participantData;
-
       } else {
         ParticipantActivityService
           .getSelectedParticipant()
@@ -117,8 +122,11 @@
         self.showPendenciesButton = false;
         self.isPaperActivity = false;
         self.selectedItemCounter = null;
+        self.statusSelectedActivity = null;
+        self.showActivitySharing = false;
+        self.showReopenActivity = false;
       } else if (selectedActivities.length === 1) {
-        var isAutoFill = selectedActivities[0].mode === "AUTOFILL" ? true : false;
+        const isAutoFill = (selectedActivities[0].mode === "AUTOFILL");
         self.showBottomSheet = true;
         self.showVisualizationButton = true;
         self.showFillingButton = !isAutoFill;
@@ -126,10 +134,11 @@
         self.showDeleteButton = true;
         self.showPendenciesButton = !isAutoFill;
         self.showInfoButton = true;
-        self.isPaperActivity = selectedActivities[0].statusHistory.getInitializedOfflineRegistry() != undefined ? true : false;
+        self.isPaperActivity = (selectedActivities[0].statusHistory.getInitializedOfflineRegistry() !== undefined);
         self.statusSelectedActivity = selectedActivities[0].statusHistory.getLastStatus().name;
         self.selectedItemCounter = null;
-        self.showActivitySharing = isAutoFill && ( selectedActivities[0].statusHistory.getLastStatus().name !== 'FINALIZED');
+        self.showActivitySharing = isAutoFill && (self.statusSelectedActivity !== 'FINALIZED');
+        self.showReopenActivity = isAutoFill && (self.statusSelectedActivity === 'FINALIZED');
       } else {
         self.showBottomSheet = true;
         self.showVisualizationButton = false;
@@ -140,36 +149,14 @@
         self.showPendenciesButton = false;
         self.isPaperActivity = false;
         self.selectedItemCounter = selectedActivities.length;
+        self.statusSelectedActivity = null;
         self.showActivitySharing = false;
+        self.showReopenActivity = false;
       }
 
        self.selectedActivity = angular.copy(selectedActivities[0]);
     }
 
-    function _buildDialogs() {
-      confirmDeleteSelectedActivity = {
-        dialogToTitle: 'Confirmação',
-        titleToText: 'Confirmar exclusão de atividade:',
-        textDialog: 'A atividade será excluida.',
-        ariaLabel: 'Confirmação de exclusão',
-        buttons: [
-          {
-            message: 'Ok',
-            action: function () {
-              $mdDialog.hide()
-            },
-            class: 'md-raised md-primary'
-          },
-          {
-            message: 'Voltar',
-            action: function () {
-              $mdDialog.cancel()
-            },
-            class: 'md-raised md-no-focus'
-          }
-        ]
-      };
-    }
 
     function DialogController(selectedActivity, updateList) {
       var self = this;
@@ -187,12 +174,11 @@
         self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
         self.selectedItem = CheckerItemFactory.create(self.user);
         self.maxDate = new Date();
-
       }
 
       function querySearch(query) {
-        var results = query ? self.checkers.filter(_createFilterFor(query)) : self.checkers;
-        var deferred = $q.defer();
+        let results = query ? self.checkers.filter(_createFilterFor(query)) : self.checkers;
+        let deferred = $q.defer();
 
         $timeout(function () {
           deferred.resolve(results);
@@ -202,7 +188,7 @@
       }
 
       function updateCheckerActivity() {
-        var activityStatus = angular.copy(self.selectedActivity.statusHistory.getInitializedOfflineRegistry());
+        let activityStatus = angular.copy(self.selectedActivity.statusHistory.getInitializedOfflineRegistry());
         activityStatus.setUser(self.selectedItem.checker);
         activityStatus.setDate(self.date);
         ParticipantActivityService.updateCheckerActivity(
@@ -217,17 +203,17 @@
             } else {
               _showMessage("Aferidor não alterado.")
             }
-          }).catch(function (e) {
-          self.cancel();
-          _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
-        })
+          })
+          .catch(function (e) {
+            self.cancel();
+            _showMessage("Ocorreu um problema! Não foi possível alterar o aferidor.");
+          })
           .then(_cleanSelectedActivity());
       }
 
       function cancel() {
         _cleanSelectedActivity();
         $mdDialog.cancel();
-
       }
 
       function _showMessage(msg) {
@@ -239,7 +225,7 @@
       }
 
       function _createFilterFor(query) {
-        var lowercaseQuery = angular.lowercase(query);
+        let lowercaseQuery = angular.lowercase(query);
 
         return function filterFn(checker) {
           return checker.text.toLowerCase().indexOf(lowercaseQuery) > -1;
@@ -253,6 +239,44 @@
 
     function activitySharingDialog(selectedActivity) {
       DialogService.showActivitySharingDialog(selectedActivity);
+    }
+
+    function reopenActivityDialog(selectedActivity){
+      DialogService.showConfirmationDialog(
+        'Reabertura de atividade',
+        'Confirma a rebertura da atividade?',
+        'Confirmação de reabertura'
+      )
+        .then(() => {
+          LoadingScreenService.start();
+
+          _createReopenStatus()
+            .then(status => {
+              selectedActivity.statusHistory.getHistory().push(status);
+
+              ParticipantActivityService.reopenActivity(selectedActivity)
+                .then(() => {
+                  self.updateList();
+                  LoadingScreenService.finish();
+                })
+                .catch(err => {
+                  console.error(err);
+                  LoadingScreenService.finish();
+                })
+            })
+            .catch(err => {
+              console.error(err);
+              LoadingScreenService.finish();
+            });
+        });
+    }
+
+    function _createReopenStatus(){
+      let defer = $q.defer();
+      ContextService.getLoggedUser()
+        .then(user => defer.resolve(ActivityStatusFactory.createReopenedStatus(user)))
+        .catch(err => defer.reject(err));
+      return defer.promise;
     }
 
   }

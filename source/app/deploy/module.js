@@ -61,9 +61,8 @@
     return StorageLoaderService.dbExists(OTUS_DB).then(function(dbExists) {
       if (dbExists) {
         return StorageLoaderService.loadIndexedStorage(OTUS_DB);
-      } else {
-        return StorageLoaderService.createIndexedStorage(OTUS_DB);
       }
+      return StorageLoaderService.createIndexedStorage(OTUS_DB);
     });
   }
 

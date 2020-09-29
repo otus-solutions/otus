@@ -60,7 +60,7 @@
     }
 
     function hasContextActive() {
-      return _storage.getItem(USER_CONTEXT) ? true : false;
+      return !!_storage.getItem(USER_CONTEXT);
     }
 
     function save() {

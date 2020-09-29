@@ -37,7 +37,7 @@
                       Centros
                     </md-tooltip>
                     <md-option ng-repeat="center in $ctrl.centers track by $index"
-                               ng-selected="{{$index == $ctrl.centers.indexOf($ctrl.centerFilter) ? true : $index == 0 ? true : false}}"
+                               ng-selected="{{$index == $ctrl.centers.indexOf($ctrl.centerFilter) ? true : $index == 0}}"
                                value="{{center}}" ng-click="$ctrl.loadDataByCenter('pending', center)">
                       {{center}}
                     </md-option>
