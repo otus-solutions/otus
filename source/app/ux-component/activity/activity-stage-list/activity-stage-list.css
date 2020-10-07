@@ -1,0 +1,23 @@
+/*begin style for pendency-item*/
+@media screen and (min-width: 1280px) {
+  .activity-stage-list-layout {
+    display: grid;
+    align-items: center;
+    height: 4vh;
+    grid-template-columns: repeat(4, 1fr) 0.7fr;
+    grid-template-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
+    grid-template-areas: "activity-acronym      activity-name      activity-name    activity-button";
+  }
+}
+
+.activity-acronym {
+  grid-area: activity-acronym;
+}
+
+.activity-name {
+  grid-area: activity-name;
+}
+
+.activity-buttom {
+  grid-area: activity-buttom;
+}

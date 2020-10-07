@@ -3,13 +3,16 @@ otus-dashboard-sidenav md-sidenav {
   width: 320px;
   min-width: 320px !important;
 }
+
 otus-dashboard-sidenav md-backdrop {
   position: fixed !important;
 }
+
 otus-dashboard-sidenav md-backdrop ~ md-content {
   position: fixed;
   overflow: hidden;
 }
+
 @media (max-width: 456px) {
   otus-dashboard-sidenav md-sidenav,
   otus-dashboard-sidenav md-sidenav.md-locked-open,
@@ -22,9 +25,11 @@ otus-dashboard-sidenav md-backdrop ~ md-content {
 otus-participants-list .dynamic-table-container-md-content {
   max-height: 90%;
 }
+
 otus-participants-list .dynamic-table-container {
   min-width: 850px;
 }
+
 otus-participants-list .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
@@ -34,6 +39,7 @@ otus-participants-list .dynamic-table-container .dynamic-structure {
     display: none;
   }
 }
+
 @media only screen and (min-width: 800px) {
   otus-dashboard-toolbar .mobile {
     display: none;
@@ -52,6 +58,7 @@ otus-participants-list .dynamic-table-container .dynamic-structure {
 otus-report-dashboard otus-panel .report-list {
   min-width: 250px;
 }
+
 otus-report-dashboard otus-panel .report-list .report-item {
   min-width: 250px;
   background-color: #ffffff;
@@ -62,23 +69,31 @@ otus-report-dashboard otus-panel .report-list .report-item {
     display: none;
   }
 }
+
 otus-activity-manager otus-activity-list .dynamic-table-container {
   min-width: 800px;
 }
+
 otus-activity-manager otus-activity-list .dynamic-table-container .dynamic-structure {
   min-width: 750px !important;
 }
+
 otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
   max-height: 50px;
 }
+
 @media only screen and (max-width: 450px) {
   otus-activity-manager otus-activity-manager-bottom-sheet md-toolbar {
     display: none !important;
   }
   otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
     position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     z-index: 20;
   }
   otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial md-fab-trigger {
@@ -92,11 +107,13 @@ otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
     padding-right: 0;
   }
 }
+
 @media only screen and (min-width: 451px) {
   otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
     display: none;
   }
 }
+
 @media only screen and (max-width: 451px) {
   otus-activity-manager otus-activity-manager-commander md-fab-speed-dial {
     display: none;
@@ -106,6 +123,7 @@ otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
 otus-activity-adder-list .dynamic-table-container {
   min-width: 800px;
 }
+
 otus-activity-adder-list .dynamic-table-container .dynamic-structure {
   min-width: 750px !important;
 }
@@ -119,8 +137,12 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
   }
   lab-control-panel .mobile-control-toolbar md-fab-speed-dial {
     max-height: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     z-index: 20;
   }
   lab-control-panel .mobile-control-toolbar md-fab-speed-dial md-fab-trigger {
@@ -137,6 +159,7 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     min-width: 150px;
   }
 }
+
 @media only screen and (min-width: 551px) {
   lab-control-panel .mobile-control-toolbar {
     display: none;
@@ -145,6 +168,7 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     display: none;
   }
 }
+
 @media only screen and (max-width: 650px) {
   lab-control-panel .collect-control-toolbar {
     display: none;
@@ -156,8 +180,12 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     position: relative;
     top: -18px;
     max-height: 30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     z-index: 20;
   }
   lab-control-panel .mobile-collect-control-toolbar fast-collection {
@@ -188,16 +216,22 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
     position: relative;
     top: -18px;
     max-height: 30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     z-index: 20;
   }
 }
+
 @media only screen and (max-width: 359px) {
   lab-control-panel .mobile-aliquots-control-toolbar div label {
     display: none;
   }
 }
+
 @media only screen and (min-width: 651px) {
   lab-control-panel .mobile-collect-control-toolbar {
     display: none;
@@ -210,6 +244,7 @@ otus-activity-adder-list .dynamic-table-container .dynamic-structure {
 aliquots-view .aliquots-container {
   min-width: 700px;
 }
+
 @media screen and (max-width: 768px) {
   aliquots-view .input-footer-message {
     font-size: 11px;
@@ -219,11 +254,13 @@ aliquots-view .aliquots-container {
 otus-sample-transportation-manager-list otus-sample-transportation-lot-info-sidenav md-sidenav {
   min-width: 320px !important;
 }
+
 @media screen and (max-width: 726px) {
   otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .desktop-filter div .md-subheader {
     display: none !important;
   }
 }
+
 @media screen and (max-width: 600px) {
   otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .desktop-filter {
     display: none;
@@ -252,27 +289,30 @@ otus-sample-transportation-manager-list otus-sample-transportation-lot-info-side
     top: -24px;
   }
 }
+
 @media screen and (min-width: 601px) {
   otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .mobile-filter {
     display: none;
   }
   otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card {
-    width: 500px;
+    width: 600px;
   }
 }
 
 otus-lot-info-manager-display .subtitle-table-container {
   max-height: 300px;
-  padding-top: 20px !important;
-
+  padding-top: 20px;
 }
+
 otus-lot-info-manager-display .dynamic-table-container {
   min-width: 850px;
   max-height: 420px;
 }
+
 otus-lot-info-manager-display .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
+
 otus-lot-info-manager-display md-input-container md-datepicker {
   position: relative;
   left: -15px;
@@ -281,30 +321,37 @@ otus-lot-info-manager-display md-input-container md-datepicker {
 otus-view-sending-exam .dynamic-table-container-md-content {
   min-height: 400px;
 }
+
 otus-view-sending-exam .dynamic-table-container-md-content .dynamic-table-container {
   min-width: 850px;
   max-height: 420px;
 }
+
 otus-view-sending-exam .dynamic-table-container-md-content .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
+
 otus-view-sending-exam otus-result-visualizer .dynamic-table-container {
   min-width: 850px;
   max-height: 420px;
 }
+
 otus-view-sending-exam otus-result-visualizer .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
+
 @media screen and (max-width: 726px) {
   otus-view-sending-exam .desktop-filter .md-subheader {
     display: none !important;
   }
 }
+
 @media screen and (max-width: 600px) {
   otus-view-sending-exam .desktop-filter {
     display: none;
   }
 }
+
 @media screen and (min-width: 601px) {
   otus-view-sending-exam .mobile-filter {
     display: none;
@@ -314,19 +361,23 @@ otus-view-sending-exam otus-result-visualizer .dynamic-table-container .dynamic-
 otus-exams-lots-manager .table-container {
   min-width: 750px;
 }
+
 otus-exams-lots-manager .table-container md-list {
   min-width: 700px;
 }
+
 @media screen and (max-width: 726px) {
   otus-exams-lots-manager .desktop-filter .md-subheader {
     display: none !important;
   }
 }
+
 @media screen and (max-width: 650px) {
   otus-exams-lots-manager .desktop-filter {
     display: none;
   }
 }
+
 @media screen and (min-width: 651px) {
   otus-exams-lots-manager .mobile-filter {
     display: none;
@@ -336,9 +387,11 @@ otus-exams-lots-manager .table-container md-list {
 otus-exam-lot-info-manager-display .dynamic-table-container {
   min-width: 850px;
 }
+
 otus-exam-lot-info-manager-display .dynamic-table-container .dynamic-structure {
   min-width: 800px !important;
 }
+
 @media screen and (max-width: 600px) {
   otus-exam-lot-info-manager-display .dynamic-table-container {
     max-height: 395px;
@@ -347,9 +400,11 @@ otus-exam-lot-info-manager-display .dynamic-table-container .dynamic-structure {
     display: none !important;
   }
 }
+
 otus-exam-lot-info-manager-display .aliquot-form {
   max-height: 70px;
 }
+
 otus-exam-lot-info-manager-display .aliquot-form md-input-container {
   margin-bottom: 0;
 }
@@ -363,6 +418,7 @@ otus-exam-lot-info-sidenav md-sidenav {
     display: none;
   }
 }
+
 @media screen and (min-width: 601px) {
   otus-monitoring-dashboard .mobile-filter {
     display: none;
@@ -374,6 +430,7 @@ otus-exam-lot-info-sidenav md-sidenav {
     max-height: 400px;
   }
 }
+
 @media screen and (min-width: 651px) {
   otus-flag-report-list-manager otus-flag-report-visualization md-content {
     max-height: 100%;
@@ -385,6 +442,7 @@ otus-exam-lot-info-sidenav md-sidenav {
     min-height: 400px;
   }
 }
+
 @media screen and (min-width: 651px) {
   otus-laboratory-flag-report-list-manager .exam-heatmap-container {
     min-height: 100%;
@@ -405,7 +463,8 @@ otus-activity-category-adder otus-activity-category-adder-list md-card md-input-
 
 activity-grid-list .gridListDynamicTiles md-grid-list {
   margin: 10px;
-  transition-duration: 0s;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
 }
 
 activity-grid-list .gridListDynamicTiles md-grid-tile md-grid-tile-header {
@@ -413,6 +472,26 @@ activity-grid-list .gridListDynamicTiles md-grid-tile md-grid-tile-header {
   width: 100%;
   overflow: inherit;
   padding: 8px;
+}
+
+activity-grid-list .gridListDynamicTiles md-grid-tile figure {
+  -webkit-box-pack: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+activity-grid-list .gridListDynamicTiles md-grid-tile:hover {
+  background: #f5f5f5;
+  cursor: pointer;
 }
 
 activity-grid-list .gridListDynamicTiles md-grid-tile-header figcaption {
@@ -424,22 +503,10 @@ activity-grid-list .gridListDynamicTiles md-grid-tile-header figcaption md-icon 
   margin: 0;
 }
 
-activity-grid-list .gridListDynamicTiles md-grid-tile figure {
-  justify-content: normal;
-  flex-direction: column;
-  align-items: start;
-  transition-duration: 0s;
-}
-
-activity-grid-list .gridListDynamicTiles .grid-aligh{
+activity-grid-list .gridListDynamicTiles .grid-aligh {
   padding-left: 10px;
   padding-top: 5px;
   width: 100%;
-}
-
-activity-grid-list .gridListDynamicTiles md-grid-tile:hover {
-  background: #F5F5F5;
-  cursor: pointer;
 }
 
 @media only screen and (max-width: 999px) {
@@ -460,7 +527,14 @@ otus-activity-adder-card md-grid-tile-header figcaption {
   width: 100%;
 }
 
-.grid-align{
+otus-activity-adder-card md-input-container {
+  padding: 0 15px 0 0;
+  margin: 0;
+  height: 40px;
+  border: none;
+}
+
+.grid-align {
   padding-left: 10px;
   padding-top: 5px;
   width: 100%;
@@ -471,22 +545,25 @@ otus-activity-adder md-input-container {
 }
 
 otus-activity-adder .button-hover :hover {
-  background-color: rgba(0,0,0,.06);
+  background-color: rgba(0, 0, 0, 0.06);
   border-radius: 0 0 0 0;
   width: auto;
   height: auto;
 }
 
 otus-activity-adder md-grid-tile figure {
-  justify-content: normal;
-  flex-direction: column;
-  align-items: start;
-  transition-duration: 0s;
-}
-
-otus-activity-adder md-grid-list {
-  margin: 10px;
-  transition-duration: 0s;
+  -webkit-box-pack: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
 }
 
 otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-header {
@@ -500,28 +577,27 @@ otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-footer {
   padding-left: 10px;
   color: red;
   height: 24px;
-  background: rgba(0,0,0,.05);
+  background: rgba(0, 0, 0, 0.05);
+}
+
+otus-activity-adder md-grid-list {
+  margin: 10px;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
 }
 
 otus-activity-adder md-select {
   margin: 5px 0 0;
 }
 
-otus-activity-adder  md-input-container {
+otus-activity-adder md-input-container {
   margin: 0;
   height: 40px;
   padding: 0 15px;
   border: none;
 }
 
-otus-activity-adder-card md-input-container {
-   padding: 0 15px 0 0;
-   margin: 0;
-   height: 40px;
-   border: none;
-}
-
- .scrollbar {
+.scrollbar {
   height: 85vh;
   background: #fff;
   overflow-y: scroll;
@@ -529,60 +605,36 @@ otus-activity-adder-card md-input-container {
 
 .scrollbar-default::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   border-radius: 10px;
 }
 
 .scrollbar-default::-webkit-scrollbar {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
 }
 
 .scrollbar-default::-webkit-scrollbar-thumb {
   border-radius: 10px;
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
-  background-color: #2BBBAD;
+  background-color: #2bbbad;
 }
 
 .no-shadow {
+  -webkit-transition: none !important;
   transition: none !important;
-  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
 }
 
 md-toast.md-error-toast-theme .md-toast-content {
-    background-color: darkred;
-    font-weight: bold;
+  background-color: darkred;
+  font-weight: bold;
 }
 
 otus-dashboard-pendency md-grid-list {
   margin: 10px;
-  transition-duration: 0s;
-}
-
-otus-dashboard-pendency md-grid-tile md-grid-tile-header {
-  background: rgba(255, 255, 255, 0.0);
-  position: relative;
-  width: 100%;
-  overflow: inherit;
-}
-
-otus-dashboard-pendency md-grid-tile md-grid-tile-footer {
-  background: rgba(255, 255, 255, 0.0);
-  overflow: inherit;
-  padding: 8px;
-}
-
-otus-dashboard-pendency md-grid-tile-footer figcaption {
-  display: block;
-  width: 100%;
-}
-
-otus-dashboard-pendency md-grid-tile-header figcaption {
-  display: block;
-  width: 100%;
-}
-
-otus-dashboard-pendency md-grid-tile-header figcaption md-icon {
-  margin: 0;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
 }
 
 otus-dashboard-pendency md-grid-tile {
@@ -590,27 +642,62 @@ otus-dashboard-pendency md-grid-tile {
 }
 
 otus-dashboard-pendency md-grid-tile figure {
-  justify-content: normal;
-  flex-direction: column;
-  align-items: normal;
-  transition-duration: 0s;
+  -webkit-box-pack: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: normal;
+      -ms-flex-align: normal;
+          align-items: normal;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
   padding: 8px;
 }
 
-otus-dashboard-pendency .md-badge{
-  background-color: rgb(255, 0 ,0);
+otus-dashboard-pendency md-grid-tile md-grid-tile-header {
+  background: rgba(255, 255, 255, 0);
+  position: relative;
+  width: 100%;
+  overflow: inherit;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-header figcaption {
+  display: block;
+  width: 100%;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-header figcaption md-icon {
+  margin: 0;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-footer {
+  background: rgba(255, 255, 255, 0);
+  overflow: inherit;
+  padding: 8px;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-footer figcaption {
+  display: block;
+  width: 100%;
+}
+
+otus-dashboard-pendency .md-badge {
+  background-color: red;
   z-index: 10;
 }
 
-otus-dashboard-pendency md-card md-card-content{
+otus-dashboard-pendency md-card md-card-content {
   border-radius: 5px;
 }
 
-otus-dashboard-pendency .full-list-items{
+otus-dashboard-pendency .full-list-items {
   min-width: 90vw;
 }
 
-otus-dashboard-pendency  md-input-container {
+otus-dashboard-pendency md-input-container {
   margin: 0;
 }
 
@@ -639,6 +726,7 @@ otus-follow-up-event #event-icon {
   max-width: 60px;
   max-height: 60px;
 }
+
 otus-follow-up-event #event-container {
   padding-bottom: 5px;
 }
@@ -649,9 +737,14 @@ otus-follow-up-event #event-container {
   }
 }
 
+unattached-laboratory md-grid-tile-header {
+  background: rgba(19, 125, 108, 0.68) !important;
+}
+
 unattached-laboratory md-grid-tile-header figcaption {
   width: 100%;
 }
+
 unattached-laboratory md-input-container {
   margin-bottom: 0px;
 }
@@ -660,10 +753,27 @@ unattached-laboratory-dashboard otus-panel {
   min-width: 320px;
 }
 
+offline-activity-collection md-card {
+  min-width: 340px;
+}
+
+offline-activity-collection #md-content-container {
+  height: 400px !important;
+  width: 100%;
+}
+
+offline-activity-collection md-content {
+  width: 100% !important;
+}
+
+offline-activity-collection md-grid-tile-header {
+  background: rgba(19, 125, 108, 0.68) !important;
+}
 
 offline-activity-collection md-grid-tile-header figcaption {
   width: 100%;
 }
+
 offline-activity-collection md-input-container {
   margin-bottom: 0px;
 }
@@ -672,36 +782,23 @@ offline-activity-collection otus-panel {
   min-width: 320px;
 }
 
-offline-activity-collection #md-content-container{
-  height: 400px !important;
-  width: 100%;
-}
-
-offline-activity-collection md-content{
-  width: 100% !important;
-}
-
-offline-activity-collection md-card{
-   min-width: 340px;
-}
-
-offline-activity-synchronize-dashboard #groups-container{
+offline-activity-synchronize-dashboard #groups-container {
   min-width: 345px;
 }
 
-otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input {
-  color: rgb(255, 255, 255) !important;
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete {
+  color: white !important;
 }
-otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button {
-  color: rgb(255, 255, 255) !important;
+
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap input {
+  color: white !important;
 }
-otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>input::-webkit-input-placeholder {
-  color: rgb(255, 255, 255) !important;
+
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap button {
+  color: white !important;
 }
-otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete>md-autocomplete-wrap>button>md-icon>svg>g>path {
-  fill: rgb(255, 254, 254) !important;
-}
-otus-participant-dashboard-toolbar>div>md-toolbar>div>otus-participant-search>md-autocomplete {
-  color: rgb(255, 255, 255) !important;
+
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap input::-webkit-input-placeholder {
+  color: white !important;
 }
 /*# sourceMappingURL=components-style.css.map */

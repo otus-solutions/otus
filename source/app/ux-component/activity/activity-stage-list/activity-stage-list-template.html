@@ -1,0 +1,26 @@
+<link href="app/ux-component/activity/activity-stage-list/activity-stage-list.css" rel="stylesheet" type="text/css">
+
+<otus-activity-information></otus-activity-information>
+
+<md-content ng-cloak>
+  <p>Hello, world!</p>
+  <md-card>
+    <div ng-repeat="stage in $ctrl.stages">
+      <h2>{{stage.stage}}</h2>
+      <md-list ng-repeat="item in stage.activities" ng-cloak>
+        <md-card class="activity-stage-list-layout">
+          <span class="activity-acronym">{{item.acronym}}</span>
+          <span class="activity-name">{{item.name}}</span>
+          <md-button class="md-icon-button activity-button" ng-click="">
+            <md-icon md-svg-icon="plus"></md-icon>
+          </md-button>
+        </md-card>
+      </md-list>
+    </div>
+  </md-card>
+
+</md-content>
+<!--TODO adapter button for hide-->
+<otus-activity-manager-bottom-sheet update-list="$ctrl.updateList()" on-view-info="$ctrl.handleViewInfoAction()">
+</otus-activity-manager-bottom-sheet>
+<otus-activity-manager-commander></otus-activity-manager-commander>
