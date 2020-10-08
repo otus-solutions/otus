@@ -1,12 +1,12 @@
 /*begin style for pendency-item*/
 @media screen and (min-width: 1280px) {
-  .activity-stage-list-layout {
+  .stage-list-layout {
     display: grid;
     align-items: center;
-    height: 4vh;
-    grid-template-columns: repeat(4, 1fr) 0.7fr;
-    grid-template-rows: 0.03fr 0.03fr 0.1fr 1fr 0.05fr;
-    grid-template-areas: "activity-acronym      activity-name      activity-name    activity-button";
+    height: 6vh;
+    grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
 }
 
@@ -20,4 +20,64 @@
 
 .activity-buttom {
   grid-area: activity-buttom;
+}
+
+@media screen and (min-width: 1280px) {
+  .activity-list-layout {
+    display: grid;
+    align-items: center;
+    height: 4vh;
+    grid-template-columns: 0.1fr 0.1fr repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: "activity-group-status     activity-group-mode      activity-group-date      activity-group-user-email    activity-group-externalID";
+  }
+
+  .activity-null-layout {
+    display: grid;
+    align-items: center;
+    height: 5vh;
+    grid-template-columns: 0.1fr repeat(4, 1fr);
+    grid-template-rows: 1fr;
+    grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+  }
+}
+
+.activity-null {
+  grid-area: activity-null
+}
+
+.activity-group-status {
+  grid-area: activity-group-status
+}
+
+.activity-group-mode {
+  grid-area: activity-group-mode
+}
+
+.activity-group-date {
+  grid-area: activity-group-date
+}
+
+.activity-group-user-email {
+  grid-area: activity-group-user-email
+}
+
+.activity-group-externalID {
+  grid-area: activity-group-externalID
+}
+
+.activity-group-buttons {
+  grid-area: activity-group-buttons
+}
+
+.margin16 {
+  margin: 16px;
+}
+
+.margin20 {
+  margin: 20px;
+}
+
+.marginLeftRigh {
+  margin: 0px 20px 0 20px;
 }

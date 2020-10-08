@@ -3,22 +3,54 @@
 <otus-activity-information></otus-activity-information>
 
 <md-content ng-cloak>
-  <p>Hello, world!</p>
-  <md-card>
-    <div ng-repeat="stage in $ctrl.stages">
-      <h2>{{stage.stage}}</h2>
-      <md-list ng-repeat="item in stage.activities" ng-cloak>
-        <md-card class="activity-stage-list-layout">
-          <span class="activity-acronym">{{item.acronym}}</span>
-          <span class="activity-name">{{item.name}}</span>
-          <md-button class="md-icon-button activity-button" ng-click="">
-            <md-icon md-svg-icon="plus"></md-icon>
-          </md-button>
-        </md-card>
+  <div class="margin16">
+    <md-card class="margin16">
+      <md-list>
+        <div ng-repeat="stage in $ctrl.stages">
+          <div class="margin20">
+            <h2>{{stage.stage}}</h2>
+            <md-list class="marginLeftRight" ng-repeat="activity in stage.acronyms track by $index">
+              <md-card class="stage-list-layout" layout-margin>
+                <div layout="row" layout-align="center center">
+                  <span class="activity-acronym">{{activity.acronym}}</span>
+                </div>
+                <span class="activity-name">{{activity.name}}</span>
+                <md-button class="md-icon-button activity-button" ng-click="">
+                  <md-icon md-svg-icon="plus"></md-icon>
+                </md-button>
+              </md-card>
+              <md-card class="activity-null-layout" ng-show="activity.activities.length == 0">
+                <div class="activity-null" style="color:light-gray">
+                  <p>Nenhuma Atividade Adicionada</p>
+                </div>
+              </md-card>
+              <md-card class="activity-list-layout" ng-repeat="item in activity.activities track by $index">
+                <div class="activity-group-status" layout="row" layout-align="center center">
+                  <md-icon md-font-set="material-icons">{{item.lastStatus.iconStatus}}</md-icon>
+                </div>
+                <div class="activity-group-mode" layout="row" layout-align="center center">
+                  <md-icon md-font-set="material-icons">{{item.iconMode}}</md-icon>
+                </div>
+                <div class="activity-group-date" layout="row" layout-align="center center">
+                  <span>{{item.lastStatus.date}}</span>
+                </div>
+                <div class="activity-group-user-email" layout="row" layout-align="center center">
+                  <span>{{item.lastStatus.user.userEmail}}</span>
+                </div>
+                <div class="activity-group-externalID" layout="row" layout-align="center center">
+                  <span>{{item.externalId}}</span>
+                </div>
+                <!-- <md-button class="md-icon-button activity-button" ng-click="">
+                                    <md-icon md-svg-icon="plus"></md-icon>
+                                  </md-button> -->
+              </md-card>
+            </md-list>
+          </div>
+          <md-divider></md-divider>
+        </div>
       </md-list>
-    </div>
-  </md-card>
-
+    </md-card>
+  </div>
 </md-content>
 <!--TODO adapter button for hide-->
 <otus-activity-manager-bottom-sheet update-list="$ctrl.updateList()" on-view-info="$ctrl.handleViewInfoAction()">

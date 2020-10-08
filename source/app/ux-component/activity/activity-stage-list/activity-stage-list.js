@@ -23,7 +23,7 @@
     var self = this;
 
     self.$onInit = onInit;
-    self.activities = [];
+    self.acronyms = [];
     self.stage = [];
 
 
@@ -32,33 +32,46 @@
       "objectType": "ActivityBasicModel",
       "acronym": "FRC",
       "name": "Formulário de revisão cardiovascular",
-      "mode": "AUTOFILL",
-      "category": "C0",
-      "lastStatus": {
-        "name": "FINALIZED",
-        "user": {},
-        "date": "2020-09-30T00:00:00"
-      },
-      "externalId": "20200921516453",
+      "activities": [
+        {
+          "mode": "AUTOFILL",
+          "iconMode": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.icon,
+          "category": "C0",
+          "lastStatus": {
+            "name": "FINALIZED",
+            "iconStatus": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.icon,
+            "user": {
+              "userEmail": "fulano@gmail.com"
+            },
+            "date": "2020-09-30T00:00:00"
+          },
+          "externalId": "20200921516453"
+        }
+      ],
       "stage": "87624basdkjasmdijas"
     }
 
+    let var2 = angular.copy(self.model);
+    var2.activities = [];
+
     //TODO map for stage
 
-    self.activities.push(self.model);
+    self.acronyms.push(self.model);
+    self.acronyms.push(var2);
+    self.acronyms.push(var2);
 
     self.stages = [
       {
         stage: "onda 3",
-        activities: self.activities
+        "acronyms": self.acronyms
       },
       {
         stage: "onda covid",
-        activities: self.activities
+        "acronyms": self.acronyms
       },
       {
         stage: "onda 4",
-        activities: self.activities
+        "acronyms": self.acronyms
       }
     ]
 
