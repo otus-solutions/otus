@@ -35,17 +35,31 @@
       "activities": [
         {
           "mode": "AUTOFILL",
-          "iconMode": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.icon,
+          "attributeMode": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL,
           "category": "C0",
           "lastStatus": {
             "name": "FINALIZED",
-            "iconStatus": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED.icon,
+            "status": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED,
             "user": {
               "userEmail": "fulano@gmail.com"
             },
             "date": "2020-09-30T00:00:00"
           },
           "externalId": "20200921516453"
+        },
+        {
+          "mode": "ONLINE",
+          "attributeMode": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE,
+          "category": "C0",
+          "lastStatus": {
+            "name": "SAVED",
+            "status": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.SAVED,
+            "user": {
+              "userEmail": "fulano@gmail.com"
+            },
+            "date": "2020-10-30T00:00:00"
+          },
+          "externalId": "20200921516454"
         }
       ],
       "stage": "87624basdkjasmdijas"
@@ -56,7 +70,7 @@
 
     //TODO map for stage
 
-    self.acronyms.push(self.model);
+    self.acronyms.push(angular.copy(self.model));
     self.acronyms.push(var2);
     self.acronyms.push(var2);
 
