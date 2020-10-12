@@ -1,0 +1,93 @@
+<div>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row" flex="">
+    <div flex layout="row" layout-align="center center" layout-margin>
+      <span layout-align="center center">Laboratórios</span>
+    </div>
+  </otus-dashboard-toolbar>
+  <div layout="row" layout-xs="column" flex>
+    <div layout="row" layout-xs="column" layout-align="start start" layout-align-xs="center center" flex="50" flex-xs="100">
+      <md-input-container class="remove-errors-spacer">
+        <md-button ng-click="$ctrl.sampleTransportDashboard()" layout-align="center" layout-margin="">
+          <md-icon>local_shipping</md-icon>Transporte de amostra
+        </md-button>
+      </md-input-container>
+      <md-input-container class="remove-errors-spacer">
+        <md-button ng-click="$ctrl.sampleTransportDashboard()" layout-align="center" layout-margin="">
+          <md-icon>event_note</md-icon>Lotes de exames
+        </md-button>
+      </md-input-container>
+      <md-input-container class="remove-errors-spacer">
+        <md-button ng-click="$ctrl.sendingExam()" layout-align="center" layout-margin="">
+          <md-icon>event_available</md-icon>Envios de exames
+        </md-button>
+      </md-input-container>
+      <md-input-container class="remove-errors-spacer">
+        <md-button ng-click="$ctrl.unattachedLaboratory()" layout-align="center" layout-margin="">
+          <md-icon>event_available</md-icon>Laboratório desvinculado
+        </md-button>
+      </md-input-container>
+    </div>
+  </div>
+
+  <!-- tubelist -->
+  <div class="aliquots-container" layout="row" layout-align="start start" flex>
+    <div layout="column" layout-align="start stretch" flex="25" flex-md="30" flex-offset="5">
+      <md-subheader class="md-no-sticky moment-type-title">
+        Tubos
+      </md-subheader>
+      <md-input-container class="md-block" flex-gt-sm>
+        <label>Código do tubo</label>
+        <input ng-model="$ctrl.tubeCode" ng-change="$ctrl.isValidCode()">
+      </md-input-container>
+      <md-list ng-repeat="collectedTube in $ctrl.collectedTubes" ng-if="$ctrl.collectedTubes.length > 0">
+        <div class="tube-list-view">
+          <md-card ng-click="$ctrl.selectTube(collectedTube)" ng-style="{'padding':'10px', 'width':'300px'}">
+            <div layout="row">
+              <div layout="column" flex="10">
+                <div class="tube-design" ng-style="{'background-color': '#554466',
+                                                    'height':'80px', 'width':'10px',
+                                                    'margin-right':'10px',
+                                                    'border': 'solid 1px #ccc',
+                                                    'border-radius':'3px 3px 10px 10px'}">
+                </div>
+              </div>
+              <div layout="column" flex="90">
+                <div layout="row" layout-align="start start" flex="65">
+                  <div layout="column" flex="90">
+                    <span class="md-title">{{collectedTube.type}}</span>
+                    <span class="md-subhead">{{collectedTube.code}}</span>
+                  </div>
+                  <div layout="column" flex="10">
+                    <md-icon class="md-primary" md-font-set="material-icons" ng-show="collectedTube.collected">assignment_turned_in
+                      <md-tooltip>Coletado</md-tooltip>
+                    </md-icon>
+                    <md-icon md-font-set="material-icons" ng-show="!collectedTube.collected && collectedTube.metadata">not_interested
+                      <md-tooltip>Não coletado</md-tooltip>
+                    </md-icon>
+                    <md-icon md-font-set="material-icons" ng-hide="collectedTube.collected || collectedTube.metadata">assignment_late
+                      <md-tooltip>Aguardando</md-tooltip>
+                    </md-icon>
+                  </div>
+                </div>
+                <div layout="row" layout-align="space-between center" flex="50">
+                  <div layout="column" flex="50">
+                  </div>
+                  <md-checkbox class="md-checkbox-small md-primary" ng-model="collectedTube.metadata" ng-false-value="''" ng-true-value="'.vp'" name="partial_volume" aria-label="volume parcial" ng-click="$ctrl.setDirty()">
+                    <span class="md-caption">Volume Parcial</span>
+                  </md-checkbox>
+                </div>
+              </div>
+            </div>
+          </md-card>
+        </div>
+      </md-list>
+      <div ng-if="$ctrl.collectedTubes.length < 1">
+        <h2>Sem Tubos Coletados</h2>
+      </div>
+    </div>
+    <laboratory-aliquots-manager tube="$ctrl.selectedTube" flex></laboratory-aliquots-manager>
+  </div>
+</div>

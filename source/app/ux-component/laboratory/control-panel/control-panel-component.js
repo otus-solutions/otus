@@ -63,6 +63,8 @@
       self.processingDate = new Date();
       self.now = new Date();
       verifyDate();
+      console.info(self.labParticipant.tubes)
+
     }
 
     function _getSelectedLocationPoint(callback) {

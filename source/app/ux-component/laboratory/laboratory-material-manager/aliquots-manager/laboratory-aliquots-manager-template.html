@@ -1,0 +1,65 @@
+<div layout="column" flex="70" flex-offset="5">
+
+  <md-subheader class="md-no-sticky moment-type-title">
+    Aliquotagem:
+  </md-subheader>
+  <span flex="20"></span>
+  <form name="formAliquot" layout-align="start stretch">
+    <md-list flex>
+      <div class="tube-list-view" flex>
+        <div layout="column" class="boxWithHeight tela" layout-padding flex>
+
+          <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex layout-padding>
+            <div class="aliquot-whiteframe-title">
+              Exame:
+            </div>
+
+            <div layout="row">
+              <div class="input-tube" flex>
+              </div>
+
+              <div flex=10 layout="row" layout-align="center center" class="aliquot-arrow-icon">
+                <div class="aliquot-arrow-icon-up">
+                  <md-icon class="md-primary" md-font-set="material-icons">arrow_forward</md-icon>
+                </div>
+              </div>
+
+              <div class="input-aloquot" flex>
+                <div class="md-list-item-text" layout="column" flex>
+                  <md-content layout="row" flex layout-align="start center">
+                    <md-input-container class="md-block" flex-gt-sm>
+                      <label>Código do tubo</label>
+                      <input>
+                    </md-input-container>
+                    <md-button class="md-icon-button md-button" style="top:-10px">
+
+                      <md-icon md-font-set="material-icons" class="icon-clickable md-default-theme material-icons">delete_forever</md-icon>
+                      <md-tooltip >
+                        Excluir Alíquota
+                      </md-tooltip>
+
+                    </md-button>
+                  </md-content>
+                  <div layout="column">
+                    <div layout="row" class="input-footer-message">
+                      <span>Registrado:&ensp;&nbsp;{{'dd/MM/yyyy hh:mm a'}}</span>
+                    </div>
+                    <div layout="row" class="input-footer-message" ng-show="">
+                      <span>Processado:&nbsp;{{'dd/MM/yyyy hh:mm a'}}</span>
+                      <span>Processado:&nbsp;</span>
+                    </div>
+                    <div layout="column" layout-align="start" class="input-footer-message" ng-show="">
+                      <span ng-show="">Ponto de localização&nbsp;</span>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          </md-whiteframe>
+        </div>
+      </div>
+    </md-list>
+  </form>
+</div>
