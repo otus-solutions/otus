@@ -5,6 +5,9 @@
     <md-card class="layout-margin">
       <md-list class="layout-margin-card" ng-repeat="stages in $ctrl.stages track by $index">
         <h2 class="md-title margin-not-top">{{stages.stageName}}</h2>
+        <h2 ng-show="stages.length == 0">
+           Etapa Não Adicionada
+        </h2>
         <md-list class="marginLeftRight" ng-repeat="activity in stages.acronyms track by $index">
           <div class="stage-list-layout">
             <div class="activity-acronym" layout="row" layout-align="center center" layout-align-xs="start center">
@@ -48,7 +51,7 @@
               </md-icon>
             </div>
             <div class="activity-group-date" layout="row" layout-align="center center">
-              <span class="md-body-2">{{item.lastStatus.date}}</span>
+              <span class="md-body-2">{{item.lastStatus.realizationDate}}</span>
             </div>
             <div class="activity-group-user-email" layout="row" layout-align="center center">
               <span class="md-body-2">{{item.lastStatus.user.userEmail}}</span>

@@ -16,15 +16,15 @@
   Controller.$inject = [
     '$mdToast',
     '$mdColors',
-    'ACTIVITY_MANAGER_LABELS'
+    'ACTIVITY_MANAGER_LABELS',
+    'otusjs.activity.core.EventService',
+    'otusjs.deploy.LoadingScreenService',
   ];
 
-  function Controller($mdToast, $mdColors, ACTIVITY_MANAGER_LABELS) {
+  function Controller($mdToast, $mdColors, ACTIVITY_MANAGER_LABELS, EventService, LoadingScreenService) {
     var self = this;
 
     self.$onInit = onInit;
-    self.loadActivityStages = loadActivityStages;
-    self.acronyms = [];
     self.stage = [];
 
     self.model = {
@@ -61,39 +61,44 @@
       "stage": "87624basdkjasmdijas"
     }
 
-    let var2 = angular.copy(self.model);
+    var var2 = angular.copy(self.model);
     var2.activities = [];
+    var acronyms = [];
 
     //TODO map for stage
 
-    self.acronyms.push(angular.copy(self.model));
-    self.acronyms.push(var2);
-    self.acronyms.push(var2);
+    acronyms.push(angular.copy(self.model));
+    acronyms.push(var2);
+    acronyms.push(var2);
+    acronyms.push(angular.copy(self.model));
 
-    self.stages = [
+    let stages2 = [
       {
         stageName: "onda 3",
-        "acronyms": self.acronyms
+        "acronyms": acronyms
       },
       {
         stageName: "onda covid",
-        "acronyms": self.acronyms
+        "acronyms": acronyms
       },
       {
         stageName: "onda 4",
-        "acronyms": self.acronyms
+        "acronyms": acronyms
       }
     ]
 
     function onInit() {
-      loadActivityStages();
+      EventService.onParticipantSelected(_loadActivityStages);
+      _loadActivityStages();
     }
 
-    function loadActivityStages() {
+    function _loadActivityStages() {
+      LoadingScreenService.start();
+      self.stages = stages2;
       self.stages.map(stage => {
-        return stage.acronyms.forEach(acronym => _activityAttributes(acronym.activities))
-      })
-      console.log(self.stages)
+        stage.acronyms.forEach(acronym => { _activityAttributes(acronym.activities) })
+      });
+      LoadingScreenService.finish();
     }
 
     function _activityAttributes(activities) {
@@ -102,7 +107,17 @@
           .find(status => status.name === activity.mode);
         activity.lastStatus.status = Object.values(ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS)
           .find(status => status.name === activity.lastStatus.name);
+        activity.lastStatus.realizationDate = _getFormattedDate(activity.lastStatus.date);
       })
+    }
+
+    function _getFormattedDate(date) {
+      try {
+        let formattedDate = new Date(date);
+        return formattedDate.getDate() + '/' + (formattedDate.getMonth() + 1) + '/' + formattedDate.getFullYear();
+      } catch (e) {
+        return null;
+      }
     }
 
     //TODO create service for activities

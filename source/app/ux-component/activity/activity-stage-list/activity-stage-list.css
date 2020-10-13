@@ -328,3 +328,7 @@ md-chips.md-default-theme .md-chips,
 md-chips .md-chips {
   box-shadow: 0 0 !important;
 }
+
+md-list {
+  padding: 0;
+}
