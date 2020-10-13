@@ -1,13 +1,11 @@
 <link href="app/ux-component/activity/activity-stage-list/activity-stage-list.css" rel="stylesheet" type="text/css">
 
-<otus-activity-information></otus-activity-information>
-
 <md-content ng-cloak>
   <div class="layout-margin">
     <md-card class="layout-margin">
-      <md-list class="layout-margin" ng-repeat="stage in $ctrl.stages track by $index">
-        <h2 class="md-title">{{stage.stage}}</h2>
-        <md-list class="marginLeftRight" ng-repeat="activity in stage.acronyms track by $index">
+      <md-list class="layout-margin-card" ng-repeat="stages in $ctrl.stages track by $index">
+        <h2 class="md-title margin-not-top">{{stages.stageName}}</h2>
+        <md-list class="marginLeftRight" ng-repeat="activity in stages.acronyms track by $index">
           <div class="stage-list-layout">
             <div class="activity-acronym" layout="row" layout-align="center center" layout-align-xs="start center">
               <md-chips layout-padding="">
@@ -17,7 +15,7 @@
               </md-chips>
             </div>
             <div class="activity-name" layout="row" layout-align-xs="center center">
-              <span class="md-body-2">{{activity.name}}</span>
+              <span class="md-title">{{activity.name}}</span>
             </div>
             <div class="activity-button" layout="row" layout-align="end center">
               <md-button class="md-icon-button md-accent" ng-click="">

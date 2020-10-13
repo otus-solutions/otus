@@ -31,6 +31,12 @@
           <md-button id="surveyforms-menu"  ng-click="$ctrl.loadParticipantActivities()">Atividades</md-button>
         </div>
       </md-list-item>
+      <md-list-item class="md-2-line" ng-show="$ctrl.userAccessToActivity.participantActivityAccess">
+        <div layout-align="start center">
+          <md-icon md-svg-icon="file-document-box" aria-label="Atividades" class="md-accent"></md-icon>
+          <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantActivityStage()">New Atividades</md-button>
+        </div>
+      </md-list-item>
       <md-list-item ng-show="$ctrl.userAccessToLaboratory.participantLaboratoryAccess
                             " class="md-2-line">
         <div layout-align="start center">

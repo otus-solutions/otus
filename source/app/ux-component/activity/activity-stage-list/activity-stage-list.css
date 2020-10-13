@@ -43,6 +43,10 @@
     margin: 8px 4px 0 4px;
   }
 
+  .layout-margin-card {
+    margin: 4px;
+  }
+
   .marginLeftRigh {
     margin: 0 2px 4px 2px;
   }
@@ -81,6 +85,10 @@
 
   .layout-margin {
     margin: 8px 4px 8px 4px;
+  }
+
+  .layout-margin-card {
+    margin: 4px;
   }
 
   .marginLeftRigh {
@@ -123,6 +131,10 @@
     margin: 8px 4px 8px 4px;
   }
 
+  .layout-margin-card {
+    margin: 4px;
+  }
+
   .marginLeftRigh {
     margin: 0 8px 0 8px;
   }
@@ -163,13 +175,17 @@
     margin: 8px 4px 8px 4px;
   }
 
+  .layout-margin-card {
+    margin: 4px;
+  }
+
   .marginLeftRigh {
     margin: 0 8px 0 8px;
   }
 }
 
 @media screen and (min-width: 1024px) {
-   .stage-list-layout {
+  .stage-list-layout {
     display: grid;
     align-items: center;
     height: 10vh;
@@ -202,6 +218,10 @@
 
   .layout-margin {
     margin: 8px;
+  }
+
+  .layout-margin-card {
+    margin: 4px;
   }
 
   .marginLeftRigh {
@@ -242,11 +262,19 @@
   }
 
   .layout-margin {
-    margin: 20px 24px 20px 24px;
+    margin: 16px 24px 2px 24px;
+  }
+
+  .layout-margin-card {
+    margin: 0 28px 4px 28px;
   }
 
   .marginLeftRigh {
-    margin: 0 20px 0 20px;
+    margin: 0 24px 0 24px;
+  }
+
+  .margin-not-top {
+    margin: 10px 0 0 0;
   }
 }
 
@@ -294,4 +322,9 @@
 
 .activity-group-buttons {
   grid-area: activity-group-buttons;
+}
+
+md-chips.md-default-theme .md-chips,
+md-chips .md-chips {
+  box-shadow: 0 0 !important;
 }

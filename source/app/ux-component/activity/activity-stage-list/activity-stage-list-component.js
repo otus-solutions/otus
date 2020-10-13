@@ -23,9 +23,9 @@
     var self = this;
 
     self.$onInit = onInit;
+    self.loadActivityStages = loadActivityStages;
     self.acronyms = [];
     self.stage = [];
-
 
     self.model = {
       "_id": "20193n8120938",
@@ -35,11 +35,9 @@
       "activities": [
         {
           "mode": "AUTOFILL",
-          "attributeMode": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL,
           "category": "C0",
           "lastStatus": {
             "name": "FINALIZED",
-            "status": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.FINALIZED,
             "user": {
               "userEmail": "fulano@gmail.com"
             },
@@ -49,11 +47,9 @@
         },
         {
           "mode": "ONLINE",
-          "attributeMode": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE,
           "category": "C0",
           "lastStatus": {
             "name": "SAVED",
-            "status": ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS.SAVED,
             "user": {
               "userEmail": "fulano@gmail.com"
             },
@@ -76,21 +72,37 @@
 
     self.stages = [
       {
-        stage: "onda 3",
+        stageName: "onda 3",
         "acronyms": self.acronyms
       },
       {
-        stage: "onda covid",
+        stageName: "onda covid",
         "acronyms": self.acronyms
       },
       {
-        stage: "onda 4",
+        stageName: "onda 4",
         "acronyms": self.acronyms
       }
     ]
 
     function onInit() {
+      loadActivityStages();
+    }
 
+    function loadActivityStages() {
+      self.stages.map(stage => {
+        return stage.acronyms.forEach(acronym => _activityAttributes(acronym.activities))
+      })
+      console.log(self.stages)
+    }
+
+    function _activityAttributes(activities) {
+      return activities.forEach(activity => {
+        activity.attributeMode = Object.values(ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE)
+          .find(status => status.name === activity.mode);
+        activity.lastStatus.status = Object.values(ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS)
+          .find(status => status.name === activity.lastStatus.name);
+      })
     }
 
     //TODO create service for activities
