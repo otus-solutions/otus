@@ -285,7 +285,6 @@
       return _remoteStorage.whenReady()
         .then(remoteStorage => remoteStorage.getAllByStageGroup(participant))
         .then(response => {
-          console.log(response)
           return response.data
         });
     }

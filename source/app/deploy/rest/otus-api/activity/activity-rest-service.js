@@ -212,9 +212,9 @@
           data: stages
         };
 
-      return Promise.resolve(response);
+     // return Promise.resolve(response);
 
-      //return _rest.getAllByStageGroup({ rn: recruitmentNumber }).$promise;
+      return _rest.getAllByStageGroup({ rn: recruitmentNumber }).$promise;
     }
 
   }
