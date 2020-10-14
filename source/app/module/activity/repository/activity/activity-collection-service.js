@@ -42,6 +42,7 @@
     self.getById = getById;
     self.createFollowUpActivity = createFollowUpActivity;
     self.reopenActivity = reopenActivity;
+    self.getAllByStageGroup = getAllByStageGroup;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -278,6 +279,15 @@
             .catch(err => request.reject(err));
         });
       return request.promise;
+    }
+
+    function getAllByStageGroup(participant) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.getAllByStageGroup(participant))
+        .then(response => {
+          console.log(response)
+          return response.data
+        });
     }
 
   }

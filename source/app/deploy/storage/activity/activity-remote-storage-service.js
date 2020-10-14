@@ -48,6 +48,7 @@
     self.renovateSharedURL = renovateSharedURL;
     self.deleteSharedURL = deleteSharedURL;
     self.reopenActivity = reopenActivity;
+    self.getAllByStageGroup = getAllByStageGroup;
 
     /**
      * Adds activities to collection.
@@ -321,6 +322,10 @@
 
     function reopenActivity(activity){
       return ActivityRestService.reopen(activity);
+    }
+
+    function getAllByStageGroup(participant) {
+      return ActivityRestService.getAllByStageGroup(participant.recruitmentNumber);
     }
 
   }

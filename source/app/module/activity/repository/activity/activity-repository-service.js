@@ -38,6 +38,7 @@
     self.createActivity = createActivity;
     self.createFollowUpActivity = createFollowUpActivity;
     self.reopenActivity = reopenActivity;
+    self.getAllByStageGroup = getAllByStageGroup;
 
     function listAll(participant) {
       if (!participant) {
@@ -221,6 +222,16 @@
     function reopenActivity(activity){
       return ActivityCollectionService.reopenActivity(activity)
         .then(_setupWorkProgress().finish);
+    }
+
+    function getAllByStageGroup(participant) {
+      if (!participant) {
+        throw new Error('No participant selected to list stage.', 'activity-repository-service.js', 229);
+      }
+
+      ActivityCollectionService.useParticipant(participant);
+
+      return ActivityCollectionService.getAllByStageGroup(participant);
     }
 
   }

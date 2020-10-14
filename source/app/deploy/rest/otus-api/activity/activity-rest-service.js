@@ -27,6 +27,7 @@
     self.getById = getById;
     self.createFollowUpActivity = createFollowUpActivity;
     self.reopen = reopen;
+    self.getAllByStageGroup = getAllByStageGroup;
 
     function initialize() {
       _rest = OtusRestResourceService.getActivityResource();
@@ -138,6 +139,82 @@
         throw new Error('REST resource is not initialized.');
       }
       return _followUpRest.createFollowUpActivity({ rn: activity.participantData.recruitmentNumber }, activity).$promise;
+    }
+
+    function getAllByStageGroup(recruitmentNumber) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+
+      self.model = {
+        "_id": "20193n8120938",
+        "objectType": "ActivityBasicModel",
+        "acronym": "FRC",
+        "name": "Formulário de revisão cardiovascular",
+        "activities": [
+          {
+            "mode": "AUTOFILL",
+            "category": "C0",
+            "lastStatus": {
+              "name": "FINALIZED",
+              "user": {
+                "email": "fulano@gmail.com"
+              },
+              "date": "2020-09-23T00:00:00"
+            },
+            "externalId": "20200921516453"
+          },
+          {
+            "mode": "ONLINE",
+            "category": "C0",
+            "lastStatus": {
+              "name": "SAVED",
+              "user": {
+                "email": "fulano@gmail.com"
+              },
+              "date": "2020-10-30T00:00:00"
+            },
+            "externalId": "20200921516454"
+          }
+        ],
+        "stage": "87624basdkjasmdijas"
+      }
+
+      var var2 = angular.copy(self.model);
+      var2.activities = [];
+      var acronyms = [];
+
+
+      //TODO map for stage
+
+      acronyms.push(angular.copy(self.model));
+      acronyms.push(var2);
+      acronyms.push(var2);
+      acronyms.push(angular.copy(self.model));
+
+      let stages = [
+        {
+          stageName: "Onda 3",
+          "acronyms": acronyms
+        },
+        {
+          stageName: "Onda Covid",
+          "acronyms": acronyms
+        },
+        {
+          stageName: "Onda 4",
+          "acronyms": acronyms
+        }
+      ];
+
+      var response = {};
+        response = {
+          data: stages
+        };
+
+      return Promise.resolve(response);
+
+      //return _rest.getAllByStageGroup({ rn: recruitmentNumber }).$promise;
     }
 
   }
