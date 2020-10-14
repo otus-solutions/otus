@@ -3,8 +3,8 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .component('expressActivityCreator', {
-      controller: 'expressActivityCreatorCtrl as $ctrl',
+    .component('otusExpressActivityCreator', {
+      controller: 'otusExpressActivityCreatorCtrl as $ctrl',
       templateUrl: 'app/ux-component/shared/express-activity-creator/express-activity-creator-template.html',
       bindings: {
         acronym: '<',
@@ -12,11 +12,13 @@
         types: '<',
         participant: '<'
       }
-    }).controller('expressActivityCreatorCtrl', Controller);
+    }).controller('otusExpressActivityCreatorCtrl', Controller);
 
-  Controller.$inject = [];
+  Controller.$inject = [
+    'otusjs.application.dialog.DialogShowService'
+  ];
 
-  function Controller() {
+  function Controller(DialogShowService) {
     const self = this;
 
     /* Public methods */
@@ -24,10 +26,8 @@
 
 
     function saveActivity() {
-      alert("call saveActivity")
+      DialogShowService.showExpressActivityCreationDialog({});
     }
   }
-
-
 
 }())
