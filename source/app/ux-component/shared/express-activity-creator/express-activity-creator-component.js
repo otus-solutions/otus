@@ -10,7 +10,8 @@
         acronym: '<',
         categories: '<',
         types: '<',
-        participant: '<'
+        participant: '<',
+        checkers: '<'
       }
     }).controller('otusExpressActivityCreatorCtrl', Controller);
 
@@ -25,8 +26,8 @@
     self.saveActivity = saveActivity;
 
 
-    function saveActivity() {
-      DialogShowService.showExpressActivityCreationDialog({});
+    function saveActivity(data, isExternalID) {
+      DialogShowService.showExpressActivityCreationDialog({}, true, );
     }
   }
 

@@ -112,13 +112,11 @@
       });
     }
 
-
     function showExpressActivityCreationDialog(activityData, fullscreen = true){
       self.data = {
         activity: activityData,
         settings: {
-          // controllerPath: "app/ux-component/dialog-show/express-activity-creator/express-activity-creator-dialog-show-controller.js",
-          controllerPath: "",
+          controllerPath: 'otusExpressActivityCreatorDialogController',
           templateUrlPath: "app/ux-component/dialog-show/express-activity-creator/express-activity-creator-dialog-show-template.html",
         },
         cancel: cancel

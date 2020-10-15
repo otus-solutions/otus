@@ -1,6 +1,6 @@
 <style>
-  .activity-sharing-dialog {
-    width: 40vw;
+  .dialog-layout {
+    width: 25vw;
     background-color: #dedede;
   }
 
@@ -18,17 +18,17 @@
   }
 </style>
 
-<md-dialog class="activity-sharing-dialog">
+<md-dialog class="dialog-layout">
   <md-toolbar class="md-primary md-toolbar-tools">
-    <span class="md-subhead">{{ $ctrl.ActivitySharingDialogValues.titles.dialogToTitle }}</span>
+    <span class="md-subhead">{{ $ctrl.dialogValues.titles.dialogToTitle }}</span>
     <span flex></span>
     <md-button class="md-icon-button" ng-click="$ctrl.data.cancel() "
-               aria-label={{$ctrl.ActivitySharingDialogValues.buttons.closeSharingDialog.ariaLabel}}>
-      <md-icon aria-label={{$ctrl.ActivitySharingDialogValues.buttons.closeSharingDialog.ariaLabel}}>
-        {{$ctrl.ActivitySharingDialogValues.buttons.closeSharingDialog.icon}}
+               aria-label={{$ctrl.dialogValues.buttons.closeDialog.ariaLabel}}>
+      <md-icon aria-label={{$ctrl.dialogValues.buttons.closeDialog.ariaLabel}}>
+        {{$ctrl.dialogValues.buttons.closeDialog.icon}}
       </md-icon>
       <md-tooltip md-direction="bottom">
-        {{$ctrl.ActivitySharingDialogValues.buttons.closeSharingDialog.tooltip}}
+        {{$ctrl.dialogValues.buttons.closeDialog.tooltip}}
       </md-tooltip>
     </md-button>
   </md-toolbar>
@@ -37,60 +37,61 @@
     <div layout="column" layout-margin>
       <div layout="row" layout-align="space-between center">
         <md-chips>
-          <md-chip  class="md-caption" md-colors="{background: 'primary'}">{{ $ctrl.data.activity.surveyForm.acronym }}</md-chip>
+          <md-chip class="md-caption" md-colors="{background: 'primary'}">{{ $ctrl.data.activity.surveyForm.acronym }}
+          </md-chip>
         </md-chips>
         <span class="md-body-1">{{ $ctrl.data.activity.surveyForm.name }}</span>
-
-        <md-button class="md-icon-button" ng-click="$ctrl.deleteSharedURL()"
-                   {{$ctrl.ActivitySharingDialogValues.buttons.deleteActivitySharing.ariaLabel}}>
-          <md-icon class="md-warn">
-            {{$ctrl.ActivitySharingDialogValues.buttons.deleteActivitySharing.icon}}
-          </md-icon>
-          <md-tooltip md-direction="bottom">
-            {{$ctrl.ActivitySharingDialogValues.buttons.deleteActivitySharing.tooltip}}
-          </md-tooltip>
-        </md-button>
-
       </div>
       <div layout="row" layout-align="center">
         <span class="md-body-2">{{ $ctrl.data.activity.participantData.name}}</span>
       </div>
-      <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
-        <span>Válido até: {{ $ctrl.activitySharing.getExpirationDate() | date:'dd/MM/yyyy'}}</span>
-        <md-button class="md-icon-button md-primary"
-                   ng-click="$ctrl.renovateSharedURL()"
-                   ng-disabled="$ctrl.liveLink"
-                   aria-label={{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.ariaLabel}}>
-          <md-icon>
-            {{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.icon}}
-          </md-icon>
-          <md-tooltip md-direction="right">
-            {{$ctrl.ActivitySharingDialogValues.buttons.renovateActivitySharing.tooltip}}
-          </md-tooltip>
-        </md-button>
+
+      <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30"
+                          layout-align="space-between start">
+        <md-select aria-label="Tipo de Atividades" ng-model="$ctrl.configuration.activityType">
+          <md-option ng-repeat="activityType in $ctrl.optionModes track by $index" ng-selected="activity.isDefault"
+                     ng-value="activityType.mode">{{activityType.label | uppercase}}
+          </md-option>
+        </md-select>
+        <md-tooltip md-direction="top">Tipo de Atividades</md-tooltip>
+      </md-input-container>
+
+
+      <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30"
+                          layout-align="space-between start">
+        <md-select aria-label="Categoria" ng-model="$ctrl.configuration.category">
+          <md-option ng-repeat="category in $ctrl.categories track by $index" ng-selected="category.isDefault"
+                     ng-value="category">{{category.label | uppercase}}
+          </md-option>
+        </md-select>
+        <md-tooltip md-direction="top">Categoria</md-tooltip>
+      </md-input-container>
+
+      <div layout-align="space-between start" layout-fill>
+        <md-datepicker ng-model="svm.date" md-placeholder={{vm.Constant.DATE_FORMAT_TITLE}}
+                       layout-align="space-between start"
+                       md-min-date="vm.minDate" required>
+        </md-datepicker>
       </div>
 
-      <div class="md-whiteframe-1dp" layout="row" layout-align="space-between center">
-        <span md-truncate flex="90">{{$ctrl.activitySharing.url}}</span>
-        <md-button class="md-icon-button md-primary"
-                   ng-click="$ctrl.copyLinkToClipboard($ctrl.activitySharing.url,'link')"
-                   aria-label={{$ctrl.ActivitySharingDialogValues.buttons.arialLabel}}
-                   ng-disabled="!$ctrl.liveLink">
-          <md-icon class="">content_copy</md-icon>
-          <md-tooltip md-direction="right">
-            {{$ctrl.ActivitySharingDialogValues.buttons.copyLink.tooltip}}
-          </md-tooltip>
-        </md-button>
-      </div>
 
-      <div>
-        <md-button ng-click="$ctrl.copyLinkToClipboard($ctrl.activitySharing.url,'msg')"
-                   class="md-raised md-primary" aria-label={{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.arialLabel}}
-                   ng-disabled="!$ctrl.liveLink" layout-fill>
-          <span class="md-caption" ng-show="$ctrl.liveLink"> {{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleActivity}}</span>
-          <span class="md-caption" ng-show="!$ctrl.liveLink">{{$ctrl.ActivitySharingDialogValues.buttons.copyMessageWithLink.titleInactivity}}</span>
+      <otus-checker-search class="space-between start">
+        filter-item="$ctrl.filterItem"
+        search-settings="$ctrl.searchSettings"
+        change-watcher="$ctrl.changePaginationViewState()"
+        placeholder-title="{{item.translatedTitle}}">
+      </otus-checker-search>
+
+      <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30"
+                          layout-align="space-between start">
+
+        <md-button ng-click="$ctrl.createActivity()" class="md-raised md-primary"
+                   aria-label={{$ctrl.dialogValues.buttons.createActivity.arialLabel}} layout-fill>
+          <span class="md-caption">{{$ctrl.dialogValues.buttons.createActivity.title}}</span>
         </md-button>
-      </div>
+      </md-input-container>
     </div>
+
+
   </md-dialog-content>
 </md-dialog>
