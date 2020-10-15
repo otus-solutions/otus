@@ -39,6 +39,7 @@
     self.createFollowUpActivity = createFollowUpActivity;
     self.reopenActivity = reopenActivity;
     self.getAllByStageGroup = getAllByStageGroup;
+    self.discardActivity = discardActivity;
 
     function listAll(participant) {
       if (!participant) {
@@ -157,7 +158,7 @@
     }
 
     function _toDbObject(entity) {
-      var dbObject = entity.toJSON();
+      var dbObject = entity.toJSON;
       dbObject.$loki = entity.$loki;
       dbObject.meta = entity.meta;
       dbObject.isDiscarded = entity.isDiscarded;
@@ -232,6 +233,10 @@
       ActivityCollectionService.useParticipant(participant);
 
       return ActivityCollectionService.getAllByStageGroup(participant);
+    }
+
+    function discardActivity(activityId, participant) {
+      ActivityCollectionService.discardActivity(activityId, participant);
     }
 
   }

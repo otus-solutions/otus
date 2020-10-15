@@ -13,7 +13,7 @@
             <div class="activity-acronym" layout="row" layout-align="center center" layout-align-xs="start center">
               <md-chips layout-padding="">
                 <md-chip>
-                  <strong>{{ activity.acronym}}</strong>
+                  <strong>{{activity.acronym}}</strong>
                 </md-chip>
               </md-chips>
             </div>
@@ -44,9 +44,9 @@
               </md-tooltip>
             </div>
             <div class="activity-group-mode" layout="row" layout-align="center center">
-              <md-icon md-font-set="material-icons">{{item.attributeMode.icon}}</md-icon>
+              <md-icon md-font-set="material-icons">{{item.lastStatus.mode.icon}}</md-icon>
               <md-tooltip md-direction="top">
-                {{item.attributeMode.label}}
+                {{item.lastStatus.mode.label}}
               </md-tooltip>
               </md-icon>
             </div>
@@ -61,13 +61,13 @@
             </div>
             <div class="activity-button" layout="row" layout-align="end center" layout-align-xs="space-around center"
               ng-show="$id == item.actionButtons">
-              <md-button class="md-icon-button md-warn" aria-label="Excluir" ng-click="$ctrl.deleteSelectedActivity()">
+              <md-button class="md-icon-button md-warn" aria-label="Excluir"
+                ng-click="$ctrl.deleteSelectedActivity(item)">
                 <md-tooltip md-direction="top">Excluir</md-tooltip>
                 <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
               </md-button>
               <md-button class="md-accent md-icon-button" aria-label="Preencher Atividade"
-                ng-click="$ctrl.fillSelectedActivity(item)"
-                ng-show="$ctrl.showFillingButton(item.mode)">
+                ng-click="$ctrl.fillSelectedActivity(item)" ng-show="$ctrl.showFillingButton(item.mode)">
                 <md-tooltip md-direction="top">Preencher Atividade</md-tooltip>
                 <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
               </md-button>

@@ -47,6 +47,7 @@
     self.clearSelectedActivities = clearSelectedActivities;
     self.reopenActivity = reopenActivity;
     self.getAllByStageGroup = getAllByStageGroup;
+    self.discardActivity = discardActivity;
 
     function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -220,6 +221,13 @@
       return getSelectedParticipant()
         .then(function (selectedParticipant) {
           return ActivityRepositoryService.getAllByStageGroup(selectedParticipant);
+        });
+    }
+
+    function discardActivity(activityId) {
+      getSelectedParticipant()
+        .then(function (selectedParticipant) {
+          ActivityRepositoryService.discardActivity(activityId, selectedParticipant);
         });
     }
   }

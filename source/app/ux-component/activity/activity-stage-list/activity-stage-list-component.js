@@ -22,15 +22,17 @@
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.activity.business.ActivityPlayerService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.model.activity.ActivityBasicFactory'
+    'otusjs.model.activity.ActivityBasicFactory',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast, $mdColors, ACTIVITY_MANAGER_LABELS, EventService, LoadingScreenService, ParticipantActivityService, ActivityPlayerService, ApplicationStateService, ActivityBasicFactory) {
+  function Controller($mdToast, $mdColors, ACTIVITY_MANAGER_LABELS, EventService, LoadingScreenService, ParticipantActivityService, ActivityPlayerService, ApplicationStateService, ActivityBasicFactory, DialogService) {
     var self = this;
 
-  /* Public methods */
+    /* Public methods */
     self.fillSelectedActivity = fillSelectedActivity;
     self.showFillingButton = showFillingButton;
+    self.deleteSelectedActivity = deleteSelectedActivity;
 
     self.$onInit = onInit;
 
@@ -48,6 +50,7 @@
         self.stages.map(stage => {
           stage.acronyms.forEach(acronym => { _activityAttributes(acronym.activities) })
         });
+        console.log(self.stages)
       })
       LoadingScreenService.finish();
     }
@@ -55,7 +58,7 @@
     function _activityAttributes(activities) {
       return activities.forEach(activity => {
         activity = ActivityBasicFactory.fromJsonObject(activity);
-        activity.attributeMode = Object.values(ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE)
+        activity.lastStatus.mode = Object.values(ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE)
           .find(status => status.name === activity.mode);
         activity.lastStatus.status = Object.values(ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS)
           .find(status => status.name === activity.lastStatus.name);
@@ -82,6 +85,18 @@
 
     function showFillingButton(mode) {
       return !(mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name);
+    }
+
+    function deleteSelectedActivity(itemActivity) {
+
+      DialogService.showConfirmationDialog(
+        'Confirmar exclusão de atividade:',
+        'A atividade será excluida.',
+        'Confirmação de exclusão'
+      ).then(function () {
+        ParticipantActivityService.discardActivity(itemActivity._id);
+        _loadActivityStages();
+      });
     }
 
     //TODO create service for activities

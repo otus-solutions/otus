@@ -28,6 +28,7 @@
     self.createFollowUpActivity = createFollowUpActivity;
     self.reopen = reopen;
     self.getAllByStageGroup = getAllByStageGroup;
+    self.discardActivity = discardActivity;
 
     function initialize() {
       _rest = OtusRestResourceService.getActivityResource();
@@ -208,13 +209,17 @@
       ];
 
       var response = {};
-        response = {
-          data: stages
-        };
+      response = {
+        data: stages
+      };
 
-     // return Promise.resolve(response);
+      // return Promise.resolve(response);
 
       return _rest.getAllByStageGroup({ rn: recruitmentNumber }).$promise;
+    }
+
+    function discardActivity(activityId, recruitmentNumber) {
+      _rest.discard({ id: activityId, rn: recruitmentNumber });
     }
 
   }

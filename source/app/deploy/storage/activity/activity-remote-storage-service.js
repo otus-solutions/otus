@@ -49,6 +49,7 @@
     self.deleteSharedURL = deleteSharedURL;
     self.reopenActivity = reopenActivity;
     self.getAllByStageGroup = getAllByStageGroup;
+    self.discardActivity = discardActivity;
 
     /**
      * Adds activities to collection.
@@ -326,6 +327,10 @@
 
     function getAllByStageGroup(participant) {
       return ActivityRestService.getAllByStageGroup(participant.recruitmentNumber);
+    }
+
+    function discardActivity(activityId, participant) {
+      ActivityRestService.discardActivity(activityId, participant.recruitmentNumber);
     }
 
   }
