@@ -1,6 +1,6 @@
 <style>
   .dialog-layout {
-    width: 25vw;
+    width: 30vw;
     background-color: #f3f3f3;
   }
 
@@ -37,10 +37,10 @@
     <div layout="column" layout-margin>
       <div layout="row" layout-align="space-between center">
         <md-chips>
-          <md-chip class="md-caption" md-colors="{background: 'primary'}">{{ $ctrl.data.activity.surveyForm.acronym }}
+          <md-chip class="md-caption" md-colors="{background: 'primary'}">{{ $ctrl.surveyForm.acronym }}
           </md-chip>
         </md-chips>
-        <span class="md-body-1">{{ $ctrl.data.activity.surveyForm.name }}</span>
+        <span class="md-body-1">{{ $ctrl.surveyForm.name }}</span>
       </div>
       <div layout="row" layout-align="center">
         <span class="md-body-2">{{ $ctrl.data.activity.participantData.name}}</span>

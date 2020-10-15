@@ -17,6 +17,7 @@
     self.dialogValues = OtusExpressActivityCreatorDialogValues;
     self.categories = [];
     self.optionModes = [];
+    self.surveyForm = {};
 
     self.$onInit = onInit;
     self.createActivity = createActivity;
@@ -56,9 +57,11 @@
         .then(response => self.categories = response);
     }
 
-
-    function _getSurveyByAcronym(acronym) {
-      // ParticipantActivityService.
+    function _getSurveyByAcronym(acronym = 'TCLEC') {
+      ParticipantActivityService.listAvailables()
+        .then(surveyForms => surveyForms.find(surveyForm => surveyForm.acronym === acronym))
+        .then( surveyfound => self.surveyForm = surveyfound)
+        .catch(e => console.info(e));
     }
   }
 
