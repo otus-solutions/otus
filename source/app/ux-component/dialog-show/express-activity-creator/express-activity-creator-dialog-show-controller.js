@@ -14,11 +14,9 @@
 
   function Controller(ParticipantActivityService, OtusExpressActivityCreatorDialogValues, CheckerItemFactory, ACTIVITY_MANAGER_LABELS){
     const self = this;
-    // self.checkers = ParticipantActivityService.listActivityCheckers().map(CheckerItemFactory.create);
     self.dialogValues = OtusExpressActivityCreatorDialogValues;
     self.categories = [];
     self.optionModes = [];
-
 
     self.$onInit = onInit;
     self.createActivity = createActivity;
@@ -26,10 +24,13 @@
     function onInit(){
       _loadOptionModes();
       _loadCategories();
+      _getSurveyByAcronym(self.data.preActivityArtefacts.acronym);
     }
 
     function createActivity(){
       alert("createActivity");
+      console.info(self.data)
+
     }
 
 
@@ -53,6 +54,11 @@
     function _loadCategories() {
       ParticipantActivityService.listAllCategories()
         .then(response => self.categories = response);
+    }
+
+
+    function _getSurveyByAcronym(acronym) {
+      // ParticipantActivityService.
     }
   }
 

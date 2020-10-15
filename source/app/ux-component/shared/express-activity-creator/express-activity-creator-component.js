@@ -8,10 +8,8 @@
       templateUrl: 'app/ux-component/shared/express-activity-creator/express-activity-creator-template.html',
       bindings: {
         acronym: '<',
-        categories: '<',
-        types: '<',
         participant: '<',
-        checkers: '<'
+        ActivityCreatorResponseCallback: '<',
       }
     }).controller('otusExpressActivityCreatorCtrl', Controller);
 
@@ -23,11 +21,26 @@
     const self = this;
 
     /* Public methods */
+    self.$onInit = onInit;
     self.saveActivity = saveActivity;
 
+    function onInit() {
+      self.preActivityArtefacts = {};
+    }
 
-    function saveActivity(data, isExternalID) {
-      DialogShowService.showExpressActivityCreationDialog({}, true, );
+
+    function saveActivity() {
+      self.preActivityArtefacts = {
+        acronym: self.acronym,
+        participant: self.participant,
+        activityCreatorResponseCallback: self.activityCreatorResponseCallback
+      }
+      try{
+        DialogShowService.showExpressActivityCreationDialog(self.preActivityArtefacts, true);
+      }
+      catch(e){
+        alert("cancelou a criação");
+      }
     }
   }
 
