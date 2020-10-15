@@ -2,7 +2,7 @@
   .stage-list-layout {
     display: grid;
     align-items: center;
-    height: 12vh;
+    height: 14vh;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-template-areas:
@@ -47,7 +47,7 @@
     margin: 4px;
   }
 
-  .marginLeftRigh {
+  .margin-left-right {
     margin: 0 2px 4px 2px;
   }
 }
@@ -91,7 +91,7 @@
     margin: 4px;
   }
 
-  .marginLeftRigh {
+  .margin-left-right {
     margin: 0 8px 0 8px;
   }
 }
@@ -135,7 +135,7 @@
     margin: 4px;
   }
 
-  .marginLeftRigh {
+  .margin-left-right {
     margin: 0 8px 0 8px;
   }
 }
@@ -179,7 +179,7 @@
     margin: 4px;
   }
 
-  .marginLeftRigh {
+  .margin-left-right {
     margin: 0 8px 0 8px;
   }
 }
@@ -224,7 +224,7 @@
     margin: 4px;
   }
 
-  .marginLeftRigh {
+  .margin-left-right {
     margin: 0 20px 0 20px;
   }
 }
@@ -269,13 +269,13 @@
     margin: 0 28px 4px 28px;
   }
 
-  .marginLeftRigh {
+  .margin-left-right {
     margin: 0 24px 0 24px;
   }
+}
 
-  .margin-not-top {
-    margin: 10px 0 0 0;
-  }
+.margin-not-top {
+  margin: 16px 0 0 16px;
 }
 
 .activity-acronym {
@@ -292,7 +292,7 @@
 
 .activity-list-layout:hover {
   background-color: rgba(158, 158, 158, 0.1);
-  box-shadow: 0 1px 8px 0 rgba(0,0,0,.2), 0 3px 4px 0 rgba(0,0,0,.14), 0 3px 3px -2px rgba(0,0,0,.12);
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
   transition: 0.3s;
 }
 

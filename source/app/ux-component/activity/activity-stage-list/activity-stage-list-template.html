@@ -2,13 +2,13 @@
 
 <md-content ng-cloak>
   <div class="layout-margin">
-    <md-card class="layout-margin">
+    <md-card>
       <h2 class="md-display-1" ng-show="$ctrl.stages.length == 0">
         Etapas Não Adicionada
       </h2>
-      <md-list class="layout-margin-card" ng-repeat="stages in $ctrl.stages track by $index">
-        <h2 class="md-title margin-not-top">{{stages.stageName}}</h2>
-        <md-list class="marginLeftRight" ng-repeat="activity in stages.acronyms track by $index">
+      <md-list ng-repeat="stages in $ctrl.stages track by $index">
+        <h2 class="md-headline margin-not-top">{{stages.stageName}}</h2>
+        <md-list class="margin-left-right" ng-repeat="activity in stages.acronyms track by $index">
           <div class="stage-list-layout">
             <div class="activity-acronym" layout="row" layout-align="center center" layout-align-xs="start center">
               <md-chips layout-padding="">
@@ -76,6 +76,7 @@
         </md-list>
         <md-divider ng-hide="$index == $ctrl.stages.length -1"></md-divider>
       </md-list>
+      <md-divider ng-hide="$index == $ctrl.stages.length -1"></md-divider>
     </md-card>
   </div>
 </md-content>
