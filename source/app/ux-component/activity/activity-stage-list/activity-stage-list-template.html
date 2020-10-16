@@ -13,12 +13,12 @@
             <div class="activity-acronym" layout="row" layout-align="center center" layout-align-xs="start center">
               <md-chips layout-padding="">
                 <md-chip>
-                  <strong>{{activity.acronym}}</strong>
+                  <strong class="text-size">{{activity.acronym}}</strong>
                 </md-chip>
               </md-chips>
             </div>
             <div class="activity-name" layout="row" layout-align-xs="center center">
-              <span class="md-title">{{activity.name}}</span>
+              <span class="md-title text-size margin-left">{{activity.name}}</span>
             </div>
             <div class="activity-button" layout="row" layout-align="end center">
               <md-button class="md-icon-button md-accent" ng-click="">
@@ -36,28 +36,43 @@
           </md-card>
           <md-card class="activity-list-layout" ng-repeat="item in activity.activities track by $id(item)"
             ng-mouseover="item.actionButtons = $id" ng-mouseleave="item.actionButtons = false">
-            <div class="activity-group-status" layout="row" layout-align="center center">
+            <div class="activity-status" layout="row" layout-align="center center">
               <md-icon md-font-set="material-icons" ng-style="{color: item.lastStatus.status.color}">
                 {{item.lastStatus.status.icon}}</md-icon>
               <md-tooltip md-direction="top">
                 {{item.lastStatus.status.label}}
               </md-tooltip>
             </div>
-            <div class="activity-group-mode" layout="row" layout-align="center center">
+            <div class="activity-mode" layout="row" layout-align="center center">
               <md-icon md-font-set="material-icons">{{item.lastStatus.mode.icon}}</md-icon>
               <md-tooltip md-direction="top">
                 {{item.lastStatus.mode.label}}
               </md-tooltip>
               </md-icon>
             </div>
-            <div class="activity-group-date" layout="row" layout-align="center center">
+            <div class="activity-date" layout="row" layout-align="center center">
               <span class="md-body-2">{{item.lastStatus.realizationDate}}</span>
+              <md-tooltip md-direction="top">
+                Data de realização
+              </md-tooltip>
             </div>
-            <div class="activity-group-user-email" layout="row" layout-align="center center">
+            <div class="activity-user-email" layout="row" layout-align="center center">
               <span class="md-body-2">{{item.lastStatus.user.email}}</span>
+              <md-tooltip md-direction="top">
+                Realizado por
+              </md-tooltip>
             </div>
-            <div class="activity-group-externalID" layout="row" layout-align="center center">
+            <div class="activity-category" layout="row" layout-align="center center">
+              <span class="md-body-2">{{item.category}}</span>
+              <md-tooltip md-direction="top">
+                Categoria
+              </md-tooltip>
+            </div>
+            <div class="activity-externalID" layout="row" layout-align="center center">
               <span class="md-body-2">{{item.externalId}}</span>
+              <md-tooltip md-direction="top">
+                ID Externo
+              </md-tooltip>
             </div>
             <div class="activity-button" layout="row" layout-align="end center" layout-align-xs="space-around center"
               ng-show="$id == item.actionButtons">

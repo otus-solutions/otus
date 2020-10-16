@@ -2,7 +2,7 @@
   .stage-list-layout {
     display: grid;
     align-items: center;
-    height: 14vh;
+    height: 17.2vh;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 1fr;
     grid-template-areas:
@@ -13,21 +13,21 @@
   .activity-list-layout {
     display: grid;
     align-items: center;
-    height: 21.5vh;
+    height: 23.5vh;
     grid-template-columns: 0.2fr 1fr;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 1fr);
     grid-template-areas:
-      "activity-group-status     activity-group-date"
-      "activity-group-status     activity-group-user-email"
-      "activity-group-mode       activity-group-externalID"
-      "activity-group-mode            activity-button"
-      "activity-group-mode            activity-button";
+      "activity-status     activity-date"
+      "activity-status     activity-user-email"
+      "activity-mode       activity-category"
+      "activity-mode        activity-externalID"
+      "activity-mode        activity-button";
   }
 
   .activity-null-layout {
     display: grid;
     align-items: center;
-    height: 8vh;
+    height: 6vh;
     grid-template-columns: 0.1fr 1fr;
     grid-template-rows: 1fr;
     grid-template-areas:
@@ -35,8 +35,12 @@
       ".    activity-null";
   }
 
-  .margin16 {
-    margin: 0;
+  .text-size {
+    font-size: 3.3vw;
+  }
+
+  .margin-left {
+    margin-left: 6px;
   }
 
   .layout-margin {
@@ -56,7 +60,7 @@
   .stage-list-layout {
     display: grid;
     align-items: center;
-    height: 15vh;
+    height: 16vh;
     grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
@@ -65,9 +69,9 @@
     display: grid;
     align-items: center;
     height: 15.5vh;
-    grid-template-columns: 0.2fr 0.2fr repeat(4, 1fr);
+    grid-template-columns: 0.2fr 0.2fr repeat(5, 1fr);
     grid-template-rows: 1fr;
-    grid-template-areas: "activity-group-status     activity-group-mode      activity-group-date      activity-group-user-email     activity-group-externalID     activity-button";
+    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
   }
 
   .activity-null-layout {
@@ -77,10 +81,6 @@
     grid-template-columns: 0.1fr repeat(4, 1fr);
     grid-template-rows: 1fr;
     grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
-  }
-
-  .margin16 {
-    margin: 16px;
   }
 
   .layout-margin {
@@ -93,6 +93,10 @@
 
   .margin-left-right {
     margin: 0 8px 0 8px;
+  }
+
+  .text-size {
+    font-size: 2vw;
   }
 }
 
@@ -109,9 +113,9 @@
     display: grid;
     align-items: center;
     height: 6.5vh;
-    grid-template-columns: 0.2fr 0.2fr repeat(4, 1fr);
+    grid-template-columns: 0.3fr 0.3fr repeat(5, 1fr);
     grid-template-rows: 1fr;
-    grid-template-areas: "activity-group-status     activity-group-mode      activity-group-date      activity-group-user-email     activity-group-externalID     activity-button";
+    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
   }
 
   .activity-null-layout {
@@ -121,10 +125,6 @@
     grid-template-columns: 0.1fr repeat(4, 1fr);
     grid-template-rows: 1fr;
     grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
-  }
-
-  .margin16 {
-    margin: 16px;
   }
 
   .layout-margin {
@@ -137,6 +137,10 @@
 
   .margin-left-right {
     margin: 0 8px 0 8px;
+  }
+
+  .text-size {
+    font-size: 2vw;
   }
 }
 
@@ -153,9 +157,9 @@
     display: grid;
     align-items: center;
     height: 15.5vh;
-    grid-template-columns: 0.2fr 0.2fr repeat(4, 1fr);
+    grid-template-columns: 0.2fr 0.2fr repeat(5, 1fr);
     grid-template-rows: 1fr;
-    grid-template-areas: "activity-group-status     activity-group-mode      activity-group-date      activity-group-user-email     activity-group-externalID     activity-button";
+    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
   }
 
   .activity-null-layout {
@@ -165,10 +169,6 @@
     grid-template-columns: 0.1fr repeat(4, 1fr);
     grid-template-rows: 1fr;
     grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
-  }
-
-  .margin16 {
-    margin: 16px;
   }
 
   .layout-margin {
@@ -182,13 +182,17 @@
   .margin-left-right {
     margin: 0 8px 0 8px;
   }
+
+  .text-size {
+    font-size: 2vw;
+  }
 }
 
 @media screen and (min-width: 1024px) {
   .stage-list-layout {
     display: grid;
     align-items: center;
-    height: 10vh;
+    height: 8vh;
     grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
@@ -197,10 +201,10 @@
   .activity-list-layout {
     display: grid;
     align-items: center;
-    height: 6.5vh;
-    grid-template-columns: 0.15fr 0.15fr repeat(4, 1fr);
+    height: 6vh;
+    grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
     grid-template-rows: 1fr;
-    grid-template-areas: "activity-group-status     activity-group-mode      activity-group-date      activity-group-user-email     activity-group-externalID     activity-button";
+    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email  activity-category   activity-externalID     activity-button";
   }
 
   .activity-null-layout {
@@ -217,7 +221,7 @@
   }
 
   .layout-margin {
-    margin: 8px;
+    margin: 4px;
   }
 
   .layout-margin-card {
@@ -226,6 +230,10 @@
 
   .margin-left-right {
     margin: 0 20px 0 20px;
+  }
+
+  .text-size {
+    font-size: 1.8vw;
   }
 }
 
@@ -243,9 +251,9 @@
     display: grid;
     align-items: center;
     height: 4.5vh;
-    grid-template-columns: 0.15fr 0.15fr repeat(4, 1fr);
+    grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
     grid-template-rows: 1fr;
-    grid-template-areas: "activity-group-status     activity-group-mode      activity-group-date      activity-group-user-email     activity-group-externalID     activity-button";
+    grid-template-areas: "activity-status     activity-mode      activity-date     activity-user-email   activity-category   activity-externalID     activity-button";
   }
 
   .activity-null-layout {
@@ -272,6 +280,10 @@
   .margin-left-right {
     margin: 0 24px 0 24px;
   }
+
+  .text-size {
+    font-size: 0.9vw;
+  }
 }
 
 .margin-not-top {
@@ -284,6 +296,10 @@
 
 .activity-name {
   grid-area: activity-name;
+}
+
+.activity-category {
+  grid-area: activity-category;
 }
 
 .activity-button {
@@ -301,28 +317,28 @@
   color: gray;
 }
 
-.activity-group-status {
-  grid-area: activity-group-status;
+.activity-status {
+  grid-area: activity-status;
 }
 
-.activity-group-mode {
-  grid-area: activity-group-mode;
+.activity-mode {
+  grid-area: activity-mode;
 }
 
-.activity-group-date {
-  grid-area: activity-group-date;
+.activity-date {
+  grid-area: activity-date;
 }
 
-.activity-group-user-email {
-  grid-area: activity-group-user-email;
+.activity-user-email {
+  grid-area: activity-user-email;
 }
 
-.activity-group-externalID {
-  grid-area: activity-group-externalID;
+.activity-externalID {
+  grid-area: activity-externalID;
 }
 
-.activity-group-buttons {
-  grid-area: activity-group-buttons;
+.activity-buttons {
+  grid-area: activity-buttons;
 }
 
 md-chips.md-default-theme .md-chips,

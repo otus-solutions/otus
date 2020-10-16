@@ -39,12 +39,11 @@
     }
 
     function _refreshActivityStage() {
-      LoadingScreenService.start();
       _loadActivityStages();
-      LoadingScreenService.finish();
     }
 
     function _loadActivityStages() {
+      LoadingScreenService.start();
       ParticipantActivityService.listAvailables().then(function (surveys) {
 
         ParticipantActivityService.getAllByStageGroup().then(stages => {
@@ -68,6 +67,7 @@
           $log.error(err);
           _showMsg(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.TOAST.ERROR.errorFind);
         })
+      LoadingScreenService.finish();
     }
 
     function _activityAttributes(activities) {
