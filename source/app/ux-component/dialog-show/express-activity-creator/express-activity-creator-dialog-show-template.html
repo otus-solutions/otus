@@ -41,9 +41,7 @@
           </md-chip>
         </md-chips>
         <span class="md-body-1">{{ $ctrl.surveyForm.name }}</span>
-      </div>
-      <div layout="row" layout-align="center">
-        <span class="md-body-2">{{ $ctrl.participant.name}}</span>
+        <span></span>
       </div>
 
       <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30"
@@ -74,11 +72,11 @@
       </md-datepicker>
 
 
-      <otus-checker-search class="space-between start">
+      <otus-checker-search class="space-between start"
         filter-item="$ctrl.filterItem"
         search-settings="$ctrl.searchSettings"
         change-watcher="$ctrl.changePaginationViewState()"
-        placeholder-title="{{item.translatedTitle}}">
+        placeholder-title="Aferidor (a)">
       </otus-checker-search>
 
       <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()" md-no-float class="md-block" style="padding-top: 10px">

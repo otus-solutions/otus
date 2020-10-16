@@ -19,6 +19,7 @@
     self.optionModes = [];
     self.surveyForm = {};
     self.preActivity = {};
+    self.filterItem = {};
 
     self.$onInit = onInit;
     self.createActivity = createActivity;
@@ -59,7 +60,7 @@
     function createActivity(){
       alert("createActivity");
       // console.info(self.data);
-      console.info(self.participant)
+      console.info(self)
     }
 
   }
