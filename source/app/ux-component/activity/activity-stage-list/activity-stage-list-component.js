@@ -5,12 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusActivityStageList', {
       controller: 'otusActivityStageListCtrl as $ctrl',
-      templateUrl: 'app/ux-component/activity/activity-stage-list/activity-stage-list-template.html',
-      //TODO bindings rethink to use
-      bindings: {
-        stageDataSettings: "=",
-        updateFunction: '=?'
-      }
+      templateUrl: 'app/ux-component/activity/activity-stage-list/activity-stage-list-template.html'
     }).controller('otusActivityStageListCtrl', Controller);
 
   Controller.$inject = [
@@ -51,8 +46,6 @@
 
     function _loadActivityStages() {
       ParticipantActivityService.listAvailables().then(function (surveys) {
-        surveys;
-        console.log(surveys)
 
         ParticipantActivityService.getAllByStageGroup().then(stages => {
           stages.map(stage => {
@@ -65,8 +58,7 @@
               }
             }))
 
-            stage.acronyms = angular.copy(surveyFilter)
-            console.log(surveyFilter)
+            stage.acronyms = angular.copy(surveyFilter);
           });
 
           self.stages = stages;
@@ -74,7 +66,7 @@
       })
         .catch(err => {
           $log.error(err);
-          _showMsg('Ocorreu um error');
+          _showMsg(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.TOAST.ERROR.errorFind);
         })
     }
 
@@ -112,17 +104,15 @@
 
     function deleteSelectedActivity(itemActivity) {
 
-      DialogService.showConfirmationDialog(
-        'Confirmar exclusão de atividade:',
-        'A atividade será excluida.',
-        'Confirmação de exclusão'
+      DialogService.showConfirmationDialog(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.DIALOG.confirmDelete.dialogToTitle,
+        ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.DIALOG.confirmDelete.titleToText,
+        ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.DIALOG.confirmDelete.textDialog
       ).then(function () {
         ParticipantActivityService.discardActivity(itemActivity._id);
         _loadActivityStages();
       });
     }
 
-    //TODO create service for activities
     function _showMsg(msg) {
       $mdToast.show(
         $mdToast.simple()
