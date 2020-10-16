@@ -14,8 +14,8 @@
     }).controller('otusActivityStageListCtrl', Controller);
 
   Controller.$inject = [
+    '$log',
     '$mdToast',
-    '$mdColors',
     'ACTIVITY_MANAGER_LABELS',
     'otusjs.activity.core.EventService',
     'otusjs.deploy.LoadingScreenService',
@@ -26,7 +26,7 @@
     'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast, $mdColors, ACTIVITY_MANAGER_LABELS, EventService, LoadingScreenService, ParticipantActivityService, ActivityPlayerService, ApplicationStateService, ActivityBasicFactory, DialogService) {
+  function Controller($log, $mdToast, ACTIVITY_MANAGER_LABELS, EventService, LoadingScreenService, ParticipantActivityService, ActivityPlayerService, ApplicationStateService, ActivityBasicFactory, DialogService) {
     var self = this;
 
     /* Public methods */
@@ -40,19 +40,42 @@
 
     function onInit() {
       EventService.onParticipantSelected(_loadActivityStages);
+      _refreshActivityStage()
+    }
+
+    function _refreshActivityStage() {
+      LoadingScreenService.start();
       _loadActivityStages();
+      LoadingScreenService.finish();
     }
 
     function _loadActivityStages() {
-      LoadingScreenService.start();
-      ParticipantActivityService.getAllByStageGroup().then(stages => {
-        self.stages = stages;
-        self.stages.map(stage => {
-          stage.acronyms.forEach(acronym => { _activityAttributes(acronym.activities) })
+      ParticipantActivityService.listAvailables().then(function (surveys) {
+        surveys;
+        console.log(surveys)
+
+        ParticipantActivityService.getAllByStageGroup().then(stages => {
+          stages.map(stage => {
+            let surveyFilter = angular.copy(surveys);
+
+            surveyFilter.forEach(survey => stage.acronyms.find(acronym => {
+              if (acronym.acronym == survey.acronym) {
+                _activityAttributes(acronym.activities);
+                return survey.activities = acronym.activities;
+              }
+            }))
+
+            stage.acronyms = angular.copy(surveyFilter)
+            console.log(surveyFilter)
+          });
+
+          self.stages = stages;
         });
-        console.log(self.stages)
       })
-      LoadingScreenService.finish();
+        .catch(err => {
+          $log.error(err);
+          _showMsg('Ocorreu um error');
+        })
     }
 
     function _activityAttributes(activities) {
