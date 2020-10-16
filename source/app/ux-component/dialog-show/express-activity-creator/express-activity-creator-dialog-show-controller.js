@@ -5,19 +5,20 @@
     .controller('otusExpressActivityCreatorDialogController', Controller);
 
   Controller.$inject = [
-    'otusjs.activity.business.ParticipantActivityService',
+    'otusjs.otus.uxComponent.OtusExpressActivityCreatorDialogShowService',
     'otusjs.otus.uxComponent.OtusExpressActivityCreatorDialogValues',
     'otusjs.otus.uxComponent.CheckerItemFactory',
     'ACTIVITY_MANAGER_LABELS'
 
   ];
 
-  function Controller(ParticipantActivityService, OtusExpressActivityCreatorDialogValues, CheckerItemFactory, ACTIVITY_MANAGER_LABELS){
+  function Controller(ExpressActivityCreatorService, OtusExpressActivityCreatorDialogValues, CheckerItemFactory, ACTIVITY_MANAGER_LABELS){
     const self = this;
     self.dialogValues = OtusExpressActivityCreatorDialogValues;
     self.categories = [];
     self.optionModes = [];
     self.surveyForm = {};
+    self.preActivity = {};
 
     self.$onInit = onInit;
     self.createActivity = createActivity;
@@ -27,13 +28,6 @@
       _loadCategories();
       _getSurveyByAcronym(self.data.preActivityArtefacts.acronym);
     }
-
-    function createActivity(){
-      alert("createActivity");
-      console.info(self.data)
-
-    }
-
 
     function _loadOptionModes() {
       self.optionModes = [
@@ -53,16 +47,21 @@
     }
 
     function _loadCategories() {
-      ParticipantActivityService.listAllCategories()
+      ExpressActivityCreatorService.loadCategories()
         .then(response => self.categories = response);
     }
 
     function _getSurveyByAcronym(acronym = 'TCLEC') {
-      ParticipantActivityService.listAvailables()
-        .then(surveyForms => surveyForms.find(surveyForm => surveyForm.acronym === acronym))
-        .then( surveyfound => self.surveyForm = surveyfound)
-        .catch(e => console.info(e));
+      ExpressActivityCreatorService.getSurveyByAcronym(acronym)
+        .then(surveyFound => self.surveyForm = surveyFound);
     }
+
+    function createActivity(){
+      alert("createActivity");
+      // console.info(self.data);
+      console.info(self.participant)
+    }
+
   }
 
 }())

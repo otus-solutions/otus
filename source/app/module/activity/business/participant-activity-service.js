@@ -74,8 +74,6 @@
       LoadingScreenService.start();
 			_prepareActivities(preActivities)
 				.then(() => ActivityRepositoryService.saveActivities(self.activities))
-        //esse catch garante que ocorrerá a troca de state mesmo que ocorra erro no backend
-        //todo: remove
         .catch(() => {
           $mdToast.show(
             $mdToast.simple()
