@@ -118,17 +118,17 @@
       var index;
 
       var _participantAliquot = self.collectedAliquots.find(function (aliquot) {
-        return aliquot.code == aliquotRemoved.code;
+        return aliquot.code == aliquotRemoved.aliquotCode;
       });
 
       index = self.collectedAliquots.indexOf(_participantAliquot);
       self.collectedAliquots.splice(index, 1);
       if (aliquotRemoved.isConverted){
-        _removeConverted(aliquotRemoved.code);
+        _removeConverted(aliquotRemoved.aliquotCode);
       } else if (_participantAliquot.role === "EXAM") {
-        _removeExam(aliquotRemoved.code);
+        _removeExam(aliquotRemoved.aliquotCode);
       } else if (_participantAliquot.role === "STORAGE") {
-        removeStorage(aliquotRemoved.code);
+        removeStorage(aliquotRemoved.aliquotCode);
       }
     }
 

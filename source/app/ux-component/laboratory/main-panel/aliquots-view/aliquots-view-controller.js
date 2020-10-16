@@ -33,13 +33,13 @@
 
     const timeShowMsg = 3000;
 
+    self.selectedLocationPoint = {}
     self.tubeLength = 9;
     self.aliquotLengths;
     self.aliquotMaxLength;
     self.validations;
     self.deleteAliquot = deleteAliquot;
     self.tubeList = self.participantLaboratory.tubes;
-
     self.$onInit = onInit;
     self.selectMomentType = selectMomentType;
     self.selectedMomentType = undefined;
@@ -84,15 +84,40 @@
           position: 2
         }
       };
-
+      _getLocationPoints()
       selectMomentType(self.momentTypeList[0]);
-
+      _getUserLocationPoints();
       Publisher.unsubscribe('have-aliquots-changed');
       Publisher.subscribe('have-aliquots-changed', _haveAliquotsChanged);
-
       Publisher.unsubscribe('save-changed-aliquots');
       Publisher.subscribe('save-changed-aliquots', _saveAliquots);
+    }
 
+
+    function _getLocationPoints() {
+      Publisher.publish('location-points', (locationPoints) => {
+        self.locationPoints = locationPoints
+      })
+    }
+
+    function _getUserLocationPoints() {
+      Publisher.publish('user-location-points', (userLocationPoints) => {
+        self.userLocationPoints = userLocationPoints
+      })
+    }
+    function _getUserLocationPointsFiltered(oldLocationPoint) {
+      Publisher.publish('user-location-points', (userLocationPoints) => {
+        self.userLocationPoints = userLocationPoints
+        self.userLocationPointsFiltered = userLocationPoints.filter(userLocationPoint => {
+          return userLocationPoint._id !== oldLocationPoint._id
+        })
+      })
+    }
+
+    function _getSelectedLocationPoint(aliquot) {
+      Publisher.publish('selected-location-point', (locationPoint) => {
+        aliquot.locationPoint = locationPoint
+      })
     }
 
     function _buildMomentTypeList() {
@@ -121,8 +146,8 @@
               .then(function(data) {
                 self.selectedMomentType.updateTubes();
                 self.participantLaboratory.updateTubeList();
-                AliquotMessagesService.showToast(Validation.validationMsg.savedSuccessfully, timeShowMsg);
                 _setMomentType(self.selectedMomentType);
+                AliquotMessagesService.showToast(Validation.validationMsg.savedSuccessfully, timeShowMsg);
               })
               .catch(function(e) {
                 AliquotMessagesService.showToast(Validation.validationMsg.couldNotSave, timeShowMsg);
@@ -163,7 +188,6 @@
 
     function selectMomentType(momentType) {
       var toChange = false;
-
       if (self.selectedMomentType) {
         if (momentType != self.selectedMomentType) {
           if (AliquotTubeService.areFieldsChanged(self.selectedMomentType)) {
@@ -184,7 +208,7 @@
     }
 
     function _setMomentType(momentType) {
-      self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType);
+      self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType, self.locationPoints);
       _buildAvailableExamTypesArray(momentType);
 
       Validation.initialize(
@@ -371,7 +395,11 @@
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
       if (!aliquot.processing) _getDateTimeProcessing(aliquot);
-
+      if(!aliquot.locationPoint) {
+        _getSelectedLocationPoint(aliquot);
+        self.oldSelectedLocationPoints = [aliquot.locationPoint]
+        _getUserLocationPointsFiltered(self.oldSelectedLocationPoints[0])
+      }
       if (self.aliquotLengths.length === 1) {
         var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
         var runCompletePlaceholder = false;
