@@ -40,6 +40,7 @@
     self.convertStorageAliquot = convertStorageAliquot;
     self.deleteAliquot = deleteAliquot;
     self.getLaboratory = getLaboratory;
+    self.getLaboratoryByTube = getLaboratoryByTube;
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getCheckingExist = getCheckingExist;
@@ -259,6 +260,22 @@
         .then(function (remoteStorage) {
           return remoteStorage
             .getLaboratory(_participant.recruitmentNumber)
+            .then(function (laboratory) {
+              request.resolve(laboratory);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getLaboratoryByTube(tubeCode) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getLaboratoryByTube(tubeCode)
             .then(function (laboratory) {
               request.resolve(laboratory);
             });

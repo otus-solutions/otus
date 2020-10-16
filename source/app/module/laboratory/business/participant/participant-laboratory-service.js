@@ -18,6 +18,7 @@
   function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService) {
     var self = this;
     var _participantLaboratory;
+    var _participantLaboratory1;
     var _laboratoryConfiguration;
 
     _init();
@@ -26,6 +27,7 @@
     self.getSelectedParticipant = getSelectedParticipant;
     self.hasLaboratory = hasLaboratory;
     self.getLaboratory = getLaboratory;
+    self.getLaboratoryByTube = getLaboratoryByTube;
     self.onParticipantSelected = onParticipantSelected;
     self.generateLabels = generateLabels;
     self.getLoggedUser = getLoggedUser;
@@ -97,6 +99,20 @@
 
     function getLaboratory() {
       return _participantLaboratory;
+    }
+
+    function getLaboratoryByTube(tubeCode) {
+      var request = $q.defer()
+      return _getLaboratoryDescriptors()
+        .then(() => {
+          LaboratoryRepositoryService
+            .getLaboratoryByTube(tubeCode)
+            .then((laboratory) => {
+              _participantLaboratory1 = laboratory;
+              request.resolve(true);
+            })
+        })
+
     }
 
     function getLoggedUser() {

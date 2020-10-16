@@ -180,6 +180,7 @@
       self.labels = ParticipantLaboratoryService.generateLabels();
       self.labels.tubes = _orderTubesWithLabelNullAlphabetically(self.labels.tubes);
       self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
+      ParticipantLaboratoryService.getLaboratoryByTube("361122646")
       self.state = newState;
     }
 

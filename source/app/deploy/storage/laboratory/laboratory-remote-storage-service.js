@@ -34,6 +34,7 @@
     self.insert = insert;
     self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
+    self.getLaboratoryByTube = getLaboratoryByTube;
     self.update = update;
     self.updateAliquots = updateAliquots;
     self.deleteAliquot = deleteAliquot;
@@ -105,6 +106,18 @@
 
       LaboratoryRestService
         .getLaboratory(recruitmentNumber)
+        .then(function (response) {
+          deferred.resolve(response.data);
+        });
+
+      return deferred.promise;
+    }
+
+    function getLaboratoryByTube(tubeCode) {
+      var deferred = $q.defer();
+
+      LaboratoryRestService
+        .getLaboratoryByTube(tubeCode)
         .then(function (response) {
           deferred.resolve(response.data);
         });

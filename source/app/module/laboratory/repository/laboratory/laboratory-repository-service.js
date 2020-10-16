@@ -14,6 +14,7 @@
     /* Public methods */
     self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
+    self.getLaboratoryByTube = getLaboratoryByTube;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
     self.convertStorageAliquot = convertStorageAliquot;
@@ -58,6 +59,10 @@
     function getLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
       return LaboratoryCollectionService.getLaboratory();
+    }
+
+    function getLaboratoryByTube(tubeCode) {
+      return LaboratoryCollectionService.getLaboratoryByTube(tubeCode);
     }
 
     function updateLaboratoryParticipant(laboratory) {
