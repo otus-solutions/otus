@@ -8,7 +8,6 @@
       templateUrl: 'app/ux-component/shared/express-activity-creator/express-activity-creator-template.html',
       bindings: {
         acronym: '<',
-        participant: '<',
         ActivityCreatorResponseCallback: '<',
       }
     }).controller('otusExpressActivityCreatorCtrl', Controller);

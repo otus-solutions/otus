@@ -19,7 +19,7 @@
     self.optionModes = [];
     self.surveyForm = {};
     self.preActivity = {};
-    self.filterItem = {};
+
 
     self.$onInit = onInit;
     self.createActivity = createActivity;

@@ -70,16 +70,13 @@
                      layout-fill
                      md-min-date="vm.minDate" required>
       </md-datepicker>
-
-
       <otus-checker-search class="space-between start"
-        filter-item="$ctrl.filterItem"
-        search-settings="$ctrl.searchSettings"
-        change-watcher="$ctrl.changePaginationViewState()"
-        placeholder-title="Aferidor (a)">
+                           selected-item="$ctrl.checker"
+                           placeholder-title="Aferidor (a)">
       </otus-checker-search>
 
-      <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()" md-no-float class="md-block" style="padding-top: 10px">
+      <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()" md-no-float class="md-block"
+                          style="padding-top: 10px">
         <input name="externalId" ng-model="$ctrl.externalID" ng-change="$ctrl.updateExternalID($ctrl.externalID)"
                placeholder="Id externo" aria-label="Id externo" required>
         <md-tooltip md-direction="bottom">ID Externo</md-tooltip>
