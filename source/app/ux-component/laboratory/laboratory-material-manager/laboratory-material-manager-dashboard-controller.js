@@ -25,26 +25,23 @@
     function onInit() {
       self.tubeListMock = [
         {
-          code: 554433221,
-          type: "Gel",
-          collected: false,
-          metadata: false,
-          exams: [
-            {
-              isSaved: false,
-              aliquotId: "",
-              aliquotCode: "",
-              tubeMessage: "",
-              date: "20/12/2020",
-              processing: "20/12/2020"
+          recruitmentNumber : 1074830,
+          tube: {
+            objectType : "Tube",
+            type : "GEL",
+            moment : "FASTING",
+            code : "361122646",
+            groupName : "DEFAULT",
+            aliquots : [],
+            order : 1,
+            tubeCollectionData : {
+              objectType : "TubeCollectionData",
+              isCollected : false,
+              metadata : "",
+              operator : "erick@otus-solutions.com.br",
+              time : "2020-09-24T16:51:22.973Z"
             }
-          ]
-        },
-        {
-          code: 445566332,
-          type: "Gel",
-          collected: false,
-          metadata: false
+          }
         }
       ]
     }
@@ -55,13 +52,14 @@
 
     function isValidCode() {
       if(self.tubeCode.length === 9) {
-        const foundTube = self.tubeListMock.find(tube => tube.code == self.tubeCode)
+        const foundTube = self.tubeListMock.find(tube => tube.tube.code == self.tubeCode)
+        console.info(foundTube);
         if(foundTube) {
-          if(!foundTube.collected) {
-            foundTube.collected = true
+          if(!foundTube.tube.tubeCollectionData.isCollected) {
+            foundTube.tube.tubeCollectionData.isCollected = true
             self.collectedTubes.push(foundTube)
           } else {
-            toastDuplicated(foundTube.code)
+            toastDuplicated(foundTube.tube.code)
           }
         } else {
           toastError(self.tubeCode)
