@@ -278,7 +278,9 @@
             .getLaboratoryByTube(tubeCode)
             .then(function (laboratory) {
               request.resolve(laboratory);
-            });
+            }, function (e) {
+            request.reject(e);
+          })
         });
 
       return request.promise;

@@ -7,64 +7,115 @@
 
   Controller.$inject = [
     '$mdToast',
+    '$mdDialog',
     '$filter',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.participant.business.ParticipantManagerService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast, $filter, LoadingScreenService) {
+  function Controller($mdToast,$mdDialog, $filter, LoadingScreenService, ParticipantLaboratoryService, ParticipantManagerService, DialogService) {
     var self = this;
     self.tubeCode = "";
-    self.collectedTubes = [];
+    self.tube = {};
     self.selectedTube = {}
+
+    self.buttons = [
+      {
+        message:'Ok',
+        action:function(){$mdDialog.hide()},
+        class:'md-raised md-primary'
+      },
+      {
+        message:'Voltar',
+        action:function(){$mdDialog.cancel()},
+        class:'md-raised md-no-focus'
+      }
+    ];
+
+    self.confirmCancel = {
+      dialogToTitle:'Cancelamento',
+      titleToText:'Confirmar cancelamento:',
+      textDialog:'Alterações não finalizadas serão descartadas.',
+      ariaLabel:'Confirmação de cancelamento',
+      buttons: self.buttons
+    };
+
+    self.confirmFinish = {
+      dialogToTitle:'Salvar',
+      titleToText:'Confirmar alteração:',
+      textDialog:'Deseja salvar as alterações?',
+      ariaLabel:'Confirmação de finalização',
+      buttons: self.buttons
+    };
 
     self.$onInit = onInit;
 
     self.isValidCode = isValidCode;
-    self.selectTube = selectTube;
+    self.saveChangedTubes = saveChangedTubes;
+    self.cancelTube = cancelTube
 
     function onInit() {
-      self.tubeListMock = [
-        {
-          recruitmentNumber : 1074830,
-          tube: {
-            objectType : "Tube",
-            type : "GEL",
-            moment : "FASTING",
-            code : "361122646",
-            groupName : "DEFAULT",
-            aliquots : [],
-            order : 1,
-            tubeCollectionData : {
-              objectType : "TubeCollectionData",
-              isCollected : false,
-              metadata : "",
-              operator : "erick@otus-solutions.com.br",
-              time : "2020-09-24T16:51:22.973Z"
-            }
-          }
-        }
-      ]
+      LoadingScreenService.start()
+      ParticipantManagerService.setup().then(function (response) {
+        self.onReady = true;
+        LoadingScreenService.finish()
+      });
     }
 
-    function selectTube(tube) {
-      self.selectedTube = tube
+    function saveChangedTubes() {
+      console.info(self.newTube == self.tube)
+
+      if (self.newTube != self.tube) {
+        _updateChangedTubes(self.newTube);
+      } else {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent('Não existem alterações a serem salvas.')
+        );
+      }
     }
 
-    function isValidCode() {
-      if(self.tubeCode.length === 9) {
-        const foundTube = self.tubeListMock.find(tube => tube.tube.code == self.tubeCode)
-        console.info(foundTube);
-        if(foundTube) {
-          if(!foundTube.tube.tubeCollectionData.isCollected) {
-            foundTube.tube.tubeCollectionData.isCollected = true
-            self.collectedTubes.push(foundTube)
-          } else {
-            toastDuplicated(foundTube.tube.code)
-          }
-        } else {
-          toastError(self.tubeCode)
-        }
-        self.tubeCode = "";
+    function _updateChangedTubes(tube) {
+
+      const tubeStructure = {
+        tubes: [tube]
+      }
+
+      DialogService.showDialog(self.confirmFinish).then(function() {
+        ParticipantLaboratoryService.updateTubeCollectionData(tubeStructure).then(function() {
+          self.participantLaboratory.updateTubeList();
+          _showToastMsg('Registrado com sucesso!');
+        }).catch(function(e) {
+          _showToastMsg('Falha ao registrar coleta');
+        });
+      });
+    }
+
+    async function isValidCode(tubeCode) {
+      if(tubeCode.length == 9) {
+        await ParticipantLaboratoryService.getLaboratoryByTube(tubeCode).then(participantLaboratory => {
+            self.participantLaboratory = participantLaboratory
+          }).catch(e => {
+            toastError(tubeCode)
+          })
+        const foundTube = self.participantLaboratory.tubes.find(tube => {
+          return tube.code == tubeCode
+        })
+        self.tube = foundTube;
+        self.newTube = angular.copy(self.tube)
+      }
+      self.tubeCode = ""
+    }
+
+    function cancelTube() {
+      if(self.tube.hasOwnProperty('code')) {
+        return DialogService.showDialog(self.confirmCancel).then(function() {
+          self.tube = {}
+          self.newTube = {}
+          isValidCode(self.tubeCode)
+        });
       }
     }
 
@@ -76,10 +127,10 @@
       );
     }
 
-    function toastDuplicated(tubeCode) {
+    function _showToastMsg(msg) {
       $mdToast.show(
         $mdToast.simple()
-          .textContent('Tubo ' + tubeCode + ' já coletado')
+          .textContent(msg)
           .hideDelay(1000)
       );
     }

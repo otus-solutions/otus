@@ -12,13 +12,15 @@
     'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.laboratory.core.EventService',
     'otusjs.laboratory.participant.ParticipantLaboratoryFactory',
-    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService'
+    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
+    'otusjs.participant.business.ParticipantManagerService'
   ];
 
-  function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService) {
+  function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory,
+                   LaboratoryConfigurationService,
+                   ParticipantManagerService) {
     var self = this;
     var _participantLaboratory;
-    var _participantLaboratory1;
     var _laboratoryConfiguration;
 
     _init();
@@ -67,7 +69,6 @@
 
     function hasLaboratory() {
       var request = $q.defer();
-
       getSelectedParticipant()
         .then(function (participant) {
           _getLaboratoryDescriptors()
@@ -103,16 +104,24 @@
 
     function getLaboratoryByTube(tubeCode) {
       var request = $q.defer()
-      return _getLaboratoryDescriptors()
+      _getLaboratoryDescriptors()
         .then(() => {
           LaboratoryRepositoryService
             .getLaboratoryByTube(tubeCode)
             .then((laboratory) => {
-              _participantLaboratory1 = laboratory;
-              request.resolve(true);
+              if (laboratory !== 'null') {
+                const parsedLab = JSON.parse(laboratory)
+                const participant = ParticipantManagerService.getParticipant(parsedLab.recruitmentNumber.toString())
+                _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(), participant);
+                request.resolve(_participantLaboratory);
+              } else {
+                request.resolve(false);
+              }
+            }, function (e) {
+              request.reject(e);
             })
         })
-
+      return request.promise
     }
 
     function getLoggedUser() {

@@ -7,7 +7,7 @@
       <span layout-align="center center">Laboratórios</span>
     </div>
   </otus-dashboard-toolbar>
-  <div layout="row" layout-xs="column" flex>
+  <div layout="row" layout-xs="column" ng-style="{'margin': '0 auto', 'width': '940px'}">
     <div layout="row" layout-xs="column" layout-align="start start" layout-align-xs="center center" flex="50" flex-xs="100">
       <md-input-container class="remove-errors-spacer">
         <md-button ng-click="$ctrl.sampleTransportDashboard()" layout-align="center" layout-margin="">
@@ -33,28 +33,27 @@
   </div>
 
   <!-- tubelist -->
-  <div class="aliquots-container" layout="column" layout-align="center center" flex ng-style="{'width':'940px'}" >
-    <div layout="column" layout-align="start stretch" flex="25" flex-md="30" flex-offset="5">
+  <div class="aliquots-container" layout="column" layout-align="center" flex ng-style="{'max-width': '940px', 'margin': '0 auto'}">
+    <div layout="column" layout-align="center" flex="25" flex-md="30" flex-offset="5">
       <md-subheader class="md-no-sticky moment-type-title">
         Tubos
       </md-subheader>
 
-
       <md-input-container class="md-block" flex-gt-sm>
         <label>Código do tubo</label>
-        <input ng-model="$ctrl.tubeCode" ng-change="$ctrl.isValidCode()">
+        <input ng-model="$ctrl.tubeCode" ng-change="[$ctrl.isValidCode($ctrl.tubeCode), $ctrl.cancelTube()]">
       </md-input-container>
 
-      <md-list ng-repeat="collectedTube in $ctrl.collectedTubes" ng-if="$ctrl.collectedTubes.length > 0">
+      <md-list ng-if="$ctrl.tube.hasOwnProperty('code')">
 
         <div class="tube-list-view">
 
-          <md-card ng-click="$ctrl.selectTube(collectedTube)" ng-style="{'padding':'10px', 'width':'300px'}">
+          <md-card ng-style="{'padding':'10px'}">
 
             <div layout="row">
               <div layout="column" flex="10">
                 <div class="tube-design" ng-style="{'background-color': '#554466',
-                                                    'height':'80px', 'width':'10px',
+                                                    'height':'100px', 'width':'10px',
                                                     'margin-right':'10px',
                                                     'border': 'solid 1px #ccc',
                                                     'border-radius':'3px 3px 10px 10px'}">
@@ -63,17 +62,17 @@
               <div layout="column" flex="90">
                 <div layout="row" layout-align="start start" flex="65">
                   <div layout="column" flex="90">
-                    <span class="md-title">{{collectedTube.tube.type}} : {{collectedTube.tube.moment}}</span>
-                    <span class="md-subhead">{{collectedTube.tube.code}}</span>
+                    <span class="md-title">{{$ctrl.newTube.type}}</span>
+                    <span class="md-subhead">{{$ctrl.newTube.code}}</span>
                   </div>
                   <div layout="column" flex="10">
-                    <md-icon class="md-primary" md-font-set="material-icons" ng-show="collectedTube.collected">assignment_turned_in
+                    <md-icon class="md-primary" md-font-set="material-icons" ng-show="$ctrl.newTube.tubeCollectionData.isCollected">assignment_turned_in
                       <md-tooltip>Coletado</md-tooltip>
                     </md-icon>
-                    <md-icon md-font-set="material-icons" ng-show="!collectedTube.collected && collectedTube.metadata">not_interested
+                    <md-icon md-font-set="material-icons" ng-show="!$ctrl.newTube.tubeCollectionData.isCollected && $ctrl.newTube.tubeCollectionData.metadata">not_interested
                       <md-tooltip>Não coletado</md-tooltip>
                     </md-icon>
-                    <md-icon md-font-set="material-icons" ng-hide="collectedTube.collected || collectedTube.metadata">assignment_late
+                    <md-icon md-font-set="material-icons" ng-hide="$ctrl.newTube.tubeCollectionData.isCollected || $ctrl.newTube.tubeCollectionData.metadata">assignment_late
                       <md-tooltip>Aguardando</md-tooltip>
                     </md-icon>
                   </div>
@@ -81,7 +80,7 @@
                 <div layout="row" layout-align="space-between center" flex="50">
                   <div layout="column" flex="50">
                   </div>
-                  <md-checkbox class="md-checkbox-small md-primary" ng-model="collectedTube.metadata" ng-false-value="''" ng-true-value="'.vp'" name="partial_volume" aria-label="volume parcial" ng-click="$ctrl.setDirty()">
+                  <md-checkbox class="md-checkbox-small md-primary" ng-model="$ctrl.newTube.tubeCollectionData.metadata" ng-false-value="''" ng-true-value="'.vp'" name="partial_volume" aria-label="volume parcial">
                     <span class="md-caption">Volume Parcial</span>
                   </md-checkbox>
                 </div>
@@ -89,14 +88,15 @@
             </div>
           </md-card>
         </div>
-
+        <md-button class="md-raised md-primary" ng-click="$ctrl.saveChangedTubes()">COLETAR</md-button>
+        <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
       </md-list>
-      <div ng-if="$ctrl.collectedTubes.length < 1">
+      <div ng-if="!$ctrl.tube.hasOwnProperty('code')">
         <h2>Sem Tubos Coletados</h2>
       </div>
     </div>
-
-    <!-- <laboratory-aliquots-manager tube="$ctrl.selectedTube" flex></laboratory-aliquots-manager> -->
-    <md-button class="md-raised">COLETAR</md-button>
+    <div ng-if="$ctrl.tube.hasOwnProperty('code')">
+      <laboratory-aliquots-manager tube="$ctrl.selectedTube" flex></laboratory-aliquots-manager>
+    </div>
   </div>
 </div>
