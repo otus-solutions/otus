@@ -8,11 +8,6 @@
     padding: 0.5em;
   }
 
-  /*.md-whiteframe-1dp {*/
-  /*  background-color: #FFFFFF;*/
-  /*  padding-left: 0.5em;*/
-  /*}*/
-
   md-chips.md-default-theme .md-chips, md-chips .md-chips {
     box-shadow: none;
   }
@@ -20,6 +15,26 @@
   .activity-creation-form-layout {
     display: flex;
     flex-flow: column wrap;
+  }
+
+  .dateInput {
+    display: flex;
+    flex-flow: column;
+    margin-top: 1em;
+  }
+
+  .small-titles {
+    color: #717171;
+    margin: .8em 5px;
+  }
+
+  .checker-input {
+    display: flex;
+    flex-flow: column;
+  }
+
+  .external-id-input{
+    display: flex;
   }
 
 </style>
@@ -43,15 +58,15 @@
     <div layout="column" layout-margin>
       <div layout="row" layout-align="space-between center">
         <md-chips>
-          <md-chip class="md-caption" md-colors="{background: 'primary'}">{{ $ctrl.surveyForm.acronym }}
-          </md-chip>
+          <md-chip class="md-body-2">{{ $ctrl.surveyForm.acronym }}</md-chip>
         </md-chips>
         <span class="md-body-1">{{ $ctrl.surveyForm.name }}</span>
         <span></span>
       </div>
-      <form class="activity-creation-form-layout" name="$ctrl.activityCreationForm" ng-submit="$ctrl.createActivity()"
-            novalidate>
-        <md-input-container flex layout-align="space-between start">
+      <form class="activity-creation-form-layout"
+            name="$ctrl.activityCreationForm"
+            ng-submit="$ctrl.createActivity()" novalidate>
+        <md-input-container>
           <label>Tipo</label>
           <md-select class="form-control" aria-label="Tipo de Atividades" ng-model="$ctrl.preActivity.type" required>
             <md-option ng-repeat="activityType in $ctrl.optionModes track by $index" ng-selected="activity.isDefault"
@@ -61,11 +76,13 @@
           <md-tooltip md-direction="top">Tipo de Atividades</md-tooltip>
         </md-input-container>
 
-
-        <md-input-container flex layout-align="space-between start">
+        <md-input-container>
           <label>Categoria</label>
-          <md-select class="form-control" aria-label="Categoria" ng-model="$ctrl.preActivity.category" required>
-            <md-option ng-repeat="category in $ctrl.categories track by $index" ng-selected="category.isDefault"
+          <md-select class="form-control"
+                     aria-label="Categoria"
+                     ng-model="$ctrl.preActivity.category" required>
+            <md-option ng-repeat="category in $ctrl.categories track by $index"
+                       ng-selected="category.isDefault"
                        ng-value="category">{{category.label | uppercase}}
             </md-option>
           </md-select>
@@ -73,35 +90,42 @@
         </md-input-container>
 
 
-        <md-datepicker flex class="form-control"
-                       ng-model="$ctrl.preActivity.date"
-                       md-placeholder={{vm.Constant.DATE_FORMAT_TITLE}}
-                       md-min-date="vm.minDate" required>
-        </md-datepicker>
-
-        <otus-checker-search class="space-between start form-control"
-                             selected-item="$ctrl.preActivity.checker"
-                             placeholder-title="Aferidor (a)">
-        </otus-checker-search>
-
-        </md-input-container>
 
 
-        <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()" md-no-float class="md-block"
-                            style="padding-top: 10px">
+        <md-input-container ng-if="!$ctrl.surveyForm.isRequiredExternalID()" class="external-id-input">
           <label>ID Externo</label>
-          <input name="externalId" ng-model="$ctrl.preActivity.externalID"
-                 ng-change="$ctrl.updateExternalID($ctrl.externalID)"
+          <input name="externalId"
+                 ng-model="$ctrl.preActivity.externalID"
+                 ng-change="$ctrl.updateExternalID($ctrl.preActivity.externalID)"
                  placeholder="Id externo" aria-label="Id externo" required>
-          <md-tooltip md-direction="bottom">ID Externo</md-tooltip>
-        </md-input-container>
-        <md-input-container ng-if="!$ctrl.surveyForm.isRequiredExternalID()">
-          <small ng-style="{color:'#6e6e6e'}">Id externo não requerido *</small>
         </md-input-container>
 
-        <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30"
-                            layout-align="space-between start">
+        <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()">
+          <small class="small-titles">Id externo não requerido<sup>*</sup></small>
+        </md-input-container>
 
+
+          <div class="checker-input">
+            <small class="small-titles">Aferidor(a)<sup>*</sup></small>
+            <otus-checker-search class="form-control checker-input" name="checker"
+                                 selected-item="$ctrl.preActivity.checker"
+                                 placeholder-title="Escolha um Aferidor(a)">
+            </otus-checker-search>
+            <!--          <div class="" ng-messages="$ctrl.activityCreationForm.checker.$error">-->
+            <!--            <div ng-message="required">This is required!</div>-->
+            <!--          </div>-->
+          </div>
+
+          <div class="dateInput">
+            <small class="small-titles">Data de Aferição<sup>*</sup></small>
+            <md-datepicker class="form-control" required
+                           ng-model="$ctrl.preActivity.date"
+                           md-placeholder={{vm.Constant.DATE_FORMAT_TITLE}}
+                           md-min-date="$ctrl.configuration.minDate">
+            </md-datepicker>
+          </div>
+
+        <md-input-container>
           <md-button type="submit" class="md-raised md-primary"
                      aria-label={{$ctrl.dialogValues.buttons.createActivity.arialLabel}} layout-fill>
             <span class="md-caption">{{$ctrl.dialogValues.buttons.createActivity.title}}</span>
@@ -109,7 +133,6 @@
         </md-input-container>
       </form>
     </div>
-
 
   </md-dialog-content>
 </md-dialog>
