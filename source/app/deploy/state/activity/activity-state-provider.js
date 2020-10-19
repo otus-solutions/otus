@@ -1,4 +1,4 @@
-(function() {
+(function () {
   'use strict';
 
   angular
@@ -23,7 +23,6 @@
       name: STATE.PARTICIPANT_ACTIVITY,
       url: '/' + STATE.PARTICIPANT_ACTIVITY,
       template: '<otus-activity-manager layout="column" flex></otus-activity-manager>',
-      //template: '<otus-activity-stage-list layout="column" flex></otus-activity-stage-list>',
       data: {
         redirect: _redirect
       },
@@ -38,17 +37,17 @@
         Application
           .isDeployed()
           .then(function () {
-              try {
-                if (!permission.participantActivityAccess) {
-                  deferred.resolve(STATE.DASHBOARD);
-                  return;
-                }
-                deferred.resolve();
-              } catch (e) {
-                deferred.resolve(STATE.LOGIN);
+            try {
+              if (!permission.participantActivityAccess) {
+                deferred.resolve(STATE.DASHBOARD);
+                return;
               }
-            });
-        });
+              deferred.resolve();
+            } catch (e) {
+              deferred.resolve(STATE.LOGIN);
+            }
+          });
+      });
 
       return deferred.promise;
     }
@@ -62,7 +61,7 @@
     function _loadStateData(ActivityContextService, ParticipantContextService, SessionContextService, Application, ActivityDataSourceService) {
       Application
         .isDeployed()
-        .then(function() {
+        .then(function () {
           try {
             ParticipantContextService.restore();
             SessionContextService.restore();

@@ -7,11 +7,15 @@
         Etapas Não Adicionada
       </h2>
       <md-list ng-repeat="stages in $ctrl.stages track by $index">
-        <h2 class="md-headline margin-not-top">{{stages.stageName}}</h2>
-        <md-list class="margin-left-right" ng-repeat="activity in stages.acronyms track by $index">
+        <div class="margin-not-top bot-top" ng-style="{ 'border-image': 'linear-gradient(to left, rgb(255, 255, 255) 80%, {{$ctrl.colorCenter}} 95%, {{$ctrl.colorLeft}} 100%) 100%
+              0 100% 0/0 0 3px 0 stretch'}">
+          <h2 class="md-headline margin-not-top">{{stages.stageName}}</h2>
+          <h2 class="md-headline margin-not-top" ng-show="!stages.stageName">Atividades sem Etapas</h2>
+        </div>
+        <md-list ng-repeat="activity in stages.acronyms track by $id(activity)">
           <div class="stage-list-layout">
             <div class="activity-acronym" layout="row" layout-align="center center" layout-align-xs="start center">
-              <md-chips layout-padding="">
+              <md-chips>
                 <md-chip>
                   <strong class="text-size">{{activity.acronym}}</strong>
                 </md-chip>
@@ -89,7 +93,8 @@
             </div>
           </md-card>
         </md-list>
-        <md-divider ng-hide="$index == $ctrl.stages.length -1"></md-divider>
+        <md-divider ng-hide="$index == $ctrl.stages.length -1" ng-style="{'border': '3px solid {{$ctrl.colorLeft}}'}">
+        </md-divider>
       </md-list>
       <md-divider ng-hide="$index == $ctrl.stages.length -1"></md-divider>
     </md-card>

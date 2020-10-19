@@ -158,7 +158,7 @@
     }
 
     function _toDbObject(entity) {
-      var dbObject = entity.toJSON;
+      var dbObject = entity.toJSON();
       dbObject.$loki = entity.$loki;
       dbObject.meta = entity.meta;
       dbObject.isDiscarded = entity.isDiscarded;

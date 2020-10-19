@@ -10,6 +10,7 @@
 
   Controller.$inject = [
     '$log',
+    '$mdColors',
     '$mdToast',
     'ACTIVITY_MANAGER_LABELS',
     'otusjs.activity.core.EventService',
@@ -21,7 +22,7 @@
     'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($log, $mdToast, ACTIVITY_MANAGER_LABELS, EventService, LoadingScreenService, ParticipantActivityService, ActivityPlayerService, ApplicationStateService, ActivityBasicFactory, DialogService) {
+  function Controller($log, $mdColors, $mdToast, ACTIVITY_MANAGER_LABELS, EventService, LoadingScreenService, ParticipantActivityService, ActivityPlayerService, ApplicationStateService, ActivityBasicFactory, DialogService) {
     var self = this;
 
     /* Public methods */
@@ -32,6 +33,8 @@
     self.$onInit = onInit;
 
     self.stage = [];
+    self.colorCenter = $mdColors.getThemeColor('primary-hue-1-0.5');
+    self.colorLeft = $mdColors.getThemeColor('primary-hue-2');
 
     function onInit() {
       EventService.onParticipantSelected(_loadActivityStages);
@@ -58,6 +61,19 @@
             }))
 
             stage.acronyms = angular.copy(surveyFilter);
+            stage.acronyms.sort(function (a, b) {
+              var nameA = a.name.toUpperCase();
+              var nameB = b.name.toUpperCase();
+              if (nameA < nameB) {
+                return -1;
+              }
+              if (nameA > nameB) {
+                return 1;
+              }
+
+              return 0;
+            });
+
           });
 
           self.stages = stages;

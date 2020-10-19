@@ -192,7 +192,7 @@
   .stage-list-layout {
     display: grid;
     align-items: center;
-    height: 8vh;
+    height: 5.2vh;
     grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
@@ -240,8 +240,9 @@
 @media screen and (min-width: 1280px) {
   .stage-list-layout {
     display: grid;
+    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
-    height: 6vh;
+    height: 7vh;
     grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
@@ -287,7 +288,7 @@
 }
 
 .margin-not-top {
-  margin: 16px 0 0 16px;
+  margin: 16px 0 4px 16px;
 }
 
 .activity-acronym {
@@ -348,4 +349,15 @@ md-chips .md-chips {
 
 md-list {
   padding: 0;
+}
+
+.stage-list-layout:hover {
+  background-color: rgba(158, 158, 158, 0.1);
+  box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+  transition: 0.3s;
+}
+
+.bot-top {
+  border-style: solid;
+  border-width: 3px;
 }
