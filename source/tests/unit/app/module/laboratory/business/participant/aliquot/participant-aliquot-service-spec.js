@@ -68,7 +68,8 @@ describe('otusParticipantAliquotService', function() {
     date : "",
     time : "",
     processing : "",
-    isSaved : false
+    isSaved : false,
+    locationPoint: ''
     };
     var aliquot = [];
     aliquot.role = "EXAM";

@@ -15,40 +15,13 @@
     'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast,$mdDialog, $filter, LoadingScreenService, ParticipantLaboratoryService, ParticipantManagerService, DialogService) {
+  function Controller($mdToast,$mdDialog, $filter, LoadingScreenService,
+                      ParticipantLaboratoryService, ParticipantManagerService,
+                      DialogService) {
     var self = this;
     self.tubeCode = "";
     self.originalTube = {};
     self.selectedTube = {}
-
-    self.buttons = [
-      {
-        message:'Ok',
-        action:function(){$mdDialog.hide()},
-        class:'md-raised md-primary'
-      },
-      {
-        message:'Voltar',
-        action:function(){$mdDialog.cancel()},
-        class:'md-raised md-no-focus'
-      }
-    ];
-
-    self.confirmCancel = {
-      dialogToTitle:'Cancelamento',
-      titleToText:'Confirmar cancelamento:',
-      textDialog:'Alterações não finalizadas serão descartadas.',
-      ariaLabel:'Confirmação de cancelamento',
-      buttons: self.buttons
-    };
-
-    self.confirmFinish = {
-      dialogToTitle:'Salvar',
-      titleToText:'Confirmar alteração:',
-      textDialog:'Deseja salvar as alterações?',
-      ariaLabel:'Confirmação de finalização',
-      buttons: self.buttons
-    };
 
     self.$onInit = onInit;
 
@@ -67,9 +40,8 @@
 
     function isValidCode(tubeCode) {
       if(tubeCode.length === 9) {
-        ParticipantLaboratoryService.getLaboratoryByTube(tubeCode).then(participantLaboratory => {
+        ParticipantLaboratoryService.getLaboratoryByTube(tubeCode, ParticipantManagerService).then(participantLaboratory => {
             self.participantLaboratory = participantLaboratory
-
             const foundTube = self.participantLaboratory.tubes.find(tube => {
               return tube.code == tubeCode
             })
@@ -160,5 +132,34 @@
           .hideDelay(1000)
       );
     }
+
+    self.buttons = [
+      {
+        message:'Ok',
+        action:function(){$mdDialog.hide()},
+        class:'md-raised md-primary'
+      },
+      {
+        message:'Voltar',
+        action:function(){$mdDialog.cancel()},
+        class:'md-raised md-no-focus'
+      }
+    ];
+
+    self.confirmCancel = {
+      dialogToTitle:'Cancelamento',
+      titleToText:'Confirmar cancelamento:',
+      textDialog:'Alterações não finalizadas serão descartadas.',
+      ariaLabel:'Confirmação de cancelamento',
+      buttons: self.buttons
+    };
+
+    self.confirmFinish = {
+      dialogToTitle:'Salvar',
+      titleToText:'Confirmar alteração:',
+      textDialog:'Deseja salvar as alterações?',
+      ariaLabel:'Confirmação de finalização',
+      buttons: self.buttons
+    };
   }
 }());

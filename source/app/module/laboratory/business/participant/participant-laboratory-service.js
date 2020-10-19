@@ -12,13 +12,12 @@
     'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.laboratory.core.EventService',
     'otusjs.laboratory.participant.ParticipantLaboratoryFactory',
-    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
-    'otusjs.participant.business.ParticipantManagerService'
+    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService'
   ];
 
   function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory,
-                   LaboratoryConfigurationService,
-                   ParticipantManagerService) {
+                   LaboratoryConfigurationService
+  ) {
     var self = this;
     var _participantLaboratory;
     var _laboratoryConfiguration;
@@ -103,7 +102,7 @@
       return _participantLaboratory;
     }
 
-    function getLaboratoryByTube(tubeCode) {
+    function getLaboratoryByTube(tubeCode, ParticipantManagerService) {
       var request = $q.defer()
       _getLaboratoryDescriptors()
         .then(() => {

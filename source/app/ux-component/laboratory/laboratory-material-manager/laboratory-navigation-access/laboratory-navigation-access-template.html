@@ -1,0 +1,24 @@
+<div layout="row" layout-xs="column" ng-style="{'margin': '0 auto', 'max-width': '940px'}">
+  <div layout="row" layout-xs="column" layout-align-xs="center center">
+    <md-input-container class="remove-errors-spacer">
+      <md-button ng-show="$ctrl.userAccessToLaboratory.sampleTransportationAccess"  ng-click="$ctrl.sampleTransportDashboard()" layout-align="center" layout-margin="">
+        <md-icon>local_shipping</md-icon>Transporte de amostra
+      </md-button>
+    </md-input-container>
+    <md-input-container ng-show="$ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess" class="remove-errors-spacer">
+      <md-button ng-click="$ctrl.unattachedLaboratory()" layout-align="center" layout-margin="">
+        <md-icon>event_available</md-icon>Laboratório desvinculado
+      </md-button>
+    </md-input-container>
+    <md-input-container ng-show="$ctrl.userAccessToLaboratory.examLotsAccess" class="remove-errors-spacer">
+      <md-button ng-click="$ctrl.examsDashboard()" layout-align="center" layout-margin="">
+        <md-icon>event_note</md-icon>Lotes de exames
+      </md-button>
+    </md-input-container>
+    <md-input-container ng-show="$ctrl.userAccessToLaboratory.examSendingAccess" class="remove-errors-spacer">
+      <md-button ng-click="$ctrl.sendingExam()" layout-align="center" layout-margin="">
+        <md-icon>event_available</md-icon>Envios de exames
+      </md-button>
+    </md-input-container>
+  </div>
+</div>

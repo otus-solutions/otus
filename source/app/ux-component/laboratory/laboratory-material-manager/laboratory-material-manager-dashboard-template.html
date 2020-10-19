@@ -4,39 +4,16 @@
   </otus-dashboard-sidenav>
   <otus-dashboard-toolbar layout="row" flex="">
     <div flex layout="row" layout-align="center center" layout-margin>
-      <span layout-align="center center">Laboratórios</span>
+      <span layout-align="center center">Laboratório</span>
     </div>
   </otus-dashboard-toolbar>
-  <div layout="row" layout-xs="column" ng-style="{'margin': '0 auto', 'width': '940px'}">
-    <div layout="row" layout-xs="column" layout-align="start start" layout-align-xs="center center" flex="50" flex-xs="100">
-      <md-input-container class="remove-errors-spacer">
-        <md-button ng-click="$ctrl.sampleTransportDashboard()" layout-align="center" layout-margin="">
-          <md-icon>local_shipping</md-icon>Transporte de amostra
-        </md-button>
-      </md-input-container>
-      <md-input-container class="remove-errors-spacer">
-        <md-button ng-click="$ctrl.sampleTransportDashboard()" layout-align="center" layout-margin="">
-          <md-icon>event_note</md-icon>Lotes de exames
-        </md-button>
-      </md-input-container>
-      <md-input-container class="remove-errors-spacer">
-        <md-button ng-click="$ctrl.sendingExam()" layout-align="center" layout-margin="">
-          <md-icon>event_available</md-icon>Envios de exames
-        </md-button>
-      </md-input-container>
-      <md-input-container class="remove-errors-spacer">
-        <md-button ng-click="$ctrl.unattachedLaboratory()" layout-align="center" layout-margin="">
-          <md-icon>event_available</md-icon>Laboratório desvinculado
-        </md-button>
-      </md-input-container>
-    </div>
-  </div>
+  <laboratory-navigation-access></laboratory-navigation-access>
 
   <!-- tubelist -->
   <div class="aliquots-container" layout="column" layout-align="center" flex ng-style="{'max-width': '940px', 'margin': '0 auto'}">
     <div layout="column" layout-align="center" flex="25" flex-md="30" flex-offset="5">
       <md-subheader class="md-no-sticky moment-type-title">
-        Tubos
+        Coleta de tubos
       </md-subheader>
 
       <md-input-container class="md-block" flex-gt-sm>
