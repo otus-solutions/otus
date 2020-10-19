@@ -35,6 +35,7 @@
     self.stage = [];
     self.colorCenter = $mdColors.getThemeColor('primary-hue-1-0.5');
     self.colorLeft = $mdColors.getThemeColor('primary-hue-2');
+    self.colorStage = $mdColors.getThemeColor('primary-hue-1');
 
     function onInit() {
       EventService.onParticipantSelected(_loadActivityStages);

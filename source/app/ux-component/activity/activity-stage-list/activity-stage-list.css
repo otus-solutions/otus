@@ -1,11 +1,10 @@
 @media screen and (min-width: 360px) {
   .stage-list-layout {
     display: grid;
-    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 17.2vh;
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 1fr;
+    grid-template-rows: 0.6fr 1fr;
     grid-template-areas:
       "activity-acronym      activity-button"
       "activity-name         activity-name";
@@ -60,7 +59,6 @@
 @media screen and (min-width: 600px) {
   .stage-list-layout {
     display: grid;
-    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 16vh;
     grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
@@ -105,7 +103,6 @@
 @media screen and (min-width: 768px) {
   .stage-list-layout {
     display: grid;
-    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 8vh;
     grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
@@ -150,7 +147,6 @@
 @media screen and (min-width: 800px) {
   .stage-list-layout {
     display: grid;
-    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 15vh;
     grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
@@ -195,7 +191,6 @@
 @media screen and (min-width: 1024px) {
   .stage-list-layout {
     display: grid;
-    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 5.2vh;
     grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
@@ -245,7 +240,6 @@
 @media screen and (min-width: 1280px) {
   .stage-list-layout {
     display: grid;
-    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 7vh;
     grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
@@ -293,7 +287,11 @@
 }
 
 .margin-not-top {
-  margin: 16px 0 4px 16px;
+  margin: 0 0 16px 0;
+}
+
+.margin-bottom {
+  margin: 0 0 30px 0;
 }
 
 .activity-acronym {
@@ -349,7 +347,7 @@
 
 md-chips.md-default-theme .md-chips,
 md-chips .md-chips {
-  box-shadow: 0 0 !important;
+  box-shadow: none;
 }
 
 md-list {
@@ -362,7 +360,8 @@ md-list {
   transition: 0.3s;
 }
 
-.bot-top {
-  border-style: solid;
-  border-width: 3px;
+.new-chip-white {
+  width: auto;
+  color: white;
+  border-radius: 10px 50px 50px 10px;
 }
