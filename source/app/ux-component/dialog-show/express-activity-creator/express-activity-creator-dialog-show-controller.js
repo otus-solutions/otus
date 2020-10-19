@@ -58,9 +58,13 @@
     }
 
     function createActivity(){
+      if(self.activityCreationForm.$invalid){
+        alert("form invalid");
+        return;
+      }
       alert("createActivity");
       // console.info(self.data);
-      console.info(self)
+      console.info(self.preActivity)
     }
 
   }
