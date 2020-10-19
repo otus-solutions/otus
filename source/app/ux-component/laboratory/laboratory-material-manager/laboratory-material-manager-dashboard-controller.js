@@ -22,8 +22,8 @@
     self.tubeCode = "";
     self.originalTube = {};
     self.selectedTube = {}
-
     self.$onInit = onInit;
+    self.participantManagerService = ParticipantManagerService
 
     self.isValidCode = isValidCode;
     self.saveChangedTubes = saveChangedTubes;
@@ -51,7 +51,6 @@
               foundTube.collect()
             }
             self.newTube = foundTube
-            console.info(self.newTube)
             self.tubeCode = ""
           }).catch(e => {
             toastError(tubeCode)

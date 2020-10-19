@@ -106,6 +106,7 @@
     }
 
     function _buildMomentTypeList() {
+      console.info(self.participantLaboratory.tubes)
       self.momentTypeList = AliquotTubeService.buildMomentTypeList(self.participantLaboratory.tubes);
     }
 
