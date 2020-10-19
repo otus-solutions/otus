@@ -66,6 +66,7 @@
     }
 
 		function createPreActivity(survey, configuration, mode) {
+		   console.log(configuration)
 			let loggedUser = ContextService.getLoggedUser();
 			return PreActivityFactory.create(survey, configuration, mode, loggedUser);
 		}

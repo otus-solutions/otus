@@ -13,6 +13,7 @@
     const self = this;
     self.loadCategories = loadCategories;
     self.getSurveyByAcronym = getSurveyByAcronym;
+    self.createActivity = createActivity;
 
 
     function loadCategories() {
@@ -23,6 +24,24 @@
       return ParticipantActivityService.listAvailables()
         .then(surveyForms => surveyForms.find(surveyForm => surveyForm.acronym === acronym))
         .catch(e => console.info(e));
+    }
+
+    function _createPreActivity({survey, configuration, mode, paperActivityData, realizationDate} = preActivityArtefacts) {
+      try {
+        return ParticipantActivityService.createPreActivity(survey, configuration, mode);
+        if (mode == 'PAPER') {
+          alert("paper");
+        }
+      } catch (e) {
+      }
+    }
+
+    function createActivity(preActivityArtefacts) {
+      console.log(preActivityArtefacts);
+      let preActivity = _createPreActivity(preActivityArtefacts);
+      if (preActivity) {
+        alert("criar");
+      }
     }
 
 

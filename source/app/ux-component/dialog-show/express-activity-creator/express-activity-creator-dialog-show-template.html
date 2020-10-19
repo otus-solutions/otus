@@ -68,7 +68,7 @@
             ng-submit="$ctrl.createActivity()" novalidate>
         <md-input-container>
           <label>Tipo</label>
-          <md-select class="form-control" aria-label="Tipo de Atividades" ng-model="$ctrl.preActivity.type" required>
+          <md-select class="form-control" aria-label="Tipo de Atividades" ng-model="$ctrl.preActivityArtefacts.mode" required>
             <md-option ng-repeat="activityType in $ctrl.optionModes track by $index" ng-selected="activity.isDefault"
                        ng-value="activityType.mode">{{activityType.label | uppercase}}
             </md-option>
@@ -80,7 +80,7 @@
           <label>Categoria</label>
           <md-select class="form-control"
                      aria-label="Categoria"
-                     ng-model="$ctrl.preActivity.category" required>
+                     ng-model="$ctrl.preActivityArtefacts.configuration" required>
             <md-option ng-repeat="category in $ctrl.categories track by $index"
                        ng-selected="category.isDefault"
                        ng-value="category">{{category.label | uppercase}}
@@ -95,8 +95,8 @@
         <md-input-container ng-if="!$ctrl.surveyForm.isRequiredExternalID()" class="external-id-input">
           <label>ID Externo</label>
           <input name="externalId"
-                 ng-model="$ctrl.preActivity.externalID"
-                 ng-change="$ctrl.updateExternalID($ctrl.preActivity.externalID)"
+                 ng-model="$ctrl.preActivityArtefacts.externalID"
+                 ng-change="$ctrl.updateExternalID($ctrl.preActivityArtefacts.externalID)"
                  placeholder="Id externo" aria-label="Id externo" required>
         </md-input-container>
 
@@ -108,7 +108,7 @@
           <div class="checker-input">
             <small class="small-titles">Aferidor(a)<sup>*</sup></small>
             <otus-checker-search class="form-control checker-input" name="checker"
-                                 selected-item="$ctrl.preActivity.checker"
+                                 selected-item="$ctrl.preActivityArtefacts.checkerData"
                                  placeholder-title="Escolha um Aferidor(a)">
             </otus-checker-search>
             <!--          <div class="" ng-messages="$ctrl.activityCreationForm.checker.$error">-->
@@ -119,7 +119,7 @@
           <div class="dateInput">
             <small class="small-titles">Data de Aferição<sup>*</sup></small>
             <md-datepicker class="form-control" required
-                           ng-model="$ctrl.preActivity.date"
+                           ng-model="$ctrl.preActivityArtefacts.realizationDate"
                            md-placeholder={{vm.Constant.DATE_FORMAT_TITLE}}
                            md-min-date="$ctrl.configuration.minDate">
             </md-datepicker>

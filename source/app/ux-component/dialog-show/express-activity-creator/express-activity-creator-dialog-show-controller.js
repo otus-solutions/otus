@@ -18,7 +18,7 @@
     self.categories = [];
     self.optionModes = [];
     self.surveyForm = {};
-    self.preActivity = {};
+    self.preActivityArtefacts = {};
 
 
     self.$onInit = onInit;
@@ -64,7 +64,7 @@
       }
       alert("createActivity");
       // console.info(self.data);
-      console.info(self.preActivity)
+      ExpressActivityCreatorService.createActivity(self.preActivityArtefacts);
     }
 
   }
