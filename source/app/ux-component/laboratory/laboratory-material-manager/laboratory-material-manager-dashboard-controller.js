@@ -51,6 +51,7 @@
               foundTube.collect()
             }
             self.newTube = foundTube
+            console.info(self.newTube)
             self.tubeCode = ""
           }).catch(e => {
             toastError(tubeCode)
@@ -61,9 +62,8 @@
     function cancelTube() {
       if(self.originalTube.hasOwnProperty('code')) {
         return DialogService.showDialog(self.confirmCancel).then(function() {
-          self.tube = {}
+          self.originalTube = {}
           self.newTube = {}
-          isValidCode(self.tubeCode)
         });
       }
     }
