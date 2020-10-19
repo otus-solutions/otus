@@ -10,7 +10,9 @@
     '$element',
     'otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService',
     'otusjs.laboratory.configuration.LaboratoryConfigurationService',
-    'otusjs.laboratory.business.participant.aliquot.AliquotValidationService'
+    'otusjs.laboratory.business.participant.aliquot.AliquotValidationService',
+    'otusjs.deploy.LocationPointRestService',
+    'otusjs.model.locationPoint.LocationPointFactory'
   ];
 
   function Controller(
@@ -18,10 +20,21 @@
                       $element,
                       AliquotTubeService,
                       LaboratoryConfigurationService,
-                      Validation) {
+                      Validation,
+                      LocationPointRestService,
+                      LocationPointFactory) {
     var self = this;
 
     self.$onInit = onInit
+
+    self.now = new Date()
+    self.processingDate = new Date()
+    self.selectedLocationPoint = {}
+
+    self.aliquotInputOnChange = aliquotInputOnChange;
+    self.aliquotInputOnBlur = aliquotInputOnBlur;
+    self.updateExamsProcessingDate = updateExamsProcessingDate;
+    self.updateExamsLocationPoint = updateExamsLocationPoint;
 
 
     function onInit() {
@@ -60,6 +73,13 @@
         }
       };
       _setMomentType(self.momentTypeList[0])
+      fetchLocationPoints()
+    }
+
+    function fetchLocationPoints() {
+      LocationPointRestService.getUserLocationPoint().then(function (response) {
+        self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
+      });
     }
 
     function _buildMomentTypeList(tube) {
@@ -69,7 +89,6 @@
     function _setMomentType(momentType) {
       self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType);
       _buildAvailableExamTypesArray(momentType);
-      console.info(self.selectedMomentType)
 
       Validation.initialize(
         self.validations, self.tubeLength, self.aliquotLengths, clearAliquotError, clearTubeError, setAliquotError, setTubeError, self.selectedMomentType.exams, self.selectedMomentType.storages
@@ -114,6 +133,10 @@
         $element.find('#' + aliquot.tubeId).blur();
         $element.find('#' + aliquot.aliquotId).blur();
       });
+    }
+
+    function _nextFocus(aliquot) {
+      _nextFocusNotFilled(aliquot);
     }
 
     function _nextFocusNotFilled(currentAliquot) {
@@ -184,6 +207,75 @@
     function setTubeError(aliquot, msg) {
       aliquot.tubeMessage = msg;
       $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', false);
+    }
+
+    function aliquotInputOnChange(aliquot) {
+      $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
+      _clearContainer(aliquot);
+      if (!aliquot.processing) updateExamsProcessingDate();
+      if (!aliquot.locationPoint) updateExamsLocationPoint();
+      if (self.aliquotLengths.length === 1) {
+        var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
+        var runCompletePlaceholder = false;
+
+        if (aliquot.aliquotCode && (aliquot.aliquotCode.length == self.aliquotMaxLength || aliquot.aliquotCode.length == self.tubeLength)) {
+          if (aliquot.aliquotCode.length == self.tubeLength && Validation.isTube(aliquot.aliquotCode)) {
+            aliquot.tubeCode = aliquot.aliquotCode;
+            aliquot.aliquotCode = "";
+            runCompletePlaceholder = true;
+            $element.find('#' + aliquot.tubeId).blur();
+          } else {
+            if (aliquot.aliquotCode.length == self.aliquotMaxLength) _nextFocus(aliquot);
+          }
+        }
+      }
+    }
+
+    function aliquotInputOnBlur(aliquot) {
+      var msgAliquotUsed = Validation.validationMsg.aliquotAlreadyUsed;
+      var msgAliquotInvalid = Validation.validationMsg.invalidAliquot;
+
+      Validation.aliquotAlreadyUsed(aliquot, true);
+      Validation.validateTubeRequired(aliquot);
+      if (!Validation.validateIsNumber(aliquot, Validation.aliquotIdentifier)) return;
+      if (!Validation.validateWave(aliquot, Validation.aliquotIdentifier)) return;
+      if (!Validation.validateAliquotCenter(aliquot)) return;
+      if (!Validation.validateAliquotLength(aliquot)) return;
+
+      if (aliquot.aliquotCode) {
+        if (Validation.isAliquot(aliquot.aliquotCode)) {
+          _fillContainer(aliquot);
+          clearAliquotError(aliquot);
+
+          if (Validation.aliquotAlreadyUsed(aliquot, true)) {
+            setAliquotError(aliquot, msgAliquotUsed);
+            return;
+          }
+        } else {
+          setAliquotError(aliquot, msgAliquotInvalid);
+        }
+      }
+    }
+    function _clearContainer(aliquot) {
+      if (aliquot.container != aliquot.containerLabel) {
+        aliquot.container = "";
+        aliquot.containerLabel = aliquot.label;
+      }
+    }
+
+    function updateExamsProcessingDate() {
+      self.selectedMomentType.exams.forEach(exam => {
+        if(!exam.processing) {
+          exam.processing = self.processingDate
+        }
+      })
+    }
+    function updateExamsLocationPoint() {
+      self.selectedMomentType.exams.forEach(exam => {
+        if(!exam.locationPoint) {
+          exam.locationPoint = self.selectedLocationPoint
+        }
+      })
     }
   }
 }());
