@@ -11,12 +11,12 @@
 
   function Controller($mdToast) {
     var self = this;
-    self.selectedTube = self.tube
 
     self.$onInit = onInit;
 
 
     function onInit() {
+
     }
 
 

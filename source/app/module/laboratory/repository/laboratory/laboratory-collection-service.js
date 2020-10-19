@@ -36,6 +36,7 @@
     self.initializeLaboratory = initializeLaboratory;
     self.update = update;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn;
     self.updateAliquots = updateAliquots;
     self.convertStorageAliquot = convertStorageAliquot;
     self.deleteAliquot = deleteAliquot;
@@ -183,6 +184,23 @@
         .then(function (remoteStorage) {
           remoteStorage
             .updateTubeCollectionData(_participant.recruitmentNumber, updateStructure)
+            .then(function (remoteLaboratory) {
+              request.resolve();
+            }, function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+    function updateTubeCollectionDataWithRn(recruitmentNumber, updateStructure) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .updateTubeCollectionData(recruitmentNumber, updateStructure)
             .then(function (remoteLaboratory) {
               request.resolve();
             }, function (e) {

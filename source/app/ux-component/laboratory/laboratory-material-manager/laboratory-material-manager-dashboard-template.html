@@ -44,7 +44,7 @@
         <input ng-model="$ctrl.tubeCode" ng-change="[$ctrl.isValidCode($ctrl.tubeCode), $ctrl.cancelTube()]">
       </md-input-container>
 
-      <md-list ng-if="$ctrl.tube.hasOwnProperty('code')">
+      <md-list ng-if="$ctrl.originalTube.hasOwnProperty('code')">
 
         <div class="tube-list-view">
 
@@ -80,7 +80,7 @@
                 <div layout="row" layout-align="space-between center" flex="50">
                   <div layout="column" flex="50">
                   </div>
-                  <md-checkbox class="md-checkbox-small md-primary" ng-model="$ctrl.newTube.tubeCollectionData.metadata" ng-false-value="''" ng-true-value="'.vp'" name="partial_volume" aria-label="volume parcial">
+                  <md-checkbox class="md-checkbox-small md-primary" ng-change="$ctrl.saveMetadata()" ng-model="$ctrl.newTube.tubeCollectionData.metadata" ng-false-value="''" ng-true-value="'.vp'" name="partial_volume" aria-label="volume parcial">
                     <span class="md-caption">Volume Parcial</span>
                   </md-checkbox>
                 </div>
@@ -91,12 +91,12 @@
         <md-button class="md-raised md-primary" ng-click="$ctrl.saveChangedTubes()">COLETAR</md-button>
         <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
       </md-list>
-      <div ng-if="!$ctrl.tube.hasOwnProperty('code')">
+      <div ng-if="!$ctrl.originalTube.hasOwnProperty('code')">
         <h2>Sem Tubos Coletados</h2>
       </div>
     </div>
-    <div ng-if="$ctrl.tube.hasOwnProperty('code')">
-      <laboratory-aliquots-manager tube="$ctrl.selectedTube" flex></laboratory-aliquots-manager>
+    <div ng-if="$ctrl.originalTube.hasOwnProperty('code')">
+      <laboratory-aliquots-manager original-tube="$ctrl.originalTube" tube="$ctrl.newTube" flex></laboratory-aliquots-manager>
     </div>
   </div>
 </div>

@@ -19,6 +19,7 @@
     self.updateAliquots = updateAliquots;
     self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn;
 
     /* Laboratory Configuration Methods */
     self.getCheckingExist = getCheckingExist;
@@ -79,6 +80,10 @@
 
     function updateTubeCollectionData(updateStructure){
       return LaboratoryCollectionService.updateTubeCollectionData(updateStructure);
+    }
+
+    function updateTubeCollectionDataWithRn(recruitmentNumber ,updateStructure){
+      return LaboratoryCollectionService.updateTubeCollectionDataWithRn(recruitmentNumber, updateStructure);
     }
 
     function getLaboratoryDescriptors() {

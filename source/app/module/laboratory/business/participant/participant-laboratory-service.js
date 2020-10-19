@@ -37,6 +37,7 @@
     self.updateAliquots = updateAliquots;
     self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn
     self.deleteAliquot = deleteAliquot;
     self.getCheckingExist = getCheckingExist;
 
@@ -134,7 +135,9 @@
     }
     function updateTubeCollectionData(updateStructure) {
       return LaboratoryRepositoryService.updateTubeCollectionData(JSON.stringify(updateStructure));
-
+    }
+    function updateTubeCollectionDataWithRn(recruitmentNumber, updateStructure) {
+      return LaboratoryRepositoryService.updateTubeCollectionDataWithRn(recruitmentNumber, JSON.stringify(updateStructure));
     }
 
     function updateAliquots(updateStructure) {

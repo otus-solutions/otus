@@ -18,7 +18,7 @@
   function Controller($mdToast,$mdDialog, $filter, LoadingScreenService, ParticipantLaboratoryService, ParticipantManagerService, DialogService) {
     var self = this;
     self.tubeCode = "";
-    self.tube = {};
+    self.originalTube = {};
     self.selectedTube = {}
 
     self.buttons = [
@@ -55,6 +55,7 @@
     self.isValidCode = isValidCode;
     self.saveChangedTubes = saveChangedTubes;
     self.cancelTube = cancelTube
+    self.saveMetadata = saveMetadata
 
     function onInit() {
       LoadingScreenService.start()
@@ -64,16 +65,58 @@
       });
     }
 
-    function saveChangedTubes() {
-      console.info(self.newTube == self.tube)
+    function isValidCode(tubeCode) {
+      if(tubeCode.length === 9) {
+        ParticipantLaboratoryService.getLaboratoryByTube(tubeCode).then(participantLaboratory => {
+            self.participantLaboratory = participantLaboratory
 
-      if (self.newTube != self.tube) {
+            const foundTube = self.participantLaboratory.tubes.find(tube => {
+              return tube.code == tubeCode
+            })
+
+            self.originalTube = angular.copy(foundTube);
+            if(!foundTube.tubeCollectionData.isCollected) {
+              foundTube.collect()
+            }
+            self.newTube = foundTube
+            self.tubeCode = ""
+          }).catch(e => {
+            toastError(tubeCode)
+          })
+      }
+    }
+
+    function cancelTube() {
+      if(self.originalTube.hasOwnProperty('code')) {
+        return DialogService.showDialog(self.confirmCancel).then(function() {
+          self.tube = {}
+          self.newTube = {}
+          isValidCode(self.tubeCode)
+        });
+      }
+    }
+
+    function saveChangedTubes() {
+      if (haveTubesChanged()) {
         _updateChangedTubes(self.newTube);
       } else {
         $mdToast.show(
           $mdToast.simple()
             .textContent('Não existem alterações a serem salvas.')
         );
+      }
+    }
+
+    function saveMetadata() {
+      if(haveTubesChanged() && self.originalTube.tubeCollectionData.isCollected) {
+        const tubeStructure = {
+          tubes: [self.newTube]
+        }
+        ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(() => {
+          _showToastMsg('Volume parcial salvo com sucesso!');
+        }).catch(function(e) {
+          _showToastMsg('Falha ao registrar volume parcial');
+        });
       }
     }
 
@@ -84,7 +127,7 @@
       }
 
       DialogService.showDialog(self.confirmFinish).then(function() {
-        ParticipantLaboratoryService.updateTubeCollectionData(tubeStructure).then(function() {
+        ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(function() {
           self.participantLaboratory.updateTubeList();
           _showToastMsg('Registrado com sucesso!');
         }).catch(function(e) {
@@ -93,30 +136,13 @@
       });
     }
 
-    async function isValidCode(tubeCode) {
-      if(tubeCode.length == 9) {
-        await ParticipantLaboratoryService.getLaboratoryByTube(tubeCode).then(participantLaboratory => {
-            self.participantLaboratory = participantLaboratory
-          }).catch(e => {
-            toastError(tubeCode)
-          })
-        const foundTube = self.participantLaboratory.tubes.find(tube => {
-          return tube.code == tubeCode
-        })
-        self.tube = foundTube;
-        self.newTube = angular.copy(self.tube)
-      }
-      self.tubeCode = ""
-    }
-
-    function cancelTube() {
-      if(self.tube.hasOwnProperty('code')) {
-        return DialogService.showDialog(self.confirmCancel).then(function() {
-          self.tube = {}
-          self.newTube = {}
-          isValidCode(self.tubeCode)
-        });
-      }
+    function haveTubesChanged() {
+      return (
+        self.originalTube.tubeCollectionData.isCollected !== self.newTube.tubeCollectionData.isCollected
+        || self.originalTube.tubeCollectionData.metadata !== self.newTube.tubeCollectionData.metadata
+        || self.originalTube.tubeCollectionData.operator !== self.newTube.tubeCollectionData.operator
+        || self.originalTube.tubeCollectionData.time !== self.newTube.tubeCollectionData.time
+      );
     }
 
     function toastError(tubeCode) {
