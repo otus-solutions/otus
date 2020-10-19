@@ -12,7 +12,7 @@
   function Controller($mdToast) {
     var self = this;
 
-    self.$onInit = onInit;
+    self.$onInit = onInit
 
 
     function onInit() {
