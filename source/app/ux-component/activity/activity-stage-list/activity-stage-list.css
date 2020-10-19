@@ -1,6 +1,7 @@
 @media screen and (min-width: 360px) {
   .stage-list-layout {
     display: grid;
+    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 17.2vh;
     grid-template-columns: repeat(2, 1fr);
@@ -59,6 +60,7 @@
 @media screen and (min-width: 600px) {
   .stage-list-layout {
     display: grid;
+    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 16vh;
     grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
@@ -103,6 +105,7 @@
 @media screen and (min-width: 768px) {
   .stage-list-layout {
     display: grid;
+    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 8vh;
     grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
@@ -147,6 +150,7 @@
 @media screen and (min-width: 800px) {
   .stage-list-layout {
     display: grid;
+    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 15vh;
     grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
@@ -191,6 +195,7 @@
 @media screen and (min-width: 1024px) {
   .stage-list-layout {
     display: grid;
+    border: 2px solid rgba(158, 158, 158, 0.1);
     align-items: center;
     height: 5.2vh;
     grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
