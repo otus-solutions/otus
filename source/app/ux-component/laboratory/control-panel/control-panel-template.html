@@ -61,7 +61,7 @@
         <md-tooltip md-direction="left">Coleta de Tubos</md-tooltip>
         </md-button>
         <md-button class="md-primary md-raised md-mini" aria-label="Aliquotagem"
-                   ng-click="$ctrl.changeState('aliquots')"
+                   ng-click="[$ctrl.changeState('aliquots'), $ctrl.fetchLocationPoints()]"
         <md-tooltip md-direction="left">Aliquotagem</md-tooltip>
         </md-button>
       </md-fab-actions>
@@ -124,7 +124,8 @@
        ng-if="$ctrl.state === 'aliquots'">
     <div layout="row" layout-align="center center">
       <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAliquots()">Voltar</md-button>
-      <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-disabled="$ctrl.fetchChanges()"
+      <md-button class="md-primary md-raised"
+                 aria-label="salvar aliquotagem" ng-disabled="$ctrl.fetchChanges()"
                  ng-click="$ctrl.saveAliquots()">Salvar
       </md-button>
     </div>
@@ -143,9 +144,11 @@
         <span flex="5px"></span>
         <label ng-if="$ctrl.userLocationPoints" style="position:relative;top:13px;margin-left: 5px;">Ponto de localização:</label>
         <md-input-container style="position: relative; top: -10px;margin-left: 5px;">
-          <label>Ponto de localização</label>
           <md-select ng-change="$ctrl.saveLocationPoint()" ng-model="$ctrl.selectedLocationPoint">
-              <md-option ng-select ng-selected='true' ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPoints">
+            <md-option ng-select ng-selected="true" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.participantLocationPoint">
+              {{userLocationPoints.name}}
+            </md-option>
+            <md-option ng-select ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPointsFiltered">
                 {{userLocationPoints.name}}
               </md-option>
           </md-select>
@@ -158,27 +161,34 @@
   </div>
 
   <div class="mobile-aliquots-control-toolbar" layout="row" layout-padding ng-if="$ctrl.state === 'aliquots'">
-    <div layout="row" flex="80">
-      <label>Processamento:</label>
-      <md-input-container class="md-input-has-placeholder md-input-has-value" style="position: relative;">
-        <input mdc-datetime-picker="" ng-change="$ctrl.verifyDate()"
-                date="true" time="true" aria-label="Data de Processamento"
-               type="text" id="datetime" show-todays-date=""
-               max-date="$ctrl.now" ng-model="$ctrl.processingDate"
-               class="md-input" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A"
-               disable-parent-scroll="true">
-        <md-tooltip>
-          Processamento
-        </md-tooltip>
-      </md-input-container>
-      <label ng-if="$ctrl.userLocationPoints" style="position:relative;top:13px;margin-left: 5px;">Ponto de localização:</label>
-      <md-input-container style="position: relative; top: -10px;margin-left: 5px;">
-        <md-select ng-change="$ctrl.saveLocationPoint()" ng-model="$ctrl.selectedLocationPoint">
-          <md-option ng-select ng-selected='true' ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPoints">
-            {{userLocationPoints.name}}
-          </md-option>
-        </md-select>
-      </md-input-container>
+    <div layout="row" flex="85" style="margin-top:-20px;">
+      <div layout="column">
+        <label>Processamento:</label>
+          <md-input-container class="md-input-has-placeholder md-input-has-value">
+            <input mdc-datetime-picker="" ng-change="$ctrl.verifyDate()"
+                    date="true" time="true" aria-label="Data de Processamento"
+                   type="text" id="datetime" show-todays-date=""
+                   max-date="$ctrl.now" ng-model="$ctrl.processingDate"
+                   class="md-input" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A"
+                   disable-parent-scroll="true">
+            <md-tooltip>
+              Processamento
+            </md-tooltip>
+        </md-input-container>
+      </div>
+      <div layout="column">
+        <label ng-if="$ctrl.userLocationPoints">Localização:</label>
+        <md-input-container>
+          <md-select ng-change="$ctrl.saveLocationPoint()" ng-model="$ctrl.selectedLocationPoint">
+            <md-option ng-select ng-selected="true" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.participantLocationPoint">
+              {{userLocationPoints.name}}
+            </md-option>
+            <md-option ng-select ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPointsFiltered">
+              {{userLocationPoints.name}}
+            </md-option>
+          </md-select>
+        </md-input-container>
+      </div>
     </div>
     <md-fab-speed-dial md-direction="down" class="md-scale" flex>
       <md-fab-trigger>

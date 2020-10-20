@@ -4,7 +4,7 @@
 }
 
 body {
-  overflow-y: hidden !important;
+  overflow-y: auto;
 }
 
 .toolbar-icon {

@@ -54,6 +54,7 @@
     self.removeDuplicatedMoments = removeDuplicatedMoments;
     self.filterTubesByMoment = filterTubesByMoment;
     self.fetchLocationPoints = fetchLocationPoints;
+    self.fetchUserLocationPoints = fetchUserLocationPoints;
     self.saveLocationPoint = saveLocationPoint;
 
     function onInit() {
@@ -63,6 +64,12 @@
       self.processingDate = new Date();
       self.now = new Date();
       verifyDate();
+    }
+
+    function _getLocationPoints(callback) {
+      callback(
+        self.locationPoints
+      )
     }
 
     function _getSelectedLocationPoint(callback) {
@@ -81,11 +88,34 @@
       Publisher.subscribe('selected-location-point', _getSelectedLocationPoint)
     }
 
+    function filterByParticipantLocationPoint() {
+      const laboratoryParticipantLocationPoint = ParticipantLaboratoryService.participant.fieldCenter.locationPoint
+      self.participantLocationPoint = self.locationPoints.filter( locationPoint =>
+        locationPoint._id == laboratoryParticipantLocationPoint
+      )
+    }
+
     function fetchLocationPoints() {
+      LocationPointRestService.getLocationPoints().then((response) => {
+        self.locationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
+        Publisher.unsubscribe('location-points');
+        Publisher.subscribe('location-points', _getLocationPoints)
+      }).then(() => {
+        filterByParticipantLocationPoint();
+      }).then (() => {
+        fetchUserLocationPoints();
+        saveLocationPoint();
+      })
+    }
+
+    function fetchUserLocationPoints() {
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
         Publisher.unsubscribe('user-location-points');
         Publisher.subscribe('user-location-points', _getUserLocationPoints);
+      }).then(() => {
+        self.userLocationPointsFiltered = self.userLocationPoints.filter(
+          userLocationPoint => userLocationPoint._id != self.participantLocationPoint[0]._id)
       });
     }
 

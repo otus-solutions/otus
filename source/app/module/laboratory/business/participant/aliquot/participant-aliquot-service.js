@@ -25,6 +25,16 @@
     self.updateAliquots = updateAliquots;
     self.deleteAliquot = deleteAliquot;
 
+    function _filterByLocationPoint(aliquotLocationPoint) {
+      if(aliquotLocationPoint) {
+        const filteredLocationPoint = self.locationPoints
+          .filter(locationPoint => locationPoint._id == ( ! aliquotLocationPoint.hasOwnProperty('$oid') ? aliquotLocationPoint : aliquotLocationPoint.$oid))
+        return filteredLocationPoint[0]
+      }else {
+        return "";
+      }
+    }
+
     function updateAliquots(updateStructure) {
       return ParticipantLaboratoryService.updateAliquots(updateStructure);
     }
@@ -94,11 +104,12 @@
       return momentTypeList;
     }
 
-    function populateAliquotsArray(momentType){
+    function populateAliquotsArray(momentType, locationPoints){
       var indexStorage = 0;
       var indexExam = 0;
       var storages = [];
       var exams = [];
+      self.locationPoints = locationPoints
       momentType.availableAliquots.forEach(function(aliquot){
 
         if(aliquot.role.toUpperCase() == "STORAGE"){
@@ -165,7 +176,7 @@
               aliquot.processing = collectedAliquot.processing;
               aliquot.date = collectedAliquot.date;
               endLoop = true;
-              aliquot.locationPoint = true
+              aliquot.locationPoint = !aliquot.locationPoint ? _filterByLocationPoint(collectedAliquot.locationPoint) : aliquot.locationPoint;
             }
           }
         }
