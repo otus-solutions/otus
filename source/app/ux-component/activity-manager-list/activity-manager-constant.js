@@ -83,7 +83,7 @@
           },
           TOAST: {
             ERROR: {
-              errorFind: 'Erro na busca'
+              errorFind: 'Erro na busca das atividades'
             }
           }
         }

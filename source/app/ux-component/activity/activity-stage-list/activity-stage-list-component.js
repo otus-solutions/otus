@@ -33,26 +33,43 @@
     self.$onInit = onInit;
 
     self.stage = [];
-    self.colorCenter = $mdColors.getThemeColor('primary-hue-1-0.5');
-    self.colorLeft = $mdColors.getThemeColor('primary-hue-2');
+    self.surveys = [];
     self.colorStage = $mdColors.getThemeColor('primary-hue-1');
 
     function onInit() {
-      EventService.onParticipantSelected(_loadActivityStages);
-      _refreshActivityStage()
+      EventService.onParticipantSelected(_refreshActivityStage);
+      _refreshActivityStage();
     }
 
     function _refreshActivityStage() {
+      _loadSurveys();
       _loadActivityStages();
+      _loadCategories();
+    }
+
+    function _loadSurveys() {
+      ParticipantActivityService.listAvailables()
+        .then(surveys => self.surveys = surveys)
+        .catch(err => {
+          $log.error(err);
+          _showMsg(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.TOAST.ERROR.errorFind);
+        })
+
+    }
+
+    function _loadCategories() {
+      ParticipantActivityService
+        .listAllCategories()
+        .then(response => self.categories = response);
     }
 
     function _loadActivityStages() {
       LoadingScreenService.start();
-      ParticipantActivityService.listAvailables().then(function (surveys) {
 
-        ParticipantActivityService.getAllByStageGroup().then(stages => {
+      ParticipantActivityService.getAllByStageGroup()
+        .then(stages => {
           stages.map(stage => {
-            let surveyFilter = angular.copy(surveys);
+            let surveyFilter = angular.copy(self.surveys);
 
             surveyFilter.forEach(survey => stage.acronyms.find(acronym => {
               if (acronym.acronym == survey.acronym) {
@@ -78,14 +95,16 @@
           });
 
           self.stages = stages;
-        });
-      })
+        })
         .catch(err => {
           $log.error(err);
           _showMsg(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.TOAST.ERROR.errorFind);
         })
+
       LoadingScreenService.finish();
     }
+
+
 
     function _activityAttributes(activities) {
       return activities.forEach(activity => {
@@ -95,6 +114,7 @@
         activity.lastStatus.status = Object.values(ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.STATUS)
           .find(status => status.name === activity.lastStatus.name);
         activity.lastStatus.realizationDate = _getFormattedDate(activity.lastStatus.date);
+        activity.lastStatus.category = self.categories.find(status => status.name === activity.category);
       })
     }
 
@@ -126,7 +146,7 @@
         ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.DIALOG.confirmDelete.textDialog
       ).then(function () {
         ParticipantActivityService.discardActivity(itemActivity._id);
-        _loadActivityStages();
+        _refreshActivityStage();
       });
     }
 
