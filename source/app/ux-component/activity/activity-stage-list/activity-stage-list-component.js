@@ -29,6 +29,7 @@
     self.fillSelectedActivity = fillSelectedActivity;
     self.showFillingButton = showFillingButton;
     self.deleteSelectedActivity = deleteSelectedActivity;
+    self.refreshActivityStage = refreshActivityStage;
 
     self.$onInit = onInit;
 
@@ -37,11 +38,11 @@
     self.colorStage = $mdColors.getThemeColor('primary-hue-1');
 
     function onInit() {
-      EventService.onParticipantSelected(_refreshActivityStage);
-      _refreshActivityStage();
+      EventService.onParticipantSelected(refreshActivityStage);
+      refreshActivityStage();
     }
 
-    function _refreshActivityStage() {
+    function refreshActivityStage() {
       _loadSurveys();
       _loadActivityStages();
       _loadCategories();
@@ -146,7 +147,7 @@
         ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.DIALOG.confirmDelete.textDialog
       ).then(function () {
         ParticipantActivityService.discardActivity(itemActivity._id);
-        _refreshActivityStage();
+        refreshActivityStage();
       });
     }
 

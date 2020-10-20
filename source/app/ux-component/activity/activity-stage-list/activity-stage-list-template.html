@@ -26,12 +26,7 @@
               <span class="md-title text-size margin-left">{{activity.name}}</span>
             </div>
             <div class="activity-button" layout="row" layout-align="end center">
-              <md-button class="md-icon-button md-accent" ng-show="$id == activity.actionButton" ng-click="">
-                <md-icon md-svg-icon="plus"></md-icon>
-                <md-tooltip md-direction="top">
-                  Adicionar Atividade
-                </md-tooltip>
-              </md-button>
+              <otus-express-activity-creator ng-show="$id == activity.actionButton" acronym="activity.acronym" action-refresh-callback="$ctrl.refreshActivityStage()"></otus-express-activity-creator>
             </div>
           </div>
           <md-card class="activity-null-layout" ng-show="!activity.activities">
