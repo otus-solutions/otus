@@ -3,6 +3,7 @@ describe('participant-activity-service Test', function() {
   var service;
   var Injections = {};
   var ID = "12345";
+  var RN = 32525;
   var DATA = {activityID: "54321"};
   var DATA_ACTIVITY = "54321";
   var DATA_RN = "0000000";
@@ -13,16 +14,19 @@ describe('participant-activity-service Test', function() {
 
     angular.mock.module('otusjs.otus');
 
-    inject(function(_$injector_) {
-      Injections.ModuleService = _$injector_.get('otusjs.activity.core.ModuleService');
-      Injections.ContextService = _$injector_.get('otusjs.activity.core.ContextService');
-      Injections.ActivityRepositoryService = _$injector_.get('otusjs.activity.repository.ActivityRepositoryService');
-      Injections.UserRepositoryService = _$injector_.get('otusjs.activity.repository.UserRepositoryService');
-      Injections.PreActivityFactory =  _$injector_.get('otusjs.activity.business.PreActivityFactory');
-      Injections.ApplicationStateService = _$injector_.get('otusjs.application.state.ApplicationStateService');
-      Injections.SurveyFormFactory = _$injector_.get('SurveyFormFactory');
+    inject(function ($injector, $rootScope) {
+      Injections.$q = $injector.get('$q');
+      Injections.ModuleService = $injector.get('otusjs.activity.core.ModuleService');
+      Injections.ContextService = $injector.get('otusjs.activity.core.ContextService');
+      Injections.ActivityRepositoryService = $injector.get('otusjs.activity.repository.ActivityRepositoryService');
+      Injections.UserRepositoryService = $injector.get('otusjs.activity.repository.UserRepositoryService');
+      Injections.PreActivityFactory =  $injector.get('otusjs.activity.business.PreActivityFactory');
+      Injections.ApplicationStateService = $injector.get('otusjs.application.state.ApplicationStateService');
+      Injections.SurveyFormFactory = $injector.get('SurveyFormFactory');
 
-      service = _$injector_.get('otusjs.activity.business.ParticipantActivityService', Injections);
+      service = $injector.get('otusjs.activity.business.ParticipantActivityService', Injections);
+
+      Mock.$scope = $rootScope.$new();
     });
   });
 
@@ -34,7 +38,9 @@ describe('participant-activity-service Test', function() {
     expect(service.getById).toBeDefined();
     expect(service.createPreActivity).toBeDefined();
     expect(service.saveActivities).toBeDefined();
-    expect(service.getSurveyFromJson).toBeDefined()
+    expect(service.getSurveyFromJson).toBeDefined();
+    expect(service.getAllByStageGroup).toBeDefined();
+    expect(service.discardActivity).toBeDefined();
   });
 
 
@@ -119,6 +125,19 @@ describe('participant-activity-service Test', function() {
       expect(Injections.SurveyFormFactory.fromJsonObject).toHaveBeenCalledTimes(1);
       expect(Injections.SurveyFormFactory.fromJsonObject).toHaveBeenCalledWith(Mock.preActivity);
     });
+
+  });
+
+  it('should call getAllByStageGroup method', function () {
+    spyOn(Injections.ContextService, "getSelectedParticipant").and.returnValue(Promise.resolve(Mock.participant));
+    service.getAllByStageGroup(ID);
+    expect(Injections.ContextService.getSelectedParticipant).toHaveBeenCalledTimes(1);
+  });
+
+  fit('should call discardActivity method', function () {
+    spyOn(Injections.ContextService, "getSelectedParticipant").and.returnValue(Promise.resolve(Mock.participant));
+    service.discardActivity(ID, RN);
+    expect(Injections.ContextService.getSelectedParticipant).toHaveBeenCalledTimes(1);
   });
 
   function mocks() {
