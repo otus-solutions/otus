@@ -51,7 +51,9 @@
                   <md-content layout="row" flex layout-align="start center">
                     <md-input-container flex class="md-block">
                       <label>Tubo</label>
-                      <input class="campo" ng-if="!exam.tubeCode" name="{{exam.tubeId}}"  ng-model="exam.tubeCode" placeholder="" ng-disabled="true"/>
+                      <input class="campo" ng-if="!exam.tubeCode" name="{{exam.tubeId}}"
+                             ng-value="$ctrl.tube.code"
+                             ng-model="exam.tubeCode" placeholder="" ng-disabled="true"/>
                       <input class="campo" ng-if="exam.tubeCode" ng-model="exam.tubeCode" placeholder="{{exam.placeholder}}" ng-change="$ctrl.tubeInputOnChange(exam)" name="{{exam.tubeId}}" id="{{exam.tubeId}}" maxlength="{{$ctrl.tubeLength}}" ng-disabled="true" tabindex="-1"
                              ng-disabled="exam.isSaved" />
                       <!-- tabindex="-1" -->

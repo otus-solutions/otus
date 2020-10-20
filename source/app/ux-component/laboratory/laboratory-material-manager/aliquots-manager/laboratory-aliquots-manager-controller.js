@@ -199,10 +199,6 @@
       _nextFocusNotFilled(aliquot);
     }
 
-    function _nextFocus(aliquot) {
-      _nextFocusNotFilled(aliquot);
-    }
-
     function _nextFocusNotFilled(currentAliquot) {
       var newFocus = "";
       var aliquotArray = self.selectedMomentType.storages.concat(self.selectedMomentType.exams);
@@ -245,12 +241,16 @@
 
     function clearAliquotError(aliquot) {
       aliquot.aliquotMessage = "";
-      $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
+      if($scope.formAliquot[aliquot.aliquotId]){
+        $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
+      }
     }
 
     function clearTubeError(aliquot) {
       aliquot.tubeMessage = "";
-      $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
+      if($scope.formAliquot[aliquot.tubeId]) {
+        $scope.formAliquot[aliquot.tubeId].$setValidity('customValidation', true);
+      }
     }
 
     function _fillConvertedStoragesContainerLabels(){
