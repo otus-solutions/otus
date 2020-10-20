@@ -86,14 +86,10 @@
 
     function saveAliquots() {
       if (AliquotTubeService.areFieldsChanged(self.selectedMomentType)) {
-        if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
-          console.info(AliquotTubeService.aliquotsWithErrors(self.selectedMomentType))
-          AliquotMessagesService.showToast(Validation.validationMsg.checkErrorsBeforeSaving, self.timeShowMsg);
-        } else {
           AliquotMessagesService.showSaveDialog().then(function() {
             var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
             var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
-            AliquotTubeService.updateAliquots(persistanceStructure)
+            AliquotTubeService.updateAliquotsWithRn(persistanceStructure, self.participantLaboratory.recruitmentNumber)
               .then(function(data) {
                 self.selectedMomentType.updateTubes();
                 self.participantLaboratory.updateTubeList();
@@ -107,7 +103,6 @@
                 fillTubesErrors(err.CONTENT.tubesNotFound, err.MESSAGE);
               });
           });
-        }
       } else {
         AliquotMessagesService.showToast(Validation.validationMsg.savedSuccessfully, self.timeShowMsg);
       }
@@ -131,6 +126,7 @@
 
     function _setMomentType(momentType) {
       self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType);
+      console.info(self.selectedMomentType);
       _buildAvailableExamTypesArray(momentType);
 
       Validation.initialize(

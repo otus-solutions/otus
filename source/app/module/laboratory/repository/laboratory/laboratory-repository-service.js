@@ -20,6 +20,7 @@
     self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
     self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn;
+    self.updateAliquotsWithRn = updateAliquotsWithRn;
 
     /* Laboratory Configuration Methods */
     self.getCheckingExist = getCheckingExist;
@@ -42,6 +43,7 @@
     self.getUnattachedById = getUnattachedById;
     self.discardUnattached = discardUnattached;
     self.getUnattachedByIdentification = getUnattachedByIdentification;
+
 
 
     function initializeLaboratory(participant) {
@@ -72,6 +74,10 @@
 
     function updateAliquots(updateStructure) {
       return LaboratoryCollectionService.updateAliquots(updateStructure);
+    }
+
+    function updateAliquotsWithRn(updateStructure, recruitmentNumber) {
+      return LaboratoryCollectionService.updateAliquotsWithRn(updateStructure, recruitmentNumber);
     }
 
     function convertStorageAliquot(aliquot) {

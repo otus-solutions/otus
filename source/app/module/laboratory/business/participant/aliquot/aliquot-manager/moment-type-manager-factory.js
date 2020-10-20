@@ -78,8 +78,10 @@
     function _buildTubeArray(newAliquotsArray) {
       var preStructure = _buildPreStructure(newAliquotsArray);
       preStructure.forEach(function (tubeSet) {
+        console.info(tubeSet);
         var tube = _findTube(tubeSet.code);
         tubeSet.rawAliquots.forEach(function (aliquot) {
+
           tubeSet.aliquots.push(tube.toAliquot(aliquot));
         });
         delete tubeSet.rawAliquots;

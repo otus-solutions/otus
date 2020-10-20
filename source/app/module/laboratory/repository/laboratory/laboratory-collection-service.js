@@ -45,6 +45,7 @@
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getCheckingExist = getCheckingExist;
+    self.updateAliquotsWithRn = updateAliquotsWithRn;
 
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
@@ -224,6 +225,24 @@
         .then(function (remoteStorage) {
           remoteStorage
             .updateAliquots(_participant.recruitmentNumber, updateStructure)
+            .then(function (data) {
+              request.resolve();
+            }, function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function updateAliquotsWithRn(updateStructure, recruitmentNumber) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .updateAliquots(recruitmentNumber, updateStructure)
             .then(function (data) {
               request.resolve();
             }, function (e) {

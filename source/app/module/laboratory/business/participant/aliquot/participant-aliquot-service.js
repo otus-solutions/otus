@@ -24,6 +24,7 @@
     self.getNewAliquots = getNewAliquots;
     self.updateAliquots = updateAliquots;
     self.deleteAliquot = deleteAliquot;
+    self.updateAliquotsWithRn = updateAliquotsWithRn;
 
     function _filterByLocationPoint(aliquotLocationPoint) {
       if(aliquotLocationPoint) {
@@ -37,6 +38,10 @@
 
     function updateAliquots(updateStructure) {
       return ParticipantLaboratoryService.updateAliquots(updateStructure);
+    }
+
+    function updateAliquotsWithRn(updateStructure, recruitmentNumber) {
+      return ParticipantLaboratoryService.updateAliquotsWithRn(updateStructure, recruitmentNumber);
     }
 
     function convertStorageAliquot(aliquot) {
