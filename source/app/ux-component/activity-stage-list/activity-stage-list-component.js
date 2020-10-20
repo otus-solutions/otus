@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusActivityStageList', {
       controller: 'otusActivityStageListCtrl as $ctrl',
-      templateUrl: 'app/ux-component/activity/activity-stage-list/activity-stage-list-template.html'
+      templateUrl: 'app/ux-component/activity-stage-list/activity-stage-list-template.html'
     }).controller('otusActivityStageListCtrl', Controller);
 
   Controller.$inject = [
