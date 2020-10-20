@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .value('otusjs.otus.uxComponent.OtusExpressActivityCreatorDialogValues', {
+    .value('otusjs.otus.uxComponent.ExpressActivityCreatorDialogValues', {
         titles: {
         dialogToTitle: 'CRIADOR DE ATIVIDADES',
         ativitity: 'Atividade',

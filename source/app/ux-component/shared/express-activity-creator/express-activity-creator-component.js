@@ -7,8 +7,8 @@
       controller: 'otusExpressActivityCreatorCtrl as $ctrl',
       templateUrl: 'app/ux-component/shared/express-activity-creator/express-activity-creator-template.html',
       bindings: {
-        acronym: '<',
-        ActivityCreatorResponseCallback: '<',
+        acronym: '@',
+        actionRefreshCallback: '&',
       }
     }).controller('otusExpressActivityCreatorCtrl', Controller);
 
@@ -31,15 +31,9 @@
     function saveActivity() {
       self.preActivityArtefacts = {
         acronym: self.acronym,
-        participant: self.participant,
-        activityCreatorResponseCallback: self.activityCreatorResponseCallback
+        actionRefreshCallback: self.actionRefreshCallback
       }
-      try{
-        DialogShowService.showExpressActivityCreationDialog(self.preActivityArtefacts, true);
-      }
-      catch(e){
-        alert("cancelou a criação");
-      }
+        DialogShowService.showExpressActivityCreationDialog(self.preActivityArtefacts);
     }
   }
 

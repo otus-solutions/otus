@@ -6,7 +6,7 @@
 
   Controller.$inject = [
     'otusjs.otus.uxComponent.OtusExpressActivityCreatorDialogShowService',
-    'otusjs.otus.uxComponent.OtusExpressActivityCreatorDialogValues',
+    'otusjs.otus.uxComponent.ExpressActivityCreatorDialogValues',
     'otusjs.otus.uxComponent.CheckerItemFactory',
     'ACTIVITY_MANAGER_LABELS'
 
@@ -52,7 +52,7 @@
         .then(response => self.categories = response);
     }
 
-    function _getSurveyByAcronym(acronym = 'TCLEC') {
+    function _getSurveyByAcronym(acronym) {
       expressActivityCreatorService.getSurveyByAcronym(acronym)
         .then(surveyFound => self.preActivityArtefacts.surveyForm = surveyFound);
     }
@@ -62,9 +62,9 @@
         alert("form invalid");
         return;
       }
-      alert("createActivity");
       expressActivityCreatorService.createActivity(self.preActivityArtefacts)
-        .then(() => self.data.cancel());
+        .then(() => self.data.cancel())
+        .then(() => self.data.preActivityArtefacts.actionRefreshCallback());
     }
 
   }

@@ -121,10 +121,10 @@
         },
         cancel: cancel
       }
-      return prepare$mdDialogShow(self.data, fullscreen);
+      return _prepareDialogShow(self.data, fullscreen);
     }
 
-    function prepare$mdDialogShow(data, fullscreen){
+    function _prepareDialogShow(data, fullscreen){
       return $mdDialog.show({
         controller: data.settings.controllerPath,
         bindToController: true,
