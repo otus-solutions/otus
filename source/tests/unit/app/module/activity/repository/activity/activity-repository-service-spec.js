@@ -167,7 +167,7 @@ describe('activity-repository-service Test', function () {
     expect(service.getAllByStageGroup).toThrowError(UNINITIALIZED_REPOSITORY_ERROR_MESSAGE);
   });
 
-  fit('discardActivity method should throw error with message select is not participant', function () {
+  it('discardActivity method should throw error with message select is not participant', function () {
     expect(service.discardActivity).toThrowError(UNINITIALIZED_REPOSITORY_ERROR_MESSAGE);
   });
 
