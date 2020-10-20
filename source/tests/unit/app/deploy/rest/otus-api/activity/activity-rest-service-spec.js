@@ -89,11 +89,11 @@ describe('ActivityRestService Suite Test', function () {
       expect(service.reopen).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE);
     });
 
-    it('reopen method should throw error with message resource is not initialized', function () {
+    it('getAllByStageGroup method should throw error with message resource is not initialized', function () {
       expect(service.getAllByStageGroup).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE);
     });
 
-    it('reopen method should throw error with message resource is not initialized', function () {
+    it('discardActivity method should throw error with message resource is not initialized', function () {
       expect(service.discardActivity).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE);
     });
   });
