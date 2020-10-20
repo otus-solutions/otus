@@ -26,33 +26,26 @@
         .catch(e => console.info(e));
     }
 
-    function _createPreActivity({survey, configuration, mode, paperActivityData, realizationDate} = preActivityArtefacts) {
-      try {
-        return ParticipantActivityService.createPreActivity(survey, configuration, mode);
-        if (mode == 'PAPER') {
-          alert("paper");
-        }
-      } catch (e) {
-      }
+    function _createPreActivity({surveyForm, configuration, mode, checkerData, realizationDate, externalID} = preActivityArtefacts) {
+      let preActivity = ParticipantActivityService.createPreActivity(surveyForm, configuration, mode);
+      if(externalID) preActivity.externalID = externalID;
+      if(_isPaperActivity(mode)) preActivity.updatePaperActivityData(checkerData, realizationDate);
+      preActivity.preActivityValid = true;
+      return preActivity;
+    }
+
+    function _isPaperActivity(mode){
+      return mode === "PAPER" ? 1 : 0;
     }
 
     function createActivity(preActivityArtefacts) {
       console.log(preActivityArtefacts);
       let preActivity = _createPreActivity(preActivityArtefacts);
-      if (preActivity) {
-        alert("criar");
+
+      if (preActivity.preActivityValid) {
+        return ParticipantActivityService.saveActivity([preActivity]);
       }
     }
-
-
-    // function createPreActivity(survey) {
-    //   return ParticipantActivityService.createPreActivity(
-    //     survey,
-    //     angular.copy(self.configuration),
-    //     angular.copy(self.mode),
-    //     angular.copy(self.paperActivityCheckerData));
-    // }
-
   }
 
 }());

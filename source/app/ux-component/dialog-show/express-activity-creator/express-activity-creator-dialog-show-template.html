@@ -58,9 +58,9 @@
     <div layout="column" layout-margin>
       <div layout="row" layout-align="space-between center">
         <md-chips>
-          <md-chip class="md-body-2">{{ $ctrl.surveyForm.acronym }}</md-chip>
+          <md-chip class="md-body-2">{{ $ctrl.preActivityArtefacts.surveyForm.acronym }}</md-chip>
         </md-chips>
-        <span class="md-body-1">{{ $ctrl.surveyForm.name }}</span>
+        <span class="md-body-1">{{ $ctrl.preActivityArtefacts.surveyForm.name }}</span>
         <span></span>
       </div>
       <form class="activity-creation-form-layout"
@@ -117,7 +117,7 @@
           </div>
 
           <div class="dateInput">
-            <small class="small-titles">Data de Aferição<sup>*</sup></small>
+            <small class="small-titles">Data de Realização<sup>*</sup></small>
             <md-datepicker class="form-control" required
                            ng-model="$ctrl.preActivityArtefacts.realizationDate"
                            md-placeholder={{vm.Constant.DATE_FORMAT_TITLE}}

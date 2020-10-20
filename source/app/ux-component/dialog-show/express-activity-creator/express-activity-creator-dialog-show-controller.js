@@ -12,7 +12,7 @@
 
   ];
 
-  function Controller(ExpressActivityCreatorService, OtusExpressActivityCreatorDialogValues, CheckerItemFactory, ACTIVITY_MANAGER_LABELS){
+  function Controller(expressActivityCreatorService, OtusExpressActivityCreatorDialogValues, CheckerItemFactory, ACTIVITY_MANAGER_LABELS){
     const self = this;
     self.dialogValues = OtusExpressActivityCreatorDialogValues;
     self.categories = [];
@@ -48,13 +48,13 @@
     }
 
     function _loadCategories() {
-      ExpressActivityCreatorService.loadCategories()
+      expressActivityCreatorService.loadCategories()
         .then(response => self.categories = response);
     }
 
     function _getSurveyByAcronym(acronym = 'TCLEC') {
-      ExpressActivityCreatorService.getSurveyByAcronym(acronym)
-        .then(surveyFound => self.surveyForm = surveyFound);
+      expressActivityCreatorService.getSurveyByAcronym(acronym)
+        .then(surveyFound => self.preActivityArtefacts.surveyForm = surveyFound);
     }
 
     function createActivity(){
@@ -63,8 +63,8 @@
         return;
       }
       alert("createActivity");
-      // console.info(self.data);
-      ExpressActivityCreatorService.createActivity(self.preActivityArtefacts);
+      expressActivityCreatorService.createActivity(self.preActivityArtefacts)
+        .then(() => self.data.cancel());
     }
 
   }

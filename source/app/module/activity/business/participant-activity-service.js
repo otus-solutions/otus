@@ -46,6 +46,7 @@
 		self.getActivity = getActivity;
 		self.clearSelectedActivities = clearSelectedActivities;
 		self.reopenActivity = reopenActivity;
+		self.saveActivity = saveActivity;
 
 		 function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -66,7 +67,6 @@
     }
 
 		function createPreActivity(survey, configuration, mode) {
-		   console.log(configuration)
 			let loggedUser = ContextService.getLoggedUser();
 			return PreActivityFactory.create(survey, configuration, mode, loggedUser);
 		}
@@ -87,6 +87,29 @@
         .then(() => self.activities = [])
         .then(() => LoadingScreenService.finish);
 		}
+
+		function saveActivity(preActivity) {
+      return _prepareActivities(preActivity)
+        .then(() => ActivityRepositoryService.saveActivities(self.activities))
+        .catch(() => {
+          $mdToast.show(
+            $mdToast.simple()
+              .textContent("Ocorreu um erro ao adicionar a(s) atividade(s)")
+              .position("bottom")
+              .hideDelay(5000));
+          LoadingScreenService.finish();
+        })
+        .then(() => {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent("atividade criada com sucesso")
+            .position("bottom")
+            .hideDelay(5000));
+        LoadingScreenService.finish();
+      })
+        .then(() => self.activities = [])
+        .then(() => LoadingScreenService.finish);
+    }
 
 		function _prepareActivities(preActivities) {
 			return getSelectedParticipant().then(selectedParticipant => {
