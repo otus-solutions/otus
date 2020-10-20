@@ -105,8 +105,6 @@
       LoadingScreenService.finish();
     }
 
-
-
     function _activityAttributes(activities) {
       return activities.forEach(activity => {
         activity = ActivityBasicFactory.fromJsonObject(activity);

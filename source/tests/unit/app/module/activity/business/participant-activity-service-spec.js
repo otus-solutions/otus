@@ -134,7 +134,7 @@ describe('participant-activity-service Test', function() {
     expect(Injections.ContextService.getSelectedParticipant).toHaveBeenCalledTimes(1);
   });
 
-  fit('should call discardActivity method', function () {
+  it('should call discardActivity method', function () {
     spyOn(Injections.ContextService, "getSelectedParticipant").and.returnValue(Promise.resolve(Mock.participant));
     service.discardActivity(ID, RN);
     expect(Injections.ContextService.getSelectedParticipant).toHaveBeenCalledTimes(1);
