@@ -39,10 +39,10 @@
     }
 
     function createActivity(preActivityArtefacts) {
-      console.log(preActivityArtefacts);
       let preActivity = _createPreActivity(preActivityArtefacts);
 
       if (preActivity.preActivityValid) {
+        console.log(preActivity)
         return ParticipantActivityService.saveActivity([preActivity]);
       }
     }

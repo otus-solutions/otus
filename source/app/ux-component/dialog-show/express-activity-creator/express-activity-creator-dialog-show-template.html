@@ -80,7 +80,7 @@
           <label>Categoria</label>
           <md-select class="form-control"
                      aria-label="Categoria"
-                     ng-model="$ctrl.preActivityArtefacts.configuration" required>
+                     ng-model="$ctrl.preActivityArtefacts.configuration.category" required>
             <md-option ng-repeat="category in $ctrl.categories track by $index"
                        ng-selected="category.isDefault"
                        ng-value="category">{{category.label | uppercase}}
@@ -88,9 +88,6 @@
           </md-select>
           <md-tooltip md-direction="top">Categoria</md-tooltip>
         </md-input-container>
-
-
-
 
         <md-input-container ng-if="!$ctrl.surveyForm.isRequiredExternalID()" class="external-id-input">
           <label>ID Externo</label>

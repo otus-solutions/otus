@@ -18,22 +18,21 @@
 
   function Controller(DialogShowService) {
     const self = this;
+    self.preActivityArtefacts = {};
 
     /* Public methods */
     self.$onInit = onInit;
     self.saveActivity = saveActivity;
 
     function onInit() {
-      self.preActivityArtefacts = {};
-    }
-
-
-    function saveActivity() {
       self.preActivityArtefacts = {
         acronym: self.acronym,
         actionRefreshCallback: self.actionRefreshCallback
       }
-        DialogShowService.showExpressActivityCreationDialog(self.preActivityArtefacts);
+    }
+
+    function saveActivity() {
+      DialogShowService.showExpressActivityCreationDialog(self.preActivityArtefacts);
     }
   }
 
