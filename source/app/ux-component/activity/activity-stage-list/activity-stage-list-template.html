@@ -1,7 +1,7 @@
 <link href="app/ux-component/activity/activity-stage-list/activity-stage-list.css" rel="stylesheet" type="text/css">
 
 <md-content ng-cloak>
-  <div class="layout-margin">
+  <div class="margin-layout">
     <md-card>
       <h2 class="md-display-1" ng-show="$ctrl.stages.length == 0">
         Etapas Não Adicionada
@@ -9,11 +9,12 @@
       <md-list ng-repeat="stages in $ctrl.stages track by $index">
         <div class="margin-not-top" layout="row" layout-align="start center">
           <span class="md-headline new-chip-white" layout-padding ng-show="stages.stageName"
-           ng-style="{ 'background': '{{$ctrl.colorStage}}'}">{{stages.stageName}}</span>
-          <span class="md-headline new-chip-white" layout-padding ng-show="stages.!stages.stageName" layout-padding
-          ng-style="{ 'background': '{{$ctrl.colorStage}}'}">Atividades sem Etapas</span>
+            ng-style="{ 'background': '{{$ctrl.colorStage}}'}">{{stages.stageName}}</span>
+          <span class="md-headline new-chip-white" layout-padding ng-show="!stages.stageName" layout-padding
+            ng-style="{ 'background': '{{$ctrl.colorStage}}'}">Atividades sem Etapas</span>
         </div>
-        <md-list class="margin-bottom" ng-repeat="activity in stages.acronyms track by $id(activity)">
+        <md-list class="margin-bottom" ng-repeat="activity in stages.acronyms track by $id(activity)"
+          ng-mouseover="activity.actionButton = $id" ng-mouseleave="activity.actionButton = false">
           <div class="stage-list-layout">
             <div class="activity-acronym" layout="row" layout-align="center center" layout-align-xs="start center">
               <md-chips>
@@ -26,7 +27,7 @@
               <span class="md-title text-size margin-left">{{activity.name}}</span>
             </div>
             <div class="activity-button" layout="row" layout-align="end center">
-              <md-button class="md-icon-button md-accent" ng-click="">
+              <md-button class="md-icon-button md-accent" ng-show="$id == activity.actionButton" ng-click="">
                 <md-icon md-svg-icon="plus"></md-icon>
                 <md-tooltip md-direction="top">
                   Adicionar Atividade

@@ -43,17 +43,10 @@
     margin-left: 6px;
   }
 
-  .layout-margin {
+  .margin-layout {
     margin: 8px 4px 0 4px;
   }
 
-  .layout-margin-card {
-    margin: 4px;
-  }
-
-  .margin-left-right {
-    margin: 0 2px 4px 2px;
-  }
 }
 
 @media screen and (min-width: 600px) {
@@ -83,16 +76,8 @@
     grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
 
-  .layout-margin {
+  .margin-layout {
     margin: 8px 4px 8px 4px;
-  }
-
-  .layout-margin-card {
-    margin: 4px;
-  }
-
-  .margin-left-right {
-    margin: 0 8px 0 8px;
   }
 
   .text-size {
@@ -127,16 +112,8 @@
     grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
 
-  .layout-margin {
+  .margin-layout {
     margin: 8px 4px 8px 4px;
-  }
-
-  .layout-margin-card {
-    margin: 4px;
-  }
-
-  .margin-left-right {
-    margin: 0 8px 0 8px;
   }
 
   .text-size {
@@ -171,16 +148,8 @@
     grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
 
-  .layout-margin {
+  .margin-layout {
     margin: 8px 4px 8px 4px;
-  }
-
-  .layout-margin-card {
-    margin: 4px;
-  }
-
-  .margin-left-right {
-    margin: 0 8px 0 8px;
   }
 
   .text-size {
@@ -216,20 +185,8 @@
     grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
 
-  .margin16 {
-    margin: 2px;
-  }
-
-  .layout-margin {
+  .margin-layout {
     margin: 4px;
-  }
-
-  .layout-margin-card {
-    margin: 4px;
-  }
-
-  .margin-left-right {
-    margin: 0 20px 0 20px;
   }
 
   .text-size {
@@ -265,20 +222,8 @@
     grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
   }
 
-  .margin16 {
-    margin: 16px;
-  }
-
-  .layout-margin {
+  .margin-layout {
     margin: 16px 24px 2px 24px;
-  }
-
-  .layout-margin-card {
-    margin: 0 28px 4px 28px;
-  }
-
-  .margin-left-right {
-    margin: 0 24px 0 24px;
   }
 
   .text-size {
