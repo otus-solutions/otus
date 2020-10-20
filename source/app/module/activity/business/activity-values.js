@@ -4,7 +4,7 @@
   angular.module('otusjs.activity.business')
     .value('otusjs.activity.business.ActivityValues', {
       toast : {
-        sucessActivityCreation: "atividade criada com sucesso",
+        sucessActivityCreation: "Atividade criada com sucesso",
         failActivityCreation: "Ocorreu um erro ao adicionar a(s) atividade(s)",
         successMessage: "Solicitação realizada com sucesso!",
         failureMessage: "Ocorreu algum problema, tente novamente mais tarde.",
