@@ -1,4 +1,4 @@
-fdescribe('ActivityRestService Suite Test', function () {
+describe('ActivityRestService Suite Test', function () {
   let Mock = {};
   let service;
   let Injections = {};
