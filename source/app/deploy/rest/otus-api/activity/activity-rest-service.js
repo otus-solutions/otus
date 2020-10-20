@@ -151,6 +151,10 @@
     }
 
     function discardActivity(activityId, recruitmentNumber) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+
       _rest.discard({ id: activityId, rn: recruitmentNumber });
     }
 

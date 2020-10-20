@@ -236,6 +236,10 @@
     }
 
     function discardActivity(activityId, participant) {
+      if (!participant) {
+        throw new Error('No participant selected to list stage.', 'activity-repository-service.js', 239);
+      }
+
       ActivityCollectionService.discardActivity(activityId, participant);
     }
 

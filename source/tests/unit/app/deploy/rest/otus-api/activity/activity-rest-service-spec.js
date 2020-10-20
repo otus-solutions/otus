@@ -1,4 +1,4 @@
-describe('ActivityRestService Suite Test', function () {
+fdescribe('ActivityRestService Suite Test', function () {
   let Mock = {};
   let service;
   let Injections = {};
@@ -44,6 +44,8 @@ describe('ActivityRestService Suite Test', function () {
     expect(service.getById).toBeDefined();
     expect(service.createFollowUpActivity).toBeDefined();
     expect(service.reopen).toBeDefined();
+    expect(service.getAllByStageGroup).toBeDefined();
+    expect(service.discardActivity).toBeDefined();
   });
 
   describe('Rest Not Initialized Suite Test', function () {
@@ -85,6 +87,14 @@ describe('ActivityRestService Suite Test', function () {
 
     it('reopen method should throw error with message resource is not initialized', function () {
       expect(service.reopen).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE);
+    });
+
+    it('reopen method should throw error with message resource is not initialized', function () {
+      expect(service.getAllByStageGroup).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE);
+    });
+
+    it('reopen method should throw error with message resource is not initialized', function () {
+      expect(service.discardActivity).toThrowError(UNINITIALIZED_REST_ERROR_MESSAGE);
     });
   });
 
@@ -168,11 +178,23 @@ describe('ActivityRestService Suite Test', function () {
       expect(Mock.rest.update).toHaveBeenCalledTimes(1);
     });
 
+    it('getAllByStageGroup method should call getAllByStageGroup method', function () {
+      spyOn(Mock.rest, "getAllByStageGroup").and.callThrough();
+      service.getAllByStageGroup(Mock.data);
+      expect(Mock.rest.getAllByStageGroup).toHaveBeenCalledTimes(1);
+    });
+
+    it('discardActivity method should call discard method', function () {
+      spyOn(Mock.rest, "discard").and.callThrough();
+      service.discardActivity(Mock.data);
+      expect(Mock.rest.discard).toHaveBeenCalledTimes(1);
+    });
+
   });
 
-  function _mockRestMethodWithoutData(restMethod){
+  function _mockRestMethodWithoutData(restMethod) {
     Mock.OtusRestResourceService[restMethod] = function () {
-      return { $promise: Promise.resolve({ }) };
+      return { $promise: Promise.resolve({}) };
     };
   }
 
@@ -204,6 +226,12 @@ describe('ActivityRestService Suite Test', function () {
         return { $promise: Promise.resolve({ data: [] }) };
       },
       createFollowUpActivity: function () {
+        return { $promise: true };
+      },
+      getAllByStageGroup: function () {
+        return { $promise: true };
+      },
+      discard: function () {
         return { $promise: true };
       }
     };
