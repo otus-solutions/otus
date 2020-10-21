@@ -64,7 +64,9 @@
       console.log(self.activityCreationForm)
       if(self.activityCreationForm.$invalid){
         self.activityCreationForm.$setDirty();
-        self.activityCreationForm.checker.$setDirty();
+        if(self.activityCreationForm.checker) {
+          self.activityCreationForm.checker.$setDirty()
+        };
         return;
       }
       expressActivityCreatorService.createActivity(self.preActivityArtefacts)

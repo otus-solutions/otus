@@ -88,6 +88,7 @@
     }
 
     function saveActivity(preActivity) {
+      LoadingScreenService.start();
       return _prepareActivities(preActivity)
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
         .catch(() => {
