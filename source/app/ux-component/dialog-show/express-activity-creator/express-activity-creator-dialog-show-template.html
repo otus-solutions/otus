@@ -103,7 +103,7 @@
           </md-select>
         </md-input-container>
 
-        <md-input-container ng-if="!$ctrl.surveyForm.isRequiredExternalID()" class="external-id-input">
+        <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()" class="external-id-input">
           <label>ID Externo</label>
           <input name="externalId"
                  ng-model="$ctrl.preActivityArtefacts.externalID"
@@ -115,11 +115,11 @@
         </md-input-container>
 
 
-        <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()">
+        <md-input-container ng-if="!$ctrl.surveyForm.isRequiredExternalID()">
           <small class="small-titles">Id externo não requerido<sup>*</sup></small>
         </md-input-container>
 
-        <div class="checker-input">
+        <div class="checker-input" ng-if="$ctrl.preActivityArtefacts.mode === 'PAPER'">
           <small class="small-titles">Aferidor(a)<sup>*</sup></small>
           <otus-checker-search id="checker" class="form-control checker-input"
                                selected-item="$ctrl.preActivityArtefacts.checkerData"
@@ -131,7 +131,7 @@
         </div>
 
 
-        <div class="date-container">
+        <div class="date-container" ng-if="$ctrl.preActivityArtefacts.mode === 'PAPER'">
           <small class="small-title-date">Data de Realização<sup>*</sup></small>
           <md-input-container class="date-input">
             <input aria-label="Data de realização" class="form-control date-input" date="true"
