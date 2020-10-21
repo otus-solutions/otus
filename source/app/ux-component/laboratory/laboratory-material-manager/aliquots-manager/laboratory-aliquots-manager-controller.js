@@ -47,7 +47,7 @@
     self.aliquotInputOnKeyDown = aliquotInputOnKeyDown
 
     function onInit() {
-      _buildMomentTypeList(self.tube)
+      _buildMomentTypeList(self.participantLaboratory.tubes)
 
       const codeConfiguration = LaboratoryConfigurationService.getCodeConfiguration();
 
@@ -121,7 +121,7 @@
     }
 
     function _buildMomentTypeList(tube) {
-      self.momentTypeList = AliquotTubeService.buildMomentTypeList([tube]);
+      self.momentTypeList = AliquotTubeService.buildMomentTypeList(tube);
     }
 
     function _setMomentType(momentType) {

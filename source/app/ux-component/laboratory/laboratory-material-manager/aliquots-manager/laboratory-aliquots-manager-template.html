@@ -52,8 +52,7 @@
                     <md-input-container flex class="md-block">
                       <label>Tubo</label>
                       <input class="campo" ng-if="!exam.tubeCode" name="{{exam.tubeId}}"
-
-                             ng-model="exam.tubeCode" placeholder="" />
+                             ng-model="exam.tubeCode" ng-value="exam.tubeCode = $ctrl.tube.code" placeholder="" ng-disabled="true"/>
                       <input class="campo" ng-if="exam.tubeCode" ng-model="exam.tubeCode" placeholder="{{exam.placeholder}}" ng-change="$ctrl.tubeInputOnChange(exam)" name="{{exam.tubeId}}" id="{{exam.tubeId}}" maxlength="{{$ctrl.tubeLength}}" ng-disabled="true" tabindex="-1"
                              ng-disabled="exam.isSaved" />
                       <!-- tabindex="-1" -->
@@ -142,7 +141,9 @@
                     <md-content layout="row" flex layout-align="start center">
                       <md-input-container flex class="md-block">
                         <label>Tubo</label>
-                        <input class="campo" ng-if="!additionalExam.tubeCode" ng-model="$ctrl.tube.code" placeholder="" ng-disabled="true"/>
+
+                        <input class="campo" ng-if="!additionalExam.tubeCode" name="{{additionalExam.tubeId}}"
+                               ng-model="additionalExam.tubeCode" ng-value="additionalExam.tubeCode = $ctrl.tube.code" placeholder="" ng-disabled="true" />
                         <input class="campo" ng-if="additionalExam.tubeCode" ng-model="additionalExam.tubeCode" placeholder="{{additionalExam.placeholder}}" ng-change="$ctrl.tubeInputOnChange(additionalExam)" name="{{additionalExam.tubeId}}" id="{{additionalExam.tubeId}}" maxlength="{{$ctrl.tubeLength}}" ng-blur="$ctrl.tubeInputOnBlur(additionalExam)" tabindex="-1"
                                ng-disabled="true" />
                         <!-- tabindex="-1" -->
@@ -231,7 +232,9 @@
                   <md-content layout="row" flex layout-align="start center">
                     <md-input-container flex class="md-block">
                       <label>Tubo</label>
-                      <input class="campo" ng-if="!storage.tubeCode" ng-model="$ctrl.tube.code" placeholder="" ng-disabled="true"/>
+
+                      <input class="campo" ng-if="!storage.tubeCode" name="{{storage.tubeId}}"
+                             ng-model="storage.tubeCode" ng-value="storage.tubeCode = $ctrl.tube.code" placeholder="" ng-disabled="true" />
                       <input class="campo" ng-if="storage.tubeCode" ng-model="storage.tubeCode" placeholder="{{storage.placeholder}}" ng-change="$ctrl.tubeInputOnChange(storage)" name="{{storage.tubeId}}" id="{{storage.tubeId}}" maxlength="{{$ctrl.tubeLength}}" ng-blur="$ctrl.tubeInputOnBlur(storage)"
                              tabindex="-1" ng-disabled="true" />
                       <!-- tabindex="-1" -->
