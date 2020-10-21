@@ -54,7 +54,7 @@
             name: 'INITIALIZED_OFFLINE',
             label: 'Realizado em Papel',
             color: '#886430',
-            icon: 'edit'
+            icon: 'description'
           },
           INITIALIZED_ONLINE: {
             name: 'INITIALIZED_ONLINE',

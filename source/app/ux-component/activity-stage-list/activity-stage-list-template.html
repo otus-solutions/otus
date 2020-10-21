@@ -3,7 +3,7 @@
 <md-content ng-cloak>
   <div class="margin-layout">
     <md-card>
-      <h2 class="md-display-1" ng-show="$ctrl.stages.length == 0">
+      <h2 class="md-display-1 text-stage-size" ng-show="$ctrl.stages.length == 0">
         Etapas Não Adicionada
       </h2>
       <md-list ng-repeat="stages in $ctrl.stages track by $index">
@@ -14,36 +14,43 @@
             ng-style="{ 'background': '{{$ctrl.colorStage}}'}">Atividades sem Etapas</span>
         </div>
         <md-list class="margin-bottom" ng-repeat="activity in stages.acronyms track by $id(activity)">
-          <div class="stage-list-layout" ng-mouseover="activity.actionButton = $id" ng-mouseleave="activity.actionButton = false">
+          <div class="stage-list-layout" ng-mouseover="activity.actionButton = $id"
+            ng-mouseleave="activity.actionButton = false">
             <div class="activity-acronym" layout="row" layout-align="center center" layout-align-xs="start center">
               <md-chips>
                 <md-chip>
-                  <span class="md-body-2 text-size">{{activity.acronym}}</span>
+                  <span class="md-body-2 ">{{activity.acronym}}</span>
                 </md-chip>
               </md-chips>
             </div>
-            <div class="activity-name" layout="row" layout-align-xs="center center">
-              <span class="md-title text-size margin-left">{{activity.name}}</span>
+            <div class="activity-name" layout="row">
+              <span class="md-title margin-left">{{activity.name}}</span>
             </div>
             <div class="activity-button" layout="row" layout-align="end center">
-              <otus-express-activity-creator ng-show="$id == activity.actionButton" acronym="activity.acronym" action-refresh-callback="$ctrl.refreshActivityStage()"></otus-express-activity-creator>
+              <otus-express-activity-creator hide-xs hide-sm ng-show="$id == activity.actionButton"
+                acronym="activity.acronym" action-refresh-callback="$ctrl.refreshActivityStage()">
+              </otus-express-activity-creator>
+              <otus-express-activity-creator layout="row" layout-align="end center" hide-lg hide-gt-md
+                acronym="activity.acronym" action-refresh-callback="$ctrl.refreshActivityStage()">
+              </otus-express-activity-creator>
             </div>
           </div>
           <md-card class="activity-null-layout" ng-show="!activity.activities">
-            <div class="activity-null">
+            <div class="activity-null ">
               <p>Nenhuma Atividade Adicionada</p>
             </div>
           </md-card>
-          <md-card class="activity-list-layout" ng-repeat="item in activity.activities track by $id(item)"
+          <div class="activity-list-layout" ng-repeat="item in activity.activities track by $id(item)"
             ng-mouseover="item.actionButtons = $id" ng-mouseleave="item.actionButtons = false">
             <div class="activity-status" layout="row" layout-align="center center">
-              <md-icon md-font-set="material-icons" ng-style="{color: item.lastStatus.status.color}">
+              <md-icon class="icon-status-size" md-font-set="material-icons"
+                ng-style="{color: item.lastStatus.status.color}">
                 {{item.lastStatus.status.icon}}</md-icon>
               <md-tooltip md-direction="top">
                 {{item.lastStatus.status.label}}
               </md-tooltip>
             </div>
-            <div class="activity-mode" layout="row" layout-align="center center">
+            <div class="activity-mode" layout="row" layout-align-gt-md="center center">
               <md-icon md-font-set="material-icons">{{item.lastStatus.mode.icon}}</md-icon>
               <md-tooltip md-direction="top">
                 {{item.lastStatus.mode.label}}
@@ -51,47 +58,61 @@
               </md-icon>
             </div>
             <div class="activity-date" layout="row" layout-align="center center">
-              <span class="md-caption" ng-style="{ color: '#797985' }" hide-xs hide-sm>Criado em <small
+              <span class="md-caption" ng-style="{ color: '#797985' }" hide-xs hide-sm hide-md>Criado em <small
                   class="md-body-2" ng-style="{color:'black'}">{{item.lastStatus.realizationDate}}</small></span>
               <span class="md-body-2" hide-gt-md>{{item.lastStatus.realizationDate}}</span>
               <md-tooltip md-direction="top">
                 Data de realização
               </md-tooltip>
             </div>
-            <div class="activity-user-email" layout="row" layout-align="center center">
-              <span class="md-caption" ng-style="{ color: '#797985' }" hide-xs hide-sm>por <small class="md-body-2"
+            <div class="activity-user-email" layout="row" layout-align-gt-sm="center center">
+              <span class="md-caption" ng-style="{ color: '#797985' }" hide-xs hide-sm hide-md>por <small class="md-body-2"
                   ng-style="{color:'black'}">{{item.lastStatus.user.email}}</small></span>
-              <span class="md-body-2" hide-gt-md>{{item.lastStatus.user.email}}</span>
+              <span class="md-body-2  margin-left" hide-gt-md>{{item.lastStatus.user.email}}</span>
               <md-tooltip md-direction="top">
                 Realizado por
               </md-tooltip>
             </div>
-            <div class="activity-category" layout="row" layout-align="center center">
+            <div class="activity-category" layout="row" layout-align-gt-sm="center center">
               <span class="md-body-2">{{item.lastStatus.category.label}}</span>
               <md-tooltip md-direction="top">
                 Categoria
               </md-tooltip>
             </div>
-            <div class="activity-externalID" layout="row" layout-align="center center">
-              <span class="md-body-2">{{item.externalId}}</span>
+            <div class="activity-externalID" layout="row" layout-align-gt-sm="center center">
+              <span class="md-body-2  margin-left">{{item.externalID}}</span>
+              <p class=" margin-left" style="color: gray" ng-show="!item.externalID">Nenhum Id Externo</p>
               <md-tooltip md-direction="top">
                 ID Externo
               </md-tooltip>
             </div>
-            <div class="activity-button" layout="row" layout-align="end center" layout-align-xs="space-around center"
-              ng-show="$id == item.actionButtons">
-              <md-button class="md-icon-button md-warn" aria-label="Excluir"
-                ng-click="$ctrl.deleteSelectedActivity(item)">
-                <md-tooltip md-direction="top">Excluir</md-tooltip>
-                <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
-              </md-button>
-              <md-button class="md-accent md-icon-button" aria-label="Preencher Atividade"
-                ng-click="$ctrl.fillSelectedActivity(item)" ng-show="$ctrl.showFillingButton(item.mode)">
-                <md-tooltip md-direction="top">Preencher Atividade</md-tooltip>
-                <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
-              </md-button>
+            <div class="activity-button">
+              <div layout="row" layout-align="end center" hide-xs hide-sm ng-show="$id == item.actionButtons">
+                <md-button class="md-icon-button md-warn" aria-label="Excluir"
+                  ng-click="$ctrl.deleteSelectedActivity(item)">
+                  <md-tooltip md-direction="top">Excluir</md-tooltip>
+                  <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
+                </md-button>
+                <md-button class="md-accent md-icon-button" aria-label="Preencher Atividade"
+                  ng-click="$ctrl.fillSelectedActivity(item)" ng-show="$ctrl.showFillingButton(item.mode)">
+                  <md-tooltip md-direction="top">Preencher Atividade</md-tooltip>
+                  <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
+                </md-button>
+              </div>
+              <div layout="row" layout-align="end center" hide-lg hide-gt-md>
+                <md-button class="md-icon-button md-warn" aria-label="Excluir"
+                  ng-click="$ctrl.deleteSelectedActivity(item)">
+                  <md-tooltip md-direction="top">Excluir</md-tooltip>
+                  <md-icon md-font-set="material-icons" aria-label="Excluir">delete</md-icon>
+                </md-button>
+                <md-button class="md-accent md-icon-button" aria-label="Preencher Atividade"
+                  ng-click="$ctrl.fillSelectedActivity(item)" ng-show="$ctrl.showFillingButton(item.mode)">
+                  <md-tooltip md-direction="top">Preencher Atividade</md-tooltip>
+                  <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
+                </md-button>
+              </div>
             </div>
-          </md-card>
+          </div>
         </md-list>
         <md-divider class="margin-bottom" ng-hide="$index == $ctrl.stages.length -1">
         </md-divider>
