@@ -9,7 +9,6 @@
     'otusjs.otus.uxComponent.ExpressActivityCreatorDialogValues',
     'otusjs.otus.uxComponent.CheckerItemFactory',
     'ACTIVITY_MANAGER_LABELS'
-
   ];
 
   function Controller(expressActivityCreatorService, expressActivityCreatorDialogValues, CheckerItemFactory, ACTIVITY_MANAGER_LABELS){
@@ -52,7 +51,6 @@
     function _loadCategories() {
       expressActivityCreatorService.loadCategories()
         .then(response => self.categories = response);
-
     }
 
     function _getSurveyByAcronym(acronym) {
