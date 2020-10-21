@@ -2,51 +2,64 @@
   .stage-list-layout {
     display: grid;
     align-items: center;
-    height: 17.2vh;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 0.6fr 1fr;
-    grid-template-areas:
-      "activity-acronym      activity-button"
-      "activity-name         activity-name";
+    height: auto;
+    grid-template-columns: 0.2fr 1fr 0.2fr;
+    grid-template-rows: 0.6fr;
+    grid-template-areas: "activity-acronym   activity-name   activity-button";
   }
 
   .activity-list-layout {
     display: grid;
     align-items: center;
-    height: 23.5vh;
-    grid-template-columns: 0.2fr 1fr;
-    grid-template-rows: repeat(5, 1fr);
+    height: auto;
+    padding-top: 20px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    grid-template-columns: 0.7fr 0.2fr 0.7fr 1.6fr;
+    grid-template-rows: repeat(3, 0.6fr);
     grid-template-areas:
-      "activity-status     activity-date"
-      "activity-status     activity-user-email"
-      "activity-mode       activity-category"
-      "activity-mode        activity-externalID"
-      "activity-mode        activity-button";
+      "activity-status  activity-mode  activity-date  activity-category"
+      "activity-status  activity-user-email   activity-user-email activity-user-email"
+      "activity-externalID  activity-externalID  activity-externalID  activity-button";
   }
 
   .activity-null-layout {
     display: grid;
     align-items: center;
-    height: 6vh;
+    height: auto;
     grid-template-columns: 0.1fr 1fr;
-    grid-template-rows: 1fr;
+    grid-template-rows: 0.8fr;
     grid-template-areas:
       ".    activity-null"
       ".    activity-null";
   }
 
-  .text-size {
-    font-size: 3.3vw;
+  .md-headline {
+    font-size: 4.2vw;
+  }
+
+  .md-body-2 {
+    font-size: 3vw;
+  }
+
+  .md-title {
+    font-size: 3.4vw;
   }
 
   .margin-left {
     margin-left: 6px;
   }
 
+  .icon-status-size {
+    font-size: 10vw;
+  }
+
   .margin-layout {
     margin: 8px 4px 0 4px;
   }
 
+  .margin-bottom {
+    margin: 0 0 10px 0;
+  }
 }
 
 @media screen and (min-width: 600px) {
@@ -61,6 +74,7 @@
   .activity-list-layout {
     display: grid;
     align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 15.5vh;
     grid-template-columns: 0.2fr 0.2fr repeat(5, 1fr);
     grid-template-rows: 1fr;
@@ -80,8 +94,24 @@
     margin: 8px 4px 8px 4px;
   }
 
-  .text-size {
-    font-size: 2vw;
+  .md-body-2 {
+    font-size: 14px;
+  }
+
+  .icon-status-size {
+    font-size: 24px;
+  }
+
+  .md-headline {
+    font-size: 24px;
+  }
+
+  .md-title {
+    font-size: 20px;
+  }
+
+  .margin-bottom {
+    margin: 0 0 15px 0;
   }
 }
 
@@ -97,8 +127,9 @@
   .activity-list-layout {
     display: grid;
     align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 6.5vh;
-    grid-template-columns: 0.3fr 0.3fr repeat(5, 1fr);
+    grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
   }
@@ -116,8 +147,24 @@
     margin: 8px 4px 8px 4px;
   }
 
-  .text-size {
-    font-size: 2vw;
+  .md-body-2 {
+    font-size: 14px;
+  }
+
+  .icon-status-size {
+    font-size: 24px;
+  }
+
+  .md-headline {
+    font-size: 24px;
+  }
+
+  .md-title {
+    font-size: 20px;
+  }
+
+  .margin-bottom {
+    margin: 0 0 15px 0;
   }
 }
 
@@ -130,9 +177,11 @@
     grid-template-rows: 1fr;
     grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
   }
+
   .activity-list-layout {
     display: grid;
     align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 15.5vh;
     grid-template-columns: 0.2fr 0.2fr repeat(5, 1fr);
     grid-template-rows: 1fr;
@@ -152,8 +201,24 @@
     margin: 8px 4px 8px 4px;
   }
 
-  .text-size {
-    font-size: 2vw;
+  .md-body-2 {
+    font-size: 14px;
+  }
+
+  .icon-status-size {
+    font-size: 24px;
+  }
+
+  .md-headline {
+    font-size: 24px;
+  }
+
+  .md-title {
+    font-size: 20px;
+  }
+
+  .margin-bottom {
+    margin: 0 0 20px 0;
   }
 }
 
@@ -170,7 +235,8 @@
   .activity-list-layout {
     display: grid;
     align-items: center;
-    height: 6vh;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    height: 5.4vh;
     grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email  activity-category   activity-externalID     activity-button";
@@ -189,8 +255,24 @@
     margin: 4px;
   }
 
-  .text-size {
-    font-size: 1.8vw;
+  .margin-bottom {
+    margin: 0 0 20px 0;
+  }
+
+  .md-body-2 {
+    font-size: 14px;
+  }
+
+  .icon-status-size {
+    font-size: 24px;
+  }
+
+  .md-headline {
+    font-size: 24px;
+  }
+
+  .md-title {
+    font-size: 20px;
   }
 }
 
@@ -198,6 +280,7 @@
   .stage-list-layout {
     display: grid;
     align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 7vh;
     grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
     grid-template-rows: 1fr;
@@ -207,7 +290,7 @@
   .activity-list-layout {
     display: grid;
     align-items: center;
-    height: 4.5vh;
+    height: 5vh;
     grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date     activity-user-email   activity-category   activity-externalID     activity-button";
@@ -226,8 +309,20 @@
     margin: 16px 24px 2px 24px;
   }
 
-  .text-size {
-    font-size: 0.9vw;
+  .md-body-2 {
+    font-size: 14px;
+  }
+
+  .icon-status-size {
+    font-size: 24px;
+  }
+
+  .md-headline {
+    font-size: 24px;
+  }
+
+  .md-title {
+    font-size: 20px;
   }
 }
 
