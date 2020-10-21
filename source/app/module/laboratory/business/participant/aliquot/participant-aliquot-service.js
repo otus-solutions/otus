@@ -29,7 +29,7 @@
     function _filterByLocationPoint(aliquotLocationPoint) {
       if(aliquotLocationPoint) {
         const filteredLocationPoint = self.locationPoints
-          .filter(locationPoint => locationPoint._id == ( ! aliquotLocationPoint.hasOwnProperty('$oid') ? aliquotLocationPoint : aliquotLocationPoint.$oid))
+          .filter(locationPoint => locationPoint._id == ( !aliquotLocationPoint.hasOwnProperty('$oid') ? aliquotLocationPoint : aliquotLocationPoint.$oid))
         return filteredLocationPoint[0]
       }else {
         return "";

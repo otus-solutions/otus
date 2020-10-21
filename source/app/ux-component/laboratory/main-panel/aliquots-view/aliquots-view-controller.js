@@ -121,7 +121,6 @@
     }
 
     function _buildMomentTypeList() {
-      console.info(self.participantLaboratory.tubes)
       self.momentTypeList = AliquotTubeService.buildMomentTypeList(self.participantLaboratory.tubes);
     }
 
@@ -210,6 +209,7 @@
 
     function _setMomentType(momentType) {
       self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType, self.locationPoints);
+
       _buildAvailableExamTypesArray(momentType);
 
       Validation.initialize(
