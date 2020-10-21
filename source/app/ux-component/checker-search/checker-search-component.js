@@ -11,7 +11,8 @@
         filterItem: '=',
         placeholderTitle: '@',
         changeWatcher: '&',
-        selectedItem: '='
+        selectedItem: '=',
+        name: '@'
       }
     }).controller('otusCheckerSearchCtrl', Controller);
 

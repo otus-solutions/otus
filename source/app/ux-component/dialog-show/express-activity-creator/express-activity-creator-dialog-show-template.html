@@ -40,10 +40,12 @@
 
   .external-id-input {
     display: flex;
+    flex-flow: column;
+
   }
 
   .date-input {
-    display:flex;
+    display: flex;
   }
 
 </style>
@@ -74,15 +76,16 @@
         <span></span>
       </div>
 
-      <form class="activity-creation-form-layout" name="$ctrl.activityCreationForm" ng-submit="$ctrl.createActivity()" novalidate>
+      <form class="activity-creation-form-layout" name="$ctrl.activityCreationForm" ng-submit="$ctrl.createActivity()"
+            novalidate>
         <md-input-container>
           <label>Tipo</label>
           <md-select class="form-control"
                      aria-label="Tipo de Atividades"
                      ng-model="$ctrl.preActivityArtefacts.mode" required>
-            <md-option ng-repeat="mode in $ctrl.optionModes track by $index"
-                       ng-selected="mode.isDefault"
-                       ng-value="mode">{{mode.label | uppercase}}
+            <md-option ng-repeat="type in $ctrl.optionModes track by $index"
+                       ng-selected="type.isDefault"
+                       ng-value="type.mode">{{type.label | uppercase}}
             </md-option>
 
           </md-select>
@@ -106,7 +109,11 @@
                  ng-model="$ctrl.preActivityArtefacts.externalID"
                  ng-change="$ctrl.updateExternalID($ctrl.preActivityArtefacts.externalID)"
                  placeholder="Id externo" aria-label="Id externo" required>
+          <div class="" ng-messages="$ctrl.activityCreationForm.externalId.$error">
+            <div ng-message="required">This is required!</div>
+          </div>
         </md-input-container>
+
 
         <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()">
           <small class="small-titles">Id externo não requerido<sup>*</sup></small>
@@ -114,14 +121,15 @@
 
         <div class="checker-input">
           <small class="small-titles">Aferidor(a)<sup>*</sup></small>
-          <otus-checker-search class="form-control checker-input" name="checker"
+          <otus-checker-search id="checker" class="form-control checker-input"
                                selected-item="$ctrl.preActivityArtefacts.checkerData"
                                placeholder-title="Escolha um Aferidor(a)">
           </otus-checker-search>
-          <!--          <div class="" ng-messages="$ctrl.activityCreationForm.checker.$error">-->
-          <!--            <div ng-message="required">This is required!</div>-->
-          <!--          </div>-->
         </div>
+        <div ng-if="$ctrl.activityCreationForm.checker.$error.required && $ctrl.activityCreationForm.checker.$dirty">
+          <small style="color: #d50000">Campo obrigatório</small>
+        </div>
+
 
         <div class="date-container">
           <small class="small-title-date">Data de Realização<sup>*</sup></small>

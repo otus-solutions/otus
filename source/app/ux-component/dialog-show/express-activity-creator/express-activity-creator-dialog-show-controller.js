@@ -18,7 +18,7 @@
     self.categories = [];
     self.optionModes = [];
     self.surveyForm = {};
-    self.preActivityArtefacts = {};
+    self.preActivityArtefacts = angular.copy(self.data.preActivityArtefacts);
 
     self.$onInit = onInit;
     self.createActivity = createActivity;
@@ -27,7 +27,7 @@
     function onInit(){
       _loadOptionModes();
       _loadCategories();
-      _getSurveyByAcronym(self.data.preActivityArtefacts.acronym);
+      _getSurveyByAcronym(self.preActivityArtefacts.acronym);
       self.preActivityArtefacts.realizationDate = new Date();
     }
 
@@ -61,8 +61,10 @@
     }
 
     function createActivity(){
+      console.log(self.activityCreationForm)
       if(self.activityCreationForm.$invalid){
-        alert("form invalid");
+        self.activityCreationForm.$setDirty();
+        self.activityCreationForm.checker.$setDirty();
         return;
       }
       expressActivityCreatorService.createActivity(self.preActivityArtefacts)
