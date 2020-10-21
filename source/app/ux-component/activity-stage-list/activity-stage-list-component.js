@@ -68,41 +68,43 @@
       LoadingScreenService.start();
 
       ParticipantActivityService.getAllByStageGroup()
-        .then(stages => {
-          stages.map(stage => {
-            let surveyFilter = angular.copy(self.surveys);
-
-            surveyFilter.forEach(survey => stage.acronyms.find(acronym => {
-              if (acronym.acronym == survey.acronym) {
-                _activityAttributes(acronym.activities);
-                return survey.activities = acronym.activities;
-              }
-            }))
-
-            stage.acronyms = angular.copy(surveyFilter);
-            stage.acronyms.sort(function (a, b) {
-              var nameA = a.name.toUpperCase();
-              var nameB = b.name.toUpperCase();
-              if (nameA < nameB) {
-                return -1;
-              }
-              if (nameA > nameB) {
-                return 1;
-              }
-
-              return 0;
-            });
-
-          });
-
-          self.stages = stages;
-        })
+        .then(stages => _setUnitySurveyAndActivity(stages))
         .catch(err => {
           $log.error(err);
           _showMsg(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.TOAST.ERROR.errorFind);
         })
 
       LoadingScreenService.finish();
+    }
+
+    function _setUnitySurveyAndActivity(stages) {
+      stages.map(stage => {
+        let surveyFilter = angular.copy(self.surveys);
+
+        surveyFilter.forEach(survey => stage.acronyms.find(acronym => {
+          if (acronym.acronym == survey.acronym) {
+            _activityAttributes(acronym.activities);
+            return survey.activities = acronym.activities;
+          }
+        }))
+
+        stage.acronyms = angular.copy(surveyFilter);
+        stage.acronyms.sort(function (a, b) {
+          var nameA = a.name.toUpperCase();
+          var nameB = b.name.toUpperCase();
+          if (nameA < nameB) {
+            return -1;
+          }
+          if (nameA > nameB) {
+            return 1;
+          }
+
+          return 0;
+        });
+
+        self.stages = stages;
+
+      });
     }
 
     function _activityAttributes(activities) {
