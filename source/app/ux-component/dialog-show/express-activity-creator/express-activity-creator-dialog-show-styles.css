@@ -1,0 +1,48 @@
+.dialog-layout {
+  width: 30vw;
+  background-color: #f3f3f3;
+}
+
+.content-share {
+  padding: 0.5em;
+}
+
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+  box-shadow: none;
+}
+
+.activity-creation-form-layout {
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.date-container {
+  display: flex;
+  flex-flow: column;
+  margin-top: 1em;
+}
+
+.small-titles {
+  color: #717171;
+  margin: .8em 5px;
+}
+
+.small-title-date {
+  color: #717171;
+  margin: .8em 0px 0px 5px;
+}
+
+.checker-input {
+  display: flex;
+  flex-flow: column;
+}
+
+.external-id-input {
+  display: flex;
+  flex-flow: column;
+
+}
+
+.date-input {
+  display: flex;
+}

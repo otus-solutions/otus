@@ -4,10 +4,13 @@
   angular
     .module('otusjs.otus.uxComponent')
     .value('otusjs.otus.uxComponent.ExpressActivityCreatorDialogValues', {
-        titles: {
+      titles: {
         dialogToTitle: 'CRIADOR DE ATIVIDADES',
         ativitity: 'Atividade',
         participant: 'Participante',
+        externalIDNotRequired: 'ID Externo não requerido',
+        checker: 'Aferidor(a)',
+        realizationDate: 'Data de Realização'
       },
       buttons: {
         closeDialog: {
@@ -16,9 +19,23 @@
           tooltip: 'Fechar'
         },
         createActivity: {
-          title: "CRIAR",
-          arialLabel: "criar atividade"
+          title: 'CRIAR',
+          arialLabel: 'criar atividade'
         }
+      },
+      inputLabel: {
+        type: 'Tipo',
+        category: 'Categoria',
+        externalID: 'ID Externo'
+      },
+      ariaLabel: {
+        activityType: 'Tipo de Atividades'
+      },
+      validator: {
+        required: 'Campo obrigatório'
+      },
+      placeholder: {
+        checker: 'Selecione Aferidor(a)'
       }
     })
 

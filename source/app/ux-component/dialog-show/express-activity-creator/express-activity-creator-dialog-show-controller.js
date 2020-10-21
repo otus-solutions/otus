@@ -12,9 +12,9 @@
 
   ];
 
-  function Controller(expressActivityCreatorService, OtusExpressActivityCreatorDialogValues, CheckerItemFactory, ACTIVITY_MANAGER_LABELS){
+  function Controller(expressActivityCreatorService, expressActivityCreatorDialogValues, CheckerItemFactory, ACTIVITY_MANAGER_LABELS){
     const self = this;
-    self.dialogValues = OtusExpressActivityCreatorDialogValues;
+    self.dialogValues = expressActivityCreatorDialogValues;
     self.categories = [];
     self.optionModes = [];
     self.surveyForm = {};
@@ -61,12 +61,11 @@
     }
 
     function createActivity(){
-      console.log(self.activityCreationForm)
       if(self.activityCreationForm.$invalid){
         self.activityCreationForm.$setDirty();
         if(self.activityCreationForm.checker) {
           self.activityCreationForm.checker.$setDirty()
-        };
+        }
         return;
       }
       expressActivityCreatorService.createActivity(self.preActivityArtefacts)
