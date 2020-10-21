@@ -76,6 +76,7 @@
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 15.5vh;
+    padding-top: 0;
     grid-template-columns: 0.2fr 0.2fr repeat(5, 1fr);
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
@@ -129,6 +130,7 @@
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 6.5vh;
+    padding-top: 0;
     grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
@@ -183,6 +185,7 @@
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 15.5vh;
+    padding-top: 0;
     grid-template-columns: 0.2fr 0.2fr repeat(5, 1fr);
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
@@ -237,6 +240,7 @@
     align-items: center;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 5.4vh;
+    padding-top: 0;
     grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email  activity-category   activity-externalID     activity-button";
@@ -291,6 +295,7 @@
     display: grid;
     align-items: center;
     height: 5vh;
+    padding-top: 0;
     grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date     activity-user-email   activity-category   activity-externalID     activity-button";
