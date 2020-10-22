@@ -22,8 +22,7 @@
 
     function getSurveyByAcronym(acronym) {
       return ParticipantActivityService.listAvailables()
-        .then(surveyForms => surveyForms.find(surveyForm => surveyForm.acronym === acronym))
-        .catch(e => console.info(e));
+        .then(surveyForms => surveyForms.find(surveyForm => surveyForm.acronym === acronym));
     }
 
     function _createPreActivity({surveyForm, configuration, mode, checkerData, realizationDate, externalID} = preActivityArtefacts) {
