@@ -134,25 +134,30 @@
     }
 
     function filterLocationPointsWithoutParticipantLocation() {
-      self.locationPointsWithoutParticipantLocation = self.userLocationPoints.filter( locationPoint =>
-        locationPoint._id != self.participant.fieldCenter.locationPoint
-      )
+      if(self.userLocationPoints) {
+        self.locationPointsWithoutParticipantLocation = self.userLocationPoints.filter( locationPoint =>
+          locationPoint._id != self.participant.fieldCenter.locationPoint
+        )
+      } else {
+        self.locationPointsWithoutParticipantLocation = self.participantLocationPoint
+      }
     }
 
     function filterLocationPointsWithoutSelected() {
-      if(self.selectedLocationPoint.hasOwnProperty('name')){
-        self.locationPointsWithouSelectedLocation = self.locationPoints.filter(userLocationPoint => {
+      if(self.userLocationPoints){
+        self.locationPointsWithouSelectedLocation = self.userLocationPoints.filter(userLocationPoint => {
           return userLocationPoint.name !== self.selectedLocationPoint.name
         })
+      }else{
+        self.locationPointsWithouSelectedLocation = []
       }
     }
 
     function fetchLocationPoints() {
       LocationPointRestService.getLocationPoints().then((response) => {
         self.locationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
-      }).then(() => {
+        _setMomentType(self.momentType)
         selectParticipantLocationPoint();
-      }).then (() => {
         fetchUserLocationPoints();
       })
     }
@@ -160,12 +165,9 @@
     function fetchUserLocationPoints() {
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
-      }).then(() =>{
-        _setMomentType(self.momentType)
-      }).then(() => {
         filterLocationPointsWithoutParticipantLocation()
         filterLocationPointsWithoutSelected()
-      });
+      })
     }
 
     function _buildMomentTypeList(tube) {
@@ -173,8 +175,8 @@
     }
 
     function _setMomentType(momentType) {
-      self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType, self.userLocationPoints);
-
+      self.originalAliquots = AliquotTubeService.populateAliquotsArray(momentType, self.locationPoints);
+      self.selectedMomentType = angular.copy(self.originalAliquots)
       _buildAvailableExamTypesArray(momentType);
       Validation.initialize(
         self.validations, self.tubeLength, self.aliquotLengths, clearAliquotError, clearTubeError, setAliquotError, setTubeError, self.selectedMomentType.exams, self.selectedMomentType.storages
@@ -344,7 +346,6 @@
 
     function haveAliquotsChanged() {
       const hasChanged = AliquotTubeService.areFieldsChanged(self.selectedMomentType);
-
       return hasChanged;
     }
 

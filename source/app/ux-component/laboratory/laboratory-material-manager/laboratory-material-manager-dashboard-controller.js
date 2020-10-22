@@ -45,11 +45,7 @@
             const foundTube = self.participantLaboratory.tubes.find(tube => {
               return tube.code == tubeCode
             })
-
             self.originalTube = angular.copy(foundTube);
-            if(!foundTube.tubeCollectionData.isCollected) {
-              foundTube.collect()
-            }
             self.newTube = foundTube
             self.tubeCode = ""
           }).catch(e => {

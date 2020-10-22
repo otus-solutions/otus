@@ -61,7 +61,7 @@
 
         for (var i = 0; i < newAliquots.length; i++) {
           if(originalAliquots[i].tubeCode != newAliquots[i].tubeCode
-          || originalAliquots[i].aliquotCode != newAliquots[i].aliquotCode){
+          && originalAliquots[i].aliquotCode != newAliquots[i].aliquotCode){
             changed = true;
             break;
           }
