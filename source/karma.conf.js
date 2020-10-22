@@ -140,7 +140,7 @@ module.exports = function (config) {
     singleRun: false,
 
     client: {
-      captureConsole: false
+      captureConsole: true
     },
 
     // Concurrency level
