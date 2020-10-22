@@ -1,6 +1,6 @@
 {
   "name": "otus",
-  "version": "1.41.0",
+  "version": "1.43.0",
   "description": "Tool for data entry in a research environment.",
   "keywords": [
     "otus",
@@ -63,9 +63,9 @@
     "require-dir": "^1.0.0",
     "xlsx-core": "^1.0.3",
     "please-wait": "0.0.5",
-    "otus-client-js": "https://github.com/ccem-dev/otus-client-js.git#feature-OCJ-9",
+    "otus-client-js": "1.29.0",
     "otus-domain-client": "1.1.0",
-    "otus-model-js": "1.35.0",
+    "otus-model-js": "1.36.0",
     "otus-preview-js": "1.15.3",
     "otus-validation-js": "1.1.0"
   },

@@ -130,10 +130,14 @@
                                  ng-model="exam.processing" readonly="readonly" format="DD/MM/YYYY hh:mm A" short-time="true" ng-disabled="{{exam.isSaved}}" />
                         </div>
                         <div layout="column" layout-align="start" class="input-footer-message" ng-show="!exam.aliquotMessage && exam.aliquotCode">
-                          <span ng-show="!exam.isSaved">Ponto de localização&nbsp;</span>
-                          <md-input-container ng-show="!exam.isSaved" style="position: relative; top: -20px;">
+                          <span ng-if="exam.isSaved">Localização:&nbsp;{{exam.locationPoint.name}}</span>
+                          <span ng-if="!exam.isSaved">Ponto de localização&nbsp;</span>
+                          <md-input-container ng-if="!exam.isSaved" style="position: relative; top: -20px;">
                             <md-select ng-disabled="{{exam.isSaved}}" ng-class="{fieldDisable: exam.isSaved, fieldActive: !exam.isSaved}" ng-model="exam.locationPoint">
-                              <md-option ng-select ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPoints">
+                              <md-option ng-select selected="true" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.oldSelectedLocationPoints">
+                                {{userLocationPoints.name}}
+                              </md-option>
+                              <md-option ng-select ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPointsFiltered">
                                 {{userLocationPoints.name}}
                               </md-option>
                             </md-select>
@@ -211,6 +215,20 @@
                             <span ng-show="!additionalExam.isSaved">Processado:&nbsp;</span>
                             <input ng-class="{fieldDisable: additionalExam.isSaved, fieldActive: !additionalExam.isSaved}" placeholder="Não Informado" tabindex="-1" mdc-datetime-picker="" ng-show="!additionalExam.isSaved" date="true" time="true" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now"
                                    ng-model="additionalExam.processing" readonly="readonly" format="DD/MM/YYYY hh:mm A" short-time="true" ng-disabled="{{additionalExam.isSaved}}" />
+                          </div>
+                          <div layout="column" layout-align="start" class="input-footer-message" ng-show="!additionalExam.aliquotMessage && additionalExam.aliquotCode">
+                            <span ng-if="additionalExam.isSaved">Localização: {{additionalExam.locationPoint}}</span>
+                            <span ng-if="!additionalExam.isSaved">Ponto de localização&nbsp;</span>
+                            <md-input-container ng-if="!additionalExam.isSaved" style="position: relative; top: -20px;">
+                              <md-select ng-disabled="{{additionalExam.isSaved}}" ng-class="{fieldDisable: additionalExam.isSaved, fieldActive: !additionalExam.isSaved}" ng-model="additionalExam.locationPoint">
+                                <md-option ng-select selected="true" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.oldSelectedLocationPoints">
+                                  {{userLocationPoints.name}}
+                                </md-option>
+                                <md-option ng-select ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPointsFiltered">
+                                  {{userLocationPoints.name}}
+                                </md-option>
+                              </md-select>
+                            </md-input-container>
                           </div>
                         </div>
                       </div>
@@ -298,11 +316,19 @@
                           <input ng-class="{fieldDisable: storage.isSaved, fieldActive: !storage.isSaved}" placeholder="Não Informado" tabindex="-1" mdc-datetime-picker="" ng-show="!storage.isSaved" date="true" time="true" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now"
                                  ng-model="storage.processing" readonly="readonly" format="DD/MM/YYYY hh:mm A" short-time="true" ng-disabled="{{storage.isSaved}}" />
                         </div>
-                        <div layout="row" class="input-footer-message" ng-show="!storage.aliquotMessage && storage.aliquotCode">
-                          <span ng-show="storage.isSaved">Ponto de localização:&nbsp;{{storage.processing | date : 'dd/MM/yyyy hh:mm a'}}</span>
-                          <span ng-show="!storage.isSaved">Processado:&nbsp;</span>
-                          <input ng-class="{fieldDisable: storage.isSaved, fieldActive: !storage.isSaved}" placeholder="Não Informado" tabindex="-1" mdc-datetime-picker="" ng-show="!storage.isSaved" date="true" time="true" type="text" id="datetime" show-todays-date="" max-date="$ctrl.now"
-                                 ng-model="storage.processing" readonly="readonly" format="DD/MM/YYYY hh:mm A" short-time="true" ng-disabled="{{storage.isSaved}}" />
+                        <div layout="column" layout-align="start" class="input-footer-message" ng-show="!storage.aliquotMessage && storage.aliquotCode">
+                          <span ng-if="storage.isSaved">Localização: {{storage.locationPoint}}</span>
+                          <span ng-if="!storage.isSaved">Ponto de localização&nbsp;</span>
+                          <md-input-container ng-if="!storage.isSaved" style="position: relative; top: -20px;">
+                            <md-select ng-disabled="{{storage.isSaved}}" ng-class="{fieldDisable: storage.isSaved, fieldActive: !storage.isSaved}" ng-model="storage.locationPoint">
+                              <md-option ng-select selected="true" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.oldSelectedLocationPoints">
+                                {{userLocationPoints.name}}
+                              </md-option>
+                              <md-option ng-select ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPointsFiltered">
+                                {{userLocationPoints.name}}
+                              </md-option>
+                            </md-select>
+                          </md-input-container>
                         </div>
                       </div>
                     </div>
