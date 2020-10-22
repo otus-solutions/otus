@@ -42,7 +42,7 @@
     self.time = aliquot.time || "";
     self.tubeId = self.role + "Tube" + self.index;
     self.tubeMessage = aliquot.tubeMessage || "";
-
+    self.locationPoint = ""
 
     function toJSON() {
       return {
@@ -62,7 +62,8 @@
         role: self.role,
         time: self.time,
         tubeId: self.tubeId,
-        tubeMessage: self.tubeMessage
+        tubeMessage: self.tubeMessage,
+        locationPoint: self.locationPoint
       };
     }
     function toEmptyJSON() {
@@ -83,7 +84,8 @@
         role: self.role,
         time: "",
         tubeId: self.tubeId,
-        tubeMessage: ""
+        tubeMessage: "",
+        locationPoint: ""
       };
     }
   }
