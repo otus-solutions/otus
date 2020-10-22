@@ -56,6 +56,8 @@
     self.fetchLocationPoints = fetchLocationPoints;
     self.fetchUserLocationPoints = fetchUserLocationPoints;
     self.saveLocationPoint = saveLocationPoint;
+    self.changeAliquotsLocationPoints = changeAliquotsLocationPoints
+    self.changeAliquotsProcessingDate = changeAliquotsProcessingDate
 
     function onInit() {
       _buildDialogs();
@@ -64,6 +66,28 @@
       self.processingDate = new Date();
       self.now = new Date();
       verifyDate();
+
+    }
+
+    function changeAliquotsLocationPoints() {
+      Publisher.publish('aliquots-data', (aliquots) => {
+        aliquots.forEach(aliquot => {
+          if(!aliquot.isSaved) {
+            aliquot.locationPoint = self.selectedLocationPoint
+          }
+        })
+      })
+    }
+
+    function changeAliquotsProcessingDate() {
+      Publisher.publish('aliquots-data', (aliquots) => {
+        console.info(aliquots)
+        aliquots.forEach(aliquot => {
+          if(!aliquot.isSaved) {
+            aliquot.processing = self.processingDate
+          }
+        })
+      })
     }
 
     function _getLocationPoints(callback) {
