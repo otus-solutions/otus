@@ -103,9 +103,6 @@
         });
 
         self.stages = stages;
-
-        console.log(self.stages)
-
       });
     }
 

@@ -1,5 +1,3 @@
-<link href="app/ux-component/activity-stage-list/activity-stage-list.css" rel="stylesheet" type="text/css">
-
 <md-content ng-cloak>
   <div class="margin-layout">
     <md-card>
@@ -50,14 +48,14 @@
                 {{item.lastStatus.status.label}}
               </md-tooltip>
             </div>
-            <div class="activity-mode" layout="row" layout-align-gt-md="center center">
-              <md-icon md-font-set="material-icons">{{item.lastStatus.mode.icon}}</md-icon>
+            <div class="activity-mode" layout="row" layout-align-gt-sm="center center" layout-align-xs="center start">
+              <md-icon class="icon-mode" md-font-set="material-icons">{{item.lastStatus.mode.icon}}</md-icon>
               <md-tooltip md-direction="top">
                 {{item.lastStatus.mode.label}}
               </md-tooltip>
               </md-icon>
             </div>
-            <div class="activity-date" layout="row" layout-align="center center">
+            <div class="activity-date" layout="row" layout-align-gt-sm="center center">
               <span class="md-caption" ng-style="{ color: '#797985' }" hide-xs hide-sm hide-md>Criado em <small
                   class="md-body-2" ng-style="{color:'black'}">{{item.lastStatus.realizationDate}}</small></span>
               <span class="md-body-2" hide-gt-md>{{item.lastStatus.realizationDate}}</span>
@@ -68,7 +66,7 @@
             <div class="activity-user-email" layout="row" layout-align-gt-sm="center center">
               <span class="md-caption" ng-style="{ color: '#797985' }" hide-xs hide-sm hide-md>por <small class="md-body-2"
                   ng-style="{color:'black'}">{{item.lastStatus.user.email}}</small></span>
-              <span class="md-body-2  margin-left" hide-gt-md>{{item.lastStatus.user.email}}</span>
+              <span class="md-body-2" hide-gt-md>{{item.lastStatus.user.email}}</span>
               <md-tooltip md-direction="top">
                 Realizado por
               </md-tooltip>
@@ -79,8 +77,8 @@
                 Categoria
               </md-tooltip>
             </div>
-            <div class="activity-externalID" layout="row" layout-align-gt-sm="center center">
-              <span class="md-body-2  margin-left">{{item.externalID}}</span>
+            <div class="activity-externalID" layout="row" layout-align-gt-sm="center center" layout-align-xs-sm="start center">
+              <span class="md-body-2 margin-left">{{item.externalID}}</span>
               <p class="margin-left" style="color: gray" ng-show="!item.externalID">Nenhum Id Externo</p>
               <md-tooltip md-direction="top">
                 ID Externo
