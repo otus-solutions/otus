@@ -39,6 +39,7 @@
     self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn
     self.deleteAliquot = deleteAliquot;
     self.getCheckingExist = getCheckingExist;
+    self.updateAliquotsWithRn = updateAliquotsWithRn;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -141,6 +142,10 @@
 
     function updateAliquots(updateStructure) {
       return LaboratoryRepositoryService.updateAliquots(updateStructure);
+    }
+
+    function updateAliquotsWithRn(updateStructure, recruitmentNumber) {
+      return LaboratoryRepositoryService.updateAliquotsWithRn(updateStructure, recruitmentNumber);
     }
 
     function convertStorageAliquot(aliquot) {

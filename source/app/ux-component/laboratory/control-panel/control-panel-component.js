@@ -96,6 +96,12 @@
       )
     }
 
+    function _getLocationPoints(callback) {
+      callback(
+        self.locationPoints
+      )
+    }
+
     function _getSelectedLocationPoint(callback) {
       callback(
         self.selectedLocationPoint
@@ -138,8 +144,8 @@
         Publisher.unsubscribe('user-location-points');
         Publisher.subscribe('user-location-points', _getUserLocationPoints);
       }).then(() => {
-        self.userLocationPointsFiltered = self.userLocationPoints.filter(
-          userLocationPoint => userLocationPoint._id != self.participantLocationPoint[0]._id)
+        self.userLocationPointsFiltered = self.userLocationPoints.filter(userLocationPoint =>
+          userLocationPoint._id != self.participantLocationPoint[0]._id)
       });
     }
 

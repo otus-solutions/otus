@@ -102,7 +102,8 @@
                       <md-content layout="row" flex layout-align="start center">
                         <md-input-container flex class="md-block">
                           <label>{{exam.containerLabel}}</label>
-                          <input ng-model="exam.aliquotCode" ng-change="$ctrl.aliquotInputOnChange(exam)" name="{{exam.aliquotId}}" id="{{exam.aliquotId}}" maxlength="{{$ctrl.aliquotMaxLength}}" ng-blur="$ctrl.aliquotInputOnBlur(exam)" ng-keydown="$ctrl.aliquotInputOnKeyDown($event, exam)"
+                          <input ng-model="exam.aliquotCode" ng-change="$ctrl.aliquotInputOnChange(exam)" name="{{exam.aliquotId}}" id="{{exam.aliquotId}}" maxlength="{{$ctrl.aliquotMaxLength}}"
+                                 ng-blur="$ctrl.aliquotInputOnBlur(exam)" ng-keydown="$ctrl.aliquotInputOnKeyDown($event, exam)"
                                  ng-disabled="exam.isSaved" />
 
                           <div ng-messages="formAliquot[exam.aliquotId].$error">

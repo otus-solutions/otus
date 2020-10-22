@@ -22,8 +22,8 @@
     self.tubeCode = "";
     self.originalTube = {};
     self.selectedTube = {}
-
     self.$onInit = onInit;
+    self.participantManagerService = ParticipantManagerService
 
     self.isValidCode = isValidCode;
     self.saveChangedTubes = saveChangedTubes;
@@ -45,13 +45,8 @@
             const foundTube = self.participantLaboratory.tubes.find(tube => {
               return tube.code == tubeCode
             })
-
             self.originalTube = angular.copy(foundTube);
-            if(!foundTube.tubeCollectionData.isCollected) {
-              foundTube.collect()
-            }
             self.newTube = foundTube
-            console.info(self.newTube)
             self.tubeCode = ""
           }).catch(e => {
             toastError(tubeCode)
@@ -70,6 +65,7 @@
 
     function saveChangedTubes() {
       if (haveTubesChanged()) {
+
         _updateChangedTubes(self.newTube);
       } else {
         $mdToast.show(
@@ -93,6 +89,10 @@
     }
 
     function _updateChangedTubes(tube) {
+
+      if(!tube.tubeCollectionData.isCollected) {
+        tube.collect()
+      }
 
       const tubeStructure = {
         tubes: [tube]

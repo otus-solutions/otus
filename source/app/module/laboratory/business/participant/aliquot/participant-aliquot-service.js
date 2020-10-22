@@ -24,6 +24,17 @@
     self.getNewAliquots = getNewAliquots;
     self.updateAliquots = updateAliquots;
     self.deleteAliquot = deleteAliquot;
+    self.updateAliquotsWithRn = updateAliquotsWithRn;
+
+    function _filterByLocationPoint(aliquotLocationPoint) {
+      if(aliquotLocationPoint) {
+        const filteredLocationPoint = self.locationPoints
+          .filter(locationPoint => locationPoint._id == ( !aliquotLocationPoint.hasOwnProperty('$oid') ? aliquotLocationPoint : aliquotLocationPoint.$oid))
+        return filteredLocationPoint[0]
+      }else {
+        return "";
+      }
+    }
 
     function _filterByLocationPoint(aliquotLocationPoint) {
       if(aliquotLocationPoint) {
@@ -37,6 +48,10 @@
 
     function updateAliquots(updateStructure) {
       return ParticipantLaboratoryService.updateAliquots(updateStructure);
+    }
+
+    function updateAliquotsWithRn(updateStructure, recruitmentNumber) {
+      return ParticipantLaboratoryService.updateAliquotsWithRn(updateStructure, recruitmentNumber);
     }
 
     function convertStorageAliquot(aliquot) {
@@ -56,7 +71,7 @@
 
         for (var i = 0; i < newAliquots.length; i++) {
           if(originalAliquots[i].tubeCode != newAliquots[i].tubeCode
-          || originalAliquots[i].aliquotCode != newAliquots[i].aliquotCode){
+          && originalAliquots[i].aliquotCode != newAliquots[i].aliquotCode){
             changed = true;
             break;
           }

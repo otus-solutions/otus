@@ -102,6 +102,13 @@
       })
     }
 
+
+    function _getLocationPoints() {
+      Publisher.publish('location-points', (locationPoints) => {
+        self.locationPoints = locationPoints
+      })
+    }
+
     function _getUserLocationPoints() {
       Publisher.publish('user-location-points', (userLocationPoints) => {
         self.userLocationPoints = userLocationPoints
@@ -411,11 +418,9 @@
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
       _getDateTimeProcessing(aliquot);
-
       _getSelectedLocationPoint(aliquot);
       self.oldSelectedLocationPoints = [aliquot.locationPoint]
       _getUserLocationPointsFiltered(self.oldSelectedLocationPoints[0])
-
       if (self.aliquotLengths.length === 1) {
         var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
         var runCompletePlaceholder = false;

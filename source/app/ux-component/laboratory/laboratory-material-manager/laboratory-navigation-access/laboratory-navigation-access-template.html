@@ -1,4 +1,4 @@
-<div layout="row" layout-xs="column" ng-style="{'margin': '0 auto', 'max-width': '940px'}">
+<div hide-xs layout="row" layout-xs="column" ng-style="{'margin': '0 auto', 'max-width': '940px'}">
   <div layout="row" layout-xs="column" layout-align-xs="center center">
     <md-input-container class="remove-errors-spacer">
       <md-button ng-show="$ctrl.userAccessToLaboratory.sampleTransportationAccess"  ng-click="$ctrl.sampleTransportDashboard()" layout-align="center" layout-margin="">
@@ -22,3 +22,42 @@
     </md-input-container>
   </div>
 </div>
+<!--      Laboratory-->
+<md-fab-speed-dial hide-gt-xs md-direction="down" class="md-scale" flex>
+  <md-fab-trigger>
+    <md-button aria-label="menu" class="md-accent">
+      acessar laboratorios
+      <md-icon md-svg-icon="menu"></md-icon>
+    </md-button>
+  </md-fab-trigger>
+  <md-fab-actions style="position: absolute; top: 40px">
+      <span layout="row" layout-align="center center">
+        <md-button class="md-raised md-primary"
+                   ng-show="$ctrl.userAccessToLaboratory.sampleTransportationAccess"
+                   ng-click="$ctrl.sampleTransportDashboard()">
+        <md-icon>local_shipping</md-icon>Transporte de amostra
+        </md-button>
+      </span>
+      <span layout="row" layout-align="center center">
+        <md-button class="md-raised md-primary"
+                   ng-show="$ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess"
+                   ng-click="$ctrl.unattachedLaboratory()">
+         <md-icon>event_available</md-icon>Laboratório desvinculado
+        </md-button>
+      </span>
+      <span layout="row" layout-align="center center">
+        <md-button class="md-raised md-primary"
+                   ng-show="$ctrl.userAccessToLaboratory.examLotsAccess"
+                   ng-click="$ctrl.examsDashboard()">
+        <md-icon>event_note</md-icon>Lotes de exames
+        </md-button>
+      </span>
+      <span layout="row" layout-align="center center">
+        <md-button class="md-raised md-primary"
+                   ng-show="$ctrl.userAccessToLaboratory.examSendingAccess"
+                   ng-click="$ctrl.sendingExam()">
+        <md-icon>event_available</md-icon>Envios de exames
+        </md-button>
+      </span>
+  </md-fab-actions>
+</md-fab-speed-dial>
