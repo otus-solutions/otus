@@ -51,6 +51,7 @@
 
   .icon-status-size {
     font-size: 10vw;
+    padding-right: 30px;
   }
 
   .margin-layout {
@@ -74,10 +75,10 @@
   .activity-list-layout {
     display: grid;
     align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 15.5vh;
     padding-top: 0;
-    grid-template-columns: 0.2fr 0.2fr repeat(5, 1fr);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    grid-template-columns: 0.1fr 0.1fr 0.5fr 1.6fr 0.5fr repeat(2, 0.8fr);
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
   }
@@ -104,11 +105,11 @@
   }
 
   .md-headline {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   .md-title {
-    font-size: 20px;
+    font-size: 18px;
   }
 
   .margin-bottom {
@@ -128,9 +129,9 @@
   .activity-list-layout {
     display: grid;
     align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 6.5vh;
     padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
@@ -183,12 +184,12 @@
   .activity-list-layout {
     display: grid;
     align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 15.5vh;
     padding-top: 0;
-    grid-template-columns: 0.2fr 0.2fr repeat(5, 1fr);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr repeat(2, 1fr);
     grid-template-rows: 1fr;
-    grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
+    grid-template-areas: "activity-status     activity-mode    activity-date    activity-user-email    activity-category    activity-externalID     activity-button";
   }
 
   .activity-null-layout {
@@ -238,9 +239,9 @@
   .activity-list-layout {
     display: grid;
     align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 5.4vh;
     padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email  activity-category   activity-externalID     activity-button";
@@ -284,7 +285,6 @@
   .stage-list-layout {
     display: grid;
     align-items: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     height: 7vh;
     grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
     grid-template-rows: 1fr;
@@ -296,6 +296,7 @@
     align-items: center;
     height: 5vh;
     padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
     grid-template-rows: 1fr;
     grid-template-areas: "activity-status     activity-mode      activity-date     activity-user-email   activity-category   activity-externalID     activity-button";
@@ -329,14 +330,14 @@
   .md-title {
     font-size: 20px;
   }
+
+  .margin-bottom {
+    margin: 0 0 30px 0;
+  }
 }
 
 .margin-not-top {
   margin: 0 0 16px 0;
-}
-
-.margin-bottom {
-  margin: 0 0 30px 0;
 }
 
 .activity-acronym {
