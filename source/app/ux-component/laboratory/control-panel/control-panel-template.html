@@ -133,7 +133,7 @@
       <div layout="row" layout-align="center none" style="height:50px">
         <label style="position:relative;top:13px">Processamento:</label>
         <md-input-container class="md-input-has-placeholder md-input-has-value" style="position: relative; top: -10px;">
-          <input mdc-datetime-picker="" ng-change="$ctrl.verifyDate()"
+          <input mdc-datetime-picker="" ng-change="[$ctrl.verifyDate(), $ctrl.changeAliquotsProcessingDate()]"
                  show-icon="true" date="true" time="true" aria-label="Data de Processamento"
                  type="text" id="datetime" show-todays-date=""
                  max-date="$ctrl.now" ng-model="$ctrl.processingDate"
@@ -143,7 +143,8 @@
         <span flex="5px"></span>
         <label ng-if="$ctrl.userLocationPoints" style="position:relative;top:13px;margin-left: 5px;">Ponto de localização:</label>
         <md-input-container style="position: relative; top: -10px;margin-left: 5px;">
-          <md-select ng-change="$ctrl.saveLocationPoint()" ng-model="$ctrl.selectedLocationPoint">
+          <md-select ng-change="[$ctrl.saveLocationPoint(),
+                                 $ctrl.changeAliquotsLocationPoints()]" ng-model="$ctrl.selectedLocationPoint">
             <md-option ng-select ng-selected="true" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.participantLocationPoint">
               {{userLocationPoints.name}}
             </md-option>
