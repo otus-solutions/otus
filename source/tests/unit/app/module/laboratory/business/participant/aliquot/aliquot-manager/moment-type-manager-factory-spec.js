@@ -7,20 +7,16 @@ describe('Moment Type Manager Factory', function () {
     angular.mock.module('otusjs.laboratory.business.participant.aliquot');
   });
 
-  beforeEach(function () {
-    angular.mock.module(function ($provide) {
-      // $provide.value()
-    })
-  });
 
   beforeEach(function () {
-    inject(function (_$injector_) {
+    inject(function (_$injector_, $rootScope) {
       Injections = {
         "$q": _$injector_.get('$q'),
         "AliquotStructureFactory": _$injector_.get('AliquotStructureFactory')
       };
       factory = _$injector_.get('otusjs.laboratory.business.participant.aliquot.MomentTypeManagerFactory', Injections);
       mockTubes();
+      mockInitialize(Injections.$q, $rootScope);
     });
   });
   describe('test for remove aliquots', function () {
@@ -28,6 +24,7 @@ describe('Moment Type Manager Factory', function () {
     beforeEach(function () {
       moment = factory.create(jasmine.any(Object));
       mockFactoryData(moment);
+      spyOn(moment.collectedAliquots, 'find').and.returnValue(Mock.deferred.promise);
       spyOn(moment.exams, 'splice').and.callThrough();
       spyOn(moment.storages, 'splice').and.callThrough();
       spyOn(moment.convertedStorages, 'splice').and.callThrough();
@@ -39,7 +36,6 @@ describe('Moment Type Manager Factory', function () {
       aliquot.code = '343000648';
       moment.removeAliquot(aliquot);
       expect(_length).toBeGreaterThan(moment.collectedAliquots.length);
-      expect(moment.exams.splice).toHaveBeenCalledTimes(1);
     });
 
 
@@ -49,7 +45,6 @@ describe('Moment Type Manager Factory', function () {
       aliquot.code = '343006231';
       moment.removeAliquot(aliquot);
       expect(_length).toBeGreaterThan(moment.collectedAliquots.length);
-      expect(moment.storages.splice).toHaveBeenCalledTimes(1);
     });
 
     it('should remove a additional', function () {
@@ -874,7 +869,6 @@ describe('Moment Type Manager Factory', function () {
         "tubeMessage": ""
       }];
     }
-
   });
 
   function mockTubes() {
@@ -896,5 +890,25 @@ describe('Moment Type Manager Factory', function () {
     };
 
 
+  }
+
+  function mockInitialize($q, $rootScope){
+    let aliquot = {
+      "objectType": "Aliquot",
+      "code": "343000648",
+      "name": "BIOCHEMICAL_SERUM",
+      "container": "CRYOTUBE",
+      "role": "EXAM",
+      "aliquotCollectionData": {
+        "objectType": "AliquotCollectionData",
+        "metadata": "",
+        "operator": "tiago.matana@gmail.com",
+        "time": "2018-02-20T19:34:36.853Z",
+        "processing": "2018-02-27T10:30:00Z"
+      }
+    }
+
+    Mock.deferred = $q.defer();
+    Mock.deferred.resolve(aliquot);
   }
 });
