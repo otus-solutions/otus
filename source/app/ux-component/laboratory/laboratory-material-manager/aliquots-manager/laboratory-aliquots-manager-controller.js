@@ -141,7 +141,7 @@
 
     function filterLocationPointsWithoutSelected() {
       if(self.selectedLocationPoint.hasOwnProperty('name')){
-        self.locationPointsWithouSelectedLocation = self.userLocationPoints.filter(userLocationPoint => {
+        self.locationPointsWithouSelectedLocation = self.locationPoints.filter(userLocationPoint => {
           return userLocationPoint.name !== self.selectedLocationPoint.name
         })
       }

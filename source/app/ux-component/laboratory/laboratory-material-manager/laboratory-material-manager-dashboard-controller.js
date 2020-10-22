@@ -69,6 +69,7 @@
 
     function saveChangedTubes() {
       if (haveTubesChanged()) {
+
         _updateChangedTubes(self.newTube);
       } else {
         $mdToast.show(
@@ -92,6 +93,10 @@
     }
 
     function _updateChangedTubes(tube) {
+
+      if(!tube.tubeCollectionData.isCollected) {
+        tube.collect()
+      }
 
       const tubeStructure = {
         tubes: [tube]
