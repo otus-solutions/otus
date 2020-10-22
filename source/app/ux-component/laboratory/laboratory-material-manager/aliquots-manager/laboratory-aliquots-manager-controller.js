@@ -128,17 +128,15 @@
     }
 
     function selectParticipantLocationPoint(){
-      self.participantLocationPoint = self.userLocationPoints.filter(locationPoint =>
+      self.participantLocationPoint = self.locationPoints.filter(locationPoint =>
         locationPoint._id == self.participant.fieldCenter.locationPoint
       )
     }
 
     function filterLocationPointsWithoutParticipantLocation() {
-      if(self.userLocationPoints){
-        self.locationPointsWithoutParticipantLocation = self.userLocationPoints.filter( locationPoint =>
-          locationPoint._id != self.participant.fieldCenter.locationPoint
-        )
-      }
+      self.locationPointsWithoutParticipantLocation = self.userLocationPoints.filter( locationPoint =>
+        locationPoint._id != self.participant.fieldCenter.locationPoint
+      )
     }
 
     function filterLocationPointsWithoutSelected() {
@@ -150,12 +148,23 @@
     }
 
     function fetchLocationPoints() {
+      LocationPointRestService.getLocationPoints().then((response) => {
+        self.locationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
+      }).then(() => {
+        selectParticipantLocationPoint();
+      }).then (() => {
+        fetchUserLocationPoints();
+      })
+    }
+
+    function fetchUserLocationPoints() {
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
       }).then(() =>{
         _setMomentType(self.momentType)
+      }).then(() => {
         filterLocationPointsWithoutParticipantLocation()
-        selectParticipantLocationPoint()
+        filterLocationPointsWithoutSelected()
       });
     }
 
