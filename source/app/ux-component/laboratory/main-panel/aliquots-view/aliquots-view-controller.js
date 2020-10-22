@@ -34,6 +34,7 @@
     const timeShowMsg = 3000;
 
     self.selectedLocationPoint = {}
+    self.filledAliquots = []
     self.tubeLength = 9;
     self.aliquotLengths;
     self.aliquotMaxLength;
@@ -91,8 +92,9 @@
       Publisher.subscribe('have-aliquots-changed', _haveAliquotsChanged);
       Publisher.unsubscribe('save-changed-aliquots');
       Publisher.subscribe('save-changed-aliquots', _saveAliquots);
+      Publisher.unsubscribe('aliquots-data');
+      Publisher.subscribe('aliquots-data', _subscribeAliquots);
     }
-
 
     function _getLocationPoints() {
       Publisher.publish('location-points', (locationPoints) => {
@@ -293,6 +295,20 @@
       }
     }
 
+    function addAliquotsFilled(aliquot) {
+      if(self.filledAliquots.indexOf(aliquot) === -1) {
+        self.filledAliquots.push(aliquot)
+      }
+    }
+
+    function _subscribeAliquots(callbackResult) {
+      if (callbackResult && typeof callbackResult === "function") {
+        callbackResult(self.filledAliquots);
+      }
+
+      return self.filledAliquots;
+    }
+
 
     function aliquotInputOnBlur(aliquot) {
       var msgAliquotUsed = Validation.validationMsg.aliquotAlreadyUsed;
@@ -309,7 +325,7 @@
         if (Validation.isAliquot(aliquot.aliquotCode)) {
           _fillContainer(aliquot);
           clearAliquotError(aliquot);
-
+          addAliquotsFilled(aliquot)
           if (Validation.aliquotAlreadyUsed(aliquot, true)) {
             setAliquotError(aliquot, msgAliquotUsed);
             return;
@@ -394,12 +410,12 @@
     function aliquotInputOnChange(aliquot) {
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
-      if (!aliquot.processing) _getDateTimeProcessing(aliquot);
-      if(!aliquot.locationPoint) {
-        _getSelectedLocationPoint(aliquot);
-        self.oldSelectedLocationPoints = [aliquot.locationPoint]
-        _getUserLocationPointsFiltered(self.oldSelectedLocationPoints[0])
-      }
+      _getDateTimeProcessing(aliquot);
+
+      _getSelectedLocationPoint(aliquot);
+      self.oldSelectedLocationPoints = [aliquot.locationPoint]
+      _getUserLocationPointsFiltered(self.oldSelectedLocationPoints[0])
+
       if (self.aliquotLengths.length === 1) {
         var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
         var runCompletePlaceholder = false;
