@@ -56,12 +56,12 @@
 
         <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()" class="external-id-input">
           <label>{{ $ctrl.dialogValues.inputLabel.externalID }}</label>
-          <input name="externalId"
+          <input name="externalID"
                  ng-model="$ctrl.preActivityArtefacts.externalID"
                  ng-change="$ctrl.updateExternalID($ctrl.preActivityArtefacts.externalID)"
                  placeholder="{{ $ctrl.dialogValues.inputLabel.externalID }}"
                  aria-label="{{ $ctrl.dialogValues.inputLabel.externalID }}" required>
-          <div ng-messages="$ctrl.activityCreationForm.externalId.$error">
+          <div ng-messages="$ctrl.activityCreationForm.externalID.$error">
             <div ng-message="required">{{ $ctrl.dialogValues.validator.required }}</div>
           </div>
         </md-input-container>
