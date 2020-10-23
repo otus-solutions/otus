@@ -76,7 +76,7 @@
     }
 
     function saveMetadata() {
-      if(haveTubesChanged() && self.originalTube.tubeCollectionData.isCollected) {
+      if(self.originalTube.tubeCollectionData.isCollected) {
         const tubeStructure = {
           tubes: [self.newTube]
         }
