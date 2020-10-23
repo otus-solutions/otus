@@ -5,25 +5,27 @@
     .controller('otusExpressActivityCreatorDialogController', Controller);
 
   Controller.$inject = [
-    'otusjs.otus.uxComponent.OtusExpressActivityCreatorDialogShowService',
+    'otusjs.otus.uxComponent.ExpressActivityCreatorDialogShowService',
     'otusjs.otus.uxComponent.ExpressActivityCreatorDialogValues',
     'otusjs.otus.uxComponent.CheckerItemFactory',
     'ACTIVITY_MANAGER_LABELS'
   ];
 
-  function Controller(expressActivityCreatorService, expressActivityCreatorDialogValues, CheckerItemFactory, ACTIVITY_MANAGER_LABELS){
+
+  function Controller(ExpressActivityCreatorDialogShowService, expressActivityCreatorDialogValues, CheckerItemFactory, ACTIVITY_MANAGER_LABELS){
     const self = this;
     self.dialogValues = expressActivityCreatorDialogValues;
     self.categories = [];
     self.optionModes = [];
     self.surveyForm = {};
-    self.preActivityArtefacts = angular.copy(self.data.preActivityArtefacts);
+    self.preActivityArtefacts = {};
 
     self.$onInit = onInit;
     self.createActivity = createActivity;
     self.updateRealizationDate = updateRealizationDate;
 
     function onInit(){
+      self.preActivityArtefacts = angular.copy(self.data.preActivityArtefacts);
       _loadOptionModes();
       _loadCategories();
       _getSurveyByAcronym(self.preActivityArtefacts.acronym);
@@ -49,12 +51,12 @@
     }
 
     function _loadCategories() {
-      expressActivityCreatorService.loadCategories()
+      ExpressActivityCreatorDialogShowService.loadCategories()
         .then(response => self.categories = response);
     }
 
     function _getSurveyByAcronym(acronym) {
-      expressActivityCreatorService.getSurveyByAcronym(acronym)
+      ExpressActivityCreatorDialogShowService.getSurveyByAcronym(acronym)
         .then(surveyFound => self.preActivityArtefacts.surveyForm = surveyFound);
     }
 
@@ -66,7 +68,7 @@
         }
         return;
       }
-      expressActivityCreatorService.createActivity(self.preActivityArtefacts)
+      ExpressActivityCreatorDialogShowService.createActivity(self.preActivityArtefacts)
         .then(() => self.data.cancel())
         .then(() => self.data.preActivityArtefacts.actionRefreshCallback());
     }

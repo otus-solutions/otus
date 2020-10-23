@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .service('otusjs.otus.uxComponent.OtusExpressActivityCreatorDialogShowService', Service);
+    .service('otusjs.otus.uxComponent.ExpressActivityCreatorDialogShowService', Service);
 
   Service.$inject = [
     'otusjs.activity.business.ParticipantActivityService',

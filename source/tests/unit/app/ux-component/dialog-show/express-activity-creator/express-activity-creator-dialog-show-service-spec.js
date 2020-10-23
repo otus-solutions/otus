@@ -7,7 +7,7 @@ describe('OtusExpressActivityCreatorDialogShowService_UnitTest_Suite', () => {
     angular.mock.module('otusjs.otus');
     angular.mock.inject(($injector, $q, $rootScope) => {
       Injections.ParticipantActivityService = $injector.get('otusjs.activity.business.ParticipantActivityService');
-      service = $injector.get('otusjs.otus.uxComponent.OtusExpressActivityCreatorDialogShowService', Injections);
+      service = $injector.get('otusjs.otus.uxComponent.ExpressActivityCreatorDialogShowService', Injections);
       mockInitialize($q, $rootScope);
 
       spyOn(Injections.ParticipantActivityService, "listAllCategories");
