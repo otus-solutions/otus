@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.ActivityState', Provider);
+    .provider('otusjs.deploy.ActivityStageState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -20,9 +20,9 @@
 
     self.state = {
       parent: STATE.PARTICIPANT_DASHBOARD,
-      name: STATE.PARTICIPANT_ACTIVITY,
-      url: '/' + STATE.PARTICIPANT_ACTIVITY,
-      template: '<otus-activity-manager layout="column" flex></otus-activity-manager>',
+      name: STATE.PARTICIPANT_ACTIVITY_STAGE,
+      url: '/' + STATE.PARTICIPANT_ACTIVITY_STAGE,
+      template: '<otus-activity-stage-list layout="column" flex></otus-activity-stage-list>',
       data: {
         redirect: _redirect
       },
