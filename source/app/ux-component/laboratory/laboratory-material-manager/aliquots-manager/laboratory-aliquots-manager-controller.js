@@ -13,7 +13,8 @@
     'otusjs.laboratory.business.participant.aliquot.AliquotValidationService',
     'otusjs.deploy.LocationPointRestService',
     'otusjs.model.locationPoint.LocationPointFactory',
-    'otusjs.laboratory.business.participant.aliquot.AliquotMessagesService'
+    'otusjs.laboratory.business.participant.aliquot.AliquotMessagesService',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
   ];
 
   function Controller(
@@ -24,7 +25,8 @@
                       Validation,
                       LocationPointRestService,
                       LocationPointFactory,
-                      AliquotMessagesService) {
+                      AliquotMessagesService,
+                      ParticipantLaboratoryService) {
     var self = this;
 
     self.$onInit = onInit
@@ -488,12 +490,12 @@
           }
         });
 
-        aliquot.convertStorage(self.participantLaboratory.getLoggedUser().email, result.observation, examNameFound);
+        aliquot.convertStorage(ParticipantLaboratoryService.getLoggedUser().email, result.observation, examNameFound);
         aliquot.code = aliquot.aliquotCode;
         aliquot.name = examNameFound;
         aliquot.role = "EXAM";
 
-        self.participantLaboratory.convertStorageAliquot(aliquot).then(function () {
+        ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
           self.selectedMomentType.removeStorage(aliquot.aliquotCode);
           _setMomentType(self.selectedMomentType);
           _fillConvertedStoragesContainerLabels()
