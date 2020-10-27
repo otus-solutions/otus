@@ -211,6 +211,7 @@
 
     function _setMomentType(momentType) {
       self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType, self.locationPoints);
+
       _buildAvailableExamTypesArray(momentType);
 
       Validation.initialize(

@@ -15,7 +15,9 @@
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService'
   ];
 
-  function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService) {
+  function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory,
+                   LaboratoryConfigurationService
+  ) {
     var self = this;
     var _participantLaboratory;
     var _laboratoryConfiguration;
@@ -26,6 +28,7 @@
     self.getSelectedParticipant = getSelectedParticipant;
     self.hasLaboratory = hasLaboratory;
     self.getLaboratory = getLaboratory;
+    self.getLaboratoryByTube = getLaboratoryByTube;
     self.onParticipantSelected = onParticipantSelected;
     self.generateLabels = generateLabels;
     self.getLoggedUser = getLoggedUser;
@@ -33,8 +36,10 @@
     self.updateAliquots = updateAliquots;
     self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn
     self.deleteAliquot = deleteAliquot;
     self.getCheckingExist = getCheckingExist;
+    self.updateAliquotsWithRn = updateAliquotsWithRn;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -65,7 +70,6 @@
 
     function hasLaboratory() {
       var request = $q.defer();
-
       getSelectedParticipant()
         .then(function (participant) {
           _getLaboratoryDescriptors()
@@ -99,6 +103,28 @@
       return _participantLaboratory;
     }
 
+    function getLaboratoryByTube(tubeCode, ParticipantManagerService) {
+      var request = $q.defer()
+      _getLaboratoryDescriptors()
+        .then(() => {
+          LaboratoryRepositoryService
+            .getLaboratoryByTube(tubeCode)
+            .then((laboratory) => {
+              if (laboratory !== 'null') {
+                const parsedLab = JSON.parse(laboratory)
+                const participant = ParticipantManagerService.getParticipant(parsedLab.recruitmentNumber.toString())
+                _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(), participant);
+                request.resolve(_participantLaboratory);
+              } else {
+                request.resolve(false);
+              }
+            }, function (e) {
+              request.reject(e);
+            })
+        })
+      return request.promise
+    }
+
     function getLoggedUser() {
       return ContextService.getCurrentUser();
 
@@ -109,11 +135,17 @@
     }
     function updateTubeCollectionData(updateStructure) {
       return LaboratoryRepositoryService.updateTubeCollectionData(JSON.stringify(updateStructure));
-
+    }
+    function updateTubeCollectionDataWithRn(recruitmentNumber, updateStructure) {
+      return LaboratoryRepositoryService.updateTubeCollectionDataWithRn(recruitmentNumber, JSON.stringify(updateStructure));
     }
 
     function updateAliquots(updateStructure) {
       return LaboratoryRepositoryService.updateAliquots(updateStructure);
+    }
+
+    function updateAliquotsWithRn(updateStructure, recruitmentNumber) {
+      return LaboratoryRepositoryService.updateAliquotsWithRn(updateStructure, recruitmentNumber);
     }
 
     function convertStorageAliquot(aliquot) {
