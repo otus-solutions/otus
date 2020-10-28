@@ -1,0 +1,40 @@
+<md-content flex>
+  <div layout="column" class="boxWithHeight tela" layout-padding flex>
+    <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex >
+      <div>
+        selecione os tubos:
+      </div>
+      <div ng-repeat="tube in $ctrl.newTubes" flex="">
+        <div layout="row" layout-fill="">
+          <div layout="row" layout-fill="" layout-align="space-between center">
+            <div layout="row" layout-align="center center">
+              <div style="height: 20px; width: 5px; border-radius: 2px" ng-style="{'background-color': tube.boxColor}">
+              </div>
+              <div layout="row">
+                <md-icon class="md-primary" md-font-set="material-icons" ng-if="tube.tubeCollectionData.isCollected">assignment_turned_in
+                  <md-tooltip>Coletado</md-tooltip>
+                </md-icon>
+                <md-icon md-font-set="material-icons" ng-if="!tube.tubeCollectionData.isCollected">not_interested
+                  <md-tooltip>Não coletado</md-tooltip>
+                </md-icon>
+                <md-icon md-font-set="material-icons" ng-hide="tube.tubeCollectionData.isCollected || tube.tubeCollectionData.metadata">assignment_late
+                  <md-tooltip>Aguardando</md-tooltip>
+                </md-icon>
+              </div>
+              <p style="margin-left: 5px;" class="subtitle">{{tube.type}} - {{tube.momentLabel}}: {{tube.code}}</p>
+            </div>
+            <div layout="row" style="margin: 5px 0 0 0">
+              <md-input-container style="margin:0 10px">
+                <label>quantidade</label>
+                <input type="number" min="1" max="100" ng-model="tube.printStructure.quantity">
+              </md-input-container>
+              <md-checkbox aria-label="selected" ng-change="
+              [ $ctrl.removeTube(tube)
+              ,$ctrl.addTubeToPrintList(tube) ]" ng-model="tube.printStructure.selected"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-whiteframe>
+  </div>
+</md-content>

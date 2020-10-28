@@ -18,7 +18,8 @@
     'otusjs.laboratory.core.EventService',
     'otusjs.otus.uxComponent.Publisher',
     'otusjs.model.participant.ParticipantFactory',
-    '$scope'
+    '$scope',
+    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
   ];
 
   function Controller($q, $mdDialog, DialogShowService, ParticipantLaboratoryService, UnattachedLaboratoryService, LoadingScreenService, EventService, Publisher, ParticipantFactory, $scope) {
@@ -181,6 +182,11 @@
       self.labels.tubes = _orderTubesWithLabelNullAlphabetically(self.labels.tubes);
       self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
       self.state = newState;
+      _setSelectedPartLaboratoryData("lastSelectedLaboratory", ParticipantLaboratoryService.getLaboratory())
+    }
+
+    function _setSelectedPartLaboratoryData(dataKey, dataValue) {
+      ParticipantLaboratoryService.setData(dataKey, dataValue)
     }
 
     function _orderTubesWithLabelNullAlphabetically(tubeList) {

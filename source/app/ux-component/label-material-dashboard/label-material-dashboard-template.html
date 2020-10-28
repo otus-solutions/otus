@@ -12,4 +12,24 @@
       <span flex>Etiquetas para materiais biologicos</span>
     </div>
   </md-toolbar>
+  <div flex="100" style="width: 1000px; margin: 0 auto" layout="column">
+    <h4 class="md-headline" flex="100" layout="row" layout-align="center center">Gerar Etiquetas</h4>
+    <md-input-group flex="100" layout="row" layout-xs="column" layout-align-xs="center center">
+      <md-button flex="50"  layout="column"  class="md-primary md-raised" ng-click="$ctrl.changeState('tubes')" ng-disabled="$ctrl.state == 'tubes'">Tubos</md-button>
+      <md-button  flex="50" layout="column" class="md-primary md-raised" ng-click="$ctrl.changeState('aliquots')" ng-disabled="$ctrl.state == 'aliquots'">Aliquotas</md-button>
+    </md-input-group>
+  </div>
+  <md-content ng-if="$ctrl.participantLaboratory || $ctrl.labels" style="max-width: 1000px; margin: 0 auto">
+    <div>
+      <!--filtro-->
+      <span>filtro</span>
+    </div>
+    <div>
+      <label-tubes ng-if="$ctrl.labels && $ctrl.state == 'tubes'" labels="$ctrl.labels"></label-tubes>
+      <label-aliquots ng-if="$ctrl.labels && $ctrl.state == 'aliquots'" labels="$ctrl.labels"></label-aliquots>
+    </div>
+  </md-content>
+  <md-content style="max-width: 1000px; margin: 0 auto" ng-if="!$ctrl.participantLaboratory || !$ctrl.labels">
+    <h4 class="md-headline">O laboratório do participante não foi selecionado</h4>
+  </md-content>
 </md-content>

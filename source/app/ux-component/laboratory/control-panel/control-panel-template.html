@@ -2,7 +2,7 @@
   <div class="control-panel control-toolbar" layout="row" layout-padding layout-align="start center"
        ng-if="$ctrl.state === 'main'">
     <md-input-container flex="20">
-      <label>Momentos</label>
+      <label>quant.</label>
       <md-select ng-change="$ctrl.filterTubesByMoment()" ng-model="$ctrl.selectedTubes" multiple>
         <md-optgroup label="Momentos">
           <md-option ng-select ng-value="moment" ng-repeat="moment in $ctrl.moments">

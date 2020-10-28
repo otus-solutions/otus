@@ -66,7 +66,6 @@
       self.processingDate = new Date();
       self.now = new Date();
       verifyDate();
-
     }
 
     function changeAliquotsLocationPoints() {

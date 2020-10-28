@@ -35,6 +35,9 @@
     self.updateTubeCollectionData = updateTubeCollectionData;
     self.deleteAliquot = deleteAliquot;
     self.getCheckingExist = getCheckingExist;
+    self.setData = setData;
+    self.getData = getData;
+    self.getLaboratoryByParticipant = getLaboratoryByParticipant;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -91,6 +94,14 @@
       return ContextService.getSelectedParticipant();
     }
 
+    function setData(dataKey, dataValue) {
+      return ContextService.setData(dataKey, dataValue)
+    }
+
+    function getData(dataKey){
+      return ContextService.getData(dataKey)
+    }
+
     function getCurrentUser() {
       return ContextService.getCurrentUser();
     }
@@ -122,6 +133,28 @@
 
     function deleteAliquot(aliquotCode) {
       return LaboratoryRepositoryService.deleteAliquot(aliquotCode);
+    }
+
+    function getLaboratoryByParticipant(recruitmentNumber, ParticipantManagerService) {
+      var request = $q.defer()
+      const participant = ParticipantManagerService.getParticipant(recruitmentNumber)
+      _getLaboratoryDescriptors()
+        .then(() => {
+          LaboratoryRepositoryService
+            .getLaboratory(participant)
+            .then((laboratory) => {
+              self.participant = participant
+              if (laboratory !== 'null') {
+                _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(), participant);
+                request.resolve(_participantLaboratory);
+              } else {
+                request.resolve(false);
+              }
+            }, function (e) {
+              request.reject(e);
+            })
+        })
+      return request.promise
     }
 
     function generateLabels() {

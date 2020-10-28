@@ -1,0 +1,137 @@
+<md-content flex>
+  <div>
+    selecione um momento
+    <md-grid-list
+      md-cols-xs="3" md-cols="6"
+      md-row-height-gt-md="1:1" md-row-height="2:2"
+      md-gutter="10px" md-gutter-gt-sm="8px">
+      <md-grid-tile class="green" ng-repeat="momentType in $ctrl.momentTypeList">
+        <md-card flex="" ng-click="$ctrl.selectMomentType(momentType)" layout="row" class="{{($ctrl.selectedMomentType == momentType ? 'moment-type-selected' : 'moment-type-not-selected') + ' aliquot-md-card card-tube ' }}">
+          <div flex="" layout="row">
+            <div layout="column" flex="10">
+              <div class="tube-design" ng-style="{'background-color':momentType.boxColor}">
+              </div>
+            </div>
+            <div layout="column" flex="100">
+              <div layout="row" flex="65">
+                <div layout="column" flex="90">
+                  <span class="md-title">{{momentType.typeLabel}}</span>
+                  <span class="md-subhead">{{momentType.momentLabel}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </md-card>
+      </md-grid-tile>
+    </md-grid-list>
+  </div>
+  <div ng-if="$ctrl.selectedMomentType.hasOwnProperty('typeLabel')" layout="column" class="boxWithHeight tela" layout-padding flex>
+    <md-whiteframe ng-if="$ctrl.selectedMomentType.hasOwnProperty('typeLabel')"  class="md-whiteframe-12dp aliquot-whiteframe" flex >
+      <div>
+        selecione os exames:
+      </div>
+      <div ng-repeat="exam in $ctrl.newExams" flex="">
+        <div layout="row" layout-fill="">
+          <div layout="row" layout-fill="" layout-align="space-between center">
+            <div layout="row" layout-align="center center">
+              <div style="height: 20px; width: 5px; border-radius: 2px" ng-style="{'background-color': $ctrl.selectedMomentType.boxColor}">
+              </div>
+              <div layout="row">
+                <md-icon class="md-primary" md-font-set="material-icons" ng-if="exam.isSaved">assignment_turned_in
+                  <md-tooltip>Coletado</md-tooltip>
+                </md-icon>
+                <md-icon md-font-set="material-icons" ng-if="!exam.isSaved">not_interested
+                  <md-tooltip>Não coletado</md-tooltip>
+                </md-icon>
+              </div>
+              <p style="margin-left: 5px;" class="subtitle">{{exam.containerLabel}} :
+                {{exam.isSaved ? exam.aliquotCode : "Não coletado"}}</p>
+            </div>
+            <div layout="row" style="margin: 5px 0 0 0">
+              <md-input-container style="margin:0 10px">
+                <label>quantidade</label>
+                <input type="number" min="1" max="100" ng-model="exam.printStructure.quantity">
+              </md-input-container>
+              <md-checkbox aria-label="selected" ng-change="
+              [ $ctrl.removeTube(exam)
+              ,$ctrl.addTubeToPrintList(exam) ]" ng-model="exam.printStructure.selected"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-whiteframe>
+    <md-whiteframe ng-if="$ctrl.selectedMomentType.hasOwnProperty('typeLabel')"  class="md-whiteframe-12dp aliquot-whiteframe" flex >
+      <div>
+        selecione os exames adicionais:
+      </div>
+      <div ng-repeat="additionalExam in $ctrl.newConvertedStorages" flex="">
+        <div layout="row" layout-fill="">
+          <div layout="row" layout-fill="" layout-align="space-between center">
+            <div layout="row" layout-align="center center">
+              <div style="height: 20px; width: 5px; border-radius: 2px" ng-style="{'background-color': $ctrl.selectedMomentType.boxColor}">
+              </div>
+              <div layout="row">
+                <md-icon class="md-primary" md-font-set="material-icons" ng-if="additionalExam.isSaved">assignment_turned_in
+                  <md-tooltip>Coletado</md-tooltip>
+                </md-icon>
+                <md-icon md-font-set="material-icons" ng-if="!additionalExam.isSaved">not_interested
+                  <md-tooltip>Não coletado</md-tooltip>
+                </md-icon>
+              </div>
+              <p style="margin-left: 5px;" class="subtitle">{{additionalExam.containerLabel}} :
+                {{additionalExam.isSaved ? additionalExam.aliquotCode : "Não coletado"}}</p>
+            </div>
+            <div layout="row" style="margin: 5px 0 0 0">
+              <md-input-container style="margin:0 10px">
+                <label>quantidade</label>
+                <input type="number" min="1" max="100" ng-model="additionalExam.printStructure.quantity">
+              </md-input-container>
+              <md-checkbox aria-label="selected" ng-change="
+              [ $ctrl.removeAliquot(additionalExam)
+              ,$ctrl.addAliquotToPrintList(additionalExam) ]" ng-model="additionalExam.printStructure.selected"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-whiteframe>
+    <md-whiteframe ng-if="$ctrl.selectedMomentType.hasOwnProperty('typeLabel')"  class="md-whiteframe-12dp aliquot-whiteframe" flex >
+      <div>
+        selecione os exames adicionais:
+      </div>
+      <div ng-repeat="storage in $ctrl.newStorages" flex="">
+        <div layout="row" layout-fill="">
+          <div layout="row" layout-fill="" layout-align="space-between center">
+            <div layout="row" layout-align="center center">
+              <div style="height: 20px; width: 5px; border-radius: 2px" ng-style="{'background-color': $ctrl.selectedMomentType.boxColor}">
+              </div>
+              <div layout="row">
+                <md-icon class="md-primary" md-font-set="material-icons" ng-if="storage.isSaved">assignment_turned_in
+                  <md-tooltip>Coletado</md-tooltip>
+                </md-icon>
+                <md-icon md-font-set="material-icons" ng-if="!storage.isSaved">not_interested
+                  <md-tooltip>Não coletado</md-tooltip>
+                </md-icon>
+              </div>
+              <p style="margin-left: 5px;" class="subtitle">{{storage.containerLabel}} :
+                {{storage.isSaved ? storage.aliquotCode : "Não coletado"}}</p>
+            </div>
+            <div layout="row" style="margin: 5px 0 0 0">
+              <md-input-container style="margin:0 10px">
+                <label>quantidade</label>
+                <input type="number" min="1" max="100" ng-model="storage.printStructure.quantity">
+              </md-input-container>
+              <md-checkbox aria-label="selected" ng-change="
+              [ $ctrl.removeAliquot(storage)
+              ,$ctrl.addAliquotToPrintList(storage) ]" ng-model="storage.printStructure.selected"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-whiteframe>
+    <md-whiteframe ng-if="!$ctrl.selectedMomentType.hasOwnProperty('typeLabel')"  class="md-whiteframe-12dp aliquot-whiteframe" flex >
+      <div>
+        Nenhum momento selecionado
+      </div>
+    </md-whiteframe>
+  </div>
+</md-content>
