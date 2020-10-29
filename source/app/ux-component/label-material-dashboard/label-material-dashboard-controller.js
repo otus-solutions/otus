@@ -40,8 +40,20 @@
           .then(part => {
             self.participantLaboratory = part
             _generateLabels();
+            _subscribeLabels();
           })
       });
+    }
+
+    function _labelsToPrint(callback) {
+      callback(
+        self.labels
+      )
+    }
+
+    function _subscribeLabels() {
+      Publisher.unsubscribe('labels-to-print')
+      Publisher.subscribe('labels-to-print', _labelsToPrint)
     }
 
     function _generateLabels() {
@@ -53,6 +65,7 @@
       var sortedArrayOfNulls = _removeTubesWithOrderNull(tubeList).sort(_sortByTubeLabel);
       return _concatArrays(tubeList, sortedArrayOfNulls);
     }
+
     function _removeTubesWithOrderNull(tubeList) {
       var firstIndexOfOrderNull = tubeList.findIndex(function (tube) {
         return tube.order === null;

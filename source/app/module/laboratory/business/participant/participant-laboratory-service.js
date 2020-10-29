@@ -12,10 +12,11 @@
     'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.laboratory.core.EventService',
     'otusjs.laboratory.participant.ParticipantLaboratoryFactory',
-    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService'
+    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
+    'otusjs.laboratory.business.participant.LaboratoryLabelAliquotFactory'
   ];
 
-  function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService) {
+  function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService,LaboratoryLabelAliquotFactory) {
     var self = this;
     var _participantLaboratory;
     var _laboratoryConfiguration;
@@ -38,6 +39,7 @@
     self.setData = setData;
     self.getData = getData;
     self.getLaboratoryByParticipant = getLaboratoryByParticipant;
+    self.generateLabelsAliquots = generateLabelsAliquots;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -159,6 +161,9 @@
 
     function generateLabels() {
       return LaboratoryLabelFactory.create(self.participant, angular.copy(_participantLaboratory));
+    }
+    function generateLabelsAliquots() {
+      return LaboratoryLabelAliquotFactory.create(self.participant, angular.copy(_participantLaboratory));
     }
 
     function getCheckingExist() {

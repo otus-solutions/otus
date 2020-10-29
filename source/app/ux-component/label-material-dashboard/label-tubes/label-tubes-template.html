@@ -1,10 +1,12 @@
 <md-content flex>
   <div layout="column" class="boxWithHeight tela" layout-padding flex>
     <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex >
-      <div>
-        selecione os tubos:
+      <div layout="row" layout-align="space-between center">
+        <p>selecione os tubos:</p>
+        <label-maker/>
       </div>
-      <div ng-repeat="tube in $ctrl.newTubes" flex="">
+      <span layout-margin="5px"></span>
+      <div ng-repeat="tube in $ctrl.labels.tubes" flex="">
         <div layout="row" layout-fill="">
           <div layout="row" layout-fill="" layout-align="space-between center">
             <div layout="row" layout-align="center center">

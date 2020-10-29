@@ -30,7 +30,7 @@
       <div>
         selecione os exames:
       </div>
-      <div ng-repeat="exam in $ctrl.newExams" flex="">
+      <div ng-repeat="exam in $ctrl.selectedMomentType.exams" flex="">
         <div layout="row" layout-fill="">
           <div layout="row" layout-fill="" layout-align="space-between center">
             <div layout="row" layout-align="center center">
@@ -54,17 +54,17 @@
               </md-input-container>
               <md-checkbox aria-label="selected" ng-change="
               [ $ctrl.removeTube(exam)
-              ,$ctrl.addTubeToPrintList(exam) ]" ng-model="exam.printStructure.selected"/>
+              ,$ctrl.addAliquotToPrintList(exam) ]" ng-model="exam.printStructure.selected"/>
             </div>
           </div>
         </div>
       </div>
     </md-whiteframe>
-    <md-whiteframe ng-if="$ctrl.selectedMomentType.hasOwnProperty('typeLabel')"  class="md-whiteframe-12dp aliquot-whiteframe" flex >
+    <md-whiteframe ng-if="$ctrl.selectedMomentType.hasOwnProperty('typeLabel') &&  $ctrl.selectedMomentType.convertedStorages.length > 0"  class="md-whiteframe-12dp aliquot-whiteframe" flex >
       <div>
         selecione os exames adicionais:
       </div>
-      <div ng-repeat="additionalExam in $ctrl.newConvertedStorages" flex="">
+      <div ng-repeat="additionalExam in $ctrl.selectedMomentType.convertedStorages" flex="">
         <div layout="row" layout-fill="">
           <div layout="row" layout-fill="" layout-align="space-between center">
             <div layout="row" layout-align="center center">
@@ -94,11 +94,11 @@
         </div>
       </div>
     </md-whiteframe>
-    <md-whiteframe ng-if="$ctrl.selectedMomentType.hasOwnProperty('typeLabel')"  class="md-whiteframe-12dp aliquot-whiteframe" flex >
+    <md-whiteframe ng-if="$ctrl.selectedMomentType.hasOwnProperty('typeLabel') && $ctrl.selectedMomentType.storages.length > 0"  class="md-whiteframe-12dp aliquot-whiteframe" flex >
       <div>
         selecione os exames adicionais:
       </div>
-      <div ng-repeat="storage in $ctrl.newStorages" flex="">
+      <div ng-repeat="storage in $ctrl.selectedMomentType.storages" flex="">
         <div layout="row" layout-fill="">
           <div layout="row" layout-fill="" layout-align="space-between center">
             <div layout="row" layout-align="center center">

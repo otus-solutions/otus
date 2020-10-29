@@ -18,6 +18,7 @@
     var self = this;
 
     self.newTubes = []
+    self.newLabels = {}
     self.tubePrintList = []
 
     self.$onInit = onInit;
@@ -26,31 +27,37 @@
 
     function onInit() {
       self.colsNumber = Array.from(Array(10).keys())
-      addPrintStructureToTubes()
+      createNewLabels()
+      _subscribeLabels()
+      self.labelMaker = $element.find("label-maker").children().children()
     }
 
-    function addPrintStructureToTubes() {
-      self.labels.tubes.map(tube => {
-        self.newTubes.push({...tube, printStructure: angular.copy(self.printStructure)})
-      })
+    function createNewLabels() {
+      self.newLabels = angular.copy(self.labels)
+      self.newLabels.tubes = []
     }
 
     function addTubeToPrintList(tube) {
       if(tube.printStructure.selected){
-        self.tubePrintList.push(tube)
+        self.newLabels.tubes.push(tube)
       }
     }
 
     function removeTube(tube) {
       if(!tube.printStructure.selected) {
-        self.tubePrintList = self.tubePrintList.filter(tubePrint => tubePrint.code != tube.code);
+        self.newLabels.tubes = self.newLabels.tubes.filter(tubePrint => tubePrint.code != tube.code);
       }
     }
 
-    self.printStructure = {
-      quantity: 1,
-      selected: false
+    function _labelsTubesToPrint(callback) {
+      callback(
+        self.newLabels
+      )
     }
 
+    function _subscribeLabels() {
+      Publisher.unsubscribe('labelsTubes-to-print')
+      Publisher.subscribe('labelsTubes-to-print', _labelsTubesToPrint)
+    }
   }
 }());

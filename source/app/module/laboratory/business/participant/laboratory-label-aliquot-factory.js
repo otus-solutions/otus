@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.business.participant')
-    .factory('otusjs.laboratory.business.participant.LaboratoryLabelFactory', Factory);
+    .factory('otusjs.laboratory.business.participant.LaboratoryLabelAliquotFactory', Factory);
 
   Factory.$inject = [];
 
@@ -15,17 +15,17 @@
     self.createForUnattached = createForUnattached;
 
     function create(participant, laboratory) {
-      return new LaboratoryLabel(participant, laboratory);
+      return new LaboratoryLabelAliquotFactory(participant, laboratory);
     }
 
     function createForUnattached(laboratory) {
-      return new LaboratoryLabel(null, laboratory);
+      return new LaboratoryLabelAliquotFactory(null, laboratory);
     }
 
     return self;
   }
 
-  function LaboratoryLabel(participant, laboratory) {
+  function LaboratoryLabelAliquotFactory(participant, laboratory) {
     var NONE = 'Nenhum';
     var DEFAULT = 'DEFAULT';
     var self = this;
@@ -51,35 +51,12 @@
       columns: "",
     }
 
-    self.cq_group = (laboratory.collectGroupName !== undefined && laboratory.collectGroupName !== DEFAULT) ? laboratory.collectGroupName : NONE;
-    self.tubes = [];
-    _buildTubeLabel(self.tubes);
-    _addPrintStructureToTubes();
+    self.aliquots = []
 
-    function _addPrintStructureToTubes() {
-      for(const tube of laboratory.tubes) {
-        self.tubes.push({
-          ...tube,
-          printStructure: {quantity: 1, selected: false}
-        })
-      }
-    }
 
     function _convertFormatDate(birthdate) {
       var date = new Date(birthdate);
       return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
-    }
-
-    function _buildTubeLabel(tubes) {
-
-      tubes.forEach(function(tube) {
-        tube.label = tube.label + ' ' + tube.momentLabel;
-      });
-    }
-
-    function _buildNameParticipantLabel(name) {
-      var result = name.split(' ');
-      return result[0] + ' ' + result[result.length - 1];
     }
 
   }

@@ -10,7 +10,9 @@
     '$element',
     'otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService',
     'otusjs.deploy.LocationPointRestService',
-    'otusjs.model.locationPoint.LocationPointFactory'
+    'otusjs.model.locationPoint.LocationPointFactory',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.otus.uxComponent.Publisher'
   ];
 
   function Controller(
@@ -18,7 +20,9 @@
     $element,
     AliquotTubeService,
     LocationPointRestService,
-    LocationPointFactory) {
+    LocationPointFactory,
+    ParticipantLaboratoryService,
+    Publisher) {
     var self = this;
 
     self.newExams = []
@@ -32,6 +36,8 @@
       quantity: 1,
       selected: false
     }
+    self.aliquotsLabels = {}
+
     self.$onInit = onInit;
     self.selectMomentType = selectMomentType
     self.addAliquotToPrintList = addAliquotToPrintList;
@@ -40,16 +46,16 @@
     function onInit() {
       _buildMomentTypeList();
       _fetchLocationPoints();
+      _subscribeLabels();
+      selectMomentType(self.momentTypeList[0]);
       self.colsNumber = Array.from(Array(10).keys())
     }
 
     function _buildMomentTypeList() {
-      console.info(self.participantLaboratory)
       self.momentTypeList = AliquotTubeService.buildMomentTypeList(self.labels.tubes);
     }
 
     function selectMomentType(momentType) {
-      console.info(momentType)
       if (self.selectedMomentType) {
         if (momentType != self.selectedMomentType) {
           _setMomentType(momentType);
@@ -59,19 +65,7 @@
 
     function _setMomentType(momentType) {
       self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType, self.locationPoints);
-      addPrintStructureToAliquots();
-    }
-
-    function addPrintStructureToAliquots() {
-      self.selectedMomentType.exams.map(exam => {
-        self.newExams.push({...exam, printStructure: angular.copy(self.printStructure)})
-      })
-      self.selectedMomentType.convertedStorages.map(exam => {
-        self.newConvertedStorages.push({...exam, printStructure: angular.copy(self.printStructure)})
-      })
-      self.selectedMomentType.storages.map(exam => {
-        self.newStorages.push({...exam, printStructure: angular.copy(self.printStructure)})
-      })
+      self.aliquotsLabels = ParticipantLaboratoryService.generateLabelsAliquots();
     }
 
     function _fetchLocationPoints() {
@@ -81,16 +75,26 @@
     }
 
     function addAliquotToPrintList(aliquot) {
-      if(tube.printStructure.selected){
-        self.aliquotPrintList.push(aliquot)
+      if(aliquot.printStructure.selected){
+        self.aliquotsLabels.aliquots.push(aliquot)
       }
     }
 
     function removeAliquotFromPrintList(aliquot) {
       if(!aliquot.printStructure.selected) {
-        self.aliquotPrintList = self.aliquotPrintList.filter(aliquotPrint => aliquotPrint.code != tube.code);
+        self.aliquotsLabels.aliquots = self.aliquotsLabels.aliquots.filter(aliquotPrint => aliquotPrint.code != tube.code);
       }
     }
 
+    function _labelsAliquotsToPrint(callback) {
+      callback(
+        self.aliquotsLabels
+      )
+    }
+
+    function _subscribeLabels() {
+      Publisher.unsubscribe('labelsAliquots-to-print')
+      Publisher.subscribe('labelsAliquots-to-print', _labelsAliquotsToPrint)
+    }
   }
 }());
