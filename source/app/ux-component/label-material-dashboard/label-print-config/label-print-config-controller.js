@@ -32,22 +32,32 @@
     self.changeLabelToPrint = changeLabelToPrint;
 
     function onInit() {
-      _publishLabels();
+      _subscribePrintStructure();
     };
 
-    function _publishLabels() {
-      Publisher.publish("labelTube-to-print", (tubeLabel) => self.tubeLabel = tubeLabel);
-      Publisher.publish("labelAliquot-to-print", (aliquotLabel) => self.aliquotLabel = aliquotLabel);
+    function _printStrucutre(callback) {
+      callback(
+        self.printStructure
+      )
+    }
+
+    function _subscribePrintStructure() {
+      Publisher.unsubscribe("default-print-structure")
+      Publisher.subscribe("default-print-structure", _printStrucutre)
     }
 
     function changeLabelToPrint(){
-      if(self.tubeLabel) {
-        self.tubeLabel.printStructure = self.printStructure
-      }
-      if(self.aliquotLabel) {
-        self.aliquotLabel.printStructure = self.printStructure
-      }
+      _subscribePrintStructure()
+      Publisher.publish("labelsTubes-to-print", (tubeLabel) => {
+        if(tubeLabel){
+          tubeLabel.printStructure = self.printStructure
+        }
+      });
+      Publisher.publish("labelsAliquots-to-print", (aliquotLabel) => {
+        if(aliquotLabel){
+          self.aliquotLabel = aliquotLabel
+        }
+      });
     }
-
   }
 }());

@@ -9,7 +9,7 @@
             <md-input-container  class="remove-errors-spacer md-block" flex style="margin:0 0">
               <label class="md-subhead">Tamanho:</label>
               <md-select ng-change="$ctrl.changeLabelToPrint()" ng-model="$ctrl.printStructure.labelSize" ng-disabled="$index === 1">
-                <md-option ng-repeat="size in $ctrl.sizes" ng-value="size" ng-click="">
+                <md-option ng-selected="size.value == 'small'" ng-repeat="size in $ctrl.sizes" ng-value="size" ng-click="">
                   {{size.name}}
                 </md-option>
               </md-select>
@@ -19,8 +19,8 @@
           <div flex layout="row" >
             <md-input-container class="remove-errors-spacer md-block" flex>
               <label class="md-subhead">Tipos:</label>
-              <md-select ng-change="$ctrl.changeLabelToPrint()" ng-model="$ctrl.printStructure.type" ng-disabled="$index === 1">
-                <md-option ng-repeat="type in $ctrl.types" ng-value="type" ng-click="">
+              <md-select  ng-change="$ctrl.changeLabelToPrint()" ng-model="$ctrl.printStructure.type" ng-disabled="$index === 1">
+                <md-option ng-selected="type.value == 'qrcode'" ng-repeat="type in $ctrl.types" ng-value="type" ng-click="">
                   {{type.name}}
                 </md-option>
               </md-select>
@@ -33,7 +33,7 @@
             <md-input-container class="remove-errors-spacer md-block" flex style="margin:0 0">
               <label class="md-subhead">Identificada:</label>
               <md-select ng-change="$ctrl.changeLabelToPrint()" ng-model="$ctrl.printStructure.identified" ng-disabled="$index === 1">
-                <md-option ng-repeat="identified in $ctrl.identified" ng-value="identified" ng-click="">
+                <md-option  ng-selected="identified.value == true" ng-repeat="identified in $ctrl.identified" ng-value="identified" ng-click="">
                   {{identified.name}}
                 </md-option>
               </md-select>
@@ -44,7 +44,7 @@
             <md-input-container class="remove-errors-spacer md-block" flex>
               <label class="md-subhead">Colunas:</label>
               <md-select ng-change="$ctrl.changeLabelToPrint()" ng-model="$ctrl.printStructure.columns" ng-disabled="$index === 1">
-                <md-option ng-repeat="columns in $ctrl.columns" ng-value="columns" ng-click="">
+                <md-option  ng-selected="columns == 1" ng-repeat="columns in $ctrl.columns" ng-value="columns" ng-click="">
                   {{columns}}
                 </md-option>
               </md-select>
