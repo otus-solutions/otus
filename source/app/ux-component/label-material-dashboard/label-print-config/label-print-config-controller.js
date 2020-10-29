@@ -5,45 +5,48 @@
     .controller('labelPrintConfigCtrl', Controller);
 
   Controller.$inject = [
-    '$q'
+    '$q',
+    "otusjs.otus.uxComponent.Publisher"
   ];
 
   function Controller(
-    $q) {
+    $q,
+    Publisher) {
 
     var self = this;
-    self.changeState = changeState;
+
     self.userState = '';
 
+    self.printStructure = {
+      labelSize: "",
+      identified: "",
+      columns: 0,
+      type: "",
+    }
+    self.sizes = [{'value': 'small', 'name': "pequeno"}, {"value": "bigger", "name": "Grande"}];
+    self.types = [{'value': "qrcode", 'name': "Qrcode"}, {"value": "barcode", "name": "Código de barra"}];
+    self.identified = [{'value': true, "name": "Sim"}, {"value": false, "name": "Não"}];
+    self.columns = Array.from(Array(11).keys()).filter(array => array !== 0);
 
-    self.printConfig = [
-      {
-        labelSize: "",
-        identified: "",
-        columns: 0,
-        type: "",
-      }
-    ];
-
-    self.tamanhos = ['Pequena', 'Grande'];
-    self.tipos = ['QRcode', 'Código de Barras'];
-    self.identificada = ['Sim', 'Não'];
-    self.colunas = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    // lifecycle hooks
     self.$onInit = onInit;
+    self.changeLabelToPrint = changeLabelToPrint;
 
-    /* Public methods */
     function onInit() {
-
-
+      _publishLabels();
     };
 
-    function changeState() {
-      console.log(self.printConfig.labelSize);
-      console.log(self.printConfig.identified);
-      console.log(self.printConfig.columns);
-      console.log(self.printConfig.type);
+    function _publishLabels() {
+      Publisher.publish("labelTube-to-print", (tubeLabel) => self.tubeLabel = tubeLabel);
+      Publisher.publish("labelAliquot-to-print", (aliquotLabel) => self.aliquotLabel = aliquotLabel);
+    }
+
+    function changeLabelToPrint(){
+      if(self.tubeLabel) {
+        self.tubeLabel.printStructure = self.printStructure
+      }
+      if(self.aliquotLabel) {
+        self.aliquotLabel.printStructure = self.printStructure
+      }
     }
 
   }
