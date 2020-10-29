@@ -1,21 +1,9 @@
 <div layout="column" md-whiteframe="1" flex>
   <div class="control-panel control-toolbar" layout="row" layout-padding layout-align="start center"
        ng-if="$ctrl.state === 'main'">
-    <md-input-container flex="20">
-      <label>quant.</label>
-      <md-select ng-change="$ctrl.filterTubesByMoment()" ng-model="$ctrl.selectedTubes" multiple>
-        <md-optgroup label="Momentos">
-          <md-option ng-select ng-value="moment" ng-repeat="moment in $ctrl.moments">
-            {{moment}}
-          </md-option>
-        </md-optgroup>
-      </md-select>
-    </md-input-container>
-    <span layout="row" ng-if="$ctrl.selectedTubes == 0" layout-align="center center">
-      <md-button class="md-raised md-primary" disabled="">Gerar Etiquetas</md-button>
-      <md-tooltip>Selecione os momentos</md-tooltip>
+    <span layout="row" layout-align="center center">
+      <md-button class="md-raised md-primary">Gerar Etiquetas</md-button>
     </span>
-    <label-maker ng-if="$ctrl.selectedTubes != 0" label-data="$ctrl.newLabels"></label-maker>
     <div layout="row" layout-align="center center">
       <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('coleta')">Coleta de
         Tubos
@@ -33,16 +21,6 @@
   <div class="mobile-control-toolbar" layout="row" layout-wrap layout-align="start center"
        ng-if="$ctrl.state === 'main'">
     <span flex="5"></span>
-    <md-input-container flex="40">
-      <label>Momentos</label>
-      <md-select ng-change="$ctrl.filterTubesByMoment()" ng-model="$ctrl.selectedTubes" multiple>
-        <md-optgroup label="Momentos">
-          <md-option ng-value="moment" ng-repeat="moment in $ctrl.moments">
-            {{moment}}
-          </md-option>
-        </md-optgroup>
-      </md-select>
-    </md-input-container>
     <md-fab-speed-dial md-direction="down" class="md-scale" flex>
       <md-fab-trigger>
         <md-button aria-label="menu" class="md-accent">
@@ -51,11 +29,9 @@
         </md-button>
       </md-fab-trigger>
       <md-fab-actions>
-        <span layout="row" ng-if="$ctrl.selectedTubes == 0" layout-align="center center">
-          <md-button class="md-raised md-primary" disabled="">Gerar Etiquetas</md-button>
-          <md-tooltip>Selecione os momento</md-tooltip>
+        <span layout="row" layout-align="center center">
+          <md-button class="md-raised md-primary">Gerar Etiquetas</md-button>
         </span>
-        <label-maker class="label-maker" ng-if="$ctrl.selectedTubes != 0" label-data="$ctrl.newLabels"></label-maker>
         <md-button class="md-primary md-raised md-mini" aria-label="Coleta de Tubos"
                    ng-click="$ctrl.changeState('coleta')"
         <md-tooltip md-direction="left">Coleta de Tubos</md-tooltip>
@@ -124,7 +100,8 @@
        ng-if="$ctrl.state === 'aliquots'">
     <div layout="row" layout-align="center center">
       <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAliquots()">Voltar</md-button>
-      <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-disabled="$ctrl.fetchChanges()"
+      <md-button class="md-primary md-raised"
+                 aria-label="salvar aliquotagem" ng-disabled="$ctrl.fetchChanges()"
                  ng-click="$ctrl.saveAliquots()">Salvar
       </md-button>
     </div>

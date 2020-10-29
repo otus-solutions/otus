@@ -28,14 +28,10 @@
     self.newExams = []
     self.newConvertedStorages = []
     self.newStorages = []
-
     self.tubePrintList = []
     self.selectedMomentType = {}
     self.aliquotPrintList = []
-    self.printStructure = {
-      quantity: 1,
-      selected: false
-    }
+    self.isAllSelected = false
     self.aliquotsLabels = {}
 
     self.$onInit = onInit;
@@ -48,7 +44,7 @@
       _fetchLocationPoints();
       _subscribeLabels();
       selectMomentType(self.momentTypeList[0]);
-      self.colsNumber = Array.from(Array(10).keys())
+      _publishPrintStructure();
     }
 
     function _buildMomentTypeList() {
@@ -74,6 +70,10 @@
       })
     }
 
+    function selectAll() {
+
+    }
+
     function addAliquotToPrintList(aliquot) {
       if(aliquot.printStructure.selected){
         self.aliquotsLabels.aliquots.push(aliquot)
@@ -95,6 +95,12 @@
     function _subscribeLabels() {
       Publisher.unsubscribe('labelsAliquots-to-print')
       Publisher.subscribe('labelsAliquots-to-print', _labelsAliquotsToPrint)
+    }
+
+    function _publishPrintStructure() {
+      Publisher.publish("default-print-structure", (defaultPrintStructure) => {
+        self.aliquotsLabels.printStructure = defaultPrintStructure
+      })
     }
   }
 }());

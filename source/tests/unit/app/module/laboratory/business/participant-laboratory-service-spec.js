@@ -13,19 +13,20 @@ describe('otusParticipantLaboratoryService', function() {
     angular.mock.module('otusjs.laboratory.core');
     angular.mock.module('otusjs.laboratory.business');
     angular.mock.module('otusjs.laboratory.participant');
+    angular.mock.module('otusjs.participant.business');
   });
 
 
   beforeEach(function() {
 
     inject(function(_$injector_) {
-
       Injections.LaboratoryRepositoryService = _$injector_.get('otusjs.laboratory.repository.LaboratoryRepositoryService');
       Injections.ContextService = _$injector_.get('otusjs.laboratory.core.ContextService');
       Injections.EventService = _$injector_.get('otusjs.laboratory.core.EventService');
       Injections.LaboratoryLabelFactory = _$injector_.get('otusjs.laboratory.business.participant.LaboratoryLabelFactory');
       Injections.ParticipantLaboratoryFactory = _$injector_.get('otusjs.laboratory.participant.ParticipantLaboratoryFactory');
 
+      Injections.ParticipantManagerService = _$injector_.get('otusjs.participant.business.ParticipantManagerService');
       service = _$injector_.get(UNIT_NAME, Injections);
     });
 
@@ -36,13 +37,6 @@ describe('otusParticipantLaboratoryService', function() {
 
     beforeEach(function() {
 
-    });
-
-    it('should verify a aliquot struture', function() {
-      spyOn(Injections.LaboratoryRepositoryService,"convertStorageAliquot");
-      service.convertStorageAliquot({});
-
-      expect(Injections.LaboratoryRepositoryService.convertStorageAliquot).toHaveBeenCalled();
     });
 
   });

@@ -13,16 +13,15 @@
     </div>
   </md-toolbar>
   <div flex="100" style="width: 1000px; margin: 0 auto" layout="column">
-    <h4 class="md-headline" flex="100" layout="row" layout-align="center center">Gerar Etiquetas</h4>
+    <div style="margin-top: 10px"></div>
     <md-input-group flex="100" layout="row" layout-xs="column" layout-align-xs="center center">
       <md-button flex="50"  layout="column"  class="md-primary md-raised" ng-click="$ctrl.changeState('tubes')" ng-disabled="$ctrl.state == 'tubes'">Tubos</md-button>
       <md-button  flex="50" layout="column" class="md-primary md-raised" ng-click="$ctrl.changeState('aliquots')" ng-disabled="$ctrl.state == 'aliquots'">Aliquotas</md-button>
     </md-input-group>
   </div>
-  <md-content ng-if="$ctrl.participantLaboratory || $ctrl.labels" style="max-width: 1000px; margin: 0 auto">
+  <md-content style="max-width: 1000px; margin: 0 auto">
     <div>
-      <!--filtro-->
-      <span>filtro</span>
+      <label-print-config></label-print-config>
     </div>
     <div>
       <label-tubes ng-if="$ctrl.labels && $ctrl.state == 'tubes'" labels="$ctrl.labels"></label-tubes>

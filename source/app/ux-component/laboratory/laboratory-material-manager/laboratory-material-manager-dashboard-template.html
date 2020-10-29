@@ -1,0 +1,79 @@
+<md-content flex="">
+      <otus-dashboard-sidenav layout="row">
+        <hide-participant-box></hide-participant-box>
+      </otus-dashboard-sidenav>
+      <otus-dashboard-toolbar layout="row" flex="">
+        <div flex layout="row" layout-align="center center" layout-margin>
+          <span layout-align="center center">Laboratório</span>
+        </div>
+      </otus-dashboard-toolbar>
+      <laboratory-navigation-access></laboratory-navigation-access>
+
+      <!-- tubelist -->
+      <div class="aliquots-container" layout="column" layout-align="center" flex ng-style="{'max-width': '940px', 'margin': '0 auto'}">
+        <div layout="column" layout-align="center" flex="25" flex-md="30" flex-offset="5">
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Código do tubo</label>
+            <input ng-model="$ctrl.tubeCode" ng-change="[$ctrl.isValidCode($ctrl.tubeCode), $ctrl.cancelTube()]">
+          </md-input-container>
+
+          <md-list ng-if="$ctrl.originalTube.hasOwnProperty('code')">
+
+            <div class="tube-list-view">
+
+              <md-card ng-style="{'padding':'10px'}">
+
+                <div layout="row">
+                  <div layout="column" flex="10">
+                    <div class="tube-design" ng-style="{'background-color': $ctrl.newTube.boxColor,
+                                                        'height':'100px', 'width':'10px',
+                                                        'margin-right':'10px',
+                                                        'border': 'solid 1px #ccc',
+                                                        'border-radius':'3px 3px 10px 10px'}">
+                    </div>
+                  </div>
+                  <div layout="column" flex="90">
+                    <div layout="row" layout-align="start start" flex="65">
+                      <div layout="column" flex="90">
+                        <span class="md-title">{{$ctrl.newTube.type}} : {{$ctrl.newTube.momentLabel}}</span>
+                        <span class="md-subhead">{{$ctrl.newTube.code}}</span>
+                      </div>
+                      <div layout="column" flex="10">
+                        <md-icon class="md-primary" md-font-set="material-icons" ng-show="$ctrl.newTube.tubeCollectionData.isCollected">assignment_turned_in
+                          <md-tooltip>Coletado</md-tooltip>
+                        </md-icon>
+                        <md-icon md-font-set="material-icons" ng-show="!$ctrl.newTube.tubeCollectionData.isCollected && $ctrl.newTube.tubeCollectionData.metadata">not_interested
+                          <md-tooltip>Não coletado</md-tooltip>
+                        </md-icon>
+                        <md-icon md-font-set="material-icons" ng-hide="$ctrl.newTube.tubeCollectionData.isCollected || $ctrl.newTube.tubeCollectionData.metadata">assignment_late
+                          <md-tooltip>Aguardando</md-tooltip>
+                        </md-icon>
+                      </div>
+                    </div>
+                    <div layout="row" layout-align="space-between center" flex="50">
+                      <div layout="column" flex="50">
+                      </div>
+                      <md-checkbox class="md-checkbox-small md-primary" ng-change="$ctrl.saveMetadata()" ng-model="$ctrl.newTube.tubeCollectionData.metadata" ng-false-value="''" ng-true-value="'.vp'" name="partial_volume" aria-label="volume parcial">
+                        <span class="md-caption">Volume Parcial</span>
+                      </md-checkbox>
+                    </div>
+                  </div>
+                </div>
+              </md-card>
+            </div>
+              <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected" ng-click="$ctrl.saveChangedTubes()">
+                  COLETAR
+              </md-button>
+              <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
+            <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
+          </md-list>
+
+          <div ng-if="!$ctrl.originalTube.hasOwnProperty('code')">
+            <h2>Sem Tubos Coletados</h2>
+          </div>
+        </div>
+        <div ng-if="$ctrl.originalTube.hasOwnProperty('code')">
+          <laboratory-aliquots-manager participant-manager="$ctrl.participantManagerService" participant-laboratory="$ctrl.participantLaboratory" original-tube="$ctrl.originalTube" tube="$ctrl.newTube" flex></laboratory-aliquots-manager>
+        </div>
+      </div>
+</md-content>

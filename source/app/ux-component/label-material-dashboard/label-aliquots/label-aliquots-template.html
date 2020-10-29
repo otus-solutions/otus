@@ -27,8 +27,13 @@
   </div>
   <div ng-if="$ctrl.selectedMomentType.hasOwnProperty('typeLabel')" layout="column" class="boxWithHeight tela" layout-padding flex>
     <md-whiteframe ng-if="$ctrl.selectedMomentType.hasOwnProperty('typeLabel')"  class="md-whiteframe-12dp aliquot-whiteframe" flex >
-      <div>
-        selecione os exames:
+      <div layout="row" layout-xs="column" layout-align="space-between center" layout-align-xs="">
+        <div>Selecionar todos: <md-checkbox aria-label="selectAll" ng-change="$ctrl.selectAll()" ng-model="$ctrl.isAllSelected"/></div>
+        <span layout="row" ng-if="$ctrl.aliquotsLabels.aliquots.length != 0" layout-align="center center">
+          <md-button class="md-raised md-primary" disabled="">Gerar Etiquetas</md-button>
+          <md-tooltip>Selecione ao menos um tubo</md-tooltip>
+        </span>
+        <label-maker ng-if="$ctrl.aliquotsLabels.aliquots.length > 0" label-data="$ctrl.aliquotsLabels"/>
       </div>
       <div ng-repeat="exam in $ctrl.selectedMomentType.exams" flex="">
         <div layout="row" layout-fill="">
