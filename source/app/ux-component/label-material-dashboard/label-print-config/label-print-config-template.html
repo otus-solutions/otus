@@ -1,0 +1,61 @@
+<md-content flex>
+  <div layout="row" flex>
+    <div layout="column" flex layout-align="center">
+      <span class="md-subheader">Configuração de Impressão:</span>
+      <div layout="row" layout-xs="column" flex layout-align="space-between center" layout-align-xs="start start">
+        <div layout="column" flex="50" flex-xs="100">
+          <div flex layout="column">
+            <md-input-container  class="remove-errors-spacer md-block" flex style="margin:0 0">
+              <label class="md-subhead">Tamanho:</label>
+              <md-select ng-model="$ctrl.printConfig.labelSize" ng-disabled="$index === 1">
+                <md-option ng-repeat="state in $ctrl.tamanhos" ng-value="state" ng-click="">
+                  {{state}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+
+          <div flex layout="row" >
+            <md-input-container class="remove-errors-spacer md-block" flex>
+              <label class="md-subhead">Tipos:</label>
+              <md-select ng-model="$ctrl.printConfig.type" ng-disabled="$index === 1">
+                <md-option ng-repeat="state in $ctrl.tipos" ng-value="state" ng-click="">
+                  {{state}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+        </div>
+
+        <div layout="column" flex="50" flex-xs="100">
+          <div flex layout="column">
+            <md-input-container class="remove-errors-spacer md-block" flex style="margin:0 0">
+              <label class="md-subhead">Identificada:</label>
+              <md-select ng-model="$ctrl.printConfig.identified" ng-disabled="$index === 1">
+                <md-option ng-repeat="state in $ctrl.identificada" ng-value="state" ng-click="">
+                  {{state}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+
+          <div flex layout="column">
+            <md-input-container class="remove-errors-spacer md-block" flex>
+              <label class="md-subhead">Colunas:</label>
+              <md-select ng-model="$ctrl.printConfig.columns" ng-disabled="$index === 1">
+                <md-option ng-repeat="state in $ctrl.colunas" ng-value="state" ng-click="">
+                  {{state}}
+                </md-option>
+              </md-select>
+            </md-input-container>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</md-content>
+
+
+
+
