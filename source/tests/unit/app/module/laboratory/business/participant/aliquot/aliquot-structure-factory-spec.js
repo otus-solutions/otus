@@ -49,7 +49,11 @@ describe('Aliquot Structure Factory', function () {
       time: '',
       tubeId: 'Tube',
       tubeMessage: '',
-      locationPoint: ''
+      locationPoint: '',
+      printStructure: {
+        quantity: 1,
+        selected: false
+      }
     };
 
     Mock.aliquot = {

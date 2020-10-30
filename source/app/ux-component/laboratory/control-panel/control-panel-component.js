@@ -23,11 +23,12 @@
     'otusjs.otus.uxComponent.Publisher',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.deploy.LocationPointRestService',
-    'otusjs.model.locationPoint.LocationPointFactory'
+    'otusjs.model.locationPoint.LocationPointFactory',
+    'otusjs.application.state.ApplicationStateService'
   ];
 
   function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService,
-                      Publisher, DialogService, LocationPointRestService, LocationPointFactory) {
+                      Publisher, DialogService, LocationPointRestService, LocationPointFactory, ApplicationStateService) {
     var self = this;
     var confirmCancel;
     var confirmAliquotingExitDialog;
@@ -51,23 +52,24 @@
     self.verifyDate = verifyDate;
     self.saveAliquots = saveAliquots;
     self.cancelAliquots = cancelAliquots;
-    self.removeDuplicatedMoments = removeDuplicatedMoments;
-    self.filterTubesByMoment = filterTubesByMoment;
     self.fetchLocationPoints = fetchLocationPoints;
     self.fetchUserLocationPoints = fetchUserLocationPoints;
     self.saveLocationPoint = saveLocationPoint;
     self.changeAliquotsLocationPoints = changeAliquotsLocationPoints
     self.changeAliquotsProcessingDate = changeAliquotsProcessingDate
+    self.activateLabelMaterialDashboard = activateLabelMaterialDashboard
 
     function onInit() {
       _buildDialogs();
-      removeDuplicatedMoments();
       fetchLocationPoints();
       self.processingDate = new Date();
       self.now = new Date();
       verifyDate();
     }
 
+    function activateLabelMaterialDashboard() {
+      ApplicationStateService.activateLabelMaterialDashboard()
+    }
     function changeAliquotsLocationPoints() {
       Publisher.publish('aliquots-data', (aliquots) => {
         aliquots.forEach(aliquot => {
@@ -140,27 +142,6 @@
         self.userLocationPointsFiltered = self.userLocationPoints.filter(userLocationPoint =>
           userLocationPoint._id != self.participantLocationPoint[0]._id)
       });
-    }
-
-    function filterTubesByMoment() {
-      if(self.selectedTubes.includes("TODOS")){
-        self.selectedTubes = self.moments
-        return self.newLabels = angular.copy(self.labels)
-      }
-      if(self.selectedTubes.length > 0) {
-        const filteredTubes = self.labels.tubes.filter(tube => {
-          return self.selectedTubes.includes(tube.momentLabel);
-        })
-        self.newLabels = angular.copy(self.labels)
-        self.newLabels.tubes = filteredTubes
-      }
-    }
-
-    function removeDuplicatedMoments(){
-      const tubesMoments = self.labels.tubes.map((tube)=>
-        tube.momentLabel
-      )
-      self.moments = ["TODOS", ...new Set(tubesMoments)]
     }
 
     function saveAliquots() {

@@ -52,18 +52,8 @@
     }
 
     self.cq_group = (laboratory.collectGroupName !== undefined && laboratory.collectGroupName !== DEFAULT) ? laboratory.collectGroupName : NONE;
-    self.tubes = [];
+    self.tubes = laboratory.tubes;;
     _buildTubeLabel(self.tubes);
-    _addPrintStructureToTubes();
-
-    function _addPrintStructureToTubes() {
-      for(const tube of laboratory.tubes) {
-        self.tubes.push({
-          ...tube,
-          printStructure: {quantity: 1, selected: false}
-        })
-      }
-    }
 
     function _convertFormatDate(birthdate) {
       var date = new Date(birthdate);

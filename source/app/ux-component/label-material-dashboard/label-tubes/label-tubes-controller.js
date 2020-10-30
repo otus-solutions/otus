@@ -8,7 +8,7 @@
   Controller.$inject = [
     '$scope',
     '$element',
-    'otusjs.otus.uxComponent.Publisher'
+    'otusjs.otus.uxComponent.Publisher',
   ];
 
   function Controller(
@@ -34,6 +34,10 @@
     }
 
     function createNewLabels() {
+      self.labels.tubes.forEach(tube => tube.printStructure = {
+        selected: false,
+        quantity: 1
+      })
       self.newLabels = angular.copy(self.labels)
       self.newLabels.tubes = []
     }

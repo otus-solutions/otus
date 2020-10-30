@@ -12,7 +12,8 @@
     'otusjs.deploy.LocationPointRestService',
     'otusjs.model.locationPoint.LocationPointFactory',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
-    'otusjs.otus.uxComponent.Publisher'
+    'otusjs.otus.uxComponent.Publisher',
+    'otusjs.laboratory.business.participant.LabelMaterialDialog'
   ];
 
   function Controller(
@@ -22,14 +23,14 @@
     LocationPointRestService,
     LocationPointFactory,
     ParticipantLaboratoryService,
-    Publisher) {
+    Publisher,
+    LabelMaterialDialog) {
     var self = this;
 
     self.newExams = []
     self.newConvertedStorages = []
     self.newStorages = []
     self.tubePrintList = []
-    self.selectedMomentType = {}
     self.aliquotPrintList = []
     self.isAllSelected = false
     self.aliquotsLabels = {}
@@ -38,6 +39,7 @@
     self.selectMomentType = selectMomentType
     self.addAliquotToPrintList = addAliquotToPrintList;
     self.removeAliquotFromPrintList = removeAliquotFromPrintList;
+    self.selectAll = selectAll
 
     function onInit() {
       _buildMomentTypeList();
@@ -54,14 +56,28 @@
     function selectMomentType(momentType) {
       if (self.selectedMomentType) {
         if (momentType != self.selectedMomentType) {
-          _setMomentType(momentType);
+          if(self.aliquotsLabels.aliquots.length != 0){
+            changeMomentDialog().then(() => {
+              _setMomentType(momentType);
+            })
+          }else {
+            _setMomentType(momentType)
+          }
         }
+      }else {
+        _setMomentType(momentType)
       }
+    }
+
+    function changeMomentDialog() {
+      return LabelMaterialDialog.showConfirmCancelDialog()
     }
 
     function _setMomentType(momentType) {
       self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType, self.locationPoints);
       self.aliquotsLabels = ParticipantLaboratoryService.generateLabelsAliquots();
+      self.isAllSelected = false
+      _publishPrintStructure();
     }
 
     function _fetchLocationPoints() {
@@ -71,7 +87,31 @@
     }
 
     function selectAll() {
-
+      if(self.isAllSelected){
+        self.selectedMomentType.exams.forEach(exam => {
+          exam.printStructure.selected = true
+          addAliquotToPrintList(exam)
+        })
+        self.selectedMomentType.convertedStorages.forEach(exam => {
+          exam.printStructure.selected = true
+          addAliquotToPrintList(exam)
+        })
+        self.selectedMomentType.storages.forEach(exam => {
+          exam.printStructure.selected = true
+          addAliquotToPrintList(exam)
+        })
+      }else {
+        self.selectedMomentType.exams.forEach(exam => {
+          exam.printStructure.selected = false
+        })
+        self.selectedMomentType.convertedStorages.forEach(exam => {
+          exam.printStructure.selected = false
+        })
+        self.selectedMomentType.storages.forEach(exam => {
+          exam.printStructure.selected = false
+        })
+        self.aliquotsLabels.aliquots = []
+      }
     }
 
     function addAliquotToPrintList(aliquot) {

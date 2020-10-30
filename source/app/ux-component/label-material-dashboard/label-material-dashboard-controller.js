@@ -11,7 +11,7 @@
     '$window',
     'otusjs.otus.uxComponent.Publisher',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
-    'otusjs.participant.business.ParticipantManagerService',
+    'otusjs.participant.business.ParticipantManagerService'
   ];
 
   function Controller(
@@ -34,7 +34,7 @@
     }
 
     function _setupLaboratory() {
-      return ParticipantManagerService.setup().then(function (response) {
+      return ParticipantManagerService.setup().then(() => {
         self.onReady = true;
         ParticipantLaboratoryService.getLaboratoryByParticipant(self.participantLaboratory.recruitmentNumber, ParticipantManagerService)
           .then(part => {
@@ -54,6 +54,10 @@
     function _subscribeLabels() {
       Publisher.unsubscribe('labels-to-print')
       Publisher.subscribe('labels-to-print', _labelsToPrint)
+    }
+
+    function changeState(state) {
+      self.state = state
     }
 
     function _generateLabels() {
@@ -87,10 +91,6 @@
     function _getParticipantLaboratoryData() {
       const laboratorySessionStorage = angular.fromJson($window.sessionStorage.getItem("laboratory_context"))
       self.participantLaboratory = laboratorySessionStorage.lastSelectedLaboratory
-    }
-
-    function changeState(state) {
-      self.state = state;
     }
   }
 }());

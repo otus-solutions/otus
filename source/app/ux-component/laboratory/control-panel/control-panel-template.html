@@ -2,7 +2,7 @@
   <div class="control-panel control-toolbar" layout="row" layout-padding layout-align="start center"
        ng-if="$ctrl.state === 'main'">
     <span layout="row" layout-align="center center">
-      <md-button class="md-raised md-primary">Gerar Etiquetas</md-button>
+      <md-button class="md-raised md-primary" ng-click="$ctrl.activateLabelMaterialDashboard()">Gerar Etiquetas</md-button>
     </span>
     <div layout="row" layout-align="center center">
       <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('coleta')">Coleta de
