@@ -13,11 +13,12 @@
     'otusjs.activity.business.PreActivityFactory',
     'otusjs.application.state.ApplicationStateService',
     'SurveyFormFactory',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.activity.business.ActivitySharingService'
   ];
 
   function Service($mdToast, ContextService, ActivityRepositoryService, UserRepositoryService,
-    PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService) {
+    PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivitySharingService) {
     var self = this;
     var _paperActivityCheckerData = null;
 
@@ -161,7 +162,8 @@
         },
         discard: function discard() {
           var toDiscard = ContextService.getSelectedActivities().map(function (activity) {
-            activity.isDiscarded = true;
+            // activity.isDiscarded = true;
+            _deleteSharedURL(activity.getID());
             return activity;
           });
           ActivityRepositoryService.discard(toDiscard);
@@ -169,6 +171,14 @@
         }
       };
     }
+
+    function _deleteSharedURL(activityId){
+      ActivitySharingService.getSharedURL(activityId)
+        .then(res => console.info(res.data.activitySharing._id))
+        .catch(error => console.info(error));
+    }
+
+
 
     function getSelectedParticipant() {
       return ContextService.getSelectedParticipant();
