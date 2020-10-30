@@ -1156,7 +1156,7 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
   }
 }
 
-@media screen and (min-width: 1280px) {
+@media screen and (min-width: 1200px) {
   otus-activity-stage-list .stage-list-layout {
     display: -ms-grid;
     display: grid;
