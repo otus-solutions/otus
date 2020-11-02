@@ -67,6 +67,7 @@
           request.resolve(value);
         });
       return request.promise;
+
     }
 
     function selectParticipant() {
