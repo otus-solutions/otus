@@ -124,7 +124,8 @@
        ng-if="$ctrl.state === 'aliquots'">
     <div layout="row" layout-align="center center">
       <md-button class="md-raised" aria-label="voltar" ng-click="$ctrl.cancelAliquots()">Voltar</md-button>
-      <md-button class="md-primary md-raised" aria-label="salvar aliquotagem" ng-disabled="$ctrl.fetchChanges()"
+      <md-button class="md-primary md-raised"
+                 aria-label="salvar aliquotagem" ng-disabled="$ctrl.fetchChanges()"
                  ng-click="$ctrl.saveAliquots()">Salvar
       </md-button>
     </div>
