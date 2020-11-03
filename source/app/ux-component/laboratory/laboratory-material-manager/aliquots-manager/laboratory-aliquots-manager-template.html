@@ -14,7 +14,8 @@
           <md-input-container class="md-input-has-placeholder md-input-has-value"
                               style="position: relative; top: 20px;margin-left: 5px;"
                               ng-style="{'margin':'0 auto'}">
-            <input ng-disabled="!$ctrl.tube.tubeCollectionData.isCollected" mdc-datetime-picker="" ng-change="$ctrl.updateExamsProcessingDate()"
+            <input ng-disabled="!$ctrl.tube.tubeCollectionData.isCollected" mdc-datetime-picker=""
+                   ng-change="$ctrl.updateExamsProcessingDate()"
                    show-icon="true" date="true" time="true" aria-label="Data de Processamento"
                    type="text" id="datetime" show-todays-date=""
                    max-date="$ctrl.now" ng-model="$ctrl.processingDate"
@@ -64,7 +65,8 @@
                         <input class="campo" ng-if="!exam.tubeCode" name="{{exam.tubeId}}"
                                ng-model="exam.tubeCode" ng-value="exam.tubeCode = $ctrl.tube.code"
                                placeholder="" ng-disabled="true"/>
-                        <input class="campo" ng-if="exam.tubeCode" ng-model="exam.tubeCode" placeholder="{{exam.placeholder}}" ng-change="$ctrl.tubeInputOnChange(exam)" name="{{exam.tubeId}}" id="{{exam.tubeId}}" maxlength="{{$ctrl.tubeLength}}" ng-disabled="true" tabindex="-1"
+                        <input class="campo" ng-if="exam.tubeCode" ng-model="exam.tubeCode" placeholder="{{exam.placeholder}}"
+                               ng-change="$ctrl.tubeInputOnChange(exam)" name="{{exam.tubeId}}" id="{{exam.tubeId}}" maxlength="{{$ctrl.tubeLength}}" ng-disabled="true" tabindex="-1"
                                ng-disabled="exam.isSaved" />
                         <!-- tabindex="-1" -->
 
@@ -285,11 +287,12 @@
                         <label>{{storage.containerLabel}}</label>
                         <input ng-model="storage.aliquotCode"
                                ng-change="$ctrl.aliquotInputOnChange(storage)"
-                               name="{{storage.aliquotId}}" id="{{storage.aliquotId}}"
-                               maxlength="{{$ctrl.aliquotMaxLength}}" ng-blur="$ctrl.aliquotInputOnBlur(storage)"
+                               name="{{storage.aliquotId}}"
+                               id="{{storage.aliquotId}}"
+                               maxlength="{{$ctrl.aliquotMaxLength}}"
+                               ng-blur="$ctrl.aliquotInputOnBlur(storage)"
                                ng-keydown="$ctrl.aliquotInputOnKeyDown($event, storage)"
-                               ng-disabled="storage.isSaved || !$ctrl.tube.tubeCollectionData.isCollected"
-                               ng-disabled="storage.isSaved" />
+                               ng-disabled="storage.isSaved || !$ctrl.tube.tubeCollectionData.isCollected" />
                         <div ng-messages="formAliquot[storage.aliquotId].$error">
                           <div ng-message="customValidation">{{storage.aliquotMessage}}</div>
                         </div>
