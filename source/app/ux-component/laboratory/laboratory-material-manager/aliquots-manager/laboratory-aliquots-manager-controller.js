@@ -18,15 +18,15 @@
   ];
 
   function Controller(
-                      $scope,
-                      $element,
-                      AliquotTubeService,
-                      LaboratoryConfigurationService,
-                      Validation,
-                      LocationPointRestService,
-                      LocationPointFactory,
-                      AliquotMessagesService,
-                      ParticipantLaboratoryService) {
+    $scope,
+    $element,
+    AliquotTubeService,
+    LaboratoryConfigurationService,
+    Validation,
+    LocationPointRestService,
+    LocationPointFactory,
+    AliquotMessagesService,
+    ParticipantLaboratoryService) {
     var self = this;
 
     self.$onInit = onInit
@@ -107,23 +107,27 @@
 
     function saveAliquots() {
       if (AliquotTubeService.areFieldsChanged(self.selectedMomentType)) {
-          AliquotMessagesService.showSaveDialog().then(function() {
-            var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
-            var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
-            AliquotTubeService.updateAliquotsWithRn(persistanceStructure, self.participantLaboratory.recruitmentNumber)
-              .then(function(data) {
-                self.selectedMomentType.updateTubes();
-                self.participantLaboratory.updateTubeList();
-                _setMomentType(self.selectedMomentType);
-                AliquotMessagesService.showToast(Validation.validationMsg.savedSuccessfully, self.timeShowMsg);
-              })
-              .catch(function(e) {
-                AliquotMessagesService.showToast(Validation.validationMsg.couldNotSave, self.timeShowMsg);
-                var err = e.data;
-                fillAliquotsErrors(err.CONTENT.conflicts, err.MESSAGE);
-                fillTubesErrors(err.CONTENT.tubesNotFound, err.MESSAGE);
-              });
-          });
+        if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
+          AliquotMessagesService.showToast(Validation.validationMsg.checkErrorsBeforeSaving, 3000);
+        } else {
+        AliquotMessagesService.showSaveDialog().then(function() {
+          var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
+          var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
+          AliquotTubeService.updateAliquotsWithRn(persistanceStructure, self.participantLaboratory.recruitmentNumber)
+            .then(function(data) {
+              self.selectedMomentType.updateTubes();
+              self.participantLaboratory.updateTubeList();
+              _setMomentType(self.selectedMomentType);
+              AliquotMessagesService.showToast(Validation.validationMsg.savedSuccessfully, self.timeShowMsg);
+            })
+            .catch(function(e) {
+              AliquotMessagesService.showToast(Validation.validationMsg.couldNotSave, self.timeShowMsg);
+              var err = e.data;
+              fillAliquotsErrors(err.CONTENT.conflicts, err.MESSAGE);
+              fillTubesErrors(err.CONTENT.tubesNotFound, err.MESSAGE);
+            });
+        });
+        }
       } else {
         AliquotMessagesService.showToast(Validation.validationMsg.savedSuccessfully, self.timeShowMsg);
       }
@@ -177,8 +181,8 @@
     }
 
     function _setMomentType(momentType) {
-      self.originalAliquots = AliquotTubeService.populateAliquotsArray(momentType, self.locationPoints);
-      self.selectedMomentType = angular.copy(self.originalAliquots)
+      self.selectedMomentType = AliquotTubeService.populateAliquotsArray(momentType, self.locationPoints);
+
       _buildAvailableExamTypesArray(momentType);
       Validation.initialize(
         self.validations, self.tubeLength, self.aliquotLengths, clearAliquotError, clearTubeError, setAliquotError, setTubeError, self.selectedMomentType.exams, self.selectedMomentType.storages
@@ -329,7 +333,7 @@
       _clearContainer(aliquot);
       if (!aliquot.processing) updateExamsProcessingDate();
       if (!aliquot.locationPoint) updateExamsLocationPoint();
-      if (self.aliquotLengths.length === 1) {
+      if (self.aliquotLengths.length >= 1) {
         var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
         var runCompletePlaceholder = false;
 
@@ -343,6 +347,10 @@
             if (aliquot.aliquotCode.length == self.aliquotMaxLength) _nextFocus(aliquot);
           }
         }
+      }
+      if (runCompletePlaceholder) {
+        completePlaceholder(aliquotsArray);
+        _callBlurTubes(aliquotsArray, aliquot);
       }
     }
 
@@ -413,17 +421,17 @@
 
     function updateExamsProcessingDate() {
       self.selectedMomentType.exams.forEach(exam => {
-        if(!exam.processing) {
+        if(!exam.isSaved) {
           exam.processing = self.processingDate
         }
       })
       self.selectedMomentType.convertedStorages.forEach(storage => {
-        if(!storage.processing) {
+        if(!storage.isSaved) {
           storage.processing = self.processingDate
         }
       })
       self.selectedMomentType.storages.forEach(storage => {
-        if(!storage.processing) {
+        if(!storage.isSaved) {
           storage.processing = self.processingDate
         }
       })
