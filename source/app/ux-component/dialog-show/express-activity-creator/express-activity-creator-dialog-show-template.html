@@ -1,0 +1,106 @@
+<link href="app/ux-component/dialog-show/express-activity-creator/express-activity-creator-dialog-show-styles.css"
+      rel="stylesheet" type="text/css">
+
+<md-dialog class="dialog-layout">
+  <md-toolbar class="md-primary md-toolbar-tools">
+    <span class="md-subhead">{{ $ctrl.dialogValues.titles.dialogToTitle }}</span>
+    <span flex></span>
+    <md-button class="md-icon-button" ng-click="$ctrl.data.cancel() "
+               aria-label={{$ctrl.dialogValues.buttons.closeDialog.ariaLabel}}>
+      <md-icon aria-label={{$ctrl.dialogValues.buttons.closeDialog.ariaLabel}}>
+        {{$ctrl.dialogValues.buttons.closeDialog.icon}}
+      </md-icon>
+      <md-tooltip md-direction="bottom">
+        {{$ctrl.dialogValues.buttons.closeDialog.tooltip}}
+      </md-tooltip>
+    </md-button>
+  </md-toolbar>
+
+  <md-dialog-content class="content-share">
+    <div layout="column" layout-margin>
+
+      <div layout="row" layout-align="space-between center">
+        <md-chips>
+          <md-chip class="md-body-2">{{ $ctrl.preActivityArtefacts.surveyForm.acronym }}</md-chip>
+        </md-chips>
+        <span class="md-body-1">{{ $ctrl.preActivityArtefacts.surveyForm.name }}</span>
+        <span></span>
+      </div>
+
+      <form class="activity-creation-form-layout" name="$ctrl.activityCreationForm" ng-submit="$ctrl.createActivity()"
+            novalidate>
+
+        <md-input-container>
+          <label>{{ $ctrl.dialogValues.inputLabel.type }}</label>
+          <md-select class="form-control"
+                     aria-label={{$ctrl.dialogValues.ariaLabel.activityType}}
+                     ng-model="$ctrl.preActivityArtefacts.mode" required>
+            <md-option ng-repeat="type in $ctrl.optionModes track by $index"
+                       ng-selected="type.isDefault"
+                       ng-value="type.mode">{{ type.label | uppercase }}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container>
+          <label>{{ $ctrl.dialogValues.inputLabel.category }}</label>
+          <md-select class="form-control"
+                     aria-label="{{ $ctrl.dialogValues.inputLabel.category }}"
+                     ng-model="$ctrl.preActivityArtefacts.configuration.category" required>
+            <md-option ng-repeat="category in $ctrl.categories track by $index"
+                       ng-selected="category.isDefault"
+                       ng-value="category">{{ category.label | uppercase }}
+            </md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()" class="external-id-input">
+          <label>{{ $ctrl.dialogValues.inputLabel.externalID }}</label>
+          <input name="externalID"
+                 ng-model="$ctrl.preActivityArtefacts.externalID"
+                 ng-change="$ctrl.updateExternalID($ctrl.preActivityArtefacts.externalID)"
+                 placeholder="{{ $ctrl.dialogValues.inputLabel.externalID }}"
+                 aria-label="{{ $ctrl.dialogValues.inputLabel.externalID }}" required>
+          <div ng-messages="$ctrl.activityCreationForm.externalID.$error">
+            <div ng-message="required">{{ $ctrl.dialogValues.validator.required }}</div>
+          </div>
+        </md-input-container>
+
+        <md-input-container ng-if="!$ctrl.surveyForm.isRequiredExternalID()">
+          <small class="small-titles">{{ $ctrl.dialogValues.titles.externalIDNotRequired }}<sup>*</sup></small>
+        </md-input-container>
+
+        <div class="checker-input" ng-if="$ctrl.preActivityArtefacts.mode === 'PAPER'">
+          <small class="small-titles">{{ $ctrl.dialogValues.titles.checker }}<sup>*</sup></small>
+          <otus-checker-search id="checker" class="form-control checker-input"
+                               selected-item="$ctrl.preActivityArtefacts.checkerData"
+                               placeholder-title="{{ $ctrl.dialogValues.placeholder.checker }}">
+          </otus-checker-search>
+        </div>
+        <div ng-if="$ctrl.activityCreationForm.checker.$error.required && $ctrl.activityCreationForm.checker.$dirty">
+          <small style="color: #d50000">{{ $ctrl.dialogValues.validator.required }}</small>
+        </div>
+
+        <div class="date-container" ng-if="$ctrl.preActivityArtefacts.mode === 'PAPER'">
+          <small class="small-title-date">{{ $ctrl.dialogValues.titles.realizationDate }}<sup>*</sup></small>
+          <md-input-container class="date-input">
+            <input aria-label="{{ $ctrl.dialogValues.titles.realizationDate }}" class="form-control date-input" date="true"
+                   disable-parent-scroll="true"
+                   format="DD/MM/YYYY" name="realizationDate"
+                   id="datetime" max-date="$ctrl.maxDate" mdc-datetime-picker=""
+                   ng-change="$ctrl.updateRealizationDate($ctrl.preActivityArtefacts.realizationDate)"
+                   ng-model="$ctrl.preActivityArtefacts.realizationDate"
+                   required show-icon="true" time="false" type="text" required>
+          </md-input-container>
+        </div>
+
+        <md-input-container>
+          <md-button type="submit" class="md-raised md-primary"
+                     aria-label={{ $ctrl.dialogValues.buttons.createActivity.arialLabel }} layout-fill>
+            <span class="md-caption">{{ $ctrl.dialogValues.buttons.createActivity.title }}</span>
+          </md-button>
+        </md-input-container>
+      </form>
+    </div>
+  </md-dialog-content>
+</md-dialog>
