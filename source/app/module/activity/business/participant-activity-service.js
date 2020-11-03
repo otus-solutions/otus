@@ -15,7 +15,6 @@
     'SurveyFormFactory',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.activity.business.ActivityValues'
-
   ];
 
   function Service($mdToast, ContextService, ActivityRepositoryService, UserRepositoryService,
@@ -49,6 +48,8 @@
     self.getActivity = getActivity;
     self.clearSelectedActivities = clearSelectedActivities;
     self.reopenActivity = reopenActivity;
+    self.getAllByStageGroup = getAllByStageGroup;
+    self.discardActivity = discardActivity;
     self.saveActivity = saveActivity;
 
     function add() {
@@ -78,6 +79,8 @@
       LoadingScreenService.start();
       _prepareActivities(preActivities)
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
+        //esse catch garante que ocorrerá a troca de state mesmo que ocorra erro no backend
+        //todo: remove
         .catch(() => {
           _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
           LoadingScreenService.finish();
@@ -87,35 +90,13 @@
         .then(() => LoadingScreenService.finish);
     }
 
-    function saveActivity(preActivity) {
-      LoadingScreenService.start();
-      return _prepareActivities(preActivity)
-        .then(() => ActivityRepositoryService.saveActivities(self.activities))
-        .catch(() => {
-          _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
-          LoadingScreenService.finish();
-        })
-        .then(() => {
-          _callToast('sucessActivityCreation');
-          LoadingScreenService.finish();
-        })
-        .then(() => self.activities = [])
-        .then(() => LoadingScreenService.finish);
-    }
-
     function _prepareActivities(preActivities) {
       return getSelectedParticipant().then(selectedParticipant => {
         preActivities.forEach(preActivity => {
           switch (preActivity.mode) {
-            case "ONLINE":
-              _createOnLineActivity(preActivity, selectedParticipant);
-              break;
-            case "PAPER":
-              _createPaperActivity(preActivity, selectedParticipant);
-              break;
-            case "AUTOFILL":
-              _createAutoFillActivity(preActivity, selectedParticipant);
-              break;
+            case "ONLINE": _createOnLineActivity(preActivity, selectedParticipant); break;
+            case "PAPER": _createPaperActivity(preActivity, selectedParticipant); break;
+            case "AUTOFILL": _createAutoFillActivity(preActivity, selectedParticipant); break;
           }
         });
       });
@@ -212,7 +193,7 @@
     }
 
     function updateCheckerActivity(recruitmentNumber, id, activityStatus) {
-      return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({id, activityStatus}));
+      return ActivityRepositoryService.updateCheckerActivity(recruitmentNumber, Object.freeze({ id, activityStatus }));
     }
 
     function addActivityRevision(activityRevision, activity) {
@@ -235,6 +216,12 @@
       return ActivityRepositoryService.reopenActivity(activity);
     }
 
+    function getAllByStageGroup() {
+      return getSelectedParticipant()
+        .then(function (selectedParticipant) {
+          return ActivityRepositoryService.getAllByStageGroup(selectedParticipant);
+        });
+
     function _callToast(msg, error) {
       let toastCss = error ? "md-toast-error" : "md-toast-done";
       return $mdToast.show($mdToast.simple()
@@ -243,5 +230,11 @@
         .hideDelay(4000));
     }
 
+    function discardActivity(activityId) {
+      getSelectedParticipant()
+        .then(function (selectedParticipant) {
+          ActivityRepositoryService.discardActivity(activityId, selectedParticipant);
+        });
+    }
   }
 }());

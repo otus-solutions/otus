@@ -20,6 +20,7 @@
     self.create = create;
     self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
+    self.getLaboratoryByTube = getLaboratoryByTube;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
     self.convertStorageAliquot = convertStorageAliquot;
@@ -66,6 +67,15 @@
       }
       return _participantRest.getLaboratory({
         rn: recruitmentNumber
+      }).$promise;
+    }
+
+    function getLaboratoryByTube(tubeCode) {
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.getLaboratoryByTube({
+        tubeCode: tubeCode
       }).$promise;
     }
 

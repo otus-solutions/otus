@@ -24,8 +24,10 @@
 
     function load() {
       activityToPlay = null;
-      var _activity = ContextService.getSelectedActivities()[0];
-      _runSurveyPlayer(_activity.getID());
+      let _activity = ContextService.getSelectedActivities()[0];
+      let activityId = _activity._id || _activity.getID();
+
+      _runSurveyPlayer(activityId);
     }
 
     function _getUrlPreviewPlayer(id) {

@@ -1,0 +1,1315 @@
+otus-dashboard-sidenav md-sidenav {
+  position: fixed !important;
+  width: 320px;
+  min-width: 320px !important;
+}
+
+otus-dashboard-sidenav md-backdrop {
+  position: fixed !important;
+}
+
+otus-dashboard-sidenav md-backdrop ~ md-content {
+  position: fixed;
+  overflow: hidden;
+}
+
+@media (max-width: 456px) {
+  otus-dashboard-sidenav md-sidenav,
+  otus-dashboard-sidenav md-sidenav.md-locked-open,
+  otus-dashboard-sidenav md-sidenav.md-closed.md-locked-open-add-active {
+    position: fixed !important;
+    min-width: 320px !important;
+  }
+}
+
+otus-participants-list .dynamic-table-container-md-content {
+  max-height: 90%;
+}
+
+otus-participants-list .dynamic-table-container {
+  min-width: 850px;
+}
+
+otus-participants-list .dynamic-table-container .dynamic-structure {
+  min-width: 800px !important;
+}
+
+@media only screen and (max-width: 799px) {
+  otus-dashboard-toolbar .not-mobile {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  otus-dashboard-toolbar .mobile {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 799px) {
+  otus-dashboard otus-dashboard-toolbar .mobile {
+    display: none !important;
+  }
+  otus-dashboard otus-dashboard-toolbar .not-mobile {
+    display: block !important;
+  }
+}
+
+otus-report-dashboard otus-panel .report-list {
+  min-width: 250px;
+}
+
+otus-report-dashboard otus-panel .report-list .report-item {
+  min-width: 250px;
+  background-color: #ffffff;
+}
+
+@media only screen and (max-width: 450px) {
+  otus-activity-manager otus-activity-list .not-mobile {
+    display: none;
+  }
+}
+
+otus-activity-manager otus-activity-list .dynamic-table-container {
+  min-width: 800px;
+}
+
+otus-activity-manager otus-activity-list .dynamic-table-container .dynamic-structure {
+  min-width: 750px !important;
+}
+
+otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
+  max-height: 50px;
+}
+
+@media only screen and (max-width: 450px) {
+  otus-activity-manager otus-activity-manager-bottom-sheet md-toolbar {
+    display: none !important;
+  }
+  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    z-index: 20;
+  }
+  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial md-fab-trigger {
+    width: 80%;
+  }
+  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial md-fab-trigger button {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media only screen and (min-width: 451px) {
+  otus-activity-manager otus-activity-manager-bottom-sheet md-fab-speed-dial {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 451px) {
+  otus-activity-manager otus-activity-manager-commander md-fab-speed-dial {
+    display: none;
+  }
+}
+
+otus-activity-adder-list .dynamic-table-container {
+  min-width: 800px;
+}
+
+otus-activity-adder-list .dynamic-table-container .dynamic-structure {
+  min-width: 750px !important;
+}
+
+@media only screen and (max-width: 550px) {
+  lab-control-panel .control-toolbar {
+    display: none;
+  }
+  lab-control-panel .mobile-control-toolbar {
+    max-height: 65px;
+  }
+  lab-control-panel .mobile-control-toolbar md-fab-speed-dial {
+    max-height: 50px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    z-index: 20;
+  }
+  lab-control-panel .mobile-control-toolbar md-fab-speed-dial md-fab-trigger {
+    width: 80%;
+  }
+  lab-control-panel .mobile-control-toolbar md-fab-speed-dial md-fab-trigger button {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+  lab-control-panel .mobile-control-toolbar md-fab-speed-dial md-fab-actions button {
+    min-width: 150px;
+  }
+}
+
+@media only screen and (min-width: 551px) {
+  lab-control-panel .mobile-control-toolbar {
+    display: none;
+  }
+  lab-control-panel .control-toolbar div .mobile-input {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  lab-control-panel .collect-control-toolbar {
+    display: none;
+  }
+  lab-control-panel .mobile-collect-control-toolbar {
+    max-height: 65px;
+  }
+  lab-control-panel .mobile-collect-control-toolbar md-fab-speed-dial {
+    position: relative;
+    top: -18px;
+    max-height: 30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    z-index: 20;
+  }
+  lab-control-panel .mobile-collect-control-toolbar fast-collection {
+    position: relative;
+    top: -15px;
+  }
+  lab-control-panel .mobile-collect-control-toolbar fast-collection div {
+    min-width: 80px;
+  }
+  lab-control-panel .mobile-collect-control-toolbar fast-collection div .desktop-input {
+    display: none;
+  }
+  lab-control-panel .aliquots-control-toolbar {
+    display: none;
+  }
+  lab-control-panel .mobile-aliquots-control-toolbar {
+    max-height: 65px;
+  }
+  lab-control-panel .mobile-aliquots-control-toolbar div label {
+    position: relative;
+    top: 10px;
+  }
+  lab-control-panel .mobile-aliquots-control-toolbar div md-input-container {
+    position: relative;
+    top: -15px;
+  }
+  lab-control-panel .mobile-aliquots-control-toolbar md-fab-speed-dial {
+    position: relative;
+    top: -18px;
+    max-height: 30px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    z-index: 20;
+  }
+}
+
+@media only screen and (max-width: 359px) {
+  lab-control-panel .mobile-aliquots-control-toolbar div label {
+    display: none;
+  }
+}
+
+@media only screen and (min-width: 651px) {
+  lab-control-panel .mobile-collect-control-toolbar {
+    display: none;
+  }
+  lab-control-panel .mobile-aliquots-control-toolbar {
+    display: none;
+  }
+}
+
+aliquots-view .aliquots-container {
+  min-width: 700px;
+}
+
+@media screen and (max-width: 768px) {
+  aliquots-view .input-footer-message {
+    font-size: 11px;
+  }
+}
+
+otus-sample-transportation-manager-list otus-sample-transportation-lot-info-sidenav md-sidenav {
+  min-width: 320px !important;
+}
+
+@media screen and (max-width: 726px) {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .desktop-filter div .md-subheader {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .desktop-filter {
+    display: none;
+  }
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .table-container {
+    min-width: 850px;
+  }
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .table-container md-list {
+    min-width: 800px;
+  }
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card {
+    width: 300px;
+  }
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card md-card-title md-card-title-text .md-subhead {
+    font-size: 10px;
+  }
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card md-card-title md-card-title-text .md-headline {
+    font-size: 14px;
+  }
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card md-card-title div div otus-sample-transportation-lot-aliquots-chart {
+    display: block;
+    height: 87px;
+    width: 128px;
+    position: relative;
+    right: 44px;
+    top: -24px;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component .mobile-filter {
+    display: none;
+  }
+  otus-sample-transportation-manager-list .sample-transportation-lot-manager-list-component md-card {
+    width: 600px;
+  }
+}
+
+otus-lot-info-manager-display .subtitle-table-container {
+  max-height: 300px;
+  padding-top: 20px;
+}
+
+otus-lot-info-manager-display .dynamic-table-container {
+  min-width: 850px;
+  max-height: 420px;
+}
+
+otus-lot-info-manager-display .dynamic-table-container .dynamic-structure {
+  min-width: 800px !important;
+}
+
+otus-lot-info-manager-display md-input-container md-datepicker {
+  position: relative;
+  left: -15px;
+}
+
+otus-view-sending-exam .dynamic-table-container-md-content {
+  min-height: 400px;
+}
+
+otus-view-sending-exam .dynamic-table-container-md-content .dynamic-table-container {
+  min-width: 850px;
+  max-height: 420px;
+}
+
+otus-view-sending-exam .dynamic-table-container-md-content .dynamic-table-container .dynamic-structure {
+  min-width: 800px !important;
+}
+
+otus-view-sending-exam otus-result-visualizer .dynamic-table-container {
+  min-width: 850px;
+  max-height: 420px;
+}
+
+otus-view-sending-exam otus-result-visualizer .dynamic-table-container .dynamic-structure {
+  min-width: 800px !important;
+}
+
+@media screen and (max-width: 726px) {
+  otus-view-sending-exam .desktop-filter .md-subheader {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  otus-view-sending-exam .desktop-filter {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  otus-view-sending-exam .mobile-filter {
+    display: none;
+  }
+}
+
+otus-exams-lots-manager .table-container {
+  min-width: 750px;
+}
+
+otus-exams-lots-manager .table-container md-list {
+  min-width: 700px;
+}
+
+@media screen and (max-width: 726px) {
+  otus-exams-lots-manager .desktop-filter .md-subheader {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  otus-exams-lots-manager .desktop-filter {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 651px) {
+  otus-exams-lots-manager .mobile-filter {
+    display: none;
+  }
+}
+
+otus-exam-lot-info-manager-display .dynamic-table-container {
+  min-width: 850px;
+}
+
+otus-exam-lot-info-manager-display .dynamic-table-container .dynamic-structure {
+  min-width: 800px !important;
+}
+
+@media screen and (max-width: 600px) {
+  otus-exam-lot-info-manager-display .dynamic-table-container {
+    max-height: 395px;
+  }
+  otus-exam-lot-info-manager-display .moment-type-title {
+    display: none !important;
+  }
+}
+
+otus-exam-lot-info-manager-display .aliquot-form {
+  max-height: 70px;
+}
+
+otus-exam-lot-info-manager-display .aliquot-form md-input-container {
+  margin-bottom: 0;
+}
+
+otus-exam-lot-info-sidenav md-sidenav {
+  min-width: 320px !important;
+}
+
+@media screen and (max-width: 600px) {
+  otus-monitoring-dashboard .desktop-filter {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 601px) {
+  otus-monitoring-dashboard .mobile-filter {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  otus-flag-report-list-manager otus-flag-report-visualization md-content {
+    max-height: 400px;
+  }
+}
+
+@media screen and (min-width: 651px) {
+  otus-flag-report-list-manager otus-flag-report-visualization md-content {
+    max-height: 100%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  otus-laboratory-flag-report-list-manager .exam-heatmap-container {
+    min-height: 400px;
+  }
+}
+
+@media screen and (min-width: 651px) {
+  otus-laboratory-flag-report-list-manager .exam-heatmap-container {
+    min-height: 100%;
+  }
+}
+
+otus-laboratory-monitoring-dashboard #orphans-by-exam svg {
+  min-width: 600px;
+}
+
+otus-activity-category-adder otus-activity-category-adder-list md-card md-input-container {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 0;
+  margin-top: 0;
+  top: -5px;
+}
+
+activity-grid-list .gridListDynamicTiles md-grid-list {
+  margin: 10px;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+activity-grid-list .gridListDynamicTiles md-grid-tile md-grid-tile-header {
+  position: relative;
+  width: 100%;
+  overflow: inherit;
+  padding: 8px;
+}
+
+activity-grid-list .gridListDynamicTiles md-grid-tile figure {
+  -webkit-box-pack: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+activity-grid-list .gridListDynamicTiles md-grid-tile:hover {
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+activity-grid-list .gridListDynamicTiles md-grid-tile-header figcaption {
+  display: block;
+  width: 100%;
+}
+
+activity-grid-list .gridListDynamicTiles md-grid-tile-header figcaption md-icon {
+  margin: 0;
+}
+
+activity-grid-list .gridListDynamicTiles .grid-aligh {
+  padding-left: 10px;
+  padding-top: 5px;
+  width: 100%;
+}
+
+@media only screen and (max-width: 999px) {
+  activity-grid-list .gridListDynamicTiles .clipped {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 90%;
+  }
+}
+
+otus-activity-adder-card {
+  width: 100%;
+}
+
+otus-activity-adder-card md-grid-tile-header figcaption {
+  display: block;
+  width: 100%;
+}
+
+otus-activity-adder-card md-input-container {
+  padding: 0 15px 0 0;
+  margin: 0;
+  height: 40px;
+  border: none;
+}
+
+.grid-align {
+  padding-left: 10px;
+  padding-top: 5px;
+  width: 100%;
+}
+
+otus-activity-adder md-input-container {
+  margin-bottom: 0px;
+}
+
+otus-activity-adder .button-hover :hover {
+  background-color: rgba(0, 0, 0, 0.06);
+  border-radius: 0 0 0 0;
+  width: auto;
+  height: auto;
+}
+
+otus-activity-adder md-grid-tile figure {
+  -webkit-box-pack: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: start;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-header {
+  position: relative;
+  width: 100%;
+  overflow: inherit;
+  padding: 8px;
+}
+
+otus-activity-adder md-grid-tile otus-activity-adder-card md-grid-tile-footer {
+  padding-left: 10px;
+  color: red;
+  height: 24px;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+otus-activity-adder md-grid-list {
+  margin: 10px;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+otus-activity-adder md-select {
+  margin: 5px 0 0;
+}
+
+otus-activity-adder md-input-container {
+  margin: 0;
+  height: 40px;
+  padding: 0 15px;
+  border: none;
+}
+
+.scrollbar {
+  height: 85vh;
+  background: #fff;
+  overflow-y: scroll;
+}
+
+.scrollbar-default::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.scrollbar-default::-webkit-scrollbar {
+  background-color: #f5f5f5;
+}
+
+.scrollbar-default::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #2bbbad;
+}
+
+.no-shadow {
+  -webkit-transition: none !important;
+  transition: none !important;
+  -webkit-box-shadow: none !important;
+          box-shadow: none !important;
+}
+
+md-toast.md-error-toast-theme .md-toast-content {
+  background-color: darkred;
+  font-weight: bold;
+}
+
+otus-dashboard-pendency md-grid-list {
+  margin: 10px;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
+}
+
+otus-dashboard-pendency md-grid-tile {
+  border-radius: 5px;
+}
+
+otus-dashboard-pendency md-grid-tile figure {
+  -webkit-box-pack: normal;
+      -ms-flex-pack: normal;
+          justify-content: normal;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: normal;
+      -ms-flex-align: normal;
+          align-items: normal;
+  -webkit-transition-duration: 0s;
+          transition-duration: 0s;
+  padding: 8px;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-header {
+  background: rgba(255, 255, 255, 0);
+  position: relative;
+  width: 100%;
+  overflow: inherit;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-header figcaption {
+  display: block;
+  width: 100%;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-header figcaption md-icon {
+  margin: 0;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-footer {
+  background: rgba(255, 255, 255, 0);
+  overflow: inherit;
+  padding: 8px;
+}
+
+otus-dashboard-pendency md-grid-tile md-grid-tile-footer figcaption {
+  display: block;
+  width: 100%;
+}
+
+otus-dashboard-pendency .md-badge {
+  background-color: red;
+  z-index: 10;
+}
+
+otus-dashboard-pendency md-card md-card-content {
+  border-radius: 5px;
+}
+
+otus-dashboard-pendency .full-list-items {
+  min-width: 90vw;
+}
+
+otus-dashboard-pendency md-input-container {
+  margin: 0;
+}
+
+otus-dashboard-pendency .header-list {
+  font-weight: bold;
+  min-height: 70px !important;
+  max-height: 70px !important;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.no-border {
+  padding: 0;
+  margin: 0;
+}
+
+otus-follow-up-event #event-icon {
+  max-width: 60px;
+  max-height: 60px;
+}
+
+otus-follow-up-event #event-container {
+  padding-bottom: 5px;
+}
+
+@media screen and (max-width: 600px) {
+  otus-follow-up-event #event-description {
+    font-size: 18px;
+  }
+}
+
+unattached-laboratory md-grid-tile-header {
+  background: rgba(19, 125, 108, 0.68) !important;
+}
+
+unattached-laboratory md-grid-tile-header figcaption {
+  width: 100%;
+}
+
+unattached-laboratory md-input-container {
+  margin-bottom: 0px;
+}
+
+unattached-laboratory-dashboard otus-panel {
+  min-width: 320px;
+}
+
+offline-activity-collection md-card {
+  min-width: 340px;
+}
+
+offline-activity-collection #md-content-container {
+  height: 400px !important;
+  width: 100%;
+}
+
+offline-activity-collection md-content {
+  width: 100% !important;
+}
+
+offline-activity-collection md-grid-tile-header {
+  background: rgba(19, 125, 108, 0.68) !important;
+}
+
+offline-activity-collection md-grid-tile-header figcaption {
+  width: 100%;
+}
+
+offline-activity-collection md-input-container {
+  margin-bottom: 0px;
+}
+
+offline-activity-collection otus-panel {
+  min-width: 320px;
+}
+
+offline-activity-synchronize-dashboard #groups-container {
+  min-width: 345px;
+}
+
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete {
+  color: white !important;
+}
+
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap input {
+  color: white !important;
+}
+
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap button {
+  color: white !important;
+}
+
+otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md-autocomplete md-autocomplete-wrap input::-webkit-input-placeholder {
+  color: white !important;
+}
+
+@media screen and (min-width: 360px) {
+  otus-activity-stage-list .stage-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    -ms-grid-columns: 0.2fr 1fr 0.2fr;
+        grid-template-columns: 0.2fr 1fr 0.2fr;
+    -ms-grid-rows: 0.6fr;
+        grid-template-rows: 0.6fr;
+        grid-template-areas: "activity-acronym   activity-name   activity-button";
+  }
+  otus-activity-stage-list .activity-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    padding-top: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.5fr 0.3fr 0.7fr 1.6fr;
+        grid-template-columns: 0.5fr 0.3fr 0.7fr 1.6fr;
+    justify-items: stretch;
+        grid-template-areas: "activity-status  activity-mode  activity-date  activity-category" "activity-status  activity-user-email   activity-user-email activity-user-email" "activity-externalID  activity-externalID  activity-externalID  activity-button";
+  }
+  otus-activity-stage-list .activity-null-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    -ms-grid-columns: 0.1fr 1fr;
+        grid-template-columns: 0.1fr 1fr;
+    -ms-grid-rows: 0.8fr;
+        grid-template-rows: 0.8fr;
+        grid-template-areas: ".    activity-null" ".    activity-null";
+  }
+  otus-activity-stage-list .md-headline {
+    font-size: 4.2vw;
+  }
+  otus-activity-stage-list .md-body-2 {
+    font-size: 10px;
+    line-height: 8px;
+  }
+  otus-activity-stage-list .md-title {
+    font-size: 3.4vw;
+  }
+  otus-activity-stage-list .margin-left {
+    margin-left: 12px;
+  }
+  otus-activity-stage-list .icon-status-size {
+    font-size: 10vw;
+    height: 10vw;
+    width: 10vw;
+  }
+  otus-activity-stage-list .margin-layout {
+    margin: 8px 4px 0 4px;
+  }
+  otus-activity-stage-list .margin-bottom {
+    margin: 0 0 10px 0;
+  }
+  otus-activity-stage-list .icon-mode {
+    height: 34px;
+    width: 34px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  otus-activity-stage-list .stage-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 16vh;
+    -ms-grid-columns: 0.1fr (1fr)[3] 0.1fr;
+        grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+  }
+  otus-activity-stage-list .activity-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.5fr (0.8fr)[2];
+        grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.5fr repeat(2, 0.8fr);
+        grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
+  }
+  otus-activity-stage-list .activity-null-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 12vh;
+    -ms-grid-columns: 0.1fr (1fr)[4];
+        grid-template-columns: 0.1fr repeat(4, 1fr);
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+  }
+  otus-activity-stage-list .margin-layout {
+    margin: 8px 4px 8px 4px;
+  }
+  otus-activity-stage-list .md-body-2 {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  otus-activity-stage-list .icon-status-size {
+    font-size: 24px;
+    height: auto;
+    width: auto;
+  }
+  otus-activity-stage-list .md-headline {
+    font-size: 22px;
+  }
+  otus-activity-stage-list .md-title {
+    font-size: 18px;
+  }
+  otus-activity-stage-list .margin-bottom {
+    margin: 0 0 15px 0;
+  }
+  otus-activity-stage-list .icon-mode {
+    height: auto;
+    width: auto;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  otus-activity-stage-list .stage-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 8vh;
+    -ms-grid-columns: 0.1fr (1fr)[3] 0.6fr;
+        grid-template-columns: 0.1fr repeat(3, 1fr) 0.6fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+  }
+  otus-activity-stage-list .activity-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 6.5vh;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
+        grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
+  }
+  otus-activity-stage-list .activity-null-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 6vh;
+    -ms-grid-columns: 0.1fr (1fr)[4];
+        grid-template-columns: 0.1fr repeat(4, 1fr);
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+  }
+  otus-activity-stage-list .margin-layout {
+    margin: 8px 4px 8px 4px;
+  }
+  otus-activity-stage-list .md-body-2 {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  otus-activity-stage-list .icon-status-size {
+    font-size: 24px;
+    height: auto;
+    width: auto;
+  }
+  otus-activity-stage-list .md-headline {
+    font-size: 24px;
+  }
+  otus-activity-stage-list .md-title {
+    font-size: 20px;
+  }
+  otus-activity-stage-list .margin-bottom {
+    margin: 0 0 15px 0;
+  }
+  otus-activity-stage-list .icon-mode {
+    height: auto;
+    width: auto;
+  }
+  otus-activity-stage-list .margin-left {
+    margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 800px) {
+  otus-activity-stage-list .stage-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 15vh;
+    -ms-grid-columns: 0.1fr (1fr)[3] 0.1fr;
+        grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+  }
+  otus-activity-stage-list .activity-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 15.5vh;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr (1fr)[2];
+        grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr repeat(2, 1fr);
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-status     activity-mode    activity-date    activity-user-email    activity-category    activity-externalID     activity-button";
+  }
+  otus-activity-stage-list .activity-null-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 12vh;
+    -ms-grid-columns: 0.1fr (1fr)[4];
+        grid-template-columns: 0.1fr repeat(4, 1fr);
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+  }
+  otus-activity-stage-list .margin-layout {
+    margin: 8px 4px 8px 4px;
+  }
+  otus-activity-stage-list .md-body-2 {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  otus-activity-stage-list .icon-status-size {
+    font-size: 24px;
+    height: auto;
+    width: auto;
+  }
+  otus-activity-stage-list .md-headline {
+    font-size: 24px;
+  }
+  otus-activity-stage-list .md-title {
+    font-size: 20px;
+  }
+  otus-activity-stage-list .margin-bottom {
+    margin: 0 0 20px 0;
+  }
+  otus-activity-stage-list .icon-mode {
+    height: auto;
+    width: auto;
+  }
+  otus-activity-stage-list .margin-left {
+    margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  otus-activity-stage-list .stage-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 5.2vh;
+    -ms-grid-columns: 0.2fr (1fr)[3] 0.1fr;
+        grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+  }
+  otus-activity-stage-list .activity-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 5.4vh;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.15fr 0.15fr (0.8fr)[5];
+        grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email  activity-category   activity-externalID     activity-button";
+  }
+  otus-activity-stage-list .activity-null-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 5vh;
+    -ms-grid-columns: 0.1fr (1fr)[4];
+        grid-template-columns: 0.1fr repeat(4, 1fr);
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+  }
+  otus-activity-stage-list .margin-layout {
+    margin: 4px;
+  }
+  otus-activity-stage-list .margin-bottom {
+    margin: 0 0 20px 0;
+  }
+  otus-activity-stage-list .md-body-2 {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  otus-activity-stage-list .icon-status-size {
+    font-size: 24px;
+    height: auto;
+    width: auto;
+  }
+  otus-activity-stage-list .md-headline {
+    font-size: 24px;
+  }
+  otus-activity-stage-list .md-title {
+    font-size: 20px;
+  }
+  otus-activity-stage-list .icon-mode {
+    height: auto;
+    width: auto;
+  }
+  otus-activity-stage-list .margin-left {
+    margin-left: 0;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  otus-activity-stage-list .stage-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 7vh;
+    -ms-grid-columns: 0.2fr (1fr)[3] 0.1fr;
+        grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+  }
+  otus-activity-stage-list .activity-list-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 5vh;
+    padding-top: 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    -ms-grid-columns: 0.15fr 0.15fr (0.8fr)[5];
+        grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "activity-status     activity-mode      activity-date     activity-user-email   activity-category   activity-externalID     activity-button";
+  }
+  otus-activity-stage-list .activity-null-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 5vh;
+    -ms-grid-columns: 0.1fr (1fr)[4];
+        grid-template-columns: 0.1fr repeat(4, 1fr);
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+  }
+  otus-activity-stage-list .margin-layout {
+    margin: 16px 24px 2px 24px;
+  }
+  otus-activity-stage-list .md-body-2 {
+    font-size: 14px;
+    line-height: 14px;
+  }
+  otus-activity-stage-list .icon-status-size {
+    font-size: 24px;
+    height: auto;
+    width: auto;
+  }
+  otus-activity-stage-list .md-headline {
+    font-size: 24px;
+  }
+  otus-activity-stage-list .md-title {
+    font-size: 20px;
+  }
+  otus-activity-stage-list .margin-bottom {
+    margin: 0 0 30px 0;
+  }
+  otus-activity-stage-list .icon-mode {
+    height: auto;
+    width: auto;
+  }
+  otus-activity-stage-list .margin-left {
+    margin-left: 0;
+  }
+}
+
+otus-activity-stage-list .margin-not-top {
+  margin: 0 0 16px 0;
+}
+
+otus-activity-stage-list .activity-acronym {
+  grid-area: activity-acronym;
+}
+
+otus-activity-stage-list .activity-name {
+  grid-area: activity-name;
+}
+
+otus-activity-stage-list .activity-category {
+  grid-area: activity-category;
+}
+
+otus-activity-stage-list .activity-button {
+  grid-area: activity-button;
+}
+
+otus-activity-stage-list .activity-list-layout:hover {
+  background-color: rgba(158, 158, 158, 0.1);
+  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+otus-activity-stage-list .activity-null {
+  grid-area: activity-null;
+  color: gray;
+}
+
+otus-activity-stage-list .activity-status {
+  grid-area: activity-status;
+}
+
+otus-activity-stage-list .activity-mode {
+  grid-area: activity-mode;
+}
+
+otus-activity-stage-list .activity-date {
+  grid-area: activity-date;
+}
+
+otus-activity-stage-list .activity-user-email {
+  grid-area: activity-user-email;
+}
+
+otus-activity-stage-list .activity-externalID {
+  grid-area: activity-externalID;
+}
+
+otus-activity-stage-list .activity-buttons {
+  grid-area: activity-buttons;
+}
+
+otus-activity-stage-list md-chips.md-default-theme .md-chips,
+otus-activity-stage-list md-chips .md-chips {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+otus-activity-stage-list md-list {
+  padding: 0;
+}
+
+otus-activity-stage-list md-card {
+  margin: 8px 0 8px 0;
+}
+
+otus-activity-stage-list .stage-list-layout:hover {
+  background-color: rgba(158, 158, 158, 0.1);
+  -webkit-box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+otus-activity-stage-list .new-chip-white {
+  width: auto;
+  color: white;
+  border-radius: 10px 50px 50px 10px;
+}
+/*# sourceMappingURL=main.css.map */

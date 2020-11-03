@@ -21,6 +21,7 @@
       'PARTICIPANT': 'participant',
       'PARTICIPANT_FOLLOW_UPS': 'participant-follow-up',
       'PARTICIPANT_ACTIVITY': 'activity',
+      'PARTICIPANT_ACTIVITY_STAGE': 'activity-stage',
       'PARTICIPANT_REPORT': 'report',
       'SESSION': 'session',
       'SIGNUP': 'signup',
@@ -56,6 +57,7 @@
     'otusjs.deploy.AccessStateProvider',
     'otusjs.deploy.ErrorStateProvider',
     'otusjs.deploy.ActivityStateProvider',
+    'otusjs.deploy.ActivityStageStateProvider',
     'otusjs.deploy.ActivityAdderStateProvider',
     'otusjs.deploy.ActivityPlayerStateProvider',
     'otusjs.deploy.ActivityViewerStateProvider',
@@ -99,6 +101,7 @@
     AccessStateProvider,
     ErrorStateProvider,
     ActivityStateProvider,
+    ActivityStageStateProvider,
     ActivityAdderStateProvider,
     ActivityPlayerStateProvider,
     ActivityViewerStateProvider,
@@ -140,6 +143,7 @@
     $stateProvider.state(AccessStateProvider.state);
     $stateProvider.state(ErrorStateProvider.state);
     $stateProvider.state(ActivityStateProvider.state);
+    $stateProvider.state(ActivityStageStateProvider.state);
     $stateProvider.state(ActivityAdderStateProvider.state);
     $stateProvider.state(ActivityPlayerStateProvider.state);
     $stateProvider.state(ActivityViewerStateProvider.state);

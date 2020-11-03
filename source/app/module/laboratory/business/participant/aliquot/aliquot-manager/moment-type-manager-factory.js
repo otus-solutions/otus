@@ -51,6 +51,7 @@
     }
     function addTube(tube) {
       self.collectedAliquots = self.collectedAliquots.concat(tube.aliquots);
+
       self.tubeList.push(tube);
     }
 
