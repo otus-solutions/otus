@@ -85,7 +85,7 @@
         <small class="md-caption">{{$ctrl.ParticipantContactValues.msg.captionAboutRequiredFields}}</small>
       </div>
 
-      <div ng-if="$ctrl.isIdentified">
+      <div>
         <md-button class="md-accent"
                    ng-click="$ctrl.createParticipantContact()"
                    ng-if="!$ctrl.contact">
@@ -100,7 +100,8 @@
       </div>
     </div>
 
-    <otus-participant-update-contact class="contact-update"
+    <otus-participant-update-contact  ng-if="$ctrl.isIdentified"
+                                     class="contact-update"
                                      contact="$ctrl.contact.phoneNumber"
                                      contact-id="{{$ctrl.contact._id}}"
                                      type="phoneNumber"
@@ -108,7 +109,8 @@
                                      ng-if="$ctrl.contact">
     </otus-participant-update-contact>
 
-    <otus-participant-update-contact class="contact-update"
+    <otus-participant-update-contact  ng-if="$ctrl.isIdentified"
+                                     class="contact-update"
                                      contact="$ctrl.contact.email"
                                      contact-id="{{$ctrl.contact._id}}"
                                      load-participant-contact="$ctrl.loadParticipantContact"

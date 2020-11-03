@@ -13,13 +13,15 @@
     'otusjs.activity.business.PreActivityFactory',
     'otusjs.application.state.ApplicationStateService',
     'SurveyFormFactory',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.activity.business.ActivityValues'
   ];
 
   function Service($mdToast, ContextService, ActivityRepositoryService, UserRepositoryService,
-    PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService) {
+                   PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues ) {
     var self = this;
     var _paperActivityCheckerData = null;
+    const  FAIL_ACTIVITY_CREATION = true;
 
     self.activityConfigurations = {};
     self.activities = [];
@@ -48,6 +50,7 @@
     self.reopenActivity = reopenActivity;
     self.getAllByStageGroup = getAllByStageGroup;
     self.discardActivity = discardActivity;
+    self.saveActivity = saveActivity;
 
     function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -79,11 +82,7 @@
         //esse catch garante que ocorrerá a troca de state mesmo que ocorra erro no backend
         //todo: remove
         .catch(() => {
-          $mdToast.show(
-            $mdToast.simple()
-              .textContent("Ocorreu um erro ao adicionar a(s) atividade(s)")
-              .position("bottom")
-              .hideDelay(5000));
+          _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
           LoadingScreenService.finish();
         })
         .then(() => ApplicationStateService.activateParticipantActivities())
@@ -222,6 +221,13 @@
         .then(function (selectedParticipant) {
           return ActivityRepositoryService.getAllByStageGroup(selectedParticipant);
         });
+
+    function _callToast(msg, error) {
+      let toastCss = error ? "md-toast-error" : "md-toast-done";
+      return $mdToast.show($mdToast.simple()
+        .toastClass(toastCss)
+        .textContent(ActivityValues.toast[msg])
+        .hideDelay(4000));
     }
 
     function discardActivity(activityId) {

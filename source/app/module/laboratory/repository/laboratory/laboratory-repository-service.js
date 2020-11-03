@@ -14,10 +14,13 @@
     /* Public methods */
     self.initializeLaboratory = initializeLaboratory;
     self.getLaboratory = getLaboratory;
+    self.getLaboratoryByTube = getLaboratoryByTube;
     self.updateLaboratoryParticipant = updateLaboratoryParticipant;
     self.updateAliquots = updateAliquots;
     self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn;
+    self.updateAliquotsWithRn = updateAliquotsWithRn;
 
     /* Laboratory Configuration Methods */
     self.getCheckingExist = getCheckingExist;
@@ -42,6 +45,7 @@
     self.getUnattachedByIdentification = getUnattachedByIdentification;
 
 
+
     function initializeLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
       return LaboratoryCollectionService
@@ -60,6 +64,10 @@
       return LaboratoryCollectionService.getLaboratory();
     }
 
+    function getLaboratoryByTube(tubeCode) {
+      return LaboratoryCollectionService.getLaboratoryByTube(tubeCode);
+    }
+
     function updateLaboratoryParticipant(laboratory) {
       return LaboratoryCollectionService.update(laboratory);
     }
@@ -68,12 +76,20 @@
       return LaboratoryCollectionService.updateAliquots(updateStructure);
     }
 
+    function updateAliquotsWithRn(updateStructure, recruitmentNumber) {
+      return LaboratoryCollectionService.updateAliquotsWithRn(updateStructure, recruitmentNumber);
+    }
+
     function convertStorageAliquot(aliquot) {
       return LaboratoryCollectionService.convertStorageAliquot(aliquot);
     }
 
     function updateTubeCollectionData(updateStructure){
       return LaboratoryCollectionService.updateTubeCollectionData(updateStructure);
+    }
+
+    function updateTubeCollectionDataWithRn(recruitmentNumber ,updateStructure){
+      return LaboratoryCollectionService.updateTubeCollectionDataWithRn(recruitmentNumber, updateStructure);
     }
 
     function getLaboratoryDescriptors() {

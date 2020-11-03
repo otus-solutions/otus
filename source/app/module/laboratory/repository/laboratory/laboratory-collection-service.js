@@ -36,13 +36,16 @@
     self.initializeLaboratory = initializeLaboratory;
     self.update = update;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn;
     self.updateAliquots = updateAliquots;
     self.convertStorageAliquot = convertStorageAliquot;
     self.deleteAliquot = deleteAliquot;
     self.getLaboratory = getLaboratory;
+    self.getLaboratoryByTube = getLaboratoryByTube;
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getCheckingExist = getCheckingExist;
+    self.updateAliquotsWithRn = updateAliquotsWithRn;
 
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
@@ -191,6 +194,23 @@
 
       return request.promise;
     }
+    function updateTubeCollectionDataWithRn(recruitmentNumber, updateStructure) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .updateTubeCollectionData(recruitmentNumber, updateStructure)
+            .then(function (remoteLaboratory) {
+              request.resolve();
+            }, function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
 
     /**
      * Updates the aliquots list in the participant laboratory.
@@ -205,6 +225,24 @@
         .then(function (remoteStorage) {
           remoteStorage
             .updateAliquots(_participant.recruitmentNumber, updateStructure)
+            .then(function (data) {
+              request.resolve();
+            }, function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function updateAliquotsWithRn(updateStructure, recruitmentNumber) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage
+            .updateAliquots(recruitmentNumber, updateStructure)
             .then(function (data) {
               request.resolve();
             }, function (e) {
@@ -262,6 +300,24 @@
             .then(function (laboratory) {
               request.resolve(laboratory);
             });
+        });
+
+      return request.promise;
+    }
+
+    function getLaboratoryByTube(tubeCode) {
+      var request = $q.defer();
+
+      _remoteStorage
+        .whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage
+            .getLaboratoryByTube(tubeCode)
+            .then(function (laboratory) {
+              request.resolve(laboratory);
+            }, function (e) {
+            request.reject(e);
+          })
         });
 
       return request.promise;
