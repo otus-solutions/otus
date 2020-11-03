@@ -121,9 +121,10 @@
     }
 
     function showRecruitmentNumberGenerated(participantData) {
+      const participantName = participantData.name ? participantData.name : "anônimo"
       return $mdDialog.show($mdDialog.alert()
         .title('Novo participante criado')
-        .textContent('Participante '+participantData.name+' criado com número de recrutamento: '+participantData.recruitmentNumber)
+        .textContent('Participante '+ participantName +  ' criado com número de recrutamento: '+participantData.recruitmentNumber)
         .ariaLabel('Confirmação de finalização')
         .ok('Ok'));
     }
