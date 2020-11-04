@@ -85,7 +85,7 @@
               </md-tooltip>
             </div>
             <div class="activity-button">
-              <div layout="row" layout-align="end center" hide-xs hide-sm ng-show="$id == item.actionButtons">
+              <div layout="row" layout-align="end center" hide-xs hide-sm hide-md ng-show="$id == item.actionButtons">
                 <md-button class="md-icon-button md-warn" aria-label="Excluir"
                   ng-click="$ctrl.deleteSelectedActivity(item)">
                   <md-tooltip md-direction="top">Excluir</md-tooltip>
@@ -97,7 +97,7 @@
                   <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
                 </md-button>
               </div>
-              <div layout="row" layout-align="end center" hide-lg hide-gt-md>
+              <div layout="row" layout-align="end center" hide-lg hide-gt>
                 <md-button class="md-icon-button md-warn" aria-label="Excluir"
                   ng-click="$ctrl.deleteSelectedActivity(item)">
                   <md-tooltip md-direction="top">Excluir</md-tooltip>
