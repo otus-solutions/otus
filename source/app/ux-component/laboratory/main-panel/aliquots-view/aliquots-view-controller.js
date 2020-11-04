@@ -514,13 +514,14 @@
         aliquot.code = aliquot.aliquotCode;
         aliquot.name = examNameFound;
         aliquot.role = "EXAM";
+        aliquot.locationPoint = aliquot.locationPoint._id
 
         ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
           self.selectedMomentType.removeStorage(aliquot.aliquotCode);
           _setMomentType(self.selectedMomentType);
-          _fillConvertedStoragesContainerLabels()
+          // _fillConvertedStoragesContainerLabels()
         }).catch(function (err) {
-          AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
+          console.info(err)
         });
 
       })

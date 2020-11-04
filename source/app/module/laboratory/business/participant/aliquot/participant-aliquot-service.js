@@ -162,6 +162,8 @@
         collectedAliquot.date = dateTime;
 
         if (collectedAliquot.isConverted){
+          collectedAliquot.locationPoint = collectedAliquot.locationPoint.hasOwnProperty('name') ? collectedAliquot.locationPoint : _filterByLocationPoint(collectedAliquot.locationPoint)
+
           momentType.convertedStorages.push(collectedAliquot);
         } else {
           var arrayAliquots = momentType.exams;
