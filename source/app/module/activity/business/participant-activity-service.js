@@ -50,6 +50,7 @@
     self.reopenActivity = reopenActivity;
     self.getAllByStageGroup = getAllByStageGroup;
     self.discardActivity = discardActivity;
+    self.saveActivity = saveActivity;
 
     function add() {
       var loggedUser = ContextService.getLoggedUser();
@@ -236,5 +237,22 @@
           ActivityRepositoryService.discardActivity(activityId, selectedParticipant);
         });
     }
+
+    function saveActivity(preActivity) {
+      LoadingScreenService.start();
+      return _prepareActivities(preActivity)
+        .then(() => ActivityRepositoryService.saveActivities(self.activities))
+        .catch(() => {
+          _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
+          LoadingScreenService.finish();
+        })
+        .then(() => {
+          _callToast('sucessActivityCreation');
+          LoadingScreenService.finish();
+        })
+        .then(() => self.activities = [])
+        .then(() => LoadingScreenService.finish);
+    }
+
   }
 }());

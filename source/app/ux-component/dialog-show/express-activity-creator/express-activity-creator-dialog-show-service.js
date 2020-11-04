@@ -39,8 +39,7 @@
 
     function createActivity(preActivityArtefacts) {
       let preActivity = _createPreActivity(preActivityArtefacts);
-      if (preActivity.preActivityValid) return ParticipantActivityService.saveActivities([preActivity]);
+      if (preActivity.preActivityValid) return ParticipantActivityService.saveActivity([preActivity]);
     }
   }
-
 }());
