@@ -81,7 +81,6 @@
 
     function changeAliquotsProcessingDate() {
       Publisher.publish('aliquots-data', (aliquots) => {
-        console.info(aliquots)
         aliquots.forEach(aliquot => {
           if(!aliquot.isSaved) {
             aliquot.processing = self.processingDate
