@@ -278,7 +278,7 @@ otus-activity-stage-list {
     .activity-list-layout {
       display: grid;
       align-items: center;
-      height: 5.4vh;
+      height: auto;
       padding-top: 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
@@ -289,7 +289,7 @@ otus-activity-stage-list {
     .activity-null-layout {
       display: grid;
       align-items: center;
-      height: 5vh;
+      height: auto;
       grid-template-columns: 0.1fr repeat(4, 1fr);
       grid-template-rows: 1fr;
       grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
@@ -336,7 +336,7 @@ otus-activity-stage-list {
     .stage-list-layout {
       display: grid;
       align-items: center;
-      height: 7vh;
+      height: 7.8vh;
       grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
       grid-template-rows: 1fr;
       grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
@@ -345,7 +345,7 @@ otus-activity-stage-list {
     .activity-list-layout {
       display: grid;
       align-items: center;
-      height: 5vh;
+      height: auto;
       padding-top: 0;
       border-bottom: 1px solid rgba(0, 0, 0, 0.2);
       grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
@@ -356,7 +356,7 @@ otus-activity-stage-list {
     .activity-null-layout {
       display: grid;
       align-items: center;
-      height: 5vh;
+      height: auto;
       grid-template-columns: 0.1fr repeat(4, 1fr);
       grid-template-rows: 1fr;
       grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
