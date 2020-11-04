@@ -85,9 +85,8 @@
           position: 2
         }
       };
-      _getLocationPoints()
+      _publishLocationPoints()
       selectMomentType(self.momentTypeList[0]);
-      _getUserLocationPoints();
       Publisher.unsubscribe('have-aliquots-changed');
       Publisher.subscribe('have-aliquots-changed', _haveAliquotsChanged);
       Publisher.unsubscribe('save-changed-aliquots');
@@ -96,23 +95,16 @@
       Publisher.subscribe('aliquots-data', _subscribeAliquots);
     }
 
-    function _getLocationPoints() {
+    function _publishLocationPoints() {
       Publisher.publish('location-points', (locationPoints) => {
         self.locationPoints = locationPoints
       })
     }
 
-    function _getUserLocationPoints() {
-      Publisher.publish('user-location-points', (userLocationPoints) => {
-        self.userLocationPoints = userLocationPoints
-      })
-    }
-    function _getUserLocationPointsFiltered(oldLocationPoint) {
-      Publisher.publish('user-location-points', (userLocationPoints) => {
-        self.userLocationPoints = userLocationPoints
-        self.userLocationPointsFiltered = userLocationPoints.filter(userLocationPoint => {
-          return userLocationPoint._id !== oldLocationPoint._id
-        })
+    function _getFilteredLocationPoints() {
+      Publisher.publish('filtered-location-points', (filteredLocationPoints) => {
+        self.filteredLocationPoints = filteredLocationPoints;
+        console.info(self.filteredLocationPoints)
       })
     }
 
@@ -412,10 +404,11 @@
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
       _getDateTimeProcessing(aliquot);
-
+      if(!self.filteredLocationPoints) {
+        _getFilteredLocationPoints();
+      }
       _getSelectedLocationPoint(aliquot);
       self.oldSelectedLocationPoints = [aliquot.locationPoint]
-      _getUserLocationPointsFiltered(self.oldSelectedLocationPoints[0])
 
       if (self.aliquotLengths.length === 1) {
         var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;

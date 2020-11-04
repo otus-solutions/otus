@@ -54,7 +54,7 @@
     self.removeDuplicatedMoments = removeDuplicatedMoments;
     self.filterTubesByMoment = filterTubesByMoment;
     self.fetchLocationPoints = fetchLocationPoints;
-    self.fetchUserLocationPoints = fetchUserLocationPoints;
+    self._fetchUserLocationPoints = _fetchUserLocationPoints;
     self.saveLocationPoint = saveLocationPoint;
     self.changeAliquotsLocationPoints = changeAliquotsLocationPoints
     self.changeAliquotsProcessingDate = changeAliquotsProcessingDate
@@ -81,7 +81,6 @@
 
     function changeAliquotsProcessingDate() {
       Publisher.publish('aliquots-data', (aliquots) => {
-        console.info(aliquots)
         aliquots.forEach(aliquot => {
           if(!aliquot.isSaved) {
             aliquot.processing = self.processingDate
@@ -90,20 +89,21 @@
       })
     }
 
-    function _getLocationPoints(callback) {
-      callback(
-        self.locationPoints
-      )
-    }
-
     function _getSelectedLocationPoint(callback) {
       callback(
         self.selectedLocationPoint
       )
     }
-    function _getUserLocationPoints(callback){
+
+    function _getFilteredLocationPoints(callback){
       callback(
-        self.userLocationPoints
+        self.filteredLocationPoints
+      )
+    }
+
+    function _getLocationPoints(callback) {
+      callback(
+        self.locationPoints
       )
     }
 
@@ -112,35 +112,55 @@
       Publisher.subscribe('selected-location-point', _getSelectedLocationPoint)
     }
 
-    function filterByParticipantLocationPoint() {
-      const laboratoryParticipantLocationPoint = ParticipantLaboratoryService.participant.fieldCenter.locationPoint
-      self.participantLocationPoint = self.locationPoints.filter( locationPoint =>
-        locationPoint._id == laboratoryParticipantLocationPoint
+    function _findParticipantLocationPoint() {
+      self.participantLocationPoint = self.locationPoints.filter(locationPoint =>
+        locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
       )
+    }
+
+    function _filterLocationPointByParticipant() {
+      self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
+        locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
+      )
+      Publisher.unsubscribe('filtered-location-points')
+      Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
+    }
+
+    function _filterLocationPoints() {
+      if(self.userLocationPoints) {
+        self.userLocationIds = []
+
+        for(const location of self.userLocationPoints) {
+          self.userLocationIds.push(location._id)
+        }
+
+        self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
+          self.userLocationIds.includes(locationPoint._id) ||
+          locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
+        )
+        Publisher.unsubscribe('filtered-location-points')
+        Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
+
+      }
     }
 
     function fetchLocationPoints() {
       LocationPointRestService.getLocationPoints().then((response) => {
         self.locationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
         Publisher.unsubscribe('location-points');
-        Publisher.subscribe('location-points', _getLocationPoints)
-      }).then(() => {
-        filterByParticipantLocationPoint();
-      }).then (() => {
-        fetchUserLocationPoints();
+        Publisher.subscribe('location-points', _getLocationPoints);
+        _findParticipantLocationPoint();
+        _filterLocationPointByParticipant();
+        _fetchUserLocationPoints();
         saveLocationPoint();
       })
     }
 
-    function fetchUserLocationPoints() {
+    function _fetchUserLocationPoints() {
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
-        Publisher.unsubscribe('user-location-points');
-        Publisher.subscribe('user-location-points', _getUserLocationPoints);
-      }).then(() => {
-        self.userLocationPointsFiltered = self.userLocationPoints.filter(userLocationPoint =>
-          userLocationPoint._id != self.participantLocationPoint[0]._id)
-      });
+        _filterLocationPoints();
+      })
     }
 
     function filterTubesByMoment() {
