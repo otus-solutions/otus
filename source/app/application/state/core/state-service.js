@@ -54,6 +54,7 @@
     self.activatePendencyViewer = activatePendencyViewer;
     self.activateIssueViewer = activateIssueViewer;
     self.activateIssueMessagesViewer = activateIssueMessagesViewer;
+    self.activateParticipantActivityStage = activateParticipantActivityStage;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -130,8 +131,13 @@
     function activateActivityCategories() {
       $state.go(STATE.ACTIVITY_CATEGORY_ADDER);
     }
+
     function activateParticipantActivities() {
       $state.go(STATE.PARTICIPANT_ACTIVITY);
+    }
+
+    function activateParticipantActivityStage() {
+      $state.go(STATE.PARTICIPANT_ACTIVITY_STAGE);
     }
 
     function activateParticipantReports() {
@@ -202,19 +208,19 @@
       return $state.current.name;
     }
 
-    function currentStateIsListViewer(){
+    function currentStateIsListViewer() {
       return [STATE.PENDENCY_VIEWER, STATE.ISSUE_VIEWER].includes(getCurrentState());
     }
 
-    function activatePendencyViewer(){
+    function activatePendencyViewer() {
       $state.go(STATE.PENDENCY_VIEWER);
     }
 
-    function activateIssueViewer(){
+    function activateIssueViewer() {
       $state.go(STATE.ISSUE_VIEWER);
     }
 
-    function activateIssueMessagesViewer(){
+    function activateIssueMessagesViewer() {
       $state.go(STATE.ISSUE_MESSAGES_VIEWER);
     }
   }

@@ -159,8 +159,9 @@
       if (!participantList) {
         throw new Error('ParticipantList is not initialized.');
       }
-
-      let participant = participantList.find(element => element.recruitmentNumber === rn);
+      let participant = participantList.find(element => {
+        return element.recruitmentNumber == rn
+      });
       if (!participant) {
         throw new Error('Participant was not found.');
       }

@@ -14,7 +14,7 @@
   <!-- uncache(rename:true, append:hash) -->
   <!-- build:css css/otus.min.css -->
   <link href="app/static-resource/stylesheet/login-page.css" rel="stylesheet" />
-  <link href="app/static-resource/stylesheet/components-style.css" rel="stylesheet" />
+  <link href="app/static-resource/stylesheet/main.css" rel="stylesheet" />
   <link href="app/static-resource/stylesheet/styles.css" rel="stylesheet" />
   <link href="app/static-resource/stylesheet/initial-config.css" rel="stylesheet" />
   <link href="app/static-resource/stylesheet/please-wait-style.css" rel="stylesheet">
@@ -273,6 +273,7 @@
 <script src="app/deploy/state/activity/activity-adder-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-player-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-viewer-state-provider.js"></script>
+<script src="app/deploy/state/activity/activity-stage-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-import-state-provider.js"></script>
 <script src="app/deploy/state/dashboard/dashboard-state-provider.js"></script>
@@ -600,6 +601,7 @@
 <script src="app/ux-component/commons/bar-chart/vertical/bar-charts-vertical-factory.js"></script>
 <script src="app/ux-component/commons/bar-chart/horizontal/bar-charts-horizontal-factory.js"></script>
 <script src="app/ux-component/commons/bar-chart/multi/bar-chart-multi-factory.js"></script>
+<script src="app/ux-component/activity-stage-list/activity-stage-list-component.js"></script>
 <script src="app/ux-component/activity-adder/activity-adder-component.js"></script>
 <script src="app/ux-component/activity-adder/activity-adder-card/activity-adder-card-component.js"></script>
 <script src="app/ux-component/error/error-component.js"></script>
@@ -654,7 +656,6 @@
 <script src="app/ux-component/display-token/display-token-component.js"></script>
 <script src="app/ux-component/dashboard-home-display/dashboard-home-display-controller.js"></script>
 <script src="app/ux-component/dashboard-home-display/dashboard-home-display-component.js"></script>
-<script src="app/ux-component/dashboard-participant-box/dashboard-participant-box-controller.js"></script>
 <script src="app/ux-component/dashboard-participant-box/dashboard-participant-box-component.js"></script>
 <script src="app/ux-component/dashboard-pendency/dashboard-pendency-componente.js"></script>
 <script src="app/ux-component/dashboard-sidenav/dashboard-sidenav-component.js"></script>
@@ -773,6 +774,12 @@
 <script src="app/ux-component/laboratory/unattached/unattached-laboratory-dashboard-component.js"></script>
 <script src="app/ux-component/laboratory/unattached/laboratory/unattached-laboratory-controller.js"></script>
 <script src="app/ux-component/laboratory/unattached/laboratory/unattached-laboratory-component.js"></script>
+<script src="app/ux-component/laboratory/laboratory-material-manager/laboratory-material-manager-dashboard-controller.js"></script>
+<script src="app/ux-component/laboratory/laboratory-material-manager/laboratory-material-manager-dashboard-component.js"></script>
+<script src="app/ux-component/laboratory/laboratory-material-manager/aliquots-manager/laboratory-aliquots-manager-controller.js"></script>
+<script src="app/ux-component/laboratory/laboratory-material-manager/aliquots-manager/laboratory-aliquots-manager-component.js"></script>
+<script src="app/ux-component/laboratory/laboratory-material-manager/laboratory-navigation-access/laboratory-navigation-access-controller.js"></script>
+<script src="app/ux-component/laboratory/laboratory-material-manager/laboratory-navigation-access/laboratory-navigation-access-component.js"></script>
 
 <!-- monitoring-ux -->
 <script src="app/ux-component/otus-monitoring/otus-monitoring-parse-data-factory.js"></script>

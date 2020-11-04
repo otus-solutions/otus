@@ -22,7 +22,7 @@
       parent: STATE.SESSION,
       name: STATE.LABORATORY_MATERIAL_MANAGER,
       url: '/' + STATE.LABORATORY_MATERIAL_MANAGER,
-      template: '<div>LABORATORY MATERIAL MANAGER STATE</div>',
+      template: '<laboratory-material-manager-dashboard layout="column" flex></laboratory-material-manager-dashboard>',
       resolve: {
         user: _resolveUserLogged
       },

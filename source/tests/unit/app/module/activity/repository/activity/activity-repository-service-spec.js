@@ -12,6 +12,8 @@ describe('activity-repository-service Test', function () {
   const DATA_RN = "0000000";
   const ACTIVITY_REVISION = { revision: DATA };
 
+  const UNINITIALIZED_REPOSITORY_ERROR_MESSAGE = 'No participant selected to list stage.';
+
   beforeEach(function () {
     angular.mock.module('otusjs.otus');
 
@@ -36,6 +38,8 @@ describe('activity-repository-service Test', function () {
     expect(service.importActivities).toBeDefined();
     expect(service.getById).toBeDefined();
     expect(service.createFollowUpActivity).toBeDefined();
+    expect(service.getAllByStageGroup).toBeDefined();
+    expect(service.discardActivity).toBeDefined();
   });
 
   describe('listAll method Suit Test', function () {
@@ -150,6 +154,7 @@ describe('activity-repository-service Test', function () {
     });
 
   });
+
   it('reopenActivity should call ActivityCollectionService reopenActivity method', function () {
     const ACTIVITY = {};
     spyOn(Injections.ActivityCollectionService, 'reopenActivity').and.returnValue(Mock.resolve);
@@ -158,6 +163,27 @@ describe('activity-repository-service Test', function () {
     expect(Injections.ActivityCollectionService.reopenActivity).toHaveBeenCalledWith(ACTIVITY);
   });
 
+  it('getAllByStageGroup method should throw error with message select is not participant', function () {
+    expect(service.getAllByStageGroup).toThrowError(UNINITIALIZED_REPOSITORY_ERROR_MESSAGE);
+  });
+
+  it('discardActivity method should throw error with message select is not participant', function () {
+    expect(service.discardActivity).toThrowError(UNINITIALIZED_REPOSITORY_ERROR_MESSAGE);
+  });
+
+  it('getAllByStageGroup should call ActivityCollectionService getAllByStageGroup method', function () {
+    spyOn(Injections.ActivityCollectionService, 'getAllByStageGroup').and.returnValue(Mock.resolve);
+    service.getAllByStageGroup(ID);
+    expect(Injections.ActivityCollectionService.getAllByStageGroup).toHaveBeenCalledTimes(1);
+    expect(Injections.ActivityCollectionService.getAllByStageGroup).toHaveBeenCalledWith(ID);
+  });
+
+  it('discardActivity should call ActivityCollectionService discardActivity method', function () {
+    spyOn(Injections.ActivityCollectionService, 'discardActivity').and.returnValue(Mock.resolve);
+    service.discardActivity(ID, DATA_RN);
+    expect(Injections.ActivityCollectionService.discardActivity).toHaveBeenCalledTimes(1);
+    expect(Injections.ActivityCollectionService.discardActivity).toHaveBeenCalledWith(ID, DATA_RN);
+  });
 
   function mocks() {
     const deferredResolve = Injections.$q.defer();
