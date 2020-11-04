@@ -25,11 +25,11 @@
               <span class="md-title margin-left">{{activity.name}}</span>
             </div>
             <div class="activity-button" layout="row" layout-align="end center">
-              <otus-express-activity-creator hide-xs hide-sm ng-show="$id == activity.actionButton"
-                acronym="activity.acronym" action-refresh-callback="$ctrl.refreshActivityStage()">
+              <otus-express-activity-creator hide-xs hide-sm hide-md ng-show="$id == activity.actionButton"
+                acronym="{{activity.acronym}}" action-refresh-callback="$ctrl.refreshActivityStage()">
               </otus-express-activity-creator>
-              <otus-express-activity-creator layout="row" layout-align="end center" hide-lg hide-gt-md
-                acronym="activity.acronym" action-refresh-callback="$ctrl.refreshActivityStage()">
+              <otus-express-activity-creator layout="row" layout-align="end center" hide-lg hide-gt
+                acronym="{{activity.acronym}}" action-refresh-callback="$ctrl.refreshActivityStage()">
               </otus-express-activity-creator>
             </div>
           </div>
