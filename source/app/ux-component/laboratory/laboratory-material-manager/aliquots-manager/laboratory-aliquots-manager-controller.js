@@ -503,6 +503,7 @@
         aliquot.name = examNameFound;
         aliquot.role = "EXAM";
 
+        aliquot.locationPoint = aliquot.locationPoint._id
         ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
           self.selectedMomentType.removeStorage(aliquot.aliquotCode);
           _setMomentType(self.selectedMomentType);

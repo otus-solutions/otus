@@ -526,7 +526,7 @@
         ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
           self.selectedMomentType.removeStorage(aliquot.aliquotCode);
           _setMomentType(self.selectedMomentType);
-          // _fillConvertedStoragesContainerLabels()
+          _fillConvertedStoragesContainerLabels()
         }).catch(function (err) {
           console.info(err)
         });
