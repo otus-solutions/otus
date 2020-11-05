@@ -2,7 +2,7 @@
   'use strict';
   angular
     .module('otusjs.otus.uxComponent')
-    .controller('labelPrintConfigCtrl', Controller);
+    .controller('printConfigLabelCtrl', Controller);
 
   Controller.$inject = [
     '$q',
@@ -26,7 +26,7 @@
     self.sizes = [{'value': 'small', 'name': "Pequeno"}, {"value": "bigger", "name": "Grande"}, {"value": "default", "name": "Padrao"}];
     self.types = [{'value': "qrcode", 'name': "Qrcode"}, {"value": "barcode", "name": "Código de barras"}];
     self.identified = [{'value': true, "name": "Sim"}, {"value": false, "name": "Não"}];
-    self.columns = Array.from(Array(11).keys()).filter(array => array !== 0);
+    self.columns = Array.from(Array(5).keys()).filter(array => array !== 0);
 
     self.$onInit = onInit;
     self.changeLabelToPrint = changeLabelToPrint;

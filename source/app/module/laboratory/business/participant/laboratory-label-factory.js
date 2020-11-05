@@ -52,7 +52,7 @@
     }
 
     self.cq_group = (laboratory.collectGroupName !== undefined && laboratory.collectGroupName !== DEFAULT) ? laboratory.collectGroupName : NONE;
-    self.tubes = laboratory.tubes;;
+    self.tubes = laboratory.tubes;
     _buildTubeLabel(self.tubes);
 
     function _convertFormatDate(birthdate) {

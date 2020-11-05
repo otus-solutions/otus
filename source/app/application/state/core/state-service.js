@@ -47,7 +47,7 @@
     self.activateActivityImport = activateActivityImport;
     self.activateLaboratoryMonitoring = activateLaboratoryMonitoring;
     self.activateLaboratoryMaterialManager = activateLaboratoryMaterialManager;
-    self.activateLabelMaterialDashboard = activateLabelMaterialDashboard;
+    self.activateMaterialLabelDashboard = activateMaterialLabelDashboard;
     self.activateActivityFlagsReport = activateActivityFlagsReport;
     self.laboratoryActivityFlagsReport = laboratoryActivityFlagsReport;
     self.activateOfflineActivitySynchronize = activateOfflineActivitySynchronize;
@@ -219,8 +219,8 @@
       $state.go(STATE.ISSUE_MESSAGES_VIEWER);
     }
 
-    function activateLabelMaterialDashboard(){
-      $state.go(STATE.LABEL_MATERIAL);
+    function activateMaterialLabelDashboard(){
+      $state.go(STATE.MATERIAL_LABEL);
     }
   }
 }());

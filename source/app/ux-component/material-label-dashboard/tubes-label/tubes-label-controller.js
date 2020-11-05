@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .controller('labelTubesCtrl', Controller);
+    .controller('tubesLabelCtrl', Controller);
 
   Controller.$inject = [
     '$scope',
@@ -45,6 +45,7 @@
     function addTubeToPrintList(tube) {
       if(tube.printStructure.selected){
         self.newLabels.tubes.push(tube)
+        console.info(self.newLabels.tubes)
       }
     }
 

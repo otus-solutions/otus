@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.laboratory.business.participant')
-    .service('otusjs.laboratory.business.participant.LabelMaterialDialog', Service);
+    .service('otusjs.laboratory.business.participant.MaterialLabelDialog', Service);
 
   Service.$inject = [
     '$mdDialog',

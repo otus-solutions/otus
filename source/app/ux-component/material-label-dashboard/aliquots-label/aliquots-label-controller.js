@@ -3,9 +3,10 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .controller('labelAliquotsCtrl', Controller);
+    .controller('aliquotsLabelCtrl', Controller);
 
   Controller.$inject = [
+    '$mdToast',
     '$scope',
     '$element',
     'otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService',
@@ -13,10 +14,11 @@
     'otusjs.model.locationPoint.LocationPointFactory',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.otus.uxComponent.Publisher',
-    'otusjs.laboratory.business.participant.LabelMaterialDialog'
+    'otusjs.laboratory.business.participant.MaterialLabelDialog'
   ];
 
   function Controller(
+    $mdToast,
     $scope,
     $element,
     AliquotTubeService,
@@ -24,7 +26,7 @@
     LocationPointFactory,
     ParticipantLaboratoryService,
     Publisher,
-    LabelMaterialDialog) {
+    MaterialLabelDialog) {
     var self = this;
 
     self.newExams = []
@@ -42,8 +44,8 @@
     self.selectAll = selectAll
 
     function onInit() {
-      _buildMomentTypeList();
       _fetchLocationPoints();
+      _buildMomentTypeList();
       _subscribeLabels();
       selectMomentType(self.momentTypeList[0]);
       _publishPrintStructure();
@@ -70,7 +72,7 @@
     }
 
     function changeMomentDialog() {
-      return LabelMaterialDialog.showConfirmCancelDialog()
+      return MaterialLabelDialog.showConfirmCancelDialog()
     }
 
     function _setMomentType(momentType) {
@@ -115,8 +117,13 @@
     }
 
     function addAliquotToPrintList(aliquot) {
-      if(aliquot.printStructure.selected){
-        self.aliquotsLabels.aliquots.push(aliquot)
+      if(aliquot.isSaved){
+        if(aliquot.printStructure.selected){
+          self.aliquotsLabels.aliquots.push(aliquot)
+        }
+      }else {
+        aliquot.printStructure.selected = false
+        _showToastMsg("Não é possível gerar etiquetas de aliquotas que ainda não foram coletadas")
       }
     }
 
@@ -141,6 +148,14 @@
       Publisher.publish("default-print-structure", (defaultPrintStructure) => {
         self.aliquotsLabels.printStructure = defaultPrintStructure
       })
+    }
+
+    function _showToastMsg(msg) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msg)
+          .hideDelay(1000)
+      );
     }
   }
 }());

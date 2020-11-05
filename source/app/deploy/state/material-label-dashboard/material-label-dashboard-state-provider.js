@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.LabelMaterialDashboardState', Provider);
+    .provider('otusjs.deploy.MaterialLabelDashboardState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -20,9 +20,9 @@
 
     self.state = {
       parent: STATE.SESSION,
-      name: STATE.LABEL_MATERIAL,
-      url: '/' + STATE.LABEL_MATERIAL,
-      template: '<label-material-dashboard layout="row" flex=""></label-material-dashboard>',
+      name: STATE.MATERIAL_LABEL,
+      url: '/' + STATE.MATERIAL_LABEL,
+      template: '<material-label-dashboard layout="row" flex=""></material-label-dashboard>',
       data: {
         redirect: _redirect
       }

@@ -3,9 +3,10 @@
 
   angular
     .module('otusjs.otus.uxComponent')
-    .controller('labelMaterialDashboardCtrl', Controller);
+    .controller('materialLabelDashboardCtrl', Controller);
 
   Controller.$inject = [
+    '$mdToast',
     '$scope',
     '$element',
     '$window',
@@ -15,6 +16,7 @@
   ];
 
   function Controller(
+    $mdToast,
     $scope,
     $element,
     $window,

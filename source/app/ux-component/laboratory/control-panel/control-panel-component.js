@@ -68,7 +68,7 @@
     }
 
     function activateLabelMaterialDashboard() {
-      ApplicationStateService.activateLabelMaterialDashboard()
+      ApplicationStateService.activateMaterialLabelDashboard()
     }
     function changeAliquotsLocationPoints() {
       Publisher.publish('aliquots-data', (aliquots) => {
