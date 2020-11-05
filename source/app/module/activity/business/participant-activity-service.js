@@ -18,10 +18,10 @@
   ];
 
   function Service($mdToast, ContextService, ActivityRepositoryService, UserRepositoryService,
-                   PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues ) {
+    PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues) {
     var self = this;
     var _paperActivityCheckerData = null;
-    const  FAIL_ACTIVITY_CREATION = true;
+    const FAIL_ACTIVITY_CREATION = true;
 
     self.activityConfigurations = {};
     self.activities = [];
@@ -221,6 +221,7 @@
         .then(function (selectedParticipant) {
           return ActivityRepositoryService.getAllByStageGroup(selectedParticipant);
         });
+    }
 
     function _callToast(msg, error) {
       let toastCss = error ? "md-toast-error" : "md-toast-done";
@@ -236,5 +237,22 @@
           ActivityRepositoryService.discardActivity(activityId, selectedParticipant);
         });
     }
+
+    function saveActivity(preActivity) {
+      LoadingScreenService.start();
+      return _prepareActivities(preActivity)
+        .then(() => ActivityRepositoryService.saveActivities(self.activities))
+        .catch(() => {
+          _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
+          LoadingScreenService.finish();
+        })
+        .then(() => {
+          _callToast('sucessActivityCreation');
+          LoadingScreenService.finish();
+        })
+        .then(() => self.activities = [])
+        .then(() => LoadingScreenService.finish);
+    }
+
   }
 }());

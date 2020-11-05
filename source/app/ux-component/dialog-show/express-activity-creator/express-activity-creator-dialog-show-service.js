@@ -42,5 +42,4 @@
       if (preActivity.preActivityValid) return ParticipantActivityService.saveActivity([preActivity]);
     }
   }
-
 }());
