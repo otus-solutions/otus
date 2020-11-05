@@ -1,0 +1,33 @@
+<md-button class="md-primary md-raised" ng-click="$ctrl.showAdvanced($event)">
+  Custom Dialog
+</md-button>
+
+<script type="text/ng-template" id="dialog1.tmpl.html">
+  <md-dialog >
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Selecione o tipo da Etiqueta: </h2>
+        <span flex></span>
+
+      </div>
+    </md-toolbar>
+
+    <md-dialog-actions flex="" layout="row">
+      <md-button flex="50" class="md-primary md-raised">
+        Desvinculado
+      </md-button>
+      <span flex></span>
+      <md-button flex="50" class="md-primary md-raised" ng-click="answer('not useful')">
+        Participante
+      </md-button>
+      <md-button flex="50" class="md-primary md-raised" ng-click="answer('useful')">
+        Material Biológico
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
+</script>
+
+
+criar nova diolog e referenciar template

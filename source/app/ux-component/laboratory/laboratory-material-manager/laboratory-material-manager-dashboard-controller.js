@@ -12,12 +12,12 @@
     'otusjs.deploy.LoadingScreenService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.participant.business.ParticipantManagerService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
   ];
 
   function Controller($mdToast,$mdDialog, $filter, LoadingScreenService,
                       ParticipantLaboratoryService, ParticipantManagerService,
-                      DialogService) {
+                      DialogService, $scope) {
     var self = this;
     self.tubeCode = "";
     self.originalTube = {};
@@ -27,8 +27,8 @@
 
     self.isValidCode = isValidCode;
     self.saveChangedTubes = saveChangedTubes;
-    self.cancelTube = cancelTube
-    self.saveMetadata = saveMetadata
+    self.cancelTube = cancelTube;
+    self.saveMetadata = saveMetadata;
 
     function onInit() {
       LoadingScreenService.start()
