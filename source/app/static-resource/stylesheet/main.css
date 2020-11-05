@@ -1104,7 +1104,7 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    height: 5.4vh;
+    height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 0.15fr 0.15fr (0.8fr)[5];
@@ -1119,7 +1119,7 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    height: 5vh;
+    height: auto;
     -ms-grid-columns: 0.1fr (1fr)[4];
         grid-template-columns: 0.1fr repeat(4, 1fr);
     -ms-grid-rows: 1fr;
@@ -1163,7 +1163,7 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    height: 7vh;
+    height: 7.8vh;
     -ms-grid-columns: 0.2fr (1fr)[3] 0.1fr;
         grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
     -ms-grid-rows: 1fr;
@@ -1176,7 +1176,7 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    height: 5vh;
+    height: auto;
     padding-top: 0;
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     -ms-grid-columns: 0.15fr 0.15fr (0.8fr)[5];
@@ -1191,7 +1191,7 @@ otus-participant-dashboard-toolbar div md-toolbar div otus-participant-search md
     -webkit-box-align: center;
         -ms-flex-align: center;
             align-items: center;
-    height: 5vh;
+    height: auto;
     -ms-grid-columns: 0.1fr (1fr)[4];
         grid-template-columns: 0.1fr repeat(4, 1fr);
     -ms-grid-rows: 1fr;
