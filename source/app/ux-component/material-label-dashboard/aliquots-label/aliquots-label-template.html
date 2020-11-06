@@ -35,7 +35,7 @@
           <md-button class="md-raised md-primary" disabled="">Gerar Etiquetas</md-button>
           <md-tooltip>Selecione ao menos um tubo</md-tooltip>
         </span>
-        <label-maker ng-if="$ctrl.aliquotsLabels.aliquots.length > 0" label-data="$ctrl.aliquotsLabels"/>
+        <label-maker ng-if="$ctrl.aliquotsLabels.aliquots.length > 0" button-name="'Gerar Etiquetas'" label-data="$ctrl.aliquotsLabels"/>
       </div>
       <div ng-repeat="exam in $ctrl.selectedMomentType.exams" flex="">
         <div layout="row" layout-fill="">

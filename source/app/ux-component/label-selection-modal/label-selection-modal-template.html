@@ -9,14 +9,10 @@
     </md-toolbar>
 
     <md-dialog-actions flex="" layout="row">
-      <md-button ng-show="ctrl.unnatachedButton" flex="50" class="md-primary md-raised">
-        Desvinculado
-      </md-button>
+      <label-maker ng-show="ctrl.unnatachedButton" label-data="ctrl.unnatached" button-name="'Participante'"/>
       <span flex></span>
-      <md-button ng-show="ctrl.participantButton" flex="50" class="md-primary md-raised">
-        Participante
-      </md-button>
-      <md-button ng-show="ctrl.bioMaterialButton" flex="50" class="md-primary md-raised">
+      <label-maker ng-show="ctrl.participantButton" label-data="ctrl.participant" button-name="'Participante'"/>
+      <md-button ng-click="$ctrl.activateMaterialLabelDashboard()" ng-show="ctrl.bioMaterialButton" flex="50" class="md-primary md-raised">
         Material Biológico
       </md-button>
     </md-dialog-actions>
