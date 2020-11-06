@@ -43,6 +43,10 @@
     self.tubeId = self.role + "Tube" + self.index;
     self.tubeMessage = aliquot.tubeMessage || "";
     self.locationPoint = ""
+    self.printStructure = {
+      quantity: 1,
+      selected: false
+    }
 
     function toJSON() {
       return {
@@ -63,7 +67,8 @@
         time: self.time,
         tubeId: self.tubeId,
         tubeMessage: self.tubeMessage,
-        locationPoint: self.locationPoint
+        locationPoint: self.locationPoint,
+        printStructure: self.printStructure
       };
     }
     function toEmptyJSON() {
@@ -85,8 +90,12 @@
         time: "",
         tubeId: self.tubeId,
         tubeMessage: "",
-        locationPoint: ""
-      };
+        locationPoint: "",
+        printStructure: {
+          quantity: "",
+          selected: ""
+        }
+      }
     }
   }
 })();

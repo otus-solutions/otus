@@ -42,6 +42,7 @@
       'FLAG_MANAGER_LIST': 'manager-list',
       'LABORATORY_MONITORING_DASHBOARD': 'laboratory-monitoring',
       'LABORATORY_MATERIAL_MANAGER': 'laboratory-material-manager',
+      'MATERIAL_LABEL': 'material-label-dashboard',
       'ACTIVITY_IMPORT': 'activity-import',
       'PENDENCY_VIEWER': 'pendency-viewer',
       'ACTIVITY_SYNCHRONIZE': 'activity-synchronize',
@@ -88,6 +89,7 @@
     'otusjs.deploy.LaboratoryMaterialManagerStateProvider',
     'otusjs.deploy.ActivityFlagReportStateProvider',
     'otusjs.deploy.LaboratoryMonitoringStateProvider',
+    'otusjs.deploy.MaterialLabelDashboardStateProvider',
     'otusjs.deploy.ActivityImportStateProvider',
     'otusjs.deploy.PendencyViewerStateProvider',
     'otusjs.deploy.OfflineActivitySynchronizeStateProvider',
@@ -131,6 +133,7 @@
     LaboratoryMaterialManagerStateProvider,
     ActivityFlagReportStateProvider,
     LaboratoryMonitoringStateProvider,
+    MaterialLabelDashboardStateProvider,
     ActivityImportStateProvider,
     PendencyViewerStateProvider,
     OfflineActivitySynchronizeStateProvider,
@@ -172,6 +175,7 @@
     $stateProvider.state(LaboratoryMaterialManagerStateProvider.state);
     $stateProvider.state(ActivityFlagReportStateProvider.state);
     $stateProvider.state(LaboratoryMonitoringStateProvider.state);
+    $stateProvider.state(MaterialLabelDashboardStateProvider.state);
     $stateProvider.state(ActivityImportStateProvider.state);
     $stateProvider.state(PendencyViewerStateProvider.state);
     $stateProvider.state(OfflineActivitySynchronizeStateProvider.state);

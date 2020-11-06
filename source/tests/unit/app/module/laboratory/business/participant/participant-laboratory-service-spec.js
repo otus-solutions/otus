@@ -17,6 +17,7 @@ describe('ParticipantLaboratoryService_UnitTest_Suite', function() {
       Injections.LaboratoryRepositoryService = _$injector_.get('otusjs.laboratory.repository.LaboratoryRepositoryService');
       Injections.ContextService = _$injector_.get('otusjs.laboratory.core.ContextService');
       Injections.LaboratoryLabelFactory = _$injector_.get('otusjs.laboratory.business.participant.LaboratoryLabelFactory');
+      Injections.LaboratoryLabelAliquotFactory = _$injector_.get('otusjs.laboratory.business.participant.LaboratoryLabelAliquotFactory');
       Injections.EventService = _$injector_.get('otusjs.laboratory.core.EventService');
       Injections.ParticipantLaboratoryFactory = _$injector_.get('otusjs.laboratory.participant.ParticipantLaboratoryFactory');
       Injections.LaboratoryConfigurationService = _$injector_.get('otusjs.laboratory.business.configuration.LaboratoryConfigurationService');
@@ -31,6 +32,7 @@ describe('ParticipantLaboratoryService_UnitTest_Suite', function() {
       spyOn(Injections.LaboratoryRepositoryService, "updateAliquots").and.callThrough();
       spyOn(Injections.LaboratoryRepositoryService, "deleteAliquot").and.callThrough();
       spyOn(Injections.LaboratoryLabelFactory,"create");
+      spyOn(Injections.LaboratoryLabelAliquotFactory,"create");
       spyOn(Injections.LaboratoryConfigurationService,"getCheckingExist").and.callThrough();
 
     });

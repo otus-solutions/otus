@@ -1,0 +1,34 @@
+<md-content flex>
+  <otus-dashboard-sidenav layout="row">
+    <hide-participant-box></hide-participant-box>
+  </otus-dashboard-sidenav>
+  <otus-dashboard-toolbar layout="row" flex="">
+    <div flex layout="row" layout-align="center center" layout-margin>
+      <span layout-align="center center">Etiquetas</span>
+    </div>
+  </otus-dashboard-toolbar>
+  <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
+    <div class="md-toolbar-tools md-hue-2">
+      <span flex>Etiquetas para materiais biologicos</span>
+    </div>
+  </md-toolbar>
+  <div flex="100" style="width: 1000px; margin: 0 auto" layout="column">
+    <div style="margin-top: 10px"></div>
+    <md-input-group flex="100" layout="row" layout-xs="column" layout-align-xs="center center">
+      <md-button flex="50"  layout="column"  class="md-primary md-raised" ng-click="$ctrl.changeState('tubes')" ng-disabled="$ctrl.state == 'tubes'">Tubos</md-button>
+      <md-button  flex="50" layout="column" class="md-primary md-raised" ng-click="$ctrl.changeState('aliquots')" ng-disabled="$ctrl.state == 'aliquots'">Aliquotas</md-button>
+    </md-input-group>
+  </div>
+  <md-content style="max-width: 1000px; margin: 0 auto">
+    <div>
+      <print-config-label></print-config-label>
+    </div>
+    <div>
+      <tubes-label ng-if="$ctrl.labels && $ctrl.state == 'tubes'" labels="$ctrl.labels"></tubes-label>
+      <aliquots-label ng-if="$ctrl.labels && $ctrl.state == 'aliquots'" labels="$ctrl.labels"></aliquots-label>
+    </div>
+  </md-content>
+  <md-content style="max-width: 1000px; margin: 0 auto" ng-if="!$ctrl.participantLaboratory || !$ctrl.labels">
+    <h4 class="md-headline">O laboratório do participante não foi selecionado</h4>
+  </md-content>
+</md-content>
