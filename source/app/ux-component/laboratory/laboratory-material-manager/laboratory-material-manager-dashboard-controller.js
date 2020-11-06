@@ -21,7 +21,7 @@
     var self = this;
     self.tubeCode = "";
     self.originalTube = {};
-    self.selectedTube = {}
+    self.selectedTube = {};
     self.$onInit = onInit;
     self.participantManagerService = ParticipantManagerService
 
@@ -29,7 +29,6 @@
     self.saveChangedTubes = saveChangedTubes;
     self.cancelTube = cancelTube;
     self.saveMetadata = saveMetadata;
-    self.showNewDialog = showNewDialog
 
     function onInit() {
       LoadingScreenService.start()

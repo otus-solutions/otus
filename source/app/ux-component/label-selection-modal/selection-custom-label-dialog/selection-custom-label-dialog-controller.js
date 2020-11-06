@@ -13,15 +13,13 @@
 
   function Controller($mdToast, $mdDialog) {
     var self = this;
-
-    self.$onInit = onInit;
     self.DialogController = DialogController;
     self.showAdvanced = showAdvanced
 
     function showAdvanced (ev) {
       $mdDialog.show({
         controller: DialogController,
-        controllerAs: '$ctrl',
+        controllerAs: 'ctrl',
         templateUrl: 'app/ux-component/label-selection-modal/label-selection-modal-template.html',
         parent: angular.element(document.body),
         targetEvent: ev,
@@ -35,9 +33,9 @@
         },
         fullscreen: false
       }).then(function (answer) {
-        self.status = 'You said the information was "' + answer + '".';
+        self.status = '';
       }, function () {
-        self.status = 'You cancelled the dialog.';
+        self.status = '';
       });
     };
 
