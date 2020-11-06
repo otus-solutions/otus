@@ -1,4 +1,4 @@
-<md-dialog flex="100" style="max-width: 500px; margin-left: auto; margin-right: auto">
+<md-dialog flex="100" style="max-width: 1000px; margin-left: auto; margin-right: auto">
   <form ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -9,14 +9,14 @@
     </md-toolbar>
 
     <md-dialog-actions flex="" layout="row">
-      <md-button ng-if="$ctrl.unnatachedButton" flex="50" class="md-primary md-raised">
+      <md-button ng-show="ctrl.unnatachedButton" flex="50" class="md-primary md-raised">
         Desvinculado
       </md-button>
       <span flex></span>
-      <md-button  ng-if="$ctrl.participantButton" flex="50" class="md-primary md-raised">
+      <md-button ng-show="ctrl.participantButton" flex="50" class="md-primary md-raised">
         Participante
       </md-button>
-      <md-button ng-if="$ctrl.bioMaterialButton" flex="50" class="md-primary md-raised">
+      <md-button ng-show="ctrl.bioMaterialButton" flex="50" class="md-primary md-raised">
         Material Biológico
       </md-button>
     </md-dialog-actions>

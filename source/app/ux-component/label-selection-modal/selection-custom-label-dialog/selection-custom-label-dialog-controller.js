@@ -39,7 +39,17 @@
       });
     };
 
-    function DialogController($scope, $mdDialog) {
+    function DialogController($scope, $mdDialog,
+                              participantButton, unnatachedButton,
+                              bioMaterialButton, participant,
+                              kit) {
+      var ctrl = this;
+      ctrl.participantButton = participantButton;
+      ctrl.unnatachedButton = unnatachedButton;
+      ctrl.bioMaterialButton = bioMaterialButton;
+      ctrl.participant = participant;
+      ctrl.kit = kit;
+
       self.hide = function () {
         $mdDialog.hide();
       };
