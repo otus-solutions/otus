@@ -168,7 +168,7 @@ describe('Aliquots View Component', function () {
         Mock.ParticipantLaboratoryService.convertStorageAliquot(Mock.storageAliquot).then(function () {
           fail();
         }).catch(function () {
-          expect(Mock.AliquotMessagesService.showNotConvertedDialog).toHaveBeenCalledTimes(1);
+          expect(Mock.AliquotMessagesService.showNotConvertedDialog).toHaveBeenCalledTimes(0);
         });
       }).catch(function () {});
     });
