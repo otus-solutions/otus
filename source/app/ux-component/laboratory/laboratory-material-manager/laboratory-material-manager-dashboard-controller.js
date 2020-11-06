@@ -41,16 +41,16 @@
     function isValidCode(tubeCode) {
       if(tubeCode.length === 9) {
         ParticipantLaboratoryService.getLaboratoryByTube(tubeCode, ParticipantManagerService).then(participantLaboratory => {
-            self.participantLaboratory = participantLaboratory
-            const foundTube = self.participantLaboratory.tubes.find(tube => {
-              return tube.code == tubeCode
-            })
-            self.originalTube = angular.copy(foundTube);
-            self.newTube = foundTube
-            self.tubeCode = ""
-          }).catch(e => {
-            toastError(tubeCode)
+          self.participantLaboratory = participantLaboratory
+          const foundTube = self.participantLaboratory.tubes.find(tube => {
+            return tube.code == tubeCode
           })
+          self.originalTube = angular.copy(foundTube);
+          self.newTube = foundTube
+          self.tubeCode = ""
+        }).catch(e => {
+          toastError(tubeCode)
+        })
       }
     }
 
@@ -64,19 +64,11 @@
     }
 
     function saveChangedTubes() {
-      if (haveTubesChanged()) {
-
-        _updateChangedTubes(self.newTube);
-      } else {
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent('Não existem alterações a serem salvas.')
-        );
-      }
+      _updateChangedTubes();
     }
 
     function saveMetadata() {
-      if(self.originalTube.tubeCollectionData.isCollected) {
+      if(self.newTube.tubeCollectionData.isCollected) {
         const tubeStructure = {
           tubes: [self.newTube]
         }
@@ -88,17 +80,15 @@
       }
     }
 
-    function _updateChangedTubes(tube) {
-
-      if(!tube.tubeCollectionData.isCollected) {
-        tube.collect()
-      }
-
-      const tubeStructure = {
-        tubes: [tube]
-      }
+    function _updateChangedTubes() {
 
       DialogService.showDialog(self.confirmFinish).then(function() {
+        self.newTube.collect()
+
+        const tubeStructure = {
+          tubes: [self.newTube]
+        }
+
         ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(function() {
           self.participantLaboratory.updateTubeList();
           _showToastMsg('Registrado com sucesso!');
@@ -106,15 +96,6 @@
           _showToastMsg('Falha ao registrar coleta');
         });
       });
-    }
-
-    function haveTubesChanged() {
-      return (
-        self.originalTube.tubeCollectionData.isCollected !== self.newTube.tubeCollectionData.isCollected
-        || self.originalTube.tubeCollectionData.metadata !== self.newTube.tubeCollectionData.metadata
-        || self.originalTube.tubeCollectionData.operator !== self.newTube.tubeCollectionData.operator
-        || self.originalTube.tubeCollectionData.time !== self.newTube.tubeCollectionData.time
-      );
     }
 
     function toastError(tubeCode) {
