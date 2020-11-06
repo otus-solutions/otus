@@ -68,7 +68,7 @@
     "otus-model-js": "https://github.com/ccem-dev/otus-model-js.git#dev",
     "otus-preview-js": "1.15.3",
     "otus-validation-js": "1.1.0",
-    "qrcode-generator": "1.4.4"
+    "qrcode-generator": "1.4.4",
     "please-wait": "0.0.5",
     "require-dir": "^1.0.0",
     "xlsx-core": "^1.0.3"
