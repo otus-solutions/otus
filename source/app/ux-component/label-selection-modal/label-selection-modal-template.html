@@ -1,9 +1,4 @@
-<md-button class="md-primary md-raised" ng-click="$ctrl.showAdvanced($event)">
-  Custom Dialog
-</md-button>
-
-<script type="text/ng-template" id="dialog1.tmpl.html">
-  <md-dialog >
+<md-dialog flex="100" style="max-width: 500px; margin-left: auto; margin-right: auto">
   <form ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -14,20 +9,16 @@
     </md-toolbar>
 
     <md-dialog-actions flex="" layout="row">
-      <md-button flex="50" class="md-primary md-raised">
+      <md-button ng-if="$ctrl.unnatachedButton" flex="50" class="md-primary md-raised">
         Desvinculado
       </md-button>
       <span flex></span>
-      <md-button flex="50" class="md-primary md-raised" ng-click="answer('not useful')">
+      <md-button  ng-if="$ctrl.participantButton" flex="50" class="md-primary md-raised">
         Participante
       </md-button>
-      <md-button flex="50" class="md-primary md-raised" ng-click="answer('useful')">
+      <md-button ng-if="$ctrl.bioMaterialButton" flex="50" class="md-primary md-raised">
         Material Biológico
       </md-button>
     </md-dialog-actions>
   </form>
 </md-dialog>
-</script>
-
-
-criar nova diolog e referenciar template

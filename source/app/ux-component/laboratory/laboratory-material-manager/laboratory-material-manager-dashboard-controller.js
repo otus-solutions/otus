@@ -29,6 +29,7 @@
     self.saveChangedTubes = saveChangedTubes;
     self.cancelTube = cancelTube;
     self.saveMetadata = saveMetadata;
+    self.showNewDialog = showNewDialog
 
     function onInit() {
       LoadingScreenService.start()

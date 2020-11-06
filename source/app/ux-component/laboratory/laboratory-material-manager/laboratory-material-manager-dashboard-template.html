@@ -68,7 +68,11 @@
               <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
             <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
           </md-list>
-          <label-selection-modal> </label-selection-modal>
+          <selection-custom-label-dialog
+            participant-button ="true"
+            unnatached-button="true"
+            bio-material-button="true">
+          </selection-custom-label-dialog>
           <div ng-if="!$ctrl.originalTube.hasOwnProperty('code')">
             <h2>Sem Tubos Coletados</h2>
           </div>
