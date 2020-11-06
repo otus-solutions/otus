@@ -28,3 +28,4 @@ source/.npmrc
 #evitar  commit temporario da configuraçao do browser-sync
 source/gulp-tasks/browser-sync.js
 *.orig
+*.tf
