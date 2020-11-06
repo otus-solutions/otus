@@ -193,10 +193,6 @@
 
       setTimeout(function() {
         _defaultCustomValidation();
-        _nextFocusNotFilled({
-          index: -1,
-          role: Validation.examIdentifier
-        });
         _fillConvertedStoragesContainerLabels();
       }, 200);
     }
