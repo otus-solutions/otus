@@ -40,7 +40,6 @@
     self.aliquotInputOnBlur = aliquotInputOnBlur;
     self.updateExamsProcessingDate = updateExamsProcessingDate;
     self.updateExamsLocationPoint = updateExamsLocationPoint;
-    self.filterLocationPointsWithoutSelected = filterLocationPointsWithoutSelected;
     self.getConvertedHistory = getConvertedHistory;
     self.saveAliquots = saveAliquots;
     self.haveAliquotsChanged = haveAliquotsChanged
@@ -110,52 +109,53 @@
         if (AliquotTubeService.aliquotsWithErrors(self.selectedMomentType)) {
           AliquotMessagesService.showToast(Validation.validationMsg.checkErrorsBeforeSaving, 3000);
         } else {
-        AliquotMessagesService.showSaveDialog().then(function() {
-          var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
-          var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
-          AliquotTubeService.updateAliquotsWithRn(persistanceStructure, self.participantLaboratory.recruitmentNumber)
-            .then(function(data) {
-              self.selectedMomentType.updateTubes();
-              self.participantLaboratory.updateTubeList();
-              _setMomentType(self.selectedMomentType);
-              AliquotMessagesService.showToast(Validation.validationMsg.savedSuccessfully, self.timeShowMsg);
-            })
-            .catch(function(e) {
-              AliquotMessagesService.showToast(Validation.validationMsg.couldNotSave, self.timeShowMsg);
-              var err = e.data;
-              fillAliquotsErrors(err.CONTENT.conflicts, err.MESSAGE);
-              fillTubesErrors(err.CONTENT.tubesNotFound, err.MESSAGE);
-            });
-        });
+          AliquotMessagesService.showSaveDialog().then(function() {
+            var updatedAliquots = AliquotTubeService.getNewAliquots(self.selectedMomentType);
+            var persistanceStructure = self.selectedMomentType.getPersistanceStructure(updatedAliquots);
+            AliquotTubeService.updateAliquotsWithRn(persistanceStructure, self.participantLaboratory.recruitmentNumber)
+              .then(function(data) {
+                self.selectedMomentType.updateTubes();
+                self.participantLaboratory.updateTubeList();
+                _setMomentType(self.selectedMomentType);
+                AliquotMessagesService.showToast(Validation.validationMsg.savedSuccessfully, self.timeShowMsg);
+              })
+              .catch(function(e) {
+                AliquotMessagesService.showToast(Validation.validationMsg.couldNotSave, self.timeShowMsg);
+                var err = e.data;
+                fillAliquotsErrors(err.CONTENT.conflicts, err.MESSAGE);
+                fillTubesErrors(err.CONTENT.tubesNotFound, err.MESSAGE);
+              });
+          });
         }
       } else {
         AliquotMessagesService.showToast(Validation.validationMsg.savedSuccessfully, self.timeShowMsg);
       }
     }
 
-    function selectParticipantLocationPoint(){
+    function findParticipantLocationPoint() {
       self.participantLocationPoint = self.locationPoints.filter(locationPoint =>
         locationPoint._id == self.participant.fieldCenter.locationPoint
       )
     }
 
-    function filterLocationPointsWithoutParticipantLocation() {
-      if(self.userLocationPoints) {
-        self.locationPointsWithoutParticipantLocation = self.userLocationPoints.filter( locationPoint =>
-          locationPoint._id != self.participant.fieldCenter.locationPoint
-        )
-      } else {
-        self.locationPointsWithoutParticipantLocation = self.participantLocationPoint
-      }
+    function filterLocationPointByParticipant() {
+      self.userLocationPoints = self.locationPoints.filter(locationPoint =>
+        self.participant.fieldCenter.locationPoint == locationPoint._id
+      )
     }
 
-    function filterLocationPointsWithoutSelected() {
-      if(self.userLocationPoints){
-        self.locationPointsWithouSelectedLocation = self.userLocationPoints.filter(userLocationPoint => {
-          return userLocationPoint.name !== self.selectedLocationPoint.name
-        })
-      }else{
-        self.locationPointsWithouSelectedLocation = []
+    function filterLocationPoints() {
+      if(self.userLocationPoints) {
+        self.userLocationIds = []
+
+        for(const location of self.userLocationPoints) {
+          self.userLocationIds.push(location._id)
+        }
+
+        self.userLocationPoints = self.locationPoints.filter(locationPoint =>
+          self.userLocationIds.includes(locationPoint._id) ||
+          self.participant.fieldCenter.locationPoint == locationPoint._id
+        )
       }
     }
 
@@ -163,7 +163,8 @@
       LocationPointRestService.getLocationPoints().then((response) => {
         self.locationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
         _setMomentType(self.momentType)
-        selectParticipantLocationPoint();
+        findParticipantLocationPoint()
+        filterLocationPointByParticipant();
         fetchUserLocationPoints();
       })
     }
@@ -171,8 +172,7 @@
     function fetchUserLocationPoints() {
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
-        filterLocationPointsWithoutParticipantLocation()
-        filterLocationPointsWithoutSelected()
+        filterLocationPoints()
       })
     }
 
