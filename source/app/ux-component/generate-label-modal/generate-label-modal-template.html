@@ -1,0 +1,21 @@
+<md-dialog flex="100" style="max-width: 1000px; margin-left: auto; margin-right: auto">
+  <form ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Selecione o tipo da Etiqueta: kit-{{ctrl.dialogData.kitId}}</h2>
+        <span flex></span>
+      </div>
+    </md-toolbar>
+    <md-dialog-content>
+      <print-config-label />
+    </md-dialog-content>
+    <md-dialog-actions flex="" layout="row">
+      <label-maker ng-show="ctrl.dialogData.kitButton" label-data="ctrl.dialogData.labelData" button-name="'lab.desvinculado'"/>
+      <label-maker ng-show="ctrl.dialogData.participantButton" label-data="ctrl.dialogData.labelData" button-name="'Participante'"/>
+      <md-button ng-click="activateMaterialLabelDashboard()"
+                 ng-show="ctrl.dialogData.bioMaterialButton" flex="20" class="md-primary md-raised">
+        Material Biológico
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

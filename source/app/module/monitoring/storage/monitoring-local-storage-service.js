@@ -83,6 +83,5 @@
       return _collection.find(query);
     }
 
-
   }
 }());

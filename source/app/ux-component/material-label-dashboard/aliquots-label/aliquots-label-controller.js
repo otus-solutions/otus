@@ -47,7 +47,6 @@
       _fetchLocationPoints();
       _buildMomentTypeList();
       _subscribeLabels();
-      selectMomentType(self.momentTypeList[0]);
       _publishPrintStructure();
     }
 

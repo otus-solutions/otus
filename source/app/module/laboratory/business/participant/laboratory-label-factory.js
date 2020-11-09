@@ -36,8 +36,8 @@
       self.gender = participant.sex;
       self.birthday = _convertFormatDate(new Date(participant.birthdate.value));
     } else {
-      self.recruitment_number = "_______________";
-      self.participant_name = "_______________";
+      self.recruitment_number = "__________";
+      self.participant_name = "___________";
       self.gender = "__";
       self.birthday = "__/__/____";
       self.laboratoryIdentification = laboratory.identification;

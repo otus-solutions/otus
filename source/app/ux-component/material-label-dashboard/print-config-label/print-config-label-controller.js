@@ -23,6 +23,7 @@
       columns: 0,
       type: "",
     }
+
     self.sizes = [{'value': 'small', 'name': "Pequeno"}, {"value": "bigger", "name": "Grande"}, {"value": "default", "name": "Padrao"}];
     self.types = [{'value': "qrcode", 'name': "Qrcode"}, {"value": "barcode", "name": "Código de barras"}];
     self.identified = [{'value': true, "name": "Sim"}, {"value": false, "name": "Não"}];
@@ -48,6 +49,11 @@
 
     function changeLabelToPrint(){
       _subscribePrintStructure()
+      Publisher.publish('label-to-print', (label) => {
+        if(label) {
+          label.printStructure = self.printStructure
+        }
+      })
       Publisher.publish("labelsTubes-to-print", (tubeLabel) => {
         if(tubeLabel){
           tubeLabel.printStructure = self.printStructure

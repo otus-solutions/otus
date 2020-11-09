@@ -38,10 +38,7 @@
     var hideDelayTime = 3000;
     var changedTubes = false;
 
-    self.selectedTubes = []
     self.selectedLocationPoint = {}
-    self.newLabels = {}
-
     self.userLocationPoints = []
 
     self.$onInit = onInit;
@@ -60,6 +57,8 @@
     self.activateLabelMaterialDashboard = activateLabelMaterialDashboard
 
     function onInit() {
+      self.participantLabel = angular.copy(self.labels)
+      self.participantLabel.tubes = []
       _buildDialogs();
       fetchLocationPoints();
       self.processingDate = new Date();
@@ -70,6 +69,7 @@
     function activateLabelMaterialDashboard() {
       ApplicationStateService.activateMaterialLabelDashboard()
     }
+
     function changeAliquotsLocationPoints() {
       Publisher.publish('aliquots-data', (aliquots) => {
         aliquots.forEach(aliquot => {
@@ -82,7 +82,6 @@
 
     function changeAliquotsProcessingDate() {
       Publisher.publish('aliquots-data', (aliquots) => {
-        console.info(aliquots)
         aliquots.forEach(aliquot => {
           if(!aliquot.isSaved) {
             aliquot.processing = self.processingDate
