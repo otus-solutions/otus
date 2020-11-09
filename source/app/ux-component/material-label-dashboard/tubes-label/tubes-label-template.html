@@ -1,0 +1,58 @@
+<md-content flex>
+  <div layout="column" class="boxWithHeight tela" layout-padding flex>
+    <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex >
+      <div layout="row" layout-xs="column" layout-align="space-between center" layout-align-xs="">
+        <div flex="" layout="row" layout-xs="column" layout-align="start center" layout-align-xs="">
+          <p>Selecione um momento:</p>
+          <md-input-container style="margin-left: 5px">
+            <label>momento</label>
+            <md-select ng-change="$ctrl.filterTubesByMoment()" ng-model="$ctrl.selectedMoments" multiple>
+              <md-optgroup label="Momentos">
+                <md-option ng-select ng-value="moment" ng-repeat="moment in $ctrl.moments">
+                  {{moment}}
+                </md-option>
+              </md-optgroup>
+            </md-select>
+          </md-input-container>
+        </div>
+        <span layout="row" ng-if="$ctrl.newLabels.tubes.length == 0" layout-align="center center">
+          <md-button class="md-raised md-primary" disabled="">Gerar Etiquetas</md-button>
+          <md-tooltip>Selecione ao menos um tubo</md-tooltip>
+        </span>
+        <label-maker ng-if="$ctrl.newLabels.tubes.length > 0" label-data="$ctrl.newLabels"/>
+      </div>
+      <span layout-margin="5px"></span>
+      <div ng-repeat="tube in $ctrl.labels.tubes" flex="">
+        <div layout="row" layout-fill="">
+          <div layout="row" layout-fill="" layout-align="space-between center">
+            <div layout="row" layout-align="center center">
+              <div style="height: 20px; width: 5px; border-radius: 2px" ng-style="{'background-color': tube.boxColor}">
+              </div>
+              <div layout="row">
+                <md-icon class="md-primary" md-font-set="material-icons" ng-if="tube.tubeCollectionData.isCollected">assignment_turned_in
+                  <md-tooltip>Coletado</md-tooltip>
+                </md-icon>
+                <md-icon md-font-set="material-icons" ng-if="!tube.tubeCollectionData.isCollected">not_interested
+                  <md-tooltip>Não coletado</md-tooltip>
+                </md-icon>
+                <md-icon md-font-set="material-icons" ng-hide="tube.tubeCollectionData.isCollected || tube.tubeCollectionData.metadata">assignment_late
+                  <md-tooltip>Aguardando</md-tooltip>
+                </md-icon>
+              </div>
+              <p style="margin-left: 5px;" class="subtitle">{{tube.type}} - {{tube.momentLabel}}: {{tube.code}}</p>
+            </div>
+            <div layout="row" style="margin: 5px 0 0 0">
+              <md-input-container style="margin:0 10px">
+                <label>quantidade</label>
+                <input type="number" min="1" max="100" ng-model="tube.printStructure.quantity">
+              </md-input-container>
+              <md-checkbox aria-label="selected" ng-change="
+              [ $ctrl.removeTube(tube)
+              ,$ctrl.addTubeToPrintList(tube) ]" ng-model="tube.printStructure.selected"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </md-whiteframe>
+  </div>
+</md-content>

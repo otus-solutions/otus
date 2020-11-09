@@ -15,7 +15,7 @@
     'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast,$mdDialog, $filter, LoadingScreenService,
+  function Controller($mdToast, $mdDialog, $filter, LoadingScreenService,
                       ParticipantLaboratoryService, ParticipantManagerService,
                       DialogService) {
     var self = this;

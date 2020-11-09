@@ -12,12 +12,11 @@
     'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.laboratory.core.EventService',
     'otusjs.laboratory.participant.ParticipantLaboratoryFactory',
-    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService'
+    'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
+    'otusjs.laboratory.business.participant.LaboratoryLabelAliquotFactory'
   ];
 
-  function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory,
-                   LaboratoryConfigurationService
-  ) {
+  function Service($q, LaboratoryRepositoryService, ContextService, LaboratoryLabelFactory, EventService, ParticipantLaboratoryFactory, LaboratoryConfigurationService,LaboratoryLabelAliquotFactory) {
     var self = this;
     var _participantLaboratory;
     var _laboratoryConfiguration;
@@ -40,6 +39,10 @@
     self.deleteAliquot = deleteAliquot;
     self.getCheckingExist = getCheckingExist;
     self.updateAliquotsWithRn = updateAliquotsWithRn;
+    self.setData = setData;
+    self.getData = getData;
+    self.getLaboratoryByParticipant = getLaboratoryByParticipant;
+    self.generateLabelsAliquots = generateLabelsAliquots;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -70,6 +73,7 @@
 
     function hasLaboratory() {
       var request = $q.defer();
+
       getSelectedParticipant()
         .then(function (participant) {
           _getLaboratoryDescriptors()
@@ -93,6 +97,14 @@
 
     function getSelectedParticipant() {
       return ContextService.getSelectedParticipant();
+    }
+
+    function setData(dataKey, dataValue) {
+      return ContextService.setData(dataKey, dataValue)
+    }
+
+    function getData(dataKey){
+      return ContextService.getData(dataKey)
     }
 
     function getCurrentUser() {
@@ -156,8 +168,33 @@
       return LaboratoryRepositoryService.deleteAliquot(aliquotCode);
     }
 
+    function getLaboratoryByParticipant(recruitmentNumber, ParticipantManagerService) {
+      var request = $q.defer()
+      const participant = ParticipantManagerService.getParticipant(recruitmentNumber)
+      _getLaboratoryDescriptors()
+        .then(() => {
+          LaboratoryRepositoryService
+            .getLaboratory(participant)
+            .then((laboratory) => {
+              self.participant = participant
+              if (laboratory !== 'null') {
+                _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(), participant);
+                request.resolve(_participantLaboratory);
+              } else {
+                request.resolve(false);
+              }
+            }, function (e) {
+              request.reject(e);
+            })
+        })
+      return request.promise
+    }
+
     function generateLabels() {
       return LaboratoryLabelFactory.create(self.participant, angular.copy(_participantLaboratory));
+    }
+    function generateLabelsAliquots() {
+      return LaboratoryLabelAliquotFactory.create(self.participant, angular.copy(_participantLaboratory));
     }
 
     function getCheckingExist() {

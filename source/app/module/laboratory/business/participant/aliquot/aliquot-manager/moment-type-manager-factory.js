@@ -35,6 +35,12 @@
     self.boxColor = tube.boxColor;
     self.collectedAliquots = [];
     self.availableAliquots = [];
+    self.printStructure = {
+      type: "",
+      size: "",
+      identified: "",
+      columns: "",
+    }
     self.tubeList = [];
 
     self.addTube = addTube;
