@@ -145,12 +145,12 @@
         <label ng-if="$ctrl.userLocationPoints" style="position:relative;top:13px;margin-left: 5px;">Ponto de localização:</label>
         <md-input-container style="position: relative; top: -10px;margin-left: 5px;">
           <md-select ng-change="[$ctrl.saveLocationPoint(),
-                                 $ctrl.changeAliquotsLocationPoints()]" ng-model="$ctrl.selectedLocationPoint">
-            <md-option ng-select ng-selected="true" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.participantLocationPoint">
-              {{userLocationPoints.name}}
-            </md-option>
-            <md-option ng-select ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPointsFiltered">
-                {{userLocationPoints.name}}
+                                 $ctrl.changeAliquotsLocationPoints()]"
+                     ng-model="$ctrl.selectedLocationPoint">
+            <md-option ng-selected="filteredLocationPoints._id == $ctrl.participantLocationPoint[0]._id"
+                       ng-value="filteredLocationPoints"
+                       ng-repeat="filteredLocationPoints in $ctrl.filteredLocationPoints">
+                {{filteredLocationPoints.name}}
               </md-option>
           </md-select>
         </md-input-container>
@@ -180,12 +180,13 @@
       <div layout="column">
         <label ng-if="$ctrl.userLocationPoints">Localização:</label>
         <md-input-container>
-          <md-select ng-change="$ctrl.saveLocationPoint()" ng-model="$ctrl.selectedLocationPoint">
-            <md-option ng-select ng-selected="true" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.participantLocationPoint">
-              {{userLocationPoints.name}}
-            </md-option>
-            <md-option ng-select ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPointsFiltered">
-              {{userLocationPoints.name}}
+          <md-select ng-change="[$ctrl.saveLocationPoint(),
+                                 $ctrl.changeAliquotsLocationPoints()]"
+                     ng-model="$ctrl.selectedLocationPoint">
+            <md-option ng-selected="filteredLocationPoints._id == $ctrl.participantLocationPoint[0]._id"
+                       ng-value="filteredLocationPoints"
+                       ng-repeat="filteredLocationPoints in $ctrl.filteredLocationPoints">
+              {{filteredLocationPoints.name}}
             </md-option>
           </md-select>
         </md-input-container>
