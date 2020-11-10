@@ -45,7 +45,6 @@ describe('otusActivityStageListCtrl Test', function () {
       spyOn(Injections.ParticipantActivityService, "listAllCategories").and.returnValue(Mock.deferredResolve.promise);
       spyOn(Injections.ParticipantActivityService, "selectActivities").and.returnValue(Mock.deferredResolve.promise);
       spyOn(Injections.LoadingScreenService, "start").and.callThrough();
-      spyOn(Injections.ParticipantActivityService, "getAllByStageGroup").and.returnValue(Mock.deferred.promise);
       spyOn(Injections.LoadingScreenService, "finish").and.callThrough();
       spyOn(Injections.ActivityPlayerService, "load").and.returnValue(Mock.deferredResolve.promise);
       spyOn(Injections.ApplicationStateService, "activateActivityPlayer");
@@ -54,13 +53,10 @@ describe('otusActivityStageListCtrl Test', function () {
     });
 
     it('onInitMethod should initialized the controller variables', function () {
-      spyOn(Injections.ParticipantActivityService, "listAvailables").and.returnValue(Mock.deferredActivity.promise);
-
+      spyOn(Injections.ParticipantActivityService, "getAllByStageGroup").and.returnValue(Mock.deferred.promise);
       controller.$onInit();
       expect(controller.stage).toEqual([]);
-      expect(controller.surveys).toEqual([]);
       expect(Injections.EventService.onParticipantSelected).toHaveBeenCalledTimes(1);
-      expect(Injections.ParticipantActivityService.listAvailables).toHaveBeenCalledTimes(1);
       expect(Injections.ParticipantActivityService.listAllCategories).toHaveBeenCalledTimes(1);
       expect(Injections.LoadingScreenService.start).toHaveBeenCalledTimes(1);
       expect(Injections.ParticipantActivityService.getAllByStageGroup).toHaveBeenCalledTimes(1);
@@ -110,7 +106,6 @@ describe('otusActivityStageListCtrl Test', function () {
         "name": "FINALIZED",
         "user": {},
         "date": "2020-09-30T00:00:00"
-
       },
       "externalId": "20200921516453",
       "stage": "87624basdkjasmdijas"

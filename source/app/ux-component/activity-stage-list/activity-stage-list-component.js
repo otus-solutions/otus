@@ -34,7 +34,6 @@
     self.$onInit = onInit;
 
     self.stage = [];
-    self.surveys = [];
     self.colorStage = $mdColors.getThemeColor('primary-hue-1');
 
     function onInit() {
