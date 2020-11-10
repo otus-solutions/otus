@@ -116,8 +116,8 @@
       self.data = {
         preActivityArtefacts: preActivityArtefacts,
         settings: {
-          controllerPath: 'otusExpressActivityCreatorDialogController',
-          templateUrlPath: "app/ux-component/dialog-show/express-activity-creator/express-activity-creator-dialog-show-template.html",
+          controller: 'otusExpressActivityCreatorDialogController',
+          templateUrl: "app/ux-component/dialog-show/express-activity-creator/express-activity-creator-dialog-show-template.html",
         },
         cancel: cancel
       }
@@ -126,10 +126,10 @@
 
     function _prepareDialogShow(data, fullscreen){
       return $mdDialog.show({
-        controller: data.settings.controllerPath,
+        controller: data.settings.controller,
         bindToController: true,
         locals: { data: data},
-        templateUrl: data.settings.templateUrlPath,
+        template: data.settings.template || data.settings.templateUrl,
         parent: angular.element(document.body),
         controllerAs: '$ctrl',
         fullscreen: fullscreen

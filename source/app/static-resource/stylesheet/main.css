@@ -1312,4 +1312,75 @@ otus-activity-stage-list .new-chip-white {
   color: white;
   border-radius: 10px 50px 50px 10px;
 }
+
+.dialog-layout {
+  width: 30vw;
+  background-color: #f3f3f3;
+}
+
+.content-share {
+  padding: 0.5em;
+}
+
+md-chips.md-default-theme .md-chips, md-chips .md-chips {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+.activity-creation-form-layout {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column wrap;
+          flex-flow: column wrap;
+}
+
+.date-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+  margin-top: 1em;
+}
+
+.small-titles {
+  color: #717171;
+  margin: .8em 5px;
+}
+
+.small-title-date {
+  color: #717171;
+  margin: .8em 0px 0px 5px;
+}
+
+.checker-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+}
+
+.external-id-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: column;
+          flex-flow: column;
+}
+
+.date-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
 /*# sourceMappingURL=main.css.map */
