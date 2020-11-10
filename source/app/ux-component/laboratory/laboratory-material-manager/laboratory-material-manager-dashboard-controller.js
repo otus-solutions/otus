@@ -17,7 +17,7 @@
 
   function Controller($mdToast, $mdDialog, $filter, LoadingScreenService,
                       ParticipantLaboratoryService, ParticipantManagerService,
-                      DialogService, $scope) {
+                      DialogService) {
     var self = this;
     self.tubeCode = "";
     self.originalTube = {};
