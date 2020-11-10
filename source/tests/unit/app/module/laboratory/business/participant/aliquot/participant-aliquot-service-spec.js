@@ -5,7 +5,6 @@ describe('otusParticipantAliquotService', function() {
   var Injections = {};
   var service = {};
 
-
   beforeEach(angular.mock.module('otusjs.laboratory'));
   beforeEach(angular.mock.module('otusjs.laboratory.business'));
   beforeEach(angular.mock.module('otusjs.laboratory.repository'));
@@ -44,7 +43,7 @@ describe('otusParticipantAliquotService', function() {
   describe('fillAliquotsWithCollectedAliquots method', function() {
 
     it('should fill exam storage and convertedStorages array', function() {
-      var modifiedMomentType = service.populateAliquotsArray(Mock.momentType);
+      var modifiedMomentType = service.populateAliquotsArray(Mock.momentType, Mock.locationPoints);
       expect(modifiedMomentType.exams.length).toEqual(4);
       expect(modifiedMomentType.storages.length).toEqual(16);
       expect(modifiedMomentType.convertedStorages.length).toEqual(1);
@@ -69,7 +68,7 @@ describe('otusParticipantAliquotService', function() {
     time : "",
     processing : "",
     isSaved : false,
-    locationPoint: ''
+    locationPoint: {}
     };
     var aliquot = [];
     aliquot.role = "EXAM";
@@ -97,6 +96,9 @@ describe('otusParticipantAliquotService', function() {
   }
 
   function mockMomentType() {
+    Mock.locationPoints = [{
+      "id":"123456"
+    }]
     Mock.momentType = {
       "type": "GEL",
       "moment": "FASTING",
@@ -129,6 +131,7 @@ describe('otusParticipantAliquotService', function() {
             "time": "2019-05-16T15:41:47.818Z",
             "processing": "2019-05-16T15:40:32.457Z"
           },
+          "locationPoint": {"name":"são paulo"},
           "aliquotHistory": []
         },
         {
@@ -156,6 +159,7 @@ describe('otusParticipantAliquotService', function() {
             "time": "2019-05-20T17:31:07.934Z",
             "processing": "2019-05-20T17:30:28.778Z"
           },
+          "locationPoint": {"name":"são paulo"},
           "aliquotHistory": []
 
         },
@@ -193,7 +197,8 @@ describe('otusParticipantAliquotService', function() {
               "description": "asdasd asda sdas d asdasdasd asdas das dasd asd asd asd a sd",
               "date": "2019-05-20T17:44:06.044Z"
             }
-          ]
+          ],
+          "locationPoint": {"name":"são paulo"},
         }
       ],
       "availableAliquots": [

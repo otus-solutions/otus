@@ -144,6 +144,32 @@
       }
     }
 
+    function _filterLocationPointByParticipant() {
+      self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
+        locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
+      )
+      Publisher.unsubscribe('filtered-location-points')
+      Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
+    }
+
+    function _filterLocationPoints() {
+      if(self.userLocationPoints) {
+        self.userLocationIds = []
+
+        for(const location of self.userLocationPoints) {
+          self.userLocationIds.push(location._id)
+        }
+
+        self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
+          self.userLocationIds.includes(locationPoint._id) ||
+          locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
+        )
+        Publisher.unsubscribe('filtered-location-points')
+        Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
+
+      }
+    }
+
     function fetchLocationPoints() {
       LocationPointRestService.getLocationPoints().then((response) => {
         self.locationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);

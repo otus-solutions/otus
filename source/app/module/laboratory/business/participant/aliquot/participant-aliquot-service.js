@@ -26,9 +26,9 @@
     self.deleteAliquot = deleteAliquot;
     self.updateAliquotsWithRn = updateAliquotsWithRn;
 
-    function _filterByLocationPoint(aliquotLocationPoint) {
+    function _filterByLocationPoint(aliquotLocationPoint, locationPoints) {
       if(aliquotLocationPoint) {
-        const filteredLocationPoint = self.locationPoints
+        const filteredLocationPoint = locationPoints
           .filter(locationPoint => locationPoint._id == ( !aliquotLocationPoint.hasOwnProperty('$oid') ? aliquotLocationPoint : aliquotLocationPoint.$oid))
         return filteredLocationPoint[0]
       }else {
@@ -114,7 +114,6 @@
       var indexExam = 0;
       var storages = [];
       var exams = [];
-      self.locationPoints = locationPoints
       momentType.availableAliquots.forEach(function(aliquot){
 
         if(aliquot.role.toUpperCase() == "STORAGE"){
@@ -137,7 +136,7 @@
       momentType.exams = exams;
       momentType.convertedStorages = [];
 
-      momentType = fillAliquotsWithCollectedAliquots(momentType);
+      momentType = fillAliquotsWithCollectedAliquots(momentType, locationPoints);
 
       momentType.originalStorages = JSON.parse(JSON.stringify(momentType.storages));
       momentType.originalExams = JSON.parse(JSON.stringify(momentType.exams));
@@ -147,7 +146,7 @@
       return momentType;
     }
 
-    function fillAliquotsWithCollectedAliquots(momentType){
+    function fillAliquotsWithCollectedAliquots(momentType, locationPoints){
       momentType.collectedAliquots.forEach(function(collectedAliquot){
         var dateTime = new Date(collectedAliquot.aliquotCollectionData.time);
         var dateProcessing = new Date(collectedAliquot.aliquotCollectionData.processing);
@@ -162,6 +161,8 @@
         collectedAliquot.date = dateTime;
 
         if (collectedAliquot.isConverted){
+          collectedAliquot.locationPoint = collectedAliquot.locationPoint.hasOwnProperty('name') ? collectedAliquot.locationPoint : _filterByLocationPoint(collectedAliquot.locationPoint, locationPoints)
+
           momentType.convertedStorages.push(collectedAliquot);
         } else {
           var arrayAliquots = momentType.exams;
@@ -181,7 +182,7 @@
               aliquot.processing = collectedAliquot.processing;
               aliquot.date = collectedAliquot.date;
               endLoop = true;
-              aliquot.locationPoint = !aliquot.locationPoint ? _filterByLocationPoint(collectedAliquot.locationPoint) : aliquot.locationPoint;
+              aliquot.locationPoint = !aliquot.locationPoint ? _filterByLocationPoint(collectedAliquot.locationPoint, locationPoints) : aliquot.locationPoint;
             }
           }
         }
