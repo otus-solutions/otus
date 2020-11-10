@@ -2,7 +2,10 @@
   <div class="control-panel control-toolbar" layout="row" layout-padding layout-align="start center"
        ng-if="$ctrl.state === 'main'">
     <span layout="row" layout-align="center center">
-      <md-button class="md-raised md-primary" ng-click="$ctrl.activateLabelMaterialDashboard()">Gerar Etiquetas</md-button>
+          <generate-custom-label-dialog participant-button="true"
+                                         bio-material-button="true"
+                                         label-data="$ctrl.participantLabel">
+          </generate-custom-label-dialog>
     </span>
     <div layout="row" layout-align="center center">
       <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('coleta')">Coleta de
@@ -30,7 +33,10 @@
       </md-fab-trigger>
       <md-fab-actions>
         <span layout="row" layout-align="center center">
-          <md-button class="md-raised md-primary">Gerar Etiquetas</md-button>
+          <generate-custom-label-dialog participant-button="true"
+                                         bio-material-button="true"
+                                        label-data="$ctrl.participantLabel">
+          </generate-custom-label-dialog>
         </span>
         <md-button class="md-primary md-raised md-mini" aria-label="Coleta de Tubos"
                    ng-click="$ctrl.changeState('coleta')"

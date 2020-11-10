@@ -38,10 +38,7 @@
     var hideDelayTime = 3000;
     var changedTubes = false;
 
-    self.selectedTubes = []
     self.selectedLocationPoint = {}
-    self.newLabels = {}
-
     self.userLocationPoints = []
 
     self.$onInit = onInit;
@@ -60,6 +57,8 @@
     self.activateLabelMaterialDashboard = activateLabelMaterialDashboard
 
     function onInit() {
+      self.participantLabel = angular.copy(self.labels)
+      self.participantLabel.tubes = []
       _buildDialogs();
       fetchLocationPoints();
       self.processingDate = new Date();
@@ -117,6 +116,32 @@
       self.participantLocationPoint = self.locationPoints.filter(locationPoint =>
         locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
       )
+    }
+
+    function _filterLocationPointByParticipant() {
+      self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
+        locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
+      )
+      Publisher.unsubscribe('filtered-location-points')
+      Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
+    }
+
+    function _filterLocationPoints() {
+      if(self.userLocationPoints) {
+        self.userLocationIds = []
+
+        for(const location of self.userLocationPoints) {
+          self.userLocationIds.push(location._id)
+        }
+
+        self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
+          self.userLocationIds.includes(locationPoint._id) ||
+          locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
+        )
+        Publisher.unsubscribe('filtered-location-points')
+        Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
+
+      }
     }
 
     function _filterLocationPointByParticipant() {

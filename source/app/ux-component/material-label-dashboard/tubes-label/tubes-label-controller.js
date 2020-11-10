@@ -45,7 +45,6 @@
     function addTubeToPrintList(tube) {
       if(tube.printStructure.selected){
         self.newLabels.tubes.push(tube)
-        console.info(self.newLabels.tubes)
       }
     }
 
