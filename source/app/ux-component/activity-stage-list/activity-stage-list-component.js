@@ -34,7 +34,6 @@
     self.$onInit = onInit;
 
     self.stage = [];
-    self.surveys = [];
     self.colorStage = $mdColors.getThemeColor('primary-hue-1');
 
     function onInit() {
@@ -43,19 +42,8 @@
     }
 
     function refreshActivityStage() {
-      _loadSurveys();
       _loadActivityStages();
       _loadCategories();
-    }
-
-    function _loadSurveys() {
-      ParticipantActivityService.listAvailables()
-        .then(surveys => self.surveys = surveys)
-        .catch(err => {
-          $log.error(err);
-          _showMsg(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.TOAST.ERROR.errorFind);
-        })
-
     }
 
     function _loadCategories() {
@@ -79,16 +67,8 @@
 
     function _setUnitySurveyAndActivity(stages) {
       stages.map(stage => {
-        let surveyFilter = angular.copy(self.surveys);
+        stage.acronyms.forEach(acronym => _activityAttributes(acronym.activities));
 
-        surveyFilter.forEach(survey => stage.acronyms.find(acronym => {
-          if (acronym.acronym == survey.acronym) {
-            _activityAttributes(acronym.activities);
-            return survey.activities = acronym.activities;
-          }
-        }))
-
-        stage.acronyms = angular.copy(surveyFilter);
         stage.acronyms.sort(function (a, b) {
           var nameA = a.name.toUpperCase();
           var nameB = b.name.toUpperCase();
