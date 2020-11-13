@@ -9,6 +9,7 @@
     '$mdToast',
     '$scope',
     '$element',
+    '$window',
     'otusjs.laboratory.business.participant.aliquot.ParticipantAliquotService',
     'otusjs.deploy.LocationPointRestService',
     'otusjs.model.locationPoint.LocationPointFactory',
@@ -21,6 +22,7 @@
     $mdToast,
     $scope,
     $element,
+    $window,
     AliquotTubeService,
     LocationPointRestService,
     LocationPointFactory,
@@ -42,12 +44,17 @@
     self.addAliquotToPrintList = addAliquotToPrintList;
     self.removeAliquotFromPrintList = removeAliquotFromPrintList;
     self.selectAll = selectAll
+    self.backPage = backPage
 
     function onInit() {
       _fetchLocationPoints();
       _buildMomentTypeList();
       _subscribeLabels();
       _publishPrintStructure();
+    }
+
+    function backPage() {
+      $window.history.back()
     }
 
     function _buildMomentTypeList() {
