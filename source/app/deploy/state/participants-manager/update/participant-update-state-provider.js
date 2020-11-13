@@ -27,19 +27,19 @@
         redirect: _redirect
       },
       resolve: {
-       loadStateData: _loadStateData
-     }
+        loadStateData: _loadStateData
+      }
     };
 
     function _redirect($q, Application, UserAccessPermissionService, ParticipantContextService) {
       var deferred = $q.defer();
 
-      UserAccessPermissionService.getCheckingActivityPermission().then(permission => {
+      UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
         Application
           .isDeployed()
           .then(function () {
             try {
-              if (!permission.participantActivityAccess) {
+              if (!permission.participantListAccess) {
                 deferred.resolve(STATE.DASHBOARD);
                 return;
               }
