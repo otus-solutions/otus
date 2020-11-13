@@ -78,19 +78,6 @@
       try {
         _loadSelectedParticipant();
         EventService.onParticipantSelected(_loadSelectedParticipant);
-
-        self.ParticipantContactValues = ParticipantContactValues;
-
-        if (self.isIdentified) {
-          self.birthdate = new Date(self.participant.birthdate.value)
-        } else {
-          self.birthdate = null;
-          self.participant.birthdate = { value: null };
-        }
-
-        self.maxDate = new Date();
-        self.centers = {};
-        _loadAllCenters();
       } catch (e) {
         console.error(e);
       }
@@ -101,23 +88,42 @@
     }
 
     function _loadSelectedParticipant() {
-      var participantData = JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant;
+      var participantData = ParticipantManagerService.getSelectedParticipant();
+        // JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant;
       if (participantData) {
         self.participant = ParticipantFactory.fromJson(participantData);
       } else {
-        DashboardService
-          .getSelectedParticipant()
-          .then(function (participantData) {
-            self.participant = ParticipantFactory.fromJson(participantData);
-          });
+        //participantData = JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant;
+       // ParticipantManagerService.selectParticipant(participantData);
+        self.participant = ParticipantFactory.fromJson(ParticipantManagerService.getSelectedParticipant());
+      //   DashboardService
+      //     .getSelectedParticipant()
+      //     .then(function (participantData) {
+      //       self.participant = ParticipantFactory.fromJson(participantData);
+      //     });
       }
+
 
       self.isEmpty = false;
       self.isIdentified = self.participant.toJSON().identified;
       loadParticipantContact();
 
+      if (self.isIdentified) {
+        delete self.birthdate;
+        self.birthdate = new Date(angular.copy(self.participant.birthdate.value));
+      } else {
+        self.birthdate = null;
+        self.participant.birthdate = { value: null };
+      }
+
+      self.ParticipantContactValues = ParticipantContactValues;
+      self.maxDate = new Date();
+      delete self.centers;
+      delete self.centerFilter;
+      _loadAllCenters();
+
       if (self.loadParticipantData) {
-        self.loadParticipantData(self.participant);
+        self.loadParticipantData(angular.copy(self.participant));
       }
     }
 

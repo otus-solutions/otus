@@ -25,23 +25,31 @@
       template: '<otus-participant-contact></otus-participant-contact>',
       data: {
         redirect: _redirect
-      }
+      },
+      resolve: {
+       loadStateData: _loadStateData
+     }
     };
 
-    function _redirect($q, Application, UserAccessPermissionService) {
+    function _redirect($q, Application, UserAccessPermissionService, ParticipantContextService) {
       var deferred = $q.defer();
 
-      Application
-        .isDeployed()
-        .then(function () {
-          UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
+      UserAccessPermissionService.getCheckingActivityPermission().then(permission => {
+        Application
+          .isDeployed()
+          .then(function () {
             try {
+              if (!permission.participantActivityAccess) {
+                deferred.resolve(STATE.DASHBOARD);
+                return;
+              }
+              ParticipantContextService.isValid();
               deferred.resolve();
             } catch (e) {
               deferred.resolve(STATE.LOGIN);
             }
           });
-        });
+      });
 
       return deferred.promise;
     }
@@ -49,11 +57,12 @@
     _redirect.$inject = [
       '$q',
       'otusjs.application.core.ModuleService',
-      'otusjs.user.business.UserAccessPermissionService'
+      'otusjs.user.business.UserAccessPermissionService',
+      'otusjs.participant.core.ContextService'
 
     ];
 
-    function _loadParticipantContext(ParticipantContextService, SessionContextService, Application) {
+    function _loadStateData(ParticipantContextService, SessionContextService, Application) {
       Application
         .isDeployed()
         .then(function () {
@@ -65,7 +74,7 @@
           }
         });
     }
-    _loadParticipantContext.$inject = [
+    _loadStateData.$inject = [
       'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',
       'otusjs.application.core.ModuleService'
