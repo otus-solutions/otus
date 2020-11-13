@@ -1,15 +1,17 @@
 <md-content ng-cloak>
   <div class="margin-layout">
     <md-card>
-      <h2 class="md-display-1 text-stage-size" ng-show="$ctrl.stages.length == 0">
-        Etapas Não Adicionada
-      </h2>
+      <div layout="row" layout-align="center center">
+        <h2 class="md-display-1 label-light-gray text-stage-size" layout-padding ng-show="$ctrl.stages.length == 0">
+          Nenhuma Etapa Adicionada
+        </h2>
+      </div>
       <md-list ng-repeat="stages in $ctrl.stages track by $index">
         <div class="margin-not-top" layout="row" layout-align="start center">
-          <p class="md-headline new-chip-white" layout-padding ng-show="stages.stageName"
-            ng-style="{ 'background': '{{$ctrl.colorStage}}'}">{{stages.stageName}}</p>
-          <p class="md-headline new-chip-white" layout-padding ng-show="!stages.stageName" layout-padding
-            ng-style="{ 'background': '{{$ctrl.colorStage}}'}">Atividades sem Etapas</p>
+          <span class="md-headline new-chip-white" layout-padding ng-show="stages.stageName"
+            ng-style="{ 'background': '{{$ctrl.colorStage}}'}">{{stages.stageName}}</span>
+          <span class="md-headline new-chip-white" layout-padding ng-show="!stages.stageName" layout-padding
+            ng-style="{ 'background': '{{$ctrl.colorStage}}'}">Atividades sem Etapas</span>
         </div>
         <md-list class="margin-bottom" ng-repeat="activity in stages.acronyms track by $id(activity)">
           <div class="stage-list-layout" ng-mouseover="activity.actionButton = $id"
@@ -77,7 +79,8 @@
                 Categoria
               </md-tooltip>
             </div>
-            <div class="activity-externalID" layout="row" layout-align-gt-sm="center center" layout-align-xs-sm="start center">
+            <div class="activity-externalID" layout="row" layout-align-gt-sm="center center"
+              layout-align-xs-sm="start center">
               <p class="md-body-2 margin-left">{{item.externalID}}</p>
               <p class="margin-left" style="color: gray" ng-show="!item.externalID">Nenhum Id Externo</p>
               <md-tooltip md-direction="top">

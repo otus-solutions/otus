@@ -42,6 +42,7 @@
     }
 
     function refreshActivityStage() {
+      self.stages = [];
       _loadActivityStages();
       _loadCategories();
     }
@@ -56,7 +57,7 @@
       LoadingScreenService.start();
 
       ParticipantActivityService.getAllByStageGroup()
-        .then(stages => _setUnitySurveyAndActivity(stages))
+        .then(stages => _setOrderByActivity(stages))
         .catch(err => {
           $log.error(err);
           _showMsg(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.TOAST.ERROR.errorFind);
@@ -65,7 +66,7 @@
       LoadingScreenService.finish();
     }
 
-    function _setUnitySurveyAndActivity(stages) {
+    function _setOrderByActivity(stages) {
       stages.map(stage => {
         stage.acronyms.forEach(acronym => _activityAttributes(acronym.activities));
 
@@ -81,9 +82,9 @@
 
           return 0;
         });
-
-        self.stages = stages;
       });
+
+      self.stages = stages;
     }
 
     function _activityAttributes(activities) {
