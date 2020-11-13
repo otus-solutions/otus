@@ -1,25 +1,28 @@
 <md-content flex>
   <div layout="column" class="boxWithHeight tela" layout-padding flex>
     <md-whiteframe class="md-whiteframe-12dp aliquot-whiteframe" flex >
-      <div layout="row" layout-xs="column" layout-align="space-between center" layout-align-xs="">
-        <div flex="" layout="row" layout-xs="column" layout-align="start center" layout-align-xs="">
-          <p>Selecione um momento:</p>
-          <md-input-container style="margin-left: 5px">
-            <label>momento</label>
-            <md-select ng-change="$ctrl.filterTubesByMoment()" ng-model="$ctrl.selectedMoments" multiple>
-              <md-optgroup label="Momentos">
-                <md-option ng-select ng-value="moment" ng-repeat="moment in $ctrl.moments">
-                  {{moment}}
-                </md-option>
-              </md-optgroup>
-            </md-select>
-          </md-input-container>
+      <div layout="row" layout-align="space-between center">
+        <md-button class="md-raised md-secondary" ng-click="$ctrl.backPage()">Voltar</md-button>
+        <div layout="row" layout-align="end">
+          <span layout="row" ng-if="$ctrl.newLabels.tubes.length == 0" layout-align="center center">
+            <md-button class="md-raised md-primary" disabled="">Gerar Etiquetas</md-button>
+            <md-tooltip>Selecione ao menos um tubo</md-tooltip>
+          </span>
+          <label-maker ng-if="$ctrl.newLabels.tubes.length > 0" button-name="'Gerar Etiquetas'" label-data="$ctrl.newLabels"/>
         </div>
-        <span layout="row" ng-if="$ctrl.newLabels.tubes.length == 0" layout-align="center center">
-          <md-button class="md-raised md-primary" disabled="">Gerar Etiquetas</md-button>
-          <md-tooltip>Selecione ao menos um tubo</md-tooltip>
-        </span>
-        <label-maker ng-if="$ctrl.newLabels.tubes.length > 0" button-name="'Gerar Etiquetas'" label-data="$ctrl.newLabels"/>
+      </div>
+      <div flex="" layout="row" layout-xs="column" layout-align="start center" layout-align-xs="">
+        <p>Selecione um momento:</p>
+        <md-input-container style="margin-left: 5px">
+          <label>momento</label>
+          <md-select ng-change="$ctrl.filterTubesByMoment()" ng-model="$ctrl.selectedMoments" multiple>
+            <md-optgroup label="Momentos">
+              <md-option ng-select ng-value="moment" ng-repeat="moment in $ctrl.moments">
+                {{moment}}
+              </md-option>
+            </md-optgroup>
+          </md-select>
+        </md-input-container>
       </div>
       <span layout-margin="5px"></span>
       <div ng-repeat="tube in $ctrl.labels.tubes" flex="">

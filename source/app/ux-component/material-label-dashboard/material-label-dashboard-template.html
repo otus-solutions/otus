@@ -9,12 +9,12 @@
   </otus-dashboard-toolbar>
   <md-toolbar style="z-index: 1" class="md-primary md-hue-1">
     <div class="md-toolbar-tools md-hue-2">
-      <span flex>Etiquetas para materiais biologicos</span>
+      <span flex>Etiquetas para materiais biológicos</span>
     </div>
   </md-toolbar>
   <div flex="100" style="width: 1000px; margin: 0 auto" layout="column">
     <div style="margin-top: 10px"></div>
-    <md-input-group flex="100" layout="row" layout-xs="column" layout-align-xs="center center">
+    <md-input-group flex="100" layout="row" layout-xs="column" layout-align-xs="">
       <md-button flex="100"  layout="column"  class="md-primary md-raised" ng-click="$ctrl.changeState('tubes')" ng-disabled="$ctrl.state == 'tubes'">Tubos</md-button>
       <md-button  flex="100" layout="column" class="md-primary md-raised" ng-click="$ctrl.changeState('aliquots')"
                   ng-if="$ctrl.labelsFound.type == 'laboratoryParticipantLabel'" ng-disabled="$ctrl.state == 'aliquots'">Aliquotas</md-button>

@@ -8,12 +8,14 @@
   Controller.$inject = [
     '$scope',
     '$element',
+    '$window',
     'otusjs.otus.uxComponent.Publisher',
   ];
 
   function Controller(
     $scope,
     $element,
+    $window,
     Publisher) {
     var self = this;
 
@@ -25,12 +27,17 @@
     self.addTubeToPrintList = addTubeToPrintList;
     self.removeTube = removeTube;
     self.filterTubesByMoment = filterTubesByMoment
+    self.backPage = backPage
 
     function onInit() {
       createNewLabels()
       _subscribeLabels()
       _publishPrintStructure()
       _removeDuplicatedMoments();
+    }
+
+    function backPage() {
+      $window.history.back()
     }
 
     function createNewLabels() {
