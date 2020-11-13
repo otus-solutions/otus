@@ -108,6 +108,7 @@
       }
 
       self.ParticipantContactValues = ParticipantContactValues;
+      self.minDate = new Date('01/01/1930')
       self.maxDate = new Date();
       delete self.centers;
       delete self.centerFilter;
