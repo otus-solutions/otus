@@ -24,7 +24,7 @@
     '$scope',
     'otusjs.participantManager.contact.ParticipantContactService',
     'ParticipantContactValues',
-    'otusjs.otus.dashboard.core.EventService',
+    'otusjs.participant.core.EventService'
   ];
 
   function Controller(
