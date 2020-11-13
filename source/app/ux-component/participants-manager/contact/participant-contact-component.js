@@ -21,7 +21,6 @@
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.participant.business.ParticipantMessagesService',
-    'otusjs.otus.dashboard.service.DashboardService',
     '$scope',
     'otusjs.participantManager.contact.ParticipantContactService',
     'ParticipantContactValues',
@@ -87,11 +86,11 @@
     }
 
     function _loadSelectedParticipant() {
-      var participantData = ParticipantManagerService.getSelectedParticipant();
+      var participantData = JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant;
       if (participantData) {
         self.participant = ParticipantFactory.fromJson(participantData);
       } else {
-        participantData = JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant;
+        participantData = ParticipantManagerService.getSelectedParticipant();
         self.participant = ParticipantFactory.fromJson(participantData);
       }
 
