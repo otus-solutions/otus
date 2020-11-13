@@ -39,7 +39,6 @@
     dashboardContextService,
     ParticipantManagerService,
     ParticipantMessagesService,
-    DashboardService,
     $scope,
     ParticipantContactService,
     ParticipantContactValues,
@@ -89,18 +88,11 @@
 
     function _loadSelectedParticipant() {
       var participantData = ParticipantManagerService.getSelectedParticipant();
-        // JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant;
       if (participantData) {
         self.participant = ParticipantFactory.fromJson(participantData);
       } else {
-        //participantData = JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant;
-       // ParticipantManagerService.selectParticipant(participantData);
-        self.participant = ParticipantFactory.fromJson(ParticipantManagerService.getSelectedParticipant());
-      //   DashboardService
-      //     .getSelectedParticipant()
-      //     .then(function (participantData) {
-      //       self.participant = ParticipantFactory.fromJson(participantData);
-      //     });
+        participantData = JSON.parse(sessionStorage.getItem("participant_context")).selectedParticipant;
+        self.participant = ParticipantFactory.fromJson(participantData);
       }
 
 
