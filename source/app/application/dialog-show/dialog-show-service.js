@@ -128,8 +128,9 @@
       return $mdDialog.show({
         controller: data.settings.controller,
         bindToController: true,
-        locals: { data: data},
-        template: data.settings.template || data.settings.templateUrl,
+        locals: { data: data },
+        templateUrl: data.settings.templateUrl,
+        template: data.settings.template,
         parent: angular.element(document.body),
         controllerAs: '$ctrl',
         fullscreen: fullscreen

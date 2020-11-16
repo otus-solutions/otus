@@ -109,6 +109,7 @@
     }
 
     function fillSelectedActivity(itemActivity) {
+      EventService.resetActivitySelected();
       ParticipantActivityService.selectActivities([itemActivity]);
 
       ActivityPlayerService.load().then(function () {
