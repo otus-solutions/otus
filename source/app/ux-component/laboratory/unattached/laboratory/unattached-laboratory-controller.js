@@ -13,18 +13,33 @@
     'otusjs.laboratory.business.unattached.UnattachedLaboratoryService',
     'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.laboratory.configuration.LaboratoryConfigurationService'
+    'otusjs.laboratory.configuration.LaboratoryConfigurationService',
+    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
+
   ];
 
-  function Controller($mdDialog, $mdToast, $timeout, DialogShowService, UnattachedLaboratoryService, LaboratoryLabelFactory, LoadingScreenService, LaboratoryConfigurationService) {
+  function Controller($mdDialog,
+                      $mdToast,
+                      $timeout,
+                      DialogShowService,
+                      UnattachedLaboratoryService,
+                      LaboratoryLabelFactory,
+                      LoadingScreenService,
+                      LaboratoryConfigurationService,
+                      LaboratoryLocalStorageService) {
     var self = this;
     const LABORATORY_NOT_FOUND_MESSAGE = "Laboratório não encontrado";
     const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
 
 
+    self.$onInit = onInit
     self.attacheLaboratory = attacheLaboratory;
     self.generateLabels = generateLabels;
     self.discardUnattached = discardUnattached;
+
+    function onInit() {
+      generateLabels();
+    }
 
     function discardUnattached() {
       showDeleteDialog().then(function () {
@@ -46,27 +61,22 @@
 
     function generateLabels() {
       LoadingScreenService.start();
-      if (self.labels) {
-        _runLabelMaker();
+      if (self.laboratoryData.tubes) {
+        _fillLabels(self.laboratoryData);
       } else {
-        if (self.laboratoryData.tubes) {
-          _fillLabels(self.laboratoryData);
-          _runLabelMaker();
-        } else {
-          UnattachedLaboratoryService.getById(self.laboratoryData._id.$oid).then(function (result) {
-            _fillLabels(result);
-            _runLabelMaker();
-          }).catch(function (error) {
-            if (error.data) {
-              self.attacheError = "Laboratório não encontrado";
-            } else {
-              self.attacheError = UNEXPECTED_ERROR_MESSAGE;
-            }
-            LoadingScreenService.finish();
-            _showToast(self.attacheError);
-          });
-        }
+        UnattachedLaboratoryService.getById(self.laboratoryData._id.$oid).then(function (result) {
+          _fillLabels(result);
+        }).catch(function (error) {
+          if (error.data) {
+            self.attacheError = "Laboratório não encontrado";
+          } else {
+            self.attacheError = UNEXPECTED_ERROR_MESSAGE;
+          }
+          LoadingScreenService.finish();
+          _showToast(self.attacheError);
+        });
       }
+      LoadingScreenService.finish();
     }
 
     function _fillLabels(lab) {
@@ -81,13 +91,12 @@
         return tubeInfo
       });
       self.labels = LaboratoryLabelFactory.createForUnattached(angular.copy(lab));
-    }
-
-    function _runLabelMaker() {
-      $timeout(function() {
-        $(".label-maker-" + self.laboratoryData._id.$oid).find("button").click();
-      });
-      LoadingScreenService.finish();
+      self.labelsWithoutTubes = angular.copy(self.labels)
+      self.labelsWithoutTubes.tubes = []
+      self.labels.type = "laboratoryUnattachedLabel"
+      LaboratoryLocalStorageService.findAndDeleteLabels({"type": "laboratoryUnattachedLabel"})
+      LaboratoryLocalStorageService.findAndDeleteLabels({"type": "laboratoryParticipantLabel"})
+      LaboratoryLocalStorageService.insert(self.labels)
     }
 
     function _buildConfirmMessage(labCode, recruitmentNumber) {

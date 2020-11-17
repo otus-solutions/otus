@@ -18,10 +18,13 @@
     'otusjs.laboratory.core.EventService',
     'otusjs.otus.uxComponent.Publisher',
     'otusjs.model.participant.ParticipantFactory',
-    '$scope'
+    '$scope',
+    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
   ];
 
-  function Controller($q, $mdDialog, DialogShowService, ParticipantLaboratoryService, UnattachedLaboratoryService, LoadingScreenService, EventService, Publisher, ParticipantFactory, $scope) {
+  function Controller($q, $mdDialog, DialogShowService,
+                      ParticipantLaboratoryService, UnattachedLaboratoryService,
+                      LoadingScreenService, EventService, Publisher, ParticipantFactory, $scope, LaboratoryLocalStorageService) {
     var self = this;
 
     /* Public methods */
@@ -179,8 +182,12 @@
 
       self.labels = ParticipantLaboratoryService.generateLabels();
       self.labels.tubes = _orderTubesWithLabelNullAlphabetically(self.labels.tubes);
+      self.labels.type = "laboratoryParticipantLabel"
       self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
       self.state = newState;
+      LaboratoryLocalStorageService.findAndDeleteLabels({"type": "laboratoryParticipantLabel"})
+      LaboratoryLocalStorageService.findAndDeleteLabels({"type": "laboratoryUnattachedLabel"})
+      LaboratoryLocalStorageService.insert(self.labels)
     }
 
     function _orderTubesWithLabelNullAlphabetically(tubeList) {

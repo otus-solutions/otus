@@ -39,6 +39,8 @@
     self.update = update;
     self.clear = clear;
     self.get = get;
+    self.find = find
+    self.findAndDeleteLabels = findAndDeleteLabels
 
     /**
      * Binds this service to collection "laboratories" from LokiJS database instance.
@@ -74,7 +76,17 @@
     }
 
     function get(ix) {
-      return _collection.get(ix);  
+      return _collection.get(ix);
+    }
+
+    function find(query) {
+      return _collection.find(query);
+    }
+
+    function findAndDeleteLabels(query) {
+      _collection.chain()
+        .find(query)
+        .remove()
     }
 
     /**
