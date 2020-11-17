@@ -26,6 +26,7 @@
       'SIGNUP': 'signup',
       'SIGNUP_RESULT': 'signup-result',
       'LABELMAKER': 'labelMaker',
+      'MATERIAL_LABEL': 'material-label',
       'RECOVERY': 'recovery',
       'ACTIVITY_IMPORT': 'activity-import'
     });

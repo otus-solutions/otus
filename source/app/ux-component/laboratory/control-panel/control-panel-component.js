@@ -23,11 +23,12 @@
     'otusjs.otus.uxComponent.Publisher',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.deploy.LocationPointRestService',
-    'otusjs.model.locationPoint.LocationPointFactory'
+    'otusjs.model.locationPoint.LocationPointFactory',
+    'otusjs.application.state.ApplicationStateService'
   ];
 
   function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService,
-                      Publisher, DialogService, LocationPointRestService, LocationPointFactory) {
+                      Publisher, DialogService, LocationPointRestService, LocationPointFactory, ApplicationStateService) {
     var self = this;
     var confirmCancel;
     var confirmAliquotingExitDialog;
@@ -37,10 +38,7 @@
     var hideDelayTime = 3000;
     var changedTubes = false;
 
-    self.selectedTubes = []
     self.selectedLocationPoint = {}
-    self.newLabels = {}
-
     self.userLocationPoints = []
 
     self.$onInit = onInit;
@@ -51,24 +49,26 @@
     self.verifyDate = verifyDate;
     self.saveAliquots = saveAliquots;
     self.cancelAliquots = cancelAliquots;
-    self.removeDuplicatedMoments = removeDuplicatedMoments;
-    self.filterTubesByMoment = filterTubesByMoment;
     self.fetchLocationPoints = fetchLocationPoints;
     self._fetchUserLocationPoints = _fetchUserLocationPoints;
     self.saveLocationPoint = saveLocationPoint;
     self.changeAliquotsLocationPoints = changeAliquotsLocationPoints
     self.changeAliquotsProcessingDate = changeAliquotsProcessingDate
+    self.activateLabelMaterialDashboard = activateLabelMaterialDashboard
 
     function onInit() {
+      self.participantLabel = angular.copy(self.labels)
+      self.participantLabel.tubes = []
       _buildDialogs();
-      removeDuplicatedMoments();
       fetchLocationPoints();
       self.processingDate = new Date();
       self.now = new Date();
       verifyDate();
-
     }
 
+    function activateLabelMaterialDashboard() {
+      ApplicationStateService.activateMaterialLabelDashboard()
+    }
     function changeAliquotsLocationPoints() {
       Publisher.publish('aliquots-data', (aliquots) => {
         aliquots.forEach(aliquot => {
@@ -144,6 +144,32 @@
       }
     }
 
+    function _filterLocationPointByParticipant() {
+      self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
+        locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
+      )
+      Publisher.unsubscribe('filtered-location-points')
+      Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
+    }
+
+    function _filterLocationPoints() {
+      if(self.userLocationPoints) {
+        self.userLocationIds = []
+
+        for(const location of self.userLocationPoints) {
+          self.userLocationIds.push(location._id)
+        }
+
+        self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
+          self.userLocationIds.includes(locationPoint._id) ||
+          locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
+        )
+        Publisher.unsubscribe('filtered-location-points')
+        Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
+
+      }
+    }
+
     function fetchLocationPoints() {
       LocationPointRestService.getLocationPoints().then((response) => {
         self.locationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
@@ -161,27 +187,6 @@
         self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
         _filterLocationPoints();
       })
-    }
-
-    function filterTubesByMoment() {
-      if(self.selectedTubes.includes("TODOS")){
-        self.selectedTubes = self.moments
-        return self.newLabels = angular.copy(self.labels)
-      }
-      if(self.selectedTubes.length > 0) {
-        const filteredTubes = self.labels.tubes.filter(tube => {
-          return self.selectedTubes.includes(tube.momentLabel);
-        })
-        self.newLabels = angular.copy(self.labels)
-        self.newLabels.tubes = filteredTubes
-      }
-    }
-
-    function removeDuplicatedMoments(){
-      const tubesMoments = self.labels.tubes.map((tube)=>
-        tube.momentLabel
-      )
-      self.moments = ["TODOS", ...new Set(tubesMoments)]
     }
 
     function saveAliquots() {
