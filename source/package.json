@@ -1,6 +1,6 @@
 {
   "name": "otus",
-  "version": "1.44.0",
+  "version": "1.44.1",
   "description": "Tool for data entry in a research environment.",
   "keywords": [
     "otus",
@@ -56,7 +56,7 @@
     "jquery": "3.0.0",
     "jsbarcode": "3.5.7",
     "json2csv": "3.11.5",
-    "label-maker-js": "1.5.0",
+    "label-maker-js": "1.5.1",
     "lokijs": "1.4.2",
     "moment": "2.12.0",
     "ng-material-datetimepicker": "1.13.0",
