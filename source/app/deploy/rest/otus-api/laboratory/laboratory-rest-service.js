@@ -91,15 +91,6 @@
       }, participantLaboratory).$promise;
     }
 
-    function updateTubeCollectionData(recruitmentNumber, updateStructure) {
-      if (!_participantRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _participantRest.updateTubeCollectionData({
-        rn: recruitmentNumber
-      }, updateStructure).$promise;
-    }
-
     function updateAliquots(recruitmentNumber, persistanceStructure) {
       if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
@@ -109,13 +100,6 @@
       }, persistanceStructure).$promise;
     }
 
-    function deleteAliquot(aliquotCode) {
-      if (!_participantRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _participantRest.deleteAliquot({code: aliquotCode}).$promise;
-    }
-
     function convertStorageAliquot(aliquot) {
       if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
@@ -123,11 +107,20 @@
       return _participantRest.convertStorageAliquot(aliquot).$promise;
     }
 
-    function getTubeMedataDataByType(tubeType) {
-      if (!_configurationRest) {
+    function deleteAliquot(aliquotCode) {
+      if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return Promise.resolve(_getDummyData(tubeType));//TODO
+      return _participantRest.deleteAliquot({code: aliquotCode}).$promise;
+    }
+
+    function updateTubeCollectionData(recruitmentNumber, updateStructure) {
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.updateTubeCollectionData({
+        rn: recruitmentNumber
+      }, updateStructure).$promise;
     }
 
     function updateTubeCustomMetadata(tube){
@@ -137,6 +130,90 @@
       return Promise.resolve(true);//TODO
     }
 
+
+    /* laboratory-configuration methods */
+    function getDescriptors() {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _configurationRest.getDescriptors().$promise;
+    }
+
+    function getCheckingExist() {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _configurationRest.getCheckingExist().$promise;
+    }
+
+    function getAliquotDescriptors() {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _configurationRest.getAliquotDescriptors().$promise;
+    }
+
+    function getAliquotConfiguration() {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _configurationRest.getAliquotConfiguration().$promise;
+    }
+
+    function getTubeMedataDataByType(tubeType) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return Promise.resolve(_getDummyData(tubeType));//TODO
+    }
+
+
+    /* Unattached Laboratory Methods */
+
+    function initializeUnattached(acronym, descriptorName) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.initialize({acronym:acronym,descriptorName:descriptorName}).$promise;
+    }
+
+    function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.attache({recruitmentNumber:recruitmentNumber,laboratoryIdentification:laboratoryIdentification}).$promise;
+    }
+
+    function listUnattached(collectGroupName, center, page, quantity) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.listLaboratories({descriptorName:collectGroupName, acronym:center, page:page, quantity:quantity}).$promise;
+    }
+
+    function getUnattachedById(laboratoryOid) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.getById({laboratoryOid:laboratoryOid}).$promise;
+    }
+
+    function discardUnattached(laboratoryOid) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.discard({laboratoryOid:laboratoryOid}).$promise;
+    }
+
+    function getUnattachedByIdentification(laboratoryIdentification) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _unattachedRest.getByIdentification({laboratoryIdentification:laboratoryIdentification}).$promise;
+    }
+
+
+    //TODO remover
     function _getDummyData(tubeType) { //TODO temporario
       const dummyData = [
         {
@@ -246,77 +323,6 @@
         }
       ];
       return dummyData.filter(obj => obj.type === tubeType);
-    }
-
-    /* laboratory-configuration methods */
-    function getDescriptors() {
-      if (!_configurationRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _configurationRest.getDescriptors().$promise;
-    }
-
-    function getAliquotConfiguration() {
-      if (!_configurationRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _configurationRest.getAliquotConfiguration().$promise;
-    }
-
-    function getAliquotDescriptors() {
-      if (!_configurationRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _configurationRest.getAliquotDescriptors().$promise;
-    }
-
-    function getCheckingExist() {
-      if (!_configurationRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _configurationRest.getCheckingExist().$promise;
-    }
-
-    function initializeUnattached(acronym, descriptorName) {
-      if (!_configurationRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _unattachedRest.initialize({acronym:acronym,descriptorName:descriptorName}).$promise;
-    }
-
-    function attacheLaboratory(recruitmentNumber, laboratoryIdentification) {
-      if (!_configurationRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _unattachedRest.attache({recruitmentNumber:recruitmentNumber,laboratoryIdentification:laboratoryIdentification}).$promise;
-    }
-
-    function listUnattached(collectGroupName, center, page, quantity) {
-      if (!_configurationRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _unattachedRest.listLaboratories({descriptorName:collectGroupName, acronym:center, page:page, quantity:quantity}).$promise;
-    }
-
-    function getUnattachedById(laboratoryOid) {
-      if (!_configurationRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _unattachedRest.getById({laboratoryOid:laboratoryOid}).$promise;
-    }
-
-    function discardUnattached(laboratoryOid) {
-      if (!_configurationRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _unattachedRest.discard({laboratoryOid:laboratoryOid}).$promise;
-    }
-
-    function getUnattachedByIdentification(laboratoryIdentification) {
-      if (!_configurationRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _unattachedRest.getByIdentification({laboratoryIdentification:laboratoryIdentification}).$promise;
     }
 
   }
