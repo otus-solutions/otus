@@ -92,9 +92,11 @@
             </div>
           </div>
 
-          <md-button class="md-raised md-primary" ng-click="$ctrl.updateCustomMetadata()">
+          <md-button ng-if="$ctrl.tubeHasCustomMetadata()" class="md-raised md-primary"
+                     ng-click="$ctrl.updateCustomMetadata()">
             Salvar Metadados
           </md-button>
+          <span ng-if="!$ctrl.tubeHasCustomMetadata()" class="md-title" style="color: #777777">Nenhum metadado foi encontrado</span>
         </div>
 
         <div ng-if="$ctrl.originalTube.hasOwnProperty('code')">

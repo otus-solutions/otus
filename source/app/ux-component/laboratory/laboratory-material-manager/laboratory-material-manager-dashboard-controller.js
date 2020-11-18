@@ -28,6 +28,7 @@
 
     self.$onInit = onInit;
     self.isValidCode = isValidCode;
+    self.tubeHasCustomMetadata = tubeHasCustomMetadata;
     self.saveChangedTubes = saveChangedTubes;
     self.cancelTube = cancelTube;
     self.saveMetadata = saveMetadata;
@@ -70,6 +71,10 @@
       }
     }
 
+    function tubeHasCustomMetadata(){
+      return self.tubeCustomMetadataOptions && self.tubeCustomMetadataOptions.length > 0;
+    }
+
     function cancelTube() {
       if(self.originalTube.hasOwnProperty('code')) {
         return DialogService.showDialog(self.confirmCancel).then(function() {
@@ -104,7 +109,6 @@
 
       ParticipantLaboratoryService.updateTubeCustomMetadata(newTube)
         .then(response => {
-          console.log(response);//.
           self.originalTube.customMetadata = newTube.customMetadata;
         })
         .catch(err => _showToastMsg('Falha ao registrar coleta'));
@@ -161,5 +165,6 @@
       ariaLabel:'Confirmação de finalização',
       buttons: self.buttons
     };
+    
   }
 }());
