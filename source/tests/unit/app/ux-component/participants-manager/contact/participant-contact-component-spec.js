@@ -51,7 +51,7 @@ describe('ParticipantComponent_UnitTest_Suite', () => {
     expect(ctrl.contact).toBeUndefined();
     ctrl.loadParticipantContact();
     Mock.scope.$digest();
-    expect(ctrl.contact).toBe('');
+    expect(ctrl.contact).toBeNull();
   });
 
 
