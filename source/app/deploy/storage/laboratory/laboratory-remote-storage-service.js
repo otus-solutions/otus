@@ -40,6 +40,7 @@
     self.deleteAliquot = deleteAliquot;
     self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.updateTubeCustomMetadata = updateTubeCustomMetadata;
 
     /* Laboratory Configuration Methods */
     self.getDescriptors = getDescriptors;
@@ -157,6 +158,17 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .updateTubeCollectionData(recruitmentNumber, updateStructure)
+        .then(function (response) {
+          deferred.resolve(response);
+        }, function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function updateTubeCustomMetadata(tube){
+      var deferred = $q.defer();
+      LaboratoryRestService.updateTubeCustomMetadata(tube)
         .then(function (response) {
           deferred.resolve(response);
         }, function (e) {

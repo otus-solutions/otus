@@ -26,6 +26,7 @@
     self.convertStorageAliquot = convertStorageAliquot;
     self.deleteAliquot = deleteAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.updateTubeCustomMetadata = updateTubeCustomMetadata;
 
     /* Laboratory Configuration Methods*/
     self.getDescriptors = getDescriptors;
@@ -126,7 +127,14 @@
       if (!_configurationRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return Promise.resolve(_getDummyData(tubeType));
+      return Promise.resolve(_getDummyData(tubeType));//TODO
+    }
+
+    function updateTubeCustomMetadata(tube){
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return Promise.resolve(true);//TODO
     }
 
     function _getDummyData(tubeType) { //TODO temporario
@@ -162,42 +170,42 @@
         {
           "_id": "5fb410071fa5e63b532dedfb",
           "objectType": "TubeCustomMetadata",
-          "type": "MICROTAINER",
+          "type": "EDTA",
           "value": "Adequada",
           "extractionValue": "Adequada"
         },
         {
           "_id": "5fb410071fa5e63b532dedfc",
           "objectType": "TubeCustomMetadata",
-          "type": "MICROTAINER",
+          "type": "EDTA",
           "value": "Inadequada - Vazado",
           "extractionValue": "Inadequada - Vazado"
         },
         {
           "_id": "5fb410071fa5e63b532dedfd",
           "objectType": "TubeCustomMetadata",
-          "type": "MICROTAINER",
+          "type": "EDTA",
           "value": "Inadequada - Vazio",
           "extractionValue": "Inadequada - Vazio"
         },
         {
           "_id": "5fb410071fa5e63b532dedfe",
           "objectType": "TubeCustomMetadata",
-          "type": "MICROTAINER",
+          "type": "EDTA",
           "value": "Inadequada - Volume inferior a 600uL",
           "extractionValue": "Inadequada - Volume inferior a 600uL"
         },
         {
           "_id": "5fb410071fa5e63b532dedff",
           "objectType": "TubeCustomMetadata",
-          "type": "MICROTAINER",
+          "type": "EDTA",
           "value": "Inadequada - Volume superior a 600uL",
           "extractionValue": "Inadequada - Volume superior a 600uL"
         },
         {
           "_id": "5fb410071fa5e63b532dee00",
           "objectType": "TubeCustomMetadata",
-          "type": "MICROTAINER",
+          "type": "EDTA",
           "value": "Inadequado - Outro",
           "extractionValue": "Inadequado - Outro"
         },

@@ -31,7 +31,7 @@
     self.saveChangedTubes = saveChangedTubes;
     self.cancelTube = cancelTube;
     self.saveMetadata = saveMetadata;
-    self.saveCustomMetadata = saveCustomMetadata;
+    self.updateCustomMetadata = updateCustomMetadata;
 
     function onInit() {
       self.showTubeCustomMetadataOptions = false;
@@ -97,11 +97,18 @@
       }
     }
 
-    function saveCustomMetadata(){
-      self.originalTube.customMetadata = self.tubeCustomMetadataOptions
+    function updateCustomMetadata(){
+      const newTube = angular.copy(self.originalTube);
+      newTube.customMetadata = self.tubeCustomMetadataOptions
         .filter(option => option.selected)
-        .map(obj => obj.value);
+        .map(obj => obj._id);
 
+      ParticipantLaboratoryService.updateTubeCustomMetadata(newTube)
+        .then(response => {
+          console.log(response);//.
+          self.originalTube.customMetadata = newTube.customMetadata;
+        })
+        .catch(err => console.log(err));
     }
 
     function _updateChangedTubes() {

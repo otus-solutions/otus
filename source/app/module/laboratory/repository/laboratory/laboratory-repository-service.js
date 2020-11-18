@@ -21,6 +21,7 @@
     self.updateTubeCollectionData = updateTubeCollectionData;
     self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn;
     self.updateAliquotsWithRn = updateAliquotsWithRn;
+    self.updateTubeCustomMetadata = updateTubeCustomMetadata;
 
     /* Laboratory Configuration Methods */
     self.getCheckingExist = getCheckingExist;
@@ -79,6 +80,10 @@
 
     function updateAliquotsWithRn(updateStructure, recruitmentNumber) {
       return LaboratoryCollectionService.updateAliquotsWithRn(updateStructure, recruitmentNumber);
+    }
+
+    function updateTubeCustomMetadata(tube){
+      return LaboratoryCollectionService.updateTubeCustomMetadata(tube);
     }
 
     function convertStorageAliquot(aliquot) {
@@ -156,5 +161,6 @@
     function getUnattachedByIdentification(laboratoryIdentification) {
       return LaboratoryCollectionService.getUnattachedByIdentification(laboratoryIdentification);
     }
+
   }
 }());

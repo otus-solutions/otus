@@ -35,7 +35,7 @@
     self.updateAliquots = updateAliquots;
     self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
-    self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn
+    self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn;
     self.deleteAliquot = deleteAliquot;
     self.getCheckingExist = getCheckingExist;
     self.updateAliquotsWithRn = updateAliquotsWithRn;
@@ -44,8 +44,7 @@
     self.getLaboratoryByParticipant = getLaboratoryByParticipant;
     self.generateLabelsAliquots = generateLabelsAliquots;
     self.getTubeMedataDataByType = getTubeMedataDataByType;
-
-
+    self.updateTubeCustomMetadata = updateTubeCustomMetadata;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -142,15 +141,16 @@
 
     function getLoggedUser() {
       return ContextService.getCurrentUser();
-
     }
+
     function updateLaboratoryParticipant() {
       return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(_participantLaboratory));
-
     }
+
     function updateTubeCollectionData(updateStructure) {
       return LaboratoryRepositoryService.updateTubeCollectionData(JSON.stringify(updateStructure));
     }
+
     function updateTubeCollectionDataWithRn(recruitmentNumber, updateStructure) {
       return LaboratoryRepositoryService.updateTubeCollectionDataWithRn(recruitmentNumber, JSON.stringify(updateStructure));
     }
@@ -193,12 +193,18 @@
       return request.promise
     }
 
+    function updateTubeCustomMetadata(tube){
+      return LaboratoryRepositoryService.updateTubeCustomMetadata(tube);
+    }
+
+
     function generateLabels() {
       return LaboratoryLabelFactory.create(self.participant, angular.copy(_participantLaboratory));
     }
     function generateLabelsAliquots() {
       return LaboratoryLabelAliquotFactory.create(self.participant, angular.copy(_participantLaboratory));
     }
+
 
     function getCheckingExist() {
       return LaboratoryConfigurationService.getCheckingExist();
@@ -211,5 +217,7 @@
     function getTubeMedataDataByType(tubeType) {
       return LaboratoryConfigurationService.getTubeMedataDataByType(tubeType);
     }
+
+
   }
 }());
