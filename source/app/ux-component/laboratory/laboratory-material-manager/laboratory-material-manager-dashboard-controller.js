@@ -44,30 +44,29 @@
 
     function isValidCode(tubeCode) {
       if(tubeCode.length === 9) {
-        ParticipantLaboratoryService.getLaboratoryByTube(tubeCode, ParticipantManagerService).then(participantLaboratory => {
-          self.participantLaboratory = participantLaboratory;
-          const foundTube = self.participantLaboratory.tubes.find(tube => {
-            return tube.code == tubeCode;
-          });
-          self.originalTube = angular.copy(foundTube);
-          self.newTube = foundTube;
-          self.tubeCode = "";
+        ParticipantLaboratoryService.getLaboratoryByTube(tubeCode, ParticipantManagerService)
+          .then(participantLaboratory => {
+            self.participantLaboratory = participantLaboratory;
+            const foundTube = self.participantLaboratory.tubes.find(tube => {
+              return tube.code == tubeCode;
+            });
+            self.originalTube = angular.copy(foundTube);
+            self.newTube = foundTube;
+            self.tubeCode = "";
 
-          ParticipantLaboratoryService.getTubeMedataDataByType(self.originalTube.type)
-            .then(data => {
-              self.tubeCustomMetadataOptions = data.map(obj => angular.extend(obj, obj, {selected: false}));
+            ParticipantLaboratoryService.getTubeMedataDataByType(self.originalTube.type)
+              .then(data => {
+                self.tubeCustomMetadataOptions = data.map(obj => angular.extend(obj, obj, {selected: false}));
 
-              if(self.originalTube.customMetadata){
-                self.tubeCustomMetadataOptions
-                  .filter(obj => self.originalTube.customMetadata.includes(obj._id))
-                  .forEach(obj => obj.selected = true);
-              }
-            })
-            .catch(err => console.log(err));
-
-        }).catch(e => {
-          toastError(tubeCode)
-        })
+                if(self.originalTube.customMetadata){
+                  self.tubeCustomMetadataOptions
+                    .filter(obj => self.originalTube.customMetadata.includes(obj._id))
+                    .forEach(obj => obj.selected = true);
+                }
+              })
+              .catch(e => _showToastMsg('Tipo de tubo não encontrado'));
+          })
+          .catch(e => _showToastMsg('Tubo ' + tubeCode + ' não encontrado'));
       }
     }
 
@@ -108,7 +107,7 @@
           console.log(response);//.
           self.originalTube.customMetadata = newTube.customMetadata;
         })
-        .catch(err => console.log(err));
+        .catch(err => _showToastMsg('Falha ao registrar coleta'));
     }
 
     function _updateChangedTubes() {
@@ -124,14 +123,6 @@
           _showToastMsg('Falha ao registrar coleta');
         });
       });
-    }
-
-    function toastError(tubeCode) {
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent('Tubo ' + tubeCode + ' não encontrado')
-          .hideDelay(1000)
-      );
     }
 
     function _showToastMsg(msg) {
