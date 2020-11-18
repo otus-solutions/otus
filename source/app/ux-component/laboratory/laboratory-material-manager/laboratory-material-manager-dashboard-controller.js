@@ -19,20 +19,23 @@
                       ParticipantLaboratoryService, ParticipantManagerService,
                       DialogService) {
     var self = this;
+    self.participantManagerService = ParticipantManagerService;
     self.tubeCode = "";
     self.originalTube = {};
     self.selectedTube = {};
-    self.tubeCustomMetadata = null;
-    self.participantManagerService = ParticipantManagerService;
+    self.tubeCustomMetadataOptions = null;
+    self.showTubeCustomMetadataOptions = false;
 
     self.$onInit = onInit;
     self.isValidCode = isValidCode;
     self.saveChangedTubes = saveChangedTubes;
     self.cancelTube = cancelTube;
     self.saveMetadata = saveMetadata;
+    self.saveCustomMetadata = saveCustomMetadata;
 
     function onInit() {
-      LoadingScreenService.start()
+      self.showTubeCustomMetadataOptions = false;
+      LoadingScreenService.start();
       ParticipantManagerService.setup().then(function (response) {
         self.onReady = true;
         LoadingScreenService.finish()
@@ -50,11 +53,15 @@
           self.newTube = foundTube;
           self.tubeCode = "";
 
-          console.log(self.originalTube);//.
           ParticipantLaboratoryService.getTubeMedataDataByType(self.originalTube.type)
             .then(data => {
-              self.tubeCustomMetadata = data;
-              console.log(data);
+              self.tubeCustomMetadataOptions = data.map(obj => angular.extend(obj, obj, {selected: false}));
+
+              if(self.originalTube.customMetadata){
+                self.tubeCustomMetadataOptions
+                  .filter(obj => self.originalTube.customMetadata.includes(obj._id))
+                  .forEach(obj => obj.selected = true);
+              }
             })
             .catch(err => console.log(err));
 
@@ -67,8 +74,8 @@
     function cancelTube() {
       if(self.originalTube.hasOwnProperty('code')) {
         return DialogService.showDialog(self.confirmCancel).then(function() {
-          self.originalTube = {}
-          self.newTube = {}
+          self.originalTube = {};
+          self.newTube = {};
         });
       }
     }
@@ -81,7 +88,7 @@
       if(self.newTube.tubeCollectionData.isCollected) {
         const tubeStructure = {
           tubes: [self.newTube]
-        }
+        };
         ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(() => {
           _showToastMsg('Volume parcial salvo com sucesso!');
         }).catch(function(e) {
@@ -90,15 +97,19 @@
       }
     }
 
+    function saveCustomMetadata(){
+      self.originalTube.customMetadata = self.tubeCustomMetadataOptions
+        .filter(option => option.selected)
+        .map(obj => obj.value);
+
+    }
+
     function _updateChangedTubes() {
-
       DialogService.showDialog(self.confirmFinish).then(function() {
-        self.newTube.collect()
-
+        self.newTube.collect();
         const tubeStructure = {
           tubes: [self.newTube]
-        }
-
+        };
         ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(function() {
           self.participantLaboratory.updateTubeList();
           _showToastMsg('Registrado com sucesso!');

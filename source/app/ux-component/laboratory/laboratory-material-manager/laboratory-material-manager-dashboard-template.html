@@ -21,7 +21,6 @@
           <md-list ng-if="$ctrl.originalTube.hasOwnProperty('code')">
 
             <div class="tube-list-view">
-
               <md-card ng-style="{'padding':'10px'}">
 
                 <div layout="row">
@@ -62,19 +61,50 @@
                 </div>
               </md-card>
             </div>
-              <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected" ng-click="$ctrl.saveChangedTubes()">
-                  COLETAR
-              </md-button>
-              <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
+            <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected"
+                       ng-click="$ctrl.saveChangedTubes()">
+              COLETAR
+            </md-button>
+            <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
             <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
+            <md-checkbox class="md-primary"
+                         ng-model="$ctrl.showTubeCustomMetadataOptions"
+                         name="custom_metadata"
+                         aria-label="custom metadados">
+              Metadados
+            </md-checkbox>
           </md-list>
 
           <div ng-if="!$ctrl.originalTube.hasOwnProperty('code')">
             <h2>Sem Tubos Coletados</h2>
           </div>
         </div>
-        <div ng-if="$ctrl.originalTube.hasOwnProperty('code')">
-          <laboratory-aliquots-manager participant-manager="$ctrl.participantManagerService" participant-laboratory="$ctrl.participantLaboratory" original-tube="$ctrl.originalTube" tube="$ctrl.newTube" flex></laboratory-aliquots-manager>
+
+        <div ng-if="$ctrl.originalTube.hasOwnProperty('code') && $ctrl.showTubeCustomMetadataOptions"
+             layout="column" layout-align="center center">
+
+          <div layout="column">
+            <div ng-repeat="option in $ctrl.tubeCustomMetadataOptions track by $index">
+              <md-checkbox class="md-primary"
+                           ng-model="option.selected">
+                <span class="md-caption">{{ option.value }}</span>
+              </md-checkbox>
+            </div>
+          </div>
+
+          <md-button class="md-raised md-primary" ng-click="$ctrl.saveCustomMetadata()">
+            Salvar Metadados
+          </md-button>
         </div>
+
+        <div ng-if="$ctrl.originalTube.hasOwnProperty('code')">
+          <laboratory-aliquots-manager participant-manager="$ctrl.participantManagerService"
+                                       participant-laboratory="$ctrl.participantLaboratory"
+                                       original-tube="$ctrl.originalTube"
+                                       tube="$ctrl.newTube"
+                                       flex>
+          </laboratory-aliquots-manager>
+        </div>
+
       </div>
 </md-content>
