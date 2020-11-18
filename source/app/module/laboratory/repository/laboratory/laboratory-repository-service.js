@@ -26,6 +26,7 @@
     self.getCheckingExist = getCheckingExist;
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
+    self.getTubeMedataDataByType = getTubeMedataDataByType;
 
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
@@ -98,6 +99,10 @@
 
     function getAliquotsDescriptors() {
       return LaboratoryCollectionService.getAliquotDescriptors();
+    }
+
+    function getTubeMedataDataByType(tubeType) {
+      return LaboratoryCollectionService.getTubeMedataDataByType(tubeType);
     }
 
     function getAliquots(lotAliquot, unique) {

@@ -43,6 +43,9 @@
     self.getData = getData;
     self.getLaboratoryByParticipant = getLaboratoryByParticipant;
     self.generateLabelsAliquots = generateLabelsAliquots;
+    self.getTubeMedataDataByType = getTubeMedataDataByType;
+
+
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -203,6 +206,10 @@
 
     function _getLaboratoryDescriptors() {
       return LaboratoryConfigurationService.getLaboratoryDescriptors();
+    }
+
+    function getTubeMedataDataByType(tubeType) {
+      return LaboratoryConfigurationService.getTubeMedataDataByType(tubeType);
     }
   }
 }());

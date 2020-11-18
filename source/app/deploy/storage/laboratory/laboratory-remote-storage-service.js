@@ -45,6 +45,7 @@
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getCheckingExist = getCheckingExist;
+    self.getTubeMedataDataByType = getTubeMedataDataByType;
 
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
@@ -239,6 +240,17 @@
       var deferred = $q.defer();
       LaboratoryRestService
         .getCheckingExist()
+        .then(function (response) {
+          deferred.resolve(response);
+        }, function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function getTubeMedataDataByType(tubeType) {
+      var deferred = $q.defer();
+      LaboratoryRestService.getTubeMedataDataByType(tubeType)
         .then(function (response) {
           deferred.resolve(response);
         }, function (e) {

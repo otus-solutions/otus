@@ -22,9 +22,10 @@
     self.tubeCode = "";
     self.originalTube = {};
     self.selectedTube = {};
-    self.$onInit = onInit;
-    self.participantManagerService = ParticipantManagerService
+    self.tubeCustomMetadata = null;
+    self.participantManagerService = ParticipantManagerService;
 
+    self.$onInit = onInit;
     self.isValidCode = isValidCode;
     self.saveChangedTubes = saveChangedTubes;
     self.cancelTube = cancelTube;
@@ -41,13 +42,22 @@
     function isValidCode(tubeCode) {
       if(tubeCode.length === 9) {
         ParticipantLaboratoryService.getLaboratoryByTube(tubeCode, ParticipantManagerService).then(participantLaboratory => {
-          self.participantLaboratory = participantLaboratory
+          self.participantLaboratory = participantLaboratory;
           const foundTube = self.participantLaboratory.tubes.find(tube => {
-            return tube.code == tubeCode
-          })
+            return tube.code == tubeCode;
+          });
           self.originalTube = angular.copy(foundTube);
-          self.newTube = foundTube
-          self.tubeCode = ""
+          self.newTube = foundTube;
+          self.tubeCode = "";
+
+          console.log(self.originalTube);//.
+          ParticipantLaboratoryService.getTubeMedataDataByType(self.originalTube.type)
+            .then(data => {
+              self.tubeCustomMetadata = data;
+              console.log(data);
+            })
+            .catch(err => console.log(err));
+
         }).catch(e => {
           toastError(tubeCode)
         })

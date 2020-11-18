@@ -32,6 +32,7 @@
     self.getCheckingExist = getCheckingExist;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getAliquotConfiguration = getAliquotConfiguration;
+    self.getTubeMedataDataByType = getTubeMedataDataByType;
 
     /* Unattached Laboratory Methods */
     self.initializeUnattached = initializeUnattached;
@@ -40,6 +41,7 @@
     self.getUnattachedById = getUnattachedById;
     self.discardUnattached = discardUnattached;
     self.getUnattachedByIdentification = getUnattachedByIdentification;
+
 
     function initialize() {
       _participantRest = OtusRestResourceService.getLaboratoryParticipantResource();
@@ -120,6 +122,124 @@
       return _participantRest.convertStorageAliquot(aliquot).$promise;
     }
 
+    function getTubeMedataDataByType(tubeType) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return Promise.resolve(_getDummyData(tubeType));
+    }
+
+    function _getDummyData(tubeType) { //TODO temporario
+      const dummyData = [
+        {
+          "_id": "5fb410071fa5e63b532dedf7",
+          "objectType": "TubeCustomMetadata",
+          "type": "GEL",
+          "value": "Adequada",
+          "extractionValue": "Adequada"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dedf8",
+          "objectType": "TubeCustomMetadata",
+          "type": "GEL",
+          "value": "Inadequada - Aberto",
+          "extractionValue": "Inadequada - Aberto"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dedf9",
+          "objectType": "TubeCustomMetadata",
+          "type": "GEL",
+          "value": "Inadequada - Cassete quebrado",
+          "extractionValue": "Inadequada - Cassete quebrado"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dedfa",
+          "objectType": "TubeCustomMetadata",
+          "type": "GEL",
+          "value": "Inadequado - Outro",
+          "extractionValue": "Inadequado - Outro"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dedfb",
+          "objectType": "TubeCustomMetadata",
+          "type": "MICROTAINER",
+          "value": "Adequada",
+          "extractionValue": "Adequada"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dedfc",
+          "objectType": "TubeCustomMetadata",
+          "type": "MICROTAINER",
+          "value": "Inadequada - Vazado",
+          "extractionValue": "Inadequada - Vazado"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dedfd",
+          "objectType": "TubeCustomMetadata",
+          "type": "MICROTAINER",
+          "value": "Inadequada - Vazio",
+          "extractionValue": "Inadequada - Vazio"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dedfe",
+          "objectType": "TubeCustomMetadata",
+          "type": "MICROTAINER",
+          "value": "Inadequada - Volume inferior a 600uL",
+          "extractionValue": "Inadequada - Volume inferior a 600uL"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dedff",
+          "objectType": "TubeCustomMetadata",
+          "type": "MICROTAINER",
+          "value": "Inadequada - Volume superior a 600uL",
+          "extractionValue": "Inadequada - Volume superior a 600uL"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dee00",
+          "objectType": "TubeCustomMetadata",
+          "type": "MICROTAINER",
+          "value": "Inadequado - Outro",
+          "extractionValue": "Inadequado - Outro"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dee01",
+          "objectType": "TubeCustomMetadata",
+          "type": "CRYOTUBE",
+          "value": "Adequada",
+          "extractionValue": "Adequada"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dee02",
+          "objectType": "TubeCustomMetadata",
+          "type": "CRYOTUBE",
+          "value": "Inadequada - Vazado",
+          "extractionValue": "Inadequada - Vazado"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dee03",
+          "objectType": "TubeCustomMetadata",
+          "type": "CRYOTUBE",
+          "value": "Inadequada - Vazio",
+          "extractionValue": "Inadequada - Vazio"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dee04",
+          "objectType": "TubeCustomMetadata",
+          "type": "CRYOTUBE",
+          "value": "Inadequada - quebrado",
+          "extractionValue": "Inadequada - quebrado"
+        },
+        {
+          "_id": "5fb410071fa5e63b532dee05",
+          "objectType": "TubeCustomMetadata",
+          "type": "CRYOTUBE",
+          "value": "Inadequado - Outro",
+          "extractionValue": "Inadequado - Outro"
+        }
+      ];
+      return dummyData.filter(obj => obj.type === tubeType);
+    }
+
     /* laboratory-configuration methods */
     function getDescriptors() {
       if (!_configurationRest) {
@@ -190,5 +310,6 @@
       }
       return _unattachedRest.getByIdentification({laboratoryIdentification:laboratoryIdentification}).$promise;
     }
+
   }
 }());

@@ -46,6 +46,7 @@
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getCheckingExist = getCheckingExist;
     self.updateAliquotsWithRn = updateAliquotsWithRn;
+    self.getTubeMedataDataByType = getTubeMedataDataByType;
 
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
@@ -245,6 +246,22 @@
             .updateAliquots(recruitmentNumber, updateStructure)
             .then(function (data) {
               request.resolve();
+            }, function (e) {
+              request.reject(e);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function getTubeMedataDataByType(tubeType) {
+      var request = $q.defer();
+
+      _remoteStorage.whenReady()
+        .then(function (remoteStorage) {
+          remoteStorage.getTubeMedataDataByType(tubeType)
+            .then(function (data) {
+              request.resolve(data);
             }, function (e) {
               request.reject(e);
             });
