@@ -11,6 +11,7 @@
         kitButton: '=',
         bioMaterialButton: '=',
         labelData: '=',
+        labels: '<',
         kitId: '='
       }
     });

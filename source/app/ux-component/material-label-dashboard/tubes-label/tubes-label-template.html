@@ -8,7 +8,7 @@
             <md-button class="md-raised md-primary" disabled="">Gerar Etiquetas</md-button>
             <md-tooltip>Selecione ao menos um tubo</md-tooltip>
           </span>
-          <label-maker ng-if="$ctrl.newLabels.tubes.length > 0" button-name="'Gerar Etiquetas'" label-data="$ctrl.newLabels"/>
+          <label-maker ng-if="$ctrl.newLabels.tubes.length > 0" button-name="'Gerar Etiquetas'" show-kit-label="false" show-participant-label="false" label-data="$ctrl.newLabels"/>
         </div>
       </div>
       <div flex="" layout="row" layout-xs="column" layout-align="start center" layout-align-xs="">
