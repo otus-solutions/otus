@@ -45,7 +45,7 @@
         });
     }
 
-    function _loadStateData(ParticipantContextService, SessionContextService, Application) {
+    function _loadStateData(ParticipantContextService, SessionContextService, Application, laboratoryContextService) {
       return Application
         .isDeployed()
         .then(function () {
@@ -71,7 +71,8 @@
     _loadStateData.$inject = [
       'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.laboratory.core.ContextService'
     ];
   }
 }());

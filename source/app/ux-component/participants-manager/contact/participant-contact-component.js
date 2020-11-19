@@ -257,9 +257,7 @@
       ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
         .then((data) => ParticipantContactService.participantContactFactoryJson(data))
         .then((resultFactory) => self.contact = resultFactory)
-        .catch(() => {
-          self.contact = "";
-        });
+        .catch(() => self.contact = null);
     }
 
     function createParticipantContact() {

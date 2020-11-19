@@ -96,7 +96,6 @@
       self.labels.type = "laboratoryUnattachedLabel"
       LaboratoryLocalStorageService.findAndDeleteLabels({"type": "laboratoryUnattachedLabel"})
       LaboratoryLocalStorageService.findAndDeleteLabels({"type": "laboratoryParticipantLabel"})
-      LaboratoryLocalStorageService.insert(self.labels)
     }
 
     function _buildConfirmMessage(labCode, recruitmentNumber) {

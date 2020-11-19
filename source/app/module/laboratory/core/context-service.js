@@ -59,6 +59,8 @@
     self.getUnattachedCenterFilter = getUnattachedCenterFilter;
     self.setUnattachedGroupFilter = setUnattachedGroupFilter;
     self.getUnattachedGroupFilter = getUnattachedGroupFilter;
+    self.setLabelPrintStructure = setLabelPrintStructure;
+    self.getLabelPrintStructure = getLabelPrintStructure;
 
     function begin() {
       _context.clear();
@@ -221,6 +223,14 @@
 
     function getUnattachedGroupFilter() {
       return getData("unattachedCollectGroupsFilter");
+    }
+
+    function setLabelPrintStructure(labelPrintStructure) {
+      setData("labelPrintStructure",labelPrintStructure);
+    }
+
+    function getLabelPrintStructure() {
+      return getData("labelPrintStructure");
     }
 
     function getLotInfoManagerAction() {
