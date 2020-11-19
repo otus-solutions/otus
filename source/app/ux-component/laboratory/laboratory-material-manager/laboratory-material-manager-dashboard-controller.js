@@ -24,7 +24,6 @@
     self.originalTube = {};
     self.selectedTube = {};
     self.tubeCustomMetadataOptions = null;
-    self.showTubeCustomMetadataOptions = false;
 
     self.$onInit = onInit;
     self.isValidCode = isValidCode;
@@ -35,7 +34,6 @@
     self.updateCustomMetadata = updateCustomMetadata;
 
     function onInit() {
-      self.showTubeCustomMetadataOptions = false;
       LoadingScreenService.start();
       ParticipantManagerService.setup().then(function (response) {
         self.onReady = true;
@@ -165,6 +163,6 @@
       ariaLabel:'Confirmação de finalização',
       buttons: self.buttons
     };
-    
+
   }
 }());
