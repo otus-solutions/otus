@@ -40,6 +40,7 @@
 
     function isValidCode(tubeCode) {
       if(tubeCode.length === 9) {
+        cancelTube(tubeCode);
         ParticipantLaboratoryService.getLaboratoryByTube(tubeCode, ParticipantManagerService).then(participantLaboratory => {
           self.participantLaboratory = participantLaboratory
           const foundTube = self.participantLaboratory.tubes.find(tube => {
@@ -54,8 +55,8 @@
       }
     }
 
-    function cancelTube() {
-      if(self.originalTube.hasOwnProperty('code')) {
+    function cancelTube(tubeCode) {
+      if(self.originalTube.hasOwnProperty('code') && tubeCode.length === 9 ) {
         return DialogService.showDialog(self.confirmCancel).then(function() {
           self.originalTube = {}
           self.newTube = {}
