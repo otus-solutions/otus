@@ -264,7 +264,7 @@
       var deferred = $q.defer();
       LaboratoryRestService.getTubeMedataDataByType(tubeType)
         .then(function (response) {
-          deferred.resolve(response);
+          deferred.resolve(response.data);
         }, function (e) {
           deferred.reject(e);
         });
