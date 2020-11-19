@@ -28,6 +28,7 @@
     self.$onInit = onInit;
     self.isValidCode = isValidCode;
     self.tubeHasCustomMetadata = tubeHasCustomMetadata;
+    self.originalTubeHasCode = originalTubeHasCode;
     self.saveChangedTubes = saveChangedTubes;
     self.cancelTube = cancelTube;
     self.saveMetadata = saveMetadata;
@@ -73,8 +74,12 @@
       return self.tubeCustomMetadataOptions && self.tubeCustomMetadataOptions.length > 0;
     }
 
+    function originalTubeHasCode(){
+      return self.originalTube.hasOwnProperty('code');
+    }
+
     function cancelTube() {
-      if(self.originalTube.hasOwnProperty('code')) {
+      if(self.originalTubeHasCode()) {
         return DialogService.showDialog(self.confirmCancel).then(function() {
           self.originalTube = {};
           self.newTube = {};

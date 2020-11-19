@@ -18,7 +18,7 @@
             <input ng-model="$ctrl.tubeCode" ng-change="[$ctrl.isValidCode($ctrl.tubeCode), $ctrl.cancelTube()]">
           </md-input-container>
 
-          <md-list ng-if="$ctrl.originalTube.hasOwnProperty('code')">
+          <md-list ng-if="$ctrl.originalTubeHasCode()">
 
             <div class="tube-list-view">
               <md-card ng-style="{'padding':'10px'}">
@@ -69,12 +69,12 @@
             <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
           </md-list>
 
-          <div ng-if="!$ctrl.originalTube.hasOwnProperty('code')">
+          <div ng-if="!$ctrl.originalTubeHasCode()">
             <h2>Sem Tubos Coletados</h2>
           </div>
         </div>
 
-        <div ng-if="$ctrl.originalTube.hasOwnProperty('code') && $ctrl.tubeHasCustomMetadata()"
+        <div ng-if="$ctrl.originalTubeHasCode() && $ctrl.tubeHasCustomMetadata()"
              layout="column" layout-align="center center">
 
           <div layout-xs="column" layout-gt-xs="row">
@@ -87,7 +87,7 @@
           </div>
         </div>
 
-        <div ng-if="$ctrl.originalTube.hasOwnProperty('code')">
+        <div ng-if="$ctrl.originalTubeHasCode()">
           <laboratory-aliquots-manager participant-manager="$ctrl.participantManagerService"
                                        participant-laboratory="$ctrl.participantLaboratory"
                                        original-tube="$ctrl.originalTube"
