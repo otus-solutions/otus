@@ -67,12 +67,6 @@
             </md-button>
             <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
             <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
-            <md-checkbox class="md-primary"
-                         ng-model="$ctrl.showTubeCustomMetadataOptions"
-                         name="custom_metadata"
-                         aria-label="custom metadados">
-              Metadados
-            </md-checkbox>
           </md-list>
 
           <div ng-if="!$ctrl.originalTube.hasOwnProperty('code')">
@@ -80,23 +74,17 @@
           </div>
         </div>
 
-        <div ng-if="$ctrl.originalTube.hasOwnProperty('code') && $ctrl.showTubeCustomMetadataOptions"
+        <div ng-if="$ctrl.originalTube.hasOwnProperty('code') && $ctrl.tubeHasCustomMetadata()"
              layout="column" layout-align="center center">
 
-          <div layout="column">
-            <div ng-repeat="option in $ctrl.tubeCustomMetadataOptions track by $index">
+          <div layout-xs="column" layout-gt-xs="row">
+            <div ng-repeat="option in $ctrl.tubeCustomMetadataOptions track by $index" style="padding-right: 16px">
               <md-checkbox class="md-primary"
                            ng-model="option.selected">
                 <span class="md-caption">{{ option.value }}</span>
               </md-checkbox>
             </div>
           </div>
-
-          <md-button ng-if="$ctrl.tubeHasCustomMetadata()" class="md-raised md-primary"
-                     ng-click="$ctrl.updateCustomMetadata()">
-            Salvar Metadados
-          </md-button>
-          <span ng-if="!$ctrl.tubeHasCustomMetadata()" class="md-title" style="color: #777777">Nenhum metadado foi encontrado</span>
         </div>
 
         <div ng-if="$ctrl.originalTube.hasOwnProperty('code')">
