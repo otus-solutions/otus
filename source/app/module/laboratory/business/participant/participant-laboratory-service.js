@@ -118,16 +118,14 @@
     }
 
     function getLaboratoryByTube(tubeCode, ParticipantManagerService) {
-      var request = $q.defer()
+      var request = $q.defer();
       _getLaboratoryDescriptors()
         .then(() => {
-          LaboratoryRepositoryService
-            .getLaboratoryByTube(tubeCode)
+          LaboratoryRepositoryService.getLaboratoryByTube(tubeCode)
             .then((laboratory) => {
               if (laboratory !== 'null') {
-                const parsedLab = JSON.parse(laboratory)
-                const participant = ParticipantManagerService.getParticipant(parsedLab.recruitmentNumber.toString())
-                _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(), participant);
+                const participant = ParticipantManagerService.getParticipant(laboratory.recruitmentNumber.toString());
+                _participantLaboratory = ParticipantLaboratoryFactory.create(laboratory, getLoggedUser(), participant);
                 request.resolve(_participantLaboratory);
               } else {
                 request.resolve(false);
@@ -135,7 +133,7 @@
             }, function (e) {
               request.reject(e);
             })
-        })
+        });
       return request.promise
     }
 
