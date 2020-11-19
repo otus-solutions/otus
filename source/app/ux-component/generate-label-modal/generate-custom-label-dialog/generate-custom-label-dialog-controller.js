@@ -11,9 +11,10 @@
     '$scope',
     '$location',
     'otusjs.otus.uxComponent.Publisher',
+    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
   ];
 
-  function Controller($mdToast, $mdDialog, $scope, $location, Publisher) {
+  function Controller($mdToast, $mdDialog, $scope, $location, Publisher, LaboratoryLocalStorageService) {
     var self = this;
     self.DialogController = DialogController;
     self.showAdvanced = showAdvanced
@@ -69,6 +70,9 @@
       }
 
       function activateMaterialLabelDashboard() {
+        if(self.labels){
+          LaboratoryLocalStorageService.insert(self.labels)
+        }
         $location.path('material-label-dashboard')
         self.hide()
       }
