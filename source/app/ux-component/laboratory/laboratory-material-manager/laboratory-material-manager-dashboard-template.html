@@ -77,10 +77,15 @@
         <div ng-if="$ctrl.originalTubeHasCode() && $ctrl.tubeHasCustomMetadata()"
              layout="column" layout-align="center center">
 
+          <md-subheader class="md-no-sticky moment-type-title">
+            Metadados Material Primário
+          </md-subheader>
+
           <div layout-xs="column" layout-gt-xs="row">
             <div ng-repeat="option in $ctrl.tubeCustomMetadataOptions track by $index" style="padding-right: 16px">
-              <md-checkbox class="md-primary"
-                           ng-model="option.selected">
+              <md-checkbox class="md-primary md-align-top-left"
+                           ng-model="option.selected"
+                           ng-change="$ctrl.updateTubeCustomMetadata(option)">
                 <span class="md-caption">{{ option.value }}</span>
               </md-checkbox>
             </div>
