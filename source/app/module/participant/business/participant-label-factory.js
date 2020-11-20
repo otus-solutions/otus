@@ -25,9 +25,9 @@
     var self = this;
 
     self.recruitment_number = participant.recruitmentNumber;
-    self.participant_name = participant.name;
-    self.gender = participant.sex;
-    self.birthday = _convertFormatDate(new Date(participant.birthdate.value));
+    self.participant_name = participant.name ? participant.name : "______________";
+    self.gender = participant.sex ? participant.name : "__";
+    self.birthday = self.birthday ? _convertFormatDate(new Date(participant.birthdate.value)) : "__/__/____";
     self.printStructure = {
       type: "",
       size: "",

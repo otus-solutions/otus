@@ -14,9 +14,8 @@
       <div class="aliquots-container" layout="column" layout-align="center" flex ng-style="{'max-width': '940px', 'margin': '0 auto'}">
         <div layout="column" layout-align="center" flex="25" flex-md="30" flex-offset="5">
           <md-input-container class="md-block" flex-gt-sm>
-          <md-input-container class="md-block" flex-gt-sm>
             <label>Código do tubo</label>
-            <input ng-model="$ctrl.tubeCode" ng-change="[$ctrl.isValidCode($ctrl.tubeCode)]">
+            <input ng-keyup="$ctrl.isEnterKey($event,$ctrl.tubeCode)" ng-model="$ctrl.tubeCode" ng-change="[$ctrl.isValidCode($ctrl.tubeCode)]" maxlength="9">
           </md-input-container>
 
           <md-list ng-if="$ctrl.originalTube.hasOwnProperty('code')">
