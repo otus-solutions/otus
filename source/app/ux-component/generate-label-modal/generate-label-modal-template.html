@@ -2,20 +2,27 @@
   <form ng-cloak>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Selecione o tipo da Etiqueta <span ng-show="ctrl.dialogData.kitButton">: kit-{{ctrl.dialogData.kitId}}</span></h2>
+        <h2>Selecione o tipo da Etiqueta <span
+          ng-show="ctrl.dialogData.kitButton">: kit-{{ctrl.dialogData.kitId}}</span></h2>
         <span flex></span>
       </div>
     </md-toolbar>
     <md-dialog-content>
-      <print-config-label />
+      <print-config-label/>
     </md-dialog-content>
     <md-dialog-actions flex="" layout="row">
-      <label-maker ng-show="ctrl.dialogData.kitButton" label-data="ctrl.dialogData.labelData" show-kit-label="true" button-name="'lab.desvinculado'">
+      <label-maker ng-show="ctrl.dialogData.identificationButton" label-data="ctrl.dialogData.labelData"
+                   show-kit-label="false" show-participant-label="false" show-identification-labels="true"
+                   button-name="'Labels de identificação'">
       </label-maker>
-      <label-maker ng-show="ctrl.dialogData.participantButton" label-data="ctrl.dialogData.labelData" show-participant-label="true" button-name="'Participante'">
+      <label-maker ng-show="ctrl.dialogData.kitButton" label-data="ctrl.dialogData.labelData" show-kit-label="true"
+                   button-name="'lab.desvinculado'">
+      </label-maker>
+      <label-maker ng-show="ctrl.dialogData.participantButton" label-data="ctrl.dialogData.labelData"
+                   show-participant-label="true" button-name="'Participante'">
       </label-maker>
       <md-button ng-click="activateMaterialLabelDashboard()"
-                 ng-show="ctrl.dialogData.bioMaterialButton"  flex="20" class="md-primary md-raised">
+                 ng-show="ctrl.dialogData.bioMaterialButton" flex="20" class="md-primary md-raised">
         Material Biológico
       </md-button>
     </md-dialog-actions>
