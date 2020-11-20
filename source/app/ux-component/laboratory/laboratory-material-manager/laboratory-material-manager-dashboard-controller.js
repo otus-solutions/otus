@@ -66,9 +66,6 @@
                 else{
                   self.originalTube.tubeCollectionData.customMetadata = [];
                 }
-
-                console.log(self.tubeCustomMetadataOptions)
-                console.log('self.originalTube.tubeCollectionData.customMetadata\n', JSON.stringify(self.originalTube.tubeCollectionData.customMetadata));
               })
               .catch(e => _showToastMsg('Tipo de tubo não encontrado'));
           })
@@ -111,30 +108,21 @@
     }
 
     function updateTubeCustomMetadata(option){
-      const newTube = angular.copy(self.originalTube);
-
-      const value = {
-        _id: option._id,
-        value: option.value
-      };///.
+      const originalTubeCopy = angular.copy(self.originalTube);
 
       if(option.selected){
-        console.log('adicionar\n', JSON.stringify(value, null, 2));
-        newTube.tubeCollectionData.customMetadata.push(option._id);
+        self.originalTube.pushCustomMetadata(option._id);
       }
       else{
-        console.log('remover\n', JSON.stringify(value, null, 2));
-        newTube.tubeCollectionData.customMetadata = newTube.tubeCollectionData.customMetadata.filter(id => id !== option._id);
+        self.originalTube.removeCustomMetadata(option._id);
       }
 
-      console.log('newTube.tubeCollectionData.customMetadata\n', JSON.stringify(newTube.tubeCollectionData.customMetadata));//.
-
-      ParticipantLaboratoryService.updateTubeCustomMetadata(newTube)
-        .then(response => {
-          self.originalTube.tubeCollectionData.customMetadata = angular.copy(newTube.tubeCollectionData.customMetadata);
-          console.log('new self.originalTube.tubeCollectionData.customMetadata\n', JSON.stringify(self.originalTube.tubeCollectionData.customMetadata));//.
-        })
-        .catch(err => _showToastMsg('Falha ao registrar metadado'));
+      ParticipantLaboratoryService.updateTubeCustomMetadata(self.originalTube)
+        .then(response => {})
+        .catch(err => {
+          self.originalTube = angular.copy(originalTubeCopy);
+          _showToastMsg('Falha ao registrar metadado')
+        });
     }
 
     function _updateChangedTubes() {
