@@ -29,6 +29,7 @@
     self.saveChangedTubes = saveChangedTubes;
     self.cancelTube = cancelTube;
     self.saveMetadata = saveMetadata;
+    self.isEnterKey = isEnterKey;
 
     function onInit() {
       LoadingScreenService.start()
@@ -38,9 +39,14 @@
       });
     }
 
+    function isEnterKey(event,tubeCode) {
+      if (event.keyCode === 13) {
+        isValidCode(tubeCode);
+      }
+    }
+
     function isValidCode(tubeCode) {
-      if(tubeCode.length === 9) {
-        cancelTube(tubeCode);
+      if (tubeCode.length === 9) {
         ParticipantLaboratoryService.getLaboratoryByTube(tubeCode, ParticipantManagerService).then(participantLaboratory => {
           self.participantLaboratory = participantLaboratory
           const foundTube = self.participantLaboratory.tubes.find(tube => {
@@ -50,14 +56,16 @@
           self.newTube = foundTube
           self.tubeCode = ""
         }).catch(e => {
-          toastError(tubeCode)
+          _showToastMsg('Tubo ' + tubeCode + ' não encontrado')
         })
+      } else {
+        _showToastMsg('O tubo deve ter 9 dígitos')
       }
     }
 
-    function cancelTube(tubeCode) {
-      if(self.originalTube.hasOwnProperty('code') && tubeCode.length === 9 ) {
-        return DialogService.showDialog(self.confirmCancel).then(function() {
+    function cancelTube() {
+      if (self.originalTube.hasOwnProperty('code')) {
+        return DialogService.showDialog(self.confirmCancel).then(function () {
           self.originalTube = {}
           self.newTube = {}
         });
@@ -69,13 +77,13 @@
     }
 
     function saveMetadata() {
-      if(self.newTube.tubeCollectionData.isCollected) {
+      if (self.newTube.tubeCollectionData.isCollected) {
         const tubeStructure = {
           tubes: [self.newTube]
         }
         ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(() => {
           _showToastMsg('Volume parcial salvo com sucesso!');
-        }).catch(function(e) {
+        }).catch(function (e) {
           _showToastMsg('Falha ao registrar volume parcial');
         });
       }
@@ -83,28 +91,20 @@
 
     function _updateChangedTubes() {
 
-      DialogService.showDialog(self.confirmFinish).then(function() {
+      DialogService.showDialog(self.confirmFinish).then(function () {
         self.newTube.collect()
 
         const tubeStructure = {
           tubes: [self.newTube]
         }
 
-        ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(function() {
+        ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(function () {
           self.participantLaboratory.updateTubeList();
           _showToastMsg('Registrado com sucesso!');
-        }).catch(function(e) {
+        }).catch(function (e) {
           _showToastMsg('Falha ao registrar coleta');
         });
       });
-    }
-
-    function toastError(tubeCode) {
-      $mdToast.show(
-        $mdToast.simple()
-          .textContent('Tubo ' + tubeCode + ' não encontrado')
-          .hideDelay(1000)
-      );
     }
 
     function _showToastMsg(msg) {
@@ -117,30 +117,34 @@
 
     self.buttons = [
       {
-        message:'Ok',
-        action:function(){$mdDialog.hide()},
-        class:'md-raised md-primary'
+        message: 'Ok',
+        action: function () {
+          $mdDialog.hide()
+        },
+        class: 'md-raised md-primary'
       },
       {
-        message:'Voltar',
-        action:function(){$mdDialog.cancel()},
-        class:'md-raised md-no-focus'
+        message: 'Voltar',
+        action: function () {
+          $mdDialog.cancel()
+        },
+        class: 'md-raised md-no-focus'
       }
     ];
 
     self.confirmCancel = {
-      dialogToTitle:'Cancelamento',
-      titleToText:'Confirmar cancelamento:',
-      textDialog:'Alterações não finalizadas serão descartadas.',
-      ariaLabel:'Confirmação de cancelamento',
+      dialogToTitle: 'Cancelamento',
+      titleToText: 'Confirmar cancelamento:',
+      textDialog: 'Alterações não finalizadas serão descartadas.',
+      ariaLabel: 'Confirmação de cancelamento',
       buttons: self.buttons
     };
 
     self.confirmFinish = {
-      dialogToTitle:'Salvar',
-      titleToText:'Confirmar alteração:',
-      textDialog:'Deseja salvar as alterações?',
-      ariaLabel:'Confirmação de finalização',
+      dialogToTitle: 'Salvar',
+      titleToText: 'Confirmar alteração:',
+      textDialog: 'Deseja salvar as alterações?',
+      ariaLabel: 'Confirmação de finalização',
       buttons: self.buttons
     };
   }

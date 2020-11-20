@@ -8,6 +8,7 @@
       templateUrl: 'app/ux-component/generate-label-modal/generate-custom-label-dialog/generate-custom-label-dialog-template.html',
       bindings: {
         participantButton: '=',
+        identificationButton: '=',
         kitButton: '=',
         bioMaterialButton: '=',
         labelData: '=',
