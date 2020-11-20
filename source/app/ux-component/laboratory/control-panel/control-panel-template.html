@@ -11,7 +11,7 @@
       <md-button class="md-raised md-primary" aria-label="coletar" ng-click="$ctrl.changeState('coleta')">Coleta de
         Tubos
       </md-button>
-      <md-button class="md-raised md-primary" aria-label="coletar" ng-click="[$ctrl.changeState('aliquots')]">
+      <md-button class="md-raised md-primary" ng-if="$ctrl.userAccessToLaboratory.aliquotManagerAccess" aria-label="coletar" ng-click="[$ctrl.changeState('aliquots')]">
         Aliquotagem
       </md-button>
     </div>
@@ -42,7 +42,7 @@
                    ng-click="$ctrl.changeState('coleta')"
         <md-tooltip md-direction="left">Coleta de Tubos</md-tooltip>
         </md-button>
-        <md-button class="md-primary md-raised md-mini" aria-label="Aliquotagem"
+        <md-button class="md-primary md-raised md-mini" aria-label="Aliquotagem" ng-if="!$ctrl.userAccessToLaboratory.aliquotManagerAccess"
                    ng-click="[$ctrl.changeState('aliquots'), $ctrl.fetchLocationPoints()]"
         <md-tooltip md-direction="left">Aliquotagem</md-tooltip>
         </md-button>

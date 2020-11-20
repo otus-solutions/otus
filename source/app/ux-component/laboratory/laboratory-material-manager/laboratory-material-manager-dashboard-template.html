@@ -74,7 +74,7 @@
           </div>
         </div>
         <div ng-if="$ctrl.originalTube.hasOwnProperty('code')">
-          <laboratory-aliquots-manager participant-manager="$ctrl.participantManagerService" participant-laboratory="$ctrl.participantLaboratory" original-tube="$ctrl.originalTube" tube="$ctrl.newTube" flex></laboratory-aliquots-manager>
+          <laboratory-aliquots-manager ng-if="$ctrl.userAccessToLaboratory.aliquotManagerAccess" participant-manager="$ctrl.participantManagerService" participant-laboratory="$ctrl.participantLaboratory" original-tube="$ctrl.originalTube" tube="$ctrl.newTube" flex></laboratory-aliquots-manager>
         </div>
       </div>
 </md-content>

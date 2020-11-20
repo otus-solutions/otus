@@ -13,17 +13,19 @@
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.application.dialog.DialogShowService',
+    'otusjs.user.business.UserAccessPermissionService'
   ];
 
   function Controller($mdToast, $mdDialog, $filter, LoadingScreenService,
                       ParticipantLaboratoryService, ParticipantManagerService,
-                      DialogService) {
+                      DialogService, UserAccessPermissionService) {
     var self = this;
     self.tubeCode = "";
     self.originalTube = {};
     self.selectedTube = {};
     self.$onInit = onInit;
     self.participantManagerService = ParticipantManagerService
+    self.userAccessToLaboratory = "";
 
     self.isValidCode = isValidCode;
     self.saveChangedTubes = saveChangedTubes;
@@ -33,9 +35,16 @@
 
     function onInit() {
       LoadingScreenService.start()
+      _checkingLaboratoryPermission();
       ParticipantManagerService.setup().then(function (response) {
         self.onReady = true;
         LoadingScreenService.finish()
+      });
+    }
+
+    function _checkingLaboratoryPermission() {
+      return UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
+        self.userAccessToLaboratory = response;
       });
     }
 

@@ -24,11 +24,12 @@
     'otusjs.application.dialog.DialogShowService',
     'otusjs.deploy.LocationPointRestService',
     'otusjs.model.locationPoint.LocationPointFactory',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.user.business.UserAccessPermissionService'
   ];
 
   function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService,
-                      Publisher, DialogService, LocationPointRestService, LocationPointFactory, ApplicationStateService) {
+                      Publisher, DialogService, LocationPointRestService, LocationPointFactory, ApplicationStateService, UserAccessPermissionService) {
     var self = this;
     var confirmCancel;
     var confirmAliquotingExitDialog;
@@ -40,6 +41,7 @@
 
     self.selectedLocationPoint = {}
     self.userLocationPoints = []
+    self.userAccessToLaboratory = ""
 
     self.$onInit = onInit;
     self.changeState = changeState;
@@ -57,13 +59,21 @@
     self.activateLabelMaterialDashboard = activateLabelMaterialDashboard
 
     function onInit() {
-      self.participantLabel = angular.copy(self.labels)
-      self.participantLabel.tubes = []
+      self.participantLabel = angular.copy(self.labels);
+      self.participantLabel.tubes = [];
+      _checkingLaboratoryPermission();
       _buildDialogs();
       fetchLocationPoints();
       self.processingDate = new Date();
       self.now = new Date();
       verifyDate();
+    }
+
+
+    function _checkingLaboratoryPermission() {
+      return UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
+        self.userAccessToLaboratory = response;
+      });
     }
 
     function activateLabelMaterialDashboard() {
