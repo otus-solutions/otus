@@ -11,9 +11,10 @@
     '$scope',
     '$location',
     'otusjs.otus.uxComponent.Publisher',
+    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
   ];
 
-  function Controller($mdToast, $mdDialog, $scope, $location, Publisher) {
+  function Controller($mdToast, $mdDialog, $scope, $location, Publisher, LaboratoryLocalStorageService) {
     var self = this;
     self.DialogController = DialogController;
     self.showAdvanced = showAdvanced
@@ -31,6 +32,7 @@
         locals: {
           data: {
             participantButton: self.participantButton,
+            identificationButton: self.identificationButton,
             kitButton: self.kitButton,
             kitId: self.kitId ? self.kitId : "",
             bioMaterialButton: self.bioMaterialButton,
@@ -44,7 +46,7 @@
       }, function () {
         self.status = '';
       });
-    };
+    }
 
 
     function DialogController($scope,
@@ -69,6 +71,9 @@
       }
 
       function activateMaterialLabelDashboard() {
+        if(self.labels){
+          LaboratoryLocalStorageService.insert(self.labels)
+        }
         $location.path('material-label-dashboard')
         self.hide()
       }
