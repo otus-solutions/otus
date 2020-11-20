@@ -41,7 +41,11 @@
 
     function isEnterKey(event,tubeCode) {
       if (event.keyCode === 13) {
-        isValidCode(tubeCode);
+        if (tubeCode.length === 9) {
+          isValidCode(tubeCode);
+        } else {
+          _showToastMsg('O tubo deve ter 9 dígitos')
+        }
       }
     }
 
@@ -58,8 +62,6 @@
         }).catch(e => {
           _showToastMsg('Tubo ' + tubeCode + ' não encontrado')
         })
-      } else {
-        _showToastMsg('O tubo deve ter 9 dígitos')
       }
     }
 
