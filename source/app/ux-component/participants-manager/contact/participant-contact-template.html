@@ -100,7 +100,7 @@
       </div>
     </div>
 
-    <otus-participant-update-contact  ng-if="$ctrl.isIdentified && $ctrl.contact"
+    <otus-participant-update-contact  ng-if="$ctrl.contact"
                                      class="contact-update"
                                      contact="$ctrl.contact.phoneNumber"
                                      contact-id="{{$ctrl.contact._id}}"
@@ -108,7 +108,7 @@
                                      load-participant-contact="$ctrl.loadParticipantContact">
     </otus-participant-update-contact>
 
-    <otus-participant-update-contact  ng-if="$ctrl.isIdentified && $ctrl.contact "
+    <otus-participant-update-contact  ng-if="$ctrl.contact "
                                      class="contact-update"
                                      contact="$ctrl.contact.email"
                                      contact-id="{{$ctrl.contact._id}}"
