@@ -32,6 +32,7 @@
         locals: {
           data: {
             participantButton: self.participantButton,
+            identificationButton: self.identificationButton,
             kitButton: self.kitButton,
             kitId: self.kitId ? self.kitId : "",
             bioMaterialButton: self.bioMaterialButton,
@@ -45,7 +46,7 @@
       }, function () {
         self.status = '';
       });
-    };
+    }
 
 
     function DialogController($scope,
