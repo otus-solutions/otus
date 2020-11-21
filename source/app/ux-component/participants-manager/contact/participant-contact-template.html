@@ -41,7 +41,7 @@
               <input mdc-datetime-picker="" show-icon="true" date="true" time="false" required
                      aria-label="Data de Nascimento" type="text" id="datetime"
                      placeholder="{{$ctrl.birthdate ? '': 'Data de Nascimento'}}"
-                     max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
+                     min-date="$ctrl.minDate" max-date="$ctrl.maxDate" ng-model="$ctrl.birthdate" class="md-input" readonly="readonly"
                      format="DD/MM/YYYY" disable-parent-scroll="true" ng-change="$ctrl.onFilter()">
             </md-input-container>
           </div>
@@ -100,7 +100,7 @@
       </div>
     </div>
 
-    <otus-participant-update-contact  ng-if="$ctrl.isIdentified && $ctrl.contact"
+    <otus-participant-update-contact  ng-if="$ctrl.contact"
                                      class="contact-update"
                                      contact="$ctrl.contact.phoneNumber"
                                      contact-id="{{$ctrl.contact._id}}"
@@ -108,7 +108,7 @@
                                      load-participant-contact="$ctrl.loadParticipantContact">
     </otus-participant-update-contact>
 
-    <otus-participant-update-contact  ng-if="$ctrl.isIdentified && $ctrl.contact "
+    <otus-participant-update-contact  ng-if="$ctrl.contact "
                                      class="contact-update"
                                      contact="$ctrl.contact.email"
                                      contact-id="{{$ctrl.contact._id}}"
