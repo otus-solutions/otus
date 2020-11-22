@@ -1,25 +1,19 @@
-describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
-
+describe('LaboratoryCollectionService_Test_Suite', function () {
   var service;
   var Mock = {};
   var Injections = [];
-  var EXPECTED_DATA;
 
   beforeEach(function () {
+    angular.mock.module('otusjs.otus');
 
-    angular.mock.module('otusjs.laboratory.repository');
-    angular.mock.module('otusjs.laboratory.core');
-    angular.mock.module('otusjs.laboratory.storage');
+    angular.mock.inject(function ($injector) {
+      Injections.$q = $injector.get('$q');
+      Injections.ModuleService = $injector.get('otusjs.laboratory.core.ModuleService');
+      Injections.LaboratoryLocalStorageService = $injector.get('otusjs.laboratory.storage.LaboratoryLocalStorageService');
 
-    angular.mock.inject(function (_$injector_) {
+      service = $injector.get('otusjs.laboratory.repository.LaboratoryCollectionService', Injections);
 
-      Injections.$q = _$injector_.get('$q');
-      Injections.ModuleService = _$injector_.get('otusjs.laboratory.core.ModuleService');
-      Injections.LaboratoryLocalStorageService = _$injector_.get('otusjs.laboratory.storage.LaboratoryLocalStorageService');
-
-      service = _$injector_.get('otusjs.laboratory.repository.LaboratoryCollectionService', Injections);
-
-      mockData();
+      _mockInitialize();
 
       spyOn(service, "useParticipant").and.callThrough();
       spyOn(service, "resetParticipantInUse").and.callThrough();
@@ -50,6 +44,8 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
     expect(service.createLot).toBeDefined();
     expect(service.updateLot).toBeDefined();
     expect(service.deleteLot).toBeDefined();
+    expect(service.getTubeMedataDataByType).toBeDefined();
+    expect(service.updateTubeCustomMetadata).toBeDefined();
   });
 
   it('useParticipant_method_should_execute', function () {
@@ -130,7 +126,15 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
     expect(service.getCheckingExist()).toBePromise();
   });
 
-  function mockData() {
+  it('getTubeMedataDataByType_method_should_execute', function () {
+    expect(service.getTubeMedataDataByType(Mock.tube.type)).toBePromise();
+  });
+
+  it('getCheckingExist_method_should_execute', function () {
+    expect(service.updateTubeCustomMetadata(Mock.tube)).toBePromise();
+  });
+
+  function _mockInitialize() {
     Mock.participant = {
       recruitmentNumber: 50000501
     };
@@ -138,5 +142,7 @@ describe('Laboratory_Collection_Service_UnitTest_Suite', function () {
       recruitmentNumber: 50000501
     };
     Mock.Aliquot = Test.utils.data.aliquot;
+
+    Mock.tube = { type:'tube type'};
   }
 });
