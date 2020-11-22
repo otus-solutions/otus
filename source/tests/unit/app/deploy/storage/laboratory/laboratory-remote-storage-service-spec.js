@@ -1,4 +1,4 @@
-describe('LaboratoryRemoteStorageServiceS_Test_Suite', function () {
+describe('LaboratoryRemoteStorageService_Test_Suite', function () {
   var Mock = {};
   var Injections = [];
   var service;
@@ -56,12 +56,14 @@ describe('LaboratoryRemoteStorageServiceS_Test_Suite', function () {
     spyOn(Injections.LaboratoryRestService, 'updateTubeCustomMetadata').and.returnValue(Mock.resolve);
     service.updateTubeCustomMetadata(Mock.tube);
     expect(Injections.LaboratoryRestService.updateTubeCustomMetadata).toHaveBeenCalledTimes(1);
+    expect(Injections.LaboratoryRestService.updateTubeCustomMetadata).toHaveBeenCalledWith(Mock.tube);
   });
 
   it('getTubeMedataDataByType method should to call getTubeMedataDataByType rest method', function () {
     spyOn(Injections.LaboratoryRestService, 'getTubeMedataDataByType').and.returnValue(Mock.resolve);
-    service.getTubeMedataDataByType();
+    service.getTubeMedataDataByType(Mock.tube.type);
     expect(Injections.LaboratoryRestService.getTubeMedataDataByType).toHaveBeenCalledTimes(1);
+    expect(Injections.LaboratoryRestService.getTubeMedataDataByType).toHaveBeenCalledWith(Mock.tube.type);
   });
 
 
@@ -69,7 +71,7 @@ describe('LaboratoryRemoteStorageServiceS_Test_Suite', function () {
     Mock.resolve = Promise.resolve({});
     Mock.resolve = Promise.reject('error');
 
-    Mock.tube = {};
+    Mock.tube = {type: 'ABC'};
   }
 
 });
