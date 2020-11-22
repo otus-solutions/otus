@@ -30,6 +30,7 @@
     self.cancelTube = cancelTube;
     self.saveMetadata = saveMetadata;
     self.isEnterKey = isEnterKey;
+    self.updateAliquots = function (){};
 
     function onInit() {
       LoadingScreenService.start()
@@ -59,6 +60,7 @@
           self.originalTube = angular.copy(foundTube);
           self.newTube = foundTube
           self.tubeCode = ""
+          self.updateAliquots(foundTube,participantLaboratory);
         }).catch(e => {
           _showToastMsg('Tubo ' + tubeCode + ' não encontrado')
         })
@@ -92,7 +94,6 @@
     }
 
     function _updateChangedTubes() {
-
       DialogService.showDialog(self.confirmFinish).then(function () {
         self.newTube.collect()
 
