@@ -13,11 +13,12 @@
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.application.dialog.DialogShowService',
+    'otusjs.user.business.UserAccessPermissionService'
   ];
 
   function Controller($mdToast, $mdDialog, $filter, LoadingScreenService,
                       ParticipantLaboratoryService, ParticipantManagerService,
-                      DialogService) {
+                      DialogService, UserAccessPermissionService) {
     var self = this;
     self.participantManagerService = ParticipantManagerService;
     self.tubeCode = "";
@@ -26,6 +27,9 @@
     self.tubeCustomMetadataOptions = null;
 
     self.$onInit = onInit;
+    self.participantManagerService = ParticipantManagerService
+    self.userAccessToLaboratory = "";
+
     self.isValidCode = isValidCode;
     self.tubeHasCustomMetadata = tubeHasCustomMetadata;
     self.originalTubeHasCode = originalTubeHasCode;
@@ -38,10 +42,17 @@
 
 
     function onInit() {
-      LoadingScreenService.start();
+      LoadingScreenService.start()
+      _checkingLaboratoryPermission();
       ParticipantManagerService.setup().then(function (response) {
         self.onReady = true;
         LoadingScreenService.finish()
+      });
+    }
+
+    function _checkingLaboratoryPermission() {
+      return UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
+        self.userAccessToLaboratory = response;
       });
     }
 
@@ -139,12 +150,14 @@
     }
 
     function _updateChangedTubes() {
-      DialogService.showDialog(self.confirmFinish).then(function() {
-        self.newTube.collect();
+      DialogService.showDialog(self.confirmFinish).then(function () {
+        self.newTube.collect()
+
         const tubeStructure = {
           tubes: [self.newTube]
-        };
-        ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(function() {
+        }
+
+        ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(function () {
           self.participantLaboratory.updateTubeList();
           _showToastMsg('Registrado com sucesso!');
         }).catch(function (e) {

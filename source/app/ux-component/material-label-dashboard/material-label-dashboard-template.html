@@ -17,7 +17,7 @@
     <md-input-group flex="100" layout="row" layout-xs="column" layout-align-xs="">
       <md-button flex="100"  layout="column"  class="md-primary md-raised" ng-click="$ctrl.changeState('tubes')" ng-disabled="$ctrl.state == 'tubes'">Tubos</md-button>
       <md-button  flex="100" layout="column" class="md-primary md-raised" ng-click="$ctrl.changeState('aliquots')"
-                  ng-if="$ctrl.labelsFound.type == 'laboratoryParticipantLabel'" ng-disabled="$ctrl.state == 'aliquots'">Aliquotas</md-button>
+                  ng-if="$ctrl.labelsFound.type == 'laboratoryParticipantLabel' && $ctrl.userAccessToLaboratory.aliquotManagerAccess" ng-disabled="$ctrl.state == 'aliquots'">Aliquotas</md-button>
     </md-input-group>
   </div>
   <md-content style="max-width: 1000px; margin: 0 auto">
@@ -26,7 +26,7 @@
     </div>
     <div>
       <tubes-label ng-if="$ctrl.labels && $ctrl.state == 'tubes'" labels="$ctrl.labels"></tubes-label>
-      <aliquots-label ng-if="$ctrl.labels && $ctrl.state == 'aliquots'" labels="$ctrl.labels"></aliquots-label>
+      <aliquots-label ng-if="$ctrl.labels && $ctrl.state == 'aliquots' && $ctrl.userAccessToLaboratory.aliquotManagerAccess" labels="$ctrl.labels"></aliquots-label>
     </div>
   </md-content>
   <md-content style="max-width: 1000px; margin: 0 auto" ng-if="!$ctrl.participantLaboratory || !$ctrl.labels">

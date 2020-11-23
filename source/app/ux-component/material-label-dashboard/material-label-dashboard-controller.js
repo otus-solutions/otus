@@ -13,7 +13,8 @@
     'otusjs.otus.uxComponent.Publisher',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.participant.business.ParticipantManagerService',
-    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
+    'otusjs.laboratory.storage.LaboratoryLocalStorageService',
+    'otusjs.user.business.UserAccessPermissionService'
   ];
 
   function Controller(
@@ -24,14 +25,17 @@
     Publisher,
     ParticipantLaboratoryService,
     ParticipantManagerService,
-    LaboratoryLocalStorageService) {
+    LaboratoryLocalStorageService,
+    UserAccessPermissionService) {
 
     var self = this;
 
+    self.userAccessToLaboratory = ""
+
     self.$onInit = onInit;
     self.changeState = changeState;
-
     function onInit() {
+      _checkingLaboratoryPermission();
       self.labelsFound = LaboratoryLocalStorageService.find({})[0]
       if(self.labelsFound.type == "laboratoryParticipantLabel") {
         _setupLaboratory();
@@ -40,6 +44,13 @@
       }
       _subscribeLabels();
       changeState('tubes');
+    }
+
+
+    function _checkingLaboratoryPermission() {
+      return UserAccessPermissionService.getCheckingLaboratoryPermission().then(response => {
+        self.userAccessToLaboratory = response;
+      });
     }
 
     function _setupLaboratory() {

@@ -4,7 +4,7 @@ var browserSync = require('browser-sync').create();
 gulp.task('browser-sync', function() {
   var index = process.argv.indexOf("--api-url");
   var indexPlayer = process.argv.indexOf("--player-url");
-  var apiurl = "http://localhost:51002"; //process.argv[index + 1];
+  var apiurl = process.argv[index + 1];
   var apiPlayer = process.argv[indexPlayer + 1];
   browserSync.init({
     server: {
