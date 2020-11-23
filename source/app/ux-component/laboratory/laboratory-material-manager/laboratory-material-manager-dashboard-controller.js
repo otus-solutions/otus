@@ -34,6 +34,7 @@
     self.saveMetadata = saveMetadata;
     self.updateTubeCustomMetadata = updateTubeCustomMetadata;
     self.isEnterKey = isEnterKey;
+    self.updateAliquots = function (){};
 
 
     function onInit() {
@@ -46,7 +47,11 @@
 
     function isEnterKey(event,tubeCode) {
       if (event.keyCode === 13) {
-        isValidCode(tubeCode);
+        if (tubeCode.length === 9) {
+          isValidCode(tubeCode);
+        } else {
+          _showToastMsg('O tubo deve ter 9 dígitos')
+        }
       }
     }
 
