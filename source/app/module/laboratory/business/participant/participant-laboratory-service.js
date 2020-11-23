@@ -35,7 +35,7 @@
     self.updateAliquots = updateAliquots;
     self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
-    self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn
+    self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn;
     self.deleteAliquot = deleteAliquot;
     self.getCheckingExist = getCheckingExist;
     self.updateAliquotsWithRn = updateAliquotsWithRn;
@@ -43,6 +43,8 @@
     self.getData = getData;
     self.getLaboratoryByParticipant = getLaboratoryByParticipant;
     self.generateLabelsAliquots = generateLabelsAliquots;
+    self.getTubeMedataDataByType = getTubeMedataDataByType;
+    self.updateTubeCustomMetadata = updateTubeCustomMetadata;
 
     function _init() {
       _laboratoryConfiguration = null;
@@ -116,16 +118,14 @@
     }
 
     function getLaboratoryByTube(tubeCode, ParticipantManagerService) {
-      var request = $q.defer()
+      var request = $q.defer();
       _getLaboratoryDescriptors()
         .then(() => {
-          LaboratoryRepositoryService
-            .getLaboratoryByTube(tubeCode)
+          LaboratoryRepositoryService.getLaboratoryByTube(tubeCode)
             .then((laboratory) => {
               if (laboratory !== 'null') {
-                const parsedLab = JSON.parse(laboratory)
-                const participant = ParticipantManagerService.getParticipant(parsedLab.recruitmentNumber.toString())
-                _participantLaboratory = ParticipantLaboratoryFactory.fromJson(laboratory, getLoggedUser(), participant);
+                const participant = ParticipantManagerService.getParticipant(laboratory.recruitmentNumber.toString());
+                _participantLaboratory = ParticipantLaboratoryFactory.create(laboratory, getLoggedUser(), participant);
                 request.resolve(_participantLaboratory);
               } else {
                 request.resolve(false);
@@ -133,21 +133,22 @@
             }, function (e) {
               request.reject(e);
             })
-        })
+        });
       return request.promise
     }
 
     function getLoggedUser() {
       return ContextService.getCurrentUser();
-
     }
+
     function updateLaboratoryParticipant() {
       return LaboratoryRepositoryService.updateLaboratoryParticipant(JSON.stringify(_participantLaboratory));
-
     }
+
     function updateTubeCollectionData(updateStructure) {
       return LaboratoryRepositoryService.updateTubeCollectionData(JSON.stringify(updateStructure));
     }
+
     function updateTubeCollectionDataWithRn(recruitmentNumber, updateStructure) {
       return LaboratoryRepositoryService.updateTubeCollectionDataWithRn(recruitmentNumber, JSON.stringify(updateStructure));
     }
@@ -190,12 +191,18 @@
       return request.promise
     }
 
+    function updateTubeCustomMetadata(tube){
+      return LaboratoryRepositoryService.updateTubeCustomMetadata(tube);
+    }
+
+
     function generateLabels() {
       return LaboratoryLabelFactory.create(self.participant, angular.copy(_participantLaboratory));
     }
     function generateLabelsAliquots() {
       return LaboratoryLabelAliquotFactory.create(self.participant, angular.copy(_participantLaboratory));
     }
+
 
     function getCheckingExist() {
       return LaboratoryConfigurationService.getCheckingExist();
@@ -204,5 +211,11 @@
     function _getLaboratoryDescriptors() {
       return LaboratoryConfigurationService.getLaboratoryDescriptors();
     }
+
+    function getTubeMedataDataByType(tubeType) {
+      return LaboratoryConfigurationService.getTubeMedataDataByType(tubeType);
+    }
+
+
   }
 }());
