@@ -10,7 +10,8 @@
         participantLaboratory:'=',
         participantManager:'=',
         originalTube:'=',
-        tube: '='
+        tube: '=',
+        updateAliquots:'='
       }
     });
 }());
