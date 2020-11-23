@@ -24,7 +24,8 @@
     '$scope',
     'otusjs.participantManager.contact.ParticipantContactService',
     'ParticipantContactValues',
-    'otusjs.participant.core.EventService'
+    'otusjs.participant.core.EventService',
+    'otusjs.deploy.LoadingScreenService'
   ];
 
   function Controller(
@@ -41,8 +42,10 @@
     $scope,
     ParticipantContactService,
     ParticipantContactValues,
-    EventService) {
-    var self = this;
+    EventService,
+    LoadingScreenService) {
+
+    const self = this;
 
     mdcDefaultParams({
       lang: 'pt-br',
@@ -230,28 +233,57 @@
       ApplicationStateService.activateParticipantDashboard();
     }
 
+    // function saveParticipant() {
+    //   if (_fieldsValidate()) {
+    //     ParticipantMessagesService.showUpdateDialog()
+    //       .then(function () {
+    //         self.onFilter();
+    //         var _participant = ParticipantFactory.fromJson(self.participant);
+    //         ParticipantManagerService.update(_participant)
+    //           .then(function (response) {
+    //             var p = ParticipantFactory.fromJson(response).toJSON();
+    //             ParticipantManagerService.selectParticipant(p);
+    //             ParticipantMessagesService.showUpdateParticipant(p).then(function () {
+    //               self.dashboardParticipant();
+    //             })
+    //           })
+    //           .catch(function (err) {
+    //             ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
+    //           });
+    //       });
+    //   } else {
+    //     ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFound);
+    //   }
+    // }
+
+
     function saveParticipant() {
       if (_fieldsValidate()) {
         ParticipantMessagesService.showUpdateDialog()
-          .then(function () {
+          .then(() => {
             self.onFilter();
-            var _participant = ParticipantFactory.fromJson(self.participant);
-            ParticipantManagerService.update(_participant)
-              .then(function (response) {
-                var p = ParticipantFactory.fromJson(response).toJSON();
-                ParticipantManagerService.selectParticipant(p);
-                ParticipantMessagesService.showUpdateParticipant(p).then(function () {
-                  self.dashboardParticipant();
-                })
-              })
-              .catch(function (err) {
-                ParticipantMessagesService.showNotSave(err.data.MESSAGE || "");
-              });
+            return ParticipantFactory.fromJson(self.participant)
+          })
+          .then(_participant => ParticipantManagerService.update(_participant))
+          .then(response => ParticipantFactory.fromJson(response).toJSON())
+          .then(p => {
+            ParticipantManagerService.selectParticipant(p);
+            return ParticipantMessagesService.showUpdateParticipant(p);
+          })
+          .then(() => {
+            LoadingScreenService.start();
+            self.dashboardParticipant();
+            return ParticipantManagerService.setup();
+          })
+          .then(() => LoadingScreenService.finish())
+          .catch( e => {
+            if(e) ParticipantMessagesService.showNotSave(e.data.MESSAGE || "")
           });
       } else {
         ParticipantMessagesService.showToast(ParticipantContactValues.msg.contactFound);
       }
     }
+
 
     function loadParticipantContact() {
       ParticipantContactService.getParticipantContactByRecruitmentNumber(self.participant.recruitmentNumber)
