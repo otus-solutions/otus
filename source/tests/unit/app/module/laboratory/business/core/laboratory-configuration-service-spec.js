@@ -1,45 +1,22 @@
-describe('LaboratoryConfigurationService Test', function () {
-
+describe('LaboratoryConfigurationService_Suite_Test', function () {
   var service;
   var Mock = {};
   var Injections = {};
 
   beforeEach(function () {
-    angular.mock.module('otusjs.laboratory.business.configuration');
-  });
+    angular.mock.module('otusjs.otus');
 
-  beforeEach(function () {
-    Mock.LaboratoryRepositoryService = {
-      getCheckingExist: function () {
-      },
-      getLaboratoryDescriptors: function () {
-      },
-      getAliquotsDescriptors: function () {
-      }
-    };
+    angular.mock.inject( ($injector) => {
+      Injections.$q = $injector.get('$q');
+      Injections.LaboratoryRepositoryService = $injector.get('otusjs.laboratory.repository.LaboratoryRepositoryService');
+      Injections.LaboratoryConfigurationService = $injector.get('otusjs.laboratory.configuration.LaboratoryConfigurationService');
 
-    Mock.LaboratoryConfigurationService = {
-      checkLaboratoryConfiguration: function () {
-      },
-      checkAliquotsDescriptors: function () {
-      },
-      initializeLaboratoryConfiguration: function () {
-      }
-    };
-
-    angular.mock.module(function ($provide) {
-      $provide.value('otusjs.laboratory.repository.LaboratoryRepositoryService', Mock.LaboratoryRepositoryService);
-      $provide.value('otusjs.laboratory.configuration.LaboratoryConfigurationService', Mock.LaboratoryConfigurationService);
-    });
-  });
-
-  beforeEach(function () {
-    angular.mock.inject(function ($injector, $q) {
-      Injections = { "$q": $q };
       service = $injector.get('otusjs.laboratory.business.configuration.LaboratoryConfigurationService', Injections);
-      spyOn(Mock.LaboratoryRepositoryService, 'getCheckingExist').and.returnValue(Promise.resolve({}));
     });
+
+    _mockInitialize();
   });
+
 
   it('check existence of service', function () {
     expect(service).toBeDefined();
@@ -49,12 +26,29 @@ describe('LaboratoryConfigurationService Test', function () {
     expect(service.getCheckingExist).toBeDefined();
     expect(service.getLaboratoryDescriptors).toBeDefined();
     expect(service.fetchAliquotsDescriptors).toBeDefined();
+    expect(service.getQualityControlGroupNames).toBeDefined();
+    expect(service.getTubeMedataDataByType).toBeDefined();
   });
 
   it('getCheckingExist method should to call getCheckingExist method', function () {
+    spyOn(Injections.LaboratoryRepositoryService, 'getCheckingExist').and.returnValue(Mock.resolve);
     service.getCheckingExist();
-
-    expect(Mock.LaboratoryRepositoryService.getCheckingExist).toHaveBeenCalledTimes(1);
+    expect(Injections.LaboratoryRepositoryService.getCheckingExist).toHaveBeenCalledTimes(1);
   });
+
+  it('getTubeMedataDataByType method should to call getTubeMedataDataByType method', function () {
+    spyOn(Injections.LaboratoryRepositoryService, 'getTubeMedataDataByType').and.returnValue(Mock.resolve);
+    service.getTubeMedataDataByType(Mock.tube);
+    expect(Injections.LaboratoryRepositoryService.getTubeMedataDataByType).toHaveBeenCalledTimes(1);
+    expect(Injections.LaboratoryRepositoryService.getTubeMedataDataByType).toHaveBeenCalledWith(Mock.tube);
+  });
+
+
+  function _mockInitialize(){
+    Mock.resolve = Promise.resolve({});
+    Mock.resolve = Promise.reject('error');
+
+    Mock.tube = {};
+  }
 
 });

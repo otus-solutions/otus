@@ -359,6 +359,25 @@ Test.utils.data.ExamWithDoesNotAppliesData = {
   observation: "",
   recruitmentNumber: 7000312
 };
+Test.utils.data.tube = {
+  "objectType": "Tube",
+  "type": "EDTA",
+  "moment": "FASTING",
+  "code": "331005018",
+  "groupName": "DEFAULT",
+  "aliquotes": [],
+  "order": 2,
+  "tubeCollectionData": {
+    "objectType": "TubeCollectionData",
+    "isCollected": false,
+    "metadata": "",
+    "operator": "",
+    "time": null,
+    "customMetadata": [
+      "5fb586d86ac9617bfffb921c"
+    ]
+  }
+};
 Test.utils.data.aliquot = {
   "_id": "5ce2daad99e0c90065f4050a",
   "tubeCode": "351286198",

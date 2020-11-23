@@ -40,11 +40,13 @@
     self.deleteAliquot = deleteAliquot;
     self.convertStorageAliquot = convertStorageAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.updateTubeCustomMetadata = updateTubeCustomMetadata;
 
     /* Laboratory Configuration Methods */
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getCheckingExist = getCheckingExist;
+    self.getTubeMedataDataByType = getTubeMedataDataByType;
 
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
@@ -164,6 +166,17 @@
       return deferred.promise;
     }
 
+    function updateTubeCustomMetadata(tube){
+      var deferred = $q.defer();
+      LaboratoryRestService.updateTubeCustomMetadata(tube)
+        .then(function (response) {
+          deferred.resolve(response);
+        }, function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
     /**
      * initialize laboratories.
      * @param {(object)} persistanceStructure - the recruitment number of participant and a persistanceStructure
@@ -241,6 +254,17 @@
         .getCheckingExist()
         .then(function (response) {
           deferred.resolve(response);
+        }, function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function getTubeMedataDataByType(tubeType) {
+      var deferred = $q.defer();
+      LaboratoryRestService.getTubeMedataDataByType(tubeType)
+        .then(function (response) {
+          deferred.resolve(response.data);
         }, function (e) {
           deferred.reject(e);
         });
