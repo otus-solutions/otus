@@ -30,6 +30,7 @@
     self.cancelTube = cancelTube;
     self.saveMetadata = saveMetadata;
     self.isEnterKey = isEnterKey;
+    self.updateAliquots = function (){};
 
     function onInit() {
       LoadingScreenService.start()
@@ -41,7 +42,11 @@
 
     function isEnterKey(event,tubeCode) {
       if (event.keyCode === 13) {
-        isValidCode(tubeCode);
+        if (tubeCode.length === 9) {
+          isValidCode(tubeCode);
+        } else {
+          _showToastMsg('O tubo deve ter 9 dígitos')
+        }
       }
     }
 
@@ -55,11 +60,10 @@
           self.originalTube = angular.copy(foundTube);
           self.newTube = foundTube
           self.tubeCode = ""
+          self.updateAliquots(foundTube,participantLaboratory);
         }).catch(e => {
           _showToastMsg('Tubo ' + tubeCode + ' não encontrado')
         })
-      } else {
-        _showToastMsg('O tubo deve ter 9 dígitos')
       }
     }
 
@@ -90,7 +94,6 @@
     }
 
     function _updateChangedTubes() {
-
       DialogService.showDialog(self.confirmFinish).then(function () {
         self.newTube.collect()
 

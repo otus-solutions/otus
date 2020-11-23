@@ -48,6 +48,13 @@
     self.aliquotInputOnKeyDown = aliquotInputOnKeyDown
     self.convertAliquot = convertAliquot
     self.deleteAliquot = deleteAliquot
+    self.updateAliquots = updateAliquots;
+
+    function updateAliquots(foundTube, participantLaboratory) {
+      self.participantLaboratory = participantLaboratory;
+      self.tube = foundTube;
+      onInit();
+    }
 
     function onInit() {
       _buildMomentTypeList(self.participantLaboratory.tubes)

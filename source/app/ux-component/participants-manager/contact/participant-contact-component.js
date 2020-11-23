@@ -76,6 +76,18 @@
       try {
         _loadSelectedParticipant();
         EventService.onParticipantSelected(_loadSelectedParticipant);
+        self.ParticipantContactValues = ParticipantContactValues;
+
+        if (self.isIdentified) {
+          self.birthdate = new Date(self.participant.birthdate.value)
+        } else {
+          self.birthdate = null;
+          self.participant.birthdate = { value: null };
+        }
+        self.minDate = new Date('01/01/1930')
+        self.maxDate = new Date();
+        self.centers = {};
+        _loadAllCenters();
       } catch (e) {
         console.error(e);
       }
