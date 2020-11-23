@@ -10,7 +10,9 @@
         searchSettings: '=',
         filterItem: '=',
         placeholderTitle: '@',
-        changeWatcher: '&'
+        changeWatcher: '&',
+        selectedItem: '=',
+        name: '@'
       }
     }).controller('otusCheckerSearchCtrl', Controller);
 

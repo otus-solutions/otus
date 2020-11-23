@@ -20,6 +20,7 @@
       'PARTICIPANT_FOLLOW_UPS': 'participant-follow-up',
       'PARTICIPANT': 'participant',
       'PARTICIPANT_ACTIVITY': 'activity',
+      'PARTICIPANT_ACTIVITY_STAGE': 'activity-stage',
       'PARTICIPANT_REPORT': 'report',
       'PARTICIPANT_UPDATE': 'participant-update',
       'SESSION': 'session',

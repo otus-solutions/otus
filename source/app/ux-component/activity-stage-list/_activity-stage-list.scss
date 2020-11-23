@@ -1,0 +1,481 @@
+otus-activity-stage-list {
+  @media screen and (min-width: 360px) {
+    .stage-list-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      grid-template-columns: 0.2fr 1fr 0.2fr;
+      grid-template-rows: 0.6fr;
+      grid-template-areas: "activity-acronym   activity-name   activity-button";
+    }
+
+    .activity-list-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      padding-top: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 0.5fr 0.3fr 0.7fr 1.6fr;
+      justify-items: stretch;
+      grid-template-areas:
+        "activity-status  activity-mode  activity-date  activity-category"
+        "activity-status  activity-user-email   activity-user-email activity-user-email"
+        "activity-externalID  activity-externalID  activity-externalID  activity-button";
+    }
+
+    .activity-null-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      grid-template-columns: 0.1fr 1fr;
+      grid-template-rows: 0.8fr;
+      grid-template-areas:
+        ".    activity-null"
+        ".    activity-null";
+    }
+
+    .md-headline {
+      font-size: 4.2vw;
+    }
+
+    .md-body-2 {
+      font-size: 10px;
+      line-height: 8px;
+    }
+
+    .md-title {
+      font-size: 3.4vw;
+    }
+
+    .margin-left {
+      margin-left: 12px;
+    }
+
+    .icon-status-size {
+      font-size: 10vw;
+      height: 10vw;
+      width: 10vw;
+    }
+
+    .margin-layout {
+      margin: 8px 4px 0 4px;
+    }
+
+    .margin-bottom {
+      margin: 0 0 10px 0;
+    }
+
+    .icon-mode {
+      height: 34px;
+      width: 34px;
+    }
+  }
+
+  @media screen and (min-width: 600px) {
+    .stage-list-layout {
+      display: grid;
+      align-items: center;
+      height: 16vh;
+      grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+    }
+    .activity-list-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.5fr repeat(2, 0.8fr);
+      grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
+    }
+
+    .activity-null-layout {
+      display: grid;
+      align-items: center;
+      height: 12vh;
+      grid-template-columns: 0.1fr repeat(4, 1fr);
+      grid-template-rows: 1fr;
+      grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+    }
+
+    .margin-layout {
+      margin: 8px 4px 8px 4px;
+    }
+
+    .md-body-2 {
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .icon-status-size {
+      font-size: 24px;
+      height: auto;
+      width: auto;
+    }
+
+    .md-headline {
+      font-size: 22px;
+    }
+
+    .md-title {
+      font-size: 18px;
+    }
+
+    .margin-bottom {
+      margin: 0 0 15px 0;
+    }
+
+    .icon-mode {
+      height: auto;
+      width: auto;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    .stage-list-layout {
+      display: grid;
+      align-items: center;
+      height: 8vh;
+      grid-template-columns: 0.1fr repeat(3, 1fr) 0.6fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+    }
+    .activity-list-layout {
+      display: grid;
+      align-items: center;
+      height: 6.5vh;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.8fr 1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email   activity-category    activity-externalID     activity-button";
+    }
+
+    .activity-null-layout {
+      display: grid;
+      align-items: center;
+      height: 6vh;
+      grid-template-columns: 0.1fr repeat(4, 1fr);
+      grid-template-rows: 1fr;
+      grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+    }
+
+    .margin-layout {
+      margin: 8px 4px 8px 4px;
+    }
+
+    .md-body-2 {
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .icon-status-size {
+      font-size: 24px;
+      height: auto;
+      width: auto;
+    }
+
+    .md-headline {
+      font-size: 24px;
+    }
+
+    .md-title {
+      font-size: 20px;
+    }
+
+    .margin-bottom {
+      margin: 0 0 15px 0;
+    }
+
+    .icon-mode {
+      height: auto;
+      width: auto;
+    }
+
+    .margin-left {
+      margin-left: 0;
+    }
+  }
+
+  @media screen and (min-width: 800px) {
+    .stage-list-layout {
+      display: grid;
+      align-items: center;
+      height: 15vh;
+      grid-template-columns: 0.1fr repeat(3, 1fr) 0.1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+    }
+
+    .activity-list-layout {
+      display: grid;
+      align-items: center;
+      height: 15.5vh;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 0.2fr 0.2fr 0.6fr 1.6fr 0.6fr repeat(2, 1fr);
+      grid-template-rows: 1fr;
+      grid-template-areas: "activity-status     activity-mode    activity-date    activity-user-email    activity-category    activity-externalID     activity-button";
+    }
+
+    .activity-null-layout {
+      display: grid;
+      align-items: center;
+      height: 12vh;
+      grid-template-columns: 0.1fr repeat(4, 1fr);
+      grid-template-rows: 1fr;
+      grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+    }
+
+    .margin-layout {
+      margin: 8px 4px 8px 4px;
+    }
+
+    .md-body-2 {
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .icon-status-size {
+      font-size: 24px;
+      height: auto;
+      width: auto;
+    }
+
+    .md-headline {
+      font-size: 24px;
+    }
+
+    .md-title {
+      font-size: 20px;
+    }
+
+    .margin-bottom {
+      margin: 0 0 20px 0;
+    }
+
+    .icon-mode {
+      height: auto;
+      width: auto;
+    }
+
+    .margin-left {
+      margin-left: 0;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .stage-list-layout {
+      display: grid;
+      align-items: center;
+      height: 5.2vh;
+      grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+    }
+
+    .activity-list-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
+      grid-template-rows: 1fr;
+      grid-template-areas: "activity-status     activity-mode      activity-date      activity-user-email  activity-category   activity-externalID     activity-button";
+    }
+
+    .activity-null-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      grid-template-columns: 0.1fr repeat(4, 1fr);
+      grid-template-rows: 1fr;
+      grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+    }
+
+    .margin-layout {
+      margin: 4px;
+    }
+
+    .margin-bottom {
+      margin: 0 0 20px 0;
+    }
+
+    .md-body-2 {
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .icon-status-size {
+      font-size: 24px;
+      height: auto;
+      width: auto;
+    }
+
+    .md-headline {
+      font-size: 24px;
+    }
+
+    .md-title {
+      font-size: 20px;
+    }
+
+    .icon-mode {
+      height: auto;
+      width: auto;
+    }
+
+    .margin-left {
+      margin-left: 0;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .stage-list-layout {
+      display: grid;
+      align-items: center;
+      height: 7.8vh;
+      grid-template-columns: 0.2fr repeat(3, 1fr) 0.1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas: "activity-acronym      activity-name      activity-name      activity-name     activity-button";
+    }
+
+    .activity-list-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      padding-top: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+      grid-template-columns: 0.15fr 0.15fr repeat(5, 0.8fr);
+      grid-template-rows: 1fr;
+      grid-template-areas: "activity-status     activity-mode      activity-date     activity-user-email   activity-category   activity-externalID     activity-button";
+    }
+
+    .activity-null-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      grid-template-columns: 0.1fr repeat(4, 1fr);
+      grid-template-rows: 1fr;
+      grid-template-areas: ".    activity-null     activity-null    activity-null   activity-null";
+    }
+
+    .margin-layout {
+      margin: 16px 24px 2px 24px;
+    }
+
+    .md-body-2 {
+      font-size: 14px;
+      line-height: 14px;
+    }
+
+    .icon-status-size {
+      font-size: 24px;
+      height: auto;
+      width: auto;
+    }
+
+    .md-headline {
+      font-size: 24px;
+    }
+
+    .md-title {
+      font-size: 20px;
+    }
+
+    .margin-bottom {
+      margin: 0 0 30px 0;
+    }
+
+    .icon-mode {
+      height: auto;
+      width: auto;
+    }
+
+    .margin-left {
+      margin-left: 0;
+    }
+  }
+
+  .margin-not-top {
+    margin: 0 0 16px 0;
+  }
+
+  .activity-acronym {
+    grid-area: activity-acronym;
+  }
+
+  .activity-name {
+    grid-area: activity-name;
+  }
+
+  .activity-category {
+    grid-area: activity-category;
+  }
+
+  .activity-button {
+    grid-area: activity-button;
+  }
+
+  .activity-list-layout:hover {
+    background-color: rgba(158, 158, 158, 0.1);
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+    transition: 0.3s;
+  }
+
+  .activity-null {
+    grid-area: activity-null;
+    color: gray;
+  }
+
+  .activity-status {
+    grid-area: activity-status;
+  }
+
+  .activity-mode {
+    grid-area: activity-mode;
+  }
+
+  .activity-date {
+    grid-area: activity-date;
+  }
+
+  .activity-user-email {
+    grid-area: activity-user-email;
+  }
+
+  .activity-externalID {
+    grid-area: activity-externalID;
+  }
+
+  .activity-buttons {
+    grid-area: activity-buttons;
+  }
+
+  md-chips.md-default-theme .md-chips,
+  md-chips .md-chips {
+    box-shadow: none;
+  }
+
+  md-list {
+    padding: 0;
+  }
+
+  md-card {
+    margin: 8px 0 8px 0;
+  }
+
+  .stage-list-layout:hover {
+    background-color: rgba(158, 158, 158, 0.1);
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.2), 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.12);
+    transition: 0.3s;
+  }
+
+  .new-chip-white {
+    width: auto;
+    color: white;
+    border-radius: 10px 50px 50px 10px;
+  }
+}
