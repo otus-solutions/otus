@@ -1,14 +1,19 @@
 <style>
+  .custom-metadata-layout {
+    background: white;
+    box-shadow: 1px 2px 5px rgba(0,0,0,0.4);
+    padding: 15px;
+    margin-bottom: 5px;
+  }
   @media screen and (min-width: 601px) {
     .custom-metadata-layout {
       display: grid;
-      margin: 0px 16px 0px 8px;
+      margin: 0px 16px 5px 8px;
       grid-template-columns: 1fr 1fr 1fr 1fr;
       grid-template-rows: repeat(auto-fill, 1fr);
       grid-template-areas:
         "customMetadataItem customMetadataItem customMetadataItem customMetadataItem";
     }
-
     .custom-metadata-layout md-checkbox {
       grid-area: customMetadataItem;
     }
@@ -106,7 +111,8 @@
         </div>
 
         <div ng-if="$ctrl.originalTubeHasCode()">
-          <laboratory-aliquots-manager participant-manager="$ctrl.participantManagerService"
+          <laboratory-aliquots-manager ng-if="!$ctrl.userAccessToLaboratory.aliquotManagerAccess"
+                                       participant-manager="$ctrl.participantManagerService"
                                        participant-laboratory="$ctrl.participantLaboratory"
                                        original-tube="$ctrl.originalTube"
                                        tube="$ctrl.newTube"
