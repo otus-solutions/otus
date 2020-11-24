@@ -22,6 +22,7 @@
     self.onLogin = onLogin;
     self.fireLogout = fireLogout;
     self.onLogout = onLogout;
+    self.resetActivitySelected = resetActivitySelected;
 
     function fireParticipantSelected(data) {
       _notifyEventObj(_onParticipantSelectedListeners, data, _onParticipantSelectedListeners.length);
@@ -34,6 +35,10 @@
 
     function fireActivitySelected(data) {
       _notifyEvent(_onActivitySelectedListeners, data, _onActivitySelectedListeners.length);
+    }
+
+    function resetActivitySelected() {
+      _onActivitySelectedListeners = [];
     }
 
     function onActivitySelected(listener) {

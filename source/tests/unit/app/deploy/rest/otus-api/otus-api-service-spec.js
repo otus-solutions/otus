@@ -5,11 +5,13 @@ describe('OtusApiService_UnitTest_Suite', () => {
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
     angular.mock.inject($injector => {
+      Injections.ActivityRestService = $injector.get('otusjs.deploy.ActivityRestService');
       Injections.UserActivityPendencyRestService = $injector.get('otusjs.deploy.UserActivityPendencyRestService');
       Injections.ParticipantContactRestService = $injector.get('otusjs.deploy.ParticipantContactRestService');
       Injections.ProjectCommunicationRestService = $injector.get('otusjs.deploy.ProjectCommunicationRestService');
       Injections.ActivitySharingRestService = $injector.get('otusjs.deploy.ActivitySharingRestService');
       service = $injector.get('otusjs.deploy.OtusApiService', Injections);
+      spyOn(Injections.ActivityRestService, 'initialize');
       spyOn(Injections.UserActivityPendencyRestService, 'initialize');
       spyOn(Injections.ParticipantContactRestService, 'initialize');
       spyOn(Injections.ProjectCommunicationRestService, 'initialize');
@@ -25,6 +27,11 @@ describe('OtusApiService_UnitTest_Suite', () => {
     expect(service.initializeOpenResources).toBeDefined();
     expect(service.initializeConfigurationResources).toBeDefined();
     expect(service.initializeRestrictResources).toBeDefined();
+  });
+
+  it('initializeRestrictResourcesMethod_should_evoke_initialize_by_ActivityRestService', () => {
+    service.initializeRestrictResources();
+    expect(Injections.ActivityRestService.initialize).toHaveBeenCalledTimes(1);
   });
 
   it('initializeRestrictResourcesMethod_should_evoke_initialize_by_UserActivityPendencyRestService', () => {
