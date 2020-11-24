@@ -1,28 +1,22 @@
-describe('ParticipantLaboratoryService_UnitTest_Suite', function() {
-
-  var UNIT_NAME = 'otusjs.laboratory.business.participant.ParticipantLaboratoryService';
+describe('ParticipantLaboratoryService_Test_Suite', function() {
+  var Mock = {};
   var Injections = [];
   var service;
 
   beforeEach(function(){
-    angular.mock.module('otusjs.laboratory.business');
-    angular.mock.module('otusjs.laboratory.repository');
-    angular.mock.module('otusjs.laboratory.core');
-    angular.mock.module('otusjs.laboratory.participant');
-    angular.mock.module('otusjs.laboratory.storage');
-    angular.mock.module('otusjs.laboratory.configuration');
+    angular.mock.module('otusjs.otus');
 
-    angular.mock.inject(function (_$injector_) {
-      Injections.$q = _$injector_.get('$q');
-      Injections.LaboratoryRepositoryService = _$injector_.get('otusjs.laboratory.repository.LaboratoryRepositoryService');
-      Injections.ContextService = _$injector_.get('otusjs.laboratory.core.ContextService');
-      Injections.LaboratoryLabelFactory = _$injector_.get('otusjs.laboratory.business.participant.LaboratoryLabelFactory');
-      Injections.LaboratoryLabelAliquotFactory = _$injector_.get('otusjs.laboratory.business.participant.LaboratoryLabelAliquotFactory');
-      Injections.EventService = _$injector_.get('otusjs.laboratory.core.EventService');
-      Injections.ParticipantLaboratoryFactory = _$injector_.get('otusjs.laboratory.participant.ParticipantLaboratoryFactory');
-      Injections.LaboratoryConfigurationService = _$injector_.get('otusjs.laboratory.business.configuration.LaboratoryConfigurationService');
+    angular.mock.inject(function ($injector) {
+      Injections.$q = $injector.get('$q');
+      Injections.LaboratoryRepositoryService = $injector.get('otusjs.laboratory.repository.LaboratoryRepositoryService');
+      Injections.ContextService = $injector.get('otusjs.laboratory.core.ContextService');
+      Injections.LaboratoryLabelFactory = $injector.get('otusjs.laboratory.business.participant.LaboratoryLabelFactory');
+      Injections.LaboratoryLabelAliquotFactory = $injector.get('otusjs.laboratory.business.participant.LaboratoryLabelAliquotFactory');
+      Injections.EventService = $injector.get('otusjs.laboratory.core.EventService');
+      Injections.ParticipantLaboratoryFactory = $injector.get('otusjs.laboratory.participant.ParticipantLaboratoryFactory');
+      Injections.LaboratoryConfigurationService = $injector.get('otusjs.laboratory.business.configuration.LaboratoryConfigurationService');
 
-      service = _$injector_.get(UNIT_NAME, Injections);
+      service = $injector.get('otusjs.laboratory.business.participant.ParticipantLaboratoryService', Injections);
 
       spyOn(Injections.EventService, "onParticipantSelected").and.callThrough();
       spyOn(Injections.ContextService, "getSelectedParticipant").and.callThrough();
@@ -34,7 +28,6 @@ describe('ParticipantLaboratoryService_UnitTest_Suite', function() {
       spyOn(Injections.LaboratoryLabelFactory,"create");
       spyOn(Injections.LaboratoryLabelAliquotFactory,"create");
       spyOn(Injections.LaboratoryConfigurationService,"getCheckingExist").and.callThrough();
-
     });
   });
 
@@ -55,6 +48,8 @@ describe('ParticipantLaboratoryService_UnitTest_Suite', function() {
     expect(service.updateTubeCollectionData).toBeDefined();
     expect(service.deleteAliquot).toBeDefined();
     expect(service.getCheckingExist).toBeDefined();
+    expect(service.getTubeMedataDataByType).toBeDefined();
+    expect(service.updateTubeCustomMetadata).toBeDefined();
   });
 
   it('onParticipantSelected_method_should_evoke_internalMethods', function () {
@@ -112,6 +107,22 @@ describe('ParticipantLaboratoryService_UnitTest_Suite', function() {
 
   it('hasLaboratory_method_should_execute', function () {
     expect(service.hasLaboratory()).toBePromise();
+  });
+
+  it('getTubeMedataDataByType_method_should_call_LaboratoryConfigurationService_method', function () {
+    spyOn(Injections.LaboratoryConfigurationService,"getTubeMedataDataByType").and.callThrough();
+    Mock.tubeType = {};
+    expect(service.getTubeMedataDataByType(Mock.tubeType)).toBePromise();
+    expect(Injections.LaboratoryConfigurationService.getTubeMedataDataByType).toHaveBeenCalledTimes(1);
+    expect(Injections.LaboratoryConfigurationService.getTubeMedataDataByType).toHaveBeenCalledWith(Mock.tubeType);
+  });
+
+  it('updateTubeCustomMetadata_method_should_call_LaboratoryConfigurationService_method', function () {
+    spyOn(Injections.LaboratoryRepositoryService,"updateTubeCustomMetadata").and.callThrough();
+    Mock.tube = {};
+    expect(service.updateTubeCustomMetadata(Mock.tube)).toBePromise();
+    expect(Injections.LaboratoryRepositoryService.updateTubeCustomMetadata).toHaveBeenCalledTimes(1);
+    expect(Injections.LaboratoryRepositoryService.updateTubeCustomMetadata).toHaveBeenCalledWith(Mock.tube);
   });
 
 });

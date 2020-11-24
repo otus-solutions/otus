@@ -27,7 +27,7 @@
         <md-subheader>Ponto de localização:</md-subheader>
         <md-input-container>
           <md-select ng-disabled="!$ctrl.tube.tubeCollectionData.isCollected"
-                     ng-change="ctrl.updateExamsLocationPoint()" ng-model="$ctrl.selectedLocationPoint">
+                     ng-change="ctrl.updateExamsLocationPoint()" ng-model="$ctrl.selectedLocationPoint" aria-label="Ponto Localizacao">
             <md-option ng-selected="userLocationPoints.name == $ctrl.participantLocationPoint[0].name" ng-value="userLocationPoints" ng-repeat="userLocationPoints in $ctrl.userLocationPoints">
               {{userLocationPoints.name}}
             </md-option>

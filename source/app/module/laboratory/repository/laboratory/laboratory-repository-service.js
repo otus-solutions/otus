@@ -21,11 +21,13 @@
     self.updateTubeCollectionData = updateTubeCollectionData;
     self.updateTubeCollectionDataWithRn = updateTubeCollectionDataWithRn;
     self.updateAliquotsWithRn = updateAliquotsWithRn;
+    self.updateTubeCustomMetadata = updateTubeCustomMetadata;
 
     /* Laboratory Configuration Methods */
     self.getCheckingExist = getCheckingExist;
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
+    self.getTubeMedataDataByType = getTubeMedataDataByType;
 
     /* Laboratory Project Methods */
     self.getAliquots = getAliquots;
@@ -80,6 +82,10 @@
       return LaboratoryCollectionService.updateAliquotsWithRn(updateStructure, recruitmentNumber);
     }
 
+    function updateTubeCustomMetadata(tube){
+      return LaboratoryCollectionService.updateTubeCustomMetadata(tube);
+    }
+
     function convertStorageAliquot(aliquot) {
       return LaboratoryCollectionService.convertStorageAliquot(aliquot);
     }
@@ -98,6 +104,10 @@
 
     function getAliquotsDescriptors() {
       return LaboratoryCollectionService.getAliquotDescriptors();
+    }
+
+    function getTubeMedataDataByType(tubeType) {
+      return LaboratoryCollectionService.getTubeMedataDataByType(tubeType);
     }
 
     function getAliquots(lotAliquot, unique) {
@@ -151,5 +161,6 @@
     function getUnattachedByIdentification(laboratoryIdentification) {
       return LaboratoryCollectionService.getUnattachedByIdentification(laboratoryIdentification);
     }
+
   }
 }());
