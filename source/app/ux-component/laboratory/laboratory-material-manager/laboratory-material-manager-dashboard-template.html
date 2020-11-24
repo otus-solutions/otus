@@ -111,7 +111,7 @@
         </div>
 
         <div ng-if="$ctrl.originalTubeHasCode()">
-          <laboratory-aliquots-manager ng-if="!$ctrl.userAccessToLaboratory.aliquotManagerAccess"
+          <laboratory-aliquots-manager ng-if="$ctrl.userAccessToLaboratory.aliquotManagerAccess"
                                        participant-manager="$ctrl.participantManagerService"
                                        participant-laboratory="$ctrl.participantLaboratory"
                                        original-tube="$ctrl.originalTube"
