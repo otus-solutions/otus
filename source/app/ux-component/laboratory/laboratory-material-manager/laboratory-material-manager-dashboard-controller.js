@@ -150,15 +150,18 @@
     }
 
     function _updateChangedTubes() {
+      const customMetadata = self.originalTube.toJSON().tubeCollectionData.customMetadata;
+
       DialogService.showDialog(self.confirmFinish).then(function () {
         self.newTube.collect()
-
         const tubeStructure = {
           tubes: [self.newTube]
         }
+        tubeStructure.tubes[0].tubeCollectionData.customMetadata = customMetadata
 
         ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(function () {
           self.participantLaboratory.updateTubeList();
+
           _showToastMsg('Registrado com sucesso!');
         }).catch(function (e) {
           _showToastMsg('Falha ao registrar coleta');
