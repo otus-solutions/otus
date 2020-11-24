@@ -8,6 +8,7 @@
       templateUrl: 'app/ux-component/shared/express-activity-creator/express-activity-creator-template.html',
       bindings: {
         acronym: '@',
+        stageId: '@',
         actionRefreshCallback: '&',
       }
     }).controller('otusExpressActivityCreatorCtrl', Controller);
@@ -27,6 +28,7 @@
     function onInit() {
       self.preActivityArtefacts = {
         acronym: self.acronym,
+        stageId: self.stageId,
         actionRefreshCallback: self.actionRefreshCallback
       }
     }

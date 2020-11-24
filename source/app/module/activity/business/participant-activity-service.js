@@ -103,7 +103,7 @@
     }
 
     function _createOnLineActivity(preActivity, selectedParticipant) {
-      ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID)
+      ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.stageId)
         .then(onlineActivity => self.activities.push(onlineActivity));
     }
 

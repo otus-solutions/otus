@@ -25,9 +25,10 @@
         .then(surveyForms => surveyForms.find(surveyForm => surveyForm.acronym === acronym));
     }
 
-    function _createPreActivity({surveyForm, configuration, mode, checkerData, realizationDate, externalID} = preActivityArtefacts) {
+    function _createPreActivity({surveyForm, configuration, mode, checkerData, realizationDate, externalID, stageId} = preActivityArtefacts) {
       let preActivity = ParticipantActivityService.createPreActivity(surveyForm, configuration, mode);
       if(externalID) preActivity.externalID = externalID;
+      if(stageId) preActivity.stageId = stageId;
       if(_isPaperActivity(mode)) preActivity.updatePaperActivityData(checkerData, realizationDate);
       preActivity.preActivityValid = true;
       return preActivity;
