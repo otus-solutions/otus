@@ -26,12 +26,14 @@
     self.convertStorageAliquot = convertStorageAliquot;
     self.deleteAliquot = deleteAliquot;
     self.updateTubeCollectionData = updateTubeCollectionData;
+    self.updateTubeCustomMetadata = updateTubeCustomMetadata;
 
     /* Laboratory Configuration Methods*/
     self.getDescriptors = getDescriptors;
     self.getCheckingExist = getCheckingExist;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getAliquotConfiguration = getAliquotConfiguration;
+    self.getTubeMedataDataByType = getTubeMedataDataByType;
 
     /* Unattached Laboratory Methods */
     self.initializeUnattached = initializeUnattached;
@@ -40,6 +42,7 @@
     self.getUnattachedById = getUnattachedById;
     self.discardUnattached = discardUnattached;
     self.getUnattachedByIdentification = getUnattachedByIdentification;
+
 
     function initialize() {
       _participantRest = OtusRestResourceService.getLaboratoryParticipantResource();
@@ -88,15 +91,6 @@
       }, participantLaboratory).$promise;
     }
 
-    function updateTubeCollectionData(recruitmentNumber, updateStructure) {
-      if (!_participantRest) {
-        throw new Error('REST resource is no initialized.');
-      }
-      return _participantRest.updateTubeCollectionData({
-        rn: recruitmentNumber
-      }, updateStructure).$promise;
-    }
-
     function updateAliquots(recruitmentNumber, persistanceStructure) {
       if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
@@ -106,6 +100,13 @@
       }, persistanceStructure).$promise;
     }
 
+    function convertStorageAliquot(aliquot) {
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.convertStorageAliquot(aliquot).$promise;
+    }
+
     function deleteAliquot(aliquotCode) {
       if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
@@ -113,11 +114,20 @@
       return _participantRest.deleteAliquot({code: aliquotCode}).$promise;
     }
 
-    function convertStorageAliquot(aliquot) {
+    function updateTubeCollectionData(recruitmentNumber, updateStructure) {
       if (!_participantRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _participantRest.convertStorageAliquot(aliquot).$promise;
+      return _participantRest.updateTubeCollectionData({
+        rn: recruitmentNumber
+      }, updateStructure).$promise;
+    }
+
+    function updateTubeCustomMetadata(tube){
+      if (!_participantRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _participantRest.updateTubeCustomMetadata(tube).$promise;
     }
 
     /* laboratory-configuration methods */
@@ -128,11 +138,11 @@
       return _configurationRest.getDescriptors().$promise;
     }
 
-    function getAliquotConfiguration() {
+    function getCheckingExist() {
       if (!_configurationRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _configurationRest.getAliquotConfiguration().$promise;
+      return _configurationRest.getCheckingExist().$promise;
     }
 
     function getAliquotDescriptors() {
@@ -142,12 +152,22 @@
       return _configurationRest.getAliquotDescriptors().$promise;
     }
 
-    function getCheckingExist() {
+    function getAliquotConfiguration() {
       if (!_configurationRest) {
         throw new Error('REST resource is no initialized.');
       }
-      return _configurationRest.getCheckingExist().$promise;
+      return _configurationRest.getAliquotConfiguration().$promise;
     }
+
+    function getTubeMedataDataByType(tubeType) {
+      if (!_configurationRest) {
+        throw new Error('REST resource is no initialized.');
+      }
+      return _configurationRest.getTubeMedataDataByType({type: tubeType}).$promise;
+    }
+
+
+    /* Unattached Laboratory Methods */
 
     function initializeUnattached(acronym, descriptorName) {
       if (!_configurationRest) {
@@ -190,5 +210,6 @@
       }
       return _unattachedRest.getByIdentification({laboratoryIdentification:laboratoryIdentification}).$promise;
     }
+
   }
 }());

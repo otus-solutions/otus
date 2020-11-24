@@ -1,3 +1,20 @@
+<style>
+  @media screen and (min-width: 601px) {
+    .custom-metadata-layout {
+      display: grid;
+      margin: 0px 16px 0px 8px;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      grid-template-rows: repeat(auto-fill, 1fr);
+      grid-template-areas:
+        "customMetadataItem customMetadataItem customMetadataItem customMetadataItem";
+    }
+
+    .custom-metadata-layout md-checkbox {
+      grid-area: customMetadataItem;
+    }
+  }
+</style>
+
 <md-content flex="">
       <otus-dashboard-sidenav layout="row">
         <hide-participant-box></hide-participant-box>
@@ -12,14 +29,14 @@
 
       <!-- tubelist -->
       <div class="aliquots-container" layout="column" layout-align="center" flex ng-style="{'max-width': '940px', 'margin': '0 auto'}">
+
         <div layout="column" layout-align="center" flex="25" flex-md="30" flex-offset="5">
           <md-input-container class="md-block" flex-gt-sm>
             <label>Código do tubo</label>
             <input ng-keyup="$ctrl.isEnterKey($event,$ctrl.tubeCode)" ng-model="$ctrl.tubeCode" ng-change="[$ctrl.isValidCode($ctrl.tubeCode)]" maxlength="9">
           </md-input-container>
 
-          <md-list ng-if="$ctrl.originalTube.hasOwnProperty('code')">
-
+          <md-list ng-if="$ctrl.originalTubeHasCode()">
             <div class="tube-list-view">
 
               <md-card ng-style="{'padding':'10px'}">
@@ -62,19 +79,40 @@
                 </div>
               </md-card>
             </div>
-              <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected" ng-click="$ctrl.saveChangedTubes()">
-                  COLETAR
-              </md-button>
-              <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
+            <md-button class="md-raised md-primary" ng-if="!$ctrl.newTube.tubeCollectionData.isCollected" ng-click="$ctrl.saveChangedTubes()">
+              COLETAR
+            </md-button>
+            <md-button class="md-raised md-primary" ng-if="$ctrl.newTube.tubeCollectionData.isCollected" ng-disabled="true">COLETADO</md-button>
             <md-button class="md-raised" ng-click="$ctrl.cancelTube()">CANCELAR</md-button>
           </md-list>
 
-          <div ng-if="!$ctrl.originalTube.hasOwnProperty('code')">
+          <div ng-if="!$ctrl.originalTubeHasCode()">
             <h2>Sem Tubos Coletados</h2>
           </div>
         </div>
-        <div ng-if="$ctrl.originalTube.hasOwnProperty('code')">
-          <laboratory-aliquots-manager participant-manager="$ctrl.participantManagerService" participant-laboratory="$ctrl.participantLaboratory" original-tube="$ctrl.originalTube" tube="$ctrl.newTube" update-aliquots="$ctrl.updateAliquots" flex></laboratory-aliquots-manager>
+        <div ng-if="$ctrl.originalTubeHasCode() && $ctrl.tubeHasCustomMetadata()" layout="column" layout-align="center center" flex-offset="5">
+          <md-subheader class="md-no-sticky moment-type-title">
+            Metadados Material Primário
+          </md-subheader>
+          <div layout-xs="column" layout-gt-xs="row" class="custom-metadata-layout">
+            <div ng-repeat="option in $ctrl.tubeCustomMetadataOptions track by $index" style="padding-right: 16px">
+              <md-checkbox class="md-primary md-align-top-left"
+                           ng-model="option.selected"
+                           ng-change="$ctrl.updateTubeCustomMetadata(option)">
+                <span class="md-caption">{{ option.value }}</span>
+              </md-checkbox>
+            </div>
+          </div>
         </div>
+
+        <div ng-if="$ctrl.originalTubeHasCode()">
+          <laboratory-aliquots-manager participant-manager="$ctrl.participantManagerService"
+                                       participant-laboratory="$ctrl.participantLaboratory"
+                                       original-tube="$ctrl.originalTube"
+                                       tube="$ctrl.newTube"
+                                       flex>
+          </laboratory-aliquots-manager>
+        </div>
+
       </div>
 </md-content>

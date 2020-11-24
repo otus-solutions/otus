@@ -18,6 +18,7 @@
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.fetchAliquotsDescriptors = fetchAliquotsDescriptors;
     self.getQualityControlGroupNames = getQualityControlGroupNames;
+    self.getTubeMedataDataByType = getTubeMedataDataByType;
 
     /* Laboratory Configuration */
 
@@ -114,6 +115,11 @@
 
       return defer.promise;
     }
+
+    function getTubeMedataDataByType(tubeType) {
+      return LaboratoryRepositoryService.getTubeMedataDataByType(tubeType);
+    }
+
   }
 
 }());
