@@ -111,13 +111,13 @@
       if (!preActivity.paperActivityData) throw Error("interrupted operation: invalid checker data");
       else {
         ActivityRepositoryService.createPaperActivity(preActivity.surveyForm,
-          preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID)
+          preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID, preActivity.stageId)
           .then(paperActivity => self.activities.push(paperActivity));
       }
     }
 
     function _createAutoFillActivity(preActivity, selectedParticipant) {
-      ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID)
+      ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.stageId)
         .then(autoFillActivity => self.activities.push(autoFillActivity));
     }
 
