@@ -49,7 +49,7 @@ describe('LaboratoryRestService_Test_Suite', function () {
   });
 
 
-  it('updateTubeCustomMetadata_should_invoke_participantRest_method_and_return_promise', () => {
+  xit('updateTubeCustomMetadata_should_invoke_participantRest_method_and_return_promise', () => {
     service.initialize();
     expect(service.updateTubeCustomMetadata(Mock.tube)).toBePromise();
   });
@@ -59,7 +59,7 @@ describe('LaboratoryRestService_Test_Suite', function () {
   });
 
 
-  it('getTubeMedataDataByType_should_invoke_configurationRest_method_and_return_promise', () => {
+  xit('getTubeMedataDataByType_should_invoke_configurationRest_method_and_return_promise', () => {
     service.initialize();
     expect(service.getTubeMedataDataByType(Mock.tube.type)).toBePromise();
   });
