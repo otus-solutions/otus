@@ -55,29 +55,33 @@
     }
 
     function getByIdentification() {
-      UnattachedLaboratoryService.getUnattachedByIdentification(self.identificationFilter).then(function (result) {
-        let currentStatus = result.actionHistory[result.actionHistory.length-1].action;
-        if (currentStatus === "DISCARDED") {
-          self.error = "O laboratório " + result.identification + " foi removido do sistema";
+      if(self.identificationFilter) {
+        UnattachedLaboratoryService.getUnattachedByIdentification(self.identificationFilter).then(function (result) {
+          let currentStatus = result.actionHistory[result.actionHistory.length-1].action;
+          if (currentStatus === "DISCARDED") {
+            self.error = "O laboratório " + result.identification + " foi removido do sistema";
+            _showToast(self.error);
+          } else if (currentStatus === "ATTACHED") {
+            self.error = "O laboratório " + result.identification + " já foi vinculado a um participante";
+            _showToast(self.error);
+          } else {
+            self.haveErrors = false;
+            self.unattachedLaboratoryList = [result];
+            self.collectGroupsFilter=result.collectGroupName;
+            self.centerFilter=result.fieldCenterAcronym;
+          }
+        }).catch(function (error) {
+          if (error.data) {
+            self.error = "Laboratório não encontrado";
+          } else {
+            self.error = "Ocorreu um erro, entre em contato com o administrador do sistema";
+          }
+          LoadingScreenService.finish();
           _showToast(self.error);
-        } else if (currentStatus === "ATTACHED") {
-          self.error = "O laboratório " + result.identification + " já foi vinculado a um participante";
-          _showToast(self.error);
-        } else {
-          self.haveErrors = false;
-          self.unattachedLaboratoryList = [result];
-          self.collectGroupsFilter=result.collectGroupName;
-          self.centerFilter=result.fieldCenterAcronym;
-        }
-      }).catch(function (error) {
-        if (error.data) {
-          self.error = "Laboratório não encontrado";
-        } else {
-          self.error = "Ocorreu um erro, entre em contato com o administrador do sistema";
-        }
-        LoadingScreenService.finish();
-        _showToast(self.error);
-      })
+        })
+      }else {
+        _showToast('O campo idenficação do laboratório está vazio');
+      }
     }
 
     function changeCreation() {
@@ -146,7 +150,7 @@
       $mdToast.show(
         $mdToast.simple()
           .textContent(msg)
-          .hideDelay(10000)
+          .hideDelay(5000)
       );
     }
   }

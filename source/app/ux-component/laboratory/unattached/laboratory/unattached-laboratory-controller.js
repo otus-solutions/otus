@@ -86,8 +86,8 @@
 
         tubeInfo.label = tubeDescriptor ? tubeDescriptor.label : '';
         tubeInfo.boxColor = tubeDescriptor ? tubeDescriptor.color : '';
-        tubeInfo.momentLabel = momentDescriptor.label !== '' ? momentDescriptor.label : 'Nenhum';
-        tubeInfo.typeLabel = tubeDescriptor.label;
+        tubeInfo.momentLabel = momentDescriptor ? ( momentDescriptor.label !== '' ? momentDescriptor.label : 'Nenhum') : "";
+        tubeInfo.typeLabel = tubeDescriptor ? tubeDescriptor.label : '';
         return tubeInfo
       });
       self.labels = LaboratoryLabelFactory.createForUnattached(angular.copy(lab));
