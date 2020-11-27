@@ -7,6 +7,7 @@
       controller: "generateCustomLabelDialogCtrl as $ctrl",
       templateUrl: 'app/ux-component/generate-label-modal/generate-custom-label-dialog/generate-custom-label-dialog-template.html',
       bindings: {
+        labelPromise: '<',
         participantButton: '=',
         identificationButton: '=',
         kitButton: '=',

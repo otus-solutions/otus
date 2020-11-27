@@ -35,6 +35,7 @@
       self.participant_name = participant.name;
       self.gender = participant.sex;
       self.birthday = _convertFormatDate(new Date(participant.birthdate.value));
+      self.laboratoryFieldCenter = participant.fieldCenter.acronym;
     } else {
       self.recruitment_number = "_______________";
       self.participant_name = "_______________";

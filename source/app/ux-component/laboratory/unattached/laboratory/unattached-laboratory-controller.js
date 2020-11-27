@@ -6,6 +6,7 @@
     .controller('unattachedLaboratoryCtrl', Controller);
 
   Controller.$inject = [
+    '$q',
     '$mdDialog',
     '$mdToast',
     '$timeout',
@@ -18,7 +19,8 @@
 
   ];
 
-  function Controller($mdDialog,
+  function Controller($q,
+                      $mdDialog,
                       $mdToast,
                       $timeout,
                       DialogShowService,
@@ -33,13 +35,13 @@
 
 
     self.$onInit = onInit
+    let defer = $q.defer();
+    self.labelPromise = defer.promise;
     self.attacheLaboratory = attacheLaboratory;
     self.generateLabels = generateLabels;
     self.discardUnattached = discardUnattached;
 
-    function onInit() {
-      generateLabels();
-    }
+    function onInit() {}
 
     function discardUnattached() {
       showDeleteDialog().then(function () {
@@ -66,6 +68,7 @@
       } else {
         UnattachedLaboratoryService.getById(self.laboratoryData._id.$oid).then(function (result) {
           _fillLabels(result);
+          defer.resolve();
         }).catch(function (error) {
           if (error.data) {
             self.attacheError = "Laboratório não encontrado";
