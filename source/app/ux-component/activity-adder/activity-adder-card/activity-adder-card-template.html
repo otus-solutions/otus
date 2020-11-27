@@ -20,6 +20,8 @@
       <span class="md-body-2" layout-fill md-truncate>{{$ctrl.preActivity.surveyForm.name}}</span>
       <span class="md-caption" ng-style="{color:'#797985'}">Categoria: <small class="md-body-2" ng-style="{color:'black'}">
         {{::$ctrl.preActivity.configuration.category.label}}</small></span>
+      <span class="md-caption" ng-style="{color:'#797985'}">Etapa: <small class="md-body-2" ng-style="{color:'black'}">
+        {{::$ctrl.preActivity.stage.name}}</small></span>
     </div>
   </div>
   <div layout="column" layout-align="start start" ng-if="$ctrl.validTypeActivityPaper()">
