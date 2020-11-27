@@ -46,7 +46,7 @@
     self.preActivities = [];
     self.selectionOptions = [];
     self.btnAddPreActivitiesDisable = true;
-    self.stage = "Onda 3";
+    self.stage = null;
     self.optionStages = [];
 
     /* Public methods */
@@ -175,7 +175,7 @@
         angular.copy(self.configuration),
         angular.copy(self.mode),
         angular.copy(self.paperActivityCheckerData),
-        angular.copy(self.stage)
+        angular.copy(self.stage.id)
       );
 
       self.preActivities.unshift(preActivity);
@@ -219,15 +219,16 @@
     function _loadStages(){
       //TODO
       self.optionStages = [{
-        id: "a",
+        id: "5f7ca9654ac6a6555b363663",
         name: "Onda 3"
       }, {
-        id: "b",
+        id: "5f7ca9654ac6a6555b363664",
         name: "Onda 4"
       }, {
-        id: "c",
+        id: "5f7ca9654ac6a6555b363665",
         name: "Onda COVID"
       }];
+      self.stage = self.optionStages[0];
     }
 
     function surveyQuerySearch(query) {
