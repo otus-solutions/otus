@@ -46,6 +46,8 @@
     self.preActivities = [];
     self.selectionOptions = [];
     self.btnAddPreActivitiesDisable = true;
+    self.stage = "Onda 3";
+    self.optionStages = [];
 
     /* Public methods */
     self.addPreActivities = addPreActivities;
@@ -70,6 +72,7 @@
       _loadOptionModes();
       _loadSurveys();
       _loadSurveysGroup();
+      _loadStages();
       $element.find('#search').on('keydown', function (ev) {
         ev.stopPropagation();
       });
@@ -170,12 +173,13 @@
         survey,
         angular.copy(self.configuration),
         angular.copy(self.mode),
-        angular.copy(self.paperActivityCheckerData));
+        angular.copy(self.stage),
+        angular.copy(self.paperActivityCheckerData)
+      );
 
       self.preActivities.unshift(preActivity);
       self.searchText = '';
       self.btnAddPreActivitiesDisable = true;
-
     }
 
     function _loadOptionModes() {
@@ -209,6 +213,20 @@
             self.isListEmpty = false;
           }
         }).then(LoadingScreenService.finish());
+    }
+
+    function _loadStages(){
+      //TODO
+      self.optionStages = [{
+        id: "a",
+        name: "Onda 3"
+      }, {
+        id: "b",
+        name: "Onda 4"
+      }, {
+        id: "c",
+        name: "Onda COVID"
+      }];
     }
 
     function surveyQuerySearch(query) {
