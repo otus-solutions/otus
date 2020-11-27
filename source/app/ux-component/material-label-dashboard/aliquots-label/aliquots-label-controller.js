@@ -122,14 +122,16 @@
       }
     }
 
-    function addAliquotToPrintList(aliquot) {
+    function addAliquotToPrintList(aliquot, showErrorToast) {
       if(aliquot.isSaved){
         if(aliquot.printStructure.selected){
           self.aliquotsLabels.aliquots.push(aliquot)
         }
       }else {
         aliquot.printStructure.selected = false
-        _showToastMsg("Não é possível gerar etiquetas de aliquotas que ainda não foram coletadas")
+        if(showErrorToast){
+          _showToastMsg("Não é possível gerar etiquetas de aliquotas que ainda não foram coletadas")
+        }
       }
     }
 
