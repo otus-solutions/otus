@@ -9,13 +9,13 @@
     let self = this;
     self.create = create;
 
-    function create(survey, configuration, mode, user, externalID) {
-      return new preActivity(survey, configuration, mode, user, externalID);
+    function create(user, survey, configuration, mode, externalID, stage) {
+      return new PreActivity(user, survey, configuration, mode, externalID, stage);
     }
     return self;
   }
 
-  function preActivity(survey, configuration, mode, user, externalID) {
+  function PreActivity(user, survey, configuration, mode, externalID, stage) {
     let self = this;
     self.objectType = 'preActivity';
     self.surveyForm = survey;
@@ -25,6 +25,7 @@
     self.paperActivityData = undefined;
     self.externalID = externalID || null;
     self.preActivityValid = false;
+    self.stage = stage;
 
     /* Public methods */
     self.updatePaperActivityData = updatePaperActivityData;
@@ -56,7 +57,8 @@
         user: self.user,
         paperActivityData: self.paperActivityData,
         externalID: self.externalID,
-        preActivityValid: self.preActivityValid
+        preActivityValid: self.preActivityValid,
+        stage: self.stage
       };
     }
   }
