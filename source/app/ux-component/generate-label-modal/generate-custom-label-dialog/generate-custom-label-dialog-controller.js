@@ -22,6 +22,19 @@
 
 
     function showAdvanced(ev) {
+      if(self.labelPromise){
+        self.labelPromise.then(function (){
+          setTimeout(function (){
+            _showDialog(ev)
+          })
+        }, 1000)
+      } else {
+        _showDialog(ev)
+      }
+
+    }
+
+    function _showDialog(ev){
       $mdDialog.show({
         controller: DialogController,
         controllerAs: 'ctrl',
@@ -31,6 +44,7 @@
         clickOutsideToClose: true,
         locals: {
           data: {
+            labelsReady: self.labelsReady ? self.labelsReady : true,
             participantButton: self.participantButton,
             identificationButton: self.identificationButton,
             kitButton: self.kitButton,

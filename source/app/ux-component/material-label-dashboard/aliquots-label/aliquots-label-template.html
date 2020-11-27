@@ -67,7 +67,7 @@
               </md-input-container>
               <md-checkbox aria-label="selected" ng-change="
               [ $ctrl.removeTube(exam)
-              ,$ctrl.addAliquotToPrintList(exam) ]" ng-model="exam.printStructure.selected"/>
+              ,$ctrl.addAliquotToPrintList(exam, true) ]" ng-model="exam.printStructure.selected"/>
             </div>
           </div>
         </div>
@@ -101,7 +101,7 @@
               </md-input-container>
               <md-checkbox aria-label="selected" ng-change="
               [ $ctrl.removeAliquot(additionalExam)
-              ,$ctrl.addAliquotToPrintList(additionalExam) ]" ng-model="additionalExam.printStructure.selected"/>
+              ,$ctrl.addAliquotToPrintList(additionalExam, true) ]" ng-model="additionalExam.printStructure.selected"/>
             </div>
           </div>
         </div>
@@ -135,7 +135,7 @@
               </md-input-container>
               <md-checkbox aria-label="selected" ng-change="
               [ $ctrl.removeAliquot(storage)
-              ,$ctrl.addAliquotToPrintList(storage) ]" ng-model="storage.printStructure.selected"/>
+              ,$ctrl.addAliquotToPrintList(storage, true) ]" ng-model="storage.printStructure.selected"/>
             </div>
           </div>
         </div>
