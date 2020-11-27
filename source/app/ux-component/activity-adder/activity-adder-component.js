@@ -169,12 +169,13 @@
     }
 
     function addPreActivities(survey) {
+
       let preActivity = ParticipantActivityService.createPreActivity(
         survey,
         angular.copy(self.configuration),
         angular.copy(self.mode),
-        angular.copy(self.stage),
-        angular.copy(self.paperActivityCheckerData)
+        angular.copy(self.paperActivityCheckerData),
+        angular.copy(self.stage)
       );
 
       self.preActivities.unshift(preActivity);

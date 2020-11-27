@@ -70,9 +70,9 @@
         });
     }
 
-    function createPreActivity(survey, configuration, mode, stage) {
+    function createPreActivity(survey, configuration, mode, externalID, stage) {
       let loggedUser = ContextService.getLoggedUser();
-      return PreActivityFactory.create(loggedUser, survey, configuration, mode, stage);
+      return PreActivityFactory.create(loggedUser, survey, configuration, mode, externalID, stage);
     }
 
     function saveActivities(preActivities) {
