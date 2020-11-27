@@ -65,6 +65,11 @@
         .then(function () {
           try {
             SessionContextService.restore();
+            try {
+              laboratoryContextService.restore();
+            }
+            catch (e) {}
+
             var user = SessionContextService.getData('loggedUser');
             return user;
           } catch (e) {
