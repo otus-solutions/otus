@@ -70,9 +70,9 @@
         });
     }
 
-    function createPreActivity(survey, configuration, mode, externalID, stageId) {
+    function createPreActivity(survey, configuration, mode, externalID, stage) {
       let loggedUser = ContextService.getLoggedUser();
-      return PreActivityFactory.create(loggedUser, survey, configuration, mode, externalID, stageId);
+      return PreActivityFactory.create(loggedUser, survey, configuration, mode, externalID, stage);
     }
 
     function saveActivities(preActivities) {
@@ -103,7 +103,7 @@
     }
 
     function _createOnLineActivity(preActivity, selectedParticipant) {
-      ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.stageId)
+      ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.stage.id)
         .then(onlineActivity => self.activities.push(onlineActivity));
     }
 
@@ -111,13 +111,13 @@
       if (!preActivity.paperActivityData) throw Error("interrupted operation: invalid checker data");
       else {
         ActivityRepositoryService.createPaperActivity(preActivity.surveyForm,
-          preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID, preActivity.stageId)
+          preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID, preActivity.stage.id)
           .then(paperActivity => self.activities.push(paperActivity));
       }
     }
 
     function _createAutoFillActivity(preActivity, selectedParticipant) {
-      ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.stageId)
+      ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.stage.id)
         .then(autoFillActivity => self.activities.push(autoFillActivity));
     }
 

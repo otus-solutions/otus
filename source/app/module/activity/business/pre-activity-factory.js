@@ -9,13 +9,13 @@
     let self = this;
     self.create = create;
 
-    function create(user, survey, configuration, mode, externalID, stageId) {
-      return new PreActivity(user, survey, configuration, mode, externalID, stageId);
+    function create(user, survey, configuration, mode, externalID, stage) {
+      return new PreActivity(user, survey, configuration, mode, externalID, stage);
     }
     return self;
   }
 
-  function PreActivity(user, survey, configuration, mode, externalID, stageId) {
+  function PreActivity(user, survey, configuration, mode, externalID, stage) {
     let self = this;
     self.objectType = 'preActivity';
     self.surveyForm = survey;
@@ -25,7 +25,7 @@
     self.paperActivityData = undefined;
     self.externalID = externalID || null;
     self.preActivityValid = false;
-    self.stageId = stageId;
+    self.stage = stage; // object with keys [id,name]
 
     /* Public methods */
     self.updatePaperActivityData = updatePaperActivityData;
