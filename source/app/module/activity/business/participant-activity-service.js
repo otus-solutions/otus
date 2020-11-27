@@ -18,7 +18,7 @@
   ];
 
   function Service($mdToast, ContextService, ActivityRepositoryService, UserRepositoryService,
-    PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues) {
+                   PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues) {
     var self = this;
     var _paperActivityCheckerData = null;
     const FAIL_ACTIVITY_CREATION = true;
@@ -103,7 +103,7 @@
     }
 
     function _createOnLineActivity(preActivity, selectedParticipant) {
-      ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.stage.id)
+      ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.getStageId())
         .then(onlineActivity => self.activities.push(onlineActivity));
     }
 
@@ -111,13 +111,13 @@
       if (!preActivity.paperActivityData) throw Error("interrupted operation: invalid checker data");
       else {
         ActivityRepositoryService.createPaperActivity(preActivity.surveyForm,
-          preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID, preActivity.stage.id)
+          preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID, preActivity.getStageId())
           .then(paperActivity => self.activities.push(paperActivity));
       }
     }
 
     function _createAutoFillActivity(preActivity, selectedParticipant) {
-      ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.stage.id)
+      ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.getStageId())
         .then(autoFillActivity => self.activities.push(autoFillActivity));
     }
 
