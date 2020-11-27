@@ -30,11 +30,14 @@
     /* Public methods */
     self.updatePaperActivityData = updatePaperActivityData;
     self.updatePreActivityValid = updatePreActivityValid;
+    self.getStageId = getStageId;
     self.toJSON = toJSON;
 
 
     function updatePaperActivityData(checkerData, realizationDate) {
-      if (!checkerData) self.preActivityValid = false;
+      if (!checkerData) {
+        self.preActivityValid = false;
+      }
       else {
         self.paperActivityData = {};
         self.paperActivityData.checker = checkerData.checker;
@@ -43,9 +46,19 @@
     }
 
     function updatePreActivityValid(stateChecker, stateIdExternal) {
-      if (self.surveyForm.isRequiredExternalID()) self.preActivityValid = stateChecker && stateIdExternal;
-      if (stateChecker && stateIdExternal) self.preActivityValid = stateChecker;
-      if (stateChecker === null && stateIdExternal) self.preActivityValid = stateIdExternal;
+      if (self.surveyForm.isRequiredExternalID()) {
+        self.preActivityValid = stateChecker && stateIdExternal;
+      }
+      if (stateChecker && stateIdExternal) {
+        self.preActivityValid = stateChecker;
+      }
+      if (stateChecker === null && stateIdExternal) {
+        self.preActivityValid = stateIdExternal;
+      }
+    }
+
+    function getStageId(){
+      return self.stage.id;
     }
 
     function toJSON() {
