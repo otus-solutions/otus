@@ -15,7 +15,6 @@
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.activity.business.GroupActivityService',
-    '$mdDialog',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.deploy.LoadingScreenService',
     '$q',
@@ -24,13 +23,10 @@
     'ACTIVITY_MANAGER_LABELS'
   ];
 
-  function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout, $element, ACTIVITY_MANAGER_LABELS) {
+  function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, DialogService, LoadingScreenService, $q, $timeout, $element, ACTIVITY_MANAGER_LABELS) {
     const ALL_OPTION = "Todos";
 
     let self = this;
-    let confirmCancelPreActivities;
-    let confirmSavePreActivities;
-    let invalidPreActivities;
 
     self.surveys = [];
     self.activities = [];
@@ -66,7 +62,6 @@
 
     function onInit() {
       LoadingScreenService.start();
-      _buildDialogs();
       _loadCategories();
       _loadOptionModes();
       _loadSurveys();
@@ -276,18 +271,29 @@
     }
 
     function resetPreActivities() {
-      DialogService.showDialog(confirmCancelPreActivities)
+      DialogService.showConfirmationDialog(
+        'Cancelamento da Lista de Formulários',
+        'Deseja sair do Gerenciador de Atividades ?',
+        'Confirmação de cancelamento')
         .then(() => self.preActivities = [])
         .then(() => ApplicationStateService.activateParticipantActivities());
     }
 
     function saveActivities() {
       if (allActivitiesAreValid()) {
-        DialogService.showDialog(confirmSavePreActivities)
+        DialogService.showConfirmationDialog(
+          'Salvar Lista de Formulários',
+          'Deseja adicionar os itens ao participante?',
+          'Confirmação de exclusão')
           .then(() => ParticipantActivityService.saveActivities(self.preActivities))
           .then(() => ApplicationStateService.activateActivityAdder())
       } else {
-        DialogService.showDialog(invalidPreActivities);
+        DialogService.showWarningDialog(
+          'Pendência de Informações',
+          'Detecção de Formulários Incompletos',
+          'Retorne para lista e preencha os campos obrigatórios',
+          'Aviso de formulários inválidos'
+        );
       }
     }
 
@@ -296,7 +302,9 @@
     }
 
     function _checkFilledInput(preActivity) {
-      return preActivity.preActivityValid = preActivity.preActivityValid || preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name || (preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name && !preActivity.surveyForm.isRequiredExternalID());
+      return preActivity.preActivityValid = preActivity.preActivityValid ||
+        preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name ||
+        (preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name && !preActivity.surveyForm.isRequiredExternalID());
     }
 
     function monitoringSearchTextChange(state) {
@@ -304,59 +312,10 @@
     }
 
     function selectedItemChange(item) {
-      if (item) self.btnAddPreActivitiesDisable = false;
-    }
-
-    function _buildDialogs() {
-      confirmCancelPreActivities = {
-        dialogToTitle: 'Confirmação',
-        titleToText: 'Cancelamento da Lista de Formulários',
-        textDialog: 'Deseja sair do Gerenciador de Atividades ?',
-        ariaLabel: 'Confirmação de cancelamento',
-        buttons: _prepareButtons()
-      };
-
-      confirmSavePreActivities = {
-        dialogToTitle: 'Confirmação',
-        titleToText: 'Salvar Lista de Formulários',
-        textDialog: 'Deseja adicionar os itens ao participante?',
-        ariaLabel: 'Confirmação de exclusão',
-        buttons: _prepareButtons()
-      };
-
-      invalidPreActivities = {
-        dialogToTitle: 'Pendência de Informações',
-        titleToText: 'Detecção de Formulários Incompletos',
-        textDialog: 'Retorne para lista e preencha os campos obrigatórios',
-        ariaLabel: 'Aviso de formulários inválidos',
-        buttons: [{
-          message: 'Voltar',
-          action: function () {
-            $mdDialog.cancel()
-          },
-          class: 'md-raised md-no-focus'
-        }]
-      };
-
-
-      function _prepareButtons() {
-        return [
-          {
-            message: 'Ok',
-            action: function () {
-              $mdDialog.hide()
-            },
-            class: 'md-raised md-primary'
-          },
-          {
-            message: 'Voltar',
-            action: function () {
-              $mdDialog.cancel()
-            },
-            class: 'md-raised md-no-focus'
-          }
-        ]
+      if (item) {
+        self.btnAddPreActivitiesDisable = false;
       }
     }
+
   }
 }());
