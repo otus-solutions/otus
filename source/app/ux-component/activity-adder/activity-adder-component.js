@@ -46,6 +46,7 @@
     self.optionStages = [];
 
     /* Public methods */
+    self.$onInit = onInit;
     self.addPreActivities = addPreActivities;
     self.saveActivities = saveActivities;
     self.surveyQuerySearch = surveyQuerySearch;
@@ -58,7 +59,6 @@
     self.monitoringSearchTextChange = monitoringSearchTextChange;
     self.selectedItemChange = selectedItemChange;
 
-    self.$onInit = onInit;
 
     function onInit() {
       LoadingScreenService.start();
@@ -70,115 +70,6 @@
       $element.find('#search').on('keydown', function (ev) {
         ev.stopPropagation();
       });
-    }
-
-    function clearSearchTerm() {
-      self.searchTerm = '';
-    }
-
-    function _loadSurveysGroup() {
-      self.selectedGroups = [];
-      self.selectedGroupsResult = [];
-      self.groupList = [];
-      self.selectionOptions = [];
-      GroupActivityService.getSurveyGroupsByUser().then(function (data) {
-        self.surveysGroups = data;
-        self.groupList = self.surveysGroups.getGroupNames();
-
-        if (self.groupList.length > 0) {
-          self.selectionOptions.push(ALL_OPTION);
-        }
-
-        self.selectionOptions = self.selectionOptions.concat(self.groupList);
-      });
-    }
-
-    function displayGridLarge() {
-      if (window.innerWidth < 1400) {
-        return '1:1.5';
-      }
-      return '1:1.05';
-    }
-
-    function displayGridSmall() {
-      if (window.innerWidth < 680) {
-        return '1:1.7';
-      }
-      return '3:4';
-    }
-
-    function _groupsFilter() {
-      _surveysFilter();
-      _activitiesFilter();
-    }
-
-    function _surveysFilter() {
-      if(!self.stage){
-        DialogService.showWarningDialog(
-          'Pendência de Informações',
-          'Nenhuma etapa selecionada',
-          'Selecione uma etapa.',
-          'Aviso de etapa nao selecionada');
-        return;
-      }
-
-      self.selectedSurveys = [];
-      self.selectedGroupsResult.forEach(groupName => {
-        self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.getGroupSurveys(groupName));
-      });
-      self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
-        return self.stage.surveyAcronyms.includes(item) && self.selectedSurveys.indexOf(item) === position;
-      });
-    }
-
-    function _activitiesFilter() {
-      self.activities = self.surveys.filter(function (activity) {
-        return self.selectedSurveys.includes(activity.acronym)
-      });
-    }
-
-    function disabledGroups(index) {
-      let disabledResult;
-      if (!self.selectedGroups.length) {
-        disabledResult = false;
-      } else if (self.selectedGroups.includes(ALL_OPTION) && index > 0) {
-        disabledResult = true
-      } else {
-        disabledResult = (!self.selectedGroups.includes(ALL_OPTION) && index === 0 && !self.searchTerm);
-      }
-      return disabledResult;
-    }
-
-    function addPreActivitiesGroup(item) {
-      self.activities = [];
-      self.selectedGroups = [];
-      self.selectedGroupsResult = [];
-      self.selectedGroupsResult = item.includes(ALL_OPTION) ? self.groupList.slice(0) : item;
-      self.processing = false;
-
-      _groupsFilter();
-
-      $timeout(() => {
-        self.processing = true;
-      }, 2000);
-
-      self.activities.forEach(activity => {
-        addPreActivities(activity);
-      });
-    }
-
-    function addPreActivities(survey) {
-      let preActivity = ParticipantActivityService.createPreActivity(
-        survey,
-        angular.copy(self.configuration),
-        angular.copy(self.mode),
-        angular.copy(self.paperActivityCheckerData),
-        angular.copy(self.stage)
-      );
-
-      self.preActivities.unshift(preActivity);
-      self.searchText = '';
-      self.btnAddPreActivitiesDisable = true;
     }
 
     function _loadOptionModes() {
@@ -212,6 +103,23 @@
             self.isListEmpty = false;
           }
         }).then(LoadingScreenService.finish());
+    }
+
+    function _loadSurveysGroup() {
+      self.selectedGroups = [];
+      self.selectedGroupsResult = [];
+      self.groupList = [];
+      self.selectionOptions = [];
+      GroupActivityService.getSurveyGroupsByUser().then(function (data) {
+        self.surveysGroups = data;
+        self.groupList = self.surveysGroups.getGroupNames();
+
+        if (self.groupList.length > 0) {
+          self.selectionOptions.push(ALL_OPTION);
+        }
+
+        self.selectionOptions = self.selectionOptions.concat(self.groupList);
+      });
     }
 
     function _loadStages(){
@@ -250,20 +158,103 @@
       ];
     }
 
+    function clearSearchTerm() {
+      self.searchTerm = '';
+    }
+
+    function displayGridLarge() {
+      if (window.innerWidth < 1400) {
+        return '1:1.5';
+      }
+      return '1:1.05';
+    }
+
+    function displayGridSmall() {
+      if (window.innerWidth < 680) {
+        return '1:1.7';
+      }
+      return '3:4';
+    }
+
+    function disabledGroups(index) {
+      let disabledResult;
+      if (!self.selectedGroups.length) {
+        disabledResult = false;
+      } else if (self.selectedGroups.includes(ALL_OPTION) && index > 0) {
+        disabledResult = true
+      } else {
+        disabledResult = (!self.selectedGroups.includes(ALL_OPTION) && index === 0 && !self.searchTerm);
+      }
+      return disabledResult;
+    }
+
+    function addPreActivitiesGroup(item) {
+      self.activities = [];
+      self.selectedGroups = [];
+      self.selectedGroupsResult = [];
+      self.selectedGroupsResult = item.includes(ALL_OPTION) ? self.groupList.slice(0) : item;
+      self.processing = false;
+
+      _filterActivities();
+
+      $timeout(() => {
+        self.processing = true;
+      }, 2000);
+
+      self.activities.forEach(activity => {
+        addPreActivities(activity);
+      });
+    }
+
+    function addPreActivities(survey) {
+      let preActivity = ParticipantActivityService.createPreActivity(
+        survey,
+        angular.copy(self.configuration),
+        angular.copy(self.mode),
+        angular.copy(self.paperActivityCheckerData),
+        angular.copy(self.stage)
+      );
+
+      self.preActivities.unshift(preActivity);
+      self.searchText = '';
+      self.btnAddPreActivitiesDisable = true;
+    }
+
     function surveyQuerySearch(query) {
-      var results = [];
-      var deferred = $q.defer();
-
       self.selectedGroupsResult = self.selectedGroupsResult.concat(self.groupList);
-      _groupsFilter();
+      _filterActivities();
 
-      results = query ? self.activities.filter(_activityCreateFilterFor(query)) : self.activities;
+      let results = query ? self.activities.filter(_activityCreateFilterFor(query)) : self.activities;
+      let deferred = $q.defer();
 
       $timeout(() => {
         deferred.resolve(results);
       }, Math.random() * 1000, false);
 
       return deferred.promise;
+    }
+
+    function _filterActivities() {
+      if(!self.stage){
+        DialogService.showWarningDialog(
+          'Pendência de Informações',
+          'Nenhuma etapa selecionada',
+          'Selecione uma etapa.',
+          'Aviso de etapa nao selecionada');
+        return;
+      }
+
+      self.selectedSurveys = [];
+      self.selectedGroupsResult.forEach(groupName => {
+        self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.getGroupSurveys(groupName));
+      });
+      self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
+        return self.stage.surveyAcronyms.includes(item) && self.selectedSurveys.indexOf(item) === position;
+      });
+
+      self.activities = self.surveys.filter(function (activity) {
+        return self.selectedSurveys.includes(activity.acronym)
+      });
     }
 
     function _activityCreateFilterFor(query) {
