@@ -212,16 +212,38 @@
 
     function _loadStages(){
       //TODO
-      self.optionStages = [{
-        id: "5f7ca9654ac6a6555b363663",
-        name: "Onda 3"
-      }, {
-        id: "5f7ca9654ac6a6555b363664",
-        name: "Onda 4"
-      }, {
-        id: "5f7ca9654ac6a6555b363665",
-        name: "Onda COVID"
-      }];
+      self.optionStages = [
+        {
+          _id: "5f7ca9654ac6a6555b363664",
+          name: "Onda 4",
+          surveyAcronyms : [
+            "FRC",
+            "MEDC",
+            "ACTA"
+          ]
+        },
+        {
+          _id: "5f7ca9654ac6a6555b363663",
+          name: "Onda 3",
+          "surveyAcronyms" : [
+            "RETCLQ",
+            "IMT",
+            "CISE",
+            "FCOC",
+            "ANTC",
+            "PASC",
+            "VOPC",
+            "BIOC",
+            "ACTDC",
+            "CSJ"
+          ]
+        },
+        {
+          _id: "5f7ca9654ac6a6555b363665",
+          name: "Onda COVID",
+          surveyAcronyms: []
+        }
+      ];
       self.stage = self.optionStages[0];
     }
 
