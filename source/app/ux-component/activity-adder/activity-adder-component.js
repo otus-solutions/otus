@@ -114,10 +114,14 @@
 
     function _surveysFilter() {
       if(!self.stage){
-        //TODO
-        console.log('Selecione uma etapa')
+        DialogService.showWarningDialog(
+          'Pendência de Informações',
+          'Nenhuma etapa selecionada',
+          'Selecione uma etapa.',
+          'Aviso de etapa nao selecionada');
         return;
       }
+
       self.selectedSurveys = [];
       self.selectedGroupsResult.forEach(groupName => {
         self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.getGroupSurveys(groupName));
