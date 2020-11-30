@@ -112,19 +112,24 @@
       return '3:4';
     }
 
+    function _groupsFilter() {
+      _surveysFilter();
+      _activitiesFilter();
+    }
+
     function _surveysFilter() {
+      if(!self.stage){
+        //TODO
+        console.log('Selecione uma etapa')
+        return;
+      }
       self.selectedSurveys = [];
       self.selectedGroupsResult.forEach(groupName => {
         self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.getGroupSurveys(groupName));
       });
       self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
-        return self.selectedSurveys.indexOf(item) == position;
+        return self.stage.surveyAcronyms.includes(item) && self.selectedSurveys.indexOf(item) === position;
       });
-    }
-
-    function _groupsFilter() {
-      _surveysFilter();
-      _activitiesFilter();
     }
 
     function _activitiesFilter() {
@@ -244,7 +249,6 @@
           surveyAcronyms: []
         }
       ];
-      self.stage = self.optionStages[0];
     }
 
     function surveyQuerySearch(query) {
