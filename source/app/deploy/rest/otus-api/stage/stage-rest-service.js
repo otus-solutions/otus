@@ -28,7 +28,7 @@
 
     function _checkRest(){
       if (!_rest) {
-        throw new Error('REST resource is not initialized.');
+        throw new Error('StageRestService resource is not initialized.');
       }
     }
   }
