@@ -2,7 +2,7 @@
   'use strict';
 
   angular
-    .module('otusjs.deploy.rest')
+    .module('otusjs.deploy')
     .service('otusjs.deploy.StageRestService', Service);
 
   Service.$inject = [
@@ -32,4 +32,4 @@
       }
     }
   }
-});
+})();
