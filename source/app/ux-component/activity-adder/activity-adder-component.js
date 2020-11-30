@@ -25,7 +25,7 @@
   ];
 
   function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout, $element, ACTIVITY_MANAGER_LABELS) {
-    const option = "Todos";
+    const ALL_OPTION = "Todos";
 
     let self = this;
     let confirmCancelPreActivities;
@@ -38,7 +38,7 @@
     self.statePreview = false;
     self.processing = true;
     self.mode = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name;
-    self.selectType = "activityList";
+    self.selectSingleActivity = false;
     self.iconMode = "";
     self.optionModes = [];
     self.configuration = {};
@@ -54,7 +54,6 @@
     self.saveActivities = saveActivities;
     self.surveyQuerySearch = surveyQuerySearch;
     self.resetPreActivities = resetPreActivities;
-    self.selectAction = selectAction;
     self.clearSearchTerm = clearSearchTerm;
     self.addPreActivitiesGroup = addPreActivitiesGroup;
     self.disabledGroups = disabledGroups;
@@ -82,10 +81,6 @@
       self.searchTerm = '';
     }
 
-    function selectAction() {
-      return (self.selectType !== 'activityUnit');
-    }
-
     function _loadSurveysGroup() {
       self.selectedGroups = [];
       self.selectedGroupsResult = [];
@@ -96,7 +91,7 @@
         self.groupList = self.surveysGroups.getGroupNames();
 
         if (self.groupList.length > 0) {
-          self.selectionOptions.push(option);
+          self.selectionOptions.push(ALL_OPTION);
         }
 
         self.selectionOptions = self.selectionOptions.concat(self.groupList);
@@ -142,10 +137,10 @@
       let disabledResult;
       if (!self.selectedGroups.length) {
         disabledResult = false;
-      } else if (self.selectedGroups.includes(option) && index > 0) {
+      } else if (self.selectedGroups.includes(ALL_OPTION) && index > 0) {
         disabledResult = true
       } else {
-        disabledResult = (!self.selectedGroups.includes(option) && index === 0 && !self.searchTerm);
+        disabledResult = (!self.selectedGroups.includes(ALL_OPTION) && index === 0 && !self.searchTerm);
       }
       return disabledResult;
     }
@@ -154,7 +149,7 @@
       self.activities = [];
       self.selectedGroups = [];
       self.selectedGroupsResult = [];
-      self.selectedGroupsResult = item.includes(option) ? self.groupList.slice(0) : item;
+      self.selectedGroupsResult = item.includes(ALL_OPTION) ? self.groupList.slice(0) : item;
       self.processing = false;
 
       _groupsFilter();
