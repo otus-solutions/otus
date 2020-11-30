@@ -5,7 +5,26 @@ describe('OtusApiService_UnitTest_Suite', () => {
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
     angular.mock.inject($injector => {
+      Injections.AuthenticationRestService = $injector.get('otusjs.deploy.user.AuthenticationRestService');
+      Injections.InstallerRestService = $injector.get('otusjs.deploy.InstallerRestService');
       Injections.ActivityRestService = $injector.get('otusjs.deploy.ActivityRestService');
+      Injections.OfflineActivityCollectionRestService = $injector.get('otusjs.deploy.OfflineActivityCollectionRestService');
+      Injections.ActivityImportRestService = $injector.get('otusjs.deploy.ActivityImportRestService');
+      Injections.SurveyRestService = $injector.get('otusjs.deploy.SurveyRestService');
+      Injections.SurveyGroupRestService = $injector.get('otusjs.deploy.SurveyGroupRestService');
+      Injections.ActivityConfigurationRestService = $injector.get('otusjs.deploy.ActivityConfigurationRestService');
+      Injections.ConfigurationRestService = $injector.get('otusjs.deploy.ConfigurationRestService');
+      Injections.FieldCenterRestService = $injector.get('otusjs.deploy.FieldCenterRestService');
+      Injections.ParticipantRestService = $injector.get('otusjs.deploy.ParticipantRestService');
+      Injections.UserRestService = $injector.get('otusjs.deploy.user.UserRestService');
+      Injections.LaboratoryRestService = $injector.get('otusjs.deploy.LaboratoryRestService');
+      Injections.SampleTransportRestService = $injector.get('otusjs.deploy.SampleTransportRestService');
+      Injections.ExamsRestService = $injector.get('otusjs.deploy.ExamsRestService');
+      Injections.ParticipantReportRestService = $injector.get('otusjs.deploy.ParticipantReportRestService');
+      Injections.MonitoringRestService = $injector.get('otusjs.deploy.monitoring.MonitoringRestService');
+      Injections.UserAccessRecoveryRestService = $injector.get('otusjs.deploy.user.UserAccessRecoveryRestService');
+      Injections.LaboratoryMonitoringRestService = $injector.get('otusjs.deploy.monitoring.LaboratoryMonitoringRestService');
+
       Injections.UserActivityPendencyRestService = $injector.get('otusjs.deploy.UserActivityPendencyRestService');
       Injections.ParticipantContactRestService = $injector.get('otusjs.deploy.ParticipantContactRestService');
       Injections.ProjectCommunicationRestService = $injector.get('otusjs.deploy.ProjectCommunicationRestService');
