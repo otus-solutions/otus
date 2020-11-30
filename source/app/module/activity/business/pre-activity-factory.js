@@ -25,7 +25,7 @@
     self.paperActivityData = undefined;
     self.externalID = externalID || null;
     self.preActivityValid = false;
-    self.stage = stage; // object with keys [id,name]
+    self.stage = stage; // object {_id, name, surveyAcronyms}
 
     /* Public methods */
     self.updatePaperActivityData = updatePaperActivityData;
@@ -58,7 +58,7 @@
     }
 
     function getStageId(){
-      return self.stage.id;
+      return self.stage._id;
     }
 
     function toJSON() {
