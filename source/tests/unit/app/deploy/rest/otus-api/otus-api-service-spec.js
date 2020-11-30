@@ -10,7 +10,7 @@ describe('OtusApiService_UnitTest_Suite', () => {
       Injections.ParticipantContactRestService = $injector.get('otusjs.deploy.ParticipantContactRestService');
       Injections.ProjectCommunicationRestService = $injector.get('otusjs.deploy.ProjectCommunicationRestService');
       Injections.ActivitySharingRestService = $injector.get('otusjs.deploy.ActivitySharingRestService');
-      Injections.StageRestService = $injector.get('otusjs.deploy.StageRestService');
+      // Injections.StageRestService = $injector.get('otusjs.deploy.StageRestService');
 
       service = $injector.get('otusjs.deploy.OtusApiService', Injections);
       spyOn(Injections.ActivityRestService, 'initialize');
