@@ -24,19 +24,20 @@ describe('OtusApiService_UnitTest_Suite', () => {
       Injections.MonitoringRestService = $injector.get('otusjs.deploy.monitoring.MonitoringRestService');
       Injections.UserAccessRecoveryRestService = $injector.get('otusjs.deploy.user.UserAccessRecoveryRestService');
       Injections.LaboratoryMonitoringRestService = $injector.get('otusjs.deploy.monitoring.LaboratoryMonitoringRestService');
-
       Injections.UserActivityPendencyRestService = $injector.get('otusjs.deploy.UserActivityPendencyRestService');
       Injections.ParticipantContactRestService = $injector.get('otusjs.deploy.ParticipantContactRestService');
       Injections.ProjectCommunicationRestService = $injector.get('otusjs.deploy.ProjectCommunicationRestService');
       Injections.ActivitySharingRestService = $injector.get('otusjs.deploy.ActivitySharingRestService');
-      // Injections.StageRestService = $injector.get('otusjs.deploy.StageRestService');
+      Injections.StageRestService = $injector.get('otusjs.deploy.StageRestService');
 
       service = $injector.get('otusjs.deploy.OtusApiService', Injections);
+
       spyOn(Injections.ActivityRestService, 'initialize');
       spyOn(Injections.UserActivityPendencyRestService, 'initialize');
       spyOn(Injections.ParticipantContactRestService, 'initialize');
       spyOn(Injections.ProjectCommunicationRestService, 'initialize');
       spyOn(Injections.ActivitySharingRestService, 'initialize');
+      spyOn(Injections.StageRestService, 'initialize');
     });
   });
 
@@ -73,6 +74,11 @@ describe('OtusApiService_UnitTest_Suite', () => {
   it('initializeRestrictResourcesMethod_should_evoke_initialize_by_ActivitySharingRestService', () => {
     service.initializeRestrictResources();
     expect(Injections.ActivitySharingRestService.initialize).toHaveBeenCalledTimes(1);
+  });
+
+  it('initializeRestrictResourcesMethod_should_evoke_initialize_by_StageRestService', () => {
+    service.initializeRestrictResources();
+    expect(Injections.StageRestService.initialize).toHaveBeenCalledTimes(1);
   });
 
 });
