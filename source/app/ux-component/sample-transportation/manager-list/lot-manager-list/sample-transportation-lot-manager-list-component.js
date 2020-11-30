@@ -67,13 +67,24 @@
 
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationsPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
+        self.userLocationsPoints = self.userLocationsPoints.filter(userLocation => userLocation._id != null)
       });
 
       self.otusSampleTransportationManagerList.listComponent = self;
     }
 
     self.getLots = function () {
-      _LoadLotsList();
+
+      if (self.locationFilter){
+        _LoadLotsList();
+      } else {
+        var msgPontoInvalido = "Ponto de localização invalido";
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(msgPontoInvalido)
+            .hideDelay(4000)
+        )
+      }
     };
 
     function selectLot(lot) {
