@@ -425,6 +425,11 @@ Test.utils.data.aliquot = {
     }
   ]
 };
+Test.utils.data.stage = {
+  _id: "5c198c8516da48006669ac63",
+  name: "Onda X",
+  surveyAcronyms: ["CSJ"]
+};
 Test.utils.data.activityPASC = {
   "_id": "58ee02de28110d317f1ad09b",
   "objectType": "Activity",
@@ -7373,8 +7378,9 @@ Test.utils.data.preActivity = {
     "realizationDate": "2019-12-04T11:54:58.171Z"
   },
   "externalID": null,
-  "preActivityValid": false
-}
+  "preActivityValid": false,
+  "stage": Test.utils.data.stage
+};
 Test.utils.data.userActivityPendency = {
   "_id": "5e137acf6f34296229baf794",
   "objectType": "userActivityPendency",
