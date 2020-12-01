@@ -1,18 +1,18 @@
-describe('PreActivityFactory Test', function() {
+describe('PreActivityFactory_UnitTest_Suite', function() {
   var Mock = {};
   var factory;
   var result;
 
   beforeEach(function() {
-    mocks();
-
     angular.mock.module('otusjs.otus');
 
-    inject(function(_$injector_) {
-      factory = _$injector_.get('otusjs.activity.business.PreActivityFactory');
+    angular.mock.inject(function($injector) {
+      factory = $injector.get('otusjs.activity.business.PreActivityFactory');
     });
 
-    result = factory.create(Mock.survey,Mock.configuration,Mock.mode,Mock.user,Mock.externalID);
+    _mockInitialize();
+
+    result = factory.create(Mock.user, Mock.survey, Mock.configuration, Mock.mode, Mock.externalID, Mock.stage);
     result.surveyForm.isRequiredExternalID = jasmine.createSpy();
   });
 
@@ -43,7 +43,7 @@ describe('PreActivityFactory Test', function() {
     expect(result.preActivityValid).toBeFalsy();
   });
 
-  function mocks() {
+  function _mockInitialize() {
     Mock.survey = Test.utils.data.activityPASC.surveyForm;
     Mock.mode = Test.utils.data.activityPASC.mode;
     Mock.configuration = {
@@ -74,6 +74,7 @@ describe('PreActivityFactory Test', function() {
       surname: "Garcia",
       token: "eyJhbGciOiJIUzI1NiJ9AOFIMALEM"
     };
+    Mock.stage = Test.utils.data.stage;
     Mock.preActivity = {
       objectType: "preActivity",
       surveyForm: Mock.survey,
@@ -81,7 +82,8 @@ describe('PreActivityFactory Test', function() {
       mode: Mock.mode,
       user: Mock.user,
       externalID: Mock.externalID,
-      preActivityValid: false
+      preActivityValid: false,
+      stage: Mock.stage
     };
     Mock.checkerData = {
       checker: {
