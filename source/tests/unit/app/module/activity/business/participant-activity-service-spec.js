@@ -1,16 +1,17 @@
-describe('participant-activity-service Test', function() {
+describe('ParticipantActivityService_UnitTest_Suite', function() {
   var Mock = {};
   var service;
   var Injections = {};
-  var ID = "12345";
-  var RN = 32525;
-  var DATA = {activityID: "54321"};
-  var DATA_ACTIVITY = "54321";
-  var DATA_RN = "0000000";
-  var ACTIVITY_REVISION = {revision: DATA};
+
+  const ID = "12345";
+  const RN = 32525;
+  const ACTIVITY_ID = "54321";
+  const DATA = {activityID: ACTIVITY_ID};
+  const DATA_RN = "0000000";
+  const ACTIVITY_REVISION = {revision: DATA};
 
   beforeEach(function() {
-    mocks();
+    _mockInitialize();
 
     angular.mock.module('otusjs.otus');
 
@@ -66,13 +67,13 @@ describe('participant-activity-service Test', function() {
     it('should call getById method', function () {
       service.getById(Mock.DATA_ACTIVITY_INFO);
       expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledTimes(1);
-      expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledWith(DATA_ACTIVITY,DATA_RN);
+      expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledWith(ACTIVITY_ID,DATA_RN);
     });
 
     it('should call getActivity method', function () {
-      service.getActivity(DATA_ACTIVITY,DATA_RN);
+      service.getActivity(ACTIVITY_ID,DATA_RN);
       expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledTimes(1);
-      expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledWith(DATA_ACTIVITY,DATA_RN);
+      expect(Injections.ActivityRepositoryService.getById).toHaveBeenCalledWith(ACTIVITY_ID,DATA_RN);
     });
 
     it('should call clearSelectedActivities method', function () {
@@ -84,16 +85,17 @@ describe('participant-activity-service Test', function() {
 
   describe("create activity test", function () {
     beforeEach(function () {
-      spyOn(Injections.ContextService, "getLoggedUser");
+      spyOn(Injections.ContextService, "getLoggedUser").and.returnValue(Mock.user);
       spyOn(Injections.PreActivityFactory, "create");
       spyOn(Injections.SurveyFormFactory,"fromJsonObject").and.callThrough();
     });
 
     it('should call createPreActivity method', function () {
-      service.createPreActivity(Mock.survey,Mock.configuration,Mock.mode);
+      service.createPreActivity(Mock.survey, Mock.configuration, Mock.mode, Mock.externalID, Mock.stage);
       expect(Injections.ContextService.getLoggedUser).toHaveBeenCalledTimes(1);
       expect(Injections.PreActivityFactory.create).toHaveBeenCalledTimes(1);
-      expect(Injections.PreActivityFactory.create).toHaveBeenCalledWith(Mock.survey,Mock.configuration,Mock.mode,Injections.ContextService.getLoggedUser());
+      expect(Injections.PreActivityFactory.create).toHaveBeenCalledWith(
+        Mock.user, Mock.survey, Mock.configuration, Mock.mode, Mock.externalID, Mock.stage);
     });
 
     it('should call saveActivities method', function () {
@@ -140,8 +142,11 @@ describe('participant-activity-service Test', function() {
     expect(Injections.ContextService.getSelectedParticipant).toHaveBeenCalledTimes(1);
   });
 
-  function mocks() {
-    Mock.DATA_ACTIVITY_INFO = {getID: function () { return "54321"},participantData: {recruitmentNumber:"0000000"}};
+  function _mockInitialize() {
+    Mock.DATA_ACTIVITY_INFO = {
+      getID: function () { return ACTIVITY_ID},
+      participantData: {recruitmentNumber: DATA_RN}
+    };
     Mock.survey = Test.utils.data.activityPASC.surveyForm;
     Mock.mode = Test.utils.data.activityPASC.mode;
     Mock.participant = Test.utils.data.activityPASC.participantData;
@@ -173,5 +178,6 @@ describe('participant-activity-service Test', function() {
       surveyForm: Mock.survey,
       user: Mock.user
     };
+    Mock.stage = angular.copy(Test.utils.data.stage);
   }
 });
