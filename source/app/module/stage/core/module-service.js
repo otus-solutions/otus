@@ -7,7 +7,7 @@
 
   Service.$inject = [
     '$q',
-    'otusjs.stage.core.ContextService',
+    'otusjs.stage.core.ContextService'
   ];
 
   function Service($q, ContextService) {
