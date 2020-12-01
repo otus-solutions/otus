@@ -31,13 +31,6 @@ describe('OtusApiService_UnitTest_Suite', () => {
       Injections.StageRestService = $injector.get('otusjs.deploy.StageRestService');
 
       service = $injector.get('otusjs.deploy.OtusApiService', Injections);
-
-      spyOn(Injections.ActivityRestService, 'initialize');
-      spyOn(Injections.UserActivityPendencyRestService, 'initialize');
-      spyOn(Injections.ParticipantContactRestService, 'initialize');
-      spyOn(Injections.ProjectCommunicationRestService, 'initialize');
-      spyOn(Injections.ActivitySharingRestService, 'initialize');
-      spyOn(Injections.StageRestService, 'initialize');
     });
   });
 
@@ -51,34 +44,49 @@ describe('OtusApiService_UnitTest_Suite', () => {
     expect(service.initializeRestrictResources).toBeDefined();
   });
 
-  it('initializeRestrictResourcesMethod_should_evoke_initialize_by_ActivityRestService', () => {
-    service.initializeRestrictResources();
-    expect(Injections.ActivityRestService.initialize).toHaveBeenCalledTimes(1);
+  it('initializeConfigurationResources_method_should_evoke_initialize_by_ActivityRestService', () => {
+    spyOn(Injections.ConfigurationRestService, 'initialize');
+    service.initializeConfigurationResources();
+    expect(Injections.ConfigurationRestService.initialize).toHaveBeenCalledTimes(1);
   });
 
-  it('initializeRestrictResourcesMethod_should_evoke_initialize_by_UserActivityPendencyRestService', () => {
-    service.initializeRestrictResources();
-    expect(Injections.UserActivityPendencyRestService.initialize).toHaveBeenCalledTimes(1);
+  describe('initializeRestrictResources_method', () => {
+    beforeEach(() => {
+      spyOn(Injections.ActivityRestService, 'initialize');
+      spyOn(Injections.UserActivityPendencyRestService, 'initialize');
+      spyOn(Injections.ParticipantContactRestService, 'initialize');
+      spyOn(Injections.ProjectCommunicationRestService, 'initialize');
+      spyOn(Injections.ActivitySharingRestService, 'initialize');
+      spyOn(Injections.StageRestService, 'initialize');
+
+      service.initializeRestrictResources();
+    });
+
+    it('should_evoke_initialize_by_ActivityRestService', () => {
+      expect(Injections.ActivityRestService.initialize).toHaveBeenCalledTimes(1);
+    });
+
+    it('should_evoke_initialize_by_UserActivityPendencyRestService', () => {
+      expect(Injections.UserActivityPendencyRestService.initialize).toHaveBeenCalledTimes(1);
+    });
+
+    it('should_evoke_initialize_by_ParticipantContactRestService', () => {
+      expect(Injections.ParticipantContactRestService.initialize).toHaveBeenCalledTimes(1);
+    });
+
+    it('should_evoke_initialize_by_ProjectCommunicationRestService', () => {
+      expect(Injections.ProjectCommunicationRestService.initialize).toHaveBeenCalledTimes(1);
+    });
+
+    it('should_evoke_initialize_by_ActivitySharingRestService', () => {
+      expect(Injections.ActivitySharingRestService.initialize).toHaveBeenCalledTimes(1);
+    });
+
+    it('should_evoke_initialize_by_StageRestService', () => {
+      expect(Injections.StageRestService.initialize).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it('initializeRestrictResourcesMethod_should_evoke_initialize_by_ParticipantContactRestService', () => {
-    service.initializeRestrictResources();
-    expect(Injections.ParticipantContactRestService.initialize).toHaveBeenCalledTimes(1);
-  });
 
-  it('initializeRestrictResourcesMethod_should_evoke_initialize_by_ProjectCommunicationRestService', () => {
-    service.initializeRestrictResources();
-    expect(Injections.ProjectCommunicationRestService.initialize).toHaveBeenCalledTimes(1);
-  });
-
-  it('initializeRestrictResourcesMethod_should_evoke_initialize_by_ActivitySharingRestService', () => {
-    service.initializeRestrictResources();
-    expect(Injections.ActivitySharingRestService.initialize).toHaveBeenCalledTimes(1);
-  });
-
-  it('initializeRestrictResourcesMethod_should_evoke_initialize_by_StageRestService', () => {
-    service.initializeRestrictResources();
-    expect(Injections.StageRestService.initialize).toHaveBeenCalledTimes(1);
-  });
 
 });
