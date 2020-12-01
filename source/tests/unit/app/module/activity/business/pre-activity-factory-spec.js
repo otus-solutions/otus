@@ -43,6 +43,10 @@ describe('PreActivityFactory_UnitTest_Suite', function() {
     expect(result.preActivityValid).toBeFalsy();
   });
 
+  it('getStageId_method_should_return_stage_id', function () {
+    expect(result.getStageId()).toEqual(Mock.stage._id);
+  });
+
   function _mockInitialize() {
     Mock.survey = Test.utils.data.activityPASC.surveyForm;
     Mock.mode = Test.utils.data.activityPASC.mode;
