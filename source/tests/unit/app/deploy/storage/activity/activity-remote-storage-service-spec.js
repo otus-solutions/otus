@@ -5,7 +5,7 @@ describe('ActivityRemoteStorageService_UnitTest_Suite', () => {
 
   const ACTIVITY_ID = "123";
   const RN = 12345;
-  const DATA = {activity: {}};
+  const DATA = { activity: {} };
   const ACRONYM = "ABC";
   const VERSION = 1;
   const SURVEY_ACTIVITIES = [DATA, DATA, DATA];
@@ -46,11 +46,13 @@ describe('ActivityRemoteStorageService_UnitTest_Suite', () => {
     expect(service.renovateSharedURL).toBeDefined();
     expect(service.deleteSharedURL).toBeDefined();
     expect(service.reopenActivity).toBeDefined();
+    expect(service.getAllByStageGroup).toBeDefined();
+    expect(service.discardActivity).toBeDefined();
   });
 
   it('insert method should call $q.all', () => {
     spyOn(Injections.ActivityRestService, 'save').and.returnValue(
-      _mockPromiseResolve({data: ACTIVITY_ID}));
+      _mockPromiseResolve({ data: ACTIVITY_ID }));
     spyOn(Injections.$q, 'all').and.returnValue(Mock.resolve);
     expect(service.insert([Mock.activity])).toBePromise();
     expect(Injections.$q.all).toHaveBeenCalledTimes(1);
@@ -58,7 +60,7 @@ describe('ActivityRemoteStorageService_UnitTest_Suite', () => {
 
   it('findActivities method should call ActivityRestService list method', () => {
     spyOn(Injections.ActivityRestService, 'list');
-    service.findActivities({recruitmentNumber: RN});
+    service.findActivities({ recruitmentNumber: RN });
     expect(Injections.ActivityRestService.list).toHaveBeenCalledTimes(1);
   });
 
@@ -184,6 +186,18 @@ describe('ActivityRemoteStorageService_UnitTest_Suite', () => {
     expect(Injections.ActivityRestService.reopen).toHaveBeenCalledTimes(1);
   });
 
+  it('getAllByStageGroup method should return ActivityRestService getAllByStageGroup result', () => {
+    const RESULT = {};
+    spyOn(Injections.ActivityRestService, 'getAllByStageGroup').and.returnValue(RESULT);
+    expect(service.getAllByStageGroup(ACTIVITY_ID)).toEqual(RESULT);
+    expect(Injections.ActivityRestService.getAllByStageGroup).toHaveBeenCalledTimes(1);
+  });
+
+  it('discardActivity method should return ActivityRestService discardActivity result', () => {
+    spyOn(Injections.ActivityRestService, 'discardActivity');
+    service.discardActivity(ACTIVITY_ID, RN)
+    expect(Injections.ActivityRestService.discardActivity).toHaveBeenCalledTimes(1);
+  });
 
   function _mockInitialize($injector) {
     const deferredResolve = Injections.$q.defer();
@@ -204,7 +218,7 @@ describe('ActivityRemoteStorageService_UnitTest_Suite', () => {
     Mock.activitySharing = Mock.ActivitySharingService.parseActivitySharing(Mock.responseActivityShared.data);
   }
 
-  function _mockPromiseResolve(value){
+  function _mockPromiseResolve(value) {
     const deferredResolveObj = Injections.$q.defer();
     deferredResolveObj.resolve(value);
     return deferredResolveObj.promise;

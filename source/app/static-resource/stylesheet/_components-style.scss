@@ -64,12 +64,12 @@ otus-dashboard {
 }
 
 otus-report-dashboard {
-  otus-panel{
+  otus-panel {
     .report-list {
       min-width: 250px;
       .report-item {
         min-width: 250px;
-        background-color: #ffffff
+        background-color: #ffffff;
       }
     }
   }
@@ -92,7 +92,7 @@ otus-activity-manager {
     }
   }
 
-  otus-activity-manager-toolbar {
+  otus-activity-manager-bottom-sheet {
     md-fab-speed-dial {
       max-height: 50px;
     }
@@ -147,7 +147,6 @@ otus-activity-adder-list {
 }
 
 lab-control-panel {
-
   @media only screen and (max-width: 550px) {
     .control-toolbar {
       display: none;
@@ -193,7 +192,6 @@ lab-control-panel {
         }
       }
     }
-
   }
 
   @media only screen and (max-width: 650px) {
@@ -282,7 +280,7 @@ aliquots-view {
   }
   @media screen and (max-width: 768px) {
     .input-footer-message {
-        font-size: 11px;
+      font-size: 11px;
     }
   }
 }
@@ -358,7 +356,8 @@ otus-sample-transportation-manager-list {
 
 otus-lot-info-manager-display {
   .subtitle-table-container {
-    max-height: 350px;
+    max-height: 300px;
+    padding-top: 20px;
   }
 
   .dynamic-table-container {
@@ -379,7 +378,7 @@ otus-lot-info-manager-display {
 }
 
 otus-view-sending-exam {
-  .dynamic-table-container-md-content{
+  .dynamic-table-container-md-content {
     min-height: 400px;
     .dynamic-table-container {
       min-width: 850px;
@@ -547,7 +546,245 @@ otus-activity-category-adder {
   }
 }
 
-otus-follow-up-event{
+activity-grid-list {
+  .gridListDynamicTiles {
+    md-grid-list {
+      margin: 10px;
+      transition-duration: 0s;
+    }
+    md-grid-tile {
+      md-grid-tile-header {
+        position: relative;
+        width: 100%;
+        overflow: inherit;
+        padding: 8px;
+      }
+      figure {
+        justify-content: normal;
+        flex-direction: column;
+        align-items: start;
+        transition-duration: 0s;
+      }
+      &:hover {
+        background: #f5f5f5;
+        cursor: pointer;
+      }
+    }
+    md-grid-tile-header {
+      figcaption {
+        display: block;
+        width: 100%;
+      }
+      figcaption {
+        md-icon {
+          margin: 0;
+        }
+      }
+    }
+    .grid-aligh {
+      padding-left: 10px;
+      padding-top: 5px;
+      width: 100%;
+    }
+  }
+  @media only screen and (max-width: 999px) {
+    .gridListDynamicTiles .clipped {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 90%;
+    }
+  }
+}
+
+otus-activity-adder-card {
+  width: 100%;
+}
+
+otus-activity-adder-card {
+  md-grid-tile-header {
+    figcaption {
+      display: block;
+      width: 100%;
+    }
+  }
+  md-input-container {
+    padding: 0 15px 0 0;
+    margin: 0;
+    height: 40px;
+    border: none;
+  }
+}
+
+.grid-align {
+  padding-left: 10px;
+  padding-top: 5px;
+  width: 100%;
+}
+
+otus-activity-adder {
+  md-input-container {
+    margin-bottom: 0px;
+  }
+  .button-hover :hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    border-radius: 0 0 0 0;
+    width: auto;
+    height: auto;
+  }
+  md-grid-tile {
+    figure {
+      justify-content: normal;
+      flex-direction: column;
+      align-items: start;
+      transition-duration: 0s;
+    }
+    otus-activity-adder-card {
+      md-grid-tile-header {
+        position: relative;
+        width: 100%;
+        overflow: inherit;
+        padding: 8px;
+      }
+      md-grid-tile-footer {
+        padding-left: 10px;
+        color: red;
+        height: 24px;
+        background: rgba(0, 0, 0, 0.05);
+      }
+    }
+  }
+  md-grid-list {
+    margin: 10px;
+    transition-duration: 0s;
+  }
+  md-select {
+    margin: 5px 0 0;
+  }
+  md-input-container {
+    margin: 0;
+    height: 40px;
+    padding: 0 15px;
+    border: none;
+  }
+}
+
+.scrollbar {
+  height: 85vh;
+  background: #fff;
+  overflow-y: scroll;
+}
+
+.scrollbar-default::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #f5f5f5;
+  border-radius: 10px;
+}
+
+.scrollbar-default::-webkit-scrollbar {
+  background-color: #f5f5f5;
+}
+
+.scrollbar-default::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.1);
+  background-color: #2bbbad;
+}
+
+.no-shadow {
+  transition: none !important;
+  box-shadow: none !important;
+}
+
+md-toast.md-error-toast-theme .md-toast-content {
+  background-color: darkred;
+  font-weight: bold;
+}
+
+otus-dashboard-pendency {
+  md-grid-list {
+    margin: 10px;
+    transition-duration: 0s;
+  }
+  md-grid-tile {
+    border-radius: 5px;
+  }
+  md-grid-tile {
+    figure {
+      justify-content: normal;
+      flex-direction: column;
+      align-items: normal;
+      transition-duration: 0s;
+      padding: 8px;
+    }
+    md-grid-tile-header {
+      background: rgba(255, 255, 255, 0);
+      position: relative;
+      width: 100%;
+      overflow: inherit;
+    }
+    md-grid-tile-header {
+      figcaption {
+        display: block;
+        width: 100%;
+      }
+      figcaption {
+        md-icon {
+          margin: 0;
+        }
+      }
+    }
+    md-grid-tile-footer {
+      background: rgba(255, 255, 255, 0);
+      overflow: inherit;
+      padding: 8px;
+    }
+    md-grid-tile-footer {
+      figcaption {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+
+  .md-badge {
+    background-color: rgb(255, 0, 0);
+    z-index: 10;
+  }
+  md-card {
+    md-card-content {
+      border-radius: 5px;
+    }
+  }
+  .full-list-items {
+    min-width: 90vw;
+  }
+  md-input-container {
+    margin: 0;
+  }
+  .header-list {
+    font-weight: bold;
+    min-height: 70px !important;
+    max-height: 70px !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+}
+
+.no-padding {
+  padding: 0;
+}
+
+.no-margin {
+  margin: 0;
+}
+
+.no-border {
+  padding: 0;
+  margin: 0;
+}
+
+otus-follow-up-event {
   #event-icon {
     max-width: 60px;
     max-height: 60px;
@@ -557,7 +794,7 @@ otus-follow-up-event{
   }
 }
 otus-follow-up-event {
-  @media screen and (max-width: 600px){
+  @media screen and (max-width: 600px) {
     #event-description {
       font-size: 18px;
     }
@@ -586,7 +823,7 @@ offline-activity-collection {
   md-card {
     min-width: 340px;
   }
-  #md-content-container{
+  #md-content-container {
     height: 400px !important;
     width: 100%;
   }
@@ -602,10 +839,40 @@ offline-activity-collection {
   md-input-container {
     margin-bottom: 0px;
   }
+  otus-panel {
+    min-width: 320px;
+  }
 }
 
 offline-activity-synchronize-dashboard {
   #groups-container {
     min-width: 345px;
+  }
+}
+
+otus-participant-dashboard-toolbar {
+  div {
+    md-toolbar {
+      div {
+        otus-participant-search {
+          md-autocomplete {
+            color: rgb(255, 255, 255) !important;
+          }
+          md-autocomplete {
+            md-autocomplete-wrap {
+              input {
+                color: rgb(255, 255, 255) !important;
+              }
+              button {
+                color: rgb(255, 255, 255) !important;
+              }
+              input::-webkit-input-placeholder {
+                color: rgb(255, 255, 255) !important;
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

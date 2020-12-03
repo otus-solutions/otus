@@ -42,6 +42,8 @@
     self.getById = getById;
     self.createFollowUpActivity = createFollowUpActivity;
     self.reopenActivity = reopenActivity;
+    self.getAllByStageGroup = getAllByStageGroup;
+    self.discardActivity = discardActivity;
 
     /**
      * Configures collection to use a participant as reference on "ready-queries". Ready-queries are
@@ -244,12 +246,12 @@
       return request.promise;
     }
 
-  /**
-  * Adds activities to collection.
-  * @param {(object|array)} activities - the activity (or array of activities) to be inserted
-  * @returns {Promise} promise with activity or activities inserted when resolved
-  * @memberof ActivityCollectionService
-  */
+    /**
+    * Adds activities to collection.
+    * @param {(object|array)} activities - the activity (or array of activities) to be inserted
+    * @returns {Promise} promise with activity or activities inserted when resolved
+    * @memberof ActivityCollectionService
+    */
     function createFollowUpActivity(activities) {
       var request = $q.defer();
 
@@ -278,6 +280,19 @@
             .catch(err => request.reject(err));
         });
       return request.promise;
+    }
+
+    function getAllByStageGroup(participant) {
+      return _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.getAllByStageGroup(participant))
+        .then(response => {
+          return response.data
+        });
+    }
+
+    function discardActivity(activityId, participant) {
+      _remoteStorage.whenReady()
+        .then(remoteStorage => remoteStorage.discardActivity(activityId, participant));
     }
 
   }

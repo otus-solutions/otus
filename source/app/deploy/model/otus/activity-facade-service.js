@@ -36,21 +36,21 @@
       self.surveyActivity = activity;
     }
 
-    function createActivity(template, user, participant, paperActivityData, configuration, externalID) {
+    function createActivity(template, user, participant, paperActivityData, configuration, externalID, stageId) {
       var _participant = _normalizeParticipant(participant);
       if (paperActivityData) {
-        ActivityFacadeService.createPaperActivity(template, user, _participant, paperActivityData, configuration, externalID);
+        ActivityFacadeService.createPaperActivity(template, user, _participant, paperActivityData, configuration, externalID, stageId);
       } else {
-        ActivityFacadeService.createActivity(template, user, _participant, configuration, externalID);
+        ActivityFacadeService.createActivity(template, user, _participant, configuration, externalID, stageId);
       }
 
       return getActivity();
     }
 
-    function createAutoFillActivity(survey, loggedUser, participant, configuration, externalID) {
+    function createAutoFillActivity(survey, loggedUser, participant, configuration, externalID, stageId) {
       var _participant = _normalizeParticipant(participant);
 
-      ActivityFacadeService.createAutoFillActivity(survey, loggedUser, _participant, configuration, externalID);
+      ActivityFacadeService.createAutoFillActivity(survey, loggedUser, _participant, configuration, externalID, stageId);
 
       return getActivity();
     }
