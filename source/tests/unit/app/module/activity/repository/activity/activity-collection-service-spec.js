@@ -4,6 +4,9 @@ describe('activity-collection-service Test', function() {
   var originalTimeout;
   var Injections = {};
 
+  const ACTIVITY_ID = "123";
+  const RN = 12345;
+
   beforeEach(function() {
     mockData();
     originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
@@ -31,6 +34,8 @@ describe('activity-collection-service Test', function() {
     expect(service).toBeDefined();
     expect(service.addActivityRevision).toBeDefined();
     expect(service.getActivityRevisions).toBeDefined();
+    expect(service.getAllByStageGroup).toBeDefined();
+    expect(service.discardActivity).toBeDefined();
   });
 
   describe("activity", function () {
@@ -41,6 +46,8 @@ describe('activity-collection-service Test', function() {
       spyOn(Mock.remoteStorage, "importActivities").and.callThrough();
       spyOn(Mock.remoteStorage, "getById").and.callThrough();
       spyOn(Mock.remoteStorage, "createFollowUpActivity").and.callThrough();
+      spyOn(Mock.remoteStorage, 'getAllByStageGroup').and.callThrough();
+      spyOn(Mock.remoteStorage, 'discardActivity').and.callThrough();
     });
 
     it('should create activity revision', function (done) {
@@ -108,6 +115,34 @@ describe('activity-collection-service Test', function() {
       done();
     });
 
+    it('getAllByStageGroup method should return remoteStorage getAllByStageGroup result', (done) => {
+      expect(service.getAllByStageGroup(ACTIVITY_ID)).toBePromise();
+
+      Injections.ModuleService.getActivityRemoteStorage().whenReady().then(function (remoteStorage) {
+        expect(Mock.remoteStorage.getAllByStageGroup).toHaveBeenCalledTimes(1);
+        expect(Mock.remoteStorage.getAllByStageGroup).toHaveBeenCalledWith(ACTIVITY_ID);
+        remoteStorage.getAllByStageGroup().then(function () {
+          done();
+        });
+        done();
+      });
+      done();
+    });
+
+    it('discardActivity method should return remoteStorage discardActivity result', (done) => {
+      service.discardActivity(ACTIVITY_ID, RN);
+
+      Injections.ModuleService.getActivityRemoteStorage().whenReady().then(function (remoteStorage) {
+        expect(Mock.remoteStorage.discardActivity).toHaveBeenCalledTimes(1);
+        expect(Mock.remoteStorage.discardActivity).toHaveBeenCalledWith(ACTIVITY_ID, RN);
+        remoteStorage.discardActivity().then(function () {
+          done();
+        });
+        done();
+      });
+      done();
+    });
+
   });
 
   function mockData() {
@@ -126,6 +161,12 @@ describe('activity-collection-service Test', function() {
         return Promise.resolve();
       },
       createFollowUpActivity: function () {
+        return Promise.resolve();
+      },
+      getAllByStageGroup: function () {
+        return Promise.resolve();
+      },
+      discardActivity: function () {
         return Promise.resolve();
       }
     };

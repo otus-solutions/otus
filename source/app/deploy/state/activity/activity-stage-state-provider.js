@@ -3,7 +3,7 @@
 
   angular
     .module('otusjs.deploy')
-    .provider('otusjs.deploy.ParticipantUpdateState', Provider);
+    .provider('otusjs.deploy.ActivityStageState', Provider);
 
   Provider.$inject = [
     'STATE'
@@ -20,9 +20,9 @@
 
     self.state = {
       parent: STATE.PARTICIPANT_DASHBOARD,
-      name: STATE.PARTICIPANT_UPDATE,
-      url: '/' + STATE.PARTICIPANT_UPDATE,
-      template: '<otus-participant-contact></otus-participant-contact>',
+      name: STATE.PARTICIPANT_ACTIVITY_STAGE,
+      url: '/' + STATE.PARTICIPANT_ACTIVITY_STAGE,
+      template: '<otus-activity-stage-list layout="column" flex></otus-activity-stage-list>',
       data: {
         redirect: _redirect
       },
@@ -31,19 +31,17 @@
       }
     };
 
-    function _redirect($q, Application, UserAccessPermissionService, ParticipantContextService) {
+    function _redirect($q, Application, UserAccessPermissionService) {
       var deferred = $q.defer();
-
-      UserAccessPermissionService.getCheckingParticipantPermission().then(permission => {
+      UserAccessPermissionService.getCheckingActivityPermission().then(permission => {
         Application
           .isDeployed()
           .then(function () {
             try {
-              if (!permission.participantListAccess) {
+              if (!permission.participantActivityAccess) {
                 deferred.resolve(STATE.DASHBOARD);
                 return;
               }
-              ParticipantContextService.isValid();
               deferred.resolve();
             } catch (e) {
               deferred.resolve(STATE.LOGIN);
@@ -57,27 +55,27 @@
     _redirect.$inject = [
       '$q',
       'otusjs.application.core.ModuleService',
-      'otusjs.user.business.UserAccessPermissionService',
-      'otusjs.participant.core.ContextService'
-
+      'otusjs.user.business.UserAccessPermissionService'
     ];
 
-    function _loadStateData(ParticipantContextService, SessionContextService, Application) {
+    function _loadStateData(ActivityContextService, ParticipantContextService, SessionContextService, Application, ActivityDataSourceService) {
       Application
         .isDeployed()
         .then(function () {
           try {
-            SessionContextService.restore();
             ParticipantContextService.restore();
+            SessionContextService.restore();
           } catch (e) {
             console.log(e);
           }
         });
     }
     _loadStateData.$inject = [
+      'otusjs.activity.core.ContextService',
       'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',
-      'otusjs.application.core.ModuleService'
+      'otusjs.application.core.ModuleService',
+      'otusjs.deploy.ActivityDataSourceService'
     ];
   }
 }());

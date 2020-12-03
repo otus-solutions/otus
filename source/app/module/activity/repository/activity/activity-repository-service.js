@@ -38,6 +38,8 @@
     self.createActivity = createActivity;
     self.createFollowUpActivity = createFollowUpActivity;
     self.reopenActivity = reopenActivity;
+    self.getAllByStageGroup = getAllByStageGroup;
+    self.discardActivity = discardActivity;
 
     function listAll(participant) {
       if (!participant) {
@@ -176,27 +178,27 @@
     }
 
 
-    function createOnLineActivity(survey, loggedUser, participant, configuration, externalID) {
+    function createOnLineActivity(survey, loggedUser, participant, configuration, externalID, stageId) {
       return ModuleService
         .whenActivityFacadeServiceReady()
         .then(function (ActivityFacadeService) {
-          return ActivityFacadeService.createActivity(survey, loggedUser, participant, null, configuration, externalID);
+          return ActivityFacadeService.createActivity(survey, loggedUser, participant, null, configuration, externalID, stageId);
         });
     }
 
-    function createPaperActivity(survey, loggedUser, participant, paperActivityData, configuration, externalID) {
+    function createPaperActivity(survey, loggedUser, participant, paperActivityData, configuration, externalID, stageId) {
       return ModuleService
         .whenActivityFacadeServiceReady()
         .then(function (ActivityFacadeService) {
-          return ActivityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configuration, externalID);
+          return ActivityFacadeService.createActivity(survey, loggedUser, participant, paperActivityData, configuration, externalID , stageId);
         });
     }
 
-    function createAutoFillActivity(survey, loggedUser, participant, configuration, externalID) {
+    function createAutoFillActivity(survey, loggedUser, participant, configuration, externalID , stageId) {
       return ModuleService
         .whenActivityFacadeServiceReady()
         .then(function (ActivityFacadeService) {
-          return ActivityFacadeService.createAutoFillActivity(survey, loggedUser, participant, configuration, externalID);
+          return ActivityFacadeService.createAutoFillActivity(survey, loggedUser, participant, configuration, externalID , stageId);
         });
     }
 
@@ -221,6 +223,24 @@
     function reopenActivity(activity){
       return ActivityCollectionService.reopenActivity(activity)
         .then(_setupWorkProgress().finish);
+    }
+
+    function getAllByStageGroup(participant) {
+      if (!participant) {
+        throw new Error('No participant selected to list stage.', 'activity-repository-service.js', 229);
+      }
+
+      ActivityCollectionService.useParticipant(participant);
+
+      return ActivityCollectionService.getAllByStageGroup(participant);
+    }
+
+    function discardActivity(activityId, participant) {
+      if (!participant) {
+        throw new Error('No participant selected to list stage.', 'activity-repository-service.js', 239);
+      }
+
+      ActivityCollectionService.discardActivity(activityId, participant);
     }
 
   }

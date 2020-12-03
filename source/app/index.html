@@ -14,7 +14,7 @@
   <!-- uncache(rename:true, append:hash) -->
   <!-- build:css css/otus.min.css -->
   <link href="app/static-resource/stylesheet/login-page.css" rel="stylesheet" />
-  <link href="app/static-resource/stylesheet/components-style.css" rel="stylesheet" />
+  <link href="app/static-resource/stylesheet/main.css" rel="stylesheet" />
   <link href="app/static-resource/stylesheet/styles.css" rel="stylesheet" />
   <link href="app/static-resource/stylesheet/initial-config.css" rel="stylesheet" />
   <link href="app/static-resource/stylesheet/please-wait-style.css" rel="stylesheet">
@@ -192,6 +192,7 @@
 <!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/deploy-module.min.js -->
 <script src="app/deploy/module.js"></script>
+
 <!-- # Deploy > Bootstrap -->
 <script src="app/deploy/bootstrap/bootstrap-service.js"></script>
 <script src="app/deploy/bootstrap/access-module-bootstrap.js"></script>
@@ -206,6 +207,7 @@
 <script src="app/deploy/bootstrap/monitoring-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/pendency-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/project-communication-module-bootstrap.js"></script>
+
 <!-- # Deploy > Data Source -->
 <script src="app/deploy/data-source/data-source-loader-service.js"></script>
 <script src="app/deploy/data-source/activity-data-source-service.js"></script>
@@ -213,10 +215,12 @@
 <script src="app/deploy/data-source/user-data-source-service.js"></script>
 <script src="app/deploy/data-source/survey-item-datasource-service.js"></script>
 <script src="app/deploy/data-source/file-upload-datasource-service.js"></script>
+
 <!-- # Deploy > Static Variable -->
 <script src="app/deploy/data-source/static-variable/static-variable-data-source-module.js"></script>
 <script src="app/deploy/data-source/static-variable/static-variable-data-source-request-factory.js"></script>
 <script src="app/deploy/data-source/static-variable/static-variable-data-source-service.js"></script>
+
 <!-- # Deploy > Model -->
 <script src="app/deploy/model/otus/module.js"></script>
 <script src="app/deploy/model/otus/activity-facade-service.js"></script>
@@ -259,6 +263,7 @@
 <script src="app/deploy/rest/otus-api/transport-location-point/location-point-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/contact/participant-contact-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/project-communication/project-communication-rest-service.js"></script>
+
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
 <script src="app/deploy/state/error/error-state-provider.js"></script>
@@ -271,6 +276,7 @@
 <script src="app/deploy/state/activity/activity-adder-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-player-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-viewer-state-provider.js"></script>
+<script src="app/deploy/state/activity/activity-stage-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-state-provider.js"></script>
 <script src="app/deploy/state/activity/activity-import-state-provider.js"></script>
 <script src="app/deploy/state/dashboard/dashboard-state-provider.js"></script>
@@ -309,13 +315,16 @@
 <script src="app/deploy/storage/activity/activity-remote-storage-service.js"></script>
 <script src="app/deploy/storage/laboratory/laboratory-remote-storage-service.js"></script>
 <script src="app/deploy/storage/laboratory/project-remote-storage-service.js"></script>
+
 <!-- # Deploy > Loading Screen -->
 <script src="app/deploy/loading-screen/loading-screen-service.js"></script>
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/activity-module.min.js -->
+
 <!-- # Module > Activity -->
 <script src="app/module/activity/module.js"></script>
+
 <!-- # Activity > Business -->
 <script src="app/module/activity/business/module.js"></script>
 <script src="app/module/activity/business/activity-player-service.js"></script>
@@ -327,12 +336,15 @@
 <script src="app/module/activity/business/model/activity-sharing-factory.js"></script>
 <script src="app/module/activity/business/offline-activity-collection-service.js"></script>
 <script src="app/module/activity/business/activity-sharing-service.js"></script>
+<script src="app/module/activity/business/activity-values.js"></script>
+
 <!-- # Activity > Core -->
 <script src="app/module/activity/core/module.js"></script>
 <script src="app/module/activity/core/context-service.js"></script>
 <script src="app/module/activity/core/event-service.js"></script>
 <script src="app/module/activity/core/module-service.js"></script>
 <script src="app/module/activity/core/service-loader.js"></script>
+
 <!-- # Activity > Repository -->
 <script src="app/module/activity/repository/module.js"></script>
 <script src="app/module/activity/repository/activity/activity-collection-service.js"></script>
@@ -341,6 +353,7 @@
 <script src="app/module/activity/repository/activity/survey-collection-service.js"></script>
 <script src="module/activity/repository/activity/activity-sharing-collection-service.js"></script>
 <script src="app/module/activity/repository/user/user-repository-service.js"></script>
+
 <!-- # Activity > Storage -->
 <script src="app/module/activity/storage/module.js"></script>
 <script src="app/module/activity/storage/activity-local-storage-service.js"></script>
@@ -595,6 +608,7 @@
 <script src="app/ux-component/commons/bar-chart/vertical/bar-charts-vertical-factory.js"></script>
 <script src="app/ux-component/commons/bar-chart/horizontal/bar-charts-horizontal-factory.js"></script>
 <script src="app/ux-component/commons/bar-chart/multi/bar-chart-multi-factory.js"></script>
+<script src="app/ux-component/activity-stage-list/activity-stage-list-component.js"></script>
 <script src="app/ux-component/activity-adder/activity-adder-component.js"></script>
 <script src="app/ux-component/activity-adder/activity-adder-card/activity-adder-card-component.js"></script>
 <script src="app/ux-component/error/error-component.js"></script>
@@ -649,7 +663,6 @@
 <script src="app/ux-component/display-token/display-token-component.js"></script>
 <script src="app/ux-component/dashboard-home-display/dashboard-home-display-controller.js"></script>
 <script src="app/ux-component/dashboard-home-display/dashboard-home-display-component.js"></script>
-<script src="app/ux-component/dashboard-participant-box/dashboard-participant-box-controller.js"></script>
 <script src="app/ux-component/dashboard-participant-box/dashboard-participant-box-component.js"></script>
 <script src="app/ux-component/dashboard-pendency/dashboard-pendency-componente.js"></script>
 <script src="app/ux-component/dashboard-sidenav/dashboard-sidenav-component.js"></script>
@@ -847,18 +860,20 @@
 <script src="app/ux-component/dialog-show/customized-dialog-show-controller.js"></script>
 <script src="app/ux-component/dialog-show/activity-sharing/activity-sharing-dialog-values.js"></script>
 <script src="app/ux-component/dialog-show/activity-sharing/activity-sharing-dialog-show-controller.js"></script>
+<script src="app/ux-component/dialog-show/express-activity-creator/express-activity-creator-dialog-values.js"></script>
+<script src="app/ux-component/dialog-show/express-activity-creator/express-activity-creator-dialog-show-controller.js"></script>
+<script src="app/ux-component/dialog-show/express-activity-creator/express-activity-creator-dialog-show-service.js"></script>
 
 <!-- user access recovery -->
 <script src="app/ux-component/user-login-access-recovery/user-login-access-recovery-controller.js"></script>
 <script src="app/ux-component/user-login-access-recovery/user-login-access-recovery-component.js"></script>
 
+<!-- shared components -->
+<script src="app/ux-component/shared/express-activity-creator/express-activity-creator-component.js"></script>
 
 <!--utils-->
 <script src="app/ux-component/utils/html-builder-service.js"></script>
 
-
-
 <!-- endbuild -->
 <!-- enduncache -->
-
 </html>
