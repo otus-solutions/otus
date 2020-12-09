@@ -33,7 +33,8 @@
 
     self.$onInit = onInit;
 
-    self.stage = [];
+    self.stages = [];
+    self.stagesArrayNull = false;
     self.colorStage = $mdColors.getThemeColor('primary-hue-1');
 
     function onInit() {
@@ -42,7 +43,6 @@
     }
 
     function refreshActivityStage() {
-      self.stages = [];
       _loadCategories();
       _loadActivityStages();
     }
@@ -60,6 +60,7 @@
         .then(stages => {
           _setOrderByActivity(stages)
           self.stages = stages;
+          self.stagesArrayNull = stages.length == 0;
         })
         .catch(err => {
           $log.error(err);
