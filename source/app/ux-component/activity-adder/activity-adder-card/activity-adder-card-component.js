@@ -34,24 +34,24 @@
     self.updateRealizationDate = updateRealizationDate;
     self.monitoringCheckerFormSearchTextChange = monitoringCheckerFormSearchTextChange;
     self.styleHeader = styleHeader;
-    self.validExternalIdTruthy = validExternalIdTruthy;
-    self.validExternalIdFalsy = validExternalIdFalsy;
-    self.validTypeActivity = validTypeActivity;
-    self.validTypeActivityPaper = validTypeActivityPaper;
+    self.validateExternalIdTruthy = validateExternalIdTruthy;
+    self.validateExternalIdFalsy = validateExternalIdFalsy;
+    self.validateTypeActivity = validateTypeActivity;
+    self.validateTypeActivityPaper = validateTypeActivityPaper;
 
-    function validExternalIdTruthy() {
+    function validateExternalIdTruthy() {
       return self.preActivity.surveyForm.isRequiredExternalID();
     }
 
-    function validExternalIdFalsy() {
+    function validateExternalIdFalsy() {
       return !self.preActivity.surveyForm.isRequiredExternalID();
     }
 
-    function validTypeActivity() {
+    function validateTypeActivity() {
       return self.preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name || self.preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name;
     }
 
-    function validTypeActivityPaper() {
+    function validateTypeActivityPaper() {
       return self.preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.PAPER.name;
     }
 
