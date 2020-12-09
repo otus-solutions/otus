@@ -23,6 +23,8 @@
     self.$onInit = onInit;
     self.createActivity = createActivity;
     self.updateRealizationDate = updateRealizationDate;
+    self.validateExternalIdTruthy = validateExternalIdTruthy;
+    self.validateExternalIdFalsy = validateExternalIdFalsy;
 
     function onInit(){
       self.preActivityArtefacts = angular.copy(self.data.preActivityArtefacts);
@@ -30,6 +32,14 @@
       _loadCategories();
       _getSurveyByAcronym(self.preActivityArtefacts.acronym);
       self.preActivityArtefacts.realizationDate = new Date();
+    }
+
+    function validateExternalIdTruthy() {
+      return self.preActivityArtefacts.surveyForm.isRequiredExternalID();
+    }
+
+    function validateExternalIdFalsy() {
+      return !self.preActivityArtefacts.surveyForm.isRequiredExternalID();
     }
 
     function _loadOptionModes() {
@@ -57,7 +67,9 @@
 
     function _getSurveyByAcronym(acronym) {
       ExpressActivityCreatorDialogShowService.getSurveyByAcronym(acronym)
-        .then(surveyFound => self.preActivityArtefacts.surveyForm = surveyFound);
+        .then(surveyFound => {
+          self.preActivityArtefacts.surveyForm = surveyFound;
+        });
     }
 
     function createActivity(){
