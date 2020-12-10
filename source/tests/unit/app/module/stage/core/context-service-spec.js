@@ -1,4 +1,4 @@
-xdescribe('StageCoreContextService_UnitTest_Suite', () => {
+describe('StageCoreContextService_UnitTest_Suite', () => {
   let service;
   let Mock = {};
 
