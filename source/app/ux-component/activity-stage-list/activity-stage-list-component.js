@@ -131,6 +131,7 @@
       ).then(function () {
         ParticipantActivityService.discardActivity(itemActivity._id);
         refreshActivityStage();
+        _showMsg(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.TOAST.SUCCESS.delete);
       });
     }
 
