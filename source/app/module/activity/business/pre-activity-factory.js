@@ -49,11 +49,8 @@
       if (self.surveyForm.isRequiredExternalID()) {
         self.preActivityValid = stateChecker && stateIdExternal;
       }
-      if (stateChecker && stateIdExternal) {
-        self.preActivityValid = stateChecker;
-      }
-      if (stateChecker === null && stateIdExternal) {
-        self.preActivityValid = stateIdExternal;
+      if(stateIdExternal){
+        self.preActivityValid = (stateChecker ? stateChecker : stateIdExternal);
       }
     }
 
