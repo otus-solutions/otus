@@ -1,4 +1,4 @@
-xdescribe('StageCoreModuleService_UnitTest_Suite', () => {
+describe('StageCoreModuleService_UnitTest_Suite', () => {
   let service;
   let Injections = [];
   let Mock = {};
@@ -25,7 +25,7 @@ xdescribe('StageCoreModuleService_UnitTest_Suite', () => {
     expect(service.configureContext).toBeDefined();
     expect(service.configureStorage).toBeDefined();
     expect(service.configureRemoteStorage).toBeDefined();
-    expect(service.getUserActivityPendencyRemoteStorage).toBeDefined();
+    expect(service.getRemoteStorage).toBeDefined();
   });
 
   it('configureContextMethod_should_evoke_contextService_configureContext', () => {
@@ -38,10 +38,13 @@ xdescribe('StageCoreModuleService_UnitTest_Suite', () => {
     expect(Injections.ContextService.configureStorage).toHaveBeenCalledTimes(1)
   });
 
-  it('configureRemoteStorageMethod_and_getUserActivityPendencyRemoteStorageMethod_should_resolve_promise', () => {
-    service.configureRemoteStorage(true);
-    service.getUserActivityPendencyRemoteStorage();
-    expect(Injections.$q.defer).toHaveBeenCalledTimes(1)
+  it('configureRemoteStorageMethod_and_getRemoteStorage_should_resolve_promise', () => {
+    Mock.restService = {
+      genericStage: {}
+    };
+    service.configureRemoteStorage(Mock.restService);
+    service.getRemoteStorage();
+    expect(Injections.$q.defer).toHaveBeenCalledTimes(1);
   });
 
 });
