@@ -12,7 +12,7 @@
           <div layout="row" layout-align-xs="space-between center" layout-align="space-around center" layout-fill flex="50" flex-xs="80">
 <!--            stage -->
             <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30"
-                                layout-align="space-between start" ng-if="$ctrl.showStageInput">
+                                layout-align="space-between start" ng-if="$ctrl.hasStage">
               <md-select id="stageSelector" aria-label="Etapa" ng-model="$ctrl.stage" placeholder="Etapa">
                 <md-option ng-repeat="stage in $ctrl.optionStages track by $index" ng-value="stage">
                   {{stage.name | uppercase}}

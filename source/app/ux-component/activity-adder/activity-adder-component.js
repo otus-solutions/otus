@@ -46,7 +46,7 @@
     self.btnAddPreActivitiesDisable = true;
     self.stage = null;
     self.optionStages = [];
-    self.showStageInput = true;
+    self.hasStage = true;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -61,7 +61,7 @@
     self.displayGridSmall = displayGridSmall;
     self.monitoringSearchTextChange = monitoringSearchTextChange;
     self.selectedItemChange = selectedItemChange;
-    
+
 
     function onInit() {
       LoadingScreenService.start();
@@ -126,17 +126,17 @@
     }
 
     function _loadStages(){
-      self.showStageInput = true;
+      self.hasStage = true;
       StageService.getAllStages()
         .then(stages => {
           if(!stages || stages.length === 0){
-            self.showStageInput = false;
+            self.hasStage = false;
           }
           self.optionStages = stages;
         })
         .catch(err => {
           console.error(err);
-          self.showStageInput = false;
+          self.hasStage = false;
         });
     }
 
