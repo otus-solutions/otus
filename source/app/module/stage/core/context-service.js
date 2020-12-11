@@ -41,10 +41,6 @@
     //--------------------------------------------------------------------------------------------
     // Internal context methods
     //--------------------------------------------------------------------------------------------
-    function _restoreContextData() {
-      isValid();
-      _context.fromJson(_storage.getItem(CONTEXT));
-    }
 
     function _testInternalState() {
       if (!_context) {
