@@ -71,7 +71,7 @@ describe('otusActivityAdder_UnitTest_Suite', function () {
 
   it('saveActivities_method_should_NOT_call_ParticipantActivityService_saveActivities_method', function (done) {
     spyOn(Injections.DialogShowService, "showWarningDialog").and.returnValue(Promise.resolve());
-    spyOn(Injections.ParticipantActivityService, "saveActivities").and.callThrough();
+    spyOn(controller.preActivities, "every").and.returnValue(false);
 
     controller.saveActivities();
 
