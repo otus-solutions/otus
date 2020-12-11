@@ -9,43 +9,69 @@ describe('PreActivityFactory_UnitTest_Suite', function() {
     angular.mock.inject(function($injector) {
       factory = $injector.get('otusjs.activity.business.PreActivityFactory');
     });
-
-    _mockInitialize();
-
-    result = factory.create(Mock.user, Mock.survey, Mock.configuration, Mock.mode, Mock.externalID, Mock.stage);
-    result.surveyForm.isRequiredExternalID = jasmine.createSpy();
   });
 
 
-  it('should create factory', function() {
+  it('factory_existence_check', function() {
     expect(factory).toBeDefined();
     expect(factory.create).toBeDefined();
   });
 
+  describe('factory_instance_test_suite', () => {
 
-  it('should call create method', function () {
-    expect(JSON.stringify(result)).toEqual(JSON.stringify(Mock.preActivity));
+    beforeEach(() => {
+      _mockInitialize();
+
+      result = factory.create(Mock.user, Mock.survey, Mock.configuration, Mock.mode, Mock.externalID, Mock.stage);
+      result.surveyForm.isRequiredExternalID = Mock.isRequiredExternalID;
+    });
+
+    it('instance_check', () => {
+      expect(JSON.stringify(result)).toEqual(JSON.stringify(Mock.preActivity));
+    });
+
+    it('updatePaperActivityData_method_should_set_paperActivityData', () => {
+      result.updatePaperActivityData(Mock.checkerData, Mock.realizationDate);
+      expect(result.paperActivityData.checker).toEqual(Mock.checkerData.checker);
+      expect(result.paperActivityData.realizationDate).toEqual(Mock.realizationDate);
+    });
+
+    it('updatePaperActivityData_method_should_set_preActivityValid_as_false', () => {
+      result.updatePaperActivityData(false, {});
+      expect(result.preActivityValid).toBeFalsy();
+    });
+
+    it('updatePreActivityValid_should_set_preActivityValid_in_case_surveyForm_isRequiredExternalID_return_true', () => {
+      spyOn(result.surveyForm, 'isRequiredExternalID').and.returnValue(true);
+      result.updatePreActivityValid(true, true);
+      expect(result.preActivityValid).toBeTruthy();
+    });
+
+    it('updatePreActivityValid_should_set_preActivityValid_as_stateChecker', () => {
+      spyOn(result.surveyForm, 'isRequiredExternalID').and.returnValue(false);
+      Mock.stateChecker = {};
+      result.updatePreActivityValid(Mock.stateChecker, true);
+      expect(result.preActivityValid).toEqual(Mock.stateChecker);
+    });
+
+    it('updatePreActivityValid_should_set_preActivityValid_as_stateIdExternal', () => {
+      spyOn(result.surveyForm, 'isRequiredExternalID').and.returnValue(false);
+      Mock.stateIdExternal = {};
+      result.updatePreActivityValid(null, Mock.stateIdExternal);
+      expect(result.preActivityValid).toEqual(Mock.stateIdExternal);
+    });
+
+    it('updatePreActivityValid_should_not_set_preActivityValid', () => {
+      spyOn(result.surveyForm, 'isRequiredExternalID').and.returnValue(false);
+      result.updatePreActivityValid(jasmine.anything(), null);
+      expect(result.preActivityValid).toEqual(false);
+    });
+
+    it('getStageId_method_should_return_stage_id', () => {
+      expect(result.getStageId()).toEqual(Mock.stage._id);
+    });
   });
 
-  it('should call updatePreActivityValid method', function () {
-    result.updatePreActivityValid(true, true);
-    expect(result.preActivityValid).toBeTruthy();
-  });
-
-  it('should call updatePaperActivityData method', function () {
-    result.updatePaperActivityData(Mock.checkerData,Mock.realizationDate);
-    expect(result.paperActivityData.checker).toEqual(Mock.checkerData.checker);
-    expect(result.paperActivityData.realizationDate).toEqual(Mock.realizationDate);
-  });
-
-  it('should call updatePaperActivityData preActivityValid false method', function () {
-    result.updatePaperActivityData(false,{});
-    expect(result.preActivityValid).toBeFalsy();
-  });
-
-  it('getStageId_method_should_return_stage_id', function () {
-    expect(result.getStageId()).toEqual(Mock.stage._id);
-  });
 
   function _mockInitialize() {
     Mock.survey = Test.utils.data.activityPASC.surveyForm;
@@ -98,5 +124,7 @@ describe('PreActivityFactory_UnitTest_Suite', function() {
       }
     };
     Mock.realizationDate = "2019-01-05T18:20:16.829Z";
+    Mock.isRequiredExternalID = function() { return true };
   }
+
 });
