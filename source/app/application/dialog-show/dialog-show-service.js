@@ -16,8 +16,6 @@
     self.showConfirmationDialog = showConfirmationDialog;
     self.showWarningDialog = showWarningDialog;
     self.showCustomizedDialog = showCustomizedDialog;
-
-
     self.showActivitySharingDialog = showActivitySharingDialog;
     self.showExpressActivityCreationDialog = showExpressActivityCreationDialog;
     self.cancel = cancel;
@@ -157,16 +155,13 @@
         },
         cancel: cancel
       };
-      return _prepareDialogShow(self.data, fullscreen);
-    }
 
-    function _prepareDialogShow(data, fullscreen){
       return $mdDialog.show({
-        controller: data.settings.controller,
+        controller: self.data.settings.controller,
         bindToController: true,
-        locals: { data: data },
-        templateUrl: data.settings.templateUrl,
-        template: data.settings.template,
+        locals: { data: self.data },
+        templateUrl: self.data.settings.templateUrl,
+        template: self.data.settings.template,
         parent: angular.element(document.body),
         controllerAs: '$ctrl',
         fullscreen: fullscreen
