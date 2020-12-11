@@ -60,11 +60,24 @@ describe('DialogShowService_UnitTest_Suite', function () {
     });
 
     it('should_showActivitySharingDialog_an_instance_with_the_same_values', function () {
-      service.showActivitySharingDialog(Mock.data2.activity).then(function (serviceShowResult) {
-        expect(serviceShowResult.test.locals.data.activity).toEqual(Mock.data2.activity);
-      });
+      Mock.selectedActivity = {};
+      service.showActivitySharingDialog(Mock.selectedActivity);
+      expect(Injections.$mdDialog.show).toHaveBeenCalledTimes(1);
+      expect(service.data.activity).toEqual(Mock.selectedActivity);
     });
 
+    it('should_showExpressActivityCreationDialog_an_instance_with_the_same_values', function () {
+      Mock.preActivityArtefacts = {};
+      service.showExpressActivityCreationDialog(Mock.preActivityArtefacts);
+      expect(Injections.$mdDialog.show).toHaveBeenCalledTimes(1);
+      expect(service.data.preActivityArtefacts).toEqual(Mock.preActivityArtefacts);
+    });
+
+    it('cancel_method_should_invoke_mdDialog_cancel_method', function(){
+      spyOn(Injections.$mdDialog, 'cancel');
+      service.cancel();
+      expect(Injections.$mdDialog.cancel).toHaveBeenCalledTimes(1);
+    });
 
   });
 
@@ -82,15 +95,6 @@ describe('DialogShowService_UnitTest_Suite', function () {
           class: 'md-raised md-primary'
         }
       ]
-    };
-
-    Mock.data2 = {};
-    Mock.data2.activity = {
-      dialogToTitle: 'Confirmação',
-      titleToText: 'ALÍQUOTA NÃO REMOVIDA',
-      textDialog: 'Confirmação de leitura',
-      ariaLabel: 'Confirmação de leitura',
-      buttons: []
     };
   }
 });
