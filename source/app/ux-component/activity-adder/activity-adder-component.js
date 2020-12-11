@@ -12,18 +12,20 @@
     }).controller('otusActivityAdderCtrl', Controller);
 
   Controller.$inject = [
+    'ACTIVITY_MANAGER_LABELS',
+    '$q',
+    '$timeout',
+    '$element',
     'otusjs.activity.business.ParticipantActivityService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.activity.business.GroupActivityService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.deploy.LoadingScreenService',
-    '$q',
-    '$timeout',
-    '$element',
-    'ACTIVITY_MANAGER_LABELS'
+    'otusjs.stage.business.StageService'
   ];
 
-  function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, DialogService, LoadingScreenService, $q, $timeout, $element, ACTIVITY_MANAGER_LABELS) {
+  function Controller(ACTIVITY_MANAGER_LABELS, $q, $timeout, $element,
+                      ParticipantActivityService, ApplicationStateService, GroupActivityService, DialogService, LoadingScreenService, StageService) {
     const ALL_OPTION = "Todos";
 
     let self = this;
@@ -44,6 +46,7 @@
     self.btnAddPreActivitiesDisable = true;
     self.stage = null;
     self.optionStages = [];
+    self.showStageInput = true;
 
     /* Public methods */
     self.$onInit = onInit;
@@ -58,7 +61,7 @@
     self.displayGridSmall = displayGridSmall;
     self.monitoringSearchTextChange = monitoringSearchTextChange;
     self.selectedItemChange = selectedItemChange;
-
+    
 
     function onInit() {
       LoadingScreenService.start();
@@ -123,39 +126,18 @@
     }
 
     function _loadStages(){
-      //TODO
-      self.optionStages = [
-        {
-          _id: "5f7ca9654ac6a6555b363664",
-          name: "Onda 4",
-          surveyAcronyms : [
-            "FRC",
-            "MEDC",
-            "ACTA"
-          ]
-        },
-        {
-          _id: "5f7ca9654ac6a6555b363663",
-          name: "Onda 3",
-          "surveyAcronyms" : [
-            "RETCLQ",
-            "IMT",
-            "CISE",
-            "FCOC",
-            "ANTC",
-            "PASC",
-            "VOPC",
-            "BIOC",
-            "ACTDC",
-            "CSJ"
-          ]
-        },
-        {
-          _id: "5f7ca9654ac6a6555b363665",
-          name: "Onda COVID",
-          surveyAcronyms: []
-        }
-      ];
+      self.showStageInput = true;
+      StageService.getAllStages()
+        .then(stages => {
+          if(!stages || stages.length === 0){
+            self.showStageInput = false;
+          }
+          self.optionStages = stages;
+        })
+        .catch(err => {
+          console.error(err);
+          self.showStageInput = false;
+        });
     }
 
     function clearSearchTerm() {
