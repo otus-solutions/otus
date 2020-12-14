@@ -163,7 +163,7 @@
 
     function filterLocationPoints() {
       if(self.userLocationPoints) {
-        self.userLocationIds = []
+        self.userLocationIds = [];
 
         for(const location of self.userLocationPoints) {
           self.userLocationIds.push(location._id)
@@ -289,13 +289,15 @@
           newFocus = aliquot.aliquotId;
           break;
         }
-        if (current.index == aliquot.index) current.index++;
+        if (current.index == aliquot.index) {
+          current.index++;
+        }
       }
 
       if (newFocus.length) {
         self.setFocus(newFocus);
-      } else {
-        if (aliquot && aliquot.aliquotId) $element.find('#' + aliquot.aliquotId).blur();
+      } else if (aliquot && aliquot.aliquotId) {
+        $element.find('#' + aliquot.aliquotId).blur();
       }
     }
 
@@ -344,8 +346,12 @@
     function aliquotInputOnChange(aliquot) {
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
-      if (!aliquot.processing) updateExamsProcessingDate();
-      if (!aliquot.locationPoint) updateExamsLocationPoint();
+      if (!aliquot.processing) {
+        updateExamsProcessingDate();
+      }
+      if (!aliquot.locationPoint) {
+        updateExamsLocationPoint();
+      }
       if (self.aliquotLengths.length >= 1) {
         var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
         var runCompletePlaceholder = false;
@@ -356,8 +362,8 @@
             aliquot.aliquotCode = "";
             runCompletePlaceholder = true;
             $element.find('#' + aliquot.tubeId).blur();
-          } else {
-            if (aliquot.aliquotCode.length == self.aliquotMaxLength) _nextFocus(aliquot);
+          } else if (aliquot.aliquotCode.length == self.aliquotMaxLength) {
+              _nextFocus(aliquot);
           }
         }
       }
@@ -368,8 +374,7 @@
     }
 
     function haveAliquotsChanged() {
-      const hasChanged = AliquotTubeService.areFieldsChanged(self.selectedMomentType);
-      return hasChanged;
+      return AliquotTubeService.areFieldsChanged(self.selectedMomentType);
     }
 
     function aliquotInputOnBlur(aliquot) {
@@ -390,9 +395,9 @@
 
           if (Validation.aliquotAlreadyUsed(aliquot, true)) {
             setAliquotError(aliquot, msgAliquotUsed);
-            return;
           }
-        } else {
+        }
+        else {
           setAliquotError(aliquot, msgAliquotInvalid);
         }
       }
@@ -437,12 +442,12 @@
         if(!exam.isSaved) {
           exam.processing = self.processingDate
         }
-      })
+      });
       self.selectedMomentType.convertedStorages.forEach(storage => {
         if(!storage.isSaved) {
           storage.processing = self.processingDate
         }
-      })
+      });
       self.selectedMomentType.storages.forEach(storage => {
         if(!storage.isSaved) {
           storage.processing = self.processingDate
@@ -483,17 +488,17 @@
         if(!exam.locationPoint) {
           exam.locationPoint = self.selectedLocationPoint
         }
-      })
+      });
       self.selectedMomentType.storages.forEach(exam => {
         if(!exam.locationPoint) {
           exam.locationPoint = self.selectedLocationPoint
         }
-      })
+      });
       self.selectedMomentType.convertedStorages.forEach(exam => {
         if(!exam.locationPoint) {
           exam.locationPoint = self.selectedLocationPoint
         }
-      })
+      });
     }
 
     function convertAliquot(aliquot) {
@@ -516,14 +521,15 @@
         aliquot.name = examNameFound;
         aliquot.role = "EXAM";
 
-        ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
-          self.selectedMomentType.removeStorage(aliquot.aliquotCode);
-          _setMomentType(self.selectedMomentType);
-          _fillConvertedStoragesContainerLabels()
-        }).catch(function (err) {
-          AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
-        });
-
+        ParticipantLaboratoryService.convertStorageAliquot(aliquot)
+          .then(function () {
+            self.selectedMomentType.removeStorage(aliquot.aliquotCode);
+            _setMomentType(self.selectedMomentType);
+            _fillConvertedStoragesContainerLabels()
+          })
+          .catch(function (err) {
+            AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
+          });
       })
     }
   }
