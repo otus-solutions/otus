@@ -7,7 +7,6 @@
 
   Controller.$inject = [
     '$q',
-    '$mdDialog',
     '$mdToast',
     '$timeout',
     'otusjs.application.dialog.DialogShowService',
@@ -20,7 +19,6 @@
   ];
 
   function Controller($q,
-                      $mdDialog,
                       $mdToast,
                       $timeout,
                       DialogShowService,
