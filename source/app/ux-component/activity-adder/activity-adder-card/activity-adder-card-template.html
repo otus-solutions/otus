@@ -22,11 +22,11 @@
         {{::$ctrl.preActivity.configuration.category.label}}</small></span>
     </div>
   </div>
-  <div layout="column" layout-align="start start" ng-if="$ctrl.validTypeActivityPaper()">
+  <div layout="column" layout-align="start start" ng-if="$ctrl.validateTypeActivityPaper()">
     <form name="$ctrl.checkerForm" style="margin-top: 10px">
       <small class="md-caption" ng-style="{color:'#797985'}">Informações do Aferidor:</small>
       <md-input-container style="margin-top: 12px; margin-bottom: 12px" id="date">
-        <input aria-label="Data de Nascimento" class="md-input" date="true" disable-parent-scroll="true"
+        <input aria-label="Data de realização" class="md-input" date="true" disable-parent-scroll="true"
                format="DD/MM/YYYY"
                id="datetime" max-date="$ctrl.maxDate" mdc-datetime-picker=""
                name="realizationDate" ng-change="$ctrl.updateRealizationDate($ctrl.realizationDate)"
@@ -66,19 +66,19 @@
   </div>
 
 
-  <div layout="column" ng-if="$ctrl.validTypeActivity()">
+  <div layout="column" ng-if="$ctrl.validateTypeActivity()">
     <small class="md-caption" ng-style="{color:'#797985', 'margin-top': '10px'}">Informações do Usuário:</small>
     <span class="md-caption" ng-style="{color:'#797985'}">Nome: <small class="md-body-2" ng-style="{color:'black'}">{{::$ctrl.preActivity.user.name}} {{::$ctrl.preActivity.user.surname}}</small></span>
     <span class="md-caption" md-truncate ng-style="{color:'#797985'}">Email: <small class="md-body-2" ng-style="{color:'black'}">
       {{::$ctrl.preActivity.user.email}}</small></span>
   </div>
   <form name="$ctrl.externalIdForm" style="height: 40px" novalidate>
-    <md-input-container ng-if="$ctrl.validExternalIdTruthy()" md-no-float class="md-block" style="padding-top: 10px">
+    <md-input-container ng-if="$ctrl.validateExternalIdTruthy()" md-no-float class="md-block" style="padding-top: 10px">
       <input name="externalid" ng-model="$ctrl.externalID" ng-change="$ctrl.updateExternalID($ctrl.externalID)"
              placeholder="Id externo" aria-label="Id externo" required>
       <md-tooltip md-direction="bottom">ID Externo</md-tooltip>
     </md-input-container>
-    <md-input-container ng-if="$ctrl.validExternalIdFalsy()">
+    <md-input-container ng-if="$ctrl.validateExternalIdFalsy()">
       <small ng-style="{color:'#9e9e9e'}">Id externo não requerido *</small>
     </md-input-container>
   </form>

@@ -27,6 +27,8 @@
     self.getById = getById;
     self.createFollowUpActivity = createFollowUpActivity;
     self.reopen = reopen;
+    self.getAllByStageGroup = getAllByStageGroup;
+    self.discardActivity = discardActivity;
 
     function initialize() {
       _rest = OtusRestResourceService.getActivityResource();
@@ -138,6 +140,22 @@
         throw new Error('REST resource is not initialized.');
       }
       return _followUpRest.createFollowUpActivity({ rn: activity.participantData.recruitmentNumber }, activity).$promise;
+    }
+
+    function getAllByStageGroup(recruitmentNumber) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+
+      return _rest.getAllByStageGroup({ rn: recruitmentNumber }).$promise;
+    }
+
+    function discardActivity(activityId, recruitmentNumber) {
+      if (!_rest) {
+        throw new Error('REST resource is not initialized.');
+      }
+
+      _rest.discard({ id: activityId, rn: recruitmentNumber });
     }
 
   }
