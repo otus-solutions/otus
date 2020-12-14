@@ -21,10 +21,18 @@
     '$mdToast',
     'otusjs.laboratory.core.ContextService',
     'otusjs.otus.dashboard.core.ContextService',
-    '$filter'
+    '$filter',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller(ProjectFieldCenterService,ExamLotService,$mdToast,laboratoryContextService,dashboardContextService,$filter) {
+  function Controller(
+    ProjectFieldCenterService,
+    ExamLotService,
+    $mdToast,
+    laboratoryContextService,
+    dashboardContextService,
+    $filter,
+    LaboratoryViewerService) {
     var self = this;
 
     /* Lifecycle hooks */
@@ -35,7 +43,6 @@
     self.realizationBeginFilter = "";
     self.realizationEndFilter = "";
     self.centers = [];
-    // self.exams = [];
     self.lotsList = [];
     self.lotsListImutable = [];
 
@@ -48,6 +55,10 @@
     self.loadExamDescriptors = loadExamDescriptors;
 
     function onInit() {
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init() {
       ProjectFieldCenterService.loadCenters().then(function (result) {
         self.lotDataSet = [];
         self.colorSet = [];
@@ -56,7 +67,6 @@
           self.centers.push(fieldCenter.acronym)
         });
         _setUserFieldCenter();
-
       });
       self.otusExamsLotsManager.listComponent = self;
     }
