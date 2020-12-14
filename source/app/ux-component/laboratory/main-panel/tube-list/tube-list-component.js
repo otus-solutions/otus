@@ -14,23 +14,26 @@
     });
 
   controller.$inject = [
-     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
-     'otusjs.otus.uxComponent.Publisher'
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.otus.uxComponent.Publisher',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
  ];
 
-  function controller(ParticipantLaboratoryService, Publisher) {
+  function controller(ParticipantLaboratoryService, Publisher, LaboratoryViewerService) {
     var self = this;
     var _originalTubeList;
 
     /* Public Interface */
     self.$onInit = onInit;
-
     self.fillOriginalTubeList = fillOriginalTubeList;
     self.haveTubesChanged = haveTubesChanged;
     self.getChangedTubes = getChangedTubes;
 
-
     function onInit() {
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init() {
       _getMoments();
       self.fillOriginalTubeList();
 
@@ -64,7 +67,7 @@
       var hasChanged = false;
       var changedTubes = [];
 
-      changedTubes =  getChangedTubes();
+      changedTubes = getChangedTubes();
 
       if(changedTubes.length) hasChanged = true;
 
