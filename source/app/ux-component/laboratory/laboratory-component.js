@@ -10,7 +10,6 @@
 
   Controller.$inject = [
     '$q',
-    '$mdDialog',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.laboratory.business.unattached.UnattachedLaboratoryService',
@@ -23,11 +22,13 @@
     'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($q, $mdDialog, DialogShowService,
+  function Controller($q, DialogShowService,
                       ParticipantLaboratoryService, UnattachedLaboratoryService,
                       LoadingScreenService, EventService, Publisher, ParticipantFactory, $scope, LaboratoryLocalStorageService,
                       LaboratoryViewerService) {
     var self = this;
+
+    const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
 
     /* Public methods */
     self.$onInit = onInit;
@@ -66,8 +67,7 @@
       LoadingScreenService.start();
       self.ready = false;
       self.hasLaboratory = false;
-      ParticipantLaboratoryService
-        .hasLaboratory()
+      ParticipantLaboratoryService.hasLaboratory()
         .then(function (hasLaboratory) {
           self.hasLaboratory = hasLaboratory;
           self.ready = true;
@@ -81,8 +81,7 @@
     function _setupLaboratory() {
       LoadingScreenService.start();
       self.hasLaboratory = false;
-      ParticipantLaboratoryService
-        .hasLaboratory()
+      ParticipantLaboratoryService.hasLaboratory()
         .then(function (hasLaboratory) {
           self.hasLaboratory = hasLaboratory;
           self.ready = true;
@@ -97,8 +96,7 @@
     function intializeLaboratory() {
       LoadingScreenService.start();
 
-      ParticipantLaboratoryService
-        .initializeLaboratory()
+      ParticipantLaboratoryService.initializeLaboratory()
         .then(function (laboratory) {
           if (laboratory) {
             self.hasLaboratory = true;
@@ -109,91 +107,65 @@
         });
     }
 
-    function _buildConfirmMessage(labCode, recruitmentNumber) {
-      return 'Deseja realmente vincular o laboratório código <b>'.concat(labCode)
-        .concat('</b> ao participante <b>')
-        .concat(recruitmentNumber)
-        .concat('</b><br />')
-        .concat('<b>O vínculo não poderá ser desfeito.</b>');
-    }
-
-    function _showAttacheDialog(msg) {
-      var message = _buildConfirmMessage(self.laboratoryIdentification, self.selectedParticipant.recruitmentNumber)
-      var _attacheDialog = {
-        dialogToTitle: 'Vincular Laboratório',
-        titleToText: 'Confirmação de Vínculo',
-        textDialog: message,
-        ariaLabel: 'Confirmação de vínculo',
-        buttons: [{
-          message: 'Ok',
-          action: function () {
-            $mdDialog.hide()
-          },
-          class: 'md-raised md-primary'
-        },
-          {
-            message: 'Voltar',
-            action: function () {
-              $mdDialog.cancel()
-            },
-            class: 'md-raised md-no-focus'
-          }
-        ]
-      };
-
-      return DialogShowService.showDialog(_attacheDialog);
-
-    }
-
     function attacheLaboratory() {
       self.attacheError = null;
-      _showAttacheDialog().then(function () {
-        LoadingScreenService.start();
-        UnattachedLaboratoryService.attacheLaboratory(self.laboratoryIdentification).then(function () {
-          _refreshLaboratory();
-          LoadingScreenService.finish();
-        }).catch(function (error) {
-          self.attacheHaveErrors = true;
-          if (error.data) {
-            if (error.data.MESSAGE.match("Laboratory not found")) {
-              self.attacheError = "Laboratório não encontrado";
-            } else if (error.data.MESSAGE.match("Laboratory is already attached")) {
-              self.attacheError = "Laboratório já foi vinculado a um participante";
-            } else if (error.data.MESSAGE.match("Invalid configuration")) {
-              if (error.data.CONTENT.laboratoryCollectGroup !== error.data.CONTENT.participantCollectGroup) {
-                self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
-              }
-              if (error.data.CONTENT.laboratoryFieldCenter !== error.data.CONTENT.participantFieldCenter) {
-                if (self.attacheError) {
-                  self.attacheError += " e " + "ao mesmo centro"
-                } else {
-                  self.attacheError = "O laboratório e o participante devem pertencer ao mesmo centro";
+
+      const textDialog = 'Deseja realmente vincular o laboratório código <b>'.concat(self.laboratoryIdentification)
+        .concat('</b> ao participante <b>').concat(self.selectedParticipant.recruitmentNumber)
+        .concat('</b><br /><b>O vínculo não poderá ser desfeito.</b>');
+
+      DialogShowService.showConfirmationDialog('Confirmação de Vínculo', textDialog, 'Confirmação de vínculo')
+        .then(function () {
+          LoadingScreenService.start();
+          UnattachedLaboratoryService.attacheLaboratory(self.laboratoryIdentification)
+            .then(function () {
+              _refreshLaboratory();
+              LoadingScreenService.finish();
+            })
+            .catch(function (error) {
+              self.attacheHaveErrors = true;
+              if (error.data) {
+                const ERROR_MESSAGES_DICT = {
+                  "Laboratory not found": "Laboratório não encontrado",
+                  "Laboratory is already attached": "Laboratório já foi vinculado a um participante",
+                  "Invalid configuration": _getErrorMessageForInvalidConfiguration(error.data)
+                };
+                self.attacheError = ERROR_MESSAGES_DICT[error.data.MESSAGE];
+                if(!self.attacheError){
+                  self.attacheError = UNEXPECTED_ERROR_MESSAGE;
                 }
               }
-            } else {
-              self.attacheError = "Ocorreu um erro, entre em contato com o administrador do sistema";
-            }
-          } else {
-            self.attacheError = "Ocorreu um erro, entre em contato com o administrador do sistema";
-          }
-          LoadingScreenService.finish();
-        });
-      }).catch(function () {
-      });
+              else {
+                self.attacheError = UNEXPECTED_ERROR_MESSAGE;
+              }
+              LoadingScreenService.finish();
+            });
+        })
+    }
 
+    function _getErrorMessageForInvalidConfiguration(errorData){
+      if (errorData.CONTENT.laboratoryCollectGroup !== errorData.CONTENT.participantCollectGroup) {
+        self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
+      }
+      if (errorData.CONTENT.laboratoryFieldCenter !== errorData.CONTENT.participantFieldCenter) {
+        if (self.attacheError) {
+          self.attacheError += " e ao mesmo centro";
+        } else {
+          self.attacheError = "O laboratório e o participante devem pertencer ao mesmo centro";
+        }
+      }
+      return self.attacheError;
     }
 
     function _fetchLaboratory(currentState) {
-      var newState = currentState ? currentState : 'main';
-
       self.labels = ParticipantLaboratoryService.generateLabels();
       self.labels.tubes = _orderTubesWithLabelNullAlphabetically(self.labels.tubes);
-      self.labels.type = "laboratoryParticipantLabel"
+      self.labels.type = "laboratoryParticipantLabel";
       self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
-      self.state = newState;
-      LaboratoryLocalStorageService.findAndDeleteLabels({"type": "laboratoryParticipantLabel"})
-      LaboratoryLocalStorageService.findAndDeleteLabels({"type": "laboratoryUnattachedLabel"})
-      LaboratoryLocalStorageService.insert(self.labels)
+      self.state = currentState ? currentState : 'main';
+      LaboratoryLocalStorageService.findAndDeleteLabels({"type": "laboratoryParticipantLabel"});
+      LaboratoryLocalStorageService.findAndDeleteLabels({"type": "laboratoryUnattachedLabel"});
+      LaboratoryLocalStorageService.insert(self.labels);
     }
 
     function _orderTubesWithLabelNullAlphabetically(tubeList) {
