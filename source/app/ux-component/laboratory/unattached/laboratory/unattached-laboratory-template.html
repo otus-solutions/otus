@@ -27,6 +27,6 @@
 <md-grid-tile-footer>
   <label-maker ng-show="false" class="label-maker-{{$ctrl.laboratoryData._id.$oid}}" label-data="$ctrl.labels"></label-maker>
   <div layout-align="center center" layout-margin="" layout="row">
-    <generate-custom-label-dialog ng-click="$ctrl.generateLabels()" label-promise="$ctrl.labelPromise" labels-ready="$ctrl.labelsReady" kit-id="$ctrl.laboratoryData.identification" identification-button="true" kit-button="true" bio-material-button="true" labels="$ctrl.labels" label-data="$ctrl.labelsWithoutTubes"/>
+    <generate-custom-label-dialog primary-button="true" ng-click="$ctrl.generateLabels()" label-promise="$ctrl.labelPromise" labels-ready="$ctrl.labelsReady" kit-id="$ctrl.laboratoryData.identification" identification-button="true" kit-button="true" bio-material-button="true" labels="$ctrl.labels" label-data="$ctrl.labelsWithoutTubes"/>
   </div>
 </md-grid-tile-footer>
