@@ -18,10 +18,21 @@
     'otusjs.laboratory.business.project.sending.SendingExamService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($filter, $mdToast, $mdDialog, ProjectFieldCenterService, DashboardContextService, ProjectContextService, SendingExamService, ApplicationStateService, LoadingScreenService, DialogService) {
+  function Controller(
+    $filter, $mdToast, $mdDialog,
+    ProjectFieldCenterService,
+    DashboardContextService,
+    ProjectContextService,
+    SendingExamService,
+    ApplicationStateService,
+    LoadingScreenService,
+    DialogService,
+    LaboratoryViewerService) {
+
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
 
     var self = this;
@@ -42,6 +53,10 @@
     self.dynamicDataTableChange = dynamicDataTableChange;
 
     function onInit() {
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init() {
       ProjectFieldCenterService.loadCenters().then(function (result) {
         self.lotDataSet = [];
         self.colorSet = [];
