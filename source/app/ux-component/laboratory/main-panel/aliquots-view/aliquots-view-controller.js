@@ -14,7 +14,8 @@
     'otusjs.otus.uxComponent.Publisher',
     '$scope',
     '$element',
-    'mdcDefaultParams'
+    'mdcDefaultParams',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
   function Controller(
@@ -26,7 +27,8 @@
     Publisher,
     $scope,
     $element,
-    mdcDefaultParams) {
+    mdcDefaultParams,
+    LaboratoryViewerService) {
     var self = this;
 
     mdcDefaultParams({ lang: 'pt-br', cancelText: 'cancelar', todayText: 'hoje', okText: 'ok' });
@@ -55,6 +57,10 @@
     self.convertAliquot = convertAliquot;
 
     function onInit() {
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init() {
       self.now = new Date();
       _buildMomentTypeList();
 
@@ -85,7 +91,7 @@
           position: 2
         }
       };
-      _publishLocationPoints()
+      _publishLocationPoints();
       selectMomentType(self.momentTypeList[0]);
       Publisher.unsubscribe('have-aliquots-changed');
       Publisher.subscribe('have-aliquots-changed', _haveAliquotsChanged);
