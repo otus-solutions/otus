@@ -15,8 +15,8 @@
     'otusjs.laboratory.business.participant.LaboratoryLabelFactory',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.laboratory.configuration.LaboratoryConfigurationService',
-    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
-
+    'otusjs.laboratory.storage.LaboratoryLocalStorageService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
   function Controller($q,
@@ -28,20 +28,23 @@
                       LaboratoryLabelFactory,
                       LoadingScreenService,
                       LaboratoryConfigurationService,
-                      LaboratoryLocalStorageService) {
+                      LaboratoryLocalStorageService,
+                      LaboratoryViewerService) {
     var self = this;
     const LABORATORY_NOT_FOUND_MESSAGE = "Laboratório não encontrado";
     const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
 
 
-    self.$onInit = onInit
+    self.$onInit = onInit;
     let defer = $q.defer();
     self.labelPromise = defer.promise;
     self.attacheLaboratory = attacheLaboratory;
     self.generateLabels = generateLabels;
     self.discardUnattached = discardUnattached;
 
-    function onInit() {}
+    function onInit() {
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(() => {});
+    }
 
     function discardUnattached() {
       showDeleteDialog().then(function () {
