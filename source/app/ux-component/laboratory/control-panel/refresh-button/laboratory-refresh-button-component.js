@@ -13,25 +13,20 @@
 
   Controller.$inject = [
     '$mdToast',
-    '$mdDialog',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.otus.uxComponent.Publisher',
     'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast, $mdDialog, ParticipantLaboratoryService, Publisher, DialogService) {
+  function Controller($mdToast, ParticipantLaboratoryService, Publisher, DialogService) {
     var self = this;
 
-    var confirmRefresh;
-
     self.$onInit = onInit;
-
     self.refreshClick = refreshClick;
     self.rotateClass;
 
     function onInit() {
       self.rotateClass = "reverse-rotate-180-deg";
-      _buildDialogs();
     }
 
     function refreshClick() {
@@ -53,10 +48,15 @@
       }
 
       if (showMsg) {
-        DialogService.showDialog(confirmRefresh).then(function () {
-          _refreshPage(currentState);
+        DialogService.showConfirmationDialog(
+          'Confirmar a atualização do Laboratório:',
+          'Existem alterações não finalizadas que serão descartadas.',
+          'Confirmação de atualização de laboratório')
+          .then(function () {
+            _refreshPage(currentState);
         });
-      } else {
+      }
+      else {
         _refreshPage(currentState);
       }
     }
@@ -65,26 +65,6 @@
       Publisher.publish('refresh-laboratory-participant', currentState);
     }
 
-    function _buildDialogs() {
-
-      confirmRefresh = {
-        dialogToTitle:'Exclusão',
-        titleToText: 'Confirmar a atualização do Laboratório:',
-        textDialog: 'Existem alterações não finalizadas que serão descartadas.',
-        buttons: [
-          {
-            message:'Ok',
-            action:function(){$mdDialog.hide()},
-            class:'md-raised md-primary'
-          },
-          {
-            message:'Cancelar',
-            action:function(){$mdDialog.cancel()},
-            class:'md-raised md-no-focus'
-          }
-        ]
-      };
-    }
     return self;
   }
 }());
