@@ -14,10 +14,17 @@
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($mdToast, $mdDialog, laboratoryContextService, MaterialTransportationService, ApplicationStateService, DialogService) {
+  function Controller(
+    $mdToast, $mdDialog,
+    laboratoryContextService,
+    MaterialTransportationService,
+    ApplicationStateService,
+    DialogService,
+    LaboratoryViewerService) {
     var self = this;
     var _confirmDeleteSelectedLots;
 
@@ -33,6 +40,10 @@
     self.newLot = newLot;
 
     function onInit() {
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init(){
       self.selectedLots = [];
       _buildDialogs();
     }
