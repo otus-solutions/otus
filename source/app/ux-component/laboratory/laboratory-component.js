@@ -19,12 +19,14 @@
     'otusjs.otus.uxComponent.Publisher',
     'otusjs.model.participant.ParticipantFactory',
     '$scope',
-    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
+    'otusjs.laboratory.storage.LaboratoryLocalStorageService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
   function Controller($q, $mdDialog, DialogShowService,
                       ParticipantLaboratoryService, UnattachedLaboratoryService,
-                      LoadingScreenService, EventService, Publisher, ParticipantFactory, $scope, LaboratoryLocalStorageService) {
+                      LoadingScreenService, EventService, Publisher, ParticipantFactory, $scope, LaboratoryLocalStorageService,
+                      LaboratoryViewerService) {
     var self = this;
 
     /* Public methods */
@@ -33,6 +35,10 @@
     self.attacheLaboratory = attacheLaboratory;
 
     function onInit() {
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init(){
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       self.hasLaboratory = false;
