@@ -13,12 +13,13 @@
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.application.dialog.DialogShowService',
-    'otusjs.user.business.UserAccessPermissionService'
+    'otusjs.user.business.UserAccessPermissionService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
   function Controller($mdToast, $mdDialog, $filter, LoadingScreenService,
                       ParticipantLaboratoryService, ParticipantManagerService,
-                      DialogService, UserAccessPermissionService) {
+                      DialogService, UserAccessPermissionService, LaboratoryViewerService) {
     var self = this;
     self.participantManagerService = ParticipantManagerService;
     self.tubeCode = "";
@@ -27,7 +28,7 @@
     self.tubeCustomMetadataOptions = null;
 
     self.$onInit = onInit;
-    self.participantManagerService = ParticipantManagerService
+    self.participantManagerService = ParticipantManagerService;
     self.userAccessToLaboratory = "";
 
     self.isValidCode = isValidCode;
@@ -42,11 +43,15 @@
 
 
     function onInit() {
-      LoadingScreenService.start()
+      LoadingScreenService.start();
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init, LoadingScreenService.finish);
+    }
+
+    function _init(){
       _checkingLaboratoryPermission();
-      ParticipantManagerService.setup().then(function (response) {
+      ParticipantManagerService.setup().then(response => {
         self.onReady = true;
-        LoadingScreenService.finish()
+        LoadingScreenService.finish();
       });
     }
 
@@ -153,10 +158,10 @@
       const customMetadata = self.originalTube.toJSON().tubeCollectionData.customMetadata;
 
       DialogService.showDialog(self.confirmFinish).then(function () {
-        self.newTube.collect()
+        self.newTube.collect();
         const tubeStructure = {
           tubes: [self.newTube]
-        }
+        };
         tubeStructure.tubes[0].tubeCollectionData.customMetadata = customMetadata
 
         ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(function () {
