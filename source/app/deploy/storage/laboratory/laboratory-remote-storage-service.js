@@ -46,6 +46,7 @@
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getCheckingExist = getCheckingExist;
+    self.checkLaboratoryConfiguration = checkLaboratoryConfiguration;
     self.getTubeMedataDataByType = getTubeMedataDataByType;
 
     /* Laboratory Project Methods */
@@ -250,10 +251,25 @@
      */
     function getCheckingExist() {
       var deferred = $q.defer();
-      LaboratoryRestService
-        .getCheckingExist()
+      LaboratoryRestService.getCheckingExist()
         .then(function (response) {
           deferred.resolve(response);
+        }, function (e) {
+          deferred.reject(e);
+        });
+      return deferred.promise;
+    }
+
+    function checkLaboratoryConfiguration(){
+      var deferred = $q.defer();
+      LaboratoryRestService.getCheckingExist()
+        .then(function (response) {
+          if(response.data){
+            deferred.resolve(true);
+          }
+          else{
+            deferred.reject(false);
+          }
         }, function (e) {
           deferred.reject(e);
         });
@@ -463,5 +479,6 @@
         });
       return deferred.promise;
     }
+
   }
 }());
