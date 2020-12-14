@@ -15,6 +15,7 @@
     'otusjs.model.locationPoint.LocationPointFactory',
     'otusjs.laboratory.business.participant.aliquot.AliquotMessagesService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
   function Controller(
@@ -26,13 +27,14 @@
     LocationPointRestService,
     LocationPointFactory,
     AliquotMessagesService,
-    ParticipantLaboratoryService) {
+    ParticipantLaboratoryService,
+    LaboratoryViewerService) {
     var self = this;
 
-    self.$onInit = onInit
+    self.$onInit = onInit;
 
-    self.now = new Date()
-    self.processingDate = new Date()
+    self.now = new Date();
+    self.processingDate = new Date();
     self.selectedLocationPoint = {};
     self.timeShowMsg = 3000;
 
@@ -42,22 +44,20 @@
     self.updateExamsLocationPoint = updateExamsLocationPoint;
     self.getConvertedHistory = getConvertedHistory;
     self.saveAliquots = saveAliquots;
-    self.haveAliquotsChanged = haveAliquotsChanged
-    self.setFocus = setFocus
-    self.tubeInputOnChange = tubeInputOnChange
-    self.aliquotInputOnKeyDown = aliquotInputOnKeyDown
-    self.convertAliquot = convertAliquot
-    self.deleteAliquot = deleteAliquot
+    self.haveAliquotsChanged = haveAliquotsChanged;
+    self.setFocus = setFocus;
+    self.tubeInputOnChange = tubeInputOnChange;
+    self.aliquotInputOnKeyDown = aliquotInputOnKeyDown;
+    self.convertAliquot = convertAliquot;
+    self.deleteAliquot = deleteAliquot;
     self.updateAliquots = updateAliquots;
 
-    function updateAliquots(foundTube, participantLaboratory) {
-      self.participantLaboratory = participantLaboratory;
-      self.tube = foundTube;
-      onInit();
+    function onInit(){
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
     }
 
-    function onInit() {
-      _buildMomentTypeList(self.participantLaboratory.tubes)
+    function _init() {
+      _buildMomentTypeList(self.participantLaboratory.tubes);
 
       const codeConfiguration = LaboratoryConfigurationService.getCodeConfiguration();
 
@@ -66,9 +66,9 @@
 
       self.participant = self.participantManager.getParticipant(
         self.participantLaboratory.recruitmentNumber.toString()
-      )
+      );
 
-      _getMomentTypeByTubeType()
+      _getMomentTypeByTubeType();
 
       self.validations = {
         wave: {
@@ -92,17 +92,27 @@
           position: 2
         }
       };
-      fetchLocationPoints()
+      fetchLocationPoints();
+    }
+
+    function updateAliquots(foundTube, participantLaboratory) {
+      self.participantLaboratory = participantLaboratory;
+      self.tube = foundTube;
+      _init();
     }
 
     function deleteAliquot(aliquot) {
-      AliquotMessagesService.showDeleteDialog().then(function() {
-        return AliquotTubeService.deleteAliquot(aliquot.aliquotCode).then(function () {
-          self.selectedMomentType.removeAliquot(aliquot);
-        }).catch(function (err) {
-          AliquotMessagesService.showNotRemovedDialog(err.data.CONTENT);
-        });
-      }).catch(function () {});
+      AliquotMessagesService.showDeleteDialog()
+        .then(function() {
+          return AliquotTubeService.deleteAliquot(aliquot.aliquotCode)
+            .then(function () {
+              self.selectedMomentType.removeAliquot(aliquot);
+            })
+            .catch(function (err) {
+              AliquotMessagesService.showNotRemovedDialog(err.data.CONTENT);
+            });
+        })
+        .catch(function () {});
     }
 
     function _getMomentTypeByTubeType() {
@@ -169,8 +179,8 @@
     function fetchLocationPoints() {
       LocationPointRestService.getLocationPoints().then((response) => {
         self.locationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
-        _setMomentType(self.momentType)
-        findParticipantLocationPoint()
+        _setMomentType(self.momentType);
+        findParticipantLocationPoint();
         filterLocationPointByParticipant();
         fetchUserLocationPoints();
       })
@@ -179,7 +189,7 @@
     function fetchUserLocationPoints() {
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
-        filterLocationPoints()
+        filterLocationPoints();
       })
     }
 
