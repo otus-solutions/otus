@@ -25,6 +25,7 @@
 
     /* Laboratory Configuration Methods */
     self.getCheckingExist = getCheckingExist;
+    self.checkLaboratoryConfiguration = checkLaboratoryConfiguration;
     self.getLaboratoryDescriptors = getLaboratoryDescriptors;
     self.getAliquotsDescriptors = getAliquotsDescriptors;
     self.getTubeMedataDataByType = getTubeMedataDataByType;
@@ -47,7 +48,6 @@
     self.getUnattachedByIdentification = getUnattachedByIdentification;
 
 
-
     function initializeLaboratory(participant) {
       LaboratoryCollectionService.useParticipant(participant);
       return LaboratoryCollectionService
@@ -59,6 +59,10 @@
 
     function getCheckingExist() {
       return LaboratoryCollectionService.getCheckingExist();
+    }
+
+    function checkLaboratoryConfiguration(){
+      return LaboratoryCollectionService.checkLaboratoryConfiguration();
     }
 
     function getLaboratory(participant) {
