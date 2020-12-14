@@ -13,10 +13,12 @@
     'otusjs.laboratory.business.unattached.UnattachedLaboratoryService',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($mdToast, $filter, ProjectFieldCenterService, SessionContextService, UnattachedLaboratoryService, LaboratoryConfigurationService, laboratoryContextService, LoadingScreenService) {
+  function Controller($mdToast, $filter, ProjectFieldCenterService, SessionContextService,
+                      UnattachedLaboratoryService, LaboratoryConfigurationService, laboratoryContextService, LoadingScreenService, LaboratoryViewerService) {
     var self = this;
     const LABORATORY_NOT_FOUND_MESSAGE = "Laboratório não encontrado";
     const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
@@ -31,8 +33,12 @@
     self.getByIdentification = getByIdentification;
 
     function onInit() {
-      LaboratoryConfigurationService.getLaboratoryDescriptors();
       LoadingScreenService.start();
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init, LoadingScreenService.finish);
+    }
+
+    function _init(){
+      LaboratoryConfigurationService.getLaboratoryDescriptors();
       let unattachedGroupFilter = laboratoryContextService.getUnattachedGroupFilter();
       let unattachedCenterFilter = laboratoryContextService.getUnattachedCenterFilter();
 
@@ -92,8 +98,8 @@
       LoadingScreenService.start();
       let center = self.userHaveCenter ? self.centerFilter : self.selectedCenter;
       UnattachedLaboratoryService.createUnattached(center, self.selectedCollectGroup).then(function () {
-        self.collectGroupsFilter=self.selectedCollectGroup;
-        self.centerFilter=center;
+        self.collectGroupsFilter = self.selectedCollectGroup;
+        self.centerFilter = center;
         onFilter();
         changeCreation();
         LoadingScreenService.finish();
