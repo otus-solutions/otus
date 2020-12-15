@@ -7,31 +7,33 @@
 
   Controller.$inject = [
     'otusjs.user.business.UserAccessPermissionService',
-    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService',
     'otusjs.otus.dashboard.core.EventService',
     'otusjs.otus.dashboard.service.DashboardService'
   ];
 
-  function Controller(UserAccessPermissionService, ParticipantLaboratoryService, EventService, DashboardService) {
+  function Controller(UserAccessPermissionService, LaboratoryViewerService, EventService, DashboardService) {
     var self = this;
-
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
     function onInit() {
+      self.laboratoryChecking = false;
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init() {
+      self.laboratoryChecking = true;
       self.selectedParticipant = undefined;
-      self.laboratoryChecking = undefined;
       self.userAccessToLaboratory = undefined;
       _loadParticipant();
-      _getCheckingExist();
       _checkingLaboratoryPermission();
       EventService.onParticipantSelected(_setParticipant);
     }
 
     function _loadParticipant() {
-      return DashboardService
-        .getSelectedParticipant()
+      return DashboardService.getSelectedParticipant()
         .then(function (participantData) {
           _setParticipant(participantData)
         });
@@ -39,13 +41,6 @@
 
     function _setParticipant(participantData) {
       self.selectedParticipant = participantData;
-    }
-
-    function _getCheckingExist() {
-      ParticipantLaboratoryService.getCheckingExist()
-        .then(response => {
-          self.laboratoryChecking = response;
-        });
     }
 
     function _checkingLaboratoryPermission() {
