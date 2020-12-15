@@ -52,10 +52,12 @@
     self.dynamicDataTableChange = dynamicDataTableChange;
 
     function onInit() {
+      self.laboratoryExists = false;
       LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
     }
 
     function _init() {
+      self.laboratoryExists = true;
       ProjectFieldCenterService.loadCenters().then(function (result) {
         self.lotDataSet = [];
         self.colorSet = [];

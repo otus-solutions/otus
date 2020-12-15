@@ -56,10 +56,12 @@
     self.downloadCSV = downloadCSV;
 
     function onInit() {
+      self.laboratoryExists = false;
       LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
     }
 
     function _init() {
+      self.laboratoryExists = true;
       self.ready = false;
       self.error = false;
       self.examsData = {};

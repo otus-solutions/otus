@@ -33,11 +33,13 @@
     self.getByIdentification = getByIdentification;
 
     function onInit() {
+      self.laboratoryExists = false;
       LoadingScreenService.start();
       LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init, LoadingScreenService.finish);
     }
 
     function _init(){
+      self.laboratoryExists = true;
       LaboratoryConfigurationService.getLaboratoryDescriptors();
       let unattachedGroupFilter = LaboratoryContextService.getUnattachedGroupFilter();
       let unattachedCenterFilter = LaboratoryContextService.getUnattachedCenterFilter();

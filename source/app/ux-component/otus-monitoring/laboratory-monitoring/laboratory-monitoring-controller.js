@@ -62,10 +62,12 @@
 
     /* Lifecycle methods */
     function onInit() {
+      self.laboratoryExists = false;
       LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
     }
 
     function _init() {
+      self.laboratoryExists = true;
       loadCenters().then(() => {
         _setUserFieldCenter();
         openTabPendingResultsByAliquots();

@@ -38,10 +38,12 @@
     self.newLot = newLot;
 
     function onInit() {
+      self.laboratoryExists = false;
       LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
     }
 
     function _init(){
+      self.laboratoryExists = true;
       self.selectedLots = [];
     }
 
