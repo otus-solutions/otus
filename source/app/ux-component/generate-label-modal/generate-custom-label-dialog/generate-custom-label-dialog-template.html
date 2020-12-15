@@ -1,3 +1,8 @@
-<md-button class="md-primary md-raised" ng-click="$ctrl.showAdvanced($event)">
+<md-button class="md-primary md-raised" ng-hide="!$ctrl.primaryBtn()"  ng-click="$ctrl.showAdvanced($event)">
   Gerar etiquetas
 </md-button>
+
+<md-button class="md-basic" ng-hide="!$ctrl.basicBtn()" ng-click="$ctrl.showAdvanced($event)">
+  Gerar etiquetas
+</md-button>
+
