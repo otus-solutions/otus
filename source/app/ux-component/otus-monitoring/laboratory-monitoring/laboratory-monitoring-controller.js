@@ -9,7 +9,6 @@
     '$q',
     '$filter',
     '$mdToast',
-    '$mdDialog',
     'otusjs.application.session.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.deploy.FieldCenterRestService',
@@ -24,7 +23,6 @@
     $q,
     $filter,
     $mdToast,
-    $mdDialog,
     SessionContextService,
     LoadingScreenService,
     FieldCenterRestService,
@@ -44,7 +42,6 @@
     const EXAM = 'exam';
 
     var self = this;
-    var _alert;
     self.centers = [];
     self.centerFilter = '';
     self.message = '';
@@ -128,11 +125,11 @@
     }
 
     function downloadCSVFile(current) {
-      if (current === PENDING)
+      if (current === PENDING) {
         LaboratoryMonitoringService.downloadCSVFileOfPendingResultsByAliquots(self.centerFilter)
           .then()
           .catch((err) => {
-            if(err.data.MESSAGE.includes("Data Not Found")){
+            if (err.data.MESSAGE.includes("Data Not Found")) {
               self.disableDownloadCSVFile = true;
               $mdToast.show(
                 $mdToast.simple()
@@ -140,23 +137,17 @@
                   .hideDelay(5000)
               );
             } else {
-              _alert = {
-                dialogToTitle:'Ocorreu um erro',
-                textDialog:'Não foi possível baixar o csv, entre em contato com o suporte.',
-                ariaLabel:'Entre em contato com o suporte',
-                buttons: [
-                  {
-                    message:'Ok',
-                    action:function(){$mdDialog.hide()},
-                    class:'md-raised md-primary'
-                  }
-                ]
-              };
-              DialogShowService.showDialog(_alert);
+              DialogShowService.showWarningDialog(
+                'Ocorreu um erro',
+                null,
+                'Não foi possível baixar o csv, entre em contato com o suporte.',
+                'Entre em contato com o suporte');
             }
           });
-      else
+      }
+      else {
         LaboratoryMonitoringService.downloadCSVFileOfOrphansByExam();
+      }
     }
 
     function loadDataByCenter(currentTab, center) {
