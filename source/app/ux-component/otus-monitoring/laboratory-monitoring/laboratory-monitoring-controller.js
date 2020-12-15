@@ -16,10 +16,24 @@
     'otusjs.monitoring.business.LaboratoryMonitoringService',
     'otusjs.otus.uxComponent.BarChartsVerticalFactory',
     'otusjs.otus.uxComponent.BarChartsHorizontalFactory',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($q, $filter, $mdToast, $mdDialog, SessionContextService, LoadingScreenService, FieldCenterRestService, LaboratoryMonitoringService, BarChartsVerticalFactory, BarChartsHorizontalFactory, DialogShowService) {
+  function Controller(
+    $q,
+    $filter,
+    $mdToast,
+    $mdDialog,
+    SessionContextService,
+    LoadingScreenService,
+    FieldCenterRestService,
+    LaboratoryMonitoringService,
+    BarChartsVerticalFactory,
+    BarChartsHorizontalFactory,
+    DialogShowService,
+    LaboratoryViewerService) {
+
     const MESSAGE_OF_DATA_NOT_FOUND = 'Não há registros a serem exibidos.';
     const MESSAGE_OF_GENERIC_ERROR = 'Não conseguimos apresentar os dados, tente novamente mais tarde.';
     const DATA_NOT_FOUND = 'Data Not Found';
@@ -51,6 +65,10 @@
 
     /* Lifecycle methods */
     function onInit() {
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init() {
       loadCenters().then(() => {
         _setUserFieldCenter();
         openTabPendingResultsByAliquots();
