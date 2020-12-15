@@ -42,11 +42,13 @@
 
 
     function onInit() {
+      self.laboratoryExists = false;
       LoadingScreenService.start();
       LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init, LoadingScreenService.finish);
     }
 
     function _init(){
+      self.laboratoryExists = true;
       _checkingLaboratoryPermission();
       ParticipantManagerService.setup().then(response => {
         self.onReady = true;
