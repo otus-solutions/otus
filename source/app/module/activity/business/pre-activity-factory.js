@@ -55,7 +55,7 @@
     }
 
     function getStageId(){
-      return self.stage._id;
+      return self.stage ? self.stage._id : null;
     }
 
     function toJSON() {

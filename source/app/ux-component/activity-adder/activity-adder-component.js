@@ -217,21 +217,12 @@
     }
 
     function _filterActivities() {
-      if(!self.stage){
-        DialogService.showWarningDialog(
-          'Pendência de Informações',
-          'Nenhuma etapa selecionada',
-          'Selecione uma etapa.',
-          'Aviso de etapa nao selecionada');
-        return;
-      }
-
       self.selectedSurveys = [];
       self.selectedGroupsResult.forEach(groupName => {
         self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.getGroupSurveys(groupName));
       });
       self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
-        return self.stage.surveyAcronyms.includes(item) && self.selectedSurveys.indexOf(item) === position;
+        return  self.stage ? self.stage.surveyAcronyms.includes(item) : false || self.selectedSurveys.indexOf(item) === position;
       });
 
       self.activities = self.surveys.filter(function (activity) {
