@@ -9,7 +9,6 @@
     });
 
   Controller.$inject = [
-    '$mdDialog',
     '$filter',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService',
@@ -21,16 +20,23 @@
     'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService,
-                      DynamicTableSettingsFactory, SendingExamService, LoadingScreenService, DialogService,
-                      THEME_CONSTANTS, LaboratoryViewerService) {
+  function Controller(
+    $filter,
+    ApplicationStateService,
+    ProjectContextService,
+    DynamicTableSettingsFactory,
+    SendingExamService,
+    LoadingScreenService,
+    DialogService,
+    THEME_CONSTANTS,
+    LaboratoryViewerService) {
+
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_DOES_MATCH_EXAM = "Aliquot does not match exam";
     const TUBE_DOES_MATCH_EXAM = "Tube does not match exam";
     const ALIQUOT_NOT_FOUND = "Aliquot not found";
 
     var self = this;
-    var therIsNoDataToShow;
 
     self.$onInit = onInit;
     self.dynamicDataTableChange = dynamicDataTableChange;
@@ -40,18 +46,24 @@
       self.laboratoryChecking = false;
       LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
     }
+
     function _init() {
       self.laboratoryChecking = true;
       self.crashImage = THEME_CONSTANTS.imageURLs.crash;
-      _buildDialogs();
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
       self.errorAliquots = [];
       self.errorexam = [];
+
       if (!self.fileStructure) {
-        DialogService.showDialog(therIsNoDataToShow).then(function () {
-          ApplicationStateService.activateExamSending();
-        });
+        DialogService.showWarningDialog(
+          'Erro ao entrar na tela de visualização de resultados',
+          null,
+          'Para acessar a tela de visualização de resultados você deve enviar um novo arquivo ou selecionar algum envio anterior.',
+          'erro')
+          .then(function () {
+            ApplicationStateService.activateExamSending();
+          });
       } else {
         if (self.action === 'view') {
           self.examList = [];
@@ -113,11 +125,7 @@
           };
 
           if (self.action === 'view') {
-            if (element.isValid){
-              structureIcon = doneStructure;
-            } else {
-              structureIcon = warningStructure;
-            }
+            structureIcon = (element.isValid ? doneStructure : warningStructure);
           } else if (self.action === 'upload') {
             if (self.errorAliquots.length) {
              var error = self.errorAliquots.find(function (error) {
@@ -200,19 +208,5 @@
       return includes;
     }
 
-    function _buildDialogs() {
-      therIsNoDataToShow = {
-         dialogToTitle:'Erro ao entrar na tela de visualização de resultados',
-         textDialog:'Para acessar a tela de visualização de resultados você deve enviar um novo arquivo ou selecionar algum envio anterior.',
-         ariaLabel:'erro',
-         buttons: [
-           {
-             message:'Ok',
-             action:function(){$mdDialog.hide()},
-             class:'md-raised md-primary'
-           }
-         ]
-       };
-    }
   }
 }());
