@@ -200,15 +200,5 @@
       self.settings = self.dynamicTableSettings.getSettings();
     }
 
-    function errorsIncludesCode(values, code) {
-      var includes = false;
-      values.forEach(function (value) {
-        if (value == code) {
-          includes = true;
-        }
-      });
-      return includes;
-    }
-
   }
 }());
