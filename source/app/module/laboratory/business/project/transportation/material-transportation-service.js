@@ -22,6 +22,7 @@
     self.getAliquots = getAliquots;
     self.getLots = getLots;
     self.getTube = getTube;
+    self.fetchConfiguration = fetchConfiguration;
     self.createLot = createLot;
     self.updateLot = updateLot;
     self.deleteLot = deleteLot;
@@ -74,10 +75,8 @@
           LaboratoryRepositoryService.getLots(locationPointId)
             .then(function(response) {
               var lots = JSON.parse(response).map(function(lotJson) {
-                return TransportationService.buildAliquotLotFromJson(
-                  lotJson);
+                return TransportationService.buildAliquotLotFromJson(lotJson);
               });
-
               deferred.resolve(lots);
             })
             .catch(function(err) {
@@ -88,7 +87,6 @@
       return deferred.promise;
     }
 
-    self.fetchConfiguration = fetchConfiguration;
     function fetchConfiguration() {
       var deferred = $q.defer();
 
