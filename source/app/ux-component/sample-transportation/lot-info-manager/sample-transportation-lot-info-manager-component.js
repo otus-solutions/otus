@@ -13,14 +13,13 @@
 
   Controller.$inject = [
     '$mdToast',
-    '$mdDialog',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast, $mdDialog, laboratoryContextService, MaterialTransportationService, ApplicationStateService, DialogService) {
+  function Controller($mdToast, laboratoryContextService, MaterialTransportationService, ApplicationStateService, DialogService) {
     var self = this;
 
     //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
