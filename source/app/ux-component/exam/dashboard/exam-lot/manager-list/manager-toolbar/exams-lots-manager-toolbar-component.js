@@ -4,14 +4,14 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusExamsLotsManagerToolbar', {
-      controller: Controller,
+      controller: "otusExamsLotsManagerToolbarCtrl as $ctrl",
       templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/manager-toolbar/exams-lots-manager-toolbar-template.html',
       bindings: {
         onViewInfo: '&',
         updateLotListOnDelete: '&',
         selectedLots: '<'
       }
-    });
+    }).controller('otusExamsLotsManagerToolbarCtrl', Controller);
 
 
   Controller.$inject = [
