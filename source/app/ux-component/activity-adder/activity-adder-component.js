@@ -27,6 +27,7 @@
   function Controller(ACTIVITY_MANAGER_LABELS, $q, $timeout, $element,
                       ParticipantActivityService, ApplicationStateService, GroupActivityService, DialogService, LoadingScreenService, StageService) {
     const ALL_OPTION = "Todos";
+    const STAGE_NULL = "Nenhuma Etapa";
 
     let self = this;
 
@@ -44,7 +45,7 @@
     self.preActivities = [];
     self.selectionOptions = [];
     self.btnAddPreActivitiesDisable = true;
-    self.stage = null;
+    self.stage = {};
     self.optionStages = [];
     self.hasStage = true;
 
@@ -132,7 +133,8 @@
           if(!stages || stages.length === 0){
             self.hasStage = false;
           }
-          self.optionStages = stages;
+          self.optionStages.push({ name: STAGE_NULL });
+          self.optionStages = self.optionStages.concat(stages);
         })
         .catch(err => {
           console.error(err);
@@ -222,7 +224,7 @@
         self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.getGroupSurveys(groupName));
       });
       self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
-        return  self.stage ? self.stage.surveyAcronyms.includes(item) : true && self.selectedSurveys.indexOf(item) === position;
+        return self.stage.surveyAcronyms ? self.stage.surveyAcronyms.includes(item) : true && self.selectedSurveys.indexOf(item) === position;
       });
 
       self.activities = self.surveys.filter(function (activity) {
