@@ -4,7 +4,7 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusExamsLotsManagerList', {
-      controller: Controller,
+      controller: "otusExamsLotsManagerListCtrl as $ctrl",
       templateUrl: 'app/ux-component/exam/dashboard/exam-lot/manager-list/list/exams-lots-manager-list-template.html',
       bindings: {
         selectedLots: '=',
@@ -13,7 +13,7 @@
       require: {
         otusExamsLotsManager: '^otusExamsLotsManager'
       }
-    });
+    }).controller("otusExamsLotsManagerListCtrl", Controller);
 
   Controller.$inject = [
     'otusjs.deploy.FieldCenterRestService',
@@ -35,9 +35,6 @@
     LaboratoryViewerService) {
     var self = this;
 
-    /* Lifecycle hooks */
-    self.$onInit = onInit;
-
     self.centerFilter = "";
     self.examFilter = "";
     self.realizationBeginFilter = "";
@@ -46,7 +43,8 @@
     self.lotsList = [];
     self.lotsListImutable = [];
 
-
+    /* Lifecycle hooks */
+    self.$onInit = onInit;
     /* Public methods */
     self.selectLot = selectLot;
     self.updateOnDelete = updateOnDelete;
