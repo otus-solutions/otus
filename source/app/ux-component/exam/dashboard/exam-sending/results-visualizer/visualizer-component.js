@@ -37,9 +37,11 @@
     self.changeResults = changeResults;
 
     function onInit() {
+      self.laboratoryChecking = false;
       LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
     }
     function _init() {
+      self.laboratoryChecking = true;
       self.crashImage = THEME_CONSTANTS.imageURLs.crash;
       _buildDialogs();
       self.action = ProjectContextService.getExamSendingAction();
