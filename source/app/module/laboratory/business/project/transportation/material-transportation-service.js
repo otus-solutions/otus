@@ -3,20 +3,16 @@
 
   angular
     .module('otusjs.laboratory.business.project.transportation')
-    .service(
-      'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
-      service);
+    .service('otusjs.laboratory.business.project.transportation.MaterialTransportationService', Service);
 
-  service.$inject = [
+  Service.$inject = [
     '$q',
     'otusjs.laboratory.transportation.TransportationService',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
-    'otusjs.laboratory.repository.LaboratoryRepositoryService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.laboratory.repository.LaboratoryRepositoryService'
   ];
 
-  function service($q, TransportationService, LaboratoryConfigurationService,
-                   LaboratoryRepositoryService, LoadingScreenService) {
+  function Service($q, TransportationService, LaboratoryConfigurationService, LaboratoryRepositoryService) {
     var self = this;
 
     self.createAliquotLot = createAliquotLot;
@@ -31,12 +27,9 @@
     self.deleteLot = deleteLot;
     self.getContainerLabelToAliquot = getContainerLabelToAliquot;
 
-    var messageLoading =
-      'Por favor aguarde o carregamento das alíquotas.<br> Esse processo pode demorar um pouco...';
 
     function getContainerLabelToAliquot(aliquot) {
-      return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" :
-        "Palheta";
+      return aliquot.container.toUpperCase() === "CRYOTUBE" ? "Criotubo" : "Palheta";
     }
 
     function createAliquotLot() {
