@@ -4,9 +4,10 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusViewSendingExam', {
-      controller: Controller,
+      controller: 'otusViewSendingExamCtrl as $ctrl',
       templateUrl: 'app/ux-component/exam/dashboard/exam-sending/sending-view/exam-sending-view-template.html'
-    });
+    })
+    .controller('otusViewSendingExamCtrl', Controller);
 
   Controller.$inject = [
     '$filter',
@@ -78,8 +79,7 @@
     }
 
     function _setUserFieldCenter() {
-      DashboardContextService
-        .getLoggedUser()
+      DashboardContextService.getLoggedUser()
         .then(function (userData) {
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : ProjectContextService.getFieldCenterInSendingExam() ? ProjectContextService.getFieldCenterInSendingExam() : "";
