@@ -1,4 +1,4 @@
-fdescribe('otusResultVisualizerCtrl_UnitTest_Suite', () => {
+describe('otusResultVisualizerCtrl_UnitTest_Suite', () => {
 
   let controller;
   let Injections = [];
