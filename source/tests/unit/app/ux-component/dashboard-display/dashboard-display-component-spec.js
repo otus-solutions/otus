@@ -1,4 +1,4 @@
-fdescribe('otusDashboardDisplay_UnitTest_Suite', function () {
+describe('otusDashboardDisplay_UnitTest_Suite', function () {
   var ctrl;
   var Injections = [];
 
