@@ -222,7 +222,7 @@
         self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.getGroupSurveys(groupName));
       });
       self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
-        return  self.stage ? self.stage.surveyAcronyms.includes(item) : false || self.selectedSurveys.indexOf(item) === position;
+        return  self.stage ? self.stage.surveyAcronyms.includes(item) : true && self.selectedSurveys.indexOf(item) === position;
       });
 
       self.activities = self.surveys.filter(function (activity) {
