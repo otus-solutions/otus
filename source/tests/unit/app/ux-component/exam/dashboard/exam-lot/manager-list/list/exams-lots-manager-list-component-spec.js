@@ -10,7 +10,7 @@ describe('otusExamsLotsManagerList_UnitTest_Suite', () => {
     angular.mock.module('otusjs.otus');
 
     angular.mock.module(function ($provide) {
-      $provide.value('otusjs.laboratoryViewerService.LaboratoryViewerService', Mock.LaboratoryViewerService);
+      $provide.value('otusjs.laboratoryViewerService.LaboratoryViewerService', Test.utils.data.LaboratoryViewerService);
     });
 
     angular.mock.inject(function ($injector, $controller) {
@@ -30,7 +30,7 @@ describe('otusExamsLotsManagerList_UnitTest_Suite', () => {
     expect(controller).toBeDefined();
   });
 
-  it('controller__methods_existence_check', () => {
+  it('controller_methods_existence_check', () => {
     expect(controller.selectLot).toBeDefined();
     expect(controller.updateOnDelete).toBeDefined();
     expect(controller.onFilter).toBeDefined();
@@ -52,8 +52,6 @@ describe('otusExamsLotsManagerList_UnitTest_Suite', () => {
   });
 
   function _mockInitialize(){
-    Mock.LaboratoryViewerService = Test.utils.data.LaboratoryViewerService;
-
     Mock.centers = [
       { acronym: 'RS' }
     ];
