@@ -7901,3 +7901,18 @@ Test.utils.data.LaboratoryViewerService = {
     onInitFunction();
   }
 };
+
+Test.utils.data.fileStructure = {
+  examSendingLot: {
+    _id: '1234',
+    realizationDate: '2020-12-16'
+  },
+  exams: []
+};
+
+Test.utils.data.ProjectContextService = {
+  getExamSendingAction: function() { return 'view'; },
+  setExamSendingAction: function(action) {},
+  getFileStructure: function() { return Test.utils.data.fileStructure; },
+  setFileStructure: function(obj) {}
+};
