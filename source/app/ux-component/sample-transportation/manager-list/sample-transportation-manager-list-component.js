@@ -6,7 +6,7 @@
     .component('otusSampleTransportationManagerList', {
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/manager-list/sample-transportation-manager-list-template.html'
-    });
+    }).controller('otusSampleTransportationManagerListCtrl', Controller);
 
   Controller.$inject = [
     '$mdToast',
