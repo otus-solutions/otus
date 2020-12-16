@@ -4,9 +4,9 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusResultVisualizer', {
-      controller: Controller,
+      controller: 'otusResultVisualizerCtrl as $ctrl',
       templateUrl: 'app/ux-component/exam/dashboard/exam-sending/results-visualizer/visualizer-template.html'
-    });
+    }).controller('otusResultVisualizerCtrl', Controller);
 
   Controller.$inject = [
     '$filter',
@@ -55,16 +55,7 @@
       self.errorAliquots = [];
       self.errorexam = [];
 
-      if (!self.fileStructure) {
-        DialogService.showWarningDialog(
-          'Erro ao entrar na tela de visualização de resultados',
-          null,
-          'Para acessar a tela de visualização de resultados você deve enviar um novo arquivo ou selecionar algum envio anterior.',
-          'erro')
-          .then(function () {
-            ApplicationStateService.activateExamSending();
-          });
-      } else {
+      if (self.fileStructure) {
         if (self.action === 'view') {
           self.examList = [];
           _loadList();
@@ -74,6 +65,17 @@
         }
         self.formattedDate = $filter('date')(self.fileStructure.examSendingLot.realizationDate, 'dd/MM/yyyy HH:mm');
       }
+      else {
+        DialogService.showWarningDialog(
+          'Erro ao entrar na tela de visualização de resultados',
+          null,
+          'Para acessar a tela de visualização de resultados você deve enviar um novo arquivo ou selecionar algum envio anterior.',
+          'erro')
+          .then(function () {
+            ApplicationStateService.activateExamSending();
+          });
+      }
+
       _buildDynamicTableSettings();
     }
 
