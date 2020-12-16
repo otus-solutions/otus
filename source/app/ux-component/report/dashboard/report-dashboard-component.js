@@ -41,14 +41,13 @@
     /* Lifecycle methods */
     function onInit() {
       self.ready = false;
+      _loadParticipantReports();
+      EventService.onParticipantSelected(_loadParticipantReports);
+      self.selectedParticipant = null;
+
       ParticipantLaboratoryService.getCheckingExist()
         .then(function (response) {
           self.laboratoryChecking = response;
-          if(response){
-            _loadParticipantReports();
-            EventService.onParticipantSelected(_loadParticipantReports);
-            self.selectedParticipant = null;
-          }
         });
     }
 
