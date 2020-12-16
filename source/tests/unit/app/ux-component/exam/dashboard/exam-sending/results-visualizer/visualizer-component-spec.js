@@ -12,8 +12,8 @@ describe('otusResultVisualizerCtrl_UnitTest_Suite', () => {
     angular.mock.module('otusjs.otus');
 
     angular.mock.module(function ($provide) {
-      $provide.value('otusjs.laboratory.core.project.ContextService', Mock.ProjectContextService);
-      $provide.value('otusjs.laboratoryViewerService.LaboratoryViewerService', Mock.LaboratoryViewerService);
+      $provide.value('otusjs.laboratory.core.project.ContextService', Test.utils.data.ProjectContextService);
+      $provide.value('otusjs.laboratoryViewerService.LaboratoryViewerService', Test.utils.data.LaboratoryViewerService);
     });
 
     angular.mock.inject(function ($injector, $controller) {
@@ -112,21 +112,6 @@ describe('otusResultVisualizerCtrl_UnitTest_Suite', () => {
 
 
   function _mockInitialize(){
-    Mock.ProjectContextService = {
-      getExamSendingAction: function() { return ACTION; },
-      getFileStructure: function() { return Mock.fileStructure; },
-    };
-
-    Mock.LaboratoryViewerService = Test.utils.data.LaboratoryViewerService;
-
-    Mock.fileStructure = {
-      examSendingLot: {
-        _id: '1234',
-        realizationDate: '2020-12-16'
-      },
-      exams: []
-    };
-
     Mock.sendingExam = {
       getExamList: function() { return []; },
       examSendingLot: {}
