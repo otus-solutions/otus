@@ -17,12 +17,13 @@
     'otusjs.laboratory.business.project.sending.SendingExamService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.application.dialog.DialogShowService',
-    'THEME_CONSTANTS'
+    'THEME_CONSTANTS',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
   function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService,
                       DynamicTableSettingsFactory, SendingExamService, LoadingScreenService, DialogService,
-                      THEME_CONSTANTS) {
+                      THEME_CONSTANTS, LaboratoryViewerService) {
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_DOES_MATCH_EXAM = "Aliquot does not match exam";
     const TUBE_DOES_MATCH_EXAM = "Tube does not match exam";
@@ -36,6 +37,9 @@
     self.changeResults = changeResults;
 
     function onInit() {
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+    function _init() {
       self.crashImage = THEME_CONSTANTS.imageURLs.crash;
       _buildDialogs();
       self.action = ProjectContextService.getExamSendingAction();
