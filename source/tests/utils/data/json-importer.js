@@ -7913,9 +7913,8 @@ Test.utils.data.activitySharingArtfacts = {
 };
 
 Test.utils.data.LaboratoryViewerService = {
-  checkExistAndRunOnInitOrBackHome: function (onInitFunction, onInitFunctionTwo){
+  checkExistAndRunOnInitOrBackHome: function (onInitFunction, finishLoadingScreen = (() => { })){
     onInitFunction();
-    if (onInitFunctionTwo) onInitFunctionTwo();
   }
 };
 
