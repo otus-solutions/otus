@@ -20,7 +20,9 @@
     self.showPendenciesList = showPendenciesList
 
     function onInit() {
-        cookie.get('pendent-activities').then(ck => self.pendentActivities = self.pendentActivities.concat(JSON.parse(decodeURIComponent(ck))))
+        cookie
+          .get('pendent-activities')
+          .then(ck => self.pendentActivities = self.pendentActivities.concat(JSON.parse(decodeURIComponent(ck))))
     }
 
     function showPendenciesList() {
@@ -29,13 +31,12 @@
 
     function _getUrlPlayerHome() {
       var callback = angular.copy($window.location.href) || "";
-      callback = callback.replace("#","HASHTAG");
       var url = $cookies.get('Player-Address');
       if (!url) return $window.location.href;
       if (_isValidUrl(url)){
-        return url.concat("#/home/").concat('?callback=').concat(callback);
+        return url.concat("#/pendent").concat('?callback=').concat(callback);
       }
-      return url.concat("#/home/").concat('?callback=').concat(callback);
+      return url.concat("#/pendent").concat('?callback=').concat(callback);
     }
 
     function _isValidUrl(url) {

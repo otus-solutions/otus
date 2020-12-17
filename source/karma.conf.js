@@ -12,7 +12,7 @@ module.exports = function (config) {
     basePath: '',
 
     // set/alter this if your "terraform init" is timing out on tests
-    //browserNoActivityTimeout: 50000,
+    browserNoActivityTimeout: 50000,
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
