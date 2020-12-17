@@ -33,7 +33,7 @@
 
     /* Public methods */
     self.$onInit = onInit;
-    self.intializeLaboratory = intializeLaboratory;
+    self.initializeLaboratory = initializeLaboratory;
     self.attacheLaboratory = attacheLaboratory;
 
     function onInit() {
@@ -94,7 +94,7 @@
     }
 
 
-    function intializeLaboratory() {
+    function initializeLaboratory() {
       LoadingScreenService.start();
 
       ParticipantLaboratoryService.initializeLaboratory()
