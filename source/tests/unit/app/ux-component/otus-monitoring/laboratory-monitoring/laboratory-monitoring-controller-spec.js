@@ -77,6 +77,8 @@ describe('otusParticipantHeatmap test', function () {
       create: function () { }
     };
 
+    Mock.LaboratoryViewerService = Test.utils.data.LaboratoryViewerService;
+
     angular.mock.module(function ($provide) {
       $provide.value('$filter', Mock.$filter);
       $provide.value('otusjs.application.session.core.ContextService', Mock.SessionContextService);
@@ -86,6 +88,7 @@ describe('otusParticipantHeatmap test', function () {
       $provide.value('otusjs.otus.uxComponent.BarChartsVerticalFactory', Mock.BarChartsVerticalFactory);
       $provide.value('otusjs.otus.uxComponent.BarChartsHorizontalFactory', Mock.BarChartsHorizontalFactory);
       $provide.value('otusjs.application.dialog.DialogShowService', []);
+      $provide.value('otusjs.laboratoryViewerService.LaboratoryViewerService', Mock.LaboratoryViewerService);
     });
 
     inject(function (_$injector_, _$controller_) {
@@ -98,7 +101,8 @@ describe('otusParticipantHeatmap test', function () {
         LaboratoryMonitoringService: _$injector_.get('otusjs.monitoring.business.LaboratoryMonitoringService'),
         BarChartsVerticalFactory: _$injector_.get('otusjs.otus.uxComponent.BarChartsVerticalFactory'),
         BarChartsHorizontalFactory: _$injector_.get('otusjs.otus.uxComponent.BarChartsHorizontalFactory'),
-        DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService')
+        DialogShowService: _$injector_.get('otusjs.application.dialog.DialogShowService'),
+        LaboratoryViewerService: _$injector_.get('otusjs.laboratoryViewerService.LaboratoryViewerService')
       };
 
       ctrl = _$controller_('otusLaboratoryMonitoringDashboardCtrl', Injections);
@@ -110,13 +114,15 @@ describe('otusParticipantHeatmap test', function () {
       spyOn(ctrl, '$onInit').and.callThrough();
       spyOn(ctrl, 'openTabPendingResultsByAliquots').and.callThrough();
       spyOn(Injections.LaboratoryMonitoringService, 'getDataOfPendingResultsByAliquots').and.callThrough();
+      spyOn(Injections.LaboratoryViewerService, 'checkExistAndRunOnInitOrBackHome').and.callThrough();
       ctrl.$onInit();
     });
 
     it('should be defined', (done) => {
       expect(ctrl.$onInit).not.toBeNull();
       expect(ctrl.$onInit).toHaveBeenCalled();
-      // expect(ctrl.openTabPendingResultsByAliquots).toHaveBeenCalled();
+      expect(Injections.LaboratoryViewerService.checkExistAndRunOnInitOrBackHome).toHaveBeenCalledTimes(1);
+      expect(ctrl.laboratoryExists ).toEqual(true);
       done();
     });
   });

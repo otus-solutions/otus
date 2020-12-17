@@ -1,4 +1,4 @@
-<div ui-view layout="column" class="visualizer-component" ng-if="$ctrl.fileStructure" flex>
+<div ui-view layout="column" class="visualizer-component" ng-if="$ctrl.laboratoryChecking && $ctrl.fileStructure" flex>
   <otus-result-visualizer-manager-toolbar action="$ctrl.action" aliquots-with-problems="$ctrl.aliquotsWithProblems"
                                           disabled-save="$ctrl.disabledSave" csv-data="$ctrl.csvData"
                                           dynamic-data-table-change="$ctrl.updateDataTable"

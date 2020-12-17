@@ -10,7 +10,7 @@ describe('Lot info manager display component', function() {
 
   beforeEach(function() {
     Mock.DialogShowService = {
-      showDialog: function (dialog) {
+      showConfirmationDialog: function (dialog) {
         var self = this;
         self.test = dialog;
         return Promise.resolve(self);

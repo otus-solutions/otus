@@ -45,6 +45,7 @@
     self.getDescriptors = getDescriptors;
     self.getAliquotDescriptors = getAliquotDescriptors;
     self.getCheckingExist = getCheckingExist;
+    self.checkLaboratoryConfiguration = checkLaboratoryConfiguration;
     self.updateAliquotsWithRn = updateAliquotsWithRn;
     self.getTubeMedataDataByType = getTubeMedataDataByType;
     self.updateTubeCustomMetadata = updateTubeCustomMetadata;
@@ -396,13 +397,31 @@
     function getCheckingExist() {
       var request = $q.defer();
 
-      _remoteStorage
-        .whenReady()
+      _remoteStorage.whenReady()
         .then(function (remoteStorage) {
-          return remoteStorage
-            .getCheckingExist()
+          return remoteStorage.getCheckingExist()
             .then(function (response) {
               request.resolve(response);
+            })
+            .catch(err => {
+              request.reject(err);
+            });
+        });
+
+      return request.promise;
+    }
+
+    function checkLaboratoryConfiguration() {
+      var request = $q.defer();
+
+      _remoteStorage.whenReady()
+        .then(function (remoteStorage) {
+          return remoteStorage.checkLaboratoryConfiguration()
+            .then(function (response) {
+              request.resolve(response);
+            })
+            .catch(function (e) {
+              request.reject(e);
             });
         });
 
@@ -417,8 +436,7 @@
     function getAliquots(lotAliquot, unique) {
       var request = $q.defer();
 
-      _remoteStorage
-        .whenReady()
+      _remoteStorage.whenReady()
         .then(function (remoteStorage) {
           return remoteStorage
             .getAliquots(lotAliquot, unique)
@@ -651,5 +669,6 @@
 
       return request.promise;
     }
+
   }
 }());

@@ -4,28 +4,39 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusViewSendingExam', {
-      controller: Controller,
+      controller: 'otusViewSendingExamCtrl as $ctrl',
       templateUrl: 'app/ux-component/exam/dashboard/exam-sending/sending-view/exam-sending-view-template.html'
-    });
+    })
+    .controller('otusViewSendingExamCtrl', Controller);
 
   Controller.$inject = [
     '$filter',
     '$mdToast',
-    '$mdDialog',
     'otusjs.deploy.FieldCenterRestService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.laboratory.core.project.ContextService',
     'otusjs.laboratory.business.project.sending.SendingExamService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($filter, $mdToast, $mdDialog, ProjectFieldCenterService, DashboardContextService, ProjectContextService, SendingExamService, ApplicationStateService, LoadingScreenService, DialogService) {
+  function Controller(
+    $filter,
+    $mdToast,
+    ProjectFieldCenterService,
+    DashboardContextService,
+    ProjectContextService,
+    SendingExamService,
+    ApplicationStateService,
+    LoadingScreenService,
+    DialogService,
+    LaboratoryViewerService) {
+
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
 
     var self = this;
-    var _confirmDeleteSelected;
     self.sendingList = [];
     self.listImmutable = [];
     self.selectedSendings = [];
@@ -42,6 +53,12 @@
     self.dynamicDataTableChange = dynamicDataTableChange;
 
     function onInit() {
+      self.laboratoryExists = false;
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init() {
+      self.laboratoryExists = true;
       ProjectFieldCenterService.loadCenters().then(function (result) {
         self.lotDataSet = [];
         self.colorSet = [];
@@ -52,7 +69,6 @@
         _setUserFieldCenter();
         _loadList();
       });
-      _buildDialogs();
     }
 
     function examSendingView() {
@@ -63,8 +79,7 @@
     }
 
     function _setUserFieldCenter() {
-      DashboardContextService
-        .getLoggedUser()
+      DashboardContextService.getLoggedUser()
         .then(function (userData) {
           self.userHaveCenter = !!userData.fieldCenter.acronym;
           self.centerFilter = self.userHaveCenter ? userData.fieldCenter.acronym : ProjectContextService.getFieldCenterInSendingExam() ? ProjectContextService.getFieldCenterInSendingExam() : "";
@@ -76,53 +91,31 @@
         });
     }
 
-    function _buildDialogs() {
-      _confirmDeleteSelected = {
-        dialogToTitle:'Exclusão',
-        titleToText:'Confirmação para exclusão de arquivos',
-        textDialog:'Atenção: Os arquivos selecionados serão excluídos.',
-        ariaLabel:'Confirmação de exclusão',
-        buttons: [
-        {
-          message:'Ok',
-          action:function(){$mdDialog.hide()},
-          class:'md-raised md-primary'
-        },
-        {
-          message:'Voltar',
-          action:function(){$mdDialog.cancel()},
-          class:'md-raised md-no-focus'
-        }
-      ]
-      };
-    }
-
     function deleteSending() {
-      DialogService.showDialog(_confirmDeleteSelected).then(function () {
-        LoadingScreenService.changeMessage(MESSAGE_LOADING);
-        LoadingScreenService.start();
-        _removeRecursive(self.selectedSendings, function () {
-          _loadList();
-          LoadingScreenService.finish();
+      DialogService.showConfirmationDialog(
+        'Confirmação para exclusão de arquivos',
+        'Atenção: Os arquivos selecionados serão excluídos.',
+        'Confirmação de exclusão')
+        .then(function () {
+          LoadingScreenService.changeMessage(MESSAGE_LOADING);
+          LoadingScreenService.start();
+          _removeRecursive(self.selectedSendings, function () {
+            _loadList();
+            LoadingScreenService.finish();
+          });
         });
-      });
     }
 
     function _removeRecursive(array, callback) {
       SendingExamService.deleteSendedExams(array[0].examSendingLot._id).then(function () {
-        if (array.length == 1) {
+        if (array.length === 1) {
           callback();
         } else {
           array.splice(0, 1);
           _removeRecursive(array, callback);
         }
       }).catch(function (e) {
-        var msg = "Não foi possível excluir o envio " + array[0]._id + ".";
-        $mdToast.show(
-          $mdToast.simple()
-            .textContent(msg)
-            .hideDelay(3000)
-        );
+        _showToast("Não foi possível excluir o envio " + array[0]._id + ".");
         callback();
       });
     }
@@ -167,24 +160,17 @@
 
     function _filterByPeriod(filteredByCenter) {
       var formattedData = $filter('date')(filteredByCenter.examSendingLot.realizationDate, 'yyyyMMdd');
-      if (self.realizationBeginFilter && self.realizationEndFilter) {
-        var initialDateFormatted = $filter('date')(self.realizationBeginFilter, 'yyyyMMdd');
-        var finalDateFormatted = $filter('date')(self.realizationEndFilter, 'yyyyMMdd');
-        if (initialDateFormatted <= finalDateFormatted) {
-          return (formattedData >= initialDateFormatted && formattedData <= finalDateFormatted);
-        } else {
-          var msgDataInvalida = "Filtro de datas com intervalo inválido";
-
-          $mdToast.show(
-            $mdToast.simple()
-              .textContent(msgDataInvalida)
-              .hideDelay(3000)
-          );
-          return filteredByCenter;
-        }
-      } else {
+      if (!self.realizationBeginFilter || !self.realizationEndFilter) {
         return filteredByCenter;
       }
+
+      var initialDateFormatted = $filter('date')(self.realizationBeginFilter, 'yyyyMMdd');
+      var finalDateFormatted = $filter('date')(self.realizationEndFilter, 'yyyyMMdd');
+      if (initialDateFormatted <= finalDateFormatted) {
+        return (formattedData >= initialDateFormatted && formattedData <= finalDateFormatted);
+      }
+      _showToast("Filtro de datas com intervalo inválido");
+      return filteredByCenter;
     }
 
     function _loadList() {
@@ -206,6 +192,14 @@
       if (self.centerFilter.length) {
         ProjectContextService.setFieldCenterInSendingExam(self.centerFilter);
       }
+    }
+
+    function _showToast(msg) {
+      $mdToast.show(
+        $mdToast.simple()
+          .textContent(msg)
+          .hideDelay(3000)
+      );
     }
 
   }
