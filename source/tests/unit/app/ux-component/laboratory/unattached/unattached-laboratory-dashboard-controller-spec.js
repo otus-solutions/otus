@@ -70,8 +70,5 @@ describe('unattachedLaboratoryDashboardCtrl_UnitTest_Suite', function () {
 
   function mock() {
     Mock.LaboratoryViewerService = Test.utils.data.LaboratoryViewerService;
-    Mock.LaboratoryLocalStorageServiceFind = {
-      type: 'laboratoryParticipantLabel'
-    }
   }
 });
