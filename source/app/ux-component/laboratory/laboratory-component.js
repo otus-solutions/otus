@@ -4,9 +4,10 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusLaboratory', {
-      controller: Controller,
+      controller: 'otusLaboratoryCtrl as $ctrl',
       templateUrl: 'app/ux-component/laboratory/laboratory-start.html'
-    });
+    })
+    .controller('otusLaboratoryCtrl', Controller);
 
   Controller.$inject = [
     '$q',
