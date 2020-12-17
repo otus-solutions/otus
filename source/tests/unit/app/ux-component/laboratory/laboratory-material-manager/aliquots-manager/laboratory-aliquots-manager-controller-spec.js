@@ -71,12 +71,7 @@ describe('laboratoryAliquotsManagerCtrl_UnitTest_Suite', () => {
 
     Mock.participant = angular.copy(Test.utils.data.selectedParticipant);
 
-    Mock.codeConfiguration = {
-      waveNumberToken: 1,
-      tubeToken: 'tubeToken',
-      cryotubeToken: 'cryotubeToken',
-      palletToken: 'palletToken'
-    };
+    Mock.codeConfiguration = angular.copy(Test.utils.data.codeConfiguration);
 
     Mock.aliquotLengths = [];
 
