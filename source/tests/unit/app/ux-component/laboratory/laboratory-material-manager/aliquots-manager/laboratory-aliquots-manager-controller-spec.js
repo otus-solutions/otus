@@ -1,4 +1,4 @@
-fdescribe('laboratoryAliquotsManagerCtrl_UnitTest_Suite', () => {
+describe('laboratoryAliquotsManagerCtrl_UnitTest_Suite', () => {
 
   let controller;
   let Injections = [];
