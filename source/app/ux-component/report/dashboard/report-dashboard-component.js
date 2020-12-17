@@ -6,7 +6,7 @@
     .component('otusReportDashboard', {
       controller: Controller,
       templateUrl: 'app/ux-component/report/dashboard/report-dashboard-template.html'
-    });
+    }).controller('ReportDashboardCtrl', Controller);
 
   Controller.$inject = [
     "otusjs.otus.dashboard.core.EventService",
