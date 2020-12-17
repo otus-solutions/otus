@@ -375,6 +375,16 @@ Test.utils.data.ExamWithDoesNotAppliesData = {
   observation: "",
   recruitmentNumber: 7000312
 };
+
+Test.utils.data.tubeCollectionData = {
+  "objectType": "TubeCollectionData",
+  "isCollected": true,
+  "metadata": "",
+  "operator": "lalala@gmail.com",
+  "time": "2017-06-06T15:15:28.958Z",
+  "customMetadata": ["59b68aee28f10d398e986595"]
+};
+
 Test.utils.data.tube = {
   "objectType": "Tube",
   "type": "EDTA",
@@ -394,6 +404,7 @@ Test.utils.data.tube = {
     ]
   }
 };
+
 Test.utils.data.aliquot = {
   "_id": "5ce2daad99e0c90065f4050a",
   "tubeCode": "351286198",
