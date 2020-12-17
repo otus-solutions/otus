@@ -7913,8 +7913,11 @@ Test.utils.data.activitySharingArtfacts = {
 };
 
 Test.utils.data.LaboratoryViewerService = {
-  checkExistAndRunOnInitOrBackHome: function (onInitFunction, finishLoadingScreen = (() => { })){
+  checkExistAndRunOnInitOrBackHome: function(onInitFunction, finishLoadingScreen){
     onInitFunction();
+    if(finishLoadingScreen){
+      finishLoadingScreen();
+    }
   }
 };
 
@@ -8147,4 +8150,11 @@ Test.utils.data.participantLaboratory = {
 
 Test.utils.data.locationPoint = {
   transportLocationPoints: []
+};
+
+Test.utils.data.codeConfiguration = {
+  waveNumberToken: 1,
+  tubeToken: 'tubeToken',
+  cryotubeToken: 'cryotubeToken',
+  palletToken: 'palletToken'
 };
