@@ -6,10 +6,6 @@
     .controller('materialLabelDashboardCtrl', Controller);
 
   Controller.$inject = [
-    '$mdToast',
-    '$scope',
-    '$element',
-    '$window',
     'otusjs.otus.uxComponent.Publisher',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.participant.business.ParticipantManagerService',
@@ -19,10 +15,6 @@
   ];
 
   function Controller(
-    $mdToast,
-    $scope,
-    $element,
-    $window,
     Publisher,
     ParticipantLaboratoryService,
     ParticipantManagerService,
