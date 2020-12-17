@@ -1,4 +1,4 @@
-describe('tusReportDashboardCtrl_UnitTest_Suite', function () {
+describe('otusReportDashboardCtrl_UnitTest_Suite', function () {
 
   let Mock = {};
   let Injections = [];
