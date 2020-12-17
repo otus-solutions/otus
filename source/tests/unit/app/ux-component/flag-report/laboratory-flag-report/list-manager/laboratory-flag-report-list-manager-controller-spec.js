@@ -1,4 +1,4 @@
-fdescribe('otusLaboratoryFlagReportListManagerCtrl_UnitTest_Suite', function () {
+describe('otusLaboratoryFlagReportListManagerCtrl_UnitTest_Suite', function () {
 
   var controller;
   var Injections = [];

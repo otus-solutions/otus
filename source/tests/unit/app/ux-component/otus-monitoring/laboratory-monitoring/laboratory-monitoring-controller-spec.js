@@ -1,4 +1,4 @@
-fdescribe('otusParticipantHeatmap test', function () {
+describe('otusParticipantHeatmap test', function () {
   const CENTER_RS = 'RS';
   const CENTER_RJ = 'RJ';
   const PENDING = 'pending';
