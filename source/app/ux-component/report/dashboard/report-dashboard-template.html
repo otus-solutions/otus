@@ -1,5 +1,17 @@
+<style>
+  .no-lab-config {
+    color: #777777;
+    text-align: center;
+    min-width: 300px;
+  }
+</style>
+
 <otus-panel header-label="'Resultados'" layout-align="'center center'" flex>
-  <div layout-wrap layout-align="center center" layout="row"  ng-if="$ctrl.ready" class="report-list" >
+  <div ng-if="!$ctrl.laboratoryChecking" layout layout-align="center center">
+    <span class="no-lab-config">Não há laboratório configurado</span>
+  </div>
+
+  <div layout-wrap layout-align="center center" layout="row" ng-if="$ctrl.laboratoryChecking && $ctrl.ready" class="report-list" >
     <md-card ng-repeat="report in $ctrl.reports" class="report-item md-whiteframe-3dp" ng-if="$ctrl.ready" flex-xs="100" flex-sm="45" flex="30">
       <md-card-header class="md-toolbar-tools">
         <md-icon ng-style="{color:report.status.color}">{{report.status.icon}}</md-icon>
@@ -74,7 +86,7 @@
     <span class="">Não há relatórios disponíveis</span>
   </div>
 
-  <div layout-align="center center" layout="row" ng-if="!$ctrl.ready">
+  <div layout-align="center center" layout="row" ng-if="$ctrl.laboratoryChecking && !$ctrl.ready">
     <md-progress-circular class="md-hue-2" md-diameter="20px"></md-progress-circular>
     <span class="md-caption">&nbsp;&nbsp;Carregando Relatórios</span>
   </div>

@@ -15,7 +15,6 @@
   function Controller(UserAccessPermissionService, ParticipantLaboratoryService, EventService, DashboardService) {
     var self = this;
 
-
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -25,13 +24,11 @@
       self.userAccessToLaboratory = undefined;
       _loadParticipant();
       _getCheckingExist();
-      _checkingLaboratoryPermission();
       EventService.onParticipantSelected(_setParticipant);
     }
 
     function _loadParticipant() {
-      return DashboardService
-        .getSelectedParticipant()
+      return DashboardService.getSelectedParticipant()
         .then(function (participantData) {
           _setParticipant(participantData)
         });
@@ -45,6 +42,9 @@
       ParticipantLaboratoryService.getCheckingExist()
         .then(response => {
           self.laboratoryChecking = response;
+          if(self.laboratoryChecking){
+            _checkingLaboratoryPermission();
+          }
         });
     }
 

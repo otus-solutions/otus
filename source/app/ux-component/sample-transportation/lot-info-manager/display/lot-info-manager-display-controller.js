@@ -6,7 +6,6 @@
     .controller('otusLotInfoManagerDisplayCtrl', Controller);
 
   Controller.$inject = [
-    '$mdDialog',
     '$filter',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationMessagesService',
@@ -20,7 +19,6 @@
   ];
 
   function Controller(
-    $mdDialog,
     $filter,
     MaterialTransportationService,
     MaterialTransportationMessagesService,
@@ -52,7 +50,6 @@
     self.dynamicDataTableChange = dynamicDataTableChange;
     self.removeElement = removeElement;
 
-    var _confirmAliquotsInsertionByPeriod, _confirmAlterOriginLocation;
 
     $scope.$watch('$ctrl.lot.originLocationPoint', function (newValue, oldValue) {
       if (oldValue && newValue != oldValue) {
@@ -93,7 +90,6 @@
       self.aliquotCode = "";
       self.initialDate = new Date();
       self.finalDate = new Date();
-      _buildDialogs();
       _buildDynamicTableSettings();
     }
 
@@ -200,74 +196,28 @@
 
     function clearLot(oldValue) {
       if (self.lot.originLocationPoint != self.selectedOriginLocationPoint) {
-
-        DialogService.showDialog(_confirmAlterOriginLocation).then(function () {
-          LoadingScreenService.changeMessage(messageLoading);
-          LoadingScreenService.start();
-          self.selectedOriginLocationPoint = angular.copy(self.lot.originLocationPoint);
-          for (var i = 0; i < self.lot.aliquotList.length; i++) {
-            self.lot.removeAliquotByIndex(i);
-          }
-          for (var i = 0; i < self.lot.tubeList.length; i++) {
-            self.lot.removeTubeByIndex(i);
-          }
-          _updateDynamicTable();
-          LoadingScreenService.finish();
-
-        }).catch(function () {
+        DialogService.showConfirmationDialog(
+          'Confirmar alteração de origem do material:',
+          'Ao confirmar essa ação, todo o material existente será removido do lote.',
+          'Confirmar alteração de origem')
+          .then(function () {
+            LoadingScreenService.changeMessage(messageLoading);
+            LoadingScreenService.start();
+            self.selectedOriginLocationPoint = angular.copy(self.lot.originLocationPoint);
+            for (var i = 0; i < self.lot.aliquotList.length; i++) {
+              self.lot.removeAliquotByIndex(i);
+            }
+            for (var i = 0; i < self.lot.tubeList.length; i++) {
+              self.lot.removeTubeByIndex(i);
+            }
+            _updateDynamicTable();
+            LoadingScreenService.finish();
+          })
+          .catch(function () {
           self.lot.originLocationPoint = oldValue;
           self.selectedOriginLocationPoint = oldValue;
         });
       }
-
-    }
-
-    function _buildDialogs() {
-      _confirmAliquotsInsertionByPeriod = {
-        dialogToTitle: 'Inclusão',
-        titleToText: 'Confirmar inclusão de Alíquotas:',
-        textDialog: 'Serão incluídas no lote as Alíquotas realizadas no perído selecionado.',
-        ariaLabel: 'Confirmar inclusão de Alíquotas por Período',
-        buttons: [
-          {
-            message: 'Confirmar',
-            action: function () {
-              $mdDialog.hide()
-            },
-            class: 'md-raised md-primary'
-          },
-          {
-            message: 'Cancelar',
-            action: function () {
-              $mdDialog.cancel()
-            },
-            class: 'md-raised md-no-focus'
-          }
-        ]
-      };
-
-      _confirmAlterOriginLocation = {
-        dialogToTitle: 'ATENÇÃO',
-        titleToText: 'Confirmar alteração de origem do material:',
-        textDialog: 'Ao confirmar essa ação, todo o material existente será removido do lote.',
-        ariaLabel: 'Confirmar alteração de origem',
-        buttons: [
-          {
-            message: 'Confirmar',
-            action: function () {
-              $mdDialog.hide()
-            },
-            class: 'md-raised md-primary'
-          },
-          {
-            message: 'Cancelar',
-            action: function () {
-              $mdDialog.cancel()
-            },
-            class: 'md-raised md-no-focus'
-          }
-        ]
-      };
     }
 
     function _dynamicDataTableUpdate(newArrayElements) {
@@ -311,24 +261,29 @@
         self.finalDate = new Date(self.finalDate.toISOString());
 
         if (self.initialDate <= self.finalDate) {
-          _confirmAliquotsInsertionByPeriod.textDialog = 'Serão incluídas no lote as Alíquotas disponíveis realizadas no período' +
+          const textDialog = 'Serão incluídas no lote as Alíquotas disponíveis realizadas no período' +
             ' entre ' + $filter('date')(self.initialDate, 'dd/MM/yyyy') + ' a ' + $filter('date')(self.finalDate, 'dd/MM/yyyy') + '.';
 
-          DialogService.showDialog(_confirmAliquotsInsertionByPeriod).then(function () {
-            LoadingScreenService.changeMessage(messageLoading);
-            LoadingScreenService.start();
-            _findAliquotByPeriod()
-              .then(function (response) {
-                if (response) {
-                  _updateDynamicTable();
-                  successInsertion = true;
-                }
-                LoadingScreenService.finish();
-              }).catch(function () {
-              LoadingScreenService.finish();
-            });
-          }).catch(function () {
-          });
+          DialogService.showConfirmationDialog(
+            'Confirmar inclusão de Alíquotas:',
+            textDialog,
+            'Confirmar inclusão de Alíquotas por Período')
+            .then(function () {
+              LoadingScreenService.changeMessage(messageLoading);
+              LoadingScreenService.start();
+              _findAliquotByPeriod()
+                .then(function (response) {
+                  if (response) {
+                    _updateDynamicTable();
+                    successInsertion = true;
+                  }
+                  LoadingScreenService.finish();
+                })
+                .catch(function () {
+                  LoadingScreenService.finish();
+                });
+            })
+            .catch(function () {});
         } else {
           MaterialTransportationMessagesService.invalidPeriodInterval();
         }
