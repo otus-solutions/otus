@@ -12,25 +12,24 @@
     }).controller('otusActivityAdderCtrl', Controller);
 
   Controller.$inject = [
-    'otusjs.activity.business.ParticipantActivityService',
-    'otusjs.application.state.ApplicationStateService',
-    'otusjs.activity.business.GroupActivityService',
-    '$mdDialog',
-    'otusjs.application.dialog.DialogShowService',
-    'otusjs.deploy.LoadingScreenService',
+    'ACTIVITY_MANAGER_LABELS',
     '$q',
     '$timeout',
     '$element',
-    'ACTIVITY_MANAGER_LABELS'
+    'otusjs.activity.business.ParticipantActivityService',
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.activity.business.GroupActivityService',
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.stage.business.StageService'
   ];
 
-  function Controller(ParticipantActivityService, ApplicationStateService, GroupActivityService, $mdDialog, DialogService, LoadingScreenService, $q, $timeout, $element, ACTIVITY_MANAGER_LABELS) {
-    const option = "Todos";
+  function Controller(ACTIVITY_MANAGER_LABELS, $q, $timeout, $element,
+                      ParticipantActivityService, ApplicationStateService, GroupActivityService, DialogService, LoadingScreenService, StageService) {
+    const ALL_OPTION = "Todos";
+    const STAGE_NULL = "Nenhuma Etapa";
 
     let self = this;
-    let confirmCancelPreActivities;
-    let confirmSavePreActivities;
-    let invalidPreActivities;
 
     self.surveys = [];
     self.activities = [];
@@ -38,7 +37,7 @@
     self.statePreview = false;
     self.processing = true;
     self.mode = ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name;
-    self.selectType = "activityList";
+    self.selectSingleActivity = false;
     self.iconMode = "";
     self.optionModes = [];
     self.configuration = {};
@@ -46,13 +45,16 @@
     self.preActivities = [];
     self.selectionOptions = [];
     self.btnAddPreActivitiesDisable = true;
+    self.stage = {};
+    self.optionStages = [];
+    self.hasStage = true;
 
     /* Public methods */
+    self.$onInit = onInit;
     self.addPreActivities = addPreActivities;
     self.saveActivities = saveActivities;
     self.surveyQuerySearch = surveyQuerySearch;
     self.resetPreActivities = resetPreActivities;
-    self.selectAction = selectAction;
     self.clearSearchTerm = clearSearchTerm;
     self.addPreActivitiesGroup = addPreActivitiesGroup;
     self.disabledGroups = disabledGroups;
@@ -61,121 +63,17 @@
     self.monitoringSearchTextChange = monitoringSearchTextChange;
     self.selectedItemChange = selectedItemChange;
 
-    self.$onInit = onInit;
 
     function onInit() {
       LoadingScreenService.start();
-      _buildDialogs();
       _loadCategories();
       _loadOptionModes();
       _loadSurveys();
       _loadSurveysGroup();
+      _loadStages();
       $element.find('#search').on('keydown', function (ev) {
         ev.stopPropagation();
       });
-    }
-
-    function clearSearchTerm() {
-      self.searchTerm = '';
-    }
-
-    function selectAction() {
-      return (self.selectType !== 'activityUnit');
-    }
-
-    function _loadSurveysGroup() {
-      self.selectedGroups = [];
-      self.selectedGroupsResult = [];
-      self.groupList = [];
-      self.selectionOptions = [];
-      GroupActivityService.getSurveyGroupsByUser().then(function (data) {
-        self.surveysGroups = data;
-        self.groupList = self.surveysGroups.getGroupNames();
-
-        if (self.groupList.length > 0) {
-          self.selectionOptions.push(option);
-        }
-
-        self.selectionOptions = self.selectionOptions.concat(self.groupList);
-      });
-    }
-
-    function displayGridLarge() {
-      if (window.innerWidth < 1400) {
-        return '1:1.5';
-      }
-      return '1:1.05';
-    }
-
-    function displayGridSmall() {
-      if (window.innerWidth < 680) {
-        return '1:1.7';
-      }
-      return '3:4';
-    }
-
-    function _surveysFilter() {
-      self.selectedSurveys = [];
-      self.selectedGroupsResult.forEach(groupName => {
-        self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.getGroupSurveys(groupName));
-      });
-      self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
-        return self.selectedSurveys.indexOf(item) == position;
-      });
-    }
-
-    function _groupsFilter() {
-      _surveysFilter();
-      _activitiesFilter();
-    }
-
-    function _activitiesFilter() {
-      self.activities = self.surveys.filter(function (activity) {
-        return self.selectedSurveys.includes(activity.acronym)
-      });
-    }
-
-    function disabledGroups(index) {
-      let disabledResult;
-      if (!self.selectedGroups.length) {
-        disabledResult = false;
-      } else if (self.selectedGroups.includes(option) && index > 0) {
-        disabledResult = true
-      } else {
-        disabledResult = (!self.selectedGroups.includes(option) && index === 0 && !self.searchTerm);
-      }
-      return disabledResult;
-    }
-
-    function addPreActivitiesGroup(item) {
-      self.activities = [];
-      self.selectedGroups = [];
-      self.selectedGroupsResult = [];
-      self.selectedGroupsResult = item.includes(option) ? self.groupList.slice(0) : item;
-      self.processing = false;
-
-      _groupsFilter();
-
-      $timeout(() => {
-        self.processing = true;
-      }, 2000);
-
-      self.activities.forEach(activity => {
-        addPreActivities(activity);
-      });
-    }
-
-    function addPreActivities(survey) {
-      let preActivity = ParticipantActivityService.createPreActivity(
-        survey,
-        angular.copy(self.configuration),
-        angular.copy(self.mode),
-        angular.copy(self.paperActivityCheckerData));
-
-      self.preActivities.unshift(preActivity);
-      self.searchText = '';
-      self.btnAddPreActivitiesDisable = true;
-
     }
 
     function _loadOptionModes() {
@@ -211,20 +109,127 @@
         }).then(LoadingScreenService.finish());
     }
 
+    function _loadSurveysGroup() {
+      self.selectedGroups = [];
+      self.selectedGroupsResult = [];
+      self.groupList = [];
+      self.selectionOptions = [];
+      GroupActivityService.getSurveyGroupsByUser().then(function (data) {
+        self.surveysGroups = data;
+        self.groupList = self.surveysGroups.getGroupNames();
+
+        if (self.groupList.length > 0) {
+          self.selectionOptions.push(ALL_OPTION);
+        }
+
+        self.selectionOptions = self.selectionOptions.concat(self.groupList);
+      });
+    }
+
+    function _loadStages(){
+      self.hasStage = true;
+      StageService.getAllStages()
+        .then(stages => {
+          if(!stages || stages.length === 0){
+            self.hasStage = false;
+          }
+          self.optionStages.push({ name: STAGE_NULL });
+          self.optionStages = self.optionStages.concat(stages);
+        })
+        .catch(err => {
+          console.error(err);
+          self.hasStage = false;
+        });
+    }
+
+    function clearSearchTerm() {
+      self.searchTerm = '';
+    }
+
+    function displayGridLarge() {
+      if (window.innerWidth < 1400) {
+        return '1:1.5';
+      }
+      return '1:1.05';
+    }
+
+    function displayGridSmall() {
+      if (window.innerWidth < 680) {
+        return '1:1.7';
+      }
+      return '3:4';
+    }
+
+    function disabledGroups(index) {
+      let disabledResult;
+      if (!self.selectedGroups.length) {
+        disabledResult = false;
+      } else if (self.selectedGroups.includes(ALL_OPTION) && index > 0) {
+        disabledResult = true
+      } else {
+        disabledResult = (!self.selectedGroups.includes(ALL_OPTION) && index === 0 && !self.searchTerm);
+      }
+      return disabledResult;
+    }
+
+    function addPreActivitiesGroup(item) {
+      self.activities = [];
+      self.selectedGroups = [];
+      self.selectedGroupsResult = [];
+      self.selectedGroupsResult = item.includes(ALL_OPTION) ? self.groupList.slice(0) : item;
+      self.processing = false;
+
+      _filterActivities();
+
+      $timeout(() => {
+        self.processing = true;
+      }, 2000);
+
+      self.activities.forEach(activity => {
+        addPreActivities(activity);
+      });
+    }
+
+    function addPreActivities(survey) {
+      let preActivity = ParticipantActivityService.createPreActivity(
+        survey,
+        angular.copy(self.configuration),
+        angular.copy(self.mode),
+        angular.copy(self.paperActivityCheckerData),
+        angular.copy(self.stage)
+      );
+
+      self.preActivities.unshift(preActivity);
+      self.searchText = '';
+      self.btnAddPreActivitiesDisable = true;
+    }
+
     function surveyQuerySearch(query) {
-      var results = [];
-      var deferred = $q.defer();
-
       self.selectedGroupsResult = self.selectedGroupsResult.concat(self.groupList);
-      _groupsFilter();
+      _filterActivities();
 
-      results = query ? self.activities.filter(_activityCreateFilterFor(query)) : self.activities;
+      let results = query ? self.activities.filter(_activityCreateFilterFor(query)) : self.activities;
+      let deferred = $q.defer();
 
       $timeout(() => {
         deferred.resolve(results);
       }, Math.random() * 1000, false);
 
       return deferred.promise;
+    }
+
+    function _filterActivities() {
+      self.selectedSurveys = [];
+      self.selectedGroupsResult.forEach(groupName => {
+        self.selectedSurveys = self.selectedSurveys.concat(self.surveysGroups.getGroupSurveys(groupName));
+      });
+      self.selectedSurveys = self.selectedSurveys.filter(function (item, position) {
+        return self.stage.surveyAcronyms ? self.stage.surveyAcronyms.includes(item) : true && self.selectedSurveys.indexOf(item) === position;
+      });
+
+      self.activities = self.surveys.filter(function (activity) {
+        return self.selectedSurveys.includes(activity.acronym)
+      });
     }
 
     function _activityCreateFilterFor(query) {
@@ -236,18 +241,29 @@
     }
 
     function resetPreActivities() {
-      DialogService.showDialog(confirmCancelPreActivities)
+      DialogService.showConfirmationDialog(
+        'Cancelamento da Lista de Formulários',
+        'Deseja sair do Gerenciador de Atividades ?',
+        'Confirmação de cancelamento')
         .then(() => self.preActivities = [])
         .then(() => ApplicationStateService.activateParticipantActivities());
     }
 
     function saveActivities() {
       if (allActivitiesAreValid()) {
-        DialogService.showDialog(confirmSavePreActivities)
+        DialogService.showConfirmationDialog(
+          'Salvar Lista de Formulários',
+          'Deseja adicionar os itens ao participante?',
+          'Confirmação de exclusão')
           .then(() => ParticipantActivityService.saveActivities(self.preActivities))
           .then(() => ApplicationStateService.activateActivityAdder())
       } else {
-        DialogService.showDialog(invalidPreActivities);
+        DialogService.showWarningDialog(
+          'Pendência de Informações',
+          'Detecção de Formulários Incompletos',
+          'Retorne para lista e preencha os campos obrigatórios',
+          'Aviso de formulários inválidos'
+        );
       }
     }
 
@@ -256,7 +272,9 @@
     }
 
     function _checkFilledInput(preActivity) {
-      return preActivity.preActivityValid = preActivity.preActivityValid || preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name || (preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name && !preActivity.surveyForm.isRequiredExternalID());
+      return preActivity.preActivityValid = preActivity.preActivityValid ||
+        preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.AUTOFILL.name ||
+        (preActivity.mode === ACTIVITY_MANAGER_LABELS.ACTIVITY_ATTRIBUTES.MODE.ONLINE.name && !preActivity.surveyForm.isRequiredExternalID());
     }
 
     function monitoringSearchTextChange(state) {
@@ -264,59 +282,10 @@
     }
 
     function selectedItemChange(item) {
-      if (item) self.btnAddPreActivitiesDisable = false;
-    }
-
-    function _buildDialogs() {
-      confirmCancelPreActivities = {
-        dialogToTitle: 'Confirmação',
-        titleToText: 'Cancelamento da Lista de Formulários',
-        textDialog: 'Deseja sair do Gerenciador de Atividades ?',
-        ariaLabel: 'Confirmação de cancelamento',
-        buttons: _prepareButtons()
-      };
-
-      confirmSavePreActivities = {
-        dialogToTitle: 'Confirmação',
-        titleToText: 'Salvar Lista de Formulários',
-        textDialog: 'Deseja adicionar os itens ao participante?',
-        ariaLabel: 'Confirmação de exclusão',
-        buttons: _prepareButtons()
-      };
-
-      invalidPreActivities = {
-        dialogToTitle: 'Pendência de Informações',
-        titleToText: 'Detecção de Formulários Incompletos',
-        textDialog: 'Retorne para lista e preencha os campos obrigatórios',
-        ariaLabel: 'Aviso de formulários inválidos',
-        buttons: [{
-          message: 'Voltar',
-          action: function () {
-            $mdDialog.cancel()
-          },
-          class: 'md-raised md-no-focus'
-        }]
-      };
-
-
-      function _prepareButtons() {
-        return [
-          {
-            message: 'Ok',
-            action: function () {
-              $mdDialog.hide()
-            },
-            class: 'md-raised md-primary'
-          },
-          {
-            message: 'Voltar',
-            action: function () {
-              $mdDialog.cancel()
-            },
-            class: 'md-raised md-no-focus'
-          }
-        ]
+      if (item) {
+        self.btnAddPreActivitiesDisable = false;
       }
     }
+
   }
 }());

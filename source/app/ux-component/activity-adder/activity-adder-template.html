@@ -10,6 +10,18 @@
         <div layout-fill layout="row" layout-xs="column" layout-sm="row" layout-align="space-between center" flex
           flex-md="60">
           <div layout="row" layout-align-xs="space-between center" layout-align="space-around center" layout-fill flex="50" flex-xs="80">
+<!--            stage -->
+            <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30"
+                                layout-align="space-between start" ng-if="$ctrl.hasStage">
+              <md-select id="stageSelector" aria-label="Etapa" ng-model="$ctrl.stage" placeholder="Etapa">
+                <md-option ng-repeat="stage in $ctrl.optionStages track by $index" ng-value="stage">
+                  {{stage.name | uppercase}}
+                </md-option>
+              </md-select>
+              <md-tooltip md-direction="top">Etapa</md-tooltip>
+            </md-input-container>
+
+<!--            mode-->
             <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30"
               layout-align="space-between start">
               <md-select aria-label="Atividades" ng-model="$ctrl.mode">
@@ -19,14 +31,15 @@
               </md-select>
               <md-tooltip md-direction="top">Tipo de Atividades</md-tooltip>
             </md-input-container>
-            <div layout="row" layout-align="space-between start" layout-margin
-              md-swipe-right="onSwipeRight($event, $target)">
+          </div>
+          <div layout-fill layout="row" layout-align-gt-sm="space-between center" layout-align-xs="center center" layout-align-sm="center center" flex="50" flex-xs="80">
+            <!--            type-->
+            <div layout="row" layout-align="space-between start" layout-margin md-swipe-right="onSwipeRight($event, $target)">
               <div>
                 <md-icon md-font-set="material-icons">bookmarks</md-icon>
                 <md-tooltip md-direction="bottom">Lista</md-tooltip>
               </div>
-              <md-switch aria-label="ActivitySelection" class="md-primary" ng-false-value="'activityList'"
-                ng-model="$ctrl.selectType" ng-true-value="'activityUnit'">
+              <md-switch class="md-primary" ng-model="$ctrl.selectSingleActivity" aria-label="ActivitySelection">
               </md-switch>
               <md-tooltip md-direction="top">Tipo de Inclusão</md-tooltip>
               <div>
@@ -34,8 +47,7 @@
                 <md-tooltip md-direction="bottom">Unitário</md-tooltip>
               </div>
             </div>
-          </div>
-          <div layout-fill layout="row" layout-align="space-between center" flex="50" flex-xs="80">
+<!--            category-->
             <md-input-container flex="20" flex-xs="40" flex-sm="40" flex-md="50" flex-lg="30"
               layout-align="space-between start">
               <md-select aria-label="Categoria" ng-model="$ctrl.configuration.category">
@@ -45,6 +57,7 @@
               </md-select>
               <md-tooltip md-direction="top">Categoria</md-tooltip>
             </md-input-container>
+<!--            buttons-->
             <div layout="row" layout-align="space-between center">
               <md-button class="md-icon-button md-primary button-hover" ng-click="$ctrl.resetPreActivities()">
                 <md-icon md-font-set="material-icons">clear</md-icon>
@@ -62,14 +75,18 @@
     </div>
     <div layout="row" layout-align="end center" layout-padding>
 
-      <div flex layout="row" layout-align="center center" ng-show="!$ctrl.selectAction()">
+      <div flex layout="row" layout-align="center center" ng-show="$ctrl.selectSingleActivity">
         <span flex="40" flex-xs="100">
           <md-tooltip md-direction="bottom">Lista de Formulários</md-tooltip>
-          <md-autocomplete id="autocomplete_selectSurvey" md-item-text="item.name"
-            md-items="item in $ctrl.surveyQuerySearch($ctrl.searchText)" md-menu-class="autocomplete-custom-template"
-            md-min-length="0" md-no-cache="true" md-search-text="$ctrl.searchText"
-            md-search-text-change="ctrl.monitoringSearchTextChange(false)" md-selected-item="$ctrl.selectedItem"
-            md-selected-item-change="$ctrl.selectedItemChange(item)" placeholder="Selecione">
+          <md-autocomplete id="autocomplete_selectSurvey"
+                           md-item-text="item.name"
+                           md-items="item in $ctrl.surveyQuerySearch($ctrl.searchText)"
+                           md-menu-class="autocomplete-custom-template"
+                           md-min-length="0" md-no-cache="true" md-search-text="$ctrl.searchText"
+                           md-search-text-change="ctrl.monitoringSearchTextChange(false)"
+                           md-selected-item="$ctrl.selectedItem"
+                           md-selected-item-change="$ctrl.selectedItemChange(item)"
+                           placeholder="Selecione">
             <md-item-template>
               <span class="item-title" md-highlight-flags="^i"
                 md-highlight-text="$ctrl.searchText">{{item.acronym}}</span>
@@ -84,7 +101,7 @@
           <md-tooltip md-direction="top">Adicionar</md-tooltip>
         </md-button>
       </div>
-      <div flex layout="row" layout-align="center center" ng-show="$ctrl.selectAction()">
+      <div flex layout="row" layout-align="center center" ng-show="!$ctrl.selectSingleActivity">
         <md-input-container md-whiteframe="1" flex="40" flex-xs="100" style="background: white">
           <label>Blocos</label>
           <md-select ng-model="$ctrl.selectedGroups" md-on-close="$ctrl.clearSearchTerm()"

@@ -207,6 +207,7 @@
 <script src="app/deploy/bootstrap/monitoring-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/pendency-module-bootstrap.js"></script>
 <script src="app/deploy/bootstrap/project-communication-module-bootstrap.js"></script>
+<script src="app/deploy/bootstrap/stage-module-bootstrap.js"></script>
 
 <!-- # Deploy > Data Source -->
 <script src="app/deploy/data-source/data-source-loader-service.js"></script>
@@ -263,6 +264,7 @@
 <script src="app/deploy/rest/otus-api/transport-location-point/location-point-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/contact/participant-contact-rest-service.js"></script>
 <script src="app/deploy/rest/otus-api/project-communication/project-communication-rest-service.js"></script>
+<script src="app/deploy/rest/otus-api/stage/stage-rest-service.js"></script>
 
 <!-- # Deploy > State -->
 <script src="app/deploy/state/state-configuration.js"></script>
@@ -585,20 +587,39 @@
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/projectContact-module.min.js -->
-<!-- # Module > Pendency -->
+<!-- # Module > ProjectCommunication -->
 <script src="app/module/project-communication/module.js"></script>
 
-<!-- # Pendency > Business -->
+<!-- # ProjectCommunication > Business -->
 <script src="app/module/project-communication/business/module.js"></script>
 <script src="app/module/project-communication/business/project-communication-service.js"></script>
-<!-- # Pendency > Core -->
+<!-- # ProjectCommunication > Core -->
 <script src="app/module/project-communication/core/module.js"></script>
 <script src="app/module/project-communication/core/module-service.js"></script>
 <script src="app/module/project-communication/core/context-service.js"></script>
-<!-- # Pendency > Repository -->
+<!-- # ProjectCommunication > Repository -->
 <script src="app/module/project-communication/repository/module.js"></script>
 <script src="app/module/project-communication/repository/project-communication/project-communication-repository-service.js"></script>
 <script src="app/module/project-communication/repository/project-communication/project-communication-collection-service.js"></script>
+<!-- endbuild -->
+
+<!-- build:js scripts/stage-module.min.js -->
+<!-- # Module > Stage -->
+<script src="app/module/stage/module.js"></script>
+
+<!-- # Stage > Business -->
+<script src="app/module/stage/business/module.js"></script>
+<script src="app/module/stage/business/stage-service.js"></script>
+<!-- # Stage > Core -->
+<script src="app/module/stage/core/module.js"></script>
+<script src="app/module/stage/core/context-service.js"></script>
+<script src="app/module/stage/core/module-service.js"></script>
+<!-- # Stage > Repository -->
+<script src="app/module/stage/repository/module.js"></script>
+<script src="app/module/stage/repository/stage/stage-collection-service.js"></script>
+<script src="app/module/stage/repository/stage/stage-repository-service.js"></script>
+<!-- # Pendency > Storage -->
+<script src="app/module/stage/storage/module.js"></script>
 <!-- endbuild -->
 <!------------------------------------------------------------------------------------------------>
 <!-- build:js scripts/ux-component-module.min.js -->

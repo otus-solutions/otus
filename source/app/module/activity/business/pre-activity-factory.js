@@ -9,13 +9,13 @@
     let self = this;
     self.create = create;
 
-    function create(survey, configuration, mode, user, externalID) {
-      return new preActivity(survey, configuration, mode, user, externalID);
+    function create(user, survey, configuration, mode, externalID, stage) {
+      return new PreActivity(user, survey, configuration, mode, externalID, stage);
     }
     return self;
   }
 
-  function preActivity(survey, configuration, mode, user, externalID) {
+  function PreActivity(user, survey, configuration, mode, externalID, stage) {
     let self = this;
     self.objectType = 'preActivity';
     self.surveyForm = survey;
@@ -25,15 +25,19 @@
     self.paperActivityData = undefined;
     self.externalID = externalID || null;
     self.preActivityValid = false;
+    self.stage = stage; // object {_id, name, surveyAcronyms}
 
     /* Public methods */
     self.updatePaperActivityData = updatePaperActivityData;
     self.updatePreActivityValid = updatePreActivityValid;
+    self.getStageId = getStageId;
     self.toJSON = toJSON;
 
 
     function updatePaperActivityData(checkerData, realizationDate) {
-      if (!checkerData) self.preActivityValid = false;
+      if (!checkerData) {
+        self.preActivityValid = false;
+      }
       else {
         self.paperActivityData = {};
         self.paperActivityData.checker = checkerData.checker;
@@ -42,9 +46,16 @@
     }
 
     function updatePreActivityValid(stateChecker, stateIdExternal) {
-      if (self.surveyForm.isRequiredExternalID()) self.preActivityValid = stateChecker && stateIdExternal;
-      if (stateChecker && stateIdExternal) self.preActivityValid = stateChecker;
-      if (stateChecker === null && stateIdExternal) self.preActivityValid = stateIdExternal;
+      if (self.surveyForm.isRequiredExternalID()) {
+        self.preActivityValid = stateChecker && stateIdExternal;
+      }
+      if(stateIdExternal){
+        self.preActivityValid = (stateChecker ? stateChecker : stateIdExternal);
+      }
+    }
+
+    function getStageId(){
+      return self.stage ? self.stage._id : null;
     }
 
     function toJSON() {
@@ -56,7 +67,8 @@
         user: self.user,
         paperActivityData: self.paperActivityData,
         externalID: self.externalID,
-        preActivityValid: self.preActivityValid
+        preActivityValid: self.preActivityValid,
+        stage: self.stage
       };
     }
   }

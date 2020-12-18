@@ -1,15 +1,11 @@
-describe('otusActivityAdder Test', function () {
-  const ACRONYM = 'PASC';
-  const ITEM = ['Todos'];
+describe('otusActivityAdder_UnitTest_Suite', function () {
 
-  var UNIT_NAME = 'otusActivityAdderCtrl';
   var Injections = {};
   var controller = {};
   var Mock = {};
 
-
   beforeEach(function () {
-    mocks();
+    _mockInitialize();
 
     angular.mock.module('otusjs.otus');
 
@@ -21,27 +17,25 @@ describe('otusActivityAdder Test', function () {
       Injections.ParticipantActivityService = $injector.get('otusjs.activity.business.ParticipantActivityService');
       Injections.ApplicationStateService = $injector.get('otusjs.application.state.ApplicationStateService');
       Injections.GroupActivityService = $injector.get('otusjs.activity.business.GroupActivityService');
-      Injections.$mdDialog = $injector.get('$mdDialog');
       Injections.DialogShowService = $injector.get('otusjs.application.dialog.DialogShowService');
       Injections.LoadingScreenService = $injector.get('otusjs.deploy.LoadingScreenService');
       Injections.$q = $injector.get('$q');
       Injections.$timeout = $injector.get('$timeout');
       Injections.$element = Mock.element;
 
-      controller = $controller(UNIT_NAME, Injections);
+      controller = $controller('otusActivityAdderCtrl', Injections);
 
       Mock.deferred = Injections.$q.defer();
-
     });
   });
 
   it('should controller defined', function () {
     expect(controller).toBeDefined();
+    expect(controller.$onInit).toBeDefined();
     expect(controller.addPreActivities).toBeDefined();
     expect(controller.saveActivities).toBeDefined();
     expect(controller.surveyQuerySearch).toBeDefined();
     expect(controller.resetPreActivities).toBeDefined();
-    expect(controller.selectAction).toBeDefined();
     expect(controller.clearSearchTerm).toBeDefined();
     expect(controller.addPreActivitiesGroup).toBeDefined();
     expect(controller.disabledGroups).toBeDefined();
@@ -49,64 +43,66 @@ describe('otusActivityAdder Test', function () {
     expect(controller.displayGridSmall).toBeDefined();
     expect(controller.monitoringSearchTextChange).toBeDefined();
     expect(controller.selectedItemChange).toBeDefined();
-    expect(controller.$onInit).toBeDefined();
   });
 
-  it('should call addPreActivities method', function () {
+  it('addPreActivities_method_should_call_ParticipantActivityService_addPreActivities_method', function () {
     spyOn(Injections.ParticipantActivityService, "createPreActivity").and.returnValue(Mock.preActivity);
-
     controller.addPreActivities(Mock.survey);
-
     expect(Injections.ParticipantActivityService.createPreActivity).toHaveBeenCalledTimes(1);
     expect(controller.preActivities).toEqual([Mock.preActivity]);
     expect(controller.searchText).toEqual('');
     expect(controller.btnAddPreActivitiesDisable).toBeTruthy();
   });
 
-  it('should call saveActivities method', function (done) {
-    spyOn(Injections.DialogShowService, "showDialog").and.returnValue(Promise.resolve());
+  it('saveActivities_method_should_call_ParticipantActivityService_saveActivities_method', function (done) {
+    spyOn(Injections.DialogShowService, "showConfirmationDialog").and.returnValue(Promise.resolve());
     spyOn(Injections.ParticipantActivityService, "saveActivities").and.callThrough();
+
     controller.preActivities.push(Mock.preActivity);
     controller.saveActivities();
 
     expect(controller.preActivities[0].preActivityValid).toBeTruthy();
-    Injections.DialogShowService.showDialog().then(function () {
+    Injections.DialogShowService.showConfirmationDialog().then(function () {
       expect(Injections.ParticipantActivityService.saveActivities).toHaveBeenCalledTimes(1);
       done();
     });
     done();
   });
 
-  it('should call surveyQuerySearch method', function () {
-    controller.surveysGroups = Mock.surveysGroups;
-    controller.selectedGroupsResult = ITEM;
+  it('saveActivities_method_should_NOT_call_ParticipantActivityService_saveActivities_method', function (done) {
+    spyOn(Injections.DialogShowService, "showWarningDialog").and.returnValue(Promise.resolve());
+    spyOn(controller.preActivities, "every").and.returnValue(false);
 
+    controller.saveActivities();
+
+    Injections.DialogShowService.showWarningDialog().then(function () {
+      expect(Injections.ParticipantActivityService.saveActivities).toHaveBeenCalledTimes(0);
+      done();
+    });
+    done();
+  });
+
+  it('should call surveyQuerySearch method', function () {
+    const ACRONYM = 'PASC';
+    controller.surveysGroups = Mock.surveysGroups;
+    controller.selectedGroupsResult = Mock.ITEM;
     expect(controller.surveyQuerySearch(ACRONYM)).toBePromise();
   });
 
-  it('should call resetPreActivities method', function () {
-
+  it('resetPreActivities_method_should_clear_preActivities_array', function (done) {
     spyOn(Injections.ApplicationStateService, "activateParticipantActivities").and.callThrough();
-    spyOn(Injections.DialogShowService, "showDialog").and.returnValue(Mock.deferred.promise);
-
+    spyOn(Injections.DialogShowService, "showConfirmationDialog").and.returnValue(Mock.deferred.promise);
     controller.resetPreActivities();
-    Injections.DialogShowService.showDialog()
-      .then(() => {
-        Mock.scope.$digest()
-        expect(Injections.ApplicationStateService.activateParticipantActivities).toHaveBeenCalledTimes(1);
-      });
+
+    Injections.DialogShowService.showConfirmationDialog().then(function () {
+      expect(Injections.ApplicationStateService.activateParticipantActivities).toHaveBeenCalledTimes(0);
+      done();
+    });
+    done();
   });
 
-  it('should call selectAction method', function () {
-    expect(controller.selectAction()).toBeTruthy();
-    controller.selectType = 'activityUnit';
-
-    expect(controller.selectAction()).toBeFalsy();
-  });
-
-  it('should call clearSearchTerm method', function () {
+  it('clearSearchTerm_method', function () {
     controller.clearSearchTerm();
-
     expect(controller.searchTerm).toEqual("");
   });
 
@@ -114,7 +110,7 @@ describe('otusActivityAdder Test', function () {
     controller.surveysGroups = Mock.surveysGroups;
     controller.groupList = Mock.group;
     controller.surveys.push(Mock.survey);
-    controller.addPreActivitiesGroup(ITEM);
+    controller.addPreActivitiesGroup(Mock.ITEM);
 
     expect(controller.selectedGroupsResult).toEqual(Mock.group);
     expect(controller.processing).toBeFalsy();
@@ -123,7 +119,7 @@ describe('otusActivityAdder Test', function () {
   it('should call disabledGroups method', function () {
     controller.selectedGroups = [];
     expect(controller.disabledGroups()).toBeFalsy();
-    controller.selectedGroups = ITEM;
+    controller.selectedGroups = Mock.ITEM;
     expect(controller.disabledGroups(1)).toBeTruthy();
     controller.selectedGroups = Mock.group;
     expect(controller.disabledGroups(0)).toBeTruthy();
@@ -175,7 +171,8 @@ describe('otusActivityAdder Test', function () {
 
   });
 
-  function mocks() {
+  function _mockInitialize() {
+    Mock.ITEM = ['Todos'];
     Mock.group = ["Desfechos", "Laboratório", "Clínica"];
     Mock.surveysGroups = {
       getGroupSurveys: function () {
