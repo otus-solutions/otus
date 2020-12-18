@@ -21,6 +21,7 @@ package-lock.json
 **/*npm-debug.log
 **/.vscode/
 **/.terraform
+**/.terraform.lock.hcl
 **/terraform.tfstate
 **/terraform.tfstate.backup
 source/.npmrc
