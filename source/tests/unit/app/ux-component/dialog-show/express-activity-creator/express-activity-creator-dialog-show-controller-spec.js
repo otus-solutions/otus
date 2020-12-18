@@ -14,6 +14,8 @@ describe('otusExpressActivityCreatorDialogController_UnitTest_Suite', () => {
       mockInitialize($injector, $q, $rootScope);
       ctrl.$onInit();
 
+      ctrl.preActivityArtefacts = Mock.createMockPreActivity();
+
       spyOn(Injections.ExpressActivityCreatorDialogShowService, "loadCategories").and.callThrough();
       spyOn(Injections.ExpressActivityCreatorDialogShowService, "getSurveyByAcronym").and.callThrough();
       spyOn(Injections.ExpressActivityCreatorDialogShowService, "createActivity")
@@ -42,6 +44,8 @@ describe('otusExpressActivityCreatorDialogController_UnitTest_Suite', () => {
     expect(ctrl.$onInit).toBeDefined();
     expect(ctrl.createActivity).toBeDefined();
     expect(ctrl.updateRealizationDate).toBeDefined();
+    expect(ctrl.validateExternalIdTruthy).toBeDefined();
+    expect(ctrl.validateExternalIdFalsy).toBeDefined();
   });
 
   it('$onit method should prepare context', () => {
@@ -67,5 +71,24 @@ describe('otusExpressActivityCreatorDialogController_UnitTest_Suite', () => {
     expect(ctrl.realizationDate).toBeDefined();
     expect(ctrl.checkerSearchText).toBeDefined();
   });
+
+  it('validateExternalIdTruthy_method_should_valid_attribute_externalID', () => {
+    ctrl.preActivityArtefacts.mode = 'ONLINE';
+    expect(ctrl.validateExternalIdTruthy()).toBeTruthy();
+  });
+
+  it('validateExternalIdFalsy_method_should_valid_attribute_externalID', () => {
+    ctrl.preActivityArtefacts.mode = 'ONLINE';
+    expect(ctrl.validateExternalIdFalsy()).toBeFalsy();
+  });
+
+  Mock.createMockPreActivity = () => {
+    ctrl.preActivityArtefacts = Test.utils.data.preActivity;
+    ctrl.preActivityArtefacts.updatePreActivityValid = jasmine.createSpy();
+    ctrl.preActivityArtefacts.surveyForm.isRequiredExternalID = function () {
+      return true;
+    };
+    return ctrl.preActivityArtefacts;
+  }
 
 });
