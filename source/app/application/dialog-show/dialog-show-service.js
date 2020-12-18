@@ -16,6 +16,7 @@
     self.showConfirmationDialog = showConfirmationDialog;
     self.showCustomizedDialog = showCustomizedDialog;
     self.showActivitySharingDialog = showActivitySharingDialog;
+    self.showExpressActivityCreationDialog = showExpressActivityCreationDialog;
     self.cancel = cancel;
 
     function showDialog(data) {
@@ -109,6 +110,31 @@
         controllerAs:"$ctrl",
         fullscreen: fullscreen
       });
+    }
+
+    function showExpressActivityCreationDialog(preActivityArtefacts, fullscreen = true){
+      self.data = {
+        preActivityArtefacts: preActivityArtefacts,
+        settings: {
+          controller: 'otusExpressActivityCreatorDialogController',
+          templateUrl: "app/ux-component/dialog-show/express-activity-creator/express-activity-creator-dialog-show-template.html",
+        },
+        cancel: cancel
+      }
+      return _prepareDialogShow(self.data, fullscreen);
+    }
+
+    function _prepareDialogShow(data, fullscreen){
+      return $mdDialog.show({
+        controller: data.settings.controller,
+        bindToController: true,
+        locals: { data: data },
+        templateUrl: data.settings.templateUrl,
+        template: data.settings.template,
+        parent: angular.element(document.body),
+        controllerAs: '$ctrl',
+        fullscreen: fullscreen
+      })
     }
 
     function cancel() {

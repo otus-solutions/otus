@@ -11,7 +11,7 @@ describe('otusUserActivityPendencyComponent_UnitTest_Suite', () => {
       ctrl = $controller('userActivityPendencyCtrl', Injections);
 
       Mock.USER_ACTIVITY_PENDENCY = Test.utils.data.userActivityPendency;
-      ctrl.selectedActivity = Test.utils.data.activity; //?
+      ctrl.selectedActivity = Test.utils.data.activity;
 
       spyOn(Injections.UserActivityPendencyDialogService, "openUserActivityPendencyDialog");
     });

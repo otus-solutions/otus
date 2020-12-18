@@ -21,11 +21,10 @@
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.participant.business.ParticipantManagerService',
     'otusjs.participant.business.ParticipantMessagesService',
-    'otusjs.otus.dashboard.service.DashboardService',
     '$scope',
     'otusjs.participantManager.contact.ParticipantContactService',
     'ParticipantContactValues',
-    'otusjs.otus.dashboard.core.EventService',
+    'otusjs.participant.core.EventService'
   ];
 
   function Controller(
@@ -39,7 +38,6 @@
     dashboardContextService,
     ParticipantManagerService,
     ParticipantMessagesService,
-    DashboardService,
     $scope,
     ParticipantContactService,
     ParticipantContactValues,
@@ -78,7 +76,6 @@
       try {
         _loadSelectedParticipant();
         EventService.onParticipantSelected(_loadSelectedParticipant);
-
         self.ParticipantContactValues = ParticipantContactValues;
 
         if (self.isIdentified) {
@@ -105,19 +102,32 @@
       if (participantData) {
         self.participant = ParticipantFactory.fromJson(participantData);
       } else {
-        DashboardService
-          .getSelectedParticipant()
-          .then(function (participantData) {
-            self.participant = ParticipantFactory.fromJson(participantData);
-          });
+        participantData = ParticipantManagerService.getSelectedParticipant();
+        self.participant = ParticipantFactory.fromJson(participantData);
       }
+
 
       self.isEmpty = false;
       self.isIdentified = self.participant.toJSON().identified;
       loadParticipantContact();
 
+      if (self.isIdentified) {
+        delete self.birthdate;
+        self.birthdate = new Date(angular.copy(self.participant.birthdate.value));
+      } else {
+        self.birthdate = null;
+        self.participant.birthdate = { value: null };
+      }
+
+      self.ParticipantContactValues = ParticipantContactValues;
+      self.minDate = new Date('01/01/1930')
+      self.maxDate = new Date();
+      delete self.centers;
+      delete self.centerFilter;
+      _loadAllCenters();
+
       if (self.loadParticipantData) {
-        self.loadParticipantData(self.participant);
+        self.loadParticipantData(angular.copy(self.participant));
       }
     }
 
