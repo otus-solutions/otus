@@ -2,7 +2,7 @@
   <div class="margin-layout">
     <md-card>
       <div layout="row" layout-align="center center">
-        <h2 class="md-display-1 label-light-gray text-stage-size" layout-padding ng-show="$ctrl.stages.length == 0">
+        <h2 class="md-display-1 label-light-gray text-stage-size" layout-padding ng-show="$ctrl.stagesArrayNull">
           Nenhuma Etapa Adicionada
         </h2>
       </div>
@@ -13,6 +13,11 @@
           <span class="md-headline new-chip-white" layout-padding ng-show="!stages.stageName" layout-padding
             ng-style="{ 'background': '{{$ctrl.colorStage}}'}">Atividades sem Etapas</span>
         </div>
+        <md-card class="activity-null-layout" ng-show="stages.acronyms.length == 0">
+          <div class="activity-null ">
+            <p>Nenhuma Atividade Adicionada na Etapa</p>
+          </div>
+        </md-card>
         <md-list class="margin-bottom" ng-repeat="activity in stages.acronyms track by $id(activity)">
           <div class="stage-list-layout" ng-mouseover="activity.actionButton = $id"
             ng-mouseleave="activity.actionButton = false">
@@ -32,14 +37,14 @@
                                              stage-id="{{stages._id}}"
                                              action-refresh-callback="$ctrl.refreshActivityStage()">
               </otus-express-activity-creator>
-              <otus-express-activity-creator layout="row" layout-align="end center" hide-lg hide-gt
+              <otus-express-activity-creator layout="row" layout-align="end center" hide-lg hide-xl
                                              acronym="{{activity.acronym}}"
                                              stage-id="{{stages._id}}"
                                              action-refresh-callback="$ctrl.refreshActivityStage()">
               </otus-express-activity-creator>
             </div>
           </div>
-          <md-card class="activity-null-layout" ng-show="!activity.activities">
+          <md-card class="activity-null-layout" ng-show="activity.activities.length == 0">
             <div class="activity-null ">
               <p>Nenhuma Atividade Adicionada</p>
             </div>
@@ -104,7 +109,7 @@
                   <md-icon md-svg-icon="clipboard-check" aria-label="Preencher Atividade"></md-icon>
                 </md-button>
               </div>
-              <div layout="row" layout-align="end center" hide-lg hide-gt>
+              <div layout="row" layout-align="end center" hide-lg hide-xl>
                 <md-button class="md-icon-button md-warn" aria-label="Excluir"
                   ng-click="$ctrl.deleteSelectedActivity(item)">
                   <md-tooltip md-direction="top">Excluir</md-tooltip>

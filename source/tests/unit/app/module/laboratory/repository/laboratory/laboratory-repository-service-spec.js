@@ -45,6 +45,12 @@ describe('LaboratoryRepositoryService_Test_Suite', function () {
     expect(Injections.LaboratoryCollectionService.getCheckingExist).toHaveBeenCalledTimes(1);
   });
 
+  it('checkLaboratoryConfiguration method should to call getCheckingExist method', function () {
+    spyOn(Injections.LaboratoryCollectionService, 'checkLaboratoryConfiguration').and.returnValue(Mock.resolve);
+    service.checkLaboratoryConfiguration();
+    expect(Injections.LaboratoryCollectionService.checkLaboratoryConfiguration).toHaveBeenCalledTimes(1);
+  });
+
   it('updateTubeCustomMetadata method should to call updateTubeCustomMetadata method', function () {
     spyOn(Injections.LaboratoryCollectionService, 'updateTubeCustomMetadata').and.returnValue(Mock.resolve);
     service.updateTubeCustomMetadata(Mock.tube);
@@ -61,7 +67,6 @@ describe('LaboratoryRepositoryService_Test_Suite', function () {
 
   function _mockInitialize() {
     Mock.resolve =  Promise.resolve({});
-
     Mock.tube = { type:'tube type'};
   }
 

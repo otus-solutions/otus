@@ -6,16 +6,23 @@
     .component('otusReportDashboard', {
       controller: Controller,
       templateUrl: 'app/ux-component/report/dashboard/report-dashboard-template.html'
-    });
+    }).controller('ReportDashboardCtrl', Controller);
 
   Controller.$inject = [
     "otusjs.otus.dashboard.core.EventService",
     "otusjs.otus.dashboard.service.DashboardService",
     "otusjs.report.business.ParticipantReportWidgetFactory",
-    "otusjs.deploy.LoadingScreenService"
+    "otusjs.deploy.LoadingScreenService",
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService'
   ];
 
-  function Controller(EventService, DashboardService, ParticipantReportWidgetFactory, LoadingScreenService) {
+  function Controller(
+    EventService,
+    DashboardService,
+    ParticipantReportWidgetFactory,
+    LoadingScreenService,
+    ParticipantLaboratoryService) {
+
     var self = this;
 
     self.ready;
@@ -30,11 +37,6 @@
     /* Public Methods*/
     self.generateReport = generateReport;
 
-    function generateReport(report) {
-      LoadingScreenService.changeMessage(report.getLoadingMessage());
-      LoadingScreenService.start();
-      report.generateReport(LoadingScreenService.finish);
-    }
 
     /* Lifecycle methods */
     function onInit() {
@@ -42,10 +44,21 @@
       _loadParticipantReports();
       EventService.onParticipantSelected(_loadParticipantReports);
       self.selectedParticipant = null;
+
+      ParticipantLaboratoryService.getCheckingExist()
+        .then(function (response) {
+          self.laboratoryChecking = response;
+        });
     }
 
     function onDestroy() {
       EventService.unsubscribeOnParticipantSelected(_loadParticipantReports);
+    }
+
+    function generateReport(report) {
+      LoadingScreenService.changeMessage(report.getLoadingMessage());
+      LoadingScreenService.start();
+      report.generateReport(LoadingScreenService.finish);
     }
 
     function _loadParticipantReports(participantData) {
@@ -54,8 +67,7 @@
         self.isEmpty = false;
         _fetchReports();
       } else {
-        DashboardService
-          .getSelectedParticipant()
+        DashboardService.getSelectedParticipant()
           .then(function (participantData) {
             self.selectedParticipant = participantData;
             self.isEmpty = false;
@@ -75,5 +87,6 @@
           self.ready = true;
         });
     }
+
   }
 }());

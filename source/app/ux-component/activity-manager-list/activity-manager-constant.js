@@ -84,7 +84,10 @@
           TOAST: {
             ERROR: {
               errorFind: 'Erro na busca das atividades'
-            }
+            },
+            SUCCESS: {
+              delete: "Removido com sucesso!"
+            },
           }
         }
       }

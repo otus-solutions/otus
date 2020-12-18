@@ -13,10 +13,12 @@
     'otusjs.laboratory.business.unattached.UnattachedLaboratoryService',
     'otusjs.laboratory.business.configuration.LaboratoryConfigurationService',
     'otusjs.laboratory.core.ContextService',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($mdToast, $filter, ProjectFieldCenterService, SessionContextService, UnattachedLaboratoryService, LaboratoryConfigurationService, laboratoryContextService, LoadingScreenService) {
+  function Controller($mdToast, $filter, ProjectFieldCenterService, SessionContextService,
+                      UnattachedLaboratoryService, LaboratoryConfigurationService, LaboratoryContextService, LoadingScreenService, LaboratoryViewerService) {
     var self = this;
     const LABORATORY_NOT_FOUND_MESSAGE = "Laboratório não encontrado";
     const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
@@ -31,10 +33,16 @@
     self.getByIdentification = getByIdentification;
 
     function onInit() {
-      LaboratoryConfigurationService.getLaboratoryDescriptors();
+      self.laboratoryExists = false;
       LoadingScreenService.start();
-      let unattachedGroupFilter = laboratoryContextService.getUnattachedGroupFilter();
-      let unattachedCenterFilter = laboratoryContextService.getUnattachedCenterFilter();
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init, LoadingScreenService.finish);
+    }
+
+    function _init(){
+      self.laboratoryExists = true;
+      LaboratoryConfigurationService.getLaboratoryDescriptors();
+      let unattachedGroupFilter = LaboratoryContextService.getUnattachedGroupFilter();
+      let unattachedCenterFilter = LaboratoryContextService.getUnattachedCenterFilter();
 
       ProjectFieldCenterService.loadCenters().then(function (result) {
         self.centers = $filter('orderBy')(self.centers);
@@ -55,6 +63,10 @@
     }
 
     function getByIdentification() {
+      if(!self.identificationFilter) {
+        _showToast('O campo idenficação do laboratório está vazio');
+        return;
+      }
       UnattachedLaboratoryService.getUnattachedByIdentification(self.identificationFilter).then(function (result) {
         let currentStatus = result.actionHistory[result.actionHistory.length-1].action;
         if (currentStatus === "DISCARDED") {
@@ -66,18 +78,14 @@
         } else {
           self.haveErrors = false;
           self.unattachedLaboratoryList = [result];
-          self.collectGroupsFilter=result.collectGroupName;
-          self.centerFilter=result.fieldCenterAcronym;
+          self.collectGroupsFilter = result.collectGroupName;
+          self.centerFilter = result.fieldCenterAcronym;
         }
       }).catch(function (error) {
-        if (error.data) {
-          self.error = "Laboratório não encontrado";
-        } else {
-          self.error = "Ocorreu um erro, entre em contato com o administrador do sistema";
-        }
+        self.error = (error.data ? LABORATORY_NOT_FOUND_MESSAGE : UNEXPECTED_ERROR_MESSAGE);
         LoadingScreenService.finish();
         _showToast(self.error);
-      })
+      });
     }
 
     function changeCreation() {
@@ -88,26 +96,27 @@
       LoadingScreenService.start();
       let center = self.userHaveCenter ? self.centerFilter : self.selectedCenter;
       UnattachedLaboratoryService.createUnattached(center, self.selectedCollectGroup).then(function () {
-        self.collectGroupsFilter=self.selectedCollectGroup;
-        self.centerFilter=center;
+        self.collectGroupsFilter = self.selectedCollectGroup;
+        self.centerFilter = center;
         onFilter();
         changeCreation();
         LoadingScreenService.finish();
       }).catch(function () {
-        _showToast("Ocorreu um erro, entre em contato com o administrador do sistema");
+        _showToast(UNEXPECTED_ERROR_MESSAGE);
         LoadingScreenService.finish();
       });
     }
 
     function onFilter() {
-      laboratoryContextService.setUnattachedCenterFilter(self.centerFilter);
-      laboratoryContextService.setUnattachedGroupFilter(self.collectGroupsFilter);
+      LaboratoryContextService.setUnattachedCenterFilter(self.centerFilter);
+      LaboratoryContextService.setUnattachedGroupFilter(self.collectGroupsFilter);
       self.identificationFilter = "";
       self.selectedSendings = [];
       LoadingScreenService.start();
       _loadData();
-      if (self.updateDataTable)
+      if (self.updateDataTable){
         self.updateDataTable(self.sendingList);
+      }
       LoadingScreenService.finish();
     }
 
@@ -123,30 +132,26 @@
     }
 
     function _loadData() {
-      UnattachedLaboratoryService.listUnattached(self.collectGroupsFilter, self.centerFilter,1,100000).then(function (result) {
-        self.haveErrors = false;
-        self.unattachedLaboratoryList = result.unattachedLaboratoryList;
-        LoadingScreenService.finish();
-      }).catch(function (error) {
-        self.haveErrors = true;
-        if (error.data) {
-          if (error.data.MESSAGE.match("There are no results")) {
-            self.errorMessage = LABORATORY_NOT_FOUND_MESSAGE;
-          } else {
-            self.errorMessage = UNEXPECTED_ERROR_MESSAGE;
-          }
-        } else {
-          self.errorMessage = UNEXPECTED_ERROR_MESSAGE;
-        }
-        LoadingScreenService.finish();
-      });
+      UnattachedLaboratoryService.listUnattached(self.collectGroupsFilter, self.centerFilter, 1, 100000)
+        .then(function (result) {
+          self.haveErrors = false;
+          self.unattachedLaboratoryList = result.unattachedLaboratoryList;
+          LoadingScreenService.finish();
+        })
+        .catch(function (error) {
+          self.haveErrors = true;
+          self.errorMessage = (error.data && error.data.MESSAGE.match("There are no results") ?
+            LABORATORY_NOT_FOUND_MESSAGE :
+            UNEXPECTED_ERROR_MESSAGE);
+          LoadingScreenService.finish();
+        });
     }
 
     function _showToast(msg) {
       $mdToast.show(
         $mdToast.simple()
           .textContent(msg)
-          .hideDelay(10000)
+          .hideDelay(5000)
       );
     }
   }

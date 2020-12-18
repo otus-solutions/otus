@@ -73,6 +73,38 @@
         }
       ]
     }
+    function showWarningDialog(dialogToTitle, titleToText, textDialog, ariaLabel){
+      self.data = {
+        dialogToTitle: dialogToTitle,
+        titleToText: titleToText,
+        textDialog: textDialog,
+        ariaLabel: ariaLabel,
+        buttons: _getWarningDialogButtons(),
+        cancel: self.cancel
+      };
+
+      return $mdDialog.show({
+        controller: 'dialogShowController',
+        locals: { data: self.data },
+        templateUrl: 'app/ux-component/dialog-show/dialog-show-template.html',
+        parent: angular.element(document.body),
+        controllerAs: "$ctrl",
+        clickOutsideToClose: true
+      });
+    }
+
+    function _getWarningDialogButtons() {
+      return [
+        {
+          message: 'Voltar',
+          action: function () {
+            $mdDialog.cancel()
+          },
+          class: 'md-raised md-no-focus'
+        }
+      ]
+    }
+
 
     function showWarningDialog(dialogToTitle, titleToText, textDialog, ariaLabel){
       self.data = {

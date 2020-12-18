@@ -1,4 +1,4 @@
-describe('LaboratoryCollectionService_Test_Suite', function () {
+describe('LaboratoryCollectionService_UnitTest_Suite', function () {
   var service;
   var Mock = {};
   var Injections = [];
@@ -126,11 +126,15 @@ describe('LaboratoryCollectionService_Test_Suite', function () {
     expect(service.getCheckingExist()).toBePromise();
   });
 
+  it('checkLaboratoryConfiguration_method_should_execute', function () {
+    expect(service.checkLaboratoryConfiguration()).toBePromise();
+  });
+
   it('getTubeMedataDataByType_method_should_execute', function () {
     expect(service.getTubeMedataDataByType(Mock.tube.type)).toBePromise();
   });
 
-  it('getCheckingExist_method_should_execute', function () {
+  it('updateTubeCustomMetadata_method_should_execute', function () {
     expect(service.updateTubeCustomMetadata(Mock.tube)).toBePromise();
   });
 

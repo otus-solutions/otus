@@ -81,13 +81,13 @@
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
         //esse catch garante que ocorrerá a troca de state mesmo que ocorra erro no backend
         //todo: remove
+        .then(() => ApplicationStateService.activateParticipantActivities())
+        .then(() => self.activities = [])
+        .then(() => LoadingScreenService.finish)
         .catch(() => {
           _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
           LoadingScreenService.finish();
-        })
-        .then(() => ApplicationStateService.activateParticipantActivities())
-        .then(() => self.activities = [])
-        .then(() => LoadingScreenService.finish);
+        });
     }
 
     function _prepareActivities(preActivities) {
@@ -242,16 +242,16 @@
       LoadingScreenService.start();
       return _prepareActivities(preActivity)
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
-        .catch(() => {
-          _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
-          LoadingScreenService.finish();
-        })
         .then(() => {
           _callToast('sucessActivityCreation');
           LoadingScreenService.finish();
         })
         .then(() => self.activities = [])
-        .then(() => LoadingScreenService.finish);
+        .then(() => LoadingScreenService.finish)
+        .catch(() => {
+          _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
+          LoadingScreenService.finish();
+        });
     }
 
   }
