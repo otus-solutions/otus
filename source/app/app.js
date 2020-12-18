@@ -15,6 +15,7 @@
       'otusjs.otus.uxComponent',
       'otusjs.otus.pendency',
       'otusjs.otus.project.communication',
+      'otusjs.otus.stage',
       'otusjs.application',
       'otusjs.application.theme',
       'otusjs.deploy',

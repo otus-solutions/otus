@@ -29,7 +29,8 @@
     'otusjs.deploy.ParticipantContactRestService',
     'otusjs.deploy.LocationPointRestService',
     'otusjs.deploy.ProjectCommunicationRestService',
-    'otusjs.deploy.ActivitySharingRestService'
+    'otusjs.deploy.ActivitySharingRestService',
+    'otusjs.deploy.StageRestService'
   ];
 
   function Service(
@@ -56,7 +57,8 @@
     ParticipantContactRestService,
     LocationPointRestService,
     ProjectCommunicationRestService,
-    ActivitySharingRestService
+    ActivitySharingRestService,
+    StageRestService
   ) {
     var self = this;
 
@@ -96,6 +98,7 @@
       LocationPointRestService.initialize();
       ProjectCommunicationRestService.initialize();
       ActivitySharingRestService.initialize();
+      StageRestService.initialize();
     }
   }
 }());
