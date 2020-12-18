@@ -33,7 +33,8 @@
 
     self.$onInit = onInit;
 
-    self.stage = [];
+    self.stages = [];
+    self.stagesArrayNull = false;
     self.colorStage = $mdColors.getThemeColor('primary-hue-1');
 
     function onInit() {
@@ -42,9 +43,8 @@
     }
 
     function refreshActivityStage() {
-      self.stages = [];
-      _loadActivityStages();
       _loadCategories();
+      _loadActivityStages();
     }
 
     function _loadCategories() {
@@ -57,7 +57,11 @@
       LoadingScreenService.start();
 
       ParticipantActivityService.getAllByStageGroup()
-        .then(stages => _setOrderByActivity(stages))
+        .then(stages => {
+          _setOrderByActivity(stages)
+          self.stages = stages;
+          self.stagesArrayNull = stages.length == 0;
+        })
         .catch(err => {
           $log.error(err);
           _showMsg(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.TOAST.ERROR.errorFind);
@@ -83,8 +87,6 @@
           return 0;
         });
       });
-
-      self.stages = stages;
     }
 
     function _activityAttributes(activities) {
@@ -129,6 +131,7 @@
       ).then(function () {
         ParticipantActivityService.discardActivity(itemActivity._id);
         refreshActivityStage();
+        _showMsg(ACTIVITY_MANAGER_LABELS.ATTRIBUTES_MESSAGE.SCENE.TOAST.SUCCESS.delete);
       });
     }
 

@@ -55,7 +55,7 @@ describe('otusActivityStageListCtrl Test', function () {
     it('onInitMethod should initialized the controller variables', function () {
       spyOn(Injections.ParticipantActivityService, "getAllByStageGroup").and.returnValue(Mock.deferred.promise);
       controller.$onInit();
-      expect(controller.stage).toEqual([]);
+      expect(controller.stages).toEqual([]);
       expect(Injections.EventService.onParticipantSelected).toHaveBeenCalledTimes(1);
       expect(Injections.ParticipantActivityService.listAllCategories).toHaveBeenCalledTimes(1);
       expect(Injections.LoadingScreenService.start).toHaveBeenCalledTimes(1);
