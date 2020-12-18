@@ -4,33 +4,36 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('tubeList', {
+      controller: 'tubeListCtrl as $ctrl',
       templateUrl: 'app/ux-component/laboratory/main-panel/tube-list/tube-list-template.html',
       bindings: {
         tubeList: '=',
         tubeConfiguration: '<',
         state: '<'
-      },
-      controller: controller
-    });
+      }
+    }).controller('tubeListCtrl', Controller);
 
-  controller.$inject = [
-     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
-     'otusjs.otus.uxComponent.Publisher'
+  Controller.$inject = [
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.otus.uxComponent.Publisher',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
  ];
 
-  function controller(ParticipantLaboratoryService, Publisher) {
+  function Controller(ParticipantLaboratoryService, Publisher, LaboratoryViewerService) {
     var self = this;
     var _originalTubeList;
 
     /* Public Interface */
     self.$onInit = onInit;
-
     self.fillOriginalTubeList = fillOriginalTubeList;
     self.haveTubesChanged = haveTubesChanged;
     self.getChangedTubes = getChangedTubes;
 
-
     function onInit() {
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init() {
       _getMoments();
       self.fillOriginalTubeList();
 
@@ -64,7 +67,7 @@
       var hasChanged = false;
       var changedTubes = [];
 
-      changedTubes =  getChangedTubes();
+      changedTubes = self.getChangedTubes();
 
       if(changedTubes.length) hasChanged = true;
 

@@ -6,20 +6,25 @@
     .component('otusSampleTransportationManagerList', {
       controller: Controller,
       templateUrl: 'app/ux-component/sample-transportation/manager-list/sample-transportation-manager-list-template.html'
-    });
+    }).controller('otusSampleTransportationManagerListCtrl', Controller);
 
   Controller.$inject = [
     '$mdToast',
-    '$mdDialog',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
     'otusjs.application.state.ApplicationStateService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($mdToast, $mdDialog, laboratoryContextService, MaterialTransportationService, ApplicationStateService, DialogService) {
+  function Controller(
+    $mdToast,
+    laboratoryContextService,
+    MaterialTransportationService,
+    ApplicationStateService,
+    DialogService,
+    LaboratoryViewerService) {
     var self = this;
-    var _confirmDeleteSelectedLots;
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -33,8 +38,13 @@
     self.newLot = newLot;
 
     function onInit() {
+      self.laboratoryExists = false;
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init(){
+      self.laboratoryExists = true;
       self.selectedLots = [];
-      _buildDialogs();
     }
 
     function handleViewInfoAction() {
@@ -42,17 +52,21 @@
     }
 
     function handleDeleteAction() {
-      DialogService.showDialog(_confirmDeleteSelectedLots).then(function() {
-        _removeLotRecursive(self.selectedLots, function() {
-          self.listComponent.updateOnDelete();
-          self.selectedLots = [];
+      DialogService.showConfirmationDialog(
+        'Confirmar exclusão de Lote(s):',
+        'O(s) lote(s) será(ão) excluido(s).',
+        'Confirmação de exclusão')
+        .then(function() {
+          _removeLotRecursive(self.selectedLots, function() {
+            self.listComponent.updateOnDelete();
+            self.selectedLots = [];
+          });
         });
-      });
     }
 
     function _removeLotRecursive(lotArray,callback){
       MaterialTransportationService.deleteLot(lotArray[0].code).then(function(){
-        if(lotArray.length == 1){
+        if(lotArray.length === 1){
           callback();
         } else {
           lotArray.splice(0,1);
@@ -67,8 +81,7 @@
         $mdToast.show(
           $mdToast.simple()
           .textContent(msgLots)
-          .hideDelay(4000)
-          );
+          .hideDelay(4000));
         callback();
       });
     }
@@ -88,25 +101,5 @@
       ApplicationStateService.activateSampleTransportationLotInfoManager();
     }
 
-    function _buildDialogs() {
-      _confirmDeleteSelectedLots = {
-        dialogToTitle:'Exclusão',
-        titleToText:'Confirmar exclusão de Lote(s):',
-        textDialog:'O(s) lote(s) será(ão) excluido(s).',
-        ariaLabel:'Confirmação de exclusão',
-        buttons: [
-          {
-            message:'Ok',
-            action:function(){$mdDialog.hide()},
-            class:'md-raised md-primary'
-          },
-          {
-            message:'Voltar',
-            action:function(){$mdDialog.cancel()},
-            class:'md-raised md-no-focus'
-          }
-        ]
-      };
-    }
   }
 }());

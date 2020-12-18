@@ -1,28 +1,17 @@
-describe('otusDashboardDisplay test', function () {
+describe('otusDashboardDisplay_UnitTest_Suite', function () {
   var ctrl;
   var Injections = [];
 
   beforeEach(function () {
-    angular.mock.module('otusjs.otus.uxComponent');
-    angular.mock.module('otusjs.laboratory');
-    angular.mock.module('otusjs.otus.laboratory');
-    angular.mock.module('otusjs.user');
-    angular.mock.module('otusjs.otus.dashboard');
+    angular.mock.module('otusjs.otus');
 
-    angular.mock.inject(function (_$injector_, _$controller_) {
+    angular.mock.inject(function ($injector, $controller) {
+      Injections.UserAccessPermissionService = $injector.get('otusjs.user.business.UserAccessPermissionService');
+      Injections.ParticipantLaboratoryService = $injector.get('otusjs.laboratory.business.participant.ParticipantLaboratoryService');
+      Injections.EventService = $injector.get('otusjs.otus.dashboard.core.EventService');
+      Injections.DashboardService = $injector.get('otusjs.otus.dashboard.service.DashboardService');
 
-      Injections.EventService = _$injector_.get('otusjs.otus.dashboard.core.EventService');
-      Injections.DashboardService = _$injector_.get('otusjs.otus.dashboard.service.DashboardService');
-      Injections.UserAccessPermissionService = _$injector_.get('otusjs.user.business.UserAccessPermissionService');
-      Injections.ParticipantLaboratoryService = _$injector_.get('otusjs.laboratory.business.participant.ParticipantLaboratoryService');
-
-      ctrl =  _$controller_('otusDashboardDisplayCtrl', Injections);
-
-      spyOn(Injections.EventService, 'onParticipantSelected').and.callThrough();
-      spyOn(Injections.DashboardService, 'getSelectedParticipant').and.callThrough();
-      spyOn(Injections.UserAccessPermissionService, 'getCheckingLaboratoryPermission').and.callThrough();
-      spyOn(Injections.ParticipantLaboratoryService, 'getCheckingExist').and.callThrough();
-
+      ctrl =  $controller('otusDashboardDisplayCtrl', Injections);
     });
   });
 
@@ -35,11 +24,16 @@ describe('otusDashboardDisplay test', function () {
   });
 
   it('onInit_method_should_evoke_internalMethods', function () {
+    spyOn(Injections.EventService, 'onParticipantSelected').and.callThrough();
+    spyOn(Injections.DashboardService, 'getSelectedParticipant').and.returnValue(Promise.resolve({}));
+    spyOn(Injections.ParticipantLaboratoryService, 'getCheckingExist').and.returnValue(Promise.resolve(true));
+    spyOn(Injections.UserAccessPermissionService, 'getCheckingLaboratoryPermission').and.returnValue(Promise.resolve(true));
+
     ctrl.$onInit();
+
     expect(Injections.EventService.onParticipantSelected).toHaveBeenCalledTimes(1);
     expect(Injections.DashboardService.getSelectedParticipant).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantLaboratoryService.getCheckingExist).toHaveBeenCalledTimes(1);
-    expect(Injections.UserAccessPermissionService.getCheckingLaboratoryPermission).toHaveBeenCalledTimes(1);
   });
 
 });

@@ -15,6 +15,7 @@
     'otusjs.model.locationPoint.LocationPointFactory',
     'otusjs.laboratory.business.participant.aliquot.AliquotMessagesService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
   function Controller(
@@ -26,13 +27,14 @@
     LocationPointRestService,
     LocationPointFactory,
     AliquotMessagesService,
-    ParticipantLaboratoryService) {
+    ParticipantLaboratoryService,
+    LaboratoryViewerService) {
     var self = this;
 
-    self.$onInit = onInit
+    self.$onInit = onInit;
 
-    self.now = new Date()
-    self.processingDate = new Date()
+    self.now = new Date();
+    self.processingDate = new Date();
     self.selectedLocationPoint = {};
     self.timeShowMsg = 3000;
 
@@ -42,22 +44,20 @@
     self.updateExamsLocationPoint = updateExamsLocationPoint;
     self.getConvertedHistory = getConvertedHistory;
     self.saveAliquots = saveAliquots;
-    self.haveAliquotsChanged = haveAliquotsChanged
-    self.setFocus = setFocus
-    self.tubeInputOnChange = tubeInputOnChange
-    self.aliquotInputOnKeyDown = aliquotInputOnKeyDown
-    self.convertAliquot = convertAliquot
-    self.deleteAliquot = deleteAliquot
+    self.haveAliquotsChanged = haveAliquotsChanged;
+    self.setFocus = setFocus;
+    self.tubeInputOnChange = tubeInputOnChange;
+    self.aliquotInputOnKeyDown = aliquotInputOnKeyDown;
+    self.convertAliquot = convertAliquot;
+    self.deleteAliquot = deleteAliquot;
     self.updateAliquots = updateAliquots;
 
-    function updateAliquots(foundTube, participantLaboratory) {
-      self.participantLaboratory = participantLaboratory;
-      self.tube = foundTube;
-      onInit();
+    function onInit(){
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
     }
 
-    function onInit() {
-      _buildMomentTypeList(self.participantLaboratory.tubes)
+    function _init() {
+      _buildMomentTypeList(self.participantLaboratory.tubes);
 
       const codeConfiguration = LaboratoryConfigurationService.getCodeConfiguration();
 
@@ -66,9 +66,9 @@
 
       self.participant = self.participantManager.getParticipant(
         self.participantLaboratory.recruitmentNumber.toString()
-      )
+      );
 
-      _getMomentTypeByTubeType()
+      _getMomentTypeByTubeType();
 
       self.validations = {
         wave: {
@@ -92,17 +92,27 @@
           position: 2
         }
       };
-      fetchLocationPoints()
+      fetchLocationPoints();
+    }
+
+    function updateAliquots(foundTube, participantLaboratory) {
+      self.participantLaboratory = participantLaboratory;
+      self.tube = foundTube;
+      _init();
     }
 
     function deleteAliquot(aliquot) {
-      AliquotMessagesService.showDeleteDialog().then(function() {
-        return AliquotTubeService.deleteAliquot(aliquot.aliquotCode).then(function () {
-          self.selectedMomentType.removeAliquot(aliquot);
-        }).catch(function (err) {
-          AliquotMessagesService.showNotRemovedDialog(err.data.CONTENT);
-        });
-      }).catch(function () {});
+      AliquotMessagesService.showDeleteDialog()
+        .then(function() {
+          return AliquotTubeService.deleteAliquot(aliquot.aliquotCode)
+            .then(function () {
+              self.selectedMomentType.removeAliquot(aliquot);
+            })
+            .catch(function (err) {
+              AliquotMessagesService.showNotRemovedDialog(err.data.CONTENT);
+            });
+        })
+        .catch(function () {});
     }
 
     function _getMomentTypeByTubeType() {
@@ -153,7 +163,7 @@
 
     function filterLocationPoints() {
       if(self.userLocationPoints) {
-        self.userLocationIds = []
+        self.userLocationIds = [];
 
         for(const location of self.userLocationPoints) {
           self.userLocationIds.push(location._id)
@@ -169,8 +179,8 @@
     function fetchLocationPoints() {
       LocationPointRestService.getLocationPoints().then((response) => {
         self.locationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
-        _setMomentType(self.momentType)
-        findParticipantLocationPoint()
+        _setMomentType(self.momentType);
+        findParticipantLocationPoint();
         filterLocationPointByParticipant();
         fetchUserLocationPoints();
       })
@@ -179,7 +189,7 @@
     function fetchUserLocationPoints() {
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
-        filterLocationPoints()
+        filterLocationPoints();
       })
     }
 
@@ -279,13 +289,15 @@
           newFocus = aliquot.aliquotId;
           break;
         }
-        if (current.index == aliquot.index) current.index++;
+        if (current.index == aliquot.index) {
+          current.index++;
+        }
       }
 
       if (newFocus.length) {
         self.setFocus(newFocus);
-      } else {
-        if (aliquot && aliquot.aliquotId) $element.find('#' + aliquot.aliquotId).blur();
+      } else if (aliquot && aliquot.aliquotId) {
+        $element.find('#' + aliquot.aliquotId).blur();
       }
     }
 
@@ -334,8 +346,12 @@
     function aliquotInputOnChange(aliquot) {
       $scope.formAliquot[aliquot.aliquotId].$setValidity('customValidation', true);
       _clearContainer(aliquot);
-      if (!aliquot.processing) updateExamsProcessingDate();
-      if (!aliquot.locationPoint) updateExamsLocationPoint();
+      if (!aliquot.processing) {
+        updateExamsProcessingDate();
+      }
+      if (!aliquot.locationPoint) {
+        updateExamsLocationPoint();
+      }
       if (self.aliquotLengths.length >= 1) {
         var aliquotsArray = Validation.fieldIsExam(aliquot.role) ? self.selectedMomentType.exams : self.selectedMomentType.storages;
         var runCompletePlaceholder = false;
@@ -346,8 +362,8 @@
             aliquot.aliquotCode = "";
             runCompletePlaceholder = true;
             $element.find('#' + aliquot.tubeId).blur();
-          } else {
-            if (aliquot.aliquotCode.length == self.aliquotMaxLength) _nextFocus(aliquot);
+          } else if (aliquot.aliquotCode.length == self.aliquotMaxLength) {
+              _nextFocus(aliquot);
           }
         }
       }
@@ -358,8 +374,7 @@
     }
 
     function haveAliquotsChanged() {
-      const hasChanged = AliquotTubeService.areFieldsChanged(self.selectedMomentType);
-      return hasChanged;
+      return AliquotTubeService.areFieldsChanged(self.selectedMomentType);
     }
 
     function aliquotInputOnBlur(aliquot) {
@@ -380,9 +395,9 @@
 
           if (Validation.aliquotAlreadyUsed(aliquot, true)) {
             setAliquotError(aliquot, msgAliquotUsed);
-            return;
           }
-        } else {
+        }
+        else {
           setAliquotError(aliquot, msgAliquotInvalid);
         }
       }
@@ -427,12 +442,12 @@
         if(!exam.isSaved) {
           exam.processing = self.processingDate
         }
-      })
+      });
       self.selectedMomentType.convertedStorages.forEach(storage => {
         if(!storage.isSaved) {
           storage.processing = self.processingDate
         }
-      })
+      });
       self.selectedMomentType.storages.forEach(storage => {
         if(!storage.isSaved) {
           storage.processing = self.processingDate
@@ -473,17 +488,17 @@
         if(!exam.locationPoint) {
           exam.locationPoint = self.selectedLocationPoint
         }
-      })
+      });
       self.selectedMomentType.storages.forEach(exam => {
         if(!exam.locationPoint) {
           exam.locationPoint = self.selectedLocationPoint
         }
-      })
+      });
       self.selectedMomentType.convertedStorages.forEach(exam => {
         if(!exam.locationPoint) {
           exam.locationPoint = self.selectedLocationPoint
         }
-      })
+      });
     }
 
     function convertAliquot(aliquot) {
@@ -506,14 +521,15 @@
         aliquot.name = examNameFound;
         aliquot.role = "EXAM";
 
-        ParticipantLaboratoryService.convertStorageAliquot(aliquot).then(function () {
-          self.selectedMomentType.removeStorage(aliquot.aliquotCode);
-          _setMomentType(self.selectedMomentType);
-          _fillConvertedStoragesContainerLabels()
-        }).catch(function (err) {
-          AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
-        });
-
+        ParticipantLaboratoryService.convertStorageAliquot(aliquot)
+          .then(function () {
+            self.selectedMomentType.removeStorage(aliquot.aliquotCode);
+            _setMomentType(self.selectedMomentType);
+            _fillConvertedStoragesContainerLabels()
+          })
+          .catch(function (err) {
+            AliquotMessagesService.showNotConvertedDialog(err.data.CONTENT);
+          });
       })
     }
   }
