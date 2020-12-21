@@ -9,11 +9,12 @@
     }).controller('otusDashboardSendPendenciesCtrl', Controller);
 
   Controller.$inject = [
+    'otusjs.application.session.core.ContextService',
     '$cookies',
     '$window'
   ]
 
-  function Controller($cookies, $window) {
+  function Controller(ContextUserService, $cookies, $window) {
     var self = this;
     self.$onInit = onInit;
     self.pendentActivities = []
@@ -32,11 +33,12 @@
     function _getUrlPlayerHome() {
       var callback = angular.copy($window.location.href) || "";
       var url = $cookies.get('Player-Address');
+      var token = ContextUserService.getToken();
       if (!url) return $window.location.href;
       if (_isValidUrl(url)){
-        return url.concat("#/pendent").concat('?callback=').concat(callback);
+        return url.concat("#/pendent").concat('?callback=').concat(callback).concat('&').concat('token=').concat(token);
       }
-      return url.concat("#/pendent").concat('?callback=').concat(callback);
+      return url.concat("#/pendent").concat('?callback=').concat(callback).concat('&').concat('token=').concat(token);
     }
 
     function _isValidUrl(url) {
