@@ -4,7 +4,52 @@
       <otus-participant-info></otus-participant-info>
       <otus-participant-heatmap></otus-participant-heatmap>
       <otus-participant-exam-heatmap ng-if="($ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking && $ctrl.selectedParticipant)"></otus-participant-exam-heatmap>
+      <otus-panel header-label="'Vincular laboratório do participante'" align="'center center'" flex>
+        <md-content layout="column" flex>
+          <div layout="row" layout-xs="column" layout-align="center center" layout-padding="" ng-if="!$ctrl.selectedParticipant.identified">
+            <md-button class="md-icon-button md-warn"> <md-icon>warning</md-icon></md-button>
+            <span align="center" class="md-title" layout-align="center center" layout-padding=""> O participante deve possuir todos os dados básicos de recrutamento para utilizar este recurso.</span>
+          </div>
+          <div ng-show="$ctrl.ready && !$ctrl.hasLaboratory" layout="column" >
+            <div layout="column" layout-align="center center" flex="100">
+              <div layout="row" layout-align="center center">
+                <p layout-padding="" flex="80"  align="center">Utilize o função vincular laboratório para
+                  atribuir um conjunto de tubos previamente criados
+                  ao participante selecionado, para isso utilize o id do laboratório.</p>
+              </div>
+              <div layout="row" layout-align="center start">
+                <md-input-container class="md-icon-float md-icon-right md-block">
+                  <label>Id do Laboratório</label>
+                  <input ng-model="$ctrl.laboratoryIdentification" type="number" numbers-only min="0" step="1"
+                         ng-disabled="!$ctrl.selectedParticipant.identified">
+                </md-input-container>
+                <md-button class="md-fab md-mini md-primary" ng-click="$ctrl.attacheLaboratory()" aria-label="More"
+                           ng-disabled="!$ctrl.laboratoryIdentification">
+                  <md-icon> compare_arrows</md-icon>
+                </md-button>
+              </div>
+            </div>
+            <div layout-margin style="height: 10px; width: 98%" flex-auto>
+              <md-toolbar ng-if="$ctrl.attacheHaveErrors" class="md-warn">
+                <h2 class="md-toolbar-tools" layout-align="center center">
+                  <span>{{$ctrl.attacheError}}</span>
+                </h2>
+              </md-toolbar>
+            </div>
+          </div>
+          <div ng-if="$ctrl.ready && $ctrl.hasLaboratory" layout="column" flex>
+            <div layout="column" layout-align="center center" style=" margin-bottom: 3px;">
+              <lab-control-panel lab-participant="$ctrl.participantLaboratory" state="$ctrl.state" labels="$ctrl.labels"
+                                 layout-fill/>
+            </div>
+            <div layout="row" flex>
+              <lab-main-panel participant-laboratory="$ctrl.participantLaboratory" layout="row" flex state="$ctrl.state"/>
+            </div>
+          </div>
+        </md-content>
+      </otus-panel>
       <otus-report-dashboard></otus-report-dashboard>
+
     </div>
   </md-content>
 </div>

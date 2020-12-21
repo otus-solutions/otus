@@ -9,6 +9,8 @@
       bindings: {
         labelPromise: '<',
         participantButton: '=',
+        basicButton: '=',
+        primaryButton: '=',
         identificationButton: '=',
         kitButton: '=',
         bioMaterialButton: '=',

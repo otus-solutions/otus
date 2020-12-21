@@ -4,7 +4,6 @@
   angular
     .module('otusjs.otus.uxComponent')
     .controller('generateCustomLabelDialogCtrl', Controller);
-
   Controller.$inject = [
     '$mdToast',
     '$mdDialog',
@@ -17,9 +16,17 @@
   function Controller($mdToast, $mdDialog, $scope, $location, Publisher, LaboratoryLocalStorageService) {
     var self = this;
     self.DialogController = DialogController;
-    self.showAdvanced = showAdvanced
+    self.showAdvanced = showAdvanced;
+    self.basicBtn = basicBtn;
+    self.primaryBtn = primaryBtn;
 
+    function basicBtn(){
+      return self.basicButton
+    }
 
+    function primaryBtn(){
+      return self.primaryButton
+    }
 
     function showAdvanced(ev) {
       if(self.labelPromise){

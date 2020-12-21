@@ -11,6 +11,9 @@ module.exports = function (config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
+    // set/alter this if your "terraform" is timing out on tests
+    browserNoActivityTimeout: 200000,
+
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['browserify', 'jasmine'],
