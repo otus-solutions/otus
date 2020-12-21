@@ -16,7 +16,6 @@
 
   controller.$inject = [
     '$mdToast',
-    '$mdDialog',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.otus.dashboard.core.ContextService',
     'otusjs.deploy.LoadingScreenService',
@@ -28,20 +27,15 @@
     'otusjs.user.business.UserAccessPermissionService'
   ];
 
-  function controller($mdToast, $mdDialog, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService,
+  function controller($mdToast, ParticipantLaboratoryService, dashboardContextService, LoadingScreenService,
                       Publisher, DialogService, LocationPointRestService, LocationPointFactory, ApplicationStateService, UserAccessPermissionService) {
     var self = this;
-    var confirmCancel;
-    var confirmAliquotingExitDialog;
-    var confirmFinish;
-    var invalidDate;
-    var _time;
     var hideDelayTime = 3000;
     var changedTubes = false;
 
-    self.selectedLocationPoint = {}
-    self.userLocationPoints = []
-    self.userAccessToLaboratory = ""
+    self.selectedLocationPoint = {};
+    self.userLocationPoints = [];
+    self.userAccessToLaboratory = "";
 
     self.$onInit = onInit;
     self.changeState = changeState;
@@ -62,7 +56,6 @@
       self.participantLabel = angular.copy(self.labels);
       self.participantLabel.tubes = [];
       _checkingLaboratoryPermission();
-      _buildDialogs();
       fetchLocationPoints();
       self.processingDate = new Date();
       self.now = new Date();
@@ -100,21 +93,15 @@
     }
 
     function _getSelectedLocationPoint(callback) {
-      callback(
-        self.selectedLocationPoint
-      )
+      callback(self.selectedLocationPoint)
     }
 
     function _getFilteredLocationPoints(callback){
-      callback(
-        self.filteredLocationPoints
-      )
+      callback(self.filteredLocationPoints)
     }
 
     function _getLocationPoints(callback) {
-      callback(
-        self.locationPoints
-      )
+      callback(self.locationPoints)
     }
 
     function saveLocationPoint() {
@@ -131,14 +118,14 @@
     function _filterLocationPointByParticipant() {
       self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
         locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
-      )
+      );
       Publisher.unsubscribe('filtered-location-points')
       Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
     }
 
     function _filterLocationPoints() {
       if(self.userLocationPoints) {
-        self.userLocationIds = []
+        self.userLocationIds = [];
 
         for(const location of self.userLocationPoints) {
           self.userLocationIds.push(location._id)
@@ -147,7 +134,7 @@
         self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
           self.userLocationIds.includes(locationPoint._id) ||
           locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
-        )
+        );
         Publisher.unsubscribe('filtered-location-points')
         Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
 
@@ -157,14 +144,14 @@
     function _filterLocationPointByParticipant() {
       self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
         locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
-      )
+      );
       Publisher.unsubscribe('filtered-location-points')
       Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
     }
 
     function _filterLocationPoints() {
       if(self.userLocationPoints) {
-        self.userLocationIds = []
+        self.userLocationIds = [];
 
         for(const location of self.userLocationPoints) {
           self.userLocationIds.push(location._id)
@@ -173,7 +160,7 @@
         self.filteredLocationPoints = self.locationPoints.filter(locationPoint =>
           self.userLocationIds.includes(locationPoint._id) ||
           locationPoint._id == ParticipantLaboratoryService.participant.fieldCenter.locationPoint
-        )
+        );
         Publisher.unsubscribe('filtered-location-points')
         Publisher.subscribe('filtered-location-points', _getFilteredLocationPoints)
 
@@ -189,14 +176,14 @@
         _filterLocationPointByParticipant();
         _fetchUserLocationPoints();
         saveLocationPoint();
-      })
+      });
     }
 
     function _fetchUserLocationPoints() {
       LocationPointRestService.getUserLocationPoint().then(function (response) {
         self.userLocationPoints = LocationPointFactory.fromArray(response.data.transportLocationPoints);
         _filterLocationPoints();
-      })
+      });
     }
 
     function saveAliquots() {
@@ -211,7 +198,10 @@
       });
 
       if (changedAliquots) {
-        DialogService.showDialog(confirmAliquotingExitDialog).then(function() {
+        DialogService.showConfirmationDialog(
+          'Descartar Alterações?',
+          'Alíquotas alteradas serão descartadas.',
+          'Confirmação de cancelamento').then(function() {
           _returnMain();
         });
       } else {
@@ -220,9 +210,7 @@
     }
 
     function _getDateTimeProcessing(callback) {
-      callback({
-        date: self.processingDate
-      })
+      callback({date: self.processingDate})
     }
 
     function changeState(moment) {
@@ -271,15 +259,20 @@
         updateChangedTubesStructure.tubes.push(tube);
       });
 
-      DialogService.showDialog(confirmFinish).then(function() {
-        ParticipantLaboratoryService.updateTubeCollectionData(updateChangedTubesStructure).then(function() {
-          self.labParticipant.updateTubeList();
-          Publisher.publish('fill-original-tube-list', self.labParticipant.tubes);
-          Publisher.publish('refresh-laboratory-participant', 'coleta');
-          _showToastMsg('Registrado com sucesso!');
-        }).catch(function(e) {
-          _showToastMsg('Falha ao registrar coleta');
-        });
+      DialogService.showConfirmationDialog(
+        'Confirmar alteração:',
+        'Deseja salvar as alterações?',
+        'Confirmação de finalização').then(function() {
+        ParticipantLaboratoryService.updateTubeCollectionData(updateChangedTubesStructure)
+          .then(function() {
+            self.labParticipant.updateTubeList();
+            Publisher.publish('fill-original-tube-list', self.labParticipant.tubes);
+            Publisher.publish('refresh-laboratory-participant', 'coleta');
+            _showToastMsg('Registrado com sucesso!');
+          })
+          .catch(function(e) {
+            _showToastMsg('Falha ao registrar coleta');
+          });
       });
     }
 
@@ -291,9 +284,13 @@
       });
 
       if (changedTubes) {
-        DialogService.showDialog(confirmCancel).then(function() {
-          _returnMain();
-        });
+        DialogService.showConfirmationDialog(
+          'Confirmar cancelamento:',
+          'Alterações não finalizadas serão descartadas.',
+          'Confirmação de cancelamento')
+          .then(function() {
+            _returnMain();
+          });
       } else {
         _returnMain();
       }
@@ -315,12 +312,15 @@
       });
 
       if (changedTubes) {
-        DialogService.showDialog(confirmCancel).then(function() {
-          _reloadTubeList();
-          Publisher.publish('refresh-laboratory-participant', 'coleta');
-          _showToastMsg('As alterações foram desfeitas.');
-        });
-
+        DialogService.showConfirmationDialog(
+          'Confirmar cancelamento:',
+          'Alterações não finalizadas serão descartadas.',
+          'Confirmação de cancelamento')
+          .then(function() {
+            _reloadTubeList();
+            Publisher.publish('refresh-laboratory-participant', 'coleta');
+            _showToastMsg('As alterações foram desfeitas.');
+          });
       } else {
         _showToastMsg('As alterações foram desfeitas.');
       }
@@ -339,80 +339,14 @@
       );
     }
 
-
-    function _buildDialogs() {
-      self.getButtons = getButtons;
-
-      self.buttons = [
-        {
-          message:'Ok',
-          action:function(){$mdDialog.hide()},
-          class:'md-raised md-primary'
-        },
-        {
-          message:'Voltar',
-          action:function(){$mdDialog.cancel()},
-          class:'md-raised md-no-focus'
-        }
-      ];
-
-      function getButtons(){
-        return self.buttons;
-      }
-
-      confirmCancel = {
-        dialogToTitle:'Cancelamento',
-        titleToText:'Confirmar cancelamento:',
-        textDialog:'Alterações não finalizadas serão descartadas.',
-        ariaLabel:'Confirmação de cancelamento',
-        buttons: getButtons()
-      };
-
-      confirmAliquotingExitDialog = {
-        dialogToTitle:'Cancelamento',
-        titleToText:'Descartar Alterações?',
-        textDialog:'Alíquotas alteradas serão descartadas.',
-        ariaLabel:'Confirmação de cancelamento',
-        buttons: [
-          {
-            message:'Continuar',
-            action:function(){$mdDialog.hide()},
-            class:'md-raised md-primary'
-          },
-          {
-            message:'Cancelar',
-            action:function(){$mdDialog.cancel()},
-            class:'md-raised md-no-focus'
-          }
-        ]
-      };
-
-      confirmFinish = {
-        dialogToTitle:'Salvar',
-        titleToText:'Confirmar alteração:',
-        textDialog:'Deseja salvar as alterações?',
-        ariaLabel:'Confirmação de finalização',
-        buttons: getButtons()
-      };
-
-      invalidDate = {
-        dialogToTitle:'Obrigatório',
-        titleToText:'Atenção',
-        textDialog:'Campo obrigatório!',
-        ariaLabel:'Confirmação de data',
-        buttons: [
-          {
-            message:'ok',
-            action:function(){$mdDialog.hide()},
-            class:'md-raised md-primary'
-          }
-        ]
-      };
-    }
-
     function verifyDate() {
       if (!self.processingDate) {
-        DialogService.showDialog(invalidDate);
+        DialogService.showWarningDialog(
+          'Obrigatório',
+          'Atenção',
+          'Campo obrigatório!',
+          'Confirmação de data'
+        );
         self.processingDate = new Date();
       }
       Publisher.unsubscribe('datetime-processing');

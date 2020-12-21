@@ -16,7 +16,6 @@ describe('LaboratoryRemoteStorageService_Test_Suite', function () {
 
     _mockInitialize();
     Injections.LaboratoryRestService.initialize();
-    spyOn(Injections.LaboratoryRestService, 'getCheckingExist').and.returnValue(Mock.resolve);
   });
 
 
@@ -37,6 +36,7 @@ describe('LaboratoryRemoteStorageService_Test_Suite', function () {
     expect(service.getDescriptors).toBeDefined();
     expect(service.getAliquotDescriptors).toBeDefined();
     expect(service.getCheckingExist).toBeDefined();
+    expect(service.checkLaboratoryConfiguration).toBeDefined();
     expect(service.updateTubeCustomMetadata).toBeDefined();
 
     expect(service.getAliquots).toBeDefined();
@@ -47,9 +47,32 @@ describe('LaboratoryRemoteStorageService_Test_Suite', function () {
     expect(service.deleteLot).toBeDefined();
   });
 
-  it('getCheckingExist method should to call getCheckingExist method', function () {
+  it('getCheckingExist method should to call getCheckingExist rest method', function () {
+    spyOn(Injections.LaboratoryRestService, 'getCheckingExist').and.returnValue(Mock.resolve);
     service.getCheckingExist();
     expect(Injections.LaboratoryRestService.getCheckingExist).toHaveBeenCalledTimes(1);
+  });
+
+  describe('checkLaboratoryConfiguration_method', () => {
+
+    it('should_return_promise_resolved_with_true', function() {
+      spyOn(Injections.LaboratoryRestService, 'getCheckingExist').and.returnValue(Promise.resolve({data: true}));
+      expect(service.checkLaboratoryConfiguration()).toBePromise();
+      expect(Injections.LaboratoryRestService.getCheckingExist).toHaveBeenCalledTimes(1);
+    });
+
+    it('should_return_promise_rejected_with_false', function() {
+      spyOn(Injections.LaboratoryRestService, 'getCheckingExist').and.returnValue(Promise.resolve({data: false}));
+      expect(service.checkLaboratoryConfiguration()).toBePromise();
+      expect(Injections.LaboratoryRestService.getCheckingExist).toHaveBeenCalledTimes(1);
+    });
+
+    it('should_return_promise_rejected_with_error', function() {
+      spyOn(Injections.LaboratoryRestService, 'getCheckingExist').and.returnValue(Promise.reject('error'));
+      expect(service.checkLaboratoryConfiguration()).toBePromise();
+      expect(Injections.LaboratoryRestService.getCheckingExist).toHaveBeenCalledTimes(1);
+    });
+    
   });
 
   it('updateTubeCustomMetadata method should to call updateTubeCustomMetadata rest method', function () {

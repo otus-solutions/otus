@@ -1,6 +1,6 @@
 {
   "name": "otus",
-  "version": "1.47.0",
+  "version": "1.48.0",
   "description": "Tool for data entry in a research environment.",
   "keywords": [
     "otus",
@@ -50,6 +50,7 @@
     "angularjs-dragula": "2.0.0",
     "chart.js": "2.7.0",
     "chart.js-scatter": "1.1.4",
+    "cross-cookie": "0.0.9",
     "d3": "5.0.0",
     "fuse.js": "2.6.2",
     "gulp-load-plugins": "1.5.0",
@@ -60,15 +61,15 @@
     "lokijs": "1.4.2",
     "moment": "2.12.0",
     "ng-material-datetimepicker": "1.13.0",
-    "require-dir": "^1.0.0",
-    "xlsx-core": "^1.0.3",
-    "please-wait": "0.0.5",
     "otus-client-js": "1.32.0",
     "otus-domain-client": "1.1.0",
-    "otus-model-js": "1.38.0",
+    "otus-model-js": "1.39.0",
     "otus-preview-js": "1.15.3",
     "otus-validation-js": "1.1.0",
-    "qrcode-generator": "1.4.4"
+    "please-wait": "0.0.5",
+    "qrcode-generator": "1.4.4",
+    "require-dir": "^1.0.0",
+    "xlsx-core": "^1.0.3"
   },
   "devDependencies": {
     "angular-mocks": "1.4.9",

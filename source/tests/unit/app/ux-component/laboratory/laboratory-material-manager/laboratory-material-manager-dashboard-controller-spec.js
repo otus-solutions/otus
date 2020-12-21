@@ -6,14 +6,19 @@ describe('laboratoryMaterialManagerDashboardCtrl_Test_Suite', () => {
   beforeEach(() => {
     angular.mock.module('otusjs.otus');
 
+    angular.mock.module(function ($provide) {
+      $provide.value('otusjs.laboratoryViewerService.LaboratoryViewerService', Test.utils.data.LaboratoryViewerService);
+    });
+
     angular.mock.inject(($injector, $controller, $rootScope) => {
       Injections.$mdToast = $injector.get('$mdToast');
-      Injections.$mdDialog = $injector.get('$mdDialog');
       Injections.$filter = $injector.get('$filter');
       Injections.LoadingScreenService = $injector.get('otusjs.deploy.LoadingScreenService');
       Injections.ParticipantLaboratoryService = $injector.get('otusjs.laboratory.business.participant.ParticipantLaboratoryService');
       Injections.ParticipantManagerService = $injector.get('otusjs.participant.business.ParticipantManagerService');
-      Injections.DialogShowService = $injector.get('otusjs.application.dialog.DialogShowService');
+      Injections.DialogService = $injector.get('otusjs.application.dialog.DialogShowService');
+      Injections.UserAccessPermissionService = $injector.get('otusjs.user.business.UserAccessPermissionService');
+      Injections.LaboratoryViewerService = $injector.get('otusjs.laboratoryViewerService.LaboratoryViewerService');
 
       controller = $controller('laboratoryMaterialManagerDashboardCtrl', Injections);
 
@@ -38,6 +43,15 @@ describe('laboratoryMaterialManagerDashboardCtrl_Test_Suite', () => {
     expect(controller.saveMetadata).toBeDefined();
     expect(controller.updateTubeCustomMetadata).toBeDefined();
     expect(controller.isEnterKey).toBeDefined();
+  });
+
+  it('onInit_method_should_invoke_internal_methods', () => {
+    spyOn(Injections.LaboratoryViewerService, 'checkExistAndRunOnInitOrBackHome').and.callThrough();
+    spyOn(Injections.ParticipantManagerService, 'setup').and.returnValue(Promise.resolve(true));
+    spyOn(Injections.UserAccessPermissionService, 'getCheckingLaboratoryPermission').and.returnValue(Promise.resolve(true));
+    controller.$onInit();
+    expect(Injections.LaboratoryViewerService.checkExistAndRunOnInitOrBackHome).toHaveBeenCalledTimes(1);
+    expect(controller.laboratoryExists).toBe(true);
   });
 
   describe('isValidCode_method', () => {

@@ -14,6 +14,7 @@
 
     self.showDialog = showDialog;
     self.showConfirmationDialog = showConfirmationDialog;
+    self.showWarningDialog = showWarningDialog;
     self.showCustomizedDialog = showCustomizedDialog;
     self.showActivitySharingDialog = showActivitySharingDialog;
     self.showExpressActivityCreationDialog = showExpressActivityCreationDialog;
@@ -72,6 +73,71 @@
         }
       ]
     }
+    function showWarningDialog(dialogToTitle, titleToText, textDialog, ariaLabel){
+      self.data = {
+        dialogToTitle: dialogToTitle,
+        titleToText: titleToText,
+        textDialog: textDialog,
+        ariaLabel: ariaLabel,
+        buttons: _getWarningDialogButtons(),
+        cancel: self.cancel
+      };
+
+      return $mdDialog.show({
+        controller: 'dialogShowController',
+        locals: { data: self.data },
+        templateUrl: 'app/ux-component/dialog-show/dialog-show-template.html',
+        parent: angular.element(document.body),
+        controllerAs: "$ctrl",
+        clickOutsideToClose: true
+      });
+    }
+
+    function _getWarningDialogButtons() {
+      return [
+        {
+          message: 'Voltar',
+          action: function () {
+            $mdDialog.cancel()
+          },
+          class: 'md-raised md-no-focus'
+        }
+      ]
+    }
+
+
+    function showWarningDialog(dialogToTitle, titleToText, textDialog, ariaLabel){
+      self.data = {
+        dialogToTitle: dialogToTitle,
+        titleToText: titleToText,
+        textDialog: textDialog,
+        ariaLabel: ariaLabel,
+        buttons: _getWarningDialogButtons(),
+        cancel: self.cancel
+      };
+
+      return $mdDialog.show({
+        controller: 'dialogShowController',
+        locals: { data: self.data },
+        templateUrl: 'app/ux-component/dialog-show/dialog-show-template.html',
+        parent: angular.element(document.body),
+        controllerAs: "$ctrl",
+        clickOutsideToClose: true
+      });
+    }
+
+    function _getWarningDialogButtons() {
+      return [
+        {
+          message: 'Voltar',
+          action: function () {
+            $mdDialog.cancel()
+          },
+          class: 'md-raised md-no-focus'
+        }
+      ]
+    }
+
 
     function showCustomizedDialog(data, controller, templateUrl, clickOutsideToClose,
                                   controllerAs = '$ctrl',
@@ -120,17 +186,14 @@
           templateUrl: "app/ux-component/dialog-show/express-activity-creator/express-activity-creator-dialog-show-template.html",
         },
         cancel: cancel
-      }
-      return _prepareDialogShow(self.data, fullscreen);
-    }
+      };
 
-    function _prepareDialogShow(data, fullscreen){
       return $mdDialog.show({
-        controller: data.settings.controller,
+        controller: self.data.settings.controller,
         bindToController: true,
-        locals: { data: data },
-        templateUrl: data.settings.templateUrl,
-        template: data.settings.template,
+        locals: { data: self.data },
+        templateUrl: self.data.settings.templateUrl,
+        template: self.data.settings.template,
         parent: angular.element(document.body),
         controllerAs: '$ctrl',
         fullscreen: fullscreen

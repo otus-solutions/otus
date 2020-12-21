@@ -4,12 +4,11 @@
   angular
     .module('otusjs.otus.uxComponent')
     .component('otusResultVisualizer', {
-      controller: Controller,
+      controller: 'otusResultVisualizerCtrl as $ctrl',
       templateUrl: 'app/ux-component/exam/dashboard/exam-sending/results-visualizer/visualizer-template.html'
-    });
+    }).controller('otusResultVisualizerCtrl', Controller);
 
   Controller.$inject = [
-    '$mdDialog',
     '$filter',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.laboratory.core.project.ContextService',
@@ -17,36 +16,46 @@
     'otusjs.laboratory.business.project.sending.SendingExamService',
     'otusjs.deploy.LoadingScreenService',
     'otusjs.application.dialog.DialogShowService',
-    'THEME_CONSTANTS'
+    'THEME_CONSTANTS',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller($mdDialog, $filter, ApplicationStateService, ProjectContextService,
-                      DynamicTableSettingsFactory, SendingExamService, LoadingScreenService, DialogService,
-                      THEME_CONSTANTS) {
+  function Controller(
+    $filter,
+    ApplicationStateService,
+    ProjectContextService,
+    DynamicTableSettingsFactory,
+    SendingExamService,
+    LoadingScreenService,
+    DialogService,
+    THEME_CONSTANTS,
+    LaboratoryViewerService) {
+
     const MESSAGE_LOADING = "Por favor aguarde o carregamento.<br> Esse processo pode demorar um pouco...";
     const ALIQUOT_DOES_MATCH_EXAM = "Aliquot does not match exam";
     const TUBE_DOES_MATCH_EXAM = "Tube does not match exam";
     const ALIQUOT_NOT_FOUND = "Aliquot not found";
 
     var self = this;
-    var therIsNoDataToShow;
 
     self.$onInit = onInit;
     self.dynamicDataTableChange = dynamicDataTableChange;
     self.changeResults = changeResults;
 
     function onInit() {
+      self.laboratoryChecking = false;
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
+    }
+
+    function _init() {
+      self.laboratoryChecking = true;
       self.crashImage = THEME_CONSTANTS.imageURLs.crash;
-      _buildDialogs();
       self.action = ProjectContextService.getExamSendingAction();
       self.fileStructure = ProjectContextService.getFileStructure();
       self.errorAliquots = [];
       self.errorexam = [];
-      if (!self.fileStructure) {
-        DialogService.showDialog(therIsNoDataToShow).then(function () {
-          ApplicationStateService.activateExamSending();
-        });
-      } else {
+
+      if (self.fileStructure) {
         if (self.action === 'view') {
           self.examList = [];
           _loadList();
@@ -56,6 +65,17 @@
         }
         self.formattedDate = $filter('date')(self.fileStructure.examSendingLot.realizationDate, 'dd/MM/yyyy HH:mm');
       }
+      else {
+        DialogService.showWarningDialog(
+          'Erro ao entrar na tela de visualização de resultados',
+          null,
+          'Para acessar a tela de visualização de resultados você deve enviar um novo arquivo ou selecionar algum envio anterior.',
+          'erro')
+          .then(function () {
+            ApplicationStateService.activateExamSending();
+          });
+      }
+
       _buildDynamicTableSettings();
     }
 
@@ -107,11 +127,7 @@
           };
 
           if (self.action === 'view') {
-            if (element.isValid){
-              structureIcon = doneStructure;
-            } else {
-              structureIcon = warningStructure;
-            }
+            structureIcon = (element.isValid ? doneStructure : warningStructure);
           } else if (self.action === 'upload') {
             if (self.errorAliquots.length) {
              var error = self.errorAliquots.find(function (error) {
@@ -184,29 +200,5 @@
       self.settings = self.dynamicTableSettings.getSettings();
     }
 
-    function errorsIncludesCode(values, code) {
-      var includes = false;
-      values.forEach(function (value) {
-        if (value == code) {
-          includes = true;
-        }
-      });
-      return includes;
-    }
-
-    function _buildDialogs() {
-      therIsNoDataToShow = {
-         dialogToTitle:'Erro ao entrar na tela de visualização de resultados',
-         textDialog:'Para acessar a tela de visualização de resultados você deve enviar um novo arquivo ou selecionar algum envio anterior.',
-         ariaLabel:'erro',
-         buttons: [
-           {
-             message:'Ok',
-             action:function(){$mdDialog.hide()},
-             class:'md-raised md-primary'
-           }
-         ]
-       };
-    }
   }
 }());

@@ -18,7 +18,7 @@
   ];
 
   function Service($mdToast, ContextService, ActivityRepositoryService, UserRepositoryService,
-    PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues) {
+                   PreActivityFactory, ApplicationStateService, SurveyFormFactory, LoadingScreenService, ActivityValues) {
     var self = this;
     var _paperActivityCheckerData = null;
     const FAIL_ACTIVITY_CREATION = true;
@@ -70,9 +70,9 @@
         });
     }
 
-    function createPreActivity(survey, configuration, mode) {
+    function createPreActivity(survey, configuration, mode, externalID, stage) {
       let loggedUser = ContextService.getLoggedUser();
-      return PreActivityFactory.create(survey, configuration, mode, loggedUser);
+      return PreActivityFactory.create(loggedUser, survey, configuration, mode, externalID, stage);
     }
 
     function saveActivities(preActivities) {
@@ -81,13 +81,13 @@
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
         //esse catch garante que ocorrerá a troca de state mesmo que ocorra erro no backend
         //todo: remove
+        .then(() => ApplicationStateService.activateParticipantActivities())
+        .then(() => self.activities = [])
+        .then(() => LoadingScreenService.finish)
         .catch(() => {
           _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
           LoadingScreenService.finish();
-        })
-        .then(() => ApplicationStateService.activateParticipantActivities())
-        .then(() => self.activities = [])
-        .then(() => LoadingScreenService.finish);
+        });
     }
 
     function _prepareActivities(preActivities) {
@@ -103,7 +103,7 @@
     }
 
     function _createOnLineActivity(preActivity, selectedParticipant) {
-      ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.stageId)
+      ActivityRepositoryService.createOnLineActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.getStageId())
         .then(onlineActivity => self.activities.push(onlineActivity));
     }
 
@@ -111,13 +111,13 @@
       if (!preActivity.paperActivityData) throw Error("interrupted operation: invalid checker data");
       else {
         ActivityRepositoryService.createPaperActivity(preActivity.surveyForm,
-          preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID, preActivity.stageId)
+          preActivity.user, selectedParticipant, preActivity.paperActivityData, preActivity.configuration, preActivity.externalID, preActivity.getStageId())
           .then(paperActivity => self.activities.push(paperActivity));
       }
     }
 
     function _createAutoFillActivity(preActivity, selectedParticipant) {
-      ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.stageId)
+      ActivityRepositoryService.createAutoFillActivity(preActivity.surveyForm, preActivity.user, selectedParticipant, preActivity.configuration, preActivity.externalID, preActivity.getStageId())
         .then(autoFillActivity => self.activities.push(autoFillActivity));
     }
 
@@ -242,16 +242,16 @@
       LoadingScreenService.start();
       return _prepareActivities(preActivity)
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
-        .catch(() => {
-          _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
-          LoadingScreenService.finish();
-        })
         .then(() => {
           _callToast('sucessActivityCreation');
           LoadingScreenService.finish();
         })
         .then(() => self.activities = [])
-        .then(() => LoadingScreenService.finish);
+        .then(() => LoadingScreenService.finish)
+        .catch(() => {
+          _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
+          LoadingScreenService.finish();
+        });
     }
 
   }

@@ -7,10 +7,11 @@
 
   Controller.$inject = [
     'otusjs.user.business.UserAccessPermissionService',
-    'otusjs.application.state.ApplicationStateService'
+    'otusjs.application.state.ApplicationStateService',
+    'otusjs.laboratoryViewerService.LaboratoryViewerService'
   ];
 
-  function Controller(UserAccessPermissionService, ApplicationStateService) {
+  function Controller(UserAccessPermissionService, ApplicationStateService, LaboratoryViewerService) {
     var self = this;
 
     self.$onInit = onInit;
@@ -20,7 +21,7 @@
     self.sendingExam = sendingExam;
 
     function onInit() {
-      _checkingLaboratoryPermission()
+      LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_checkingLaboratoryPermission);
     }
 
     function _checkingLaboratoryPermission() {

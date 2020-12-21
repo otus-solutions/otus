@@ -307,8 +307,24 @@ Test.utils.data.participantExamStatusList = {
 Test.utils.data.selectedParticipant = {
   name: "OTUS",
   recruitmentNumber: 3051442,
-  sex: "M"
-}
+  sex: "M",
+  birthdate: {
+    objectType: "ImmutableDate",
+    value: "1977-03-14 :0:00.000"
+  },
+  fieldCenter: {
+    name: "Rio Grande do Sul",
+    code: 5,
+    acronym: "RS"
+  },
+  meta: {
+    revision: 0,
+    created: 0,
+    version: 0
+  },
+  stringfiedRN: "5003388"
+};
+
 Test.utils.data.HeatMapExam = {
   "name": "CÁLCIO - URINA AMOSTRA ISOLADA",
   "objectType": "HeatMapExam",
@@ -359,6 +375,16 @@ Test.utils.data.ExamWithDoesNotAppliesData = {
   observation: "",
   recruitmentNumber: 7000312
 };
+
+Test.utils.data.tubeCollectionData = {
+  "objectType": "TubeCollectionData",
+  "isCollected": true,
+  "metadata": "",
+  "operator": "lalala@gmail.com",
+  "time": "2017-06-06T15:15:28.958Z",
+  "customMetadata": ["59b68aee28f10d398e986595"]
+};
+
 Test.utils.data.tube = {
   "objectType": "Tube",
   "type": "EDTA",
@@ -378,6 +404,7 @@ Test.utils.data.tube = {
     ]
   }
 };
+
 Test.utils.data.aliquot = {
   "_id": "5ce2daad99e0c90065f4050a",
   "tubeCode": "351286198",
@@ -424,6 +451,11 @@ Test.utils.data.aliquot = {
       "date": "2019-05-14T12:36:23.631Z"
     }
   ]
+};
+Test.utils.data.stage = {
+  _id: "5c198c8516da48006669ac63",
+  name: "Onda X",
+  surveyAcronyms: ["CSJ"]
 };
 Test.utils.data.activityPASC = {
   "_id": "58ee02de28110d317f1ad09b",
@@ -7373,8 +7405,9 @@ Test.utils.data.preActivity = {
     "realizationDate": "2019-12-04T11:54:58.171Z"
   },
   "externalID": null,
-  "preActivityValid": false
-}
+  "preActivityValid": false,
+  "stage": Test.utils.data.stage
+};
 Test.utils.data.userActivityPendency = {
   "_id": "5e137acf6f34296229baf794",
   "objectType": "userActivityPendency",
@@ -7894,4 +7927,251 @@ Test.utils.data.activitySharingArtfacts = {
       "url": "https://localhost:51008/otus/survey-player/#/?activity=5f49059e5b1291413d340190&token=eyJhbGciOiJIUzI1NiJ9.eyJtb2RlIjoic2hhcmluZyJ9.LF49U2dH0TOxFMhigjKP8Q2YESWItwIlkHT3PEWqK1Q"
     }}
   }
+};
+
+Test.utils.data.LaboratoryViewerService = {
+  checkExistAndRunOnInitOrBackHome: function(onInitFunction, finishLoadingScreen){
+    onInitFunction();
+    if(finishLoadingScreen){
+      finishLoadingScreen();
+    }
+  }
+};
+
+Test.utils.data.fileStructure = {
+  examSendingLot: {
+    _id: '1234',
+    realizationDate: '2020-12-16'
+  },
+  exams: []
+};
+
+Test.utils.data.ProjectContextService = {
+  getExamSendingAction: function() { return 'view'; },
+  setExamSendingAction: function(action) {},
+  getFileStructure: function() { return Test.utils.data.fileStructure; },
+  setFileStructure: function(obj) {}
+};
+
+Test.utils.data.participantLaboratory = {
+
+  "objectType": null,
+  "recruitmentNumber": 5003304,
+  "collectGroupName": "DEFAULT",
+  "tubes": [
+    {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "FASTING",
+      "code": "341002263",
+      "groupName": "DEFAULT",
+      "aliquots": [{
+        "objectType": "Aliquot",
+        "code": 34200252,
+        "name": "BIOCHEMICAL_SERUM",
+        "container": "CRYOTUBE",
+        "role": "EXAM",
+        "aliquotCollectionData": {
+          "objectType": "AliquotCollectionData",
+          "metadata": "",
+          "operator": "LALA@GMAIL.COM",
+          "time": "2017-06-22T21:43:06.086Z",
+          "processing": "2018-06-20T18:58:10.942Z"
+        },
+        "aliquotHistory": [{
+          "objectType": "AliquotEvent",
+          "type": "CONVERTED_STORAGE",
+          "userEmail": "otus@gmail.com",
+          "description": "Falta de material para completar os exames",
+          "date": "2019-05-14T12:36:23.631Z"
+        }]
+      }],
+      "order": 1,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": true,
+        "metadata": "",
+        "operator": "lalala@gmail.com",
+        "time": "2017-06-06T15:15:28.958Z",
+        "customMetadata": ["59b68aee28f10d398e986595"]
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "EDTA",
+      "moment": "FASTING",
+      "code": "361009386",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 2,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null,
+        "customMetadata": []
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "FLUORIDE",
+      "moment": "FASTING",
+      "code": "361009389",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 3,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "FASTING",
+      "code": "361009381",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 4,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "FASTING",
+      "code": "361009382",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 5,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "FASTING",
+      "code": "361009383",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 6,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "EDTA",
+      "moment": "FASTING",
+      "code": "361009387",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 7,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "EDTA",
+      "moment": "FASTING",
+      "code": "361009388",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 8,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD",
+      "code": "361009390",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 9,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "GEL",
+      "moment": "POST_OVERLOAD",
+      "code": "361009391",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 10,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "FLUORIDE",
+      "moment": "POST_OVERLOAD",
+      "code": "361009385",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 11,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+    }, {
+      "objectType": "Tube",
+      "type": "URINE",
+      "moment": "NONE",
+      "code": "361009384",
+      "groupName": "DEFAULT",
+      "aliquots": [],
+      "order": 12,
+      "tubeCollectionData": {
+        "objectType": "TubeCollectionData",
+        "isCollected": false,
+        "metadata": "",
+        "operator": "",
+        "time": null
+      }
+    }],
+  "exams": []
+};
+
+Test.utils.data.locationPoint = {
+  transportLocationPoints: []
+};
+
+Test.utils.data.codeConfiguration = {
+  waveNumberToken: 1,
+  tubeToken: 'tubeToken',
+  cryotubeToken: 'cryotubeToken',
+  palletToken: 'palletToken'
 };

@@ -1,0 +1,26 @@
+<div
+  ng-show="$ctrl.pendentActivities.length > 0"
+  layout="column"
+  layout-align="center center"
+  layout-fill
+  layout-padding
+  flex
+  class="layout-fill layout-padding ng-isolate-scope layout-align-center-center layout-column flex"
+>
+  <md-card layout="column" style="min-width: 90vw;border-radius: 5px;" class="full-list-items no-border _md md-default-theme layout-column">
+    <md-card-content class="no-padding">
+      <md-card-header flex layout-align="start center" style="border-radius: 5px" class="primary-header header-list layout-align-start-center flex">
+        <md-card-header-text layout="row" layout-xs="column" layout-align="start center" layout-align-xs="start start">
+          <div layout="row">
+            <md-icon style="color: yellow; margin-right: 8px; margin-left: 0;">warning</md-icon>
+            <span>Você possui <b><u>{{ $ctrl.pendentActivities.length }}</u></b> atividade{{ $ctrl.pendentActivities.length > 1 ? 's' : null}} pendente{{ $ctrl.pendentActivities.length > 1 ? 's' : null}} de envio</span>
+          </div>
+
+          <span flex='5'></span>
+
+          <md-button style="margin-left: auto;" ng-click="$ctrl.showPendenciesList()">EXIBIR PENDÊNCIAS</md-button>
+        </md-card-header-text>
+      </md-card-header>
+    </md-card-content>
+  </md-card>
+</div>

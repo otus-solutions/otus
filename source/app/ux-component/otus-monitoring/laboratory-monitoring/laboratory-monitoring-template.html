@@ -3,7 +3,7 @@
     fill: steelblue;
   }
 </style>
-<div layout="column" flex>
+<div layout="column" flex ng-if="$ctrl.laboratoryExists">
   <otus-dashboard-sidenav layout="row">
     <hide-participant-box></hide-participant-box>
   </otus-dashboard-sidenav>

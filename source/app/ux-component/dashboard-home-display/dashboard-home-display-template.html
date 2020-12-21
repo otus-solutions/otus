@@ -37,8 +37,12 @@
 </style>
 <md-content flex>
   <div layout="row" layout-xs="column" layout-align="end start" flex>
-
     <div layout="column" layout-align="start center" layout-align-xs="center center" layout-padding layout-fill flex="100">
+
+      <!-- Pendent activities warning banner -->
+      <otus-dashboard-send-pendencies></otus-dashboard-send-pendencies>
+
+      <!-- Pariticipants searchbar -->
       <div layout="row" ng-show="$ctrl.userAccessToParticipant.participantListAccess" layout-padding style="width: 100%;" layout-align="center center" >
         <div layout="column" layout-padding layout-align="center center">
           <otus-participant-search class="full-width" on-select="$ctrl.selectParticipant(participant)" show-all-participants="$ctrl.managerParticipantsDashboard()"
@@ -65,7 +69,7 @@
           </div>
 
           <div layout="row" layout-sm="column" layout-md="column" ng-show="$ctrl.userAccessToActivity.offlineActivitySincAccess">
-            <md-card class="card-button" ng-init="showLaboratory=true" layout-fill >
+            <md-card class="card-button" ng-init="showLaboratory=true" layout-fill ng-show="$ctrl.userAccessToActivity.offlineActivitySincAccess" >
               <md-card-content class="no-padding" layout="column" layout-align="start start">
                 <md-button ng-click="$ctrl.activateOfflineActivitySynchronize()" layout-align="center" layout-margin="">
                   <md-icon>wifi_off</md-icon>Sincronismo de atividades offline
@@ -77,12 +81,12 @@
 
         <!--    Laboratory buttons-->
         <div layout="column" layout-align="center center"
-             ng-show="$ctrl.userAccessToLaboratory.sampleTransportationAccess ||
+             ng-show="$ctrl.laboratoryChecking &&
+                      ($ctrl.userAccessToLaboratory.sampleTransportationAccess ||
                       $ctrl.userAccessToLaboratory.examLotsAccess ||
                       $ctrl.userAccessToLaboratory.examSendingAccess ||
                       $ctrl.userAccessToLaboratory.unattachedLaboratoriesAccess ||
-                      $ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess
-                     "
+                      $ctrl.userAccessToLaboratory.laboratoryMaterialManagerAccess)"
              class="first-menu-margin">
 
           <div layout="row" layout-align="center center" layout-align-sm="start center" layout-align-md="start center">
@@ -170,7 +174,7 @@
               </md-card-content>
             </md-card>
 
-            <md-card class="card-button" layout-fill ng-show="$ctrl.userAccessToMonitoring.laboratoryFlagsAccess">
+            <md-card class="card-button" layout-fill ng-show="$ctrl.laboratoryChecking && $ctrl.userAccessToMonitoring.laboratoryFlagsAccess">
               <md-card-content class="no-padding" layout="column" layout-align="start start">
                 <md-button class="md-body-1 option"
                            ng-click="$ctrl.laboratoryActivityFlagsReport()"
@@ -180,7 +184,7 @@
               </md-card-content>
             </md-card>
 
-            <md-card class="card-button" layout-fill ng-show="$ctrl.userAccessToMonitoring.laboratoryControlAccess">
+            <md-card class="card-button" layout-fill ng-show="$ctrl.laboratoryChecking && $ctrl.userAccessToMonitoring.laboratoryControlAccess">
               <md-card-content layout="column" layout-align="start start" class="no-padding">
                 <md-button class="md-body-1 option" layout-margin="" layout-align="center"
                            ng-click="$ctrl.laboratoryMonitoring()">

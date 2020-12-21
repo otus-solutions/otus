@@ -51,7 +51,7 @@
           </md-select>
         </md-input-container>
 
-        <md-input-container ng-if="$ctrl.surveyForm.isRequiredExternalID()" class="external-id-input">
+        <md-input-container ng-if="$ctrl.validateExternalIdTruthy()" class="external-id-input">
           <label>{{ $ctrl.dialogValues.inputLabel.externalID }}</label>
           <input name="externalID"
                  ng-model="$ctrl.preActivityArtefacts.externalID"
@@ -63,7 +63,7 @@
           </div>
         </md-input-container>
 
-        <md-input-container ng-if="!$ctrl.surveyForm.isRequiredExternalID()">
+        <md-input-container ng-if="$ctrl.validateExternalIdFalsy()">
           <small class="small-titles">{{ $ctrl.dialogValues.titles.externalIDNotRequired }}<sup>*</sup></small>
         </md-input-container>
 

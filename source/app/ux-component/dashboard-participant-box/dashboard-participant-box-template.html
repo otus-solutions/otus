@@ -36,12 +36,12 @@
           <p style="color: orange; margin: 0; padding: 0 4px">Novo</p>
           <md-icon md-svg-icon="file-document-box" aria-label="Etapas de Atividades" style="margin-top:0; margin-bottom:0;"
             class="md-accent"></md-icon>
-          <md-button id="surveyforms-menu" ng-click="$ctrl.loadParticipantActivityStage()" style="margin-top:0; margin-bottom:0;">
+          <md-button id="surveyforms-menu-stage" ng-click="$ctrl.loadParticipantActivityStage()" style="margin-top:0; margin-bottom:0;">
             Atividades</md-button>
         </div>
       </md-list-item>
-      <md-list-item ng-show="$ctrl.userAccessToLaboratory.participantLaboratoryAccess
-                            " class="md-2-line">
+      <md-list-item ng-if="$ctrl.laboratoryChecking && $ctrl.userAccessToLaboratory.participantLaboratoryAccess"
+                    class="md-2-line">
         <div layout-align="start center">
           <md-icon md-svg-icon="eyedropper-variant" aria-label="Laboratório" class="md-accent"></md-icon>
           <md-button id="laboratory-menu" ng-click="$ctrl.loadLaboratory()">Laboratório</md-button>

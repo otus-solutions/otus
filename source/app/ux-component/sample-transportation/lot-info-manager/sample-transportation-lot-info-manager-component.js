@@ -13,17 +13,14 @@
 
   Controller.$inject = [
     '$mdToast',
-    '$mdDialog',
     'otusjs.laboratory.core.ContextService',
     'otusjs.laboratory.business.project.transportation.MaterialTransportationService',
     'otusjs.application.state.ApplicationStateService',
     'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller($mdToast, $mdDialog, laboratoryContextService, MaterialTransportationService, ApplicationStateService, DialogService) {
+  function Controller($mdToast, laboratoryContextService, MaterialTransportationService, ApplicationStateService, DialogService) {
     var self = this;
-    var _confirmCancel, _confirmationSave, _confirmationUpdate;
-    var _deleteAlreadyUsedAliquotsDialog;
 
     //TODO: Colors for the aliquots types in the charts, the colors will be dynamic in the future
     var color = ["#F44336","#E91E63","#9C27B0","#673AB7","#3F51B5","#2196F3",
@@ -56,7 +53,6 @@
         self.lot.shipmentDate = new Date();
         self.lot.processingDate = new Date();
       }
-      _buildDialogs();
       _formatLotDates();
       self.setChartData();
     }
@@ -80,14 +76,21 @@
         _toastRouterEmpty();
         return;
       }
+
       MaterialTransportationService.createLot(self.lot.toJSON()).then(function() {
-        DialogService.showDialog(_confirmationSave).then(function() {
-          self.updateLotStateData();
-          ApplicationStateService.activateSampleTransportationManagerList();
-        }).catch(function () {
-          self.updateLotStateData();
-          ApplicationStateService.activateSampleTransportationManagerList();
-        });
+        DialogService.showWarningDialog(
+          'Confirmação',
+          'Lote salvo com sucesso:',
+          'O material inserido no lote encontra-se disponível para o destino informado.',
+          'Confirmação de sucesso')
+          .then(function() {
+            self.updateLotStateData();
+            ApplicationStateService.activateSampleTransportationManagerList();
+          })
+          .catch(function () {
+            self.updateLotStateData();
+            ApplicationStateService.activateSampleTransportationManagerList();
+          });
       }, function(err) {
         _backendErrorAliquotsAlreadyUsed(err.data.CONTENT.value);
         _toastOtherLot()
@@ -96,13 +99,19 @@
 
     function alterLot() {
       MaterialTransportationService.updateLot(self.lot).then(function() {
-        DialogService.showDialog(_confirmationUpdate).then(function() {
-          self.updateLotStateData();
-          ApplicationStateService.activateSampleTransportationManagerList();
-        }).catch(function () {
-          self.updateLotStateData();
-          ApplicationStateService.activateSampleTransportationManagerList();
-        });
+        DialogService.showWarningDialog(
+          'Confirmação',
+          'Lote alterado com sucesso:',
+          'O material alterado no lote encontra-se disponível para o destino informado.',
+          'Confirmação de sucesso')
+          .then(function() {
+            self.updateLotStateData();
+            ApplicationStateService.activateSampleTransportationManagerList();
+          })
+          .catch(function () {
+            self.updateLotStateData();
+            ApplicationStateService.activateSampleTransportationManagerList();
+          });
       }, function(err) {
         _backendErrorAliquotsAlreadyUsed(err.data.CONTENT.value);
         _toastOtherLot();
@@ -110,10 +119,14 @@
     }
 
     function cancel() {
-     DialogService.showDialog(_confirmCancel).then(function() {
-        self.updateLotStateData();
-        ApplicationStateService.activateSampleTransportationManagerList();
-      });
+      DialogService.showConfirmationDialog(
+        'Confirmar cancelamento:',
+        'As alterações realizadas no lote serão descartadas.',
+        'Confirmação de cancelamento')
+        .then(function() {
+          self.updateLotStateData();
+          ApplicationStateService.activateSampleTransportationManagerList();
+        });
     }
 
     function updateLotStateData(newData) {
@@ -136,8 +149,6 @@
       );
     }
 
-
-
     function _toastAliquotsRemoved(count) {
       $mdToast.show(
         $mdToast.simple()
@@ -147,18 +158,22 @@
     }
 
     function _backendErrorAliquotsAlreadyUsed(aliquotsArray){
-      _deleteAlreadyUsedAliquotsDialog.textDialog =
+      const textDialog =
         'A(s) aliquota(s): '
         + _convertArrayToStringIncludesLastPosition(aliquotsArray,' e ')
         + ' estão em outro(s) lote(s), deseja remove-la(s) do lote atual?';
 
-      DialogService.showDialog(_deleteAlreadyUsedAliquotsDialog).then(function() {
-        self.selectedAliquots = aliquotsArray;
-        removeAliquots()
-      })
-      .catch(function() {
-        _hasErrorBackEnd(aliquotsArray);
-      });
+      DialogService.showConfirmationDialog(
+        'Aliquota(s) utilizada(s) em outro(s) Lote(s), remover aliquotas?',
+        textDialog,
+        'Confirmação de cancelamento')
+        .then(function() {
+          self.selectedAliquots = aliquotsArray;
+          removeAliquots()
+        })
+        .catch(function() {
+          _hasErrorBackEnd(aliquotsArray);
+        });
     }
 
     function _convertArrayToStringIncludesLastPosition(array, includes){
@@ -202,65 +217,6 @@
     //       self.fullAliquotsList = response;
     //     });
     // }
-
-    function _buildDialogs() {
-      self.getButtons = getButtons;
-
-      self.buttons = [
-        {
-          message:'Ok',
-          action:function(){$mdDialog.hide()},
-          class:'md-raised md-primary'
-        },
-        {
-          message:'Voltar',
-          action:function(){$mdDialog.cancel()},
-          class:'md-raised md-no-focus'
-        }
-      ];
-
-      function getButtons(){
-        return self.buttons;
-      }
-
-      _confirmCancel = {
-        dialogToTitle:'Cancelamento',
-        titleToText:'Confirmar cancelamento:',
-        textDialog:'As alterações realizadas no lote serão descartadas.',
-        ariaLabel:'Confirmação de cancelamento',
-        buttons: getButtons()
-      };
-      _confirmationSave = {
-        dialogToTitle:'Confirmação',
-        titleToText:'Lote salvo com sucesso:',
-        textDialog:'O material inserido no lote encontra-se disponível para o destino informado.',
-        ariaLabel:'Confirmação de sucesso',
-        buttons: [ {
-          message:'Ok',
-          action:function(){$mdDialog.hide()},
-          class:'md-raised md-primary'
-        }]
-      };
-
-      _confirmationUpdate = {
-        dialogToTitle:'Confirmação',
-        titleToText:'Lote alterado com sucesso:',
-        textDialog:'O material alterado no lote encontra-se disponível para o destino informado.',
-        ariaLabel:'Confirmação de sucesso',
-        buttons: [ {
-          message:'Ok',
-          action:function(){$mdDialog.hide()},
-          class:'md-raised md-primary'
-        }]
-      };
-      _deleteAlreadyUsedAliquotsDialog = {
-        dialogToTitle:'Cancelamento',
-        titleToText:'Aliquota(s) utilizada(s) em outro(s) Lote(s), remover aliquotas?',
-        textDialog:'A(s) aliquota(s): "asd5a4s5sa4a" estão em outro(s) lote(s), deseja remove-la(s) do lote atual?',
-        ariaLabel:'Confirmação de cancelamento',
-        buttons: getButtons()
-      };
-    }
 
     function setChartData() {
       if (!self.lot.chartAliquotDataSet.chartId) {

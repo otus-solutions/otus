@@ -38,9 +38,9 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
     expect(ctrl.updateRealizationDate).toBeDefined();
     expect(ctrl.monitoringCheckerFormSearchTextChange).toBeDefined();
     expect(ctrl.styleHeader).toBeDefined();
-    expect(ctrl.validExternalIdTruthy).toBeDefined();
-    expect(ctrl.validExternalIdFalsy).toBeDefined();
-    expect(ctrl.validTypeActivity).toBeDefined();
+    expect(ctrl.validateExternalIdTruthy).toBeDefined();
+    expect(ctrl.validateExternalIdFalsy).toBeDefined();
+    expect(ctrl.validateTypeActivity).toBeDefined();
   });
 
   it('checkerQuerySearch_method_should_return_list_of_checkers_when_nullQuery', () => {
@@ -108,23 +108,23 @@ describe('ctrl_of_ActivityAdderCardComponent_UnitTest_Suite', () => {
     expect(ctrl.styleHeader().background).toBe(expectedColor);
   });
 
-  it('validExternalIdTruthyAndAutoFill_method_should_valid_attribute_externalID', () => {
+  it('validateExternalIdTruthyAndAutoFill_method_should_valid_attribute_externalID', () => {
     ctrl.preActivity.mode = 'ONLINE';
-    expect(ctrl.validExternalIdTruthy()).toBeTruthy();
+    expect(ctrl.validateExternalIdTruthy()).toBeTruthy();
   });
 
-  it('validExternalIdFalsyAndAutoFill_method_should_valid_attribute_externalID', () => {
+  it('validateExternalIdFalsyAndAutoFill_method_should_valid_attribute_externalID', () => {
     ctrl.preActivity.mode = 'ONLINE';
-    expect(ctrl.validExternalIdFalsy()).toBeFalsy();
+    expect(ctrl.validateExternalIdFalsy()).toBeFalsy();
   });
 
-  it('validTypeActivity_method_should_valid_attribute_type_activity', () => {
+  it('validateTypeActivity_method_should_valid_attribute_type_activity', () => {
     ctrl.preActivity.mode = 'ONLINE';
-    expect(ctrl.validTypeActivity()).toBeTruthy();
+    expect(ctrl.validateTypeActivity()).toBeTruthy();
     ctrl.preActivity.mode = 'AUTOFILL';
-    expect(ctrl.validTypeActivity()).toBeTruthy();
+    expect(ctrl.validateTypeActivity()).toBeTruthy();
     ctrl.preActivity.mode = 'PAPER';
-    expect(ctrl.validTypeActivity()).toBeFalsy();
+    expect(ctrl.validateTypeActivity()).toBeFalsy();
   });
 
   Mock.createMockPreActivity = () => {
