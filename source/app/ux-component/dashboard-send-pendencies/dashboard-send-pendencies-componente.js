@@ -32,6 +32,7 @@
 
     function _getUrlPlayerHome() {
       var callback = angular.copy($window.location.href) || "";
+      callback = callback.replace("#","HASHTAG");
       var url = $cookies.get('Player-Address');
       var token = ContextUserService.getToken();
       if (!url) return $window.location.href;
