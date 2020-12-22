@@ -34,7 +34,11 @@
     /* Public methods */
     self.$onInit = onInit;
     self.initializeLaboratory = initializeLaboratory;
-    self.attacheLaboratory = attacheLaboratory;
+
+    self.attacheLabTitle = "Vincular laboratório do participante";
+    self.attacheLabText = "Utilize o função vincular laboratório para\n" +
+      "            atribuir um conjunto de tubos previamente criados\n" +
+      "            ao participante selecionado, para isso utilize o id do laboratório.";
 
     function onInit() {
       LaboratoryViewerService.checkExistAndRunOnInitOrBackHome(_init);
@@ -108,55 +112,6 @@
         });
     }
 
-    function attacheLaboratory() {
-      self.attacheError = null;
-
-      const textDialog = 'Deseja realmente vincular o laboratório código <b>'.concat(self.laboratoryIdentification)
-        .concat('</b> ao participante <b>').concat(self.selectedParticipant.recruitmentNumber)
-        .concat('</b><br /><b>O vínculo não poderá ser desfeito.</b>');
-
-      DialogShowService.showConfirmationDialog('Confirmação de Vínculo', textDialog, 'Confirmação de vínculo')
-        .then(function () {
-          LoadingScreenService.start();
-          UnattachedLaboratoryService.attacheLaboratory(self.laboratoryIdentification)
-            .then(function () {
-              _refreshLaboratory();
-              LoadingScreenService.finish();
-            })
-            .catch(function (error) {
-              self.attacheHaveErrors = true;
-              if (error.data) {
-                const ERROR_MESSAGES_DICT = {
-                  "Laboratory not found": "Laboratório não encontrado",
-                  "Laboratory is already attached": "Laboratório já foi vinculado a um participante",
-                  "Invalid configuration": _getErrorMessageForInvalidConfiguration(error.data)
-                };
-                self.attacheError = ERROR_MESSAGES_DICT[error.data.MESSAGE];
-                if(!self.attacheError){
-                  self.attacheError = UNEXPECTED_ERROR_MESSAGE;
-                }
-              }
-              else {
-                self.attacheError = UNEXPECTED_ERROR_MESSAGE;
-              }
-              LoadingScreenService.finish();
-            });
-        })
-    }
-
-    function _getErrorMessageForInvalidConfiguration(errorData){
-      if (errorData.CONTENT.laboratoryCollectGroup !== errorData.CONTENT.participantCollectGroup) {
-        self.attacheError = "O laboratório e o participante devem pertencer ao mesmo grupo de controle de qualidade";
-      }
-      if (errorData.CONTENT.laboratoryFieldCenter !== errorData.CONTENT.participantFieldCenter) {
-        if (self.attacheError) {
-          self.attacheError += " e ao mesmo centro";
-        } else {
-          self.attacheError = "O laboratório e o participante devem pertencer ao mesmo centro";
-        }
-      }
-      return self.attacheError;
-    }
 
     function _fetchLaboratory(currentState) {
       self.labels = ParticipantLaboratoryService.generateLabels();

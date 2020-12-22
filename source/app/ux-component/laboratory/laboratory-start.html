@@ -15,35 +15,11 @@
                  ng-disabled="!$ctrl.selectedParticipant.identified">Iniciar Laboratório
       </md-button>
     </div>
-    <div layout="column" layout-align="center center" flex="50" flex-xs="100" class="spacing-second-block">
+    <div layout="column" layout-align="center center" flex="50" flex-xs="100" style="padding-top: 65px">
       <div layout="column" layout-align="center center" flex="100">
-        <span class="md-title">Vincular laboratório do participante</span>
-        <div layout="row" layout-align="center center">
-          <p layout-padding="" flex="80" class="md-subheader" align="center">Utilize o função vincular laboratório para
-            atribuir um conjunto de tubos previamente criados
-            ao participante selecionado, para isso utilize o id do laboratório.</p>
-        </div>
-        <div layout="row" layout-align="center start">
-          <md-input-container class="md-icon-float md-icon-right md-block">
-            <label>Id do Laboratório</label>
-            <input ng-model="$ctrl.laboratoryIdentification" type="number" numbers-only min="0" step="1"
-                   ng-disabled="!$ctrl.selectedParticipant.identified">
-          </md-input-container>
-          <md-button class="md-fab md-mini md-primary" ng-click="$ctrl.attacheLaboratory()" aria-label="More"
-                     ng-disabled="!$ctrl.laboratoryIdentification">
-            <md-icon> compare_arrows</md-icon>
-          </md-button>
-        </div>
-      </div>
-      <div layout-margin style="height: 50px; width: 98%" flex-auto>
-        <md-toolbar ng-if="$ctrl.attacheHaveErrors" class="md-warn">
-          <h2 class="md-toolbar-tools" layout-align="center center">
-            <span>{{$ctrl.attacheError}}</span>
-          </h2>
-        </md-toolbar>
+        <attache-laboratory subtitle="$ctrl.attacheLabTitle" text="$ctrl.attacheLabText" selected-participant="$ctrl.selectedParticipant">
       </div>
     </div>
-  </div>
   <div ng-if="$ctrl.ready && $ctrl.hasLaboratory" layout="column" flex>
     <div layout="column" layout-align="center center" style=" margin-bottom: 3px;">
       <lab-control-panel lab-participant="$ctrl.participantLaboratory" state="$ctrl.state" labels="$ctrl.labels"

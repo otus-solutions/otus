@@ -5,7 +5,7 @@
     .module('otusjs.otus.uxComponent')
     .component('otusParticipantInfo', {
       controller: Controller,
-      templateUrl: 'app/ux-component/participant-info/participant-info-template.html'
+      templateUrl: 'app/ux-component/participant-info/participant-info-template.html',
     });
 
   Controller.$inject = [
@@ -24,7 +24,7 @@
     var self = this;
 
     self.participantBirthdate;
-
+    self.attacheLabTitle = 'Vincular laboratório ao participante'
     /* Public methods */
     self.selectParticipant = selectParticipant;
     /* Lifecycle hooks */
@@ -47,8 +47,8 @@
     /* Lifecycle methods */
     function onInit() {
        _loadSelectedParticipant();
-      EventService.onParticipantSelected(_loadSelectedParticipant);
-      self.selectedParticipant = null;
+       EventService.onParticipantSelected(_loadSelectedParticipant)
+       self.selectedParticipant = null;
     }
 
     function getCurrentState() {
@@ -73,7 +73,8 @@
             self.participantLabel = ParticipantLabelFactory.create(self.selectedParticipant)
             _publishPrintStructure()
             _subscribeLabels()
-          });
+        });
+
       }
     }
 
