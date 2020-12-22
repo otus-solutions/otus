@@ -6,19 +6,19 @@
           Nenhuma Etapa Adicionada
         </h2>
       </div>
-      <md-list ng-repeat="stages in $ctrl.stages track by $index">
+      <md-list ng-repeat="stage in $ctrl.stages track by $index">
         <div class="margin-not-top" layout="row" layout-align="start center">
-          <span class="md-headline new-chip-white" layout-padding ng-show="stages.stageName"
-            ng-style="{ 'background': '{{$ctrl.colorStage}}'}">{{stages.stageName}}</span>
-          <span class="md-headline new-chip-white" layout-padding ng-show="!stages.stageName" layout-padding
+          <span class="md-headline new-chip-white" layout-padding ng-show="stage.stageName"
+            ng-style="{ 'background': '{{$ctrl.colorStage}}'}">{{stage.stageName}}</span>
+          <span class="md-headline new-chip-white" layout-padding ng-show="!stage.stageName" layout-padding
             ng-style="{ 'background': '{{$ctrl.colorStage}}'}">Atividades sem Etapas</span>
         </div>
-        <md-card class="activity-null-layout" ng-show="stages.acronyms.length == 0">
+        <md-card class="activity-null-layout" ng-show="stage.acronyms.length == 0">
           <div class="activity-null ">
             <p>Nenhuma Atividade Adicionada na Etapa</p>
           </div>
         </md-card>
-        <md-list class="margin-bottom" ng-repeat="activity in stages.acronyms track by $id(activity)">
+        <md-list class="margin-bottom" ng-repeat="activity in stage.acronyms track by $id(activity)">
           <div class="stage-list-layout" ng-mouseover="activity.actionButton = $id"
             ng-mouseleave="activity.actionButton = false">
             <div class="activity-acronym" layout="row" layout-align="center center" layout-align-xs="start center">
@@ -34,12 +34,12 @@
             <div class="activity-button" layout="row" layout-align="end center">
               <otus-express-activity-creator hide-xs hide-sm hide-md ng-show="$id == activity.actionButton"
                                              acronym="{{activity.acronym}}"
-                                             stage-id="{{stages._id}}"
+                                             stage-id="{{stage._id}}"
                                              action-refresh-callback="$ctrl.refreshActivityStage()">
               </otus-express-activity-creator>
               <otus-express-activity-creator layout="row" layout-align="end center" hide-lg hide-xl
                                              acronym="{{activity.acronym}}"
-                                             stage-id="{{stages._id}}"
+                                             stage-id="{{stage._id}}"
                                              action-refresh-callback="$ctrl.refreshActivityStage()">
               </otus-express-activity-creator>
             </div>
