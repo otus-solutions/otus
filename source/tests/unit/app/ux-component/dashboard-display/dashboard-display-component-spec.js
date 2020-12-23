@@ -31,7 +31,7 @@ describe('otusDashboardDisplay_UnitTest_Suite', function () {
 
     ctrl.$onInit();
 
-    expect(Injections.EventService.onParticipantSelected).toHaveBeenCalledTimes(1);
+    expect(Injections.EventService.onParticipantSelected).toHaveBeenCalledTimes(2);
     expect(Injections.DashboardService.getSelectedParticipant).toHaveBeenCalledTimes(1);
     expect(Injections.ParticipantLaboratoryService.getCheckingExist).toHaveBeenCalledTimes(1);
   });

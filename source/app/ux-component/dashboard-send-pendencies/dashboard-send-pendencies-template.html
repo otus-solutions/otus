@@ -1,5 +1,4 @@
 <div
-  ng-show="$ctrl.pendentActivities.length > 0"
   layout="column"
   layout-align="center center"
   layout-fill
@@ -13,12 +12,12 @@
         <md-card-header-text layout="row" layout-xs="column" layout-align="start center" layout-align-xs="start start">
           <div layout="row">
             <md-icon style="color: yellow; margin-right: 8px; margin-left: 0;">warning</md-icon>
-            <span>Você possui <b><u>{{ $ctrl.pendentActivities.length }}</u></b> atividade{{ $ctrl.pendentActivities.length > 1 ? 's' : null}} pendente{{ $ctrl.pendentActivities.length > 1 ? 's' : null}} de envio</span>
+            <p>
+              Acesso a atividades pendentes para envio
+            </p>
           </div>
-
           <span flex='5'></span>
-
-          <md-button style="margin-left: auto;" ng-click="$ctrl.showPendenciesList()">EXIBIR PENDÊNCIAS</md-button>
+          <md-button style="margin-left: auto;" class="md-fab" ng-click="$ctrl.showPendenciesList()"><md-icon>forward</md-icon></md-button>
         </md-card-header-text>
       </md-card-header>
     </md-card-content>
