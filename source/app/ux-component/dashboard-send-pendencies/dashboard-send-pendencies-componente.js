@@ -17,14 +17,9 @@
   function Controller(ContextUserService, $cookies, $window) {
     var self = this;
     self.$onInit = onInit;
-    self.pendentActivities = []
     self.showPendenciesList = showPendenciesList
 
-    function onInit() {
-        cookie
-          .get('pendent-activities')
-          .then(ck => self.pendentActivities = self.pendentActivities.concat(JSON.parse(decodeURIComponent(ck))))
-    }
+    function onInit() {}
 
     function showPendenciesList() {
       $window.location.href = _getUrlPlayerHome();

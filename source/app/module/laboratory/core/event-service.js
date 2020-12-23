@@ -7,12 +7,23 @@
 
   function Service() {
     var self = this;
-    
+
     var _onParticipantSelectedListeners = {};
+    var _onLabCreatedListeners = [];
 
     /* Public methods */
     self.fireParticipantSelected = fireParticipantSelected;
-    self.onParticipantSelected = onParticipantSelected; 
+    self.onParticipantSelected = onParticipantSelected;
+    self.onLabCreated = onLabCreated;
+    self.fireOnLabCreated = fireOnLabCreated;
+
+    function onLabCreated(listener) {
+      _onLabCreatedListeners.push(listener)
+    }
+
+    function fireOnLabCreated(data) {
+      _notifyEvent(_onLabCreatedListeners, data, _onLabCreatedListeners.length);
+    }
 
     function fireParticipantSelected(data) {
       _notifyEventObj(_onParticipantSelectedListeners, data, _onParticipantSelectedListeners.length);

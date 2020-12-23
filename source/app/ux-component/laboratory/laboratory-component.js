@@ -20,7 +20,7 @@
     'otusjs.model.participant.ParticipantFactory',
     '$scope',
     'otusjs.laboratory.storage.LaboratoryLocalStorageService',
-    'otusjs.laboratoryViewerService.LaboratoryViewerService'
+    'otusjs.laboratoryViewerService.LaboratoryViewerService',
   ];
 
   function Controller($q, DialogShowService,
@@ -30,6 +30,11 @@
     var self = this;
 
     const UNEXPECTED_ERROR_MESSAGE = "Ocorreu um erro, entre em contato com o administrador do sistema";
+
+    self.attacheLabTitle = "Vincular laboratório do participante";
+    self.attacheLabText = "Utilize o função vincular laboratório para\n" +
+      "            atribuir um conjunto de tubos previamente criados\n" +
+      "            ao participante selecionado, para isso utilize o id do laboratório.";
 
     /* Public methods */
     self.$onInit = onInit;
@@ -43,6 +48,7 @@
     function _init(){
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
+
       self.hasLaboratory = false;
       self.ready = false;
       self.attacheHasErrors = false;
@@ -96,10 +102,10 @@
 
     function initializeLaboratory() {
       LoadingScreenService.start();
-
       ParticipantLaboratoryService.initializeLaboratory()
         .then(function (laboratory) {
           if (laboratory) {
+            EventService.fireOnLabCreated(true);
             self.hasLaboratory = true;
             self.ready = true;
             _fetchLaboratory();
