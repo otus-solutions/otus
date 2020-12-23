@@ -79,12 +79,11 @@
       LoadingScreenService.start();
       _prepareActivities(preActivities)
         .then(() => ActivityRepositoryService.saveActivities(self.activities))
-        //esse catch garante que ocorrerá a troca de state mesmo que ocorra erro no backend
-        //todo: remove
         .then(() => ApplicationStateService.activateParticipantActivities())
         .then(() => self.activities = [])
         .then(() => LoadingScreenService.finish)
         .catch(() => {
+          ApplicationStateService.activateParticipantActivities();
           _callToast('failActivityCreation', FAIL_ACTIVITY_CREATION);
           LoadingScreenService.finish();
         });

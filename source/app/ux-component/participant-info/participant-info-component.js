@@ -5,7 +5,10 @@
     .module('otusjs.otus.uxComponent')
     .component('otusParticipantInfo', {
       controller: Controller,
-      templateUrl: 'app/ux-component/participant-info/participant-info-template.html'
+      templateUrl: 'app/ux-component/participant-info/participant-info-template.html',
+      bindings: {
+        hasLaboratory: '='
+      }
     });
 
   Controller.$inject = [
@@ -25,6 +28,7 @@
 
     self.participantBirthdate;
 
+    self.attacheLabTitle = 'Vincular laboratório ao participante'
     /* Public methods */
     self.selectParticipant = selectParticipant;
     /* Lifecycle hooks */
