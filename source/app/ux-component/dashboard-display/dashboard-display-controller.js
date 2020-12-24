@@ -35,14 +35,12 @@
       self.userAccessToLaboratory = undefined;
       _loadParticipant();
       _getCheckingExist();
-      _checkingLaboratoryPermission();
       EventService.onParticipantSelected(_setParticipant);
 
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       ParticipantLaboratoryService.onParticipantSelected(_setupLaboratory);
       EventService.onLabCreated(_setupLaboratory);
-      _setupLaboratory();
     }
 
     function _loadSelectedParticipant(participantData) {
@@ -102,6 +100,7 @@
           self.laboratoryChecking = response;
           if(self.laboratoryChecking){
             _checkingLaboratoryPermission();
+            _setupLaboratory();
           }
         });
     }
