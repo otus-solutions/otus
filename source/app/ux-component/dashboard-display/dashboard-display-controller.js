@@ -6,24 +6,23 @@
     .controller('otusDashboardDisplayCtrl', Controller);
 
   Controller.$inject = [
-    '$mdDialog',
     'otusjs.user.business.UserAccessPermissionService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.laboratory.core.EventService',
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.model.participant.ParticipantFactory',
-    'otusjs.deploy.LoadingScreenService',
-    'otusjs.laboratory.business.unattached.UnattachedLaboratoryService',
-    'otusjs.application.dialog.DialogShowService',
-    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
-
+    'otusjs.deploy.LoadingScreenService'
   ];
 
-  function Controller($mdDialog ,UserAccessPermissionService, ParticipantLaboratoryService, EventService, DashboardService
-  ,ParticipantFactory, LoadingScreenService, UnattachedLaboratoryService, DialogShowService, LaboratoryLocalStorageService) {
+  function Controller(
+    UserAccessPermissionService,
+    ParticipantLaboratoryService,
+    EventService,
+    DashboardService,
+    ParticipantFactory,
+    LoadingScreenService) {
 
     var self = this;
-
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -35,14 +34,12 @@
       self.userAccessToLaboratory = undefined;
       _loadParticipant();
       _getCheckingExist();
-      _checkingLaboratoryPermission();
       EventService.onParticipantSelected(_setParticipant);
 
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       ParticipantLaboratoryService.onParticipantSelected(_setupLaboratory);
       EventService.onLabCreated(_setupLaboratory);
-      _setupLaboratory();
     }
 
     function _loadSelectedParticipant(participantData) {
@@ -65,17 +62,13 @@
         .then(function (hasLaboratory) {
           self.hasLaboratory = hasLaboratory;
           self.ready = true;
-          if (hasLaboratory) {
-          }
           LoadingScreenService.finish();
         });
     }
 
     function intializeLaboratory() {
       LoadingScreenService.start();
-
-      ParticipantLaboratoryService
-        .initializeLaboratory()
+      ParticipantLaboratoryService.initializeLaboratory()
         .then(function (laboratory) {
           if (laboratory) {
             self.hasLaboratory = true;
@@ -102,6 +95,7 @@
           self.laboratoryChecking = response;
           if(self.laboratoryChecking){
             _checkingLaboratoryPermission();
+            _setupLaboratory();
           }
         });
     }
