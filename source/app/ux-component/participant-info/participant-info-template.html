@@ -19,6 +19,7 @@
           <span class="md-caption">
             Centro: {{$ctrl.selectedParticipant.fieldCenter.acronym}}
           </span>
+
         </div>
         <div layout="column" layout-align="start end">
           <md-button class="md-icon-button">
@@ -37,5 +38,8 @@
       </div>
     </md-card-content>
     <attache-laboratory ng-show="!$ctrl.hasLaboratory" subtitle="$ctrl.attacheLabTitle" selected-participant="$ctrl.selectedParticipant"></attache-laboratory>
+    <span ng-show="$ctrl.hasLaboratory && $ctrl.participantLaboratory.identification" layout="row" layout-align="center center" class="md-title">
+      Laboratório vinculado: {{$ctrl.participantLaboratory.identification}}
+    </span>
   </md-card>
 </div>

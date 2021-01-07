@@ -106,7 +106,6 @@
      */
     function getLaboratory(recruitmentNumber) {
       var deferred = $q.defer();
-
       LaboratoryRestService
         .getLaboratory(recruitmentNumber)
         .then(function (response) {
