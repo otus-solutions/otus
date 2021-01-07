@@ -109,7 +109,6 @@
       LaboratoryRestService
         .getLaboratory(recruitmentNumber)
         .then(function (response) {
-          console.info(response)
           deferred.resolve(response.data);
         });
 
