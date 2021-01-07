@@ -7,7 +7,8 @@
       controller: Controller,
       templateUrl: 'app/ux-component/participant-info/participant-info-template.html',
       bindings: {
-        hasLaboratory: '='
+        hasLaboratory: '=',
+        participantLaboratory: '='
       }
     });
 

@@ -23,7 +23,7 @@
   ,ParticipantFactory, LoadingScreenService, UnattachedLaboratoryService, DialogShowService, LaboratoryLocalStorageService) {
 
     var self = this;
-
+    self.participantLaboratory = {};
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -66,6 +66,7 @@
           self.hasLaboratory = hasLaboratory;
           self.ready = true;
           if (hasLaboratory) {
+            self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
           }
           LoadingScreenService.finish();
         });
@@ -73,13 +74,13 @@
 
     function intializeLaboratory() {
       LoadingScreenService.start();
-
       ParticipantLaboratoryService
         .initializeLaboratory()
         .then(function (laboratory) {
           if (laboratory) {
             self.hasLaboratory = true;
             self.ready = true;
+            self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
           }
           LoadingScreenService.finish();
         });
