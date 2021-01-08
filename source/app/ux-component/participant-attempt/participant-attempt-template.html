@@ -1,0 +1,75 @@
+<otus-panel header-label="'Tentativas de contato'" align="'center center'" flex>
+  <div layout="column" style="width: 850px; margin: 0 auto;" flex>
+    <div layout="row" layout-align="center center" style="margin-bottom: 5px">
+      <span class="md-subheader">Endereço: </span>
+      <md-input-container flex="" layout-fill="">
+        <md-select ng-model="$ctrl.selectedAddress" aria-label="address">
+          <md-option ng-value="$ctrl.value" ng-selected="true">
+            {{$ctrl.value.address}}
+          </md-option>
+        </md-select>
+      </md-input-container>
+    </div>
+    <div class="md-whiteframe-z1" style="background: white; padding: 10px">
+      <span class="md-subhead">Adição de tentativa</span>
+      <div layout="row" layout-xs="column" layout-align-xs="center center" layout-align="space-between start">
+        <div layout="row" layout-align="center center">
+          <span class="md-subheader">Status: </span>
+          <md-input-container flex="">
+            <md-select ng-model="$ctrl.selectedStatus" aria-label="address">
+              <md-option ng-value="$ctrl.statusValue" ng-selected="true">
+                {{$ctrl.statusValue.name}}
+              </md-option>
+            </md-select>
+          </md-input-container>
+        </div>
+        <div layout="row" layout-align="center center">
+          <md-input-container class="md-input-has-placeholder md-input-has-value"
+                              style="position: relative; top: 20px;margin-left: 5px;"
+                              ng-style="{'margin':'0 auto'}">
+            <label class="md-subheader"></label>
+            <input placeholder="data/hora" mdc-datetime-picker=""
+                   show-icon="true" date="true" time="true" aria-label="attemptDatetime"
+                   type="text" id="datetime" show-todays-date=""
+                   max-date="$ctrl.now" ng-model="$ctrl.attemptDate"
+                   class="md-input" readonly="readonly" short-time="true" format="DD/MM/YYYY HH:mm A"
+                   disable-parent-scroll="true">
+          </md-input-container>
+        </div>
+      </div>
+    </div>
+    <div layout="row" layout-align="end center">
+      <md-button ng-disabled="!$ctrl.attemptDate || !$ctrl.selectedStatus" class="md-raised white">Adicionar</md-button>
+    </div>
+    <div>
+      <md-list>
+        <md-list-item class="md-whiteframe-z1" style="background: white;" layout-fill="">
+          <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center">
+            <span class="md-subhead">
+              5100520
+            </span>
+            <span class="md-subhead">
+              {{$ctrl.selectedAddress.address}}
+            </span>
+            <span style="background: orange; padding: 0px 30px;">
+              {{$ctrl.selectedStatus.name}}
+            </span>
+          </div>
+        </md-list-item>
+        <md-list-item class="md-whiteframe-z1" style="background: white; margin-top: 5px;" layout-fill="">
+          <div layout-fill="" layout="row" layout-align="space-between center">
+            <span class="md-subhead">
+              5100520
+            </span>
+            <span class="md-subhead">
+              {{$ctrl.selectedAddress.address}}
+            </span>
+            <span style="background: orange; padding: 0px 30px;">
+              Ausente
+            </span>
+          </div>
+        </md-list-item>
+      </md-list>
+    </div>
+  </div>
+</otus-panel>

@@ -11,10 +11,12 @@
     'otusjs.application.context.ContextFactory',
     'otusjs.application.storage.StorageService',
     'otusjs.deploy.ParticipantDataSourceService',
-    'otusjs.deploy.ParticipantContactRestService'
+    'otusjs.deploy.ParticipantContactRestService',
+    'otusjs.deploy.ParticipantContactAttemptRestService',
+
   ];
 
-  function Service($q, ModuleService, ContextFactory, StorageService, ParticipantDataSourceService, ParticipantContactRestService) {
+  function Service($q, ModuleService, ContextFactory, StorageService, ParticipantDataSourceService, ParticipantContactRestService, ParticipantContactAttemptRestService) {
     var self = this;
 
     /* Public methods */
@@ -29,6 +31,7 @@
       configureStorage(StorageService.session);
       configureParticipantDataSource(ParticipantDataSourceService);
       ModuleService.configureRemoteStorage(ParticipantContactRestService);
+      ModuleService.configureAttemptRemoteStorage(ParticipantContactAttemptRestService);
       return deferred.promise;
     }
 
