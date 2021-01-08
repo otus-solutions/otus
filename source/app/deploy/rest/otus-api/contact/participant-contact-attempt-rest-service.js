@@ -15,7 +15,7 @@
     let _rest = null;
 
     self.initialize = initialize;
-    self.create = createParticipantContact;
+    self.create = create;
     self.deleteContactAttempt = deleteContactAttempt;
     self.findByRnByContactTypeByPosition = findByRnByContactTypeByPosition;
     self.findMetadataAttemptByObjectType = findMetadataAttemptByObjectType;
@@ -24,7 +24,7 @@
       _rest = OtusRestResourceService.getParticipantContactAttemptResource();
     }
 
-    function createParticipantContact(attemptJson) {
+    function create(attemptJson) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.create(attemptJson).$promise;
     }
