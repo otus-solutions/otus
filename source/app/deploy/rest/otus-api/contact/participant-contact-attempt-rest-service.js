@@ -29,19 +29,20 @@
       return _rest.create(attemptJson).$promise;
     }
 
-    function findByRnByContactTypeByPosition(rn, contactType, position) {
-      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.get({rn: rn, contactType: contactType, position: position}).$promise;
-    }
-
     function deleteContactAttempt(id) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       return _rest.delete({id:id}).$promise;
     }
 
+    function findByRnByContactTypeByPosition(rn, contactType, position) {
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      return _rest.findByRnByContactTypeByPosition({rn: rn, contactType: contactType, position: position}).$promise;
+    }
+
     function findMetadataAttemptByObjectType(objectType) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      return _rest.get({objectType: objectType}).$promise;
+      const resp = _rest.findMetadataAttemptByObjectType({objectType: objectType});
+      return resp.$promise;
     }
   }
 }());

@@ -27,7 +27,7 @@
 
     function findByRnByContactTypeByPosition(rn, contactType, position) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.getParticipantContactByRecruitmentNumber(rn, contactType, position))
+        .then(remoteDataSource => remoteDataSource.findByRnByContactTypeByPosition(rn, contactType, position))
         .then(response => response.data);
     }
 
@@ -39,7 +39,7 @@
 
     function findMetadataAttemptByObjectType(objectType) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.getParticipantContactByRecruitmentNumber(objectType))
+        .then(remoteDataSource => remoteDataSource.findMetadataAttemptByObjectType(objectType))
         .then(response => response.data);
     }
   }
