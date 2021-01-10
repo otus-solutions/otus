@@ -20,6 +20,7 @@
         country: 'País',
         complements: 'Complemento',
         observation: 'Observação',
+        census: 'Censitário',
         login: 'Email'
       },
       keys: {

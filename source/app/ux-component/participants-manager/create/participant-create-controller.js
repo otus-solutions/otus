@@ -219,7 +219,7 @@
               var _participant = _getParticipantData();
               if (self.permissions.autoGenerateRecruitmentNumber) delete _participant.recruitmentNumber;
               ParticipantManagerService.create(_participant)
-                .then(function (response) {
+                .then(function (response) {''
                   if (!self.permissions.autoGenerateRecruitmentNumber) {
                     if (response.recruitmentNumber === self.participant.recruitmentNumber) {
                       _setClear();

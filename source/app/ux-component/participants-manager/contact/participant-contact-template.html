@@ -100,21 +100,22 @@
       </div>
     </div>
 
-    <otus-participant-update-contact  ng-if="$ctrl.contact"
+    <otus-participant-update-contact ng-if="$ctrl.contact"
                                      class="contact-update"
                                      contact="$ctrl.contact.phoneNumber"
                                      contact-id="{{$ctrl.contact._id}}"
                                      type="phoneNumber"
+                                     permissions="$ctrl.permissions"
                                      load-participant-contact="$ctrl.loadParticipantContact">
     </otus-participant-update-contact>
 
-    <otus-participant-update-contact  ng-if="$ctrl.contact "
+    <otus-participant-update-contact ng-if="$ctrl.contact "
                                      class="contact-update"
                                      contact="$ctrl.contact.email"
                                      contact-id="{{$ctrl.contact._id}}"
                                      load-participant-contact="$ctrl.loadParticipantContact"
                                      type="email"
-                                     ng-if="$ctrl.contact">
+                                     permissions="$ctrl.permissions">
     </otus-participant-update-contact>
 
     <otus-participant-update-contact ng-if="$ctrl.contact"
@@ -122,6 +123,7 @@
                                      contact="$ctrl.contact.address"
                                      contact-id="{{$ctrl.contact._id}}"
                                      load-participant-contact="$ctrl.loadParticipantContact"
+                                     permissions="$ctrl.permissions"
                                      type="address">
     </otus-participant-update-contact>
   </otus-panel>
