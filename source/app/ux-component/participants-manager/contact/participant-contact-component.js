@@ -88,7 +88,6 @@
         self.maxDate = new Date();
         self.centers = {};
         _loadAllCenters();
-        console.info(self.permissions);
       } catch (e) {
         console.error(e);
       }
