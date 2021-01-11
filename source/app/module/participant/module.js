@@ -6,7 +6,8 @@
       'otusjs.participant.core',
       'otusjs.participant.business',
       'otusjs.participant.repository',
-      'otusjs.participant.storage'
+      'otusjs.participant.storage',
+      'otusjs.model.participant'
     ])
     .run(Runner);
 

@@ -13,14 +13,10 @@
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.model.participant.ParticipantFactory',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.laboratory.business.unattached.UnattachedLaboratoryService',
-    'otusjs.application.dialog.DialogShowService',
-    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
-
   ];
 
   function Controller($mdDialog ,UserAccessPermissionService, ParticipantLaboratoryService, EventService, DashboardService
-  ,ParticipantFactory, LoadingScreenService, UnattachedLaboratoryService, DialogShowService, LaboratoryLocalStorageService) {
+  ,ParticipantFactory, LoadingScreenService) {
 
     var self = this;
     self.participantLaboratory = {};
