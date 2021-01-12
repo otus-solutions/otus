@@ -97,7 +97,12 @@
           const posLabels = ['main', 'second', 'third', 'fourth', 'fifth']
 
           posLabels.map((p) => response.address[p] && self.addresses.push({
-            address: response.address[p],
+            census: response.address[p].value.census,
+            street: response.address[p].value.street,
+            streetNumber: response.address[p].value.streetNumber,
+            city: response.address[p].value.city,
+            state: response.address[p].value.state,
+            country: response.address[p].value.country,
             pos: p
           }))
         })
@@ -109,8 +114,6 @@
     }
 
     function _loadSelectedParticipant(participant) {
-      console.log("_loadSelectedParticipant")
-      console.log(participant)
       if (participant) {
         self.selectedParticipant = participant;
         _getAddresses(participant);

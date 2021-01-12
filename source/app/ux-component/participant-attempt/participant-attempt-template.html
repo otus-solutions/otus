@@ -15,7 +15,7 @@
           <md-option ng-value="address"
                      ng-repeat="address in $ctrl.addresses track by $index"
                      ng-selected="$index === 0">
-            {{ address.address.value.census && address.address.value.census + " - "}}{{address.address.value.street}}, {{address.streetNumber}}
+            {{address.census && address.census + " - "}}{{address.street}}{{address.streetNumber && ", " + address.streetNumber}}{{" - " + address.city + ", " + address.state + " (" + address.country + ")"}}
           </md-option>
         </md-select>
       </md-input-container>
@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <md-button ng-click="$ctrl.save()" ng-disabled="!$ctrl.attemptDate || !$ctrl.selectedStatus" class="md-raised white">
+      <md-button ng-click="$ctrl.save()" ng-disabled="!$ctrl.attemptDate || !$ctrl.selectedStatus" class="md-raised md-primary" style="margin-left: auto">
         registrar
       </md-button>
     </div>
