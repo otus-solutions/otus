@@ -7,7 +7,7 @@
   flex
 >
   <div class="md-whiteframe-z1" style="background: white; padding: 10px">
-    <span class="md-subhead">Registrar tentativa de contato</span>
+    <span class="md-subhead"><b>Registrar tentativa de contato</b></span>
 
     <div layout="row" layout-align="center center" style="margin-top: 16px">
       <md-input-container flex="" layout-fill="">
@@ -33,10 +33,9 @@
         >
           <span class="md-subheader">Status: </span>
           <md-input-container flex="">
-            <md-select ng-model="$ctrl.selectedStatus" aria-label="address">
+            <md-select ng-model="$ctrl.selectedStatus" ng-change="$ctrl.selectStatus()" aria-label="address">
               <md-option ng-value="status"
-                         ng-repeat="status in $ctrl.addressConfiguration.statusMetadata track by $index"
-                         ng-selected="$index == 0">
+                         ng-repeat="status in $ctrl.addressConfiguration.statusMetadata track by $index">
                 {{status.value}}
               </md-option>
             </md-select>
@@ -87,9 +86,10 @@
     <md-divider style="margin-left: auto; margin-right: auto; margin-top: 16px; margin-bottom: 16px" />
 
     <div>
-      <span ng-if="$ctrl.attempts.length > 0" class="md-subhead">Visualizar tentativas de contato</span>
+      <span ng-if="$ctrl.attempts.length > 0" class="md-subhead"><b>Visualizar tentativas de contato</b></span>
       <md-list ng-if="$ctrl.attempts.length > 0" style="margin-top: 16px">
-        <md-list-item class="md-whiteframe-z1" style="background: white;" layout-fill=""
+        <span class="md-subheader">{{$ctrl.selectedAddress.address.value.census}} - {{$ctrl.selectedAddress.address.value.street}}, {{$ctrl.selectedAddress.address.value.streetNumber}}</span>
+        <md-list-item class="md-whiteframe-z1" style="background: white; margin-top: 5px;" layout-fill=""
                       ng-repeat="attempt in $ctrl.attempts track by $index">
           <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center" layout-align-xs="center center">
             <span

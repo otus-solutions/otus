@@ -38,10 +38,15 @@
     self.getAttempts = getAttempts;
     self.parseToDateWithTime = parseToDateWithTime;
     self.remove = remove;
+    self.selectStatus = selectStatus;
     self.save = save;
 
     function onInit() {
       EventService.onParticipantLoaded(_loadSelectedParticipant);
+    }
+
+    function selectStatus() {
+      console.info(self.selectedStatus)
     }
 
     function save() {
@@ -128,8 +133,12 @@
 
     function parseToDateWithTime(dateString) {
       const toDate = new Date(dateString);
-      const localDate = toDate.toLocaleDateString();
-      return localDate + " " + toDate.getHours() + ":" + toDate.getMinutes() + ':' + toDate.getSeconds();
+      const addZeros = (dateNum) => (dateNum > 0 && dateNum < 10) ? `0${dateNum}`: dateNum
+      const localDate = `${addZeros(toDate.getDate())}/${addZeros(toDate.getMonth()+1)}/${toDate.getFullYear()}`;
+      return localDate + " " +
+        addZeros(toDate.getHours()) + ":" +
+        addZeros(toDate.getMinutes()) + ':' +
+        addZeros(toDate.getSeconds());
     }
 
     function showToast(msg) {
