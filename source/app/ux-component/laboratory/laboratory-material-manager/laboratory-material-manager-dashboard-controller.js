@@ -128,7 +128,7 @@
 
     function _updateCollection(participantLaboratory, tubeStructure) {
       ParticipantLaboratoryService.updateTubeCollectionDataWithRn(participantLaboratory.recruitmentNumber, tubeStructure).then(() => {
-        _showToastMsg('salvo com sucesso!');
+        _showToastMsg('Salvo com sucesso!');
       }).catch(function (e) {
         _showToastMsg('Falha ao registrar');
       });
@@ -138,8 +138,6 @@
       const tubeStructure = {
         tubes: [self.newTube]
       };
-      console.log('saveDynamicMetadata')
-      console.log(tubeStructure)
       _updateCollection(self.participantLaboratory, tubeStructure)
     }
 
