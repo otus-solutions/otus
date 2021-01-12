@@ -91,11 +91,11 @@
         <span class="md-subheader">{{$ctrl.selectedAddress.address.value.census}} - {{$ctrl.selectedAddress.address.value.street}}, {{$ctrl.selectedAddress.address.value.streetNumber}}</span>
         <md-list-item class="md-whiteframe-z1" style="background: white; margin-top: 5px;" layout-fill=""
                       ng-repeat="attempt in $ctrl.attempts track by $index">
-          <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center" layout-align-xs="center center">
+          <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center">
             <span
               hide-gt-xs
               ng-style="{
-                backgroundColor: '{{attempt.attemptStatus.statusColor}}',
+                backgroundColor: attempt.attemptStatus.statusColor,
                 height: '10px',
                 width: '10px',
                 padding: '10px',
@@ -104,22 +104,28 @@
               }"
             ></span>
             <span hide-gt-xs flex="5"></span>
-            <div layout="column">
+            <div layout="column" flex="25">
               <span style="text-align: center">
                 {{$ctrl.parseToDateWithTime(attempt.attemptDateTime)}}
               </span>
             </div>
             <span flex="5"></span>
-            <div layout="column">
+            <div layout="column" flex="25">
               <span style="text-align: justify; line-break: anywhere">
                 {{ attempt.userEmail }}
               </span>
             </div>
             <span hide-xs flex="5"></span>
-            <span hide-xs ng-style="{backgroundColor: '{{attempt.attemptStatus.statusColor}}',
-                             padding: '10px',
-                             width: '100px',
-                             textAlign: 'center'}">
+            <span
+              hide-xs
+              ng-style="{
+                backgroundColor: attempt.attemptStatus.statusColor,
+                padding: '10px',
+                width: '100px',
+                textAlign: 'center'
+              }"
+              flex="25"
+            >
               {{attempt.attemptStatus.value}}
             </span>
             <span flex="5"></span>

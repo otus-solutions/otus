@@ -33,7 +33,8 @@
     self.addresses = [];
     self.attempts = [];
     self.now = new Date();
-    self.attemptDate = new Date();
+    self.attemptDate = new Date();    
+    self.posLabels = ['main', 'second', 'third', 'fourth', 'fifth']
 
     /*Methods*/
     self.$onInit = onInit;
@@ -99,12 +100,20 @@
       ParticipantContactService
         .getParticipantContactByRecruitmentNumber(participant.recruitmentNumber)
         .then(response => {
-          const posLabels = ['main', 'second', 'third', 'fourth', 'fifth']
+          self.posLabels.map(p => {
+            // Verifica se o endereço já foi captado
+            var posExists = false
 
-          posLabels.map((p) => response.address[p] && self.addresses.push({
-            address: response.address[p],
-            pos: p
-          }))
+            self.addresses.map(addr => {
+              if(addr.pos === p) posExists = true
+            })
+
+            // Valida o endereço e o adiciona à listagem
+            if(!posExists && response.address[p] && response.address[p].value.street) self.addresses.push({
+              address: response.address[p],
+              pos: p
+            })
+          })
         })
     }
 
