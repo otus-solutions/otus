@@ -9,7 +9,7 @@
   <div class="md-whiteframe-z1" style="background: white; padding: 10px">
     <span class="md-subhead">Registrar tentativa de contato</span>
 
-    <div layout="row" layout-align="center center" style="margin-top: 8px">
+    <div layout="row" layout-align="center center" style="margin-top: 16px">
       <md-input-container flex="" layout-fill="">
         <md-select ng-model="$ctrl.selectedAddress" ng-change='$ctrl.getAttempts()' aria-label="address">
           <md-option ng-value="address"
@@ -21,9 +21,16 @@
       </md-input-container>
     </div>
 
-    <div layout="row" layout-xs="column" layout-align="space-between center">
-      <div flex="100" layout="row" layout-xs="column">
-        <div layout="row" layout-align="center center" style="margin-right: 16px">
+    <div layout="row" layout-xs="column" layout-align="space-between center" style="row-gap: 8px">
+      <div flex="100" layout="row" layout-xs="column" style="width: 100%">
+        <div
+          layout="row"
+          layout-align="center center"
+          ng-style="{
+            marginRight: window.innerWidth > 600 && '16px',
+            width: window.innerWidth <= 600 && '100%'
+          }"
+        >
           <span class="md-subheader">Status: </span>
           <md-input-container flex="">
             <md-select ng-model="$ctrl.selectedStatus" aria-label="address">
@@ -38,10 +45,24 @@
 
         <span flex="5"></span>
 
-        <div layout="row" layout-align="center center" style="margin-bottom: 16px">
-          <md-input-container class="md-input-has-placeholder md-input-has-value"
-                              style="position: relative; top: 20px;margin-left: 5px;"
-                              ng-style="{'margin':'0 auto'}">
+        <div
+          layout="row"
+          layout-align="center center"
+          ng-style="{
+            marginTop: '-16px',
+            width: window.innerWidth <= 600 && '100%'
+          }"
+        >
+          <md-input-container
+            class="md-input-has-placeholder md-input-has-value"
+            ng-style="{
+              position: 'relative',
+              top: '20px',
+              marginLeft: '5px',
+              width: '100%',
+              margin: 0
+            }"
+          >
             <label class="md-subheader"></label>
             <input placeholder="data/hora" mdc-datetime-picker=""
                    show-icon="true" date="true" time="true" aria-label="attemptDatetime"
@@ -53,7 +74,12 @@
         </div>
       </div>
 
-      <md-button ng-click="$ctrl.save()" ng-disabled="!$ctrl.attemptDate || !$ctrl.selectedStatus" class="md-raised md-primary" style="margin-left: auto">
+      <md-button
+        ng-click="$ctrl.save()"
+        ng-disabled="!$ctrl.attemptDate || !$ctrl.selectedStatus"
+        class="md-raised md-primary"
+        style="margin-left: auto"
+      >
         registrar
       </md-button>
     </div>
@@ -62,7 +88,7 @@
 
     <div>
       <span ng-if="$ctrl.attempts.length > 0" class="md-subhead">Visualizar tentativas de contato</span>
-      <md-list ng-if="$ctrl.attempts.length > 0">
+      <md-list ng-if="$ctrl.attempts.length > 0" style="margin-top: 16px">
         <md-list-item class="md-whiteframe-z1" style="background: white;" layout-fill=""
                       ng-repeat="attempt in $ctrl.attempts track by $index">
           <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center" layout-align-xs="center center">
