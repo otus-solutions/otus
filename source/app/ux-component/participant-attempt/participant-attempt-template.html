@@ -1,36 +1,67 @@
-<otus-panel header-label="'Tentativas de contato'" align="'center center'" flex>
-  <div layout="column" style="width: 850px; margin: 0 auto;" flex>
-    <div layout="row" layout-align="center center" style="margin-bottom: 5px">
-      <span class="md-subheader">Endereço: </span>
+<div
+  ng-if="$ctrl.addresses.length > 0"
+  layout="column"
+  class="layout-margin layout-padding"
+  style="width: 832px; max-width: calc(100% - 2px); margin: 0 auto;"
+  layout-fill=""
+  flex
+>
+  <div class="md-whiteframe-z1" style="background: white; padding: 10px">
+    <span class="md-subhead"><b>Registrar tentativa de contato</b></span>
+
+    <div layout="row" layout-align="center center" style="margin-top: 16px">
       <md-input-container flex="" layout-fill="">
         <md-select ng-model="$ctrl.selectedAddress" ng-change='$ctrl.getAttempts()' aria-label="address">
           <md-option ng-value="address"
                      ng-repeat="address in $ctrl.addresses track by $index"
                      ng-selected="$index === 0">
-            {{address.posValue}} - {{address.address.value.street}}, {{address.streetNumber}}
+            {{address.address.value.census && address.address.value.census + " - "}}{{address.address.value.street}}{{address.address.value.streetNumber && ", " + address.address.value.streetNumber}}{{" - " + address.address.value.city + ", " + address.address.value.state + " (" + address.address.value.country + ")"}}
           </md-option>
         </md-select>
       </md-input-container>
     </div>
-    <div class="md-whiteframe-z1" style="background: white; padding: 10px">
-      <span class="md-subhead">Registro de tentativa</span>
-      <div layout="row" layout-xs="column" layout-align-xs="center center" layout-align="space-between start">
-        <div layout="row" layout-align="center center">
+
+    <div layout="row" layout-xs="column" layout-align="space-between center" style="row-gap: 8px">
+      <div flex="100" layout="row" layout-xs="column" style="width: 100%">
+        <div
+          layout="row"
+          layout-align="center center"
+          ng-style="{
+            marginRight: window.innerWidth > 600 && '16px',
+            width: window.innerWidth <= 600 && '100%'
+          }"
+        >
           <span class="md-subheader">Status: </span>
           <md-input-container flex="">
             <md-select ng-model="$ctrl.selectedStatus" aria-label="address">
               <md-option ng-value="status"
-                         ng-repeat="status in $ctrl.statusAddress.metadataOptions track by $index"
-                         ng-selected="$index == 0">
-                {{status}}
+                         ng-repeat="status in $ctrl.addressConfiguration.statusMetadata track by $index">
+                {{status.value}}
               </md-option>
             </md-select>
           </md-input-container>
         </div>
-        <div layout="row" layout-align="center center">
-          <md-input-container class="md-input-has-placeholder md-input-has-value"
-                              style="position: relative; top: 20px;margin-left: 5px;"
-                              ng-style="{'margin':'0 auto'}">
+
+        <span flex="5"></span>
+
+        <div
+          layout="row"
+          layout-align="center center"
+          ng-style="{
+            marginTop: '-16px',
+            width: window.innerWidth <= 600 && '100%'
+          }"
+        >
+          <md-input-container
+            class="md-input-has-placeholder md-input-has-value"
+            ng-style="{
+              position: 'relative',
+              top: '20px',
+              marginLeft: '5px',
+              width: '100%',
+              margin: 0
+            }"
+          >
             <label class="md-subheader"></label>
             <input placeholder="data/hora" mdc-datetime-picker=""
                    show-icon="true" date="true" time="true" aria-label="attemptDatetime"
@@ -41,58 +72,70 @@
           </md-input-container>
         </div>
       </div>
-    </div>
-    <div layout="row" layout-align="end center">
-      <md-button ng-click="$ctrl.save()" ng-disabled="!$ctrl.attemptDate || !$ctrl.selectedStatus" class="md-raised white">
+
+      <md-button
+        ng-click="$ctrl.save()"
+        ng-disabled="!$ctrl.attemptDate || !$ctrl.selectedStatus"
+        class="md-raised md-primary"
+        style="margin-left: auto"
+      >
         registrar
       </md-button>
     </div>
+
+    <md-divider style="margin-left: auto; margin-right: auto; margin-top: 16px; margin-bottom: 16px" />
+
     <div>
-      <md-list ng-if="$ctrl.attempts.length > 0">
-        <md-list-item class="md-whiteframe-z1" style="background: white;" layout-fill=""
+      <span ng-if="$ctrl.attempts.length > 0" class="md-subhead"><b>Visualizar tentativas de contato</b></span>
+      <md-list ng-if="$ctrl.attempts.length > 0" style="margin-top: 16px">
+        <span class="md-subheader">{{$ctrl.selectedAddress.address.value.census}} - {{$ctrl.selectedAddress.address.value.street}}, {{$ctrl.selectedAddress.address.value.streetNumber}}</span>
+        <md-list-item class="md-whiteframe-z1" style="background: white; margin-top: 5px;" layout-fill=""
                       ng-repeat="attempt in $ctrl.attempts track by $index">
-          <div class="md-list-item-text"  layout-xs="column" layout-align-xs="end end" layout-fill="" layout="row" layout-align="space-between center">
-            <div layout="row" flex="">
-              <div layout="column">
-                <span class="md-subhead" ng-if="attempt.address[$ctrl.selectedAddress.pos].value.census">
-                  {{attempt.address[$ctrl.selectedAddress.pos].value.census}}
-                </span>
-                <span class="md-subhead" ng-if="!attempt.address[$ctrl.selectedAddress.pos].value.census">
-                  {{$ctrl.parseToDateWithTime(attempt.attemptDateTime)}}
-                </span>
-                <span ng-if="attempt.address[$ctrl.selectedAddress.pos].value.census">
-                  {{$ctrl.parseToDateWithTime(attempt.attemptDateTime)}}
-                </span>
-              </div>
-              <span flex="5"></span>
-              <div layout="column">
-                <span class="md-subhead">
-                {{attempt.address[$ctrl.selectedAddress.pos].value.street}}, {{attempt.address[$ctrl.selectedAddress.pos].value.streetNumber}}
-                </span>
-              </div>
-            </div>
-            <div layout="row"  layout-align-xs="space-between center" layout-align="center center">
-              <span ng-style="{backgroundColor: '{{$ctrl.statusColorParser(attempt.attemptStatus)}}',
-                               padding: '10px',
-                               width: '100px',
-                               textAlign: 'center'}">
-                {{attempt.attemptStatus}}
+          <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center" layout-align-xs="center center">
+            <span
+              hide-gt-xs
+              ng-style="{
+                backgroundColor: '{{attempt.attemptStatus.statusColor}}',
+                height: '10px',
+                width: '10px',
+                padding: '10px',
+                borderRadius: '50%',
+                textAlign: 'center'
+              }"
+            ></span>
+            <span hide-gt-xs flex="5"></span>
+            <div layout="column">
+              <span style="text-align: center">
+                {{$ctrl.parseToDateWithTime(attempt.attemptDateTime)}}
               </span>
-              <span flex="5"></span>
-              <md-button ng-click="$ctrl.remove(attempt._id)" class="md-icon-button">
-                <md-icon style="color: #d50000">
-                  delete_forever
-                </md-icon>
-              </md-button>
             </div>
+            <span flex="5"></span>
+            <div layout="column">
+              <span style="text-align: justify; line-break: anywhere">
+                {{ attempt.userEmail }}
+              </span>
+            </div>
+            <span hide-xs flex="5"></span>
+            <span hide-xs ng-style="{backgroundColor: '{{attempt.attemptStatus.statusColor}}',
+                             padding: '10px',
+                             width: '100px',
+                             textAlign: 'center'}">
+              {{attempt.attemptStatus.value}}
+            </span>
+            <span flex="5"></span>
+            <md-button ng-click="$ctrl.remove(attempt._id)" class="md-icon-button">
+              <md-icon style="color: #d50000">
+                delete_forever
+              </md-icon>
+            </md-button>
           </div>
         </md-list-item>
       </md-list>
-      <div ng-if="$ctrl.attempts.length < 1" layout="row" layout-align="center center">
+      <div ng-if="$ctrl.attempts.length < 1" layout="row" layout-align="center center" style="margin-bottom: 8px">
         <span class="md-subhead">
-          Não há tentativas para este endereço
+          Não há tentativas de contato para este endereço
         </span>
       </div>
     </div>
   </div>
-</otus-panel>
+</div>

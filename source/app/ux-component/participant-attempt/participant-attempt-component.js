@@ -13,6 +13,8 @@
     'otusjs.participant.repository.ParticipantContactAttemptService',
     'otusjs.participantManager.contact.ParticipantContactService',
     'otusjs.participant.core.EventService',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.model.participant.ParticipantFactory',
     'otusjs.application.dialog.DialogShowService'
   ];
 
@@ -20,6 +22,8 @@
                       AttemptService,
                       ParticipantContactService,
                       EventService,
+                      ParticipantLaboratoryService,
+                      ParticipantFactory,
                       DialogService) {
     var self = this;
     /*variables*/
@@ -30,13 +34,6 @@
     self.attempts = [];
     self.now = new Date();
     self.attemptDate = new Date();
-    self.statusColor = {
-      aceite: () => "#24bd4d",
-      arrolado: () => "#d1c324",
-      ausente: () => "#e6edec",
-      recusa: () => "#bf2102",
-      vago: () => "#96e0de"
-    }
 
     /*Methods*/
     self.$onInit = onInit;
@@ -44,14 +41,10 @@
     self.parseToDateWithTime = parseToDateWithTime;
     self.remove = remove;
     self.save = save;
-    self.statusColorParser = statusColorParser;
 
     function onInit() {
+      _loadSelectedParticipant()
       EventService.onParticipantLoaded(_loadSelectedParticipant);
-    }
-
-    function statusColorParser(status) {
-      return self.statusColor[status.toLowerCase()]()
     }
 
     function save() {
@@ -62,7 +55,7 @@
         attemptDateTime: self.attemptDate,
         attemptStatus: self.selectedStatus
       }
-      if(self.attempts.length < 3) {
+      if(self.attempts.length < self.addressConfiguration.numberOfAttempts) {
         DialogService.showConfirmationDialog(
           'Confirmar',
           'Deseja salvar as alterações?',
@@ -76,7 +69,7 @@
               .catch(() => showToast('Ocorreu algum erro, tente novamente'))
           })
       } else {
-        showToast('limite de tentativas por endereço atingido');
+        showToast('Limite de tentativas por endereço atingido');
       }
     }
 
@@ -87,7 +80,7 @@
         'Confirmação de remoção')
         .then(res => {
           AttemptService
-            .deleteContactAttempt(id)
+            .deleteContactAttempt(id.$oid)
             .then(() => {
               getAttempts();
               showToast('Tentativa de contato removida');
@@ -106,19 +99,18 @@
       ParticipantContactService
         .getParticipantContactByRecruitmentNumber(participant.recruitmentNumber)
         .then(response => {
-          self.addresses = [
-            {address: response.address.main, pos: 'main', posValue: "principal"},
-            {address: response.address.second, pos: 'second', posValue: "segundo"},
-            {address: response.address.third, pos: 'third', posValue: "terceiro"},
-            {address: response.address.fourth, pos: 'fourth', posValue: "quarto"},
-            {address: response.address.fifth, pos: 'fifth', posValue: "quinto"}
-          ]
+          const posLabels = ['main', 'second', 'third', 'fourth', 'fifth']
+
+          posLabels.map((p) => response.address[p] && self.addresses.push({
+            address: response.address[p],
+            pos: p
+          }))
         })
     }
 
     function _getAddressStatusList() {
-      AttemptService.findMetadataAttemptByObjectType("metadata_for_address")
-        .then(metadataObj => self.statusAddress = metadataObj);
+      AttemptService.findAttemptConfigurationByObjectType("AddressMetadata")
+        .then(metadataObj => self.addressConfiguration = metadataObj);
     }
 
     function _loadSelectedParticipant(participant) {
@@ -126,13 +118,25 @@
         self.selectedParticipant = participant;
         _getAddresses(participant);
         _getAddressStatusList();
+      } else {
+        ParticipantLaboratoryService
+          .getSelectedParticipant()
+          .then(function (participant) {
+            self.selectedParticipant = ParticipantFactory.fromJson(participant);
+            _getAddresses(participant);
+            _getAddressStatusList();
+          });
       }
     }
 
     function parseToDateWithTime(dateString) {
       const toDate = new Date(dateString);
-      const localDate = toDate.toLocaleDateString();
-      return localDate + " " + toDate.getHours() + ":" + toDate.getMinutes() + ':' + toDate.getSeconds();
+      const addZeros = (dateNum) => (dateNum > 0 && dateNum < 10) ? `0${dateNum}`: dateNum
+      const localDate = `${addZeros(toDate.getDate())}/${addZeros(toDate.getMonth()+1)}/${toDate.getFullYear()}`;
+      return localDate + " " +
+        addZeros(toDate.getHours()) + ":" +
+        addZeros(toDate.getMinutes()) + ':' +
+        addZeros(toDate.getSeconds());
     }
 
     function showToast(msg) {

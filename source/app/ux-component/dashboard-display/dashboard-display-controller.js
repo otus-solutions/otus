@@ -13,10 +13,11 @@
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.model.participant.ParticipantFactory',
     'otusjs.deploy.LoadingScreenService',
+    'otusjs.participant.core.EventService',
   ];
 
   function Controller($mdDialog ,UserAccessPermissionService, ParticipantLaboratoryService, EventService, DashboardService
-  ,ParticipantFactory, LoadingScreenService) {
+  ,ParticipantFactory, LoadingScreenService, ParticipantEventService) {
 
     var self = this;
     self.participantLaboratory = {};
@@ -44,11 +45,13 @@
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = ParticipantFactory.fromJson(participantData);
+        ParticipantEventService.fireParticipantLoaded(self.selectedParticipant)
       } else {
         ParticipantLaboratoryService
           .getSelectedParticipant()
           .then(function (participantData) {
             self.selectedParticipant = ParticipantFactory.fromJson(participantData);
+            ParticipantEventService.fireParticipantLoaded(self.selectedParticipant)
           });
       }
     }

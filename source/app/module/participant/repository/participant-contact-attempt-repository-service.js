@@ -17,7 +17,7 @@
     self.create = create;
     self.findByRnByContactTypeByPosition = findByRnByContactTypeByPosition;
     self.deleteContactAttempt = deleteContactAttempt;
-    self.findMetadataAttemptByObjectType = findMetadataAttemptByObjectType;
+    self.findAttemptConfigurationByObjectType = findAttemptConfigurationByObjectType;
 
     function create(attempt) {
       return _remoteDataSource.whenReady()
@@ -37,9 +37,9 @@
         .then(response => response.data);
     }
 
-    function findMetadataAttemptByObjectType(objectType) {
+    function findAttemptConfigurationByObjectType(objectType) {
       return _remoteDataSource.whenReady()
-        .then(remoteDataSource => remoteDataSource.findMetadataAttemptByObjectType(objectType))
+        .then(remoteDataSource => remoteDataSource.findAttemptConfigurationByObjectType(objectType))
         .then(response => response.data);
     }
   }

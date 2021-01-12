@@ -6,8 +6,8 @@
           <md-icon style="font-size: 8em;" flex hide-xs>account_circle</md-icon>
         </div>
         <div layout="column" layout-align="center start">
-          <div ng-if="$ctrl.selectedParticipant.name">{{$ctrl.selectedParticipant.name}}</div>
-          <span class="md-caption">
+          <div class="md-subtitle" ng-if="$ctrl.selectedParticipant.name"><b>{{$ctrl.selectedParticipant.name}}</b></div>
+          <span class="md-subtitle" class="md-caption">
             NR: {{$ctrl.selectedParticipant.recruitmentNumber}}
           </span>
           <span class="md-caption" ng-if="$ctrl.getSex($ctrl.selectedParticipant.sex)">
@@ -19,7 +19,9 @@
           <span class="md-caption">
             Centro: {{$ctrl.selectedParticipant.fieldCenter.acronym}}
           </span>
-
+          <span ng-show="$ctrl.hasLaboratory && $ctrl.participantLaboratory.identification" layout="row" layout-align="center center" class="md-caption">
+            Laboratório vinculado: {{$ctrl.participantLaboratory.identification}}
+          </span>
         </div>
         <div layout="column" layout-align="start end">
           <md-button class="md-icon-button">
@@ -38,8 +40,5 @@
       </div>
     </md-card-content>
     <attache-laboratory ng-show="!$ctrl.hasLaboratory" subtitle="$ctrl.attacheLabTitle" selected-participant="$ctrl.selectedParticipant"></attache-laboratory>
-    <span ng-show="$ctrl.hasLaboratory && $ctrl.participantLaboratory.identification" layout="row" layout-align="center center" class="md-title">
-      Laboratório vinculado: {{$ctrl.participantLaboratory.identification}}
-    </span>
   </md-card>
 </div>
