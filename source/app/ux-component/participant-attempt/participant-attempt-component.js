@@ -30,13 +30,6 @@
     self.attempts = [];
     self.now = new Date();
     self.attemptDate = new Date();
-    self.statusColor = {
-      aceite: () => "#24bd4d",
-      arrolado: () => "#d1c324",
-      ausente: () => "#e6edec",
-      recusa: () => "#bf2102",
-      vago: () => "#96e0de"
-    }
 
     /*Methods*/
     self.$onInit = onInit;
@@ -44,14 +37,9 @@
     self.parseToDateWithTime = parseToDateWithTime;
     self.remove = remove;
     self.save = save;
-    self.statusColorParser = statusColorParser;
 
     function onInit() {
       EventService.onParticipantLoaded(_loadSelectedParticipant);
-    }
-
-    function statusColorParser(status) {
-      return self.statusColor[status.toLowerCase()]()
     }
 
     function save() {
@@ -62,7 +50,7 @@
         attemptDateTime: self.attemptDate,
         attemptStatus: self.selectedStatus
       }
-      if(self.attempts.length < 3) {
+      if(self.attempts.length < self.addressConfiguration.numberOfAttempts) {
         DialogService.showConfirmationDialog(
           'Confirmar',
           'Deseja salvar as alterações?',
@@ -76,7 +64,7 @@
               .catch(() => showToast('Ocorreu algum erro, tente novamente'))
           })
       } else {
-        showToast('limite de tentativas por endereço atingido');
+        showToast('Limite de tentativas por endereço atingido');
       }
     }
 
@@ -106,22 +94,23 @@
       ParticipantContactService
         .getParticipantContactByRecruitmentNumber(participant.recruitmentNumber)
         .then(response => {
-          self.addresses = [
-            {address: response.address.main, pos: 'main', posValue: "principal"},
-            {address: response.address.second, pos: 'second', posValue: "segundo"},
-            {address: response.address.third, pos: 'third', posValue: "terceiro"},
-            {address: response.address.fourth, pos: 'fourth', posValue: "quarto"},
-            {address: response.address.fifth, pos: 'fifth', posValue: "quinto"}
-          ]
+          const posLabels = ['main', 'second', 'third', 'fourth', 'fifth']
+
+          posLabels.map((p) => response.address[p] && self.addresses.push({
+            address: response.address[p],
+            pos: p
+          }))
         })
     }
 
     function _getAddressStatusList() {
-      AttemptService.findMetadataAttemptByObjectType("metadata_for_address")
-        .then(metadataObj => self.statusAddress = metadataObj);
+      AttemptService.findAttemptConfigurationByObjectType("AddressMetadata")
+        .then(metadataObj => self.addressConfiguration = metadataObj);
     }
 
     function _loadSelectedParticipant(participant) {
+      console.log("_loadSelectedParticipant")
+      console.log(participant)
       if (participant) {
         self.selectedParticipant = participant;
         _getAddresses(participant);

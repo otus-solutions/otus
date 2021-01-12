@@ -63,7 +63,7 @@
           translatedTitle: 'Buscar Cep'
         },
         saveNewContact: {
-          icon: 'note_add',
+          icon: 'save',
           translatedTitle: 'Gravar novo contato'
         },
         deleteContact: {

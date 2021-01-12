@@ -18,7 +18,7 @@
     self.create = create;
     self.deleteContactAttempt = deleteContactAttempt;
     self.findByRnByContactTypeByPosition = findByRnByContactTypeByPosition;
-    self.findMetadataAttemptByObjectType = findMetadataAttemptByObjectType;
+    self.findAttemptConfigurationByObjectType = findAttemptConfigurationByObjectType;
 
     function initialize() {
       _rest = OtusRestResourceService.getParticipantContactAttemptResource();
@@ -39,9 +39,9 @@
       return _rest.findByRnByContactTypeByPosition({rn: rn, contactType: contactType, position: position}).$promise;
     }
 
-    function findMetadataAttemptByObjectType(objectType) {
+    function findAttemptConfigurationByObjectType(objectType) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
-      const resp = _rest.findMetadataAttemptByObjectType({objectType: objectType});
+      const resp = _rest.findAttemptConfigurationByObjectType({objectType: objectType});
       return resp.$promise;
     }
   }

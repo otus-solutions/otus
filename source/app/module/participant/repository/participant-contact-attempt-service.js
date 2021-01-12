@@ -8,13 +8,13 @@
   Service.$inject = [
     '$q',
     'otusjs.participant.repository.ParticipantContactAttemptRepositoryService',
-    'otusjs.model.participant.ParticipantMetadataAttemptFactory',
+    'otusjs.model.participant.ParticipantContactAttemptConfigurationFactory',
     'otusjs.model.participant.ParticipantContactAttemptFactory'
   ];
 
   function Service($q,
                    AttemptRepositoryService,
-                   ParticipantMetadataAttemptFactory,
+                   ParticipantContactAttemptConfigurationFactory,
                    ParticipantContactAttemptFactory) {
     var self = this;
 
@@ -22,7 +22,7 @@
     self.create = create;
     self.findByRnByContactTypeByPosition = findByRnByContactTypeByPosition;
     self.deleteContactAttempt = deleteContactAttempt;
-    self.findMetadataAttemptByObjectType = findMetadataAttemptByObjectType;
+    self.findAttemptConfigurationByObjectType = findAttemptConfigurationByObjectType;
 
     function create(attempt) {
       var request = $q.defer();
@@ -58,12 +58,12 @@
       return request.promise;
     }
 
-    function findMetadataAttemptByObjectType(objectType) {
+    function findAttemptConfigurationByObjectType(objectType) {
       var request = $q.defer();
       AttemptRepositoryService
-        .findMetadataAttemptByObjectType(objectType)
+        .findAttemptConfigurationByObjectType(objectType)
         .then(metadata => {
-          const participantMetadata = ParticipantMetadataAttemptFactory.fromJson(metadata);
+          const participantMetadata = ParticipantContactAttemptConfigurationFactory.fromJson(metadata);
           request.resolve(participantMetadata);
         }).catch(e => request.reject(e))
       return request.promise;
