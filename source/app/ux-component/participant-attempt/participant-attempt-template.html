@@ -33,7 +33,7 @@
         >
           <span class="md-subheader">Status: </span>
           <md-input-container flex="">
-            <md-select ng-model="$ctrl.selectedStatus" ng-change="$ctrl.selectStatus()" aria-label="address">
+            <md-select ng-model="$ctrl.selectedStatus" aria-label="address">
               <md-option ng-value="status"
                          ng-repeat="status in $ctrl.addressConfiguration.statusMetadata track by $index">
                 {{status.value}}

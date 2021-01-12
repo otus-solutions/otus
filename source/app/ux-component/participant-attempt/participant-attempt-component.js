@@ -14,6 +14,7 @@
     'otusjs.participantManager.contact.ParticipantContactService',
     'otusjs.participant.core.EventService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
+    'otusjs.model.participant.ParticipantFactory',
     'otusjs.application.dialog.DialogShowService'
   ];
 
@@ -22,6 +23,7 @@
                       ParticipantContactService,
                       EventService,
                       ParticipantLaboratoryService,
+                      ParticipantFactory,
                       DialogService) {
     var self = this;
     /*variables*/
@@ -38,15 +40,11 @@
     self.getAttempts = getAttempts;
     self.parseToDateWithTime = parseToDateWithTime;
     self.remove = remove;
-    self.selectStatus = selectStatus;
     self.save = save;
 
     function onInit() {
+      _loadSelectedParticipant()
       EventService.onParticipantLoaded(_loadSelectedParticipant);
-    }
-
-    function selectStatus() {
-      console.info(self.selectedStatus)
     }
 
     function save() {
