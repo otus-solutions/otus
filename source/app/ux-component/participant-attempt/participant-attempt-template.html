@@ -15,7 +15,7 @@
           <md-option ng-value="address"
                      ng-repeat="address in $ctrl.addresses track by $index"
                      ng-selected="$index === 0">
-            {{address.census && address.census + " - "}}{{address.street}}{{address.streetNumber && ", " + address.streetNumber}}{{" - " + address.city + ", " + address.state + " (" + address.country + ")"}}
+            {{address.address.value.census && address.address.value.census + " - "}}{{address.address.value.street}}{{address.address.value.streetNumber && ", " + address.address.value.streetNumber}}{{" - " + address.address.value.city + ", " + address.address.value.state + " (" + address.address.value.country + ")"}}
           </md-option>
         </md-select>
       </md-input-container>
@@ -105,14 +105,14 @@
             ></span>
             <span hide-gt-xs flex="5"></span>
             <div layout="column">
-              <span ng-style="{textAlign: 'center'}">
+              <span style="text-align: center">
                 {{$ctrl.parseToDateWithTime(attempt.attemptDateTime)}}
               </span>
             </div>
             <span flex="5"></span>
             <div layout="column">
-              <span ng-style="{textAlign: 'justify'}">
-              {{attempt.address[$ctrl.selectedAddress.pos].value.street}}, {{attempt.address[$ctrl.selectedAddress.pos].value.streetNumber}}
+              <span style="text-align: justify; line-break: anywhere">
+                {{ attempt.userEmail }}
               </span>
             </div>
             <span hide-xs flex="5"></span>
@@ -131,7 +131,7 @@
           </div>
         </md-list-item>
       </md-list>
-      <div ng-if="$ctrl.attempts.length < 1" layout="row" layout-align="center center">
+      <div ng-if="$ctrl.attempts.length < 1" layout="row" layout-align="center center" style="margin-bottom: 8px">
         <span class="md-subhead">
           Não há tentativas de contato para este endereço
         </span>

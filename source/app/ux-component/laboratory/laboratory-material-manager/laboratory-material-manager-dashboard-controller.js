@@ -138,6 +138,8 @@
       const tubeStructure = {
         tubes: [self.newTube]
       };
+      console.log('saveDynamicMetadata')
+      console.log(tubeStructure)
       _updateCollection(self.participantLaboratory, tubeStructure)
     }
 

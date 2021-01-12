@@ -13,6 +13,7 @@
     'otusjs.participant.repository.ParticipantContactAttemptService',
     'otusjs.participantManager.contact.ParticipantContactService',
     'otusjs.participant.core.EventService',
+    'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.application.dialog.DialogShowService'
   ];
 
@@ -20,6 +21,7 @@
                       AttemptService,
                       ParticipantContactService,
                       EventService,
+                      ParticipantLaboratoryService,
                       DialogService) {
     var self = this;
     /*variables*/
@@ -75,7 +77,7 @@
         'Confirmação de remoção')
         .then(res => {
           AttemptService
-            .deleteContactAttempt(id)
+            .deleteContactAttempt(id.$oid)
             .then(() => {
               getAttempts();
               showToast('Tentativa de contato removida');
@@ -97,12 +99,7 @@
           const posLabels = ['main', 'second', 'third', 'fourth', 'fifth']
 
           posLabels.map((p) => response.address[p] && self.addresses.push({
-            census: response.address[p].value.census,
-            street: response.address[p].value.street,
-            streetNumber: response.address[p].value.streetNumber,
-            city: response.address[p].value.city,
-            state: response.address[p].value.state,
-            country: response.address[p].value.country,
+            address: response.address[p],
             pos: p
           }))
         })
@@ -118,6 +115,14 @@
         self.selectedParticipant = participant;
         _getAddresses(participant);
         _getAddressStatusList();
+      } else {
+        ParticipantLaboratoryService
+          .getSelectedParticipant()
+          .then(function (participant) {
+            self.selectedParticipant = ParticipantFactory.fromJson(participant);
+            _getAddresses(participant);
+            _getAddressStatusList();
+          });
       }
     }
 
