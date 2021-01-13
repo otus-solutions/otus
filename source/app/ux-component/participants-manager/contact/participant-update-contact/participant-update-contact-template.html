@@ -249,6 +249,16 @@
           <md-tooltip md-direction="down">{{$ctrl.ParticipantContactValues.icons.swapChoiceContact.translatedTitle}}
           </md-tooltip>
         </md-button>
+
+        <md-input-container class="census-input" ng-if="$ctrl.permissions.addressCensusRequired">
+          <label>{{$ctrl.ParticipantContactValues.fields.census}}</label>
+          <input ng-model="contactItem.value.census" ui-mask="99999999" placeholder="" ng-disabled=!$ctrl.editMode[key] required>
+        </md-input-container >
+
+        <md-input-container class="census-input" ng-if="!$ctrl.permissions.addressCensusRequired">
+          <label>{{$ctrl.ParticipantContactValues.fields.census}}</label>
+          <input ng-model="contactItem.value.census" ui-mask="99999999" placeholder="" ng-disabled=!$ctrl.editMode[key]>
+        </md-input-container >
       </form>
     </div>
   </md-card-content>

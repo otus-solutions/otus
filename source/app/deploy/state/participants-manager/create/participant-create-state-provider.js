@@ -73,6 +73,7 @@
                 var _permissions = {}
                 _permissions.participantRegistration = response.data.participantRegistration;
                 _permissions.autoGenerateRecruitmentNumber = response.data.autoGenerateRecruitmentNumber;
+                _permissions.addressCensusRequired = response.data.addressCensusRequired;
                 return _permissions;
               });
           } catch (e) {

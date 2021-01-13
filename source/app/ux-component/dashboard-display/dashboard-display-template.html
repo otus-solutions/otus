@@ -1,7 +1,8 @@
 <div ui-view layout="row" flex>
   <md-content class="backgroud-color-default" flex style="background-color: #eeeeee">
     <div layout-align="center center" layout="column">
-      <otus-participant-info has-laboratory="$ctrl.hasLaboratory"></otus-participant-info>
+      <otus-participant-info has-laboratory="$ctrl.hasLaboratory" participant-laboratory="$ctrl.participantLaboratory"></otus-participant-info>
+      <otus-participant-attempt participant="$ctrl.participantLaboratory"></otus-participant-attempt>
       <otus-participant-heatmap></otus-participant-heatmap>
       <otus-participant-exam-heatmap ng-if="($ctrl.userAccessToLaboratory && $ctrl.laboratoryChecking && $ctrl.selectedParticipant)"></otus-participant-exam-heatmap>
       <otus-report-dashboard></otus-report-dashboard>

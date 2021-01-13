@@ -2,7 +2,7 @@ describe('ParticipantUpdateState', function () {
 
   var UNIT_NAME = 'otusjs.deploy.ParticipantUpdateState';
   var URL = '/participant-update';
-  var TEMPLATE_URL = '<otus-participant-contact></otus-participant-contact>';
+  var TEMPLATE_URL = '<otus-participant-contact permissions="$resolve.permission"></otus-participant-contact>';
   var provider = {};
   var Injections = {};
 

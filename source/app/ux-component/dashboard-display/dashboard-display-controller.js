@@ -13,17 +13,14 @@
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.model.participant.ParticipantFactory',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.laboratory.business.unattached.UnattachedLaboratoryService',
-    'otusjs.application.dialog.DialogShowService',
-    'otusjs.laboratory.storage.LaboratoryLocalStorageService'
-
+    'otusjs.participant.core.EventService',
   ];
 
   function Controller($mdDialog ,UserAccessPermissionService, ParticipantLaboratoryService, EventService, DashboardService
-  ,ParticipantFactory, LoadingScreenService, UnattachedLaboratoryService, DialogShowService, LaboratoryLocalStorageService) {
+  ,ParticipantFactory, LoadingScreenService, ParticipantEventService) {
 
     var self = this;
-
+    self.participantLaboratory = {};
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -48,11 +45,13 @@
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = ParticipantFactory.fromJson(participantData);
+        ParticipantEventService.fireParticipantLoaded(self.selectedParticipant)
       } else {
         ParticipantLaboratoryService
           .getSelectedParticipant()
           .then(function (participantData) {
             self.selectedParticipant = ParticipantFactory.fromJson(participantData);
+            ParticipantEventService.fireParticipantLoaded(self.selectedParticipant)
           });
       }
     }
@@ -66,6 +65,7 @@
           self.hasLaboratory = hasLaboratory;
           self.ready = true;
           if (hasLaboratory) {
+            self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
           }
           LoadingScreenService.finish();
         });
@@ -73,13 +73,13 @@
 
     function intializeLaboratory() {
       LoadingScreenService.start();
-
       ParticipantLaboratoryService
         .initializeLaboratory()
         .then(function (laboratory) {
           if (laboratory) {
             self.hasLaboratory = true;
             self.ready = true;
+            self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
           }
           LoadingScreenService.finish();
         });

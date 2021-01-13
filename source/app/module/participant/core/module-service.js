@@ -14,7 +14,9 @@
   function Service($q, ContextService, EventService) {
     var self = this;
     let _genericParticipantContactStorageDefer = $q.defer();
+    let _genericParticipantContactAttemptStorageDefer = $q.defer();
     let _remoteStorage = {};
+    let remoteAttemptStorage = {};
 
     self.DataSource = {};
     self.Event = EventService;
@@ -24,7 +26,9 @@
     self.configureStorage = configureStorage;
     self.configureParticipantDataSourceService = configureParticipantDataSourceService;
     self.configureRemoteStorage = configureRemoteStorage;
+    self.configureAttemptRemoteStorage = configureAttemptRemoteStorage;
     self.getParticipantContactRemoteStorage = getParticipantContactRemoteStorage;
+    self.getParticipantContactAttemptRemoteStorage = getParticipantContactAttemptRemoteStorage;
 
     function configureContext(context) {
       ContextService.configureContext(context);
@@ -43,6 +47,11 @@
       _genericParticipantContactStorageDefer.resolve(_remoteStorage.genericContact);
     }
 
+    function configureAttemptRemoteStorage(restService) {
+      remoteAttemptStorage.genericContact = restService;
+      _genericParticipantContactAttemptStorageDefer.resolve(remoteAttemptStorage.genericContact);
+    }
+
     function getParticipantContactRemoteStorage() {
       if (_remoteStorage.genericContact) {
         _genericParticipantContactStorageDefer = $q.defer();
@@ -52,6 +61,19 @@
       return {
         whenReady() {
           return _genericParticipantContactStorageDefer.promise;
+        }
+      }
+    }
+
+    function getParticipantContactAttemptRemoteStorage() {
+      if (remoteAttemptStorage.genericContact) {
+        _genericParticipantContactAttemptStorageDefer = $q.defer();
+        _genericParticipantContactAttemptStorageDefer.resolve(remoteAttemptStorage.genericContact);
+      }
+
+      return {
+        whenReady() {
+          return _genericParticipantContactAttemptStorageDefer.promise;
         }
       }
     }

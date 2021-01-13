@@ -1,5 +1,5 @@
 <style>
-  .custom-metadata-layout {
+  .box {
     background: white;
     box-shadow: 1px 2px 5px rgba(0,0,0,0.4);
     padding: 15px;
@@ -95,17 +95,31 @@
         <h2>Sem Tubos Coletados</h2>
       </div>
     </div>
+  
     <div ng-if="$ctrl.originalTubeHasCode() && $ctrl.tubeHasCustomMetadata()" layout="column" layout-align="center center" flex-offset="5">
       <md-subheader class="md-no-sticky moment-type-title">
         Metadados Material Primário
       </md-subheader>
-      <div layout-xs="column" layout-gt-xs="row" class="custom-metadata-layout">
-        <div ng-repeat="option in $ctrl.tubeCustomMetadataOptions track by $index" style="padding-right: 16px">
-          <md-checkbox class="md-primary md-align-top-left"
-                       ng-model="option.selected"
-                       ng-change="$ctrl.updateTubeCustomMetadata(option)">
-            <span class="md-caption">{{ option.value }}</span>
-          </md-checkbox>
+
+      <div layout-fill="" layout="column" class="box">
+        <div layout-xs="column" layout-gt-xs="row" class="custom-metadata-layout">
+          <div ng-repeat="option in $ctrl.tubeCustomMetadataOptions track by $index" style="padding-right: 16px">
+            <md-checkbox class="md-primary md-align-top-left"
+                         ng-model="option.selected"
+                         ng-change="$ctrl.updateTubeCustomMetadata(option)">
+              <span class="md-caption">{{ option.value }}</span>
+            </md-checkbox>
+          </div>
+        </div>
+        <div layout="row" >
+          <md-input-container flex="80" style="margin: 0 0 0 8px; padding: 0" layout="row" layout-align="start center">
+            <p>Outro: </p>
+            <input ng-model="$ctrl.newTube.tubeCollectionData.dynamicMetadata"/>
+          </md-input-container>
+
+          <md-button ng-click="$ctrl.saveDynamicMetadata()" class="md-icon-button md-primary">
+            <md-icon>save</md-icon>
+          </md-button>
         </div>
       </div>
     </div>
