@@ -133,7 +133,7 @@
           </div>
         </div>
       </md-list>
-      <div layout="row" layout-align="end end">
+      <div layout="row" style="margin-top: 5px" layout-align="end end">
         <dynamic-dialog
           data="{
             attempts: $ctrl.attemptAddresses,
@@ -144,6 +144,7 @@
             'remove': $ctrl.remove
           }"
           template-url="'app/ux-component/participant-attempt/participant-attempt-modal/participant-attempt-modal-template.html'"
+          button-type="'md-raised'"
           button-text="'histórico'"
         ></dynamic-dialog>
       </div>

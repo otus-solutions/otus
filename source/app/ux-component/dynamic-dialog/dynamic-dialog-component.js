@@ -10,6 +10,7 @@
         data: "=",
         callbackFunctions: "=",
         templateUrl: "=",
+        buttonType: "=",
         buttonText: "="
       }
     });
