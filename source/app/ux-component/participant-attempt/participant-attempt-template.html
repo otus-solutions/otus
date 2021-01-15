@@ -87,16 +87,16 @@
 
     <div>
       <span ng-if="$ctrl.attemptAddresses.length > 0" class="md-subhead"><b>Tentativas de contato ({{$ctrl.translatePosition($ctrl.selectedAddress.pos)}})</b></span>
-      <md-list ng-repeat="attemptAddress in $ctrl.lastAttempts track by $index" ng-if="$ctrl.attemptAddresses.length > 0" style="margin-top: 16px">
+      <md-list class="md-dense" ng-repeat="attemptAddress in $ctrl.lastAttempts track by $index" ng-if="$ctrl.attemptAddresses.length > 0" style="margin-top: 16px">
         <span class="md-subheader">{{attemptAddress.fullAddress}}</span>
-        <md-list-item class="md-whiteframe-z1" style="background: white; margin-top: 5px;" layout-fill=""
+        <div class="secondary-button-padding" layout-fill=""
                       ng-repeat="attempt in attemptAddress.attemptList track by $index">
           <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center">
             <span
               hide-gt-xs
               ng-style="{
                 backgroundColor: attempt.attemptStatus.statusColor,
-                height: '10px',
+                height: '5px',
                 width: '10px',
                 padding: '10px',
                 borderRadius: '50%',
@@ -104,14 +104,14 @@
               }"
             ></span>
             <span hide-gt-xs flex="5"></span>
-            <div layout="column" flex="25">
+            <div layout="column" flex="20">
               <span style="text-align: center">
                 {{$ctrl.parseToDateWithTime(attempt.attemptDateTime)}}
               </span>
             </div>
             <span flex="5"></span>
-            <div layout="column" flex="25">
-              <span style="text-align: justify; line-break: anywhere">
+            <div layout="column" flex="35">
+              <span style="line-break: anywhere">
                 {{ attempt.userEmail }}
               </span>
             </div>
@@ -120,22 +120,18 @@
               hide-xs
               ng-style="{
                 backgroundColor: attempt.attemptStatus.statusColor,
-                padding: '10px',
-                width: '100px',
+                padding: '5px',
                 textAlign: 'center'
-              }"
-              flex="25"
-            >
+              }" flex="15">
               {{attempt.attemptStatus.value}}
             </span>
-            <span flex="5"></span>
             <md-button ng-click="$ctrl.remove(attempt._id)" class="md-icon-button">
               <md-icon style="color: #d50000">
                 delete_forever
               </md-icon>
             </md-button>
           </div>
-        </md-list-item>
+        </div>
       </md-list>
       <div ng-if="$ctrl.attemptAddresses.length < 1" layout="row" layout-align="center center" style="margin-bottom: 8px">
         <span class="md-subhead">

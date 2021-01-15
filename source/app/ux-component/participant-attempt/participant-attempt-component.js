@@ -52,7 +52,7 @@
     self.translatePosition = translatePosition;
 
     function onInit() {
-      _loadSelectedParticipant()
+      _loadSelectedParticipant();
       EventService.onParticipantLoaded(_loadSelectedParticipant);
     }
 
@@ -98,6 +98,12 @@
         })
     }
 
+    function _reverseList() {
+      for(const attempt of self.lastAttempts) {
+        attempt.attemptList.reverse()
+      }
+    }
+
     function _getLastAttempts() {
       self.lastAttempts = [];
       var itemCount = 0;
@@ -120,6 +126,7 @@
           }
         }
       }
+      _reverseList();
     }
 
     function getAttempts() {
@@ -156,12 +163,20 @@
     function _loadSelectedParticipant(participant) {
       if (participant) {
         self.selectedParticipant = participant;
+        self.attemptAddresses = [];
+        self.addresses = [];
+        self.statusAddress = "";
+        self.addressConfiguration = "";
         _getAddresses(participant);
         _getAddressStatusList();
       } else {
         ParticipantLaboratoryService
           .getSelectedParticipant()
           .then(function (participant) {
+            self.attemptAddresses = [];
+            self.addresses = [];
+            self.statusAddress = "";
+            self.addressConfiguration = "";
             self.selectedParticipant = ParticipantFactory.fromJson(participant);
             _getAddresses(participant);
             _getAddressStatusList();
