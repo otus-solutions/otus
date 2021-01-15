@@ -86,11 +86,11 @@
     <md-divider style="margin-left: auto; margin-right: auto; margin-top: 16px; margin-bottom: 16px" />
 
     <div>
-      <span ng-if="$ctrl.attempts.length > 0" class="md-subhead"><b>Visualizar tentativas de contato</b></span>
-      <md-list ng-if="$ctrl.attempts.length > 0" style="margin-top: 16px">
-        <span class="md-subheader">{{$ctrl.selectedAddress.address.value.census}} - {{$ctrl.selectedAddress.address.value.street}}, {{$ctrl.selectedAddress.address.value.streetNumber}}</span>
+      <span ng-if="$ctrl.attemptAddresses.length > 0" class="md-subhead"><b>Tentativas de contato ({{$ctrl.translatePosition($ctrl.selectedAddress.pos)}})</b></span>
+      <md-list ng-repeat="attemptAddress in $ctrl.lastAttempts track by $index" ng-if="$ctrl.attemptAddresses.length > 0" style="margin-top: 16px">
+        <span class="md-subheader">{{attemptAddress.fullAddress}}</span>
         <md-list-item class="md-whiteframe-z1" style="background: white; margin-top: 5px;" layout-fill=""
-                      ng-repeat="attempt in $ctrl.attempts track by $index">
+                      ng-repeat="attempt in attemptAddress.attemptList track by $index">
           <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center">
             <span
               hide-gt-xs
@@ -137,7 +137,7 @@
           </div>
         </md-list-item>
       </md-list>
-      <div ng-if="$ctrl.attempts.length < 1" layout="row" layout-align="center center" style="margin-bottom: 8px">
+      <div ng-if="$ctrl.attemptAddresses.length < 1" layout="row" layout-align="center center" style="margin-bottom: 8px">
         <span class="md-subhead">
           Não há tentativas de contato para este endereço
         </span>

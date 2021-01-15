@@ -31,10 +31,17 @@
     self.selectedStatus = "";
     self.statusAddress = {};
     self.addresses = [];
-    self.attempts = [];
+    self.attemptAddresses = [];
     self.now = new Date();
-    self.attemptDate = new Date();    
+    self.attemptDate = new Date();
     self.posLabels = ['main', 'second', 'third', 'fourth', 'fifth']
+    self.translatedPos = {
+      "main": () => "Principal",
+      "second": () => "Segundo",
+      "third": () => "Terceiro",
+      "fourth": () => "Quarto",
+      "fifth": () => "Quinto"
+    }
 
     /*Methods*/
     self.$onInit = onInit;
@@ -42,6 +49,7 @@
     self.parseToDateWithTime = parseToDateWithTime;
     self.remove = remove;
     self.save = save;
+    self.translatePosition = translatePosition;
 
     function onInit() {
       _loadSelectedParticipant()
@@ -56,7 +64,7 @@
         attemptDateTime: self.attemptDate,
         attemptStatus: self.selectedStatus
       }
-      if(self.attempts.length < self.addressConfiguration.numberOfAttempts) {
+      if(_isLowerThanLimit()) {
         DialogService.showConfirmationDialog(
           'Confirmar',
           'Deseja salvar as alterações?',
@@ -90,10 +98,37 @@
         })
     }
 
+    function _getLastAttempts() {
+      self.lastAttempts = [];
+      var itemCount = 0;
+      for(const [index, attemptAddress] of self.attemptAddresses.entries()) {
+        for(const attempt of attemptAddress.attemptList) {
+          if(index > 0) {
+            if(itemCount < self.addressConfiguration.numberOfAttempts) {
+              itemCount = self.lastAttempts[index - 1].attemptList.length;
+              if(itemCount < self.addressConfiguration.numberOfAttempts) {
+                self.lastAttempts[index] =  {
+                  address: attemptAddress.address,
+                  attemptList: attemptAddress.attemptList.splice(0, (self.addressConfiguration.numberOfAttempts - itemCount)),
+                  fullAddress: attemptAddress.fullAddress
+                };
+                itemCount += (self.addressConfiguration.numberOfAttempts - itemCount)
+              }
+            }
+          } else {
+            self.lastAttempts[index] = attemptAddress;
+          }
+        }
+      }
+    }
+
     function getAttempts() {
       AttemptService
         .findByRnByContactTypeByPosition(self.selectedParticipant.recruitmentNumber, 'address', self.selectedAddress.pos)
-        .then(attempts => self.attempts = attempts);
+        .then(attempts => {
+          self.attemptAddresses = attempts;
+          _getLastAttempts();
+        });
     }
 
     function _getAddresses(participant) {
@@ -101,14 +136,10 @@
         .getParticipantContactByRecruitmentNumber(participant.recruitmentNumber)
         .then(response => {
           self.posLabels.map(p => {
-            // Verifica se o endereço já foi captado
             var posExists = false
-
             self.addresses.map(addr => {
               if(addr.pos === p) posExists = true
             })
-
-            // Valida o endereço e o adiciona à listagem
             if(!posExists && response.address[p] && response.address[p].value.street) self.addresses.push({
               address: response.address[p],
               pos: p
@@ -136,6 +167,26 @@
             _getAddressStatusList();
           });
       }
+    }
+
+    function _isLowerThanLimit() {
+      const foundAttempt = self.attemptAddresses.find(attempt => {
+        return attempt.fullAddress == _addresObjToFullAddressString(self.selectedAddress.address.value)
+      })
+      if(foundAttempt){
+        return foundAttempt.attemptList.length < self.addressConfiguration.numberOfAttempts ? true : false;
+      } else {
+        return true;
+      }
+    }
+
+    function _addresObjToFullAddressString(addressObj) {
+      return `${addressObj.census} - ${addressObj.street}, ${addressObj.streetNumber}/${addressObj.complements} - ` +
+        `${addressObj.neighbourhood} - ${addressObj.postalCode} - ${addressObj.city}, ${addressObj.state}(${addressObj.country})`
+    }
+
+    function translatePosition(pos) {
+      return self.translatedPos[pos]();
     }
 
     function parseToDateWithTime(dateString) {

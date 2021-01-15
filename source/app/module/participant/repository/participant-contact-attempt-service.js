@@ -49,11 +49,7 @@
       AttemptRepositoryService
         .findByRnByContactTypeByPosition(rn, contactType, position)
         .then(attempts => {
-          const attemptObjects = [];
-          for(let attempt of attempts) {
-            attemptObjects.push(ParticipantContactAttemptFactory.fromJson(attempt));
-          }
-          request.resolve(attemptObjects);
+          request.resolve(attempts);
         }).catch(e => request.reject(e))
       return request.promise;
     }
