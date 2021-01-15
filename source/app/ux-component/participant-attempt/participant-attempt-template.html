@@ -133,6 +133,20 @@
           </div>
         </div>
       </md-list>
+      <div layout="row" layout-align="end end">
+        <dynamic-dialog
+          data="{
+            attempts: $ctrl.attemptAddresses,
+            position: $ctrl.translatePosition($ctrl.selectedAddress.pos)
+          }"
+          callback-functions="{
+            'parseDate': $ctrl.parseToDateWithTime,
+            'remove': $ctrl.remove
+          }"
+          template-url="'app/ux-component/participant-attempt/participant-attempt-modal/participant-attempt-modal-template.html'"
+          button-text="'histórico'"
+        ></dynamic-dialog>
+      </div>
       <div ng-if="$ctrl.attemptAddresses.length < 1" layout="row" layout-align="center center" style="margin-bottom: 8px">
         <span class="md-subhead">
           Não há tentativas de contato para este endereço
