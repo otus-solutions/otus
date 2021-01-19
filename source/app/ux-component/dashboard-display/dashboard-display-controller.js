@@ -6,7 +6,6 @@
     .controller('otusDashboardDisplayCtrl', Controller);
 
   Controller.$inject = [
-    '$mdDialog',
     'otusjs.user.business.UserAccessPermissionService',
     'otusjs.laboratory.business.participant.ParticipantLaboratoryService',
     'otusjs.laboratory.core.EventService',
@@ -16,8 +15,14 @@
     'otusjs.participant.core.EventService',
   ];
 
-  function Controller($mdDialog ,UserAccessPermissionService, ParticipantLaboratoryService, EventService, DashboardService
-  ,ParticipantFactory, LoadingScreenService, ParticipantEventService) {
+  function Controller(
+    UserAccessPermissionService,
+    ParticipantLaboratoryService,
+    EventService,
+    DashboardService,
+    ParticipantFactory,
+    LoadingScreenService,
+    ParticipantEventService) {
 
     var self = this;
     self.participantLaboratory = {};
@@ -73,8 +78,7 @@
 
     function intializeLaboratory() {
       LoadingScreenService.start();
-      ParticipantLaboratoryService
-        .initializeLaboratory()
+      ParticipantLaboratoryService.initializeLaboratory()
         .then(function (laboratory) {
           if (laboratory) {
             self.hasLaboratory = true;
@@ -102,6 +106,7 @@
           self.laboratoryChecking = response;
           if(self.laboratoryChecking){
             _checkingLaboratoryPermission();
+            _setupLaboratory();
           }
         });
     }
