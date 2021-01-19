@@ -27,6 +27,7 @@
     'otusjs.deploy.monitoring.LaboratoryMonitoringRestService',
     'otusjs.deploy.UserActivityPendencyRestService',
     'otusjs.deploy.ParticipantContactRestService',
+    'otusjs.deploy.ParticipantContactAttemptRestService',
     'otusjs.deploy.LocationPointRestService',
     'otusjs.deploy.ProjectCommunicationRestService',
     'otusjs.deploy.ActivitySharingRestService',
@@ -55,6 +56,7 @@
     LaboratoryMonitoringRestService,
     UserActivityPendencyRestService,
     ParticipantContactRestService,
+    ParticipantContactAttemptRestService,
     LocationPointRestService,
     ProjectCommunicationRestService,
     ActivitySharingRestService,
@@ -95,6 +97,7 @@
       LaboratoryMonitoringRestService.initialize();
       UserActivityPendencyRestService.initialize();
       ParticipantContactRestService.initialize();
+      ParticipantContactAttemptRestService.initialize();
       LocationPointRestService.initialize();
       ProjectCommunicationRestService.initialize();
       ActivitySharingRestService.initialize();

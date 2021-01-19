@@ -38,8 +38,7 @@
     self.saveMetadata = saveMetadata;
     self.updateTubeCustomMetadata = updateTubeCustomMetadata;
     self.isEnterKey = isEnterKey;
-    self.updateAliquots = function (){};
-
+    self.saveDynamicMetadata = saveDynamicMetadata;
 
     function onInit() {
       self.laboratoryExists = false;
@@ -63,7 +62,7 @@
     }
 
     function isEnterKey(event,tubeCode) {
-      if (event.keyCode === 13) {
+      if (event.key === 13) {
         if (tubeCode.length === 9) {
           isValidCode(tubeCode);
         } else {
@@ -83,7 +82,6 @@
             self.originalTube = angular.copy(foundTube);
             self.newTube = foundTube;
             self.tubeCode = "";
-
             ParticipantLaboratoryService.getTubeMedataDataByType(self.originalTube.type)
               .then(data => {
                 self.tubeCustomMetadataOptions = data.map(obj => angular.extend(obj, obj, {selected: false}));
@@ -128,16 +126,27 @@
       _updateChangedTubes();
     }
 
+    function _updateCollection(participantLaboratory, tubeStructure) {
+      ParticipantLaboratoryService.updateTubeCollectionDataWithRn(participantLaboratory.recruitmentNumber, tubeStructure).then(() => {
+        _showToastMsg('Salvo com sucesso!');
+      }).catch(function (e) {
+        _showToastMsg('Falha ao registrar');
+      });
+    }
+
+    function saveDynamicMetadata() {
+      const tubeStructure = {
+        tubes: [self.newTube]
+      };
+      _updateCollection(self.participantLaboratory, tubeStructure)
+    }
+
     function saveMetadata() {
       if (self.newTube.tubeCollectionData.isCollected) {
         const tubeStructure = {
           tubes: [self.newTube]
         };
-        ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure).then(() => {
-          _showToastMsg('Volume parcial salvo com sucesso!');
-        }).catch(function (e) {
-          _showToastMsg('Falha ao registrar volume parcial');
-        });
+        _updateCollection(self.participantLaboratory, tubeStructure);
       }
     }
 
@@ -161,7 +170,7 @@
 
     function _updateChangedTubes() {
       const customMetadata = self.originalTube.toJSON().tubeCollectionData.customMetadata;
-
+      const dynamic = self.newTube.tubeCollectionData.dynamicMetadata
       DialogService.showConfirmationDialog(
         'Confirmar alteração',
         'Deseja salvar as alterações?',
@@ -172,6 +181,7 @@
             tubes: [self.newTube]
           };
           tubeStructure.tubes[0].tubeCollectionData.customMetadata = customMetadata;
+          tubeStructure.tubes[0].tubeCollectionData.dynamicMetadata = dynamic;
 
           ParticipantLaboratoryService.updateTubeCollectionDataWithRn(self.participantLaboratory.recruitmentNumber, tubeStructure)
             .then(function () {

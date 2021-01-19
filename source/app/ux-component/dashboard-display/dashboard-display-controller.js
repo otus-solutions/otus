@@ -11,7 +11,8 @@
     'otusjs.laboratory.core.EventService',
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.model.participant.ParticipantFactory',
-    'otusjs.deploy.LoadingScreenService'
+    'otusjs.deploy.LoadingScreenService',
+    'otusjs.participant.core.EventService',
   ];
 
   function Controller(
@@ -20,9 +21,11 @@
     EventService,
     DashboardService,
     ParticipantFactory,
-    LoadingScreenService) {
+    LoadingScreenService,
+    ParticipantEventService) {
 
     var self = this;
+    self.participantLaboratory = {};
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -34,22 +37,26 @@
       self.userAccessToLaboratory = undefined;
       _loadParticipant();
       _getCheckingExist();
+      _checkingLaboratoryPermission();
       EventService.onParticipantSelected(_setParticipant);
 
       _loadSelectedParticipant();
       EventService.onParticipantSelected(_loadSelectedParticipant);
       ParticipantLaboratoryService.onParticipantSelected(_setupLaboratory);
       EventService.onLabCreated(_setupLaboratory);
+      _setupLaboratory();
     }
 
     function _loadSelectedParticipant(participantData) {
       if (participantData) {
         self.selectedParticipant = ParticipantFactory.fromJson(participantData);
+        ParticipantEventService.fireParticipantLoaded(self.selectedParticipant)
       } else {
         ParticipantLaboratoryService
           .getSelectedParticipant()
           .then(function (participantData) {
             self.selectedParticipant = ParticipantFactory.fromJson(participantData);
+            ParticipantEventService.fireParticipantLoaded(self.selectedParticipant)
           });
       }
     }
@@ -62,6 +69,9 @@
         .then(function (hasLaboratory) {
           self.hasLaboratory = hasLaboratory;
           self.ready = true;
+          if (hasLaboratory) {
+            self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
+          }
           LoadingScreenService.finish();
         });
     }
@@ -73,6 +83,7 @@
           if (laboratory) {
             self.hasLaboratory = true;
             self.ready = true;
+            self.participantLaboratory = ParticipantLaboratoryService.getLaboratory();
           }
           LoadingScreenService.finish();
         });

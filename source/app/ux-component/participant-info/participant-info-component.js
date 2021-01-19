@@ -7,13 +7,15 @@
       controller: Controller,
       templateUrl: 'app/ux-component/participant-info/participant-info-template.html',
       bindings: {
-        hasLaboratory: '='
+        hasLaboratory: '=',
+        participantLaboratory: '='
       }
     });
 
   Controller.$inject = [
     'otusjs.application.state.ApplicationStateService',
     'otusjs.otus.dashboard.core.EventService',
+    'otusjs.participant.core.EventService',
     'otusjs.otus.dashboard.service.DashboardService',
     'otusjs.participant.business.ParticipantLabelFactory',
     'otusjs.otus.uxComponent.Publisher'
@@ -21,6 +23,7 @@
 
   function Controller(ApplicationStateService,
                       EventService,
+                      ParticipantEventService,
                       DashboardService,
                       ParticipantLabelFactory,
                       Publisher) {
@@ -65,6 +68,7 @@
         self.participantBirthdate = self.selectedParticipant.birthdate ? new Date(self.selectedParticipant.birthdate.value) : '';
         self.isEmpty = false;
         self.participantLabel = ParticipantLabelFactory.create(self.selectedParticipant)
+        ParticipantEventService.fireParticipantLoaded(participantData)
         _publishPrintStructure()
         _subscribeLabels()
       } else {
@@ -72,6 +76,7 @@
         .getSelectedParticipant()
         .then(function(participantData) {
             self.selectedParticipant = participantData;
+            ParticipantEventService.fireParticipantLoaded(participantData)
             self.participantBirthdate = self.selectedParticipant.birthdate ? new Date(self.selectedParticipant.birthdate.value) : '';
             self.isEmpty = false;
             self.participantLabel = ParticipantLabelFactory.create(self.selectedParticipant)
