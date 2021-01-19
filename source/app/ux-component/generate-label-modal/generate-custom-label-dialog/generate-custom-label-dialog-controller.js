@@ -69,7 +69,6 @@
       });
     }
 
-
     function DialogController($scope,
                               $mdDialog,
                               $location,

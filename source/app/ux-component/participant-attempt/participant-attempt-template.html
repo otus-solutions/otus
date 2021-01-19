@@ -86,17 +86,17 @@
     <md-divider style="margin-left: auto; margin-right: auto; margin-top: 16px; margin-bottom: 16px" />
 
     <div>
-      <span ng-if="$ctrl.attempts.length > 0" class="md-subhead"><b>Visualizar tentativas de contato</b></span>
-      <md-list ng-if="$ctrl.attempts.length > 0" style="margin-top: 16px">
-        <span class="md-subheader">{{$ctrl.selectedAddress.address.value.census}} - {{$ctrl.selectedAddress.address.value.street}}, {{$ctrl.selectedAddress.address.value.streetNumber}}</span>
-        <md-list-item class="md-whiteframe-z1" style="background: white; margin-top: 5px;" layout-fill=""
-                      ng-repeat="attempt in $ctrl.attempts track by $index">
+      <span ng-if="$ctrl.attemptAddresses.length > 0" class="md-subhead"><b>Tentativas de contato ({{$ctrl.translatePosition($ctrl.selectedAddress.pos)}})</b></span>
+      <md-list class="md-dense" ng-repeat="attemptAddress in $ctrl.lastAttempts track by $index" ng-if="$ctrl.attemptAddresses.length > 0" style="margin-top: 16px">
+        <span class="md-subheader">{{attemptAddress.fullAddress}}</span>
+        <div class="secondary-button-padding" layout-fill=""
+                      ng-repeat="attempt in attemptAddress.attemptList track by $index">
           <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center">
             <span
               hide-gt-xs
               ng-style="{
                 backgroundColor: attempt.attemptStatus.statusColor,
-                height: '10px',
+                height: '5px',
                 width: '10px',
                 padding: '10px',
                 borderRadius: '50%',
@@ -104,14 +104,14 @@
               }"
             ></span>
             <span hide-gt-xs flex="5"></span>
-            <div layout="column" flex="25">
+            <div layout="column" flex="20">
               <span style="text-align: center">
                 {{$ctrl.parseToDateWithTime(attempt.attemptDateTime)}}
               </span>
             </div>
             <span flex="5"></span>
-            <div layout="column" flex="25">
-              <span style="text-align: justify; line-break: anywhere">
+            <div layout="column" flex="35">
+              <span style="line-break: anywhere">
                 {{ attempt.userEmail }}
               </span>
             </div>
@@ -120,24 +120,35 @@
               hide-xs
               ng-style="{
                 backgroundColor: attempt.attemptStatus.statusColor,
-                padding: '10px',
-                width: '100px',
+                padding: '5px',
                 textAlign: 'center'
-              }"
-              flex="25"
-            >
+              }" flex="15">
               {{attempt.attemptStatus.value}}
             </span>
-            <span flex="5"></span>
             <md-button ng-click="$ctrl.remove(attempt._id)" class="md-icon-button">
               <md-icon style="color: #d50000">
                 delete_forever
               </md-icon>
             </md-button>
           </div>
-        </md-list-item>
+        </div>
       </md-list>
-      <div ng-if="$ctrl.attempts.length < 1" layout="row" layout-align="center center" style="margin-bottom: 8px">
+      <div layout="row" style="margin-top: 5px" layout-align="end end">
+        <dynamic-dialog
+          data="{
+            attempts: $ctrl.attemptAddresses,
+            position: $ctrl.translatePosition($ctrl.selectedAddress.pos)
+          }"
+          callback-functions="{
+            'parseDate': $ctrl.parseToDateWithTime,
+            'remove': $ctrl.remove
+          }"
+          template-url="'app/ux-component/participant-attempt/participant-attempt-modal/participant-attempt-modal-template.html'"
+          button-type="'md-raised'"
+          button-text="'histórico'"
+        ></dynamic-dialog>
+      </div>
+      <div ng-if="$ctrl.attemptAddresses.length < 1" layout="row" layout-align="center center" style="margin-bottom: 8px">
         <span class="md-subhead">
           Não há tentativas de contato para este endereço
         </span>
