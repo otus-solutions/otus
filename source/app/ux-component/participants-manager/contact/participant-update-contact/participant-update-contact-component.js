@@ -9,6 +9,7 @@
         contact: '=',
         contactId: '@',
         type: '@',
+        permissions: '=',
         loadParticipantContact: '&'
       }
     }).controller('participantUpdateContactCtrl', Controller);

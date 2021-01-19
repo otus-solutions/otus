@@ -22,12 +22,12 @@
       parent: STATE.PARTICIPANT_DASHBOARD,
       name: STATE.PARTICIPANT_UPDATE,
       url: '/' + STATE.PARTICIPANT_UPDATE,
-      template: '<otus-participant-contact></otus-participant-contact>',
+      template: '<otus-participant-contact permissions="$resolve.permission"></otus-participant-contact>',
       data: {
         redirect: _redirect
       },
       resolve: {
-        loadStateData: _loadStateData
+        permission: _loadParticipantRegistration
       }
     };
 
@@ -62,19 +62,29 @@
 
     ];
 
-    function _loadStateData(ParticipantContextService, SessionContextService, Application) {
-      Application
+    function _loadParticipantRegistration(ProjectConfiguration, ParticipantContextService, SessionContextService, Application) {
+      return Application
         .isDeployed()
-        .then(function () {
+        .then(function() {
           try {
             SessionContextService.restore();
             ParticipantContextService.restore();
+            return ProjectConfiguration.getProjectConfiguration()
+              .then(function(response) {
+                var _permissions = {}
+                _permissions.participantRegistration = response.data.participantRegistration;
+                _permissions.autoGenerateRecruitmentNumber = response.data.autoGenerateRecruitmentNumber;
+                _permissions.addressCensusRequired = response.data.addressCensusRequired;
+                return _permissions;
+              });
           } catch (e) {
-            console.log(e);
+            console.error(e);
           }
         });
     }
-    _loadStateData.$inject = [
+
+    _loadParticipantRegistration.$inject = [
+      'otusjs.deploy.ProjectConfigurationRestService',
       'otusjs.participant.core.ContextService',
       'otusjs.application.session.core.ContextService',
       'otusjs.application.core.ModuleService'
