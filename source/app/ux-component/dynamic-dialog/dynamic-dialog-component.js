@@ -9,7 +9,7 @@
       bindings: {
         data: "=",
         callbackFunctions: "=",
-        templateUrl: "=",
+        template: "=",
         buttonType: "=",
         buttonText: "="
       }
