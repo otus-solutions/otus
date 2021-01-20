@@ -135,6 +135,7 @@
       </md-list>
       <div layout="row" style="margin-top: 5px" layout-align="end end">
         <dynamic-dialog
+          ng-if="$ctrl.selectedAddress.hasOwnProperty('pos')"
           data="{
             attempts: $ctrl.attemptAddresses,
             position: $ctrl.translatePosition($ctrl.selectedAddress.pos)
