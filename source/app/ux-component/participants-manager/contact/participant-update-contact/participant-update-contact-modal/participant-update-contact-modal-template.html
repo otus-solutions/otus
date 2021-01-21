@@ -1,0 +1,62 @@
+<md-dialog flex="100" style="max-width: 700px; max-height: 700px; margin-left: auto; margin-right: auto">
+    <form ng-cloak>
+      <md-toolbar>
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+          <h2>Histórico de tentativas <span ng-if="ctrl.dialogData.position">({{ctrl.dialogData.position}}) </span></h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="hide()">X</md-button>
+        </div>
+      </md-toolbar>
+      <md-dialog-content>
+        <md-list class="md-dense" ng-repeat="attemptAddress in ctrl.dialogData.attempts track by $index">
+          <span class="md-subheader">{{attemptAddress.fullAddress}}</span>
+          <div class="secondary-button-padding" layout-fill=""
+               ng-repeat="attempt in attemptAddress.attemptList track by $index">
+            <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center">
+              <span
+                hide-gt-xs
+                ng-style="{
+                  backgroundColor: attempt.attemptStatus.statusColor,
+                  height: '5px',
+                  width: '10px',
+                  padding: '10px',
+                  borderRadius: '50%',
+                  textAlign: 'center'
+                }"
+              ></span>
+              <span hide-gt-xs flex="5"></span>
+              <div layout="column" flex="25">
+                <span style="text-align: center">
+                  {{ctrl.callbackFunctions.parseDate(attempt.attemptDateTime)}}
+                </span>
+              </div>
+              <span flex="5"></span>
+              <div layout="column" flex="35">
+                <span style="line-break: anywhere">
+                  {{ attempt.userEmail }}
+                </span>
+              </div>
+              <span hide-xs flex="5"></span>
+              <span
+                hide-xs
+                ng-style="{
+                  backgroundColor: attempt.attemptStatus.statusColor,
+                  padding: '5px',
+                  textAlign: 'center'
+                }" flex="15">
+                {{attempt.attemptStatus.value}}
+              </span>
+              <md-button ng-click="ctrl.callbackFunctions.remove(attempt._id)" class="md-icon-button">
+                <md-icon style="color: #d50000">
+                  delete_forever
+                </md-icon>
+              </md-button>
+            </div>
+          </div>
+        </md-list>
+      </md-dialog-content>
+      <md-dialog-actions layout="row">
+        <md-button ng-click="hide()">fechar</md-button>
+      </md-dialog-actions>
+    </form>
+  </md-dialog>

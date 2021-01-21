@@ -158,7 +158,7 @@
 
       angular.extend(dialogObject, dialogObject, additionalOptions);
 
-      return $mdDialog.show();
+      return $mdDialog.show(dialogObject);
     }
 
     function showActivitySharingDialog(selectedActivity, fullscreen = true) {

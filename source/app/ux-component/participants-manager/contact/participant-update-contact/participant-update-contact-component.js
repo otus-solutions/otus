@@ -96,8 +96,11 @@
       DialogShowService.showCustomizedDialog(
         self.dialogData,
         DialogController,
-        "app/ux-component/dialog-show/dialog-show-template.html",
-        true
+        "app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-modal/participant-update-contact-modal-template.html",
+        true,
+        '$ctrl',
+        {},
+        false
       ).then(() => {
         ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
           .then(() => self.editMode[position] = false)
@@ -178,9 +181,7 @@
 
     function DialogController(
       $scope,
-      $mdDialog,
-      data,
-      callbackFunctions
+      $mdDialog
     ) {
       var $ctrl = this;
       $ctrl.cancel = cancel;
