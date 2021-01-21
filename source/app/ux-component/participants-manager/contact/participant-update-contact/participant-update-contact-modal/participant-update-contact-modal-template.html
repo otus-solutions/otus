@@ -1,62 +1,43 @@
-<md-dialog flex="100" style="max-width: 700px; max-height: 700px; margin-left: auto; margin-right: auto">
-    <form ng-cloak>
+<md-dialog class="dialog-show-template">
+  <form ng-cloak>
       <md-toolbar>
         <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
-          <h2>Histórico de tentativas <span ng-if="ctrl.dialogData.position">({{ctrl.dialogData.position}}) </span></h2>
+          <h2>{{$ctrl.data.dialogToTitle}} <span ng-if="$ctrl.dialogData.position"></span>({{$ctrl.data.position}}) </span></h2>
           <span flex></span>
           <md-button class="md-icon-button" ng-click="hide()">X</md-button>
         </div>
       </md-toolbar>
+
       <md-dialog-content>
-        <md-list class="md-dense" ng-repeat="attemptAddress in ctrl.dialogData.attempts track by $index">
-          <span class="md-subheader">{{attemptAddress.fullAddress}}</span>
-          <div class="secondary-button-padding" layout-fill=""
-               ng-repeat="attempt in attemptAddress.attemptList track by $index">
-            <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center">
-              <span
-                hide-gt-xs
-                ng-style="{
-                  backgroundColor: attempt.attemptStatus.statusColor,
-                  height: '5px',
-                  width: '10px',
-                  padding: '10px',
-                  borderRadius: '50%',
-                  textAlign: 'center'
-                }"
-              ></span>
-              <span hide-gt-xs flex="5"></span>
-              <div layout="column" flex="25">
-                <span style="text-align: center">
-                  {{ctrl.callbackFunctions.parseDate(attempt.attemptDateTime)}}
-                </span>
-              </div>
-              <span flex="5"></span>
-              <div layout="column" flex="35">
-                <span style="line-break: anywhere">
-                  {{ attempt.userEmail }}
-                </span>
-              </div>
-              <span hide-xs flex="5"></span>
-              <span
-                hide-xs
-                ng-style="{
-                  backgroundColor: attempt.attemptStatus.statusColor,
-                  padding: '5px',
-                  textAlign: 'center'
-                }" flex="15">
-                {{attempt.attemptStatus.value}}
-              </span>
-              <md-button ng-click="ctrl.callbackFunctions.remove(attempt._id)" class="md-icon-button">
-                <md-icon style="color: #d50000">
-                  delete_forever
-                </md-icon>
-              </md-button>
-            </div>
-          </div>
-        </md-list>
+        <div class="md-padding" >
+          <p class="md-body-1">
+            Você deseja <strong>alterar</strong> este endereço ou <strong>corrigi-lo</strong>?
+          </p>
+
+          <p class="md-body-1">
+            <strong>Alterá-lo</strong> indica que o endereço novo é diferente do anterior e habilita novas tentativas de contato.
+          </p>
+
+          <p class="md-body-1">
+            <strong>Corrigi-lo</strong> indica que o endereço é fisicamente o mesmo e só foram alterados alguns de seus dados.
+          </p>
+          
+          <md-radio-group ng-model="$ctrl.data.selection" style="margin-top: 16px">
+            <md-radio-button value="alterar"><strong>Alterar</strong> endereço</md-radio-button>
+            <md-radio-button value="corrigir"><strong>Corrigir</strong> endereço</md-radio-button>
+          </md-radio-group>
+        </div>
+        
       </md-dialog-content>
+
       <md-dialog-actions layout="row">
-        <md-button ng-click="hide()">fechar</md-button>
+        <div ng-repeat="button in $ctrl.buttons">
+          <md-button class="{{ button.class }}"
+                     ng-click="button.action($ctrl.data.selection)"
+                     ng-bind="button.message"
+                     aria-label="{{button.ariaLabel ? button.ariaLabel : ''}}"></md-button>
+          <span flex></span>
+        </div>
       </md-dialog-actions>
     </form>
   </md-dialog>

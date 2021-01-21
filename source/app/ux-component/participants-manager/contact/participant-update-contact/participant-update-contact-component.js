@@ -20,20 +20,12 @@
     'otusjs.participantManager.contact.ParticipantContactService',
     'otusjs.participant.business.ParticipantMessagesService',
     'otusjs.participant.repository.ParticipantContactAttemptService',
-    'otusjs.application.dialog.DialogShowService'
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.participant.business.ParticipantManagerService'
   ];
 
-  function Controller($mdDialog, ParticipantContactValues, ParticipantContactService, ParticipantMessagesService, ParticipantContactAttemptService, DialogShowService) {
+  function Controller($mdDialog, ParticipantContactValues, ParticipantContactService, ParticipantMessagesService, ParticipantContactAttemptService, DialogShowService, ParticipantManagerService) {
     const self = this;
-
-    self.dialogData = {
-      dialogToTitle: "Alterar ou corrigir endereço?",
-      titleToText: "Alterar ou corrigir endereço?",
-      textDialog: "Alterar ou corrigir endereço?",
-      ariaLabel: "Alterar ou corrigir endereço?",
-      buttons: _getDialogButtons(),
-      cancel: $mdDialog.cancel()
-    }
 
     self.addContactInput = addContactInput;
     self.enableEditMode = enableEditMode;
@@ -46,6 +38,26 @@
     self.swapMainContact = swapMainContact;
     self.confirmedDisabledButtomPostalCode = confirmedDisabledButtomPostalCode;
 
+    // Dialog-related objects
+    self.dialogSelection = "alterar"
+
+    self.dialogData = {
+      dialogToTitle: "Alterar ou corrigir o endereço?",
+      titleToText: "Alterar ou corrigir o endereço?",
+      textDialog: "Alterar ou corrigir o endereço?",
+      ariaLabel: "Alterar ou corrigir o endereço?",
+      buttons: _getDialogButtons(),
+      cancel: $mdDialog.cancel(),
+      selection: self.dialogSelection
+    }
+
+    self.translatedPos = {
+      "main": () => "Principal",
+      "second": () => "Segundo",
+      "third": () => "Terceiro",
+      "fourth": () => "Quarto",
+      "fifth": () => "Quinto"
+    }
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -53,6 +65,7 @@
     /* Public methods */
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
+      self.participant = ParticipantManagerService.getSelectedParticipant();
       self.editMode = {};
       self.newContactMode = {};
       self.form = {};
@@ -93,8 +106,13 @@
 
     function updateContact(updatedContactItem, position, type) {
       let updateContactDto = ParticipantContactService.createContactDto(self.contactId, position, updatedContactItem);
+      let updatedDialogData = {
+        ...self.dialogData,
+        position: self.translatedPos[position]()
+      }
+
       DialogShowService.showCustomizedDialog(
-        self.dialogData,
+        updatedDialogData,
         DialogController,
         "app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-modal/participant-update-contact-modal-template.html",
         true,
@@ -179,46 +197,48 @@
       if (contact.main.value.content === "" || contact.main.value.street === "") enableEditMode("main");
     }
 
-    function DialogController(
-      $scope,
-      $mdDialog
-    ) {
+    function DialogController(data) {
       var $ctrl = this;
-      $ctrl.cancel = cancel;
-      $scope.cancel = cancel;
-      $scope.hide = hide;
-
-      function hide() {
-        $mdDialog.hide();
-      }
-
-      function cancel() {
-        $mdDialog.cancel();
-      }
+      $ctrl.data = data;
+      $ctrl.buttons = _getDialogButtons({
+        position: data.position
+      })
     }
 
-    function _getDialogButtons() {
+    function _getDialogButtons(data) {
       return [
         {
-          message: "voltar",
-          action: function() {
-            $mdDialog.cancel()
+          message: "confirmar",
+          action: function(option) {
+            // Perform update/change
+            if(option === 'alterar') {
+              ParticipantContactAttemptService.changeAttemptAddress(
+                self.participant.recruitmentNumber,
+                self.type,
+                data.position
+              )
+            }
+
+            if(option === 'corrigir') {
+              ParticipantContactAttemptService.updateAttemptAddress(
+                self.participant.recruitmentNumber,
+                self.type,
+                data.position,
+                self.form
+              )
+            }
+
+            // Hide the dialog
+            $mdDialog.hide()
           },
-          class: "md-raised md-no-focus"
+          class: "md-primary"
         },
         {
-          message: "alterar",
+          message: "cancelar",
           action: function() {
             $mdDialog.cancel()
           },
-          class: "md-raised md-primary"
-        },
-        {
-          message: "corrigir",
-          action: function() {
-            $mdDialog.cancel()
-          },
-          class: "md-raised md-primary"
+          class: "md-no-focus"
         }
       ]
     }
