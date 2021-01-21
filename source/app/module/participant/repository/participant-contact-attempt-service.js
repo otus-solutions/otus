@@ -8,14 +8,12 @@
   Service.$inject = [
     '$q',
     'otusjs.participant.repository.ParticipantContactAttemptRepositoryService',
-    'otusjs.model.participant.ParticipantContactAttemptConfigurationFactory',
-    'otusjs.model.participant.ParticipantContactAttemptFactory'
+    'otusjs.model.participant.ParticipantContactAttemptConfigurationFactory'
   ];
 
   function Service($q,
                    AttemptRepositoryService,
-                   ParticipantContactAttemptConfigurationFactory,
-                   ParticipantContactAttemptFactory) {
+                   ParticipantContactAttemptConfigurationFactory) {
     var self = this;
 
     /* Public methods */
@@ -23,6 +21,8 @@
     self.findByRnByContactTypeByPosition = findByRnByContactTypeByPosition;
     self.deleteContactAttempt = deleteContactAttempt;
     self.findAttemptConfigurationByObjectType = findAttemptConfigurationByObjectType;
+    self.updateAttemptAddress = updateAttemptAddress;
+    self.changeAttemptAddress = changeAttemptAddress;
 
     function create(attempt) {
       var request = $q.defer();
@@ -58,6 +58,28 @@
       var request = $q.defer();
       AttemptRepositoryService
         .findAttemptConfigurationByObjectType(objectType)
+        .then(metadata => {
+          const participantMetadata = ParticipantContactAttemptConfigurationFactory.fromJson(metadata);
+          request.resolve(participantMetadata);
+        }).catch(e => request.reject(e))
+      return request.promise;
+    }
+
+    function updateAttemptAddress(rn, contactType, position, address) {
+      var request = $q.defer();
+      AttemptRepositoryService
+        .updateAttemptAddress(rn, contactType, position, address)
+        .then(metadata => {
+          const participantMetadata = ParticipantContactAttemptConfigurationFactory.fromJson(metadata);
+          request.resolve(participantMetadata);
+        }).catch(e => request.reject(e))
+      return request.promise;
+    }
+
+    function changeAttemptAddress(rn, contactType, position) {
+      var request = $q.defer();
+      AttemptRepositoryService
+        .changeAttemptAddress(rn, contactType, position)
         .then(metadata => {
           const participantMetadata = ParticipantContactAttemptConfigurationFactory.fromJson(metadata);
           request.resolve(participantMetadata);

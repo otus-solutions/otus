@@ -15,13 +15,25 @@
     }).controller('participantUpdateContactCtrl', Controller);
 
   Controller.$inject = [
+    '$mdDialog',
     'ParticipantContactValues',
     'otusjs.participantManager.contact.ParticipantContactService',
-    'otusjs.participant.business.ParticipantMessagesService'
+    'otusjs.participant.business.ParticipantMessagesService',
+    'otusjs.participant.repository.ParticipantContactAttemptService',
+    'otusjs.application.dialog.DialogShowService'
   ];
 
-  function Controller(ParticipantContactValues, ParticipantContactService, ParticipantMessagesService) {
+  function Controller($mdDialog, ParticipantContactValues, ParticipantContactService, ParticipantMessagesService, ParticipantContactAttemptService, DialogShowService) {
     const self = this;
+
+    self.dialogData = {
+      dialogToTitle: "Alterar ou corrigir endereço?",
+      titleToText: "Alterar ou corrigir endereço?",
+      textDialog: "Alterar ou corrigir endereço?",
+      ariaLabel: "Alterar ou corrigir endereço?",
+      buttons: _getDialogButtons(),
+      cancel: $mdDialog.cancel()
+    }
 
     self.addContactInput = addContactInput;
     self.enableEditMode = enableEditMode;
@@ -81,12 +93,18 @@
 
     function updateContact(updatedContactItem, position, type) {
       let updateContactDto = ParticipantContactService.createContactDto(self.contactId, position, updatedContactItem);
-
-      ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
-        .then(() => self.editMode[position] = false)
-        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
-        .then(() => ParticipantContactService.isLastContact(self, position, "updateContact"))
-        .then(() => self.loadParticipantContact());
+      DialogShowService.showCustomizedDialog(
+        self.dialogData,
+        DialogController,
+        "app/ux-component/dialog-show/dialog-show-template.html",
+        true
+      ).then(() => {
+        ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
+          .then(() => self.editMode[position] = false)
+          .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
+          .then(() => ParticipantContactService.isLastContact(self, position, "updateContact"))
+          .then(() => self.loadParticipantContact());
+      })
     }
 
     function findAddressByCep(addressContact) {
@@ -156,6 +174,52 @@
 
     function _isNewContact(contact) {
       if (contact.main.value.content === "" || contact.main.value.street === "") enableEditMode("main");
+    }
+
+    function DialogController(
+      $scope,
+      $mdDialog,
+      data,
+      callbackFunctions
+    ) {
+      var $ctrl = this;
+      $ctrl.cancel = cancel;
+      $scope.cancel = cancel;
+      $scope.hide = hide;
+
+      function hide() {
+        $mdDialog.hide();
+      }
+
+      function cancel() {
+        $mdDialog.cancel();
+      }
+    }
+
+    function _getDialogButtons() {
+      return [
+        {
+          message: "voltar",
+          action: function() {
+            $mdDialog.cancel()
+          },
+          class: "md-raised md-no-focus"
+        },
+        {
+          message: "alterar",
+          action: function() {
+            $mdDialog.cancel()
+          },
+          class: "md-raised md-primary"
+        },
+        {
+          message: "corrigir",
+          action: function() {
+            $mdDialog.cancel()
+          },
+          class: "md-raised md-primary"
+        }
+      ]
     }
   }
 }());

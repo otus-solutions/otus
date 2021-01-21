@@ -35,11 +35,7 @@
           callbackFunctions: self.callbackFunctions ? self.callbackFunctions : ""
         },
         fullscreen: false
-      }).then(function (answer) {
-        self.status = '';
-      }, function () {
-        self.status = '';
-      });
+      })
     }
 
     function DialogController(
