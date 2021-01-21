@@ -51,14 +51,6 @@
       selection: self.dialogSelection
     }
 
-    self.translatedPos = {
-      "main": () => "Principal",
-      "second": () => "Segundo",
-      "third": () => "Terceiro",
-      "fourth": () => "Quarto",
-      "fifth": () => "Quinto"
-    }
-
     /* Lifecycle hooks */
     self.$onInit = onInit;
 
@@ -108,7 +100,7 @@
       let updateContactDto = ParticipantContactService.createContactDto(self.contactId, position, updatedContactItem);
       let updatedDialogData = {
         ...self.dialogData,
-        position: self.translatedPos[position]()
+        position: position
       }
 
       DialogShowService.showCustomizedDialog(
@@ -197,9 +189,15 @@
       if (contact.main.value.content === "" || contact.main.value.street === "") enableEditMode("main");
     }
 
-    function DialogController(data) {
+    function DialogController($scope, data) {
       var $ctrl = this;
       $ctrl.data = data;
+      $scope.cancel = cancel;
+
+      function cancel() {
+        $mdDialog.cancel()
+      }
+
       $ctrl.buttons = _getDialogButtons({
         position: data.position
       })
