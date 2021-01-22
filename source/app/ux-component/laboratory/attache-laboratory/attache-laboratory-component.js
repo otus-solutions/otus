@@ -54,15 +54,27 @@
 
       DialogShowService.showConfirmationDialog('Confirmação de Vínculo', textDialog, 'Confirmação de vínculo')
         .then(function () {
-          LoadingScreenService.start();
           UnattachedLaboratoryService.attacheLaboratory(self.laboratoryIdentification)
             .then(function () {
+              LoadingScreenService.start();
               EventService.fireOnLabCreated(true);
               LoadingScreenService.finish();
             })
             .catch(function (error) {
-              LoadingScreenService.finish();
-              _showToast('Laboratório não encontrado')
+              console.info(error)
+              if(error.status === 404 || (error.status === 400
+                && error.data.MESSAGE === "Data Validation Fail: java.lang.Throwable: Laboratory not found")) {
+                _showToast("Laboratório não encontrado")
+              }else if(error.status === 400 &&
+                error.data.MESSAGE === "Data Validation Fail: Laboratory is already attached") {
+                _showToast(`O laboratório ${self.laboratoryIdentification} já foi vinculado a um participante`)
+              }else if (error.status === 400 &&
+                error.data.MESSAGE === "Data Validation Fail: Invalid configuration"
+              ) {
+                _showToast(`Configuração de laboratório inválida`)
+              }else {
+                _showToast(`Unknown error`)
+              }
             });
         })
     }

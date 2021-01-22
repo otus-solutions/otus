@@ -39,7 +39,7 @@
     self.confirmedDisabledButtomPostalCode = confirmedDisabledButtomPostalCode;
 
     // Dialog-related objects
-    self.dialogSelection = "alterar"
+    self.dialogSelection = "corrigir"
 
     self.dialogData = {
       dialogToTitle: "Alterar ou corrigir o endereço?",
@@ -202,9 +202,21 @@
         $mdDialog.hide()
       }
 
+      const translatedPos = {
+        "main": () => "Principal",
+        "second": () => "Segundo",
+        "third": () => "Terceiro",
+        "fourth": () => "Quarto",
+        "fifth": () => "Quinto"
+      }
+
       $ctrl.buttons = _getDialogButtons({
         position: data.position
       }, cancel, hide)
+
+      $ctrl.translatePosition = function (pos) {
+        return translatedPos[pos]();
+      }
     }
 
     function _getDialogButtons(data, cancel, hide) {
