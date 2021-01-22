@@ -198,12 +198,16 @@
         $mdDialog.cancel()
       }
 
+      function hide() {
+        $mdDialog.hide()
+      }
+
       $ctrl.buttons = _getDialogButtons({
         position: data.position
-      })
+      }, cancel, hide)
     }
 
-    function _getDialogButtons(data) {
+    function _getDialogButtons(data, cancel, hide) {
       return [
         {
           message: "confirmar",
@@ -222,20 +226,18 @@
                 self.participant.recruitmentNumber,
                 self.type,
                 data.position,
-                self.form
+                self.contact[data.position].value
               )
             }
 
             // Hide the dialog
-            $mdDialog.hide()
+            hide()
           },
           class: "md-primary"
         },
         {
           message: "cancelar",
-          action: function() {
-            $mdDialog.cancel()
-          },
+          action: cancel,
           class: "md-no-focus"
         }
       ]
