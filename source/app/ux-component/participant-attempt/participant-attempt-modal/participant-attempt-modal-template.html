@@ -7,7 +7,7 @@
         <md-button class="md-icon-button" ng-click="hide()">X</md-button>
       </div>
     </md-toolbar>
-    <md-dialog-content>
+    <md-dialog-content style="padding: 10px;">
       <md-list class="md-dense" ng-repeat="attemptAddress in ctrl.dialogData.attempts track by $index">
         <span class="md-subheader">{{attemptAddress.fullAddress}}</span>
         <div class="secondary-button-padding" layout-fill=""
