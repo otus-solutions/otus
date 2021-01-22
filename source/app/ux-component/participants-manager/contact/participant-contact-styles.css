@@ -31,4 +31,8 @@
   margin-top: 0px;
 }
 
-
+@media (min-height: 1000px) {
+  .pc-layout {
+    height: 60vh;
+  }
+}
