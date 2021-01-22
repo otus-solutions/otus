@@ -2,7 +2,7 @@
   href="app/ux-component/participants-manager/contact/participant-contact-styles.css"
   rel="stylesheet" type="text/css">
 
-<md-content class="pc-layout" ng-cloak>
+<md-content style="margin-top: 0; padding-top: 0" class="pc-layout" ng-cloak>
   <div class="anonymous-msg" layout="column" ng-show="!$ctrl.isIdentified">
     <div layout="row" layout-padding layout-align="center center">
       <p align="center" class="md-body-1">Este participante está definido como <strong>anônimo</strong>. Portanto,
@@ -75,29 +75,31 @@
         </form>
       </md-card-content>
     </md-card>
+
     <otus-participant-login-email class="contact-update"
                                   load-participant-function="$ctrl.loadParticipantData"
                                   participant = $ctrl.participant>
     </otus-participant-login-email>
+
+    <div>
+      <md-button class="md-accent"
+                 ng-click="$ctrl.createParticipantContact()"
+                 ng-if="!$ctrl.contact">
+        <small>{{$ctrl.ParticipantContactValues.icons.createNewContacts.translatedTitle}}</small>
+        <md-icon>{{$ctrl.ParticipantContactValues.icons.createNewContacts.icon}}</md-icon>
+      </md-button>
+      <md-button class="md-warn"
+                 ng-click="$ctrl.deleteParticipantContact()"
+                 ng-if="$ctrl.contact">
+        <small>{{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}</small>
+      </md-button>
+    </div>
 
     <div class="contact-label" layout="row" layout-align="space-between center" layout-margin>
       <div>
         <small class="md-caption">{{$ctrl.ParticipantContactValues.msg.captionAboutRequiredFields}}</small>
       </div>
 
-      <div>
-        <md-button class="md-accent"
-                   ng-click="$ctrl.createParticipantContact()"
-                   ng-if="!$ctrl.contact">
-          <small>{{$ctrl.ParticipantContactValues.icons.createNewContacts.translatedTitle}}</small>
-          <md-icon>{{$ctrl.ParticipantContactValues.icons.createNewContacts.icon}}</md-icon>
-        </md-button>
-        <md-button class="md-warn"
-                   ng-click="$ctrl.deleteParticipantContact()"
-                   ng-if="$ctrl.contact">
-          <small>{{$ctrl.ParticipantContactValues.icons.deleteContact.translatedTitle}}</small>
-        </md-button>
-      </div>
     </div>
 
     <otus-participant-update-contact ng-if="$ctrl.contact"
