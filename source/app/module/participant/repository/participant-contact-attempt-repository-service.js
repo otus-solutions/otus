@@ -18,6 +18,8 @@
     self.findByRnByContactTypeByPosition = findByRnByContactTypeByPosition;
     self.deleteContactAttempt = deleteContactAttempt;
     self.findAttemptConfigurationByObjectType = findAttemptConfigurationByObjectType;
+    self.updateAttemptAddress = updateAttemptAddress;
+    self.changeAttemptAddress = changeAttemptAddress;
 
     function create(attempt) {
       return _remoteDataSource.whenReady()
@@ -40,6 +42,18 @@
     function findAttemptConfigurationByObjectType(objectType) {
       return _remoteDataSource.whenReady()
         .then(remoteDataSource => remoteDataSource.findAttemptConfigurationByObjectType(objectType))
+        .then(response => response.data);
+    }
+
+    function updateAttemptAddress(rn, contactType, position, addressJson) {
+      return _remoteDataSource.whenReady()
+        .then(remoteDataSource => remoteDataSource.updateAttemptAddress(rn, contactType, position, addressJson))
+        .then(response => response.data);
+    }
+
+    function changeAttemptAddress(rn, contactType, position) {
+      return _remoteDataSource.whenReady()
+        .then(remoteDataSource => remoteDataSource.changeAttemptAddress(rn, contactType, position))
         .then(response => response.data);
     }
   }

@@ -15,12 +15,16 @@
     }).controller('participantUpdateContactCtrl', Controller);
 
   Controller.$inject = [
+    '$mdDialog',
     'ParticipantContactValues',
     'otusjs.participantManager.contact.ParticipantContactService',
-    'otusjs.participant.business.ParticipantMessagesService'
+    'otusjs.participant.business.ParticipantMessagesService',
+    'otusjs.participant.repository.ParticipantContactAttemptService',
+    'otusjs.application.dialog.DialogShowService',
+    'otusjs.participant.business.ParticipantManagerService'
   ];
 
-  function Controller(ParticipantContactValues, ParticipantContactService, ParticipantMessagesService) {
+  function Controller($mdDialog, ParticipantContactValues, ParticipantContactService, ParticipantMessagesService, ParticipantContactAttemptService, DialogShowService, ParticipantManagerService) {
     const self = this;
 
     self.addContactInput = addContactInput;
@@ -34,6 +38,18 @@
     self.swapMainContact = swapMainContact;
     self.confirmedDisabledButtomPostalCode = confirmedDisabledButtomPostalCode;
 
+    // Dialog-related objects
+    self.dialogSelection = "alterar"
+
+    self.dialogData = {
+      dialogToTitle: "Alterar ou corrigir o endereço?",
+      titleToText: "Alterar ou corrigir o endereço?",
+      textDialog: "Alterar ou corrigir o endereço?",
+      ariaLabel: "Alterar ou corrigir o endereço?",
+      buttons: _getDialogButtons(),
+      cancel: $mdDialog.cancel(),
+      selection: self.dialogSelection
+    }
 
     /* Lifecycle hooks */
     self.$onInit = onInit;
@@ -41,6 +57,7 @@
     /* Public methods */
     function onInit() {
       self.ParticipantContactValues = ParticipantContactValues;
+      self.participant = ParticipantManagerService.getSelectedParticipant();
       self.editMode = {};
       self.newContactMode = {};
       self.form = {};
@@ -81,12 +98,26 @@
 
     function updateContact(updatedContactItem, position, type) {
       let updateContactDto = ParticipantContactService.createContactDto(self.contactId, position, updatedContactItem);
+      let updatedDialogData = {
+        ...self.dialogData,
+        position: position
+      }
 
-      ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
-        .then(() => self.editMode[position] = false)
-        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
-        .then(() => ParticipantContactService.isLastContact(self, position, "updateContact"))
-        .then(() => self.loadParticipantContact());
+      DialogShowService.showCustomizedDialog(
+        updatedDialogData,
+        DialogController,
+        "app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-modal/participant-update-contact-modal-template.html",
+        true,
+        '$ctrl',
+        {},
+        false
+      ).then(() => {
+        ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
+          .then(() => self.editMode[position] = false)
+          .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
+          .then(() => ParticipantContactService.isLastContact(self, position, "updateContact"))
+          .then(() => self.loadParticipantContact());
+      })
     }
 
     function findAddressByCep(addressContact) {
@@ -156,6 +187,60 @@
 
     function _isNewContact(contact) {
       if (contact.main.value.content === "" || contact.main.value.street === "") enableEditMode("main");
+    }
+
+    function DialogController($scope, data) {
+      var $ctrl = this;
+      $ctrl.data = data;
+      $scope.cancel = cancel;
+
+      function cancel() {
+        $mdDialog.cancel()
+      }
+
+      function hide() {
+        $mdDialog.hide()
+      }
+
+      $ctrl.buttons = _getDialogButtons({
+        position: data.position
+      }, cancel, hide)
+    }
+
+    function _getDialogButtons(data, cancel, hide) {
+      return [
+        {
+          message: "confirmar",
+          action: function(option) {
+            // Perform update/change
+            if(option === 'alterar') {
+              ParticipantContactAttemptService.changeAttemptAddress(
+                self.participant.recruitmentNumber,
+                self.type,
+                data.position
+              )
+            }
+
+            if(option === 'corrigir') {
+              ParticipantContactAttemptService.updateAttemptAddress(
+                self.participant.recruitmentNumber,
+                self.type,
+                data.position,
+                self.contact[data.position].value
+              )
+            }
+
+            // Hide the dialog
+            hide()
+          },
+          class: "md-primary"
+        },
+        {
+          message: "cancelar",
+          action: cancel,
+          class: "md-no-focus"
+        }
+      ]
     }
   }
 }());

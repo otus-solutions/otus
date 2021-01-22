@@ -19,6 +19,8 @@
     self.deleteContactAttempt = deleteContactAttempt;
     self.findByRnByContactTypeByPosition = findByRnByContactTypeByPosition;
     self.findAttemptConfigurationByObjectType = findAttemptConfigurationByObjectType;
+    self.updateAttemptAddress = updateAttemptAddress;
+    self.changeAttemptAddress = changeAttemptAddress;
 
     function initialize() {
       _rest = OtusRestResourceService.getParticipantContactAttemptResource();
@@ -42,6 +44,18 @@
     function findAttemptConfigurationByObjectType(objectType) {
       if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
       const resp = _rest.findAttemptConfigurationByObjectType({objectType: objectType});
+      return resp.$promise;
+    }
+
+    function updateAttemptAddress(rn, contactType, position, addressJson) {
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      const resp = _rest.updateAttemptAddress({rn: rn, contactType: contactType, position: position}, addressJson);
+      return resp.$promise;
+    }
+
+    function changeAttemptAddress(rn, contactType, position) {
+      if(!_rest) throw new Error(UNINITIALIZED_REST_ERROR_MESSAGE);
+      const resp = _rest.changeAttemptAddress({rn: rn, contactType: contactType, position: position});
       return resp.$promise;
     }
   }
