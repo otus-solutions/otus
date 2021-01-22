@@ -36,3 +36,9 @@
     height: 60vh;
   }
 }
+
+@media (min-height: 1300px) {
+  .pc-layout {
+    height: 50vh;
+  }
+}
