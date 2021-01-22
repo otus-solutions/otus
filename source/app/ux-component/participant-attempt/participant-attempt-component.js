@@ -98,8 +98,8 @@
         })
     }
 
-    function _reverseList() {
-      for(const attempt of self.lastAttempts) {
+    function _reverseAttemptList() {
+      for(const attempt of self.attemptAddresses) {
         attempt.attemptList.reverse()
       }
     }
@@ -107,7 +107,8 @@
     function _getLastAttempts() {
       self.lastAttempts = [];
       var itemCount = 0;
-      for(const [index, attemptAddress] of self.attemptAddresses.entries()) {
+      for(const [index, originalAttemptAddress] of self.attemptAddresses.entries()) {
+        let attemptAddress = angular.copy(originalAttemptAddress);
         for(const attempt of attemptAddress.attemptList) {
           if(index > 0) {
             if(itemCount < self.addressConfiguration.numberOfAttempts) {
@@ -126,7 +127,6 @@
           }
         }
       }
-      _reverseList();
     }
 
     function getAttempts() {
@@ -134,6 +134,7 @@
         .findByRnByContactTypeByPosition(self.selectedParticipant.recruitmentNumber, 'address', self.selectedAddress.pos)
         .then(attempts => {
           self.attemptAddresses = attempts;
+          _reverseAttemptList();
           _getLastAttempts();
         });
     }

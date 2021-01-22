@@ -58,7 +58,7 @@
               <div layout="column" flex="90">
                 <div layout="row" layout-align="start start" flex="65">
                   <div layout="column" flex="90">
-                    <span class="md-title">{{$ctrl.newTube.type}} : {{$ctrl.newTube.momentLabel}}</span>
+                    <span class="md-title">{{$ctrl.newTube.typeLabel}} : {{$ctrl.newTube.momentLabel}}</span>
                     <span class="md-subhead">{{$ctrl.newTube.code}}</span>
                   </div>
                   <div layout="column" flex="10">
@@ -95,7 +95,7 @@
         <h2>Sem Tubos Coletados</h2>
       </div>
     </div>
-  
+
     <div ng-if="$ctrl.originalTubeHasCode() && $ctrl.tubeHasCustomMetadata()" layout="column" layout-align="center center" flex-offset="5">
       <md-subheader class="md-no-sticky moment-type-title">
         Metadados Material Primário
