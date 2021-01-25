@@ -31,14 +31,14 @@ gulp.task('compress-compress', function () {
         .pipe(gulp.dest('dist/otus'));
 });
 
-gulp.task('copy_code', ()=> {
+gulp.task('copy_code', function () {
     return gulp.src('./app/**/*')
     .pipe(gulp_if('index.html', replace('src="app/', 'src="')))
     .pipe(gulp_if('index.html', replace('href="app/', 'href="')))
         .pipe(gulp.dest('dist/otus'));
 });
 
-gulp.task('embeded_template', ()=> {
+gulp.task('embeded_template', function () {
     return gulp.src('./dist/otus/**/*')
         .pipe(gulp_if('*.js', embedTemplates({
             basePath: '.'

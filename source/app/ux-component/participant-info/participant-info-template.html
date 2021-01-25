@@ -1,8 +1,8 @@
 <div layout-align="center center" layout-margin layout-padding>
-  <md-card style="width: 800px; margin: 0 auto;" flex>
-    <md-card-content>
+  <div style="width: 800px; margin: 0 auto; background: white" flex>
+    <div>
       <div layout="row" layout-align="space-between stretch">
-        <div layout="column" layout-align="space-around stretch" hide-sm hide-xs>
+        <div layout="column" hide-sm hide-xs>
           <md-icon style="font-size: 8em;" flex hide-xs>account_circle</md-icon>
         </div>
         <div layout="column" layout-align="center start">
@@ -38,7 +38,7 @@
           </generate-custom-label-dialog>
         </div>
       </div>
-    </md-card-content>
+    </div>
     <attache-laboratory ng-show="!$ctrl.hasLaboratory" subtitle="$ctrl.attacheLabTitle" selected-participant="$ctrl.selectedParticipant"></attache-laboratory>
-  </md-card>
+  </div>
 </div>
