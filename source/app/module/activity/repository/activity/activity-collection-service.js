@@ -12,7 +12,8 @@
   Service.$inject = [
     '$q',
     'otusjs.activity.core.ModuleService',
-    'otusjs.activity.storage.ActivityLocalStorageService'
+    'otusjs.activity.storage.ActivityLocalStorageService',
+    '$timeout'
   ];
 
   /**
@@ -23,7 +24,7 @@
    * @namespace ActivityCollectionService
    * @memberof Services
    */
-  function Service($q, ModuleService, ActivityStorageService) {
+  function Service($q, ModuleService, ActivityStorageService, $timeout) {
     var self = this;
     var _remoteStorage = ModuleService.getActivityRemoteStorage();
     var _participant = null;
@@ -99,8 +100,12 @@
             .update(activities)
             .then(function () {
               request.resolve();
-            });
+            })
         });
+
+      $timeout(function () {
+        request.resolve();
+      }, 10000);
 
       return request.promise;
     }
