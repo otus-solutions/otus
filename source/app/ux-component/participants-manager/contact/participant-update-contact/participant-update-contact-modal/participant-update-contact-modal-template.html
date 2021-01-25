@@ -1,0 +1,43 @@
+<md-dialog class="dialog-show-template">
+  <form ng-cloak>
+      <md-toolbar>
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+          <h2>{{$ctrl.data.dialogToTitle}} <span ng-if="$ctrl.data.position"></span>({{$ctrl.translatePosition($ctrl.data.position)}}) </span></h2>
+          <span flex></span>
+          <md-button class="md-icon-button" ng-click="cancel()">X</md-button>
+        </div>
+      </md-toolbar>
+
+      <md-dialog-content>
+        <div class="md-padding" >
+          <p class="md-body-1">
+            Você deseja <strong>corrigir</strong> ou <strong>alterar</strong> este endereço?
+          </p>
+
+          <p class="md-body-1">
+            <strong>Corrigir</strong> indica que o endereço é fisicamente o mesmo e só foram alterados alguns de seus dados.
+          </p>
+
+          <p class="md-body-1">
+            <strong>Alterar</strong> indica que o endereço novo é diferente do anterior e habilita novas tentativas de contato.
+          </p>
+
+          <md-radio-group ng-model="$ctrl.data.selection" style="margin-top: 16px">
+            <md-radio-button value="corrigir"><strong>Corrigir</strong> endereço</md-radio-button>
+            <md-radio-button value="alterar"><strong>Alterar</strong> endereço</md-radio-button>
+          </md-radio-group>
+        </div>
+
+      </md-dialog-content>
+
+      <md-dialog-actions layout="row">
+        <div ng-repeat="button in $ctrl.buttons">
+          <md-button class="{{ button.class }}"
+                     ng-click="button.action($ctrl.data.selection)"
+                     ng-bind="button.message"
+                     aria-label="{{button.ariaLabel ? button.ariaLabel : ''}}"></md-button>
+          <span flex></span>
+        </div>
+      </md-dialog-actions>
+    </form>
+  </md-dialog>

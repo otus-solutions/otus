@@ -22,7 +22,7 @@
       parent: STATE.PARTICIPANT_DASHBOARD,
       name: STATE.PARTICIPANT_UPDATE,
       url: '/' + STATE.PARTICIPANT_UPDATE,
-      template: '<otus-participant-contact permissions="$resolve.permission"></otus-participant-contact>',
+      template: '<otus-participant-contact permissions="$resolve.permission" flex=""></otus-participant-contact>',
       data: {
         redirect: _redirect
       },
