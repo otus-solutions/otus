@@ -68,6 +68,7 @@
         email: true,
         address: true
       }
+      self.oldContact = angular.copy(self.contact);
       _isNewContact(angular.copy(self.contact));
     }
 
@@ -102,22 +103,30 @@
         ...self.dialogData,
         position: position
       }
+      if(self.oldContact.main.value.census) {
+        DialogShowService.showCustomizedDialog(
+          updatedDialogData,
+          DialogController,
+          "app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-modal/participant-update-contact-modal-template.html",
+          true,
+          '$ctrl',
+          {},
+          false
+        ).then(() => {
+          _saveContact(updateContactDto, position, type)
+        })
+      } else {
+        _saveContact(updateContactDto, position, type)
+        self.oldContact = angular.copy(self.contact)
+      }
+    }
 
-      DialogShowService.showCustomizedDialog(
-        updatedDialogData,
-        DialogController,
-        "app/ux-component/participants-manager/contact/participant-update-contact/participant-update-contact-modal/participant-update-contact-modal-template.html",
-        true,
-        '$ctrl',
-        {},
-        false
-      ).then(() => {
-        ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
-          .then(() => self.editMode[position] = false)
-          .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
-          .then(() => ParticipantContactService.isLastContact(self, position, "updateContact"))
-          .then(() => self.loadParticipantContact());
-      })
+    function _saveContact(updateContactDto, position,type) {
+      ParticipantContactService.dinamicUpdateContact(updateContactDto, type)
+        .then(() => self.editMode[position] = false)
+        .then(() => ParticipantMessagesService.showToast(ParticipantContactValues.msg.updateSuccess))
+        .then(() => ParticipantContactService.isLastContact(self, position, "updateContact"))
+        .then(() => self.loadParticipantContact());
     }
 
     function findAddressByCep(addressContact) {
