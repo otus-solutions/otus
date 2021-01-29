@@ -15,7 +15,7 @@
           <md-option ng-value="address"
                      ng-repeat="address in $ctrl.addresses track by $index"
                      ng-selected="$index === 0">
-            {{address.address.value.census && address.address.value.census + " - "}}{{address.address.value.street}}{{address.address.value.streetNumber && ", " + address.address.value.streetNumber}}{{" - " + address.address.value.city + ", " + address.address.value.state + " (" + address.address.value.country + ")"}}
+            {{address.address.value.census && address.address.value.census + " - "}}{{address.address.value.street}}{{address.address.value.streetNumber && ", " + address.address.value.streetNumber}}{{address.address.value.complements && "/" + address.address.value.complements}}{{" - "+ address.address.value.neighbourhood + " - " + address.address.value.postalCode + " - " + address.address.value.city + ", " + address.address.value.state + " (" + address.address.value.country + ")"}}
           </md-option>
         </md-select>
       </md-input-container>
