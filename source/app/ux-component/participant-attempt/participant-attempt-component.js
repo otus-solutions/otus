@@ -50,6 +50,7 @@
     self.remove = remove;
     self.save = save;
     self.translatePosition = translatePosition;
+    self.translateAddress = _addresObjToFullAddressString;
 
     function onInit() {
       _loadSelectedParticipant();
@@ -197,8 +198,7 @@
     }
 
     function _addresObjToFullAddressString(addressObj) {
-      return `${addressObj.census} - ${addressObj.street}, ${addressObj.streetNumber}/${addressObj.complements} - ` +
-        `${addressObj.neighbourhood} - ${addressObj.postalCode} - ${addressObj.city}, ${addressObj.state}(${addressObj.country})`
+      return `${addressObj.census ? addressObj.census : ''} - ${addressObj.street}, ${addressObj.streetNumber}${addressObj.complements ? ('/' + addressObj.complements) : ''} - ${addressObj.neighbourhood} - ${addressObj.postalCode} - ${addressObj.city}, ${addressObj.state}(${addressObj.country})`
     }
 
     function translatePosition(pos) {

@@ -15,7 +15,7 @@
           <md-option ng-value="address"
                      ng-repeat="address in $ctrl.addresses track by $index"
                      ng-selected="$index === 0">
-            {{address.address.value.census && address.address.value.census + " - "}}{{address.address.value.street}}{{address.address.value.streetNumber && ", " + address.address.value.streetNumber}}{{address.address.value.complements && "/" + address.address.value.complements}}{{" - "+ address.address.value.neighbourhood + " - " + address.address.value.postalCode + " - " + address.address.value.city + ", " + address.address.value.state + " (" + address.address.value.country + ")"}}
+            {{$ctrl.translateAddress(address.address.value)}}
           </md-option>
         </md-select>
       </md-input-container>
@@ -88,7 +88,7 @@
     <div>
       <span ng-if="$ctrl.attemptAddresses.length > 0" class="md-subhead"><b>Tentativas de contato ({{$ctrl.translatePosition($ctrl.selectedAddress.pos)}})</b></span>
       <md-list class="md-dense" ng-repeat="attemptAddress in $ctrl.lastAttempts track by $index" ng-if="$ctrl.attemptAddresses.length > 0" style="margin-top: 16px">
-        <span class="md-subheader">{{attemptAddress.fullAddress}}</span>
+        <span class="md-subheader">{{$ctrl.translateAddress(attemptAddress.address)}}</span>
         <div class="secondary-button-padding" layout-fill=""
                       ng-repeat="attempt in attemptAddress.attemptList track by $index">
           <div class="md-list-item-text" layout-fill="" layout="row" layout-align="space-between center">
