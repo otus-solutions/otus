@@ -113,7 +113,9 @@
       if (!toUpdate || !toUpdate.length) {
         throw new Error('No activity to update.', 'activity-repository-service.js', 50);
       }
-      return ActivityCollectionService.update(toUpdate).then(_setupWorkProgress().finish);
+      return ActivityCollectionService.update(toUpdate)
+        .then(_setupWorkProgress().finish)
+        .catch(_setupWorkProgress().finish);
     }
 
     function _toActivityModel(surveys, loggedUser, participant, paperActivityData, activityFacadeService, configuration) {
