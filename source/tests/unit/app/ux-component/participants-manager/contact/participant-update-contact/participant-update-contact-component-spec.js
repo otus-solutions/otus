@@ -1,4 +1,4 @@
-describe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
+xdescribe('ParticipantUpdateContactComponent_UnitTest_Suite', () => {
   let ctrl;
   let Injections = [];
   let Mock = {};
