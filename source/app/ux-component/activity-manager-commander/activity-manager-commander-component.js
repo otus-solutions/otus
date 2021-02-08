@@ -19,6 +19,7 @@
     self.goToActivityAdder = goToActivityAdder;
 
     function goToActivityAdder() {
+      ApplicationStateService.setCurrentStateStorage();
       ApplicationStateService.activateActivityAdder();
     }
    }

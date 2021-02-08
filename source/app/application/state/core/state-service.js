@@ -56,6 +56,8 @@
     self.activateIssueViewer = activateIssueViewer;
     self.activateIssueMessagesViewer = activateIssueMessagesViewer;
     self.activateParticipantActivityStage = activateParticipantActivityStage;
+    self.getCurrentStateStorage = getCurrentStateStorage;
+    self.setCurrentStateStorage = setCurrentStateStorage;
 
     function activateMonitoring() {
       $state.go(STATE.MONITORING);
@@ -209,6 +211,14 @@
       return $state.current.name;
     }
 
+    function setCurrentStateStorage() {
+      sessionStorage.setItem("toState", getCurrentState())
+   }
+
+    function getCurrentStateStorage() {
+      return sessionStorage.getItem("toState")
+    }
+
     function currentStateIsListViewer() {
       return [STATE.PENDENCY_VIEWER, STATE.ISSUE_VIEWER].includes(getCurrentState());
     }
@@ -225,7 +235,7 @@
       $state.go(STATE.ISSUE_MESSAGES_VIEWER);
     }
 
-    function activateMaterialLabelDashboard(){
+    function activateMaterialLabelDashboard() {
       $state.go(STATE.MATERIAL_LABEL);
     }
   }

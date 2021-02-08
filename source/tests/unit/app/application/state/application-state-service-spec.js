@@ -1,11 +1,11 @@
-xdescribe('ApplicationStateService', function () {
+describe('ApplicationStateService', function () {
 
   var UNIT_NAME = 'otusjs.application.state.ApplicationStateService';
   var service = {};
   var injections = {};
 
   beforeEach(function () {
-    module('otusjs.application.state');
+    module('otusjs.otus');
 
     inject(function (_$injector_, _$state_, _STATE_) {
       injections.STATE = _$injector_.get('STATE');
@@ -24,7 +24,7 @@ xdescribe('ApplicationStateService', function () {
 
   });
 
-  xdescribe('activateActivityAdder method', function () {
+  describe('activateActivityAdder method', function () {
 
     it('should activate the INSTALLER state', function () {
       service.activateActivityAdder();
@@ -34,7 +34,7 @@ xdescribe('ApplicationStateService', function () {
 
   });
 
-  xdescribe('activateInstaller method', function () {
+  describe('activateInstaller method', function () {
 
     it('should activate the INSTALLER state', function () {
       service.activateInstaller();
@@ -44,7 +44,7 @@ xdescribe('ApplicationStateService', function () {
 
   });
 
-  xdescribe('activateLogin method', function () {
+  describe('activateLogin method', function () {
 
     it('should activate the LOGIN state', function () {
       service.activateLogin();
@@ -54,17 +54,27 @@ xdescribe('ApplicationStateService', function () {
 
   });
 
-  xdescribe('activateDashboard method', function () {
+  describe('activateDashboard method', function () {
 
     it('should activate the DASHBOARD state', function () {
       service.activateDashboard();
+
+      expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.DASHBOARD);
+    });
+
+  });
+
+  describe('activateParticipantDashboard method', function () {
+
+    it('should activate the Participant DASHBOARD state', function () {
+      service.activateParticipantDashboard();
 
       expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.PARTICIPANT_DASHBOARD);
     });
 
   });
 
-  xdescribe('activateParticipantActivities method', function () {
+  describe('activateParticipantActivities method', function () {
 
     it('should activate the PARTICIPANT_ACTIVITY state', function () {
       service.activateParticipantActivities();
@@ -74,7 +84,7 @@ xdescribe('ApplicationStateService', function () {
 
   });
 
-  xdescribe('activateParticipantReports method', function () {
+  describe('activateParticipantReports method', function () {
 
     it('should activate the PARTICIPANT_REPORT state', function () {
       service.activateParticipantReports();
@@ -84,7 +94,7 @@ xdescribe('ApplicationStateService', function () {
 
   });
 
-  xdescribe('activateSignup method', function () {
+  describe('activateSignup method', function () {
 
     it('should activate the SIGNUP state', function () {
       service.activateSignup();
@@ -94,7 +104,7 @@ xdescribe('ApplicationStateService', function () {
 
   });
 
-  xdescribe('activateSignupResult method', function () {
+  describe('activateSignupResult method', function () {
 
     it('should activate the SIGNUP_RESULT state', function () {
       service.activateSignupResult();
@@ -104,4 +114,24 @@ xdescribe('ApplicationStateService', function () {
 
   });
 
+  describe('activateParticipantActivityStage method', function () {
+
+    it('should activate the PARTICIPANT_ACTIVITY_STAGE state', function () {
+      service.activateParticipantActivityStage();
+
+      expect(injections.$state.go).toHaveBeenCalledWith(injections.STATE.PARTICIPANT_ACTIVITY_STAGE);
+    });
+
+  });
+
+  describe('getCurrentStateStorage method and setCurrentStateStorage return state', function () {
+
+    it('should return state', function () {
+      injections.$state.current.name = injections.STATE.PARTICIPANT_ACTIVITY_STAGE;
+      service.setCurrentStateStorage();
+
+      expect(service.getCurrentStateStorage()).toEqual(injections.STATE.PARTICIPANT_ACTIVITY_STAGE);
+    });
+
+  });
 });

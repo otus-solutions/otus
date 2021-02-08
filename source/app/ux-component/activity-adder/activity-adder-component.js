@@ -21,11 +21,12 @@
     'otusjs.activity.business.GroupActivityService',
     'otusjs.application.dialog.DialogShowService',
     'otusjs.deploy.LoadingScreenService',
-    'otusjs.stage.business.StageService'
+    'otusjs.stage.business.StageService',
+    'STATE'
   ];
 
   function Controller(ACTIVITY_MANAGER_LABELS, $q, $timeout, $element,
-                      ParticipantActivityService, ApplicationStateService, GroupActivityService, DialogService, LoadingScreenService, StageService) {
+    ParticipantActivityService, ApplicationStateService, GroupActivityService, DialogService, LoadingScreenService, StageService, STATE) {
     const ALL_OPTION = "Todos";
     const STAGE_NULL = "Nenhuma Etapa";
 
@@ -126,11 +127,11 @@
       });
     }
 
-    function _loadStages(){
+    function _loadStages() {
       self.hasStage = true;
       StageService.getAllStages()
         .then(stages => {
-          if(!stages || stages.length === 0){
+          if (!stages || stages.length === 0) {
             self.hasStage = false;
           }
           self.optionStages.push({ name: STAGE_NULL });
@@ -246,7 +247,17 @@
         'Deseja sair do Gerenciador de Atividades ?',
         'Confirmação de cancelamento')
         .then(() => self.preActivities = [])
-        .then(() => ApplicationStateService.activateParticipantActivities());
+        .then(() => _loadStateActivity());
+    }
+
+    function _loadStateActivity() {
+    let toStage = ApplicationStateService.getCurrentStateStorage()
+
+    if (toStage == STATE.PARTICIPANT_ACTIVITY_STAGE) {
+      ApplicationStateService.activateParticipantActivityStage()
+    } else {
+      ApplicationStateService.activateParticipantActivities()
+    }
     }
 
     function saveActivities() {
@@ -256,7 +267,7 @@
           'Deseja adicionar os itens ao participante?',
           'Confirmação de exclusão')
           .then(() => ParticipantActivityService.saveActivities(self.preActivities))
-          .then(() => ApplicationStateService.activateActivityAdder())
+        // .then(() => ApplicationStateService.activateActivityAdder())
       } else {
         DialogService.showWarningDialog(
           'Pendência de Informações',
