@@ -1,0 +1,65 @@
+otus-dashboard-display {
+  @media screen and (min-width: 360px) {
+    .dashboard-display-layout {
+      display: grid;
+      height: auto;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas:
+        "display-participant-info"
+        "display-participant-attempt"
+        "display-user-comment-list"
+        "display-participant-heatmap"
+        "display-participant-exam-heatmap"
+        "display-report-dashboard";
+    }
+    .mobile-width {
+      width: 100vw;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .dashboard-display-layout {
+      display: grid;
+      align-items: center;
+      height: auto;
+      width: auto;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+      grid-template-areas:
+        "display-participant-info    display-user-comment-list"
+        "display-participant-attempt    display-user-comment-list"
+        "display-participant-heatmap    display-participant-heatmap"
+        "display-participant-exam-heatmap    display-participant-exam-heatmap"
+        "display-report-dashboard     display-report-dashboard";
+    }
+
+    .mobile-width {
+      width: auto;
+    }
+  }
+
+  .display-participant-info {
+    grid-area: display-participant-info;
+  }
+
+  .display-participant-attempt {
+    grid-area: display-participant-attempt;
+  }
+
+  .display-user-comment-list {
+    grid-area: display-user-comment-list;
+  }
+
+  .display-participant-heatmap {
+    grid-area: display-participant-heatmap;
+  }
+
+  .display-participant-exam-heatmap {
+    grid-area: display-participant-exam-heatmap;
+  }
+
+  .display-report-dashboard {
+    grid-area: display-report-dashboard;
+  }
+}

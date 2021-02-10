@@ -1380,4 +1380,64 @@ otus-activity-stage-list .new-chip-white {
   display: -ms-flexbox;
   display: flex;
 }
+
+@media screen and (min-width: 360px) {
+  otus-dashboard-display .dashboard-display-layout {
+    display: -ms-grid;
+    display: grid;
+    height: auto;
+    -ms-grid-columns: 1fr;
+        grid-template-columns: 1fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "display-participant-info" "display-participant-attempt" "display-user-comment-list" "display-participant-heatmap" "display-participant-exam-heatmap" "display-report-dashboard";
+  }
+  otus-dashboard-display .mobile-width {
+    width: 100vw;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  otus-dashboard-display .dashboard-display-layout {
+    display: -ms-grid;
+    display: grid;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: auto;
+    width: auto;
+    -ms-grid-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
+    -ms-grid-rows: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: "display-participant-info    display-user-comment-list" "display-participant-attempt    display-user-comment-list" "display-participant-heatmap    display-participant-heatmap" "display-participant-exam-heatmap    display-participant-exam-heatmap" "display-report-dashboard     display-report-dashboard";
+  }
+  otus-dashboard-display .mobile-width {
+    width: auto;
+  }
+}
+
+otus-dashboard-display .display-participant-info {
+  grid-area: display-participant-info;
+}
+
+otus-dashboard-display .display-participant-attempt {
+  grid-area: display-participant-attempt;
+}
+
+otus-dashboard-display .display-user-comment-list {
+  grid-area: display-user-comment-list;
+}
+
+otus-dashboard-display .display-participant-heatmap {
+  grid-area: display-participant-heatmap;
+}
+
+otus-dashboard-display .display-participant-exam-heatmap {
+  grid-area: display-participant-exam-heatmap;
+}
+
+otus-dashboard-display .display-report-dashboard {
+  grid-area: display-report-dashboard;
+}
 /*# sourceMappingURL=main.css.map */
